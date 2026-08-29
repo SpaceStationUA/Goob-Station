@@ -975,8 +975,6 @@
   - type: FlashImmunity
   - type: EyeProtection
   - type: WeldingVisor # Pirate: welding visor toggle
-    # Unlike the welding masks/goggles, tgstation's gas/welding visor also plays a sound on toggle
-    # (the only welding item that does) - opt back in here.
     soundLower:
       collection: PirateWeldingVisorDown
     soundRaise:

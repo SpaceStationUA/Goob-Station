@@ -41,7 +41,7 @@ public sealed class XRayVisionSystem : SharedXRayVisionSystem
 
     private void OnHandleState(Entity<XRayVisionComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        // The state may have landed on the worn item rather than on us, so refresh whoever is looking.
+        // State may arrive on the worn item, so refresh the attached player.
         RefreshOverlay(_player.LocalSession?.AttachedEntity ?? ent.Owner);
     }
 
@@ -57,15 +57,13 @@ public sealed class XRayVisionSystem : SharedXRayVisionSystem
         if (entity != _player.LocalSession?.AttachedEntity)
             return;
 
-        // Find the first active xray component.
         XRayVisionComponent? xray = null;
         foreach (var ent in entities)
         {
             if (!ent.Comp.Enabled)
                 continue;
 
-            // A component being torn down still answers the relay event, and it must not keep the overlay up -
-            // see the RelayOverlay note in SharedXRayVisionSystem.OnRemove.
+            // Components being removed still relay events.
             if (TerminatingOrDeleted(ent.Owner))
                 continue;
 
@@ -75,7 +73,6 @@ public sealed class XRayVisionSystem : SharedXRayVisionSystem
             xray ??= ent.Comp;
         }
 
-        // There are no active xray components, so we disable the overlay.
         if (xray == null)
         {
             Deactivate(entity);

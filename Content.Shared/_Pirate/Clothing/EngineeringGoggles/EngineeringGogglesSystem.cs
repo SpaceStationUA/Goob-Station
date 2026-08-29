@@ -97,18 +97,14 @@ public sealed class EngineeringGogglesSystem : EntitySystem
         comp.Mode = mode;
         Dirty(uid, comp);
 
-        // Set the shader color for the NEW mode before toggling either sub-system's Enabled below. Each of
-        // those raises GoggleShaderToggledEvent, and the client refreshes its overlay's cached color by
-        // reading GoggleShaderComponent.Color at that exact moment - if we toggled first and recolored after,
-        // the client would always render one mode behind (e.g. showing xray's color while t-ray is enabling).
+        // Set the color before toggling so the overlay refresh sees the selected mode.
         if (TryComp<GoggleShaderComponent>(uid, out var shader))
         {
             shader.Color = mode == EngineeringGogglesMode.XRay ? comp.XRayColor : comp.TrayColor;
             Dirty(uid, shader);
         }
 
-        // Disable both sub-modes first (each call is a no-op if already off), then enable the target one last -
-        // both of these also flip GoggleShaderComponent.Enabled, so whichever runs last decides the end state.
+        // Disable both modes before enabling the selected one.
         _trayScanner.SetEnabled(uid, false);
         _xray.SetEnabled(uid, false);
 

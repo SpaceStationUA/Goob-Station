@@ -157,10 +157,6 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         _audio.PlayPredicted(sound, ent, user);
     }
 
-    /// <summary>
-    /// Enables or disables the scanner from outside this system (e.g. an item that combines several vision
-    /// modes and needs to drive TrayScanner as just one of them).
-    /// </summary>
     // Pirate: engineering goggles - public toggle for external mode-switchers, mirrors SharedXRayVisionSystem.SetEnabled.
     public void SetEnabled(Entity<TrayScannerComponent?> ent, bool enabled)
     {

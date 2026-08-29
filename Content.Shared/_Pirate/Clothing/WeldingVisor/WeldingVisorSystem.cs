@@ -45,7 +45,6 @@ public sealed class WeldingVisorSystem : EntitySystem
 
     private void OnGetActions(Entity<WeldingVisorComponent> ent, ref GetItemActionsEvent args)
     {
-        // Only offer the action while worn in a slot (not just held in a hand).
         if (args.SlotFlags is null)
             return;
 

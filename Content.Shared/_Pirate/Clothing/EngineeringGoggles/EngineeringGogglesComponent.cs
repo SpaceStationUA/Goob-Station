@@ -23,28 +23,15 @@ public sealed partial class EngineeringGogglesComponent : Component
     [DataField, AutoNetworkedField]
     public EngineeringGogglesMode Mode = EngineeringGogglesMode.Off;
 
-    /// <summary>
-    /// Goggle shader color while in <see cref="EngineeringGogglesMode.XRay"/>.
-    /// </summary>
     [DataField, AutoNetworkedField]
     public Color XRayColor = Color.FromHex("#FFA64099");
 
-    /// <summary>
-    /// Goggle shader color while in <see cref="EngineeringGogglesMode.Tray"/>.
-    /// </summary>
     [DataField, AutoNetworkedField]
     public Color TrayColor = Color.FromHex("#3D8599CC");
 
-    /// <summary>
-    /// Played when switching into x-ray or t-ray mode. Reuses the same default as the goobstation
-    /// SwitchableVisionOverlayComponent family (night vision/thermal goggles).
-    /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundActivate = new SoundPathSpecifier("/Audio/_White/Items/Goggles/activate.ogg");
 
-    /// <summary>
-    /// Played when switching to off.
-    /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundDeactivate = new SoundPathSpecifier("/Audio/_White/Items/Goggles/deactivate.ogg");
 
@@ -63,10 +50,6 @@ public enum EngineeringGogglesMode : byte
     Tray,
 }
 
-/// <summary>
-/// Appearance data key driving the item's own (dropped/inventory) sprite state - see
-/// EngineeringGogglesVisualsSystem (client).
-/// </summary>
 [Serializable, NetSerializable]
 public enum EngineeringGogglesVisuals : byte
 {

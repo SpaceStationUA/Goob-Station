@@ -11,10 +11,6 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Shared._Pirate.Xray;
 
-/// <summary>
-/// Shows/hides the x-ray overlay based on whether the observed entity has a
-/// <see cref="XRayVisionComponent"/> equipped.
-/// </summary>
 public abstract class SharedXRayVisionSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -108,12 +104,6 @@ public abstract class SharedXRayVisionSystem : EntitySystem
         args.Handled = true;
     }
 
-    /// <summary>
-    /// Enables or disables the component.
-    /// </summary>
-    /// <param name="ent">The x-ray to toggle.</param>
-    /// <param name="enabled">Whether to enable or disable.</param>
-    /// <param name="viewer">Viewer of the x-ray, used to refresh their overlay. If null, assumes the x-ray entity is the viewer.</param>
     public void SetEnabled(Entity<XRayVisionComponent?> ent, bool enabled, EntityUid? viewer = null)
     {
         if (!Resolve(ent, ref ent.Comp, false))

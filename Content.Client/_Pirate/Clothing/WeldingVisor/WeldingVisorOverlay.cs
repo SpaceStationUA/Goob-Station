@@ -20,10 +20,7 @@ public sealed class WeldingVisorOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    /// <summary>
-    /// How opaque the darkened periphery is drawn. 1.0 is the raw tgstation tier-3 overlay (near-solid black
-    /// at the edges); lower values keep the same shape but let more of the world show through.
-    /// </summary>
+    /// <summary>Screen edge opacity.</summary>
     private const float Opacity = 0.7f;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;

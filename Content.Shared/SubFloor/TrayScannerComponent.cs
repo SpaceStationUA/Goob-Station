@@ -24,27 +24,15 @@ public sealed partial class TrayScannerComponent : Component
 
     // Pirate: meson vision - ported from Moffstation PR #1688 (toggle action + on/off sounds for worn scanners).
 
-    /// <summary>
-    /// The action prototype to give to the user when equipped.
-    /// </summary>
     [DataField]
     public EntProtoId? ToggleAction;
 
-    /// <summary>
-    /// The spawned action entity linked to this scanner.
-    /// </summary>
     [DataField, NonSerialized]
     public EntityUid? ToggleActionEntity;
 
-    /// <summary>
-    /// Sound played when the scanner is turned on.
-    /// </summary>
     [DataField]
     public SoundSpecifier? SoundOn;
 
-    /// <summary>
-    /// Sound played when the scanner is turned off.
-    /// </summary>
     [DataField]
     public SoundSpecifier? SoundOff;
 }

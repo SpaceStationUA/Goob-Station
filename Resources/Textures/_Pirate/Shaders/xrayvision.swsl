@@ -1,21 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Pirate: meson vision - ported from space-wizards/space-station-14#44601 ("Mesons (XRayVision)").
-//
-// Upstream's version also samples the engine FOV shadow-depth map here and discards every fragment that is
-// actually visible, and tints what survives with its own color/scanlines. The FOV sampling needs
-// IClydeViewport.FovRenderTarget (RobustToolbox#6781), which our pinned engine does not have, so that test
-// happens per-tile on the CPU in XRayVisionOverlay.IsHidden instead. The hue and scanlines were dropped by
-// request - revealed tiles are meant to read as the same color as the rest of the screen (tinted uniformly by
-// the goggles' full-screen shader, see SharedXRayVisionSystem.SetEnabled), not a separately-colored patch.
-//
-// So this shader is a deliberate passthrough. It exists ONLY for the light_mode line below; the brightness
-// that upstream folded into its tint alpha is now a neutral white modulate on the draw call instead
-// (XRayVisionComponent.TileAlpha), which dims without tinting.
-
-// Anything revealed here is outside FOV and therefore in darkness by definition - without this the lighting
-// pass blackens it straight back out. This is also exactly why revealed tiles need TileAlpha to dim them:
-// skipping the lighting pass means skipping the dimming that everything else on screen receives, so they
-// would otherwise glare at full texture brightness.
+// CPU visibility checks run in XRayVisionOverlay because this engine lacks upstream's FOV shadow map.
+// This shader only forces unshaded drawing; TileAlpha supplies brightness.
 light_mode unshaded;
 
 void fragment()

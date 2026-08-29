@@ -1,14 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Pirate: meson vision - ported from space-wizards/space-station-14#44601 ("Mesons (XRayVision)").
-//
-// Deviation from upstream, and the only one: upstream's shader decides visibility per-pixel by sampling the
-// engine's FOV shadow-depth map, which it reaches through IClydeViewport.FovRenderTarget - added by
-// RobustToolbox#6781, merged upstream 2026-07-10. Our engine is pinned at 270.1.0 (2026-01-01) and has no
-// public path to that render target (Clyde._fovRenderTarget is private, and the sandbox whitelist has no
-// System.Reflection.FieldInfo entry, so reflection is not an option either). We therefore resolve occlusion
-// per-tile on the CPU with a raycast against the occluder set. Same rule as upstream - a tile is drawn only
-// when line of sight to it is blocked - just at tile granularity instead of pixel granularity, and bounded by
-// XRayVisionComponent.Range to keep the raycast count sane.
+// Uses CPU tile raycasts because this engine lacks upstream's FOV shadow-map access.
 
 using Content.Shared._Pirate.Xray;
 using Content.Shared.Physics;
@@ -28,9 +20,6 @@ using System.Numerics;
 
 namespace Content.Client._Pirate.Xray;
 
-/// <summary>
-/// Overlay that shows tiles hidden behind walls.
-/// </summary>
 public sealed class XRayVisionOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -54,13 +43,9 @@ public sealed class XRayVisionOverlay : Overlay
 
     public const int ContentZIndex = Content.Client.Light.BeforeLightTargetOverlay.ContentZIndex + 1;
 
-    // Not readonly - FindGridsIntersecting takes this by ref.
     private List<Entity<MapGridComponent>> _grids = [];
     private readonly Dictionary<Tile, Dictionary<byte, Texture>> _tileVariations = [];
 
-    /// <summary>
-    /// Cached delegate so the per-tile raycast does not allocate a closure every call.
-    /// </summary>
     private readonly Func<EntityUid, bool> _ignoreNonOccluder;
 
     public bool ShowTiles { get; private set; }
@@ -110,10 +95,7 @@ public sealed class XRayVisionOverlay : Overlay
 
         var handle = args.WorldHandle;
 
-        // Still routed through a shader (rather than drawn plain) purely for light_mode unshaded - without
-        // it the lighting/FOV pass blackens the tiles straight back out. No tint of its own: revealed tiles
-        // are meant to read as whatever color the goggles' full-screen shader is currently applying, same as
-        // the rest of the screen - not a separate, distinctly-colored patch.
+        // The unshaded shader prevents FOV from blacking out revealed tiles.
         handle.UseShader(_tileShader);
         DrawTiles(args, handle, viewerXform);
 
@@ -127,16 +109,14 @@ public sealed class XRayVisionOverlay : Overlay
 
         var eyePos = _transform.GetWorldPosition(viewerXform);
 
-        // Only consider what is both on screen and inside the reveal radius - every tile that survives this
-        // costs a raycast.
+        // Limit raycasts to visible tiles within range.
         var bounds = args.WorldAABB.Intersect(Box2.CenteredAround(eyePos, new Vector2(Range * 2f)));
         if (bounds.IsEmpty())
             return;
 
         var rangeSquared = Range * Range;
 
-        // Neutral white - alpha only, so this dims the tiles without shifting their hue. Unshaded tiles would
-        // otherwise draw at full texture brightness and glare against the dimly-lit floor around them.
+        // Dim unshaded tiles without tinting them.
         var modulate = Color.White.WithAlpha(TileAlpha);
 
         _grids.Clear();
@@ -156,8 +136,7 @@ public sealed class XRayVisionOverlay : Overlay
                 if (!_tileDefManager.TryGetDefinition(tileRef.Tile.TypeId, out var tileDef) || tileDef.Sprite is not { } sprite)
                     continue;
 
-                // Skip tiles that have a wall on them - upstream does the same, so you see the floor beyond a
-                // wall rather than the wall itself.
+                // Reveal the floor beyond walls, not the walls themselves.
                 if (TileHasOccluder(grid, tileRef.GridIndices))
                     continue;
 
@@ -167,7 +146,6 @@ public sealed class XRayVisionOverlay : Overlay
                 if (Vector2.DistanceSquared(eyePos, tileCenter) > rangeSquared)
                     continue;
 
-                // Only reveal what we cannot already see.
                 if (!IsHidden(args.MapId, eyePos, tileCenter))
                     continue;
 
@@ -177,10 +155,6 @@ public sealed class XRayVisionOverlay : Overlay
         }
     }
 
-    /// <summary>
-    /// CPU stand-in for upstream's FOV shadow-map lookup: true when line of sight from the eye to the point is
-    /// broken by an occluder.
-    /// </summary>
     private bool IsHidden(MapId mapId, Vector2 eyePos, Vector2 target)
     {
         var delta = target - eyePos;
@@ -193,9 +167,6 @@ public sealed class XRayVisionOverlay : Overlay
         return _physics.IntersectRayWithPredicate(mapId, ray, distance, _ignoreNonOccluder).Any();
     }
 
-    /// <summary>
-    /// Predicate for <see cref="IsHidden"/> - returning true tells the raycast to ignore the entity.
-    /// </summary>
     private bool IgnoreNonOccluder(EntityUid uid)
     {
         return !_occluderQuery.TryGetComponent(uid, out var occluder) || !occluder.Enabled;
@@ -213,9 +184,7 @@ public sealed class XRayVisionOverlay : Overlay
         return false;
     }
 
-    /// <summary>
-    /// Tile spritesheets lay their variants out horizontally, so slice the atlas and cache the result.
-    /// </summary>
+    /// <summary>Gets a cached atlas slice for a tile variant.</summary>
     private Texture GetTileTexture(Tile tile, ITileDefinition tileDef, ResPath sprite)
     {
         if (_tileVariations.TryGetValue(tile, out var variants) && variants.TryGetValue(tile.Variant, out var cached))
