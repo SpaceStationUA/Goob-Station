@@ -74,7 +74,7 @@ public sealed class KnowledgeUiIntegrationTest
             {
                 Assert.That(saveButton.Disabled, Is.False);
                 Assert.That(resetButton.Disabled, Is.False);
-                Assert.That(pointsLabel.Text, Does.Contain("5"));
+                Assert.That(pointsLabel.Text, Does.Contain("9"));
                 Assert.That(firstAidDecrease.Disabled, Is.False);
             });
         });
@@ -110,7 +110,7 @@ public sealed class KnowledgeUiIntegrationTest
             Assert.Multiple(() =>
             {
                 Assert.That(saveButton.Disabled, Is.False);
-                Assert.That(pointsLabel.Text, Does.Contain("6"));
+                Assert.That(pointsLabel.Text, Does.Contain("10"));
             });
             (firstAidDecrease, firstAidIncrease) = GetSkillButtons(client.ProtoMan, skills, "FirstAidKnowledge");
             (chemistryDecrease, chemistryIncrease) = GetSkillButtons(client.ProtoMan, skills, "ChemistryKnowledge");
@@ -129,11 +129,13 @@ public sealed class KnowledgeUiIntegrationTest
             "The editor must stop at the skill's maximum selectable mastery."));
 
         await Click(pair, chemistryIncrease);
+        await Click(pair, chemistryIncrease);
+        await Click(pair, chemistryIncrease);
         await client.WaitAssertion(() =>
         {
             Assert.Multiple(() =>
             {
-                Assert.That(pointsLabel.Text, Does.Contain("-1"));
+                Assert.That(pointsLabel.Text, Does.Contain("-2"));
                 Assert.That(pointsLabel.FontColorOverride, Is.EqualTo(Color.Red));
                 Assert.That(saveButton.Disabled, Is.True,
                     "An over-budget profile must never be applicable.");
@@ -141,7 +143,11 @@ public sealed class KnowledgeUiIntegrationTest
         });
 
         await Click(pair, chemistryDecrease);
-        await client.WaitAssertion(() => Assert.That(saveButton.Disabled, Is.False));
+        await client.WaitAssertion(() =>
+        {
+            Assert.That(pointsLabel.Text, Does.Contain("1"));
+            Assert.That(saveButton.Disabled, Is.False);
+        });
         await Click(pair, saveButton);
 
         await client.WaitAssertion(() =>

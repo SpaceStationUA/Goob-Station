@@ -193,6 +193,8 @@ public sealed class KnowledgeLifecycleIntegrationTest
             {
                 ["MeleeKnowledge"] = 2,
                 ["FirstAidKnowledge"] = 3,
+                ["ChemistryKnowledge"] = 2,
+                ["FabricationKnowledge"] = 1,
                 ["KnowledgeWeaponsEnergy"] = 1,
                 ["DoorsKnowledge"] = 3,
                 ["CookingKnowledge"] = -1,
@@ -202,13 +204,19 @@ public sealed class KnowledgeLifecycleIntegrationTest
             Assert.That(invalid.Mastery, Is.EquivalentTo(new Dictionary<EntProtoId, int>
             {
                 ["FirstAidKnowledge"] = 3,
+                ["ChemistryKnowledge"] = 2,
+                ["FabricationKnowledge"] = 1,
             }), "Invalid, unavailable, over-racial, and over-budget profile entries must be removed deterministically.");
-            Assert.That(knowledge.ProfileCost(invalid), Is.EqualTo(6));
+            Assert.That(knowledge.ProfileCost(invalid), Is.EqualTo(10));
 
             var holder = entMan.SpawnEntity("PirateKnowledgeLifecycleHolder", MapCoordinates.Nullspace);
             knowledge.ApplyProfile(holder, "Human", invalid);
             Assert.That(SharedKnowledgeSystem.GetMastery(
                 knowledge.GetKnowledge(holder, "FirstAidKnowledge")!.Value.Comp.NetLevel), Is.EqualTo(3));
+            Assert.That(SharedKnowledgeSystem.GetMastery(
+                knowledge.GetKnowledge(holder, "ChemistryKnowledge")!.Value.Comp.NetLevel), Is.EqualTo(2));
+            Assert.That(SharedKnowledgeSystem.GetMastery(
+                knowledge.GetKnowledge(holder, "FabricationKnowledge")!.Value.Comp.NetLevel), Is.EqualTo(1));
             Assert.That(SharedKnowledgeSystem.GetMastery(
                 knowledge.GetKnowledge(holder, "DoorsKnowledge")!.Value.Comp.NetLevel), Is.EqualTo(1));
 

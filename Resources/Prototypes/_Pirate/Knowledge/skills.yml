@@ -214,9 +214,12 @@
   - type: Knowledge
     unremoveable: true
   - type: AimSpeedKnowledge
-    curve: !type:RootSkillCurve
-      skillOffset: 2.5
-      curveScale: 0.6
+    # Pirate: Restore the pre-rework Trauma random shot-angle spread.
+    curve: !type:MarksmanshipSpreadSkillCurve
+      untrainedSpread: 3
+      basicTrainingLevel: 26
+      expertLevel: 50
+      minimumSpread: 0.05
 
 - type: entity
   parent: BasePirateRangedKnowledge

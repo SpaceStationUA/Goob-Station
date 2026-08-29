@@ -52,6 +52,50 @@ public sealed partial class CubicSkillCurve : SkillCurve
     internal override float GetValue(float value) => value * value * value;
 }
 
+/// <summary>
+/// Reproduces the pre-rework Trauma marksmanship spread profile.
+/// The returned value is inverse spread because aim-speed consumers divide by skill curves.
+/// </summary>
+public sealed partial class MarksmanshipSpreadSkillCurve : SkillCurve
+{
+    [DataField]
+    public float UntrainedSpread = 3f;
+
+    [DataField]
+    public float BasicTrainingLevel = 26f;
+
+    [DataField]
+    public float ExpertLevel = 50f;
+
+    [DataField]
+    public float MinimumSpread = 0.05f;
+
+    internal override float GetValue(float value)
+    {
+        var normalizedLevel = Math.Clamp(value, 0f, 1f);
+        var level = normalizedLevel * 100f;
+        float spread;
+
+        if (level < BasicTrainingLevel)
+        {
+            spread = UntrainedSpread
+                - level / BasicTrainingLevel
+                - normalizedLevel * normalizedLevel;
+        }
+        else if (level <= ExpertLevel)
+        {
+            spread = 1f;
+        }
+        else
+        {
+            var expertProgress = (level - ExpertLevel) / (100f - ExpertLevel);
+            spread = 1f - expertProgress * expertProgress;
+        }
+
+        return 1f / MathF.Max(spread, MinimumSpread);
+    }
+}
+
 public sealed partial class SumSkillCurve : SkillCurve
 {
     [DataField(required: true)]
