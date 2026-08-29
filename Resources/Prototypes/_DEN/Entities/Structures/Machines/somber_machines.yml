@@ -73,6 +73,16 @@
       state: sombertelevision
     - map: ["computerLayerScreen"]
       state: sombertelevision-on
+  # Pirate edit start
+  - type: GenericVisualizer
+    visuals:
+      enum.EdgeConnectionVisuals.ConnectionMask:
+        computerLayerBody:
+          None: { state: sombertelevision, sprite: _DEN/Structures/Machines/computers.rsi }
+          East: { state: sombertelevision, sprite: _DEN/Structures/Machines/computers.rsi }
+          West: { state: sombertelevision, sprite: _DEN/Structures/Machines/computers.rsi }
+          East, West: { state: sombertelevision, sprite: _DEN/Structures/Machines/computers.rsi }
+  # Pirate edit end
   - type: EtherealLight
   - type: PointLight
     radius: 2

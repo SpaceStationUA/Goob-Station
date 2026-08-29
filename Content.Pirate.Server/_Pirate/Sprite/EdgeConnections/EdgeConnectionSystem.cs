@@ -123,7 +123,7 @@ public sealed class EdgeConnectionSystem : EntitySystem
                 continue;
 
             var otherQuarterTurns = GetQuarterTurns(otherXform.LocalRotation);
-            if (selfQuarterTurns % 2 != otherQuarterTurns % 2)
+            if (selfQuarterTurns != otherQuarterTurns)
                 continue;
 
             var otherAllowed = RotateDirections(edge.AllowedDirections, otherXform.LocalRotation, clockwise: true);
