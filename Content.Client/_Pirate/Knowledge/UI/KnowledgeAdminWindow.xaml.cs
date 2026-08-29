@@ -133,7 +133,9 @@ public sealed partial class KnowledgeAdminWindow : DefaultWindow
             MinWidth = 210,
             IsValid = value => value is >= 0 and <= 100,
         };
-        level.SetButtons([-10, -1], [1, 10]);
+        // Pirate: avoid collection-expression lowering to CollectionsMarshal.SetCount,
+        // which is rejected by the client sandbox verifier.
+        level.SetButtons(new List<int> { -10, -1 }, new List<int> { 1, 10 });
         level.OverrideValue(entry.LearnedLevel);
 
         var experience = new SpinBox
