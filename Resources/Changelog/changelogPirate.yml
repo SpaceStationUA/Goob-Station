@@ -5075,3 +5075,13 @@ Entries:
       message: Респрайт HV, MV, LV кабелів і клемник-а
   id: 489
   time: '2026-08-29T13:06:24.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Прибрано подвійне сповіщення про зміну температури
+    - type: Tweak
+      message: >-
+        Не зберігати важкі стани shuttle/radar/gunnery UI у replay після
+        закриття
+  id: 490
+  time: '2026-08-29T13:10:56.0000000+00:00'
