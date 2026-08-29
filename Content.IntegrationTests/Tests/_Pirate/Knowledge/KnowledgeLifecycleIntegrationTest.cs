@@ -547,7 +547,7 @@ public sealed class KnowledgeLifecycleIntegrationTest
                 Assert.That(firstAid.Value.Comp.TemporaryLevel, Is.EqualTo(7));
                 Assert.That(firstAid.Value.Comp.Experience, Is.Zero,
                     "A max-level skill cannot retain progress toward another level.");
-                Assert.That(firstAid.Value.Comp.TimeToNextExperience, Is.Zero,
+                Assert.That(firstAid.Value.Comp.TimeToNextExperience, Is.EqualTo(TimeSpan.Zero),
                     "Administrative progress changes must allow an immediate gameplay XP check.");
                 Assert.That(fabrication!.Value.Comp.LearnedLevel, Is.EqualTo(42));
                 Assert.That(fabrication.Value.Comp.Experience,

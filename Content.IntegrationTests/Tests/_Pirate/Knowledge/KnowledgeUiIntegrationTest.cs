@@ -357,13 +357,13 @@ public sealed class KnowledgeUiIntegrationTest
                 Assert.That(apply.Disabled, Is.True, "Apply must debounce until authoritative state returns.");
             });
 
-            search.Text = "definitely missing";
+            search.SetText("definitely missing", invokeEvent: true);
             Assert.Multiple(() =>
             {
                 Assert.That(scroll.Visible, Is.False);
                 Assert.That(empty.Visible, Is.True);
             });
-            search.Text = "FirstAidKnowledge";
+            search.SetText("FirstAidKnowledge", invokeEvent: true);
             Assert.Multiple(() =>
             {
                 Assert.That(scroll.Visible, Is.True);
