@@ -671,7 +671,7 @@
   id: FloorReinforced
   parent: BaseStationTile
   name: tiles-reinforced-floor
-  sprite: /Textures/_Pirate/Tiles/reinforced.png # Pirate - resprite
+  sprite: /Textures/Tiles/reinforced.png
   footstepSounds:
     collection: FootstepHull
   itemDrop: PartRodMetal1
@@ -1307,7 +1307,7 @@
   id: FloorGreenCircuit
   parent: BaseStationTile
   name: tiles-green-circuit-floor
-  sprite: /Textures/_Pirate/Tiles/green_circuit.png # Pirate - resprite
+  sprite: /Textures/Tiles/green_circuit.png
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemGCircuit
@@ -1317,7 +1317,7 @@
   id: FloorBlueCircuit
   parent: BaseStationTile
   name: tiles-blue-circuit-floor
-  sprite: /Textures/_Pirate/Tiles/blue_circuit.png # Pirate - resprite
+  sprite: /Textures/Tiles/blue_circuit.png
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemBCircuit
@@ -1327,7 +1327,7 @@
   id: FloorRedCircuit
   parent: BaseStationTile
   name: tiles-red-circuit-floor
-  sprite: /Textures/_Pirate/Tiles/red_circuit.png # Pirate - resprite
+  sprite: /Textures/Tiles/red_circuit.png
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemRCircuit

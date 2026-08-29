@@ -72,7 +72,7 @@
   copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae"
   source: "https://github.com/space-wizards/space-station-14/pull/18676"
 
-- files: ["shuttleblue.png", "shuttleorange.png", "shuttlepurple.png", "shuttlered.png", "shuttlewhite.png", "shuttlegrey.png", "shuttleblack.png", "green_circuit.png", "blue_circuit.png", "red_circuit.png"]
+- files: ["shuttleblue.png", "shuttleorange.png", "shuttlepurple.png", "shuttlered.png", "shuttlewhite.png", "shuttlegrey.png", "shuttleblack.png", "blue_circuit.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from Paradise Station at https://github.com/ParadiseSS13/Paradise/blob/master/icons/turf/floors.dmi"
   source: "https://github.com/ParadiseSS13/Paradise"
