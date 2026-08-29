@@ -26,23 +26,11 @@ public sealed class TemperatureSystemTest : RobustIntegrationTest
             ContentStart = true,
             ContentAssemblies = PoolManager.GetAssemblies(client: false, includePoolAssembly: false),
             Pool = false,
-            // The standalone harness does not mount content prototype resources required during
-            // content startup.
-            ExtraPrototypes = """
-                - type: language
-                  id: Universal
-                - type: language
-                  id: Psychomantic
-                - type: salary
-                  id: Salaries
-                  salaries: {}
-                """,
-            // Content startup currently reports a known invalid prototype at Error level.
             FailureLogLevel = LogLevel.Fatal,
             Options = new ServerOptions
             {
                 LoadConfigAndUserData = false,
-                LoadContentResources = false,
+                LoadContentResources = true,
             },
         };
 
