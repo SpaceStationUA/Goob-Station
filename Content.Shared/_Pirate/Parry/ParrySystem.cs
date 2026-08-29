@@ -2,6 +2,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._Goobstation.Wizard.Projectiles;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -149,6 +150,7 @@ public sealed class ParrySystem : EntitySystem
 
         var localRotation = Transform(projectile).LocalRotation;
         _transform.SetLocalRotation(projectile, rotation.RotateVec(localRotation.ToVec()).ToAngle());
+        RemCompDeferred<HomingProjectileComponent>(projectile);
 
         EntityUid? shooter = null;
         if (TryComp<ProjectileComponent>(projectile, out var projectileComp))

@@ -138,6 +138,37 @@ public sealed class ConstructionKnowledgeIntegrationTest
     }
 
     [Test]
+    public async Task UnannotatedConstructionRecipeDoesNotReceiveQuality()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+
+        await server.WaitAssertion(() =>
+        {
+            var recipe = server.ProtoMan.Index<ConstructionPrototype>("Tsword");
+            Assert.Multiple(() =>
+            {
+                Assert.That(recipe.Theory, Is.Empty);
+                Assert.That(recipe.Practical, Is.Null.Or.Empty);
+            });
+
+            var holder = entMan.SpawnEntity("PirateKnowledgeTestHolder", MapCoordinates.Nullspace);
+            var result = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
+            var constructed = new ConstructedEvent(result, recipe.ID);
+            entMan.EventBus.RaiseLocalEvent(holder, ref constructed);
+
+            Assert.That(entMan.HasComponent<QualityComponent>(result), Is.False,
+                "Recipes without theory or practical skill annotations must retain their original stats.");
+
+            entMan.DeleteEntity(result);
+            entMan.DeleteEntity(holder);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public void CombineRequirementsKeepsTheHighestTheoryRequirement()
     {
         var prototype = new ConstructionPrototype

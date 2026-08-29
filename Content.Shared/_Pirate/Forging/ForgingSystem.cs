@@ -58,13 +58,15 @@ public sealed class ForgingSystem : EntitySystem
         _metal.SetMetal(args.Result, metalId);
         SetItemPrototype(args.Result, ent.Comp.Item, completed: true);
         MakeOverheatable(args.Result, metal, completed: true);
+
+        // Pirate: quality is rolled by ForgingCompletedEvent, so establish the base price first.
+        if (item.Result is not null)
+            SetPrice(args.Result, metal, item);
+
         ModifyResult(args.Result, args.User, metal, item, item.DisplayName(_prototypes));
 
         if (item.Tag is { } tag)
             _metal.AddUnworkableTag(args.Result, tag);
-
-        if (item.Result is not null)
-            SetPrice(args.Result, metal, item);
     }
 
     private void OnMeleeCompleted(Entity<MeleeWeaponComponent> ent, ref ForgingCompletedEvent args)
@@ -249,9 +251,10 @@ public sealed class ForgingSystem : EntitySystem
         var result = Spawn(finished, transform.Coordinates);
         var metal = _prototypes.Index(_metal.GetMetalOrThrow(part));
         _metal.SetMetal(result, metal.ID);
+        SetPrice(result, metal, item);
 
-        // Transfer the already-rolled quality before ForgingCompleted is raised for the final
-        // entity. This prevents a second roll and applies its modifiers exactly once.
+        // Transfer after setting the base price, but before ForgingCompleted is raised. This
+        // applies price quality exactly once and prevents a second quality roll on the result.
         var qualityTransfer = new QualityTransferEvent(result);
         RaiseLocalEvent(part, ref qualityTransfer);
         MakeOverheatable(result, metal, completed: true);
@@ -263,7 +266,6 @@ public sealed class ForgingSystem : EntitySystem
         if (wasHolding)
             _hands.TryPickupAnyHand(user!.Value, result);
 
-        SetPrice(result, metal, item);
         return result;
     }
 

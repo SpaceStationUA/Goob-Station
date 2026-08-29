@@ -9,6 +9,7 @@ using Content.Server.Destructible;
 using Content.Server.Temperature.Systems;
 using Content.Shared._Pirate.Durability;
 using Content.Shared._Pirate.Forging;
+using Content.Shared._Pirate.Knowledge.Quality;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
@@ -65,6 +66,53 @@ public sealed class ForgingRuntimeIntegrationTest
                 "Steel stayed workable below its lower temperature boundary.");
 
             entMan.DeleteEntity(ingot);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task FinishedForgedItemAppliesQualityToItsCalculatedPrice()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var forging = server.System<ForgingSystem>();
+        var metalSystem = server.System<SharedMetalSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var item = server.ProtoMan.Index<ForgedItemPrototype>("LongswordBlade");
+            var metal = server.ProtoMan.Index<MetalPrototype>("Steel");
+            var factors = server.ProtoMan.Index<QualityPrototype>("BaseQuality");
+            var part = entMan.SpawnEntity("ForgedPart", MapCoordinates.Nullspace);
+            var forged = entMan.EnsureComponent<ForgedItemComponent>(part);
+            forged.Item = item.ID;
+            forged.Completed = true;
+            metalSystem.SetMetal(part, metal.ID);
+
+            var partQuality = entMan.EnsureComponent<QualityComponent>(part);
+            partQuality.Quality = 2;
+            partQuality.QualityFactors = factors.ID;
+            partQuality.Applied = true;
+
+            var result = forging.FinishForgedItem(part, null);
+            Assert.That(result, Is.Not.Null);
+            var resultQuality = entMan.GetComponent<QualityComponent>(result!.Value);
+            var price = entMan.GetComponent<StaticPriceComponent>(result.Value);
+            var basePrice = metal.Price *
+                            (item.Work * metal.WorkScale / Math.Max(1, item.Amount)).Double() *
+                            item.Cost;
+            var expected = basePrice * QualitySystem.QualityModifier(partQuality.Quality, factors.Price);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultQuality.Applied, Is.True);
+                Assert.That(resultQuality.Quality, Is.EqualTo(partQuality.Quality));
+                Assert.That(price.Price, Is.EqualTo(expected).Within(0.001d));
+            });
+
+            entMan.DeleteEntity(result.Value);
         });
 
         await pair.CleanReturnAsync();

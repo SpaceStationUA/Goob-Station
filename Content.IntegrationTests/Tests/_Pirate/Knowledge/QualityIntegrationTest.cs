@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Server.Cargo.Components;
 using Content.Server.Damage.Components;
 using Content.Server.Destructible;
 using Content.Server.Stack;
@@ -83,6 +84,8 @@ public sealed class QualityIntegrationTest
     qualityFactors: PirateQualityIntegration
   - type: QualityOverride
     qualityOverride: 1.25
+  - type: StaticPrice
+    price: 100
   - type: Armor
     modifiers:
       coefficients:
@@ -191,6 +194,7 @@ public sealed class QualityIntegrationTest
                 var blocking = entMan.GetComponent<BlockingComponent>(uid);
                 var destructible = entMan.GetComponent<DestructibleComponent>(uid);
                 var selfDamage = entMan.GetComponent<DamageOnHitComponent>(uid);
+                var price = entMan.GetComponent<StaticPriceComponent>(uid);
 
                 Assert.Multiple(() =>
                 {
@@ -214,6 +218,7 @@ public sealed class QualityIntegrationTest
                         Is.EqualTo(10f * Modifier(0.81f)).Within(0.001f));
                     Assert.That(Damage(projectile.Damage.DamageDict, "Blunt"),
                         Is.EqualTo(14f * Modifier(1.08f)).Within(0.01f));
+                    Assert.That(price.Price, Is.EqualTo(100f * Modifier(1.31f)).Within(0.001f));
                     Assert.That(blocking.PassiveBlockFraction,
                         Is.EqualTo(0.4f * Modifier(1.11f)).Within(0.0001f));
                     Assert.That(blocking.ActiveBlockFraction,
@@ -396,6 +401,10 @@ public sealed class QualityIntegrationTest
             var store = knowledge.EnsureKnowledgeContainer(holder);
             Assert.That(knowledge.EnsureKnowledge(store, "FabricationKnowledge", 50, popup: false), Is.Not.Null);
             Assert.That(knowledge.EnsureKnowledge(store, "MetalworkingKnowledge", 25, popup: false), Is.Not.Null);
+            var fabrication = knowledge.GetKnowledge(store, "FabricationKnowledge")!.Value.Comp;
+            var metalworking = knowledge.GetKnowledge(store, "MetalworkingKnowledge")!.Value.Comp;
+            var fabricationExperience = fabrication.Experience;
+            var metalworkingExperience = metalworking.Experience;
 
             var skilledItem = SpawnQuality(quality: 1, modifiers: 4);
             skilledItem.Comp.LevelDeltas = new Dictionary<EntProtoId, int>
@@ -418,6 +427,13 @@ public sealed class QualityIntegrationTest
             Assert.That(skilledItem.Comp.Applied, Is.True);
             Assert.That(qualitySystem.RollQuality(skilledItem, holder, roll: 99), Is.EqualTo(3),
                 "An applied quality roll must be immutable.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(fabrication.Experience, Is.EqualTo(fabricationExperience),
+                    "Crafting experience was intentionally removed by the Trauma baseline.");
+                Assert.That(metalworking.Experience, Is.EqualTo(metalworkingExperience),
+                    "Quality rolls must not provide unlimited practical-skill experience.");
+            });
 
             server.CfgMan.SetCVar(KnowledgeCVars.SkillsEnabled, false);
             var lowRoll = SpawnQuality();

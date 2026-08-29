@@ -200,8 +200,14 @@ public sealed class KnowledgeUiIntegrationTest
 
             tab.UpdateKnowledgeTab(holder);
 
-            var categoryLabels = knowledgeBox.Children.OfType<Label>().ToList();
-            var rows = knowledgeBox.Children.OfType<BoxContainer>().ToList();
+            var categories = knowledgeBox.Children.OfType<BoxContainer>().ToList();
+            var categoryLabels = categories
+                .Select(category => ((PanelContainer) category.Children.First()).Children.OfType<Label>().Single())
+                .ToList();
+            var rows = categories
+                .SelectMany(category => ((BoxContainer) category.Children.ElementAt(1)).Children
+                    .OfType<PanelContainer>())
+                .ToList();
             var names = rows.Select(GetSkillName).ToList();
             Assert.Multiple(() =>
             {
@@ -220,19 +226,162 @@ public sealed class KnowledgeUiIntegrationTest
 
             var firstAidRow = rows.Single(row => GetSkillName(row) ==
                 entMan.GetComponent<MetaDataComponent>(firstAid.Value.Owner).EntityName);
-            var rowChildren = firstAidRow.Children.ToArray();
-            var labels = ((BoxContainer) rowChildren[1]).Children.OfType<Label>().ToArray();
-            var progress = (ProgressBar) rowChildren[2];
+            var body = (BoxContainer) firstAidRow.Children.Single();
+            var summary = (BoxContainer) body.Children.First();
+            var labels = summary.Children.OfType<BoxContainer>().Single().Children.OfType<Label>().ToArray();
+            var progress = body.Children.OfType<ProgressBar>().Single();
             Assert.Multiple(() =>
             {
-                Assert.That(((TextureRect) rowChildren[0]).Texture, Is.Not.Null);
-                Assert.That(labels[1].Text, Is.EqualTo(knowledge.GetKnowledgeInfo(firstAid.Value).Level));
+                Assert.That(summary.Children.OfType<TextureRect>().Single().Texture, Is.Not.Null);
+                Assert.That(labels[0].Text, Is.EqualTo(knowledge.GetKnowledgeInfo(firstAid.Value).Name));
+                Assert.That(labels[1].Text, Does.Contain("50"));
+                Assert.That(labels[1].Text, Does.Contain(SharedKnowledgeSystem.GetMasteryString(2)));
                 Assert.That(progress.MinValue, Is.Zero);
                 Assert.That(progress.MaxValue, Is.EqualTo(19));
                 Assert.That(progress.Value, Is.EqualTo(7));
             });
 
             entMan.DeleteEntity(holder);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task AdminWindowFiltersResetsAndSubmitsOnlyChangedSkillProgress()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var client = pair.Client;
+        KnowledgeAdminWindow window = null!;
+        Dictionary<string, KnowledgeAdminEdit>? applied = null;
+        var refreshes = 0;
+        BoxContainer skills = null!;
+        LineEdit search = null!;
+        ScrollContainer scroll = null!;
+        Label empty = null!;
+        Button apply = null!;
+        Button reset = null!;
+        TextureButton refresh = null!;
+        SpinBox fabricationLevel = null!;
+        SpinBox fabricationExperience = null!;
+        SpinBox firstAidLevel = null!;
+        SpinBox firstAidExperience = null!;
+
+        await client.WaitAssertion(() =>
+        {
+            window = new KnowledgeAdminWindow();
+            window.ApplyRequested += changes => applied = changes;
+            window.RefreshRequested += () => refreshes++;
+            window.SetState(new KnowledgeAdminEuiState(
+                new NetEntity(1),
+                "Test subject",
+                [
+                    new KnowledgeAdminEntry(
+                        "FirstAidKnowledge",
+                        "First aid",
+                        "Medical description",
+                        "Medical",
+                        false,
+                        true,
+                        10,
+                        5,
+                        3,
+                        20),
+                    new KnowledgeAdminEntry(
+                        "FabricationKnowledge",
+                        "Fabrication",
+                        "Crafting description",
+                        "Crafting",
+                        true,
+                        false,
+                        0,
+                        0,
+                        0,
+                        19),
+                ]));
+
+            skills = FindNamed<BoxContainer>(window, "SkillsBox");
+            search = FindNamed<LineEdit>(window, "SearchInput");
+            scroll = FindNamed<ScrollContainer>(window, "SkillsScroll");
+            empty = FindNamed<Label>(window, "EmptyLabel");
+            apply = FindNamed<Button>(window, "ApplyButton");
+            reset = FindNamed<Button>(window, "ResetButton");
+            refresh = FindNamed<TextureButton>(window, "RefreshButton");
+            var spins = FindControls<SpinBox>(skills).ToList();
+            fabricationLevel = spins[0];
+            fabricationExperience = spins[1];
+            firstAidLevel = spins[2];
+            firstAidExperience = spins[3];
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(skills.ChildCount, Is.EqualTo(2));
+                Assert.That(spins, Has.Count.EqualTo(4));
+                Assert.That(apply.Disabled, Is.True);
+                Assert.That(reset.Disabled, Is.True);
+                Assert.That(FindControls<Label>(skills).Any(label => label.Text.Contains("15")), Is.True,
+                    "The summary must show learned plus temporary level.");
+            });
+
+            fabricationLevel.Value = 42;
+            fabricationExperience.Value = 18;
+            Assert.Multiple(() =>
+            {
+                Assert.That(apply.Disabled, Is.False);
+                Assert.That(reset.Disabled, Is.False);
+            });
+        });
+
+        await Click(pair, reset);
+        await client.WaitAssertion(() =>
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(fabricationLevel.Value, Is.Zero);
+                Assert.That(fabricationExperience.Value, Is.Zero);
+                Assert.That(apply.Disabled, Is.True);
+            });
+
+            fabricationLevel.Value = 42;
+            fabricationExperience.Value = 18;
+        });
+
+        await Click(pair, apply);
+        await client.WaitAssertion(() =>
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(applied, Has.Count.EqualTo(1));
+                Assert.That(applied?["FabricationKnowledge"], Is.EqualTo(new KnowledgeAdminEdit(42, 18)));
+                Assert.That(apply.Disabled, Is.True, "Apply must debounce until authoritative state returns.");
+            });
+
+            search.Text = "definitely missing";
+            Assert.Multiple(() =>
+            {
+                Assert.That(scroll.Visible, Is.False);
+                Assert.That(empty.Visible, Is.True);
+            });
+            search.Text = "FirstAidKnowledge";
+            Assert.Multiple(() =>
+            {
+                Assert.That(scroll.Visible, Is.True);
+                Assert.That(skills.Children.Count(control => control.Visible), Is.EqualTo(1));
+            });
+
+            firstAidLevel.Value = 100;
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstAidExperience.Value, Is.Zero);
+                Assert.That(firstAidExperience.LineEditDisabled, Is.True);
+            });
+        });
+
+        await Click(pair, refresh);
+        await client.WaitAssertion(() =>
+        {
+            Assert.That(refreshes, Is.EqualTo(1));
+            window.Dispose();
         });
 
         await pair.CleanReturnAsync();
@@ -340,8 +489,24 @@ public sealed class KnowledgeUiIntegrationTest
         return ((Button) children[1], (Button) children[3]);
     }
 
-    private static string GetSkillName(BoxContainer row)
-        => ((BoxContainer) row.Children.ElementAt(1)).Children.OfType<Label>().First().Text;
+    private static string GetSkillName(PanelContainer row)
+    {
+        var body = (BoxContainer) row.Children.Single();
+        var summary = (BoxContainer) body.Children.First();
+        return summary.Children.OfType<BoxContainer>().Single().Children.OfType<Label>().First().Text;
+    }
+
+    private static IEnumerable<T> FindControls<T>(Control root) where T : Control
+    {
+        if (root is T typed)
+            yield return typed;
+
+        foreach (var child in root.Children)
+        {
+            foreach (var control in FindControls<T>(child))
+                yield return control;
+        }
+    }
 
     private static T FindNamed<T>(Control root, string name) where T : Control
     {

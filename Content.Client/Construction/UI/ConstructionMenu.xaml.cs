@@ -30,6 +30,8 @@ namespace Content.Client.Construction.UI
 
         ListContainer Recipes { get; }
         ItemList RecipeStepList { get; }
+        BoxContainer RecipeConstructionList { get; }
+        ScrollContainer RecipeConstructionScroll { get; }
 
 
         ScrollContainer RecipesGridScrollContainer { get; }
@@ -185,6 +187,8 @@ namespace Content.Client.Construction.UI
             TargetTexture.SetPrototype(null);
             FavoriteButton.Visible = false;
             RecipeStepList.Clear();
+            RecipeConstructionList.RemoveAllChildren();
+            RecipeConstructionScroll.Visible = false;
         }
 
         public sealed record ConstructionMenuListData(ConstructionPrototype Prototype, EntityPrototype TargetPrototype) : ListData;

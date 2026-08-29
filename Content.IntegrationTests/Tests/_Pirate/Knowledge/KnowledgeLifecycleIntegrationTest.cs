@@ -3,8 +3,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Goobstation.Common.Cloning;
+using Content.Server._Pirate.Knowledge;
+using Content.Server.Administration.Managers;
+using Content.Server.EUI;
 using Content.Shared._Pirate.CCVars;
 using Content.Shared._Pirate.Knowledge;
+using Content.Shared.Administration;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Body.Systems;
@@ -486,6 +490,90 @@ public sealed class KnowledgeLifecycleIntegrationTest
             }));
         });
 
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task AdminEuiAppliesValidatedProgressWithoutTouchingTemporaryLevels()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var knowledge = server.System<SharedKnowledgeSystem>();
+        var players = server.ResolveDependency<IPlayerManager>();
+        var admins = server.ResolveDependency<IAdminManager>();
+        var euiManager = server.ResolveDependency<EuiManager>();
+        KnowledgeAdminEui adminEui = null!;
+        EntityUid holder = default;
+
+        await server.WaitAssertion(() =>
+        {
+            var player = players.Sessions.Single();
+            Assert.That(admins.HasAdminFlag(player, AdminFlags.Debug), Is.True,
+                "The local integration-test host must have debug permission.");
+
+            holder = entMan.SpawnEntity("PirateKnowledgeLifecycleHolder", MapCoordinates.Nullspace);
+            var firstAid = knowledge.SetKnowledgeProgress(holder, "FirstAidKnowledge", 10, 3);
+            Assert.That(firstAid, Is.Not.Null);
+            firstAid!.Value.Comp.TemporaryLevel = 7;
+            firstAid.Value.Comp.TimeToNextExperience = TimeSpan.FromMinutes(1);
+
+            adminEui = new KnowledgeAdminEui(holder);
+            euiManager.OpenEui(adminEui, player);
+
+            var initial = (KnowledgeAdminEuiState) adminEui.GetNewState();
+            Assert.Multiple(() =>
+            {
+                Assert.That(initial.Target, Is.Not.Null);
+                Assert.That(initial.Skills, Has.Count.EqualTo(knowledge.AllKnowledges.Count));
+                Assert.That(initial.Skills.Single(entry => entry.Prototype == "FirstAidKnowledge").Exists, Is.True);
+                Assert.That(initial.Skills.Single(entry => entry.Prototype == "FabricationKnowledge").Exists, Is.False);
+            });
+
+            adminEui.HandleMessage(new KnowledgeAdminEuiMsg.Apply(new Dictionary<string, KnowledgeAdminEdit>
+            {
+                ["FirstAidKnowledge"] = new(500, 500),
+                ["FabricationKnowledge"] = new(42, 500),
+                ["PirateMissingKnowledge"] = new(75, 10),
+            }));
+
+            firstAid = knowledge.GetKnowledge(holder, "FirstAidKnowledge");
+            var fabrication = knowledge.GetKnowledge(holder, "FabricationKnowledge");
+            Assert.That(firstAid, Is.Not.Null);
+            Assert.That(fabrication, Is.Not.Null);
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstAid!.Value.Comp.LearnedLevel, Is.EqualTo(100));
+                Assert.That(firstAid.Value.Comp.TemporaryLevel, Is.EqualTo(7));
+                Assert.That(firstAid.Value.Comp.Experience, Is.Zero,
+                    "A max-level skill cannot retain progress toward another level.");
+                Assert.That(firstAid.Value.Comp.TimeToNextExperience, Is.Zero,
+                    "Administrative progress changes must allow an immediate gameplay XP check.");
+                Assert.That(fabrication!.Value.Comp.LearnedLevel, Is.EqualTo(42));
+                Assert.That(fabrication.Value.Comp.Experience,
+                    Is.EqualTo(fabrication.Value.Comp.ExperienceCost - 1));
+                Assert.That(knowledge.GetKnowledge(holder, "PirateMissingKnowledge"), Is.Null);
+            });
+
+            var state = (KnowledgeAdminEuiState) adminEui.GetNewState();
+            var fabricationState = state.Skills.Single(entry => entry.Prototype == "FabricationKnowledge");
+            Assert.Multiple(() =>
+            {
+                Assert.That(fabricationState.Exists, Is.True);
+                Assert.That(fabricationState.LearnedLevel, Is.EqualTo(42));
+                Assert.That(fabricationState.Experience, Is.EqualTo(fabrication.Value.Comp.ExperienceCost - 1));
+            });
+
+            var oversized = Enumerable.Range(0, knowledge.AllKnowledges.Count + 1)
+                .ToDictionary(index => $"PirateInvalidKnowledge{index}", _ => new KnowledgeAdminEdit(1, 1));
+            adminEui.HandleMessage(new KnowledgeAdminEuiMsg.Apply(oversized));
+            Assert.That(knowledge.GetKnowledge(holder, "FabricationKnowledge")?.Comp.LearnedLevel, Is.EqualTo(42),
+                "Oversized client payloads must be rejected as a whole.");
+
+            entMan.DeleteEntity(holder);
+        });
+
+        await pair.RunTicksSync(3);
         await pair.CleanReturnAsync();
     }
 }

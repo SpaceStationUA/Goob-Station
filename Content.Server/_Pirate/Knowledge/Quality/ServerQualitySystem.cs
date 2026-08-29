@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server.Cargo.Components;
 using Content.Server.Damage.Components;
 using Content.Server.Destructible;
 using Content.Shared._Pirate.Knowledge.Quality;
@@ -16,8 +17,14 @@ public sealed class ServerQualitySystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<StaticPriceComponent, ApplyQualityEvent>(OnStaticPriceApplyQuality);
         SubscribeLocalEvent<DestructibleComponent, ApplyQualityEvent>(OnDestructibleApplyQuality);
         SubscribeLocalEvent<DamageOnHitComponent, ApplyQualityEvent>(OnSelfDamageApplyQuality);
+    }
+
+    private void OnStaticPriceApplyQuality(Entity<StaticPriceComponent> ent, ref ApplyQualityEvent args)
+    {
+        ent.Comp.Price *= args.Modifier(args.Prototype.Price);
     }
 
     private void OnDestructibleApplyQuality(Entity<DestructibleComponent> ent, ref ApplyQualityEvent args)

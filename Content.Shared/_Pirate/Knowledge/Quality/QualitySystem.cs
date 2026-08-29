@@ -242,6 +242,7 @@ public sealed class QualitySystem : EntitySystem
         ent.Comp.Quality = QualityFromModifier(modifier);
         Dirty(ent);
         ApplyQuality(ent);
+        // Pirate: Trauma intentionally removed passive crafting XP; progression uses explicit knowledge grants.
         return ent.Comp.Quality;
     }
 

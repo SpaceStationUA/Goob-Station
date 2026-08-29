@@ -6,6 +6,7 @@ using Content.Client._Pirate.Temperature;
 using Content.IntegrationTests.Tests.Helpers;
 using Content.Server._Pirate.Screens;
 using Content.Server.Temperature.Systems;
+using Content.Shared._Goobstation.Wizard.Projectiles;
 using Content.Shared._Pirate.Access.Components;
 using Content.Shared._Pirate.Access.Systems;
 using Content.Shared._Pirate.Parry;
@@ -21,8 +22,10 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Projectiles;
 using Content.Shared.TextScreen;
 using Content.Shared.Weapons.Reflect;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -47,6 +50,10 @@ public sealed class PortedSystemsIntegrationTest
 - type: entity
   id: PirateSystemsGaussMagazine
   parent: BaseMagazineGaussgun
+
+- type: entity
+  id: PirateSystemsRemovableCellGun
+  parent: BaseWeaponPowerCell
 
 - type: entity
   id: PirateSystemsSignalScreen
@@ -130,6 +137,45 @@ public sealed class PortedSystemsIntegrationTest
 
             entMan.DeleteEntity(distant);
             entMan.DeleteEntity(nearby);
+            entMan.DeleteEntity(scanner);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task AccessScannerFindsIdCardsInNestedNearbyContainers()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var entMan = server.EntMan;
+        var containers = server.System<SharedContainerSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var scanner = entMan.SpawnEntity("PirateSystemsAccessScanner", map.GridCoords);
+            var carrier = entMan.SpawnEntity(null, new EntityCoordinates(map.Grid, new Vector2(1f, 0f)));
+            var pda = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
+            var card = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
+            entMan.EnsureComponent<IdCardComponent>(card).FullName = "Contained";
+
+            var pdaSlot = containers.EnsureContainer<ContainerSlot>(carrier, "pda");
+            var idSlot = containers.EnsureContainer<ContainerSlot>(pda, "id");
+            Assert.That(containers.Insert(pda, pdaSlot), Is.True);
+            Assert.That(containers.Insert(card, idSlot), Is.True);
+
+            var component = entMan.GetComponent<AccessScannerComponent>(scanner);
+            var reader = entMan.GetComponent<AccessReaderComponent>(scanner);
+            server.System<AccessScannerSystem>().ScanNearby((scanner, component, reader), powered: true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(component.Scanned, Is.EquivalentTo(new[] { card }));
+                Assert.That(component.Active, Is.True);
+            });
+
+            entMan.DeleteEntity(carrier);
             entMan.DeleteEntity(scanner);
         });
 
@@ -246,12 +292,16 @@ public sealed class PortedSystemsIntegrationTest
             var projectileComponent = entMan.GetComponent<ProjectileComponent>(projectile);
             projectileComponent.Shooter = attacker;
             projectileComponent.Weapon = attacker;
+            var homing = entMan.EnsureComponent<HomingProjectileComponent>(projectile);
+            homing.Target = user;
             Assert.That(parrySystem.TryReflectProjectile((weapon, parry), user, projectile), Is.True);
             Assert.Multiple(() =>
             {
                 Assert.That(projectileComponent.Shooter, Is.EqualTo(user));
                 Assert.That(projectileComponent.Weapon, Is.EqualTo(user));
                 Assert.That(exhaustion.Exhaustion, Is.EqualTo(0.25f).Within(0.001f));
+                Assert.That(homing.LifeStage, Is.GreaterThanOrEqualTo(ComponentLifeStage.Stopping),
+                    "A reflected homing projectile must not steer back toward its former target.");
             });
 
             exhaustion.Exhaustion = 0f;
@@ -380,6 +430,45 @@ public sealed class PortedSystemsIntegrationTest
                     Assert.That(count.Capacity, Is.EqualTo(expectedCapacity));
                 });
             }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task RemovingPowerCellPreservesFractionalAmmoCapacity()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var entMan = server.EntMan;
+
+        await server.WaitAssertion(() =>
+        {
+            var gun = entMan.SpawnEntity("PirateSystemsRemovableCellGun", map.GridCoords);
+            var provider = entMan.GetComponent<BatteryAmmoProviderComponent>(gun);
+            var gunSystem = server.System<SharedGunSystem>();
+            var slots = server.System<ItemSlotsSystem>();
+
+            gunSystem.UpdateShots((gun, provider));
+            var capacity = provider.CapacityFloat;
+            Assert.That(capacity, Is.GreaterThan(0f));
+            Assert.That(slots.TryEject(gun, "cell_slot", null, out var cell, doAfter: false), Is.True);
+
+            gunSystem.UpdateShots((gun, provider));
+            var ammo = new GetAmmoCountEvent();
+            entMan.EventBus.RaiseLocalEvent(gun, ref ammo);
+            Assert.Multiple(() =>
+            {
+                Assert.That(provider.ShotsFloat, Is.Zero);
+                Assert.That(provider.CapacityFloat, Is.EqualTo(capacity).Within(0.0001f));
+                Assert.That(ammo.Count, Is.Zero);
+                Assert.That(ammo.Capacity, Is.EqualTo((int) capacity));
+            });
+
+            if (cell is { } ejected)
+                entMan.DeleteEntity(ejected);
+            entMan.DeleteEntity(gun);
         });
 
         await pair.CleanReturnAsync();

@@ -110,19 +110,25 @@ public abstract partial class SharedGunSystem
         var oldShots = ent.Comp.ShotsFloat;
         var oldCapacity = ent.Comp.CapacityFloat;
         var (newShots, newCapacity) = GetShotsFloat(ent);
+        var capacityDelta = newCapacity > 0f ? Math.Abs(oldCapacity - newCapacity) : 0f;
 
         // Only dirty if necessary.
-        if (Math.Abs(oldShots - newShots) + Math.Abs(oldCapacity - newCapacity) < 0.0001f)
+        if (Math.Abs(oldShots - newShots) + capacityDelta < 0.0001f)
             return;
 
         ent.Comp.Shots = (int) newShots;
         if ((int) newCapacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
+        {
             ent.Comp.Capacity = (int) newCapacity;
+        }
+
+        // Pirate: retain the last usable capacity while a removable cell is absent.
+        if (newCapacity > 0f)
+            ent.Comp.CapacityFloat = newCapacity;
 
         // Keep integer values authoritative for visuals while retaining fractional
         // values for charge prediction and ammo-counter calculations.
         ent.Comp.ShotsFloat = newShots;
-        ent.Comp.CapacityFloat = newCapacity;
 
         // Update the ammo counter predictively if the change was predicted. On the server this does nothing.
         UpdateAmmoCount(ent.Owner);

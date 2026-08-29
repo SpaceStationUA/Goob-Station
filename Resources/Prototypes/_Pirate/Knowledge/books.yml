@@ -80,7 +80,7 @@
 # Pirate: Trauma's BaseRevMinorContraband parent does not exist locally.
 - type: entity
   parent: PirateBookSkillbook
-  id: PirateBookMeleePrintedRev
+  id: PirateBookRevolutionaryMelee
   components:
   - type: Sprite
     layers:
@@ -96,7 +96,7 @@
 
 - type: entity
   parent: PirateBookSkillbook
-  id: PirateBookShootingPrintedRev
+  id: PirateBookRevolutionaryShooting
   components:
   - type: Sprite
     layers:

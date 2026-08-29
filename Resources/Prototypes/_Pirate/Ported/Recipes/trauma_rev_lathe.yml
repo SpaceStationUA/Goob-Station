@@ -88,14 +88,14 @@
 
 - type: latheRecipe
   id: BookShootingPrintedRev
-  result: PirateBookShootingPrintedRev
+  result: PirateBookRevolutionaryShooting
   completetime: 180
   materials:
     Paper: 1000
 
 - type: latheRecipe
   id: BookMeleePrintedRev
-  result: PirateBookMeleePrintedRev
+  result: PirateBookRevolutionaryMelee
   completetime: 180
   materials:
     Paper: 1000

@@ -437,6 +437,42 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
     public int GetKnowledgeLevel(EntityUid holder, EntProtoId id)
         => GetKnowledge(holder, id)?.Comp.NetLevel ?? 0;
 
+    /// <summary>
+    /// Sets persistent progress for one skill without changing temporary bonuses.
+    /// Intended for authoritative administrative and test tooling.
+    /// </summary>
+    public Entity<KnowledgeComponent>? SetKnowledgeProgress(
+        EntityUid holder,
+        EntProtoId id,
+        int learnedLevel,
+        int experience)
+    {
+        if (!SkillsEnabled || !AllKnowledges.ContainsKey(id))
+            return null;
+
+        var store = EnsureKnowledgeContainer(holder);
+        if (EnsureKnowledge(store, id, popup: false) is not { } knowledge)
+            return null;
+
+        var level = Math.Clamp(learnedLevel, 0, 100);
+        var maxExperience = level < 100 && knowledge.Comp.ExperienceCost > 0
+            ? knowledge.Comp.ExperienceCost - 1
+            : 0;
+
+        knowledge.Comp.LearnedLevel = level;
+        knowledge.Comp.Experience = Math.Clamp(experience, 0, maxExperience);
+        knowledge.Comp.TimeToNextExperience = TimeSpan.Zero;
+        Dirty(knowledge);
+
+        if (store.Comp.Holder is { } actualHolder)
+        {
+            var changed = new KnowledgeExperienceChangedEvent();
+            RaiseLocalEvent(actualHolder, ref changed);
+        }
+
+        return knowledge;
+    }
+
     public List<Entity<KnowledgeComponent>>? GetAllKnowledge(EntityUid holder)
     {
         if (GetContainer(holder) is not { } store)

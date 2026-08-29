@@ -76,7 +76,9 @@ public sealed class ConstructionKnowledgeSystem : EntitySystem
 
     private void OnConstructed(Entity<KnowledgeHolderComponent> ent, ref ConstructedEvent args)
     {
-        if (!_prototypes.TryIndex<ConstructionPrototype>(args.Prototype, out var prototype) || !prototype.UseQuality)
+        if (!_prototypes.TryIndex<ConstructionPrototype>(args.Prototype, out var prototype) ||
+            !prototype.UseQuality ||
+            (prototype.Theory.Count == 0 && prototype.Practical is not { Count: > 0 }))
             return;
 
         if (EnsureComp<QualityComponent>(args.Entity, out var qualityAlreadyPresent))

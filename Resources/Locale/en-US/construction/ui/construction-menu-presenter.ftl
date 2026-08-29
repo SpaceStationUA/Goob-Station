@@ -18,3 +18,8 @@ construction-presenter-tool-step = Use a {LOC($tool)}.
 construction-presenter-material-step = Add {$amount}x {LOC($material)}.
 construction-presenter-arbitrary-step = Add {LOC($name)}.
 construction-presenter-temperature-step = Heat to {$temperature}.
+
+knowledge-construction-theory = Theory required to understand:
+knowledge-construction-practical = Practical skills affecting quality:
+knowledge-construction-theory-requirement = Required: {$mastery} (level {$required-level}+); yours: {$current-mastery} (level {$current-level}).
+knowledge-construction-practical-requirement = Quality target: {$mastery} (level {$required-level}+); yours: {$current-mastery} (level {$current-level}).

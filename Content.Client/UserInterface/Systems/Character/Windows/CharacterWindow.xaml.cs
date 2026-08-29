@@ -12,6 +12,7 @@ public sealed partial class CharacterWindow : DefaultWindow
     public CharacterWindow()
     {
         RobustXamlLoader.Load(this);
+        MinWidth = 520; // Pirate: keep the skills overview readable at its initial size.
         CharacterInfoTabs.SetTabTitle(0, Loc.GetString("character-info-overview")); // Pirate: Starlight character descriptions.
         CharacterInfoTabs.SetTabTitle(1, Loc.GetString("character-info-ic"));
         CharacterInfoTabs.SetTabTitle(2, Loc.GetString("character-info-ooc"));

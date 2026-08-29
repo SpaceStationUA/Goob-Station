@@ -120,6 +120,7 @@ public sealed class AccessScannerSystem : EntitySystem
 
         _nearby.Clear();
         var coordinates = _transform.GetMapCoordinates(ent.Owner);
+        // LookupFlags.All stays spatially bounded, then recursively includes descendants in nearby containers.
         _lookup.GetEntitiesInRange(coordinates.MapId, coordinates.Position, range, _nearby, LookupFlags.All);
 
         ent.Comp1.Scanned.RemoveWhere(uid =>
