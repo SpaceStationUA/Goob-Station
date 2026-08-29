@@ -125,15 +125,13 @@
   description: A medium voltage power cable.
   components:
   - type: Sprite
-    # Pirate start - resprite
-    color: Yellow
-    sprite: _Pirate/Structures/Power/Cables/mv_cable.rsi
-    state: mvcable_0
+    sprite: _Pirate/Structures/Power/Cables/mv_cable.rsi # Pirate - resprite
+    layers:
+    - state: mvcable_0
+      color: Yellow
+    #- state: mvstripes_0 # Pirate edit
   - type: Icon
-    color: Yellow
-    sprite: _Pirate/Structures/Power/Cables/mv_cable.rsi
-    # Pirate end - resprite
-    state: mvcable_4
+    sprite: _Pirate/Structures/Power/Cables/mv_cable.rsi # Pirate - resprite
   - type: NodeContainer
     nodes:
       power:
