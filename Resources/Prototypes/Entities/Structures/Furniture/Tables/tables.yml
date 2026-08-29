@@ -436,9 +436,9 @@
   components:
   - type: ReflectiveSurface # Pirate: Mirror Maid jaunt surface.
   - type: Sprite
-    sprite: Structures/Furniture/Tables/plasma.rsi
+    sprite: _Pirate/Structures/Furniture/Tables/plasma.rsi # Pirate - resprite
   - type: Icon
-    sprite: Structures/Furniture/Tables/plasma.rsi
+    sprite: _Pirate/Structures/Furniture/Tables/plasma.rsi # Pirate - resprite
   - type: GlassTable
     climberDamage:
       types:
