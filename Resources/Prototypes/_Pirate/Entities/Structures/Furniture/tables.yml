@@ -93,6 +93,7 @@
   - type: IconSmooth
     key: uraniumglasstable
   - type: Construction
+    graph: Table
     node: tableuraniumglass
   - type: FootstepModifier
     footstepSoundCollection:
@@ -150,6 +151,7 @@
   - type: IconSmooth
     key: reinforcedplasmaglasstable
   - type: Construction
+    graph: Table
     node: tablereinforcedplasmaglass
   - type: FootstepModifier
     footstepSoundCollection:
@@ -207,6 +209,7 @@
   - type: IconSmooth
     key: reinforceduraniumglasstable
   - type: Construction
+    graph: Table
     node: tablereinforceduraniumglass
   - type: FootstepModifier
     footstepSoundCollection:
@@ -275,8 +278,6 @@
     bonkDamage:
       types:
         Blunt: 4
-    bonkSound: !type:SoundCollectionSpecifier
-      collection: TrayHit
   - type: Tag
     tags:
     - Table
@@ -284,6 +285,7 @@
   - type: RequireProjectileTarget
     ignoreThrow: true
   - type: Construction
+    graph: TPTable
     node: tableroundframe
 
 - type: entity
@@ -530,6 +532,7 @@
   - type: Physics
     bodyType: Static
   - type: Construction
+    graph: TPTable
     node: tableroulette
   - type: Tag
     tags: [Table, ForceFixRotations]
