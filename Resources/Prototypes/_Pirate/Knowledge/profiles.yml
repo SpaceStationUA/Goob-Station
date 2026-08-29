@@ -2,7 +2,7 @@
 
 - type: knowledgeProfile
   id: Human
-  pointsLimit: 6
+  pointsLimit: 10
   mastery:
     CookingKnowledge: 0
     DoorsKnowledge: 1
@@ -36,7 +36,7 @@
 
 - type: knowledgeProfile
   id: Dwarf
-  pointsLimit: 3
+  pointsLimit: 10
   mastery:
     MeleeKnowledge: 1
     KnowledgeWeaponsBludgeon: 1
@@ -47,7 +47,7 @@
 
 - type: knowledgeProfile
   id: Reptilian
-  pointsLimit: 3
+  pointsLimit: 10
   mastery:
     ThrowingKnowledge: 1
     MeleeKnowledge: 1
@@ -57,7 +57,7 @@
 
 - type: knowledgeProfile
   id: Diona
-  pointsLimit: 3
+  pointsLimit: 10
   mastery:
     MagicalLiteracyKnowledge: 1
     FirstAidKnowledge: 1
@@ -69,7 +69,7 @@
 
 - type: knowledgeProfile
   id: Moth
-  pointsLimit: 3
+  pointsLimit: 10
   mastery:
     MechanicsKnowledge: 1
     TailoringKnowledge: 1
@@ -83,13 +83,13 @@
 
 - type: knowledgeProfile
   id: Vox
-  pointsLimit: 3
+  pointsLimit: 10
   mastery:
     JanitorKnowledge: 4
 
 - type: knowledgeProfile
   id: IPC
-  pointsLimit: 3
+  pointsLimit: 10
   mastery:
     DoorsKnowledge: 1
     AirlocksKnowledge: 1
@@ -102,7 +102,7 @@
 
 - type: knowledgeProfile
   id: Plasmaman
-  pointsLimit: 3
+  pointsLimit: 10
   mastery:
     DoorsKnowledge: 1
     AirlocksKnowledge: 1
@@ -114,7 +114,7 @@
 
 - type: knowledgeProfile
   id: Slimeperson
-  pointsLimit: 3
+  pointsLimit: 10
   mastery:
     ChemistryKnowledge: 2
     DoorsKnowledge: 1
@@ -127,7 +127,7 @@
 
 - type: knowledgeProfile
   id: Arachnid
-  pointsLimit: 3
+  pointsLimit: 10
   mastery:
     SpiderCraftKnowledge: 4
     DoorsKnowledge: 1
@@ -140,7 +140,7 @@
 
 - type: knowledgeProfile
   id: Abductor
-  pointsLimit: 12
+  pointsLimit: 10
   mastery:
     SurgeryKnowledge: 3
     FirstAidKnowledge: 1
