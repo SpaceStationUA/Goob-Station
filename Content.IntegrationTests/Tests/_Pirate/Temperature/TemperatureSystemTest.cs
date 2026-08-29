@@ -26,9 +26,13 @@ public sealed class TemperatureSystemTest : RobustIntegrationTest
             ContentStart = true,
             ContentAssemblies = PoolManager.GetAssemblies(client: false, includePoolAssembly: false),
             Pool = false,
-            // The standalone harness does not mount Pirate prototype resources, but BankCardSystem
-            // indexes this prototype during content startup.
+            // The standalone harness does not mount content prototype resources required during
+            // content startup.
             ExtraPrototypes = """
+                - type: language
+                  id: Universal
+                - type: language
+                  id: Psychomantic
                 - type: salary
                   id: Salaries
                   salaries: {}
@@ -78,6 +82,16 @@ public sealed class TemperatureSystemTest : RobustIntegrationTest
                 Assert.That(counter.TemperatureDelta, Is.EqualTo(expectedTemperature - lastTemperature).Within(0.001f));
                 Assert.That(temperature.CurrentTemperature, Is.EqualTo(expectedTemperature).Within(0.001f));
             });
+
+            counter.CancelNextAttempt = true;
+            var temperatureBeforeCancellation = temperature.CurrentTemperature;
+            temperatureSystem.ForceChangeTemperature(entity, temperatureBeforeCancellation + 2f, temperature);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(temperature.CurrentTemperature, Is.EqualTo(temperatureBeforeCancellation).Within(0.001f));
+                Assert.That(counter.EventCount, Is.EqualTo(1));
+            });
         });
     }
 
@@ -90,17 +104,28 @@ public sealed class TemperatureSystemTest : RobustIntegrationTest
         public float CurrentTemperature { get; private set; }
         public float LastTemperature { get; private set; }
         public float TemperatureDelta { get; private set; }
+        public bool CancelNextAttempt { get; set; }
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<TemperatureComponent, TemperatureImmunityEvent>(OnTemperatureImmunity);
+            SubscribeLocalEvent<TemperatureComponent, TemperatureChangeAttemptEvent>(OnTemperatureChangeAttempt);
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(OnTemperatureChange);
         }
 
         private void OnTemperatureImmunity(Entity<TemperatureComponent> _, ref TemperatureImmunityEvent args)
         {
             args.CurrentTemperature += ImmunityAdjustment;
+        }
+
+        private void OnTemperatureChangeAttempt(Entity<TemperatureComponent> _, ref TemperatureChangeAttemptEvent args)
+        {
+            if (!CancelNextAttempt)
+                return;
+
+            CancelNextAttempt = false;
+            args.Cancel();
         }
 
         private void OnTemperatureChange(Entity<TemperatureComponent> _, ref OnTemperatureChangeEvent args)
