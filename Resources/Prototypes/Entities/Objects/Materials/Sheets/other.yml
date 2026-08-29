@@ -37,6 +37,10 @@
   name: paper
   suffix: Full
   components:
+  # Pirate: Trauma's paper-folding construction graph needs its result to carry the target node.
+  - type: Construction
+    graph: SheetPaper
+    node: paper sheet
   - type: Stack
     stackType: Paper
     baseLayer: base

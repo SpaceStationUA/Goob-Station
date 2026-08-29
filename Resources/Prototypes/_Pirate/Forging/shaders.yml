@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: local copy of Trauma's emissive shader used by hot metal visuals.
+
+- type: shader
+  id: Emissive
+  kind: source
+  path: "/Textures/_Pirate/Shaders/emissive.swsl"
+  params:
+    emissive: 0,0,0,0

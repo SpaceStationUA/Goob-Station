@@ -19,7 +19,9 @@ public sealed partial class GunSystem
         if (args.Control is not BoxesStatusControl boxes)
             return;
 
-        boxes.Update(ent.Comp.Shots, ent.Comp.Capacity);
+        // Pirate: multi-magazine guns can scale the effective power-cell fire cost.
+        var multiplier = Math.Max(args.FireCostMultiplier, float.Epsilon);
+        boxes.Update((int) (ent.Comp.ShotsFloat / multiplier), (int) (ent.Comp.CapacityFloat / multiplier));
     }
 
     private void OnControl(Entity<BatteryAmmoProviderComponent> ent, ref AmmoCounterControlEvent args)

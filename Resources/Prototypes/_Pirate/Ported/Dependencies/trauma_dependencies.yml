@@ -1,0 +1,305 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: small source dependencies required by the ported Trauma recipes/entities.
+
+- type: damageModifierSet
+  id: NormalMode
+  coefficients:
+    Structural: 1
+
+- type: stepTriggerType
+  id: Caltrop
+
+- type: soundCollection
+  id: AmusingDuckCollection
+  files:
+  - /Audio/_Pirate/Mobs/Bots/Duck/amusingduck.ogg
+
+- type: soundCollection
+  id: BeepskyTargetFound
+  files:
+  - /Audio/_Pirate/Mobs/Bots/Beepsky/creep.ogg
+  - /Audio/_Pirate/Mobs/Bots/Beepsky/criminal.ogg
+  - /Audio/_Pirate/Mobs/Bots/Beepsky/freeze.ogg
+  - /Audio/_Pirate/Mobs/Bots/Beepsky/justice.ogg
+
+- type: soundCollection
+  id: BeepskyTargetArrested
+  files:
+  - /Audio/_Pirate/Mobs/Bots/Beepsky/iamthelaw.ogg
+  - /Audio/_Pirate/Mobs/Bots/Beepsky/secureday.ogg
+
+- type: soundCollection
+  id: FootstepKilldozer
+  files:
+  - /Audio/_Pirate/Revs/killdozerstep.ogg
+
+- type: soundCollection
+  id: PowerFistHit
+  files:
+  - /Audio/_Pirate/Weapons/Melee/PowerFist/powerfist_hit1.ogg
+  - /Audio/_Pirate/Weapons/Melee/PowerFist/powerfist_hit2.ogg
+  - /Audio/_Pirate/Weapons/Melee/PowerFist/powerfist_hit3.ogg
+
+- type: entity
+  parent: MobSiliconBase
+  id: BaseMobBoogieBot
+  name: boogie bot
+  description: Get down on it!
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Silicon/Bots/boogiebot.rsi
+    state: icon
+  - type: HTN
+    rootTask:
+      task: RuminantCompound
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageStateVisuals
+    states:
+      Dead:
+        Base: dead
+  - type: MobState
+    allowedStates: [ Alive, Dead ]
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: Construction
+    graph: BoogieBot
+    node: bot
+  - type: InteractionPopup
+    successChance: 0.9
+    interactSuccessString: petting-success-boogiebot
+    interactFailureString: petting-failure-boogiebot
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent: BaseMobBoogieBot
+  id: MobBoogieBotD1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: boogie-d1
+
+- type: entity
+  parent: BaseMobBoogieBot
+  id: MobBoogieBotD2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: boogie-d2
+
+- type: entity
+  parent: BaseMobBoogieBot
+  id: MobBoogieBotD3
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: boogie-d3
+
+- type: entity
+  parent: BulletRocket
+  id: BulletRPG2HE
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: frag
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 5
+    totalIntensity: 30
+    maxTileBreak: 0
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterLethalWeak
+    capacity: 50
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
+
+- type: entity
+  parent: BulletRocket
+  id: BulletRPG2AP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: frag
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 5
+    intensitySlope: 1
+    maxIntensity: 1
+    maxTileBreak: 0
+  - type: Projectile
+    damage:
+      types:
+        Ion: 2000
+        Structural: 2000
+        Blunt: 1000
+
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: WeaponFlamethrower
+  name: flamethrower
+  description: A flamethrower, draws its fuel from the backpack tank.
+  components:
+  - type: WeaponClass
+    class: Heavy
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Flamethrower/flamethrower.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+  - type: Wieldable
+  - type: GunRequiresWield
+  - type: Gun
+    minAngle: 0
+    maxAngle: 0
+    fireRate: 15
+    burstFireRate: 15
+    burstCooldown: 0.5
+    shotsPerBurst: 5
+    projectileSpeed: 20
+    selectedMode: FullAuto
+    availableModes: [ FullAuto, Burst ]
+    soundGunshot:
+      path: /Audio/_Pirate/Revs/flamethrower.ogg
+  - type: AmmoCounter
+  - type: StaticPrice
+    price: 500
+  - type: UseDelay
+    delay: 1
+  - type: ClothingSlotAmmoProvider
+  - type: SlotBasedConnectedContainer
+    targetSlot: BACK
+    containerWhitelist:
+      tags:
+      - FlamethrowerBackpack
+  - type: Tag
+    tags:
+    - FlamethrowerGun
+
+- type: entity
+  id: WeaponMechMosinPorts
+  name: firing-port mosins
+  description: Several Mosin rifles modified to fit killdozer firing ports.
+  parent: [ BaseMechWeaponRange, IndustrialMechEquipment ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Mechs/mosinports.rsi
+    state: icon
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 0.75
+    selectedMode: SemiAuto
+    availableModes: [ SemiAuto ]
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: BallisticAmmoProvider
+    autoCycle: true
+    capacity: 500
+    proto: CartridgeLightRifle
+    whitelist:
+      tags:
+      - CartridgeLightRifle
+  - type: ClothingSpeedModifier
+    walkModifier: 0.05
+    sprintModifier: 0.05
+  - type: HeldSpeedModifier
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+
+- type: entity
+  id: WeaponMechMosinPortsEmpty
+  suffix: Mech Weapon, Empty
+  parent: WeaponMechMosinPorts
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband ]
+  id: NailBoardTrap
+  name: nail board
+  description: A nasty trap that can injure a foot.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/nailboard.rsi
+    state: floor
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+  - type: Physics
+    bodyType: Static
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer: [ LowImpassable ]
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask: [ ItemMask ]
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Slippery
+    slipSound:
+      path: /Audio/Weapons/bladeslice.ogg
+    slipData:
+      launchForwardsMultiplier: 0
+  - type: TriggerOnStepTrigger
+  - type: DamageOnTrigger
+    targetUser: true
+    damage:
+      types:
+        Piercing: 15
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+          Nail:
+            min: 1
+            max: 5
+      - !type:DoActsBehavior
+        acts: [ Destruction ]

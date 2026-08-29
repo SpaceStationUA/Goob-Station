@@ -8,6 +8,13 @@ namespace Content.Shared.Weapons.Ranged.Events;
 [ByRefEvent]
 public struct GetAmmoCountEvent
 {
+    // Pirate: effective battery cost for multi-magazine weapons.
+    public float FireCostMultiplier;
     public int Count;
     public int Capacity;
+
+    public GetAmmoCountEvent()
+    {
+        FireCostMultiplier = 1f;
+    }
 }

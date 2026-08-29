@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Administration.Logs;
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Popups;
@@ -39,7 +40,16 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
         if (beforeThrowArgs.Cancelled)
             return;
 
-        if (!_random.Prob(ent.Comp.Probability))
+        var chance = ent.Comp.Probability;
+        if (args.Component.Thrower is { } thrower)
+        {
+            // Pirate: this event is local to the thrower and this insertion attempt.
+            var skillEvent = new ModifyThrowInsertChanceEvent(thrower, chance);
+            RaiseLocalEvent(thrower, ref skillEvent);
+            chance = Math.Clamp(skillEvent.Chance, 0f, 1f);
+        }
+
+        if (!_random.Prob(chance))
         {
             _audio.PlayPvs(ent.Comp.MissSound, ent);
             _popup.PopupEntity(Loc.GetString(ent.Comp.MissLocString), ent);

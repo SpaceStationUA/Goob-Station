@@ -228,6 +228,7 @@ namespace Content.Shared.Damage
         /// <param name="interruptsDoAfters">Whether the damage should cancel any damage sensitive do-afters</param>
         /// <param name="origin">The entity that is causing this damage</param>
         /// <param name="ignoreGlobalModifiers">If true, this will skip over applying the universal damage modifiers (see <see cref="ApplyUniversalAllModifiers"/>).</param>
+        /// <param name="increaseOnly">If true, damage reductions are ignored while damage increases still apply.</param>
         /// <returns></returns>
         public DamageSpecifier? TryChangeDamage(
             EntityUid? uid,
@@ -242,7 +243,8 @@ namespace Content.Shared.Damage
             bool ignoreBlockers = false,
             SplitDamageBehavior splitDamage = SplitDamageBehavior.Split,
             bool canMiss = true,
-            DamageOriginFlag? originFlag = null)
+            DamageOriginFlag? originFlag = null,
+            bool increaseOnly = false)
         {
             if (!uid.HasValue || !_damageableQuery.Resolve(uid.Value, ref damageable, false))
             {
@@ -254,6 +256,19 @@ namespace Content.Shared.Damage
 
             if (damage.Empty)
                 return damage;
+
+            var before = new BeforeDamageChangedEvent(damage,
+                origin,
+                canBeCancelled,
+                targetPart,
+                OriginFlag: originFlag); // Shitmed Change; Pirate: indirect damage origin.
+            RaiseLocalEvent(uid.Value, ref before);
+
+            if (before.Cancelled)
+                return null;
+
+            // Listeners may adjust the damage or target part before it is applied.
+            damage = before.Damage;
 
             // Goobstation start
             var vitalDamage = new DamageSpecifier(damage);
@@ -267,16 +282,6 @@ namespace Content.Shared.Damage
             vitalDamage.TrimZeros();
             // Goobstation end
 
-            var before = new BeforeDamageChangedEvent(damage,
-                origin,
-                canBeCancelled,
-                targetPart,
-                OriginFlag: originFlag); // Shitmed Change; Pirate: indirect damage origin.
-            RaiseLocalEvent(uid.Value, ref before);
-
-            if (before.Cancelled)
-                return null;
-
             // For entities with a body, route damage through body parts and then sum it up
             if (_bodyQuery.TryGetComponent(uid.Value, out var body)
                 && body.BodyType == BodyType.Complex)
@@ -285,11 +290,11 @@ namespace Content.Shared.Damage
                 damage.TrimZeros(); // Goobstation
 
                 var appliedDamage = ApplyDamageToBodyParts(uid.Value, damage, origin, ignoreResistances,
-                    interruptsDoAfters, targetPart, partMultiplier, ignoreBlockers, splitDamage, canMiss);
+                    interruptsDoAfters, targetPart, partMultiplier, ignoreBlockers, splitDamage, canMiss, increaseOnly);
 
                 // Goobstation start
                 var appliedVitalDamage = ApplyDamageToBodyParts(uid.Value, vitalDamage, origin, ignoreResistances,
-                    interruptsDoAfters, TargetBodyPart.Vital, partMultiplier, ignoreBlockers, splitDamage, canMiss);
+                    interruptsDoAfters, TargetBodyPart.Vital, partMultiplier, ignoreBlockers, splitDamage, canMiss, increaseOnly);
 
                 var totalDamage = appliedDamage;
                 if (totalDamage != null && appliedVitalDamage != null)
@@ -300,7 +305,7 @@ namespace Content.Shared.Damage
             }
 
             // For entities without a body, apply damage directly
-            return ApplyDamageToEntity(uid.Value, damage, ignoreResistances, interruptsDoAfters, origin, damageable, ignoreBlockers);
+            return ApplyDamageToEntity(uid.Value, damage, ignoreResistances, interruptsDoAfters, origin, damageable, ignoreBlockers, increaseOnly);
         }
 
         /// <summary>
@@ -316,7 +321,8 @@ namespace Content.Shared.Damage
             float partMultiplier,
             bool ignoreBlockers = false,
             SplitDamageBehavior splitDamageBehavior = SplitDamageBehavior.Split,
-            bool canMiss = true)
+            bool canMiss = true,
+            bool increaseOnly = false)
         {
             DamageSpecifier? totalAppliedDamage = null;
             var adjustedDamage = damage * partMultiplier;
@@ -373,7 +379,8 @@ namespace Content.Shared.Damage
 
                     // Apply damage to this part
                     var partDamageResult = TryChangeDamage(partId, modifiedDamage, ignoreResistances,
-                        interruptsDoAfters, partDamageable, origin, ignoreBlockers: ignoreBlockers);
+                        interruptsDoAfters, partDamageable, origin, ignoreBlockers: ignoreBlockers,
+                        increaseOnly: increaseOnly);
 
                     if (partDamageResult != null && !partDamageResult.Empty)
                     {
@@ -444,7 +451,8 @@ namespace Content.Shared.Damage
                     return null;
 
                 totalAppliedDamage = TryChangeDamage(chosenTarget.Id, adjustedDamage, ignoreResistances,
-                    interruptsDoAfters, partDamageable, origin, ignoreBlockers: ignoreBlockers);
+                    interruptsDoAfters, partDamageable, origin, ignoreBlockers: ignoreBlockers,
+                    increaseOnly: increaseOnly);
             }
 
             return totalAppliedDamage;
@@ -460,7 +468,8 @@ namespace Content.Shared.Damage
             bool interruptsDoAfters,
             EntityUid? origin,
             DamageableComponent? damageable = null,
-            bool ignoreBlockers = false)
+            bool ignoreBlockers = false,
+            bool increaseOnly = false)
         {
             if (!Resolve(uid, ref damageable) || damage == null)
                 return null;
@@ -468,11 +477,18 @@ namespace Content.Shared.Damage
             // Apply resistances
             if (!ignoreResistances)
             {
+                // Pirate: retain the requested values so Trauma's increase-only
+                // damage mode can ignore reductions without skipping increases.
+                var requestedDamage = increaseOnly ? new DamageSpecifier(damage) : null;
+                var modifiedDamage = damage;
+                if (increaseOnly)
+                    modifiedDamage = new DamageSpecifier(damage);
+
                 if (damageable.DamageModifierSetId != null &&
                     _prototypeManager.Resolve(damageable.DamageModifierSetId, out var modifierSet)) // Shitmed Change
                 {
-                    damage = DamageSpecifier.ApplyModifierSet(damage,
-                        DamageSpecifier.PenetrateArmor(modifierSet, damage.ArmorPenetration)); // Goob edit
+                    modifiedDamage = DamageSpecifier.ApplyModifierSet(modifiedDamage,
+                        DamageSpecifier.PenetrateArmor(modifierSet, modifiedDamage.ArmorPenetration)); // Goob edit
                 }
 
                 if (TryComp(uid, out BodyPartComponent? bodyPart))
@@ -481,22 +497,41 @@ namespace Content.Shared.Damage
                     if (bodyPart.Body != null)
                     {
                         // First raise the event on the parent to apply any parent modifiers
-                        var parentEv = new DamageModifyEvent(bodyPart.Body.Value, damage, origin, target);
+                        var parentEv = new DamageModifyEvent(bodyPart.Body.Value, modifiedDamage, origin, target);
                         RaiseLocalEvent(bodyPart.Body.Value, parentEv);
-                        damage = parentEv.Damage;
+                        modifiedDamage = parentEv.Damage;
                     }
 
                     // Then raise on the part itself for any part-specific modifiers
-                    var ev = new DamageModifyEvent(uid, damage, origin, target);
+                    var ev = new DamageModifyEvent(uid, modifiedDamage, origin, target);
                     RaiseLocalEvent(uid, ev);
-                    damage = ev.Damage;
+                    modifiedDamage = ev.Damage;
                 }
                 else
                 {
                     // Not a body part, just apply modifiers normally
-                    var ev = new DamageModifyEvent(uid, damage, origin);
+                    var ev = new DamageModifyEvent(uid, modifiedDamage, origin);
                     RaiseLocalEvent(uid, ev);
-                    damage = ev.Damage;
+                    modifiedDamage = ev.Damage;
+                }
+
+                if (increaseOnly)
+                {
+                    // Keep each requested value unless the complete modifier chain
+                    // increased it. Missing types start at zero, matching the normal
+                    // DamageSpecifier indexer semantics for newly added damage.
+                    foreach (var (type, value) in modifiedDamage.DamageDict)
+                    {
+                        var requested = requestedDamage!.DamageDict.TryGetValue(type, out var old)
+                            ? old
+                            : FixedPoint2.Zero;
+                        if (value > requested)
+                            damage.DamageDict[type] = value;
+                    }
+                }
+                else
+                {
+                    damage = modifiedDamage;
                 }
 
                 if (damage.Empty)

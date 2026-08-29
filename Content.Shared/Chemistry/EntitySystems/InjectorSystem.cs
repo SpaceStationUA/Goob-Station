@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
@@ -306,6 +307,11 @@ public sealed partial class InjectorSystem : EntitySystem
         // Technically, both can be true, but that is probably a balance nightmare.
         else if (_standingState.IsDown(target))
             doAfterTime *= activeMode.DownedModifier;
+
+        // Pirate: skill hooks are raised only for the user performing this injection.
+        var skillEvent = new UserModifyInjectTimeEvent(user, injector, doAfterTime);
+        RaiseLocalEvent(user, ref skillEvent);
+        doAfterTime = skillEvent.Delay;
 
         return true;
     }

@@ -565,7 +565,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// <summary>
     /// Call this whenever the ammo count for a gun changes.
     /// </summary>
-    protected virtual void UpdateAmmoCount(EntityUid uid, bool prediction = true) { }
+    public virtual void UpdateAmmoCount(EntityUid uid, bool prediction = true) { } // Pirate: multi-magazine provider.
 
     protected void SetCartridgeSpent(EntityUid uid, CartridgeAmmoComponent cartridge, bool spent)
     {
@@ -871,6 +871,8 @@ public enum AmmoVisuals : byte
     AmmoCount,
     AmmoMax,
     HasAmmo, // used for generic visualizers. c# stuff can just check ammocount != 0
+    // Pirate: expose the full-magazine state used by battery and magazine visuals.
+    IsFull,
     MagLoaded,
     BoltClosed,
 }

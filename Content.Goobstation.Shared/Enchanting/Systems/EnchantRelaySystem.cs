@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Shared.Enchanting.Components;
+using Content.Shared._Pirate.Durability;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Electrocution;
@@ -23,6 +24,8 @@ public sealed class EnchantRelaySystem : EntitySystem
         base.Initialize();
 
         SubInventory<DamageModifyEvent>();
+        // Pirate: unbreaking also protects the ported item durability mechanic.
+        SubscribeLocalEvent<EnchantedComponent, DurabilityChangeAttemptEvent>(RelayEvent);
         SubscribeLocalEvent<EnchantedComponent, MeleeHitEvent>(RelayEvent);
         SubInventory<AttackedEvent>(true);
         SubInventory<StepTriggerAttemptEvent>(true);

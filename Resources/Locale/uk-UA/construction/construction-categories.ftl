@@ -11,5 +11,6 @@ construction-category-utilities = Корисне
 construction-category-misc = Інше
 construction-category-clothing = Одяг
 construction-category-favorites = Обране
+construction-category-antagonist = Антагоністи
 construction-add-favorite-button = Додати до обраного
 construction-remove-from-favorite-button = Видалити з обраного

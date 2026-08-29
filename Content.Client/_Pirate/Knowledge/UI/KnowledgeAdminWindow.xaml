@@ -1,0 +1,48 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'knowledge-admin-title'}"
+               MinSize="780 560">
+    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="8">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="8">
+            <Label Name="TargetLabel"
+                   StyleClasses="KnowledgeSkillName"
+                   HorizontalExpand="True"
+                   VerticalAlignment="Center" />
+            <LineEdit Name="SearchInput"
+                      PlaceHolder="{Loc 'knowledge-admin-filter'}"
+                      MinWidth="260"
+                      HorizontalExpand="False" />
+        </BoxContainer>
+
+        <BoxContainer Orientation="Horizontal" Margin="10 0" SeparationOverride="8">
+            <Label Text="{Loc 'knowledge-editor-tab'}" HorizontalExpand="True" />
+            <Label Text="{Loc 'knowledge-admin-level'}" MinWidth="210" HorizontalAlignment="Center" />
+            <Label Text="{Loc 'knowledge-admin-experience'}" MinWidth="145" HorizontalAlignment="Center" />
+        </BoxContainer>
+
+        <ScrollContainer Name="SkillsScroll" HScrollEnabled="False" VerticalExpand="True">
+            <BoxContainer Name="SkillsBox"
+                          Orientation="Vertical"
+                          HorizontalExpand="True"
+                          SeparationOverride="12" />
+        </ScrollContainer>
+        <Label Name="EmptyLabel"
+               Text="{Loc 'knowledge-admin-no-results'}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               VerticalExpand="True"
+               Visible="False" />
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="8">
+            <Label Name="PendingLabel" StyleClasses="LabelSubText" VerticalAlignment="Center" />
+            <Control HorizontalExpand="True" />
+            <TextureButton Name="RefreshButton"
+                           StyleClasses="RefreshButton"
+                           ToolTip="{Loc 'knowledge-admin-refresh-tooltip'}"
+                           MinSize="32 32" />
+            <Button Name="ResetButton" Text="{Loc 'knowledge-admin-reset'}" />
+            <Button Name="ApplyButton" Text="{Loc 'knowledge-admin-apply'}" StyleClasses="positive" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

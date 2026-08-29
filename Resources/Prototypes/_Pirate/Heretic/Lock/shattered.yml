@@ -57,6 +57,7 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobShatteredDummy
   skinColoration: TintedHues
+  knowledge: Human
 
 - type: speciesBaseSprites
   id: MobShatteredSprites

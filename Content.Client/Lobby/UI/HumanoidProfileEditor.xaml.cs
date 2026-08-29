@@ -561,6 +561,7 @@ namespace Content.Client.Lobby.UI
             TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-markings-tab")); // Pirate: loadout
             TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-ic-info-tab")); // Pirate: Starlight character descriptions.
             TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-ooc-info-tab"));
+            TabContainer.SetTabTitle(8, Loc.GetString("knowledge-editor-tab")); // Pirate
 
             Markings.OnMarkingAdded += OnMarkingChange;
             Markings.OnMarkingRemoved += OnMarkingChange;
@@ -607,6 +608,7 @@ namespace Content.Client.Lobby.UI
             // Pirate end: port and modified DV traits UI
 
             UpdateSpeciesGuidebookIcon();
+            InitializePirateKnowledgeEditor(); // Pirate
             IsDirty = false;
         }
 
@@ -2088,6 +2090,7 @@ namespace Content.Client.Lobby.UI
             RefreshEmployers(); // Pirate - port EE contractors
             RefreshTraits();
             RefreshFlavorText();
+            UpdatePirateKnowledgeEditor(); // Pirate
             ReloadPreview();
 
             if (Profile != null)
@@ -2586,6 +2589,7 @@ namespace Content.Client.Lobby.UI
             UpdateWeight();
             // end Goobstation: port EE height/width sliders
             RefreshTraits(); // Goobstation: ported from DeltaV - Species trait exclusion
+            UpdatePirateKnowledgeEditor(); // Pirate
         }
 
         // Pirate edit start - port EE contractors

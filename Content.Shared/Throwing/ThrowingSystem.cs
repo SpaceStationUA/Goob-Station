@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
@@ -181,6 +182,14 @@ public sealed class ThrowingSystem : EntitySystem
 
         if (tileFriction == 0f)
             compensateFriction = false; // cannot calculate this if there is no friction
+
+        // Pirate: query only the thrower's skill for this throw.
+        if (user is { } thrower)
+        {
+            var skillEvent = new ModifyThrownSpeedEvent(thrower, baseThrowSpeed, direction.Length());
+            RaiseLocalEvent(thrower, ref skillEvent);
+            baseThrowSpeed = Math.Max(skillEvent.BaseThrowSpeed, float.Epsilon);
+        }
 
         // Set the time the item is supposed to be in the air so we can apply OnGround status.
         // This is a free parameter, but we should set it to something reasonable.

@@ -8,6 +8,7 @@
   sprites: MobMonkeySprites
   dollPrototype: MobMonkeyDummy
   skinColoration: Hues
+  knowledge: Human # Pirate
   defaultSkinTone: "#ffffff"
   markingLimits: MobMonkeyMarkingLimits
 

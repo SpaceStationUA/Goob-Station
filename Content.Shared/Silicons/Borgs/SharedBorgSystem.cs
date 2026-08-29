@@ -2,6 +2,7 @@
 
 using Content.Shared._CorvaxNext.Silicons.Borgs.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared._Pirate.Silicons; // Pirate - relay brain ownership changes without duplicate container subscriptions.
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Events;
@@ -177,6 +178,10 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (args.Container != chassis.Comp.BrainContainer)
             return;
 
+        // Pirate - downstream systems subscribe to this dedicated event instead of the container event.
+        var insertedEvent = new BorgBrainInsertedEvent(chassis, args.Entity);
+        RaiseLocalEvent(args.Entity, ref insertedEvent);
+
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind))
         {
             _mind.TransferTo(mindId, chassis.Owner, mind: mind);
@@ -195,6 +200,10 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             _mind.TransferTo(mindId, args.Entity, mind: mind);
         }
+
+        // Pirate - downstream systems subscribe to this dedicated event instead of the container event.
+        var removedEvent = new BorgBrainRemovedEvent(chassis, args.Entity);
+        RaiseLocalEvent(args.Entity, ref removedEvent);
 
         // Corvax-Next-AiRemoteControl-Start
         if (HasComp<AiRemoteBrainComponent>(args.Entity))

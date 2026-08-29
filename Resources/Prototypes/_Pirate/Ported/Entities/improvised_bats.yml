@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: Trauma crafting results for the extended WoodenBat construction graph.
+
+- type: entity
+  parent: BaseBallBat
+  id: BaseBallBatBarb
+  name: бейсбольна бита з колючим дротом
+  description: Міцна бейсбольна бита, обмотана колючим дротом.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/bat_barbwire.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+        Slash: 2
+        Structural: 5
+  - type: Construction
+    graph: WoodenBat
+    node: barbedwire
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 250
+      Steel: 50
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: _Pirate/Objects/Weapons/Melee/bat_barbwire.rsi
+
+- type: entity
+  parent: BaseBallBat
+  id: BaseBallBatNail
+  name: бейсбольна бита з цвяхами
+  description: Міцна бейсбольна бита, вкрита цвяхами.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/bat_nail.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+        Piercing: 2
+        Structural: 5
+  - type: Construction
+    graph: WoodenBat
+    node: nail
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 250
+      Steel: 50
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: _Pirate/Objects/Weapons/Melee/bat_nail.rsi

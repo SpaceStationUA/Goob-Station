@@ -192,6 +192,9 @@ public abstract class SharedImplanterSystem : EntitySystem
         if ((implantingSelf && !implantComp.CanImplantSelf) || (!implantingSelf && !implantComp.CanImplantOther))
             return false;
 
+        if (component.ExtractOnly)
+            return false;
+
         var ev = new AddImplantAttemptEvent(user, target, implant.Value, implanter);
         RaiseLocalEvent(target, ev);
         return !ev.Cancelled;

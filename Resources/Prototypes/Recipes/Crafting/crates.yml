@@ -7,6 +7,12 @@
   targetNode: cratelivestock
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: CrateGenericSteel
@@ -15,6 +21,12 @@
   targetNode: crategenericsteel
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: CrateSecure
@@ -23,6 +35,13 @@
   targetNode: cratesecure
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: CrateFreezer
@@ -32,6 +51,12 @@
   targetNode: done
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: CratePlastic
@@ -40,6 +65,12 @@
   targetNode: crateplastic
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: BigBox
@@ -49,6 +80,10 @@
   targetNode: basebigbox
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory: {}
+  practical: {}
+  useQuality: false
 
 - type: construction
   id: BoxCardboard
@@ -58,6 +93,12 @@
   targetNode: boxcardboard
   category: construction-category-storage
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: BoxCardboardSmall
@@ -67,6 +108,10 @@
   targetNode: boxcardboardsmall
   category: construction-category-storage
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: ToteBase
@@ -76,6 +121,10 @@
   targetNode: totebase
   category: construction-category-storage
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: FoodBoxPizza
@@ -84,6 +133,10 @@
   targetNode: foodboxpizza
   category: construction-category-storage
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: CrateCoffin
@@ -92,3 +145,9 @@
   targetNode: cratecoffin
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 2
+  useQuality: false

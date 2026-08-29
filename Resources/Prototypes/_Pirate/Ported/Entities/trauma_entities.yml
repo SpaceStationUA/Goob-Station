@@ -1,0 +1,3337 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from Trauma Station; adapted to local prototypes.
+
+- type: entity
+  parent: BaseLogicItem
+  id: AccessScanner
+  name: RFID access scanner
+  description: A LV-powered radio beacon that scans for nearby ID card accesses. Use a screwdriver to modify its range.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/access_scanner.rsi
+    layers:
+    - state: icon
+    - state: powered
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: AccessReader
+  - type: DoorElectronics # :)
+  - type: ActivatableUI
+    key: enum.DoorElectronicsConfigurationUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.DoorElectronicsConfigurationUiKey.Key:
+        type: DoorElectronicsBoundUserInterface
+  - type: AccessScanner
+    settings:
+    - range: 1
+      power: 200
+    - range: 3
+      power: 800
+    - range: 6
+      power: 2000
+  - type: DeviceLinkSource
+    ports:
+    - AccessActive
+    - AccessName
+    - AccessJob
+  - type: ExtensionCableReceiver
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Construction
+    graph: AccessScanner
+    node: access scanner
+- type: entity
+  parent: BaseItem
+  id: AccessScannerUnfinished
+  name: unfinished access scanner
+  description: A bunch of scrap electronics being fashioned into some kind of radio device.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/access_scanner.rsi
+    state: icon
+  - type: Construction
+    graph: AccessScanner
+    defaultTarget: access scanner
+    node: unfinished
+- type: entity
+  parent: [ BaseMinorContraband, Handcuffs ]
+  id: BarbHandcuffs # TODO: Needs to damage on remove attempt
+  name: barbed wire handcuffs
+  description: Used to detain people you intend to kill.
+  components:
+  - type: Handcuff
+    cuffedRSI: _Pirate/Objects/Misc/cuffs_barbwire.rsi
+    bodyIconState: body-overlay
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/cuffs_barbwire.rsi
+    state: icon
+  - type: UseDelay
+    delay: 3
+  - type: Construction
+    graph: BarbCuffs
+    node: finish
+- type: entity
+  parent: MaterialBase
+  id: BarbedWire
+  name: barbed wire
+  suffix: Full
+  description: Some wire with barbs cut into it.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Materials/barbwire.rsi
+    state: icon
+  - type: Appearance
+  - type: Stack
+    stackType: BarbedWire
+    count: 30
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      BarbedWire: 100
+  - type: Item
+    heldPrefix: wire
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Pirate/Footsteps/barbedwire.ogg
+      params:
+        volume: -4
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Pirate/Footsteps/barbedwire.ogg
+      params:
+        volume: -4
+  - type: Construction
+    graph: BarbedWireMaterial
+    node: BarbedWire
+- type: entity
+  parent: BarbedWire
+  id: BarbedWire1
+  suffix: Single
+  components:
+  - type: Stack
+- type: entity
+  parent: [ BaseStructure, BaseMinorContraband ]
+  id: BarbedWireStructure
+  name: barbed wire
+  description: A large mass of steel wire with nasty barbs.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Materials/barbwire.rsi
+    state: structure
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BarbedWire1:
+            min: 0
+            max: 1
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.3
+    sprintSpeedModifier: 0.3
+  - type: Physics
+    bodyType: Static
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/_Pirate/Footsteps/barbedwire.ogg
+      params:
+        volume: 8
+  - type: DamageContacts
+    damage:
+      types:
+        Slash: 3
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+  - type: Construction
+    graph: BarbedWire
+    deconstructionTarget: null
+    node: finish
+  - type: InteractionOutline
+  - type: Damageable
+    damageModifierSet: Metallic
+    damageContainer: Inorganic
+  - type: DamageOnAttacked
+    damage:
+      types:
+        Slash: 5
+    popupText: barbed-contact-damage
+    interactSound: /Audio/Weapons/bladeslice.ogg
+- type: entity
+  parent: [ BaseCartridge, BaseSecurityContraband ]
+  id: BaseCartridgeGaussgun
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - CartridgeGaussgun
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Bullets/gaussgun.rsi
+  - type: StaticPrice
+    price: 10
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Bullets/gaussgun.rsi
+- type: entity
+  abstract: true
+  parent: FloorTileItemBase
+  id: BaseFloorTileAstro
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+- type: entity
+  parent: [ BaseItem, BaseSecurityContraband ]
+  id: BaseMagazineGaussgun
+  name: gauss magazine
+  suffix: Full
+  description:  15 round magazine for Gaussguns, can contain a variety of ammo types.
+  components:
+  - type: Tag
+    tags:
+    - MagazineGaussgun
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+      - CartridgeGaussgun
+    proto: CartridgeBallBearing
+    capacity: 15
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazine/gaussgun.rsi
+    state: icon
+- type: entity
+  abstract: true
+  parent: BaseRevPart
+  id: BaseRevComponent # can be made via construction
+  components:
+  - type: Construction
+    graph: RevParts
+    deconstructionTarget: null
+  - type: Appearance
+  groups:
+  - Technological
+- type: entity
+  abstract: true
+  parent: [ BaseMachine, BaseRevMinorContraband ]
+  id: BaseRevIndustry
+  components:
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+  - type: Appearance
+  - type: Lathe
+    idleState: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: ActivatableUI
+    key: enum.LatheUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.LatheUiKey.Key:
+        type: LatheBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
+  - type: StaticPrice
+    price: 800
+  - type: TechnologyDatabase
+  - type: AutomationSlots
+    slots:
+    - !type:AutomatedMaterialStorage
+      input: AutomationSlotMaterials
+      output: null
+  - type: Animateable
+  - type: LightningTarget
+    priority: 1
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevMachine
+  - type: OreSiloClient
+- type: entity
+  abstract: true
+  id: BaseRevMajorContraband
+  components:
+  - type: Contraband
+    severity: RevMajor
+- type: entity
+  abstract: true
+  id: BaseRevMinorContraband
+  components:
+  - type: Contraband
+    severity: RevMinor
+
+# Rev weaponry turrets etc
+- type: entity
+  abstract: true
+  parent: BaseStockPart
+  id: BaseRevPart # can't be made via construction
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Revs/components.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10 # removed plastic
+- type: entity
+  parent: BaseItem
+  id: BaseWeaponGaussgun
+  abstract: true
+  components:
+  - type: WeaponClass
+    class: Laser # probably similar since no cartridges, explosion or crazy recoil of firearms
+  - type: Item
+    size: Ginormous
+    shape:
+    - 0,0,8,1
+  - type: StaticPrice
+    price: 1500
+  - type: EmitSoundOnPickup
+    sound:
+      collection: SnipersPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: SnipersDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: SnipersDrop
+  - type: AmmoCounter
+  - type: Gun
+    minAngle: 3
+    maxAngle: 10
+    fireRate: 1
+    angleIncrease: 3
+    angleDecay: 16
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/railgun/railgunshot.ogg
+    defaultDirection: 1, 0
+  - type: MultiMagazineAmmoProvider
+    slots:
+      gun_magazine: null # Use ammo provied by gun magazine
+      gun_magazine_cell: 0.5 # Don't use battery projectiles, multiply fire cost by 0.5 (30 shots for high-cap cell)
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineGaussgun
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_magazine_cell:
+        ejectOnInteract: false
+        name: power-cell-slot-component-slot-name-default
+        whitelist:
+          tags:
+          - PowerCell
+          - PowerCellSmall
+        blacklist:
+          tags:
+          - PotatoBattery
+          - PowerCage
+        whitelistFailPopup: gun-magazine-whitelist-fail
+  - type: PowerCellSlot
+    cellSlotId: gun_magazine_cell
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_magazine_cell: !type:ContainerSlot
+  - type: Appearance
+- type: entity
+  abstract: true
+  parent: BaseStructure
+  id: BaseWeaponTurretIndestructible
+  name: turret
+  components:
+  # Pirate: Trauma's separate viewcone overlay is not local and performs a global client query.
+  - type: InteractionOutline
+  - type: Actions
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
+    drawdepth: Mobs
+    layers:
+    - state: syndie_lethal
+  - type: InteractionPopup
+    interactDelay: 0.2
+    successChance: 0.8
+    interactSuccessString: petting-success-generic
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Effects/double_beep.ogg
+  - type: CombatMode
+    toggleMouseRotator: false
+  - type: HTN
+    rootTask:
+      task: TurretCompound
+    blackboard:
+      RotateSpeed: !type:Single
+        9 # Trauma, from pi
+      SoundTargetInLOS: !type:SoundPathSpecifier
+        path: /Audio/Effects/double_beep.ogg
+  - type: MouseRotator
+    angleTolerance: 5
+    rotationSpeed: 180
+    simple4DirMode: false
+  - type: NoRotateOnInteract
+  - type: NoRotateOnMove
+  - type: Input
+    context: "human"
+- type: entity
+  abstract: true
+  parent: [ BaseWeaponTurretIndestructible, BaseRevMajorContraband ]
+  id: BaseWeaponTurretRevolutionary
+  suffix: Full
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Revolutionary
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          RevTurretElectronics:
+            min: 1
+            max: 1
+          SheetSteel1:
+            min: 1
+            max: 3
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Repairable
+    qualityNeeded: Anchoring
+    doAfterDelay: 3
+  - type: StaticPrice
+    price: 100
+- type: entity
+  abstract: true
+  parent: [ BaseStructure, BaseRevMajorContraband ]
+  id: BaseWeaponTurretRevolutionaryMagazine
+  suffix: Full
+  components:
+  - type: InteractionOutline
+  - type: Actions
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: InteractionPopup
+    interactDelay: 0.2
+    successChance: 0.8
+    interactSuccessString: petting-success-generic
+    interactFailureString: petting-failure-generic
+    interactSuccessSound:
+      path: /Audio/Effects/double_beep.ogg
+  - type: CombatMode
+    toggleMouseRotator: false
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          RevTurretElectronics:
+            min: 1
+            max: 1
+          SheetSteel1:
+            min: 1
+            max: 3
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: HTN
+    rootTask:
+      task: TurretCompound
+    blackboard:
+      RotateSpeed: !type:Single
+        9
+      SoundTargetInLOS: !type:SoundPathSpecifier
+        path: /Audio/Effects/double_beep.ogg
+  - type: NpcFactionMember
+    factions:
+    - Revolutionary
+  - type: MouseRotator
+    angleTolerance: 5
+    rotationSpeed: 180
+    simple4DirMode: false
+  - type: NoRotateOnInteract
+  - type: NoRotateOnMove
+  - type: Input
+    context: "human"
+  - type: Repairable
+    qualityNeeded: Anchoring
+    doAfterDelay: 3
+  - type: MagazineAmmoProvider
+  - type: StaticPrice
+    price: 100
+- type: entity
+  id: BoogieBotSpawner
+  name: boogie bot
+  description: Get down on it!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Silicon/Bots/boogiebot.rsi
+    state: icon
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+    - MobBoogieBotD1
+    - MobBoogieBotD2
+    - MobBoogieBotD3
+  - type: Construction
+    graph: BoogieBot
+    node: bot
+- type: entity
+  parent: BaseCartridgeGaussgun
+  id: CartridgeBallBearing
+  name: ball bearing
+  description: A small projectile suitable for gauss guns.
+  components:
+  - type: CartridgeAmmo
+    proto: GaussgunBearing
+  - type: Sprite
+    state: bullet
+  - type: Construction
+    graph: GaussImprovAmmoGraph
+    node: finish
+- type: entity
+  parent: CartridgeRocketRPG2HE
+  id: CartridgeRocketRPG2AP
+  name: rocket-propelled armor piercing grenade
+  description: A warhead for the RPG-2, this one is armor piercing, and good against mechs, borgs, and structures. Requires a direct hit to be effective.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletRPG2AP
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Rockets/ap.rsi
+  - type: Construction
+    graph: RevRockets
+    deconstructionTarget: null
+    node: AP
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: CartridgeRocketRPG2HE
+  name: rocket-propelled high explosive grenade
+  description: A warhead for the RPG-2, this one is high explosive and launches shrapnel everywhere.
+  components:
+  - type: Item
+    shape:
+    - 0,0,3,0
+  - type: CartridgeAmmo
+    proto: BulletRPG2HE
+    deleteOnSpawn: true
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Rockets/he.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - CartridgeRPG2
+  - type: MultiHandedItem
+  - type: Construction
+    graph: RevRockets
+    deconstructionTarget: null
+    node: HE
+- type: entity
+  parent: [ Clothing, ClothingSlotBase, BaseRevMajorContraband ]
+  id: ClothingBackpackFlamethrower
+  name: flamethrower back tank
+  description: Accepts custom fuel tanks to fuel a flamethrower.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Back/Backpacks/flamethrower.rsi
+    layers:
+    - state: base
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Clothing
+    slots: BACK
+    sprite: _Pirate/Clothing/Back/Backpacks/flamethrower.rsi
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        whitelist:
+          tags:
+          - FlamethrowerTank
+      item:
+        name: flamethrower
+        priority: 2
+        startingItem: WeaponFlamethrower
+        whitelist:
+          tags:
+          - FlamethrowerGun
+  - type: Appearance
+  - type: StaticPrice
+    price: 500
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      item: !type:ContainerSlot
+  - type: Item
+    size: Ginormous
+  - type: Tag
+    tags:
+    - FlamethrowerBackpack
+    - WhitelistChameleon
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevGuns
+    node: Flamethrower
+- type: entity
+  parent: [BaseItem]
+  id: CraftingGaussAmmoImprov
+  name: unfinished ball bearings
+  description: Some unfinished gauss ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/parts.rsi
+    state: rods
+  - type: Construction
+    graph: GaussImprovAmmoGraph
+    node: 1
+- type: entity
+  parent: [BaseItem, BaseMajorContraband]
+  id: CraftingGaussMagazineImprov
+  name: unfinished improvised magazine
+  description: An unfinished magazine for a gauss weapon.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug_metal.rsi
+    state: icon
+  - type: Construction
+    graph: GaussImprovMagazineGraph
+    node: 1
+- type: entity
+  parent: [BaseItem, BaseMajorContraband]
+  id: CraftingGaussPistol
+  name: incomplete gauss pistol
+  description: An unfinished gauss pistol.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Crafting/gausspistol.rsi
+    state: 1
+  - type: Construction
+    graph: GaussPistolGraph
+  - type: Item
+    size: Small
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol1
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 1
+  - type: Construction
+    node: 1
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol10
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 10
+  - type: Construction
+    node: 10
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol2
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 2
+  - type: Construction
+    node: 2
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol3
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 3
+  - type: Construction
+    node: 3
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol4
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 4
+  - type: Construction
+    node: 4
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol5
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 5
+  - type: Construction
+    node: 5
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol6
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 6
+  - type: Construction
+    node: 6
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol7
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 7
+  - type: Construction
+    node: 7
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol8
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 8
+  - type: Construction
+    node: 8
+- type: entity
+  parent: CraftingGaussPistol
+  id: CraftingGaussPistol9
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 9
+  - type: Construction
+    node: 9
+- type: entity
+  parent: [ BaseItem, BaseMajorContraband ]
+  id: CraftingGaussRifle
+  name: incomplete gauss rifle
+  description: An unfinished gauss rifle.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Crafting/gaussrifle.rsi
+    state: 1
+  - type: Construction
+    graph: GaussRifleGraph
+  - type: Item
+    size: Small
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle1
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 1
+  - type: Construction
+    node: 1
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle10
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 10
+  - type: Construction
+    node: 10
+  - type: Item
+    size: Huge
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle11
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 11
+  - type: Construction
+    node: 11
+  - type: Item
+    size: Huge
+
+# Pistol
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle2
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 2
+  - type: Construction
+    node: 2
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle3
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 3
+  - type: Construction
+    node: 3
+  - type: Item
+    size: Large
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle4
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 4
+  - type: Construction
+    node: 4
+  - type: Item
+    size: Huge
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle5
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 5
+  - type: Construction
+    node: 5
+  - type: Item
+    size: Huge
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle6
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 6
+  - type: Construction
+    node: 6
+  - type: Item
+    size: Huge
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle7
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 7
+  - type: Construction
+    node: 7
+  - type: Item
+    size: Huge
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle8
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 8
+  - type: Construction
+    node: 8
+  - type: Item
+    size: Huge
+- type: entity
+  parent: CraftingGaussRifle
+  id: CraftingGaussRifle9
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: 9
+  - type: Construction
+    node: 9
+  - type: Item
+    size: Huge
+- type: entity
+  parent: BaseFloorTileAstro # it's made of plastic...
+  id: FloorTileItemPlastic
+  name: plastic tile
+  components:
+  - type: Sprite
+    state: steel # no plastic tile item sprites
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorPlastic
+  - type: Stack
+    stackType: FloorTilePlastic
+  - type: Construction
+    graph: TilePlastic
+    node: plastic tile
+- type: entity
+  parent: FloorTileItemPlastic
+  id: FloorTileItemPlasticDark
+  name: dark plastic tile
+  components:
+  - type: Sprite
+    state: dark
+  - type: Item
+    heldPrefix: dark
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkPlastic
+  - type: Stack
+    stackType: FloorTilePlasticDark
+  - type: Construction
+    node: dark plastic tile
+- type: entity
+  parent: FloorTileItemPlastic
+  id: FloorTileItemPlasticWhite
+  name: white plastic tile
+  components:
+  - type: Sprite
+    state: white
+  - type: Item
+    heldPrefix: white
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorWhitePlastic
+  - type: Stack
+    stackType: FloorTilePlasticWhite
+  - type: Construction
+    name: white plastic tile
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: FuelTankFlamethrower
+  name: flamethrower fuel tank
+  description: A fuel tank for the flamethrower. Loaded with napalm that sticks to your newly-charred corpses as it burns.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Flamethrower/fuel.rsi
+    state: icon
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
+  - type: BasicEntityAmmoProvider
+    proto: FlameThrowerBullet
+    capacity: 100
+    count: 100
+  - type: Tag
+    tags:
+    - FlamethrowerTank
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+  - type: AmmoCounter
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevFlamethrowerAmmo
+    node: FlamethrowerAmmo
+- type: entity
+  parent: [ ProjectileGrenadeBase, BaseRevMajorContraband, TimerGrenadeBase ]
+  id: GrenadeShrapnelRev
+  name: improvised shrapnel bomb
+  description: Releases a deadly spray of shrapnel that causes severe bleeding.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/ied.rsi
+    layers:
+    - state: base
+      map: ["enum.TriggerVisualLayers.Base"]
+    - state: fuel
+    - state: wires
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterLethalWeak
+    capacity: 30
+  - type: TimerTrigger
+    delay: 5
+    examinable: false
+    initialBeepDelay: 0
+    beepSound:
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+      params:
+        volume: 1
+  - type: Item
+    sprite: Objects/Weapons/Bombs/ied.rsi
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: StaticPrice
+    price: 1500
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: TimerTriggerVisuals
+    unprimedSprite: base
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevIED
+    node: IED
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband ]
+  id: IncompleteWoodenSword
+  name: incomplete wooden sword
+  description: An uncarved wooden sword.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/incomplete_bat.rsi
+    state: icon
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,5
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/incomplete_bat.rsi
+    sprite: Objects/Weapons/Melee/incomplete_bat.rsi
+  - type: Construction
+    graph: WoodenSword
+    node: uncarved
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 250
+- type: entity
+  id: Killdozer
+  parent: [ BaseMech, IndustrialMech, BaseRevMajorContraband ]
+  name: killdozer
+  description: Oh no
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: _Pirate/Objects/Specific/Mech/killdozer.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: killdozer
+    - map: ["enum.PaperLabelVisuals.Layer"]
+      sprite: Structures/Storage/Crates/labels.rsi
+      state: paper
+    scale: 1.2, 1.2
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepKilldozer
+      params:
+        variation: 0.17
+  - type: Mech
+    baseState: killdozer
+    openState: icon
+    brokenState: icon
+    mechToPilotDamageMultiplier: 0
+    airtight: false
+    maxIntegrity: 1000
+    maxEquipmentAmount: 1
+    pilotWhitelist:
+      components:
+        - HumanoidAppearance
+    startingEquipment:
+      - WeaponMechMosinPortsEmpty
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.5
+    damage:
+      types:
+        Structural: 800
+        Blunt: 50
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2
+  - type: Damageable
+  - type: StaticPrice
+    price: 1000
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: Construction
+    graph: Killdozer
+    deconstructionTarget: null
+    node: Killdozer
+- type: entity
+  parent: [ BaseMagazineGaussgun ]
+  id: MagazineGaussgunImprov
+  name: improvised gauss magazine
+  description: A low quality magazine for gauss guns, it will work in a pinch.
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+    capacity: 8
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazine/gaussgunimprov.rsi
+    state: icon
+  - type: Construction
+    graph: GaussImprovMagazineGraph
+    node: finish
+
+# Crafting
+- type: entity
+  id: MetalToolDurability
+  abstract: true
+  components:
+  - type: Durability
+    durabilityThresholds:
+      0: Pristine
+      50: Worn
+      75: Damaged
+      85: Broken
+      100: Destroyed
+    damageProbability: .50
+    damagePopups:
+      Worn:
+      - durability-metal-0
+      - durability-metal-1
+      Damaged:
+      - durability-metal-2
+      - durability-metal-3
+      - durability-metal-4
+      Broken:
+      - durability-metal-5
+      - durability-metal-6
+      - durability-metal-7
+      Destroyed:
+      - durability-metal-8
+      - durability-metal-9
+      - durability-metal-10
+      - durability-wood-9
+    minDamageRoll: 2.5
+    maxDamageRoll: 5
+    maxRepairBonus: 0
+    repairable: true
+    repairTool: Welding
+    toolRepairAmount: 10, 15
+    fuelCost: 5
+    repairDoAfter: 3
+    onBreakEffects:
+    - !type:PlaySoundEffect
+      sound:
+        collection: MetalBreak
+        params:
+          volume: -6
+- type: entity
+  parent: MobSiliconBase
+  id: MobDuckBot
+  name: duck bot
+  description: An amusing duck
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Silicon/Bots/duckbot.rsi
+    state: duckbot
+  - type: HTN
+    rootTask:
+      task: RuminantCompound
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
+  - type: Construction
+    graph: DuckBot
+    node: bot
+  - type: EggLayer
+    eggSpawn:
+    - id: FoodEgg
+  - type: SpamEmitSound
+    minInterval: 60
+    maxInterval: 120
+    sound:
+      collection: AmusingDuckCollection
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-duckbot
+    interactFailureString: petting-failure-duckbot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+- type: entity
+  parent:
+  - MobSiliconBase
+  - ShowSecurityIcons
+  - StripableInventoryBase
+  id: MobSecuritron
+  name: securitron
+  description: Tiders hate this one simple trick!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Silicon/Bots/beepsky.rsi
+    state: secbot
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  # - type: TileMovement
+  - type: HTN
+    rootTask:
+      task: SecbotCompound
+    blackboard:
+      TargetFoundSound: !type:SoundCollectionSpecifier
+        collection: BeepskyTargetFound
+      TargetArrestedSound: !type:SoundCollectionSpecifier
+        collection: BeepskyTargetArrested
+  - type: CombatMode
+  - type: MeleeWeapon
+    hidden: true
+    animation: WeaponArcThrust
+    damage:
+      types:
+        Blunt: 1
+  - type: Stunbaton
+    energyPerUse: 50
+  - type: StaminaDamageOnHit
+    damage: 25
+    overtime: 40
+    lightAttackDamageMultiplier: 2
+    lightAttackOvertimeDamageMultiplier: 0
+    sound: /Audio/Weapons/egloves.ogg
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: BatterySelfRecharger
+    autoRechargeRate: 40
+  - type: DoAfter
+  - type: Construction
+    graph: SecBot
+    node: bot
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-mechanical
+  - type: Anchorable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-secbot
+    interactFailureString: petting-failure-secbot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Inventory
+    templateId: medibot
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Security
+  - type: PatrolSlave
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Security
+  - type: Access
+    tags:
+    - HeadOfSecurity
+    - Command
+    - Brig
+    - Security
+    - Armory
+    - Maintenance
+    - External
+    - Detective
+    - Cryogenics
+    - GenpopEnter
+    - GenpopLeave
+  - type: CuffSpawner
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 3
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband ]
+  id: NailBoardUnfinished
+  name: unfinished nail board
+  description: Needs some nails.
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: Construction
+    graph: NailBoard
+    node: incompleteBoard
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/nailboard.rsi
+    state: icon
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,2
+    storedRotation: -45
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband, WoodDurabilityWeak ]
+  id: NailBoardWeapon
+  name: nail board
+  description: A nasty weapon that also works as a trap.
+  components:
+  - type: WeaponClass
+    class: Bludgeon
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/nailboard.rsi
+    state: finished
+  - type: MeleeWeapon
+    animationRotation: -135
+    heavyStaminaCost: 15
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 10
+        Piercing: 3
+    soundHit:
+      collection: MetalThud
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,2
+    storedRotation: -45
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100
+      Steel: 50
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: UndetectableContraband
+  - type: SpawnAfterInteract
+    prototype: NailBoardTrap
+    doAfter: 0.5
+    removeOnInteract: true
+  - type: Construction
+    graph: NailBoard
+    node: finish
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband, MetalToolDurability ]
+  id: PipeSpear
+  name: pipe shank
+  description: A pipe sharpened to a nasty point, could be a great throwing weapon.
+  components:
+  - type: WeaponClass
+    class: Knife
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/spear_pipe.rsi
+    state: icon
+  - type: MeleeWeapon
+    animationRotation: -90
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Piercing: 10
+    heavyStaminaCost: 6
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,2,0
+    storedRotation: 90
+  - type: Construction
+    graph: PipeShank
+    node: finish
+  - type: EmbeddableProjectile
+    offset: -0.15,0.0
+  - type: ThrowingAngle
+    angle: 180
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband ]
+  id: PipeSpearUnfinished
+  name: unfinished pipe shank
+  description: Needs to be sharpened.
+  components:
+  - type: WeaponClass
+    class: Knife
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+  - type: MeleeWeapon
+    animationRotation: -90
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 3
+    heavyStaminaCost: 6
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Construction
+    graph: PipeShank
+    node: unfinished
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,2,0
+    storedRotation: 90
+- type: entity
+  parent: BaseRevMajorContraband
+  id: PowerArmorFrame
+  name: P.O.W.A.R armor frame
+  description: Precise Orbital WAR, armor
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Pirate/Objects/Specific/Mech/PowerArmorFrame.rsi
+    state: frame
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Buckleable
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 500
+        mask:
+        - ItemMask
+  - type: Appearance
+  - type: ItemMapper
+    sprite: _Pirate/Objects/Specific/Mech/T45Armor.rsi
+    mapLayers:
+      t45_lefthand:
+        whitelist:
+          tags:
+          - T45ArmR
+      t45_righthand:
+        whitelist:
+          tags:
+          - T45ArmL
+      t45_chest:
+        whitelist:
+          tags:
+          - T45Chest
+      t45_helmet:
+        whitelist:
+          tags:
+          - T45Helmet
+      t45_rightleg:
+        whitelist:
+          tags:
+          - T45LegR
+      t45_leftleg:
+        whitelist:
+          tags:
+          - T45LegL
+  - type: ContainerContainer
+    containers:
+      part-container: !type:Container
+  - type: PartAssembly
+    parts:
+      generic:
+      - T45LegL
+      - T45LegR
+      - T45Helmet
+      - T45Chest
+      - T45ArmL
+      - T45ArmR
+  - type: Construction
+    graph: T45Armor
+    node: start
+    defaultTarget: T45
+    containers:
+    - part-container
+  - type: Buckle
+  - type: Pullable
+  - type: Tag
+    tags:
+    - T45Frame
+- type: entity
+  parent: BaseRevComponent
+  id: RevBolt
+  name: pile of bolts
+  description: Some bolts, used in quite a few devices.
+  components:
+  - type: Sprite
+    layers:
+    - state: bolt
+      map: ["base"]
+  - type: Stack
+    stackType: RevBolt
+    baseLayer: base
+    layerStates:
+    - bolt
+    - bolt_2
+    - bolt_3
+  - type: Construction
+    node: bolt
+- type: entity
+  parent: BaseRevIndustry
+  id: RevBulletPress
+  name: bullet press
+  description: Creates ammo by pressing the bullet into the casing, this one is automated.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/bulletpress.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/_Pirate/Revs/bulletpress.ogg
+    runningState: bulletpress
+    staticPacks:
+    - RevBulletPressStatic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: Construction
+    node: bullet press
+- type: entity
+  parent: BaseRevIndustry
+  id: RevForge
+  name: industrial forge
+  description: This jury rigged machine can produce all sorts of useful (and dangerous) components.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/revforge.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/_Pirate/Revs/strike.ogg
+    runningState: revforge
+    staticPacks:
+    - RevForgeStatic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - Metal
+      - Wooden
+      - RawMaterial
+      - Plastic
+  - type: PointLight
+    enabled: true
+    color: "#E25822"
+    radius: 1.5
+    energy: 5.0
+  - type: BlueprintReceiver
+    whitelist:
+      tags:
+      - ForgeMold
+  - type: ContainerContainer
+    containers:
+      blueprint: !type:Container
+  # this doesn't do anything currently as rev machines dont use machine construction
+  # keeping it here for reference incase it's changed in the future
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - blueprint
+  - type: Construction
+    node: industrial forge
+- type: entity
+  parent: BaseRevComponent
+  id: RevGear
+  name: gear
+  description: A gear, used in quite a few devices.
+  components:
+  - type: Sprite
+    layers:
+    - state: gear
+      map: ["base"]
+  - type: Stack
+    stackType: RevGear
+    baseLayer: base
+    layerStates:
+    - gear
+    - gear_2
+    - gear_3
+  - type: Construction
+    node: gear
+- type: entity
+  parent: BaseRevIndustry
+  id: RevMedFab
+  name: hidden medifab
+  description: A hidden subfloor fabricator that can make medical equipment.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/hiddenmedifab.rsi
+  - type: SubFloorHide
+  - type: Visibility # This kills the test fail.
+  - type: CollideOnAnchor # This kills the test fail.
+  - type: Physics # This kills the test fail.
+    bodyType: Static
+    canCollide: false
+  - type: Lathe
+    producingSound:
+      path: /Audio/Machines/uniformprinter.ogg
+    runningState: icon
+    staticPacks:
+    - RevMedicalStatic
+    - ChemistryStatic
+    - SurgeryStatic
+    - MedicalStatic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - Metal
+      - Wooden
+      - RawMaterial
+      - Plastic
+      - Ingot # Pirate: Rev medical recipes consume silver and gold ingots.
+  - type: ContainerContainer
+    containers:
+      blueprint: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - blueprint
+  - type: Construction
+    node: hidden medifab
+- type: entity
+  parent: BaseRevIndustry
+  id: RevMicroelectronicsAssembler
+  name: microelectronics assembler
+  description: Allows the creation of illegal technology useful to the revolution.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/microelectronicsassembler.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/_Pirate/Revs/microelectronicsassembler.ogg
+    runningState: microelectronicsassembler
+    staticPacks:
+    - RevMicroElectronicsStatic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: Construction
+    node: microelectronics assembler
+  - type: BlueprintReceiver
+    whitelist:
+      tags:
+      - DataChip
+  - type: ContainerContainer
+    containers:
+      blueprint: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - blueprint
+- type: entity
+  parent: BaseRevComponent
+  id: RevNut
+  name: pile of nuts
+  description: Some nuts, used in quite a few devices.
+  components:
+  - type: Sprite
+    layers:
+    - state: nut
+      map: ["base"]
+  - type: Stack
+    stackType: RevNut
+    baseLayer: base
+    layerStates:
+    - nut
+    - nut_2
+    - nut_3
+  - type: Construction
+    node: nut
+- type: entity
+  parent: BaseRevIndustry
+  id: RevPlasmaFoundry
+  name: phoron foundry
+  description: An advanced foundry powered by phoron sheets, it melts metals incredibly fast and produces advanced components.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/plasmaforge.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/_Pirate/Revs/foundryaudio.ogg
+    runningState: plasmaforge
+    staticPacks:
+    - RevFoundryStatic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - Metal
+      - Wooden
+      - RawMaterial
+      - Plastic
+  - type: PointLight
+    enabled: true
+    color: "#E25822"
+    radius: 3.5
+    energy: 5.0
+  - type: ContainerContainer
+    containers:
+      blueprint: !type:Container
+  - type: Construction
+    node: phoron foundry
+- type: entity
+  parent: BaseRevIndustry
+  id: RevPowerArmorStand
+  name: P.O.W.A.R armor stand
+  description: A P.O.W.A.R armor stand, used for showing off P.O.W.A.R armor.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/powerarmorstand.rsi
+    layers:
+    - state: chains
+      map: [ "chains" ]
+    - state: station
+      map: ["station"]
+  - type: Construction
+    graph: PowerArmorStand
+    node: start
+  - type: Strap
+    buckleOnInteractHand: false
+    addBuckleverb: false
+    buckleOffset: "0, 0.2"
+    whitelist:
+      tags:
+      - T45Frame
+- type: entity
+  parent: BaseRevIndustry
+  id: RevPrinter
+  name: 3D printer
+  description: Makes either cute little guys or gun parts, zero inbetween. This one can print both metal and plastic.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/printer.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/_Pirate/Revs/printer.ogg
+    runningState: printer
+    staticPacks:
+    - RevPrinterStatic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: Construction
+    node: 3D printer
+- type: entity
+  parent: BaseRevIndustry
+  id: RevPrintingPress
+  name: printing press
+  description: A printing press for mass producing media, or in your case anti-NT propaganda.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/revprintingpress.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/_Pirate/Revs/printingpresslong.ogg
+    runningState: printingpress
+    staticPacks:
+    - RevPrintingPress
+    - PrintingPressAdvanced
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+  - type: Construction
+    node: printing press
+- type: entity
+  parent: BaseRevIndustry
+  id: RevRadioBench
+  name: telecommunications workshop
+  description: A device for hacking into nearby signals, allows the production of radiochips, turrets, as well as some upgrades for other machines.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/telecommsbench.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/_Pirate/Revs/commsworkbench.ogg
+    runningState: telecomms
+    staticPacks:
+    - RevTelecommsWorkbenchStatic
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: Construction
+    node: telecomms workshop
+- type: entity
+  parent: BaseRevIndustry
+  id: RevTechAnalyzer
+  name: tech analyzer
+  description: Scans NT tech and produces tech disks for the microelectronics assembler to create.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/techanalyzer.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/Machines/uniformprinter.ogg
+    runningState: techAnalyzer
+    staticPacks:
+    - RevTechStatic
+  - type: Construction
+    node: tech analyzer
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+- type: entity
+  parent: BaseRevIndustry
+  id: RevTelesphere
+  name: telesphere
+  description: An experimental device, it can be used to remotely steal materials from passing trade ships using phoron. Additionally; it can be used as a material silo for the revolution.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/telesphere.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/_Pirate/Revs/telesphere.ogg
+    runningState: telesphere
+    staticPacks:
+    - RevTelesphereStatic
+  - type: Construction
+    node: telesphere
+  - type: PointLight
+    enabled: true
+    color: "#ffffff"
+    radius: 1.5
+    energy: 5.0
+  - type: OreSilo
+    range: 15
+  - type: MasterSiloClient # theft
+  - type: MaterialStorage
+    ignoreColor: true
+    whitelist:
+      tags:
+      - Sheet
+      - Ingot
+  - type: UserInterface
+    interfaces:
+      enum.LatheUiKey.Key:
+        type: LatheBoundUserInterface
+      enum.OreSiloUiKey.Key:
+        type: OreSiloBoundUserInterface
+- type: entity
+  parent: BaseItem
+  id: RevUnfinishedComponent
+  name: steel chunk
+  description: A misshapen lump of steel, clearly being worked into something.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Revs/components.rsi
+    state: unfinished
+  - type: Construction
+    graph: RevParts
+    deconstructionTarget: null
+    node: unfinished
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: RevUnfinishedFuelTank
+  name: unfinished fuel tank
+  description: An unfinished flamethrower fuel tank
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Flamethrower/unfinished.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - RevFuelTank
+  - type: Solution
+    solution:
+      maxVol: 100
+  - type: MixableSolution
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: SolutionTransfer
+    maxTransferAmount: 20
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
+  - type: Spillable
+    solution: beaker
+  - type: Construction
+    graph: RevFlamethrowerAmmo
+    deconstructionTarget: null
+    node: empty
+- type: entity
+  parent: [ BaseItem, BaseRevMinorContraband ]
+  id: RevUnfinishedGun
+  name: misshapen steel chunk
+  description: A sheet of steel bent into the rough shape of a gun. It needs a lot more work before firing.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Pistols/unfinished.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Construction
+    graph: RevGuns
+    deconstructionTarget: null
+    node: unfinished
+- type: entity
+  parent: [ BaseMachine, BaseMinorContraband ]
+  id: RevUnfinishedMachine
+  name: steel contraption
+  description: A large mass of steel worked into some kind of machine. Only a madman knows what this could be!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/unfinished.rsi
+    state: icon
+  - type: Construction
+    graph: RevMachine
+    deconstructionTarget: null
+    node: unfinished
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: RevUnfinishedRocket
+  name: unfinished rocket
+  description: An unfinished rocket.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Rockets/unfinished.rsi
+    state: icon
+  - type: Construction
+    graph: RevRockets
+    deconstructionTarget: null
+    node: unfinished
+- type: entity
+  parent: RevUnfinishedMachine
+  id: RevUnfinishedTurret
+  name: turret base
+  description: A lump of steel mounted to a tripod, not very imposing.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Defences/turrets.rsi
+    state: unfinished
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Construction
+    graph: RevTurret
+- type: entity
+  parent: RevUnfinishedTurret
+  id: RevUnfinishedTurretBarrel
+  suffix: Barrel
+  description: A homemade anti-personnel turret. It still needs more work to be done, though keep your eyes clear of its barrel.
+  components:
+  - type: Sprite
+    state: unfinished-barrel
+  - type: Construction
+    node: barrel
+- type: entity
+  parent: BaseRevIndustry
+  id: RevUniformPrinter
+  name: military uniform printer
+  description: Creates armored clothing for the troops.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/uniformprinter.rsi
+  - type: Lathe
+    producingSound:
+      path: /Audio/Machines/uniformprinter.ogg
+    runningState: uniformsewer
+    staticPacks:
+    - RevClothingStatic
+  - type: Construction
+    node: uniform printer
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
+- type: entity
+  parent: Screen
+  id: SignalScreen
+  name: signal screen
+  description: Displays text from signals sent to its text port.
+  components:
+  - type: Screen
+    ignoreNetwork: true
+  - type: SignalScreen
+  - type: DeviceLinkSink
+    ports:
+    - Text
+  - type: Construction
+    graph: SignalScreen
+    node: signal screen
+- type: entity
+  id: SpearDurabilityWeak
+  abstract: true
+  components:
+  - type: Durability
+    durabilityThresholds:
+      0: Pristine
+      50: Worn
+      65: Damaged
+      80: Broken
+      100: Destroyed
+    damageProbability: .50
+    damagePopups:
+      Worn:
+      - durability-blade-1
+      - durability-blade-2
+      Damaged:
+      - durability-shaft-2
+      - durability-shaft-3
+      - durability-shaft-4
+      - durability-blade-4
+      Broken:
+      - durability-shaft-5
+      - durability-shaft-6
+      Destroyed:
+      - durability-shaft-7
+      - durability-shaft-8
+    onBreakEffects:
+    - !type:SpawnRandomEntities
+      entity: SheetPlastic1
+      number: 2
+    minDamageRoll: 2.5
+    maxDamageRoll: 5
+    repairDoAfter: 3
+    repairMaterials:
+      Bracing: 15, 25
+      Whetstone: 15, 25
+    maxRepairBonus: 0
+
+# Unique
+- type: entity
+  parent: SpearPipebomb
+  id: SpearIED
+  name: fire bomb spear
+  description: Risky, but deadly.
+  components:
+  - type: WeaponClass
+    class: Polearm
+  - type: CosmicTransmutable
+    transmutesTo: SpearCosmicCult
+    requiredGlyphType: CosmicGlyphBlades
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/spear_IED.rsi
+    layers:
+    - state: base
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: SpawnOnTrigger
+    keysIn:
+    - timer
+    proto: MolotovFire
+  - type: Explosive
+    explosionType: FireBomb
+    totalIntensity: 25
+    intensitySlope: 5
+    maxIntensity: 3
+    canCreateVacuum: false
+  - type: Construction
+    graph: IEDSpear
+    node: finish
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband, SpearDurabilityWeak ]
+  id: SpearPipebomb
+  name: pipe bomb spear
+  description: Risky, but deadly.
+  components:
+  - type: WeaponClass
+    class: Polearm
+  - type: ThrowableBlocked
+  - type: UndetectableContraband
+  - type: CosmicTransmutable
+    transmutesTo: SpearCosmicCult # Pirate: local DeltaV field name.
+    requiredGlyphType: CosmicGlyphBlades
+  - type: DamageOnHit
+    damage:
+      types:
+        Blunt: 1
+  - type: EmbeddableProjectile
+    removalTime: 1
+    offset: -0.15,0.0
+  - type: ThrowingAngle
+    angle: 225
+  - type: LandAtCursor
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.08,-0.06
+            - -0.06,-0.08
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
+    useSound:
+      path: /Audio/Items/Culinary/chop.ogg
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/spear_pipebomb.rsi
+    layers:
+    - state: base
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: MeleeWeapon
+    canWideSwing: false
+    range: 2.2
+    attackRate: 0.6
+    animationRotation: -135
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 10
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,8,0
+    storedRotation: 45
+  - type: UseDelay
+  - type: Appearance
+  - type: TimerTrigger
+    delay: 5
+    examinable: false
+    initialBeepDelay: 0
+    beepSound: /Audio/Effects/lightburn.ogg
+  - type: RandomTimerTrigger
+    min: 5
+    max: 8
+  - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 50
+    intensitySlope: 5
+    maxIntensity: 6
+    canCreateVacuum: false
+  - type: TimerTriggerVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: active }
+          Unprimed: { state: icon }
+  - type: AnimationPlayer
+  - type: Tag
+    tags:
+    - Grenade
+    - HandGrenade
+  - type: TriggerOnEmbed
+  - type: ToggleComponentsOnTrigger
+    components:
+      - type: PointLight
+        radius: 3
+        energy: 15
+        color: "#b85425"
+  - type: Construction
+    graph: PipebombSpear
+    node: finish
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband, WoodDurability ]
+  id: SwordNail
+  name: nail sword
+  description: A wooden sword with nails sticking out of it.
+  components:
+  - type: WeaponClass
+    class: Bludgeon
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/sword_nail.rsi
+    state: icon
+  - type: MeleeWeapon
+    animationRotation: -90
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 10
+        Piercing: 3
+    heavyStaminaCost: 6
+    soundHit:
+      collection: MetalThud
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,5
+    storedRotation: -45
+  - type: Construction
+    graph: NailSword
+    node: finish
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband ]
+  id: SwordNailUnfinished
+  name: unfinished nail sword
+  description: Still needs some nails.
+  components:
+  - type: Construction
+    graph: NailSword
+    node: unfinished
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/sword_wooden.rsi
+    state: icon
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,5
+    storedRotation: -45
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband, WoodDurability ]
+  id: SwordScrap
+  name: scrap sword
+  description: A wooden sword with jagged metal sticking out of it.
+  components:
+  - type: WeaponClass
+    class: Bludgeon
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/sword_scrap.rsi
+    state: icon
+  - type: MeleeWeapon
+    animationRotation: -90
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 10
+        Slash: 5
+    heavyStaminaCost: 6
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,5
+    storedRotation: -45
+  - type: Construction
+    graph: ScrapSword
+    node: finish
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband ]
+  id: SwordScrapUnfinished
+  name: unfinished scrap sword
+  description: Still needs some blades.
+  components:
+  - type: Construction
+    graph: ScrapSword
+    node: unfinished
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/sword_wooden.rsi
+    state: icon
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,5
+    storedRotation: -45
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband, MetalToolDurability ]
+  id: SwordWelded
+  name: welded sword
+  description: A sword made by welding two pieces of metal to a tang, a bit unwieldy.
+  components:
+  - type: WeaponClass
+    class: Sword
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/sword_welded.rsi
+    state: icon
+  - type: MeleeWeapon
+    animationRotation: -90
+    wideAnimationRotation: -135
+    attackRate: 0.8
+    damage:
+      types:
+        Slash: 18
+    heavyStaminaCost: 6
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,6
+    storedRotation: -45
+  - type: Construction
+    graph: WeldedSword
+    node: finish
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband ]
+  id: SwordWeldedUnfinished
+  name: unfinished welded sword
+  description: An unfinished welded sword.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/sword_welded_unfinished.rsi
+    state: icon
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,6
+    storedRotation: -45
+  - type: Construction
+    graph: WeldedSword
+    node: unfinished
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband, WoodDurability ]
+  id: SwordWood
+  name: wooden sword
+  description: A wooden sword.
+  components:
+  - type: WeaponClass
+    class: Bludgeon # can't exactly stab with it
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/sword_wooden.rsi
+    state: icon
+  - type: MeleeWeapon
+    animationRotation: -90
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 10
+    heavyStaminaCost: 6
+    soundHit:
+      collection: MetalThud
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,0,5
+    storedRotation: -45
+  - type: Construction
+    graph: WoodenSword
+    node: finish
+  - type: Tag
+    tags:
+    - WoodenSword
+    - Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 250
+- type: entity
+  parent: [ BaseStructure, BaseMinorContraband ]
+  id: TrapPipeBomb
+  name: pipe bomb trap
+  description: A pipebomb linked to a remote signal. Can be disarmed with wirecutters.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Defences/trap_pipebomb.rsi
+    state: icon
+  - type: TimerTrigger
+    delay: 1
+    examinable: false
+    initialBeepDelay: 0
+    beepSound: /Audio/Effects/lightburn.ogg
+  - type: RandomTimerTrigger
+    min: 0
+    max: 1
+  - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 50
+    intensitySlope: 5
+    maxIntensity: 6
+    canCreateVacuum: false
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+  - type: TriggerOnSignal
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,0.35,0.4,0.5"
+        density: 190
+        mask:
+        - None
+        layer:
+        - TabletopMachineLayer
+  - type: InteractionOutline
+  - type: Construction
+    graph: PipeBombTrap
+    node: finish
+    defaultTarget: null
+- type: entity
+  parent: [ BaseMinorContraband ]
+  id: TrapTripWire
+  name: trip wire
+  description: A wire that sends a signal when walked over, can be disarmed with wirecutters.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+    stepOn: true
+  - type: Sprite
+    sprite: _Pirate/Structures/Defences/trap_tripwire.rsi
+    state: icon
+  - type: Anchorable
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+          - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+  - type: LandMine
+    sound:
+      path: /Audio/Effects/beep_landmine.ogg
+      params:
+        maxDistance: 10
+  - type: TriggerOnVerb
+    text: trigger-on-verb-detonation
+  - type: SignalOnTrigger
+    port: Triggered
+  - type: DeviceLinkSource
+    ports:
+    - Triggered
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 40
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: InteractionOutline
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: TriggerOnDamage
+    threshold: 1
+  - type: Construction
+    graph: TripWire
+    node: finish
+    defaultTarget: null
+- type: entity
+  id: UnfinishedKilldozer
+  name: pile of metal parts
+  description: This feels forboding
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+        restitution: 0.3
+        friction: 0.2
+  - type: Sprite
+    noRot: true
+    drawdepth: Items
+    sprite: _Pirate/Objects/Specific/Mech/killdozer.rsi
+    state: unfinished
+  - type: Appearance
+  - type: Pullable
+  - type: Construction
+    graph: Killdozer
+    deconstructionTarget: null
+    node: unfinished
+- type: entity
+  parent: BaseStructure
+  id: WallInsulation
+  name: insulation
+  description: Noise blocking insulation.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/insulation.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,-0.28125"
+        density: 190
+        mask:
+        - None
+        layer:
+        - TabletopMachineLayer
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger: !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCloth1:
+            min: 0
+            max: 1
+  - type: SoundBlocker
+    soundBlockPercent: .95
+  - type: InteractionOutline
+  - type: Construction
+    graph: WallInsulation
+    node: insulation
+- type: entity
+  parent: Stunbaton
+  id: Wandsky
+  name: commander wandsky
+  description: A technological marvel used for directing securitrons.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/commanderwandsky.rsi
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: StaminaDamageOnCollide
+    damage: 25
+    overtime: 40
+    sound: /Audio/Weapons/egloves.ogg
+  - type: LandAtCursor
+  - type: Clothing
+    sprite: _Pirate/Objects/Tools/commanderwandsky.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: PatrolCommander
+    waypointId: SecuritronWaypoint
+  - type: ActionsContainer
+  - type: ActionGrant
+    actions:
+    - ActionTogglePatrol
+    - ActionCRWaypoint
+    - ActionClearWaypoints
+  - type: ItemActionGrant
+    actions:
+    - ActionTogglePatrol
+    - ActionCRWaypoint
+    - ActionClearWaypoints
+  - type: ContainerContainer
+    containers:
+      actions: !type:Container
+  - type: Construction
+    graph: Wandsky
+    node: bot
+- type: entity
+  parent: MaterialBase
+  id: WeaponBracing
+  name: weapon bracing
+  description: Bracing materials used to repair many weapons.
+  suffix: full
+  components:
+  - type: Tag
+    tags:
+    - Bracing
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/weaponreinforcement.rsi
+    state: icon
+  - type: Item
+    sprite: _Pirate/Objects/Tools/weaponreinforcement.rsi
+    storedOffset: 0,-1
+    storedRotation: 45
+    size: Small
+    shape:
+    - 0,0,2,0
+  - type: Stack
+    stackType: Bracing
+    count: 5
+  - type: Construction
+    graph: Bracing
+    node: finish
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Bracing: 100
+- type: entity
+  parent: [ BaseSecurityContraband, BaseGunWieldable, BaseWeaponGaussgun ]
+  id: WeaponGaussgun
+  name: coil gun
+  description: Requires both a battery and ammunition to operate, a cheaper alternative to ballistic firearms.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/gaussgun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Large
+    sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/gaussgun_inhands_64x.rsi
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/gaussgun_back.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Gun
+    fireRate: 2
+- type: entity
+  parent: [ BaseMajorContraband, WeaponGaussgun ]
+  id: WeaponGaussgunImprov
+  name: gauss rifle
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/improv_gaussgun.rsi
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/improv_gaussgun_inhands_64x.rsi
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/improv_gaussgun_back.rsi
+  - type: Gun
+    fireRate: 1.5
+    minAngle: 26
+    maxAngle: 37
+  - type: Construction
+    graph: GaussRifleGraph
+    node: finish
+- type: entity
+  parent: [ BaseMajorContraband, BaseWeaponGaussgun ]
+  id: WeaponGaussgunPistol
+  name: gauss pistol
+  description: A much ligher alternative to the gauss gun, but far more innacurate and only semiautomatic.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/gausspistol.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/gausspistol.rsi
+    size: Small
+    shape:
+    - 0,0,0,0
+    - 0,1,1,1
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/gausspistol.rsi
+    quickEquip: false
+    slots:
+    - belt
+    - suitStorage
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: Construction
+    graph: GaussPistolGraph
+    node: finish
+
+# crafting
+- type: entity
+  parent: [ BaseWeaponLauncher, BaseRevMajorContraband, BaseGunWieldable ]
+  id: WeaponLauncherRPG2
+  name: RPG-2
+  description: An ancient old earth rocket launcher.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Launchers/RPG2.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Launchers/RPG2worn.rsi
+  - type: Item
+    shape:
+    - 0,0,7,2
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeRPG2
+    capacity: 1
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: Appearance
+  - type: StaticPrice
+    price: 1000
+  - type: GunRequiresWield
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: SpeedModifiedOnWield
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: HeldSpeedModifier
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevGuns
+    node: RPG2
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: WeaponLightMachineGunProletariat
+  name: Proletariat
+  description: An ancient LMG named for the classes it was used to oppress, until that class got ahold of it. Takes .22 short turret mags.
+  components:
+  - type: WeaponClass
+    class: Rifle # .22, it's like a 2-handed pistol come on
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/LightMachineGuns/proletariat.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/LightMachineGuns/proletariat_inhands_x64.rsi
+    size: Huge
+    shape:
+    - 0,0,5,3
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: Gun
+    minAngle: 10
+    maxAngle: 30
+    fireRate: 4
+    angleIncrease: 1 # its a 22
+    angleDecay: 16
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/smg.ogg
+    defaultDirection: 1, 0
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -10
+    maxAngle: -25
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineTurret
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeTurret
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeTurret
+  - type: ContainerFill
+    containers:
+      gun_magazine: [ BaseMagazineTurretHeavy ]
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: EmitSoundOnPickup
+    sound:
+      collection: SMGPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: SMGDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: SMGDrop
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: MeleeWeapon
+    damage:
+      types:
+       Blunt: 10
+    angle: 0
+    wideAnimationRotation: 90
+    soundHit:
+      collection: MetalThud
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+- type: entity
+  parent: WeaponLightMachineGunProletariat
+  id: WeaponLightMachineGunProletariatEmpty
+  suffix: Empty
+  components:
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevGuns
+    node: Proletariat
+  - type: ContainerFill
+    containers: {}
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: WeaponPistolLiberator
+  name: Liberator
+  description: A shitty little pistol that can only hold 6 rounds and has to be hand fed.
+  suffix: Full
+  components:
+  - type: WeaponClass
+    class: Pistol
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Pistols/liberator.rsi
+    layers:
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 3
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgePistol
+    capacity: 6
+    proto: CartridgePistol
+  - type: AmmoCounter
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+- type: entity
+  parent: WeaponPistolLiberator
+  id: WeaponPistolLiberatorEmpty
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevGuns
+    node: liberator
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: WeaponSMGResistance
+  name: Resistance
+  description: A small and innaccurate gun, cannot hit anything but at least it has a magazine.
+  suffix: Full
+  components:
+  - type: WeaponClass
+    class: SMG
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/resistance.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: AmmoCounter
+  - type: Gun
+    minAngle: 10
+    maxAngle: 20
+    fireRate: 6
+    burstFireRate: 12
+    burstCooldown: 0.5
+    shotsPerBurst: 3
+    angleIncrease: 3
+    angleDecay: 16
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/smg.ogg
+    defaultDirection: 1, 0
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazinePistolSubMachineGun
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgePistol
+  - type: ContainerFill
+    containers:
+      gun_magazine: [ MagazinePistolSubMachineGun ]
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: EmitSoundOnPickup
+    sound:
+      collection: SMGPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: SMGDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: SMGDrop
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: MeleeWeapon
+    damage:
+      types:
+       Blunt: 10
+    angle: 0
+    wideAnimationRotation: 90
+    soundHit:
+      collection: MetalThud
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+- type: entity
+  parent: WeaponSMGResistance
+  id: WeaponSMGResistanceEmpty
+  suffix: Empty
+  components:
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevGuns
+    node: resistance
+  - type: ContainerFill
+    containers: {}
+- type: entity
+  parent: [ BaseMajorContraband, BaseWeaponShotgun, BaseGunWieldable ]
+  id: WeaponShotgunDevastator
+  name: Devastator
+  description: A 4 barrel shotgun, inaccurate as hell but the results speak for themselves. Uses 12 gauge shotgun shells.
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Shotguns/devastator.rsi
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,3,1
+    sprite: _Pirate/Objects/Weapons/Guns/Shotguns/devastator.rsi
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Shotguns/devastator.rsi
+  - type: GunRequiresWield # ah yes let me one-hand the quad barrel shotgun
+  - type: Gun
+    fireRate: 1 # Was 4 but I nerfed it a bit because it felt fucky at 4
+  - type: GunSpreadModifier
+    spread: 1.5 # Was 2 but I wanted it to be more useful at range... still shit though.
+  - type: BallisticAmmoProvider
+    capacity: 4
+  - type: MeleeWeapon
+    wideAnimationRotation: -90 # Barrel thumps are cool.
+    animationRotation: -90
+    angle: 0
+    animation: WeaponArcThrust
+  # I tried adding durability but it had occasional crashes in a dev environment, its probably nothing but I don't like that.
+  # I also had it vary more from other shotguns but eh, it just has to barrel thump.
+- type: entity
+  parent: WeaponShotgunDevastator
+  id: WeaponShotgunDevastatorEmpty
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevGuns
+    node: Devastator
+- type: entity
+  parent: WeaponTurretRevolutionaryPistolFull
+  id: WeaponTurretRevolutionaryPistol
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevTurret
+    node: pistol turret
+- type: entity
+  parent: BaseWeaponTurretRevolutionary
+  id: WeaponTurretRevolutionaryPistolFull
+  name: improvised pistol turret
+  description: Fires at anything without the proper IFF signal, can only hold ten rounds which must be hand loaded. Careful with this thing.
+  components:
+  - type: Gun
+    fireRate: 0.5
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/gun_sentry.ogg
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+      - CartridgeTurret
+    proto: CartridgeTurret
+    capacity: 15
+  - type: Sprite
+    sprite: _Pirate/Structures/Defences/turrets.rsi
+    drawdepth: Mobs
+    layers:
+    - state: revturretpistol
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+- type: entity
+  parent: BaseWeaponTurretRevolutionaryMagazine
+  id: WeaponTurretRevolutionarySMG
+  name: improvised smg turret
+  description: Fires at anything without the proper IFF signal. This one is magazine loaded, but extremely innaccurate.
+  suffix: Empty
+  components:
+  - type: Gun
+    minAngle: 36
+    maxAngle: 36
+    fireRate: 1
+    burstFireRate: 16
+    burstCooldown: 0.5
+    selectedMode: Burst
+    availableModes:
+    - Burst
+  - type: Sprite
+    sprite: _Pirate/Structures/Defences/turrets.rsi
+    drawdepth: Mobs
+    layers:
+    - state: revturretsmg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineTurret
+        whitelistFailPopup: gun-magazine-whitelist-fail
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: Construction
+    deconstructionTarget: null
+    graph: RevTurret
+    node: SMG turret
+- type: entity
+  parent: MaterialBase
+  id: Whetstone
+  name: whetstone
+  description: A whetstone, used to maintain bladed weapons.
+  suffix: full
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/whetstone.rsi
+    state: icon
+  - type: Appearance
+  - type: Stack
+    stackType: Whetstone
+    count: 5
+  - type: Item
+    sprite: _Pirate/Objects/Tools/whetstone.rsi
+    storedOffset: 0,-1
+    storedRotation: 15
+    size: Small
+    shape:
+    - 0,0,1,0
+  - type: Construction
+    graph: Whetstone
+    node: finish
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Whetstone: 100
+  - type: CustomDurabilityModifier
+    maxDurabilityStateModifiers:
+      Reinforced: 2, 1.15 # Either +2 damage or +15% damage, whichever is less
+  - type: Tool
+    qualities:
+    - Sharpening
+    speedModifier: 0.5
+    useSound:
+      path: /Audio/_Pirate/Tools/whetstone.ogg
+- type: entity
+  id: WoodDurability
+  abstract: true
+  components:
+  - type: Durability
+    durabilityThresholds:
+      0: Pristine
+      50: Worn
+      65: Damaged
+      80: Broken
+      100: Destroyed
+    damageProbability: .50
+    damagePopups:
+      Worn:
+      - durability-wood-0
+      - durability-wood-1
+      Damaged:
+      - durability-wood-2
+      - durability-wood-3
+      - durability-wood-4
+      - durability-handle-2
+      - durability-handle-3
+      - durability-handle-4
+      Broken:
+      - durability-wood-5
+      - durability-wood-6
+      - durability-wood-7
+      - durability-handle-5
+      - durability-handle-6
+      Destroyed:
+      - durability-wood-8
+      - durability-wood-9
+      - durability-wood-10
+      - durability-handle-7
+    onBreakEffects:
+    - !type:SpawnRandomEntities
+      entity: MaterialWoodPlank1
+      min: 2
+      number: 3
+    minDamageRoll: 2.5
+    maxDamageRoll: 5
+    repairDoAfter: 3
+    repairMaterials:
+      Bracing: 15, 25
+    maxRepairBonus: 0
+- type: entity
+  id: WoodDurabilityWeak
+  abstract: true
+  components:
+  - type: Durability
+    durabilityThresholds:
+      0: Pristine
+      50: Worn
+      65: Damaged
+      80: Broken
+      100: Destroyed
+    damageProbability: .25
+    damagePopups:
+      Worn:
+      - durability-wood-0
+      - durability-wood-1
+      Damaged:
+      - durability-wood-2
+      - durability-wood-3
+      - durability-wood-4
+      - durability-handle-2
+      - durability-handle-3
+      - durability-handle-4
+      Broken:
+      - durability-wood-5
+      - durability-wood-6
+      - durability-wood-7
+      - durability-handle-5
+      - durability-handle-6
+      Destroyed:
+      - durability-wood-8
+      - durability-wood-9
+      - durability-wood-10
+      - durability-handle-7
+    onBreakEffects:
+    - !type:SpawnRandomEntities
+      entity: MaterialWoodPlank1
+      min: 2
+      number: 3
+    minDamageRoll: 5
+    maxDamageRoll: 10
+    repairDoAfter: 3
+    repairMaterials:
+      Bracing: 15, 25
+    maxRepairBonus: 0

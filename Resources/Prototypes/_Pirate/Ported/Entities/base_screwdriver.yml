@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: local abstract base required by forged screwdriver results.
+
+- type: entity
+  name: screwdriver
+  abstract: true
+  parent: BaseItem
+  id: BaseScrewdriver
+  description: Industrial grade torque in a small screwdriving package.
+  components:
+  - type: Tag
+    tags:
+    - Screwdriver
+    - DroneUsable
+  - type: Item
+    sprite: Objects/Tools/screwdriver.rsi
+    storedRotation: -90
+  - type: MeleeWeapon
+    animationRotation: -90
+    wideAnimationRotation: -90
+    attackRate: 1
+    damage:
+      types:
+        Piercing: 6
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Tool
+    qualities:
+    - Screwing
+    useSound:
+      collection: Screwdriver
+  - type: StaticPrice
+    price: 30

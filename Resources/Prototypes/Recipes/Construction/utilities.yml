@@ -8,6 +8,11 @@
   category: construction-category-utilities
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: WallmountTelescreen
@@ -18,6 +23,11 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: StationMap
@@ -33,6 +43,12 @@
   - !type:WallmountCondition {}
 
 # POWER
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
+
 - type: construction
   id: APC
   graph: APC
@@ -42,6 +58,11 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: CableTerminal
@@ -52,6 +73,11 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: WallmountSubstation
@@ -62,6 +88,11 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: WallmountGenerator
@@ -72,6 +103,11 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: WallmountGeneratorAPU
@@ -84,6 +120,12 @@
   canBuildInImpassable: true
 
 # DISPOSALS
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 3
+
 - type: construction
   id: DisposalUnit
   graph: DisposalMachine
@@ -92,6 +134,12 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: MailingUnit
@@ -101,6 +149,12 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: DisposalPipe
@@ -110,6 +164,11 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: DisposalTagger
@@ -119,6 +178,12 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: DisposalSignaller
@@ -128,6 +193,13 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: DisposalTrunk
@@ -137,6 +209,11 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: DisposalRouter
@@ -147,6 +224,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   mirror: DisposalRouterFlipped
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   hide: true
@@ -158,6 +240,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   mirror: DisposalRouter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: DisposalSignalRouter
@@ -168,6 +255,13 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   mirror: DisposalSignalRouterFlipped
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
+    MetalworkingKnowledge: 1
 
 - type: construction
   hide: true
@@ -179,6 +273,13 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   mirror: DisposalSignalRouter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: DisposalJunction
@@ -189,6 +290,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   mirror: DisposalJunctionFlipped
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   hide: true
@@ -200,6 +306,11 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   mirror: DisposalJunction
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: DisposalYJunction
@@ -209,6 +320,11 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: DisposalXJunction
@@ -218,6 +334,11 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: DisposalBend
@@ -229,6 +350,12 @@
   canBuildInImpassable: false
 
 # ATMOS
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
 - type: construction
   id: AirAlarmFixture
   graph: AirAlarm
@@ -241,6 +368,10 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition {}
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
 
 - type: construction
   id: FireAlarm
@@ -254,6 +385,10 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition {}
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
 
 - type: construction
   id: AirSensor
@@ -264,6 +399,10 @@
   placementMode: SnapgridCenter
   objectType: Structure
   canRotate: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
 
 - type: construction
   id: GasPipeSensor
@@ -278,6 +417,10 @@
   - GasPipeSensor
   - GasPipeSensorAlt1
   - GasPipeSensorAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
 
 - type: construction
   id: GasPipeSensorAlt1
@@ -293,6 +436,10 @@
   - GasPipeSensor
   - GasPipeSensorAlt1
   - GasPipeSensorAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
 
 - type: construction
   id: GasPipeSensorAlt2
@@ -310,6 +457,11 @@
   - GasPipeSensorAlt2
 
 # ATMOS PIPES
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+
 - type: construction
   id: GasPipeHalf
   name: construction-recipe-gas-pipe-half
@@ -323,6 +475,11 @@
   - GasPipeHalf
   - GasPipeHalfAlt1
   - GasPipeHalfAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeHalfAlt1
@@ -337,6 +494,11 @@
   - GasPipeHalf
   - GasPipeHalfAlt1
   - GasPipeHalfAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeHalfAlt2
@@ -351,6 +513,11 @@
   - GasPipeHalf
   - GasPipeHalfAlt1
   - GasPipeHalfAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeStraight
@@ -364,6 +531,11 @@
   - GasPipeStraight
   - GasPipeStraightAlt1
   - GasPipeStraightAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeStraightAlt1
@@ -378,6 +550,11 @@
   - GasPipeStraight
   - GasPipeStraightAlt1
   - GasPipeStraightAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeStraightAlt2
@@ -392,6 +569,11 @@
   - GasPipeStraight
   - GasPipeStraightAlt1
   - GasPipeStraightAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeBend
@@ -406,6 +588,11 @@
   - GasPipeBend
   - GasPipeBendAlt1
   - GasPipeBendAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeBendAlt1
@@ -420,6 +607,11 @@
   - GasPipeBend
   - GasPipeBendAlt1
   - GasPipeBendAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeBendAlt2
@@ -434,6 +626,11 @@
   - GasPipeBend
   - GasPipeBendAlt1
   - GasPipeBendAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeTJunction
@@ -448,6 +645,11 @@
   - GasPipeTJunction
   - GasPipeTJunctionAlt1
   - GasPipeTJunctionAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeTJunctionAlt1
@@ -462,6 +664,11 @@
   - GasPipeTJunction
   - GasPipeTJunctionAlt1
   - GasPipeTJunctionAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeTJunctionAlt2
@@ -476,6 +683,11 @@
   - GasPipeTJunction
   - GasPipeTJunctionAlt1
   - GasPipeTJunctionAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeFourway
@@ -490,6 +702,11 @@
   - GasPipeFourway
   - GasPipeFourwayAlt1
   - GasPipeFourwayAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeFourwayAlt1
@@ -504,6 +721,11 @@
   - GasPipeFourway
   - GasPipeFourwayAlt1
   - GasPipeFourwayAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeFourwayAlt2
@@ -518,6 +740,11 @@
   - GasPipeFourway
   - GasPipeFourwayAlt1
   - GasPipeFourwayAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPipeManifold
@@ -529,6 +756,12 @@
   canBuildInImpassable: true
 
 # ATMOS UNARY
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+
 - type: construction
   id: GasVentPump
   graph: GasUnary
@@ -539,6 +772,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPassiveVent
@@ -550,6 +788,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasVentScrubber
@@ -561,6 +804,13 @@
   canBuildInImpassable: false
   conditions:
   - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasOutletInjector
@@ -574,6 +824,14 @@
   - !type:NoUnstackableInTile
 
 # ATMOS BINARY
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
+
 - type: construction
   id: GasPressurePump
   graph: GasBinary
@@ -588,6 +846,13 @@
   - GasPressurePump
   - GasPressurePumpAlt1
   - GasPressurePumpAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasPressurePumpAlt1
@@ -604,6 +869,13 @@
   - GasPressurePump
   - GasPressurePumpAlt1
   - GasPressurePumpAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasPressurePumpAlt2
@@ -620,6 +892,13 @@
   - GasPressurePump
   - GasPressurePumpAlt1
   - GasPressurePumpAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasVolumePump
@@ -635,6 +914,13 @@
   - GasVolumePump
   - GasVolumePumpAlt1
   - GasVolumePumpAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasVolumePumpAlt1
@@ -651,6 +937,13 @@
   - GasVolumePump
   - GasVolumePumpAlt1
   - GasVolumePumpAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasVolumePumpAlt2
@@ -667,6 +960,13 @@
   - GasVolumePump
   - GasVolumePumpAlt1
   - GasVolumePumpAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasPassiveGate
@@ -682,6 +982,11 @@
   - GasPassiveGate
   - GasPassiveGateAlt1
   - GasPassiveGateAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPassiveGateAlt1
@@ -698,6 +1003,11 @@
   - GasPassiveGate
   - GasPassiveGateAlt1
   - GasPassiveGateAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPassiveGateAlt2
@@ -714,6 +1024,11 @@
   - GasPassiveGate
   - GasPassiveGateAlt1
   - GasPassiveGateAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasPressureRegulator
@@ -729,6 +1044,13 @@
   - GasPressureRegulator
   - GasPressureRegulatorAlt1
   - GasPressureRegulatorAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasPressureRegulatorAlt1
@@ -745,6 +1067,13 @@
   - GasPressureRegulator
   - GasPressureRegulatorAlt1
   - GasPressureRegulatorAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasPressureRegulatorAlt2
@@ -761,6 +1090,13 @@
   - GasPressureRegulator
   - GasPressureRegulatorAlt1
   - GasPressureRegulatorAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasValve
@@ -776,6 +1112,11 @@
   - GasValve
   - GasValveAlt1
   - GasValveAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasValveAlt1
@@ -792,6 +1133,11 @@
   - GasValve
   - GasValveAlt1
   - GasValveAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasValveAlt2
@@ -808,6 +1154,11 @@
   - GasValve
   - GasValveAlt1
   - GasValveAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: SignalControlledValve
@@ -823,6 +1174,13 @@
   - SignalControlledValve
   - SignalControlledValveAlt1
   - SignalControlledValveAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: SignalControlledValveAlt1
@@ -838,6 +1196,13 @@
   - SignalControlledValve
   - SignalControlledValveAlt1
   - SignalControlledValveAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: SignalControlledValveAlt2
@@ -853,6 +1218,13 @@
   - SignalControlledValve
   - SignalControlledValveAlt1
   - SignalControlledValveAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasPort
@@ -864,6 +1236,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: GasDualPortVentPump
@@ -873,6 +1250,11 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: HeatExchanger
@@ -882,6 +1264,11 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: HeatExchangerBend
@@ -894,6 +1281,12 @@
   canBuildInImpassable: false
 
 # ATMOS TRINARY
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
 - type: construction
   id: GasFilter
   graph: GasTrinary
@@ -905,6 +1298,13 @@
   mirror: GasFilterFlipped
   conditions:
     - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasFilterFlipped
@@ -918,6 +1318,13 @@
   mirror: GasFilter
   conditions:
     - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasMixer
@@ -930,6 +1337,13 @@
   mirror: GasMixerFlipped
   conditions:
     - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GasMixerFlipped
@@ -943,6 +1357,13 @@
   mirror: GasMixer
   conditions:
     - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: PressureControlledValve
@@ -956,6 +1377,14 @@
     - !type:NoUnstackableInTile
 
 # INTERCOM
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
+
 - type: construction
   id: IntercomAssembly
   graph: Intercom
@@ -970,6 +1399,12 @@
   - !type:WallmountCondition {}
 
 # TIMERS
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
+
 - type: construction
   id: SignalTimer
   graph: Timer
@@ -981,6 +1416,11 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: ScreenTimer
@@ -994,6 +1434,12 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: BrigTimer
@@ -1009,6 +1455,13 @@
   - !type:WallmountCondition
 
 # DEFENSES
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
+
 - type: construction
   id: WeaponEnergyTurretControlPanel
   graph: WeaponEnergyTurretControlPanel
@@ -1021,3 +1474,9 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 3
+    InfrastructureKnowledge: 1
+  practical:
+    ElectronicsKnowledge: 2

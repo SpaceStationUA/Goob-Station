@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared._Goobstation.Wizard.Projectiles;
 using Content.Shared._Pirate.Weapons.Melee.Components;
 using Content.Shared._Pirate.Weapons.Ranged.Events;
+using Content.Shared._Pirate.Parry;
 using Content.Shared._Shitmed.ItemSwitch;
 using Content.Shared._Shitmed.ItemSwitch.Components;
 using Content.Shared.Clothing.Components;
@@ -177,25 +178,40 @@ public sealed class TimedDeflectBlockSystem : EntitySystem
         if (args.Cancelled || args.Type != HarmfulActionType.Harm)
             return;
 
-        if (!TryGetActiveDeflectWeapon(ent, out var weapon, out var block) || block == null)
-            return;
-
-         if (!ApplyDefense(ent.Owner, weapon, block, args.User, GetDamageTotal(args.Damage), projectile: null, isRanged: false, out _))
-            return;
-
-        args.Cancel();
-
-        // If the attacker was wielding a TimedDeflectBlock weapon, break their grip —
-        // a blocked swing counts as "reaching the target" for the wield-break rule.
-        // BeforeHarmfulActionEvent is shared, but wield state is server-authoritative.
-        if (_net.IsServer &&
-            _hands.TryGetActiveItem(args.User, out var attackerWeapon) &&
-            TryComp<TimedDeflectBlockComponent>(attackerWeapon, out _) &&
-            TryComp<WieldableComponent>(attackerWeapon, out var attackerWieldable) &&
-            attackerWieldable.Wielded)
+        if (TryGetActiveDeflectWeapon(ent, out var weapon, out var block) &&
+            block != null &&
+            ApplyDefense(
+                ent.Owner,
+                weapon,
+                block,
+                args.User,
+                GetDamageTotal(args.Damage),
+                projectile: null,
+                isRanged: false,
+                out _))
         {
-            _wieldable.TryUnwield(attackerWeapon.Value, attackerWieldable, args.User, force: true);
+            args.Cancel();
+
+            // If the attacker was wielding a TimedDeflectBlock weapon, break their grip —
+            // a blocked swing counts as "reaching the target" for the wield-break rule.
+            // BeforeHarmfulActionEvent is shared, but wield state is server-authoritative.
+            if (_net.IsServer &&
+                _hands.TryGetActiveItem(args.User, out var attackerWeapon) &&
+                TryComp<TimedDeflectBlockComponent>(attackerWeapon, out _) &&
+                TryComp<WieldableComponent>(attackerWeapon, out var attackerWieldable) &&
+                attackerWieldable.Wielded)
+            {
+                _wieldable.TryUnwield(attackerWeapon.Value, attackerWieldable, args.User, force: true);
+            }
+
+            return;
         }
+
+        // Pirate: use this single hands subscription to relay Trauma-style parrying too.
+        var parry = new ParryAttemptEvent(args.User);
+        RaiseLocalEvent(ent.Owner, parry);
+        if (parry.Cancelled)
+            args.Cancel();
     }
 
     private void OnProjectileReflectAttempt(

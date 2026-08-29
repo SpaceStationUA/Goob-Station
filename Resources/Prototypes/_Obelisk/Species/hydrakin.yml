@@ -10,6 +10,7 @@
   markingLimits: MobHydrakinMarkingLimits
   dollPrototype: MobHydrakinDummy
   skinColoration: Hues
+  knowledge: Human # Pirate
   maleFirstNames: NamesHydrakin
   femaleFirstNames: NamesHydrakin
   naming: FirstDashFirst

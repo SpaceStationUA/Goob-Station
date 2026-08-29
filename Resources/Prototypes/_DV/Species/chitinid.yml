@@ -8,6 +8,7 @@
   markingLimits: MobChitinidMarkingLimits
   dollPrototype: MobChitinidDummy
   skinColoration: Hues
+  knowledge: Human # Pirate
   maleFirstNames: NamesChitinidFirstMale
   femaleFirstNames: NamesChitinidFirstFemale
   naming: First

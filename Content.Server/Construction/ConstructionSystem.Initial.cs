@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Goobstation.Common.Construction; // Goobstation
 using Content.Server.Construction.Components;
+using Content.Shared._Pirate.Construction; // Pirate
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
@@ -352,6 +353,12 @@ namespace Content.Server.Construction
                 return false;
             }
 
+            // Pirate: validate skill requirements before consuming construction materials.
+            var attempt = new ConstructAttemptEvent(prototype);
+            RaiseLocalEvent(user, ref attempt);
+            if (attempt.Cancelled)
+                return false;
+
             if (_whitelistSystem.IsWhitelistFail(constructionPrototype.EntityWhitelist, user))
             {
                 _popup.PopupEntity(Loc.GetString("construction-system-cannot-start"), user, user);
@@ -410,7 +417,7 @@ namespace Content.Server.Construction
                 return false;
 
             // <Goobstation>
-            var constructedEv = new ConstructedEvent(item);
+            var constructedEv = new ConstructedEvent(item, prototype); // Pirate
             RaiseLocalEvent(user, ref constructedEv);
             // </Goobstation>
 
@@ -450,6 +457,15 @@ namespace Content.Server.Construction
             if (!PrototypeManager.TryIndex(prototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Log.Error($"Tried to start construction of invalid recipe '{prototypeName}'!");
+                RaiseNetworkEvent(new AckStructureConstructionMessage(ack), user);
+                return false;
+            }
+
+            // Pirate: validate skill requirements before reserving or consuming construction materials.
+            var attempt = new ConstructAttemptEvent(prototypeName);
+            RaiseLocalEvent(user, ref attempt);
+            if (attempt.Cancelled)
+            {
                 RaiseNetworkEvent(new AckStructureConstructionMessage(ack), user);
                 return false;
             }
@@ -604,7 +620,7 @@ namespace Content.Server.Construction
             }
 
             // <Goobstation>
-            var constructedEv = new ConstructedEvent(structure);
+            var constructedEv = new ConstructedEvent(structure, prototypeName); // Pirate
             RaiseLocalEvent(user, ref constructedEv);
             // </Goobstation>
 

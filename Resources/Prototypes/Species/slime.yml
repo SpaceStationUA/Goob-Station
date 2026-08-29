@@ -10,6 +10,7 @@
   markingLimits: MobSlimeMarkingLimits
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
+  knowledge: Slimeperson # Pirate
 
 - type: speciesBaseSprites
   id: MobSlimeSprites

@@ -9,6 +9,7 @@
   defaultSkinTone: "#ffffff"
   dollPrototype: MobThavenDummy
   skinColoration: Hues
+  knowledge: Human # Pirate
   maleFirstNames: NamesThaven
   femaleFirstNames: NamesThaven
   naming: First

@@ -33,6 +33,14 @@ public abstract partial class SharedStackSystem
         if (recipient.Comp.StackTypeId != donor.Comp.StackTypeId)
             return false;
 
+        // Pirate: quality and other per-stack metadata can reject incompatible merges.
+        var donorAttempt = new AttemptMergeStackEvent(recipient.Owner);
+        RaiseLocalEvent(donor.Owner, ref donorAttempt);
+        var recipientAttempt = new AttemptMergeStackEvent(donor.Owner);
+        RaiseLocalEvent(recipient.Owner, ref recipientAttempt);
+        if (donorAttempt.Cancelled || recipientAttempt.Cancelled)
+            return false;
+
         // The most we can transfer
         transferred = Math.Min(donor.Comp.Count, GetAvailableSpace(recipient.Comp));
         if (transferred <= 0)

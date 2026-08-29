@@ -13,13 +13,14 @@ using Content.Shared._Shitmed.Medical.Surgery.Traumas.Systems;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Pirate.Knowledge.Quality; // Pirate
 
 namespace Content.Shared.Armor;
 
 /// <summary>
 /// Used for clothing that reduces damage when worn.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedArmorSystem), typeof(TraumaSystem))] // Shitmed Change
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedArmorSystem), typeof(TraumaSystem), typeof(QualitySystem))] // Shitmed Change; Pirate quality
 public sealed partial class ArmorComponent : Component
 {
     /// <summary>

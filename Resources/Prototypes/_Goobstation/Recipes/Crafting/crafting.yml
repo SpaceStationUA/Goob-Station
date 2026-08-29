@@ -6,6 +6,13 @@
   category: construction-category-misc
   targetNode: stack
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    FabricationKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: ScrewDouble
@@ -13,6 +20,13 @@
   category: construction-category-misc
   targetNode: stack
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    FabricationKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: TileCanvas

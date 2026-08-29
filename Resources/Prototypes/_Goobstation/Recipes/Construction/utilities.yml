@@ -7,6 +7,10 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
 
 - type: construction
   id: GasFilterInline
@@ -17,6 +21,13 @@
   canBuildInImpassable: false
   conditions:
   - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: HeatExchangerInline
@@ -25,6 +36,11 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: HeatExchangerInlineBend
@@ -33,3 +49,8 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1

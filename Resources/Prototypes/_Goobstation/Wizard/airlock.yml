@@ -95,6 +95,9 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
 
 - type: construction
   id: AirlockUraniumGlass
@@ -109,6 +112,10 @@
     - !type:TileNotBlocked
 
 # Construction
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+
 - type: constructionGraph
   id: AirlockUranium
   start: start

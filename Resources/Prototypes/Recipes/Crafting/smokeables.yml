@@ -7,6 +7,11 @@
   targetNode: joint
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SmokeablesKnowledge: 0
+  practical:
+    SmokeablesKnowledge: 1
 
 - type: construction
   id: smokeableJointRainbow
@@ -16,6 +21,11 @@
   targetNode: jointRainbow
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SmokeablesKnowledge: 0
+  practical:
+    SmokeablesKnowledge: 2
 
 - type: construction
   id: smokeableBlunt
@@ -24,6 +34,11 @@
   targetNode: blunt
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SmokeablesKnowledge: 0
+  practical:
+    SmokeablesKnowledge: 1
 
 - type: construction
   id: smokeableBluntRainbow
@@ -33,6 +48,11 @@
   targetNode: bluntRainbow
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SmokeablesKnowledge: 0
+  practical:
+    SmokeablesKnowledge: 2
 
 - type: construction
   id: smokeableCigarette
@@ -43,6 +63,11 @@
   objectType: Item
 
 # I wanted to put a hand-grinder here but we need construction graphs that use non-consumed catalysts first.
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SmokeablesKnowledge: 0
+  practical:
+    SmokeablesKnowledge: 1
 
 - type: construction
   id: smokeableGroundCannabis
@@ -52,6 +77,11 @@
   category: construction-category-misc
 #    color: darkgreen
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SmokeablesKnowledge: 0
+  practical:
+    SmokeablesKnowledge: 1
 
 - type: construction
   id: smokeableGroundCannabisRainbow
@@ -60,6 +90,11 @@
   targetNode: groundRainbow
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SmokeablesKnowledge: 0
+  practical:
+    SmokeablesKnowledge: 2
 
 - type: construction
   id: smokeableGroundTobacco
@@ -69,3 +104,8 @@
   category: construction-category-misc
 #    color: brown
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SmokeablesKnowledge: 0
+  practical:
+    SmokeablesKnowledge: 1

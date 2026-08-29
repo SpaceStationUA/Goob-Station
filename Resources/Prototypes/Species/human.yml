@@ -9,6 +9,7 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobHumanDummy
   skinColoration: HumanToned
+  knowledge: Human # Pirate
   # begin Goobstation: port EE height/width sliders
   minHeight: 0.90
   defaultHeight: 1

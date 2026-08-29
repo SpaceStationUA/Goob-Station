@@ -8,6 +8,7 @@
   markingLimits: MobPlasmamanMarkingLimits
   dollPrototype: MobPlasmamanDummy
   skinColoration: Hues
+  knowledge: Plasmaman # Pirate
   youngAge: 60
   oldAge: 120
   maxAge: 180

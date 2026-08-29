@@ -7,6 +7,8 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
+  - type: WeaponClass # Pirate
+    class: SMG
   - type: Sprite
   - type: Item
     size: Large

@@ -7,3 +7,8 @@
   targetNode: end
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    ElectronicsKnowledge: 1

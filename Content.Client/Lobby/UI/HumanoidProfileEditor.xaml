@@ -10,6 +10,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 	         xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
 	         xmlns:pirate="clr-namespace:Content.Client._Pirate.Traits.UI"
 	         xmlns:pirateInfo="clr-namespace:Content.Client._Pirate.Lobby.UI"
+	         xmlns:pirateKnowledge="clr-namespace:Content.Client._Pirate.Knowledge.UI"
          HorizontalExpand="True">
         <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10" HorizontalExpand="True">
@@ -223,6 +224,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <pirateInfo:OOCInfoEditor Name="OOCInfoEditor" />
                     </ScrollContainer>
                 </BoxContainer>
+                <!-- Pirate: character skills. Appended to keep existing tab indices stable. -->
+                <pirateKnowledge:KnowledgeProfileEditor Name="KnowledgeEditor" />
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->

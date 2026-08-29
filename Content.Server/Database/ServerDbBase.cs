@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Content.Pirate.Common.AlternativeJobs; // Pirate - Alternative Jobs
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared._RMC14.LinkAccount;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Prototypes;
@@ -305,7 +306,10 @@ namespace Content.Server.Database
                 profile.PersonalNotes,
                 profile.OOCNotes,
                 profile.Secrets,
-                profile.ExploitableInfo);
+                profile.ExploitableInfo).WithKnowledge(
+                new KnowledgeProfile(profile.KnowledgeMastery.ToDictionary(
+                    pair => new EntProtoId(pair.Key),
+                    pair => pair.Value)));
         }
 
         private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot, Profile? profile = null)
@@ -365,6 +369,11 @@ namespace Content.Server.Database
             );
 
             profile.BarkVoice = humanoid.BarkVoice; // Goob Station - Barks
+
+            // Pirate: persist only the character's selected mastery increases.
+            profile.KnowledgeMastery.Clear();
+            foreach (var (id, mastery) in humanoid.Knowledge.Mastery)
+                profile.KnowledgeMastery[id.Id] = mastery;
 
             profile.Loadouts.Clear();
 

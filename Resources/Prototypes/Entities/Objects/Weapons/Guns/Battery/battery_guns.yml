@@ -5,6 +5,8 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: WeaponClass # Pirate
+    class: Laser
   - type: Sprite
   - type: Item
     size: Huge

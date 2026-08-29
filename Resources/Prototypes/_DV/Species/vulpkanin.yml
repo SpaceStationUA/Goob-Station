@@ -13,6 +13,7 @@
   markingLimits: MobVulpkaninMarkingLimits
   dollPrototype: MobVulpkaninDummy
   skinColoration: AnimalFur # Pirate edit
+  knowledge: Human # Pirate
   maleFirstNames: NamesVulpakinMale
   femaleFirstNames: NamesVulpakinFemale
   lastNames: NamesVulpakinLast
@@ -211,4 +212,3 @@
   baseSprite:
     sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
     state: r_foot
-

@@ -32,6 +32,9 @@ public sealed class ScreenSystem : EntitySystem
     /// </summary>
     private void OnPacketReceived(EntityUid uid, ScreenComponent component, DeviceNetworkPacketEvent args)
     {
+        if (component.IgnoreNetwork)
+            return;
+
         if (args.Data.TryGetValue(ShuttleTimerMasks.ShuttleMap, out _))
             ShuttleTimer(uid, component, args);
         else

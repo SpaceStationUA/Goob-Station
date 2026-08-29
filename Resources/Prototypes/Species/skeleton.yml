@@ -12,6 +12,7 @@
   femaleFirstNames: NamesSkeletonFirst
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
+  knowledge: Plasmaman # Pirate
 
 - type: speciesBaseSprites
   id: MobSkeletonSprites

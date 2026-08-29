@@ -8,6 +8,7 @@
   sprites: MobKoboldSprites
   dollPrototype: MobKoboldDummy
   skinColoration: Hues
+  knowledge: Human # Pirate
   defaultSkinTone: "#9a7c5a"
   markingLimits: MobKoboldMarkingLimits
 

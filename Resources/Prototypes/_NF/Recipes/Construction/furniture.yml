@@ -11,6 +11,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BenchSofaLeft
@@ -23,6 +28,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BenchSofaRight
@@ -35,6 +45,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BenchSofaCorner
@@ -47,6 +62,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BenchSofaCorpMiddle
@@ -59,6 +79,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BenchSofaCorpLeft
@@ -71,6 +96,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BenchSofaCorpRight
@@ -83,6 +113,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BenchSofaCorpCorner
@@ -95,6 +130,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BenchSteelMiddle
@@ -107,6 +147,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchSteelRight
@@ -119,6 +164,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchSteelLeft
@@ -131,6 +181,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchPewMiddle
@@ -143,6 +198,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchPewRight
@@ -155,6 +215,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchPewLeft
@@ -167,6 +232,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkMiddle
@@ -179,6 +249,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkRight
@@ -191,6 +266,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkLeft
@@ -203,6 +283,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchSteelWhiteMiddle
@@ -215,6 +300,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchSteelWhiteRight
@@ -227,6 +317,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchSteelWhiteLeft
@@ -239,6 +334,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchParkBambooMiddle
@@ -251,6 +351,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkBambooRight
@@ -263,6 +368,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkBambooLeft
@@ -277,6 +387,12 @@
     - !type:TileNotBlocked
 
 # Decorations (bonfire, fireplace)
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
+
 - type: construction
   id: BonfireFrontier
   graph: FiresGraph
@@ -302,6 +418,10 @@
     - !type:TileNotBlocked
 
 # Banners
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+
 - type: construction
   id: BannerNanotrasen
   graph: BannersGraph
@@ -313,6 +433,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerCargo
@@ -325,6 +450,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerEngineering
@@ -337,6 +467,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerMedical
@@ -349,6 +484,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerScience
@@ -361,6 +501,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerSecurity
@@ -373,6 +518,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerBlue
@@ -385,6 +535,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerRed
@@ -397,6 +552,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerYellow
@@ -409,6 +569,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerGreen
@@ -421,6 +586,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerRevolution
@@ -433,6 +603,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerSyndicate
@@ -445,3 +620,8 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
