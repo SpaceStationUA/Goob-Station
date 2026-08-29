@@ -92,6 +92,7 @@
     tags:
     - FelinidEmotes
     - HarpyEmotes
+    - ReptilianEmotes # Pirate: reptilian emotes
   blacklist:
     components:
     - BorgChassis

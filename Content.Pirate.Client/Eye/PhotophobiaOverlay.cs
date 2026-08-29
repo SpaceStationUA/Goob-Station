@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Client._Pirate.Photo;
 using Content.Pirate.Shared.Traits;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -25,11 +26,21 @@ public sealed class PhotophobiaOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private readonly ShaderInstance _photophobiaShader;
+    private readonly PhotoCaptureFilterSystem _photoCaptureFilter;
 
     public PhotophobiaOverlay()
     {
         IoCManager.InjectDependencies(this);
         _photophobiaShader = _prototypeManager.Index(Shader).InstanceUnique();
+        _photoCaptureFilter = _entityManager.System<PhotoCaptureFilterSystem>();
+    }
+
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
+    {
+        if (_photoCaptureFilter.IsSuppressedForEye(args.Viewport.Eye, PhotoCaptureSuppressionMask.VisionEffects))
+            return false;
+
+        return base.BeforeDraw(in args);
     }
 
     protected override void Draw(in OverlayDrawArgs args)

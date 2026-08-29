@@ -8,6 +8,8 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Whitelist; // Pirate
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
@@ -107,6 +109,8 @@ public sealed class BackEquipSystem : EntitySystem
                 var ejectCandidates = slots.Slots.Values
                     .Where(s => s.HasItem)
                     .OrderByDescending(s => s.Priority)
+                    .OrderByDescending(s => s.Item.HasValue &&
+                        (HasComp<GunComponent>(s.Item.Value) || HasComp<MeleeWeaponComponent>(s.Item.Value)))
                     .ToList();
 
                 foreach (var slot in ejectCandidates)

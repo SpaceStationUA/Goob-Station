@@ -32,10 +32,20 @@ public sealed class SlimeMorphAppearance
     public List<Marking> Markings = new();
 
     /// <summary>
-    /// The target species' head base-sprite id (e.g. a fox muzzle), copied so baked head shapes
-    /// transfer on mimic. Null = keep the slime's own head.
+    /// The target species' base-sprite ids for structural layers markings can't reproduce (e.g. a
+    /// fox muzzle head, digitigrade legs), keyed by layer. Copied so baked shapes transfer on mimic;
+    /// a layer missing here keeps the slime's own sprite for that part.
     /// </summary>
-    public string? HeadLayer;
+    public Dictionary<HumanoidVisualLayers, string> BodyLayers = new();
+}
+
+/// <summary>A copied structural layer's base sprite, plus the brightness factor to normalize it to the slime body.</summary>
+[Serializable, NetSerializable]
+public sealed class SlimeMorphBodyLayer
+{
+    public HumanoidVisualLayers Layer;
+    public string SpriteId = string.Empty;
+    public float ColorFactor = 1f;
 }
 
 [Serializable, NetSerializable]
@@ -61,14 +71,11 @@ public sealed class SlimeMorphUiState : BoundUserInterfaceState
     /// <summary>Species the slime may scope its marking pickers to (the morph whitelist). Empty = Any.</summary>
     public List<string> MorphableSpecies = new();
 
-    /// <summary>Head base-sprite override for the staged look (baked head shapes like muzzles).</summary>
-    public string? HeadLayer;
+    /// <summary>Base-sprite overrides for the staged look's copied structural layers (baked heads, digitigrade legs, ...).</summary>
+    public List<SlimeMorphBodyLayer> BodyLayers = new();
 
-    /// <summary>Brightness multiplier for the copied head so it matches the slime body.</summary>
-    public float HeadColorFactor = 1f;
-
-    /// <summary>Opacity multiplier for an opaque copied head so it matches translucent slime body art.</summary>
-    public float HeadColorAlpha = 1f;
+    /// <summary>Opacity multiplier for opaque copied layers so they match translucent slime body art.</summary>
+    public float CopiedLayerAlpha = 1f;
 
     /// <summary>Species used to populate marking pickers.</summary>
     public string? PickerSpecies;

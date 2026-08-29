@@ -1,11 +1,11 @@
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
-using Content.Server.Humanoid.Systems;
 using Content.Server.Preferences.Managers;
 using Content.Server.RandomMetadata;
 using Content.Server.RoundEnd;
 using Content.Server._Pirate.Character.Info;
 using Content.Server._Pirate.Traits;
+using Content.Pirate.Server.Contractors.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
@@ -50,10 +50,10 @@ namespace Content.Pirate.Server.Mercenary
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly RandomHumanoidSystem _randomHumanoidSystem = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
         [Dependency] private readonly PirateCharacterInfoSystem _characterInfoSystem = default!;
         [Dependency] private readonly TraitSystem _traitSystem = default!;
+        [Dependency] private readonly NationalitySystem _nationalitySystem = default!;
         [Dependency] private readonly RandomMetadataSystem _randomMetadataSystem = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
@@ -115,6 +115,7 @@ namespace Content.Pirate.Server.Mercenary
             {
                 _traitSystem.ApplyProfileTraits(uid, mercProfile, session, null);
                 _characterInfoSystem.ApplyCharacterInfo(uid, mercProfile);
+                _nationalitySystem.ApplyNationality(uid, mercProfile, session);
             }
 
             var disk = EntityManager.SpawnEntity(Disk, spawn);
@@ -132,29 +133,34 @@ namespace Content.Pirate.Server.Mercenary
                 && prefs.SelectedCharacter is HumanoidCharacterProfile selected
                 && _prototypeManager.Resolve(selected.Species, out var species))
             {
-                var body = CreateMercBody(species.Prototype, coordinates, settings, selected.Name);
-                _humanoidSystem.LoadProfile(body, selected);
-                _entManager.InitializeAndStartEntity(body);
-
                 Log.Info($"makemerc: used the selected character of {session.Name} ({selected.Name}, {species.ID}).");
 
                 profile = selected;
-                return body;
+                return CreateMercBody(species.Prototype, coordinates, settings, selected.Name, selected);
             }
 
-            Log.Info($"makemerc: no selected character for {session.Name}, rolling a random merc.");
+            // SpawnRandomHumanoid loads before initialization, losing the rolled appearance.
+            var rolled = settings.SpeciesWhitelist != null
+                ? HumanoidCharacterProfile.RandomWithSpecies(settings.SpeciesWhitelist)
+                : HumanoidCharacterProfile.Random(settings.SpeciesBlacklist);
+
+            var rolledSpecies = _prototypeManager.Index<SpeciesPrototype>(rolled.Species);
+            var name = settings.RandomizeName ? rolled.Name : MetaData(source).EntityName;
+
+            Log.Info($"makemerc: no selected character for {session.Name}, rolled {name} ({rolledSpecies.ID}).");
 
             profile = null;
-            return _randomHumanoidSystem.SpawnRandomHumanoid(SpawnerPrototypeId, coordinates, MetaData(source).EntityName);
+            return CreateMercBody(rolledSpecies.Prototype, coordinates, settings, name, rolled);
         }
 
         private EntityUid CreateMercBody(EntProtoId speciesEntity, EntityCoordinates coordinates,
-            RandomHumanoidSettingsPrototype settings, string name)
+            RandomHumanoidSettingsPrototype settings, string name, HumanoidCharacterProfile profile)
         {
             var body = _entManager.CreateEntityUninitialized(speciesEntity, coordinates);
 
             _metaDataSystem.SetEntityName(body, name);
 
+            // Add components before initialization so map init equips the loadout.
             if (settings.Components != null)
             {
                 foreach (var entry in settings.Components.Values)
@@ -164,6 +170,11 @@ namespace Content.Pirate.Server.Mercenary
                     AddComp(body, comp);
                 }
             }
+
+            _entManager.InitializeAndStartEntity(body);
+
+            // Load after initialization; ComponentInit otherwise restores the default appearance.
+            _humanoidSystem.LoadProfile(body, profile);
 
             return body;
         }

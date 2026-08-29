@@ -11,6 +11,8 @@ namespace Content.Shared.Wagging;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class WaggingComponent : Component
 {
+    public const string DefaultSuffix = "Animated"; // Pirate: slime morph
+
     [DataField]
     public EntProtoId Action = "ActionToggleWagging";
 
@@ -20,7 +22,7 @@ public sealed partial class WaggingComponent : Component
     /// <summary>
     /// Suffix to add to get the animated marking.
     /// </summary>
-    public string Suffix = "Animated";
+    public string Suffix = DefaultSuffix; // Pirate: slime morph
 
     /// <summary>
     /// Is the entity currently wagging.

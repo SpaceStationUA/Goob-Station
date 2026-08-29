@@ -6,7 +6,7 @@
   parent: BaseAction
   id: ActionMorphGeras
   name: Morph into Geras
-  description: Morphs you into a geras, a faster miniature form, at the cost of dropping your equipment and held items.
+  description: Morphs you into a geras, a faster miniature form. Your equipment and held items are stashed away safely, but will spill out if you die in this form.
   categories: [ HideSpawnMenu ]
   components:
   - type: ConfirmableAction

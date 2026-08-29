@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: SyndieFulton
-  name: syndicate fulton
-  description: These fultons are used by the Syndicate to extract items of value, or possibly even people.
+  name: fulton
+  description: Used to extract containers, items, or forcibly recruit people into your base of operations. A tiny waffle-shaped maker's mark is stamped beneath the handle.
   components:
   - type: Sprite
     sprite: Objects/Tools/fulton.rsi # TODO: unique sprite

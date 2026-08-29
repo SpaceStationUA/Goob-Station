@@ -6,7 +6,6 @@ using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -38,18 +37,7 @@ public sealed class ExtractionFultonSystem : SharedExtractionFultonSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ExtractionFultonComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<ExtractionFultonComponent, ExtractionFultonDoAfterEvent>(OnDoAfter);
-    }
-
-    private void OnAfterInteract(Entity<ExtractionFultonComponent> ent, ref AfterInteractEvent args)
-    {
-        if (args.Handled || args.Target is not {} target)
-            return;
-
-        args.Handled = true;
-
-        AttachFulton(ent, target, args.User);
     }
 
     protected override void AttachFulton(Entity<ExtractionFultonComponent> ent, EntityUid target, EntityUid user)

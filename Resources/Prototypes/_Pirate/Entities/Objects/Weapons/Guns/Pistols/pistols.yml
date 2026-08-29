@@ -30,7 +30,7 @@
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 5
+        priority: 2
         ejectOnBreak: true
         occludesLight: false
         whitelist:
@@ -41,7 +41,7 @@
         startingItem: MagazineUniversalMagnum
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3
         whitelist:
           tags:
             - MagazineUniversalMagnum
@@ -96,7 +96,7 @@
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 5
+        priority: 2
         ejectOnBreak: true
         occludesLight: false
         whitelist:
@@ -107,7 +107,7 @@
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3
         whitelist:
           tags:
             - MagazinePistol

@@ -34,8 +34,10 @@
   - !type:AddComponentSpecial
     components:
       - type: CanEnchant
-      - type: MetapsionicPulsePower # DeltaV
-      - type: AssayPower
+  - !type:AddPsionicComponentSpecial # Pirate - Forensic Mantis gets Metapsionic Pulse as a proper psionic power.
+    powerPrototype: MetapsionicPulsePowerEntity
+  - !type:AddPsionicComponentSpecial # Pirate - Forensic Mantis gets Assay as a proper psionic power.
+    powerPrototype: AssayPowerEntity
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
 
