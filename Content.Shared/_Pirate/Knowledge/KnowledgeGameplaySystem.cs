@@ -3,6 +3,7 @@
 using Content.Goobstation.Common.Weapons.Ranged;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Projectiles;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Pirate.Knowledge;
@@ -41,9 +42,9 @@ public sealed class KnowledgeGameplaySystem : EntitySystem
 
         SubscribeLocalEvent<KnowledgeHolderComponent, GetRecoilModifiersEvent>(OnGetRecoilModifiers);
         SubscribeLocalEvent<KnowledgeHolderComponent, AmmoShotUserEvent>(OnAmmoShot);
-        // Pirate: keep this broadcast subscription component-agnostic because other systems may
-        // already subscribe to ProjectileComponent/ProjectileHitEvent for the same projectile.
-        SubscribeLocalEvent<ProjectileHitEvent>(OnProjectileHit);
+        // Pirate: EnergyDomeSystem owns ProjectileComponent/ProjectileHitEvent on the server.
+        // Projectile hits originate from physics collisions, so use that component as the event anchor.
+        SubscribeLocalEvent<PhysicsComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<KnowledgeHolderComponent, UserModifyInjectTimeEvent>(OnModifyInjectTime);
         SubscribeLocalEvent<KnowledgeHolderComponent, GetBlockFractionEvent>(OnGetBlockFraction);
         SubscribeLocalEvent<KnowledgeHolderComponent, ModifyThrownSpeedEvent>(OnModifyThrownSpeed);
@@ -67,7 +68,7 @@ public sealed class KnowledgeGameplaySystem : EntitySystem
             _knowledge.AddExperience(store, ShootingKnowledge, 1, 20);
     }
 
-    private void OnProjectileHit(ref ProjectileHitEvent args)
+    private void OnProjectileHit(Entity<PhysicsComponent> _, ref ProjectileHitEvent args)
     {
         if (args.Shooter is not { } shooter || !_mobState.IsAlive(args.Target) ||
             _knowledge.GetContainer(shooter) is not { } store)
