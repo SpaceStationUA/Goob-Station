@@ -368,7 +368,13 @@ namespace Content.Server.Construction
             var newTransform = Transform(newUid);
             TransformSystem.AttachToGridOrMap(newUid, newTransform); // in case in hands or a container
             newTransform.LocalRotation = transform.LocalRotation;
-            newTransform.Anchored = transform.Anchored;
+            // Pirate: secret door - route unanchoring through the system so the physics body drops back to
+            // Dynamic and the snap-grid cell is released. The raw setter leaves an entity whose prototype is
+            // bodyType: Static (e.g. Girder) unanchored but unpullable until it's wrench-cycled by hand.
+            if (!transform.Anchored)
+                TransformSystem.Unanchor(newUid, newTransform);
+            else
+                newTransform.Anchored = transform.Anchored;
 
             // Container transferring.
             if (containerManager != null)

@@ -36,6 +36,10 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 50 #Half of a regular steel sheet to reflect the crafting recipe
+  # Pirate: rod refining - weld 2 rods back into a sheet, reversing the 1 steel -> 2 rods recipe (SS13 rods.dm welder_act)
+  - type: StackRefinable
+    refineResult: SheetSteel1
+    cost: 2
   - type: Stack
     stackType: MetalRod
     baseLayer: base
