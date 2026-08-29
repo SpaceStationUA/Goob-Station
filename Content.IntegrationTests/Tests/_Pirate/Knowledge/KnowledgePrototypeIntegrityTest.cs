@@ -235,8 +235,11 @@ public sealed class KnowledgePrototypeIntegrityTest
                     continue;
                 }
 
-                if (profile!.PointsLimit < 0)
-                    failures.Add($"{speciesId}: profile {profile.ID} has a negative points limit");
+                if (profile!.PointsLimit != 10)
+                    failures.Add($"{speciesId}: profile {profile.ID} must have the shared 10-point limit");
+
+                if (!profile.Profile.Mastery.ContainsKey(KnowledgeGameplaySystem.ShootingKnowledge))
+                    failures.Add($"{speciesId}: profile {profile.ID} must expose Marksmanship at level zero or higher");
 
                 foreach (var (skillId, mastery) in profile.Profile.Mastery)
                 {

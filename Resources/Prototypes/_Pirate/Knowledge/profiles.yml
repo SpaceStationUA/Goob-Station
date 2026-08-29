@@ -38,6 +38,7 @@
   id: Dwarf
   pointsLimit: 10
   mastery:
+    ShootingKnowledge: 0
     MeleeKnowledge: 1
     KnowledgeWeaponsBludgeon: 1
     KnowledgeWeaponsMining: 2
@@ -49,6 +50,7 @@
   id: Reptilian
   pointsLimit: 10
   mastery:
+    ShootingKnowledge: 0
     ThrowingKnowledge: 1
     MeleeKnowledge: 1
     CarvingKnowledge: 1
@@ -59,6 +61,7 @@
   id: Diona
   pointsLimit: 10
   mastery:
+    ShootingKnowledge: 0
     MagicalLiteracyKnowledge: 1
     FirstAidKnowledge: 1
     ChemistryKnowledge: 1
@@ -71,6 +74,7 @@
   id: Moth
   pointsLimit: 10
   mastery:
+    ShootingKnowledge: 0
     MechanicsKnowledge: 1
     TailoringKnowledge: 1
     DoorsKnowledge: 1
@@ -85,12 +89,14 @@
   id: Vox
   pointsLimit: 10
   mastery:
+    ShootingKnowledge: 0
     JanitorKnowledge: 4
 
 - type: knowledgeProfile
   id: IPC
   pointsLimit: 10
   mastery:
+    ShootingKnowledge: 0
     DoorsKnowledge: 1
     AirlocksKnowledge: 1
     BotsKnowledge: 2
@@ -104,6 +110,7 @@
   id: Plasmaman
   pointsLimit: 10
   mastery:
+    ShootingKnowledge: 0
     DoorsKnowledge: 1
     AirlocksKnowledge: 1
     FurnitureKnowledge: 1
@@ -116,6 +123,7 @@
   id: Slimeperson
   pointsLimit: 10
   mastery:
+    ShootingKnowledge: 0
     ChemistryKnowledge: 2
     DoorsKnowledge: 1
     AirlocksKnowledge: 1
@@ -129,6 +137,7 @@
   id: Arachnid
   pointsLimit: 10
   mastery:
+    ShootingKnowledge: 0
     SpiderCraftKnowledge: 4
     DoorsKnowledge: 1
     AirlocksKnowledge: 1
