@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+
+# Pirate: welding visor
+- type: entity
+  id: ActionToggleWeldingVisor
+  name: Toggle Visor
+  description: Flip the visor up or down. Only lowered down does it protect your eyes.
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:ToggleWeldingVisorEvent

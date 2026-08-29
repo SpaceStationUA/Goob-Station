@@ -351,6 +351,9 @@
   id: ClothingHandsGlovesColorYellow
   name: insulated gloves
   description: These gloves will protect the wearer from electric shocks.
+  components:
+  - type: StaticPrice # Pirate: engivend price pass
+    price: 50
 
 # Budget Insulated Gloves
 - type: entity

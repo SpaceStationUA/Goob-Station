@@ -4,15 +4,19 @@
   id: EngiVendInventory
   startingInventory:
     ClothingEyesGlassesMeson: 4
+    ClothingEyesGlassesEngineering: 4 # Pirate: engineering goggles
     ClothingEyesHudDiagnostic: 4
+    ClothingEyesGlassesWelding: 3 # Pirate: welding visor toggle - stock the new welding goggles alongside the mask
     ClothingHeadHatWelding: 6
     CrowbarYellow: 8
     Multitool: 4
     NetworkConfigurator: 5
     PowerCellMedium: 5
-    ClothingHandsGlovesColorYellow: 12 # GoobStation: was 6, IPCs need insuls more than usual
+    ClothingHandsGlovesColorYellow: 3 # Pirate: engivend price pass - was 12
+    RCDAmmo: 6 # Pirate: engivend price pass - compressed matter
     BoxInflatable: 2
     ClothingHeadHatCone: 4
+    MaterialPouch: 4 # Pirate: material pouch
   contrabandInventory:
     CowToolboxFilled: 1
     DrinkBeerCan: 3

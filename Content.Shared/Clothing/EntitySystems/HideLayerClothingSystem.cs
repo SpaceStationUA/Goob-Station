@@ -2,6 +2,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared._Pirate.Clothing.WeldingVisor; // Pirate: welding visor toggle
 using Robust.Shared.Containers; // Pirate: modsuit hidden layer restore
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -20,6 +21,7 @@ public sealed class HideLayerClothingSystem : EntitySystem
         SubscribeLocalEvent<HideLayerClothingComponent, ClothingGotEquippedEvent>(OnHideGotEquipped);
         SubscribeLocalEvent<HideLayerClothingComponent, ItemMaskToggledEvent>(OnHideToggled);
         SubscribeLocalEvent<HideLayerClothingComponent, ItemToggledEvent>(OnItemToggled); // Pirate: modular suits
+        SubscribeLocalEvent<HideLayerClothingComponent, WeldingVisorToggledEvent>(OnWeldingVisorToggled); // Pirate: welding visor toggle
         #region Pirate: modsuit hidden layer restore
         SubscribeLocalEvent<HideLayerClothingComponent, ComponentStartup>(OnHideStartup);
         SubscribeLocalEvent<HideLayerClothingComponent, ComponentShutdown>(OnHideShutdown);
@@ -69,6 +71,13 @@ public sealed class HideLayerClothingSystem : EntitySystem
             return;
 
         SetLayerVisibility(ent!, args.User.Value, args.Activated);
+    }
+
+    // Pirate: welding visor toggle
+    private void OnWeldingVisorToggled(Entity<HideLayerClothingComponent> ent, ref WeldingVisorToggledEvent args)
+    {
+        if (args.Wearer != null)
+            SetLayerVisibility(ent!, args.Wearer.Value, hideLayers: true);
     }
 
     private void OnHideGotEquipped(Entity<HideLayerClothingComponent> ent, ref ClothingGotEquippedEvent args)
@@ -148,6 +157,9 @@ public sealed class HideLayerClothingSystem : EntitySystem
 
         if (TryComp<ItemToggleComponent>(clothing, out var toggle)) // Pirate: modular suits
             return toggle.Activated;
+
+        if (TryComp<WeldingVisorComponent>(clothing, out var visor)) // Pirate: welding visor toggle
+            return visor.Lowered;
 
         if (!TryComp(clothing, out MaskComponent? mask))
             return true;

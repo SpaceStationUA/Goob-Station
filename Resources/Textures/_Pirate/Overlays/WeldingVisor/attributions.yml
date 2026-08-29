@@ -1,0 +1,4 @@
+- files: ["impaired.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f27682c7e4b8accb88eea49f62042014fd312fd9 (icons/hud/screen_full.dmi, state impairedoverlay3)."
+  source: "https://github.com/tgstation/tgstation"

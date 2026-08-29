@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from NovaSector at commit https://github.com/NovaSector/NovaSector/commit/1fd989ca3d3249928da200ac0389e813a973441c (modular_nova/modules/modular_items/icons/storage.dmi, state 'materialpouch')",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        }
+    ]
+}
