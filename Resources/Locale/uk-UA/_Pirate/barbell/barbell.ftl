@@ -11,6 +11,5 @@ ent-PunchingBag = боксерська груша
 barbell-lift-emote = піднімає штангу.
 barbell-lift-emote-self = Ти піднімаєш штангу.
 barbell-bench-recovered = Штанга повернулася на місце.
-barbell-bench-strength-increased = Твоя сила зросла.
 barbell-bench-pinned = Тебе притиснуло штангою.
 barbell-bench-cannot-unbuckle = Ти ще не можеш відстебнутися.

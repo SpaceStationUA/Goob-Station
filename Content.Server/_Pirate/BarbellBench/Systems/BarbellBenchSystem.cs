@@ -4,7 +4,6 @@ using Content.Server.Body.Systems;
 using Content.Shared._Pirate.BarbellBench;
 using Content.Shared._Pirate.BarbellBench.Components;
 using Content.Shared._Pirate.BarbellBench.Systems;
-using Content.Shared._Pirate.Movement.Components;
 using Content.Shared._EinsteinEngines.Silicon.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Alert;
@@ -15,7 +14,6 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
-using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Content.Shared.Verbs;
@@ -67,8 +65,6 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
         SubscribeLocalEvent<BarbellPinnedComponent, ComponentShutdown>(OnPinnedShutdown);
         SubscribeLocalEvent<StaminaComponent, EnterStaminaCritEvent>(OnStaminaCrit);
         SubscribeLocalEvent<BarbellPinnedComponent, BeforeStaminaDamageEvent>(OnPinnedStaminaDamage);
-        SubscribeLocalEvent<PullStrengthComponent, RefreshStaminaCritThresholdEvent>(OnRefreshStaminaCritThreshold);
-        SubscribeLocalEvent<PullStrengthComponent, ComponentShutdown>(OnPullStrengthShutdown);
 
         SubscribeLocalEvent<BarbellPinnedComponent, InteractHandEvent>(OnPinnedInteractHand,
             before: new[] { typeof(SharedBuckleSystem) });
@@ -112,6 +108,7 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
         if (args.Container.ID != component.BarbellSlotId)
             return;
 
+        ReleasePinnedUsers(uid, args.Entity);
         _appearance.SetData(uid, BarbellBenchVisuals.HasBarbell, false);
         if (TryComp<StrapComponent>(uid, out var strap))
             foreach (var buckled in strap.BuckledEntities)
@@ -131,9 +128,36 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
 
     private void OnShutdown(EntityUid uid, BarbellBenchComponent component, ComponentShutdown args)
     {
+        EntityUid? barbell = null;
+        if (Container.TryGetContainer(uid, component.BarbellSlotId, out var barbellContainer) &&
+            barbellContainer.Count > 0)
+        {
+            barbell = barbellContainer.ContainedEntities[0];
+        }
+
+        ReleasePinnedUsers(uid, barbell);
+
         if (component.OverlayEntity is { } overlay && Exists(overlay))
             Del(overlay);
         component.OverlayEntity = null;
+    }
+
+    private void ReleasePinnedUsers(EntityUid bench, EntityUid? barbell)
+    {
+        if (!TryComp<StrapComponent>(bench, out var strap))
+            return;
+
+        foreach (var buckled in strap.BuckledEntities)
+        {
+            if (!TryComp<BarbellPinnedComponent>(buckled, out var pinned) || pinned.Bench != bench)
+                continue;
+
+            if (barbell is { } barbellUid)
+                _virtualItem.DeleteInHandsMatching(buckled, barbellUid);
+
+            RemCompDeferred<BarbellPinnedComponent>(buckled);
+            RemCompDeferred<ActiveBarbellPinnedComponent>(buckled);
+        }
     }
 
     private void EnsureOverlay(EntityUid uid, BarbellBenchComponent component)
@@ -168,39 +192,6 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
                 _stamina.TakeStaminaDamage(args.Performer, lift.StaminaCost, source: args.Performer, with: barbell, visual: true);
                 _popup.PopupEntity(Loc.GetString(lift.EmoteLocSelf), args.Performer, args.Performer, PopupType.Medium);
 
-                if (!HasComp<SiliconComponent>(args.Performer))
-                {
-                    if (HasComp<PullerComponent>(args.Performer))
-                    {
-                        var strength = EnsureComp<PullStrengthComponent>(args.Performer);
-                        var currentStrength = strength.Progress;
-
-                        var previousStrength = currentStrength;
-                        currentStrength = Math.Min(strength.HighStrengthThreshold, currentStrength + strength.StrengthGain);
-                        strength.Progress = currentStrength;
-
-                        if ((previousStrength < strength.LowStrengthThreshold && currentStrength >= strength.LowStrengthThreshold) ||
-                            (previousStrength < strength.MediumStrengthThreshold && currentStrength >= strength.MediumStrengthThreshold) ||
-                            (previousStrength < strength.HighStrengthThreshold && currentStrength >= strength.HighStrengthThreshold))
-                        {
-                            var performer = args.Performer;
-                            Timer.Spawn(TimeSpan.FromSeconds(0.5f), () =>
-                            {
-                                if (Exists(performer))
-                                    _popup.PopupEntity(Loc.GetString("barbell-bench-strength-increased"), performer, performer, PopupType.Medium);
-                            });
-                        }
-
-                        if (currentStrength >= strength.HighStrengthThreshold && !strength.StaminaBonusApplied)
-                        {
-                            if (TryComp<StaminaComponent>(args.Performer, out var staminaComp))
-                            {
-                                strength.StaminaBonusApplied = true;
-                                _stamina.RefreshStaminaCritThreshold((args.Performer, staminaComp));
-                            }
-                        }
-                    }
-                }
             }
         }
 
@@ -407,19 +398,6 @@ public sealed class BarbellBenchSystem : SharedBarbellBenchSystem
     private void OnBuckleTerminating(EntityUid uid, BuckleComponent component, EntityTerminatingEvent args)
     {
         _performingReps.Remove(uid);
-    }
-
-    private void OnRefreshStaminaCritThreshold(Entity<PullStrengthComponent> ent,
-        ref RefreshStaminaCritThresholdEvent args)
-    {
-        if (ent.Comp.StaminaBonusApplied)
-            args.ThresholdValue += ent.Comp.StaminaBonus;
-    }
-
-    private void OnPullStrengthShutdown(EntityUid uid, PullStrengthComponent component, ComponentShutdown args)
-    {
-        if (TryComp<StaminaComponent>(uid, out var stamina))
-            _stamina.RefreshStaminaCritThreshold((uid, stamina));
     }
 
     public override void Update(float frameTime)

@@ -1,6 +1,4 @@
 using Content.Shared._Pirate.PunchingBag;
-using Content.Shared._Pirate.Movement.Components;
-using Content.Shared.Movement.Pulling.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server._Pirate.PunchingBag;
@@ -16,10 +14,5 @@ public sealed class PunchingBagAnimationsSystem : SharedPunchingBagAnimationsSys
 
         RaiseNetworkEvent(new PunchingBagAnimationEvent(GetNetEntity(uid), animationState), filter);
 
-        if (HasComp<PullerComponent>(attacker))
-        {
-            var strength = EnsureComp<PullStrengthComponent>(attacker);
-            strength.Progress = Math.Min(strength.HighStrengthThreshold, strength.Progress + strength.StrengthGain);
-        }
     }
 }
