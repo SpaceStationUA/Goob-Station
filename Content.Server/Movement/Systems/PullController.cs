@@ -92,7 +92,6 @@ public sealed class PullController : VirtualController
         _pullableQuery = GetEntityQuery<PullableComponent>();
         _pullerQuery = GetEntityQuery<PullerComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
-
         UpdatesAfter.Add(typeof(MoverController));
         SubscribeLocalEvent<PullMovingComponent, PullStoppedMessage>(OnPullStop);
         SubscribeLocalEvent<ActivePullerComponent, MoveEvent>(OnPullerMove);
@@ -233,6 +232,7 @@ public sealed class PullController : VirtualController
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
     {
         base.UpdateBeforeSolve(prediction, frameTime);
+
         var movingQuery = EntityQueryEnumerator<PullMovingComponent, PullableComponent, TransformComponent>();
 
         while (movingQuery.MoveNext(out var pullableEnt, out var mover, out var pullable, out var pullableXform))
