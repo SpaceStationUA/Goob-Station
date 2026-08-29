@@ -67,11 +67,11 @@
   description: An orange high voltage power cable.
   components:
   - type: Sprite
-    sprite: Structures/Power/Cables/hv_cable.rsi
+    sprite: _Pirate/Structures/Power/Cables/hv_cable.rsi # Pirate - resprite
     state: hvcable_0
     drawdepth: ThickWire
   - type: Icon
-    sprite: Structures/Power/Cables/hv_cable.rsi
+    sprite: _Pirate/Structures/Power/Cables/hv_cable.rsi # Pirate - resprite
     state: hvcable_4
   - type: NodeContainer
     nodes:
@@ -125,13 +125,14 @@
   description: A medium voltage power cable.
   components:
   - type: Sprite
-    sprite: Structures/Power/Cables/mv_cable.rsi
-    layers:
-    - state: mvcable_0
-      color: Yellow
-    - state: mvstripes_0
+    # Pirate start - resprite
+    color: Yellow
+    sprite: _Pirate/Structures/Power/Cables/mv_cable.rsi
+    state: mvcable_0
   - type: Icon
-    sprite: Structures/Power/Cables/mv_cable.rsi
+    color: Yellow
+    sprite: _Pirate/Structures/Power/Cables/mv_cable.rsi
+    # Pirate end - resprite
     state: mvcable_4
   - type: NodeContainer
     nodes:
@@ -162,7 +163,7 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: mvcable_
-    extraLayerPrefix: mvstripes_
+    # extraLayerPrefix: mvstripes_ # Pirate edit
 
 - type: entity
   id: CableMVUncuttable
