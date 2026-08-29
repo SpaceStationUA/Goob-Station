@@ -1,9 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-# Pirate: material pouch - port of NovaSector's /obj/item/storage/pouch/material
-# (modular_nova/modules/modular_items/code/bags.dm): a pouch that clips into a pocket and holds sheets
-# and RCD ammo. Sized Small so it fits a pocket ("pouch") slot, with maxItemSize raised back up to
-# Normal so the 2x2 material stacks can actually go in.
+# Pirate: material pouch
 - type: entity
   parent: BaseStorageItem
   id: MaterialPouch

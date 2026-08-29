@@ -6,7 +6,7 @@
   name: gar mesons
   description: Do the impossible, see the invisible!
   components:
-  # Pirate: meson vision - ported from Moffstation PR #1688; toggle to reveal subfloor infra + green shader tint
+  # Pirate: meson vision
   - type: TrayScanner
     range: 10
     enabled: true # Pirate: slime morph

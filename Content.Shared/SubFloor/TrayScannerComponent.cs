@@ -25,7 +25,7 @@ public sealed partial class TrayScannerComponent : Component
     [DataField]
     public float Range = 4f;
 
-    // Pirate: meson vision - ported from Moffstation PR #1688 (toggle action + on/off sounds for worn scanners).
+    // Pirate: meson vision
 
     [DataField]
     public EntProtoId? ToggleAction;
