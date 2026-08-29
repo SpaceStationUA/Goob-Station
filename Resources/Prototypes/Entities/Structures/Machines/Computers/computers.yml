@@ -1780,6 +1780,14 @@
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
           False: { visible: true }
+      # Pirate edit start
+      enum.EdgeConnectionVisuals.ConnectionMask:
+        computerLayerBody:
+          None: { state: computer, sprite: Structures/Machines/computers.rsi }
+          East: { state: computer, sprite: Structures/Machines/computers.rsi }
+          West: { state: computer, sprite: Structures/Machines/computers.rsi }
+          East, West: { state: computer, sprite: Structures/Machines/computers.rsi }
+      # Pirate edit end
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: Computer
