@@ -36,6 +36,9 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: Appearance
+  - type: EdgeConnection # Pirate edit
+    connectionKey: computer-console
+    allowedDirections: East, West
   - type: GenericVisualizer
     visuals:
       enum.ComputerVisuals.Powered:
@@ -49,6 +52,14 @@
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
           False: { visible: true }
+      # Pirate edit start
+      enum.EdgeConnectionVisuals.ConnectionMask:
+        computerLayerBody:
+          None: { state: computer, sprite: Structures/Machines/computers.rsi }
+          West: { state: computer_r, sprite: _Pirate/Structures/Machines/computers.rsi }
+          East: { state: computer_l, sprite: _Pirate/Structures/Machines/computers.rsi }
+          East, West: { state: computer_l_r, sprite: _Pirate/Structures/Machines/computers.rsi }
+      # Pirate edit end
   - type: LitOnPowered
   - type: PointLight
     radius: 1.5
