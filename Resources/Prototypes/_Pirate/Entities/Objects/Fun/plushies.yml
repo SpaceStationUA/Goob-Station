@@ -304,3 +304,30 @@
   - type: EmitSoundOnActivate
     sound:
       collection: RickKarter
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBlakinka
+  name: "плюшева блакитна тіньовичка"
+  description: Плюшева іграшка домашнього тіньовика, морда іграшки виглядає ліниво на стільки, на скільки це можливо. Змусьте цю іграшку працювати замість вас! # Коли весілля з Малваром?
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/Plushies/blakinka.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      collection: Mars
+  - type: EmitSoundOnActivate
+    sound:
+      collection: Mars
+  - type: EmitSoundOnCollide
+    sound:
+      collection: Wurble
+  - type: EmitSoundOnLand
+    sound:
+      collection: Wurble
+  - type: Clothing
+    quickEquip: false
+    sprite: _Pirate/Objects/Fun/Plushies/blakinka.rsi
+    slots:
+    - HEAD
