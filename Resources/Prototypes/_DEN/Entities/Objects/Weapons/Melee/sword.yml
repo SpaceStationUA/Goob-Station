@@ -51,7 +51,7 @@
         volume: -2
         variation: 0.05
   - type: MeleeWeapon
-    attackRate: 0.3
+    attackRate: 0.4
     range: 1.85
     angle: 90
     maxTargets: 10 # When you see a stat that looks good, just remember that if you hit anything non-psionic, you lose
@@ -61,9 +61,9 @@
     heavyStaminaCost: 15 # Pirate - halved from 30, so heavy swings are less punishing to the wielder
     damage:
       types:
-        Slash: 28 # 8.4 DPS (Slash only), or 10.5 against psions (1.25×)
-        Holy: 20 # 14.4 total base DPS, or 18.0 against psionic supernaturals (1.25×)
-        Structural: 30 # 9.0 structural DPS
+        Slash: 28 # 11.2 DPS (Slash only), or 14.0 against psions (1.25×)
+        Holy: 20 # 19.2 total base DPS, or 24.0 against psionic supernaturals (1.25×)
+        Structural: 30 # 12.0 structural DPS
     soundHit:
       path: /Audio/_DEN/Weapons/Melee/fausthit.ogg
       params:

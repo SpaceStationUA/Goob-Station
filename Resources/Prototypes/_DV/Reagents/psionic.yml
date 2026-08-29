@@ -35,3 +35,11 @@
         - !type:ReagentCondition
           reagent: Claridisol
           min: 40
+      - !type:ModifyStatusEffect # Pirate
+        effectProto: StatusEffectShieldedFromPsionics
+        type: Remove
+        time: 10
+      - !type:ModifyStatusEffect # Pirate
+        effectProto: StatusEffectPsionicsDisabled
+        type: Remove
+        time: 10

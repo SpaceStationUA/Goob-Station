@@ -22,11 +22,11 @@
       - !type:ModifyStatusEffect # Pirate
         effectProto: StatusEffectShieldedFromPsionics
         type: Add
-        time: 50
+        time: 15
       - !type:ModifyStatusEffect # Pirate
         effectProto: StatusEffectPsionicsDisabled
         type: Add
-        time: 900
+        time: 15
       - !type:Drunk
         boozePower: 20
 
