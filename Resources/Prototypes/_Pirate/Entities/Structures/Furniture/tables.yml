@@ -222,7 +222,6 @@
   parent: BaseStructure
   name: round table frame
   description: Pieces of metal that make the frame of a round table.
-  abstract: true
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/roundtable.rsi
