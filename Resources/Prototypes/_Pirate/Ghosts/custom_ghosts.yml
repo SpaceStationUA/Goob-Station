@@ -409,3 +409,12 @@
   alpha: 1
   ghostName: Dynexust
   ghostDescription: Дракончик; великий любитель унаті і всіх лускатиків (і вульп, але останнього не визнає).
+
+- type: customGhost
+  id: saloplay-ghost
+  ckey: saloplay
+  sprite:
+    - _Pirate/Ghosts/saloplay.rsi
+  alpha: 1
+  ghostName: salo
+  ghostDescription: meow?

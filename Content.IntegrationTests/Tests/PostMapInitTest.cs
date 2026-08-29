@@ -152,6 +152,7 @@ namespace Content.IntegrationTests.Tests
             "PiramideTP",     // Pirate
             "Reach",
             "Saltern",
+            "SalternTP",
             "Serpentcrest",
             "Snowball",
             "TestTeg",        // Dev map
