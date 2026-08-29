@@ -119,7 +119,7 @@
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 5
+        priority: 2 # DOWNSTREAM-TPirates: gun flashlights - between chamber and magazine
         ejectOnBreak: true
         occludesLight: false
         whitelist:
@@ -130,7 +130,7 @@
         startingItem: MagazinePistolHighCapacity
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3 # DOWNSTREAM-TPirates: gun flashlights - flashlight sits between chamber and magazine
         whitelist:
           tags:
             - MagazinePistol
@@ -183,7 +183,7 @@
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 5
+        priority: 0 # DOWNSTREAM-TPirates: gun flashlights - lowest eject priority
         ejectOnBreak: true
         occludesLight: false
         whitelist:
@@ -234,7 +234,7 @@
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 5
+        priority: 2 # DOWNSTREAM-TPirates: gun flashlights - between chamber and magazine
         ejectOnBreak: true
         occludesLight: false
         whitelist:
@@ -245,7 +245,7 @@
         startingItem: MagazinePistolCaselessRifle
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3 # DOWNSTREAM-TPirates: gun flashlights - flashlight sits between chamber and magazine
         whitelist:
           tags:
             - MagazinePistolCaselessRifle
@@ -295,7 +295,7 @@
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 5
+        priority: 2 # DOWNSTREAM-TPirates: gun flashlights - between chamber and magazine
         ejectOnBreak: true
         occludesLight: false
         whitelist:
@@ -306,7 +306,7 @@
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3 # DOWNSTREAM-TPirates: gun flashlights - flashlight sits between chamber and magazine
         whitelist:
           tags:
             - MagazinePistol
@@ -359,7 +359,7 @@
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 5
+        priority: 2 # DOWNSTREAM-TPirates: gun flashlights - between chamber and magazine
         ejectOnBreak: true
         occludesLight: false
         whitelist:
@@ -370,7 +370,7 @@
         startingItem: MagazineMagnum
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3 # DOWNSTREAM-TPirates: gun flashlights - flashlight sits between chamber and magazine
         whitelist:
           tags:
             - MagazineMagnum

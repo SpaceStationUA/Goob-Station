@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: MIT
+
+- files: ["visor_down1.ogg", "visor_down2.ogg", "visor_down3.ogg", "visor_up1.ogg", "visor_up2.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f27682c7e4b8accb88eea49f62042014fd312fd9. Originally \"Bike helmet visor.wav\" by Didi0508 (https://freesound.org/s/541921/)."
+  source: "https://github.com/tgstation/tgstation"

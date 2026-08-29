@@ -8,6 +8,7 @@ using Content.Shared.Players;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
@@ -44,6 +45,23 @@ public sealed class NationalitySystem : EntitySystem
         if (jobId == null || !_prototype.TryIndex(jobId.Value, out var jobPrototypeToUse))
             return;
 
+        ApplyNationality(uid, profile, playTimes);
+    }
+
+    /// <summary>Applies nationality to an entity without a job, such as a mercenary.</summary>
+    public void ApplyNationality(EntityUid uid, HumanoidCharacterProfile profile, ICommonSession session)
+    {
+        // A session can lack tracker data while loading; use no playtimes instead.
+        if (!_playTimeTracking.TryGetTrackerTimes(session, out var playTimes))
+            playTimes = new Dictionary<string, TimeSpan>();
+
+        ApplyNationality(uid, profile, playTimes);
+    }
+
+    /// <inheritdoc cref="ApplyNationality(EntityUid, HumanoidCharacterProfile, ICommonSession)"/>
+    public void ApplyNationality(EntityUid uid, HumanoidCharacterProfile profile,
+        Dictionary<string, TimeSpan> playTimes)
+    {
         ProtoId<NationalityPrototype> nationality = string.IsNullOrEmpty(profile.Nationality)
         ? SharedHumanoidAppearanceSystem.DefaultNationality
         : profile.Nationality;

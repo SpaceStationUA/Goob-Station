@@ -2,6 +2,7 @@
 
 using System.Numerics;
 using Content.Client._Pirate.Photo;
+using Content.Client._Pirate.ZLevels.Core; // Pirate: multiz
 using Content.Client.StatusIcon;
 using Content.Client.UserInterface.Systems;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Components; // Shitmed Change
@@ -35,6 +36,7 @@ public sealed class EntityHealthBarOverlay : Overlay
     private readonly SpriteSystem _spriteSystem;
     private readonly ProgressColorSystem _progressColor;
     private readonly PhotoCaptureFilterSystem _photoCaptureFilter; // # Pirate: camera
+    private readonly CEClientZLevelsSystem _zLevels; // Pirate: multiz
 
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
@@ -52,6 +54,7 @@ public sealed class EntityHealthBarOverlay : Overlay
         _spriteSystem = _entManager.System<SpriteSystem>();
         _progressColor = _entManager.System<ProgressColorSystem>();
         _photoCaptureFilter = _entManager.System<PhotoCaptureFilterSystem>(); // # Pirate: camera
+        _zLevels = _entManager.System<CEClientZLevelsSystem>(); // Pirate: multiz
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -88,7 +91,9 @@ public sealed class EntityHealthBarOverlay : Overlay
 
             // we use the status icon component bounds if specified otherwise use sprite
             var bounds = _entManager.GetComponentOrNull<StatusIconComponent>(uid)?.Bounds ?? _spriteSystem.GetLocalBounds((uid, spriteComponent));
-            var worldPos = _transform.GetWorldPosition(xform, xformQuery);
+            var elevationOffset = _zLevels.GetRenderScreenOffset(uid); // Pirate: multiz
+            Angle elevationRotation = rotation * -1; // Pirate: multiz
+            var worldPos = _transform.GetWorldPosition(xform, xformQuery) + elevationRotation.RotateVec(elevationOffset); // Pirate: multiz
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
                 continue;
@@ -97,7 +102,7 @@ public sealed class EntityHealthBarOverlay : Overlay
             if (CalcProgress(uid, mobStateComponent, damageableComponent, mobThresholdsComponent) is not { } deathProgress)
                 continue;
 
-            var worldPosition = _transform.GetWorldPosition(xform);
+            var worldPosition = worldPos; // Pirate: multiz
             var worldMatrix = Matrix3Helpers.CreateTranslation(worldPosition);
 
             var scaledWorld = Matrix3x2.Multiply(scaleMatrix, worldMatrix);

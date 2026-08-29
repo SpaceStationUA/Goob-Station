@@ -1,0 +1,9 @@
+- type: construction
+  id: BarbellRecipe
+  name: construction-name-barbell
+  description: construction-desc-barbell
+  graph: Barbell
+  startNode: start
+  targetNode: barbell
+  category: construction-category-furniture
+  objectType: Item

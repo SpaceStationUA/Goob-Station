@@ -13,6 +13,7 @@ using Content.Shared._DV.NanoChat;
 using Content.Shared._Pirate.CartridgeLoader.Cartridges;
 using Content.Shared._Pirate.Instruments;
 using Content.Shared.Popups;
+using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -23,6 +24,7 @@ namespace Content.Server._Pirate.CartridgeLoader.Cartridges;
 public sealed class DetomatixCartridgeSystem : EntitySystem
 {
     [Dependency] private readonly CartridgeLoaderSystem _cartridge = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -120,10 +122,14 @@ public sealed class DetomatixCartridgeSystem : EntitySystem
         // Keep the countdown server-side.
         EnsureComp<DetomatixArmedComponent>(device);
 
-        _popup.PopupEntity(
-            Loc.GetString("detomatix-device-armed-warning", ("device", Name(device))),
-            device,
-            PopupType.LargeCaution);
+        if (_container.TryGetOuterContainer(device, Transform(device), out var deviceContainer))
+        {
+            _popup.PopupEntity(
+                Loc.GetString("detomatix-device-armed-warning", ("device", Name(device))),
+                device,
+                deviceContainer.Owner,
+                PopupType.MediumCaution);
+        }
 
         ent.Comp.Charges--;
 

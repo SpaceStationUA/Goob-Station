@@ -8,6 +8,8 @@
   components:
   - type: Vehicle
     renderOver: None
+  - type: CEZPhysics # Pirate: multiz
+    preserveDynamicDrawDepth: true # Pirate: multiz
   - type: Strap
     position: Stand
     blockMovement: false

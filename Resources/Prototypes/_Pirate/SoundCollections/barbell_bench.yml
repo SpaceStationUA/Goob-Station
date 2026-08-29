@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: BarbellBenchRep
+  files:
+    - /Audio/_Pirate/Furniture/barbell/barbell_1.ogg
+    - /Audio/_Pirate/Furniture/barbell/barbell_2.ogg
+    - /Audio/_Pirate/Furniture/barbell/barbell_3.ogg

@@ -32,6 +32,7 @@ public sealed partial class FireControlSystem : EntitySystem
         SubscribeLocalEvent<FireControlConsoleComponent, FireControlConsoleRefreshServerMessage>(OnRefreshServer);
         SubscribeLocalEvent<FireControlConsoleComponent, FireControlConsoleFireMessage>(OnFire);
         SubscribeLocalEvent<FireControlConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
+        SubscribeLocalEvent<FireControlConsoleComponent, BoundUIClosedEvent>(OnUIClosed);
         SubscribeLocalEvent<FireControlConsoleComponent, FireControlConsoleSelectLayerMessage>(OnSelectLayer); // Pirate: multiz
     }
 
@@ -78,7 +79,19 @@ public sealed partial class FireControlSystem : EntitySystem
 
     public void OnUIOpened(EntityUid uid, FireControlConsoleComponent component, BoundUIOpenedEvent args)
     {
+        if (args.UiKey is not FireControlConsoleUiKey.Key)
+            return;
+
         UpdateUi(uid, component);
+    }
+
+    private void OnUIClosed(EntityUid uid, FireControlConsoleComponent component, BoundUIClosedEvent args)
+    {
+        if (args.UiKey is not FireControlConsoleUiKey.Key || _ui.IsUiOpen(uid, FireControlConsoleUiKey.Key))
+            return;
+
+        // Pirate: do not retain a large gunnery state in replay/PVS after the last viewer closes the UI.
+        _ui.SetUiState(uid, FireControlConsoleUiKey.Key, null);
     }
 
     #region Pirate: multiz
@@ -126,6 +139,10 @@ public sealed partial class FireControlSystem : EntitySystem
     private void UpdateUi(EntityUid uid, FireControlConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
+            return;
+
+        // Pirate: gunnery state is only useful while the console is open; avoid replay/PVS payload for idle consoles.
+        if (!_ui.IsUiOpen(uid, FireControlConsoleUiKey.Key))
             return;
 
         #region Pirate: multiz

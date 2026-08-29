@@ -1,12 +1,14 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Server._Pirate.GameTicking; // Pirate - SecretTP tweak
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared._Pirate.CCVars; // Pirate: multiz
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
@@ -362,6 +364,31 @@ public sealed partial class GameTicker
 
                 continue;
             }
+
+            // Pirate start - SecretTP tweak
+            var secretTpActive = false;
+            var activeRules = EntityQueryEnumerator<ActiveGameRuleComponent>();
+            while (activeRules.MoveNext(out var activeRuleUid, out _))
+            {
+                if (MetaData(activeRuleUid).EntityPrototype?.ID == SecretTPConstants.RuleId)
+                {
+                    secretTpActive = true;
+                    break;
+                }
+            }
+
+            if (secretTpActive)
+            {
+                var attempt = new PirateGameRuleAddAttemptEvent(rule);
+                RaiseLocalEvent(ref attempt);
+                if (attempt.Cancelled)
+                {
+                    shell.WriteError(attempt.RejectionReason ??
+                        $"Rule {rule} exceeds the maximum available point budget.");
+                    continue;
+                }
+            }
+            // Pirate end - SecretTP tweak
 
             if (shell.Player != null)
             {

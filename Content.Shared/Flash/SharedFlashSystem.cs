@@ -27,6 +27,7 @@ using Content.Shared.Mobs.Components; // Goobstation
 using Content.Shared.Movement.Systems;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Clothing.Components;
+using Content.Shared._Pirate.Clothing.WeldingVisor; // Pirate: welding visor toggle
 
 namespace Content.Shared.Flash;
 
@@ -289,6 +290,9 @@ public abstract class SharedFlashSystem : EntitySystem
     private void OnFlashImmunityFlashAttempt(Entity<FlashImmunityComponent> ent, ref FlashAttemptEvent args)
     {
         if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
+            return;
+
+        if (TryComp<WeldingVisorComponent>(ent, out var visor) && !visor.Lowered) // Pirate: welding visor toggle
             return;
 
         if (ent.Comp.Enabled

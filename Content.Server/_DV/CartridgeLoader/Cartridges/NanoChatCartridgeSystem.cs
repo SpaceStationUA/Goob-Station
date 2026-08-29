@@ -283,8 +283,8 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
         if (msg.RecipientNumber == null || card.Comp.Number == null)
             return;
 
-        // Delete chat but keep the messages
-        var deleted = _nanoChat.TryDeleteChat((card, card.Comp), msg.RecipientNumber.Value, true);
+        // Pirate: pda fix - delete messages instead of keeping them, otherwise re-adding the recipient (new chat/incoming message) resurfaces the "deleted" history
+        var deleted = _nanoChat.TryDeleteChat((card, card.Comp), msg.RecipientNumber.Value, false); // Pirate: pda fix
 
         if (!deleted)
             return;

@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: MIT
+// Pirate: meson vision - ported from space-wizards/space-station-14#44601 ("Mesons (XRayVision)").
+// CPU visibility checks run in XRayVisionOverlay because this engine lacks upstream's FOV shadow map.
+// This shader only forces unshaded drawing; TileAlpha supplies brightness.
+light_mode unshaded;
+
+void fragment()
+{
+    COLOR = zTexture(UV);
+}

@@ -17,6 +17,8 @@ psionic-power-name-revivify = Revivify
 psionic-power-name-darkswap = DarkSwap
 psionic-power-name-assay = Assay
 psionic-power-name-shadeskip = Shadeskip
+psionic-power-name-telekinetic-pulse = Telekinetic Pulse
+psionic-power-name-psionic-flash = Psionic Flash
 
 ## Psionic Rolling & Mindbreaking Messages
 psionic-roll-failed = The noöspheric influence leaves no mark on your mind...
@@ -190,6 +192,14 @@ psionic-eruption-power-metapsionic-feedback = {CAPITALIZE($entity)} is a storm a
 # Psychokinetic Scream
 psychokinetic-scream-power-initialization-feedback = A wordless scream grows in my throat, older than language. When I release it, the light around me will shatter.
 psychokinetic-scream-power-metapsionic-feedback = {CAPITALIZE($entity)} has a voice that shatters light itself.
+
+# Telekinetic Pulse
+telekinetic-pulse-power-initialization-feedback = As I reach through the veil with my psyche, I discover a wellspring of pure kinetic energy. It courses through me, but I seem to lack fine control over it.
+telekinetic-pulse-power-metapsionic-feedback = {CAPITALIZE($entity)} has the essence of pure kinesis flowing through them.
+
+# Psionic Flash
+psionic-flash-power-initialization-feedback = A blinding light erupts from within my mind, capable of searing the sight of those who dare to look upon me.
+psionic-flash-power-metapsionic-feedback = {CAPITALIZE($entity)} radiates a blinding psionic aura.
 
 # Mantis pendulum
 mantis-pendulum-hot-message = The pendulum grows uncomfortably hot in your hand.

@@ -1,11 +1,13 @@
 using System;
 using System.Numerics;
+using Content.Pirate.Shared.EnergyDome;
 using Content.Shared.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -14,12 +16,14 @@ using Content.Shared.Power.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Projectiles;
+using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
@@ -36,6 +40,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -65,6 +70,10 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         //Dome events
         SubscribeLocalEvent<EnergyDomeComponent, DamageChangedEvent>(OnDomeDamaged);
         SubscribeLocalEvent<EnergyDomeComponent, PreventCollideEvent>(OnDomePreventCollide);
+
+        // Stamina hits bypass DamageChangedEvent; SharedStaminaSystem owns the stamina-component events.
+        SubscribeLocalEvent<ProjectileComponent, ProjectileHitEvent>(OnStaminaProjectileHit);
+        SubscribeLocalEvent<ThrownItemComponent, ThrowDoHitEvent>(OnStaminaThrowHit);
     }
 
 
@@ -166,19 +175,39 @@ public sealed partial class EnergyDomeSystem : EntitySystem
     }
     private void OnDomeDamaged(Entity<EnergyDomeComponent> dome, ref DamageChangedEvent args)
     {
-        if (dome.Comp.Generator == null)
+        if (args.DamageDelta == null)
             return;
 
-        var generatorUid = dome.Comp.Generator.Value;
+        DrainGeneratorForDome(dome, args.DamageDelta.GetTotal().Float());
+    }
+
+    private void OnStaminaProjectileHit(Entity<ProjectileComponent> ent, ref ProjectileHitEvent args)
+    {
+        if (TryComp<StaminaDamageOnCollideComponent>(ent, out var stamina) &&
+            TryComp<EnergyDomeComponent>(args.Target, out var domeComp))
+        {
+            DrainGeneratorForDome((args.Target, domeComp), stamina.Damage);
+        }
+    }
+
+    private void OnStaminaThrowHit(Entity<ThrownItemComponent> ent, ref ThrowDoHitEvent args)
+    {
+        if (TryComp<StaminaDamageOnCollideComponent>(ent, out var stamina) &&
+            TryComp<EnergyDomeComponent>(args.Target, out var domeComp))
+        {
+            DrainGeneratorForDome((args.Target, domeComp), stamina.Damage);
+        }
+    }
+
+    private void DrainGeneratorForDome(Entity<EnergyDomeComponent> dome, float damageAmount)
+    {
+        if (damageAmount <= 0f || dome.Comp.Generator is not { } generatorUid)
+            return;
 
         if (!TryComp<EnergyDomeGeneratorComponent>(generatorUid, out var generatorComp))
             return;
 
-        if (args.DamageDelta == null)
-            return;
-
-        float totalDamage = args.DamageDelta.GetTotal().Float();
-        var energyLeak = totalDamage * generatorComp.DamageEnergyDraw;
+        var energyLeak = damageAmount * generatorComp.DamageEnergyDraw;
 
         _audio.PlayPvs(generatorComp.ParrySound, dome);
 
@@ -318,8 +347,29 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             }
         }
 
+        if (status && !generator.Comp.Enabled && HasActiveDome(GetProtectedEntity(generator)))
+        {
+            _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
+            _popup.PopupEntity(
+                Loc.GetString("energy-dome-already-active"),
+                generator);
+            return false;
+        }
+
         Toggle(generator, status);
         return true;
+    }
+
+    private bool HasActiveDome(EntityUid protectedEntity)
+    {
+        var enumerator = Transform(protectedEntity).ChildEnumerator;
+        while (enumerator.MoveNext(out var child))
+        {
+            if (HasComp<EnergyDomeComponent>(child) && !EntityManager.IsQueuedForDeletion(child))
+                return true;
+        }
+
+        return false;
     }
 
     private void Toggle(Entity<EnergyDomeGeneratorComponent> generator, bool status)
@@ -344,6 +394,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         if (TryComp<EnergyDomeComponent>(newDome, out var domeComp))
         {
             domeComp.Generator = generator;
+            ApplyDomeSpriteScale((newDome, domeComp));
         }
 
         _powerCell.SetDrawEnabled(generator.Owner, true);
@@ -396,5 +447,19 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         return (_container.TryGetOuterContainer(entity, Transform(entity), out var container))
             ? container.Owner
             : entity;
+    }
+
+    private void ApplyDomeSpriteScale(Entity<EnergyDomeComponent> dome)
+    {
+        if (!TryComp<FixturesComponent>(dome, out var fixtures) ||
+            !fixtures.Fixtures.TryGetValue("fix1", out var fixture) ||
+            fixture.Shape is not PhysShapeCircle circle ||
+            dome.Comp.SpriteReferenceRadius <= 0f)
+        {
+            return;
+        }
+
+        var scale = circle.Radius / dome.Comp.SpriteReferenceRadius;
+        _appearance.SetData(dome.Owner, EnergyDomeVisuals.Scale, scale);
     }
 }

@@ -22,6 +22,7 @@
     - prefRoles: [ SELFAgent ]
       max: 3
       playerRatio: 31 # Pirate: Local AntagSelection only supports integer ratios.
+      chaosScore: 125
       lateJoinAdditional: true
       allowNonHumans: true
       jobBlacklist: [ Roboticist ]

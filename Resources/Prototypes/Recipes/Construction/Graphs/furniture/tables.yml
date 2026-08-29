@@ -96,6 +96,31 @@
               amount: 1
               doAfter: 1
 
+        ### Pirate tables start VVV
+        - to: tableplastic
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 1
+
+        - to: tableuraniumglass
+          steps:
+            - material: UraniumGlass
+              amount: 1
+              doAfter: 1
+
+        - to: tablereinforcedplasmaglass
+          steps:
+            - material: ReinforcedPlasmaGlass
+              amount: 1
+              doAfter: 1
+
+        - to: tablereinforceduraniumglass
+          steps:
+            - material: ReinforcedUraniumGlass
+              amount: 1
+              doAfter: 1
+        ### Pirate tables end
 
     - node: CounterWoodFrame
       entity: CounterWoodFrame
@@ -285,6 +310,56 @@
           steps:
             - material: FloorCarpetWhite
               amount: 1
+
+    ### Pirate tables start VVV
+    - node: tableplastic
+      entity: TablePlastic
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: tableuraniumglass
+      entity: TableUraniumGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: tablereinforcedplasmaglass
+      entity: TableReinforcedPlasmaGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRPGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: tablereinforceduraniumglass
+      entity: TableReinforcedUraniumGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRUGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    ### Pirate tables end
 
     - node: TableCarpet
       entity: TableCarpet

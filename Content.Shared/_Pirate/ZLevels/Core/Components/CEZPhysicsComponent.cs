@@ -134,6 +134,27 @@ public sealed partial class CEZPhysicsComponent : Component
     [DataField]
     public Vector2 SpriteOffsetDefault = Vector2.Zero;
 
+    /// <summary>Preserves a vehicle's runtime draw depth while grounded.</summary>
+    [DataField]
+    public bool PreserveDynamicDrawDepth;
+
+    [ViewVariables]
+    public int? DrawDepthBeforeElevation;
+    [ViewVariables]
+    public bool VisualsInitialized;
+
+    [ViewVariables]
+    public float RenderHeight;
+
+    [ViewVariables]
+    public bool RenderHeightInitialized;
+
+    [ViewVariables]
+    public int RenderZLevel;
+
+    [ViewVariables]
+    public bool RenderElevated;
+
     /// <summary>
     /// automatically rises if the current localPosition is lower than the height. Enabled by default, but for ghosts, for example, there is no point in climbing stairs
     /// </summary>

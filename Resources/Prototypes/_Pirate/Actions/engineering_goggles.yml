@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: MIT
+
+# Pirate: engineering goggles
+- type: entity
+  id: ActionToggleEngineeringGoggles
+  parent: BaseAction
+  name: Toggle mode
+  description: Cycles the goggles' mode.
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:ToggleEngineeringGogglesEvent

@@ -12,6 +12,8 @@
   - type: FlashImmunity
   - type: IdentityBlocker
   - type: EyeProtection
+  - type: WeldingVisor # Pirate: welding visor toggle
+  - type: Appearance # Pirate: welding visor toggle - drives the item's own icon swap
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Steel: 100
@@ -26,6 +28,7 @@
   - type: HideLayerClothing
     slots:
     - Snout
+    hideOnToggle: true # Pirate: welding visor toggle - only hide the snout while the visor is actually lowered
   - type: Armor
     coverage:
     - Head

@@ -8,7 +8,7 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      sprite: Structures/Power/cable_terminal.rsi
+      sprite: _Pirate/Structures/Power/cable_terminal.rsi  # Pirate - resprite
       state: term
       drawdepth: BelowFloor
     - type: Clickable

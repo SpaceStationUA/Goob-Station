@@ -1,0 +1,157 @@
+- type: entity
+  abstract: true
+  id: BarbellBenchBase
+  parent: BaseStructure
+  components:
+  - type: Sprite
+    noRot: true
+    drawdepth: HighFloorObjects
+  - type: BarbellBench
+  - type: BarbellBenchVisuals
+    attachedState: barbell-overlay-up
+    overlayBaseState: barbell-overlay-up
+    overlayRepFlickState: barbell-up
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      barbell-slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      barbell-slot:
+        insertSound: /Audio/_Pirate/Furniture/barbell/barbell_3.ogg
+        ejectSound: /Audio/_Pirate/Furniture/barbell/barbell_2.ogg
+        whitelist:
+          tags:
+          - BarbellAttachment
+  - type: Strap
+    position: Down
+    rotation: -90
+    buckleOffset: "0,-0.15"
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+        density: 190
+        mask:
+        - TableMask
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Anchorable
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+
+- type: entity
+  parent: BarbellBenchBase
+  id: BarbellBench
+  name: barbell bench
+  description: A bench for bench pressing. You can attach a barbell to it.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Furniture/barbell_bench.rsi
+    layers:
+    - state: barbell
+      map: ["base"]
+    - state: barbell
+      map: ["barbell-slot"]
+      visible: false
+  - type: Construction
+    graph: BarbellBench
+    node: barbellbench
+
+- type: entity
+  id: BarbellBenchOverlay
+  save: false
+  name: barbell bench overlay
+  description: Visual overlay for barbell bench.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/barbell.rsi
+    layers:
+    - state: barbell-overlay-up
+      map: ["barbell-overlay"]
+      visible: false
+    noRot: true
+    drawdepth: OverMobs
+  - type: Transform
+    noRot: true
+
+- type: entity
+  abstract: true
+  id: BarbellBase
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Fun/barbell.rsi
+    state: icon
+  - type: Item
+    size: Huge
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.55,-0.12,0.55,0.12"
+        density: 20
+        mask:
+        - ItemMask
+  - type: Tag
+    tags:
+    - BarbellAttachment
+  - type: BarbellLift
+    staminaCost: 15
+    overlayRsi: _Pirate/Objects/Fun/barbell.rsi
+  - type: MultiHandedItem
+    handsNeeded: 2
+  - type: HeldSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.6
+  - type: UseDelay
+    delay: 1
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 500
+
+- type: entity
+  parent: BarbellBase
+  id: Barbell
+  name: barbell
+  description: A heavy barbell for bench pressing. Can be attached to a barbell bench.
+  components:
+  - type: Construction
+    graph: Barbell
+    node: barbell

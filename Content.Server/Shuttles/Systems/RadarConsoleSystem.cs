@@ -18,16 +18,31 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RadarConsoleComponent, ComponentStartup>(OnRadarStartup);
+        Subs.BuiEvents<RadarConsoleComponent>(RadarConsoleUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(OnRadarUIOpened);
+            subs.Event<BoundUIClosedEvent>(OnRadarUIClosed);
+        });
     }
 
-    private void OnRadarStartup(EntityUid uid, RadarConsoleComponent component, ComponentStartup args)
+    private void OnRadarUIOpened(EntityUid uid, RadarConsoleComponent component, BoundUIOpenedEvent args)
     {
         UpdateState(uid, component);
     }
 
+    private void OnRadarUIClosed(EntityUid uid, RadarConsoleComponent component, BoundUIClosedEvent args)
+    {
+        // Pirate: do not retain a large radar state in replay/PVS after the last viewer closes the UI.
+        if (!_uiSystem.IsUiOpen(uid, RadarConsoleUiKey.Key))
+            _uiSystem.SetUiState(uid, RadarConsoleUiKey.Key, null);
+    }
+
     protected override void UpdateState(EntityUid uid, RadarConsoleComponent component)
     {
+        // Pirate: BUI state is only useful while a console is open; avoid retaining it in replays otherwise.
+        if (!_uiSystem.IsUiOpen(uid, RadarConsoleUiKey.Key))
+            return;
+
         var xform = Transform(uid);
         var onGrid = xform.ParentUid == xform.GridUid;
         EntityCoordinates? coordinates = onGrid ? xform.Coordinates : null;

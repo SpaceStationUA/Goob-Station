@@ -4,13 +4,10 @@
  */
 
 using System.Numerics;
-using Content.Client.Damage.Systems;
-using Content.Shared._DV.Carrying;
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
-using Content.Shared.Damage.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -19,7 +16,7 @@ using Robust.Shared.Configuration;
 namespace Content.Client._Pirate.ZLevels.Core;
 
 /// <summary>
-/// Only process Eye offset and drawdepth on clientside
+/// Client-side Z-level rendering and eye offset.
 /// </summary>
 public sealed partial class CEClientZLevelsSystem : CESharedZLevelsSystem
 {
@@ -48,30 +45,18 @@ public sealed partial class CEClientZLevelsSystem : CESharedZLevelsSystem
         // Keep the static offset in sync with the cvar so it can be tuned live from the console.
         _cfg.OnValueChanged(CCVars.CEZLevelsRenderOffset, value => ZLevelOffset = value, invokeImmediately: true);
 
-        SubscribeLocalEvent<CEZPhysicsComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<CEZPhysicsComponent, AfterAutoHandleStateEvent>(OnZPhysicsHandleState);
         SubscribeLocalEvent<CEZPhysicsComponent, GetEyeOffsetEvent>(OnEyeOffset);
-        SubscribeLocalEvent<CEZPhysicsComponent, CEZPhysicsActivationChangedEvent>(OnActivationChanged);
-        SubscribeLocalEvent<CEZItemPhysicsComponent, ComponentStartup>(OnItemZPhysicsStartup);
-        SubscribeLocalEvent<CEZItemPhysicsComponent, ComponentRemove>(OnItemZPhysicsRemove);
+
+        InitializeVisuals();
     }
 
     private void OnEyeOffset(Entity<CEZPhysicsComponent> ent, ref GetEyeOffsetEvent args)
     {
         Angle rotation = _eye.CurrentEye.Rotation * -1;
-        var localPosition = GetVisualsLocalPosition((ent, ent), Transform(ent));
-        var offset = rotation.RotateVec(new Vector2(0, localPosition * ZLevelOffset));
+        var renderHeight = GetRenderHeight((ent, ent), Transform(ent));
+        var offset = rotation.RotateVec(new Vector2(0, renderHeight * ZLevelOffset));
         args.Offset += offset;
-    }
-
-    private void OnStartup(Entity<CEZPhysicsComponent> ent, ref ComponentStartup args)
-    {
-        if (!TryComp<SpriteComponent>(ent, out var sprite))
-            return;
-
-        ent.Comp.NoRotDefault = sprite.NoRotation;
-        ent.Comp.DrawDepthDefault = sprite.DrawDepth;
-        ent.Comp.SpriteOffsetDefault = sprite.Offset;
     }
 
     private void OnZPhysicsHandleState(Entity<CEZPhysicsComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -91,124 +76,9 @@ public sealed partial class CEClientZLevelsSystem : CESharedZLevelsSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
-        foreach (var uid in ActiveBodies)
-        {
-            if (!ZPhysQuery.TryComp(uid, out var zPhys) ||
-                !TryComp<SpriteComponent>(uid, out var sprite) ||
-                !TransformQuery.TryComp(uid, out var xform))
-            {
-                continue;
-            }
-
-            var localPosition = GetVisualsLocalPosition((uid, zPhys), xform);
-
-            sprite.NoRotation = localPosition != 0 || zPhys.NoRotDefault;
-
-            _sprite.SetOffset((uid, sprite), zPhys.SpriteOffsetDefault + new Vector2(0, localPosition * ZLevelOffset));
-            _sprite.SetDrawDepth((uid, sprite), localPosition > 0 ? (int)Shared.DrawDepth.DrawDepth.OverMobs : zPhys.DrawDepthDefault);
-        }
-
-        // Update StartOffset for entities with running fatigue animations
-        // This allows animations to follow dynamic offset changes (e.g., from Z-levels system)
-        var query2 = EntityQueryEnumerator<StaminaComponent, SpriteComponent, CEZPhysicsComponent>();
-        while (query2.MoveNext(out var uid, out var stamina, out var sprite, out var zPhys))
-        {
-            if (!_animation.HasRunningAnimation(uid, StaminaSystem.StaminaAnimationKey))
-                continue;
-
-            // Track the live sprite position (including z-level shift), not the static default.
-            stamina.StartOffset = sprite.Offset;
-        }
-
-        var itemQuery = EntityQueryEnumerator<CEZItemPhysicsComponent, SpriteComponent>();
-        while (itemQuery.MoveNext(out var uid, out var zItem, out var sprite))
-        {
-            var localPosition = MathF.Max(zItem.LocalPosition, 0f);
-
-            // Flat on its layer: leave the sprite alone (restore once) so the per-frame drive
-            // doesn't fight the throw's own animation — the short-throw twitch.
-            if (localPosition <= 0f)
-            {
-                if (zItem.VisualsApplied)
-                {
-                    sprite.NoRotation = zItem.NoRotDefault;
-                    _sprite.SetOffset((uid, sprite), zItem.SpriteOffsetDefault);
-                    _sprite.SetDrawDepth((uid, sprite), zItem.DrawDepthDefault);
-                    zItem.VisualsApplied = false;
-                }
-
-                continue;
-            }
-
-            EnsureItemVisualDefaults((uid, zItem), sprite);
-
-            sprite.NoRotation = true;
-            _sprite.SetOffset((uid, sprite), zItem.SpriteOffsetDefault + new Vector2(0, localPosition * ZLevelOffset));
-            _sprite.SetDrawDepth((uid, sprite), (int)Shared.DrawDepth.DrawDepth.OverMobs);
-            zItem.VisualsApplied = true;
-        }
-
-        var carriedQuery = EntityQueryEnumerator<BeingCarriedComponent, SpriteComponent, CEZPhysicsComponent>();
-        while (carriedQuery.MoveNext(out var uid, out var carried, out var sprite, out var zPhys))
-        {
-            if (!ZPhysQuery.TryComp(carried.Carrier, out var carrierZ) ||
-                !TransformQuery.TryComp(carried.Carrier, out var carrierXform))
-            {
-                continue;
-            }
-
-            var localPosition = GetVisualsLocalPosition((carried.Carrier, carrierZ), carrierXform);
-
-            _sprite.SetOffset((uid, sprite), zPhys.SpriteOffsetDefault + new Vector2(0, localPosition * ZLevelOffset));
-            _sprite.SetDrawDepth((uid, sprite), localPosition > 0 ? (int)Shared.DrawDepth.DrawDepth.OverMobs : zPhys.DrawDepthDefault);
-        }
     }
 
-    private void OnActivationChanged(Entity<CEZPhysicsComponent> ent, ref CEZPhysicsActivationChangedEvent args)
-    {
-        if (args.Active)
-            return;
-
-        if (!TryComp<SpriteComponent>(ent, out var sprite))
-            return;
-
-        sprite.NoRotation = ent.Comp.NoRotDefault;
-        _sprite.SetOffset((ent.Owner, sprite), ent.Comp.SpriteOffsetDefault);
-        _sprite.SetDrawDepth((ent.Owner, sprite), ent.Comp.DrawDepthDefault);
-    }
-
-    private void OnItemZPhysicsStartup(Entity<CEZItemPhysicsComponent> ent, ref ComponentStartup args)
-    {
-        if (TryComp<SpriteComponent>(ent, out var sprite))
-            EnsureItemVisualDefaults(ent, sprite);
-    }
-
-    private void OnItemZPhysicsRemove(Entity<CEZItemPhysicsComponent> ent, ref ComponentRemove args)
-    {
-        if (!ent.Comp.VisualsInitialized ||
-            !TryComp<SpriteComponent>(ent, out var sprite))
-        {
-            return;
-        }
-
-        sprite.NoRotation = ent.Comp.NoRotDefault;
-        _sprite.SetOffset((ent.Owner, sprite), ent.Comp.SpriteOffsetDefault);
-        _sprite.SetDrawDepth((ent.Owner, sprite), ent.Comp.DrawDepthDefault);
-    }
-
-    private void EnsureItemVisualDefaults(Entity<CEZItemPhysicsComponent> ent, SpriteComponent sprite)
-    {
-        if (ent.Comp.VisualsInitialized)
-            return;
-
-        ent.Comp.NoRotDefault = sprite.NoRotation;
-        ent.Comp.DrawDepthDefault = sprite.DrawDepth;
-        ent.Comp.SpriteOffsetDefault = sprite.Offset;
-        ent.Comp.VisualsInitialized = true;
-    }
-
-
+    /// <summary>Returns raw simulated height, using a parent's height for riders.</summary>
     public float GetVisualsLocalPosition(Entity<CEZPhysicsComponent?> ent, TransformComponent? xform = null)
     {
         if (!Resolve(ent, ref ent.Comp, false))

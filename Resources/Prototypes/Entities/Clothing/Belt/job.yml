@@ -213,6 +213,7 @@
       - MedicalPatch # Goobstation
       - AutoinjectorCartridge # Goobstation
       - HandheldCrewMonitor # Goobstation
+      - BrigmedicBeltEquip # Pirate: allow BrigBuddy 5000 in medic belts
       - Hypospray
       components:
       - Injector

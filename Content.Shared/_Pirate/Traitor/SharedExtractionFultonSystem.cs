@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Salvage.Fulton;
 using Content.Shared.Verbs;
@@ -19,8 +20,19 @@ public abstract class SharedExtractionFultonSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ExtractionFultonComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
         SubscribeLocalEvent<ExtractionFultonComponent, GetVerbsEvent<UtilityVerb>>(OnGetVerbs);
         SubscribeLocalEvent<FultonedComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
+    }
+
+    private void OnBeforeRangedInteract(Entity<ExtractionFultonComponent> ent, ref BeforeRangedInteractEvent args)
+    {
+        if (args.Handled || !args.CanReach || args.Target is not {} target)
+            return;
+
+        // Fulton attachment has to run before target interactions so storage targets do not try to insert the fulton.
+        args.Handled = true;
+        AttachFulton(ent, target, args.User);
     }
 
     private void OnGetVerbs(Entity<ExtractionFultonComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
@@ -30,8 +42,7 @@ public abstract class SharedExtractionFultonSystem : EntitySystem
         args.Verbs.Add(new UtilityVerb()
         {
             Act = () => AttachFulton(ent, target, user),
-            Text = Loc.GetString("extraction-fulton-verb-text"),
-            Disabled = FindBeacon(ent, target) == null
+            Text = Loc.GetString("extraction-fulton-verb-text")
         });
     }
 

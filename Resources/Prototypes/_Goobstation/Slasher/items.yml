@@ -56,9 +56,7 @@
     sprite: _Goobstation/Objects/Specific/Slasher/mask.rsi
   - type: Clothing
     sprite: _Goobstation/Objects/Specific/Slasher/mask.rsi
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
+    # Pirate: welding visor toggle - use the default raised-visor sprite states.
   - type: Tag
     tags:
     - WhitelistChameleon
