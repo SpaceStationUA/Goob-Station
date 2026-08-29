@@ -22,6 +22,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.TextScreen;
 using Content.Shared.Weapons.Reflect;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -304,6 +305,20 @@ public sealed class PortedSystemsIntegrationTest
             Assert.That(slots.TryInsert(gun, "gun_magazine_cell", cell, null), Is.True);
             AssertAmmoCount(15, 15);
 
+            var appearance = server.System<SharedAppearanceSystem>();
+            var effectiveCell = new GetAmmoCountEvent { FireCostMultiplier = 0.5f };
+            entMan.EventBus.RaiseLocalEvent(cell, ref effectiveCell);
+            var magazineAmmo = new GetAmmoCountEvent();
+            entMan.EventBus.RaiseLocalEvent(magazine, ref magazineAmmo);
+            Assert.Multiple(() =>
+            {
+                Assert.That(appearance.TryGetData<int>(gun, AmmoVisuals.AmmoCount, out var displayedCount), Is.True);
+                Assert.That(displayedCount, Is.EqualTo(Math.Min(magazineAmmo.Count, effectiveCell.Count)),
+                    "Composite magazine visuals must match the limiting effective provider.");
+                Assert.That(appearance.TryGetData<int>(gun, AmmoVisuals.AmmoMax, out var displayedCapacity), Is.True);
+                Assert.That(displayedCapacity, Is.EqualTo(Math.Min(magazineAmmo.Capacity, effectiveCell.Capacity)));
+            });
+
             var battery = entMan.GetComponent<BatteryComponent>(cell);
             var batteries = server.System<SharedBatterySystem>();
             var initialCharge = batteries.GetCharge((cell, battery));
@@ -319,14 +334,41 @@ public sealed class PortedSystemsIntegrationTest
             });
             AssertAmmoCount(14, 15);
 
-            foreach (var ammo in take.Ammo)
+            // Drain the ballistic magazine to one round, then request a three-round burst. The
+            // charge-only cell must pay for the one projectile actually supplied.
+            for (var i = 0; i < 13; i++)
             {
-                if (ammo.Entity is { } spawned)
-                    entMan.DeleteEntity(spawned);
+                var drain = new TakeAmmoEvent(1, new(), map.GridCoords, null);
+                entMan.EventBus.RaiseLocalEvent(gun, drain);
+                DeleteAmmo(drain);
             }
+
+            AssertAmmoCount(1, 15);
+            var chargeBeforeShortBurst = batteries.GetCharge((cell, battery));
+            var shortBurst = new TakeAmmoEvent(3, new(), map.GridCoords, null);
+            entMan.EventBus.RaiseLocalEvent(gun, shortBurst);
+            Assert.Multiple(() =>
+            {
+                Assert.That(shortBurst.Ammo, Has.Count.EqualTo(1));
+                Assert.That(batteries.GetCharge((cell, battery)),
+                    Is.EqualTo(chargeBeforeShortBurst - 67.5f).Within(0.01f));
+            });
+            DeleteAmmo(shortBurst);
+            AssertAmmoCount(0, 15);
+
+            DeleteAmmo(take);
             entMan.DeleteEntity(cell);
             entMan.DeleteEntity(magazine);
             entMan.DeleteEntity(gun);
+
+            void DeleteAmmo(TakeAmmoEvent ammoEvent)
+            {
+                foreach (var ammo in ammoEvent.Ammo)
+                {
+                    if (ammo.Entity is { } spawned)
+                        entMan.DeleteEntity(spawned);
+                }
+            }
 
             void AssertAmmoCount(int expectedCount, int expectedCapacity)
             {

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
@@ -55,14 +56,13 @@ public abstract class SharedMultiMagazineGunSystem : EntitySystem
 
     private void OnUseInHand(Entity<MultiMagazineAmmoProviderComponent> ent, ref UseInHandEvent args)
     {
-        var magazines = new List<EntityUid>();
-        foreach (var nested in GetMagazineEntities(ent).Values)
+        var magazines = GetMagazineEntities(ent);
+        foreach (var nested in magazines.Values)
         {
             if (nested is not { } uid)
                 return;
 
             RaiseLocalEvent(uid, args);
-            magazines.Add(uid);
         }
 
         _gun.UpdateAmmoCount(ent.Owner);
@@ -75,14 +75,13 @@ public abstract class SharedMultiMagazineGunSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess)
             return;
 
-        var magazines = new List<EntityUid>();
-        foreach (var nested in GetMagazineEntities(ent).Values)
+        var magazines = GetMagazineEntities(ent);
+        foreach (var nested in magazines.Values)
         {
             if (nested is not { } uid)
                 return;
 
             RaiseLocalEvent(uid, args);
-            magazines.Add(uid);
         }
 
         UpdateMagazineAppearance(ent, magazines);
@@ -100,15 +99,13 @@ public abstract class SharedMultiMagazineGunSystem : EntitySystem
     {
         _gun.UpdateAmmoCount(ent.Owner);
 
-        var magazines = new List<EntityUid>();
-        foreach (var nested in GetMagazineEntities(ent).Values)
-        {
-            if (nested is { } uid)
-                magazines.Add(uid);
-        }
+        var magazines = GetMagazineEntities(ent);
 
         if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
-            _appearance.SetData(ent.Owner, AmmoVisuals.MagLoaded, magazines.Count > 0, appearance);
+        {
+            var hasLoadedMagazine = magazines.Values.Any(uid => uid is not null);
+            _appearance.SetData(ent.Owner, AmmoVisuals.MagLoaded, hasLoadedMagazine, appearance);
+        }
 
         UpdateMagazineAppearance(ent, magazines);
     }
@@ -172,49 +169,111 @@ public abstract class SharedMultiMagazineGunSystem : EntitySystem
     {
         var count = new GetAmmoCountEvent();
         RaiseLocalEvent(ent.Owner, ref count);
-        if (count.Count < 1)
+        var requested = Math.Min(args.Shots, count.Count);
+        if (requested < 1)
             return;
 
-        foreach (var (slotId, nested) in GetMagazineEntities(ent))
+        var magazines = GetMagazineEntities(ent);
+        var remaining = requested;
+        var suppliedProjectiles = 0;
+
+        // Projectile providers are consumed first so charge-only providers can be billed for
+        // exactly the number of projectiles that were actually supplied.
+        foreach (var (slotId, nested) in magazines)
+        {
+            if (nested is not { } uid)
+                return;
+
+            if (ent.Comp.Slots[slotId] is not null)
+                continue;
+
+            if (remaining <= 0)
+                break;
+
+            var take = new TakeAmmoEvent(remaining, new(), args.Coordinates, args.User)
+            {
+                FireCostMultiplier = args.FireCostMultiplier,
+                SpawnProjectiles = args.SpawnProjectiles,
+            };
+            RaiseLocalEvent(uid, take);
+
+            var supplied = Math.Min(take.Ammo.Count, remaining);
+            for (var i = 0; i < supplied; i++)
+                args.Ammo.Add(take.Ammo[i]);
+
+            remaining -= supplied;
+            suppliedProjectiles += supplied;
+            if (take.Reason is not null && args.Reason is null)
+                args.Reason = take.Reason;
+        }
+
+        if (suppliedProjectiles < 1)
+            return;
+
+        foreach (var (slotId, nested) in magazines)
         {
             if (nested is not { } uid)
                 return;
 
             if (ent.Comp.Slots[slotId] is not { } multiplier)
-            {
-                RaiseLocalEvent(uid, args);
                 continue;
-            }
 
-            var consume = new TakeAmmoEvent(args.Shots, new(), args.Coordinates, args.User)
+            var consume = new TakeAmmoEvent(suppliedProjectiles, new(), args.Coordinates, args.User)
             {
                 FireCostMultiplier = multiplier,
                 SpawnProjectiles = false,
             };
             RaiseLocalEvent(uid, consume);
         }
+
+        UpdateMagazineAppearance(ent, magazines);
     }
 
     private void UpdateMagazineAppearance(Entity<MultiMagazineAmmoProviderComponent> ent,
-        IReadOnlyCollection<EntityUid> magazines)
+        IReadOnlyDictionary<string, EntityUid?> magazines)
     {
         if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
             return;
 
         var count = 0;
         var capacity = 0;
-        foreach (var uid in magazines)
+        var loaded = 0;
+        var hasEffectiveCount = false;
+        foreach (var (slotId, nested) in magazines)
         {
-            if (!TryComp<AppearanceComponent>(uid, out var nestedAppearance))
+            if (nested is not { } uid)
                 continue;
 
-            _appearance.TryGetData<int>(uid, AmmoVisuals.AmmoCount, out var nestedCount, nestedAppearance);
-            _appearance.TryGetData<int>(uid, AmmoVisuals.AmmoMax, out var nestedCapacity, nestedAppearance);
-            count += nestedCount;
-            capacity += nestedCapacity;
+            loaded++;
+            // Use the same effective counts as firing and GetAmmoCount. Raw appearance values
+            // are incorrect for charge-only slots with a fire-cost multiplier.
+            var nestedEvent = new GetAmmoCountEvent
+            {
+                FireCostMultiplier = ent.Comp.Slots[slotId] ?? 1f,
+            };
+            RaiseLocalEvent(uid, ref nestedEvent);
+
+            if (!hasEffectiveCount)
+            {
+                count = nestedEvent.Count;
+                capacity = nestedEvent.Capacity;
+                hasEffectiveCount = true;
+            }
+            else
+            {
+                count = Math.Min(count, nestedEvent.Count);
+                capacity = Math.Min(capacity, nestedEvent.Capacity);
+            }
         }
 
-        _appearance.SetData(ent.Owner, AmmoVisuals.MagLoaded, magazines.Count > 0, appearance);
+        // A missing slot makes the composite unable to fire, matching OnGetAmmoCount.
+        if (loaded != magazines.Count)
+        {
+            count = 0;
+            capacity = 0;
+        }
+
+        _appearance.SetData(ent.Owner, AmmoVisuals.MagLoaded, loaded > 0, appearance);
         _appearance.SetData(ent.Owner, AmmoVisuals.HasAmmo, count != 0, appearance);
         _appearance.SetData(ent.Owner, AmmoVisuals.AmmoCount, count, appearance);
         _appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, capacity, appearance);

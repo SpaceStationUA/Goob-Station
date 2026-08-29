@@ -2,6 +2,7 @@
 
 using System.Numerics;
 using System.Text;
+using Content.Shared._Pirate.Knowledge; // Pirate: cooking skill completion events.
 using Content.Shared._Shitmed.StatusEffects;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
@@ -66,11 +67,11 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
         if (!ent.Comp.OnlyFinal || elementProto.Final || start.FoodLayers.Count == start.MaxLayers)
         {
-            TryMetamorph((ent, start));
+            TryMetamorph((ent, start), args.User);
         }
     }
 
-    private bool TryMetamorph(Entity<FoodSequenceStartPointComponent> start)
+    private bool TryMetamorph(Entity<FoodSequenceStartPointComponent> start, EntityUid? user = null)
     {
         List<MetamorphRecipePrototype> availableRecipes = new();
         foreach (var recipe in _proto.EnumeratePrototypes<MetamorphRecipePrototype>())
@@ -94,14 +95,24 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (availableRecipes.Count <= 0)
             return true;
 
-        Metamorf(start, _random.Pick(availableRecipes)); //In general, if there's more than one recipe, the yml-guys screwed up. Maybe some kind of unit test is needed.
+        Metamorf(start, _random.Pick(availableRecipes), user); //In general, if there's more than one recipe, the yml-guys screwed up. Maybe some kind of unit test is needed.
         PredictedQueueDel(start.Owner);
         return true;
     }
 
-    private void Metamorf(Entity<FoodSequenceStartPointComponent> start, MetamorphRecipePrototype recipe)
+    private void Metamorf(Entity<FoodSequenceStartPointComponent> start,
+        MetamorphRecipePrototype recipe,
+        EntityUid? user)
     {
         var result = PredictedSpawnNextToOrDrop(recipe.Result, start);
+
+        // Pirate: food-sequence recipes are cooking completions too, so award XP to the actor
+        // who added the finishing ingredient.
+        if (user is { } actualUser)
+        {
+            var cooked = new CookedFoodEvent(actualUser, recipe.Result);
+            RaiseLocalEvent(actualUser, ref cooked);
+        }
 
         //Try putting in container
         _transform.DropNextTo(result, (start, Transform(start)));

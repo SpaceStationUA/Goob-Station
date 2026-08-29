@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using System.Linq;
 using Content.Client.Weapons.Ranged.Systems;
 using Content.Shared._Pirate.Weapons.Ranged;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client._Pirate.Weapons.Ranged;
 
@@ -18,6 +19,27 @@ public sealed class MultiMagazineGunSystem : SharedMultiMagazineGunSystem
     private void OnAmmoUpdate(Entity<MultiMagazineAmmoProviderComponent> ent,
         ref GunSystem.UpdateAmmoCounterEvent args)
     {
+        // A composite can contain multiple providers with the same control type. Route an
+        // update through the slot marker attached while controls were collected so each control
+        // is updated by its own provider.
+        if (args.Control is SlotStatusControl slotControl)
+        {
+            if (!ent.Comp.Slots.TryGetValue(slotControl.SlotId, out var multiplier) ||
+                !GetMagazineEntities(ent).TryGetValue(slotControl.SlotId, out var nested) ||
+                nested is not { } uid)
+            {
+                return;
+            }
+
+            var update = new GunSystem.UpdateAmmoCounterEvent
+            {
+                FireCostMultiplier = multiplier ?? 1f,
+                Control = slotControl.Content,
+            };
+            RaiseLocalEvent(uid, update);
+            return;
+        }
+
         foreach (var (slotId, nested) in GetMagazineEntities(ent))
         {
             if (nested is not { } uid)
@@ -41,14 +63,50 @@ public sealed class MultiMagazineGunSystem : SharedMultiMagazineGunSystem
     private void OnAmmoControl(Entity<MultiMagazineAmmoProviderComponent> ent,
         ref GunSystem.AmmoCounterControlEvent args)
     {
-        var nested = GetMagazineEntities(ent).Values.ToList();
-        foreach (var uid in nested)
+        var nested = GetMagazineEntities(ent);
+        var loaded = 0;
+        foreach (var (slotId, uid) in nested)
         {
-            if (uid is { } actual)
-                RaiseLocalEvent(actual, args);
+            if (uid is not { } actual)
+                continue;
+
+            loaded++;
+            // Use a fresh event per slot so two providers with the same control type cannot
+            // overwrite one another while being collected.
+            var slotEvent = new GunSystem.AmmoCounterControlEvent();
+            RaiseLocalEvent(actual, slotEvent);
+
+            foreach (var control in slotEvent.Controls)
+            {
+                args.Controls.Add(new SlotStatusControl(slotId, control));
+            }
+
+            if (slotEvent.Controls.Count == 0)
+            {
+                args.Controls.Add(new SlotStatusControl(slotId, new GunSystem.DefaultStatusControl()));
+            }
         }
 
-        if (args.Controls.Count < nested.Count)
-            args.Control = new GunSystem.DefaultStatusControl();
+        if (loaded == 0 && args.Controls.Count == 0)
+            args.Controls.Add(new GunSystem.DefaultStatusControl());
+    }
+
+    /// <summary>
+    /// Keeps the nested provider identity next to its visual control. This is necessary because
+    /// the UI update event only carries the control instance, not the slot that owns it.
+    /// </summary>
+    private sealed class SlotStatusControl : PanelContainer
+    {
+        public string SlotId { get; }
+        public Control Content { get; }
+
+        public SlotStatusControl(string slotId, Control content)
+        {
+            SlotId = slotId;
+            Content = content;
+            HorizontalExpand = true;
+            VerticalExpand = true;
+            AddChild(content);
+        }
     }
 }
