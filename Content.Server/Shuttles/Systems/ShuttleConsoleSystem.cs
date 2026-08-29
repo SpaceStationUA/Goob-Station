@@ -69,6 +69,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         SubscribeLocalEvent<ShuttleConsoleComponent, AfterActivatableUIOpenEvent>(OnConsoleUIOpenAttempt);
         Subs.BuiEvents<ShuttleConsoleComponent>(ShuttleConsoleUiKey.Key, subs =>
         {
+            subs.Event<BoundUIOpenedEvent>(OnConsoleUIOpened);
             subs.Event<ShuttleConsoleFTLBeaconMessage>(OnBeaconFTLMessage);
             subs.Event<ShuttleConsoleFTLPositionMessage>(OnPositionFTLMessage);
             #region Pirate: multiz
@@ -122,8 +123,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// </summary>
     public void RefreshShuttleConsoles(EntityUid gridUid)
     {
-        var exclusions = new List<ShuttleExclusionObject>();
-        GetExclusions(ref exclusions);
         _consoles.Clear();
         DockingInterfaceState? dockState = null;
         DockingPortStates? dockingPortStates = null;
@@ -162,8 +161,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     /// </summary>
     public void RefreshShuttleConsoles()
     {
-        var exclusions = new List<ShuttleExclusionObject>();
-        GetExclusions(ref exclusions);
         var query = AllEntityQuery<ShuttleConsoleComponent>();
         DockingInterfaceState? dockState = null;
         DockingPortStates? dockingPortStates = null;
@@ -180,11 +177,20 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     private void OnConsoleUIClose(EntityUid uid, ShuttleConsoleComponent component, BoundUIClosedEvent args)
     {
         if ((ShuttleConsoleUiKey)args.UiKey != ShuttleConsoleUiKey.Key)
-        {
             return;
-        }
 
         RemovePilot(args.Actor);
+
+        // Pirate: do not retain a large shuttle state in replay/PVS after the last viewer closes the UI.
+        if (!_ui.IsUiOpen(uid, ShuttleConsoleUiKey.Key))
+            _ui.SetUiState(uid, ShuttleConsoleUiKey.Key, null);
+    }
+
+    private void OnConsoleUIOpened(EntityUid uid, ShuttleConsoleComponent component, BoundUIOpenedEvent args)
+    {
+        DockingInterfaceState? dockState = null;
+        DockingPortStates? dockingPortStates = null;
+        UpdateState(uid, ref dockState, ref dockingPortStates);
     }
 
     private void OnConsoleUIOpenAttempt(EntityUid uid, ShuttleConsoleComponent component,
@@ -296,6 +302,10 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         ref DockingInterfaceState? dockState,
         ref DockingPortStates? dockingPortStates)
     {
+        // Pirate: BUI state is only useful while a console is open; avoid retaining it in replays otherwise.
+        if (!_ui.IsUiOpen(consoleUid, ShuttleConsoleUiKey.Key))
+            return;
+
         EntityUid? entity = consoleUid;
 
         var getShuttleEv = new ConsoleShuttleEvent
