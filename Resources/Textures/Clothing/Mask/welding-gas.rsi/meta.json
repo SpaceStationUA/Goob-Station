@@ -72,6 +72,10 @@
         {
             "name": "equipped-MASK-hydrakin",
             "directions": 4
+        },
+        {
+            "name": "up-equipped-MASK-hydrakin",
+            "directions": 4
         }
     ]
 }

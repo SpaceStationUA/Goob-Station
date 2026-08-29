@@ -18,6 +18,7 @@
   - type: EngineeringGoggles
   - type: TrayScanner
     range: 10
+    toggleOnActivate: false
   - type: XRayVision
     enabled: false
     relayOverlay: true

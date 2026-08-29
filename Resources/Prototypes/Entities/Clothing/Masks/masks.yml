@@ -974,7 +974,8 @@
   - type: IdentityBlocker
   - type: FlashImmunity
   - type: EyeProtection
-  - type: WeldingVisor # Pirate: welding visor toggle
+  - type: WeldingVisor # Pirate: welding visor toggle - spawns with the visor raised (not protecting)
+    lowered: false
     soundLower:
       collection: PirateWeldingVisorDown
     soundRaise:

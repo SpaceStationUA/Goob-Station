@@ -5,6 +5,7 @@ using Content.Shared._Pirate.Xray;
 using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Interaction;
 using Content.Shared.SubFloor;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -35,6 +36,7 @@ public sealed class EngineeringGogglesSystem : EntitySystem
         SubscribeLocalEvent<EngineeringGogglesComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<EngineeringGogglesComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<EngineeringGogglesComponent, ToggleEngineeringGogglesEvent>(OnToggleAction);
+        SubscribeLocalEvent<EngineeringGogglesComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<EngineeringGogglesComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerb);
     }
 
@@ -60,6 +62,15 @@ public sealed class EngineeringGogglesSystem : EntitySystem
 
         args.Handled = true;
         SetMode(ent, NextMode(ent.Comp.Mode), args.Performer);
+    }
+
+    private void OnActivateInWorld(Entity<EngineeringGogglesComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (args.Handled || !args.Complex)
+            return;
+
+        args.Handled = true;
+        SetMode(ent, NextMode(ent.Comp.Mode), args.User);
     }
 
     private void OnGetAltVerb(Entity<EngineeringGogglesComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)

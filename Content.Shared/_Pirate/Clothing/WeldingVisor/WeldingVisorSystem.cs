@@ -7,6 +7,7 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
 namespace Content.Shared._Pirate.Clothing.WeldingVisor;
@@ -22,6 +23,7 @@ public sealed class WeldingVisorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -113,22 +115,28 @@ public sealed class WeldingVisorSystem : EntitySystem
 
     private void OnGotEquipped(Entity<WeldingVisorComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        // Pirate: welding visor toggle - the component always exists while any welding visor is worn (added/removed
-        // only on equip/unequip below); toggling the visor only ever flips its membership in Sources, never adds or
-        // removes the component itself. Doing the add/remove churn only here keeps SetLowered a plain field mutation
-        // on both directions, so raising doesn't behave any differently to prediction than lowering does.
+        // Client-side equip events also fire while predicted entities are being reset. Adding a component there
+        // mutates the collection that reset is enumerating, so component lifetime is authoritative-server-only.
+        if (_net.IsClient)
+            return;
+
         var impaired = EnsureComp<WeldingVisorImpairedComponent>(args.Wearer);
+        impaired.WornVisors.Add(ent.Owner);
         SetImpairedSource(args.Wearer, impaired, ent.Owner, ent.Comp.Lowered);
     }
 
     private void OnGotUnequipped(Entity<WeldingVisorComponent> ent, ref ClothingGotUnequippedEvent args)
     {
+        if (_net.IsClient)
+            return;
+
         if (!TryComp<WeldingVisorImpairedComponent>(args.Wearer, out var impaired))
             return;
 
+        impaired.WornVisors.Remove(ent.Owner);
         SetImpairedSource(args.Wearer, impaired, ent.Owner, false);
 
-        if (impaired.Sources.Count == 0)
+        if (impaired.WornVisors.Count == 0)
             RemComp<WeldingVisorImpairedComponent>(args.Wearer);
     }
 

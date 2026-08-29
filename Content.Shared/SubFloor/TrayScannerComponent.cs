@@ -16,6 +16,9 @@ public sealed partial class TrayScannerComponent : Component
     [DataField]
     public bool Enabled;
 
+    [DataField] // Pirate: slime morph
+    public bool ToggleOnActivate = true; // Pirate: slime morph
+
     /// <summary>
     ///     Radius in which the scanner will reveal entities. Centered on the <see cref="LastLocation"/>.
     /// </summary>

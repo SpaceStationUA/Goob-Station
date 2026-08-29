@@ -140,7 +140,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnTrayScannerActivate(Entity<TrayScannerComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (args.Handled || !args.Complex)
+        if (args.Handled || !args.Complex || !ent.Comp.ToggleOnActivate) // Pirate: slime morph
             return;
 
         ToggleScanner(ent, args.User); // Pirate: meson vision - now goes through ToggleScanner for the on/off sound.

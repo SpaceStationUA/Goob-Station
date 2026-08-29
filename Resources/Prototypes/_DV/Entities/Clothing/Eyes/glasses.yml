@@ -9,15 +9,12 @@
   # Pirate: meson vision - ported from Moffstation PR #1688; toggle to reveal subfloor infra + green shader tint
   - type: TrayScanner
     range: 10
-    toggleAction: ActionToggleTrayScanner
-    soundOn:
-      path: /Audio/Items/flashlight_on.ogg
-    soundOff:
-      path: /Audio/Items/flashlight_off.ogg
+    enabled: true # Pirate: slime morph
+    toggleOnActivate: false # Pirate: slime morph
   - type: GoggleShader
     shader: Goggles
     color: "#5AB43CCC"
-    enabled: false
+    enabled: true # Pirate: slime morph
   - type: Tag # Goobstation
     tags:
     - MesonGoggles

@@ -69,6 +69,7 @@
   - type: TrayScanner
     range: 10
     enabled: true
+    toggleOnActivate: false # Pirate: slime morph
   - type: GoggleShader
     shader: Goggles
     color: "#5AB43CCC"
