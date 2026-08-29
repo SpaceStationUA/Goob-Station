@@ -13,6 +13,7 @@ public sealed class GoggleShaderOverlay(IPrototypeManager prototype) : Overlay
     public override bool RequestScreenTexture => true;
 
     public readonly List<(string Shader, Color Color)> ActiveShaders = new();
+    private readonly Dictionary<string, ShaderInstance> _shaderCache = new();
 
     public bool ReducedMotion;
 
@@ -34,7 +35,12 @@ public sealed class GoggleShaderOverlay(IPrototypeManager prototype) : Overlay
             if (!prototype.TryIndex<ShaderPrototype>(shaderId, out var proto))
                 continue;
 
-            var instance = proto.InstanceUnique();
+            if (!_shaderCache.TryGetValue(shaderId, out var instance))
+            {
+                instance = proto.InstanceUnique();
+                _shaderCache.Add(shaderId, instance);
+            }
+
             instance.SetParameter("color", color);
             instance.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 

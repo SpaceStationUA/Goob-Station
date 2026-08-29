@@ -7,15 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Pirate.Clothing.EngineeringGoggles;
 
-/// <summary>
-/// Pirate: engineering goggles - ported from tgstation's "engineering scanner goggles"
-/// (/obj/item/clothing/glasses/meson/engine). Cycles a single toggle action between three modes, driving the
-/// existing <see cref="Content.Shared._Pirate.Xray.XRayVisionComponent"/> (tgstation's "meson" mode - see
-/// basic structure/terrain through walls) and <see cref="Content.Shared.SubFloor.TrayScannerComponent"/>
-/// (tgstation's "t-ray" mode - see subfloor pipes/cables) mutually exclusively, both of which must also be
-/// present on the entity. Neither of those components should carry their own toggle action/sound - this
-/// component's action is the only one offered, see EngineeringGogglesSystem.SetMode.
-/// </summary>
+/// <summary>Pirate: engineering goggles - cycles through off, x-ray, and T-ray modes; ported from tgstation.</summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(EngineeringGogglesSystem))]
 public sealed partial class EngineeringGogglesComponent : Component

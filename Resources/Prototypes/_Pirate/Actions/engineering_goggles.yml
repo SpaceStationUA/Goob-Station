@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-# Pirate: engineering goggles - cycles Off -> XRay -> Tray -> Off. Icon is set dynamically per-mode by
-# EngineeringGogglesSystem, not hardcoded here.
+# Pirate: engineering goggles
 - type: entity
   id: ActionToggleEngineeringGoggles
   parent: BaseAction

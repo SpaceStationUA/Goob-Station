@@ -7,10 +7,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client._Pirate.Clothing.WeldingVisor;
 
-/// <summary>
-/// Pirate: welding visor - registers <see cref="WeldingVisorOverlay"/> for the local player while they carry
-/// a <see cref="WeldingVisorImpairedComponent"/>.
-/// </summary>
+/// <summary>Pirate: welding visor - manages the local visor overlay.</summary>
 public sealed class WeldingVisorOverlaySystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;

@@ -64,12 +64,11 @@
     sprite: Clothing/Eyes/Glasses/meson.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
-  # Pirate: meson vision - matches tgstation's plain meson goggles: always on, no toggle (only the
-  # engineering scanner goggles variant is switchable - see ClothingEyesGlassesEngineering).
+  # Pirate: meson vision - always on.
   - type: TrayScanner
     range: 10
     enabled: true
-    toggleOnActivate: false # Pirate: slime morph
+    toggleOnActivate: false # Pirate: meson vision
   - type: GoggleShader
     shader: Goggles
     color: "#5AB43CCC"

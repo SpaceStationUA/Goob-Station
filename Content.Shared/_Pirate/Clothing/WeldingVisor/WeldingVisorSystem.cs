@@ -12,11 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared._Pirate.Clothing.WeldingVisor;
 
-/// <summary>
-/// Pirate: welding visor - toggles <see cref="WeldingVisorComponent"/> between a lowered (protecting) and
-/// raised (not protecting) state, via an item action or an alt-click verb. Whether it's currently lowered is
-/// read directly by EyeProtectionSystem and SharedFlashSystem to decide whether it's actually protecting.
-/// </summary>
+/// <summary>Pirate: welding visor - toggles visors and updates their effects.</summary>
 public sealed class WeldingVisorSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -35,7 +31,7 @@ public sealed class WeldingVisorSystem : EntitySystem
         SubscribeLocalEvent<WeldingVisorComponent, ToggleWeldingVisorEvent>(OnToggleAction);
         SubscribeLocalEvent<WeldingVisorComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerb);
 
-        // Pirate: welding visor toggle - obstructed-vision overlay while a lowered visor is worn.
+        // Pirate: welding visor toggle
         SubscribeLocalEvent<WeldingVisorComponent, ClothingGotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<WeldingVisorComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
     }
@@ -75,7 +71,7 @@ public sealed class WeldingVisorSystem : EntitySystem
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString(ent.Comp.Lowered ? "welding-visor-raise-verb" : "welding-visor-lower-verb"),
-            IconEntity = GetNetEntity(ent.Owner), // Pirate: welding visor toggle - this item's own sprite, not a generic one.
+            IconEntity = GetNetEntity(ent.Owner), // Pirate: welding visor toggle
             Act = () => SetLowered(target, !target.Comp.Lowered, user),
         });
     }
@@ -104,7 +100,7 @@ public sealed class WeldingVisorSystem : EntitySystem
             _popup.PopupClient(Loc.GetString(msg, ("item", uid)), user.Value, user.Value);
         }
 
-        // Pirate: welding visor toggle - let other systems (e.g. hiding snout/ear layers, obstructed vision) react live.
+        // Pirate: welding visor toggle
         var wearer = GetWearer(uid);
         if (wearer != null && TryComp<WeldingVisorImpairedComponent>(wearer.Value, out var impaired))
             SetImpairedSource(wearer.Value, impaired, uid, lowered);
@@ -165,9 +161,7 @@ public sealed class WeldingVisorSystem : EntitySystem
         if (comp.ToggleActionEntity is not { } action)
             return;
 
-        // Pirate: welding visor toggle - if this item's own icon swaps on toggle (see LoweredIconState/
-        // RaisedIconState), the action icon should track that same state instead of freezing on whichever
-        // it was equipped with. Otherwise it just shows this item's fixed appearance.
+        // Pirate: welding visor toggle - match the action icon to the visor state.
         if (comp.LoweredIconState is { } loweredState
             && comp.RaisedIconState is { } raisedState
             && TryComp(uid, out ClothingComponent? clothing)
@@ -185,7 +179,7 @@ public sealed class WeldingVisorSystem : EntitySystem
     private void UpdateAppearance(Entity<WeldingVisorComponent> ent)
     {
         var (uid, comp) = ent;
-        // Pirate: welding visor toggle - only the on-body sprite changes; in-hand sprites are left untouched.
+        // Pirate: welding visor toggle
         var prefix = comp.Lowered ? null : comp.RaisedPrefix;
         _clothing.SetEquippedPrefix(uid, prefix);
         _appearance.SetData(uid, WeldingVisorVisuals.Lowered, comp.Lowered);

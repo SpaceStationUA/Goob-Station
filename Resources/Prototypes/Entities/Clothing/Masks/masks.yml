@@ -970,6 +970,7 @@
     state: icon
   - type: Clothing
     sprite: Clothing/Mask/welding-gas.rsi
+    equippedPrefix: up # Pirate: welding visor - match the initially raised welding visor
   - type: BreathMask
   - type: IdentityBlocker
   - type: FlashImmunity
@@ -980,8 +981,7 @@
       collection: PirateWeldingVisorDown
     soundRaise:
       collection: PirateWeldingVisorUp
-  # Pirate: welding visor toggle - dropped IngestionBlocker; the face shield only gates flash/eye
-  # protection (matches tgstation's gas/welding visor_vars_to_toggle), you can eat through it either way.
+  # Pirate: welding visor toggle - the face shield only controls flash and eye protection.
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Steel: 150

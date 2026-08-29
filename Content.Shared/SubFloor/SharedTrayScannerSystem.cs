@@ -82,7 +82,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
     {
         OnUnequip(args.User);
 
-        // Pirate: meson vision
+        // Pirate: meson vision - ported from Moffstation PR #1688 (funky-station/forky-station#102).
         if (ent.Comp.ToggleActionEntity is { } action)
         {
             if (TryComp(action, out TransformComponent? xform) && xform.ParentUid == args.User)
@@ -98,7 +98,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
     {
         OnEquip(args.User);
 
-        // Pirate: meson vision
+        // Pirate: meson vision - ported from Moffstation PR #1688 (funky-station/forky-station#102).
         if (ent.Comp.ToggleAction != null && HasComp<ActionsComponent>(args.User))
             _actions.AddAction(args.User, ref ent.Comp.ToggleActionEntity, ent.Comp.ToggleAction.Value, ent);
     }
@@ -107,7 +107,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
     {
         OnUnequip(args.Equipee);
 
-        // Pirate: meson vision
+        // Pirate: meson vision - ported from Moffstation PR #1688 (funky-station/forky-station#102).
         if (ent.Comp.ToggleActionEntity is { } action)
         {
             if (TryComp(action, out TransformComponent? xform) && xform.ParentUid == args.Equipee)
@@ -123,12 +123,12 @@ public abstract class SharedTrayScannerSystem : EntitySystem
     {
         OnEquip(args.Equipee);
 
-        // Pirate: meson vision
+        // Pirate: meson vision - ported from Moffstation PR #1688 (funky-station/forky-station#102).
         if (ent.Comp.ToggleAction != null && HasComp<ActionsComponent>(args.Equipee))
             _actions.AddAction(args.Equipee, ref ent.Comp.ToggleActionEntity, ent.Comp.ToggleAction.Value, ent);
     }
 
-    // Pirate: meson vision
+    // Pirate: meson vision - ported from Moffstation PR #1688 (funky-station/forky-station#102).
     private void OnToggleAction(Entity<TrayScannerComponent> ent, ref ToggleTrayScannerEvent args)
     {
         if (args.Handled)
@@ -140,14 +140,14 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnTrayScannerActivate(Entity<TrayScannerComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (args.Handled || !args.Complex || !ent.Comp.ToggleOnActivate) // Pirate: slime morph
+        if (args.Handled || !args.Complex || !ent.Comp.ToggleOnActivate) // Pirate: welding viso
             return;
 
         ToggleScanner(ent, args.User); // Pirate: meson vision - now goes through ToggleScanner for the on/off sound.
         args.Handled = true;
     }
 
-    // Pirate: meson vision
+    // Pirate: meson vision - ported from Moffstation PR #1688 (funky-station/forky-station#102).
     private void ToggleScanner(Entity<TrayScannerComponent> ent, EntityUid user)
     {
         var isEnabled = !ent.Comp.Enabled;

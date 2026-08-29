@@ -6,12 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Pirate.Clothing.WeldingVisor;
 
-/// <summary>
-/// Pirate: welding visor - lets welding masks/goggles be flipped between a lowered (eye-protecting) and
-/// raised (non-protecting) state, mirroring tgstation's welding mask/goggle "up" behaviour.
-/// Only <see cref="Lowered"/> welding visors count towards eye/flash protection - see WeldingVisorSystem
-/// and the checks added to EyeProtectionSystem/SharedFlashSystem.
-/// </summary>
+/// <summary>Pirate: welding visor - toggles eye protection with its raised state; ported from tgstation.</summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(WeldingVisorSystem))]
 public sealed partial class WeldingVisorComponent : Component

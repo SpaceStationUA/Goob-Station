@@ -13,11 +13,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared._Pirate.Clothing.EngineeringGoggles;
 
-/// <summary>
-/// Pirate: engineering goggles - cycles <see cref="EngineeringGogglesComponent"/> through its three modes,
-/// driving TrayScanner/XRayVision mutually exclusively and keeping the item's own icon, action icon, on-body
-/// sprite and goggle shader color all in lockstep. See EngineeringGogglesComponent for the mode mapping.
-/// </summary>
+/// <summary>Pirate: engineering goggles - synchronizes their vision modes and visuals.</summary>
 public sealed class EngineeringGogglesSystem : EntitySystem
 {
     private static readonly ResPath RsiPath = new("Clothing/Eyes/Glasses/engineering.rsi");
@@ -129,11 +125,7 @@ public sealed class EngineeringGogglesSystem : EntitySystem
                 break;
         }
 
-        // Pirate: engineering goggles - the two calls above each raise their own GoggleShaderToggledEvent as a
-        // side effect of enabling/disabling their own component, using whatever Color happened to be set at
-        // that exact instant. Rather than depend on getting that interleaving exactly right, re-raise it one
-        // last time now that Color and Enabled are both in their final state for this mode, so the client's
-        // cached overlay color can never end up one step behind.
+        // Pirate: engineering goggles - refresh the shader after the final mode state is set.
         if (shader != null)
         {
             var ev = new GoggleShaderToggledEvent(shader.Enabled);

@@ -69,14 +69,7 @@ public sealed partial class GoggleShaderSystem : EntitySystem
         RefreshOverlay();
     }
 
-    /// <summary>
-    /// Pirate: engineering goggles - the overlay snapshots <see cref="GoggleShaderComponent.Color"/> when it is
-    /// refreshed, so every networked change to it has to force a refresh of its own. Without this, an item that
-    /// recolors the shader as part of a mode switch (the engineering goggles' x-ray -> t-ray cycle) renders the
-    /// previous mode's color: the component states arrive in the order the components sit on the entity, and
-    /// TrayScannerComponent's state handler re-raises <see cref="GoggleShaderToggledEvent"/> before this
-    /// component's own state - and therefore the new color - has been applied.
-    /// </summary>
+    /// <summary>Pirate: engineering goggles - refreshes the cached overlay color after state synchronization.</summary>
     private void OnHandleState(Entity<GoggleShaderComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         RefreshOverlay();

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Pirate: meson vision - ported from space-wizards/space-station-14#44601 ("Mesons (XRayVision)").
-// Upstream declares its handlers with [SubscribeLocalEvent]; our engine (270.1.0) predates attribute-based
-// subscriptions, so they are wired up explicitly in Initialize instead.
+// This engine uses explicit event subscriptions.
 
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
@@ -35,18 +34,14 @@ public abstract class SharedXRayVisionSystem : EntitySystem
 
         RefreshOverlay(ent);
 
-        // Pirate: guarded - clothing gets equipped onto action-less dummies (the lobby character preview),
-        // and AddAction errors out on those. Same guard the T-ray port uses.
+        // Pirate: meson vision - skip actionless preview entities.
         if (ent.Comp.Action is { } action && HasComp<ActionsComponent>(ent))
             _actions.AddAction(ent, ref ent.Comp.ActionEntity, action);
     }
 
     private void OnRemove(Entity<XRayVisionComponent> ent, ref ComponentRemove args)
     {
-        // Pirate: upstream bails outright on RelayOverlay here, which leaves a worn-and-then-deleted item's
-        // effects up (admin-deleting equipped goggles, gibbing). Harmless upstream - just a stale overlay - but
-        // our client also holds the lighting buffer off while active, and a permanently unlit client is nasty.
-        // So refresh the wearer instead of returning; the item is parented to them while equipped.
+        // Pirate: meson vision - refresh the wearer when a worn item is removed.
         if (ent.Comp.RelayOverlay)
         {
             RefreshOverlay(Transform(ent.Owner).ParentUid);
@@ -64,9 +59,7 @@ public abstract class SharedXRayVisionSystem : EntitySystem
 
         RefreshOverlay(args.Equipee);
 
-        // Pirate: see the guard note in OnStartup. Unequipping needs no counterpart - SharedActionsSystem's
-        // RemoveProvidedActions already revokes item-provided actions, and keeping ActionEntity set lets
-        // re-equipping reuse the same action entity.
+        // Pirate: meson vision - retain the action entity for re-equipping.
         if (ent.Comp.Action is { } action && HasComp<ActionsComponent>(args.Equipee))
             _actions.AddAction(args.Equipee, ref ent.Comp.ActionEntity, action, ent);
     }
@@ -92,9 +85,7 @@ public abstract class SharedXRayVisionSystem : EntitySystem
         args.Entities.Add(ent);
     }
 
-    // Pirate: upstream reads the toggled item out of the action's Container field. That field is
-    // [Access]-restricted to the actions systems here, but SharedActionsSystem already raises item-action
-    // events directed at the container itself, so subscribing on the component gives us the same entity.
+    // Pirate: meson vision - item-action events target their container.
     private void OnToggleXRayVision(Entity<XRayVisionComponent> ent, ref ToggleXRayVisionEvent args)
     {
         if (args.Handled)
@@ -115,8 +106,7 @@ public abstract class SharedXRayVisionSystem : EntitySystem
         ent.Comp.Enabled = enabled;
         Dirty(ent);
 
-        // Pirate: reuses the T-ray goggles' full-screen tint/scanline shader for the x-ray's own toggle, kept
-        // in lockstep the same way SharedTrayScannerSystem does it for TrayScannerComponent.
+        // Pirate: meson vision - keep the shader in sync.
         if (TryComp(ent.Owner, out GoggleShaderComponent? goggleShader))
         {
             goggleShader.Enabled = enabled;

@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-# Pirate: welding visor - welding goggles ported from tgstation, sharing the lowered/raised visor toggle
-# used by the welding masks (see Content.Shared/_Pirate/Clothing/WeldingVisor).
+# Pirate: welding visor - ported from tgstation.
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesWelding

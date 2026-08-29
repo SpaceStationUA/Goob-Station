@@ -5,10 +5,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client._Pirate.Clothing.EngineeringGoggles;
 
-/// <summary>
-/// Pirate: engineering goggles - swaps the item's own (dropped/inventory) sprite state to match its current
-/// mode. The worn/in-hand layers are handled separately via ClothingComponent.EquippedPrefix.
-/// </summary>
+/// <summary>Pirate: engineering goggles - updates the item's sprite for its current mode.</summary>
 public sealed class EngineeringGogglesVisualsSystem : VisualizerSystem<EngineeringGogglesComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, EngineeringGogglesComponent component, ref AppearanceChangeEvent args)

@@ -1,6 +1,3 @@
-ent-ClothingEyesGlassesEngineering = engineering scanner goggles
-    .desc = Goggles used by engineers. X-ray mode reveals basic structures and terrain through walls, while T-ray mode reveals underfloor objects such as cables and pipes.
-
 ent-ClothingEyesGlassesWelding = welding goggles
     .desc = Protect the eyes from bright flashes, but only while lowered over the eyes.
 

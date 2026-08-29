@@ -32,7 +32,8 @@ void fragment() {
     highp float flickerNoise = 1.0 + sin(TIME * FLICKER_SPEED) * FLICKER_INTENSITY;
     highp float flicker = mix(flickerNoise, 1.0, reducedMotion);
 
-    highp float beamCycle = fract(distortedUv.y - TIME * BEAM_SPEED);
+    highp float beamTime = TIME * (1.0 - reducedMotion);
+    highp float beamCycle = fract(distortedUv.y - beamTime * BEAM_SPEED);
     highp float beamGlow = smoothstep(0.0, BEAM_WIDTH, beamCycle);
     highp float beam = mix(BEAM_MIN_BRIGHTNESS, 1.0, beamGlow);
 

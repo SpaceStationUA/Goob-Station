@@ -56,10 +56,7 @@
     sprite: _Goobstation/Objects/Specific/Slasher/mask.rsi
   - type: Clothing
     sprite: _Goobstation/Objects/Specific/Slasher/mask.rsi
-    # Pirate: welding visor toggle - removed the hardcoded clothingVisuals override so the mask picks up
-    # the default "{prefix}-equipped-HELMET" state resolution WeldingVisorSystem relies on to flip the visor.
-    # It inherits WeldingVisor from WeldingMaskBase; placeholder "up-" sprites duplicate the base ones for
-    # now, see chat for the RSI path to replace them.
+    # Pirate: welding visor toggle - use the default raised-visor sprite states.
   - type: Tag
     tags:
     - WhitelistChameleon

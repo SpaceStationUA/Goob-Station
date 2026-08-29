@@ -9,12 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client._Pirate.Clothing.WeldingVisor;
 
-/// <summary>
-/// Pirate: welding visor - darkens the edges of the screen while the local player has a lowered welding
-/// visor equipped, based on tgstation's "impaired" fullscreen overlay for welding gear. Uses tgstation's
-/// strongest tier (impairedoverlay3) drawn at reduced opacity, landing between their darkened and strongest
-/// tiers - a tighter viewing window than plain TINT_DARKENED without blacking the periphery out completely.
-/// </summary>
+/// <summary>Pirate: welding visor - darkens screen edges while a lowered visor is equipped; ported from tgstation.</summary>
 public sealed class WeldingVisorOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -43,8 +38,7 @@ public sealed class WeldingVisorOverlay : Overlay
         if (args.Viewport.Eye != eyeComp.Eye)
             return false;
 
-        // Pirate: welding visor toggle - the component stays on the wearer for as long as any welding visor is
-        // worn (added/removed only on equip/unequip); Sources tracks which of those are actually lowered right now.
+        // Pirate: welding visor toggle - Sources tracks lowered worn visors.
         return _entityManager.TryGetComponent(_playerManager.LocalEntity, out WeldingVisorImpairedComponent? impaired)
             && impaired.Sources.Count > 0;
     }

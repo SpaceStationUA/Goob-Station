@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Pirate: meson vision - ported from space-wizards/space-station-14#44601 ("Mesons (XRayVision)").
-// Uses CPU tile raycasts because this engine lacks upstream's FOV shadow-map access.
+// Uses CPU tile raycasts because the engine has no FOV shadow-map access.
 
 using Content.Shared._Pirate.Xray;
 using Content.Shared.Physics;
@@ -45,6 +45,7 @@ public sealed class XRayVisionOverlay : Overlay
 
     private List<Entity<MapGridComponent>> _grids = [];
     private readonly Dictionary<Tile, Dictionary<byte, Texture>> _tileVariations = [];
+    private readonly Dictionary<EntityUid, GridVisibilityCache> _visibilityCache = [];
 
     private readonly Func<EntityUid, bool> _ignoreNonOccluder;
 
@@ -70,9 +71,20 @@ public sealed class XRayVisionOverlay : Overlay
 
     public void SetParameters(bool showTiles, float range, float tileAlpha)
     {
+        if (!MathHelper.CloseTo(Range, range))
+            _visibilityCache.Clear();
+
         ShowTiles = showTiles;
         Range = range;
         TileAlpha = tileAlpha;
+    }
+
+    public void InvalidateVisibility(EntityUid? grid = null)
+    {
+        if (grid == null)
+            _visibilityCache.Clear();
+        else
+            _visibilityCache.Remove(grid.Value);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -115,6 +127,8 @@ public sealed class XRayVisionOverlay : Overlay
             return;
 
         var rangeSquared = Range * Range;
+        var (eyeTile, rayOrigin) = GetEyeTile(eyePos, viewerXform);
+        var occluderSignature = GetOccluderSignature(args.MapId, rayOrigin);
 
         // Dim unshaded tiles without tinting them.
         var modulate = Color.White.WithAlpha(TileAlpha);
@@ -125,34 +139,99 @@ public sealed class XRayVisionOverlay : Overlay
         foreach (var grid in _grids)
         {
             var gridWorldMatrix = _transform.GetWorldMatrix(grid.Owner);
-            var (gridPos, gridRot) = _transform.GetWorldPositionRotation(grid.Owner);
             handle.SetTransform(gridWorldMatrix);
+            var revealedTiles = GetRevealedTiles(args.MapId, grid, eyeTile, rayOrigin, rangeSquared, occluderSignature);
 
             foreach (var tileRef in _map.GetTilesIntersecting(grid.Owner, grid.Comp, bounds))
             {
-                if (tileRef.Tile.IsEmpty)
+                if (!revealedTiles.Contains(tileRef.GridIndices))
                     continue;
 
                 if (!_tileDefManager.TryGetDefinition(tileRef.Tile.TypeId, out var tileDef) || tileDef.Sprite is not { } sprite)
-                    continue;
-
-                // Reveal the floor beyond walls, not the walls themselves.
-                if (TileHasOccluder(grid, tileRef.GridIndices))
-                    continue;
-
-                var tileLocalCenter = _map.ToCenterCoordinates(tileRef, grid.Comp).Position;
-                var tileCenter = gridPos + gridRot.RotateVec(tileLocalCenter);
-
-                if (Vector2.DistanceSquared(eyePos, tileCenter) > rangeSquared)
-                    continue;
-
-                if (!IsHidden(args.MapId, eyePos, tileCenter))
                     continue;
 
                 var texture = GetTileTexture(tileRef.Tile, tileDef, sprite);
                 handle.DrawTextureRect(texture, _lookup.GetLocalBounds(tileRef, grid.Comp.TileSize), modulate);
             }
         }
+    }
+
+    private HashSet<Vector2i> GetRevealedTiles(
+        MapId mapId,
+        Entity<MapGridComponent> grid,
+        EyeTile eyeTile,
+        Vector2 rayOrigin,
+        float rangeSquared,
+        int occluderSignature)
+    {
+        if (_visibilityCache.TryGetValue(grid.Owner, out var cached)
+            && cached.EyeTile == eyeTile
+            && cached.OccluderSignature == occluderSignature)
+            return cached.RevealedTiles;
+
+        var revealed = new HashSet<Vector2i>();
+        var rangeBounds = Box2.CenteredAround(rayOrigin, new Vector2(Range * 2f));
+        var (gridPos, gridRot) = _transform.GetWorldPositionRotation(grid.Owner);
+
+        foreach (var tileRef in _map.GetTilesIntersecting(grid.Owner, grid.Comp, rangeBounds))
+        {
+            if (tileRef.Tile.IsEmpty
+                || !_tileDefManager.TryGetDefinition(tileRef.Tile.TypeId, out var tileDef)
+                || tileDef.Sprite == null
+                || TileHasOccluder(grid, tileRef.GridIndices))
+            {
+                continue;
+            }
+
+            var tileLocalCenter = _map.ToCenterCoordinates(tileRef, grid.Comp).Position;
+            var tileCenter = gridPos + gridRot.RotateVec(tileLocalCenter);
+
+            if (Vector2.DistanceSquared(rayOrigin, tileCenter) <= rangeSquared
+                && IsHidden(mapId, rayOrigin, tileCenter))
+            {
+                revealed.Add(tileRef.GridIndices);
+            }
+        }
+
+        _visibilityCache[grid.Owner] = new GridVisibilityCache(eyeTile, occluderSignature, revealed);
+        return revealed;
+    }
+
+    private int GetOccluderSignature(MapId mapId, Vector2 eyePos)
+    {
+        var rangeBounds = Box2.CenteredAround(eyePos, new Vector2(Range * 2f));
+        var hash = new HashCode();
+        var query = _entManager.EntityQueryEnumerator<OccluderComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var occluder, out var xform))
+        {
+            if (!occluder.Enabled || xform.MapID != mapId)
+                continue;
+
+            var position = _transform.GetWorldPosition(xform);
+            if (!rangeBounds.Contains(position))
+                continue;
+
+            hash.Add(uid);
+            hash.Add(position);
+            hash.Add(occluder.BoundingBox);
+        }
+
+        return hash.ToHashCode();
+    }
+
+    private (EyeTile Tile, Vector2 Position) GetEyeTile(Vector2 eyePos, TransformComponent viewerXform)
+    {
+        if (viewerXform.GridUid is { } gridUid
+            && _entManager.TryGetComponent<MapGridComponent>(gridUid, out var grid))
+        {
+            var indices = _map.WorldToTile(gridUid, grid, eyePos);
+            var center = _map.ToCenterCoordinates(gridUid, indices, grid);
+            return (new EyeTile(gridUid, indices), _transform.ToMapCoordinates(center).Position);
+        }
+
+        var mapIndices = new Vector2i((int) MathF.Floor(eyePos.X), (int) MathF.Floor(eyePos.Y));
+        return (new EyeTile(null, mapIndices), mapIndices + new Vector2(0.5f));
     }
 
     private bool IsHidden(MapId mapId, Vector2 eyePos, Vector2 target)
@@ -214,4 +293,8 @@ public sealed class XRayVisionOverlay : Overlay
         variants[tile.Variant] = texture;
         return texture;
     }
+
+    private readonly record struct EyeTile(EntityUid? Grid, Vector2i Indices);
+
+    private sealed record GridVisibilityCache(EyeTile EyeTile, int OccluderSignature, HashSet<Vector2i> RevealedTiles);
 }

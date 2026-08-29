@@ -5,11 +5,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client._Pirate.Clothing.WeldingVisor;
 
-/// <summary>
-/// Pirate: welding visor - swaps the item's own (dropped/inventory) sprite state between
-/// <see cref="WeldingVisorComponent.LoweredIconState"/> and <see cref="WeldingVisorComponent.RaisedIconState"/>
-/// as the visor is toggled. The worn/in-hand layers are handled separately via ClothingComponent.EquippedPrefix.
-/// </summary>
+/// <summary>Pirate: welding visor - updates the item's sprite when the visor is toggled.</summary>
 public sealed class WeldingVisorVisualsSystem : VisualizerSystem<WeldingVisorComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, WeldingVisorComponent component, ref AppearanceChangeEvent args)
