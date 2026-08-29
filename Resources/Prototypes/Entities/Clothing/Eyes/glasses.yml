@@ -58,7 +58,7 @@
   parent: ClothingEyesBase # goobstation - tider nation - no longer contra
   id: ClothingEyesGlassesMeson
   name: meson goggles # goobstation - they're called MESONS!!!!
-  description: Green-tinted goggles that use mesons to reveal sub-floor infrastructure. No longer protects against eye damage. # Pirate: meson vision
+  description: Green-tinted goggles that use mesons to reveal sub-floor infrastructure. # Pirate: meson vision
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/meson.rsi

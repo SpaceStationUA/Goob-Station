@@ -12,7 +12,8 @@
     Multitool: 4
     NetworkConfigurator: 5
     PowerCellMedium: 5
-    ClothingHandsGlovesColorYellow: 12 # GoobStation: was 6, IPCs need insuls more than usual
+    ClothingHandsGlovesColorYellow: 3 # Pirate: engivend price pass - was 12
+    RCDAmmo: 6 # Pirate: engivend price pass - compressed matter
     BoxInflatable: 2
     ClothingHeadHatCone: 4
   contrabandInventory:
