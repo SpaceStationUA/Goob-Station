@@ -4,6 +4,7 @@
   components:
   - type: GameRule
     minPlayers: 24
+    chaosScore: 650
   - type: ConspiratorRule
   - type: AntagObjectives
     objectives:
