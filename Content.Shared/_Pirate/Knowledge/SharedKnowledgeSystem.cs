@@ -309,6 +309,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
             {
                 existing.Comp.LearnedLevel = Math.Max(existing.Comp.LearnedLevel, sourceKnowledge.LearnedLevel);
                 existing.Comp.Experience = Math.Max(existing.Comp.Experience, sourceKnowledge.Experience);
+                MergeEmployerBonus((sourceUid, sourceKnowledge), existing);
                 Dirty(existing);
                 PredictedQueueDel(sourceUid);
                 continue;
