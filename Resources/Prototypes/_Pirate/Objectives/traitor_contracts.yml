@@ -117,20 +117,6 @@
 
 - type: entity
   parent: BasePirateTraitorExtractObjective
-  id: TraitorContractEnergyMagnumObjective
-  components:
-  - type: NotJobRequirement
-    jobs: [ HeadOfSecurity ]
-  - type: ExtractCondition
-    stealGroup: WeaponEnergyMagnum
-    owner: job-name-hos
-  - type: Objective
-    difficulty: 3
-  - type: ReputationCondition
-    reputation: 60
-
-- type: entity
-  parent: BasePirateTraitorExtractObjective
   id: TraitorContractMagbootsObjective
   components:
   - type: NotJobRequirement
