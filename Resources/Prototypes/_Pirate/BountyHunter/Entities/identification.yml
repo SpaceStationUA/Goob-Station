@@ -1,7 +1,7 @@
 - type: entity
   parent: IDCardStandard
   id: BountyHunterIDCard
-  name: visitor ID card
+  name: "iD-картка відвідувача"
   components:
   - type: Sprite
     layers:
@@ -18,7 +18,7 @@
 - type: entity
   parent: VisitorPDA
   id: BountyHunterPDA
-  name: bounty hunter PDA
+  name: "кПК мисливця за головами"
   components:
   - type: Pda
     id: BountyHunterIDCard

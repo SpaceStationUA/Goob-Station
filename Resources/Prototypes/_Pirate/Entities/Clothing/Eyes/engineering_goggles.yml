@@ -4,8 +4,8 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesEngineering
-  name: engineering scanner goggles
-  description: Goggles used by engineers. The x-ray mode lets you see basic structural and terrain layouts through walls, and the t-ray mode lets you see underfloor objects such as cables and pipes.
+  name: "інженерні сканувальні окуляри"
+  description: "Окуляри для інженерів. Рентгенівський режим дозволяє бачити основні конструкції та рельєф крізь стіни, а Т-променевий — об'єкти під підлогою, як-от кабелі й труби."
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/engineering.rsi

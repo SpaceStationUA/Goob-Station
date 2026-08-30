@@ -4,8 +4,8 @@
 - type: entity
   parent: BaseMachine
   id: CharcoalOven
-  name: charcoal oven
-  description: Turns wood into either charcoal or ash.
+  name: "піч для деревного вугілля"
+  description: "Перетворює деревину на деревне вугілля або попіл."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Forging/charcoalburner.rsi

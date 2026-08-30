@@ -31,10 +31,10 @@
 # reagents and shit for healing or different effects.
 
 - type: entity
-  name: boritos
+  name: "боритос"
   parent: FoodSnackBase
   id: FoodSnackBoritos
-  description: Crunchy, salty tortilla chips. You could probably make nachos with these.
+  description: "Хрусткі, солоні чіпси з тортильї. З них, напевно, можна зробити начос."
   components:
   - type: FlavorProfile
     flavors:
@@ -48,10 +48,10 @@
     - FoodPacketBoritosTrash
 
 - type: entity
-  name: C&Ds
+  name: "C&D"
   parent: FoodSnackBase
   id: FoodSnackCnDs
-  description: Legally, we cannot say that these won't melt in your hands.
+  description: "З юридичної точки зору, ми не можемо сказати, що вони не розтануть у вас в руках."
   components:
   - type: FlavorProfile
     flavors:
@@ -69,10 +69,10 @@
   # Pirate banking end
 
 - type: entity
-  name: cheesie honkers
+  name: "сирні гудки"
   parent: FoodSnackBase
   id: FoodSnackCheesie
-  description: Bite sized cheesie snacks that will honk all over your mouth.
+  description: "Сирні закуски розміром з укус, від яких аж дзвенить у роті."
   components:
   - type: FlavorProfile
     flavors:
@@ -87,10 +87,10 @@
     - FoodPacketCheesieTrash
 
 - type: entity
-  name: chips
+  name: "чіпси"
   parent: FoodSnackBase
   id: FoodSnackChips
-  description: Commander Riker's What-The-Crisps.
+  description: "Командир Райкер - \"Чіпси\"."
   components:
   - type: FlavorProfile
     flavors:
@@ -108,8 +108,8 @@
 - type: entity
   parent: BaseItem
   id: FoodSnackChocolate
-  name: chocolate bar
-  description: Tastes like cardboard.
+  name: "шоколадка"
+  description: "На смак як картон."
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
@@ -131,8 +131,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackChocolateBar
-  name: chocolate bar
-  description: Tastes like cardboard.
+  name: "шоколадка"
+  description: "На смак як картон."
   components:
   - type: FlavorProfile
     flavors:
@@ -163,8 +163,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackEnergy
-  name: energy bar
-  description: An energy bar with a lot of punch.
+  name: "енергетичний батончик"
+  description: "Енергетичний батончик з великою кількістю пуншу."
   components:
   - type: Sprite
     state: energybar
@@ -181,8 +181,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackEnergyBar
-  name: energy bar
-  description: An energy bar with a lot of punch.
+  name: "енергетичний батончик"
+  description: "Енергетичний батончик з великою кількістю пуншу."
   components:
   - type: FlavorProfile
     flavors:
@@ -199,8 +199,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackPistachios
-  name: Sweetie's pistachios
-  description: Sweeties's name-brand pistachios. Probably won't give you diseases. Probably.
+  name: "фісташки від Світі"
+  description: "Фірмові фісташки від Світі. Ймовірно, не викличуть у вас хвороб. Ймовірно."
   components:
   - type: FlavorProfile
     flavors:
@@ -224,10 +224,10 @@
   # Pirate banking end
 
 - type: entity
-  name: popcorn
+  name: "попкорн"
   parent: FoodSnackBase
   id: FoodSnackPopcorn
-  description: Grown on an unknown planet, by an unknown farmer, popped by some jerk on a space station.
+  description: "Вирощений на невідомій планеті, невідомим фермером, застрелений якимось придурком на космічній станції."
   components:
   - type: FlavorProfile
     flavors:
@@ -243,10 +243,10 @@
     - FoodPacketPopcornTrash
 
 - type: entity
-  name: 4no raisins
+  name: "4без родзинок"
   parent: FoodSnackBase
   id: FoodSnackRaisins
-  description: Best raisins in the universe. Not sure why.
+  description: "Найкращі родзинки у всесвіті. Не знаю, чому."
   components:
   - type: FlavorProfile
     flavors:
@@ -269,8 +269,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackSemki
-  name: bob's semki sunflower seeds
-  description: Proudly produced by the Bob Bobson nutritional corporation. Perfect for spitting at people.
+  name: "насіння соняшнику бобівські семки"
+  description: "З гордістю виробляється харчовою корпорацією Bob Bobson. Ідеально підходить для того, щоб плювати на людей."
   components:
   - type: FlavorProfile
     flavors:
@@ -285,10 +285,10 @@
     - FoodPacketSemkiTrash
 
 - type: entity
-  name: sus jerky
+  name: "sus jerky"
   parent: FoodSnackBase
   id: FoodSnackSus
-  description: Something about this packet makes you feel incredibly uneasy. Jerky's good though.
+  description: "Щось у цьому пакеті змушує вас почуватися неймовірно неспокійно. Хоча в'ялене м'ясо смачне."
   components:
   - type: FlavorProfile
     flavors:
@@ -309,10 +309,10 @@
   # Pirate banking end
 
 - type: entity
-  name: syndi-cakes
+  name: "синді-тістечка"
   parent: FoodSnackBase
   id: FoodSnackSyndi
-  description: An extremely moist snack cake that tastes just as good after being nuked.
+  description: "Надзвичайно вологий закусочний торт, який смакує так само добре, як і після ядерної бомбардування."
   components:
   - type: FlavorProfile
     flavors:
@@ -328,8 +328,8 @@
 - type: entity
   parent: FoodSnackBase
   id: DrinkRamen
-  name: cup ramen
-  description: A cheap food with a taste that reminds you of your school years.
+  name: "чашка рамен"
+  description: "Дешева їжа зі смаком, що нагадує шкільні роки."
   components:
   - type: RefillableSolution
     solution: food
@@ -358,8 +358,8 @@
 - type: entity
   parent: DrinkRamen
   id: DrinkHellRamen
-  name: hell ramen
-  description: Super spicy flavor!
+  name: "пекельний рамен"
+  description: "Супер пікантний смак!"
   components:
   - type: SolutionContainerManager
     solutions:
@@ -376,8 +376,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackChowMein
-  name: chow mein
-  description: A salty fried noodle snack. Looks like they forgot the vegetables.
+  name: "чау-мейн"
+  description: "Закуска з солоної смаженої локшини. Схоже, вони забули овочі."
   components:
   - type: FlavorProfile
     flavors:
@@ -407,8 +407,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackDanDanNoodles
-  name: dan dan noodles
-  description: A spicy Sichuan noodle snack. The chili oil slick pools on top.
+  name: "локшина дан дан дан"
+  description: "Гостра закуска з сичуаньської локшини. Зверху збирається патьоки олії чилі."
   components:
   - type: FlavorProfile
     flavors:
@@ -440,8 +440,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackCookieFortune
-  name: fortune cookie
-  description: A boring cardboard tasting snack with a fortune inside. Surprise! You're boring too.
+  name: "печиво з передбаченнями"
+  description: "Нудний картонний смаколик з цілим багатством всередині. Сюрприз! Ти теж нудний."
   components:
   - type: FlavorProfile
     flavors:
@@ -467,8 +467,8 @@
 - type: entity
   parent: BaseItem
   id: FoodSnackNutribrick
-  name: nutribrick
-  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  name: "нутрібрік"
+  description: "Ретельно синтезована цеглина, розроблена з максимальним співвідношенням поживних речовин до об'єму. На смак як лайно."
   components:
   - type: Item
     size: Small
@@ -490,8 +490,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackNutribrickOpen
-  name: nutribrick
-  description: A carefully synthesized brick designed to contain the highest ratio of nutriment to volume. Tastes like shit.
+  name: "нутрібрік"
+  description: "Ретельно синтезована цеглина, розроблена з максимальним співвідношенням поживних речовин до об'єму. На смак як лайно."
   components:
   - type: FlavorProfile
     flavors:
@@ -518,8 +518,8 @@
 - type: entity
   parent: BaseItem
   id: FoodSnackMREBrownie
-  name: brownie
-  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  name: "тістечко"
+  description: "Точно вимішаний брауні, створений, щоб витримувати тупі травми та суворі умови. На смак як лайно."
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
@@ -541,9 +541,9 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackMREBrownieOpen
-  name: brownie
+  name: "тістечко"
   suffix: MRE
-  description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
+  description: "Точно вимішаний брауні, створений, щоб витримувати тупі травми та суворі умови. На смак як лайно."
   components:
   - type: FlavorProfile
     flavors:
@@ -568,8 +568,8 @@
 - type: entity
   parent: FoodSnackBase
   id: FoodSnackSwirlLollipop
-  name: swirl lollipop
-  description: A swirly circle of pure concentrated sugar. Who's the biggest kid on the playground now?
+  name: "закручений льодяник"
+  description: "Закручене коло чистого концентрованого цукру. Хто тепер найбільша дитина на ігровому майданчику?"
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/candy.rsi
@@ -610,7 +610,7 @@
   categories: [ HideSpawnMenu ]
   parent: BaseItem
   id: FoodPacketTrash
-  description: This is rubbish.
+  description: "Це нісенітниця."
   abstract: true
   components:
   - type: Sprite
@@ -644,7 +644,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketBoritosTrash
-  name: boritos bag
+  name: "пакетик боритос"
   components:
   - type: Sprite
     state: boritos-trash
@@ -661,7 +661,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketCnDsTrash
-  name: C&Ds bag
+  name: "Сумка C&Ds"
   components:
   - type: Sprite
     state: cnds-trash
@@ -678,7 +678,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketCheesieTrash
-  name: cheesie honkers
+  name: "сирні гудки"
   components:
   - type: Sprite
     state: cheesiehonkers-trash
@@ -695,7 +695,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketChipsTrash
-  name: chips
+  name: "чіпси"
   components:
   - type: Sprite
     state: chips-trash
@@ -712,7 +712,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketChocolateTrash
-  name: chocolate wrapper
+  name: "шоколадна обгортка"
   components:
   - type: Sprite
     state: chocolatebar-trash
@@ -729,7 +729,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketEnergyTrash
-  name: energybar wrapper
+  name: "обгортка енергетичного батончика"
   components:
   - type: Sprite
     state: energybar-trash
@@ -746,7 +746,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketPistachioTrash
-  name: pistachios packet
+  name: "пачка фісташок"
   components:
   - type: Sprite
     state: pistachio-trash
@@ -763,7 +763,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketPopcornTrash
-  name: popcorn box
+  name: "коробка для попкорну"
   components:
   - type: Sprite
     state: popcorn-trash
@@ -780,7 +780,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketRaisinsTrash
-  name: 4no raisins
+  name: "4без родзинок"
   components:
   - type: Sprite
     state: raisins-trash
@@ -797,7 +797,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketSemkiTrash
-  name: semki packet
+  name: "пакет \"Семки"
   components:
   - type: Sprite
     state: semki-trash
@@ -814,7 +814,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketSusTrash
-  name: sus jerky
+  name: "sus jerky"
   components:
   - type: Sprite
     state: susjerky-trash
@@ -831,7 +831,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketSyndiTrash
-  name: syndi-cakes box
+  name: "коробка з синді-тістечками"
   components:
   - type: Sprite
     state: syndicakes-trash
@@ -848,7 +848,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketCupRamenTrash
-  name: empty cup ramen
+  name: "порожня чашка рамен"
   components:
   - type: Sprite
     state: ramen
@@ -859,7 +859,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketChowMeinTrash
-  name: empty chow mein box
+  name: "порожня коробка з-під чау-чау"
   components:
   - type: Sprite
     state: chinese1
@@ -870,7 +870,7 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketDanDanTrash
-  name: empty dan dan box
+  name: "порожне відро Дан-Дан"
   components:
   - type: Sprite
     state: chinese2
@@ -881,8 +881,8 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodCookieFortune
-  name: cookie fortune
-  description: "The fortune reads: The end is near...and it's all your fault."
+  name: "печиво фортуна"
+  description: "Доля говорить: Кінець близький... і це твоя провина."
   components:
   - type: Sprite
     state: fortune
@@ -894,8 +894,8 @@
   categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketMRETrash
-  name: MRE wrapper
-  description: A general purpose wrapper for a variety of military food goods.
+  name: "Обгортка MRE"
+  description: "Універсальна обгортка для різноманітних військових харчових продуктів."
   components:
   - type: Edible
     requiresSpecialDigestion: true

@@ -3,8 +3,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesForge
-  name: forge gloves
-  description: Good for handling metal without burning yourself.
+  name: "ковальські рукавиці"
+  description: "Захищають руки під час роботи з гарячим металом."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Hands/Gloves/forge.rsi

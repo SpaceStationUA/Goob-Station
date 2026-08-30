@@ -31,8 +31,8 @@
 - type: entity
   id: BannerCybersun
   parent: BannerBaseTP
-  name: Cybersun banner
-  description: A banner with the Cybersun Industries logo. They are very secretive corporations.
+  name: "банер Кіберсан"
+  description: "Банер із логотипом «Кіберсан Індастріз». Це дуже таємнича корпорація."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Banners/banner.rsi
@@ -50,8 +50,8 @@
 - type: entity
   id: BannerGorlex
   parent: BannerBaseTP
-  name: Gorlex Securities banner
-  description: A banner with the Gorlex Securities LLC logo. These corporations are very secretive, but you know everything!
+  name: "банер «Ґорлекс Сек’юрітіз»"
+  description: "Банер із логотипом ТОВ «Ґорлекс Сек’юрітіз». Ця корпорація дуже таємнича, але ви знаєте все!"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Banners/banner.rsi
@@ -69,8 +69,8 @@
 - type: entity
   id: BannerGreytide
   parent: BannerBaseTP
-  name: greytide banner
-  description: A banner with a greytide flag. Greytide must be destroyed!
+  name: "банер сірого тайду"
+  description: "Банер із прапором сірого тайду. Сірий тайд має бути знищений!"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Banners/banner.rsi
@@ -88,8 +88,8 @@
 - type: entity
   id: BannerInterpharm
   parent: BannerBaseTP
-  name: InterPharm banner
-  description: A banner with the Interdyne Pharmaceutics logo. They are corporations. Pharmaceuticals - that's understandable.
+  name: "банер «ІнтерФарм»"
+  description: "Банер із логотипом «Інтердайн Фармасьютікалз». Це корпорація. Фармацевтика, тут усе зрозуміло."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Banners/banner.rsi
@@ -107,8 +107,8 @@
 - type: entity
   id: BannerMagic
   parent: BannerBaseTP
-  name: wizard banner
-  description: A banner displaying a wizard from the "Order of Wizard-Magicians and Wizard-Magicians Order". Honestly, that name sounds like it came from a children's book.
+  name: "банер чарівника"
+  description: "Банер із чарівником з «Ордену чарівників-магів та магів-чарівників». Чесно кажучи, назва наче з дитячої книжки."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Banners/banner.rsi
@@ -126,8 +126,8 @@
 - type: entity
   id: BannerNarsi
   parent: BannerBaseTP
-  name: Nars'ie banner
-  description: A banner with Nars'ie.
+  name: "банер Нар’Сі"
+  description: "Банер із зображенням Нар’Сі."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Banners/banner.rsi
@@ -145,8 +145,8 @@
 - type: entity
   id: BannerNinja
   parent: BannerBaseTP
-  name: space ninja banner
-  description: A banner displaying a ninja.
+  name: "банер космічного ніндзя"
+  description: "Банер із зображенням ніндзя."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Banners/banner.rsi
@@ -164,8 +164,8 @@
 - type: entity
   id: BannerPirate
   parent: BannerBaseTP
-  name: pirate banner
-  description: A banner displaying a pirate flag. Argh!
+  name: "піратський банер"
+  description: "Банер із піратським прапором. Ар-р-р!"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Banners/banner.rsi
@@ -184,8 +184,8 @@
 - type: entity
   id: BannerSolarian
   parent: BannerBase
-  name: Баннер Соларіанського Альянсу
-  description: Баннер, що зображує прапор Соларіанського Альянсу.
+  name: "банер Соларіанського Альянсу"
+  description: "Банер із прапором Соларіанського Альянсу."
   suffix: SAN
   components:
   - type: Sprite
@@ -198,8 +198,8 @@
 - type: entity
   id: BannerRespublic
   parent: BannerBase
-  name: Баннер Галактичної Республіки
-  description: Баннер, що зображує прапор Галактичної Республіки. Це не те про що ви могли подумати!
+  name: "банер Галактичної Республіки"
+  description: "Банер із прапором Галактичної Республіки. Це не те, про що ви могли подумати!"
   suffix: StarWars
   components:
   - type: Sprite
