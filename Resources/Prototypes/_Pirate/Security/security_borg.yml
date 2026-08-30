@@ -6,8 +6,8 @@
   # Pirate: copy the disabler SMG layout without its global PacifismAllowedGun;
   # pacifism is allowed only for the nonlethal fire mode below.
   parent: [ BaseWeaponBattery, BaseSecurityContraband ]
-  name: "вбудований імпульсний карабін"
-  description: "Самозарядний дизейблер, вмонтований у кіборга СБ. Летальний режим доступний лише за червоного коду."
+  name: integrated pulse carbine
+  description: A self-recharging disabler SMG built into a security cyborg. Its lethal mode is restricted to Code Red.
   components:
   - type: Item
     size: Large
@@ -64,8 +64,8 @@
 - type: entity
   id: BorgStunbatonRechargeable
   parent: Stunbaton
-  name: "вбудований електрокийок"
-  description: "Електрокийок із самозаряджанням, вмонтований у кіборга СБ."
+  name: integrated stun baton
+  description: A self-recharging stun baton built into a security cyborg.
   components:
   - type: Battery
     maxCharge: 1000
@@ -77,8 +77,8 @@
 - type: entity
   id: BorgHolocuffs
   parent: Handcuffs
-  name: "вбудовані голокайданки"
-  description: "Голографічні кайданки, що випромінюються кіборгом СБ. Після використання з'являється нова пара."
+  name: integrated holocuffs
+  description: Holographic restraints emitted by a security cyborg. A fresh pair appears after use and the applied pair vanishes when removed.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Tools/holocuffs.rsi
@@ -96,8 +96,8 @@
 - type: entity
   id: BorgFlashRechargeable
   parent: Flash
-  name: "вбудований спалах"
-  description: "Надяскравий спалах, вмонтований у кіборга СБ. Його конденсатор автоматично заряджається."
+  name: integrated flash
+  description: An ultrabright flash built into a security cyborg. Its capacitor recharges automatically.
   components:
   - type: LimitedCharges
     maxCharges: 5
@@ -108,8 +108,8 @@
 - type: entity
   id: BorgHoloprojectorSecurity
   parent: HoloprojectorSecurity
-  name: "вбудований голобар'єрний проєктор"
-  description: "Проєктор голобар'єрів СБ із герметичним самозарядним елементом живлення."
+  name: integrated holobarrier projector
+  description: A security holobarrier projector powered by a sealed self-charging cell.
   suffix: Borg
   components:
   - type: ItemSlots
@@ -127,8 +127,8 @@
 - type: entity
   id: BorgContrabandBag
   parent: BaseStorageItem
-  name: "вбудована сумка для контрабанди"
-  description: "Сумка для речових доказів, вмонтована в кіборга СБ для збору контрабанди."
+  name: integrated contraband bag
+  description: An evidence bag mounted in a security cyborg's chassis for collecting contraband.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/security.rsi
@@ -179,8 +179,8 @@
 - type: entity
   id: BorgModuleSecurity
   parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
-  name: "модуль спорядження кіборга СБ"
-  description: "Надає кіборгу СБ нелетальне спорядження та імпульсний карабін, летальний режим якого обмежено червоним кодом."
+  name: security equipment cyborg module
+  description: Provides a security cyborg with nonlethal enforcement equipment and a red-alert-restricted pulse carbine.
   components:
   - type: Sprite
     layers:
@@ -204,8 +204,8 @@
 - type: entity
   id: BorgModuleSecurityContraband
   parent: [ BaseBorgModuleSecurity, BaseProviderBorgModule ]
-  name: "модуль сумки для контрабанди"
-  description: "Надає кіборгу СБ вбудовану сумку для речових доказів."
+  name: contraband bag cyborg module
+  description: Provides an integrated evidence bag for collecting contraband.
   components:
   - type: Sprite
     layers:
@@ -231,7 +231,7 @@
 - type: entity
   id: BorgChassisSecurity
   parent: BorgChassisSelectable
-  name: "охоронний кіборг"
+  name: security cyborg
   components:
   - type: Sprite
     sprite: _Pirate/Mobs/Silicon/Chassis/security.rsi
@@ -254,7 +254,7 @@
 - type: entity
   id: BorgChassisSecurityPowered
   parent: BorgChassisSecurity
-  name: "охоронний кіборг"
+  name: security cyborg
   suffix: Powered
   components:
   - type: ItemSlots
@@ -364,7 +364,7 @@
 - type: entity
   id: BorgChassisSecurityBorg
   parent: BorgChassisSecurity
-  name: "охоронний кіборг"
+  name: security cyborg
   categories: [ HideSpawnMenu ]
   components:
   - type: BorgSwitchableSubtype
@@ -373,7 +373,7 @@
 - type: entity
   id: BorgChassisSecurityRedKnight
   parent: BorgChassisSecurity
-  name: "охоронний кіборг"
+  name: security cyborg
   categories: [ HideSpawnMenu ]
   components:
   - type: BorgSwitchableSubtype
@@ -382,7 +382,7 @@
 - type: entity
   id: BorgChassisSecurityBlackKnight
   parent: BorgChassisSecurity
-  name: "охоронний кіборг"
+  name: security cyborg
   categories: [ HideSpawnMenu ]
   components:
   - type: BorgSwitchableSubtype
@@ -391,7 +391,7 @@
 - type: entity
   id: BorgChassisSecurityNoble
   parent: BorgChassisSecurity
-  name: "охоронний кіборг"
+  name: security cyborg
   categories: [ HideSpawnMenu ]
   components:
   - type: BorgSwitchableSubtype
@@ -400,7 +400,7 @@
 - type: entity
   id: BorgChassisSecurityCricket
   parent: BorgChassisSecurity
-  name: "охоронний кіборг"
+  name: security cyborg
   categories: [ HideSpawnMenu ]
   components:
   - type: BorgSwitchableSubtype
@@ -409,7 +409,7 @@
 - type: entity
   id: BorgChassisSecurityHeavy
   parent: BorgChassisSecurity
-  name: "охоронний кіборг"
+  name: security cyborg
   categories: [ HideSpawnMenu ]
   components:
   - type: BorgSwitchableSubtype

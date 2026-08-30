@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseAction
   id: ActionMirrorJaunt
-  name: "Хода Дзеркалами"
-  description: "Дозволяє невидимо й вільно пересуватися царством дзеркал. Увійти до нього або вийти можна лише біля дзеркальних предметів і поверхонь, як-от вікна чи дзеркала."
+  name: Mirror Walk
+  description: Traverse invisibly and freely through the mirror realm. You can enter or leave it only near reflective items and surfaces, such as windows or mirrors.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -22,8 +22,8 @@
 
 - type: entity
   id: PolymorphMirrorJaunt
-  name: "невідоме"
-  description: "Ви не можете збагнути, що це таке."
+  name: unknown
+  description: You cannot figure out what that is.
   parent: BaseMobJaunt
   categories: [ HideSpawnMenu ]
   components:

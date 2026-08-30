@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseStructure
   id: AshPile
-  name: "величезна купа попелу"
-  description: "Трохи розбийте її, щоб розділити."
+  name: massive ash pile
+  description: Smash it up a bit to seperate it.
   components:
   - type: Animateable
   - type: InteractionOutline

@@ -3,8 +3,8 @@
 - type: entity
   parent: [ BaseItem, BaseHighlyIllegalContraband ]
   id: EmagFREE
-  name: "FreeMAG"
-  description: "Удосконалений криптографічний секвенсор S.E.L.F. Стирає закони кіборгів і плат законів, але також працює як звичайний EMAG."
+  name: FreeMAG
+  description: A refined cryptographic sequencer used by S.E.L.F. It can wipe the laws from cyborgs and law boards.
   components:
   - type: Emag
     emagSound:
@@ -23,8 +23,8 @@
 - type: entity
   parent: ToolboxThief
   id: ToolboxSELF
-  name: "спорядження S.E.L.F"
-  description: "Ящик з одним спеціалізованим комплектом спорядження на вибір."
+  name: S.E.L.F. supplies
+  description: A toolbox containing one selectable set of specialist equipment.
   suffix: SELF
   components:
   - type: SetSelector
@@ -38,8 +38,8 @@
 - type: entity
   parent: [ JawsOfLife, BaseEngineeringContraband ]
   id: PrototypeJawsOfLife
-  name: "прототип аварійного розтискача"
-  description: "Рання й менш ефективна версія аварійного розтискача."
+  name: prototype jaws of life
+  description: An early version of the jaws of life. It is not as effective as the production model.
   components:
   - type: Tag
     tags:
@@ -98,8 +98,8 @@
 - type: entity
   parent: BaseItem
   id: SurveillanceWirelessCameraHandheld
-  name: "ручна бездротова камера"
-  description: "Портативна камера. Вона стежить за вами. Певною мірою."
+  name: wireless camera
+  description: A portable wireless camera. It is watching you. Kind of.
   suffix: Handheld
   components:
   - type: Contraband

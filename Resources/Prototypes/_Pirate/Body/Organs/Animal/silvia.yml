@@ -4,7 +4,7 @@
 - type: entity
   parent: OrganCobraHeart
   id: OrganCobraHeartSilvia
-  name: "залоза Сільвії"
+  name: Silvia's cobra gland
   components:
   - type: Organ
     onAdd:

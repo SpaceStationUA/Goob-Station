@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseMentalAction
   id: ActionStationAiViewUp
-  name: "Переглянути поверх вище"
-  description: "Перемістити оглядову камеру на поверх вище."
+  name: View deck above
+  description: Move your eye to the deck above.
   components:
   - type: Action
     checkCanInteract: false
@@ -17,8 +17,8 @@
 - type: entity
   parent: BaseMentalAction
   id: ActionStationAiViewDown
-  name: "Переглянути поверх нижче"
-  description: "Перемістити оглядову камеру на поверх нижче."
+  name: View deck below
+  description: Move your eye to the deck below.
   components:
   - type: Action
     checkCanInteract: false

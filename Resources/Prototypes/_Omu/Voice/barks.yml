@@ -9,7 +9,7 @@
 
 - type: bark
   id: MothSqueak
-  name: "Писк молі"
+  name: Moth Squeak
   soundCollection:
     collection: MothSqueakBark
   speciesWhitelist:

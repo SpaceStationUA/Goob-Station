@@ -14,8 +14,8 @@
 - type: entity
   parent: [ BaseForgeItem, BaseMetallicProcGen ]
   id: UnfinishedForgedItem
-  name: "незавершений виріб"
-  description: "Завершіть його, надавши форми ударами молота!"
+  name: unfinished thing
+  description: Finish it by smashing it into shape with a hammer!
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -65,7 +65,7 @@
 - type: entity
   parent: BaseForgedReadyItem
   id: ForgedPart
-  description: "Дайте йому охолонути або загартуйте його."
+  description: Let it cool for a while or quench it.
   categories: [ HideSpawnMenu ] # procedurally generated, no spawn menu!
   components:
   # TODO: quenching vs air cooling should matter, heat treatment gameplay

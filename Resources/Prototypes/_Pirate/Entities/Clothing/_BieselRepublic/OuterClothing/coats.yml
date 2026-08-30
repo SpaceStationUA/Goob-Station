@@ -1,9 +1,9 @@
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
   id: ClothingOuterJacketTCAF
-  name: "куртка TCAF"
+  name: куртка TCAF
   suffix: TCAF
-  description: "Якісна куртка з тканини, стійкої до розривів і займання. Її часто носять діючі та колишні військовослужбовці збройних сил Тау Кита."
+  description: Якісна куртка з тканини, стійкої до розривів і займання. Її часто носять діючі та колишні військовослужбовці збройних сил Тау Кита.
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/OuterClothing/Coats/TCAF_jacket.rsi

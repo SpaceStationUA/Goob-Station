@@ -3,8 +3,8 @@
 # Pirate: welding visor
 - type: entity
   id: ActionToggleWeldingVisor
-  name: "Перемкнути візор"
-  description: "Підняти або опустити візор. Він захищає очі лише в опущеному стані."
+  name: Toggle Visor
+  description: Flip the visor up or down. Only lowered down does it protect your eyes.
   components:
   - type: Action
     itemIconStyle: NoItem

@@ -67,7 +67,7 @@
 - type: entity
   parent: [ BaseForgedKnife, KitchenKnife ]
   id: ForgedKnife
-  name: "ніж"
+  name: knife
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -78,7 +78,7 @@
 - type: entity
   parent: [ BaseForgedKnife, ButchCleaver ]
   id: ForgedCleaver
-  name: "тесак"
+  name: cleaver
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -152,7 +152,7 @@
 - type: entity
   parent: [ BaseForgedProductCrossGuard, BaseSword ]
   id: ForgedSword
-  name: "лицарський меч"
+  name: arming sword
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -186,8 +186,8 @@
 - type: entity
   parent: [ BaseMajorContraband, BaseForgedProductSeparateHead, BaseSword ]
   id: ForgedHalberd
-  name: "алебарда"
-  description: "Потужна древкова зброя з головкою незвичної форми."
+  name: halberd
+  description: A powerful polearm with an oddly shaped head.
   categories: [ HideSpawnMenu ]
   components:
   - type: WeaponClass
@@ -213,8 +213,8 @@
 - type: entity
   parent: [ BaseForgedProductSeparateHead, BaseSword ]
   id: ForgedLongsword
-  name: "довгий меч"
-  description: "Це як меч, тільки довший. Для належного використання потрібні дві руки."
+  name: longsword
+  description: It's like a sword, but longer. Needs two hands to wield properly.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -251,8 +251,8 @@
 - type: entity
   parent: [ BaseForgedProductSeparateHead, BaseItem ]
   id: ForgedWarhammer
-  name: "бойовий молот"
-  description: "Кожен дворф мусить мати один такий. Або, можливо, сорок тисяч."
+  name: warhammer
+  description: Every dwarf's gotta have one of these, or maybe forty thousand of them.
   categories: [ HideSpawnMenu ]
   components:
   - type: WeaponClass
@@ -301,8 +301,8 @@
 - type: entity
   parent: [ BaseForgedProduct, BaseSword ]
   id: ForgedKatana
-  name: "катана"
-  description: "Поки вони розважалися на вечірках, я вправлявся з клинком."
+  name: katana
+  description: While they were out partying, I practiced the blade.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -330,7 +330,7 @@
 - type: entity
   parent: [ BaseMetallicProcGen, BaseArrow ]
   id: ForgedArrow
-  name: "стріла"
+  name: arrow
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -378,8 +378,8 @@
 - type: entity
   parent: [ BaseForgedProductSeparateHead, BaseItem ]
   id: ForgedMorningstar
-  name: "моргенштерн"
-  description: "Ви ТОЧНО не хочете, щоб він проломив вам череп..."
+  name: morningstar
+  description: You REALLY don't want to get your skull caved in by this...
   categories: [ HideSpawnMenu ]
   components:
   - type: WeaponClass
