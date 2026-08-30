@@ -25,5 +25,6 @@ public sealed class KnowledgeProfileSystem : EntitySystem
     {
         var species = _prototypes.Index<SpeciesPrototype>(args.Profile.Species);
         _knowledge.ApplyProfile(args.Mob, species.Knowledge, args.Profile.Knowledge);
+        _knowledge.ApplyEmployerBonuses(args.Mob, args.Profile.Employer);
     }
 }
