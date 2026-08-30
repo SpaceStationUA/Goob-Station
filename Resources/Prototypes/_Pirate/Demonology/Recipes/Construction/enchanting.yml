@@ -24,6 +24,9 @@
   # Pirate: effective Trauma skill requirements and quality.
   theory:
     MagicalLiteracyKnowledge: 3
+  # Pirate: larger summoning circles provide more practice.
+  experience:
+    MagicalLiteracyKnowledge: 5
   useQuality: false
 
 - type: construction
@@ -36,6 +39,9 @@
   # Pirate: effective Trauma skill requirements and quality.
   theory:
     MagicalLiteracyKnowledge: 4
+  # Pirate: larger summoning circles provide more practice.
+  experience:
+    MagicalLiteracyKnowledge: 10
   useQuality: false
 
 - type: construction
@@ -48,4 +54,7 @@
   # Pirate: effective Trauma skill requirements and quality.
   theory:
     MagicalLiteracyKnowledge: 5
+  # Pirate: larger summoning circles provide more practice.
+  experience:
+    MagicalLiteracyKnowledge: 15
   useQuality: false
