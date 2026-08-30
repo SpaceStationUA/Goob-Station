@@ -1,0 +1,29 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="using:Content.Client.UserInterface.Controls"
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      Title="{Loc 'light-paint-window-title'}"
+                      MinSize="420 400"
+                      SetSize="420 400"
+                      Resizable="False">
+    <BoxContainer Orientation="Vertical" Margin="13 11 13 11" VerticalExpand="True">
+
+        <Label Text="{Loc 'light-paint-window-presets'}" FontColorOverride="#6a7280" />
+
+        <PanelContainer Margin="0 6 0 12">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#20242e" BorderColor="#2b313d" BorderThickness="1" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Name="Swatches" Orientation="Vertical" Margin="9 9" HorizontalAlignment="Center" />
+        </PanelContainer>
+
+        <Label Text="{Loc 'light-paint-window-label'}" FontColorOverride="#6a7280" />
+
+        <PanelContainer Margin="0 6 0 0" VerticalExpand="True">
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#20242e" BorderColor="#2b313d" BorderThickness="1" />
+            </PanelContainer.PanelOverride>
+            <ColorSelectorSliders Name="ColorSelector" Margin="9 9" VerticalAlignment="Top" />
+        </PanelContainer>
+
+    </BoxContainer>
+</controls:FancyWindow>
