@@ -58,13 +58,6 @@
   - type: SecurityBorgLethalMode
     safeMode: 0
     lethalMode: 1
-    allowedAlertLevels:
-    - amber
-    - red
-    - gamma
-    - delta
-    - violet
-    - omicron
   - type: Unremoveable
   - type: GunExecutionBlacklist
 
@@ -291,6 +284,7 @@
   - Security
   addComponents:
   - type: FlashImmunity
+  - type: SecurityBorgAlertLevelAccess
   inventoryTemplateId: borgShort
   spriteBodyState: standard
   spriteHasMindState: standard_e
