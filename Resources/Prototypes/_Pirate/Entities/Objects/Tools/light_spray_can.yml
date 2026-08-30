@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: LightSprayCan
-  name: light spray can
-  description: A can of tinted lacquer for colouring light bulbs and tubes. Works on a loose bulb, or on a fixture with one already installed.
+  name: spray can
+  description: A can of coloured paint.
   components:
   - type: Appearance
   - type: Sprite
@@ -16,15 +16,24 @@
     heldPrefix: spray
   - type: LightPaint
     color: "#47f8ff"
+  # Glyph selection uses the stock crayon UI.
+  - type: Crayon
+    selectedState: like
+    color: "#47f8ff"
+    selectableColor: false
+    deleteEmpty: false
   - type: LimitedCharges
     maxCharges: 15
     lastCharges: 15
   - type: ActivatableUI
     key: enum.LightPaintUiKey.Key
+    verbOnly: true
   - type: UserInterface
     interfaces:
       enum.LightPaintUiKey.Key:
         type: LightPaintBoundUserInterface
+      enum.CrayonUiKey.Key:
+        type: CrayonBoundUserInterface
   - type: StaticPrice
     price: 40
   - type: PhysicalComposition
