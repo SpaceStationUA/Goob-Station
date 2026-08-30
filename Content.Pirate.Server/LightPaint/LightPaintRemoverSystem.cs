@@ -10,11 +10,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Pirate.Server.LightPaint;
 
-/// <summary>
-///     Cleans sprayed paint off a bulb, restoring the colour it had before it was first painted.
-///     Silent, unlike most soap interactions -- there's no splash to hear when soap just wipes a
-///     dry lacquer off a bulb.
-/// </summary>
 public sealed class LightPaintRemoverSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -26,9 +21,7 @@ public sealed class LightPaintRemoverSystem : EntitySystem
     {
         base.Initialize();
 
-        // Soap shares AfterInteract with forensics cleaning, which marks the interaction handled
-        // whenever the target has any prints or DNA on it -- which light fixtures pick up as soon
-        // as anyone installs a bulb. Removing paint is the more specific intent, so it goes first.
+        // Handle paint before forensics claims fixtures with fingerprints.
         SubscribeLocalEvent<PaintRemoverComponent, AfterInteractEvent>(OnAfterInteract,
             before: [typeof(ForensicsSystem)]);
         SubscribeLocalEvent<PaintRemoverComponent, LightPaintRemoveDoAfterEvent>(OnDoAfter);
@@ -54,15 +47,11 @@ public sealed class LightPaintRemoverSystem : EntitySystem
         args.Verbs.Add(new UtilityVerb
         {
             Text = Loc.GetString("light-paint-remove-verb"),
-            // Same icon as forensics' "Remove evidence" -- both are soap wiping something off an object.
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/bubbles.svg.192dpi.png")),
             Act = () => TryStartCleaning(ent, target, user),
         });
     }
 
-    /// <summary>
-    ///     Resolves a click to a painted bulb, either directly or through a light fixture.
-    /// </summary>
     private bool TryGetPaintedBulb(EntityUid target, out EntityUid bulb)
     {
         bulb = default;

@@ -1,6 +1,3 @@
-# Spray can for tinting light bulbs and tubes.
-# Sprites: Resources/Textures/_Pirate/Objects/Tools/light_spray_can.rsi (CC-BY-SA-3.0, from tgstation).
-
 - type: entity
   parent: BaseItem
   id: LightSprayCan

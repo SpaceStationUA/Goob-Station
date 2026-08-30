@@ -7,8 +7,6 @@
                       Resizable="False">
     <BoxContainer Orientation="Vertical" Margin="13 11 13 11" VerticalExpand="True">
 
-        <!-- Preset swatches. Section labels follow the kit's .lbl rule:
-             small, uppercase, faint, never competing with the content. -->
         <Label Text="{Loc 'light-paint-window-presets'}" FontColorOverride="#6a7280" />
 
         <PanelContainer Margin="0 6 0 12">

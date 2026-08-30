@@ -11,10 +11,7 @@ namespace Content.Pirate.Client.LightPaint;
 [GenerateTypedNameReferences]
 public sealed partial class LightPaintWindow : FancyWindow
 {
-    /// <summary>
-    ///     tgstation's crayon palette (COLOR_CRAYON_* in code/__DEFINES/colors.dm, plus the
-    ///     white crayon), which is the full fixed set its spray can offers.
-    /// </summary>
+    // tgstation crayon palette.
     private static readonly Color[] CrayonPresets =
     {
         Color.FromHex("#DA0000"), // red
@@ -27,10 +24,7 @@ public sealed partial class LightPaintWindow : FancyWindow
         Color.White,
     };
 
-    /// <summary>
-    ///     The colours of this game's own crystal light tubes, so a painted bulb can be matched
-    ///     exactly to one you could otherwise only get by finding the crystal variant.
-    /// </summary>
+    // Crystal light tube colours.
     private static readonly Color[] BulbPresets =
     {
         Color.FromHex("#fb4747"), // red
@@ -43,8 +37,6 @@ public sealed partial class LightPaintWindow : FancyWindow
         Color.FromHex("#ff66cc"), // pink
     };
 
-    // Traits-style UI kit (design/ss14-traits-style-kit.html): selection is an accent outline,
-    // never a fill -- filling a swatch would hide the colour it is there to show.
     private static readonly Color Accent = Color.FromHex("#4f93d6");
     private static readonly Color LineSoft = Color.FromHex("#2b313d");
 
@@ -53,11 +45,7 @@ public sealed partial class LightPaintWindow : FancyWindow
 
     private readonly List<(StyleBoxFlat Border, Color Color)> _swatches = new();
 
-    /// <summary>
-    ///     Guards against the swatch rows and the sliders driving each other in a loop: setting
-    ///     <see cref="ColorSelectorSliders.Color"/> pushes values into the sliders, which fires
-    ///     their change event right back at us.
-    /// </summary>
+    // Prevent slider updates from re-triggering selection.
     private bool _updating;
 
     public event Action<Color>? OnColorSelected;
@@ -82,7 +70,6 @@ public sealed partial class LightPaintWindow : FancyWindow
 
         foreach (var color in colors)
         {
-            // The swatch's own border doubles as the selection outline: transparent until picked.
             var border = new StyleBoxFlat
             {
                 BackgroundColor = LineSoft,
@@ -123,8 +110,7 @@ public sealed partial class LightPaintWindow : FancyWindow
 
     private void SelectColor(Color color, bool notify)
     {
-        // Pushing the colour into the sliders re-raises OnColorChanged once per slider, so mute
-        // ourselves and send a single message afterwards instead of one per channel.
+        // Send one update after the sliders finish changing.
         _updating = true;
         ColorSelector.Color = color;
         _updating = false;
@@ -135,10 +121,6 @@ public sealed partial class LightPaintWindow : FancyWindow
             OnColorSelected?.Invoke(color);
     }
 
-    /// <summary>
-    ///     Outlines the preset matching the current colour, so picking with the sliders keeps the
-    ///     swatch rows in sync too.
-    /// </summary>
     private void UpdateSelection(Color color)
     {
         foreach (var (border, swatch) in _swatches)
@@ -147,18 +129,12 @@ public sealed partial class LightPaintWindow : FancyWindow
         }
     }
 
-    /// <summary>
-    ///     Compares on 8-bit channels: round-tripping a colour through the HSV sliders does not
-    ///     come back exactly equal to the hex it started from.
-    /// </summary>
+    // HSV round-trips can vary slightly; compare RGB bytes.
     private static bool Matches(Color a, Color b)
     {
         return a.RByte == b.RByte && a.GByte == b.GByte && a.BByte == b.BByte;
     }
 
-    /// <summary>
-    ///     Seeds the window from the can's current colour without echoing a message back to it.
-    /// </summary>
     public void SetColor(Color color)
     {
         SelectColor(color, notify: false);

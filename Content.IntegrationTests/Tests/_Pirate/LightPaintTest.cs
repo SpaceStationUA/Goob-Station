@@ -13,11 +13,6 @@ namespace Content.IntegrationTests.Tests._Pirate;
 [TestFixture]
 public sealed class LightPaintTest
 {
-    /// <summary>
-    ///     Painting a loose bulb has to change the bulb's own colour, and painting a bulb that is
-    ///     installed in a fixture has to reach the fixture's point light, since that is what both
-    ///     the emitted light and the fixture's glow layer are driven from.
-    /// </summary>
     [Test]
     public async Task PaintingBulbRecoloursBulbAndFixtureLight()
     {
@@ -32,7 +27,6 @@ public sealed class LightPaintTest
 
         await server.WaitAssertion(() =>
         {
-            // A loose bulb, painted directly.
             var looseBulb = entMan.SpawnEntity("LightTube", map.GridCoords);
             var originalColor = entMan.GetComponent<LightBulbComponent>(looseBulb).Color;
 
@@ -47,7 +41,6 @@ public sealed class LightPaintTest
                     "The bulb's original colour was not recorded for cleaning.");
             });
 
-            // A fixture that spawns with a tube already installed.
             var fixture = entMan.SpawnEntity("Poweredlight", map.GridCoords);
             var installed = poweredLight.GetBulb(fixture);
 
@@ -63,7 +56,6 @@ public sealed class LightPaintTest
                     "Painting an installed bulb did not reach the fixture's point light.");
             });
 
-            // Cleaning restores the colour the bulb had before it was painted.
             var bulbComp = entMan.GetComponent<LightBulbComponent>(looseBulb);
             var remembered = entMan.GetComponent<PaintedLightBulbComponent>(looseBulb).OriginalColor;
             lightPaint.PaintBulb(looseBulb, remembered, remember: false);
@@ -75,9 +67,6 @@ public sealed class LightPaintTest
         await pair.CleanReturnAsync();
     }
 
-    /// <summary>
-    ///     An empty fixture has no bulb to paint, so it must be left alone entirely.
-    /// </summary>
     [Test]
     public async Task EmptyFixtureHasNoBulbToPaint()
     {

@@ -3,10 +3,6 @@ using Robust.Client.GameObjects;
 
 namespace Content.Pirate.Client.LightPaint;
 
-/// <summary>
-///     Tints the spray can's paint layer to whatever colour is currently loaded, so the
-///     can visibly shows what it will spray.
-/// </summary>
 public sealed class LightPaintVisualizerSystem : VisualizerSystem<LightPaintComponent>
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
