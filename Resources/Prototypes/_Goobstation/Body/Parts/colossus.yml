@@ -40,6 +40,7 @@
       collection: MetalThud
   - type: BodyPart
     partComposition: Inorganic
+  - type: Boneless # Colossi have an inorganic shell, not bones.
   - type: SurgeryTool # Shitmed Change
     startSound:
       path: /Audio/_Shitmed/Medical/Surgery/organ1.ogg
