@@ -1,0 +1,35 @@
+# Spray can for tinting light bulbs and tubes.
+# Sprites: Resources/Textures/_Pirate/Objects/Tools/light_spray_can.rsi (CC-BY-SA-3.0, from tgstation).
+
+- type: entity
+  parent: BaseItem
+  id: LightSprayCan
+  name: light spray can
+  description: A can of tinted lacquer for colouring light bulbs and tubes. Works on a loose bulb, or on a fixture with one already installed.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/light_spray_can.rsi
+    layers:
+    - state: spray
+    - state: spray_colors
+      map: [ "enum.LightPaintLayers.Paint" ]
+  - type: Item
+    sprite: _Pirate/Objects/Tools/light_spray_can.rsi
+    heldPrefix: spray
+  - type: LightPaint
+    color: "#47f8ff"
+  - type: LimitedCharges
+    maxCharges: 15
+    lastCharges: 15
+  - type: ActivatableUI
+    key: enum.LightPaintUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.LightPaintUiKey.Key:
+        type: LightPaintBoundUserInterface
+  - type: StaticPrice
+    price: 40
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100

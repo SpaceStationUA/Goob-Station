@@ -1,0 +1,7 @@
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: LightSprayCan
+  result: LightSprayCan
+  materials:
+    Steel: 200
+    Plastic: 100
