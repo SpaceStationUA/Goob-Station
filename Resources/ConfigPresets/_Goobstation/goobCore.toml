@@ -97,3 +97,6 @@ enabled = true
 
 [voice]
 barks_enabled = true
+
+[biomass]
+easy_mode = false

@@ -186,7 +186,6 @@
     - id: RubberStampCE
     - id: MetalFoamGrenade
     # Goobstation V
-    - id: SupermatterComputerCircuitboard
     - id: BaseHandheldStationMapSupermatterCe
     - id: BaseHandheldStationMapPowerCe
     - id: EngineeringTechFabCircuitboard
@@ -257,6 +256,9 @@
     - id: RubberStampCMO
     # Goobstation Start
     - id: ChemistryHotplateFlatPack
+    - id: CloningpodFlatpack
+    - id: MedicalScannerFlatpack
+    - id: ComputerCloningConsoleFlatpack
     - id: BiomassReclaimerFlatpack
     - id: Multitool
     - id: MedTekCartridge
@@ -333,7 +335,6 @@
       prob: 0.15 # GoobStation - RD needs cigs for uhh... science...
     - id: ScienceTechFabCircuitboard # Goobstation - Science Techfab
     - id: ClothingBeltGeminiHoloProjector # Goobstation - Who better to do science with than yourself?
-    - id: XenobiologyBountyComputerCircuitboard # Goobstation
     - id: MMI # Goobstation
     - id: PrinterDocFlatpack  # Pirate document printer
     - id: PhotoAlbumDepartmentScience
@@ -381,7 +382,7 @@
   id: LockerFillHeadOfSecurityNoHardsuit
   table: !type:AllSelector
     children:
-    - id: WeaponEnergyMagnum
+   # - id: WeaponEnergyMagnum # Goobstation - Remove Energy Magnum
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase
