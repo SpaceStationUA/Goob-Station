@@ -35,3 +35,23 @@ stack-ashwood-plank = {$amount ->
     [few] дошки з ашвуду
    *[other] дощок з ашвуду
 }
+stack-ashwood-stick = {$amount ->
+    [one] палиця з ашвуду
+    [few] палиці з ашвуду
+   *[other] палиць з ашвуду
+}
+stack-wood-stick = {$amount ->
+    [one] дерев'яна палиця
+    [few] дерев'яні палиці
+   *[other] дерев'яних палиць
+}
+stack-flowers-ash = {$amount ->
+    [one] попеляста квітка
+    [few] попелясті квітки
+   *[other] попелястих квіток
+}
+stack-flowers-pale = {$amount ->
+    [one] бліда квітка
+    [few] бліді квітки
+   *[other] блідих квіток
+}

@@ -17,9 +17,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
-using Content.Shared.EntityEffects.Effects;
-using Content.Goobstation.Maths.FixedPoint;
-using Content.Shared.Drunk;
 using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.Fluids;
 using Content.Shared.Forensics.Components;
@@ -34,8 +31,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System.Linq;
-using Content.Shared.EntityEffects.Effects;
 
 namespace Content.Shared.Body.Systems;
 // todo marty clean up this warzone.
@@ -506,11 +501,12 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
             return false;
 
         referenceFactor = Math.Clamp(referenceFactor, 0f, ent.Comp.MaxVolumeModifier);
+        var ratio = (float) amount / (float) ent.Comp.BloodReferenceSolution.Volume; // Goobstation - added float so 1/300 is not 0..
         foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
         {
             var error = referenceQuantity * referenceFactor - bloodSolution.GetTotalPrototypeQuantity(referenceReagent.Prototype);
             // Pirate: multiply before dividing so small blood changes do not truncate to zero.
-            var adjustedAmount = amount * referenceQuantity / ent.Comp.BloodReferenceSolution.Volume;
+            var adjustedAmount = referenceQuantity * ratio;
 
             if (error > 0)
             {

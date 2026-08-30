@@ -306,7 +306,7 @@
     slots:
     - Snout
   - type: SpeakFontOverride # Goob - clown speaks pink comic sans
-    fontId: LDFComicSans
+    # fontId: LDFComicSans # Pirate: disabled because the font does not support Cyrillic.
     color: "#e93790"
 
 - type: entity

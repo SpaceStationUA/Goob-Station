@@ -148,7 +148,7 @@ ent-RevolutionaryKnowledge = Революційне ремесло
 knowledge-character-tab = Навички
 knowledge-character-empty = Немає вивчених навичок.
 knowledge-character-level-mastery = Рівень {$level} · {$mastery}
-knowledge-character-experience = {$current} / {$required} XP
+knowledge-character-experience = {$current} / {$required} ОД
 
 knowledge-admin-title = Редактор навичок
 knowledge-admin-verb = Редагувати навички
