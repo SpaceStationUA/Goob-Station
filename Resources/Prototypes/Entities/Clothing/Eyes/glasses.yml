@@ -299,6 +299,11 @@
     sprite: Clothing/Eyes/Glasses/thermal.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/thermal.rsi
+  - type: ThermalSight # Pirate: thermal vision
+  - type: GoggleShader # Pirate: thermal vision
+    shader: Goggles
+    color: "#F1674399"
+    enabled: true
   - type: Armor
     coverage: # defends you well only against heat lol # GOOBSTATION???? # Goob start
     - Head

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._Pirate.Fluids; // Pirate: stains
+using Content.Shared._Pirate.Overlays; // Pirate: thermal vision
 using Content.Shared._Pirate.Xray; // Pirate: meson vision
 using Content.Shared.Armor;
 using Content.Shared.Atmos;
@@ -105,6 +106,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ShowCriminalRecordIconsComponent>>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<BlackAndWhiteOverlayComponent>>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<NoirOverlayComponent>>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<ThermalSightComponent>>(RefRelayInventoryEvent); // Pirate: thermal vision
         SubscribeLocalEvent<InventoryComponent, RefreshXRayVisionEvent>(RefRelayInventoryEvent); // Pirate: meson vision
 
 
