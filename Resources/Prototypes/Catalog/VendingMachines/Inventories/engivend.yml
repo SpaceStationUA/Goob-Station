@@ -4,6 +4,7 @@
   id: EngiVendInventory
   startingInventory:
     ClothingEyesGlassesMeson: 4
+    ClothingEyesGlassesThermal: 4 # Pirate: thermal vision
     ClothingEyesGlassesEngineering: 4 # Pirate: engineering goggles
     ClothingEyesHudDiagnostic: 4
     ClothingEyesGlassesWelding: 3 # Pirate: welding visor toggle - stock the new welding goggles alongside the mask

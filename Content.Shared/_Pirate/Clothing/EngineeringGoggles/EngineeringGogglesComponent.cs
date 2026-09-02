@@ -16,10 +16,10 @@ public sealed partial class EngineeringGogglesComponent : Component
     public EngineeringGogglesMode Mode = EngineeringGogglesMode.Off;
 
     [DataField, AutoNetworkedField]
-    public Color XRayColor = Color.FromHex("#FFA64099");
+    public Color XRayColor = Color.FromHex("#FFA64080");
 
     [DataField, AutoNetworkedField]
-    public Color TrayColor = Color.FromHex("#3D8599CC");
+    public Color TrayColor = Color.FromHex("#3D859980");
 
     [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundActivate = new SoundPathSpecifier("/Audio/_White/Items/Goggles/activate.ogg");
