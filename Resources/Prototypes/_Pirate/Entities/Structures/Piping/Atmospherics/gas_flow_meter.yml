@@ -1,0 +1,133 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseItem
+  id: GasFlowMeter
+  name: gas flow meter
+  description: A compact gauge that displays the pressure and temperature of the pipe beneath it.
+  placement:
+    mode: AlignAtmosPipeLayers
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    canCollide: false
+    bodyType: Static
+  - type: Sprite
+    sprite: _Pirate/Structures/Piping/Atmospherics/gas_flow_meter.rsi
+    drawdepth: FloorObjects
+    noRot: true
+    layers:
+    - state: base
+      map: [ "enum.GasFlowMeterVisualLayers.Base" ]
+    - state: pressure_off
+      map: [ "enum.GasFlowMeterVisualLayers.Pressure" ]
+      color: "#808080"
+    - state: blank
+      map: [ "enum.GasFlowMeterVisualLayers.Buttons" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.GasFlowMeterVisuals.PressureState:
+        enum.GasFlowMeterVisualLayers.Pressure:
+          Offline: { state: pressure_off }
+          Meter0: { state: pressure0 }
+          Meter1_1: { state: pressure1_1 }
+          Meter1_2: { state: pressure1_2 }
+          Meter1_3: { state: pressure1_3 }
+          Meter1_4: { state: pressure1_4 }
+          Meter1_5: { state: pressure1_5 }
+          Meter1_6: { state: pressure1_6 }
+          Meter2_1: { state: pressure2_1 }
+          Meter2_2: { state: pressure2_2 }
+          Meter2_3: { state: pressure2_3 }
+          Meter2_4: { state: pressure2_4 }
+          Meter2_5: { state: pressure2_5 }
+          Meter2_6: { state: pressure2_6 }
+          Meter3_1: { state: pressure3_1 }
+          Meter3_2: { state: pressure3_2 }
+          Meter3_3: { state: pressure3_3 }
+          Meter3_4: { state: pressure3_4 }
+          Meter3_5: { state: pressure3_5 }
+          Meter3_6: { state: pressure3_6 }
+          Meter4: { state: pressure4 }
+        enum.GasFlowMeterVisualLayers.Buttons:
+          Offline: { state: blank }
+          Meter0: { state: buttons0 }
+          Meter1_1: { state: buttons1 }
+          Meter1_2: { state: buttons1 }
+          Meter1_3: { state: buttons1 }
+          Meter1_4: { state: buttons1 }
+          Meter1_5: { state: buttons1 }
+          Meter1_6: { state: buttons1 }
+          Meter2_1: { state: buttons2 }
+          Meter2_2: { state: buttons2 }
+          Meter2_3: { state: buttons2 }
+          Meter2_4: { state: buttons2 }
+          Meter2_5: { state: buttons2 }
+          Meter2_6: { state: buttons2 }
+          Meter3_1: { state: buttons3 }
+          Meter3_2: { state: buttons3 }
+          Meter3_3: { state: buttons3 }
+          Meter3_4: { state: buttons3 }
+          Meter3_5: { state: buttons3 }
+          Meter3_6: { state: buttons3 }
+          Meter4: { state: buttons4 }
+      enum.GasFlowMeterVisuals.TemperatureState:
+        enum.GasFlowMeterVisualLayers.Pressure:
+          Gray: { color: "#808080" }
+          Violet: { color: "#B900F7" }
+          Blue: { color: "#0000FF" }
+          Cyan: { color: "#00FFFF" }
+          Lime: { color: "#00FF00" }
+          Yellow: { color: "#FFFF00" }
+          Orange: { color: "#FF9900" }
+          Red: { color: "#FF0000" }
+  - type: GasFlowMeter
+  - type: ApcPowerReceiver
+    powerLoad: 20
+  - type: ExtensionCableReceiver
+  - type: AtmosPipeLayers
+    spriteRsiPaths:
+      Primary: _Pirate/Structures/Piping/Atmospherics/gas_flow_meter.rsi
+      Secondary: _Pirate/Structures/Piping/Atmospherics/gas_flow_meter_alt1.rsi
+      Tertiary: _Pirate/Structures/Piping/Atmospherics/gas_flow_meter_alt2.rsi
+    alternativePrototypes:
+      Primary: GasFlowMeter
+      Secondary: GasFlowMeterAlt1
+      Tertiary: GasFlowMeterAlt2
+  - type: Anchorable
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetSteel1
+    refineTime: 2
+    refineFuel: 1
+  - type: RCDDeconstructable
+    cost: 1
+    delay: 0
+    fx: EffectRCDDeconstruct2
+    rpd: true
+
+- type: entity
+  parent: GasFlowMeter
+  id: GasFlowMeterAlt1
+  suffix: Layer 2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: FloorTiles
+    sprite: _Pirate/Structures/Piping/Atmospherics/gas_flow_meter_alt1.rsi
+  - type: AtmosPipeLayers
+    pipeLayer: Secondary
+
+- type: entity
+  parent: GasFlowMeter
+  id: GasFlowMeterAlt2
+  suffix: Layer 3
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: Puddles
+    sprite: _Pirate/Structures/Piping/Atmospherics/gas_flow_meter_alt2.rsi
+  - type: AtmosPipeLayers
+    pipeLayer: Tertiary

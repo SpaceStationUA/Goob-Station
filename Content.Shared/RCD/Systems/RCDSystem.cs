@@ -15,6 +15,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared._Pirate.Plumbing.Components; // Pirate: chem plumbing
+using Content.Shared._Pirate.Atmos.Components; // Pirate: gas flow meter
 using Content.Shared.RCD.Components;
 using Content.Shared.Tag;
 using Content.Shared.Tiles;
@@ -585,6 +586,30 @@ public sealed class RCDSystem : EntitySystem
         _intersectingEntities.Clear();
         _lookup.GetLocalEntitiesIntersecting(gridUid, position, _intersectingEntities, -0.05f, LookupFlags.Uncontained);
 
+        #region Pirate: gas flow meter
+        if (prototype.Prototype != null &&
+            _protoManager.TryIndex<EntityPrototype>(prototype.Prototype, out var flowMeterProto) &&
+            flowMeterProto.TryGetComponent<GasFlowMeterComponent>(out _, EntityManager.ComponentFactory))
+        {
+            var placementLayer = GetPlacementLayer(component, prototype);
+
+            foreach (var ent in _intersectingEntities)
+            {
+                if (!HasComp<GasFlowMeterComponent>(ent) ||
+                    !TryComp<AtmosPipeLayersComponent>(ent, out var entLayers) ||
+                    entLayers.CurrentPipeLayer != placementLayer)
+                {
+                    continue;
+                }
+
+                if (popMsgs)
+                    _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-identical-entity"), uid, user);
+
+                return false;
+            }
+        }
+        #endregion
+
         foreach (var ent in _intersectingEntities)
         {
             // If the entity is the exact same prototype as what we are trying to build, then block it.
@@ -817,6 +842,9 @@ public sealed class RCDSystem : EntitySystem
                 {
                     _pipeLayers.SetPipeLayer((ent, spawnedLayers), pipeLayer);
                 }
+                // Pirate: gas flow meter
+                if (HasComp<GasFlowMeterComponent>(ent) && !HasGasFlowMeterSupport(gridUid, position, pipeLayer))
+                    _transform.Unanchor(ent);
                 #endregion
                 // End of funky changes
 
@@ -891,6 +919,26 @@ public sealed class RCDSystem : EntitySystem
     {
         return (AtmosPipeLayer) Math.Clamp((int) layer, (int) AtmosPipeLayer.Primary, (int) AtmosPipeLayer.Tertiary);
     }
+
+    #region Pirate: gas flow meter
+    private bool HasGasFlowMeterSupport(EntityUid gridUid, Vector2i position, AtmosPipeLayer layer)
+    {
+        var candidates = new HashSet<EntityUid>();
+        _lookup.GetLocalEntitiesIntersecting(gridUid, position, candidates, -0.05f, LookupFlags.Uncontained);
+
+        foreach (var ent in candidates)
+        {
+            if (HasComp<GasFlowMeterAttachableComponent>(ent) &&
+                TryComp<AtmosPipeLayersComponent>(ent, out var entLayers) &&
+                entLayers.CurrentPipeLayer == layer)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    #endregion
 
     public RpdMode GetCurrentRpdMode(EntityUid uid, RCDComponent? component = null)
     {
