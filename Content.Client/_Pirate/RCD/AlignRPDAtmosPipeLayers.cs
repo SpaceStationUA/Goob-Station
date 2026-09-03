@@ -189,6 +189,10 @@ public sealed class AlignRPDAtmosPipeLayers : PlacementMode
 
         _lastLayerSyncEntity = heldEntity;
         _lastLayerSynced = layer;
+
+        if (_entityManager.TryGetComponent<RCDComponent>(heldEntity, out var rcd))
+            _rcdSystem.SetLastSelectedLayer((heldEntity, rcd), layer);
+
         _entityNetwork.SendSystemNetworkMessage(new RPDSelectedLayerEvent(_entityManager.GetNetEntity(heldEntity), (byte) layer));
     }
 

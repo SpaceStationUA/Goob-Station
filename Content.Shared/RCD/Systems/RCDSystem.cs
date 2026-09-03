@@ -388,7 +388,12 @@ public sealed class RCDSystem : EntitySystem
         if (!TryComp<RCDComponent>(uid, out var rcd) || (!rcd.IsRpd && !rcd.IsRPLD))
             return;
 
-        rcd.LastSelectedLayer = (AtmosPipeLayer) Math.Clamp((int) ev.Layer, (int) AtmosPipeLayer.Primary, (int) AtmosPipeLayer.Tertiary);
+        SetLastSelectedLayer((uid, rcd), (AtmosPipeLayer) ev.Layer);
+    }
+
+    public void SetLastSelectedLayer(Entity<RCDComponent> ent, AtmosPipeLayer layer)
+    {
+        ent.Comp.LastSelectedLayer = ClampPipeLayer(layer);
     }
 
     private void OnGetUtilityVerb(EntityUid uid, RCDComponent component, GetVerbsEvent<UtilityVerb> args)

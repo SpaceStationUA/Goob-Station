@@ -444,6 +444,7 @@
     - PipeBend
     - PipeTJunction
     - CEMultizAtmosPipeAdapter # Pirate: multiz
+    - GasPipeManifold # Pirate: heat exchange pipes
     - OutletInjector
     - ManualValve
     - VolumetricPump
@@ -454,17 +455,22 @@
     - VentGas
     - VentPassive
     - MixerGas
-    - Radiator
-    - RadiatorBend
     - SignalValve
     - CanisterPort
     - GasFlowMeter # Pirate: gas flow meter
     - FilterGas
     # <Goobstation>
     - FilterInline
-    - RadiatorInline
-    - RadiatorInlineBend
     # </Goobstation>
+    #region Pirate: heat exchange pipes
+    - Radiator
+    - RadiatorBend
+    - RadiatorInline # <Goobstation>
+    - RadiatorInlineBend # <Goobstation>
+    - RadiatorInlineManifold
+    - RadiatorInlineFourway
+    - RadiatorInlineJunction
+    #endregion
     - Deconstruct
   - type: LimitedCharges
     maxCharges: 90

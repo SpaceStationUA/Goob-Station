@@ -27565,18 +27565,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -69.5,0.5
       parent: 2
-  - uid: 1707
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -72.5,-0.5
-      parent: 2
-  - uid: 1708
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -71.5,-0.5
-      parent: 2
   - uid: 2263
     components:
     - type: Transform
@@ -40815,6 +40803,18 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -71.5,-3.5
+      parent: 2
+- proto: HeatExchangerInlineJunction
+  entities:
+  - uid: 1707
+    components:
+    - type: Transform
+      pos: -72.5,-0.5
+      parent: 2
+  - uid: 1708
+    components:
+    - type: Transform
+      pos: -71.5,-0.5
       parent: 2
 - proto: HighSecArmoryLocked
   entities:

@@ -179,7 +179,7 @@
 
 - type: rcd
   id: Radiator
-  category: AtmosphericUtility
+  category: HeatExchange # Pirate: heat exchange pipes
   sprite: /Textures/Interface/Radial/RPD/radiator.png
   mode: ConstructObject
   prototype: HeatExchanger
@@ -187,12 +187,13 @@
   delay: 0
   collisionMask: Impassable
   rotation: User
+  hasLayers: true # Pirate: heat exchange pipes
   fx: EffectRCDConstruct0
   allowMultiDirection: true
 
 - type: rcd
   id: RadiatorBend
-  category: AtmosphericUtility
+  category: HeatExchange # Pirate: heat exchange pipes
   sprite: /Textures/Interface/Radial/RPD/radiator_bend.png
   mode: ConstructObject
   prototype: HeatExchangerBend
@@ -200,6 +201,7 @@
   delay: 0
   collisionMask: Impassable
   rotation: User
+  hasLayers: true # Pirate: heat exchange pipes
   fx: EffectRCDConstruct0
   allowMultiDirection: true
 

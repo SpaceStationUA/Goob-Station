@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at commit 21ce3d66d4ceff1e547f6e2c137231c599efcf2a (icons/obj/pipes_n_cables/he-simple.dmi, he-manifold.dmi, he-junction.dmi), pipe layer offsets rebuilt for SS14 spacing by Tools/_Pirate/build_he_pipes.py.",
+    "states": [
+        {
+            "name": "pipeStraight",
+            "directions": 4
+        },
+        {
+            "name": "pipeBend",
+            "directions": 4
+        },
+        {
+            "name": "pipeTJunction",
+            "directions": 4
+        },
+        {
+            "name": "pipeFourway",
+            "directions": 4
+        },
+        {
+            "name": "junction",
+            "directions": 4
+        },
+        {
+            "name": "pipeConnector",
+            "directions": 4
+        }
+    ]
+}
