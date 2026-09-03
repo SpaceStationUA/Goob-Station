@@ -61,3 +61,63 @@
           Quantity: 1
         - ReagentId: PhantomCocoa
           Quantity: 5
+
+# Wrapped ghost bar: unwraps into the edible ghost chocolate bar.
+- type: entity
+  parent: BaseItem
+  id: FoodSnackChocolateGhost
+  name: ghost chocolate bar
+  description: The wrapper fades from view. Creepy.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Consumable/Food/invisible_bar.rsi
+    state: invisible-chocolatebar
+  - type: Item
+    sprite: _Pirate/Objects/Consumable/Food/invisible_bar.rsi
+    heldPrefix: invisible-chocolatebar
+    size: Tiny
+    storedOffset: 1,-1
+  - type: Tag
+    tags:
+    - FoodSnack
+  - type: SpawnItemsOnUse
+    items:
+    - id: FoodPacketChocolateTrash
+    - id: FoodSnackChocolateBarGhost
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+# The bar itself: eating it makes you invisible for a short while.
+- type: entity
+  parent: FoodSnackBase
+  id: FoodSnackChocolateBarGhost
+  name: ghost chocolate bar
+  description: Tastes like cardboard. You feel yourself fading away...
+  components:
+  - type: FlavorProfile
+    flavors:
+    - chocolate
+  - type: Sprite
+    sprite: _Pirate/Objects/Consumable/Food/invisible_bar.rsi
+    state: invisible-chocolatebar-open
+  - type: Item
+    sprite: _Pirate/Objects/Consumable/Food/invisible_bar.rsi
+    heldPrefix: invisible-chocolatebar-open
+    storedOffset: 1,-2
+  - type: Tag
+    tags:
+    - FoodSnack
+    - ReptilianFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Theobromine
+          Quantity: 3
+        - ReagentId: CocoaPowder
+          Quantity: 1
+        - ReagentId: SpectralCocoa
+          Quantity: 5
