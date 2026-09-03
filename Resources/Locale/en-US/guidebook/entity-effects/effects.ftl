@@ -588,3 +588,6 @@ reagent-effect-guidebook-chem-roll-psionic =
         [1] Gives
         *[other] give
     } a chance to roll a psionic power with x{$multiplier} multiplier
+
+reagent-effect-guidebook-temporary-godmode =
+    Makes the subject [color=yellow]invulnerable[/color] for { $seconds } seconds
