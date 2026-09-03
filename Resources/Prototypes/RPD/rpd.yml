@@ -111,6 +111,34 @@
   rotation: User
   fx: EffectRCDConstruct0
 
+# Pirate: RPD pumps and valves
+- type: rcd
+  id: PressureRegulator
+  category: PumpsValves
+  sprite: /Textures/Interface/Radial/RPD/pressure_regulator.png
+  mode: ConstructObject
+  prototype: GasPressureRegulator
+  cost: 2
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+  allowMultiDirection: true
+
+- type: rcd
+  id: PassiveGate
+  category: PumpsValves
+  sprite: /Textures/Interface/Radial/RPD/passive_gate.png
+  mode: ConstructObject
+  prototype: GasPassiveGate
+  cost: 2
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+  allowMultiDirection: true
+# end Pirate: RPD pumps and valves
+
 
 - type: rcd
   id: OutletInjector

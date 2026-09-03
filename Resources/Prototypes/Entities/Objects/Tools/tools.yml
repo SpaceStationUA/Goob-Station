@@ -451,6 +451,8 @@
     - PressurePump
     - VentScrubber
     - PressureValve
+    - PressureRegulator # Pirate: RPD pumps and valves
+    - PassiveGate # Pirate: RPD pumps and valves
     - DualPortVent
     - VentGas
     - VentPassive
