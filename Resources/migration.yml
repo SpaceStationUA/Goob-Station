@@ -1042,12 +1042,12 @@ StairStageDark: SteelDarkCenterStairs
 StairWood: WoodCenterStairs
 StairStageWood: WoodCenterStairs
 # sofas
-BenchSofaMiddle: SofaBlack
-BenchSofaLeft: SofaBlackLeft
-BenchSofaRight: SofaBlackRight
-BenchSofaCorner: SofaBlackCorner
-BenchSofaCorpMiddle: SofaWhite
-BenchSofaCorpLeft: SofaWhiteLeft
-BenchSofaCorpRight: SofaWhiteRight
-BenchSofaCorpCorner: SofaWhiteCorner
+BenchSofaCorpMiddle: SofaBlack
+BenchSofaCorpLeft: SofaBlackRight
+BenchSofaCorpRight: SofaBlackLeft
+BenchSofaCorpCorner: SofaBlackCorner
+BenchSofaMiddle: SofaWhite
+BenchSofaLeft: SofaWhiteRight
+BenchSofaRight: SofaWhiteLeft
+BenchSofaCorner: SofaWhiteCorner
 # PIRATE END
