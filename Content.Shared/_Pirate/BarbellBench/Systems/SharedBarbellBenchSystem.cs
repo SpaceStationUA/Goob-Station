@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared._Pirate.BarbellBench;
 using Content.Shared._Pirate.BarbellBench.Components;
 using Content.Shared.Buckle.Components;
 using Robust.Shared.Containers;
@@ -22,7 +23,9 @@ public abstract class SharedBarbellBenchSystem : EntitySystem
 
     protected virtual void OnStrapped(Entity<BarbellBenchComponent> bench, ref StrappedEvent args)
     {
-        if (Container.TryGetContainer(bench.Owner, bench.Comp.BarbellSlotId, out var barbellContainer) && barbellContainer.Count > 0)
+        if (Container.TryGetContainer(bench.Owner, bench.Comp.BarbellSlotId, out var barbellContainer) &&
+            barbellContainer.Count > 0 &&
+            TryComp<BarbellLiftComponent>(barbellContainer.ContainedEntities[0], out _))
         {
             _actionsSystem.RemoveProvidedActions(args.Buckle.Owner, bench.Owner);
             EntityUid? action = null;
