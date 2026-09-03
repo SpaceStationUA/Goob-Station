@@ -351,8 +351,16 @@
     sprite: _Pirate/Clothing/Eyes/Glasses/secvision.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Eyes/Glasses/secvision.rsi
-  - type: NightVision
-    isEquipment: true
+  - type: MonolithNightVision # Gen 1 monotube
+    relayOverlay: true
+    goggleEffect: true
+    action: MonolithToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 1
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF26"
+    amplification: 6
   - type: IdentityBlocker
     coverage: EYES
   # Pirate: target has no Impstation PluralName component.

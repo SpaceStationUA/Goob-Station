@@ -474,3 +474,20 @@
   - type: Action
     icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
     itemIconStyle: BigAction
+
+- type: entity
+  parent: BaseAction
+  id: MonolithToggleNightVision
+  name: Toggle night vision
+  description: Toggles the night vision on and off.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -20
+    useDelay: 2
+    icon:
+      sprite: Interface/Actions/night_vision.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:MonolithToggleNightVisionEvent {}
