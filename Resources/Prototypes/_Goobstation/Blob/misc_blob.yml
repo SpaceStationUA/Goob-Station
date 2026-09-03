@@ -78,6 +78,7 @@
   priority: 10
   showTo:
     components:
+    - ShowAntagIcons # Pirate: expose to admin ghosts
     - BlobCarrier
     - BlobObserver
     - ZombieBlob
