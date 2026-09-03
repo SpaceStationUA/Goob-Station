@@ -73,6 +73,8 @@
       shader: unshaded
   - type: Clothing
     sprite: _Goobstation/Clothing/OuterClothing/Armor/helldiver.rsi
+  - type: PersonalShield
+    color: "#F5C518F2"
   - type: TemperatureProtection
     heatingCoefficient: 0.1
     coolingCoefficient: 0.1
