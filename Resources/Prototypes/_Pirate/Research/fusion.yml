@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Hyper-torus Fusion Reactor (HFR) research.
+# Unlocks the circuit boards for the reactor core and its parts on the
+# circuit imprinter / engineering techfab.
+
+- type: technology
+  id: FusionReactors
+  name: research-technology-fusion-reactors
+  icon:
+    # The real /tg/ core sprite is a busy 32x32 torus with green/red/blue glow
+    # accents that reads as noise in the R&D console's ~80px icon box. Use a
+    # dedicated clean metallic-torus icon (desaturated from the same sprite).
+    sprite: _Pirate/Research/hfr_icon.rsi
+    state: icon
+  discipline: Industrial
+  tier: 2
+  cost: 15000
+  position: -1,-2
+  technologyPrerequisites:
+  - PowerGeneration
+  - AtmosphericTech
+  recipeUnlocks:
+  - MachineHyperTorusFusionReactorCircuitboard
+  - MachineHFRFuelInputCircuitboard
+  - MachineHFRModeratorInputCircuitboard
+  - MachineHFRWasteOutputCircuitboard
+  - MachineHFRInterfaceCircuitboard
+  - MachineHFRCornerCircuitboard

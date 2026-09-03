@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Hyper-torus Fusion Reactor icon, derived from the /tg/station hfr_parts.dmi core sprite (cleaned to a neutral metal tone for small icons)",
+  "size": {"x": 32, "y": 32},
+  "states": [
+    {"name": "icon"}
+  ]
+}

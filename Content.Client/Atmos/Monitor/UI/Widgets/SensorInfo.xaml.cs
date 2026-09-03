@@ -53,6 +53,11 @@ public sealed partial class SensorInfo : BoxContainer
 
         foreach (var (gas, amount) in data.Gases)
         {
+            // Pirate: skip gases the server sent no threshold for (e.g. newly added HFR gases)
+            // so we never throw on a missing dictionary key.
+            if (!data.GasThresholds.TryGetValue(gas, out var gasThreshold))
+                continue;
+
             var label = new RichTextLabel();
 
             var fractionGas = amount / data.TotalMoles;
@@ -62,14 +67,13 @@ public sealed partial class SensorInfo : BoxContainer
 
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
                 ("gas", Loc.GetString(gasName)),
-                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
+                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, gasThreshold)), // Pirate
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
             GasContainer.AddChild(label);
             _gasLabels.Add(gas, label);
 
-            var threshold = data.GasThresholds[gas];
-            var gasThresholdControl = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title"), threshold, AtmosMonitorThresholdType.Gas, gas, 100);
+            var gasThresholdControl = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title"), gasThreshold, AtmosMonitorThresholdType.Gas, gas, 100); // Pirate
             gasThresholdControl.Margin = new Thickness(20, 2, 2, 2);
             gasThresholdControl.ThresholdDataChanged += (type, alarmThreshold, arg3) =>
             {
@@ -134,9 +138,18 @@ public sealed partial class SensorInfo : BoxContainer
             ProtoId<GasPrototype> gasProtoId = atmosphereSystem.GetGas(gas);
             var gasName = _prototypeManager.Index(gasProtoId).Name;
 
+            // Pirate: skip gases the server sent no threshold for (e.g. newly added HFR gases)
+            // and hide the stale row so it doesn't keep showing the last known value.
+            if (!data.GasThresholds.TryGetValue(gas, out var gasThreshold))
+            {
+                label.Visible = false;
+                continue;
+            }
+
+            label.Visible = true;
             label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
                 ("gas", Loc.GetString(gasName)),
-                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
+                ("color", AirAlarmWindow.ColorForThreshold(fractionGas, gasThreshold)), // Pirate
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
         }
@@ -145,12 +158,17 @@ public sealed partial class SensorInfo : BoxContainer
         _temperatureThreshold.UpdateThresholdData(data.TemperatureThreshold, data.Temperature);
         foreach (var (gas, control) in _gasThresholds)
         {
-            if (!data.GasThresholds.TryGetValue(gas, out var threshold))
+            // Pirate: hide the control when the server no longer reports the gas or
+            // its threshold, and never index data.Gases without checking the key first.
+            if (!data.GasThresholds.TryGetValue(gas, out var threshold)
+                || !data.Gases.TryGetValue(gas, out var amount))
             {
+                control.Visible = false;
                 continue;
             }
 
-            control.UpdateThresholdData(threshold, data.Gases[gas] / data.TotalMoles);
+            control.Visible = true;
+            control.UpdateThresholdData(threshold, amount / data.TotalMoles);
         }
     }
 

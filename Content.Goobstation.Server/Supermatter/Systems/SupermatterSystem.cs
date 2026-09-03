@@ -539,6 +539,7 @@ public sealed class SupermatterSystem : SharedSupermatterSystem
                 Spawn(sm.TeslaPrototypeId, xform.Coordinates);
                 break;
 
+
             case DelamType.Cascade:
                 Spawn(sm.SupermatterKudzuPrototypeId, xform.Coordinates);
                 break;

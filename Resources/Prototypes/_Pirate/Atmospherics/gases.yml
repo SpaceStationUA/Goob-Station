@@ -1,0 +1,237 @@
+# /tg/ gases
+
+- type: gas
+  id: HyperNoblium
+  name: gases-hyper-noblium
+  specificHeat: 200
+  heatCapacityRatio: 1.5
+  molarMass: 200
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  # /tg/ reuses the freon overlay for Hyper-Noblium (our state is spelled "frezon")
+  gasOverlayState: frezon
+  gasMolesVisible: 0.05
+  gasVisbilityFactor: 5
+  color: '#e6e6fa'
+  reagent: HyperNoblium
+  pricePerMole: 5
+
+- type: gas
+  id: AntiNoblium
+  name: gases-anti-noblium
+  specificHeat: 200
+  heatCapacityRatio: 1.3
+  molarMass: 200
+  gasOverlaySprite: /Textures/_Pirate/Effects/atmospherics.rsi
+  gasOverlayState: antinoblium
+  gasMolesVisible: 0.05
+  gasVisbilityFactor: 5
+  color: '#2f0047'
+  reagent: AntiNoblium
+  pricePerMole: 10
+
+- type: gas
+  id: Hydrogen
+  name: gases-hydrogen
+  specificHeat: 15
+  heatCapacityRatio: 1.4
+  molarMass: 2
+  gasOverlaySprite: /Textures/_Pirate/Effects/atmospherics.rsi
+  gasOverlayState: hydrogen
+  gasMolesVisible: 0.05
+  gasVisbilityFactor: 5
+  color: '#ffffff'
+  reagent: Hydrogen
+  pricePerMole: 1
+
+- type: gas
+  id: Helium
+  name: gases-helium
+  specificHeat: 15
+  heatCapacityRatio: 1.67
+  molarMass: 4
+  gasOverlaySprite: /Textures/_Pirate/Effects/atmospherics.rsi
+  gasOverlayState: helium
+  gasMolesVisible: 0.05
+  gasVisbilityFactor: 5
+  color: '#f0f8ff'
+  reagent: Helium
+  pricePerMole: 3.5
+
+- type: gas
+  id: ProtoNitrate
+  name: gases-proto-nitrate
+  specificHeat: 30
+  heatCapacityRatio: 1.3
+  molarMass: 82
+  gasOverlaySprite: /Textures/_Pirate/Effects/atmospherics.rsi
+  gasOverlayState: proto_nitrate
+  gasMolesVisible: 0.05
+  gasVisbilityFactor: 5
+  color: '#adff2f'
+  reagent: ProtoNitrate
+  pricePerMole: 2.5
+
+- type: gas
+  id: Zauker
+  name: gases-zauker
+  specificHeat: 350
+  heatCapacityRatio: 1.3
+  molarMass: 200
+  gasOverlaySprite: /Textures/_Pirate/Effects/atmospherics.rsi
+  gasOverlayState: zauker
+  gasMolesVisible: 0.05
+  gasVisbilityFactor: 5
+  color: '#006400'
+  reagent: Zauker
+  pricePerMole: 7
+
+- type: gas
+  id: Miasma
+  name: gases-miasma
+  specificHeat: 20
+  heatCapacityRatio: 1.3
+  molarMass: 30
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: miasma
+  gasMolesVisible: 0.05
+  gasVisbilityFactor: 5
+  color: '#808000'
+  reagent: Miasma
+  pricePerMole: 1
+
+- type: gas
+  id: Halon
+  name: gases-halon
+  specificHeat: 175
+  heatCapacityRatio: 1.3
+  molarMass: 150
+  gasOverlaySprite: /Textures/_Pirate/Effects/atmospherics.rsi
+  gasOverlayState: halon
+  gasMolesVisible: 0.05
+  gasVisbilityFactor: 5
+  color: '#800080'
+  reagent: Halon
+  pricePerMole: 4
+
+# --- /tg/ gas reactions (gas_reactions.dm) ---
+# Hyper-Nobilium suppresses ALL other gas reactions when >= 5 moles and temperature > 20K
+# (port of the pre-check in /tg/ gas_mixture.react()). High priority so it runs first.
+- type: gasReaction
+  id: HyperNobliumSuppression
+  priority: 1000
+  minimumTemperature: 20
+  effects:
+  - !type:HyperNobliumSuppressionReaction
+
+- type: gasReaction
+  id: HyperNobliumFormation
+  priority: 2
+  maximumTemperature: 15.0
+  minimumTemperature: 2.7
+  minimumRequirements:
+    Nitrogen: 10
+    Tritium: 5
+  effects:
+  - !type:HyperNobliumFormationReaction
+
+- type: gasReaction
+  id: AntiNobliumReplication
+  priority: 2
+  minimumTemperature: 20.0
+  minimumRequirements:
+    AntiNoblium: 0.25
+  effects:
+  - !type:AntiNobliumReplicationReaction
+
+- type: gasReaction
+  id: HydrogenFire
+  priority: -1
+  minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
+  minimumRequirements:
+    Oxygen: 0.01
+    Hydrogen: 0.01
+  effects:
+  - !type:HydrogenFireReaction
+
+# --- /tg/ gases: Proto-Nitrate, Zauker, Miasma, Halon (gas_reactions.dm) ---
+
+- type: gasReaction
+  id: HalonOxygenAbsorption
+  priority: 3 # PRE_FORMATION in /tg/ (priority 1, runs first) - SS14 sorts descending, so mirror it high
+  minimumTemperature: 343.149 # T0C + 70
+  minimumRequirements:
+    Halon: 0.01
+    Oxygen: 0.01
+  effects:
+  - !type:HalonOxygenAbsorptionReaction
+
+- type: gasReaction
+  id: ProtoNitrateHydrogenResponse
+  priority: 3 # PRE_FORMATION in /tg/ (runs first)
+  minimumRequirements:
+    ProtoNitrate: 0.01
+    Hydrogen: 150
+  effects:
+  - !type:ProtoNitrateHydrogenResponseReaction
+
+- type: gasReaction
+  id: ProtoNitrateTritiumResponse
+  priority: 3 # PRE_FORMATION in /tg/ (runs first)
+  minimumTemperature: 150
+  maximumTemperature: 340
+  minimumRequirements:
+    ProtoNitrate: 0.01
+    Tritium: 0.01
+  effects:
+  - !type:ProtoNitrateTritiumResponseReaction
+
+- type: gasReaction
+  id: ProtoNitrateBzase
+  priority: 3 # PRE_FORMATION in /tg/ (runs first)
+  minimumTemperature: 260
+  maximumTemperature: 280
+  minimumRequirements:
+    ProtoNitrate: 0.01
+    BZ: 0.01
+  effects:
+  - !type:ProtoNitrateBzaseReaction
+
+- type: gasReaction
+  id: ZaukerFormation
+  priority: 2 # FORMATION in /tg/
+  minimumTemperature: 50000
+  maximumTemperature: 75000
+  minimumRequirements:
+    HyperNoblium: 0.01
+    Nitrium: 0.01
+  effects:
+  - !type:ZaukerFormationReaction
+
+- type: gasReaction
+  id: ProtoNitrateFormation
+  priority: 2 # FORMATION in /tg/
+  minimumTemperature: 5000
+  maximumTemperature: 10000
+  minimumRequirements:
+    Pluoxium: 0.01
+    Hydrogen: 0.01
+  effects:
+  - !type:ProtoNitrateFormationReaction
+
+- type: gasReaction
+  id: MiasmaSterilization
+  priority: 1 # POST_FORMATION in /tg/ (runs after formation, before fires)
+  minimumTemperature: 443.149 # FireMinimumTemperatureToExist + 70
+  minimumRequirements:
+    Miasma: 0.01
+  effects:
+  - !type:MiasmaSterilizationReaction
+
+- type: gasReaction
+  id: ZaukerDecomposition
+  priority: 1 # POST_FORMATION in /tg/
+  minimumRequirements:
+    Zauker: 0.01
+    Nitrogen: 0.01
+  effects:
+  - !type:ZaukerDecompositionReaction

@@ -1,0 +1,97 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Circuit boards for the Hyper-torus Fusion Reactor (HFR) and its eight parts.
+# The reactor core is a standard machine built from a machine frame; each part
+# is also built from a frame, then screwed into its completed state so the
+# multipart machine can match it.
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MachineHyperTorusFusionReactorCircuitboard
+  name: HFR core machine board
+  description: A machine printed circuit board for the hyper-torus fusion reactor core.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: HyperTorusFusionReactor
+    stackRequirements:
+      Manipulator: 8
+      Steel: 10
+      Glass: 5
+      Plasma: 5
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MachineHFRFuelInputCircuitboard
+  name: HFR fuel input port board
+  description: A machine printed circuit board for the HFR fuel input port.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: HFRFuelInputPartUnfinished
+    stackRequirements:
+      Manipulator: 2
+      Steel: 3
+      Glass: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MachineHFRModeratorInputCircuitboard
+  name: HFR moderator input port board
+  description: A machine printed circuit board for the HFR moderator input port.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: HFRModeratorInputPartUnfinished
+    stackRequirements:
+      Manipulator: 2
+      Steel: 3
+      Glass: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MachineHFRWasteOutputCircuitboard
+  name: HFR waste output port board
+  description: A machine printed circuit board for the HFR waste output port.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: HFRWasteOutputPartUnfinished
+    stackRequirements:
+      Manipulator: 2
+      Steel: 3
+      Glass: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MachineHFRInterfaceCircuitboard
+  name: HFR interface board
+  description: A machine printed circuit board for the HFR control interface.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: HFRInterfacePartUnfinished
+    stackRequirements:
+      Manipulator: 3
+      Steel: 2
+      Glass: 3
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MachineHFRCornerCircuitboard
+  name: HFR corner board
+  description: A machine printed circuit board for an HFR structural corner.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: HFRCornerPartUnfinished
+    stackRequirements:
+      Manipulator: 1
+      Steel: 3
+

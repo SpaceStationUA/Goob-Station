@@ -1,0 +1,120 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Construction graphs for the HFR parts. These exist so the multipart
+# machine can match anchored, completed parts; each part is assembled by
+# screwing it into place and removed by prying it back off.
+
+- type: constructionGraph
+  id: HFRFuelInputPart
+  start: start
+  graph:
+    - node: start
+      entity: HFRFuelInputPartUnfinished
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+    - node: completed
+      entity: HFRFuelInputPart
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: HFRModeratorInputPart
+  start: start
+  graph:
+    - node: start
+      entity: HFRModeratorInputPartUnfinished
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+    - node: completed
+      entity: HFRModeratorInputPart
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: HFRWasteOutputPart
+  start: start
+  graph:
+    - node: start
+      entity: HFRWasteOutputPartUnfinished
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+    - node: completed
+      entity: HFRWasteOutputPart
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: HFRInterfacePart
+  start: start
+  graph:
+    - node: start
+      entity: HFRInterfacePartUnfinished
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+    - node: completed
+      entity: HFRInterfacePart
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: HFRCornerPart
+  start: start
+  graph:
+    - node: start
+      entity: HFRCornerPartUnfinished
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+    - node: completed
+      entity: HFRCornerPart
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Prying
+              doAfter: 0.5

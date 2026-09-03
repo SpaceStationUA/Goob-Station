@@ -6,6 +6,19 @@
   - PiratePlumbingFlow
   - PiratePlumbingMachines
 
+# Pirate: HFR guidebook entries
+- type: guideEntry
+  id: HFR
+  name: guide-entry-hfr
+  text: "/ServerInfo/_Pirate/Guidebook/Engineering/HFR.xml"
+  children:
+  - PirateGasses # exotic gases
+
+- type: guideEntry
+  id: PirateGasses
+  name: guidebook-pirate-gasses
+  text: "/ServerInfo/_Pirate/Guidebook/Engineering/PirateGasses.xml"
+
 - type: guideEntry
   id: PiratePlumbingFlow
   name: guidebook-pirate-plumbing-flow
