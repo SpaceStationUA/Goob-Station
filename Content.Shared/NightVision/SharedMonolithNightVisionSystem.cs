@@ -48,7 +48,9 @@ public abstract partial class SharedMonolithNightVisionSystem : EntitySystem
             return;
 
         RefreshOverlay(ent);
-        _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
+        // Use the detached-safe overload: the action may already be gone (e.g. deleted
+        // alongside its owner), in which case RemoveAction would log an error.
+        _actions.RemoveAction(ent.Comp.ActionEntity);
     }
 
     private void OnCompEquip(Entity<MonolithNightVisionComponent> ent, ref GotEquippedEvent args)
@@ -66,7 +68,9 @@ public abstract partial class SharedMonolithNightVisionSystem : EntitySystem
 
         ent.Comp.Enabled = false; // mono
         Dirty(ent);
-        _actions.RemoveAction(args.Equipee, ent.Comp.ActionEntity);
+        // Use the detached-safe overload: when the wearer is being deleted the action
+        // entity may already be gone, and RemoveAction would log an error (fails tests).
+        _actions.RemoveAction(ent.Comp.ActionEntity);
         RefreshOverlay(args.Equipee);
     }
     protected virtual void OnRefreshEquipmentHud(Entity<MonolithNightVisionComponent> ent, ref InventoryRelayedEvent<RefreshMonolithNightVisionEvent> args)

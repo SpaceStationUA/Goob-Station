@@ -368,7 +368,8 @@
     viewCircleSpacing: 280
     action: MonolithToggleNightVision
     phosphorColor: "#41D7D9"
-    lightingColor: "#FFFFFF32"
+    lightingColor: "#FFFFFF26"
+    amplification: 18
   - type: Armor
     coverage:
     - Head

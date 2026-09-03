@@ -98,9 +98,11 @@ public sealed partial class MonolithNightVisionComponent : Component
 
     /// <summary>
     /// The amount of light multiplication the night vision system should apply.
+    /// The shader rolls highlights off softly, so this mostly controls how far into
+    /// darkness the device can see rather than how bright lit areas get.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Amplification = 32f;
+    public float Amplification = 8f;
 
     [DataField]
     public SoundSpecifier? ActivateSound = new SoundPathSpecifier("/Audio/_White/Items/Goggles/activate.ogg");

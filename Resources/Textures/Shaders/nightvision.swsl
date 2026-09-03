@@ -24,8 +24,11 @@ void fragment()
     // Monochrome the view
     highp float gray = zGrayscale(blurred.rgb);
 
-    // Shade it to the phosphor color
+    // Shade it to the phosphor color, then roll highlights off softly instead of
+    // clipping to a blinding flat sheet. Dark areas stay amplified (exp is near
+    // linear close to zero), bright areas taper towards full phosphor brightness.
     highp vec3 colorized = gray * BASE_COLOR * AMPLIFICATION;
+    colorized = vec3(1.0) - exp(-colorized);
 
     // Re-expand and add the original alpha back
     highp vec4 walpha = vec4(vec3(colorized), blurred.a);

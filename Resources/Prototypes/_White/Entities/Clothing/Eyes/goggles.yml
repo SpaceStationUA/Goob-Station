@@ -19,7 +19,8 @@
     viewCircleCount: 2
     viewCircleSpacing: 280
     phosphorColor: "#00FF00"
-    lightingColor: "#FFFFFF32"
+    lightingColor: "#FFFFFF26"
+    amplification: 10
   - type: IdentityBlocker
     coverage: EYES
 
@@ -37,6 +38,7 @@
     viewCircleCount: 1
     viewCircleSpacing: 280
     phosphorColor: "#00FF00"
+    amplification: 6
 
 - type: entity
   parent: ClothingEyesNightVisionGoggles
@@ -50,6 +52,7 @@
     viewCircleCount: 2
     viewCircleSpacing: 280
     phosphorColor: "#00FF00"
+    amplification: 10
 
 - type: entity
   parent: ClothingEyesNightVisionGoggles
@@ -63,6 +66,7 @@
     viewCircleCount: 2
     viewCircleSpacing: 280
     phosphorColor: "#00FF00"
+    amplification: 14
 
 - type: entity
   parent: ClothingEyesNightVisionGoggles
@@ -76,6 +80,7 @@
     viewCircleCount: 4
     viewCircleSpacing: 260
     phosphorColor: "#41D7D9"
+    amplification: 18
 # Mono end
 
 - type: entity
@@ -100,6 +105,7 @@
     viewCircleCount: 2
     viewCircleSpacing: 280
     phosphorColor: "#00FF00"
+    amplification: 14
 
 # Thermal Vision Goggles
 
