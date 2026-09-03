@@ -1,3 +1,4 @@
+using Content.Shared.Armor;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -17,7 +18,10 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PersonalShieldComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
+        // Soak the raw hit before armor coefficients are applied, so the charge is spent
+        // 1:1 with incoming damage rather than with the post-armor remainder.
+        SubscribeLocalEvent<PersonalShieldComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify,
+            before: [typeof(SharedArmorSystem)]);
         SubscribeLocalEvent<PersonalShieldComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<PersonalShieldComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PersonalShieldComponent, MapInitEvent>(OnMapInit);
