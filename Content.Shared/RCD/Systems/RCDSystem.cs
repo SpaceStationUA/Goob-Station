@@ -388,13 +388,15 @@ public sealed class RCDSystem : EntitySystem
         if (!TryComp<RCDComponent>(uid, out var rcd) || (!rcd.IsRpd && !rcd.IsRPLD))
             return;
 
-        SetLastSelectedLayer((uid, rcd), (AtmosPipeLayer) ev.Layer);
+        SetLastSelectedLayer((uid, rcd), (AtmosPipeLayer) ev.Layer); // Pirate: heat exchange pipes
     }
 
+    #region Pirate: heat exchange pipes
     public void SetLastSelectedLayer(Entity<RCDComponent> ent, AtmosPipeLayer layer)
     {
         ent.Comp.LastSelectedLayer = ClampPipeLayer(layer);
     }
+    #endregion
 
     private void OnGetUtilityVerb(EntityUid uid, RCDComponent component, GetVerbsEvent<UtilityVerb> args)
     {
@@ -847,6 +849,9 @@ public sealed class RCDSystem : EntitySystem
                 {
                     _pipeLayers.SetPipeLayer((ent, spawnedLayers), pipeLayer);
                 }
+                #endregion
+
+                #region Pirate: gas flow meter
                 // Pirate: gas flow meter
                 if (HasComp<GasFlowMeterComponent>(ent) && !HasGasFlowMeterSupport(gridUid, position, pipeLayer))
                     _transform.Unanchor(ent);
@@ -934,6 +939,7 @@ public sealed class RCDSystem : EntitySystem
         foreach (var ent in candidates)
         {
             if (HasComp<GasFlowMeterAttachableComponent>(ent) &&
+                Transform(ent).Anchored &&
                 TryComp<AtmosPipeLayersComponent>(ent, out var entLayers) &&
                 entLayers.CurrentPipeLayer == layer)
             {

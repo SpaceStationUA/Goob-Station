@@ -201,11 +201,7 @@ public sealed class GasTileDangerousTemperatureOverlay : Overlay
         drawHandle.SetTransform(Matrix3x2.Identity);
 
         if (!anyGasDrawn)
-        {
-            _temperatureTarget?.Dispose();
-            _temperatureTarget = null;
             return false;
-        }
 
         return true;
     }

@@ -65,6 +65,12 @@ public struct ThermalByte : IEquatable<ThermalByte>
             case StateVacuum:
                 temperature = 0f;
                 return false;
+            // Reserved values are not temperatures.
+            case ReservedFuture0:
+            case ReservedFuture1:
+            case ReservedFuture2:
+                temperature = 0f;
+                return false;
             default:
                 temperature = (_coreValue * TempDegreeResolution) + TempMinimum;
                 return true;

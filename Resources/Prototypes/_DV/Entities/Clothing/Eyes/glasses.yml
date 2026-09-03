@@ -14,7 +14,7 @@
     requireWorn: true # Pirate: meson vision
   - type: GoggleShader
     shader: Goggles
-    color: "#5AB43CCC"
+    color: "#5AB43C80" # Pirate: meson vision
     enabled: true # Pirate: meson vision
   - type: Tag # Goobstation
     tags:
