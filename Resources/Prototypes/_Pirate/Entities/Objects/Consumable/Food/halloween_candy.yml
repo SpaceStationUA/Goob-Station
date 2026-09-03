@@ -10,10 +10,10 @@
   description: The wrapper is real. Probably.
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Consumable/Food/invisible_bar.rsi
+    sprite: _Pirate/Objects/Consumable/Food/invisible_bar.rsi
     state: invisible-chocolatebar
   - type: Item
-    sprite: _Goobstation/Objects/Consumable/Food/invisible_bar.rsi
+    sprite: _Pirate/Objects/Consumable/Food/invisible_bar.rsi
     heldPrefix: invisible-chocolatebar
     size: Tiny
     storedOffset: 1,-1
@@ -38,10 +38,10 @@
     flavors:
     - chocolate
   - type: Sprite
-    sprite: _Goobstation/Objects/Consumable/Food/invisible_bar.rsi
+    sprite: _Pirate/Objects/Consumable/Food/invisible_bar.rsi
     state: invisible-chocolatebar-open
   - type: Item
-    sprite: _Goobstation/Objects/Consumable/Food/invisible_bar.rsi
+    sprite: _Pirate/Objects/Consumable/Food/invisible_bar.rsi
     heldPrefix: invisible-chocolatebar-open
     storedOffset: 1,-2
   - type: Tag

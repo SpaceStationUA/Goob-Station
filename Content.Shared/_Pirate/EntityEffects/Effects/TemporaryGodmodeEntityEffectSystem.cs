@@ -3,11 +3,12 @@
 using System.Threading;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.EntityEffects;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
-namespace Content.Shared.EntityEffects.Effects;
+namespace Content.Shared._Pirate.EntityEffects.Effects;
 
 /// <summary>
 /// Grants temporary invulnerability through the godmode system, then removes it.
