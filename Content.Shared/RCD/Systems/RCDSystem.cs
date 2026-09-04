@@ -38,6 +38,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Atmos.Components; // Goob - Check for pipe layer
 using Content.Shared.Doors.Systems;
 using Content.Shared.Doors.Components; // Goob - Check for Door Bolt
+using Content.Goobstation.Common.Effects; // Pirate: RPD mode selector
 
 namespace Content.Shared.RCD.Systems;
 
@@ -60,6 +61,7 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAtmosPipeLayersSystem _pipeLayers = default!; // Pirate: chem plumbing
+    [Dependency] private readonly SparksSystem _sparks = default!; // Pirate: RPD mode selector
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!; // Goobstation - RCD respects door access
 
@@ -398,18 +400,31 @@ public sealed class RCDSystem : EntitySystem
     }
     #endregion
 
+    private static readonly RpdMode[] SelectableModes =
+    {
+        RpdMode.Free,
+        RpdMode.Primary,
+        RpdMode.Secondary,
+        RpdMode.Tertiary,
+    };
+
     private void OnGetUtilityVerb(EntityUid uid, RCDComponent component, GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || (!component.IsRpd && !component.IsRPLD))
             return;
 
-        args.Verbs.Add(new UtilityVerb
+        foreach (var mode in SelectableModes)
         {
-            Act = () => SwitchPipeMode(uid, component, args.User),
-            Text = Loc.GetString("rcd-verb-switch-mode"),
-            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-            Impact = LogImpact.Low,
-        });
+            args.Verbs.Add(new UtilityVerb
+            {
+                Act = () => SetPipeMode((uid, component), mode, args.User),
+                Category = VerbCategory.Adjust,
+                Text = GetModeName(mode),
+                Disabled = component.CurrentMode == mode,
+                Icon = ModeVerbIcon,
+                Impact = LogImpact.Low,
+            });
+        }
     }
 
     private void OnGetAlternativeVerb(EntityUid uid, RCDComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -418,33 +433,51 @@ public sealed class RCDSystem : EntitySystem
             !args.Using.HasValue || args.Using.Value != uid)
             return;
 
-        args.Verbs.Add(new AlternativeVerb
+        var nextMode = GetNextPipeMode(component.CurrentMode); // Pirate: RPD mode selector
+        foreach (var mode in SelectableModes)
         {
-            Act = () => SwitchPipeMode(uid, component, args.User),
-            Text = Loc.GetString("rcd-verb-switch-mode"),
-            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-            Impact = LogImpact.Low,
-        });
+            args.Verbs.Add(new AlternativeVerb
+            {
+                Act = () => SetPipeMode((uid, component), mode, args.User),
+                Category = VerbCategory.Adjust,
+                Text = GetModeName(mode),
+                Disabled = component.CurrentMode == mode,
+                Priority = mode == nextMode ? 1 : 0, // Pirate: RPD mode selector
+                Icon = ModeVerbIcon,
+                Impact = LogImpact.Low,
+            });
+        }
     }
 
-    private void SwitchPipeMode(EntityUid uid, RCDComponent component, EntityUid? user = null)
+    #region Pirate: RPD mode selector
+    private static RpdMode GetNextPipeMode(RpdMode mode)
     {
-        if (!component.IsRpd && !component.IsRPLD)
+        var index = Array.IndexOf(SelectableModes, mode);
+        return SelectableModes[(index + 1) % SelectableModes.Length];
+    }
+    #endregion Pirate: RPD mode selector
+
+    private static readonly SpriteSpecifier ModeVerbIcon =
+        new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png"));
+
+    private string GetModeName(RpdMode mode)
+        => Loc.GetString($"rcd-rpd-mode-{mode.ToString().ToLowerInvariant()}");
+
+    public void SetPipeMode(Entity<RCDComponent> ent, RpdMode mode, EntityUid? user = null)
+    {
+        if (!ent.Comp.IsRpd && !ent.Comp.IsRPLD)
             return;
 
-        component.CurrentMode = component.CurrentMode switch
-        {
-            RpdMode.Primary => RpdMode.Secondary,
-            RpdMode.Secondary => RpdMode.Tertiary,
-            RpdMode.Tertiary => RpdMode.Free,
-            RpdMode.Free => RpdMode.Primary,
-            _ => RpdMode.Primary,
-        };
+        if (ent.Comp.CurrentMode == mode)
+            return;
 
-        Dirty(uid, component);
+        ent.Comp.CurrentMode = mode;
+        Dirty(ent);
 
         if (user != null)
-            _audio.PlayPredicted(component.SoundSwitchMode, uid, user.Value);
+            _audio.PlayPredicted(ent.Comp.SoundSwitchMode, ent, user.Value);
+
+        _sparks.DoSparks(Transform(ent).Coordinates, minSparks: 1, maxSparks: 2, playSound: false); // Pirate: RPD mode selector
     }
     #endregion
 
@@ -918,8 +951,6 @@ public sealed class RCDSystem : EntitySystem
             RpdMode.Primary => AtmosPipeLayer.Primary,
             RpdMode.Secondary => AtmosPipeLayer.Secondary,
             RpdMode.Tertiary => AtmosPipeLayer.Tertiary,
-            RpdMode.Quaternary => AtmosPipeLayer.Tertiary, // Pirate: chem plumbing
-            RpdMode.Quinary => AtmosPipeLayer.Tertiary,
             RpdMode.Free => component.LastSelectedLayer ?? AtmosPipeLayer.Primary,
             _ => AtmosPipeLayer.Primary,
         });

@@ -160,8 +160,6 @@ public sealed class AlignRPDAtmosPipeLayers : PlacementMode
             RpdMode.Primary => AtmosPipeLayer.Primary,
             RpdMode.Secondary => AtmosPipeLayer.Secondary,
             RpdMode.Tertiary => AtmosPipeLayer.Tertiary,
-            RpdMode.Quaternary => AtmosPipeLayer.Tertiary, // Pirate: local atmos/plumbing supports three pipe layers.
-            RpdMode.Quinary => AtmosPipeLayer.Tertiary,
             RpdMode.Free => GetFreeModeLayer(gridId),
             _ => AtmosPipeLayer.Primary,
         };
