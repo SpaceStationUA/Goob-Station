@@ -1,7 +1,7 @@
 - type: entity
   parent: [IDCardStandard, BaseChameleon]
   id: MercenaryIDCard
-  name: mercenary ID card
+  name: "iD-картка найманця"
   suffix: Mercenary
   components:
   - type: Access

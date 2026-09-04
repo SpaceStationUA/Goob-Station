@@ -3,7 +3,7 @@
 - type: entity
   parent: BaseEnchant
   id: EnchantElectrified
-  name: Electrified
+  name: "електричне зачарування"
   components:
   - type: Enchant
     maxLevel: 1

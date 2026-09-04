@@ -4,7 +4,7 @@
 
 - type: body
   id: Asakim
-  name: asakim
+  name: "асаким"
   root: chest
   slots:
     head:

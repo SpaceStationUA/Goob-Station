@@ -2,9 +2,9 @@
 - type: entity
   parent: ClothingModsuitStandard
   id: ClothingModsuitTCAFLegionnaire
-  name: мод-костюм легіонера TCAF
+  name: "мод-костюм легіонера TCAF"
   suffix: TCAF
-  description: Головний контролер модульного костюма легіонера. Його зразок носять офіцери Легіону іноземців Тау-Кита.
+  description: "Головний контролер модульного костюма легіонера. Цю модель носять офіцери Іноземного легіону Тау-Кита."
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Modsuits/legionnaire.rsi
@@ -36,8 +36,8 @@
 - type: entity
   parent: ClothingModsuitGauntletsStandard
   id: ClothingModsuitGauntletsTCAFLegionnaire
-  name: рукавички мод-костюма легіонера TCAF
-  description: Пара рукавичок, створених для модульного костюма легіонера.
+  name: "рукавички мод-костюма легіонера TCAF"
+  description: "Пара рукавичок, створених для модульного костюма легіонера."
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -52,8 +52,8 @@
 - type: entity
   parent: [ClothingModsuitHelmetStandard, ShowSecurityIcons, BaseClothingRadio]
   id: ClothingModsuitHelmetTCAFLegionnaire
-  name: шолом мод-костюма легіонера TCAF
-  description: Передовий шолом, розроблений NanoTrasen для модульного костюма легіонера. Має вбудований проєкційний HUD.
+  name: "шолом мод-костюма легіонера TCAF"
+  description: "Передовий шолом, розроблений Нанотрейзен для модульного костюма легіонера. Має вбудований проєкційний дисплей."
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -87,8 +87,8 @@
 - type: entity
   parent: [ClothingModsuitChestplateStandard, BaseClothingRadio]
   id: ClothingModsuitChestplateTCAFLegionnaire
-  name: нагрудник мод-костюма легіонера TCAF
-  description: Передовий нагрудник, розроблений NanoTrasen для модульного костюма легіонера. Вбудовані силові сервоприводи допомагають знизити вагу спорядження для користувача.
+  name: "нагрудник мод-костюма легіонера TCAF"
+  description: "Передовий нагрудник, розроблений Нанотрейзен для модульного костюма легіонера. Вбудовані силові сервоприводи допомагають зменшити відчутну вагу спорядження."
   categories: [HideSpawnMenu]
   components:
     - type: Sprite
@@ -139,8 +139,8 @@
 - type: entity
   parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsTCAFLegionnaire
-  name: чоботи мод-костюма легіонера TCAF
-  description: Сучасна пара магнітних чобіт для модульного костюма легіонера. Поки костюм увімкнений, вони не знижують швидкість пересування власника.
+  name: "чоботи мод-костюма легіонера TCAF"
+  description: "Сучасна пара магнітних чобіт для модульного костюма легіонера. Поки костюм увімкнений, вони не знижують швидкість пересування власника."
   categories: [HideSpawnMenu]
   components:
     - type: Appearance

@@ -2,8 +2,8 @@
 - type: entity
   id: TablePlastic
   parent: TableBase
-  name: plastic table
-  description: A square piece of plastic, standing on four metal legs.
+  name: "пластиковий стіл"
+  description: "Квадратний лист пластику на чотирьох металевих ніжках."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/plastic.rsi
@@ -47,8 +47,8 @@
 - type: entity
   id: TableUraniumGlass
   parent: TableBase
-  name: uranium glass table
-  description: A square piece of uranium glass, standing on four metal legs. Radioactive!
+  name: "стіл з ураново-скляного матеріалу"
+  description: "Квадратний лист уранового скла на чотирьох металевих ніжках. Радіоактивний! Мабуть"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/uranium.rsi
@@ -102,8 +102,8 @@
 - type: entity
   id: TableReinforcedPlasmaGlass
   parent: TableBase
-  name: reinforced plasma glass table
-  description: A square piece of reinforced plasma glass, standing on four metal legs. Extra robust and pretty!
+  name: "стіл із плазмового армованого скла"
+  description: "Квадратний лист плазмового армованого скла на чотирьох металевих ніжках. Дуже міцний"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/r_plasma.rsi
@@ -160,8 +160,8 @@
 - type: entity
   id: TableReinforcedUraniumGlass
   parent: TableBase
-  name: reinforced uranium glass table
-  description: A square piece of reinforced uranium glass, standing on four metal legs. Extra robust and radioactive!
+  name: "стіл з уранового армованого скла"
+  description: "Квадратний лист уранового армованого скла на чотирьох металевих ніжках. Дуже міцний"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/r_uran.rsi
@@ -220,8 +220,8 @@
 - type: entity
   id: TableRoundFrame
   parent: BaseStructure
-  name: round table frame
-  description: Pieces of metal that make the frame of a round table.
+  name: "каркас круглого столу"
+  description: "Металеві деталі, з яких складається каркас круглого столу."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/roundtable.rsi
@@ -290,8 +290,8 @@
 - type: entity
   id: TableRoundWood
   parent: TableRoundFrame
-  name: wood round table
-  description: Do not apply fire to this. Rumour says it burns easily.
+  name: "дерев'яний круглий стіл"
+  description: "Круглий стіл, зроблений з дерева."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/roundtable.rsi
@@ -324,8 +324,8 @@
 - type: entity
   id: TableRoundGlass
   parent: TableRoundFrame
-  name: glass round table
-  description: Do not apply fire to this. Rumour says it burns easily.
+  name: "скляний круглий стіл"
+  description: "Круглий стіл, зроблений з дерева."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/roundtable.rsi
@@ -364,8 +364,8 @@
 - type: entity
   id: TableRoundGeneric
   parent: TableRoundFrame
-  name: round table
-  description: A round piece of metal standing on a metal leg.
+  name: "круглий стіл"
+  description: "Круглий лист металу на металевій ніжці."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/roundtable.rsi
@@ -379,8 +379,8 @@
 - type: entity
   id: TableRoundCarpet
   parent: TableRoundFrame
-  name: gambling round table
-  description: Play em' cowboy.
+  name: "круглий гральний стіл"
+  description: "Грай, ковбою."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/roundtable.rsi
@@ -430,8 +430,8 @@
 - type: entity
   id: TableRoundPlasma
   parent: TableRoundFrame
-  name: plasma round table
-  description: A round piece of plasma glass, standing on a metal leg. Pretty!
+  name: "круглий стіл із плазмового скла"
+  description: "Круглий лист плазмового скла на металевій ніжці. Красивий! Рожевий!"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/roundtable.rsi
@@ -473,8 +473,8 @@
 - type: entity
   id: TableRoundPlastic
   parent: TableRoundFrame
-  name: plastic round table
-  description: Do not apply fire to this. Rumour says it burns easily.
+  name: "пластиковий круглий стіл"
+  description: "Круглий стіл, зроблений з дерева."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/roundtable.rsi
@@ -490,8 +490,8 @@
 - type: entity
   id: TableRoulette
   parent: BaseStructure
-  name: roulette table
-  description: A roulette wheel table.
+  name: "ігровий стіл з рулеткою"
+  description: "Дивись не програй всю свою зарплатню."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/Tables/roulette.rsi

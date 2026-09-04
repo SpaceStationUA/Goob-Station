@@ -69,8 +69,8 @@
 - type: entity
   parent: BarbellBenchBase
   id: BarbellBench
-  name: barbell bench
-  description: A bench for bench pressing. You can attach a barbell to it.
+  name: "лава для жиму"
+  description: "Лава для жиму лежачи. До неї можна прикріпити штангу."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/barbell_bench.rsi
@@ -87,7 +87,7 @@
 - type: entity
   id: BarbellBenchOverlay
   save: false
-  name: barbell bench overlay
+  name: "лава для жиму"
   description: Visual overlay for barbell bench.
   components:
   - type: Sprite
@@ -149,8 +149,8 @@
 - type: entity
   parent: BarbellBase
   id: Barbell
-  name: barbell
-  description: A heavy barbell for bench pressing. Can be attached to a barbell bench.
+  name: "штанга"
+  description: "Важка штанга для жиму лежачи."
   components:
   - type: Construction
     graph: Barbell

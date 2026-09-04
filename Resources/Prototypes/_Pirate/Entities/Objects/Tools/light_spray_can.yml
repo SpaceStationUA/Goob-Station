@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: LightSprayCan
-  name: spray can
-  description: A can of coloured paint.
+  name: "балончик для фарб"
+  description: "Балончик із кольоровою фарбою."
   components:
   - type: Appearance
   - type: Sprite

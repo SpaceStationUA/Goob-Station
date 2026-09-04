@@ -3,8 +3,8 @@
 - type: entity
   id: TableBilliard
   parent: BaseStructure
-  name: billiard table
-  description: A standard billiard table with green cloth. The perfect place to relax after a shift.
+  name: "більярдний стіл"
+  description: "Стандартний більярдний стіл із зеленим сукном. Ідеальне місце для відпочинку після зміни."
   components:
   - type: Transform
     anchored: true
@@ -139,8 +139,8 @@
 - type: entity
   id: BilliardBall
   parent: BaseItem
-  name: billiard ball
-  description: A heavy, smooth ball used to play billiards.
+  name: "більярдна куля"
+  description: "Важка гладенька куля для гри в більярд."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Fun/Billiards/billiard_ball.rsi
@@ -181,8 +181,8 @@
 - type: entity
   id: BilliardCue
   parent: BaseItem
-  name: billiard cue
-  description: A cue used to strike billiard balls.
+  name: "більярдний кий"
+  description: "Кий для ударів по більярдних кулях."
   components:
   - type: Item
     size: Small
@@ -206,8 +206,8 @@
 - type: entity
   id: BilliardTableFlatpack
   parent: BaseFlatpack
-  name: billiard table flatpack
-  description: A flatpack used to construct a billiard table. Use a multitool to unpack it.
+  name: "комплект для складання більярдного столу"
+  description: "Плаский пакунок для складання більярдного столу. Скористайтеся мультитулом, щоб розпакувати його."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Devices/billiard_flatpack.rsi
@@ -244,8 +244,8 @@
 - type: entity
   id: BoxBilliardBalls
   parent: BoxCardboard
-  name: billiard ball box
-  description: A box for storing billiard balls.
+  name: "коробка для більярдних куль"
+  description: "Коробка для зберігання більярдних куль."
   components:
   - type: Sprite
     layers:
@@ -268,8 +268,8 @@
 - type: entity
   id: CrateBilliardComplect
   parent: CrateGenericSteel
-  name: billiards set crate
-  description: "A billiard table flatpack, a box of balls, and two cues: everything needed for a good evening."
+  name: "ящик із більярдним набором"
+  description: "Комплект для складання більярдного столу, коробка куль і два киї — усе необхідне для гарного вечора."
   components:
   - type: EntityTableContainerFill
     containers:

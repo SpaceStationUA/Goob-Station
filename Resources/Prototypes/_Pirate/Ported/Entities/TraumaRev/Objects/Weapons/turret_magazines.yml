@@ -3,9 +3,9 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: BaseMagazineTurret
-  name: "magazine (.22 short)"
+  name: "магазин (.22 short)"
   suffix: Full
-  description: 60 round low-caliber magazine, often used in anti-personnel turrets.
+  description: "Малокаліберний магазин на 60 набоїв, який часто використовують у протипіхотних турелях."
   components:
   - type: Tag
     tags:
@@ -46,9 +46,9 @@
 - type: entity
   parent: BaseMagazineTurret
   id: BaseMagazineTurretHeavy
-  name: "pan magazine (.22 short)"
+  name: "дисковий магазин (.22 short)"
   suffix: Full
-  description: 240 round low-caliber pan magazine, often used by communists and other assholes.
+  description: "Малокаліберний дисковий магазин на 240 набоїв, який часто використовують комуністи та інші покидьки."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/maxim.rsi
