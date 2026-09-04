@@ -71,6 +71,9 @@ public sealed class CharacterPodSystem : EntitySystem
         RemComp<GhostRoleComponent>(mob);
         RemComp<GhostTakeoverAvailableComponent>(mob);
 
+        if (ent.Comp.ExtraComponents.Count > 0)
+            EntityManager.AddComponents(mob, ent.Comp.ExtraComponents);
+
         var spawnedEvent = new GhostRoleSpawnerUsedEvent(ent, mob);
         RaiseLocalEvent(mob, spawnedEvent, true);
 

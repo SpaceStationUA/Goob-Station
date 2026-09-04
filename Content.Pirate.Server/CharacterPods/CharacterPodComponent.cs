@@ -12,6 +12,9 @@ public sealed partial class CharacterPodComponent : Component
     public ProtoId<RandomHumanoidSettingsPrototype> Settings;
 
     [DataField]
+    public ComponentRegistry ExtraComponents = new();
+
+    [DataField]
     public bool DeleteOnSpawn = true;
 
     [DataField]

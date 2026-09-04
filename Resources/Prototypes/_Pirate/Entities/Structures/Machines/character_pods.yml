@@ -44,13 +44,17 @@
   - type: GhostRole
     name: ghost-role-information-syndie-soldier-name
     description: ghost-role-information-syndie-soldier-description
-    rules: ghost-role-information-rules-team-antagonist
+    rules: ghost-role-information-rules-cybersun
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleCybersun
     raffle:
       settings: default
   - type: CharacterPod
     settings: SyndieSoldier
+    # The base sits on Lavaland, out of reach of anything the station can do, so its occupants are
+    # not valid targets for hitman contracts or bounty hunter kill objectives.
+    extraComponents:
+    - type: TargetObjectiveImmune
 
 - type: entity
   parent: BaseCharacterPod
@@ -60,13 +64,15 @@
   - type: GhostRole
     name: ghost-role-information-syndie-soldier-teamlead-name
     description: ghost-role-information-syndie-soldier-teamlead-description
-    rules: ghost-role-information-rules-team-antagonist
+    rules: ghost-role-information-rules-cybersun
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleCybersun
     raffle:
       settings: default
   - type: CharacterPod
     settings: SyndieSoldierTeamLeader
+    extraComponents:
+    - type: TargetObjectiveImmune
 
 - type: entity
   parent: BaseCharacterPod
@@ -83,3 +89,6 @@
       settings: default
   - type: CharacterPod
     settings: SyndicateMarshalPod
+    # Sits on a nonstation map, as unreachable as the Lavaland base soldiers above.
+    extraComponents:
+    - type: TargetObjectiveImmune

@@ -37,6 +37,7 @@
     subtype: role-subtype-hitman
     antagPrototype: Hitman
     exclusiveAntag: true
+    roleType: FreeAgent
   - type: HitmanRole
   - type: RoleBriefing
     briefing: hitman-briefing
