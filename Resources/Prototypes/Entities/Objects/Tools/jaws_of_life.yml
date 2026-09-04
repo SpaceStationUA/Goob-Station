@@ -30,6 +30,9 @@
     speedModifier: 1.5
     pryPowered: true
     useSound: /Audio/Items/jaws_pry.ogg
+    # Pirate: force pry sound
+    forcePrySound:
+      path: /Audio/_Pirate/Machines/airlock_alien_prying.ogg
   - type: UseDelay # Goobstation - For insta prying
     delay: 1
   - type: MultipleTool
