@@ -50,7 +50,7 @@
     raffle:
       settings: default
   - type: CharacterPod
-    settings: SyndieSoldier
+    settings: LavalandSyndieSoldier
     # The base sits on Lavaland, out of reach of anything the station can do, so its occupants are
     # not valid targets for hitman contracts or bounty hunter kill objectives.
     extraComponents:
@@ -70,7 +70,7 @@
     raffle:
       settings: default
   - type: CharacterPod
-    settings: SyndieSoldierTeamLeader
+    settings: LavalandSyndieSoldierTeamLeader
     extraComponents:
     - type: TargetObjectiveImmune
 
