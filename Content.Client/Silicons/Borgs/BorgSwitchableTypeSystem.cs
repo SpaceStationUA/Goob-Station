@@ -44,16 +44,16 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
     protected override void UpdateEntityAppearance(
         Entity<BorgSwitchableTypeComponent> entity,
         BorgTypePrototype prototype,
-        BorgSubtypePrototype subtypePrototype)
+        BorgSubtypePrototype? subtypePrototype)
     {
         // Pirate: allow subtype RSIs to use skin-specific state names.
-        var bodyState = subtypePrototype.SpriteBodyState ?? prototype.SpriteBodyState;
-        var hasMindState = subtypePrototype.SpriteHasMindState ?? prototype.SpriteHasMindState;
-        var noMindState = subtypePrototype.SpriteNoMindState ?? prototype.SpriteNoMindState;
-        var toggleLightState = subtypePrototype.SpriteToggleLightState ?? prototype.SpriteToggleLightState;
-        var hasMovementState = prototype.SpriteBodyMovementState is null;
+        var bodyState = subtypePrototype?.SpriteBodyState ?? prototype.SpriteBodyState;
+        var hasMindState = subtypePrototype?.SpriteHasMindState ?? prototype.SpriteHasMindState;
+        var noMindState = subtypePrototype?.SpriteNoMindState ?? prototype.SpriteNoMindState;
+        var toggleLightState = subtypePrototype?.SpriteToggleLightState ?? prototype.SpriteToggleLightState;
+        var hasMovementState = subtypePrototype is null || prototype.SpriteBodyMovementState is null;
 
-        if (TryComp(entity, out SpriteComponent? sprite))
+        if (TryComp(entity, out SpriteComponent? sprite) && subtypePrototype is not null)
         {
             _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Body, bodyState);
             _sprite.LayerSetRsiState((entity, sprite), BorgVisualLayers.Light, bodyState);
