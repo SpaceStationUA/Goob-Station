@@ -228,7 +228,7 @@
   defaultModules:
   - BorgModuleMusique
   - BorgModuleService
-  # - BorgModuleClowning # goobedit
+  - BorgModuleClowning
   - BorgModuleGardening
   - BorgModuleCooking
   - BorgModuleLollypop # Goobstation

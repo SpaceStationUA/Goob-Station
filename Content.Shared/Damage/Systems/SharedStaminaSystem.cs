@@ -493,7 +493,8 @@ public abstract partial class SharedStaminaSystem : EntitySystem
                 TakeStaminaDamage(
                     uid,
                     comp.AfterCritical ? -comp.Decay * comp.AfterCritDecayMultiplier : -comp.Decay, // Recover faster after crit
-                    comp);
+                    comp,
+                    ignoreResist: true); // Goob end; ignoreResist: true allows for natural regen to work as intended
 
             Dirty(uid, comp);
         }
