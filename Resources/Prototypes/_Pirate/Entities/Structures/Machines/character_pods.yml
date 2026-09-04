@@ -1,0 +1,85 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  id: BaseCharacterPodStructure
+  name: cryogenic sleeper
+  description: A sealed hypersleep chamber. The frosted-over readout says the occupant is still under.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/character_pod.rsi
+    state: pod
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  abstract: true
+  parent: BaseCharacterPodStructure
+  id: BaseCharacterPod
+  categories: [ Spawner ]
+
+
+- type: entity
+  parent: BaseCharacterPod
+  id: CharacterPodSyndieSoldier
+  suffix: Syndicate Soldier
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndie-soldier-name
+    description: ghost-role-information-syndie-soldier-description
+    rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: CharacterPod
+    settings: SyndieSoldier
+
+- type: entity
+  parent: BaseCharacterPod
+  id: CharacterPodSyndieSoldierTeamLeader
+  suffix: Syndicate Team Leader
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndie-soldier-teamlead-name
+    description: ghost-role-information-syndie-soldier-teamlead-description
+    rules: ghost-role-information-rules-team-antagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: CharacterPod
+    settings: SyndieSoldierTeamLeader
+
+- type: entity
+  parent: BaseCharacterPod
+  id: CharacterPodSyndicateMarshal
+  suffix: Syndicate Marshal
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-marshal-name
+    description: ghost-role-information-syndicate-marshal-description
+    rules: ghost-role-information-syndicate-marshal-rules
+    mindRoles:
+    - MindRoleSyndicateMarshal
+    raffle:
+      settings: default
+  - type: CharacterPod
+    settings: SyndicateMarshalPod

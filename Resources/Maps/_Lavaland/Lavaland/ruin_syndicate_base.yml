@@ -56930,7 +56930,7 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 3258
-- proto: SyndieSoldierSpawner
+- proto: CharacterPodSyndieSoldier # Pirate: character pods
   entities:
   - uid: 8948
     components:
@@ -56972,7 +56972,7 @@ entities:
     - type: Transform
       pos: -0.5,18.5
       parent: 1
-- proto: SyndieSoldierTeamLeaderSpawner
+- proto: CharacterPodSyndieSoldierTeamLeader # Pirate: character pods
   entities:
   - uid: 8955
     components:

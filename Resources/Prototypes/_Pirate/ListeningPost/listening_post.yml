@@ -32,9 +32,12 @@
     exclusiveAntag: true
   - type: ListeningPostRole
 
+# A character pod rather than an invisible marker: the operative is their own character, and the
+# pod is what the ghost sees and clicks on. AntagCharacterPod puts them on the pod's tile and
+# clears the pod away, which antag selection does not do on its own.
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseAntagSpawner
+  parent: BaseCharacterPodStructure
   id: SpawnPointGhostSyndicateListener
   components:
   - type: GhostRole
@@ -43,6 +46,10 @@
     rules: ghost-role-information-listeningop-rules
     mindRoles:
     - MindRoleListeningPost
+    raffle:
+      settings: default
+  - type: GhostRoleAntagSpawner
+  - type: AntagCharacterPod
 
 - type: entity
   parent: BaseGameRule
@@ -69,6 +76,8 @@
     count: 6
     distanceModifier: 3
   - type: AntagLoadProfileRule
+  # AntagLoadProfileRule only copies appearance; this brings the rest of the character across.
+  - type: AntagProfileDetailsRule
   - type: AntagSelection
     agentName: listening-post-round-end-agent-name
     definitions:
@@ -80,11 +89,9 @@
       roleLoadout:
       - RoleSurvivalStandard
       components:
-      - type: RandomHumanoidAppearance
-        randomizeName: false
-      - type: RandomMetadata
-        nameSegments:
-        - NamesDeathCommando
+      # Pirate: no RandomHumanoidAppearance/RandomMetadata here. Antag selection adds definition
+      # components after the profile is loaded, and adding them to a map initialized entity fires
+      # their map init, which would randomise the appearance and name right back over the character.
       - type: AutoImplant
         implants:
         - DeathAcidifierImplant
