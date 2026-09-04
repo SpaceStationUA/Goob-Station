@@ -4,7 +4,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
-using Content.Shared.Pinpointer; // Pirate: multiz
+using Content.Server.Pinpointer; // Pirate: multiz
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -26,6 +26,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     [Dependency] private readonly SurveillanceCameraSystem _surveillanceCameras = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly NavMapSystem _navMap = default!; // Pirate: multiz
 
     // Goobstation
     [Dependency] private readonly PvsOverrideSystem _pvsOverrideSystem = default!;
@@ -65,7 +66,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         if (xform.GridUid == null || !IsValidZMonitoringGrid(xform.GridUid.Value, targetGrid.Value))
             return;
 
-        EnsureComp<NavMapComponent>(targetGrid.Value);
+        _navMap.EnsureNavMap(targetGrid.Value);
     }
 
     private bool IsValidZMonitoringGrid(EntityUid sourceGrid, EntityUid targetGrid)
