@@ -1,0 +1,105 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: sourcePort
+  id: SyndicateDropPad
+  name: signal-port-name-syndicate-drop-pad
+  description: signal-port-description-syndicate-drop-pad
+  defaultLinks: [ SyndicateDropPad ]
+
+- type: sinkPort
+  id: SyndicateDropPad
+  name: signal-port-name-syndicate-drop-pad
+  description: signal-port-description-syndicate-drop-pad
+
+- type: entity
+  parent: MarkerBase
+  id: SyndicateDropAnnouncer
+  name: Syndicate High Command
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: SyndicateDropPad
+  name: bluespace launch pad
+  description: Load a crate or a briefcase, then have a dispatch console throw it across the sector. Broadcasts loudly enough that using it twice in a row is asking to be found.
+  components:
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 190
+        mask:
+          - MachineMask
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/syndicate_drop_pad.rsi
+    drawdepth: HighFloorObjects
+    layers:
+    - state: lpad-idle-off
+      map: [ "enum.SyndicateDropPadLayers.Base" ]
+    - state: lpad-idle
+      map: [ "enum.SyndicateDropPadLayers.Beam" ]
+      shader: unshaded
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: DeviceLinkSink
+    ports:
+    - SyndicateDropPad
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: SyndicateDropPad
+    whitelist:
+      tags:
+      - Crate
+      - Briefcase
+    anchorOnArrival:
+      tags:
+      - Briefcase
+    arrivalComponents:
+    - type: Appearance
+    - type: SubFloorHide
+    - type: Anchorable
+    - type: CollideOnAnchor
+    - type: AnchoredStorageFilter
+      blacklist:
+        components:
+        - HumanoidAppearance
+    - type: BlockAnchorOn
+      blacklist:
+        components:
+        - AnchoredStorageFilter
+  - type: Machine
+    board: SyndicateDropPadMachineCircuitboard
+  - type: CollideOnAnchor
+  - type: PointLight
+    radius: 1.4
+    energy: 2.0
+    color: "#f71713"
+    enabled: false
+  - type: LitOnPowered
+
+- type: entity
+  parent: [ BaseMachineCircuitboard, BaseSyndicateContraband ]
+  id: SyndicateDropPadMachineCircuitboard
+  name: bluespace launch pad machine board
+  description: A machine printed circuit board for a bluespace launch pad.
+  components:
+  - type: Sprite
+    state: supply
+  - type: MachineBoard
+    prototype: SyndicateDropPad
+    stackRequirements:
+      Manipulator: 2
+      Steel: 5
+      BSCrystal: 2

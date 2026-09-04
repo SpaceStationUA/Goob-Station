@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from NovaSector at commit 9d5bb13a76866960c76cb78217e7436e65239268, icons/obj/machines/telepad.dmi (lpad states only)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "lpad-idle-open",
+      "directions": 1
+    },
+    {
+      "name": "lpad-idle-off",
+      "directions": 1
+    },
+    {
+      "name": "lpad-beam",
+      "directions": 1,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "lpad-idle",
+      "directions": 1,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

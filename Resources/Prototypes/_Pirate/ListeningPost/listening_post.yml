@@ -32,9 +32,6 @@
     exclusiveAntag: true
   - type: ListeningPostRole
 
-# A character pod rather than an invisible marker: the operative is their own character, and the
-# pod is what the ghost sees and clicks on. AntagCharacterPod puts them on the pod's tile and
-# clears the pod away, which antag selection does not do on its own.
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseCharacterPodStructure
@@ -263,6 +260,62 @@
     name: "Невідомо?"
     responsePings: false
   - type: Emagged
+
+- type: entity
+  id: SyndicateDropDispatcher
+  name: dead drop dispatcher
+  description: An invisible bookkeeper that runs the drop schedule for every dispatch console.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SyndicateDropDispatcher
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerSyndicateDropConsole
+  name: dead drop dispatch console
+  description: A long range bluespace dispatcher. It cooks up supply packages on its own schedule and fires them at a station of High Command's choosing.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request-syndie
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 4.0
+    color: "#f71713"
+  - type: Computer
+    board: SyndicateDropConsoleCircuitboard
+  - type: SyndicateDropConsole
+  - type: DeviceLinkSource
+    ports:
+    - SyndicateDropPad
+  - type: ActivatableUI
+    key: enum.SyndicateDropConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SyndicateDropConsoleUiKey.Key:
+        type: SyndicateDropConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+
+- type: entity
+  parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
+  id: SyndicateDropConsoleCircuitboard
+  name: dead drop dispatch console board
+  description: A computer printed circuit board for a dead drop dispatch console.
+  components:
+  - type: Sprite
+    state: cpu_syndicate
+  - type: ComputerBoard
+    prototype: ComputerSyndicateDropConsole
 
 # Guard
 
