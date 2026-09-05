@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server._Pirate.Medical.CrewMonitoring; // Pirate: departmental handheld monitors
+using Content.Server.Medical.SuitSensors;
 using Content.Goobstation.Shared.CrewMonitoring;
 using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
