@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Paper;
 using Content.Shared.Radio;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -54,6 +55,40 @@ public sealed partial class SyndicateDropDispatcherComponent : Component
 
     [DataField]
     public TimeSpan MaxPodCooldown = TimeSpan.FromMinutes(20);
+
+    [DataField]
+    public LocId InterceptAnnouncement = "syndicate-drop-console-intercept-announcement";
+
+    [DataField]
+    public Color InterceptAnnouncementColor = Color.Gold;
+
+    [DataField]
+    public SoundSpecifier InterceptAnnouncementSound = new SoundPathSpecifier("/Audio/Announcements/attention.ogg");
+
+    [DataField]
+    public LocId InterceptFaxTitle = "syndicate-drop-console-intercept-fax-title";
+
+    [DataField]
+    public LocId InterceptFaxBody = "syndicate-drop-console-intercept-fax-body";
+
+    [DataField]
+    public EntProtoId<StampComponent> InterceptFaxStamp = "RubberStampCentcom";
+
+    [DataField]
+    public List<string> InterceptFaxKeywords = new()
+    {
+        "Капітан",
+        "Captain",
+        "Гл. Безпеки",
+        "Голова Безпеки",
+        "HoS",
+        "Head of security",
+        "Наглядач",
+        "Warden",
+        "Конф",
+        "Conference",
+        "Command Meeting Room",
+    };
 
 
 

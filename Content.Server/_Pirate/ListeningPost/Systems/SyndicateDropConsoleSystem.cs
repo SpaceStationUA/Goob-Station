@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server._Pirate.ZLevels.Spawning;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
+using Content.Server.Fax;
 using Content.Server.GameTicking;
 using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
@@ -11,6 +12,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Shared.Station.Components;
 using Content.Shared._Pirate.ListeningPost.DropConsole;
 using Content.Shared.DeviceLinking;
+using Content.Shared.Fax.Components;
 using Content.Shared.Maps;
 using Content.Shared.Station;
 using Content.Shared.Whitelist;
@@ -23,6 +25,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Paper;
 using Robust.Shared.Utility;
 
 namespace Content.Server._Pirate.ListeningPost.Systems;
@@ -43,6 +46,7 @@ public sealed class SyndicateDropConsoleSystem : EntitySystem
     [Dependency] private readonly CEZLevelFloorGridsSystem _zFloors = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly FaxSystem _fax = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
@@ -427,12 +431,84 @@ public sealed class SyndicateDropConsoleSystem : EntitySystem
         AnnounceDrop(comp, payload, SyndicateDropMode.Pod, 0);
 
         if (traceable)
-            Log.Info($"{ToPrettyString(pad)} fired while still traceable; the station should be faxed its coordinates.");
+            ReportIntercept(comp, pad);
 
         comp.PodCooldownEnd = _timing.CurTime + TimeSpan.FromSeconds(
             _random.NextDouble(comp.MinPodCooldown.TotalSeconds, comp.MaxPodCooldown.TotalSeconds));
 
         return true;
+    }
+
+    private void ReportIntercept(SyndicateDropDispatcherComponent comp, EntityUid pad)
+    {
+        var position = GetGpsPosition(pad);
+        var coordinates = Loc.GetString("syndicate-drop-console-coordinates",
+            ("x", position.X),
+            ("y", position.Y));
+        var stamp = comp.InterceptFaxStamp.Get(_proto, EntityManager.ComponentFactory);
+
+        var inGame = Filter.Empty().AddWhere(_gameTicker.UserHasJoinedGame);
+        _chat.DispatchFilteredAnnouncement(inGame,
+            Loc.GetString(comp.InterceptAnnouncement),
+            playSound: true,
+            announcementSound: comp.InterceptAnnouncementSound,
+            colorOverride: comp.InterceptAnnouncementColor);
+
+        var printout = new FaxPrintout(
+            Loc.GetString(comp.InterceptFaxBody,
+                ("location", GetSourceMapName(pad)),
+                ("coordinates", coordinates)),
+            Loc.GetString(comp.InterceptFaxTitle),
+            null,
+            null,
+            stamp.StampState,
+            new List<StampDisplayInfo>
+            {
+                new()
+                {
+                    StampedName = stamp.StampedName,
+                    StampedColor = stamp.StampedColor,
+                    StampLargeIcon = stamp.StampLargeIcon,
+                },
+            });
+
+        foreach (var fax in GetCommandFaxes(comp))
+        {
+            _fax.Receive(fax, printout);
+        }
+    }
+
+    private string GetSourceMapName(EntityUid pad)
+    {
+        var xform = Transform(pad);
+        return xform.MapUid is { } map ? Name(map) : Loc.GetString("syndicate-drop-console-intercept-unknown-source");
+    }
+
+    private List<EntityUid> GetCommandFaxes(SyndicateDropDispatcherComponent comp)
+    {
+        var faxes = new List<EntityUid>();
+
+        if (comp.TargetGrid is not { } target)
+            return faxes;
+
+        var floors = _zFloors.GetFloorGrids(target);
+        var query = EntityQueryEnumerator<FaxMachineComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var fax, out var xform))
+        {
+            if (xform.GridUid is not { } grid || !floors.Contains(grid))
+                continue;
+
+            foreach (var keyword in comp.InterceptFaxKeywords)
+            {
+                if (!fax.FaxName.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                faxes.Add(uid);
+                break;
+            }
+        }
+
+        return faxes;
     }
 
     private void AnnounceDrop(SyndicateDropDispatcherComponent comp,

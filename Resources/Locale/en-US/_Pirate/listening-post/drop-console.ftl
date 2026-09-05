@@ -35,6 +35,23 @@ syndicate-drop-console-mode-badge-automatic = A
 syndicate-drop-console-mode-badge-manual = M
 syndicate-drop-console-mode-badge-pod = POD
 
+syndicate-drop-console-intercept-announcement = Attention. Nanotrasen Communications Intelligence has logged a hostile bluespace transmission directed at this station and fixed its source. A detailed report has been sent to command fax terminals.
+syndicate-drop-console-intercept-fax-title = Intercept report
+syndicate-drop-console-intercept-unknown-source = an untracked position
+syndicate-drop-console-intercept-fax-body =
+    {"["}head=2]NANOTRASEN COMMUNICATIONS INTELLIGENCE[/head]
+    {"["}bold]INTERCEPT REPORT - PRIORITY RED[/bold]
+
+    Listening stations have logged a series of bluespace transmissions directed at your station and fixed their source: [bold]{$location}[/bold], approximate coordinates [bold]{$coordinates}[/bold].
+
+    Signature analysis establishes an operational launch platform at the indicated position, from which cargo is being transferred aboard your station on a regular basis. The source is classified as hostile to Nanotrasen assets.
+
+    {"["}bold]Instructions:[/bold]
+    - Treat any cargo reaching the station outside the supply schedule as hostile.
+    - Direct Security to sweep the station for foreign objects.
+    - Command is to brief all personnel operating in the vicinity of the indicated coordinates: the area is to be treated as hostile.
+    - Approach to the indicated coordinates without express authorisation from Central Command is prohibited.
+
 syndicate-drop-console-radio-announcement = A dead drop has been bluespaced near {$location}, coordinates {$coordinates}. Collect these tools at your convenience.
 
 syndicate-drop-console-footer-left = Cybersun Industries Logistics
