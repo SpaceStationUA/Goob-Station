@@ -16,3 +16,6 @@ personal-shield-toggle-fractured = Перезаряджання щита. Зал
 }.
 personal-shield-toggle-up = Щит піднято.
 personal-shield-toggle-down = Щит опущено.
+
+personal-shield-action-name = Перемкнути особистий щит
+personal-shield-action-desc = Підняти або опустити особистий щит.

@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseToggleAction
+  id: ActionTogglePersonalShield
+  name: personal-shield-action-name
+  description: personal-shield-action-desc
+  components:
+  - type: Action
+    icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-icon }
+    iconOn: { sprite: Objects/Weapons/Melee/shields.rsi, state: teleriot-on }
