@@ -1,5 +1,5 @@
 using Content.Client.Pinpointer.UI;
-using Content.Client.ADT.Medical.CrewMonitoring;
+using Content.Client._Pirate.Medical.CrewMonitoring;
 using Content.Client.ADT.Shuttles.UI;
 using Content.Client.Stylesheets;
 using Robust.Client.ResourceManagement;

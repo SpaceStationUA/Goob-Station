@@ -1,4 +1,4 @@
-using Content.Server.ADT.Medical.SuitSensors;
+using Content.Server._Pirate.Medical.SuitSensors;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensors;
 using Content.Shared.Medical.SuitSensor;

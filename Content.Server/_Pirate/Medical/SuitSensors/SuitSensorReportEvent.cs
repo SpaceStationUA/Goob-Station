@@ -1,7 +1,7 @@
 using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Map;
 
-namespace Content.Server.ADT.Medical.SuitSensors;
+namespace Content.Server._Pirate.Medical.SuitSensors;
 
 /// <summary>
 /// Local suit-sensor status report for crew-monitoring servers

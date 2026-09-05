@@ -51,7 +51,7 @@ public sealed partial class CrewMonitoringConsoleComponent : Component
     /// Sound played on crit/dead sensor edges and as a reminder while any remain.
     /// </summary>
     [DataField("critAlertSound")]
-    public SoundSpecifier CritAlertSound = new SoundPathSpecifier("/Audio/ADT/Machines/crew_monitor_crit_alert.ogg");
+    public SoundSpecifier CritAlertSound = new SoundPathSpecifier("/Audio/_Pirate/Machines/crew_monitor_crit_alert.ogg");
 
     /// <summary>
     /// Reminder ping interval while at least one sensor is still crit or dead.

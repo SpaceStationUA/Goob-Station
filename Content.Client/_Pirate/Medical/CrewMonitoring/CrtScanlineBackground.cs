@@ -1,8 +1,7 @@
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 
-// File lives under ADT/, but keeps the Medical.CrewMonitoring namespace so XAML
-// can resolve it via xmlns:ui without a separate clr-namespace (XamlIL + IDE).
+// Pirate CrewMonitor visual helper.
 namespace Content.Client.Medical.CrewMonitoring;
 
 /// <summary>

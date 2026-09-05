@@ -1,6 +1,6 @@
 using System.Numerics;
-using Content.Server.ADT.Medical.CrewMonitoring;
-using Content.Server.ADT.Medical.SuitSensors;
+using Content.Server._Pirate.Medical.CrewMonitoring;
+using Content.Server._Pirate.Medical.SuitSensors;
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.Medical.SuitSensors;
 using Robust.Shared.Map;

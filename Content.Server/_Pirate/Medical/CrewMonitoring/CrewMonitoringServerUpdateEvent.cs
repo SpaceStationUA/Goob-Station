@@ -1,6 +1,6 @@
 using Content.Shared.Medical.SuitSensor;
 
-namespace Content.Server.ADT.Medical.CrewMonitoring;
+namespace Content.Server._Pirate.Medical.CrewMonitoring;
 
 /// <summary>
 /// Published by the crew-monitoring server when a sensor snapshot should be
