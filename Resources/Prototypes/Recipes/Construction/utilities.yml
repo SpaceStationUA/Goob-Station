@@ -1262,7 +1262,13 @@
   startNode: start
   targetNode: radiator
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  #region Pirate: heat exchange pipes
+  placementMode: AlignAtmosPipeLayers
+  alternativePrototypes:
+  - HeatExchanger
+  - HeatExchangerAlt1
+  - HeatExchangerAlt2
+  #endregion
   canBuildInImpassable: false
   # Pirate: effective Trauma skill requirements and quality.
   theory:
@@ -1277,7 +1283,13 @@
   startNode: start
   targetNode: bendradiator
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  #region Pirate: heat exchange pipes
+  placementMode: AlignAtmosPipeLayers
+  alternativePrototypes:
+  - HeatExchangerBend
+  - HeatExchangerBendAlt1
+  - HeatExchangerBendAlt2
+  #endregion
   canBuildInImpassable: false
 
 # ATMOS TRINARY

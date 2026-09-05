@@ -73,7 +73,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockEngineeringFilled
-  cost: 3500 # Pirate: welding visor & mesonds - cover the expanded EngiVend inventory value
+  cost: 3700 # Pirate: expanded engineering glasses inventory
   category: cargoproduct-category-name-engineering
   group: market
 

@@ -139,18 +139,34 @@
         doAfter: 1
 
     # <Goobstation>
-    - to: inlineradiator
+    # Pirate: heat exchange pipes
+    # </Goobstation>
+
+    #region Pirate: heat exchange pipes
+    - to: radiatorAlt1
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
 
-    - to: bendinlineradiator
+    - to: radiatorAlt2
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
-    # </Goobstation>
+
+    - to: bendradiatorAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: bendradiatorAlt2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+    #endregion
 
   - node: pressurepump
     entity: GasPressurePump
@@ -510,9 +526,9 @@
       - tool: Welding
         doAfter: 1
 
-  # <Goobstation>
-  - node: inlineradiator
-    entity: HeatExchangerInline
+  #region Pirate: heat exchange pipes
+  - node: radiatorAlt1
+    entity: HeatExchangerAlt1
     edges:
     - to: start
       conditions:
@@ -529,8 +545,8 @@
       - tool: Welding
         doAfter: 1
 
-  - node: bendinlineradiator
-    entity: HeatExchangerInlineBend
+  - node: radiatorAlt2
+    entity: HeatExchangerAlt2
     edges:
     - to: start
       conditions:
@@ -546,4 +562,40 @@
         doAfter: 1
       - tool: Welding
         doAfter: 1
-  # </Goobstation>
+
+  - node: bendradiatorAlt1
+    entity: HeatExchangerBendAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+
+  - node: bendradiatorAlt2
+    entity: HeatExchangerBendAlt2
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+  #endregion

@@ -5,5 +5,10 @@
 
 - files: ["lathe_print.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "made by kayozzx (discord)"
-  source: "https://github.com/ss220club/BandaStation"
+  copyright: "Made by kayozzx (Discord), taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/436ba869ebcd0b60b63973fb7562f447ee655205/sound/machines/lathe/lathe_print.ogg"
+
+- files: ["airlock_alien_prying.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/436ba869ebcd0b60b63973fb7562f447ee655205/sound/machines/airlock/airlock_alien_prying.ogg"

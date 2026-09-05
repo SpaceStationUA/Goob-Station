@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: MIT
 
-# Pirate: engineering goggles - ported from tgstation.
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesEngineering
@@ -9,13 +8,18 @@
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/engineering.rsi
+    state: icon-tray
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/engineering.rsi
+    equippedPrefix: tray
   - type: Appearance
   - type: EngineeringGoggles
+    mode: Tray
   - type: TrayScanner
     range: 10
     toggleOnActivate: false
+    requireWorn: true
+    enabled: true
   - type: XRayVision
     enabled: false
     relayOverlay: true
@@ -24,7 +28,8 @@
     tileAlpha: 0.2
   - type: GoggleShader
     shader: Goggles
-    enabled: false
+    color: "#3D859980"
+    enabled: true
   - type: StaticPrice
     price: 100
   - type: IdentityBlocker

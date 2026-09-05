@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: rcd
+  id: RadiatorInlineManifold
+  category: HeatExchange
+  sprite: /Textures/_Pirate/Interface/Radial/RPD/he_manifold.png
+  mode: ConstructObject
+  prototype: HeatExchangerInlineManifold
+  cost: 2
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  hasLayers: true
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: RadiatorInlineFourway
+  category: HeatExchange
+  sprite: /Textures/_Pirate/Interface/Radial/RPD/he_fourway.png
+  mode: ConstructObject
+  prototype: HeatExchangerInlineFourway
+  cost: 2
+  delay: 0
+  collisionMask: Impassable
+  rotation: Fixed
+  hasLayers: true
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: RadiatorInlineJunction
+  category: HeatExchange
+  sprite: /Textures/_Pirate/Interface/Radial/RPD/he_junction.png
+  mode: ConstructObject
+  prototype: HeatExchangerInlineJunction
+  cost: 2
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  hasLayers: true
+  fx: EffectRCDConstruct0
