@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Emp;
@@ -427,7 +426,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         if (!sensor.OnMob &&
             wearer is { } wearerUid &&
             _onMobSensorsByWearer.TryGetValue(wearerUid, out var onMobUid) &&
-            TryComp(onMobUid, out var onMob) &&
+            TryComp<SuitSensorComponent>(onMobUid, out var onMob) &&
             onMob.Mode != SuitSensorMode.SensorOff)
         {
             return null;
