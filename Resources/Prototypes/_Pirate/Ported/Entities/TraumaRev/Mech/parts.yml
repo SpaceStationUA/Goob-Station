@@ -4,7 +4,7 @@
   abstract: true
   parent: [BaseItem, BaseRevMajorContraband]
   id: T45PartBase
-  description: "Деталь силової броні T-45 P.O.W.A.R."
+  description: A part for the T-45 P.O.W.A.R armor.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Mech/T45Armor.rsi
@@ -14,7 +14,7 @@
 - type: entity
   parent: T45PartBase
   id: T45Helmet
-  name: "шолом T-45"
+  name: T-45 Helmet
   components:
   - type: Sprite
     state: t45_helmet
@@ -25,7 +25,7 @@
 - type: entity
   parent: T45PartBase
   id: T45Chest
-  name: "нагрудник T-45"
+  name: T-45 Chest
   components:
   - type: Sprite
     state: t45_chest
@@ -36,7 +36,7 @@
 - type: entity
   parent: T45PartBase
   id: T45ArmL
-  name: "ліва рука T-45"
+  name: T-45 left arm
   components:
   - type: Sprite
     state: t45_lefthand
@@ -47,7 +47,7 @@
 - type: entity
   parent: T45PartBase
   id: T45ArmR
-  name: "права рука T-45"
+  name: T-45 right arm
   components:
   - type: Sprite
     state: t45_righthand
@@ -58,7 +58,7 @@
 - type: entity
   parent: T45PartBase
   id: T45LegR
-  name: "права нога T-45"
+  name: T-45 right leg
   components:
   - type: Sprite
     state: t45_rightleg
@@ -69,7 +69,7 @@
 - type: entity
   parent: T45PartBase
   id: T45LegL
-  name: "ліва нога T-45"
+  name: T-45 left leg
   components:
   - type: Sprite
     state: t45_leftleg
@@ -80,9 +80,9 @@
 - type: entity
   parent: [PowerCellHyper, BaseRevMajorContraband]
   id: FusionCore
-  name: "термоядерне ядро"
+  name: fusion core
   suffix: Full
-  description: "Термоядерне ядро можна використовувати як акумулятор дуже великої місткості, але частіше ним живлять комплекти силової броні P.O.W.A.R."
+  description: A fusion core, can be used as a battery with a very high capacity, but is more often used to power, P.O.W.A.R armor suits.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Devices/fusionCore.rsi
@@ -101,9 +101,9 @@
 - type: entity
   parent: [BaseMechWeaponMelee, CombatMechEquipment, BaseRevMajorContraband]
   id: WeaponMechMeleePowerFist
-  name: "силовий кулак"
+  name: power fist
   suffix: Mech Weapon, Melee
-  description: "Броньована рукавиця з механічним тараном або подібним пристроєм, який підсилює удари власника. Використовується в силовій броні T-45 P.O.W.A.R."
+  description: An armored gauntlet, with a powered ram or similar device which improves the impact of the wielder's strikes, used in the T-45 P.O.W.A.R armor.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/powerfist.rsi
@@ -128,9 +128,9 @@
 - type: entity
   parent: [ BaseMechWeaponRange, CombatMechEquipment, BaseRevMajorContraband ]
   id: WeaponMechCombatFlameThrower
-  name: "важкий вогнемет fO-46 mk3"
+  name: fO-46 mk3 heavy flamer
   suffix: Mech Weapon, Gun, Combat, Flame
-  description: "Викидає полум'я зі ствола; може використовуватися в силовій броні T-45 P.O.W.A.R."
+  description: Fires flame from its thrower, can be used in the T-45 P.O.W.A.R armor.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Flamethrower/flamethrower.rsi

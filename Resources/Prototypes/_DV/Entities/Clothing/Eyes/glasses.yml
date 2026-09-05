@@ -3,8 +3,8 @@
 - type: entity
   parent: ClothingEyesGlassesGar
   id: ClothingEyesGlassesGarMeson
-  name: "гар-мезони"
-  description: "Робити неможливе, бачити невидиме!"
+  name: gar mesons
+  description: Do the impossible, see the invisible!
   components:
   # Pirate: meson vision - ported from Moffstation PR #1688 (funky-station/forky-station#102).
   - type: TrayScanner

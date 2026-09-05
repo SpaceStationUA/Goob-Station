@@ -4,8 +4,8 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlassesWelding
-  name: "зварювальні окуляри"
-  description: "Захищають очі від яскравих спалахів, але лише коли опущені на очі."
+  name: welding goggles
+  description: Protects the eyes from bright flashes, but only while lowered down over the eyes.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/welding.rsi

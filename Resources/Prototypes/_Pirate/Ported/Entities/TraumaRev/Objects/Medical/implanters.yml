@@ -3,8 +3,8 @@
 - type: entity
   parent: [ BaseFastDrawImplanter, BaseRevMajorContraband ]
   id: RevShieldRipper
-  name: "виривач захисту"
-  description: "Пристрій, що швидко й болісно вириває з людини імплант захисту розуму. Його можна використати лише один раз."
+  name: shield ripper
+  description: A device that quickly and painfully rips the mindshield out of someone. It can only be used once.
   components:
   - type: Item
     sprite: _Pirate/Objects/Specific/Medical/shieldripper.rsi
@@ -51,7 +51,7 @@
   parent: [BaseImplantOnlyImplanter, BaseRevMajorContraband]
   id: FakeMindShieldImplanterRev
   suffix: Fake Mindshield
-  name: "імплантер підробленого захисту розуму"
+  name: fake mindshield implanter
   components:
   - type: Implanter
     implant: FakeMindShieldImplant

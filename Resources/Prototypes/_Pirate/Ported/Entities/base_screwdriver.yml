@@ -3,11 +3,11 @@
 # Pirate: local abstract base required by forged screwdriver results.
 
 - type: entity
-  name: "викрутка"
+  name: screwdriver
   abstract: true
   parent: BaseItem
   id: BaseScrewdriver
-  description: "Промисловий крутний момент у компактному корпусі викрутки."
+  description: Industrial grade torque in a small screwdriving package.
   components:
   - type: Tag
     tags:

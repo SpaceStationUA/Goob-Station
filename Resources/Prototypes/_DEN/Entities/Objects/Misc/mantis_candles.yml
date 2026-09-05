@@ -9,9 +9,9 @@
 - type: entity
   parent: Candle
   id: CandleSomberMantis
-  name: "мнемолітова свічка"
+  name: mnemolith candle
   suffix: Magic
-  description: "Свічка з порошку мнемоліту. Вона не хоче гаснути."
+  description: "A candle made with mnemolith powder. It doesn't want to go out."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Misc/candlesmantis.rsi
@@ -65,8 +65,8 @@
 - type: entity
   parent: CandleSomberMantis
   id: CandleSomberMantisSmall
-  name: "мнемолітова свічка (мала)"
-  description: "Мала свічка з порошку мнемоліту. Вона не хоче гаснути."
+  name: mnemolith candle (small)
+  description: "A small candle made with mnemolith powder. It doesn't want to go out."
   components:
   - type: Sprite
     layers:
@@ -78,8 +78,8 @@
 - type: entity
   parent: CandleSomberMantis
   id: CandleSomberMantisCluster
-  name: "мнемолітові свічки (гроно)"
-  description: "Гроно свічок із порошку мнемоліту. Це не святковий торт."
+  name: mnemolith candle (cluster)
+  description: "A cluster of candles made with mnemolith powder. Not a birthday cake."
   components:
   - type: Sprite
     layers:

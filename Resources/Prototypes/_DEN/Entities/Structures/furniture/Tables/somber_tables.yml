@@ -7,8 +7,8 @@
 - type: entity
   parent: TableBase
   id: SomberTable
-  name: "похмурий стіл"
-  description: "Дорогий стіл із похмурого візерунчастого дерева з електрумовими акцентами."
+  name: somber table
+  description: "An expensive table made of gloomy, patterned wood with electrum accents."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Furniture/Tables/somberwoodtable.rsi
@@ -53,8 +53,8 @@
 - type: entity
   parent: SomberTable
   id: SomberCounter
-  name: "похмурий прилавок"
-  description: "Дорогий прилавок із похмурого візерунчастого дерева з електрумовими акцентами."
+  name: somber counter
+  description: "An expensive counter made of gloomy, patterned wood with electrum accents."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Furniture/Tables/somberwoodcounter.rsi
