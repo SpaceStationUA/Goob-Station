@@ -353,8 +353,8 @@
   sprite:
     - _Pirate/Ghosts/hhhhhhhhruo.rsi
   alpha: 1
-  ghostName: hhhhhhhhruo
-  ghostDescription: лютий хард РПешер
+  ghostName: Sir Benjamin Netanyahu
+  ghostDescription: анроб якийсь
 
 - type: customGhost
   id: Bukhhalter-ghost
