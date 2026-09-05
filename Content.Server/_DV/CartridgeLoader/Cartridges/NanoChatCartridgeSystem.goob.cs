@@ -17,7 +17,7 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem // Allll larp
         string senderName,
         string content)
     {
-        var message = new NanoChatMessage(_timing.CurTime, content, senderNumber);
+        var message = new NanoChatMessage(0, _timing.CurTime, content, senderNumber);
 
         _nanoChat.SetRecipient((recipient, recipient.Comp), senderNumber,
             new NanoChatRecipient(senderNumber, senderName));

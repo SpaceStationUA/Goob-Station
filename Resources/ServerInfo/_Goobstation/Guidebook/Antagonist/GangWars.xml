@@ -1,154 +1,154 @@
 <Document>
-# Gang Wars
+# Війни банд
 
-HEAVILY IN DEV, EXPECT SIGNFICANT CHANGES
+РОЗРОБКА В ПРОЦЕСІ, ОЧІКУЙТЕ ЗНАЧНИХ ЗМІН
 
-[color=#e8a020]Your bosses are not happy. Your recent failures have put you on thin ice, and patience is running out. This is your last chance to prove your worth. Fail again and there won't be another.[/color]
+[color=#e8a020]Ваші боси незадоволені. Через нещодавні провали ви опинилися на тонкому льоду, а їхнє терпіння вичерпується. Це ваш останній шанс довести свою користь. Провалитеся знову - і другого шансу не буде.[/color]
 
-Hit the station hard. Recruit whoever you can, claim every corner you're able to, and make it clear who runs this place. Don't get comfortable, though. Word is, rival gangs are already moving in with the same idea.
+Жорстко вдарте по станції. Вербуйте всіх, кого зможете, захоплюйте кожен доступний куточок і дайте всім зрозуміти, хто тут головний. Але не розслабляйтеся: конкуруючі банди вже рухаються сюди з тією самою метою.
 
-Gang Wars is a competitive antag vs antag gamemode. Generally the crew won't be a target. Two to four [bold]Gang Leaders[/bold] spawn from among the existing crew, each builds a crew of their own, and they fight to top the leaderboard by claiming turf and racking up points before the round ends.
+Війни банд - це змагальний режим "антагоніст проти антагоніста". Зазвичай екіпаж не є ціллю. Від двох до чотирьох [bold]ватажків банд[/bold] обираються з-поміж членів екіпажу, кожен створює власну банду, а потім вони змагаються за перше місце в таблиці лідерів, захоплюючи територію та набираючи очки до кінця раунду.
 
 <Box>
-  <GuideEntityEmbed Entity="GangLocker" Caption="Gang Locker"/>
-  <GuideEntityEmbed Entity="GangSprayCan" Caption="Spray Can"/>
-  <GuideEntityEmbed Entity="CrateGang" Caption="Gang Crate"/>
+  <GuideEntityEmbed Entity="GangLocker" Caption="Сховище банди"/>
+  <GuideEntityEmbed Entity="GangSprayCan" Caption="Балончик фарби"/>
+  <GuideEntityEmbed Entity="CrateGang" Caption="Бандитський ящик"/>
 </Box>
 
-## Who Becomes a Gang Leader
-Gang Leaders are picked roundstart and requires some Command-department playtime to unlock.
+## Хто стане ватажком банди
+Ватажків банд обирають на початку раунду. Для цього потрібно мати певний час, проведений на посадах командного відділу.
 
-Most senior command roles are blocked, but the [bold]Quartermaster[/bold], the Detective, and ordinary crew are all fair game.
+Більшість старших командних посад недоступні, але [bold]квартирмейстер[/bold], детектив і звичайні члени екіпажу можуть стати ватажками.
 
-## Creating Your Gang
-Everything starts from your [bold]Summon Gang Locker[/bold] action.
+## Створення банди
+Усе починається з дії [bold]Викликати сховище банди[/bold].
 
-  1. Use the action. The first time, a window opens asking you to pick a [bold]color[/bold] and a [bold]name[/bold] for your gang.
+  1. Використайте дію. Під час першого використання відкриється вікно, де потрібно вибрати [bold]колір[/bold] і [bold]назву[/bold] банди.
   
-  2. You cannot pick a color or name that is too close to a rival's.
+  2. Не можна вибрати колір або назву, надто схожі на колір чи назву суперника.
   
-  3. Confirm, and a drop pod delivers your [bold]Gang Locker[/bold] to your feet.
+  3. Підтвердьте вибір, і десантна капсула доставить [bold]сховище банди[/bold] до ваших ніг.
 
-You cannot drop the locker too close to an existing territory.
+Не можна скинути сховище надто близько до вже наявної території.
 
 <Box>
-  <GuideEntityEmbed Entity="GangLocker" Caption="Gang Locker"/>
+  <GuideEntityEmbed Entity="GangLocker" Caption="Сховище банди"/>
 </Box>
 
-The locker is the heart of your gang. It:
-  - Acts as your [bold]store[/bold] (see below).
-  - Grants [bold]boosted healing[/bold] to your members standing near it.
-  - Shows the [bold]leaderboard[/bold] when examined.
+Сховище - серце вашої банди. Воно:
+  - Виконує роль вашого [bold]магазину[/bold] (див. нижче).
+  - Дає [bold]посилене лікування[/bold] членам банди, які стоять поруч.
+  - Показує [bold]таблицю лідерів[/bold] під час огляду.
 
-After a long enough time inactive it will become invisible, but interacting with the spot it's located will make it appear again.
+Після достатньо тривалого простою воно стане невидимим, але взаємодія з місцем, де воно розташоване, знову його проявить.
 
-## The Store
-Walk up to your locker and interact with it to open the [bold]Gang Store[/bold]. The store spends [bold]Gang Points[/bold].
+## Магазин
+Підійдіть до сховища та взаємодійте з ним, щоб відкрити [bold]магазин банди[/bold]. Магазин витрачає [bold]очки банди[/bold].
 
-[bold]Important:[/bold] the store balance is your [italic]personal[/italic] point wallet, and every member's points also feed the gang's leaderboard score. Spending points buys gear but lowers your gang's standing, so weigh every purchase against the scoreboard.
+[bold]Важливо:[/bold] баланс магазину - це ваш [italic]особистий[/italic] запас очок, а очки кожного члена також додаються до загального рахунку банди в таблиці лідерів. Купівля спорядження зменшує ваші очки й погіршує позицію банди, тому зважуйте кожну покупку.
 
-### Starter Equipment
-  - [bold]Beginner Bundle[/bold] - [color=#90ee90]Free[/color] (one per member). A duffel packed with everything an aspiring gangster needs: 5 spray cans, a gang headset (preloaded with a gang encryption key), a full set of gang clothing, and a random flashy top hat.
+### Стартове спорядження
+  - [bold]Початковий набір[/bold] - [color=#90ee90]безкоштовно[/color] (по одному на члена). Сумка з усім необхідним для початківця-бандита: 5 балончиків фарби, бандитська гарнітура (вже налаштована на ключ шифрування банди), повний комплект бандитського одягу та випадковий яскравий циліндр.
 
 <Box>
-  <GuideEntityEmbed Entity="GangBeginnerBundle" Caption="Beginner Bundle"/>
+  <GuideEntityEmbed Entity="GangBeginnerBundle" Caption="Початковий набір"/>
 </Box>
 
-### Consumables
-  - [bold]Quickhack[/bold] - 800. A covert device that fakes AI "open" signals to open unbolted doors. 5 uses.
-  - [bold]Medkit[/bold] - 800.
-  - [bold]Omnizine[/bold] - 1100. A medipen that quickly heals most damage types.
-  - [bold]Tip Off[/bold] - 8000 (one per member). Schedules an early duffel bag drop. A random civilian gets tipped off about the location via NanoChat and a short head start before it hits the gang radio.
+### Витратні матеріали
+  - [bold]Quickhack[/bold] - 800. Прихований пристрій, що імітує сигнал ШІ "відкрити" та відчиняє незаблоковані двері. 5 використань.
+  - [bold]Аптечка[/bold] - 800.
+  - [bold]Омнізін[/bold] - 1100. Медіпен, який швидко лікує більшість типів ушкоджень.
+  - [bold]На підхваті[/bold] - 8000 (по одному на члена). Планує раннє скидання сумки. Випадковий цивільний отримує через NanoChat попередження про місце та невелику фору, перш ніж повідомлення надійде на радіо банди.
 
-### Weapons
-  - [bold]Throwing Knife[/bold] - 700.
-  - [bold]Combat Knife[/bold] - 800.
-  - [bold]Baseball Bat[/bold] - 2000.
-  - [bold]Gang Machete[/bold] - 4000. Quite effective at cutting off limbs.
+### Зброя
+  - [bold]Метальний ніж[/bold] - 700.
+  - [bold]Бойовий ніж[/bold] - 800.
+  - [bold]Бейсбольна біта[/bold] - 2000.
+  - [bold]Мачете банди[/bold] - 4000. Досить ефективне для відсікання кінцівок.
 
-### Equipment
-  - [bold]Spray Paint[/bold] - 300. Extra spray cans for claiming turf.
-  - [bold]Gang Clothes Bundle[/bold] - 300. A spare set of gang threads (shoes, jumpsuit, jacket, top hat) for repping your colors.
-  - [bold]Gang Encryption Key[/bold] - 1500. Puts a recruit on the gang radio channel.
-  - [bold]Light Armor Vest[/bold] - 2000.
+### Спорядження
+  - [bold]Фарба-спрей[/bold] - 300. Додаткові балончики для захоплення території.
+  - [bold]Комплект одягу банди[/bold] - 300. Запасний комплект одягу банди (взуття, комбінезон, куртка та циліндр), щоб представляти свої кольори.
+  - [bold]Ключ шифрування банди[/bold] - 1500. Додає завербованого до радіоканалу банди.
+  - [bold]Легкий бронежилет[/bold] - 2000.
 
 <Box>
-  <GuideEntityEmbed Entity="GangMachete" Caption="Gang Machete"/>
+  <GuideEntityEmbed Entity="GangMachete" Caption="Мачете банди"/>
   <GuideEntityEmbed Entity="Quickhack" Caption="Quickhack"/>
-  <GuideEntityEmbed Entity="EncryptionKeyGang" Caption="Gang Encryption Key"/>
+  <GuideEntityEmbed Entity="EncryptionKeyGang" Caption="Ключ шифрування банди"/>
 </Box>
 
-## The Gang Radio
-Gangs talk on a dedicated [bold]gang radio channel[/bold] (key [bold]:g[/bold]). The beginner bundle's headset comes tuned to it, and you can buy spare encryption keys incase you lose it.
+## Радіо банди
+Банди спілкуються через окремий [bold]радіоканал банди[/bold] (клавіша [bold]:g[/bold]). Гарнітура з початкового набору вже налаштована на нього, а якщо ви її загубите, можна придбати запасні ключі шифрування.
 
-[bold]The channel is shared by every gang on the station.[/bold] There is no private per-gang frequency, so anything you say can be read by your rivals. Watch your mouth, or use it to bluff them.
+[bold]Цей канал спільний для всіх банд на станції.[/bold] Окремої частоти для кожної банди немає, тому суперники можуть прочитати все, що ви скажете. Стежте за словами або використовуйте це, щоб їх обдурити.
 
-The radio is also how the [bold]Boss[/bold] reaches everyone. When a crate or duffel bag drops, an announcement from "Boss" hits the gang channel naming the rough location, and every headset on the channel plays a hip-hop beat sting so nobody misses it. Every gang hears the same message at the same time, so a drop is a race.
+Радіо також потрібне [bold]Босу[/bold], щоб зв'язуватися з усіма. Коли скидають ящик або сумку, оголошення від "Боса" надходить на канал банди й називає приблизне місце. Кожна гарнітура на каналі відтворює хіп-хоп сигнал, щоб ніхто не пропустив повідомлення. Усі банди чують його одночасно, тому скидання перетворюється на перегони.
 
-## Recruiting People
-Once you have established your gang you get a new action that allows you to recruit people.
+## Вербування людей
+Після створення банди ви отримуєте нову дію для вербування людей.
 
-Use your [bold]Offer Membership[/bold] action on a crewmate to invite them. They get a popup to accept or deny. Accept, and they:
-  - Gain the [bold]Gang Member[/bold] role and your gang's color.
-  - Can use your spray cans, open your store and crates, and benefit from territory.
-  - Start with their own pool of Gang Points that adds to the gang's score.
+Використайте дію [bold]Запропонувати членство[/bold] на члені екіпажу, щоб запросити його. Він отримає вікно з пропозицією прийняти або відхилити запрошення. У разі згоди він:
+  - Отримає роль [bold]члена банди[/bold] та колір вашої банди.
+  - Зможе користуватися вашими балончиками, відкривати ваш магазин і ящики та отримувати переваги від території.
+  - Почне з власним запасом очок банди, який додається до рахунку банди.
 
-You can only recruit up to three members, and you cannot poach someone who is already in a gang, so choose your members carefully.
+Можна завербувати не більше трьох членів. Також не можна переманити того, хто вже належить до іншої банди, тому обирайте членів уважно.
 
-## Claiming Territory
-Territory is how you take ground and earn passive score.
+## Захоплення території
+Територія дає змогу захоплювати простір і отримувати пасивні очки.
 
-  1. Use a [bold]spray can[/bold] on the floor. After a short do-after, a randomized gang tag in your color appears.
+  1. Використайте [bold]балончик фарби[/bold] на підлозі. Після короткої затримки з'явиться випадковий бандитський тег вашого кольору.
   
-  2. Each tag projects a [bold]territory[/bold]. You can't spray too close to another tag, so spread them out to cover more ground.
+  2. Кожен тег створює [bold]територію[/bold]. Не можна розпилювати фарбу надто близько до іншого тега, тому розміщуйте їх на відстані, щоб охопити більше простору.
 
-Every tag you place awards you [bold]+100 Gang Points[/bold] on the spot. More importantly, the floor tiles inside your territory count toward your gang's tile score. You can also spray your [bold]gang clothing[/bold] to recolor it into your gang's colors.
+Кожен розміщений тег одразу дає [bold]+100 очок банди[/bold]. Важливіше те, що плитки підлоги всередині вашої території враховуються в рахунку плиток банди. Також можна розпилити фарбу на [bold]одязі банди[/bold], щоб перефарбувати його у кольори вашої банди.
 
-Standing in your own territory while wearing the full outfit gives your members super strong perks: reduced stamina damage, extra defense, passive healing, and a chance to stop bleeding. Right next to your locker the healing is even stronger.
+Перебування на власній території в повному комплекті одягу дає членам банди дуже сильні переваги: менше шкоди витривалості, додатковий захист, пасивне лікування та шанс зупинити кровотечу. Безпосередньо біля вашого сховища лікування ще сильніше.
 
-## The Leaderboard and Scoring
-[bold]Examine your gang locker[/bold] to see the live leaderboard: every gang ranked by score, with a timer until the next update. Scores recalculate on a regular interval, so the standings lag slightly behind the action.
+## Таблиця лідерів і рахунок
+[bold]Огляньте сховище банди[/bold], щоб побачити поточну таблицю лідерів: усі банди впорядковані за рахунком, а поруч показано час до наступного оновлення. Рахунок перераховується регулярно, тому таблиця трохи відстає від подій.
 
-A gang's total score is:
+Загальний рахунок банди:
 
-  [bold]( claimed tiles x 10 ) + ( the Gang Points of every member combined )[/bold]
+  [bold]( захоплені плитки x 10 ) + ( сума очок банди всіх членів )[/bold]
 
-So you climb the board two ways:
-  - [bold]Claim more turf[/bold] - every floor tile inside your territory is worth points. Overlapping same-color tags don't double-count a tile.
-  - [bold]Bank Gang Points[/bold] - spraying tags, opening crates, and your members' starting balances all add up.
+Тож є два способи піднятися в таблиці:
+  - [bold]Захоплюйте більше території[/bold] - кожна плитка підлоги всередині вашої території приносить очки. Теги одного кольору, що перекриваються, не рахують плитку двічі.
+  - [bold]Накопичуйте очки банди[/bold] - теги, відкриття ящиків і стартові запаси ваших членів збільшують рахунок.
 
-Because spending from the store drains the same points that score you, there is a constant tension between gearing up and staying on top. End the shift in [bold]first place[/bold] to win.
+Оскільки витрати в магазині забирають ті самі очки, що формують ваш рахунок, між підготовкою та утриманням першого місця постійно виникає напруга. Щоб перемогти, завершіть зміну на [bold]першому місці[/bold].
 
-## Fighting Other Gangs
-Rivals are after the exact same tiles, drops, and bragging rights you are.
+## Боротьба з іншими бандами
+Суперники полюють на ті самі плитки, скидання та право хвалитися перемогою.
 
-  - [bold]Smash their tags.[/bold] Gang signs can be destroyed, shrinking enemy territory and your competition's tile score.
-  - [bold]Contest drops.[/bold] Every gang gets the same drop announcement, so expect a brawl over each crate and duffel.
-  - [bold]Watch the radio.[/bold] The channel is shared, so rivals can hear your plans, and you can hear theirs.
+  - [bold]Знищуйте їхні теги.[/bold] Бандитські знаки можна знищити, зменшивши ворожу територію та рахунок плиток суперника.
+  - [bold]Змагайтеся за скидання.[/bold] Кожна банда отримує однакове оголошення, тож біля кожного ящика та сумки очікуйте бійки.
+  - [bold]Слухайте радіо.[/bold] Канал спільний, тому суперники чують ваші плани, а ви - їхні.
 
-The crew and security will not love armed gangs spraying the halls either, so keep an eye over your shoulder.
+Екіпажу та службі безпеки також не сподобається, що озброєні банди розфарбовують коридори, тож озирайтеся.
 
-## Drops: Crates vs. Duffel Bags
-The Boss periodically airdrops loot somewhere on the station and calls it out on the gang radio. There are two kinds, and they behave very differently.
+## Скидання: ящики та сумки
+Бос періодично скидає здобич у випадковому місці станції та оголошує про це на радіо банди. Є два типи скидань, і вони працюють дуже по-різному.
 
 <Box>
-  <GuideEntityEmbed Entity="CrateGang" Caption="Gang Crate"/>
-  <GuideEntityEmbed Entity="GangDuffelBag" Caption="Duffel Bag"/>
+  <GuideEntityEmbed Entity="CrateGang" Caption="Бандитський ящик"/>
+  <GuideEntityEmbed Entity="GangDuffelBag" Caption="Сумка"/>
 </Box>
 
-### Gang Crates
-  - [bold]Rarer[/bold] and far more valuable. This is the big prize.
-  - Lands [bold]anchored[/bold] and locked. A light on the crate counts down through stages (full, half, low, blinking) before it finally unlocks with a chime. You have to [bold]wait it out[/bold].
-  - Can only be opened while [bold]next to a gang locker[/bold]. The intended play is to drag the crate back to your base after the timer runs out, then crack it open in safety.
-  - Opening it awards a big chunk of [bold]Gang Points to every member[/bold] of the gang that opens it, on top of the loot inside.
-  - The loot pool is strong, with a real shot at high-end weapons, implants, and large cash.
+### Бандитські ящики
+  - [bold]Рідкісніші[/bold] та значно цінніші. Це головний приз.
+  - Падають [bold]зафіксованими[/bold] та замкненими. Індикатор на ящику проходить етапи (повний, наполовину, низький, блимає), перш ніж ящик нарешті розблокується зі звуковим сигналом. Потрібно [bold]перечекати таймер[/bold].
+  - Відкрити їх можна лише [bold]поруч зі сховищем банди[/bold]. План такий: після завершення таймера відтягнути ящик на базу, а потім безпечно відкрити.
+  - Відкриття дає велику кількість [bold]очок банди кожному члену[/bold] банди, яка його відкрила, додатково до здобичі всередині.
+  - Таблиця здобичі сильна: є реальний шанс отримати високорівневу зброю, імпланти та велику суму грошей.
 
-### Duffel Bags
-  - [bold]Far more common[/bold] than crates, but the loot is weaker and high-end items are much rarer.
-  - It's [bold]rigged.[/bold] You must first [bold]disarm the trap[/bold] with a do-after, which leaves you [bold]slowed for a short time[/bold] as a debuff.
-  - Once disarmed it can be dragged and opened, and unlike the crate it can be [bold]opened anywhere[/bold]. You don't need to haul it home.
-  - Grabbing it gives no score bonus on its own. The value is purely whatever gear is inside.
-  - The bought [bold]Tip Off[/bold] purchase spawns an early duffel bag and quietly warns a civilian first, giving someone a head start before the radio call goes out.
+### Сумки
+  - [bold]Набагато поширеніші[/bold] за ящики, але здобич слабша, а високорівневі предмети трапляються значно рідше.
+  - Вони [bold]заміновані.[/bold] Спочатку потрібно [bold]знешкодити пастку[/bold] за допомогою затримки, після чого ви на короткий час будете сповільнені.
+  - Після знешкодження сумку можна тягнути та відкрити. На відміну від ящика, її можна [bold]відкрити будь-де[/bold]. Везти її додому не потрібно.
+  - Саме захоплення не дає бонусу до рахунку. Цінність полягає лише у спорядженні всередині.
+  - Покупка [bold]На підхваті[/bold] створює ранню сумку та спочатку потай попереджає цивільного, даючи йому фору до оголошення на радіо.
 
-[color=#e8a020][bold]Recruit hard, claim every corner, and make it clear who runs this place. Don't get comfortable - the rivals won't.[/bold][/color]
+[color=#e8a020][bold]Вербуйте завзято, захоплюйте кожен куточок і дайте всім зрозуміти, хто тут головний. Але не розслабляйтеся - суперники не розслабляться.[/bold][/color]
 </Document>
