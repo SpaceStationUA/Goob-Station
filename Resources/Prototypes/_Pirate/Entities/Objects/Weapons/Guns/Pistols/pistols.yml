@@ -72,19 +72,33 @@
   parent: [BaseWeaponPistol, BaseSecurityContraband, SolAllianceInfo]
   id: WeaponPistolSol
   suffix: SAN
-  description: Виготовлений Zavodskoi Interstellar, компактний M8 є стандартним службовим пістолетом Соляріанських збройних сил. Використовує пістолетні магазини .35 калібру.
+  description: Виготовлений Zavodskiy Interstellar, M8 є стандартним службовим пістолетом збройних сил Соларіанського Альянсу.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Pistols/sol_pistol.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: base-unshaded
+      map: ["enum.GunVisualLayers.BaseUnshaded"]
+      shader: unshaded
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: GunFlashlightAttachment
     offset: "0.03125, 0.15625"
   - type: Clothing
     sprite: _Pirate/Objects/Weapons/Guns/Pistols/sol_pistol.rsi
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/Pistols/sol_pistol.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: inhand-right
+      - state: inhand-right-unshaded
+        shader: unshaded
   - type: Gun
     fireRate: 6
     availableModes:

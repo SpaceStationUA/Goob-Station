@@ -7,6 +7,8 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Graphics.RSI; // Pirate - bold-open unshaded layer
+using static Robust.Client.Graphics.RSI; // Pirate - bold-open unshaded layer
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
@@ -38,6 +40,16 @@ public sealed partial class GunSystem
         {
             _sprite.LayerSetRsiState((ent, args.Sprite), boltLayer, "bolt-open");
         }
+
+        // Pirate start - bold-open unshaded layer
+        if (!_sprite.LayerMapTryGet((ent, args.Sprite), GunVisualLayers.BaseUnshaded, out var unshadedLayer, false))
+            return;
+
+        var unshadedState = boltClosed ? "base-unshaded" : "bold-open-unshaded";
+        var rsi = _sprite.LayerGetEffectiveRsi((ent, args.Sprite), unshadedLayer);
+        if (rsi?.TryGetState(new StateId(unshadedState), out _) == true)
+            _sprite.LayerSetRsiState((ent, args.Sprite), unshadedLayer, new StateId(unshadedState));
+        // Pirate end - bold-open unshaded layer
     }
 
     protected override void OnMagazineSlotChange(EntityUid uid, MagazineAmmoProviderComponent component, ContainerModifiedMessage args)

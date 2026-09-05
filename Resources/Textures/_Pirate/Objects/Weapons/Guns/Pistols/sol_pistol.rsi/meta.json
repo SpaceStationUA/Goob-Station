@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from Aurora.3 at https://github.com/Aurorastation/Aurora.3/pull/13555/changes/c977ef4ee630cacde06e67b9103ae4049ca6cea3",
+    "copyright": "Taken from https://github.com/Aurorastation/Aurora.3/blob/master/icons/obj/guns/faction/sol_alliance/sol_pistol.dmi",
     "size": {
         "x": 32,
         "y": 32
@@ -14,7 +14,13 @@
             "name": "base"
         },
         {
+            "name": "base-unshaded"
+        },
+        {
             "name": "bolt-open"
+        },
+        {
+            "name": "bold-open-unshaded"
         },
         {
             "name": "mag-0"
@@ -24,7 +30,15 @@
             "directions": 4
         },
         {
+            "name": "inhand-left-unshaded",
+            "directions": 4
+        },
+        {
             "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-unshaded",
             "directions": 4
         },
         {
