@@ -322,6 +322,9 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/spy_device.rsi
+    storedSprite:
+      state: icon
+      sprite: Objects/Tools/spy_device.rsi
   - type: PowerCellDraw
     useCharge: 10
   - type: StaticPrice

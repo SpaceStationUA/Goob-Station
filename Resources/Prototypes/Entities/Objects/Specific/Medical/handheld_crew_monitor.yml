@@ -11,7 +11,7 @@
   - type: Item
     heldPrefix: scanner
     storedSprite:
-      state: icon-storage
+      state: icon
       sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
   - type: Sprite
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
