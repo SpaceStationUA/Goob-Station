@@ -24,3 +24,26 @@ crew-monitoring-ui-no-station-label = Unknown station
 
 crew-monitoring-ui-flavor-left-label = In case of an emergency, contact station medical staff immediately
 crew-monitoring-ui-flavor-right-label = v1.7
+crew-monitoring-ui-scan-initializing = Initializing scan
+crew-monitoring-ui-scan-searching = Searching for monitoring servers
+crew-monitoring-ui-scan-verifying = Verifying server addresses
+crew-monitoring-ui-scan-finalizing = Finalizing scan
+crew-monitoring-ui-scan-waiting = Waiting for server response
+
+crew-monitoring-ui-start-scan = Scan for servers
+crew-monitoring-ui-scan-title = Scanning for monitoring servers
+crew-monitoring-ui-select-server-label = Select a server to continue
+crew-monitoring-ui-wounded-only = Show wounded only
+crew-monitoring-ui-reset-sensors = Reset sensor history
+
+crew-monitoring-tab-sensors = Sensors
+crew-monitoring-tab-servers = Servers
+crew-monitoring-rescan = Rescan
+crew-monitoring-servers-department = Monitoring servers
+crew-monitoring-server-online = Online
+crew-monitoring-server-offline = Offline
+crew-monitoring-server-active = Active
+crew-monitoring-server-blip = Monitoring server
+crew-monitoring-user-interface-need-help = No sensor data available
+crew-monitoring-header-server-offline = Server offline
+crew-monitoring-header-server-address = Address:

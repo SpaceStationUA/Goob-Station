@@ -1,7 +1,5 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
-using Content.Shared._Pirate.ListeningPost; // Pirate: listening post long-range monitor
 using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
+using Content.Client.PDA;
 using Content.Shared.Medical.CrewMonitoring;
 using Robust.Client.UserInterface;
 
@@ -20,32 +18,28 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        EntityUid? gridUid = null;
-        var stationName = string.Empty;
+        _menu = this.CreateWindow<CrewMonitoringWindow>();
 
-        if (EntMan.TryGetComponent<TransformComponent>(Owner, out var xform))
+        //ADT-Tweak Start - New Monitor: PdaBorderColor / UiVisuals theme
+        if (EntMan.TryGetComponent<PdaBorderColorComponent>(Owner, out var border))
         {
-            gridUid = xform.GridUid;
-
-            // Pirate: listening post long-range monitor - the server hands the console the station grid it
-            // resolved, which is the only way to reach a station on another map. The same-map search stays as
-            // the fallback for a console whose server has not ticked yet.
-            if (EntMan.TryGetComponent<LongRangeCrewMonitorComponent>(Owner, out var longRange))
-            {
-                gridUid = longRange.TargetGrid
-                          ?? EntMan.System<LongRangeCrewMonitorSystem>().FindLargestStationGridInMap(xform.MapID)
-                          ?? xform.GridUid;
-            }
-
-            if (EntMan.TryGetComponent<MetaDataComponent>(gridUid, out var metaData))
-            {
-                stationName = metaData.EntityName;
-            }
+            _menu.BorderColor = border.BorderColor;
         }
 
-        _menu = this.CreateWindow<CrewMonitoringWindow>();
-        _menu.SendZLevelSelectedMessageAction += SendZLevelSelectedMessage; // Pirate: multiz
-        _menu.Set(stationName, gridUid);
+        if (EntMan.TryGetComponent<CrewMonitoringUiVisualsComponent>(Owner, out var visuals))
+            _menu.ApplyScreenTheme(visuals.ThemeColor);
+        //ADT-Tweak End
+
+        //ADT-Tweak Start - New Monitor: BUI callbacks
+        _menu.OnAlertMutedChanged = muted => SendMessage(new CrewMonitoringSetAlertMutedMessage(muted));
+        _menu.OnAlertVolumeChanged = volume => SendMessage(new CrewMonitoringSetAlertVolumeMessage(volume));
+        _menu.OnSelectServer = server => SendMessage(new CrewMonitoringSelectServerMessage(server));
+        _menu.OnScanStarted = () => SendMessage(new CrewMonitoringScanStartMessage());
+        _menu.OnScanComplete = () => SendMessage(new CrewMonitoringScanCompleteMessage());
+        _menu.OnRescan = () => SendMessage(new CrewMonitoringRescanMessage());
+        _menu.OnResetSensors = () => SendMessage(new CrewMonitoringResetSensorsMessage());
+        _menu.OnZLevelSelected += (grid, depth) => SendMessage(new CEZMonitoringConsoleLevelSelectedMessage(GetNetEntity(grid), depth)); // Pirate: multiz
+        //ADT-Tweak End
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -56,15 +50,10 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
         {
             case CrewMonitoringState st:
                 EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-                _menu?.ShowSensors(st.Sensors, Owner, xform?.Coordinates);
+                //ADT-Tweak Start - New Monitor: pass full BUI state (was Sensors list + bool)
+                _menu?.ShowSensors(st, Owner, xform?.Coordinates);
+                //ADT-Tweak End
                 break;
         }
     }
-
-    #region Pirate: multiz
-    private void SendZLevelSelectedMessage(NetEntity? grid, int depth)
-    {
-        SendMessage(new CEZMonitoringConsoleLevelSelectedMessage(grid, depth));
-    }
-    #endregion
 }

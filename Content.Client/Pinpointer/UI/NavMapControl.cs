@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
@@ -21,7 +19,6 @@ using JetBrains.Annotations;
 using Content.Shared.Atmos;
 using System.Linq;
 using Robust.Shared.Utility;
-using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -37,17 +34,19 @@ public partial class NavMapControl : MapGridControl
 
     public EntityUid? Owner;
     public EntityUid? MapUid;
-    public bool ZLevelSelectorEnabled; // Pirate: multiz
-    public bool ZFilterTrackedBlipsToDisplayedMap; // Pirate: multiz
 
     protected override bool Draggable => true;
 
     // Actions
     public event Action<NetEntity?>? TrackedEntitySelectedAction;
     public event Action<DrawingHandleScreen>? PostWallDrawingAction;
-    public event Action<EntityUid, int>? ZLevelSelectedAction; // Pirate: multiz
-    // Pirate: syndicate drop console - reports the grid-local position that was left clicked, for consoles that aim at tiles instead of entities.
-    public event Action<EntityUid, Vector2>? TileSelectedAction;
+
+    // ADT-Tweak Start - New Monitor
+    protected void SelectTrackedEntity(NetEntity? entity)
+    {
+        TrackedEntitySelectedAction?.Invoke(entity);
+    }
+    // ADT-Tweak End
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
@@ -56,11 +55,13 @@ public partial class NavMapControl : MapGridControl
     public List<(Vector2, Vector2)> TileLines = new();
     public List<(Vector2, Vector2)> TileRects = new();
     public List<(Vector2[], Color)> TilePolygons = new();
+    public List<(Vector2, Vector2)> WindowLines = new();    // ADT-Tweak - New Monitor
     public List<NavMapRegionOverlay> RegionOverlays = new();
 
     // Default colors
     public Color WallColor = new(102, 217, 102);
     public Color TileColor = new(30, 67, 30);
+    public Color WindowColor = new(102, 217, 102);  // ADT-Tweak - New Monitor
 
     // Constants
     protected float UpdateTime = 1.0f;
@@ -76,6 +77,11 @@ public partial class NavMapControl : MapGridControl
 
     // Local variables
     private float _updateTimer = 1.0f;
+    // ADT-Tweak Start - New Monitor
+    private int _appliedNavMapVersion = -1;
+    private Vector2 _lastCullOffset;
+    private float _lastCullRange = -1f;
+    // ADT-Tweak End
     private Dictionary<Color, Color> _sRGBLookUp = new();
     protected Color BackgroundColor;
     protected float BackgroundOpacity = 0.9f;
@@ -94,14 +100,14 @@ public partial class NavMapControl : MapGridControl
     private FixturesComponent? _fixtures;
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
-    private readonly Label _zoom = new()
+    protected readonly Label ZoomLabel = new()    // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
     {
         VerticalAlignment = VAlignment.Top,
         HorizontalExpand = true,
         Margin = new Thickness(8f, 8f),
     };
 
-    private readonly Button _recenter = new()
+    protected readonly Button RecenterButton = new()    // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
     {
         Text = Loc.GetString("navmap-recenter"),
         VerticalAlignment = VAlignment.Top,
@@ -111,7 +117,7 @@ public partial class NavMapControl : MapGridControl
         Disabled = true,
     };
 
-    private readonly CheckBox _beacons = new()
+    protected readonly CheckBox BeaconsCheckbox = new()    // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
     {
         Text = Loc.GetString("navmap-toggle-beacons"),
         VerticalAlignment = VAlignment.Center,
@@ -121,9 +127,7 @@ public partial class NavMapControl : MapGridControl
         Pressed = true,
     };
 
-    private PanelContainer? _zLevelSelectorPanel; // Pirate: multiz
-    private BoxContainer? _zLevelSelectorRow; // Pirate: multiz
-    private EntityUid? _zLevelSelectorRoot; // Pirate: multiz
+    protected readonly PanelContainer NavMapTopPanel;   // ADT-Tweak - New Monitor
 
     public NavMapControl() : base(MinDisplayedRange, MaxDisplayedRange, DefaultDisplayedRange)
     {
@@ -151,39 +155,16 @@ public partial class NavMapControl : MapGridControl
                     Orientation = BoxContainer.LayoutOrientation.Horizontal,
                     Children =
                     {
-                        _zoom,
-                        _beacons,
-                        _recenter
+                        // ADT-Tweak Start - New Monitor: private -> protected, avoding bug issue 3818
+                        ZoomLabel,
+                        BeaconsCheckbox,
+                        RecenterButton
+                        // ADT-Tweak End
                     }
                 }
             }
         };
-
-        #region Pirate: multiz
-        _zLevelSelectorRow = new BoxContainer()
-        {
-            Orientation = BoxContainer.LayoutOrientation.Horizontal,
-            HorizontalAlignment = HAlignment.Center,
-            HorizontalExpand = true,
-            Margin = new Thickness(4f, 2f),
-        };
-        _zLevelSelectorPanel = new PanelContainer()
-        {
-            PanelOverride = new StyleBoxFlat()
-            {
-                BackgroundColor = StyleNano.ButtonColorContext.WithAlpha(1f),
-                BorderColor = StyleNano.PanelDark
-            },
-            VerticalExpand = false,
-            HorizontalExpand = true,
-            SetWidth = 650f,
-            Visible = false,
-            Children =
-            {
-                _zLevelSelectorRow
-            }
-        }; // Pirate: multiz
-        #endregion
+        NavMapTopPanel = topPanel;
 
         var topContainer = new BoxContainer()
         {
@@ -192,7 +173,6 @@ public partial class NavMapControl : MapGridControl
             Children =
             {
                 topPanel,
-                _zLevelSelectorPanel, // Pirate: multiz
                 new Control()
                 {
                     Name = "DrawingControl",
@@ -205,7 +185,7 @@ public partial class NavMapControl : MapGridControl
         AddChild(topContainer);
         topPanel.Measure(Vector2Helpers.Infinity);
 
-        _recenter.OnPressed += args =>
+        RecenterButton.OnPressed += args =>
         {
             Recentering = true;
         };
@@ -220,78 +200,16 @@ public partial class NavMapControl : MapGridControl
         EntManager.TryGetComponent(MapUid, out _xform);
         EntManager.TryGetComponent(MapUid, out _physics);
         EntManager.TryGetComponent(MapUid, out _fixtures);
-
         UpdateNavMap();
-        RefreshZLevelSelector(); // Pirate: multiz
+        _appliedNavMapVersion = _navMap?.DataVersion ?? -1;
     }
-
-    #region Pirate: multiz
-    public void SetZLevelSelectorRoot(EntityUid? gridUid) // Pirate: multiz
-    {
-        _zLevelSelectorRoot = gridUid;
-        RefreshZLevelSelector();
-    }
-
-    private void RefreshZLevelSelector()
-    {
-        if (_zLevelSelectorPanel == null || _zLevelSelectorRow == null)
-            return;
-
-        _zLevelSelectorRow.RemoveAllChildren();
-
-        if (!ZLevelSelectorEnabled || _zLevelSelectorRoot == null ||
-            !EntManager.TryGetComponent<CEZLinkedGridComponent>(_zLevelSelectorRoot.Value, out var linked))
-        {
-            _zLevelSelectorPanel.Visible = false;
-            return;
-        }
-
-        var levels = new SortedDictionary<int, EntityUid>(linked.PeerGrids);
-        levels[linked.Depth] = _zLevelSelectorRoot.Value;
-
-        if (levels.Count <= 1)
-        {
-            _zLevelSelectorPanel.Visible = false;
-            return;
-        }
-
-        _zLevelSelectorPanel.Visible = true;
-        _zLevelSelectorRow.AddChild(new Label
-        {
-            Text = Loc.GetString("pinpointer-z-label"),
-            VerticalAlignment = VAlignment.Center,
-            Margin = new Thickness(0f, 0f, 4f, 0f),
-        });
-
-        foreach (var (depth, gridUid) in levels)
-        {
-            var selected = MapUid == gridUid;
-            var button = new Button
-            {
-                Text = depth.ToString(),
-                Disabled = selected,
-                Margin = new Thickness(2f, 0f),
-                MinSize = new Vector2(28f, 0f),
-            };
-
-            button.OnPressed += _ =>
-            {
-                MapUid = gridUid;
-                ForceNavMapUpdate();
-                ZLevelSelectedAction?.Invoke(gridUid, depth);
-            };
-
-            _zLevelSelectorRow.AddChild(button);
-        }
-    } // Pirate: multiz
-    #endregion
 
     public void CenterToCoordinates(EntityCoordinates coordinates)
     {
         if (_physics != null)
-            Offset = new Vector2(coordinates.X, coordinates.Y) - _physics.LocalCenter;
+            Offset = new Vector2(coordinates.X, coordinates.Y) - _physics.LocalCenter;  // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
 
-        _recenter.Disabled = false;
+        RecenterButton.Disabled = false;
     }
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
@@ -300,21 +218,6 @@ public partial class NavMapControl : MapGridControl
 
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            #region Pirate: syndicate drop console
-            if (TileSelectedAction != null &&
-                MapUid != null &&
-                _xform != null &&
-                _physics != null &&
-                (StartDragPosition - args.PointerLocation.Position).Length() <= MinDragDistance)
-            {
-                var clickOffset = Offset + _physics.LocalCenter;
-                var clickLocal = args.PointerLocation.Position - GlobalPixelPosition;
-                var clickUnscaled = (clickLocal - MidPointVector) / MinimapScale;
-
-                TileSelectedAction.Invoke(MapUid.Value, new Vector2(clickUnscaled.X, -clickUnscaled.Y) + clickOffset);
-            }
-            #endregion Pirate: syndicate drop console
-
             if (TrackedEntitySelectedAction == null)
                 return;
 
@@ -342,12 +245,7 @@ public partial class NavMapControl : MapGridControl
                 if (!blip.Selectable)
                     continue;
 
-                #region Pirate: multiz
-                var blipMapPos = _transformSystem.ToMapCoordinates(blip.Coordinates);
-                if (ZFilterTrackedBlipsToDisplayedMap && blipMapPos.MapId != _xform.MapID)
-                    continue;
-                var currentDistance = (blipMapPos.Position - worldPosition).Length();
-                #endregion
+                var currentDistance = (_transformSystem.ToMapCoordinates(blip.Coordinates).Position - worldPosition).Length();
 
                 if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
@@ -371,7 +269,7 @@ public partial class NavMapControl : MapGridControl
         else if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
             // Toggle beacon labels
-            _beacons.Pressed = !_beacons.Pressed;
+            BeaconsCheckbox.Pressed = !BeaconsCheckbox.Pressed; // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
         }
     }
 
@@ -380,9 +278,9 @@ public partial class NavMapControl : MapGridControl
         base.MouseMove(args);
 
         if (Offset != Vector2.Zero)
-            _recenter.Disabled = false;
+            RecenterButton.Disabled = false;    // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
         else
-            _recenter.Disabled = true;
+            RecenterButton.Disabled = true;     // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -400,10 +298,10 @@ public partial class NavMapControl : MapGridControl
             return;
 
         // Map re-centering
-        _recenter.Disabled = DrawRecenter();
+        RecenterButton.Disabled = DrawRecenter();   // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
 
         // Update zoom text
-        _zoom.Text = Loc.GetString("navmap-zoom", ("value", $"{(DefaultDisplayedRange / WorldRange):0.0}"));
+        ZoomLabel.Text = Loc.GetString("navmap-zoom", ("value", $"{(DefaultDisplayedRange / WorldRange):0.0}"));    // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
 
         // Update offset with physics local center
         var offset = Offset;
@@ -471,6 +369,27 @@ public partial class NavMapControl : MapGridControl
                 handle.DrawPrimitives(DrawPrimitiveTopology.LineList, lines.Span, wallsRGB);
         }
 
+        // ADT-Tweak Start - New Monitor: Hollow window outlines (merged across adjacent glass tiles)
+        if (WindowLines.Count > 0)
+        {
+            if (!_sRGBLookUp.TryGetValue(WindowColor, out var windowRGB))
+            {
+                windowRGB = Color.ToSrgb(WindowColor);
+                _sRGBLookUp[WindowColor] = windowRGB;
+            }
+
+            var windowVerts = new ValueList<Vector2>(WindowLines.Count * 2);
+            foreach (var (o, t) in WindowLines)
+            {
+                windowVerts.Add(ScalePosition(o - offsetVec));
+                windowVerts.Add(ScalePosition(t - offsetVec));
+            }
+
+            if (windowVerts.Count > 0)
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, windowVerts.Span, windowRGB);
+        }
+        // ADT-Tweak End
+
         // Draw map rects
         if (TileRects.Any())
         {
@@ -515,9 +434,6 @@ public partial class NavMapControl : MapGridControl
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
-                    if (ZFilterTrackedBlipsToDisplayedMap && mapPos.MapId != _xform.MapID) // Pirate: multiz
-                        continue; // Pirate: multiz
-
                     var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
                     position = ScalePosition(new Vector2(position.X, -position.Y));
 
@@ -539,9 +455,6 @@ public partial class NavMapControl : MapGridControl
 
             if (mapPos.MapId != MapId.Nullspace)
             {
-                if (ZFilterTrackedBlipsToDisplayedMap && mapPos.MapId != _xform.MapID) // Pirate: multiz
-                    continue; // Pirate: multiz
-
                 var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
                 position = ScalePosition(new Vector2(position.X, -position.Y));
 
@@ -553,7 +466,7 @@ public partial class NavMapControl : MapGridControl
         }
 
         // Beacons
-        if (_beacons.Pressed)
+        if (BeaconsCheckbox.Pressed)    // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
         {
             var rectBuffer = new Vector2(5f, 3f);
 
@@ -575,6 +488,39 @@ public partial class NavMapControl : MapGridControl
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
+        //ADT-Tweak Start - New Monitor: Refresh component refs so DataVersion invalidation works even between Draws.
+        EntManager.TryGetComponent(MapUid, out _navMap);
+        EntManager.TryGetComponent(MapUid, out _physics);
+
+        var needsRebuild = false;
+
+        if (_navMap != null && _navMap.DataVersion != _appliedNavMapVersion)
+            needsRebuild = true;
+
+        // Viewport culling: rebuild when the camera moves/zooms enough that
+        // previously skipped chunks may now be visible (or vice versa).
+        var cullOffset = GetOffset();
+        if (_lastCullRange < 0f ||
+            Math.Abs(WorldRange - _lastCullRange) > 0.5f ||
+            (cullOffset - _lastCullOffset).LengthSquared() > WorldRange * 0.15f * WorldRange * 0.15f)
+        {
+            needsRebuild = true;
+        }
+
+        if (needsRebuild)
+        {
+            EntManager.TryGetComponent(MapUid, out _grid);
+            EntManager.TryGetComponent(MapUid, out _xform);
+            EntManager.TryGetComponent(MapUid, out _fixtures);
+            UpdateNavMap();
+            _appliedNavMapVersion = _navMap?.DataVersion ?? -1;
+            _lastCullOffset = cullOffset;
+            _lastCullRange = WorldRange;
+            _updateTimer = 0f;
+            return;
+        }
+        // ADT-Tweak End
+
         // Update the timer
         _updateTimer += args.DeltaSeconds;
 
@@ -583,6 +529,11 @@ public partial class NavMapControl : MapGridControl
             _updateTimer -= UpdateTime;
 
             UpdateNavMap();
+            // ADT-Tweak Start - New Monitor
+            _appliedNavMapVersion = _navMap?.DataVersion ?? -1;
+            _lastCullOffset = cullOffset;
+            _lastCullRange = WorldRange;
+            // ADT-Tweak End
         }
     }
 
@@ -592,11 +543,34 @@ public partial class NavMapControl : MapGridControl
         TilePolygons.Clear();
         TileLines.Clear();
         TileRects.Clear();
+        WindowLines.Clear();    // ADT-Tweak - New Monitor
 
         UpdateNavMapFloorTiles();
         UpdateNavMapWallLines();
+        UpdateNavMapWindows();
         UpdateNavMapAirlocks();
     }
+
+    // ADT-Tweak Start - New Monitor
+    /// <summary>
+    /// Local-space AABB of the current camera view, with a margin for chunk edges.
+    /// </summary>
+    protected Box2 GetViewBoundsLocal(float margin = 1.25f)
+    {
+        var offset = GetOffset();
+        var range = WorldRange * margin;
+        return new Box2(offset.X - range, offset.Y - range, offset.X + range, offset.Y + range);
+    }
+
+    protected static bool ChunkIntersectsView(Vector2i chunkOrigin, float tileSize, in Box2 view)
+    {
+        var size = SharedNavMapSystem.ChunkSize * tileSize;
+        var minX = chunkOrigin.X * SharedNavMapSystem.ChunkSize * tileSize;
+        var minY = chunkOrigin.Y * SharedNavMapSystem.ChunkSize * tileSize;
+        return new Box2(minX, minY, minX + size, minY + size).Intersects(view);
+    }
+    // ADT-Tweak End
+
 
     private void UpdateNavMapFloorTiles()
     {
@@ -631,13 +605,24 @@ public partial class NavMapControl : MapGridControl
         _vertLines.Clear();
         _vertLinesReversed.Clear();
 
-        const int southMask = (int) AtmosDirection.South << (int) NavMapChunkType.Wall;
+        const int southMask = (int) AtmosDirection.South << (int) NavMapChunkType.Wall;     // ADT-Tweak - New Monitor
         const int eastMask = (int) AtmosDirection.East << (int) NavMapChunkType.Wall;
         const int westMask = (int) AtmosDirection.West << (int) NavMapChunkType.Wall;
         const int northMask = (int) AtmosDirection.North << (int) NavMapChunkType.Wall;
 
+        // ADT-Tweak Start - New Monitor
+        var view = GetViewBoundsLocal();
+        var tileSize = (float) _grid.TileSize;
+        // ADT-Tweak End
+
         foreach (var (chunkOrigin, chunk) in _navMap.Chunks)
         {
+            // ADT-Tweak Start - New Monitor: Intersection
+            if (!ChunkIntersectsView(chunkOrigin, tileSize, view))
+                continue;
+            // ADT-Tweak End
+
+
             for (var i = 0; i < SharedNavMapSystem.ArraySize; i++)
             {
                 var tileData = chunk.TileData[i] & SharedNavMapSystem.WallMask;
@@ -728,13 +713,142 @@ public partial class NavMapControl : MapGridControl
         }
     }
 
+    // ADT-Tweak Start - New Monitor
+    /// <summary>
+    /// Glass tiles: empty squares outlined only on exterior edges. Adjacent windows merge
+    /// (shared edges disappear) into one continuous pane outline.
+    /// </summary>
+    private void UpdateNavMapWindows()
+    {
+        if (_navMap == null || _grid == null)
+            return;
+
+        _horizLines.Clear();
+        _horizLinesReversed.Clear();
+        _vertLines.Clear();
+        _vertLinesReversed.Clear();
+
+        const int southMask = (int) AtmosDirection.South << (int) NavMapChunkType.Window;
+        const int eastMask = (int) AtmosDirection.East << (int) NavMapChunkType.Window;
+        const int westMask = (int) AtmosDirection.West << (int) NavMapChunkType.Window;
+        const int northMask = (int) AtmosDirection.North << (int) NavMapChunkType.Window;
+
+        var view = GetViewBoundsLocal();
+        var tileSize = (float) _grid.TileSize;
+
+        foreach (var (chunkOrigin, chunk) in _navMap.Chunks)
+        {
+            if (!ChunkIntersectsView(chunkOrigin, tileSize, view))
+                continue;
+
+            for (var i = 0; i < SharedNavMapSystem.ArraySize; i++)
+            {
+                var tileData = chunk.TileData[i] & SharedNavMapSystem.WindowMask;
+                if (tileData == 0)
+                    continue;
+
+                tileData >>= (int) NavMapChunkType.Window;
+
+                var relativeTile = SharedNavMapSystem.GetTileFromIndex(i);
+                var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * _grid.TileSize;
+                tile = tile with { Y = -tile.Y };
+                NavMapChunk? neighborChunk;
+
+                // Even partial windows contribute their blocked edges as outline segments.
+                var drawNorth = (tileData & (int) AtmosDirection.North) != 0;
+                var drawEast = (tileData & (int) AtmosDirection.East) != 0;
+                var drawSouth = (tileData & (int) AtmosDirection.South) != 0;
+                var drawWest = (tileData & (int) AtmosDirection.West) != 0;
+
+                // North edge — omit when neighbor also has a north-facing / south glass edge
+                if (drawNorth)
+                {
+                    var neighborData = 0;
+                    if (relativeTile.Y != SharedNavMapSystem.ChunkSize - 1)
+                        neighborData = chunk.TileData[i + 1];
+                    else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Up, out neighborChunk))
+                        neighborData = neighborChunk.TileData[i + 1 - SharedNavMapSystem.ChunkSize];
+
+                    if ((neighborData & southMask) == 0)
+                    {
+                        AddOrUpdateNavMapLine(tile + new Vector2i(0, -_grid.TileSize),
+                            tile + new Vector2i(_grid.TileSize, -_grid.TileSize), _horizLines,
+                            _horizLinesReversed);
+                    }
+                }
+
+                if (drawEast)
+                {
+                    var neighborData = 0;
+                    if (relativeTile.X != SharedNavMapSystem.ChunkSize - 1)
+                        neighborData = chunk.TileData[i + SharedNavMapSystem.ChunkSize];
+                    else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Right, out neighborChunk))
+                        neighborData = neighborChunk.TileData[i + SharedNavMapSystem.ChunkSize - SharedNavMapSystem.ArraySize];
+
+                    if ((neighborData & westMask) == 0)
+                    {
+                        AddOrUpdateNavMapLine(tile + new Vector2i(_grid.TileSize, -_grid.TileSize),
+                            tile + new Vector2i(_grid.TileSize, 0), _vertLines, _vertLinesReversed);
+                    }
+                }
+
+                if (drawSouth)
+                {
+                    var neighborData = 0;
+                    if (relativeTile.Y != 0)
+                        neighborData = chunk.TileData[i - 1];
+                    else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Down, out neighborChunk))
+                        neighborData = neighborChunk.TileData[i - 1 + SharedNavMapSystem.ChunkSize];
+
+                    if ((neighborData & northMask) == 0)
+                    {
+                        AddOrUpdateNavMapLine(tile, tile + new Vector2i(_grid.TileSize, 0), _horizLines,
+                            _horizLinesReversed);
+                    }
+                }
+
+                if (drawWest)
+                {
+                    var neighborData = 0;
+                    if (relativeTile.X != 0)
+                        neighborData = chunk.TileData[i - SharedNavMapSystem.ChunkSize];
+                    else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Left, out neighborChunk))
+                        neighborData = neighborChunk.TileData[i - SharedNavMapSystem.ChunkSize + SharedNavMapSystem.ArraySize];
+
+                    if ((neighborData & eastMask) == 0)
+                    {
+                        AddOrUpdateNavMapLine(tile + new Vector2i(0, -_grid.TileSize), tile, _vertLines,
+                            _vertLinesReversed);
+                    }
+                }
+            }
+        }
+
+        foreach (var (origin, terminal) in _horizLines)
+            WindowLines.Add((origin, terminal));
+
+        foreach (var (origin, terminal) in _vertLines)
+            WindowLines.Add((origin, terminal));
+    }
+    // ADT-Tweak End
+
     private void UpdateNavMapAirlocks()
     {
         if (_navMap == null || _grid == null)
             return;
 
-        foreach (var chunk in _navMap.Chunks.Values)
+        // ADT-Tweak Start - New Monitor
+        var view = GetViewBoundsLocal();
+        var tileSize = (float) _grid.TileSize;
+        // ADT-Tweak End
+
+        foreach (var (chunkOrigin, chunk) in _navMap.Chunks) // ADT-Tweak - New Monitor
         {
+            // ADT-Tweak Start - New Monitor: Intersection
+            if (!ChunkIntersectsView(chunkOrigin, tileSize, view))
+                continue;
+            // ADT-Tweak End
+
             for (var i = 0; i < SharedNavMapSystem.ArraySize; i++)
             {
                 var tileData = chunk.TileData[i] & SharedNavMapSystem.AirlockMask;
