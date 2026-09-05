@@ -621,13 +621,15 @@ public abstract class SharedBiomeSystem : EntitySystem
         out Vector2i wallOffset)
     {
         // Prefer cardinal order with a stable hash so chunk reloads match.
-        ReadOnlySpan<Vector2i> dirs =
-        [
+        // Avoid collection expressions / ReadOnlySpan here — they emit
+        // InlineArrayAsReadOnlySpan and fail Content.Shared ILVerify/SandboxTest.
+        var dirs = new[]
+        {
             new Vector2i(0, 1),
             new Vector2i(1, 0),
             new Vector2i(0, -1),
             new Vector2i(-1, 0),
-        ];
+        };
 
         Vector2i? best = null;
         var bestScore = float.MaxValue;
