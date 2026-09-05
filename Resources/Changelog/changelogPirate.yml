@@ -5382,3 +5382,13 @@ Entries:
       message: RPD адекватно перемикає режим альт кліком
   id: 515
   time: '2026-09-05T12:43:01.0000000+00:00'
+- author: saloplay
+  changes:
+    - type: Remove
+      message: Книги з просунутого мімства в кімнаті міма, no more robust
+    - type: Tweak
+      message: Лампа тепер не висить на двері
+    - type: Add
+      message: Столи в дормах, бо вони виглядали занадто пусто
+  id: 516
+  time: '2026-09-05T12:51:25.0000000+00:00'
