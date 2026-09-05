@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 09/05/2026 12:53:52
-  entityCount: 10702
+  time: 09/05/2026 14:43:07
+  entityCount: 10708
 maps: []
 grids:
 - 1
@@ -75,7 +75,7 @@ entities:
     - type: MetaData
       name: Syndicate Base
     - type: Transform
-      pos: 0,0
+      parent: invalid
     - type: MapGrid
       chunks:
         -1,-1:
@@ -5140,9 +5140,11 @@ entities:
           2,0:
             0: 45533
           3,-3:
-            0: 65522
+            0: 57330
+            2: 8192
           3,-2:
-            0: 4095
+            3: 1
+            0: 4094
           3,-1:
             0: 65535
           3,0:
@@ -5185,7 +5187,7 @@ entities:
             0: 65454
           -1,3:
             0: 20207
-            2: 40960
+            4: 40960
           -1,1:
             0: 57582
           -1,2:
@@ -5215,11 +5217,11 @@ entities:
           -2,-8:
             0: 3959
           -2,-7:
-            3: 102
-            4: 24576
+            5: 102
+            6: 24576
           -2,-6:
-            4: 6
-            5: 26112
+            6: 6
+            7: 26112
           -1,-8:
             0: 22384
           -1,-9:
@@ -5705,6 +5707,16 @@ entities:
           moles:
             Oxygen: 27.225372
             Nitrogen: 102.419266
+        - volume: 2500
+          temperature: 293.15
+          moles:
+            Oxygen: 23.57087
+            Nitrogen: 88.67137
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+            Oxygen: 20.078888
+            Nitrogen: 75.53487
         - volume: 2500
           temperature: 293.15
           moles:
@@ -7247,7 +7259,7 @@ entities:
       pos: -35.5,11.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -3379.836
+      secondsUntilStateChange: -3715.2314
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10241,11 +10253,8 @@ entities:
   - uid: 9377
     components:
     - type: Transform
-      parent: 9374
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 9374
+      pos: 13.5,-8.5
+      parent: 1
 - proto: BoxFolderGrey
   entities:
   - uid: 44
@@ -25706,6 +25715,16 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 9680
+  - uid: 10704
+    components:
+    - type: Transform
+      pos: 13.5,-8.5
+      parent: 1
+  - uid: 10705
+    components:
+    - type: Transform
+      pos: 13.5,-8.5
+      parent: 1
 - proto: ClothingMaskBreath
   entities:
   - uid: 959
@@ -28058,6 +28077,14 @@ entities:
     - type: Transform
       pos: 12.5,-7.5
       parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
 - proto: CrateSurgeryInterdyne
   entities:
   - uid: 1048
@@ -32736,6 +32763,16 @@ entities:
       parent: 1192
     - type: Physics
       canCollide: False
+  - uid: 10707
+    components:
+    - type: Transform
+      pos: 13.488705,-8.602604
+      parent: 1
+  - uid: 10708
+    components:
+    - type: Transform
+      pos: 13.488705,-8.602604
+      parent: 1
 - proto: EncryptionKeyInterdyne
   entities:
   - uid: 2977
@@ -56255,31 +56292,43 @@ entities:
     - type: Transform
       pos: 13.5,-8.5
       parent: 1
+    - type: Lock
+      locked: False
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PolygonShape
+            radius: 0.01
+            vertices:
+            - -0.25,-0.48
+            - 0.25,-0.48
+            - 0.25,0.48
+            - -0.25,0.48
+          mask:
+          - Impassable
+          - MidImpassable
+          - LowImpassable
+          - BlobImpassable
+          layer:
+          - Opaque
+          density: 75
+          hard: True
+          restitution: 0
+          friction: 0.4
+    - type: PlaceableSurface
+      isPlaceable: True
     - type: AccessReader
       accessListsOriginal: []
       access:
       - - SyndicateAgent
     - type: EntityStorage
+      removedMasks: 84
       air:
         volume: 200
         immutable: False
         temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9375
-          - 9376
-          - 9377
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
+        moles: {}
+      open: True
 - proto: Handcuffs
   entities:
   - uid: 10176
@@ -59097,9 +59146,8 @@ entities:
   - uid: 9376
     components:
     - type: Transform
-      parent: 9374
-    - type: Physics
-      canCollide: False
+      pos: 13.5,-8.5
+      parent: 1
     - type: Paper
       stampState: paper_stamp-syndicate
       stampedBy:
@@ -59115,8 +59163,6 @@ entities:
 
 
         — Вище командування
-    - type: InsideEntityStorage
-      storage: 9374
 - proto: ParamedHypo
   entities:
   - uid: 1881
@@ -66501,6 +66547,13 @@ entities:
     - type: Transform
       pos: 11.767612,-10.603442
       parent: 1
+- proto: SyndiListeningPostPDA
+  entities:
+  - uid: 10703
+    components:
+    - type: Transform
+      pos: 13.5,-8.5
+      parent: 1
 - proto: SynthesizerInstrument
   entities:
   - uid: 9681
@@ -67703,11 +67756,8 @@ entities:
   - uid: 9375
     components:
     - type: Transform
-      parent: 9374
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-      storage: 9374
+      pos: 13.5,-8.5
+      parent: 1
 - proto: TelescopicBaton
   entities:
   - uid: 1153
@@ -68188,6 +68238,13 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 9788
+- proto: TraitorCodePaper
+  entities:
+  - uid: 10706
+    components:
+    - type: Transform
+      pos: 13.5,-8.5
+      parent: 1
 - proto: TrashBagBlue
   entities:
   - uid: 8951
@@ -74236,7 +74293,6 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 10511
       - 10511
   - uid: 9931
     components:
