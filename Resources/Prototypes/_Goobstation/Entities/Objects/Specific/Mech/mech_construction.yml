@@ -366,7 +366,6 @@
     containers:
       mech-assembly-container: !type:Container
       battery-container: !type:Container
-      part-container: !type:Container
   - type: MechAssemblyVisuals
     statePrefix: gygax
   - type: Sprite
@@ -380,6 +379,11 @@
       - GygaxRArm
       - GygaxLLeg
       - GygaxRLeg
+    containerId: mech-assembly-container
+  # Pirate: Restore the Gygax harness construction graph binding.
+  - type: Construction
+    graph: Gygax
+    node: start
 
 - type: entity
   parent: BaseGygaxPartItem
