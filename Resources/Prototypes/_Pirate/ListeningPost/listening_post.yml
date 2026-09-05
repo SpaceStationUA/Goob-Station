@@ -101,6 +101,13 @@
           True: { visible: true }
           False: { visible: false }
   - type: LongRangeCrewMonitoringServer
+  - type: CrewMonitoringServer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: CrewMonitor
+    autoConnect: false
+  - type: WirelessNetworkConnection
+    range: 500
   - type: Destructible
     thresholds:
     - trigger:

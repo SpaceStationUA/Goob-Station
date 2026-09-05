@@ -1,7 +1,9 @@
-using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
+using Content.Client._Pirate.Medical.CrewMonitoring;
 using Content.Client.PDA;
+using Content.Shared._Pirate.ZLevels.Monitoring;
 using Content.Shared.Medical.CrewMonitoring;
 using Robust.Client.UserInterface;
+
 
 namespace Content.Client.Medical.CrewMonitoring;
 
@@ -38,7 +40,7 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
         _menu.OnScanComplete = () => SendMessage(new CrewMonitoringScanCompleteMessage());
         _menu.OnRescan = () => SendMessage(new CrewMonitoringRescanMessage());
         _menu.OnResetSensors = () => SendMessage(new CrewMonitoringResetSensorsMessage());
-        _menu.OnZLevelSelected += (grid, depth) => SendMessage(new CEZMonitoringConsoleLevelSelectedMessage(GetNetEntity(grid), depth)); // Pirate: multiz
+        _menu.OnZLevelSelected += (grid, depth) => SendMessage(new CEZMonitoringConsoleLevelSelectedMessage(EntMan.GetNetEntity(grid), depth)); // Pirate: multiz
         //ADT-Tweak End
     }
 

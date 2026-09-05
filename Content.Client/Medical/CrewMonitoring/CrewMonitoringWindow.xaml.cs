@@ -739,6 +739,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                 frameUid = resolvedFrameUid;
             }
 
+            NavMap.SetZLevelSelectorRoot(frameUid);
             SetDisplayedGrid(frameUid);
 
             if (state.ReferenceFrame != null)

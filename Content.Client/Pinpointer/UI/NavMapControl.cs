@@ -1,4 +1,7 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 using Content.Client.Stylesheets;
+
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
 using Content.Shared.Pinpointer;
@@ -19,6 +22,8 @@ using JetBrains.Annotations;
 using Content.Shared.Atmos;
 using System.Linq;
 using Robust.Shared.Utility;
+using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
+
 
 namespace Content.Client.Pinpointer.UI;
 
@@ -34,11 +39,15 @@ public partial class NavMapControl : MapGridControl
 
     public EntityUid? Owner;
     public EntityUid? MapUid;
+    public bool ZLevelSelectorEnabled; // Pirate: multiz
+    public bool ZFilterTrackedBlipsToDisplayedMap; // Pirate: multiz
 
     protected override bool Draggable => true;
 
     // Actions
     public event Action<NetEntity?>? TrackedEntitySelectedAction;
+    public event Action<EntityUid, int>? ZLevelSelectedAction; // Pirate: multiz
+    public event Action<EntityUid, Vector2>? TileSelectedAction; // Pirate: syndicate drop console
     public event Action<DrawingHandleScreen>? PostWallDrawingAction;
 
     // ADT-Tweak Start - New Monitor
@@ -126,6 +135,9 @@ public partial class NavMapControl : MapGridControl
         Margin = new Thickness(4f, 0f),
         Pressed = true,
     };
+    private PanelContainer? _zLevelSelectorPanel; // Pirate: multiz
+    private BoxContainer? _zLevelSelectorRow; // Pirate: multiz
+    private EntityUid? _zLevelSelectorRoot; // Pirate: multiz
 
     protected readonly PanelContainer NavMapTopPanel;   // ADT-Tweak - New Monitor
 
@@ -155,16 +167,37 @@ public partial class NavMapControl : MapGridControl
                     Orientation = BoxContainer.LayoutOrientation.Horizontal,
                     Children =
                     {
-                        // ADT-Tweak Start - New Monitor: private -> protected, avoding bug issue 3818
                         ZoomLabel,
                         BeaconsCheckbox,
                         RecenterButton
-                        // ADT-Tweak End
                     }
                 }
             }
         };
         NavMapTopPanel = topPanel;
+
+        #region Pirate: multiz
+        _zLevelSelectorRow = new BoxContainer()
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            HorizontalAlignment = HAlignment.Center,
+            HorizontalExpand = true,
+            Margin = new Thickness(4f, 2f),
+        };
+        _zLevelSelectorPanel = new PanelContainer()
+        {
+            PanelOverride = new StyleBoxFlat()
+            {
+                BackgroundColor = StyleNano.ButtonColorContext.WithAlpha(1f),
+                BorderColor = StyleNano.PanelDark
+            },
+            VerticalExpand = false,
+            HorizontalExpand = true,
+            SetWidth = 650f,
+            Visible = false,
+            Children = { _zLevelSelectorRow }
+        };
+        #endregion
 
         var topContainer = new BoxContainer()
         {
@@ -173,6 +206,7 @@ public partial class NavMapControl : MapGridControl
             Children =
             {
                 topPanel,
+                _zLevelSelectorPanel,
                 new Control()
                 {
                     Name = "DrawingControl",
@@ -185,7 +219,7 @@ public partial class NavMapControl : MapGridControl
         AddChild(topContainer);
         topPanel.Measure(Vector2Helpers.Infinity);
 
-        RecenterButton.OnPressed += args =>
+        RecenterButton.OnPressed += _ =>
         {
             Recentering = true;
         };
@@ -201,8 +235,65 @@ public partial class NavMapControl : MapGridControl
         EntManager.TryGetComponent(MapUid, out _physics);
         EntManager.TryGetComponent(MapUid, out _fixtures);
         UpdateNavMap();
-        _appliedNavMapVersion = _navMap?.DataVersion ?? -1;
+        RefreshZLevelSelector(); // Pirate: multiz
     }
+
+    // Pirate: multiz
+    public void SetZLevelSelectorRoot(EntityUid? gridUid)
+    {
+        _zLevelSelectorRoot = gridUid;
+        RefreshZLevelSelector();
+    }
+
+    private void RefreshZLevelSelector()
+    {
+        if (_zLevelSelectorPanel == null || _zLevelSelectorRow == null)
+            return;
+
+        _zLevelSelectorRow.RemoveAllChildren();
+        if (!ZLevelSelectorEnabled || _zLevelSelectorRoot is not { } root ||
+            !EntManager.TryGetComponent<CEZLinkedGridComponent>(root, out var linked))
+        {
+            _zLevelSelectorPanel.Visible = false;
+            return;
+        }
+
+        var levels = new SortedDictionary<int, EntityUid>(linked.PeerGrids)
+        {
+            [linked.Depth] = root
+        };
+        if (levels.Count <= 1)
+        {
+            _zLevelSelectorPanel.Visible = false;
+            return;
+        }
+
+        _zLevelSelectorPanel.Visible = true;
+        _zLevelSelectorRow.AddChild(new Label
+        {
+            Text = Loc.GetString("pinpointer-z-label"),
+            VerticalAlignment = VAlignment.Center,
+            Margin = new Thickness(0f, 0f, 4f, 0f),
+        });
+        foreach (var (depth, gridUid) in levels)
+        {
+            var button = new Button
+            {
+                Text = depth.ToString(),
+                Disabled = MapUid == gridUid,
+                Margin = new Thickness(2f, 0f),
+                MinSize = new Vector2(28f, 0f),
+            };
+            button.OnPressed += _ =>
+            {
+                MapUid = gridUid;
+                ForceNavMapUpdate();
+                ZLevelSelectedAction?.Invoke(gridUid, depth);
+            };
+            _zLevelSelectorRow.AddChild(button);
+        }
+    }
+
 
     public void CenterToCoordinates(EntityCoordinates coordinates)
     {
@@ -218,58 +309,51 @@ public partial class NavMapControl : MapGridControl
 
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            if (TrackedEntitySelectedAction == null)
+            var clickDistance = (StartDragPosition - args.PointerLocation.Position).Length();
+            if (TileSelectedAction != null && MapUid is { } mapUid && _physics != null &&
+                clickDistance <= MinDragDistance)
+            {
+                var offset = Offset + _physics.LocalCenter;
+                var local = args.PointerLocation.Position - GlobalPixelPosition;
+                var unscaled = (local - MidPointVector) / MinimapScale;
+                TileSelectedAction.Invoke(mapUid, offset + new Vector2(unscaled.X, -unscaled.Y));
+            }
+
+            if (TrackedEntitySelectedAction == null || _xform == null || _physics == null ||
+                TrackedEntities.Count == 0 || clickDistance > MinDragDistance)
                 return;
 
-            if (_xform == null || _physics == null || TrackedEntities.Count == 0)
-                return;
-
-            // If the cursor has moved a significant distance, exit
-            if ((StartDragPosition - args.PointerLocation.Position).Length() > MinDragDistance)
-                return;
-
-            // Get the clicked position
-            var offset = Offset + _physics.LocalCenter;
+            var offsetForSelection = Offset + _physics.LocalCenter;
             var localPosition = args.PointerLocation.Position - GlobalPixelPosition;
-
-            // Convert to a world position
             var unscaledPosition = (localPosition - MidPointVector) / MinimapScale;
-            var worldPosition = Vector2.Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset, _transformSystem.GetWorldMatrix(_xform));
-
-            // Find closest tracked entity in range
+            var worldPosition = Vector2.Transform(
+                new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offsetForSelection,
+                _transformSystem.GetWorldMatrix(_xform));
             var closestEntity = NetEntity.Invalid;
             var closestDistance = float.PositiveInfinity;
-
-            foreach ((var currentEntity, var blip) in TrackedEntities)
+            foreach (var (currentEntity, blip) in TrackedEntities)
             {
                 if (!blip.Selectable)
                     continue;
-
-                var currentDistance = (_transformSystem.ToMapCoordinates(blip.Coordinates).Position - worldPosition).Length();
-
-                if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
+                var mapPosition = _transformSystem.ToMapCoordinates(blip.Coordinates);
+                if (ZFilterTrackedBlipsToDisplayedMap && mapPosition.MapId != _xform.MapID)
                     continue;
-
+                var distance = (mapPosition.Position - worldPosition).Length();
+                if (closestDistance < distance || distance * MinimapScale > MaxSelectableDistance)
+                    continue;
                 closestEntity = currentEntity;
-                closestDistance = currentDistance;
+                closestDistance = distance;
             }
-
-            if (closestDistance > MaxSelectableDistance || !closestEntity.IsValid())
-                return;
-
-            TrackedEntitySelectedAction.Invoke(closestEntity);
+            if (closestDistance <= MaxSelectableDistance && closestEntity.IsValid())
+                TrackedEntitySelectedAction.Invoke(closestEntity);
         }
-
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
-            // Clear current selection with right click
             TrackedEntitySelectedAction?.Invoke(null);
         }
-
         else if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
-            // Toggle beacon labels
-            BeaconsCheckbox.Pressed = !BeaconsCheckbox.Pressed; // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
+            BeaconsCheckbox.Pressed = !BeaconsCheckbox.Pressed;
         }
     }
 
@@ -425,45 +509,40 @@ public partial class NavMapControl : MapGridControl
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
 
-        // Tracked coordinates (simple dot, legacy)
         foreach (var (coord, value) in TrackedCoordinates)
         {
             if (lit && value.Visible)
             {
                 var mapPos = _transformSystem.ToMapCoordinates(coord);
 
-                if (mapPos.MapId != MapId.Nullspace)
+                if (mapPos.MapId != MapId.Nullspace &&
+                    (!ZFilterTrackedBlipsToDisplayedMap || mapPos.MapId == _xform.MapID))
                 {
                     var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
                     position = ScalePosition(new Vector2(position.X, -position.Y));
-
                     handle.DrawCircle(position, float.Sqrt(MinimapScale) * 2f, value.Color);
                 }
             }
         }
 
-        // Tracked entities (can use a supplied sprite as a marker instead; should probably just replace TrackedCoordinates with this eventually)
+
         foreach (var blip in TrackedEntities.Values)
         {
-            if (blip.Blinks && !lit)
-                continue;
-
-            if (blip.Texture == null)
+            if (blip.Blinks && !lit || blip.Texture == null)
                 continue;
 
             var mapPos = _transformSystem.ToMapCoordinates(blip.Coordinates);
+            if (mapPos.MapId == MapId.Nullspace ||
+                ZFilterTrackedBlipsToDisplayedMap && mapPos.MapId != _xform.MapID)
+                continue;
 
-            if (mapPos.MapId != MapId.Nullspace)
-            {
-                var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
-                position = ScalePosition(new Vector2(position.X, -position.Y));
-
-                var scalingCoefficient = MinmapScaleModifier * float.Sqrt(MinimapScale);
-                var positionOffset = new Vector2(scalingCoefficient * blip.Scale * blip.Texture.Width, scalingCoefficient * blip.Scale * blip.Texture.Height);
-
-                handle.DrawTextureRect(blip.Texture, new UIBox2(position - positionOffset, position + positionOffset), blip.Color);
-            }
+            var position = Vector2.Transform(mapPos.Position, _transformSystem.GetInvWorldMatrix(_xform)) - offset;
+            position = ScalePosition(new Vector2(position.X, -position.Y));
+            var scalingCoefficient = MinmapScaleModifier * float.Sqrt(MinimapScale);
+            var positionOffset = new Vector2(scalingCoefficient * blip.Scale * blip.Texture.Width, scalingCoefficient * blip.Scale * blip.Texture.Height);
+            handle.DrawTextureRect(blip.Texture, new UIBox2(position - positionOffset, position + positionOffset), blip.Color);
         }
+
 
         // Beacons
         if (BeaconsCheckbox.Pressed)    // ADT-Tweak - New Monitor: private -> protected, avoding bug issue 3818
