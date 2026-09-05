@@ -7,5 +7,5 @@ personal-shield-toggle-fractured = Shield respooling. { $seconds } seconds remai
 personal-shield-toggle-up = Shield raised.
 personal-shield-toggle-down = Shield lowered.
 
-personal-shield-action-name = Toggle personal shield
-personal-shield-action-desc = Raise or lower your personal shield.
+ent-ActionTogglePersonalShield = Toggle personal shield
+    .desc = Raise or lower your personal shield.
