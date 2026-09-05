@@ -1,0 +1,74 @@
+# Magic pizza — eat the whole pizza or a slice to teleport to the station.
+
+- type: entity
+  parent: FoodPizzaBase
+  id: FoodPizzaMagic
+  name: magical pizza
+  description: It smells like home. Somehow. The cheese looks like it's staring into another dimension.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cheesy
+    - oily
+    - bread
+    - magical
+  - type: Sprite
+    layers:
+    - state: margherita
+  - type: SliceableFood
+    slice: FoodPizzaMagicSlice
+  - type: TeleportToStationOnFullyEaten
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: SpaceDrugs
+          Quantity: 5
+
+- type: entity
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaMagicSlice
+  name: slice of magical pizza
+  description: One bite and you're somewhere else. Probably.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cheesy
+    - oily
+    - bread
+    - magical
+  - type: Sprite
+    layers:
+    - state: margherita-slice
+  - type: Item
+    heldPrefix: margherita-slice
+  - type: TeleportToStationOnFullyEaten
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 0.5
+        - ReagentId: SpaceDrugs
+          Quantity: 1
+
+- type: entity
+  parent: FoodBoxPizza
+  id: FoodBoxPizzaMagic
+  name: pizza box
+  suffix: Magical
+  description: A slightly warm pizza box. The grease stains form a constellation you almost recognize.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: FoodPizzaMagic

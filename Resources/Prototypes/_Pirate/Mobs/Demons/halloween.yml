@@ -1,0 +1,30 @@
+# Ported from SpaceStationUA/station — Halloween pumpkin slime
+
+- type: entity
+  name: pumpkin... slime?
+  parent: MobAdultSlimes
+  id: MobHaloweenSlimes
+  suffix: halloween
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Goobstation/Mobs/Demons/pumpkinslime.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+
+- type: entity
+  name: pumpkin... slime?
+  parent: MobHaloweenSlimes
+  id: MobHaloweenSlimesAngry
+  suffix: Angry, halloween
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile

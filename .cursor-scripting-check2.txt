@@ -1,0 +1,67 @@
+Robust.Shared.Scripting.dll  name=Robust.Shared.Scripting ver=270.1.0.0 culture=
+Microsoft.CodeAnalysis.dll  name=Microsoft.CodeAnalysis ver=5.0.0.0 culture=
+Microsoft.CodeAnalysis.CSharp.dll  name=Microsoft.CodeAnalysis.CSharp ver=5.0.0.0 culture=
+Robust.Client.dll  name=Robust.Client ver=270.1.0.0 culture=
+Robust.Shared.dll  name=Robust.Shared ver=270.1.0.0 culture=
+Content.Pirate.Client.dll  name=Content.Pirate.Client ver=1.0.0.0 culture=
+Content.Pirate.Client.exe  name=Content.Pirate.Client ver=1.0.0.0 culture=
+Content.Client.exe  name=Content.Pirate.Client ver=1.0.0.0 culture=
+--- launch ---
+D:\X_троєщена\Goob-Station\RobustToolbox\Robust.Serialization.Generator\Properties\launchSettings.json
+D:\X_троєщена\Goob-Station\RobustToolbox\Robust.Shared.CompNetworkGenerator\Properties\launchSettings.json
+Pirate.deps Scripting=False CodeAnalysis=False
+Client.deps Scripting=True CodeAnalysis=True
+Content.Client.runtimeconfig.json
+{
+  "runtimeOptions": {
+    "tfm": "net10.0",
+    "framework": {
+      "name": "Microsoft.NETCore.App",
+      "version": "10.0.0"
+    },
+    "configProperties": {
+      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false
+    }
+  }
+}
+Content.Goobstation.Client.runtimeconfig.json
+{
+  "runtimeOptions": {
+    "tfm": "net10.0",
+    "framework": {
+      "name": "Microsoft.NETCore.App",
+      "version": "10.0.0"
+    },
+    "configProperties": {
+      "System.Reflection.Metadata.MetadataUpdater.IsSupported": false,
+      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false
+    }
+  }
+}
+Content.Pirate.Client.runtimeconfig.json
+{
+  "runtimeOptions": {
+    "tfm": "net10.0",
+    "framework": {
+      "name": "Microsoft.NETCore.App",
+      "version": "10.0.0"
+    },
+    "configProperties": {
+      "System.Reflection.Metadata.MetadataUpdater.IsSupported": false,
+      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false
+    }
+  }
+}
+Robust.Client.runtimeconfig.json
+{
+  "runtimeOptions": {
+    "tfm": "net10.0",
+    "framework": {
+      "name": "Microsoft.NETCore.App",
+      "version": "10.0.0"
+    },
+    "configProperties": {
+      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false
+    }
+  }
+}

@@ -1,0 +1,73 @@
+# Always-powered vending machines for backrooms (no APC needed).
+
+- type: entity
+  parent: VendingMachineCoffee
+  id: VendingMachineCoffeeAlwaysPowered
+  suffix: Always Powered
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+
+- type: entity
+  parent: VendingMachineCola
+  id: VendingMachineColaAlwaysPowered
+  suffix: Always Powered
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+
+- type: entity
+  parent: VendingMachineSnack
+  id: VendingMachineSnackAlwaysPowered
+  suffix: Always Powered
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+
+- type: entity
+  parent: VendingMachineCigs
+  id: VendingMachineCigsAlwaysPowered
+  suffix: Always Powered
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+
+- type: entity
+  parent: VendingMachineChang
+  id: VendingMachineChangAlwaysPowered
+  suffix: Always Powered
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+
+- type: entity
+  parent: VendingMachineDiscount
+  id: VendingMachineDiscountAlwaysPowered
+  suffix: Always Powered
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+
+- type: entity
+  parent: VendingMachineDonut
+  id: VendingMachineDonutAlwaysPowered
+  suffix: Always Powered
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+
+- type: entity
+  parent: VendingMachineYouTool
+  id: VendingMachineYouToolAlwaysPowered
+  suffix: Always Powered
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0

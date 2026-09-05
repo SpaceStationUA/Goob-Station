@@ -45,6 +45,7 @@
     - id: Fugitive # Pirate
     - id: BorerSpawn # Pirate
     - id: ListeningPost # Pirate
+    - id: MimeSpawn # Pirate - halloween slendermime
     # - id: RevenantSpawn # Goob
     - id: EeepEvent # Harmony Eeep Port - imp
     - id: SyndicateDeadDrop

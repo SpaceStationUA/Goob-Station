@@ -1,0 +1,14 @@
+- type: tile
+  id: FloorBackroom
+  name: tiles-backroom-floor
+  sprite: /Textures/_Pirate/Tiles/backroom.png
+  baseTurf: Plating
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepCarpet
+  barestepSounds:
+    collection: BarestepCarpet
+  friction: 1.25
+  itemDrop: FloorTileItemCarpetOffice
+  heatCapacity: 10000
+  tileRipResistance: 75

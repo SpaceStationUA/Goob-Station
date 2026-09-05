@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "made by Sh1Nima",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "full"
+      },
+      {
+        "name": "backrooms0",
+        "directions": 4
+      },
+      {
+        "name": "backrooms1",
+        "directions": 4
+      },
+      {
+        "name": "backrooms2",
+        "directions": 4
+      },
+      {
+        "name": "backrooms3",
+        "directions": 4
+      },
+      {
+        "name": "backrooms4",
+        "directions": 4
+      },
+      {
+        "name": "backrooms5",
+        "directions": 4
+      },
+      {
+        "name": "backrooms6",
+        "directions": 4
+      },
+      {
+        "name": "backrooms7",
+        "directions": 4
+      }
+    ]
+  }

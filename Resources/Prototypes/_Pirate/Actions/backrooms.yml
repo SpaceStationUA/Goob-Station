@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseAction
+  id: ActionBackroomsPreySense
+  name: Prey Sense
+  description: Sense every living player in the backrooms and lock onto one.
+  components:
+  - type: Action
+    useDelay: 5
+    itemIconStyle: NoItem
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: mass_scanner
+  - type: InstantAction
+    event: !type:BackroomsPreySenseActionEvent
+
+- type: entity
+  id: ActionMonsterDisperse
+  name: Disperse
+  description: Scatter into a black smear. Move freely, then rematerialize.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: _Goobstation/SlaughterDemon/abilities.rsi
+      state: crawl
+    useDelay: 1
+  - type: InstantAction
+    event: !type:BloodCrawlEvent

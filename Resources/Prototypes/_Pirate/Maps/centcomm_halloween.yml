@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Ported from SpaceStationUA/station — Halloween CentComm grid
+
+- type: gameMap
+  id: CentCommHalloween
+  isGrid: true
+  mapName: 'Центральне Командування (Halloween)'
+  mapPath: /Maps/centcomm_halloween.yml
+  minPlayers: 10
+  stations:
+    centcomm:
+      stationProto: NanotrasenCentralCommand
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Центральне Командування {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'TG'

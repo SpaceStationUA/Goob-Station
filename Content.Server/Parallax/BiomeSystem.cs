@@ -60,6 +60,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private const float DefaultLoadRange = 16f;
     private float _loadRange = DefaultLoadRange;
     private static readonly ProtoId<TagPrototype> AllowBiomeLoadingTag = "AllowBiomeLoading";
+    private static readonly ProtoId<TagPrototype> WallLightTag = "WallLight";
 
     private List<(Vector2i, Tile)> _tiles = new();
 
@@ -320,6 +321,37 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 layerChunks.Add(chunkOrigin.Value);
             }
         }
+    }
+
+    /// <summary>
+    /// Synchronously loads tiles, entities, and marker-layer spawns for <paramref name="area"/>.
+    /// Safe to call outside <see cref="Update"/> (e.g. to pick a spawn away from just-created mobs).
+    /// </summary>
+    public void LoadArea(EntityUid gridUid, BiomeComponent component, MapGridComponent grid, Box2 area)
+    {
+        if (component.LifeStage < ComponentLifeStage.Running || !component.Enabled)
+            return;
+
+        var ownsActive = !_activeChunks.ContainsKey(component);
+        if (ownsActive)
+            _activeChunks[component] = _tilePool.Get();
+
+        var tiles = _activeChunks[component];
+        var enumerator = new ChunkIndicesEnumerator(area, ChunkSize);
+        while (enumerator.MoveNext(out var chunkOrigin))
+        {
+            tiles.Add(chunkOrigin.Value * ChunkSize);
+        }
+
+        Preload(gridUid, component, area);
+        LoadChunks(component, gridUid, grid, component.Seed);
+
+        if (!ownsActive)
+            return;
+
+        _tilePool.Return(tiles);
+        _activeChunks.Remove(component);
+        _markerChunks.Remove(component);
     }
 
     private bool CanLoad(EntityUid uid)
@@ -840,6 +872,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // Just track loaded chunks for now.
                 var ent = Spawn(entPrototype, _mapSystem.GridTileToLocal(gridUid, grid, indices));
 
+                // Wall lights from maze-adjacent layers face the nearest maze wall.
+                TryOrientWallLightToMazeWall(ent, indices, component);
+
                 // At least for now unless we do lookups or smth, only work with anchoring.
                 if (_xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
                 {
@@ -1109,5 +1144,36 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
 
         _mapSystem.SetTiles(mapUid, mapGrid, tiles);
+    }
+
+    /// <summary>
+    /// Rotate wall-mounted lights so their mount (+Y / fixture) faces the nearest maze wall.
+    /// PointLight offset (0,-0.5) then shines into the corridor.
+    /// </summary>
+    private void TryOrientWallLightToMazeWall(EntityUid ent, Vector2i indices, BiomeComponent biome)
+    {
+        if (!_tags.HasTag(ent, WallLightTag))
+            return;
+
+        foreach (var layer in biome.Layers)
+        {
+            if (layer is not BiomeMazeAdjacentEntityLayer adj)
+                continue;
+
+            if (!TryGetNearestMazeWallOffset(
+                    indices,
+                    biome.Seed,
+                    adj.CellSize,
+                    adj.WallThickness,
+                    adj.LoopChance,
+                    adj.PillarChance,
+                    out var wallOffset))
+                continue;
+
+            // Local +Y is the wall-attachment side; aim it at the wall tile.
+            var wallAngle = new Vector2(wallOffset.X, wallOffset.Y).ToWorldAngle();
+            _transform.SetLocalRotation(ent, wallAngle - Angle.FromDegrees(90));
+            return;
+        }
     }
 }

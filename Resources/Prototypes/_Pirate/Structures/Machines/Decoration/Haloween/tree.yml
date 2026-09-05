@@ -1,0 +1,56 @@
+# Ported from SpaceStationUA/station — Halloween trees
+
+- type: entity
+  parent: BaseTree
+  id: HalloweenTree01
+  name: dead tree
+  description: Dead tree with leaves on it, looks creepy.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/Halloween/flora_halloween.rsi
+    state: halloweentree01
+
+- type: entity
+  parent: BaseTree
+  id: HalloweenTree02
+  name: dead tree
+  description: Dead tree with leaves on it, looks creepy.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/Halloween/flora_halloween.rsi
+    state: halloweentree02
+
+- type: entity
+  parent: BaseTree
+  id: HalloweenTree03
+  name: dead tree
+  description: Dead tree with leaves on it, looks creepy.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/Halloween/flora_halloween.rsi
+    state: halloweentree03
+
+- type: entity
+  parent: BaseTree
+  id: HalloweenTree04
+  name: dead tree
+  description: Dead tree with leaves on it, looks creepy.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/Halloween/flora_halloween.rsi
+    state: halloweentree04
+
+- type: entity
+  parent: BaseTree
+  id: HalloweenTree
+  name: spooky tree
+  description: Cool tree.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/tree.rsi
+    state: animated

@@ -1,0 +1,32 @@
+# Ported from SpaceStationUA/station — Halloween potted plants
+
+- type: entity
+  id: PottedPlantHalloween1
+  parent: PottedPlantBase
+  description: Withered houseplant, looks dead.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/Halloween/plant.rsi
+    state: plant1
+
+- type: entity
+  id: PottedPlantHalloween2
+  parent: PottedPlantHalloween1
+  components:
+  - type: Sprite
+    state: plant2
+
+- type: entity
+  id: PottedPlantHalloween3
+  parent: PottedPlantHalloween1
+  components:
+  - type: Sprite
+    state: plant3
+
+- type: entity
+  id: PottedPlantHalloween4
+  parent: PottedPlantHalloween1
+  components:
+  - type: Sprite
+    state: plant4

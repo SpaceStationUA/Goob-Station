@@ -66,4 +66,10 @@ public sealed partial class BloodCrawlComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 RequiredReagentAmount = 0.5;
+
+    /// <summary>
+    /// If false, blood crawl can be used anywhere (no puddle required).
+    /// </summary>
+    [DataField]
+    public bool RequireBlood = true;
 }
