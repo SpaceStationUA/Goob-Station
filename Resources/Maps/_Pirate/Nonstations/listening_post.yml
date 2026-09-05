@@ -4183,6 +4183,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 12.5,-0.5
       parent: 1
+- proto: ComputerSurveillanceCameraMonitorSyndicate
+  entities:
+  - uid: 1274
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 10.5,1.5
+      parent: 1
 - proto: CrateEngineeringCableBulk
   entities:
   - uid: 402
@@ -7417,6 +7425,13 @@ entities:
     components:
     - type: Transform
       pos: 7.483023,-4.4898586
+      parent: 1
+- proto: SyndicateSurveillanceServer
+  entities:
+  - uid: 1275
+    components:
+    - type: Transform
+      pos: 2.5,-6.5
       parent: 1
 - proto: SyndieHandyFlag
   entities:

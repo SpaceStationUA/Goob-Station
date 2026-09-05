@@ -2,6 +2,7 @@
 
 using Content.Server.Pinpointer;
 using Content.Server.SurveillanceCamera;
+using Content.Shared._Pirate.ListeningPost;
 using Content.Shared.SurveillanceCamera;
 
 namespace Content.Server._Pirate.SurveillanceCamera;
@@ -19,6 +20,14 @@ public sealed class SurveillanceCameraMonitorNavMapSystem : EntitySystem
     {
         if (args.UiKey is not SurveillanceCameraMonitorUiKey.Key)
             return;
+
+        if (TryComp<LongRangeSurveillanceMonitorComponent>(ent, out var longRange))
+        {
+            if (longRange.TargetGrid is { } target)
+                _navMap.EnsureNavMap(target);
+
+            return;
+        }
 
         if (Transform(ent).GridUid is { } grid)
             _navMap.EnsureNavMap(grid);

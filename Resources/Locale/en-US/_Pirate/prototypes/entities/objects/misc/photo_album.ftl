@@ -34,5 +34,8 @@ ent-PhotoAlbumDepartmentEngineering = engineering department photo album
 ent-PhotoAlbumDepartmentMedical = medical department photo album
     .desc = { ent-PhotoAlbumDepartmentService.desc }
 
+ent-PhotoAlbumCybersun = Cybersun photo album
+    .desc = { ent-PhotoAlbumDepartmentService.desc }
+
 ent-PhotoAlbumMakeshift = makeshift photo album
     .desc = A makeshift book packed with memories. Put photos into it so they appear in the final round summary. Use a pen to customize photo titles, descriptions, and captions.

@@ -48,6 +48,7 @@ public sealed class SyndicateDropConsoleSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly LongRangeTargetStationSystem _targetStation = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -324,35 +325,20 @@ public sealed class SyndicateDropConsoleSystem : EntitySystem
 
     private (EntityUid Station, EntityUid Grid)? ResolveTargetGrid()
     {
-        EntityUid? station = null;
+        MapId? preferredMap = null;
 
         var consoles = EntityQueryEnumerator<SyndicateDropConsoleComponent>();
         while (consoles.MoveNext(out var uid, out _))
         {
-            if (_station.GetStationInMap(_transform.GetMapId(uid)) is not { } found)
+            var map = _transform.GetMapId(uid);
+            if (_station.GetStationInMap(map) == null)
                 continue;
 
-            station = found;
+            preferredMap = map;
             break;
         }
 
-        if (station == null)
-        {
-            var stations = EntityQueryEnumerator<StationDataComponent>();
-            while (stations.MoveNext(out var uid, out var data))
-            {
-                if (data.Grids.Count == 0)
-                    continue;
-
-                station = uid;
-                break;
-            }
-        }
-
-        if (station == null || _zFloors.GetStationDefaultGrid(station.Value) is not { } grid)
-            return null;
-
-        return (station.Value, grid);
+        return _targetStation.ResolveTargetStation(preferredMap);
     }
 
     private bool IsTargetableGrid(SyndicateDropDispatcherComponent comp,

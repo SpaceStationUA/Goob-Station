@@ -245,6 +245,71 @@
       path: /Audio/Ambience/Objects/server_fans.ogg
 
 - type: entity
+  parent: ComputerSurveillanceCameraMonitor
+  id: ComputerSurveillanceCameraMonitorSyndicate
+  suffix: Syndicate, Long Range
+  components:
+  - type: LongRangeSurveillanceMonitor
+
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: SyndicateSurveillanceServer
+  name: surveillance server
+  description: A surveillance relay. Someone else's cameras, your screen.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    snapCardinals: true
+    layers:
+    - state: server-off
+    - state: server-on
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: server_o
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Machine
+    board: SurveillanceCameraRouterCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: LongRangeSurveillanceServer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    enabled: false
+    sound:
+      path: /Audio/Ambience/Objects/server_fans.ogg
+
+- type: entity
   parent: FaxMachineBase
   id: FaxMachineListeningSyndie
   suffix: Syndicate
