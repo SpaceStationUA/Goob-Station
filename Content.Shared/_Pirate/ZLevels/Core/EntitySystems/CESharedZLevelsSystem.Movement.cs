@@ -44,6 +44,9 @@ public abstract partial class CESharedZLevelsSystem
     private const float StairTransferMovingGridGraceScale = 0.01f;
     private const float StairTransferMovingGridGraceMaxSeconds = 0.8f;
     private const float GroundContactTolerance = 0.05f;
+    // Height deltas below this are not networked. Keep this well under a slow stair step: the old
+    // 0.01 threshold could swallow complete ticks and leave remote clients visibly behind.
+    private const float ZHeightDirtyEpsilon = 0.002f;
     private const float FlatGroundSettleVelocityThreshold = 1.0f;
     private static readonly float[] StairUpLandingSearchSamples = [0.05f, 0.15f, 0.25f, 0.35f, 0.45f];
 
@@ -1013,19 +1016,12 @@ public abstract partial class CESharedZLevelsSystem
     {
         base.Update(frameTime);
 
-        _accumulatedTime += TimeSpan.FromSeconds(frameTime);
-
-        var steps = 0;
-        while (_accumulatedTime >= _fixedTimestep && steps < MaxStepsPerFrame)
-        {
-            UpdateZPhysics((float) _fixedTimestep.TotalSeconds);
-            _accumulatedTime -= _fixedTimestep;
-            steps++;
-        }
-
-        // Cap leftover accumulator at one step on a step-cap hit so it can't permanently lag behind.
-        if (_accumulatedTime > _fixedTimestep)
-            _accumulatedTime = _fixedTimestep;
+        // Prediction can replay the same window many times. Component state is rolled back, but a
+        // system-local time accumulator is not, which made client stair height drift out of phase and
+        // then snap when the next server state arrived. Tick-derived cadence is replay-stable.
+        var steps = GetZPhysicsStepsForTick(_timing.CurTick.Value, _zPhysicsTickRate, _timing.TickRate);
+        for (var step = 0; step < steps; step++)
+            UpdateZPhysics(_fixedTimestep);
     }
 
     private void UpdateZPhysics(float frameTime)
@@ -1093,7 +1089,7 @@ public abstract partial class CESharedZLevelsSystem
                 if (Math.Abs(oldVelocity - zPhys.Velocity) > 0.01f)
                     DirtyField(uid, zPhys, nameof(CEZPhysicsComponent.Velocity));
 
-                if (Math.Abs(oldHeight - zPhys.LocalPosition) > 0.01f)
+                if (Math.Abs(oldHeight - zPhys.LocalPosition) > ZHeightDirtyEpsilon)
                     DirtyField(uid, zPhys, nameof(CEZPhysicsComponent.LocalPosition));
 
                 continue;
@@ -1423,7 +1419,7 @@ public abstract partial class CESharedZLevelsSystem
             if (Math.Abs(oldVelocity - zPhys.Velocity) > 0.01f)
                 DirtyField(uid, zPhys, nameof(CEZPhysicsComponent.Velocity));
 
-            if (Math.Abs(oldHeight - zPhys.LocalPosition) > 0.01f)
+            if (Math.Abs(oldHeight - zPhys.LocalPosition) > ZHeightDirtyEpsilon)
                 DirtyField(uid, zPhys, nameof(CEZPhysicsComponent.LocalPosition));
         }
     }
@@ -2833,6 +2829,9 @@ public abstract partial class CESharedZLevelsSystem
 
         var ev = new CEZLevelMapMoveEvent(offset, targetZLevel);
         RaiseLocalEvent(ent, ref ev);
+
+        // Keep attached bodies' cached traversal depth in sync with their vehicle.
+        RefreshAttachedZPhysics(ent);
 
         if (ZPhysQuery.TryComp(ent, out var zPhysAfterMove))
         {

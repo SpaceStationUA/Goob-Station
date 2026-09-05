@@ -9,10 +9,6 @@ public abstract partial class CESharedZLevelsSystem
 {
     public const int MaxZLevelsBelowRendering = 6;
 
-    /// <summary>
-    /// Cap on z-physics substeps per engine Update, preventing a death spiral where a slow frame
-    /// accumulates enough frametime that the next frame substeps even longer.
-    /// </summary>
     public const int MaxStepsPerFrame = 10;
 
     /// <summary>Downward acceleration applied per second to falling z-physics bodies.</summary>

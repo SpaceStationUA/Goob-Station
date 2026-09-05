@@ -7,6 +7,11 @@
   targetNode: potatobattery
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: PotatoAI
@@ -15,6 +20,11 @@
   targetNode: potatoai
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: PotatoAIChip
@@ -23,3 +33,8 @@
   targetNode: potatoaichip
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 3

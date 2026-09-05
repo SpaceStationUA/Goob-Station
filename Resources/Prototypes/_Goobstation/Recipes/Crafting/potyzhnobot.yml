@@ -4,3 +4,8 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: Potyzhnobot replaces Trauma's bot recipe in the skill system.
+  theory:
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1

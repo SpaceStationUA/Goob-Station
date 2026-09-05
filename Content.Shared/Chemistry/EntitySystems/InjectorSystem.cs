@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
@@ -21,7 +22,8 @@ using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
-using Content.Shared.Chemistry.EntitySystems.Hypospray; // Goob
+using Content.Shared.Chemistry.EntitySystems.Hypospray;
+using Content.Shared._DV.Chemistry.Components;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -195,6 +197,14 @@ public sealed partial class InjectorSystem : EntitySystem
     /// </summary>
     private bool TryMobsDoAfter(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
     {
+        //Checks if target has blockInjection comp - fuck Chitinid, no more hypos for them - also Goob start
+        if (HasComp<BlockInjectionComponent>(target))
+        {
+            _popup.PopupClient(Loc.GetString("injector-component-deny-user"), user, user);
+            return false;
+        }
+        //Goob end
+
         if (_useDelay.IsDelayed(injector.Owner) // Check for Delay.
             || !GetMobsDoAfterTime(injector, user, target, out var doAfterTime, out var amount)) // Get the DoAfter time.
             return false;
@@ -306,6 +316,11 @@ public sealed partial class InjectorSystem : EntitySystem
         // Technically, both can be true, but that is probably a balance nightmare.
         else if (_standingState.IsDown(target))
             doAfterTime *= activeMode.DownedModifier;
+
+        // Pirate: skill hooks are raised only for the user performing this injection.
+        var skillEvent = new UserModifyInjectTimeEvent(user, injector, doAfterTime);
+        RaiseLocalEvent(user, ref skillEvent);
+        doAfterTime = skillEvent.Delay;
 
         return true;
     }

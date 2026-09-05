@@ -10,6 +10,12 @@
     tags:
     - SpiderCraft
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: ClothingOuterWinterWeb
@@ -21,6 +27,11 @@
     tags:
     - SpiderCraft
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 4
 
 - type: construction
   id: ClothingUniformJumpsuitWeb
@@ -32,6 +43,11 @@
     tags:
     - SpiderCraft
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 4
 
 - type: construction
   id: ClothingUniformJumpskirtWeb
@@ -43,6 +59,11 @@
     tags:
     - SpiderCraft
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 4
 
 - type: construction
   id: SilkWovenCloth
@@ -55,6 +76,10 @@
     tags:
     - SpiderCraft
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: WebShield
@@ -66,6 +91,11 @@
     tags:
     - SpiderCraft
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 4
 
 - type: construction
   id: ClothingShoesBootsWinterWeb
@@ -77,3 +107,8 @@
     tags:
     - SpiderCraft
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 4

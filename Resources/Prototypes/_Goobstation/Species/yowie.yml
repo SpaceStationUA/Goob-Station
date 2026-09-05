@@ -9,6 +9,7 @@
   markingLimits: MobYowieMarkingLimits
   dollPrototype: MobYowieDummy
   skinColoration: TintedHues
+  knowledge: Human # Pirate
   defaultSkinTone: "#7d7d7d" # added here to make skin-tone markings work better
   naming: First
   maleFirstNames: NamesYowieMale

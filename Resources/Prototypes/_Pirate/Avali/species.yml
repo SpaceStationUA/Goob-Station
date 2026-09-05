@@ -8,6 +8,7 @@
   markingLimits: MobAvaliMarkingLimits
   dollPrototype: AppearanceAvali
   skinColoration: Hues
+  knowledge: Human
   maleFirstNames: names_avali_first
   femaleFirstNames: names_avali_first
   lastNames: names_avali_packs

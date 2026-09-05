@@ -7,6 +7,8 @@
   description: A shield!
   abstract: true
   components:
+    - type: WeaponClass # Pirate
+      class: Shield
     - type: Sprite
       sprite: Objects/Weapons/Melee/shields.rsi
       state: riot-icon

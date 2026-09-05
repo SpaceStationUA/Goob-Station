@@ -1,0 +1,27 @@
+# Pirate: reptilian emotes - ported from ProjectOmu/OmuStation
+- type: emote
+  id: Rattle
+  name: chat-emote-name-rattle
+  category: Vocal
+  icon: Interface/Emotes/weh.png
+  chatMessages: ["chat-emote-msg-reptile-rattle"]
+  whitelist:
+    tags:
+    - ReptilianEmotes
+  chatTriggers:
+    - rattles
+    - rattle
+    - rattled
+
+- type: emote
+  id: ReptilianScreech
+  name: chat-emote-name-reptile-screech
+  category: Vocal
+  icon: _Goobstation/Interface/Emotes/scream.png
+  chatMessages: ["chat-emote-msg-reptile-screech"]
+  whitelist:
+    tags:
+    - ReptilianEmotes
+  # No chatTriggers: "screech"/"screeches"/"screeching"/"screeched" are already claimed by the
+  # base Scream emote (Voice/speech_emotes.yml), and EmotePrototype.ChatTriggers must be unique
+  # across all emotes. Still selectable from the emote menu.

@@ -1,0 +1,86 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: weaponClass
+  id: Unarmed
+  name: knowledge-weapon-class-unarmed
+  knowledge: MeleeKnowledge
+
+- type: weaponClass
+  id: Bludgeon
+  name: knowledge-weapon-class-bludgeon
+  knowledge: KnowledgeWeaponsBludgeon
+
+- type: weaponClass
+  id: Knife
+  name: knowledge-weapon-class-knife
+  knowledge: KnowledgeWeaponsShortBlade
+
+- type: weaponClass
+  id: Sword
+  name: knowledge-weapon-class-sword
+  knowledge: KnowledgeWeaponsLongBlade
+
+- type: weaponClass
+  id: Polearm
+  name: knowledge-weapon-class-polearm
+  knowledge: KnowledgeWeaponsPolearm
+
+- type: weaponClass
+  id: NonLethal
+  name: knowledge-weapon-class-non-lethal
+  knowledge: KnowledgeWeaponsNonLethal
+
+- type: weaponClass
+  id: Tool
+  name: knowledge-weapon-class-tool
+  knowledge: KnowledgeWeaponsTool
+
+- type: weaponClass
+  id: Energy
+  name: knowledge-weapon-class-energy
+  knowledge: KnowledgeWeaponsEnergy
+
+- type: weaponClass
+  id: Shield
+  name: knowledge-weapon-class-shield
+  knowledge: KnowledgeWeaponsShield
+
+- type: weaponClass
+  id: Pistol
+  name: knowledge-weapon-class-pistol
+  knowledge: KnowledgeWeaponsPistol
+
+- type: weaponClass
+  id: Rifle
+  name: knowledge-weapon-class-rifle
+  knowledge: KnowledgeWeaponsRifle
+
+- type: weaponClass
+  id: SMG
+  name: knowledge-weapon-class-smg
+  knowledge: KnowledgeWeaponsSMG
+
+- type: weaponClass
+  id: Shotgun
+  name: knowledge-weapon-class-shotgun
+  knowledge: KnowledgeWeaponsShotgun
+
+- type: weaponClass
+  id: Sniper
+  name: knowledge-weapon-class-sniper
+  knowledge: KnowledgeWeaponsSniper
+
+- type: weaponClass
+  id: Heavy
+  name: knowledge-weapon-class-heavy
+  knowledge: KnowledgeWeaponsHeavy
+
+- type: weaponClass
+  id: Laser
+  name: knowledge-weapon-class-laser
+  knowledge: KnowledgeWeaponsLaser
+
+- type: weaponClass
+  id: Mining
+  name: knowledge-weapon-class-mining
+  knowledge: KnowledgeWeaponsMining

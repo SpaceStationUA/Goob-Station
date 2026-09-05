@@ -33,6 +33,12 @@ public sealed partial class PryingComponent : Component
     [DataField]
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
 
+    #region Pirate: force pry sound
+    /// <summary>Sound played when forcing a resistant door.</summary>
+    [DataField]
+    public SoundSpecifier? ForcePrySound;
+    #endregion
+
     /// <summary>
     /// Whether the entity can currently pry things.
     /// </summary>

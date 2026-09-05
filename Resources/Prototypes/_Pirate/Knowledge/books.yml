@@ -1,0 +1,303 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: cargoProduct
+  id: PirateRandomSkillbooks
+  icon:
+    sprite: Objects/Misc/books.rsi
+    state: book_icon
+  product: PirateCrateRandomSkillbooks
+  cost: 2000
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: entity
+  parent: CrateGenericSteel
+  id: PirateCrateRandomSkillbooks
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: PirateRandomSkillbook
+
+- type: entityTable
+  id: PirateRandomSkillbook
+  table: !type:GroupSelector
+    children:
+    - id: PirateBookJanitor
+    - id: PirateBookFabrication
+    - id: PirateBookSurvival
+    - id: PirateBookDoors
+    - id: PirateBookAirlocks
+    - id: PirateBookBananium
+    - id: PirateBookBots
+    - id: PirateBookFurniture
+    - id: PirateBookInfrastructure
+    - id: PirateBookElectronics
+    - id: PirateBookWalls
+    - id: PirateBookWindows
+    - id: PirateBookSmokeables
+
+- type: entity
+  parent: BaseItem
+  id: PirateBookSkillbook
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/skillbooks.rsi
+    layers:
+    - state: base
+  - type: StaticPrice
+    price: 20
+  - type: KnowledgeGrantOnUse
+    singleUse: false
+    instant: false
+  - type: Tag
+    tags:
+    - Book
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: [PirateBookSkillbook, BaseMagicalContraband]
+  id: PirateBookDebugSkills
+  suffix: DEBUG
+  components:
+  - type: Sprite
+    layers:
+    - state: melee
+  - type: KnowledgeGrantOnUse
+    grantEverything: true
+    instant: true
+
+- type: entity
+  parent: PirateBookSkillbook
+  id: PirateBookSchematic
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/schematics.rsi
+
+# Pirate: Trauma's BaseRevMinorContraband parent does not exist locally.
+- type: entity
+  parent: PirateBookSkillbook
+  id: PirateBookRevolutionaryMelee
+  components:
+  - type: Sprite
+    layers:
+    - state: melee
+  - type: KnowledgeGrantOnUse
+    skills:
+      MeleeKnowledge: 35
+      WeaponsKnowledge: 35
+    experience:
+      MeleeKnowledge: 15
+      WeaponsKnowledge: 15
+    doAfter: 2
+
+- type: entity
+  parent: PirateBookSkillbook
+  id: PirateBookRevolutionaryShooting
+  components:
+  - type: Sprite
+    layers:
+    - state: shooting
+  - type: KnowledgeGrantOnUse
+    skills:
+      ShootingKnowledge: 35
+      WeaponsKnowledge: 35
+    experience:
+      ShootingKnowledge: 5
+      WeaponsKnowledge: 4
+    doAfter: 2
+
+- type: entity
+  parent: PirateBookSkillbook
+  id: PirateBookJanitor
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+  - type: KnowledgeGrantOnUse
+    skills:
+      ThrowingKnowledge: 25
+      JanitorKnowledge: 25
+    experience:
+      ThrowingKnowledge: 3
+      JanitorKnowledge: 3
+    doAfter: 2
+
+- type: entity
+  parent: PirateBookSkillbook
+  id: PirateBookFabrication
+  components:
+  - type: Sprite
+    layers:
+    - state: fabrication
+  - type: KnowledgeGrantOnUse
+    skills:
+      FabricationKnowledge: 10
+    experience:
+      FabricationKnowledge: 3
+    doAfter: 2
+
+- type: entity
+  parent: PirateBookSkillbook
+  id: PirateBookFabricationPrinted
+  components:
+  - type: Sprite
+    layers:
+    - state: fabrication
+  - type: KnowledgeGrantOnUse
+    skills:
+      FabricationKnowledge: 25
+    experience:
+      FabricationKnowledge: 4
+    doAfter: 2
+
+- type: entity
+  parent: PirateBookSkillbook
+  id: PirateBookSurvival
+  components:
+  - type: Sprite
+    layers:
+    - state: fabrication
+  - type: KnowledgeGrantOnUse
+    skills:
+      CarvingKnowledge: 10
+    experience:
+      CarvingKnowledge: 3
+    doAfter: 2
+
+- type: entity
+  parent: PirateBookSkillbook
+  id: PirateBookSurvivalPrinted
+  components:
+  - type: Sprite
+    layers:
+    - state: fabrication
+  - type: KnowledgeGrantOnUse
+    skills:
+      CarvingKnowledge: 25
+    experience:
+      CarvingKnowledge: 4
+    doAfter: 2
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookDoors
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { DoorsKnowledge: 25 }
+    experience: { DoorsKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: doors
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookAirlocks
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { AirlocksKnowledge: 25 }
+    experience: { AirlocksKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: airlocks
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookBananium
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { BananiumKnowledge: 25 }
+    experience: { BananiumKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: bananium
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookBots
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { BotsKnowledge: 25 }
+    experience: { BotsKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: bots
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookFurniture
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { FurnitureKnowledge: 25 }
+    experience: { FurnitureKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: furniture
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookInfrastructure
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { InfrastructureKnowledge: 25 }
+    experience: { InfrastructureKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: infrastructure
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookElectronics
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { ElectronicsKnowledge: 25 }
+    experience: { ElectronicsKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: electronics
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookWalls
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { WallsKnowledge: 25 }
+    experience: { WallsKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: walls
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookWindows
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { WindowsKnowledge: 25 }
+    experience: { WindowsKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: windows
+
+- type: entity
+  parent: PirateBookSchematic
+  id: PirateBookSmokeables
+  components:
+  - type: KnowledgeGrantOnUse
+    skills: { SmokeablesKnowledge: 25 }
+    experience: { SmokeablesKnowledge: 5 }
+    doAfter: 2
+  - type: Sprite
+    layers:
+    - state: smokeables

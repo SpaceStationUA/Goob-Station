@@ -8,6 +8,10 @@
   targetNode: finish
   category: construction-category-demonology
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    MagicalLiteracyKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: BloodVial
@@ -15,6 +19,10 @@
   targetNode: finish
   category: construction-category-demonology
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    MagicalLiteracyKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: CraftInk
@@ -22,6 +30,10 @@
   targetNode: finish
   category: construction-category-demonology
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    MagicalLiteracyKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: DefaceBible
@@ -29,3 +41,7 @@
   targetNode: finish
   category: construction-category-demonology
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    MagicalLiteracyKnowledge: 1
+  useQuality: false

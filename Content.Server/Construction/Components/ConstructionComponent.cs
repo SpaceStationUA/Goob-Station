@@ -6,7 +6,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Construction.Components
 {
-    [RegisterComponent, Access(typeof(ConstructionSystem))]
+    // Pirate: forging assigns the item's post-forging construction graph.
+    [RegisterComponent, Access(typeof(ConstructionSystem), typeof(global::Content.Server._Pirate.Forging.MetalSystem))]
     public sealed partial class ConstructionComponent : SharedConstructionComponent // Goobstation
     {
         [DataField("graph", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]

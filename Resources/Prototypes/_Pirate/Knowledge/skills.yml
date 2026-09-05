@@ -1,0 +1,424 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: knowledgeCatalog
+  id: PirateSkills
+  entries:
+  - MeleeKnowledge
+  - KnowledgeWeaponsBludgeon
+  - KnowledgeWeaponsShortBlade
+  - KnowledgeWeaponsLongBlade
+  - KnowledgeWeaponsPolearm
+  - KnowledgeWeaponsNonLethal
+  - KnowledgeWeaponsTool
+  - KnowledgeWeaponsShield
+  - KnowledgeWeaponsEnergy
+  - ShootingKnowledge
+  - KnowledgeWeaponsPistol
+  - KnowledgeWeaponsRifle
+  - KnowledgeWeaponsSMG
+  - KnowledgeWeaponsShotgun
+  - KnowledgeWeaponsSniper
+  - KnowledgeWeaponsHeavy
+  - KnowledgeWeaponsLaser
+  - KnowledgeWeaponsMining
+  - ThrowingKnowledge
+  - SurgeryKnowledge
+  - FirstAidKnowledge
+  - ChemistryKnowledge
+  - FabricationKnowledge
+  - WeaponsKnowledge
+  - ArmorKnowledge
+  - MetalworkingKnowledge
+  - CarvingKnowledge
+  - GunsmithingKnowledge
+  - MechanicsKnowledge
+  - TailoringKnowledge
+  - MagicalLiteracyKnowledge
+  - LiteracyKnowledge
+  - JanitorKnowledge
+  - CookingKnowledge
+  - DoorsKnowledge
+  - AirlocksKnowledge
+  - BananiumKnowledge
+  - BotsKnowledge
+  - FurnitureKnowledge
+  - InfrastructureKnowledge
+  - ElectronicsKnowledge
+  - WallsKnowledge
+  - WindowsKnowledge
+  - SpiderCraftKnowledge
+  - SmokeablesKnowledge
+  - RevolutionaryKnowledge
+
+- type: knowledgeCategory
+  id: MeleeCombat
+  name: knowledge-category-melee
+
+- type: knowledgeCategory
+  id: RangedCombat
+  name: knowledge-category-ranged
+
+- type: knowledgeCategory
+  id: Medical
+  name: knowledge-category-medical
+
+- type: knowledgeCategory
+  id: Crafting
+  name: knowledge-category-crafting
+
+- type: knowledgeCategory
+  id: Intellectual
+  name: knowledge-category-intellectual
+
+- type: knowledgeCategory
+  id: Scientific
+  name: knowledge-category-scientific
+
+- type: knowledgeCategory
+  id: Recipes
+  name: knowledge-category-recipes
+
+- type: entity
+  id: BasePirateKnowledge
+  abstract: true
+  components:
+  - type: Knowledge
+    category: Crafting
+    learnedLevel: 0
+    experienceCost: 1
+    costs: [0, 1, 3, 6]
+
+- type: entity
+  id: BasePirateMeleeKnowledge
+  parent: BasePirateKnowledge
+  abstract: true
+  components:
+  - type: Knowledge
+    category: MeleeCombat
+    color: "#f71818"
+    experienceCost: 15
+    costs: [0, 2, 6]
+
+- type: entity
+  id: BasePirateRangedKnowledge
+  parent: BasePirateKnowledge
+  abstract: true
+  components:
+  - type: Knowledge
+    category: RangedCombat
+    color: "#f71818"
+    experienceCost: 15
+    costs: [0, 2, 6]
+
+- type: entity
+  id: BasePirateMedicalKnowledge
+  parent: BasePirateKnowledge
+  abstract: true
+  components:
+  - type: Knowledge
+    category: Medical
+    color: "#1865d8"
+
+- type: entity
+  id: BasePirateCraftingKnowledge
+  parent: BasePirateKnowledge
+  abstract: true
+  components:
+  - type: Knowledge
+    category: Crafting
+    color: "#0ba881"
+    experienceCost: 20
+    timeBetweenExperience: 1
+
+- type: entity
+  id: BasePirateIntellectualKnowledge
+  parent: BasePirateKnowledge
+  abstract: true
+  components:
+  - type: Knowledge
+    category: Intellectual
+
+- type: entity
+  id: BasePirateScientificKnowledge
+  parent: BasePirateKnowledge
+  abstract: true
+  components:
+  - type: Knowledge
+    category: Scientific
+    color: "#c01dcf"
+
+- type: entity
+  id: BasePirateRecipeKnowledge
+  parent: BasePirateKnowledge
+  abstract: true
+  components:
+  - type: Knowledge
+    category: Recipes
+    color: "#f39b29"
+    experienceCost: 20
+    timeBetweenExperience: 1
+
+# Melee combat
+- type: entity
+  parent: BasePirateMeleeKnowledge
+  id: MeleeKnowledge
+
+- type: entity
+  parent: BasePirateMeleeKnowledge
+  id: KnowledgeWeaponsBludgeon
+
+- type: entity
+  parent: BasePirateMeleeKnowledge
+  id: KnowledgeWeaponsShortBlade
+
+- type: entity
+  parent: BasePirateMeleeKnowledge
+  id: KnowledgeWeaponsLongBlade
+
+- type: entity
+  parent: BasePirateMeleeKnowledge
+  id: KnowledgeWeaponsPolearm
+
+- type: entity
+  parent: BasePirateMeleeKnowledge
+  id: KnowledgeWeaponsNonLethal
+
+- type: entity
+  parent: BasePirateMeleeKnowledge
+  id: KnowledgeWeaponsTool
+
+- type: entity
+  parent: BasePirateMeleeKnowledge
+  id: KnowledgeWeaponsShield
+  components:
+  - type: Knowledge
+    unremoveable: true
+  - type: BlockFractionKnowledge
+    curve: !type:RootSkillCurve
+      skillScale: 100
+      curveOffset: 0.7
+      curveScale: 0.06
+
+- type: entity
+  parent: BasePirateMeleeKnowledge
+  id: KnowledgeWeaponsEnergy
+  components:
+  - type: Knowledge
+    costs: null
+
+# Ranged combat
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: ShootingKnowledge
+  components:
+  - type: Knowledge
+    unremoveable: true
+  - type: AimSpeedKnowledge
+    # Pirate: Restore the pre-rework Trauma random shot-angle spread.
+    curve: !type:MarksmanshipSpreadSkillCurve
+      untrainedSpread: 3
+      basicTrainingLevel: 26
+      expertLevel: 50
+      minimumSpread: 0.05
+
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: KnowledgeWeaponsPistol
+
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: KnowledgeWeaponsRifle
+
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: KnowledgeWeaponsSMG
+
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: KnowledgeWeaponsShotgun
+
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: KnowledgeWeaponsSniper
+  components:
+  - type: Knowledge
+    costs: null
+
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: KnowledgeWeaponsHeavy
+  components:
+  - type: Knowledge
+    costs: null
+
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: KnowledgeWeaponsLaser
+
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: KnowledgeWeaponsMining
+
+- type: entity
+  parent: BasePirateRangedKnowledge
+  id: ThrowingKnowledge
+  components:
+  - type: Knowledge
+    unremoveable: true
+    experienceCost: 5
+  - type: ThrowInsertKnowledge
+    curve: !type:QuadraticSkillCurve
+
+# Medical
+- type: entity
+  parent: BasePirateMedicalKnowledge
+  id: SurgeryKnowledge
+  components:
+  - type: Knowledge
+    experienceCost: 24
+
+- type: entity
+  parent: BasePirateMedicalKnowledge
+  id: FirstAidKnowledge
+  components:
+  - type: Knowledge
+    experienceCost: 19
+  - type: InjectTimeKnowledge
+    curve: !type:CubicSkillCurve
+      skillOffset: 0.6
+      skillScale: -1
+      curveOffset: 1
+      curveScale: 1.4
+
+- type: entity
+  parent: BasePirateMedicalKnowledge
+  id: ChemistryKnowledge
+  components:
+  - type: Knowledge
+    experienceCost: 15
+
+# Crafting quality
+- type: entity
+  parent: BasePirateCraftingKnowledge
+  id: FabricationKnowledge
+  components:
+  - type: Knowledge
+    experienceCost: 15
+
+- type: entity
+  parent: BasePirateCraftingKnowledge
+  id: WeaponsKnowledge
+
+- type: entity
+  parent: BasePirateCraftingKnowledge
+  id: ArmorKnowledge
+
+- type: entity
+  parent: BasePirateCraftingKnowledge
+  id: MetalworkingKnowledge
+
+- type: entity
+  parent: BasePirateCraftingKnowledge
+  id: CarvingKnowledge
+
+- type: entity
+  parent: BasePirateCraftingKnowledge
+  id: GunsmithingKnowledge
+
+- type: entity
+  parent: BasePirateCraftingKnowledge
+  id: MechanicsKnowledge
+
+- type: entity
+  parent: BasePirateCraftingKnowledge
+  id: TailoringKnowledge
+
+# Intellectual and scientific
+- type: entity
+  parent: BasePirateIntellectualKnowledge
+  id: MagicalLiteracyKnowledge
+  components:
+  - type: Knowledge
+    experienceCost: 30
+    costs: [0, 2]
+
+- type: entity
+  parent: BasePirateIntellectualKnowledge
+  id: LiteracyKnowledge
+  components:
+  - type: Knowledge
+    experienceCost: 20
+
+- type: entity
+  parent: BasePirateScientificKnowledge
+  id: JanitorKnowledge
+  components:
+  - type: Knowledge
+    experienceCost: 5
+  - type: ThrowInsertKnowledge
+    curve: !type:QuadraticSkillCurve
+      skillScale: 2.9
+
+# Recipe and construction knowledge
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: CookingKnowledge
+  components:
+  - type: Knowledge
+    experienceCost: 15
+  - type: ExperienceOnCooking
+    scale: 100
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: DoorsKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: AirlocksKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: BananiumKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: BotsKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: FurnitureKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: InfrastructureKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: ElectronicsKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: WallsKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: WindowsKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: SpiderCraftKnowledge
+  components:
+  - type: Knowledge
+    costs: null
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: SmokeablesKnowledge
+
+- type: entity
+  parent: BasePirateRecipeKnowledge
+  id: RevolutionaryKnowledge
+  components:
+  - type: Knowledge
+    costs: null

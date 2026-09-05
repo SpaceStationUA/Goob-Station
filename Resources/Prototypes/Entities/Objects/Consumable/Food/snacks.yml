@@ -18,7 +18,9 @@
         maxVol: 30 # Room for extra condiments
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5 # Goobstation - snacks are worse than cooked food
+        - ReagentId: JunkFood # Goobstation - snacks are worse than cooked food
+          Quantity: 5
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
@@ -150,11 +152,13 @@
         maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5 # Goobstation - snacks are worse than cooked food
         - ReagentId: Theobromine
           Quantity: 3
         - ReagentId: CocoaPowder
           Quantity: 1
+        - ReagentId: JunkFood # Goobstation - snacks are worse than cooked food
+          Quantity: 5
 
 - type: entity
   parent: FoodSnackBase
@@ -340,6 +344,8 @@
           Quantity: 30
         - ReagentId: Soysauce
           Quantity: 5
+        - ReagentId: JunkFood # Goobstation - snacks are worse than cooked food
+          Quantity: 15
   - type: Sprite
     state: ramen
   - type: Edible
@@ -364,6 +370,8 @@
           Quantity: 30
         - ReagentId: CapsaicinOil
           Quantity: 5
+        - ReagentId: JunkFood # Goobstation - snacks are worse than cooked food
+          Quantity: 15
 
 - type: entity
   parent: FoodSnackBase
@@ -387,9 +395,11 @@
         maxVol: 30 # Room for extra condiments
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5 # Goobstation - snacks are worse than cooked food
         - ReagentId: Soysauce
           Quantity: 2
+        - ReagentId: JunkFood # Goobstation - snacks are worse than cooked food
+          Quantity: 5
   - type: Edible
     trash:
     - FoodPacketChowMeinTrash
@@ -416,11 +426,13 @@
         maxVol: 30 # Room for extra condiments
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 5 # Goobstation - snacks are worse than cooked food
         - ReagentId: CapsaicinOil
           Quantity: 2
         - ReagentId: Soysauce
           Quantity: 2
+        - ReagentId: JunkFood # Goobstation - snacks are worse than cooked food
+          Quantity: 5
   - type: Edible
     trash:
     - FoodPacketDanDanTrash
@@ -499,7 +511,9 @@
         maxVol: 20 #Goobstation
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15 #Goobstation
+          Quantity: 10 # Goobstation - junk food less useful
+        - ReagentId: JunkFood # Goobstation - snacks are worse than cooked food
+          Quantity: 5
 
 - type: entity
   parent: BaseItem
@@ -545,9 +559,11 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 4 # Goobstation - junk food less useful
         - ReagentId: Theobromine
           Quantity: 3
+        - ReagentId: JunkFood # Goobstation - snacks are worse than cooked food
+          Quantity: 5
 
 - type: entity
   parent: FoodSnackBase
@@ -575,6 +591,8 @@
         reagents:
         - ReagentId: Sugar
           Quantity: 15
+        - ReagentId: JunkFood # Goobstation - snacks are worse than cooked food
+          Quantity: 1
   - type: FlavorProfile
     flavors:
     - sweet

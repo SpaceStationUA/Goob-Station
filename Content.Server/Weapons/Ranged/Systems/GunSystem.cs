@@ -26,6 +26,7 @@ using Content.Shared._Lavaland.Weapons.Ranged.Events;
 using Robust.Server.GameObjects;
 using Content.Goobstation.Common.Weapons.Ranged;
 using Content.Shared._Shitmed.Targeting;
+using Content.Shared._Pirate.Knowledge.Quality; // Pirate
 using Content.Shared.Body.Components;
 using Content.Shared.Effects;
 using Content.Shared.PowerCell;
@@ -128,6 +129,9 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (!cartridge.Spent)
                     {
                         var uid = Spawn(cartridge.Prototype, fromEnt);
+                        // Pirate: quality follows this cartridge's projectile without any lookup or polling.
+                        var qualityTransfer = new QualityTransferEvent(uid);
+                        RaiseLocalEvent(ent!.Value, ref qualityTransfer);
                         CreateAndFireProjectiles(uid, cartridge);
 
                         RaiseLocalEvent(ent!.Value, new AmmoShotEvent()
@@ -213,6 +217,9 @@ public sealed partial class GunSystem : SharedGunSystem
                 for (var i = 1; i < ammoSpreadComp.Count; i++)
                 {
                     var newuid = Spawn(ammoSpreadComp.Proto, fromEnt);
+                    // Pirate: each additional pellet inherits the quality of its root projectile.
+                    var qualityTransfer = new QualityTransferEvent(newuid);
+                    RaiseLocalEvent(ammoEnt, ref qualityTransfer);
                     // Lavaland Change: Raise event when a projectile/pellet is fired from a gun.
                     RaiseLocalEvent(gun, new ProjectileShotEvent()
                     {
@@ -352,7 +359,9 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var spread = component.CurrentAngle.Theta * random;
         var angle = new Angle(direction.Theta + component.CurrentAngle.Theta * random);
-        DebugTools.Assert(Math.Abs(spread) <= maxTheta); // goob edit
+        // Pirate: skill modifiers scale the random shot angle beyond the gun's unmodified bounds.
+        var spreadBound = Math.Max(Math.Abs(minTheta), Math.Abs(maxTheta)) * Math.Abs(angleEv.Modifier);
+        DebugTools.Assert(Math.Abs(spread) <= spreadBound); // goob edit
         return angle;
     }
 

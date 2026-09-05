@@ -7,6 +7,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: BlueLight
@@ -15,6 +20,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: YellowLight
@@ -23,6 +33,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: PinkLight
@@ -31,6 +46,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: OrangeLight
@@ -39,6 +59,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: BlackLight
@@ -47,6 +72,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: RedLight
@@ -55,6 +85,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GreenLight
@@ -63,6 +98,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: CyanLightBulb
@@ -71,6 +111,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: BlueLightBulb
@@ -79,6 +124,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: YellowLightBulb
@@ -87,6 +137,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: PinkLightBulb
@@ -95,6 +150,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: OrangeLightBulb
@@ -103,6 +163,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: BlackLightBulb
@@ -111,6 +176,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: RedLightBulb
@@ -119,6 +189,11 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: GreenLightBulb
@@ -127,3 +202,8 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1

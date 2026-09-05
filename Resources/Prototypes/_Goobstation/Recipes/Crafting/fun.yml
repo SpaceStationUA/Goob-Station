@@ -6,3 +6,8 @@
   targetNode: toygrenade
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2

@@ -8,6 +8,7 @@
   },
   "states": [
     {"name": "interdyne_green"},
-    {"name": "interdyne_evil"}
+    {"name": "interdyne_evil"},
+    {"name": "rev_label"}
   ]
 }

@@ -142,6 +142,7 @@
   - type: Construction
     graph: GasPipe
     node: half
+  - type: GasFlowMeterAttachable # Pirate: gas flow meter
   - type: Item
     size: Small
     storedSprite:
@@ -183,6 +184,7 @@
   - type: Construction
     graph: GasPipe
     node: straight
+  - type: GasFlowMeterAttachable # Pirate: gas flow meter
   - type: Item
     storedSprite:
       sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -232,6 +234,7 @@
   - type: Construction
     graph: GasPipe
     node: bend
+  - type: GasFlowMeterAttachable # Pirate: gas flow meter
   - type: Item
     shape:
     - 0,0,1,0
@@ -287,6 +290,7 @@
   - type: Construction
     graph: GasPipe
     node: tjunction
+  - type: GasFlowMeterAttachable # Pirate: gas flow meter
   - type: Item
     heldPrefix: TJunction
     storedSprite:
@@ -342,6 +346,7 @@
   - type: Construction
     graph: GasPipe
     node: fourway
+  - type: GasFlowMeterAttachable # Pirate: gas flow meter
   - type: VentCrawlerTube # Goobstation - ventcrawl
     containerId: VentCrawlerTube
   - type: VentCrawlerJunction # Goobstation - ventcrawl

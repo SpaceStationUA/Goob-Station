@@ -7,6 +7,12 @@
   targetNode: done
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    MechanicsKnowledge: 1
 
 - type: construction
   id: ClosetSteelSecure
@@ -15,6 +21,12 @@
   targetNode: done
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    MechanicsKnowledge: 1
 
 - type: construction
   id: ClosetFreezer
@@ -24,6 +36,12 @@
   targetNode: done
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    MechanicsKnowledge: 1
 
 - type: construction
   id: GunSafe
@@ -32,6 +50,12 @@
   targetNode: done
   category: construction-category-storage
   objectType: Structure
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+    MechanicsKnowledge: 2
 
 - type: construction
   id: ClosetWall
@@ -45,3 +69,9 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    MechanicsKnowledge: 1

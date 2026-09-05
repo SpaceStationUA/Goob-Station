@@ -5,6 +5,8 @@
   id: BaseKnife
   abstract: true
   components:
+  - type: WeaponClass # Pirate
+    class: Knife
   - type: Tag
     tags:
     - Knife

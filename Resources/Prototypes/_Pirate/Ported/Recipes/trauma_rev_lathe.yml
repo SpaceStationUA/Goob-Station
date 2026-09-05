@@ -1,0 +1,593 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: complete Trauma revolutionary lathe recipe set, adapted to local skillbook IDs.
+
+- type: latheRecipe
+  abstract: true
+  id: BaseRevWeapon
+  categories: [ Weapons ]
+  completetime: 15
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  abstract: true
+  id: BaseRevWeaponUpgraded
+  categories: [ Weapons ]
+  completetime: 15
+  materials:
+    Steel: 500
+    Plasteel: 500
+
+- type: latheRecipe
+  parent: BaseRevWeapon
+  id: RevSword
+  result: RevSwordBlade
+
+- type: latheRecipe
+  parent: BaseRevWeapon
+  id: RevKnife
+  result: RevKnifeBlade
+
+- type: latheRecipe
+  parent: BaseRevWeapon
+  id: RevPitchfork
+  result: RevPitchforkHead
+
+- type: latheRecipe
+  parent: BaseRevWeapon
+  id: RevTorch
+  result: RevTorchHead
+
+- type: latheRecipe
+  parent: BaseRevWeapon
+  id: RevMace
+  result: RevMaceHead
+
+- type: latheRecipe
+  parent: BaseRevWeaponUpgraded
+  id: RevMaul
+  result: RevMaulHead
+
+- type: latheRecipe
+  parent: BaseRevWeapon
+  id: RevKunai
+  result: RevKunaiHead
+  completetime: 5
+
+- type: latheRecipe
+  parent: BaseRevWeapon
+  id: RevCaltrop
+  result: Caltrops
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingOuterArmorRev
+  result: ClothingOuterArmorRev
+  completetime: 15
+  materials:
+    Steel: 1500
+
+- type: latheRecipe
+  id: RevDropPodTraps
+  result: RevDropPodTraps
+  completetime: 6
+  materials:
+    Silver: 100
+    Gold: 100
+    Steel: 300
+    Glass: 100
+
+- type: latheRecipe
+  id: RevPropaganda
+  result: RevPropaganda
+  completetime: 180
+  materials:
+    Paper: 100
+
+- type: latheRecipe
+  id: BookShootingPrintedRev
+  result: PirateBookRevolutionaryShooting
+  completetime: 180
+  materials:
+    Paper: 1000
+
+- type: latheRecipe
+  id: BookMeleePrintedRev
+  result: PirateBookRevolutionaryMelee
+  completetime: 180
+  materials:
+    Paper: 1000
+
+- type: latheRecipe
+  id: BookFabricationPrinted
+  result: PirateBookFabricationPrinted
+  completetime: 180
+  materials:
+    Paper: 1000
+
+- type: latheRecipe
+  id: BookSurvivalPrinted
+  result: PirateBookSurvivalPrinted
+  completetime: 180
+  materials:
+    Paper: 1000
+
+- type: latheRecipe
+  id: RevIFF
+  result: ClothingRevolutionaryIFF
+  completetime: 6
+  materials:
+    Plastic: 100
+    Gold: 150
+
+- type: latheRecipe
+  id: TrackingImplanterRev
+  result: TrackingImplanterRev
+  completetime: 6
+  materials:
+    Plastic: 100
+    Gold: 50
+    Silver: 50
+
+- type: latheRecipe
+  id: RevGunParts
+  result: RevGunParts
+  completetime: 15
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  abstract: true
+  id: BaseRevsMaterials
+  completetime: 30
+  materials:
+    Plasma: 500
+
+- type: latheRecipe
+  id: RevBrass
+  parent: BaseRevsMaterials
+  result: SheetBrass
+
+- type: latheRecipe
+  id: RevBiomass
+  parent: BaseRevsMaterials
+  result: MaterialBiomass
+
+- type: latheRecipe
+  id: RevCrystal
+  parent: BaseRevsMaterials
+  result: MaterialBSCrystal
+
+- type: latheRecipe
+  id: RevBones
+  parent: BaseRevsMaterials
+  result: MaterialBones
+
+- type: latheRecipe
+  id: RevGlass
+  parent: BaseRevsMaterials
+  result: SheetGlass
+
+- type: latheRecipe
+  id: RevCardboard
+  parent: BaseRevsMaterials
+  result: MaterialCardboard
+
+- type: latheRecipe
+  id: RevBanana
+  parent: BaseRevsMaterials
+  result: MaterialBananium
+
+- type: latheRecipe
+  id: RevSteel
+  parent: BaseRevsMaterials
+  result: SheetSteel
+
+- type: latheRecipe
+  id: RevPaper
+  parent: BaseRevsMaterials
+  result: SheetPaper
+
+- type: latheRecipe
+  id: RevCloth
+  parent: BaseRevsMaterials
+  result: MaterialCloth
+
+- type: latheRecipe
+  id: RevMeat
+  parent: BaseRevsMaterials
+  result: MaterialSheetMeat
+
+- type: latheRecipe
+  id: RevDuraThread
+  parent: BaseRevsMaterials
+  result: MaterialDurathread
+
+- type: latheRecipe
+  id: RevPlasma
+  parent: BaseRevsMaterials
+  result: SheetPlasma
+
+- type: latheRecipe
+  id: RevDiamonds
+  parent: BaseRevsMaterials
+  result: MaterialDiamond
+
+- type: latheRecipe
+  id: RevSilk
+  parent: BaseRevsMaterials
+  result: MaterialWebSilk
+
+- type: latheRecipe
+  id: RevUranium
+  parent: BaseRevsMaterials
+  result: SheetUranium
+
+- type: latheRecipe
+  id: RevPlasteel
+  parent: BaseRevsMaterials
+  result: SheetPlasteel
+
+- type: latheRecipe
+  id: RevWood
+  parent: BaseRevsMaterials
+  result: MaterialWoodPlank
+
+- type: latheRecipe
+  id: RevPlastic
+  parent: BaseRevsMaterials
+  result: SheetPlastic
+
+- type: latheRecipe
+  id: RevGunpowder
+  parent: BaseRevsMaterials
+  result: MaterialGunpowder30
+
+- type: latheRecipe
+  abstract: true
+  id: BaseSmilingPal
+  completetime: 15
+  materials:
+    Plastic: 50
+
+- type: latheRecipe
+  id: SmilingPal1
+  parent: BaseSmilingPal
+  result: SmilingBanana
+
+- type: latheRecipe
+  id: SmilingPal2
+  parent: BaseSmilingPal
+  result: SmilingBean
+
+- type: latheRecipe
+  id: SmilingPal3
+  parent: BaseSmilingPal
+  result: SmilingBoss
+
+- type: latheRecipe
+  id: SmilingPal4
+  parent: BaseSmilingPal
+  result: SmilingRedGuy
+
+- type: latheRecipe
+  id: SmilingPal5
+  parent: BaseSmilingPal
+  result: SmilingFrog
+
+- type: latheRecipe
+  id: SmilingPal6
+  parent: BaseSmilingPal
+  result: SmilingTylenol
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseRevWeapon
+  id: BaseRevBullet
+  completetime: 1.5
+  materials:
+    Steel: 5
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseRevWeapon
+  id: BaseRevMagazine
+  completetime: 15
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  parent: BaseRevBullet
+  id: RevTurretBullet
+  result: CartridgeTurret
+
+- type: latheRecipe
+  parent: BaseRevBullet
+  id: RevPistolBullet
+  result: CartridgePistol
+
+- type: latheRecipe
+  parent: BaseRevBullet
+  id: RevRifleBullet
+  result: CartridgeLightRifle
+
+- type: latheRecipe
+  parent: BaseRevBullet
+  id: RevBuckShell
+  result: ShellShotgun
+  materials:
+    Steel: 20
+
+- type: latheRecipe
+  parent: BaseRevBullet
+  id: RevSlugShell
+  result: ShellShotgunSlug
+  materials:
+    Steel: 15
+    Plastic: 5
+
+- type: latheRecipe
+  parent: BaseRevBullet
+  id: RevBreachShell
+  result: ShellShotgunBreaching
+  materials:
+    Steel: 15
+    Plasteel: 5
+
+- type: latheRecipe
+  parent: BaseRevMagazine
+  id: RevTurretMagazine
+  result: BaseMagazineTurretEmpty
+
+- type: latheRecipe
+  parent: BaseRevMagazine
+  id: RevTurretMagazineHeavy
+  result: BaseMagazineTurretHeavyEmpty
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  parent: BaseRevMagazine
+  id: RevSMGMagazine
+  result: MagazinePistolSubMachineGunEmpty
+
+- type: latheRecipe
+  abstract: true
+  id: BaseRevClothingRecipe
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  parent: BaseRevClothingRecipe
+  id: ClothingBackpackRev
+  result: ClothingBackpackRev
+
+- type: latheRecipe
+  parent: BaseRevClothingRecipe
+  id: ClothingBeltRevWebbing
+  result: ClothingBeltRevWebbing
+
+- type: latheRecipe
+  parent: BaseRevClothingRecipe
+  id: RevHelmetLiner
+  result: RevHelmetLiner
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  parent: BaseRevClothingRecipe
+  id: RevGasFilter
+  result: RevGasFilter
+  materials:
+    Cloth: 100
+    Plastic: 50
+
+- type: latheRecipe
+  parent: BaseRevClothingRecipe
+  id: ClothingHeadBandRev
+  result: ClothingHeadBandRev
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  parent: BaseRevClothingRecipe
+  id: RevEmptyVest
+  result: RevEmptyVest
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  parent: BaseRevClothingRecipe
+  id: ClothingUniformJumpsuitMilitaryTurtleneckRev
+  result: ClothingUniformJumpsuitMilitaryTurtleneckRev
+
+- type: latheRecipe
+  parent: BaseRevClothingRecipe
+  id: ClothingShoesBootsRev
+  result: ClothingShoesBootsRev
+  materials:
+    Cloth: 200
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseRevClothingRecipe
+  id: ClothingHandsGlovesCombat
+  result: ClothingHandsGlovesCombat
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  abstract: true
+  id: BaseRevDatachip
+  completetime: 10
+  materials:
+    Steel: 25
+    Plastic: 25
+    Gold: 25
+
+- type: latheRecipe
+  id: DataChipAIBoard
+  parent: BaseRevDatachip
+  result: DataChipAIBoard
+
+- type: latheRecipe
+  id: DataChipReflectivePlate
+  parent: BaseRevDatachip
+  result: DataChipReflectivePlate
+
+- type: latheRecipe
+  id: DataChipFakeMindshield
+  parent: BaseRevDatachip
+  result: DataChipFakeMindshield
+
+- type: latheRecipe
+  id: DataChipShieldRipper
+  parent: BaseRevDatachip
+  result: DataChipShieldRipper
+
+- type: latheRecipe
+  id: MoldMeleeUpgrades
+  parent: BaseRevDatachip
+  result: RevDropPodMelees
+
+- type: latheRecipe
+  abstract: true
+  id: BaseRevGadget
+  completetime: 7.5
+
+- type: latheRecipe
+  id: RevJammer
+  parent: BaseRevGadget
+  result: RevRadioJammer
+  materials:
+    Steel: 100
+    Plastic: 100
+    Glass: 25
+    Gold: 25
+    Silver: 25
+
+- type: latheRecipe
+  id: RevDoor
+  parent: BaseRevGadget
+  result: RevDoorFlatpack
+  materials:
+    Steel: 500
+    Plastic: 50
+    Glass: 150
+
+- type: latheRecipe
+  id: RevVisor
+  parent: BaseRevGadget
+  result: ClothingEyesRevolutionaryVisor
+  materials:
+    Glass: 50
+    Plastic: 50
+
+- type: latheRecipe
+  id: RevHeadset
+  parent: BaseRevGadget
+  result: ClothingHeadsetRevolutionary
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
+  id: RevCircuitBoard
+  parent: BaseRevGadget
+  result: RevCircuitBoard
+  materials:
+    Steel: 50
+    Plastic: 50
+    Gold: 25
+
+- type: latheRecipe
+  id: RevReflectivePlate
+  parent: BaseRevGadget
+  result: RevReflectivePlate
+  materials:
+    Steel: 200
+    Silver: 200
+    Gold: 25
+
+- type: latheRecipe
+  id: FakeMindShieldImplanterRev
+  parent: BaseRevGadget
+  result: FakeMindShieldImplanterRev
+  materials:
+    Steel: 50
+    Plastic: 50
+    Gold: 25
+
+- type: latheRecipe
+  id: RevShieldRipper
+  parent: BaseRevGadget
+  result: RevShieldRipper
+  materials:
+    Steel: 50
+    Plastic: 50
+    Gold: 25
+
+- type: latheRecipe
+  id: PinpointerCommand
+  parent: BaseRevGadget
+  result: PinpointerCommand
+  materials:
+    Steel: 50
+    Plastic: 50
+    Gold: 25
+
+- type: latheRecipe
+  id: FusionCore
+  parent: BaseRevGadget
+  result: FusionCore
+  materials:
+    Steel: 1000
+    Plastic: 500
+    Glass: 250
+    Gold: 750
+    Uranium: 1000
+
+- type: latheRecipe
+  abstract: true
+  id: BaseRevMedical
+  categories: [ Medical ]
+  materials:
+    Cloth: 50
+    Plasma: 50
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseRevMedical
+  id: BaseRevMedicalAdvanced
+  materials:
+    Cloth: 100
+    Plasma: 100
+
+- type: latheRecipe
+  parent: BaseRevMedicalAdvanced
+  id: RegenerativeMesh
+  result: RegenerativeMesh
+
+- type: latheRecipe
+  parent: BaseRevMedicalAdvanced
+  id: MedicatedSuture
+  result: MedicatedSuture
+
+- type: latheRecipe
+  parent: BaseRevMedical
+  id: RevBrutepack
+  result: Brutepack
+
+- type: latheRecipe
+  parent: BaseRevMedical
+  id: RevOintment
+  result: Ointment
+
+- type: latheRecipe
+  parent: BaseRevMedical
+  id: RevGauze
+  result: Gauze

@@ -21,6 +21,7 @@ using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Destructible;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Pirate.Knowledge; // Pirate: cooking skill completion events.
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.Random;
@@ -393,6 +394,7 @@ namespace Content.Server.Kitchen.EntitySystems
             args.Handled = true;
             _handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
             UpdateUserInterfaceState(ent, ent.Comp);
+            ent.Comp.LastUser = args.User; // Pirate: attribute the next completed recipe.
         }
 
         private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
@@ -593,6 +595,8 @@ namespace Content.Server.Kitchen.EntitySystems
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
             activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
             activeComp.PortionedRecipe = portionedRecipe;
+            if (user is { } actualUser)
+                component.LastUser = actualUser; // Pirate: retain the starter for completion XP.
             //Scale tiems with cook times
             component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(component.CurrentCookTimerTime * component.CookTimeMultiplier);
             if (malfunctioning)
@@ -602,6 +606,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void StopCooking(Entity<MicrowaveComponent> ent)
         {
+            ent.Comp.LastUser = null;
             RemCompDeferred<ActiveMicrowaveComponent>(ent);
             foreach (var solid in ent.Comp.Storage.ContainedEntities)
             {
@@ -672,13 +677,21 @@ namespace Content.Server.Kitchen.EntitySystems
                 //this means the microwave has finished cooking.
                 AddTemperature(microwave, Math.Max(frameTime + active.CookTimeRemaining, 0)); //Though there's still a little bit more heat to pump out
 
-                if (active.PortionedRecipe.Item1 != null)
+                if (active.PortionedRecipe.Item1 is { } recipe)
                 {
+                    // Pirate: emit one event for the portions produced by this completion.
+                    if (microwave.LastUser is { } user)
+                    {
+                        var cooked = new CookedFoodEvent(user, recipe.Result, active.PortionedRecipe.Item2);
+                        RaiseLocalEvent(user, ref cooked);
+                        microwave.LastUser = null;
+                    }
+
                     var coords = Transform(uid).Coordinates;
                     for (var i = 0; i < active.PortionedRecipe.Item2; i++)
                     {
-                        SubtractContents(microwave, active.PortionedRecipe.Item1);
-                        Spawn(active.PortionedRecipe.Item1.Result, coords);
+                        SubtractContents(microwave, recipe);
+                        Spawn(recipe.Result, coords);
                     }
                 }
 

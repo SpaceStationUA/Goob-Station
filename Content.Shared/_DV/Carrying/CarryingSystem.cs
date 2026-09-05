@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Pirate.Common.Traits.Lightweight; // Pirate - Traits Rework
+using Content.Shared._Pirate.Buckle;
 using Content.Shared._DV.Polymorph;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
@@ -357,6 +358,7 @@ public sealed class CarryingSystem : EntitySystem
             // no tower of spacemen or stack overflow
             !HasComp<BeingCarriedComponent>(carrier) &&
             !HasComp<BeingCarriedComponent>(carried) &&
+            !HasComp<StrapLockedComponent>(carried) && // Pirate - nailed/held mobs cannot be carried off a strap.
             // finally check that there are enough free hands
             _hands.CountFreeHands(carrier) >= carried.Comp.FreeHandsRequired;
     }

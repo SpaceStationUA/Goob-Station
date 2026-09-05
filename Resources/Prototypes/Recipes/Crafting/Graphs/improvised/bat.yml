@@ -11,7 +11,7 @@
             - material: WoodPlank
               amount: 5
               doAfter: 4
-        
+
     - node: incompleteBat
       entity: IncompleteBaseBallBat
       edges:
@@ -32,6 +32,56 @@
           steps:
             - tool: Slicing
               doAfter: 4
-        
+
     - node: bat
       entity: BaseBallBat
+      # Pirate: Trauma skill crafting extensions.
+      edges:
+        - to: barbedwire
+          steps:
+            - material: BarbedWire
+              amount: 3
+              doAfter: 5
+        - to: nail
+          steps:
+            - tag: Nail
+              name: construction-graph-tag-nail
+              icon:
+                sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+                state: icon
+            - tool: Hammering
+              doAfter: 0.5
+            - tag: Nail
+              name: construction-graph-tag-nail
+              icon:
+                sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+                state: icon
+            - tool: Hammering
+              doAfter: 0.5
+            - tag: Nail
+              name: construction-graph-tag-nail
+              icon:
+                sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+                state: icon
+            - tool: Hammering
+              doAfter: 0.5
+            - tag: Nail
+              name: construction-graph-tag-nail
+              icon:
+                sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+                state: icon
+            - tool: Hammering
+              doAfter: 0.5
+            - tag: Nail
+              name: construction-graph-tag-nail
+              icon:
+                sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+                state: icon
+            - tool: Hammering
+              doAfter: 0.5
+
+    - node: barbedwire
+      entity: BaseBallBatBarb
+
+    - node: nail
+      entity: BaseBallBatNail

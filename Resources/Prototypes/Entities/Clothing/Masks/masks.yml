@@ -306,7 +306,7 @@
     slots:
     - Snout
   - type: SpeakFontOverride # Goob - clown speaks pink comic sans
-    fontId: LDFComicSans
+    # fontId: LDFComicSans # Pirate: disabled because the font does not support Cyrillic.
     color: "#e93790"
 
 - type: entity
@@ -970,11 +970,18 @@
     state: icon
   - type: Clothing
     sprite: Clothing/Mask/welding-gas.rsi
+    equippedPrefix: up # Pirate: welding visor - match the initially raised welding visor
   - type: BreathMask
-  - type: IngestionBlocker
   - type: IdentityBlocker
   - type: FlashImmunity
   - type: EyeProtection
+  - type: WeldingVisor # Pirate: welding visor toggle - spawns with the visor raised (not protecting)
+    lowered: false
+    soundLower:
+      collection: PirateWeldingVisorDown
+    soundRaise:
+      collection: PirateWeldingVisorUp
+  # Pirate: welding visor toggle - the face shield only controls flash and eye protection.
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Steel: 150
@@ -988,6 +995,7 @@
   - type: HideLayerClothing
     slots:
     - Snout
+    hideOnToggle: true # Pirate: welding visor toggle - only hide the snout while the visor is actually lowered
 
 # Entity tables
 - type: entityTable

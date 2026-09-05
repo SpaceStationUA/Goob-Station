@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Client._Pirate.Knowledge;
 using Content.Client.CharacterInfo;
 using Content.Client.Gameplay;
 using Content.Client.Stylesheets;
@@ -34,6 +35,7 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
+    [UISystemDependency] private readonly KnowledgeClientSystem? _knowledge = default; // Pirate: optional in integration clients.
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
@@ -41,6 +43,7 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
         base.Initialize();
 
         SubscribeNetworkEvent<MindRoleTypeChangedEvent>(OnRoleTypeChanged);
+        _knowledge?.KnowledgeChanged += OnPirateKnowledgeChanged; // Pirate
     }
 
     private CharacterWindow? _window;
@@ -150,6 +153,7 @@ public sealed partial class CharacterUIController : UIController, IOnStateEntere
         _window.NameLabel.Text = entityName;
         _window.SubText.Text = job;
         SetPirateSelfCharacterInfo(entity); // Pirate: Starlight character descriptions.
+        UpdatePirateKnowledgeTab(entity); // Pirate
         _window.Objectives.RemoveAllChildren();
         _window.ObjectivesLabel.Visible = objectives.Any();
         _window.Memories.RemoveAllChildren(); //Pirate banking

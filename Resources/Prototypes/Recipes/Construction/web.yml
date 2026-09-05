@@ -15,6 +15,12 @@
     - SpiderCraft
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: TableWeb
@@ -31,6 +37,11 @@
     - SpiderCraft
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: WebBed
@@ -47,6 +58,11 @@
     - SpiderCraft
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: ChairWeb
@@ -60,6 +76,11 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: CrateWeb
@@ -74,6 +95,11 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: WebDoor
@@ -89,3 +115,8 @@
     - SpiderCraft
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 2

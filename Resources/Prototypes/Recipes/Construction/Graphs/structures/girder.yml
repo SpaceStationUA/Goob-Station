@@ -31,6 +31,22 @@
             - tool: Screwing
               doAfter: 2
 
+    # Pirate: secret door start - unanchored ("displaced") girder conceals into a secret door, as in SS13
+        - to: solidSecretDoor
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SetAnchor
+              value: true
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+    # Pirate: secret door end
+
         - to: wall
           completed:
             - !type:SnapToGrid
@@ -148,6 +164,70 @@
             - tool: Welding
               doAfter: 10
 
+    # Pirate: secret door start - welder dismantles back to a displaced girder, screwdriver bolts it into a real wall (SS13 falsewall)
+    - node: solidSecretDoor
+      entity: SolidSecretDoor
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:SetAnchor
+              value: false
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+        - to: wall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorClosed {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: reinforcedSecretDoor
+      entity: ReinforcedSecretDoor
+      edges:
+        - to: reinforcedGirder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+            - !type:SetAnchor
+              value: false
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+        # Reinforced falsewalls can also be cut apart with wirecutters in SS13
+        - to: reinforcedGirder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+            - !type:SetAnchor
+              value: false
+          steps:
+            - tool: Cutting
+              doAfter: 2
+
+        - to: reinforcedWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorClosed {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+    # Pirate: secret door end
+
     - node: wallChitin
       entity: WallSolidChitin
       edges:
@@ -257,6 +337,24 @@
     - node: reinforcedGirder
       entity: ReinforcedGirder
       edges:
+    # Pirate: secret door start - mirrors the reinforced wall pipeline: a displaced *reinforced* girder takes
+    # plasteel to conceal. SS13 builds every falsewall off a plain displaced girder, but its real r-wall is far
+    # cheaper than SS14's, so copying that here made the fake cost half of the wall it imitates.
+        - to: reinforcedSecretDoor
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SetAnchor
+              value: true
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          steps:
+            - material: Plasteel
+              amount: 2
+              doAfter: 2
+    # Pirate: secret door end
+
         - to: reinforcedWall
           completed:
             - !type:SnapToGrid

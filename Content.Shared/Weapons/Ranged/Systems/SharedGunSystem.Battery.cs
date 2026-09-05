@@ -63,29 +63,34 @@ public abstract partial class SharedGunSystem
 
     private void OnBatteryTakeAmmo(Entity<BatteryAmmoProviderComponent> ent, ref TakeAmmoEvent args)
     {
-        var shots = Math.Min(args.Shots, ent.Comp.Shots);
+        // Pirate: a multi-magazine provider can scale the cell's effective fire cost.
+        var multiplier = Math.Max(args.FireCostMultiplier, float.Epsilon);
+        var shots = Math.Min(args.Shots, (int) (ent.Comp.ShotsFloat / multiplier));
 
         if (shots == 0)
             return;
 
-        for (var i = 0; i < shots; i++)
+        if (args.SpawnProjectiles)
         {
-            args.Ammo.Add(GetShootable(ent, args.Coordinates));
+            for (var i = 0; i < shots; i++)
+                args.Ammo.Add(GetShootable(ent, args.Coordinates));
         }
 
-        TakeCharge(ent, shots);
+        TakeCharge(ent, shots * multiplier);
     }
 
     private void OnBatteryAmmoCount(Entity<BatteryAmmoProviderComponent> ent, ref GetAmmoCountEvent args)
     {
-        args.Count = ent.Comp.Shots;
-        args.Capacity = ent.Comp.Capacity;
+        // Pirate: report shots at the caller's effective fire cost.
+        var multiplier = Math.Max(args.FireCostMultiplier, float.Epsilon);
+        args.Count = (int) (ent.Comp.ShotsFloat / multiplier);
+        args.Capacity = (int) (ent.Comp.CapacityFloat / multiplier);
     }
 
     /// <summary>
     /// Use up the required amount of battery charge for firing.
     /// </summary>
-    public void TakeCharge(Entity<BatteryAmmoProviderComponent> ent, int shots = 1)
+    public void TakeCharge(Entity<BatteryAmmoProviderComponent> ent, float shots = 1f) // Pirate: fractional cost.
     {
         // Take charge from either the BatteryComponent or PowerCellSlotComponent.
         var ev = new ChangeChargeEvent(-ent.Comp.FireCost * shots);
@@ -102,17 +107,28 @@ public abstract partial class SharedGunSystem
 
     public void UpdateShots(Entity<BatteryAmmoProviderComponent> ent)
     {
-        var oldShots = ent.Comp.Shots;
-        var oldCapacity = ent.Comp.Capacity;
-        (var newShots, var newCapacity) = GetShots(ent);
+        var oldShots = ent.Comp.ShotsFloat;
+        var oldCapacity = ent.Comp.CapacityFloat;
+        var (newShots, newCapacity) = GetShotsFloat(ent);
+        var capacityDelta = newCapacity > 0f ? Math.Abs(oldCapacity - newCapacity) : 0f;
 
         // Only dirty if necessary.
-        if (oldShots == newShots && oldCapacity == newCapacity)
+        if (Math.Abs(oldShots - newShots) + capacityDelta < 0.0001f)
             return;
 
-        ent.Comp.Shots = newShots;
-        if (newCapacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
-            ent.Comp.Capacity = newCapacity;
+        ent.Comp.Shots = (int) newShots;
+        if ((int) newCapacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
+        {
+            ent.Comp.Capacity = (int) newCapacity;
+        }
+
+        // Pirate: retain the last usable capacity while a removable cell is absent.
+        if (newCapacity > 0f)
+            ent.Comp.CapacityFloat = newCapacity;
+
+        // Keep integer values authoritative for visuals while retaining fractional
+        // values for charge prediction and ammo-counter calculations.
+        ent.Comp.ShotsFloat = newShots;
 
         // Update the ammo counter predictively if the change was predicted. On the server this does nothing.
         UpdateAmmoCount(ent.Owner);
@@ -123,10 +139,11 @@ public abstract partial class SharedGunSystem
             return;
 
         // Update the visuals.
-        Appearance.SetData(ent.Owner, AmmoVisuals.HasAmmo, newShots != 0, appearance);
-        Appearance.SetData(ent.Owner, AmmoVisuals.AmmoCount, newShots, appearance);
-        if (newCapacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
-            Appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, newCapacity, appearance);
+        Appearance.SetData(ent.Owner, AmmoVisuals.HasAmmo, ent.Comp.Shots != 0, appearance);
+        Appearance.SetData(ent.Owner, AmmoVisuals.IsFull, ent.Comp.Shots == ent.Comp.Capacity, appearance);
+        Appearance.SetData(ent.Owner, AmmoVisuals.AmmoCount, ent.Comp.Shots, appearance);
+        if (ent.Comp.Capacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
+            Appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, ent.Comp.Capacity, appearance);
     }
 
     // For server side changes the client's ammo counter needs to be updated as well.
@@ -183,10 +200,16 @@ public abstract partial class SharedGunSystem
     /// </summary>
     public (int, int) GetShots(Entity<BatteryAmmoProviderComponent> ent)
     {
+        var (current, maximum) = GetShotsFloat(ent);
+        return ((int) current, (int) maximum);
+    }
+
+    private (float, float) GetShotsFloat(Entity<BatteryAmmoProviderComponent> ent)
+    {
         var ev = new GetChargeEvent();
         RaiseLocalEvent(ent, ref ev);
-        var currentShots = (int)(ev.CurrentCharge / ent.Comp.FireCost);
-        var maxShots = (int)(ev.MaxCharge / ent.Comp.FireCost);
+        var currentShots = ev.CurrentCharge / ent.Comp.FireCost;
+        var maxShots = ev.MaxCharge / ent.Comp.FireCost;
 
         return (currentShots, maxShots);
     }

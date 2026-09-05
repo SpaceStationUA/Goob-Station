@@ -64,6 +64,10 @@ namespace Content.IntegrationTests.Tests.Construction
             {
                 foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
                 {
+                    // Pirate: inherited abstract recipe bases are templates, not constructable recipes.
+                    if (proto.Abstract)
+                        continue;
+
                     var start = proto.StartNode;
                     var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
 
@@ -86,6 +90,10 @@ namespace Content.IntegrationTests.Tests.Construction
             {
                 foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
                 {
+                    // Pirate: inherited abstract recipe bases are templates, not constructable recipes.
+                    if (proto.Abstract)
+                        continue;
+
                     var target = proto.TargetNode;
                     var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
 
@@ -139,6 +147,10 @@ namespace Content.IntegrationTests.Tests.Construction
             {
                 foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
                 {
+                    // Pirate: inherited abstract recipe bases are templates, not constructable recipes.
+                    if (proto.Abstract)
+                        continue;
+
                     var start = proto.StartNode;
                     var target = proto.TargetNode;
                     var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
@@ -155,7 +167,7 @@ namespace Content.IntegrationTests.Tests.Construction
                     Assert.That(protoMan.TryIndex(nextId, out EntityPrototype entity),
                         $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({nextId} [{next.Entity}])");
                     Assert.That(entity.Components.ContainsKey("Construction"),
-                        $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
+                        $"Construction prototype {proto.ID}: the next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
 #pragma warning restore NUnit2045
                 }
             });

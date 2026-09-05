@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Antag;
+using Content.Server._Pirate.Banking; // Pirate: nukie starting balance
 using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Nuke;
@@ -50,9 +51,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     // goob edit end
+    [Dependency] private readonly BankCardSystem _bankCard = default!; // Pirate: nukie starting balance
 
     private static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
     private static readonly ProtoId<TagPrototype> NukeOpsUplinkTagPrototype = "NukeOpsUplink";
+    private const int NukieStartingBalance = 1000; // Pirate: nukie starting balance
 
     [ValidatePrototypeId<TagPrototype>]
     private const string NukeOpsReinforcementUplinkTagPrototype = "NukeOpsReinforcementUplink"; // Goobstation
@@ -511,6 +514,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnAfterAntagEntSelected(Entity<NukeopsRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
+        _bankCard.TryGiveFlatBalance(args.EntityUid, NukieStartingBalance); // Pirate: nukie starting balance
+
         var target = (ent.Comp.TargetStation is not null) ? Name(ent.Comp.TargetStation.Value) : "the target";
 
         _antag.SendBriefing(args.Session,

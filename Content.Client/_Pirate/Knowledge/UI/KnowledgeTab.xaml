@@ -1,0 +1,16 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical"
+              Margin="10 8"
+              HorizontalExpand="True"
+              VerticalExpand="True">
+    <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Name="KnowledgeBox" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="12" />
+    </ScrollContainer>
+    <Label Name="KnowledgePlaceholder"
+           Text="{Loc 'knowledge-character-empty'}"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+           VerticalExpand="True" />
+</BoxContainer>

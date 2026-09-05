@@ -9,6 +9,7 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobBananaMenDummy
   skinColoration: TintedHues
+  knowledge: Human # Pirate
 
 - type: speciesBaseSprites
   id: MobBananaMenSprites

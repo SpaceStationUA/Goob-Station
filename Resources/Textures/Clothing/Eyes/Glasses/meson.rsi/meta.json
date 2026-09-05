@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da. equipped-EYES-secdog modified from equipped-EYES by TJohnson. Equipped-EYES-arachnid and equipped-EYES-moth modified from equipped-EYES by HTMLSystem. equipped-EYES-dog modified from equipped-EYES by Sparlight (GitHub).",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da; icon re-synced from current tgstation (commit https://github.com/tgstation/tgstation/commit/21ce3d66d4ceff1e547f6e2c137231c599efcf2a) as the old one had gone stale against a since-redesigned upstream sprite. equipped-EYES-secdog modified from equipped-EYES by TJohnson. Equipped-EYES-arachnid and equipped-EYES-moth modified from equipped-EYES by HTMLSystem. equipped-EYES-dog modified from equipped-EYES by Sparlight (GitHub). Pirate: meson vision - equipped-EYES/inhand-left/inhand-right replaced with the shared neutral goggle art from engineering.rsi (same source/license). icon-on holds the old tgstation icon (now the 'enabled' state); icon (the 'disabled' state) is a CyberLanos edit of the engineering.rsi icon.",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,9 @@
     "states": [
         {
             "name": "icon"
+        },
+        {
+            "name": "icon-on"
         },
         {
             "name": "equipped-EYES",

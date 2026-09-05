@@ -7,6 +7,10 @@
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
 
 - type: construction
   id: GasFilterInline
@@ -17,19 +21,46 @@
   canBuildInImpassable: false
   conditions:
   - !type:NoUnstackableInTile
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
 
+#region Pirate: heat exchange pipes
 - type: construction
   id: HeatExchangerInline
-  graph: GasBinary
-  targetNode: inlineradiator
+  graph: PirateHeatExchangePipe
+  targetNode: heStraight
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInline
+  - HeatExchangerInlineAlt1
+  - HeatExchangerInlineAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: HeatExchangerInlineBend
-  graph: GasBinary
-  targetNode: bendinlineradiator
+  graph: PirateHeatExchangePipe
+  targetNode: heBend
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineBend
+  - HeatExchangerInlineBendAlt1
+  - HeatExchangerInlineBendAlt2
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+#endregion

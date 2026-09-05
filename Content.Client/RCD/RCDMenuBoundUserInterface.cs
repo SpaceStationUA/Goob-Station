@@ -29,6 +29,8 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             // Goobstation - RPD (13 of stars)
             ["Piping"] = ("rcd-component-piping", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/fourway.png"))),
             ["AtmosphericUtility"] = ("rcd-component-atmosphericutility", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/port.png"))),
+            // Pirate: heat exchange pipes
+            ["HeatExchange"] = ("rcd-component-heat-exchange", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/radiator.png"))), // Pirate: heat exchange pipes
             ["PumpsValves"] = ("rcd-component-pumps", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/pump_volume.png"))), // Pirate: chem plumbing
             ["Vents"] = ("rcd-component-vents", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RPD/vent_passive.png"))),
             // Pirate: chem plumbing

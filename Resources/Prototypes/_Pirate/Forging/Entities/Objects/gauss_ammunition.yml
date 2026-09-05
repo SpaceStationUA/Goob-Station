@@ -1,0 +1,177 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Tags used by the ported gauss weapon and its construction graph.
+- type: Tag
+  id: CartridgeGaussgun
+
+- type: Tag
+  id: MagazineGaussgun
+
+- type: Tag
+  id: MetalContainer
+
+- type: entity
+  parent: BaseCartridgeGaussgun
+  id: CartridgeDisc
+  name: razor disc
+  description: A small projectile suitable for gauss guns. This one slightly pierces armor and causes bleeding.
+  components:
+  - type: CartridgeAmmo
+    proto: GaussgunDisk
+  - type: Sprite
+    state: disk
+
+- type: entity
+  parent: BaseCartridgeGaussgun
+  id: CartridgeShard
+  name: shardshot
+  description: A small projectile suitable for gauss guns. This one splits into shards when shot and is nearly useless against armored targets.
+  components:
+  - type: CartridgeAmmo
+    proto: GaussgunShardSpread
+  - type: Sprite
+    state: shard
+
+- type: entity
+  parent: [ BaseForgedReadyItem, CartridgeBallBearing ]
+  id: CartridgeBallBearingForged
+  name: ball bearing
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Bullets/gaussgun.rsi
+    layers:
+    - state: bullet
+      shader: Emissive
+
+- type: entity
+  parent: [ BaseForgedReadyItem, CartridgeDisc ]
+  id: CartridgeDiscForged
+  name: razor disc
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Bullets/gaussgun.rsi
+    layers:
+    - state: disk
+      shader: Emissive
+
+- type: entity
+  parent: [ BaseForgedReadyItem, CartridgeShard ]
+  id: CartridgeShardForged
+  name: shardshot
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Bullets/gaussgun.rsi
+    layers:
+    - state: shard
+      shader: Emissive
+
+- type: entity
+  id: BaseGaussgunAmmo
+  abstract: true
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Bullets/gaussgun.rsi
+  - type: Ammo
+    muzzleFlash: null
+  - type: Reflective
+  - type: FlyBySound
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+    linearDamping: 0
+    angularDamping: 0
+  - type: TileFrictionModifier
+    modifier: 0
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.10,0.1,0.30"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by:
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: false
+  - type: Projectile
+    impactEffect: BulletImpactEffect
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    deleteOnCollide: true
+    onlyCollideWhenShot: true
+  - type: TimedDespawn
+    lifetime: 10
+
+- type: entity
+  parent: BaseGaussgunAmmo
+  id: GaussgunBearing
+  name: ball bearing
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 20 # Pirate: local damage taxonomy has no Ballistic type.
+  - type: Sprite
+    state: bullet
+
+- type: entity
+  parent: PelletShotgun
+  id: GaussgunShardSpread
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: GaussgunShard
+    count: 10
+    spread: 25
+
+- type: entity
+  parent: BaseGaussgunAmmo
+  id: GaussgunShard
+  name: shard
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 4 # Pirate: local damage taxonomy has no Ballistic type.
+      armorPenetration: -10
+  - type: Sprite
+    state: shard
+
+- type: entity
+  parent: BaseGaussgunAmmo
+  id: GaussgunDisk
+  name: sharp disk
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 10 # Pirate: local damage taxonomy has no Ballistic type.
+        Slash: 5
+      armorPenetration: 0.1
+  - type: Sprite
+    state: disk
+
+- type: entity
+  parent: BaseMagazineGaussgun
+  id: MagazineGaussgun
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null

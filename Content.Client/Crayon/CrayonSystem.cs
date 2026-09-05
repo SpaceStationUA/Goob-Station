@@ -49,7 +49,8 @@ public sealed class CrayonSystem : SharedCrayonSystem
                 ("color", _crayon.Comp.Color),
                 ("state", _crayon.Comp.SelectedState),
                 ("charges", _charges.GetCurrentCharges(_crayon.Owner)),
-                ("capacity", _capacity)));
+                ("capacity", _capacity),
+                ("infinite", false))); // Pirate: light paint glyph status
         }
     }
 }

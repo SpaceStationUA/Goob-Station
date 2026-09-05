@@ -6,6 +6,7 @@
   sprites: MobScurretSprites
   dollPrototype: MobScurretDummy
   skinColoration: Hues
+  knowledge: Human # Pirate
   defaultSkinTone: "#ffffff"
   markingLimits: MobScurretMarkingLimits
 

@@ -8,3 +8,10 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   targetNode: detector
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+    ElectronicsKnowledge: 2

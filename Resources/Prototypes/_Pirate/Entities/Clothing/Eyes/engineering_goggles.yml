@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: MIT
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesEngineering
+  name: engineering scanner goggles
+  description: Goggles used by engineers. The x-ray mode lets you see basic structural and terrain layouts through walls, and the t-ray mode lets you see underfloor objects such as cables and pipes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/engineering.rsi
+    state: icon-tray
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/engineering.rsi
+    equippedPrefix: tray
+  - type: Appearance
+  - type: EngineeringGoggles
+    mode: Tray
+  - type: TrayScanner
+    range: 10
+    toggleOnActivate: false
+    requireWorn: true
+    enabled: true
+  - type: XRayVision
+    enabled: false
+    relayOverlay: true
+    showTiles: true
+    range: 12
+    tileAlpha: 0.2
+  - type: GoggleShader
+    shader: Goggles
+    color: "#3D859980"
+    enabled: true
+  - type: StaticPrice
+    price: 100
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags:
+    - MesonGoggles
+    - WhitelistChameleon

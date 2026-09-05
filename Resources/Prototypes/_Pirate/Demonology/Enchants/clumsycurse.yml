@@ -30,4 +30,4 @@
         interval: 10
       - type: SpeakFontOverride # Pirate: local equivalent for Trauma's SpeechFontOverride.
         enabled: true
-        fontId: LDFComicSans
+        # fontId: LDFComicSans # Pirate: disabled because the font does not support Cyrillic.

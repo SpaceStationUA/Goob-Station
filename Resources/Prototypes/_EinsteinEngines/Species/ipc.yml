@@ -9,6 +9,7 @@
   markingLimits: MobIPCMarkingLimits
   dollPrototype: MobIPCDummy
   skinColoration: Hues
+  knowledge: IPC # Pirate
   minAge: 1
   maxAge: 240
   oldAge: 50

@@ -36,9 +36,25 @@ public sealed partial class StationMapWindow : FancyWindow
             StationName.Text = stationName;
         }
 
+        // Pirate: multiz - let the map switch between Z-levels of the station like the other monitoring consoles
+        #region Pirate: multiz
+        NavMapScreen.ZLevelSelectorEnabled = true;
+        NavMapScreen.ZFilterTrackedBlipsToDisplayedMap = true;
+        NavMapScreen.SetZLevelSelectorRoot(mapUid);
+        NavMapScreen.ZLevelSelectedAction += OnZLevelSelected;
+        #endregion Pirate: multiz
+
         NavMapScreen.ForceNavMapUpdate();
         UpdateBeaconList(mapUid);
     }
+
+    // Pirate: multiz - nav map data is fully networked per-grid already, so switching the displayed Z-level only needs to refresh the beacon list client-side
+    #region Pirate: multiz
+    private void OnZLevelSelected(EntityUid gridUid, int depth)
+    {
+        UpdateBeaconList(gridUid);
+    }
+    #endregion Pirate: multiz
 
     public void OnFilterChanged(string newFilter)
     {

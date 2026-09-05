@@ -40,6 +40,14 @@
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
           False: { visible: true }
+      # Pirate edit start
+      enum.EdgeConnectionVisuals.ConnectionMask:
+        computerLayerBody:
+          None: { state: computer, sprite: Structures/Machines/computers.rsi }
+          West: { state: computer_r, sprite: _Pirate/Structures/Machines/computers.rsi }
+          East: { state: computer_l, sprite: _Pirate/Structures/Machines/computers.rsi }
+          East, West: { state: computer_l_r, sprite: _Pirate/Structures/Machines/computers.rsi }
+      # Pirate edit end
   - type: AtmosAlertsComputer
   - type: ActivatableUI
     singleUser: true
@@ -1329,6 +1337,14 @@
           enum.WiresVisualLayers.MaintenancePanel:
             True: { visible: false }
             False: { visible: true }
+        # Pirate edit start
+        enum.EdgeConnectionVisuals.ConnectionMask:
+          computerLayerBody:
+            None: { state: computer, sprite: Structures/Machines/computers.rsi }
+            West: { state: computer_r, sprite: _Pirate/Structures/Machines/computers.rsi }
+            East: { state: computer_l, sprite: _Pirate/Structures/Machines/computers.rsi }
+            East, West: { state: computer_l_r, sprite: _Pirate/Structures/Machines/computers.rsi }
+        # Pirate edit end
     - type: SalvageExpeditionConsole
     - type: ActivatableUI
       key: enum.SalvageConsoleUiKey.Expedition
@@ -1764,6 +1780,14 @@
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
           False: { visible: true }
+      # Pirate edit start
+      enum.EdgeConnectionVisuals.ConnectionMask:
+        computerLayerBody:
+          None: { state: computer, sprite: Structures/Machines/computers.rsi }
+          East: { state: computer, sprite: Structures/Machines/computers.rsi }
+          West: { state: computer, sprite: Structures/Machines/computers.rsi }
+          East, West: { state: computer, sprite: Structures/Machines/computers.rsi }
+      # Pirate edit end
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: Computer

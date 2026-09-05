@@ -6,12 +6,12 @@
   copyright: "Taken from vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05. Modified by Ko4erga (discord)"
   source: "https://github.com/vgstation-coders/vgstation13/"
 
-- files: ["hydro.png", "plating.png", "reinforced.png", "bar.png", "laundry.png", "mime.png", "clown.png", "kitchen.png"]
+- files: ["hydro.png", "plating.png", "bar.png", "laundry.png", "mime.png", "clown.png", "kitchen.png"]
   license: "CC-BY-SA-3.0"
   copyright: "TauCetiStation commit 4cd533cf0a4243050364023af9a4fcaca209dce7"
   source: "https://github.com/TauCetiStation/TauCetiClassic/"
 
-- files: ["blue_circuit.png", "cropped_parallax.png", "eighties.png", "gold.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "lattice.png", "plating.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
+- files: ["cropped_parallax.png", "eighties.png", "gold.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "lattice.png", "plating.png", "silver.png", "snow.png", "wood.png"]
   license: "CC-BY-SA-3.0"
   copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax, [reinforced, snow] modified by Ko4erga (discord), wood resprited by prazat911 (discord)"
   source: "https://github.com/tgstation/tgstation/"

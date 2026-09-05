@@ -1,0 +1,2186 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from Trauma Station; adapted to local prototypes.
+
+- type: constructionGraph
+  id: AccessScanner
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - tag: DoorElectronics # specifically the tag not component, as the component's very poorly named and has nothing to do with doors
+        name: construction-graph-tag-door-electronics-circuit-board
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: door_electronics
+      - material: Steel
+        amount: 4
+        doAfter: 3
+  - node: unfinished
+    entity: AccessScannerUnfinished
+    edges:
+    - to: access scanner
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - material: Cable
+        amount: 3
+        doAfter: 2
+      - tool: Cutting
+        doAfter: 1
+      - material: MetalRod
+        amount: 2
+        doAfter: 1
+      - material: Cable
+        amount: 3
+        doAfter: 2
+      - tool: Cutting
+        doAfter: 1
+  - node: access scanner
+    entity: AccessScanner
+- type: constructionGraph
+  id: BarbCuffs
+  graph:
+  - node: start
+    edges:
+    - to: finish
+      steps:
+      - material: BarbedWire
+        amount: 2
+        doAfter: 3
+
+  - node: finish
+    entity: BarbHandcuffs
+- type: constructionGraph
+  id: BarbedWire
+  graph:
+  - node: start
+    edges:
+    - to: finish
+      steps:
+      - material: BarbedWire
+        amount: 2
+        doAfter: 3
+
+  - node: finish
+    entity: BarbedWireStructure
+    edges:
+    - to: finish
+      completed:
+      - !type:SpawnPrototype
+          prototype: BarbedWire1
+          amount: 2
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Cutting
+        doAfter: 5
+
+# TripWire
+- type: constructionGraph
+  id: BarbedWireMaterial
+  graph:
+  - node: start
+    edges:
+    - to: BarbedWire
+      completed:
+      - !type:SetStackCount
+        amount: 1
+      steps:
+      - material: Cable
+        amount: 30
+        doAfter: 3
+
+    - to: BarbedWire0
+      completed:
+      - !type:SetStackCount
+        amount: 1
+      steps:
+      - material: CableMV
+        amount: 20
+        doAfter: 3
+
+    - to: BarbedWire1
+      completed:
+      - !type:SetStackCount
+        amount: 1
+      steps:
+      - material: CableHV
+        amount: 10
+        doAfter: 3
+
+  - node: BarbedWire
+    entity: BarbedWire
+
+  - node: BarbedWire0
+    entity: BarbedWire
+
+  - node: BarbedWire1
+    entity: BarbedWire
+- type: constructionGraph
+  id: BoogieBot
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: BikeHorn
+        icon:
+          sprite: Objects/Fun/bikehorn.rsi
+          state: icon
+        name: construction-graph-tag-clown-bike-horn
+        doAfter: 2
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: construction-graph-tag-proximity-sensor
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: construction-graph-tag-borg-arm
+        doAfter: 2
+  - node: bot
+    entity: BoogieBotSpawner
+- type: constructionGraph
+  id: Bracing
+  graph:
+  - node: start
+    edges:
+    - to: finish
+      completed:
+        - !type:SetStackCount
+          amount: 1
+      steps:
+        - material: MetalRod
+          amount: 3
+        - material: Cable
+          amount: 3
+  - node: finish
+    entity: WeaponBracing
+- type: constructionGraph
+  id: Crucifix
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity
+    edges:
+    - to: cross
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: WoodPlank
+        amount: 10
+        doAfter: 5
+
+  - node: cross
+    entity: Crucifix
+    edges:
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: MaterialWoodPlank10
+      steps:
+      - tool: Prying
+        doAfter: 4
+    # TODO: make it so you can use nailgun with limb targeting to do this step
+    - to: left hand
+      conditions:
+      - !type:HasStrappedEntity
+      completed:
+      - !type:AdminLog
+        message: 'Crucifixion started'
+      - !type:EffectGraphAction
+        effects:
+        - !type:RelayStrapped
+          effects:
+          - !type:HealthChange
+            damage:
+              types:
+                Piercing: 15
+            targetPart: LeftHand
+      steps:
+      - tag: Nail
+        name: construction-graph-tag-nail
+        icon:
+          sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+          state: icon
+      - tool: Hammering
+        doAfter: 3
+
+  - node: left hand
+    edges:
+    - to: cross
+      completed:
+      - !type:EffectGraphAction
+        effects:
+        - !type:UnbuckleStrapped
+      - !type:GivePrototype
+        prototype: Nail
+      steps:
+      - tool: Prying
+        doAfter: 2
+    - to: right hand
+      conditions:
+      - !type:HasStrappedEntity
+      completed:
+      - !type:EffectGraphAction
+        effects:
+        - !type:RelayStrapped
+          effects:
+          - !type:HealthChange
+            damage:
+              types:
+                Piercing: 15
+            targetPart: RightHand
+      steps:
+      - tag: Nail
+        name: construction-graph-tag-nail
+        icon:
+          sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+          state: icon
+      - tool: Hammering
+        doAfter: 3
+
+  - node: right hand
+    edges:
+    - to: left hand
+      completed:
+      - !type:GivePrototype
+        prototype: Nail
+      steps:
+      - tool: Prying
+        doAfter: 2
+    - to: crucified
+      conditions:
+      - !type:HasStrappedEntity
+      completed:
+      - !type:AdminLog
+        message: 'Crucifixion finished'
+      - !type:EffectGraphAction
+        effects:
+        - !type:StrapLock
+        - !type:RelayStrapped
+          effects:
+          - !type:HealthChange
+            damage:
+              types:
+                Piercing: 15
+            targetPart: Feet
+          - !type:ModifyBleed
+            amount: 10 # perish
+          - !type:PopupMessage
+            type: Pvs
+            visualType: LargeCaution
+            messages:
+            - entity-effect-popup-crucified
+      steps:
+      - tag: Nail
+        name: construction-graph-tag-nail
+        icon:
+          sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+          state: icon
+      - tool: Hammering
+        doAfter: 5
+
+  - node: crucified
+    edges:
+    - to: right hand
+      completed:
+      - !type:GivePrototype
+        prototype: Nail
+      - !type:EffectGraphAction
+        effects:
+        - !type:StrapLock
+          unlock: true
+      steps:
+      - tool: Prying
+        doAfter: 2
+- type: constructionGraph
+  id: DefibrillatorCabinet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 5
+  - node: done
+    entity: DefibrillatorCabinet
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:ContainerEmpty
+        container: "ItemCabinet"
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+- type: constructionGraph
+  id: DuckBot
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: OrganEggSack
+        icon:
+          sprite: _White/Mobs/Species/Xenomorph/organs.rsi
+          state: egg_sack
+        name: construction-graph-tag-egg-sack
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: construction-graph-tag-proximity-sensor
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: construction-graph-tag-borg-arm
+        doAfter: 2
+  - node: bot
+    entity: MobDuckBot
+- type: constructionGraph
+  id: GaussImprovAmmoGraph
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: 1
+      steps:
+      - material: MetalRod
+        amount: 1
+        doAfter: 0.5
+
+  - node: 1
+    entity: CraftingGaussAmmoImprov
+    edges:
+    - to: finish
+      steps:
+      - tool: Sawing
+        doAfter: 1.5
+      - tool: Sawing
+        doAfter: 1.5
+      - tool: Sawing
+        doAfter: 1.5
+      - tool: Sawing
+        doAfter: 1.5
+      - tool: Sawing
+        doAfter: 1.5
+      - tool: Sawing
+        doAfter: 1.5
+      - tool: Sawing
+        doAfter: 1.5
+      completed:
+      - !type:SpawnPrototype
+        prototype: CartridgeBallBearing
+        amount: 7
+
+  - node: finish
+    entity: CartridgeBallBearing
+
+# NailBoard
+- type: constructionGraph
+  id: GaussImprovMagazineGraph
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: 1
+      steps:
+      - tag: MetalContainer
+        icon:
+          sprite: Objects/Consumable/Drinks/mug_metal.rsi
+          state: icon
+        name: construction-graph-tag-part-metal-container
+        doAfter: 0.5
+
+  - node: 1
+    entity: CraftingGaussMagazineImprov
+    edges:
+    - to: finish
+      steps:
+      - tool: Slicing
+        doAfter: 3
+
+  - node: finish
+    entity: MagazineGaussgunImprov
+
+# Ammo
+- type: constructionGraph
+  id: GaussPistolGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: 1
+      steps:
+      - tag: RifleStock
+        icon:
+          sprite: Objects/Misc/rifle_stock.rsi
+          state: icon
+        name: construction-graph-tag-rifle-stock
+        doAfter: 0.5
+
+  - node: 1
+    entity: CraftingGaussPistol1
+    edges:
+    - to: 2
+      steps:
+      - tag: ModularReceiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+        name: construction-graph-tag-modular-receiver
+        doAfter: 0.5
+
+  - node: 2
+    entity: CraftingGaussPistol2
+    edges:
+    - to: 3
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - material: Steel
+        amount: 1
+        doAfter: 0.5
+
+  - node: 3
+    entity: CraftingGaussPistol3
+    edges:
+    - to: 4
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: construction-graph-tag-pipe
+        doAfter: 0.5
+
+  - node: 4
+    entity: CraftingGaussPistol4
+    edges:
+    - to: 5
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - material: Steel
+        amount: 1
+        doAfter: 0.5
+
+  - node: 5
+    entity: CraftingGaussPistol5
+    edges:
+    - to: 6
+      steps:
+      - tool: Welding
+        doAfter: 1
+      - material: CableHV
+        amount: 3
+        doAfter: 0.5
+      - tag: RechargingBoard
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: generic
+        name: construction-graph-tag-recharging-board
+        doAfter: 0.5
+
+  - node: 6
+    entity: CraftingGaussPistol6
+    edges:
+    - to: 7
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tag: PartCapacitor
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: adv_capacitor
+        name: construction-graph-tag-part-capacitor
+        doAfter: 0.5
+
+  - node: 7
+    entity: CraftingGaussPistol7
+    edges:
+    - to: 8
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tag: PartCapacitor
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: adv_capacitor
+        name: construction-graph-tag-part-capacitor
+        doAfter: 0.5
+
+  - node: 8
+    entity: CraftingGaussPistol8
+    edges:
+    - to: 9
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - material: Cable
+        amount: 1
+        doAfter: 0.5
+
+  - node: 9
+    entity: CraftingGaussPistol9
+    edges:
+    - to: 10
+      steps:
+      - material: CableMV
+        amount: 1
+        doAfter: 0.5
+
+  - node: 10
+    entity: CraftingGaussPistol10
+    edges:
+    - to: finish
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: finish
+    entity: WeaponGaussgunPistol
+
+# Magazine
+- type: constructionGraph
+  id: GaussRifleGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: 1
+      steps:
+      - tag: RifleStock
+        icon:
+          sprite: Objects/Misc/rifle_stock.rsi
+          state: icon
+        name: construction-graph-tag-rifle-stock
+        doAfter: 0.5
+
+  - node: 1
+    entity: CraftingGaussRifle1
+    edges:
+    - to: 2
+      steps:
+      - tag: ModularReceiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+        name: construction-graph-tag-modular-receiver
+        doAfter: 0.5
+
+  - node: 2
+    entity: CraftingGaussRifle2
+    edges:
+    - to: 3
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - material: Steel
+        amount: 1
+        doAfter: 0.5
+
+  - node: 3
+    entity: CraftingGaussRifle3
+    edges:
+    - to: 4
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: construction-graph-tag-pipe
+        doAfter: 0.5
+
+  - node: 4
+    entity: CraftingGaussRifle4
+    edges:
+    - to: 5
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - material: Steel
+        amount: 1
+        doAfter: 0.5
+
+  - node: 5
+    entity: CraftingGaussRifle5
+    edges:
+    - to: 6
+      steps:
+      - tool: Welding
+        doAfter: 1
+      - material: CableHV
+        amount: 10
+        doAfter: 0.5
+      - tag: RechargingBoard
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: generic
+        name: construction-graph-tag-recharging-board
+        doAfter: 0.5
+
+  - node: 6
+    entity: CraftingGaussRifle6
+    edges:
+    - to: 7
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tag: PartCapacitor
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: adv_capacitor
+        name: construction-graph-tag-part-capacitor
+        doAfter: 0.5
+
+  - node: 7
+    entity: CraftingGaussRifle7
+    edges:
+    - to: 8
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tag: PartCapacitor
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: adv_capacitor
+        name: construction-graph-tag-part-capacitor
+        doAfter: 0.5
+
+  - node: 8
+    entity: CraftingGaussRifle8
+    edges:
+    - to: 9
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tag: PartCapacitor
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: adv_capacitor
+        name: construction-graph-tag-part-capacitor
+        doAfter: 0.5
+
+  - node: 9
+    entity: CraftingGaussRifle9
+    edges:
+    - to: 10
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - material: Cable
+        amount: 1
+        doAfter: 0.5
+
+  - node: 10
+    entity: CraftingGaussRifle10
+    edges:
+    - to: 11
+      steps:
+      - material: CableMV
+        amount: 1
+        doAfter: 0.5
+
+  - node: 11
+    entity: CraftingGaussRifle11
+    edges:
+    - to: finish
+      steps:
+      - tool: Screwing
+        doAfter: 1
+
+  - node: finish
+    entity: WeaponGaussgunImprov
+
+
+# Pistol
+- type: constructionGraph
+  id: IEDSpear
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: finish
+      steps:
+      - tag: Spear
+        name: construction-graph-tag-any-spear
+        icon:
+          sprite: Objects/Weapons/Melee/spear.rsi
+          state: spear
+      - material: Cable
+        amount: 5
+        doAfter: 3
+      - tag: Firebomb
+        name: construction-graph-tag-firebomb
+        icon:
+          sprite: Objects/Weapons/Bombs/ied.rsi
+          state: base
+  - node: finish
+    entity: SpearIED
+- type: constructionGraph
+  id: Killdozer
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - material: Steel
+        amount: 30
+        doAfter: 15
+  - node: unfinished
+    entity: UnfinishedKilldozer
+    edges:
+    - to: Killdozer
+      steps:
+      - tool: Welding
+        doAfter: 10
+      - material: RevEngineParts
+        amount: 1
+        doAfter: 3
+      - tool: Anchoring
+        doAfter: 2
+      - tag: RevArmorPlate
+        name: construction-graph-tag-armorplate
+        icon:
+          sprite: _Pirate/Objects/Revs/components.rsi
+          state: armorplate
+        doAfter: 4
+      - tool: Hammering
+        doAfter: 2
+      - tool: Screwing
+        doAfter: 2
+      - material: RevEngineParts
+        amount: 1
+        doAfter: 3
+      - tool: Anchoring
+        doAfter: 2
+      - tag: RevArmorPlate
+        name: construction-graph-tag-armorplate
+        icon:
+          sprite: _Pirate/Objects/Revs/components.rsi
+          state: armorplate
+        doAfter: 4
+      - tool: Hammering
+        doAfter: 2
+      - tool: Screwing
+        doAfter: 2
+      - tag: RevArmorPlate
+        name: construction-graph-tag-armorplate
+        icon:
+          sprite: _Pirate/Objects/Revs/components.rsi
+          state: armorplate
+        doAfter: 4
+      - tag: RevArmorPlate
+        name: construction-graph-tag-armorplate
+        icon:
+          sprite: _Pirate/Objects/Revs/components.rsi
+          state: armorplate
+        doAfter: 4
+      - tag: RevArmorPlate
+        name: construction-graph-tag-armorplate
+        icon:
+          sprite: _Pirate/Objects/Revs/components.rsi
+          state: armorplate
+        doAfter: 4
+      - tool: Anchoring
+        doAfter: 5
+      - tool: Welding
+        doAfter: 10
+      - material: RevEngineParts
+        amount: 1
+        doAfter: 3
+      - tool: Anchoring
+        doAfter: 5
+      - material: RevEngineParts
+        amount: 1
+        doAfter: 3
+      - tool: Anchoring
+        doAfter: 5
+      - tag: RifleStock
+        icon:
+          sprite: Objects/Misc/rifle_stock.rsi
+          state: icon
+        name: construction-graph-tag-rifle-stock
+        doAfter: 1
+      - material: Cloth
+        amount: 3
+        doAfter: 3
+      - material: RevGunParts
+        amount: 3
+      - material: RevBolt
+      - material: RevNut
+      - tool: Anchoring
+        doAfter: 2
+      - tool: Welding
+        doAfter: 15
+  - node: Killdozer
+    entity: Killdozer
+- type: constructionGraph
+  id: NailBoard
+  start: start
+  graph:
+
+    - node: start
+      edges:
+        - to: incompleteBoard
+          steps:
+          - material: WoodPlank
+            amount: 1
+
+    - node: incompleteBoard
+      entity: NailBoardUnfinished
+      edges:
+        - to: finish
+          steps:
+          - tag: Nail
+            name: construction-graph-tag-nail
+            icon:
+              sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+              state: icon
+          - tool: Hammering
+            doAfter: 0.1
+          - tag: Nail
+            name: construction-graph-tag-nail
+            icon:
+              sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+              state: icon
+          - tool: Hammering
+            doAfter: 0.1
+          - tag: Nail
+            name: construction-graph-tag-nail
+            icon:
+              sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+              state: icon
+          - tool: Hammering
+            doAfter: 0.1
+          - tag: Nail
+            name: construction-graph-tag-nail
+            icon:
+              sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+              state: icon
+          - tool: Hammering
+            doAfter: 0.1
+          - tag: Nail
+            name: construction-graph-tag-nail
+            icon:
+              sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+              state: icon
+          - tool: Hammering
+            doAfter: 0.1
+
+    - node: finish
+      entity: NailBoardWeapon
+
+# Spear bomb
+- type: constructionGraph
+  id: NailSword
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - tag: WoodenSword
+        name: construction-graph-tag-woodensword
+        icon:
+          sprite: _Pirate/Objects/Weapons/Melee/sword_wooden.rsi
+          state: icon
+
+  - node: unfinished
+    entity: SwordNailUnfinished
+    edges:
+    - to: finish
+      steps:
+      - tag: Nail
+        name: construction-graph-tag-nail
+        icon:
+          sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+          state: icon
+      - tool: Hammering
+        doAfter: 0.5
+      - tag: Nail
+        name: construction-graph-tag-nail
+        icon:
+          sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+          state: icon
+      - tool: Hammering
+        doAfter: 0.5
+      - tag: Nail
+        name: construction-graph-tag-nail
+        icon:
+          sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+          state: icon
+      - tool: Hammering
+        doAfter: 0.5
+      - tag: Nail
+        name: construction-graph-tag-nail
+        icon:
+          sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+          state: icon
+      - tool: Hammering
+        doAfter: 0.5
+      - tag: Nail
+        name: construction-graph-tag-nail
+        icon:
+          sprite: _Goobstation/Objects/Specific/Engineering/nail.rsi
+          state: icon
+      - tool: Hammering
+        doAfter: 0.5
+
+  - node: finish
+    entity: SwordNail
+- type: constructionGraph
+  id: PipeBombTrap
+  graph:
+  - node: start
+    edges:
+    - to: finish
+      steps:
+      - tag: Pipebomb
+        name: construction-graph-tag-pipebomb
+        icon:
+          sprite: Objects/Weapons/Bombs/pipebomb.rsi
+          state: base
+      - tag: Igniter
+        name: construction-graph-tag-igniter
+        icon:
+          sprite: Objects/Devices/igniter.rsi
+          state: icon
+      - tag: SignalTrigger
+        name: construction-graph-tag-signaltrigger
+        icon:
+          sprite: Objects/Devices/signaltrigger.rsi
+          state: signaltrigger
+      - material: Cable
+        amount: 5
+        doAfter: 3
+
+  - node: finish
+    entity: TrapPipeBomb
+    edges:
+    - to: finish
+      completed:
+      - !type:SpawnPrototype
+        prototype: PipeBomb
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+      - !type:SpawnPrototype
+        prototype: Igniter
+      - !type:SpawnPrototype
+        prototype: SignalTrigger
+      - !type:DeleteEntity
+      steps:
+      - tool: Cutting
+        doAfter: 5
+
+# Barbed Wire
+- type: constructionGraph
+  id: PipeShank
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: construction-graph-tag-pipe
+        doAfter: 1
+
+  - node: unfinished
+    entity: PipeSpearUnfinished
+    edges:
+    - to: finish
+      steps:
+      - tool: Sharpening
+        doAfter: 3
+
+  - node: finish
+    entity: PipeSpear
+
+# Wooden Sword
+- type: constructionGraph
+  id: PipebombSpear
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: finish
+      steps:
+      - tag: Spear
+        name: construction-graph-tag-any-spear
+        icon:
+          sprite: Objects/Weapons/Melee/spear.rsi
+          state: spear
+      - material: Cable
+        amount: 5
+        doAfter: 3
+      - tag: Pipebomb
+        name: construction-graph-tag-pipebomb
+        icon:
+          sprite: Objects/Weapons/Bombs/pipebomb.rsi
+          state: base
+  - node: finish
+    entity: SpearPipebomb
+
+# Pipe Shank
+- type: constructionGraph
+  id: PowerArmorFrame
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: Frame
+      steps:
+      - material: Plasteel
+        amount: 20
+      - material: Steel
+        amount: 30
+        doAfter: 15
+
+  - node: Frame
+    entity: PowerArmorFrame
+- type: constructionGraph
+  id: PowerArmorStand
+  graph:
+  - node: start
+    entity: RevPowerArmorStand
+    edges:
+    - to: PowerArmorStand
+      steps:
+        - material: Steel
+          amount: 30
+          doAfter: 20
+
+  - node: PowerArmorStand
+    entity: RevPowerArmorStand
+- type: constructionGraph
+  id: RevFlamethrowerAmmo
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: empty
+      steps:
+      - tag: RevFuelTank
+        name: construction-graph-tag-FlamethrowerTank
+        icon:
+          sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Flamethrower/unfinished.rsi
+          state: icon
+        doAfter: 1
+  - node: empty
+    entity: RevUnfinishedFuelTank
+    edges:
+    - to: FlamethrowerAmmo
+      conditions:
+      - !type:MinSolution
+        solution: beaker
+        reagent:
+          ReagentId: WeldingFuel
+        quantity: 100
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Painting
+        doAfter: 1
+  - node: FlamethrowerAmmo
+    entity: FuelTankFlamethrower
+- type: constructionGraph
+  id: RevGuns
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - material: Steel
+        amount: 3
+        doAfter: 1
+      - tag: Pipe
+        name: construction-graph-tag-pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+  - node: unfinished
+    entity: RevUnfinishedGun
+    edges:
+    - to: liberator
+      steps:
+      - material: RevBolt
+      - material: RevNut
+      - tool: Anchoring
+        doAfter: 1
+      - material: RevGunParts
+      - tag: ModularReceiver
+        name: construction-graph-tag-modular-receiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+      - tool: Welding
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+    - to: resistance
+      steps:
+      - tool: Welding
+        doAfter: 1
+      - material: RevBolt
+      - material: RevNut
+      - tool: Anchoring
+        doAfter: 1
+      - material: RevGunParts
+      - tag: ModularReceiver
+        name: construction-graph-tag-modular-receiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+      - material: RevBolt
+      - material: RevNut
+      - tool: Anchoring
+        doAfter: 1
+      - tool: Welding
+    - to: RPG2
+      steps:
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+      - material: RevBolt
+        amount: 7
+        doAfter: 1
+      - material: RevNut
+        amount: 7
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+      - material: WoodPlank
+        amount: 3
+        doAfter: 1
+      - tool: Slicing
+        doAfter: 1
+      - material: Steel
+        amount: 3
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Welding
+        doAfter: 1
+      - material: RevGunParts
+        amount: 5
+        doAfter: 1
+      - material: RevBolt
+        amount: 7
+        doAfter: 1
+      - material: RevGunParts
+        amount: 5
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 3
+      - material: RevNut
+        amount: 7
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+      - material: RevGunParts
+        amount: 5
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+    - to: Flamethrower
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Screwing
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+      - material: RevBolt
+        amount: 7
+        doAfter: 1
+      - material: RevNut
+        amount: 7
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+      - material: WoodPlank
+        amount: 3
+        doAfter: 1
+      - tool: Slicing
+        doAfter: 1
+      - material: Steel
+        amount: 3
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Welding
+        doAfter: 5
+      - material: RevGunParts
+        amount: 5
+        doAfter: 1
+      - material: RevBolt
+        amount: 7
+        doAfter: 1
+      - material: RevGunParts
+        amount: 5
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - material: RevNut
+        amount: 7
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+      - material: RevGunParts
+        amount: 5
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+    - to: Devastator
+      steps:
+      - tag: Pipe
+        name: construction-graph-tag-pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - tag: Pipe
+        name: construction-graph-tag-pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - tag: Pipe
+        name: construction-graph-tag-pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - tag: ModularReceiver
+        name: construction-graph-tag-modular-receiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+      - material: RevGunParts
+        amount: 2
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+      - material: WoodPlank
+        amount: 5
+        doAfter: 1
+      - tool: Slicing
+        doAfter: 1
+      - material: RevBolt
+        amount: 2
+        doAfter: 1
+      - material: RevNut
+        amount: 2
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Slicing
+        doAfter: 1
+    - to: Proletariat
+      steps:
+      - material: Steel
+        amount: 10
+        doAfter: 5
+      - tool: Slicing
+        doAfter: 1
+      - material: RevBolt
+        amount: 2
+        doAfter: 1
+      - material: RevNut
+        amount: 2
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 0.5
+      - material: RevGunParts
+        amount: 5
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - tag: Pipe
+        name: construction-graph-tag-pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+      - tag: ModularReceiver
+        name: construction-graph-tag-modular-receiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+      - material: RevBallBearings
+        amount: 3
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+      - material: WoodPlank
+        amount: 5
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+
+  - node: liberator
+    entity: WeaponPistolLiberatorEmpty
+  - node: resistance
+    entity: WeaponSMGResistanceEmpty
+  - node: RPG2
+    entity: WeaponLauncherRPG2
+  - node: Flamethrower
+    entity: ClothingBackpackFlamethrower # Temp
+  - node: Devastator
+    entity: WeaponShotgunDevastatorEmpty
+  - node: Proletariat
+    entity: WeaponLightMachineGunProletariatEmpty
+- type: constructionGraph
+  id: RevIED
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: IED
+      steps:
+      - tag: DrinkCan
+        name: construction-graph-tag-empty-can
+        icon:
+          sprite: Objects/Consumable/Drinks/cola.rsi
+          state: icon_open
+        doAfter: 1
+      - tag: Igniter
+        name: construction-graph-tag-igniter
+        icon:
+          sprite: Objects/Devices/igniter.rsi
+          state: icon
+      - material: Gunpowder
+        amount: 1
+      - material: RevBallBearings
+      - material: Cable
+        amount: 5
+  - node: IED
+    entity: GrenadeShrapnelRev
+- type: constructionGraph
+  id: RevMachine
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 1
+  - node: unfinished
+    entity: RevUnfinishedMachine
+    edges:
+    - to: gear
+      steps:
+      - material: RevGear
+      - tool: Screwing
+        doAfter: 1
+    - to: telecomms workshop # Secoff required
+      steps:
+      - tag: EncryptionSecurity
+        name: construction-graph-tag-seccomms
+        icon:
+          sprite: Objects/Devices/encryption_keys.rsi
+          state: sec_label
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - material: RevBolt
+      - material: RevNut
+      - tool: Anchoring
+        doAfter: 1
+    - to: microelectronics assembler # Techfab sabotage required
+      steps:
+      - tag: TechfabMachineBoard
+        name: construction-graph-tag-techfabmachineboard
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: generic
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 1
+      - material: Glass
+        amount: 5
+      - material: Cable
+        amount: 5
+        doAfter: 1
+      - material: RevBolt
+        amount: 7
+      - material: RevNut
+        amount: 7
+      - tool: Anchoring
+        doAfter: 1
+    - to: 3D printer # Engi required
+      steps:
+      - tag: RCD
+        name: construction-graph-tag-RCD
+        icon:
+          sprite: Objects/Tools/rcd.rsi
+          state: icon
+      - tool: Welding
+        doAfter: 1
+      - material: Cable
+        amount: 5
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - material: RevBolt
+        amount: 5
+      - material: RevNut
+        amount: 5
+      - tool: Anchoring
+        doAfter: 1
+      - material: Plastic
+        amount: 1
+      - tool: Welding
+        doAfter: 1
+      - material: RevBolt
+        amount: 3
+      - material: RevNut
+        amount: 2
+      - tool: Anchoring
+        doAfter: 1
+    - to: telesphere # RD exclusive
+      steps:
+      - tag: EncryptionRevolutionary
+        name: construction-graph-tag-encryption-revolutionary
+        icon:
+          sprite: _Pirate/Objects/Devices/encryption_keys.rsi
+          state: rev_label
+      # - component: HandTeleporter - temp remove for econ purposes
+      #   name: construction-graph-tag-hand-teleporter
+      #   icon:
+      #     sprite: Objects/Devices/hand_teleporter.rsi
+      #     state: icon
+      - tool: Welding
+        doAfter: 1
+      - material: Cable
+        amount: 8
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - material: RevBolt
+        amount: 10
+      - material: RevNut
+        amount: 10
+      - tool: Anchoring
+        doAfter: 1
+      - material: RevBolt
+        amount: 10
+      - material: RevNut
+        amount: 10
+      - tool: Anchoring
+        doAfter: 1
+    - to: tech analyzer # QM exclusive
+      steps:
+      - tag: RevID
+        name: construction-graph-tag-RevID
+        icon:
+          sprite: _Pirate/Objects/Misc/id_cards.rsi
+          state: idrevolutionary
+      - tag: QMBoard
+        name: construction-graph-tag-QMBoard
+        icon:
+          sprite: Objects/Misc/qm_clipboard.rsi
+          state: qm_clipboard
+      - tool: Welding
+        doAfter: 1
+      - material: Cable
+        amount: 8
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - material: RevBolt
+        amount: 10
+      - material: RevNut
+        amount: 10
+      - tool: Anchoring
+        doAfter: 1
+      - material: RevBolt
+        amount: 10
+      - material: RevNut
+        amount: 10
+      - tool: Anchoring
+        doAfter: 1
+    - to: phoron foundry # CE exclusive
+      steps:
+      - material: RevGunParts
+      - tool: Screwing
+        doAfter: 1
+      - tag: AdvancedMagboots # Change to CE magboots
+        name: construction-graph-tag-AdvancedMagboots
+        icon:
+          sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
+          state: icon
+      - tool: Welding
+        doAfter: 1
+      - material: Cable
+        amount: 8
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - material: RevBolt
+        amount: 10
+      - material: RevNut
+        amount: 10
+      - tool: Anchoring
+        doAfter: 1
+      - material: RevBolt
+        amount: 10
+      - material: RevNut
+        amount: 10
+      - tool: Anchoring
+        doAfter: 1
+    - to: hidden medifab
+      steps:
+      - tag: HudMedical # Bully medical for it
+        name: construction-graph-tag-medical-hud
+        icon:
+      - tool: Screwing
+        doAfter: 1
+      - material: Glass
+        amount: 5
+      - material: Cable
+        amount: 5
+        doAfter: 1
+      - material: RevBolt
+        amount: 7
+      - material: RevNut
+        amount: 7
+      - tool: Anchoring
+        doAfter: 1
+  - node: gear
+    edges:
+    - to: industrial forge
+      steps:
+      - material: RevGear
+      - material: RevGear
+      - tool: Anchoring
+        doAfter: 1
+    - to: printing press
+      steps:
+      - tool: Anchoring
+        doAfter: 1
+      - material: RevBolt
+        amount: 2
+      - material: RevNut
+        amount: 2
+      - tool: Anchoring
+        doAfter: 1
+    - to: bullet press
+      steps:
+      - material: RevGunParts
+      - tool: Screwing
+        doAfter: 1
+      - material: RevBolt
+        amount: 5
+      - material: RevNut
+        amount: 5
+      - tool: Anchoring
+        doAfter: 1
+    - to: uniform printer
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - material: RevBolt
+        amount: 5
+      - material: RevNut
+        amount: 5
+      - tool: Anchoring
+        doAfter: 1
+  - node: industrial forge
+    entity: RevForge
+  - node: printing press
+    entity: RevPrintingPress
+  - node: telecomms workshop
+    entity: RevRadioBench
+  - node: 3D printer
+    entity: RevPrinter
+  - node: telesphere
+    entity: RevTelesphere
+  - node: bullet press
+    entity: RevBulletPress
+  - node: microelectronics assembler
+    entity: RevMicroelectronicsAssembler
+  - node: uniform printer
+    entity: RevUniformPrinter
+  - node: tech analyzer
+    entity: RevTechAnalyzer
+  - node: phoron foundry
+    entity: RevPlasmaFoundry
+  - node: hidden medifab
+    entity: RevMedFab
+- type: constructionGraph
+  id: RevParts
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 5
+  - node: unfinished
+    entity: RevUnfinishedComponent
+    edges:
+    - to: gear
+      steps:
+      - tool: Hammering
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 1
+      - material: Steel
+        amount: 4
+      - tool: Welding
+        doAfter: 1
+    - to: bolt
+      steps:
+      - tool: Cutting
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - material: Steel # extra steel welded to the top
+        amount: 2
+      - tool: Hammering
+        doAfter: 1
+      - tool: Welding
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+    - to: nut
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 1
+      - tool: Anchoring
+        doAfter: 1
+  - node: gear
+    entity: RevGear
+  - node: bolt
+    entity: RevBolt
+  - node: nut
+    entity: RevNut
+- type: constructionGraph
+  id: RevRockets
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - tag: RevRocket
+        name: construction-graph-tag-RocketFrame
+        icon:
+          sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Rockets/unfinished.rsi
+          state: icon
+        doAfter: 1
+  - node: unfinished
+    entity: RevUnfinishedRocket
+    edges:
+    - to: HE
+      steps:
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - material: RevBallBearings
+      - material: RevBolt
+      - material: RevNut
+      - tool: Screwing
+        doAfter: 1
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - material: Gunpowder
+        amount: 1
+      - tool: Screwing
+        doAfter: 1
+    - to: AP
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - material: Uranium
+        amount: 2
+        doAfter: 1
+      - material: RevBolt
+      - material: RevNut
+      - tool: Screwing
+        doAfter: 1
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - tool: Hammering
+        doAfter: 0.5
+      - material: Gunpowder
+        amount: 1
+      - tool: Screwing
+        doAfter: 1
+  - node: HE
+    entity: CartridgeRocketRPG2HE
+  - node: AP
+    entity: CartridgeRocketRPG2AP
+- type: constructionGraph
+  id: RevTurret
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 3
+  - node: unfinished
+    entity: RevUnfinishedTurret
+    edges:
+    - to: barrel
+      steps:
+      - tag: RevTurretBoard
+        name: construction-graph-tag-turretboard
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: door_electronics
+      - tool: Screwing
+        doAfter: 1
+      - tag: Pipe
+        name: construction-graph-tag-pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+      - tool: Welding
+        doAfter: 1
+  - node: barrel
+    entity: RevUnfinishedTurretBarrel
+    edges:
+    - to: pistol turret
+      steps:
+      - material: RevBolt
+      - material: RevNut
+      - tool: Anchoring
+        doAfter: 1
+      - material: RevGunParts
+      - tag: ModularReceiver
+        name: construction-graph-tag-modular-receiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+      - tool: Welding
+        doAfter: 1
+    - to: SMG turret
+      steps:
+      - material: RevGunParts
+        amount: 2
+      - tool: Welding
+        doAfter: 2
+      - material: RevBolt
+      - tag: ModularReceiver
+        name: construction-graph-tag-modular-receiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+      - material: RevNut
+      - tool: Anchoring
+        doAfter: 2
+      - material: RevBolt
+      - material: RevNut
+      - tool: Anchoring
+        doAfter: 2
+  - node: pistol turret
+    entity: WeaponTurretRevolutionaryPistol
+  - node: SMG turret
+    entity: WeaponTurretRevolutionarySMG
+- type: constructionGraph
+  id: ScrapSword
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: unfinished
+      steps:
+      - tag: WoodenSword
+        name: construction-graph-tag-woodensword
+        icon:
+          sprite: _Pirate/Objects/Weapons/Melee/sword_wooden.rsi
+          state: icon
+
+  - node: unfinished
+    entity: SwordScrapUnfinished
+    edges:
+    - to: finish
+      steps:
+      - material: Steel
+      - tool: Hammering
+        doAfter: 1
+      - material: HexNut
+      - material: Screw
+      - tool: Sharpening
+        doAfter: 3
+      - material: Steel
+      - tool: Hammering
+        doAfter: 1
+      - material: HexNut
+      - material: Screw
+      - tool: Sharpening
+        doAfter: 3
+      - material: Steel
+      - tool: Hammering
+        doAfter: 1
+      - material: HexNut
+      - material: Screw
+      - tool: Sharpening
+        doAfter: 3
+
+  - node: finish
+    entity: SwordScrap
+
+# Welded Sword
+- type: constructionGraph
+  id: SecBot
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: Stunbaton # Pirate: use the local tag spelling.
+        icon:
+          sprite: Objects/Weapons/Melee/stunbaton.rsi
+          state: stunbaton_off
+        name: construction-graph-tag-stun-baton
+        doAfter: 2
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: construction-graph-tag-proximity-sensor
+        doAfter: 2
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: construction-graph-tag-borg-arm
+        doAfter: 1
+      - tag: SecurityHelmet
+        name: construction-graph-tag-security-helmet
+        icon:
+          sprite: Clothing/Head/Helmets/security.rsi
+          state: icon
+          doAfter: 1
+  - node: bot
+    entity: MobSecuritron
+- type: constructionGraph
+  id: SheetPaper
+  graph:
+  - node: start
+    edges:
+    - to: paper sheet
+      completed:
+      - !type:SetStackCount
+        amount: 1
+      steps:
+      - tag: Paper
+        doAfter: 5
+        name: construction-graph-tag-paper
+        icon:
+          sprite: Objects/Misc/bureaucracy.rsi
+          state: paper
+  - node: paper sheet
+    entity: SheetPaper
+- type: constructionGraph
+  id: SignalScreen
+  graph:
+  - node: start
+    edges:
+    - to: signal screen
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+      - material: Cable
+        amount: 3
+        doAfter: 1
+      - material: Glass
+        amount: 4
+        doAfter: 1
+  - node: signal screen
+    entity: SignalScreen
+    edges:
+    - to: start
+      steps:
+      - tool: Prying
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - tool: Screwing
+        doAfter: 2
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:GivePrototype
+        prototype: CableApcStack1
+        amount: 3
+      - !type:GivePrototype
+        prototype: SheetGlass1
+        amount: 4
+      - !type:DeleteEntity
+- type: constructionGraph
+  id: TilePlastic
+  graph:
+  - node: start
+    edges:
+    - to: plastic tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: Plastic
+        amount: 1
+    - to: dark plastic tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: Plastic
+        amount: 1
+    - to: white plastic tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: Plastic
+        amount: 1
+
+  - node: plastic tile
+    entity: FloorTileItemPlastic
+
+  - node: dark plastic tile
+    entity: FloorTileItemPlasticDark
+
+  - node: white plastic tile
+    entity: FloorTileItemPlasticWhite
+- type: constructionGraph
+  id: TripWire
+  graph:
+  - node: start
+    edges:
+    - to: finish
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 3
+      - tag: RemoteSignaller
+        name: construction-graph-tag-remotesignaller
+        icon:
+          sprite: Objects/Devices/signaller.rsi
+          state: signaller
+
+  - node: finish
+    entity: TrapTripWire
+    edges:
+    - to: finish
+      completed:
+      - !type:SpawnPrototype
+        prototype: RemoteSignaller
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Cutting
+        doAfter: 5
+
+# Pipe bomb trap
+- type: constructionGraph
+  id: WallInsulation
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity
+    edges:
+    - to: insulation
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+
+  - node: insulation
+    entity: WallInsulation
+- type: constructionGraph
+  id: Wandsky
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: Stunbaton # Pirate: use the local tag spelling.
+        icon:
+          sprite: Objects/Weapons/Melee/stunbaton.rsi
+          state: stunbaton_off
+        name: construction-graph-tag-stun-baton
+        doAfter: 2
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: construction-graph-tag-proximity-sensor
+        doAfter: 2
+  - node: bot
+    entity: Wandsky
+- type: constructionGraph
+  id: WeldedSword
+  start: start
+  graph:
+  - node: start
+    edges:
+
+    - to: unfinished
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 4
+
+  - node: unfinished
+    entity: SwordWeldedUnfinished
+    edges:
+    - to: finish
+      steps:
+      - tool: Welding
+        doAfter: 5
+      - tool: Welding
+        doAfter: 5
+      - tool: Sharpening
+        doAfter: 5
+
+  - node: finish
+    entity: SwordWelded
+
+# Barbcuffs
+- type: constructionGraph
+  id: Whetstone
+  graph:
+  - node: start
+    edges:
+    - to: finish
+      completed:
+        - !type:SetStackCount
+          amount: 1
+      steps:
+        - material: Steel
+          amount: 1
+        - material: Brick
+          amount: 1
+  - node: finish
+    entity: Whetstone
+- type: constructionGraph
+  id: WoodenSword
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: uncarved
+      steps:
+      - material: WoodPlank
+        amount: 5
+        doAfter: 4
+  - node: uncarved
+    entity: IncompleteWoodenSword
+    edges:
+    - to: finish
+      steps:
+      - tool: Slicing
+        doAfter: 4
+  - node: finish
+    entity: SwordWood

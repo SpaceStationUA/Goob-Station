@@ -1,0 +1,17 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical"
+              Margin="10"
+              HorizontalExpand="True"
+              VerticalExpand="True">
+    <BoxContainer Orientation="Horizontal" Margin="0 0 0 8" HorizontalExpand="True">
+        <Label Name="PointsLabel" VerticalAlignment="Center" />
+        <Control HorizontalExpand="True" />
+        <Button Name="ResetButton" Text="{Loc 'knowledge-editor-reset'}" ToolTip="{Loc 'knowledge-editor-reset-tooltip'}" Margin="0 0 6 0" />
+        <Button Name="SaveButton" Text="{Loc 'knowledge-editor-apply'}" ToolTip="{Loc 'knowledge-editor-apply-tooltip'}" />
+    </BoxContainer>
+    <ScrollContainer HScrollEnabled="False" VerticalExpand="True">
+        <BoxContainer Name="Skills" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2" />
+    </ScrollContainer>
+</BoxContainer>

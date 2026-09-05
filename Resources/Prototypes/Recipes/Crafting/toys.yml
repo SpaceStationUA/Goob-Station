@@ -7,6 +7,11 @@
   targetNode: plushie
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
 
 - type: construction
   id: ClothingOuterSuitIan
@@ -15,6 +20,11 @@
   targetNode: suit
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    FabricationKnowledge: 1
 
 - type: construction
   id: MoproachShoes
@@ -23,3 +33,8 @@
   targetNode: shoes
   category: construction-category-misc
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1

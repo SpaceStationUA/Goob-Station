@@ -7,6 +7,11 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 1
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: plantbot
@@ -15,6 +20,11 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 1
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: fillbot
@@ -31,3 +41,8 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 1
+  practical:
+    ElectronicsKnowledge: 1

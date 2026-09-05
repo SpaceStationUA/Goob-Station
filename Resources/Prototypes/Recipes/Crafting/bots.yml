@@ -7,6 +7,11 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: firebot
@@ -15,6 +20,11 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: honkbot
@@ -23,6 +33,12 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 0
+    BananiumKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: jonkbot
@@ -31,6 +47,11 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: medibot
@@ -39,6 +60,12 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 0
+    ChemistryKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: mimebot
@@ -47,6 +74,11 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: supplybot
@@ -55,6 +87,11 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
 
 - type: construction
   id: hugbot
@@ -63,3 +100,8 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1

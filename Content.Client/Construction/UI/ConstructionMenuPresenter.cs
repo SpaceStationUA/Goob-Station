@@ -6,6 +6,8 @@ using Content.Client.Lobby;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Goobstation.Common.CCVar; // Goobstation
+using Content.Shared._Pirate.Construction;
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
@@ -17,6 +19,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration; // Goobstation
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Control;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Construction.UI
 {
@@ -42,6 +46,7 @@ namespace Content.Client.Construction.UI
         private readonly IConstructionMenuView _constructionView;
         private readonly EntityWhitelistSystem _whitelistSystem;
         private readonly IConfigurationManager _cfg; // Goobstation
+        private SharedKnowledgeSystem? _knowledge;
 
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
@@ -100,6 +105,7 @@ namespace Content.Client.Construction.UI
             _spriteSystem = _entManager.System<SpriteSystem>();
             _sawmill = _logManager.GetSawmill("construction.ui");
             _cfg = IoCManager.Resolve<IConfigurationManager>(); // Goobstation
+            _systemManager.TryGetEntitySystem(out _knowledge); // Pirate: skills are optional in minimal clients.
 
             // This is required so that if we load after the system is initialized, we can bind to it immediately
             if (_systemManager.TryGetEntitySystem<ConstructionSystem>(out var constructionSystem))
@@ -398,7 +404,114 @@ namespace Content.Client.Construction.UI
                 !_favoritedRecipes.Contains(prototype));
 
             var stepList = _constructionView.RecipeStepList;
+            PopulateKnowledgeRequirements(prototype);
             GenerateStepList(prototype, stepList);
+        }
+
+        /// <summary>
+        /// Presents both the hard theory gate and the practical quality inputs. Keeping this
+        /// separate from the ordinary construction guide prevents a missing skill from looking
+        /// like a missing material.
+        /// </summary>
+        private void PopulateKnowledgeRequirements(ConstructionPrototype prototype)
+        {
+            var list = _constructionView.RecipeConstructionList;
+            list.RemoveAllChildren();
+
+            var hasTheory = prototype.Theory.Count > 0;
+            var hasPractical = prototype.Practical is { Count: > 0 };
+            _constructionView.RecipeConstructionScroll.Visible = hasTheory || hasPractical;
+            if (!_constructionView.RecipeConstructionScroll.Visible)
+                return;
+
+            if (hasTheory)
+            {
+                list.AddChild(new Label
+                {
+                    Text = Loc.GetString("knowledge-construction-theory"),
+                    StyleClasses = { "LabelKeyText" },
+                });
+                AddKnowledgeRequirementRows(list, prototype.Theory, theory: true);
+            }
+
+            if (hasPractical)
+            {
+                list.AddChild(new Label
+                {
+                    Text = Loc.GetString("knowledge-construction-practical"),
+                    StyleClasses = { "LabelKeyText" },
+                    Margin = new Thickness(0, hasTheory ? 6 : 0, 0, 0),
+                });
+                AddKnowledgeRequirementRows(list, prototype.Practical!, theory: false);
+            }
+        }
+
+        private void AddKnowledgeRequirementRows(
+            BoxContainer list,
+            IReadOnlyDictionary<EntProtoId, int> requirements,
+            bool theory)
+        {
+            foreach (var (id, requiredMastery) in requirements.OrderBy(pair => pair.Key.Id))
+            {
+                if (!_prototypeManager.TryIndex(id, out EntityPrototype? skillPrototype))
+                    continue;
+
+                var currentLevel = _playerManager.LocalEntity is { } player && _knowledge is { } knowledge
+                    ? knowledge.GetKnowledgeLevel(player, id)
+                    : 0;
+                var requiredLevel = SharedKnowledgeSystem.GetInverseMastery(requiredMastery);
+                var currentMastery = SharedKnowledgeSystem.GetMastery(currentLevel);
+                var meetsRequirement = !theory || currentMastery >= requiredMastery;
+
+                var row = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                    HorizontalExpand = true,
+                    SeparationOverride = 6,
+                    ToolTip = skillPrototype.Description,
+                    MouseFilter = MouseFilterMode.Pass,
+                };
+
+                if (skillPrototype.TryGetComponent<KnowledgeComponent>(out var skill, _entManager.ComponentFactory) &&
+                    skill.Sprite is { } sprite)
+                {
+                    row.AddChild(new TextureRect
+                    {
+                        Texture = _spriteSystem.Frame0(sprite),
+                        MinSize = new Vector2(24, 24),
+                        Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                        VerticalAlignment = VAlignment.Center,
+                    });
+                }
+
+                var text = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical,
+                    HorizontalExpand = true,
+                };
+                text.AddChild(new Label
+                {
+                    Text = skillPrototype.Name,
+                    HorizontalExpand = true,
+                    Modulate = skill?.Color ?? Color.White,
+                });
+                text.AddChild(new Label
+                {
+                    Text = Loc.GetString(
+                        theory
+                            ? "knowledge-construction-theory-requirement"
+                            : "knowledge-construction-practical-requirement",
+                        ("mastery", SharedKnowledgeSystem.GetMasteryString(requiredMastery)),
+                        ("required-level", requiredLevel),
+                        ("current-level", currentLevel),
+                        ("current-mastery", SharedKnowledgeSystem.GetMasteryString(currentMastery))),
+                    StyleClasses = { "LabelSubText" },
+                    Modulate = meetsRequirement ? Color.LightGreen : Color.IndianRed,
+                    HorizontalExpand = true,
+                });
+                row.AddChild(text);
+                list.AddChild(row);
+            }
         }
 
         private void GenerateStepList(ConstructionPrototype prototype, ItemList stepList)
@@ -441,6 +554,14 @@ namespace Content.Client.Construction.UI
                     return;
                 }
 
+                // Pirate: give immediate feedback and avoid a silent no-op while the
+                // authoritative server performs the same check again.
+                if (!CheckKnowledgeBeforeConstruction())
+                {
+                    _constructionView.BuildButtonPressed = false;
+                    return;
+                }
+
                 if (_selected.Type == ConstructionType.Item)
                 {
                     _constructionSystem.TryStartItemConstruction(_selected.ID);
@@ -461,6 +582,17 @@ namespace Content.Client.Construction.UI
                 _placementManager.Clear();
 
             _constructionView.BuildButtonPressed = pressed;
+        }
+
+        private bool CheckKnowledgeBeforeConstruction()
+        {
+            if (_selected is null || _knowledge is null || !_knowledge.SkillsEnabled ||
+                _playerManager.LocalEntity is not { } player)
+                return true;
+
+            var attempt = new ConstructAttemptEvent(_selected.ID);
+            _entManager.EventBus.RaiseLocalEvent(player, ref attempt);
+            return !attempt.Cancelled;
         }
 
         private void UpdateGhostPlacement()

@@ -25,6 +25,10 @@
         whitelist:
           components:
           - Defibrillator
+  # Pirate: keep the cabinet on the construction graph so it can be deconstructed.
+  - type: Construction
+    graph: DefibrillatorCabinet
+    node: done
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger

@@ -46,6 +46,8 @@ public partial class NavMapControl : MapGridControl
     public event Action<NetEntity?>? TrackedEntitySelectedAction;
     public event Action<DrawingHandleScreen>? PostWallDrawingAction;
     public event Action<EntityUid, int>? ZLevelSelectedAction; // Pirate: multiz
+    // Pirate: syndicate drop console - reports the grid-local position that was left clicked, for consoles that aim at tiles instead of entities.
+    public event Action<EntityUid, Vector2>? TileSelectedAction;
 
     // Tracked data
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
@@ -298,6 +300,21 @@ public partial class NavMapControl : MapGridControl
 
         if (args.Function == EngineKeyFunctions.UIClick)
         {
+            #region Pirate: syndicate drop console
+            if (TileSelectedAction != null &&
+                MapUid != null &&
+                _xform != null &&
+                _physics != null &&
+                (StartDragPosition - args.PointerLocation.Position).Length() <= MinDragDistance)
+            {
+                var clickOffset = Offset + _physics.LocalCenter;
+                var clickLocal = args.PointerLocation.Position - GlobalPixelPosition;
+                var clickUnscaled = (clickLocal - MidPointVector) / MinimapScale;
+
+                TileSelectedAction.Invoke(MapUid.Value, new Vector2(clickUnscaled.X, -clickUnscaled.Y) + clickOffset);
+            }
+            #endregion Pirate: syndicate drop console
+
             if (TrackedEntitySelectedAction == null)
                 return;
 

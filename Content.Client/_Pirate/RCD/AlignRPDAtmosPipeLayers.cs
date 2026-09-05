@@ -155,13 +155,13 @@ public sealed class AlignRPDAtmosPipeLayers : PlacementMode
 
     private AtmosPipeLayer GetLayerForMode(RCDComponent rcd, EntityUid gridId)
     {
-        return rcd.CurrentMode switch
+        // Legacy saved/networked state can still hold the removed Quaternary(3)/Quinary(4) values;
+        // NormalizeMode folds them onto Tertiary so the preview agrees with the server.
+        return RCDSystem.NormalizeMode(rcd.CurrentMode) switch
         {
             RpdMode.Primary => AtmosPipeLayer.Primary,
             RpdMode.Secondary => AtmosPipeLayer.Secondary,
             RpdMode.Tertiary => AtmosPipeLayer.Tertiary,
-            RpdMode.Quaternary => AtmosPipeLayer.Tertiary, // Pirate: local atmos/plumbing supports three pipe layers.
-            RpdMode.Quinary => AtmosPipeLayer.Tertiary,
             RpdMode.Free => GetFreeModeLayer(gridId),
             _ => AtmosPipeLayer.Primary,
         };
@@ -189,6 +189,10 @@ public sealed class AlignRPDAtmosPipeLayers : PlacementMode
 
         _lastLayerSyncEntity = heldEntity;
         _lastLayerSynced = layer;
+
+        if (_entityManager.TryGetComponent<RCDComponent>(heldEntity, out var rcd))
+            _rcdSystem.SetLastSelectedLayer((heldEntity, rcd), layer);
+
         _entityNetwork.SendSystemNetworkMessage(new RPDSelectedLayerEvent(_entityManager.GetNetEntity(heldEntity), (byte) layer));
     }
 

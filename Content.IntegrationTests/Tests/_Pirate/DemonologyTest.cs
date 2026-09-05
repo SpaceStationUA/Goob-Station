@@ -11,6 +11,7 @@ using Content.Goobstation.Maths.FixedPoint;
 using Content.Goobstation.Shared.Clothing.Components;
 using Content.Goobstation.Shared.Enchanting.Components;
 using Content.Goobstation.Shared.Enchanting.Systems;
+using Content.Shared._Pirate.Durability;
 using Content.Goobstation.Shared.GrabIntent;
 using Content.Goobstation.Shared.Religion;
 using Content.Goobstation.Shared.Religion.Nullrod;
@@ -921,7 +922,7 @@ public sealed class DemonologyTest : InteractionTest
                     Assert.That(clumsy.GunShootFailDamage.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(4)));
                     Assert.That(clumsy.GunShootFailDamage.DamageDict["Heat"], Is.EqualTo(FixedPoint2.New(3)));
                     Assert.That(font.Enabled);
-                    Assert.That(font.FontId, Is.EqualTo("LDFComicSans"));
+                    Assert.That(font.FontId, Is.Null);
                 });
                 break;
             }
@@ -1078,6 +1079,23 @@ public sealed class DemonologyTest : InteractionTest
                     SEntMan.EventBus.RaiseLocalEvent(targetUid, ev);
                     var expected = incoming * SEntMan.GetComponent<DamageModifyEnchantComponent>(enchantUid).Modifier;
                     Assert.That(ev.Damage.DamageDict["Blunt"].Float(), Is.EqualTo(expected).Within(0.01f), enchantId);
+
+                    if (enchantId == "EnchantUnbreaking")
+                    {
+                        var durability = SEntMan.EnsureComponent<DurabilityComponent>(targetUid);
+                        var system = SEntMan.System<DurabilitySystem>();
+                        system.SetDamageProbability((targetUid, durability), 1f);
+                        Assert.That(system.DamageEntity(targetUid, incoming, durability), Is.True);
+                        var durabilityDamage = durability.Damage;
+                        Assert.That(durabilityDamage.Float(), Is.EqualTo(expected).Within(0.01f),
+                            "Unbreaking did not reduce item durability wear by its enchant modifier.");
+
+                        const float repair = 1f;
+                        Assert.That(system.DamageEntity(targetUid, -repair, durability), Is.True);
+                        var repairedDamage = durability.Damage;
+                        Assert.That(repairedDamage.Float(), Is.EqualTo(expected - repair).Within(0.01f),
+                            "Unbreaking incorrectly reduced the effectiveness of item repairs.");
+                    }
                 });
                 break;
             case "EnchantProtFire":

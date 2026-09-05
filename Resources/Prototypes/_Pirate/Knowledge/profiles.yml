@@ -1,0 +1,163 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: knowledgeProfile
+  id: Human
+  pointsLimit: 10
+  mastery:
+    CookingKnowledge: 0
+    DoorsKnowledge: 1
+    AirlocksKnowledge: 1
+    BananiumKnowledge: 0
+    BotsKnowledge: 0
+    FurnitureKnowledge: 1
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
+    WallsKnowledge: 1
+    WindowsKnowledge: 1
+    SmokeablesKnowledge: 0
+    LiteracyKnowledge: 0
+    MagicalLiteracyKnowledge: 0
+    SurgeryKnowledge: 0
+    FirstAidKnowledge: 0
+    ChemistryKnowledge: 0
+    ThrowingKnowledge: 0
+    MeleeKnowledge: 0
+    ShootingKnowledge: 0
+    KnowledgeWeaponsShield: 0
+    FabricationKnowledge: 0
+    WeaponsKnowledge: 0
+    ArmorKnowledge: 0
+    MetalworkingKnowledge: 0
+    CarvingKnowledge: 0
+    GunsmithingKnowledge: 0
+    MechanicsKnowledge: 0
+    TailoringKnowledge: 0
+    JanitorKnowledge: 0
+
+- type: knowledgeProfile
+  id: Dwarf
+  pointsLimit: 10
+  mastery:
+    ShootingKnowledge: 0
+    MeleeKnowledge: 1
+    KnowledgeWeaponsBludgeon: 1
+    KnowledgeWeaponsMining: 2
+    FabricationKnowledge: 3
+    WeaponsKnowledge: 1
+    MetalworkingKnowledge: 3
+
+- type: knowledgeProfile
+  id: Reptilian
+  pointsLimit: 10
+  mastery:
+    ShootingKnowledge: 0
+    ThrowingKnowledge: 1
+    MeleeKnowledge: 1
+    CarvingKnowledge: 1
+    DoorsKnowledge: 0
+    AirlocksKnowledge: 0
+
+- type: knowledgeProfile
+  id: Diona
+  pointsLimit: 10
+  mastery:
+    ShootingKnowledge: 0
+    MagicalLiteracyKnowledge: 1
+    FirstAidKnowledge: 1
+    ChemistryKnowledge: 1
+    ThrowingKnowledge: 1
+    SmokeablesKnowledge: 4
+    DoorsKnowledge: 1
+    AirlocksKnowledge: 1
+
+- type: knowledgeProfile
+  id: Moth
+  pointsLimit: 10
+  mastery:
+    ShootingKnowledge: 0
+    MechanicsKnowledge: 1
+    TailoringKnowledge: 1
+    DoorsKnowledge: 1
+    AirlocksKnowledge: 1
+    FurnitureKnowledge: 1
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
+    WallsKnowledge: 1
+    WindowsKnowledge: 1
+
+- type: knowledgeProfile
+  id: Vox
+  pointsLimit: 10
+  mastery:
+    ShootingKnowledge: 0
+    JanitorKnowledge: 4
+
+- type: knowledgeProfile
+  id: IPC
+  pointsLimit: 10
+  mastery:
+    ShootingKnowledge: 0
+    DoorsKnowledge: 1
+    AirlocksKnowledge: 1
+    BotsKnowledge: 2
+    FurnitureKnowledge: 1
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 2
+    WallsKnowledge: 1
+    WindowsKnowledge: 1
+
+- type: knowledgeProfile
+  id: Plasmaman
+  pointsLimit: 10
+  mastery:
+    ShootingKnowledge: 0
+    DoorsKnowledge: 1
+    AirlocksKnowledge: 1
+    FurnitureKnowledge: 1
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
+    WallsKnowledge: 1
+    WindowsKnowledge: 1
+
+- type: knowledgeProfile
+  id: Slimeperson
+  pointsLimit: 10
+  mastery:
+    ShootingKnowledge: 0
+    ChemistryKnowledge: 2
+    DoorsKnowledge: 1
+    AirlocksKnowledge: 1
+    FurnitureKnowledge: 1
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
+    WallsKnowledge: 1
+    WindowsKnowledge: 1
+
+- type: knowledgeProfile
+  id: Arachnid
+  pointsLimit: 10
+  mastery:
+    ShootingKnowledge: 0
+    SpiderCraftKnowledge: 4
+    DoorsKnowledge: 1
+    AirlocksKnowledge: 1
+    FurnitureKnowledge: 1
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
+    WallsKnowledge: 1
+    WindowsKnowledge: 1
+
+- type: knowledgeProfile
+  id: Abductor
+  pointsLimit: 10
+  mastery:
+    SurgeryKnowledge: 3
+    FirstAidKnowledge: 1
+    ShootingKnowledge: 1
+    DoorsKnowledge: 1
+    AirlocksKnowledge: 1
+    FurnitureKnowledge: 1
+    InfrastructureKnowledge: 1
+    ElectronicsKnowledge: 1
+    WallsKnowledge: 1
+    WindowsKnowledge: 1

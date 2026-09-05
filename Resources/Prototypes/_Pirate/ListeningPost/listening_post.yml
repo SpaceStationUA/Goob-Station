@@ -1,120 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Role and event
-
-- type: antag
-  id: ListeningPost
-  name: roles-antag-listening-post-name
-  antagonist: true
-  objective: roles-antag-listening-post-objective
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 72h
-  - !type:DepartmentTimeRequirement
-    department: Security
-    time: 11.1h
-  - !type:DepartmentTimeRequirement
-    department: Civilian
-    time: 11.1h
-  - !type:DepartmentTimeRequirement
-    department: Command
-    time: 11.1h
-
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleListeningPost
-  name: Listening Post Role
-  components:
-  - type: MindRole
-    roleType: TeamAntagonist
-    subtype: role-subtype-lpo
-    antagPrototype: ListeningPost
-    exclusiveAntag: true
-  - type: ListeningPostRole
-
-- type: entity
-  categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseAntagSpawner
-  id: SpawnPointGhostSyndicateListener
-  components:
-  - type: GhostRole
-    name: ghost-role-information-listeningop-name
-    description: ghost-role-information-listeningop-description
-    rules: ghost-role-information-listeningop-rules
-    mindRoles:
-    - MindRoleListeningPost
-
-- type: entity
-  parent: BaseGameRule
-  id: ListeningPost
-  components:
-  - type: GameRule
-    chaosScore: 300
-  - type: StationEvent
-    earliestStart: 30
-    weight: 4
-    minimumPlayers: 25
-    maxOccurrences: 1
-    duration: null
-    chaos:
-      Hostile: 20
-      Friend: 20
-    eventType: HostilesSpawn
-  # Pirate: PrecognitionResult is unavailable in the local psionics implementation.
-  - type: RuleGrids
-  - type: LoadFarGridRule
-    path: /Maps/_Pirate/Nonstations/listening_post.yml
-    distanceModifier: 13
-  - type: DebrisSpawnerRule
-    count: 6
-    distanceModifier: 3
-  - type: AntagLoadProfileRule
-  - type: AntagSelection
-    agentName: listening-post-round-end-agent-name
-    definitions:
-    - spawnerPrototype: SpawnPointGhostSyndicateListener
-      min: 2
-      max: 2
-      pickPlayer: false
-      startingGear: SyndicateListenerGear
-      roleLoadout:
-      - RoleSurvivalStandard
-      components:
-      - type: RandomHumanoidAppearance
-        randomizeName: false
-      - type: RandomMetadata
-        nameSegments:
-        - NamesDeathCommando
-      - type: AutoImplant
-        implants:
-        - DeathAcidifierImplant
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      # Pirate: Binary is a collective-mind channel here, not a radio channel.
-      - type: ReceiveOnlyCollectiveMind
-        channel: Binary
-      - type: TargetObjectiveImmune
-      mindRoles:
-      - MindRoleListeningPost
-  - type: DynamicRuleCost
-    cost: 50
-
-# Operative equipment
-
-- type: startingGear
-  id: SyndicateListenerGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitPyjamaSyndicateBlack
-    head: ClothingHeadPyjamaSyndicateBlack
-    ears: ClothingHeadsetAltSyndicateListening
-    gloves: ClothingHandsGlovesCombat
-    shoes: ClothingShoesSlippers
-    id: SyndiListeningPostPDA
-    back: ClothingBackpackSyndicate
-    pocket1: AgentIDCard
-    pocket2: HandheldStationMapRecordsTablet
-
 - type: entity
   parent: ClothingHeadsetAltSyndicate
   id: ClothingHeadsetAltSyndicateListening
@@ -126,6 +11,11 @@
       - EncryptionKeyStationMaster
   # Pirate: bridge radio coverage between the remote post and the station.
   - type: ListeningPostRadio
+  # Pirate: lets the wearer eavesdrop on Binary without being able to pose as a silicon on it.
+  - type: ClothingGrantComponent
+    component:
+    - type: ReceiveOnlyCollectiveMind
+      channel: Binary
   - type: Sprite
     sprite: _Pirate/Clothing/Ears/Headsets/syndicate_listening.rsi
   - type: Clothing
@@ -173,8 +63,6 @@
     sprite: _Pirate/Clothing/Belt/syndbelt_overlay.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Belt/syndbelt_overlay.rsi
-
-# Listening post machines
 
 - type: entity
   parent: ComputerCrewMonitoring
@@ -242,6 +130,73 @@
       path: /Audio/Ambience/Objects/server_fans.ogg
 
 - type: entity
+  parent: ComputerSurveillanceCameraMonitor
+  id: ComputerSurveillanceCameraMonitorSyndicate
+  suffix: Syndicate, Long Range
+  components:
+  - type: LongRangeSurveillanceMonitor
+  - type: SurveillanceCameraMonitor
+    neverAutomaticallyHeartbeat: true
+
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: SyndicateSurveillanceServer
+  name: surveillance server
+  description: A surveillance relay. Someone else's cameras, your screen.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    snapCardinals: true
+    layers:
+    - state: server-off
+    - state: server-on
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: server_o
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Machine
+    board: SurveillanceCameraRouterCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: LongRangeSurveillanceServer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    enabled: false
+    sound:
+      path: /Audio/Ambience/Objects/server_fans.ogg
+
+- type: entity
   parent: FaxMachineBase
   id: FaxMachineListeningSyndie
   suffix: Syndicate
@@ -256,6 +211,64 @@
     name: "Невідомо?"
     responsePings: false
   - type: Emagged
+
+# The round's single dead drop dispatcher. Spawned into nullspace by the first console that needs it, so
+# every console shares one countdown, one drop site and one set of packages. Tune the drops here.
+- type: entity
+  id: SyndicateDropDispatcher
+  name: dead drop dispatcher
+  description: An invisible bookkeeper that runs the drop schedule for every dispatch console.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SyndicateDropDispatcher
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerSyndicateDropConsole
+  name: dead drop dispatch console
+  description: A long range bluespace dispatcher. It cooks up supply packages on its own schedule and fires them at a station of High Command's choosing.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request-syndie
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 4.0
+    color: "#f71713"
+  - type: Computer
+    board: SyndicateDropConsoleCircuitboard
+  - type: SyndicateDropConsole
+  - type: DeviceLinkSource
+    ports:
+    - SyndicateDropPad
+  - type: ActivatableUI
+    key: enum.SyndicateDropConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SyndicateDropConsoleUiKey.Key:
+        type: SyndicateDropConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+
+- type: entity
+  parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
+  id: SyndicateDropConsoleCircuitboard
+  name: dead drop dispatch console board
+  description: A computer printed circuit board for a dead drop dispatch console.
+  components:
+  - type: Sprite
+    state: cpu_syndicate
+  - type: ComputerBoard
+    prototype: ComputerSyndicateDropConsole
 
 # Guard
 

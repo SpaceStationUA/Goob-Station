@@ -5,6 +5,8 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: WeaponClass # Pirate
+    class: Laser
   - type: Sprite
   - type: Item
     size: Huge
@@ -1145,8 +1147,8 @@
     tags:
     - HighRiskItem
     - Sidearm
-  - type: StealTarget
-    stealGroup: WeaponEnergyMagnum
+#  - type: StealTarget # Goobstation - Remove Energy Magnum
+#    stealGroup: WeaponEnergyMagnum # Goobstation - Remove Energy Magnum
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
@@ -1186,6 +1188,7 @@
   - type: Appearance
   - type: Item
     size: Large
+    sprite: _Goobstation/Objects/Weapons/Guns/Battery/tempgun.rsi # Goobstation
     shape:
     - 0,0,3,1
   - type: MagazineVisuals

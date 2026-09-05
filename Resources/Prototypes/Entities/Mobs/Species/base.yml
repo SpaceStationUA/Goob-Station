@@ -11,6 +11,10 @@
   id: BaseMobSpecies
   abstract: true
   components:
+  - type: KnowledgeHolder # Pirate
+  - type: WeaponClass # Pirate
+    class: Unarmed
+    examinable: false
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.TailBehind" ] # Floof

@@ -1,0 +1,1012 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from Trauma Station; adapted to local prototypes.
+
+- type: construction
+  id: AccessScanner
+  graph: AccessScanner
+  targetNode: access scanner
+  category: construction-category-utilities
+  objectType: Item
+  theory:
+    FabricationKnowledge: 1
+  useQuality: false
+- type: construction
+  id: BarbCuffs
+  graph: BarbCuffs
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: BaseQuality
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+- type: construction
+  id: BarbWireStructure
+  graph: BarbedWire
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canBuildInImpassable: false
+  targetNode: finish
+  category: construction-category-structures
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+- type: construction
+  parent: BaseMaterial
+  id: BarbedWireMaterial
+  graph: BarbedWireMaterial
+  targetNode: BarbedWire
+- type: construction
+  parent: BarbedWireMaterial
+  id: BarbedWireMaterialHV
+  graph: BarbedWireMaterial
+  targetNode: BarbedWire1
+- type: construction
+  parent: BarbedWireMaterial
+  id: BarbedWireMaterialMV
+  targetNode: BarbedWire0
+- type: construction
+  abstract: true
+  id: BaseAtmos
+  placementMode: SnapgridCenter
+  category: construction-category-atmospherics
+  objectType: Structure
+  canRotate: true
+  # <Trauma>
+  theory:
+    ElectronicsKnowledge: 0
+    InfrastructureKnowledge: 0
+  # </Trauma>
+- type: construction
+  abstract: true
+  parent: BaseFurniture
+  id: BaseBed
+  graph: bed
+  canRotate: false
+  conditions:
+  - !type:TileNotBlocked
+- type: construction
+  abstract: true
+  id: BaseBox
+  category: construction-category-storage
+  objectType: Item
+  # <Trauma>
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+  # </Trauma>
+# endregion Base
+
+# region Crates
+- type: construction
+  abstract: true
+  parent: BaseFurniture
+  id: BaseChair
+  graph: Seat
+  conditions:
+  - !type:TileNotBlocked
+- type: construction
+  abstract: true
+  id: BaseCloset
+  targetNode: done
+  category: construction-category-storage
+  canRotate: false
+  # <Trauma>
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    MechanicsKnowledge: 1
+  # </Trauma>
+# endregion
+
+# region Closets
+- type: construction
+  abstract: true
+  id: BaseClothing
+  category: construction-category-clothing
+  objectType: Item
+  # <Trauma>
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    FabricationKnowledge: 1
+  # </Trauma>
+# endregion Base
+
+# region Clothing
+- type: construction
+  abstract: true
+  id: BaseCrate
+  category: construction-category-storage
+  canRotate: false
+  # <Trauma>
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
+  # </Trauma>
+- type: construction
+  abstract: true
+  parent: BaseFurniture
+  id: BaseCurtains
+  graph: Curtains
+  canBuildInImpassable: true
+# endregion Base
+
+# region Chairs
+- type: construction
+  abstract: true
+  id: BaseDemonology
+  targetNode: finish
+  category: construction-category-demonology
+  objectType: Item
+  theory:
+    MagicalLiteracyKnowledge: 1
+  useQuality: false
+- type: construction
+  abstract: true
+  id: BaseDemonologyRune
+  targetNode: finish
+  category: construction-category-demonology
+  objectType: Structure
+  placementMode: SnapgridCenter
+  theory:
+    MagicalLiteracyKnowledge: 1
+  useQuality: false
+- type: construction
+  abstract: true
+  id: BaseFurniture
+  category: construction-category-furniture
+  placementMode: SnapgridCenter
+  # <Trauma>
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  # </Trauma>
+- type: construction
+  abstract: true
+  parent: BaseGasDevice
+  id: BaseGasBinary
+  graph: GasBinary
+  placementMode: AlignAtmosPipeLayers # most binary devices support layers
+- type: construction
+  abstract: true
+  parent: BaseAtmos
+  id: BaseGasDevice
+  conditions:
+  - !type:NoUnstackableInTile
+  # <Trauma>
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  # </Trauma>
+- type: construction
+  abstract: true
+  parent: BaseAtmos
+  id: BaseGasPipe
+  placementMode: AlignAtmosPipeLayers
+  graph: GasPipe
+  canBuildInImpassable: true # for player convenience
+  # <Trauma>
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  # </Trauma>
+- type: construction
+  abstract: true
+  parent: BaseGasDevice
+  id: BaseGasTrinary
+  graph: GasTrinary
+  # <Trauma>
+  theory:
+    InfrastructureKnowledge: 0
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+    ElectronicsKnowledge: 1
+  # </Trauma>
+# endregion Base
+
+# region Machines
+- type: construction
+  abstract: true
+  parent: BaseGasDevice
+  id: BaseGasUnary
+  graph: GasUnary
+- type: construction
+  abstract: true
+  id: BaseItemMisc
+  category: construction-category-misc
+  objectType: Item
+# endregion
+
+# region Weapons
+- type: construction
+  abstract: true
+  id: BaseLight
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+  # <Trauma>
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
+  # </Trauma>
+# endregion Base
+
+# region Lights
+- type: construction
+  abstract: true
+  id: BaseMachine
+  category: construction-category-machines
+  placementMode: SnapgridCenter
+  conditions:
+  - !type:TileNotBlocked
+  # <Trauma>
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
+  # </Trauma>
+- type: construction
+  abstract: true
+  id: BaseMaterial
+  category: construction-category-materials
+  objectType: Item
+  # <Trauma>
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+  # </Trauma>
+# endregion Base
+
+# region Materials
+- type: construction
+  abstract: true
+  id: BaseRepairItem
+  targetNode: finish
+  category: construction-category-tools
+  objectType: Item
+  theory:
+    FabricationKnowledge: 1
+  useQuality: false
+- type: construction
+  abstract: true
+  id: BaseRev
+  category: construction-category-antagonist
+  entityWhitelist: # if skills are disabled, prevents randoms making rev shit
+    components:
+    - Revolutionary
+  theory:
+    RevolutionaryKnowledge: 0
+- type: construction
+  abstract: true
+  parent: BaseRev
+  id: BaseRevGun
+  graph: RevGuns
+  objectType: Item
+  theory:
+    RevolutionaryKnowledge: 2
+    GunsmithingKnowledge: 0
+  practical:
+    WeaponsKnowledge: 2
+    GunsmithingKnowledge: 2
+- type: construction
+  abstract: true
+  parent: BaseRev
+  id: BaseRevMachine
+  graph: RevMachine
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  theory:
+    RevolutionaryKnowledge: 2
+  useQuality: false
+- type: construction
+  abstract: true
+  parent: BaseRev
+  id: BaseRevParts
+  graph: RevParts
+  objectType: Item
+  practical:
+    FabricationKnowledge: 1
+    MetalworkingKnowledge: 1
+  useQuality: false
+- type: construction
+  abstract: true
+  parent: BaseRevMachine
+  id: BaseRevTurret
+  graph: RevTurret
+  theory:
+    RevolutionaryKnowledge: 2
+    WeaponsKnowledge: 1
+  practical:
+    MechanicsKnowledge: 2
+- type: construction
+  abstract: true
+  id: BaseRobot
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  # <Trauma>
+  theory:
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
+  # </Trauma>
+# endregion Base
+- type: construction
+  abstract: true
+  parent: BaseStorageStructure
+  id: BaseShelf
+  graph: Shelf
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+# endregion Base
+
+# region Bureaucracy
+- type: construction
+  abstract: true
+  parent: BaseStructure
+  id: BaseShutters
+  graph: Shutters
+  canBuildInImpassable: true
+  # <Trauma>
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  # </Trauma>
+# endregion Base
+
+# region Walls
+- type: construction
+  abstract: true
+  id: BaseStorageStructure
+  category: construction-category-storage
+  placementMode: SnapgridCenter
+  conditions:
+  - !type:TileNotBlocked
+  # <Trauma>
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  # </Trauma>
+- type: construction
+  abstract: true
+  id: BaseStructure
+  category: construction-category-structures
+  placementMode: SnapgridCenter
+  # <Trauma>
+  theory:
+    FabricationKnowledge: 0
+  # </Trauma>
+- type: construction
+  abstract: true
+  parent: BaseStructure
+  id: BaseStructureFullTile
+  canRotate: false
+  conditions:
+  - !type:TileNotBlocked
+- type: construction
+  abstract: true
+  parent: BaseStructure
+  id: BaseStructureFullTileDirectional
+  conditions:
+  - !type:TileNotBlocked
+- type: construction
+  abstract: true
+  parent: BaseMachine
+  id: BaseSwitch
+  canBuildInImpassable: true
+  # <Trauma>
+  #conditions:
+  #- !type:WallmountCondition
+  theory:
+    ElectronicsKnowledge: 0
+  useQuality: false
+  # </Trauma>
+# endregion Base
+
+# region Machines
+- type: construction
+  abstract: true
+  parent: BaseFurniture
+  id: BaseTable
+  graph: Table
+  canRotate: false
+  conditions:
+  - !type:TileNotBlocked
+- type: construction
+  abstract: true
+  id: BaseTile
+  category: construction-category-tiles
+  objectType: Item
+  # <Trauma>
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false # annoying for construction, masterwork tiles as weapons is sad but not worth the hassle
+  # </Trauma>
+# endregion Base
+
+# region Tiles
+- type: construction
+  abstract: true
+  id: BaseTool
+  category: construction-category-tools
+  objectType: Item
+  # <Trauma>
+  theory:
+    FabricationKnowledge: 0
+  # </Trauma>
+# endregion Base
+
+# region Logic Gates
+- type: construction
+  abstract: true
+  id: BaseUtility
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  # <Trauma>
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
+  # </Trauma>
+- type: construction
+  abstract: true
+  parent: BaseUtility
+  id: BaseUtilityWallmount
+  canBuildInImpassable: true
+  # <Trauma> - its chuddy and theres no reason you cant have a battery on the floor
+  # conditions:
+  #- !type:WallmountCondition
+  # </Trauma>
+# endregion Base
+
+# region Surveillance
+- type: construction
+  abstract: true
+  id: BaseWeapon
+  category: construction-category-weapons
+  objectType: Item
+# endregion Base
+
+# region Weapons
+- type: construction
+  abstract: true
+  id: BaseWebObject
+  graph: WebObjects
+  category: construction-category-clothing
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  objectType: Item
+  # <Trauma>
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 4
+  # </Trauma>
+# endregion Base
+
+# region Web Objects
+- type: construction
+  abstract: true
+  id: BaseWebStructure
+  graph: WebStructures
+  category: construction-category-furniture
+  placementMode: SnapgridCenter
+  canRotate: false
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  # <Trauma>
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 2
+  # </Trauma>
+# endregion Base
+
+# region Web
+- type: construction
+  abstract: true
+  parent: BaseStructure
+  id: BaseWindow
+  graph: Window
+  canBuildInImpassable: true
+  canRotate: false
+  conditions:
+  - !type:EmptyOrWindowValidInTile
+  - !type:NoWindowsInTile
+- type: construction
+  abstract: true
+  parent: BaseWindow
+  id: BaseWindowDiagonal
+  graph: WindowDiagonal
+  canRotate: true
+- type: construction
+  id: BoogieBot
+  graph: BoogieBot
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  theory:
+    ElectronicsKnowledge: 0
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
+- type: construction
+  parent: BaseRepairItem
+  id: Bracing
+  graph: Bracing
+- type: construction
+  id: Crucifix
+  graph: Crucifix
+  targetNode: crucified
+  placementMode: SnapgridCenter
+  category: construction-category-structures
+  objectType: Structure
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  theory:
+    WeaponsKnowledge: 0
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 2
+- type: construction
+  parent: BaseShelf
+  id: DefibrillatorCabinet
+  graph: DefibrillatorCabinet
+  targetNode: done
+  # <Trauma>
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
+  # </Trauma>
+- type: construction
+  parent: RevRPG2
+  id: Devastator
+  targetNode: Devastator
+- type: construction
+  id: DuckBot
+  graph: DuckBot
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  theory:
+    CookingKnowledge: 0
+    BotsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 1
+- type: construction
+  id: GaussImprovAmmo
+  graph: GaussImprovAmmoGraph
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
+- type: construction
+  id: GaussImprovMagazine
+  graph: GaussImprovMagazineGraph
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
+- type: construction
+  id: GaussPistol
+  graph: GaussPistolGraph
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  theory:
+    FabricationKnowledge: 4
+  practical:
+    GunsmithingKnowledge: 3
+    WeaponsKnowledge: 2
+    MechanicsKnowledge: 2
+  qualityPrototype: BaseQuality
+- type: construction
+  id: GaussRifle
+  graph: GaussRifleGraph
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  theory:
+    FabricationKnowledge: 4
+  practical:
+    GunsmithingKnowledge: 3
+    WeaponsKnowledge: 2
+    MechanicsKnowledge: 2
+  qualityPrototype: BaseQuality
+- type: construction
+  id: IEDSpear
+  graph: IEDSpear
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 3
+  practical:
+    WeaponsKnowledge: 4
+    CarvingKnowledge: 4
+- type: construction
+  parent: BaseRev
+  id: Killdozer
+  graph: Killdozer
+  targetNode: Killdozer
+  objectType: Item
+  theory:
+    RevolutionaryKnowledge: 3
+  useQuality: false
+- type: construction
+  id: NailSword
+  graph: NailSword
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: BaseQuality
+  theory:
+    FabricationKnowledge: 2
+  practical:
+    WeaponsKnowledge: 2
+    CarvingKnowledge: 3
+- type: construction
+  id: PipeBombTrap
+  graph: PipeBombTrap
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canBuildInImpassable: false
+  targetNode: finish
+  category: construction-category-structures
+  theory:
+    ElectronicsKnowledge: 1
+    MechanicsKnowledge: 1
+  useQuality: false
+- type: construction
+  id: PipeShank
+  graph: PipeShank
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    WeaponsKnowledge: 4
+    CarvingKnowledge: 4
+- type: construction
+  id: PipebombSpear
+  graph: PipebombSpear
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 3
+  practical:
+    WeaponsKnowledge: 4
+    CarvingKnowledge: 4
+- type: construction
+  parent: BaseRev
+  id: PowerArmorFrame
+  graph: PowerArmorFrame
+  targetNode: Frame
+  objectType: Item
+  theory:
+    RevolutionaryKnowledge: 2
+  useQuality: false
+- type: construction
+  parent: BaseRev
+  id: PowerArmorStand
+  graph: PowerArmorStand
+  targetNode: PowerArmorStand
+  objectType: Item
+  theory:
+    RevolutionaryKnowledge: 3
+- type: construction
+  parent: RevRPG2
+  id: Proletariat
+  targetNode: Proletariat
+- type: construction
+  parent: BaseRevMachine
+  id: Rev3DPrinter
+  targetNode: 3D printer
+- type: construction
+  parent: BaseRevParts
+  id: RevBolt
+  targetNode: bolt
+- type: construction
+  parent: BaseRevMachine
+  id: RevBulletPress
+  targetNode: bullet press
+- type: construction
+  parent: RevRPG2
+  id: RevFlamethrower
+  targetNode: Flamethrower
+- type: construction
+  parent: RevRPG2HE
+  id: RevFlamethrowerAmmo
+  graph: RevFlamethrowerAmmo
+  targetNode: FlamethrowerAmmo
+- type: construction
+  parent: BaseRevMachine
+  id: RevForge
+  targetNode: industrial forge
+  theory:
+    RevolutionaryKnowledge: 0
+- type: construction
+  parent: BaseRevParts
+  id: RevGear
+  targetNode: gear
+- type: construction
+  parent: BaseRevGun
+  id: RevIED
+  graph: RevIED
+  targetNode: IED
+  practical:
+    MechanicsKnowledge: 2
+    WeaponsKnowledge: 2
+- type: construction
+  parent: BaseRevGun
+  id: RevLiberator
+  targetNode: liberator
+- type: construction
+  parent: BaseRevMachine
+  id: RevMedFab
+  targetNode: hidden medifab
+
+# Turrets
+- type: construction
+  parent: BaseRevMachine
+  id: RevMicroelectronicsAssembler
+  targetNode: microelectronics assembler
+- type: construction
+  parent: BaseRevParts
+  id: RevNut
+  targetNode: nut
+- type: construction
+  parent: BaseRevMachine
+  id: RevPlasmaFoundry
+  targetNode: phoron foundry
+- type: construction
+  parent: BaseRevMachine
+  id: RevPrintingPress
+  targetNode: printing press
+- type: construction
+  parent: BaseRevGun
+  id: RevRPG2
+  targetNode: RPG2
+  theory:
+    RevolutionaryKnowledge: 2
+    GunsmithingKnowledge: 1
+    WeaponsKnowledge: 1
+  practical:
+    GunsmithingKnowledge: 4
+    WeaponsKnowledge: 3
+- type: construction
+  parent: RevRPG2HE
+  id: RevRPG2AP
+  targetNode: AP
+- type: construction
+  parent: BaseRevGun
+  id: RevRPG2HE
+  graph: RevRockets
+  targetNode: HE
+  theory:
+    RevolutionaryKnowledge: 2
+    WeaponsKnowledge: 2
+  practical:
+    MechanicsKnowledge: 1
+    WeaponsKnowledge: 2
+- type: construction
+  parent: BaseRevGun
+  id: RevResistance
+  targetNode: resistance
+- type: construction
+  parent: BaseRevMachine
+  id: RevTechAnalyzer
+  targetNode: tech analyzer
+- type: construction
+  parent: BaseRevMachine
+  id: RevTelecommsWorkbench
+  targetNode: telecomms workshop
+- type: construction
+  parent: BaseRevMachine
+  id: RevTelesphere
+  targetNode: telesphere
+- type: construction
+  parent: BaseRevTurret
+  id: RevTurretPistol
+  targetNode: pistol turret
+- type: construction
+  parent: BaseRevTurret
+  id: RevTurretSMG
+  targetNode: SMG turret
+- type: construction
+  parent: BaseRevMachine
+  id: RevUniformPrinter
+  targetNode: uniform printer
+- type: construction
+  id: ScrapSword
+  graph: ScrapSword
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: BaseQuality
+  theory:
+    FabricationKnowledge: 2
+  practical:
+    WeaponsKnowledge: 2
+    CarvingKnowledge: 3
+    MetalworkingKnowledge: 3
+- type: construction
+  parent: BaseMaterial
+  id: SheetPaper
+  graph: SheetPaper
+  targetNode: paper sheet
+  theory: {} # it's folding paper bro
+  useQuality: false
+- type: construction
+  parent: BaseUtilityWallmount
+  id: SignalScreen
+  graph: SignalScreen
+  targetNode: signal screen
+- type: construction
+  parent: TileSteel
+  id: TilePlastic
+  graph: TilePlastic
+  targetNode: plastic tile
+- type: construction
+  parent: TilePlastic
+  id: TilePlasticDark
+  targetNode: dark plastic tile
+- type: construction
+  parent: TilePlastic
+  id: TilePlasticWhite
+  targetNode: white plastic tile
+- type: construction
+  id: TripWire
+  graph: TripWire
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canBuildInImpassable: false
+  targetNode: finish
+  category: construction-category-structures
+  theory:
+    ElectronicsKnowledge: 1
+    MechanicsKnowledge: 1
+  useQuality: false
+- type: construction
+  id: WallInsulation
+  graph: WallInsulation
+  targetNode: insulation
+  placementMode: SnapgridCenter
+  category: construction-category-structures
+  objectType: Structure
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+  theory:
+    FabricationKnowledge: 0
+    FurnitureKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+- type: construction
+  id: WeldedSword
+  graph: WeldedSword
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: BaseQuality
+  theory:
+    FabricationKnowledge: 2
+  practical:
+    WeaponsKnowledge: 2
+    MetalworkingKnowledge: 4
+- type: construction
+  parent: BaseRepairItem
+  id: Whetstone
+  graph: Whetstone
+- type: construction
+  id: WoodenSword
+  graph: WoodenSword
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: BaseQuality
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 2
+    CarvingKnowledge: 2
+- type: construction
+  id: barbedbat
+  graph: WoodenBat
+  startNode: start
+  targetNode: barbedwire
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 4
+    CarvingKnowledge: 4
+- type: construction
+  id: nailbat
+  graph: WoodenBat
+  startNode: start
+  targetNode: nail
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 4
+    CarvingKnowledge: 4
+- type: construction
+  id: nailboard
+  graph: NailBoard
+  startNode: start
+  targetNode: finish
+  category: construction-category-weapons
+  objectType: Item
+  qualityPrototype: ShitCraft
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 2
+    CarvingKnowledge: 2
+- type: construction
+  id: secbot
+  graph: SecBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  theory:
+    BotsKnowledge: 1
+  practical:
+    ElectronicsKnowledge: 1
+- type: construction
+  parent: secbot
+  id: wandsky
+  graph: Wandsky

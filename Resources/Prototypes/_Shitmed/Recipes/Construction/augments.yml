@@ -7,6 +7,9 @@
   targetNode: augment
   category: construction-category-utilities
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: AugmentRechargerAPC
@@ -15,6 +18,9 @@
   targetNode: apc
   category: construction-category-utilities
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: AugmentRechargerStation
@@ -25,6 +31,9 @@
   canBuildInImpassable: false
 
 # Arm
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: AugmentToolsPanel
@@ -33,6 +42,9 @@
   targetNode: "utility tools panel"
   category: construction-category-utilities
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: AugmentBotanyPanel
@@ -41,6 +53,9 @@
   targetNode: "botany tools panel"
   category: construction-category-utilities
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: AugmentPaperworkPanel
@@ -57,6 +72,9 @@
   targetNode: "surgery tools panel"
   category: construction-category-utilities
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 2
 
 - type: construction
   id: AugmentStrength
@@ -65,3 +83,8 @@
   targetNode: augment
   category: construction-category-utilities
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 2
+  practical:
+    ElectronicsKnowledge: 3

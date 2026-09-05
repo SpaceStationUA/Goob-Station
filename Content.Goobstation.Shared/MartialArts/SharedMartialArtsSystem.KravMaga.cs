@@ -5,6 +5,7 @@ using Content.Goobstation.Shared.Changeling.Components;
 using Content.Goobstation.Shared.MartialArts.Components;
 using Content.Goobstation.Shared.MartialArts.Events;
 using Content.Shared.Damage.Components;
+using Content.Shared.Actions.Components; // Pirate: krav maga implant action popup
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 
@@ -19,6 +20,7 @@ public abstract partial class SharedMartialArtsSystem
     {
         SubscribeLocalEvent<KravMagaComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<KravMagaComponent, KravMagaActionEvent>(OnKravMagaAction);
+        SubscribeLocalEvent<ActionsComponent, KravMagaActionEvent>(OnKravMagaActionPopup); // Pirate: krav maga implant action popup
         SubscribeLocalEvent<KravMagaComponent, MeleeHitEvent>(OnMeleeHitEvent);
         SubscribeLocalEvent<KravMagaComponent, ComponentShutdown>(OnKravMagaShutdown);
     }
@@ -88,9 +90,18 @@ public abstract partial class SharedMartialArtsSystem
 
         args.Handled = true;
 
-        _popupSystem.PopupClient(Loc.GetString("krav-maga-ready", ("action", kravActionComp.Name)), ent, ent);
         ent.Comp.SelectedMove = kravActionComp.Configuration;
         ent.Comp.SelectedMoveComp = kravActionComp;
+    }
+
+    // Pirate: krav maga implant action popup
+    private void OnKravMagaActionPopup(Entity<ActionsComponent> ent, ref KravMagaActionEvent args)
+    {
+        var actionEnt = args.Action.Owner;
+        if (!TryComp<KravMagaActionComponent>(actionEnt, out var kravActionComp))
+            return;
+
+        _popupSystem.PopupPredicted(Loc.GetString("krav-maga-ready", ("action", kravActionComp.Name)), ent, ent);
     }
 
     private void OnMapInit(Entity<KravMagaComponent> ent, ref MapInitEvent args)

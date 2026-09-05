@@ -1,100 +1,101 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate new sofas: _Pirate\Recipes\Construction\furniture.yml
 # Seat
-- type: construction
-  id: BenchSofaMiddle
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaMiddleNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# - type: construction
+#   id: BenchSofaMiddle
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaMiddleNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaLeft
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaLeftNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# - type: construction
+#   id: BenchSofaLeft
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaLeftNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaRight
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaRightNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# - type: construction
+#   id: BenchSofaRight
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaRightNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorner
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCornerNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# - type: construction
+#   id: BenchSofaCorner
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCornerNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorpMiddle
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCorpMiddleNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# - type: construction
+#   id: BenchSofaCorpMiddle
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCorpMiddleNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorpLeft
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCorpLeftNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# - type: construction
+#   id: BenchSofaCorpLeft
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCorpLeftNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorpRight
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCorpRightNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# - type: construction
+#   id: BenchSofaCorpRight
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCorpRightNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorpCorner
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCorpCornerNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# - type: construction
+#   id: BenchSofaCorpCorner
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCorpCornerNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
 - type: construction
   id: BenchSteelMiddle
@@ -107,6 +108,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchSteelRight
@@ -119,6 +125,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchSteelLeft
@@ -131,6 +142,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchPewMiddle
@@ -143,6 +159,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchPewRight
@@ -155,6 +176,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchPewLeft
@@ -167,6 +193,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkMiddle
@@ -179,6 +210,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkRight
@@ -191,6 +227,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkLeft
@@ -203,6 +244,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchSteelWhiteMiddle
@@ -215,6 +261,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchSteelWhiteRight
@@ -227,6 +278,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchSteelWhiteLeft
@@ -239,6 +295,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BenchParkBambooMiddle
@@ -251,6 +312,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkBambooRight
@@ -263,6 +329,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BenchParkBambooLeft
@@ -277,6 +348,12 @@
     - !type:TileNotBlocked
 
 # Decorations (bonfire, fireplace)
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    CarvingKnowledge: 2
+
 - type: construction
   id: BonfireFrontier
   graph: FiresGraph
@@ -302,6 +379,10 @@
     - !type:TileNotBlocked
 
 # Banners
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+
 - type: construction
   id: BannerNanotrasen
   graph: BannersGraph
@@ -313,6 +394,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerCargo
@@ -325,6 +411,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerEngineering
@@ -337,6 +428,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerMedical
@@ -349,6 +445,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerScience
@@ -361,6 +462,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerSecurity
@@ -373,6 +479,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerBlue
@@ -385,6 +496,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerRed
@@ -397,6 +513,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerYellow
@@ -409,6 +530,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerGreen
@@ -421,6 +547,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerRevolution
@@ -433,6 +564,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 - type: construction
   id: BannerSyndicate
@@ -445,3 +581,8 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2

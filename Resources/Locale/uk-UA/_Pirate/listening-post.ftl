@@ -1,10 +1,3 @@
-role-subtype-lpo = Опер. прослуховування
-listening-post-round-end-agent-name = оперативник станції прослуховування
-ent-MindRoleListeningPost = Роль оперативника станції прослуховування
-
-ghost-role-information-listeningop-name = Оперативник станції прослуховування
-ghost-role-information-listeningop-description = Наблизьтеся до станції, спостерігайте за нею, перехоплюйте переговори та допомагайте агентам Синдикату.
-ghost-role-information-listeningop-rules = Ви оперативник Синдикату, відповідальний за безперервне спостереження за станцією та її діяльністю, а також за підтримку агентів Синдикату на борту. Робіть усе необхідне для виконання цього завдання. Не дозвольте ворогу захопити пост, не залишайте його та приховуйте його існування за будь-яку ціну!
 
 ent-ClothingHeadsetAltSyndicateListening = криваво-червона перехоплювальна гарнітура
     .desc = Удосконалена модульна гарнітура Синдикату для перехоплення станційних переговорів.
@@ -18,18 +11,6 @@ ent-SyndicateMonitoringServer = підозрілий сервер монітор
     .desc = Приймає та передає дані всіх активних костюмних датчиків на великій відстані.
 ent-FaxMachineListeningSyndie = далекодійний факс станції прослуховування
     .desc = Модифікований факс Синдикату, який приховує джерело повідомлень.
-ent-LightTubeListeningPostSoftRed = м'яко-червона люмінесцентна трубка
-    .desc = Кольорова освітлювальна трубка, що випромінює м'яке червоне світло.
-ent-ListeningPostGamingLoreSpawner = спавнер записів настільної гри
-    .desc = { ent-MarkerBase.desc }
-ent-ListeningPostGamingLorePaper1 = списаний аркуш
-    .desc = { ent-Paper.desc }
-ent-ListeningPostGamingLorePaper2 = списаний аркуш
-    .desc = { ent-Paper.desc }
-ent-ListeningPostGamingLorePaper3 = списаний аркуш
-    .desc = { ent-Paper.desc }
-ent-ListeningPostGamingLorePaper4 = списаний аркуш
-    .desc = { ent-Paper.desc }
 
 ent-ClothingOuterArmorPlateCarrierUnremoveable = вживлений плитоносець
     .desc = Звичайний плитоносець, жорстоко вживлений у тіло власника.

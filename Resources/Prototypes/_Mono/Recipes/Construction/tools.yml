@@ -7,3 +7,6 @@
   targetNode: timer
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 1

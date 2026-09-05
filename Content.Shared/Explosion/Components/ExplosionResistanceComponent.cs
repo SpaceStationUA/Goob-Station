@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Explosion.EntitySystems;
+using Content.Shared._Pirate.Knowledge.Quality; // Pirate
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.GameStates;
 
@@ -16,7 +17,7 @@ namespace Content.Shared.Explosion.Components;
 ///     significantly reduce the damage, but shouldn't be silly overpowered in regular combat.
 /// </remarks>
 [NetworkedComponent, RegisterComponent]
-[Access(typeof(SharedExplosionSystem))]
+[Access(typeof(SharedExplosionSystem), typeof(QualitySystem))] // Pirate quality
 public sealed partial class ExplosionResistanceComponent : Component
 {
     /// <summary>

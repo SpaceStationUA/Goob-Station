@@ -3,12 +3,19 @@
 using Content.Shared.Construction.Conditions;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Construction.Prototypes;
 
 [Prototype]
-public sealed partial class ConstructionPrototype : IPrototype
+public sealed partial class ConstructionPrototype : IPrototype, IInheritingPrototype // Pirate: Trauma skill recipes inherit shared requirements.
 {
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<ConstructionPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    [AbstractDataField, NeverPushInheritance]
+    public bool Abstract { get; private set; }
+
     [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
 
     /// <summary>

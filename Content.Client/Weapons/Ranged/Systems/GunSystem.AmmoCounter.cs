@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using System.Numerics;
 using Content.Client.IoC;
 using Content.Client.Items;
@@ -40,6 +41,24 @@ public sealed partial class GunSystem
         // Fallback to default if none specified
         ev.Control ??= new DefaultStatusControl();
 
+        // Pirate: show each provider used by a multi-magazine gun.
+        if (ev.Controls.Count > 1)
+        {
+            var container = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
+                VerticalExpand = true,
+            };
+
+            foreach (var control in ev.Controls)
+                container.AddChild(control);
+
+            ent.Comp.Control = container;
+            UpdateAmmoCount(ent);
+            return;
+        }
+
         ent.Comp.Control = ev.Control;
         UpdateAmmoCount(ent);
     }
@@ -49,6 +68,16 @@ public sealed partial class GunSystem
         if (ent.Comp.Control == null)
             return;
 
+        // Pirate: update each provider's own status control.
+        if (ent.Comp.Control is BoxContainer container)
+        {
+            foreach (var child in container.Children)
+            {
+                var childEvent = new UpdateAmmoCounterEvent { Control = child };
+                RaiseLocalEvent(ent, childEvent, false);
+            }
+        }
+
         var ev = new UpdateAmmoCounterEvent()
         {
             Control = ent.Comp.Control
@@ -57,7 +86,7 @@ public sealed partial class GunSystem
         RaiseLocalEvent(ent, ev, false);
     }
 
-    protected override void UpdateAmmoCount(EntityUid uid, bool prediction = true)
+    public override void UpdateAmmoCount(EntityUid uid, bool prediction = true) // Pirate: multi-magazine provider.
     {
         // Don't use resolves because the method is shared and there's no compref and I'm trying to
         // share as much code as possible
@@ -75,7 +104,23 @@ public sealed partial class GunSystem
     /// </summary>
     public sealed class AmmoCounterControlEvent : EntityEventArgs
     {
-        public Control? Control;
+        public Control? Control
+        {
+            get => Controls.FirstOrDefault();
+            set
+            {
+                if (value is not { } control)
+                    return;
+
+                var index = Controls.FindIndex(existing => existing.GetType() == control.GetType());
+                if (index < 0)
+                    Controls.Add(control);
+                else
+                    Controls[index] = control;
+            }
+        }
+
+        public readonly List<Control> Controls = new();
     }
 
     /// <summary>
@@ -83,12 +128,13 @@ public sealed partial class GunSystem
     /// </summary>
     public sealed class UpdateAmmoCounterEvent : HandledEntityEventArgs
     {
+        public float FireCostMultiplier = 1f; // Pirate: multi-magazine power-cell cost.
         public Control Control = default!;
     }
 
     #region Controls
 
-    private sealed class DefaultStatusControl : Control
+    public sealed class DefaultStatusControl : Control // Pirate: multi-magazine fallback.
     {
         private readonly BulletRender _bulletRender;
 

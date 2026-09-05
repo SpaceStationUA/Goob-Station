@@ -38,6 +38,19 @@ public sealed partial class CCVars
     public static readonly CVarDef<float>
         CEZLevelsRenderOffset = CVarDef.Create("zlevels.ce_render_offset", 0.3f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+    /// <summary>
+    /// Time constant in seconds for client-side interpolation of rendered Z height. Set to 0 to
+    /// render raw simulation height.
+    /// </summary>
+    public static readonly CVarDef<float>
+        CEZLevelsRenderSmoothing = CVarDef.Create("zlevels.ce_render_smoothing", 0.05f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Maximum Z-height distance the rendered sprite may trail its simulated position.
+    /// </summary>
+    public static readonly CVarDef<float>
+        CEZLevelsRenderMaxLag = CVarDef.Create("zlevels.ce_render_max_lag", 0.12f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
     public static readonly CVarDef<bool>
         CEDebugMovement = CVarDef.Create("zlevels.ce_debug_movement", false, CVar.SERVERONLY | CVar.ARCHIVE);
 
@@ -56,13 +69,7 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool>
         CEDebugStairsClient = CVarDef.Create("zlevels.ce_debug_stairs_client", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
-    /// <summary>
-    /// Internal z-physics tick rate, in Hz. The Update loop accumulates engine frametime and
-    /// advances physics in fixed-size substeps of <c>1/this</c> seconds. Defaults to 30 Hz to
-    /// match the typical engine tickrate (one substep per engine tick, no behavior change).
-    /// Bump it for smoother z-physics on hosts that run faster; capped at
-    /// <see cref="CESharedZLevelsSystem.MaxStepsPerFrame"/> substeps per frame either way.
-    /// </summary>
+    /// <summary>Internal Z-physics rate; tick-derived cadence keeps prediction deterministic.</summary>
     public static readonly CVarDef<float>
         CEZPhysicsTickRate = CVarDef.Create("zlevels.ce_physics_tickrate", 30f, CVar.SERVER | CVar.REPLICATED | CVar.ARCHIVE);
 

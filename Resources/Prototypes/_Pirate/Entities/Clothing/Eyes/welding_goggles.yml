@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: MIT
+
+# Pirate: welding visor - ported from tgstation.
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesWelding
+  name: welding goggles
+  description: Protects the eyes from bright flashes, but only while lowered down over the eyes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/welding.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/welding.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: WeldingVisor
+  - type: Appearance
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
+      Glass: 25
+  - type: StaticPrice
+    price: 75
+  - type: Tag
+    tags:
+    - WhitelistChameleon

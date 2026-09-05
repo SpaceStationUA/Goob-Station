@@ -294,3 +294,33 @@
     checkCanInteract: false
   - type: InstantAction
     event: !type:ShadeskipPowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionTelekineticPulse
+  name: Telekinetic Pulse
+  description: Force everyone around you away.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: telekinetic_pulse
+    useDelay: 45
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:TelekineticPulsePowerActionEvent
+
+- type: entity
+  parent: BasePsionicAction
+  id: ActionPsionicFlash
+  name: Psionic Flash
+  description: Emit a blinding psionic flash that blinds everyone nearby.
+  components:
+  - type: Action
+    icon:
+      sprite: _DV/Interface/Actions/actions_psionics.rsi
+      state: pyrokinetic_flare
+    useDelay: 60
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:PsionicFlashPowerActionEvent

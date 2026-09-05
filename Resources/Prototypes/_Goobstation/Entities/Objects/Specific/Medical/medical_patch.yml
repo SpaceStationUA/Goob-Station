@@ -198,6 +198,12 @@
   targetNode: medicalPatchMakeshift
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FirstAidKnowledge: 0
+    FabricationKnowledge: 1
+  practical:
+    TailoringKnowledge: 1
 
 - type: constructionGraph
   id: SilkPatchMakeshift
@@ -223,3 +229,9 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    SpiderCraftKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false

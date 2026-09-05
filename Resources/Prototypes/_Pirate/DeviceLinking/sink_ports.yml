@@ -7,3 +7,9 @@
   id: Launch
   name: signal-port-name-launch
   description: signal-port-description-launch
+
+# Pirate signal screen input.
+- type: sinkPort
+  id: Text
+  name: signal-port-name-text
+  description: signal-port-description-text

@@ -40,7 +40,11 @@ public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
         if(args.Target == args.Component.Thrower) // Goobstation - Mjolnir
             return;
 
-        var dmg = _damageable.TryChangeDamage(args.Target, component.Damage * _damageable.UniversalThrownDamageModifier, component.IgnoreResistances, origin: args.Component.Thrower);
+        var dmg = _damageable.TryChangeDamage(args.Target,
+            component.Damage * _damageable.UniversalThrownDamageModifier,
+            component.IgnoreResistances,
+            origin: args.Component.Thrower,
+            increaseOnly: component.IncreaseOnly);
 
         // For stuff that cares about it being attacked. GOOBSTATION!!!
         var attackedEvent = new AttackedEvent(args.Thrown, uid, args.Target.ToCoordinates());
@@ -55,7 +59,7 @@ public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
             _color.RaiseEffect(Color.Red, [args.Target], Filter.Pvs(args.Target, entityManager: EntityManager));
         }
 
-        _guns.PlayImpactSound(args.Target, dmg, null, false);
+        _guns.PlayImpactSound(args.Target, dmg, component.SoundHit, component.ForceSound);
         if (TryComp<PhysicsComponent>(uid, out var body) && body.LinearVelocity.LengthSquared() > 0f)
         {
             var direction = body.LinearVelocity.Normalized();

@@ -24,26 +24,14 @@ public sealed class RummagerSystem : EntitySystem
 
         SubscribeLocalEvent<RummageableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
         SubscribeLocalEvent<RummageableComponent, RummageDoAfterEvent>(OnDoAfterComplete);
-
-        SubscribeLocalEvent<RummageableComponent, ComponentInit>(OnComponentInit); // Goobstation
-    }
-
-
-    // Goobstation
-    public void OnComponentInit(EntityUid uid, RummageableComponent component, ComponentInit args)
-    {
-        component.LastLooted = _gameTiming.CurTime;
-        Dirty(uid, component);
     }
 
     private void OnGetVerb(Entity<RummageableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!HasComp<RummagerComponent>(args.User)
-            || ent.Comp.Looted
+            //ent.Comp.Looted // Goobstation - Removed the looted
             || _gameTiming.CurTime < ent.Comp.LastLooted + ent.Comp.RummageCooldown // Goob
             )
-            // DeltaV -
-            // Additionally, adds a cooldown check
             return;
 
         var user = args.User;
@@ -74,9 +62,7 @@ public sealed class RummagerSystem : EntitySystem
     {
         // Pirate: restore repeat rummaging lost during the Rat King refactor.
         var time = _gameTiming.CurTime;
-        if (args.Cancelled ||
-            ent.Comp.Looted ||
-            time < ent.Comp.LastLooted + ent.Comp.RummageCooldown)
+        if (args.Cancelled || time < ent.Comp.LastLooted + ent.Comp.RummageCooldown)
             return;
 
         ent.Comp.LastLooted = time;

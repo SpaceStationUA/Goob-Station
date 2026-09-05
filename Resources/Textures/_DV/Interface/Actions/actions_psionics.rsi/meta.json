@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-4.0",
-    "copyright": "Created by @Vordenburg (github) for Nyanotrasen. Eruption sprited by TehFlaminTaco on Discord for DeltaV.",
+    "copyright": "Created by @Vordenburg (github) for Nyanotrasen. Eruption sprited by TehFlaminTaco on Discord for DeltaV. telekinetic_pulse by .mocho (discord), pyrokinetic_flare by ghost581 (discord) from EinsteinEngines.",
     "size": {
         "x": 64,
         "y": 64
@@ -60,6 +60,12 @@
         },
         {
             "name": "shadeskip"
+        },
+        {
+            "name": "telekinetic_pulse"
+        },
+        {
+            "name": "pyrokinetic_flare"
         }
     ]
 }

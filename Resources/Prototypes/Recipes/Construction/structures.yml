@@ -12,6 +12,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: ReinforcedGirder
@@ -25,6 +32,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: ClockworkGirder
@@ -38,6 +52,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: Wall
@@ -51,6 +72,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: ReinforcedWall
@@ -64,6 +92,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: WallClock
@@ -77,6 +112,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: WoodWall
@@ -90,6 +132,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: UraniumWall
@@ -103,6 +152,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: SilverWall
@@ -116,6 +172,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: PlasticWall
@@ -129,6 +192,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: PlasmaWall
@@ -142,6 +212,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: GoldWall
@@ -155,6 +232,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: ShuttleWall
@@ -168,6 +252,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: DiagonalShuttleWall
@@ -182,6 +273,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: ClownWall
@@ -195,6 +293,13 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    BananiumKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: MeatWall
@@ -208,6 +313,13 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+    FabricationKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: Cardwall
@@ -221,6 +333,12 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: Grille
@@ -234,6 +352,12 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: ClockGrille
@@ -247,6 +371,12 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: GrilleDiagonal
@@ -259,6 +389,12 @@
       failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: ClockworkGrilleDiagonal
@@ -271,6 +407,12 @@
       failIfSpace: false
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+  useQuality: false
 
 - type: construction
   id: Window
@@ -285,6 +427,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: WindowDiagonal
@@ -299,6 +444,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: ReinforcedWindow
@@ -313,6 +461,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: ReinforcedWindowDiagonal
@@ -327,6 +478,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: TintedWindow
@@ -341,6 +495,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: ClockworkWindow
@@ -355,6 +512,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: ClockworkWindowDiagonal
@@ -369,6 +529,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: PlasmaWindow
@@ -383,6 +546,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: ReinforcedPlasmaWindow
@@ -397,6 +563,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: ShuttleWindow
@@ -411,6 +580,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: PlasmaWindowDiagonal
@@ -425,6 +597,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: ReinforcedPlasmaWindowDiagonal
@@ -439,6 +614,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: WindowDirectional
@@ -452,6 +630,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: WindowReinforcedDirectional
@@ -465,6 +646,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: WindowClockworkDirectional
@@ -478,6 +662,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: PlasmaWindowDirectional
@@ -491,6 +678,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: PlasmaReinforcedWindowDirectional
@@ -504,6 +694,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: UraniumWindow
@@ -518,6 +711,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: ReinforcedUraniumWindow
@@ -532,6 +728,9 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: UraniumWindowDiagonal
@@ -546,6 +745,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: ReinforcedUraniumWindowDiagonal
@@ -560,6 +762,9 @@
     - !type:NoWindowsInTile
   objectType: Structure
   placementMode: SnapgridCenter
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: Firelock
@@ -573,6 +778,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: FirelockGlass
@@ -586,6 +796,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: FirelockEdge
@@ -599,6 +814,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: Turnstile
@@ -611,6 +831,12 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    DoorsKnowledge: 0
+  practical:
+    DoorsKnowledge: 1
+    MetalworkingKnowledge: 3
 
 - type: construction
   id: Shutters
@@ -621,6 +847,11 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: ShuttersWindow
@@ -631,6 +862,11 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: ShuttersRadiation
@@ -641,6 +877,11 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: BlastDoor
@@ -651,6 +892,11 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 3
 
 - type: construction
   id: Catwalk
@@ -668,6 +914,10 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: FloorBananium
@@ -684,6 +934,10 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BananiumKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: Barricade
@@ -696,6 +950,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: BarricadeDirectional
@@ -709,6 +968,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: Railing
@@ -721,6 +985,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: RailingCorner
@@ -734,6 +1003,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: RailingCornerSmall
@@ -747,6 +1021,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: RailingRound
@@ -762,6 +1041,12 @@
   - !type:TileNotBlocked
 
 # Chain link fencing
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
 - type: construction
   id: FenceMetal
   graph: FenceMetal
@@ -773,6 +1058,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: FenceMetalCorner
@@ -786,6 +1076,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: FenceMetalEnd
@@ -799,6 +1094,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: FenceMetalGate
@@ -813,6 +1113,12 @@
   - !type:TileNotBlocked
 
 #Wooden fence high
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
 - type: construction
   id: FenceWood
   graph: FenceWood
@@ -824,6 +1130,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: FenceWoodEnd
@@ -837,6 +1148,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: FenceWoodCorner
@@ -850,6 +1166,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: FenceWoodTJunction
@@ -863,6 +1184,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: FenceWoodGate
@@ -877,6 +1203,12 @@
   - !type:TileNotBlocked
 
 #Wooden fence small
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
+
 - type: construction
   id: FenceWoodSmall
   graph: FenceWood
@@ -888,6 +1220,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: FenceWoodEndSmall
@@ -901,6 +1238,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: FenceWoodCornerSmall
@@ -914,6 +1256,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: FenceWoodTJunctionSmall
@@ -927,6 +1274,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
 
 - type: construction
   id: FenceWoodGateSmall
@@ -942,6 +1294,12 @@
   - !type:TileNotBlocked
 
 #Airlocks
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    CarvingKnowledge: 1
+
 - type: construction
   id: Airlock
   graph: Airlock
@@ -953,6 +1311,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: AirlockGlass
@@ -965,6 +1328,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: AirlockSealed
@@ -977,6 +1345,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 1
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: AirlockSealedGlass
@@ -989,6 +1362,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 1
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: PinionAirlock
@@ -1002,6 +1380,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: PinionAirlockGlass
@@ -1015,6 +1398,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: AirlockShuttle
@@ -1028,6 +1416,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: AirlockGlassShuttle
@@ -1042,6 +1435,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    AirlocksKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: Windoor
@@ -1054,6 +1452,12 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WindowsKnowledge: 0
+    AirlocksKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: SecureWindoor
@@ -1066,6 +1470,12 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WindowsKnowledge: 0
+    AirlocksKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
 
 - type: construction
   id: ClockworkWindoor
@@ -1080,6 +1490,13 @@
     - !type:TileNotBlocked
 
 #lighting
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WindowsKnowledge: 0
+    AirlocksKnowledge: 0
+  practical:
+    MechanicsKnowledge: 2
+
 - type: construction
   id: LightTubeFixture
   graph: LightFixture
@@ -1094,6 +1511,10 @@
   # Need an *additional* condition here that forces there to be a wall in the opposite direction to the one used for placement.
   # Also see below. Didn't add it b/c construction ECS work going on. Cheers, - 20kdc
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: LightSmallFixture
@@ -1108,6 +1529,10 @@
   conditions:
   # Same here. - 20kdc
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: EmergencyLightFixture
@@ -1121,6 +1546,10 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: LightGroundFixture
@@ -1134,6 +1563,9 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: LightStrobeFixture
@@ -1149,6 +1581,11 @@
     - !type:TileNotBlocked
 
 #conveyor
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  useQuality: false
+
 - type: construction
   id: ConveyorBelt
   graph: ConveyorGraph
@@ -1160,6 +1597,10 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: MetalDoor
@@ -1172,6 +1613,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    DoorsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: WoodDoor
@@ -1184,6 +1630,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    DoorsKnowledge: 0
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: PlasmaDoor
@@ -1196,6 +1647,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    DoorsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: GoldDoor
@@ -1208,6 +1664,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    DoorsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: SilverDoor
@@ -1220,6 +1681,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    DoorsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
 - type: construction
   id: PaperDoor
@@ -1230,6 +1696,10 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    DoorsKnowledge: 0
+  practical: {}
 
 - type: construction
   id: CardDoor
@@ -1240,6 +1710,10 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    DoorsKnowledge: 0
+  practical: {}
 
 - type: construction
   id: PlasticFlapsClear
@@ -1253,6 +1727,9 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: PlasticFlapsOpaque
@@ -1266,6 +1743,9 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: CarpStatue
@@ -1278,6 +1758,11 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    CarvingKnowledge: 4
 
 - type: construction
   id: BananiumClownStatue
@@ -1290,6 +1775,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BananiumKnowledge: 0
+  practical:
+    CarvingKnowledge: 4
 
 - type: construction
   id: BananiumDoor
@@ -1320,32 +1810,15 @@
 ##  canBuildInImpassable: false
 ##  conditions:
 ##    - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    DoorsKnowledge: 0
+    BananiumKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 2
 
-- type: construction
-  name: recipes-secret-door-name
-  id: SolidSecretDoor
-  graph: SecretDoor
-  startNode: start
-  targetNode: solidSecretDoor
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: recipes-secret-door-reinforced-name
-  id: ReinforcedSecretDoor
-  graph: ReinforcedSecretDoor
-  startNode: start
-  targetNode: ReinforcedSecretDoor
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
+# Pirate: secret door - no crafting-menu entry, matching SS13. Both variants are built by unwrenching a
+# girder into its displaced state and applying steel (normal) or plasteel (reinforced); see the Girder graph.
 
 - type: construction
   id: FungalSoil
@@ -1358,6 +1831,10 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
 
 - type: construction
   id: StationAiCore
@@ -1371,6 +1848,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 3
+  practical:
+    ElectronicsKnowledge: 3
 
 - type: construction
   id: Bonfire
@@ -1384,6 +1866,9 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
 
 - type: construction
   id: BonfireStake
@@ -1397,3 +1882,8 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FurnitureKnowledge: 0
+  practical:
+    CarvingKnowledge: 2

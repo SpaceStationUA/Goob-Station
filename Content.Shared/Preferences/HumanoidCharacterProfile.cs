@@ -298,6 +298,7 @@ namespace Content.Shared.Preferences
                 other.BarkVoice) // Goob Station - Barks
         {
             CopyPirateCharacterInfo(other); // Pirate: Starlight character descriptions.
+            CopyPirateKnowledge(other); // Pirate: Trauma knowledge port.
         }
 
         /// <summary>
@@ -659,6 +660,7 @@ namespace Content.Shared.Preferences
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
             if (!PirateCharacterInfoEquals(other)) return false; // Pirate: Starlight character descriptions.
+            if (!PirateKnowledgeEquals(other)) return false; // Pirate: Trauma knowledge port.
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
@@ -672,6 +674,8 @@ namespace Content.Shared.Preferences
                 Species = SharedHumanoidAppearanceSystem.DefaultSpecies;
                 speciesPrototype = prototypeManager.Index(Species);
             }
+
+            EnsurePirateKnowledgeValid(collection, prototypeManager); // Pirate: Trauma knowledge port.
 
             var sex = Sex switch
             {
@@ -981,6 +985,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
             AddPirateCharacterInfoHash(ref hashCode); // Pirate: Starlight character descriptions.
+            AddPirateKnowledgeHash(ref hashCode); // Pirate: Trauma knowledge port.
             hashCode.Add(Species);
             hashCode.Add(Height); // Goobstation: port EE height/width sliders
             hashCode.Add(Width); // Goobstation: port EE height/width sliders

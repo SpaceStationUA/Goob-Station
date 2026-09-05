@@ -222,12 +222,19 @@ public abstract partial class CESharedZLevelsSystem
     }
 
     /// <summary>
+    /// The active list itself is not prediction state, so past-prediction replays must not churn it.
+    /// State application is different: that is when a newly visible entity receives its parent. If
+    /// ignored there, remote movers can remain absent from z-physics for their entire time in PVS.
+    /// </summary>
+    private bool CanMutateActiveList() => _timing.IsFirstTimePredicted || _timing.ApplyingState;
+
+    /// <summary>
     /// Adds the entity to the active list and primes its movement cache. No-op if already active.
     /// </summary>
     [PublicAPI]
     public void WakeBody(Entity<CEZPhysicsComponent> ent)
     {
-        if (!_timing.IsFirstTimePredicted)
+        if (!CanMutateActiveList())
             return;
 
         if (_activeBodies.Contains(ent))
@@ -247,7 +254,7 @@ public abstract partial class CESharedZLevelsSystem
     [PublicAPI]
     public void SleepBody(EntityUid uid)
     {
-        if (!_timing.IsFirstTimePredicted)
+        if (!CanMutateActiveList())
             return;
 
         if (!_activeBodies.Remove(uid))

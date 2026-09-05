@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Item;
 
-public abstract class SharedItemSystem : EntitySystem
+public abstract partial class SharedItemSystem : EntitySystem // Pirate: downstream visual APIs live in a partial file.
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!; // Goobstation
     [Dependency] private readonly SharedStorageSystem _storage = default!; // Goobstation

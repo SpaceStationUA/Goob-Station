@@ -266,7 +266,7 @@
           Quantity: 2.5
   - type: SolutionInjectOnProjectileHit
     solution: ammo
-    transferAmount: 2.5 # Nerfed 0.5x - 2.5u of crypto disables psionics for ~50s
+    transferAmount: 2.5 # 2.5u of crypto disables psionics for ~1m34s
 
 - type: entity
   parent: BaseBulletMantis
@@ -336,7 +336,7 @@
           Quantity: 5
   - type: SolutionInjectOnProjectileHit
     solution: ammo
-    transferAmount: 5 # Nerfed 0.5x - 5u of crypto disables psionics for ~1m40s
+    transferAmount: 5 # 5u of crypto disables psionics for ~3m7s
 
 - type: entity
   parent: BulletMantisHoly
@@ -372,7 +372,7 @@
           Quantity: 1
   - type: SolutionInjectOnProjectileHit
     solution: ammo
-    transferAmount: 1 # Nerfed 0.5x - 1u of crypto disables psionics for ~20s per pellet
+    transferAmount: 1 # 1u of crypto disables psionics for ~37s per pellet
 
 - type: entity
   parent: BulletMantisCryptoShotgun
@@ -381,7 +381,7 @@
   components:
   - type: ProjectileSpread
     proto: BulletMantisCryptoShotgun
-    count: 6 # 12u of crypto disables psionics for 4m, and a full magazine of any mantis gun will disable psionics for 20m
+    count: 6 # 6u of crypto disables psionics for ~3m45s, and a full magazine of any mantis gun will disable psionics for ~18m45s
     spread: 20
 
 - type: entity
@@ -438,7 +438,7 @@
           Quantity: 1.25
   - type: SolutionInjectOnProjectileHit
     solution: ammo
-    transferAmount: 1.25 # Nerfed 0.5x - 1.25u of crypto disables psionics for ~25s
+    transferAmount: 1.25 # 1.25u of crypto disables psionics for ~47s
 
 - type: entity
   parent: BulletMantisHoly

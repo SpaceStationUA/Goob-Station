@@ -6,10 +6,22 @@
   targetNode: bananiumSword
   category: construction-category-weapons
   objectType: Item
-  
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    BananiumKnowledge: 0
+  practical:
+    WeaponsKnowledge: 2
+    BananiumKnowledge: 2
+
 - type: construction
   id: boomerang
   graph: boomerangGraph
   targetNode: boomerangFinish
   category: construction-category-weapons
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+  practical:
+    WeaponsKnowledge: 2
+    CarvingKnowledge: 2

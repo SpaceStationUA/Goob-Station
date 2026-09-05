@@ -1,0 +1,237 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: Trauma revolutionary ammunition, fire, and completed power armor dependencies.
+
+- type: entity
+  parent: MaterialGunpowder
+  id: MaterialGunpowder30
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Gunpowder
+    count: 30
+
+- type: entity
+  parent: BaseBullet
+  id: BulletTurret
+  name: bullet (.22 short)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 11 # Pirate: local damage taxonomy has no Ballistic type.
+
+- type: entity
+  parent: BaseBullet
+  id: PelletShotgunBreaching
+  name: pellet (.50)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 5
+        Structural: 15
+      armorPenetration: 0.5
+
+- type: entity
+  parent: PelletShotgunBreaching
+  id: PelletShotgunBreachingSpread
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunBreaching
+    count: 6
+    spread: 15
+
+- type: entity
+  parent: [ BaseShellShotgun, BaseSecurityContraband ]
+  id: ShellShotgunBreaching
+  name: shell (12 gauge breaching)
+  description: Breaching ammunition designed to deal maximum damage to structures.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    layers:
+    - state: breach
+      map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunBreachingSpread
+  - type: SpentAmmoVisuals
+    state: breach
+
+- type: entity
+  id: MolotovFire
+  name: fire
+  description: It is burning.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: TimedDespawn
+    lifetime: 10
+  - type: IgnitionSource
+    temperature: 400
+    ignited: true
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    triggerGroups:
+      types:
+      - Lava
+  - type: TileEntityEffect
+    effects:
+    - !type:Flammable
+      multiplier: 3.75
+      multiplierOnExisting: 0.75
+    - !type:Ignite
+  - type: AlwaysHot
+  - type: PointLight
+    radius: 5
+    energy: 3
+    color: "#ff790c"
+  - type: Sprite
+    sprite: _Pirate/Effects/floorfire.rsi
+    layers:
+    - state: floorfire
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - SlipLayer
+        mask:
+        - ItemMask
+        density: 1000
+        hard: false
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  id: FlameThrowerBullet
+  name: flame
+  description: Do not stand close to this.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Bullets/flamethrower.rsi
+    state: icon
+    drawdepth: Items
+    noRot: false
+  - type: PointLight
+    enabled: true
+    color: "#E25822"
+    radius: 2
+    energy: 1
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: IgniteOnCollide
+    fireStacks: 3
+  - type: Damageable
+  # Pirate: Trauma's Injurable wound model is not present in this repository.
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MolotovFire:
+            min: 1
+            max: 1
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 15
+  - type: LandAtCursor
+  - type: FadingTimedDespawn
+    lifetime: 5
+    fadeOutTime: 3
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+    linearDamping: 0
+    angularDamping: 0
+    fixedRotation: false
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Heat: 5
+  - type: IgnitionSource
+    temperature: 400
+    ignited: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.1,-0.3,0.1,-0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: ThrowingAngle
+    angle: 90
+
+- type: entity
+  parent: [ BaseMech, BaseRevMajorContraband, CombatMech ]
+  id: T45PowerArmor
+  name: T-45 P.O.W.A.R armor
+  description: Precise Orbital Worn Armor for Revolutionaries.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: _Pirate/Objects/Specific/Mech/T45Armor.rsi
+    state: T45Armor
+  - type: Buckleable
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHeavySuit
+  - type: Mech
+    baseState: T45Armor
+    openState: T45Armor
+    brokenState: T45Armor
+    mechToPilotDamageMultiplier: 0.01
+    airtight: false
+    maxIntegrity: 250
+    maxEquipmentAmount: 2
+    pilotWhitelist:
+      components:
+      - HumanoidAppearance
+    startingEquipment:
+    - WeaponMechMeleePowerFist
+    - WeaponMechCombatFlameThrower
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2
+  - type: Damageable
+    damageModifierSet: HeavyArmorNT
+  - type: StaticPrice
+    price: 1000
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+    - T45Frame
+  - type: Construction
+    graph: T45Armor
+    node: T45 # Pirate: the completed entity must use the graph's completed node.
+  - type: Buckle

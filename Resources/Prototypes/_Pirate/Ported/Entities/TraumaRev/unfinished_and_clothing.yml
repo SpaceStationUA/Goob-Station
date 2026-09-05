@@ -1,0 +1,589 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: Trauma revolutionary lathe outputs and their completed construction results.
+
+- type: entity
+  abstract: true
+  parent: [ RevUnfinishedComponent, BaseRevMinorContraband ]
+  id: BaseUnfinishedRevWeapon
+  components:
+  - type: Construction
+    defaultTarget: finished
+    node: start
+
+- type: entity
+  parent: BaseUnfinishedRevWeapon
+  id: RevSwordBlade
+  name: unfinished sword blade
+  description: An unfinished sword, use some wood to complete it.
+  components:
+  - type: Sprite
+    state: sword
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5
+  - type: ThrowingAngle
+    angle: 225
+  - type: Construction
+    graph: RevSword
+
+- type: entity
+  parent: BaseUnfinishedRevWeapon
+  id: RevMaceHead
+  name: unfinished mace parts
+  description: An unfinished mace, use some wood to complete it.
+  components:
+  - type: Sprite
+    state: mace
+  - type: Construction
+    graph: RevMace
+
+- type: entity
+  parent: BaseUnfinishedRevWeapon
+  id: RevKnifeBlade
+  name: unfinished knife blade
+  description: An unfinished knife, use some wood to complete it.
+  components:
+  - type: Sprite
+    state: knife
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5
+  - type: ThrowingAngle
+    angle: 225
+  - type: Construction
+    graph: RevKnife
+
+- type: entity
+  parent: BaseUnfinishedRevWeapon
+  id: RevTorchHead
+  name: unfinished combat torch
+  description: An unfinished combat torch, use some wood to complete it.
+  components:
+  - type: Sprite
+    state: torch
+  - type: Construction
+    graph: RevTorch
+
+- type: entity
+  parent: BaseUnfinishedRevWeapon
+  id: RevPitchforkHead
+  name: unfinished pitchfork
+  description: An unfinished pitchfork, use some wood to complete it.
+  components:
+  - type: Sprite
+    state: spear
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5
+  - type: ThrowingAngle
+    angle: 225
+  - type: Construction
+    graph: RevPitchfork
+
+- type: entity
+  parent: BaseUnfinishedRevWeapon
+  id: RevMaulHead
+  name: unfinished maul parts
+  description: An unfinished maul, use some wood to complete it.
+  components:
+  - type: Sprite
+    state: maul
+  - type: Construction
+    graph: RevMaul
+
+- type: entity
+  parent: BaseUnfinishedRevWeapon
+  id: RevKunaiHead
+  name: unfinished kunai parts
+  description: An unfinished kunai, use some wood to complete it.
+  components:
+  - type: Sprite
+    state: kunai
+  - type: Construction
+    graph: RevKunai
+
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: RevHelmetLiner
+  name: helmet liner
+  description: Used in the creation of helmets. Add plasteel to complete it.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Revs/components.rsi
+    state: helmetliner
+  - type: Construction
+    graph: RevHelmet
+    deconstructionTarget: null
+    node: unfinished
+
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: RevGasFilter
+  name: gas filter
+  description: Used in the creation of gas masks. Use plastic to complete it.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Revs/components.rsi
+    state: gasfilter
+  - type: Construction
+    graph: RevMask
+    defaultTarget: finished
+    deconstructionTarget: null
+    node: unfinished
+
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: RevEmptyVest
+  name: empty vest
+  description: An empty vest that still needs armor plates.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Revs/components.rsi
+    state: emptyweb
+  - type: Construction
+    graph: RevVest
+    deconstructionTarget: null
+    node: unfinished
+
+- type: entity
+  parent: [ BaseItem, BaseRevMajorContraband ]
+  id: RevReflectivePlate
+  name: reflective plate
+  description: A plate for a laser-resistant vest.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Revs/components.rsi
+    state: reflectplate
+  - type: Tag
+    tags:
+    - RevReflectivePlate
+
+- type: entity
+  parent: [ ClothingBackpack, BaseRevMajorContraband ]
+  id: ClothingBackpackRev
+  name: MOLLE pack
+  description: A backpack designed for use in combat.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/merc.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Storage
+    grid:
+    - 0,0,7,3
+    - 8,1,8,3
+
+- type: entity
+  parent: [ ClothingBeltStorageBase, BaseRevMajorContraband ]
+  id: ClothingBeltRevWebbing
+  name: chest rig
+  description: Ideal for storing ammo, weapons, and combat essentials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/mercwebbing.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/mercwebbing.rsi
+
+- type: entity
+  parent: [ ClothingUniformJumpsuitMercenary, BaseRevMajorContraband ]
+  id: ClothingUniformJumpsuitMilitaryTurtleneckRev
+  name: military jumpsuit
+  description: A sturdy and protective jumpsuit.
+  components:
+  - type: Sprite
+    sprite: _NF/Clothing/Uniforms/Jumpsuit/military.rsi
+    layers:
+    - state: icon-base-bottom
+      color: "#3e3e48"
+    - state: icon-base-top-turtleneck
+      color: "#b5b56e"
+    - state: icon-belt
+      color: "#3e3e48"
+    - state: icon-belt-buckle
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-base-bottom
+        color: "#3e3e48"
+      - state: inhand-left-base-top-turtleneck
+        color: "#b5b56e"
+      - state: inhand-left-belt
+        color: "#3e3e48"
+      - state: inhand-left-belt-buckle
+      right:
+      - state: inhand-right-base-bottom
+        color: "#3e3e48"
+      - state: inhand-right-base-top-turtleneck
+        color: "#b5b56e"
+      - state: inhand-right-belt
+        color: "#3e3e48"
+      - state: inhand-right-belt-buckle
+  - type: Clothing
+    sprite: _NF/Clothing/Uniforms/Jumpsuit/military.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-base-bottom
+        color: "#3e3e48"
+      - state: equipped-base-top-turtleneck-alt
+        color: "#b5b56e"
+      - state: equipped-belt
+        color: "#3e3e48"
+      - state: equipped-belt-buckle
+  - type: Armor
+    coverage: [ Chest, Groin, Arm, Hand, Leg, Foot ] # Pirate: Trauma Torso maps to local Chest + Groin.
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Heat: 0.85
+
+- type: entity
+  parent: [ ClothingShoesMilitaryBase, BaseRevMajorContraband ]
+  id: ClothingShoesBootsRev
+  name: workboots
+  description: Robust workboots that reduce injury slowdown and can be armored.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Shoes/Boots/workboots.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Shoes/Boots/workboots.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5
+  - type: Construction
+    graph: RevBoots
+    defaultTarget: finished
+    deconstructionTarget: null
+    node: unfinished
+
+- type: entity
+  parent: ClothingShoesBootsRev
+  id: ClothingShoesBootsRevSteel
+  name: steel-toed workboots
+  description: Workboots modified to safely walk across caltrops.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Shoes/Boots/steeltoed.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Shoes/Boots/steeltoed.rsi
+  - type: StepTriggerImmune
+    whitelist:
+      types:
+      - Caltrop
+  - type: Construction
+    defaultTarget: null
+    node: finished
+
+- type: entity
+  parent: [ ClothingHeadsetAlt, BaseRevMajorContraband ]
+  id: ClothingHeadsetRevolutionary
+  name: revolutionary headset
+  description: A modular over-ear intercom that protects from flashbangs.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Ears/Headsets/revearpiece.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Clothing/Ears/Headsets/revearpiece.rsi
+  - type: FlashSoundSuppression
+
+- type: entity
+  parent: [ ClothingEyesBase, BaseRevMajorContraband, ShowSecurityIcons ]
+  id: ClothingEyesRevolutionaryVisor
+  name: revolutionary visor
+  description: Protects from flashes and shows security status icons.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Pirate/Clothing/Eyes/Glasses/revvisor.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Eyes/Glasses/revvisor.rsi
+  - type: FactionClothing
+    faction: Revolutionary
+  - type: FlashImmunity
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Armor
+    coverage: [ Head ]
+    modifiers:
+      coefficients:
+        Heat: 0.95
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+    traumaDeductions:
+      Dismemberment: 0
+      OrganDamage: 0.13
+      BoneDamage: 0.13
+      VeinsDamage: 0
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseRevMajorContraband ]
+  id: ClothingRevolutionaryIFF
+  name: revolutionary IFF card
+  description: Marks the wearer as friendly to revolutionary turrets.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/revIFF.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/revIFF.rsi
+  - type: FactionClothing
+    faction: Revolutionary
+
+- type: entity
+  parent: [ ClothingMaskGas, BaseRevMajorContraband ]
+  id: ClothingMaskGasRev
+  name: gas mask
+  description: A reliable military-style gas mask.
+  components:
+  # Pirate: no Trauma viewcone parent or viewcone component.
+  - type: Sprite
+    sprite: Clothing/Mask/merc.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/merc.rsi
+  - type: Armor
+    coverage: [ Head ]
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: IngestionBlocker
+    blockSmokeIngestion: true
+  - type: Construction
+    graph: RevMask
+    deconstructionTarget: null
+    node: finished
+
+- type: entity
+  parent: [ ClothingHeadHelmetArmoredBase, BaseRevMajorContraband ]
+  id: ClothingHeadHelmetRev
+  name: helmet
+  description: A strong but light revolutionary combat helmet.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/merc_helmet.rsi
+  - type: Construction
+    graph: RevHelmet
+    deconstructionTarget: null
+    node: finished
+  - type: Armor
+    coverage: [ Head ]
+    traumaDeductions:
+      Dismemberment: 0.3
+      OrganDamage: 0.3
+      BoneDamage: 0.3
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Heat: 0.3
+      flatReductions:
+        Piercing: 3.5 # Pirate: local damage taxonomy has no Ballistic type.
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
+- type: entity
+  parent: [ ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseRevMajorContraband ]
+  id: ClothingOuterArmorRev
+  name: chest plate
+  description: Hastily made armor for the people.
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Armor/revchestplate.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Armor/revchestplate.rsi
+  - type: Armor
+    coverage: [ Chest, Groin ] # Pirate: Trauma Torso maps to local Chest + Groin.
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ModifyDelayedKnockdown
+    delayDelta: 3
+    knockdownTimeDelta: -3
+  - type: StaminaResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  parent: [ ClothingOuterStorageBase, AllowSuitStorageClothing, BaseRevMajorContraband ]
+  id: ClothingOuterVestWebRev
+  name: web vest
+  description: A flexible bullet-resistant vest with homemade armor plating.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
+  - type: Armor
+    coverage: [ Chest, Groin ] # Pirate: Trauma Torso maps to local Chest + Groin.
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.3 # Pirate: local damage taxonomy has no Ballistic type.
+        Heat: 0.8
+      flatReductions:
+        Piercing: 3 # Pirate: local damage taxonomy has no Ballistic type.
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ModifyDelayedKnockdown
+    delayDelta: 3
+    knockdownTimeDelta: -3
+  - type: StaminaResistance
+    damageCoefficient: 0.5
+  - type: Construction
+    graph: RevVest
+    deconstructionTarget: null
+    node: bullet
+
+- type: entity
+  parent: [ ClothingOuterStorageBase, AllowSuitStorageClothing, BaseRevMajorContraband ]
+  id: ClothingOuterVestReflectRev
+  name: reflective vest
+  description: An armored vest with advanced shielding against energy weapons.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Vests/revreflective.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Vests/revreflective.rsi
+  - type: Armor
+    coverage: [ Chest, Groin ] # Pirate: Trauma Torso maps to local Chest + Groin.
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.8
+        Heat: 0.2
+  - type: Reflect
+    reflectProb: 0.6
+    reflects: [ Energy ]
+    reflectingInHands: false
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    softness: 5
+    color: "#4acff7"
+  - type: Construction
+    graph: RevVest
+    deconstructionTarget: null
+    node: reflect
+  - type: StaminaResistance
+    damageCoefficient: 0.3
+
+- type: entity
+  parent: [ ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseRevMajorContraband ]
+  id: ClothingOuterArmorRevFlame
+  name: flame trooper armor
+  description: Heavy armor that almost completely protects the user from fire.
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Armor/revflamearmor.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Armor/revflamearmor.rsi
+  - type: Armor
+    coverage: [ Chest, Groin, Leg, Arm, Hand, Foot, Tail ] # Pirate: Trauma Torso maps to local Chest + Groin.
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: ModifyDelayedKnockdown
+    delayDelta: 2
+    knockdownTimeDelta: -2
+  - type: StaminaResistance
+    damageCoefficient: 0.3
+  - type: FireProtection
+    reduction: 1
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototypes:
+      head: ClothingHelmetRevFlame
+  - type: SelfExtinguisher
+    cooldown: 1
+    requiresIgniteFromGasImmune: false
+    sound:
+      path: /Audio/_Pirate/Revs/flamethrower.ogg
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:Container
+
+- type: entity
+  parent: [ ClothingHeadHelmetArmoredBase, BaseRevMajorContraband ]
+  id: ClothingHelmetRevFlame
+  name: flame trooper helmet
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/revflamearmor.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/revflamearmor.rsi
+  - type: Armor
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.1
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: FireProtection
+    reduction: 1
+  - type: FaceHuggerBlocker

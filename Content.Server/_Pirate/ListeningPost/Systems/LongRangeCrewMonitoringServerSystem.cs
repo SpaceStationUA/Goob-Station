@@ -3,6 +3,7 @@
 using Content.Server._Pirate.ListeningPost.Components;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Medical.SuitSensors;
+using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Shared._Pirate.ListeningPost;
 using Content.Shared.DeviceNetwork;
@@ -10,7 +11,6 @@ using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Medical.SuitSensors;
-using Content.Shared.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -21,7 +21,8 @@ public sealed class LongRangeCrewMonitoringServerSystem : EntitySystem
     private const float UpdateRate = 3f;
 
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly LongRangeCrewMonitorSystem _longRangeMonitor = default!;
+    [Dependency] private readonly LongRangeTargetStationSystem _targetStation = default!;
+    [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly SuitSensorSystem _suitSensors = default!;
 
     private float _updateAccumulator;
@@ -42,14 +43,13 @@ public sealed class LongRangeCrewMonitoringServerSystem : EntitySystem
             if (TryComp<ApcPowerReceiverComponent>(server, out var power) && !power.Powered)
                 continue;
 
-            if (_longRangeMonitor.FindLargestStationGridInMap(serverXform.MapID) is not { } stationGrid ||
-                !TryComp<StationMemberComponent>(stationGrid, out var stationMember))
-            {
+            if (_targetStation.ResolveTargetStation(serverXform.MapID) is not { } target)
                 continue;
-            }
 
-            var statuses = CollectSensorStatuses(stationMember.Station);
-            SendToLongRangeConsoles(server, serverXform.MapID, statuses);
+            var (station, grid) = target;
+
+            var statuses = CollectSensorStatuses(station);
+            SendToLongRangeConsoles(server, serverXform.MapID, grid, statuses);
         }
     }
 
@@ -72,6 +72,7 @@ public sealed class LongRangeCrewMonitoringServerSystem : EntitySystem
     private void SendToLongRangeConsoles(
         EntityUid server,
         MapId map,
+        EntityUid grid,
         Dictionary<string, SuitSensorStatus> statuses)
     {
         var payload = new NetworkPayload
@@ -80,11 +81,25 @@ public sealed class LongRangeCrewMonitoringServerSystem : EntitySystem
             [SuitSensorConstants.NET_STATUS_COLLECTION] = statuses,
         };
 
+        var navMapEnsured = false;
+
         var consoles = EntityQueryEnumerator<LongRangeCrewMonitorComponent, CrewMonitoringConsoleComponent, TransformComponent>();
-        while (consoles.MoveNext(out var console, out _, out _, out var consoleXform))
+        while (consoles.MoveNext(out var console, out var longRange, out _, out var consoleXform))
         {
             if (consoleXform.MapID != map)
                 continue;
+
+            if (!navMapEnsured)
+            {
+                _navMap.EnsureNavMap(grid);
+                navMapEnsured = true;
+            }
+
+            if (longRange.TargetGrid != grid)
+            {
+                longRange.TargetGrid = grid;
+                Dirty(console, longRange);
+            }
 
             var ev = new DeviceNetworkPacketEvent(0, null, 0, string.Empty, server, payload);
             RaiseLocalEvent(console, ev);

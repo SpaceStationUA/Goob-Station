@@ -48,7 +48,7 @@
     - id: MimeSpawn # Pirate - halloween slendermime
     # - id: RevenantSpawn # Goob
     - id: EeepEvent # Harmony Eeep Port - imp
-    - id: SyndicateDeadDrop
+    # - id: SyndicateDeadDrop # Pirate: syndicate drop console - replaced by the always-on SyndicateDropDispatcher
     - id: BountyHunterSpawn # Pirate
       conditions:
       - !type:BountyHunterTargetCondition

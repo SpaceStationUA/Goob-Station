@@ -7,6 +7,9 @@
   targetNode: torch
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
 
 - type: construction
   id: LogicGate
@@ -15,6 +18,12 @@
   targetNode: logic_gate
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: EdgeDetector
@@ -23,6 +32,12 @@
   targetNode: edge_detector
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: PowerSensor
@@ -31,6 +46,12 @@
   targetNode: power_sensor
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: MemoryCell
@@ -39,6 +60,12 @@
   targetNode: memory_cell
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: RandomGate
@@ -47,6 +74,12 @@
   targetNode: random_gate
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    ElectronicsKnowledge: 2
+  useQuality: false
 
 - type: construction
   id: MakeshiftMortarAndPestle
@@ -55,12 +88,22 @@
   targetNode: mortarAndPestle
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: MakeshiftJuicer
   graph: MakeshiftJuicer
   startNode: start
   targetNode: juicer
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    CarvingKnowledge: 2
 
 - type: construction
   id: MakeshiftCentrifuge
@@ -69,3 +112,7 @@
   targetNode: makeshiftCentrifuge
   category: construction-category-tools
   objectType: Item
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+    ElectronicsKnowledge: 0

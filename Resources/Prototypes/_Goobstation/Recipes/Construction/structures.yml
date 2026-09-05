@@ -9,6 +9,11 @@
   placementMode: SnapgridCenter
   canRotate: true
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    WallsKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
 
 - type: construction
   id: SolarPanel
@@ -19,6 +24,9 @@
   placementMode: SnapgridCenter
 
 # Barricades
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    ElectronicsKnowledge: 0
 
 - type: construction
   id: BarricadeSteel
@@ -29,6 +37,13 @@
   placementMode: SnapgridCenter
   canRotate: true
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+    WallsKnowledge: 0
+  practical:
+    WallsKnowledge: 1
+    MetalworkingKnowledge: 4
 
 - type: construction
   id: BarricadeSteelFolding
@@ -39,6 +54,13 @@
   placementMode: SnapgridCenter
   canRotate: true
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 0
+    WallsKnowledge: 0
+  practical:
+    WallsKnowledge: 1
+    MetalworkingKnowledge: 4
 
 - type: construction
   id: BarricadePlasteel
@@ -49,6 +71,13 @@
   placementMode: SnapgridCenter
   canRotate: true
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+    WallsKnowledge: 0
+  practical:
+    WallsKnowledge: 2
+    MetalworkingKnowledge: 4
 
 - type: construction
   id: BarricadePlasteelFolding
@@ -59,3 +88,10 @@
   placementMode: SnapgridCenter
   canRotate: true
   canBuildInImpassable: true
+  # Pirate: effective Trauma skill requirements and quality.
+  theory:
+    FabricationKnowledge: 1
+    WallsKnowledge: 0
+  practical:
+    WallsKnowledge: 2
+    MetalworkingKnowledge: 4

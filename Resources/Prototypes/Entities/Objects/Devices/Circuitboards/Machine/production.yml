@@ -44,6 +44,9 @@
       GlassBeaker:
         amount: 2
         defaultPrototype: Beaker
+  - type: Tag # Pirate: local equivalent of Trauma's techfab board.
+    tags:
+    - TechfabMachineBoard
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -745,6 +748,9 @@
         Plastic: 25
     - type: StaticPrice
       price: 15
+    - type: Tag # Pirate: Trauma gauss construction dependency.
+      tags:
+      - RechargingBoard
 
 - type: entity
   id: TurboItemRechargerCircuitboard

@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: MIT
+
+# Pirate: material pouch - ported from NovaSector.
+- type: entity
+  parent: BaseStorageItem
+  id: MaterialPouch
+  name: material pouch
+  description: A pouch for sheets and RCD ammunition that manages to hang where you would normally put things in your pocket.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Storage/material_pouch.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,5,1
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+      components:
+      - RCDAmmo
+  - type: Dumpable
+  - type: StaticPrice
+    price: 80

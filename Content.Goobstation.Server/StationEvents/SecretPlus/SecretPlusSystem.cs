@@ -14,6 +14,7 @@ using Content.Server.StationEvents;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Random.Helpers;
@@ -173,6 +174,16 @@ public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
             if (scheduler.Comp.DisallowedEvents.Contains(stationEvent.EventType))
                 continue;
 
+            // Pirate start - SecretTP tweak
+            if (IsPirateSecretTp(scheduler.Owner))
+            {
+                var filter = new PirateSecretPlusRuleFilterEvent(scheduler.Owner, proto.ID, proto, count.Players);
+                RaiseLocalEvent(filter);
+                if (filter.Cancelled)
+                    continue;
+            }
+            // Pirate end - SecretTP tweak
+
             scheduler.Comp.SelectedEvents.Add(new SelectedEvent(proto, gameRule, stationEvent));
         }
     }
@@ -246,15 +257,48 @@ public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
         {
             i++;
 
-            // on first iter pick a primary antag
-            var pick = _random.Pick(i == 1 ? primaryWeights : weights);
+            // Pirate start - SecretTP tweak
+            Dictionary<string, float> pickWeights;
+            if (i == 1)
+            {
+                pickWeights = primaryWeights;
+                if (IsPirateSecretTp(scheduler.Owner))
+                {
+                    var primarySelection = new PirateSecretPlusPrimarySelectionEvent(scheduler.Owner, primaryWeights);
+                    RaiseLocalEvent(primarySelection);
+                    if (primarySelection.Cancelled)
+                        continue;
 
-            // on lowpop this may still go no likey even for the primary antag pick and pick thief or something, intended
+                    pickWeights = primarySelection.Weights;
+                }
+            }
+            else
+            {
+                pickWeights = weights;
+            }
+
+            if (pickWeights.Count == 0 || pickWeights.Values.All(weight => weight <= 0))
+                continue;
+
+            var pick = _random.Pick(pickWeights);
+            // Pirate end - SecretTP tweak
+
+            // Low population may still select a fallback rule.
             GameRuleComponent? ruleComp = null;
             if (!_prototypeManager.TryIndex(pick, out var entProto)
                 || !entProto.TryGetComponent<GameRuleComponent>(out ruleComp, _factory)
             )
                 continue;
+
+            // Pirate start - SecretTP tweak
+            if (IsPirateSecretTp(scheduler.Owner))
+            {
+                var filter = new PirateSecretPlusRuleFilterEvent(scheduler.Owner, pick, entProto, count);
+                RaiseLocalEvent(filter);
+                if (filter.Cancelled)
+                    continue;
+            }
+            // Pirate end - SecretTP tweak
 
             var chaosScore = GetChaosScore(entProto, ruleComp);
 
@@ -313,14 +357,42 @@ public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
     /// </summary>
     private void StartRule(Entity<SecretPlusComponent> scheduler, string rule, bool doStart = true, int? players = null)
     {
-        var ruleUid = _ticker.AddGameRule(rule);
+        // Pirate start - SecretTP tweak
+        var pirateSecretTp = IsPirateSecretTp(scheduler.Owner);
+        EntityPrototype? prototype = null;
+        GameRuleComponent? ruleComp = null;
+        var playerCount = pirateSecretTp
+            ? players ?? GetTotalPlayerCount(_playerManager.Sessions)
+            : 0;
 
-        scheduler.Comp.ChaosScore += GetChaosScore(ruleUid, players)!.Value;
+        if (pirateSecretTp)
+        {
+            prototype = _prototypeManager.Index(rule);
+            if (!prototype.TryGetComponent<GameRuleComponent>(out ruleComp, _factory))
+                return;
+
+            var filter = new PirateSecretPlusRuleFilterEvent(scheduler.Owner, rule, prototype!, playerCount);
+            RaiseLocalEvent(filter);
+            if (filter.Cancelled)
+                return;
+        }
+
+        if (pirateSecretTp && GetChaosScore(prototype!, ruleComp, players) is null)
+            return;
+        // Pirate end - SecretTP tweak
+
+        var ruleUid = _ticker.AddGameRule(rule);
+        // Pirate start - SecretTP tweak
+        var chaosScore = GetChaosScore(ruleUid, players);
+        if (chaosScore is null)
+            return;
+
+        scheduler.Comp.ChaosScore += chaosScore!.Value;
+        // Pirate end - SecretTP tweak
 
         // if we hijack playercount, also hijack how many antags we pick
         if (players != null && TryComp<AntagSelectionComponent>(ruleUid, out var selection))
         {
-            // i love C#
             for (var i = 0; i < selection.Definitions.Count; i++)
             {
                 var def = selection.Definitions[i];
@@ -329,9 +401,21 @@ public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
             }
         }
 
+        // Pirate start - SecretTP tweak
+        if (pirateSecretTp)
+            RaiseLocalEvent(new PirateSecretPlusRuleStartedEvent(scheduler.Owner, ruleUid, playerCount));
+        // Pirate end - SecretTP tweak
+
         if (doStart)
             _ticker.StartGameRule(ruleUid);
     }
+
+    // Pirate start - SecretTP tweak
+    private bool IsPirateSecretTp(EntityUid scheduler)
+    {
+        return MetaData(scheduler).EntityPrototype?.ID == SecretTPConstants.RuleId;
+    }
+    // Pirate end - SecretTP tweak
 
     /// <summary>
     ///   Count the active players and ghosts on the server to determine how chaos changes.

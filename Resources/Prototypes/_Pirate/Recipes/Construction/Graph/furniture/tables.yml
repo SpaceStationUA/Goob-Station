@@ -1,0 +1,167 @@
+- type: constructionGraph
+  id: TPTable
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DeleteEntity {}
+      edges:
+        - to: tableroulette
+          steps:
+            - material: WoodPlank
+              amount: 6
+              doAfter: 6
+            - material: Cloth
+              amount: 4
+              doAfter: 4
+        - to: tableroundframe
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+
+    - node: tableroundframe
+      entity: TableRoundFrame
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal
+              amount: 2
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+        - to: tableroundplastic
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 1
+
+        - to: tableroundwood
+          steps:
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1
+
+        - to: tableroundglass
+          steps:
+            - material: Glass
+              amount: 1
+              doAfter: 1
+
+        - to: tableroundgeneric
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+
+        - to: tableroundcarpet
+          steps:
+            - material: WoodPlank
+              amount: 1
+              doAfter: 1
+            - material: Cloth
+              amount: 1
+              doAfter: 1
+
+        - to: tableroundplasma
+          steps:
+            - material: PlasmaGlass
+              amount: 1
+              doAfter: 1
+
+    - node: tableroundplastic
+      entity: TableRoundPlastic
+      edges:
+        - to: tableroundframe
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 4
+
+    - node: tableroundwood
+      entity: TableRoundWood
+      edges:
+        - to: tableroundframe
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 4
+
+    - node: tableroundglass
+      entity: TableRoundGlass
+      edges:
+        - to: tableroundframe
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: tableroundgeneric
+      entity: TableRoundGeneric
+      edges:
+        - to: tableroundframe
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: tableroundcarpet
+      entity: TableRoundCarpet
+      edges:
+        - to: tableroundframe
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: tableroundplasma
+      entity: TableRoundPlasma
+      edges:
+        - to: tableroundframe
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: tableroulette
+      entity: TableRoulette
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank1
+              amount: 6
+            - !type:SpawnPrototype
+              prototype: MaterialCloth1
+              amount: 4
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 4
+

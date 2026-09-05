@@ -178,6 +178,49 @@ public sealed class BankCardSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Ensures the mob's ID card has a bank account and sets it to a flat balance, with no salary attached.
+    /// Used for roles (e.g. nuke operatives) that don't go through the normal job-spawn pipeline.
+    /// </summary>
+    public bool TryGiveFlatBalance(EntityUid mob, int balance)
+    {
+        if (!_idCardSystem.TryFindIdCard(mob, out var id))
+            return false;
+
+        var cardEntity = id.Owner;
+        var bankCardComponent = EnsureComp<BankCardComponent>(cardEntity);
+
+        if (!bankCardComponent.AccountId.HasValue || !TryGetAccount(bankCardComponent.AccountId.Value, out var bankAccount))
+            return false;
+
+        bankAccount.Balance = balance;
+        bankAccount.Name = Name(mob);
+
+        if (TryComp<MindContainerComponent>(mob, out var mindContainer) &&
+            mindContainer.Mind.HasValue &&
+            TryComp(mindContainer.Mind.Value, out MindComponent? mindComponent))
+        {
+            mindComponent.AddMemory(new Memory("PIN", bankAccount.AccountPin.ToString()));
+            mindComponent.AddMemory(new Memory(Loc.GetString("character-info-memories-account-number"),
+                bankAccount.AccountId.ToString()));
+            bankAccount.Mind = GetNetEntity(mindContainer.Mind.Value);
+        }
+
+        if (_inventorySystem.TryGetSlotEntity(mob, "id", out var pdaUid))
+        {
+            BankCartridgeComponent? comp = null;
+            var programs = _cartridgeLoader.GetInstalled(pdaUid.Value);
+            var program = programs.ToList().Find(p => TryComp(p, out comp));
+            if (comp != null)
+            {
+                bankAccount.CartridgeUid = GetNetEntity(program);
+                comp.AccountId = bankAccount.AccountId;
+            }
+        }
+
+        return true;
+    }
+
     public BankAccount CreateAccount(int accountId = default, int startingBalance = 0)
     {
         if (TryGetAccount(accountId, out var acc))

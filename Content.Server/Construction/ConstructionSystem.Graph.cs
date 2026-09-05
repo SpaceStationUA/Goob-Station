@@ -2,6 +2,7 @@
 
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
+using Content.Shared._Pirate.Knowledge.Quality; // Pirate
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Containers;
@@ -367,7 +368,13 @@ namespace Content.Server.Construction
             var newTransform = Transform(newUid);
             TransformSystem.AttachToGridOrMap(newUid, newTransform); // in case in hands or a container
             newTransform.LocalRotation = transform.LocalRotation;
-            newTransform.Anchored = transform.Anchored;
+            // Pirate: secret door - route unanchoring through the system so the physics body drops back to
+            // Dynamic and the snap-grid cell is released. The raw setter leaves an entity whose prototype is
+            // bodyType: Static (e.g. Girder) unanchored but unpullable until it's wrench-cycled by hand.
+            if (!transform.Anchored)
+                TransformSystem.Unanchor(newUid, newTransform);
+            else
+                newTransform.Anchored = transform.Anchored;
 
             // Container transferring.
             if (containerManager != null)
@@ -408,6 +415,10 @@ namespace Content.Server.Construction
             var entChangeEv = new ConstructionChangeEntityEvent(newUid, uid, userUid);
             RaiseLocalEvent(uid, entChangeEv);
             RaiseLocalEvent(newUid, entChangeEv, broadcast: true);
+
+            // Pirate: transfer immutable quality metadata only when a construction stage changes entity.
+            var qualityTransfer = new QualityTransferEvent(newUid);
+            RaiseLocalEvent(uid, ref qualityTransfer);
 
             foreach (var logic in GetCurrentNode(newUid, newConstruction)!.TransformLogic)
             {

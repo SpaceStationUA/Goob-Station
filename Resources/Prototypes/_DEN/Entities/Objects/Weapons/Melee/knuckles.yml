@@ -95,8 +95,8 @@
     bluntStaminaDamageFactor: 1.35 # Stuns in 5 hits (which takes 5 seconds, compared to BaseBallBatHomeRun's 4.5)
     damage:
       types:
-        Blunt: 15 # 15 DPS (same as CombatKnife), or 18.75 DPS against psions
-        Holy: 7.5 # 28.13 total DPS against psionic supernaturals
+        Blunt: 12 # 12 DPS, or 15 DPS against psions (1.25×)
+        Holy: 6 # 18 total DPS against psionic supernaturals (1.25×)
         Structural: 11.25 # 7.5 structural DPS (same as BaseBallBat)
   - type: MeleeThrowOnHit # They just go sailing and do hit walls hard enough to hurt (still only 2/3rds as fast as BaseBallBatHomeRun)
     speed: 20

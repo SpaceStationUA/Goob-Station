@@ -1,0 +1,41 @@
+- type: entity
+  parent: BaseItem
+  id: LightSprayCan
+  name: spray can
+  description: A can of coloured paint.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/light_spray_can.rsi
+    layers:
+    - state: spray
+    - state: spray_colors
+      map: [ "enum.LightPaintLayers.Paint" ]
+  - type: Item
+    sprite: _Pirate/Objects/Tools/light_spray_can.rsi
+    heldPrefix: spray
+  - type: LightPaint
+    color: "#47f8ff"
+  # Glyph selection uses the stock crayon UI.
+  - type: Crayon
+    selectedState: like
+    color: "#47f8ff"
+    selectableColor: false
+    deleteEmpty: false
+  - type: LimitedCharges
+    maxCharges: 15
+    lastCharges: 15
+  - type: ActivatableUI
+    key: enum.LightPaintUiKey.Key
+    verbOnly: true
+  - type: UserInterface
+    interfaces:
+      enum.LightPaintUiKey.Key:
+        type: LightPaintBoundUserInterface
+      enum.CrayonUiKey.Key:
+        type: CrayonBoundUserInterface
+  - type: StaticPrice
+    price: 40
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100

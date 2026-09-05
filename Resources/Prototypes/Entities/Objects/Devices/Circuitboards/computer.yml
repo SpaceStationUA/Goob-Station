@@ -119,6 +119,7 @@
     - type: Tag
       tags:
       - DroneUsable # Goobstation
+      - QMBoard # Pirate: Trauma revolutionary analyzer construction.
     - type: StealTarget # Pirate
       stealGroup: CargoRequestComputerCircuitboard
 

@@ -16,6 +16,7 @@
   - SprayPainter
   - GeigerCounter #Goob station
   - SprayPainterAmmo
+  - LightSprayCan # Pirate: light paint
   - FlashlightLantern
   - HandheldGPSBasic
   - TRayScanner
@@ -23,6 +24,7 @@
   - ClothingOuterVestTank
   - HandheldStationMap
   - ClothingHeadHatWelding
+  - ClothingEyesGlassesWelding # Pirate: welding visor toggle
   - ClothingHeadHatCone
   - WeaponHammer
 

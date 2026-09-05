@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [ BaseItem, BaseRevMinorContraband ]
+  id: BlueprintCaltrops
+  name: caltrops mold
+  description: A mold for caltrops. It can be inserted into an industrial forge.
+  components:
+  - type: Blueprint
+    providedRecipes:
+    - RevCaltrop
+  - type: Sprite
+    sprite: _Pirate/Objects/Revs/mold.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - ForgeMold
+
+- type: entity
+  parent: [ BaseItem, BaseRevMinorContraband ]
+  id: BlueprintRevMelees
+  name: melee upgrades mold
+  description: A mold for some new melee weapons. It can be inserted into an industrial forge.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Revs/mold.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - ForgeMold
+  - type: Blueprint
+    providedRecipes:
+    - RevMaul
+    - RevKunai

@@ -1,0 +1,45 @@
+- type: entity
+  parent: ClothingHeadsetAltSyndicate
+  id: ClothingHeadsetAltSyndicateCybersun
+  name: Cybersun over-ear headset
+  description: A blood-red Syndicate headset fitted with a Cybersun corporate encryption key.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySyndie
+      - EncryptionKeyCybersun
+  - type: RadioSoundProfile
+    transmitSound: /Audio/_Pirate/Radio/radio_talk_alter.ogg
+    receiveSound: /Audio/_Pirate/Radio/radio_receive_alter.ogg
+    allowedChannels:
+    - Syndicate
+    - Cybersun
+
+- type: startingGear
+  id: LavalandSyndicateFootsoldierGear
+  parent: SyndicateFootsoldierGear
+  equipment:
+    ears: ClothingHeadsetAltSyndicateCybersun
+
+- type: startingGear
+  id: LavalandSyndicateFootsoldierTeamLeaderGear
+  parent: SyndicateFootsoldierTeamLeaderGear
+  equipment:
+    ears: ClothingHeadsetAltSyndicateCybersun
+
+- type: randomHumanoidSettings
+  id: LavalandSyndieSoldier
+  parent: SyndieSoldier
+  components:
+  - type: Loadout
+    prototypes: [ LavalandSyndicateFootsoldierGear ]
+    roleLoadout: [ RoleSurvivalSyndicate ]
+
+- type: randomHumanoidSettings
+  id: LavalandSyndieSoldierTeamLeader
+  parent: SyndieSoldierTeamLeader
+  components:
+  - type: Loadout
+    prototypes: [ LavalandSyndicateFootsoldierTeamLeaderGear ]
+    roleLoadout: [ RoleSurvivalSyndicate ]

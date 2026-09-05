@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Shared.Enchanting.Components;
+using Content.Shared._Pirate.Durability;
 using Content.Shared.Damage;
 
 namespace Content.Goobstation.Shared.Enchanting.Systems;
@@ -19,6 +20,8 @@ public sealed class DamageModifyEnchantSystem : EntitySystem
         SubscribeLocalEvent<DamageModifyEnchantComponent, EnchantAddedEvent>(OnAdded);
         SubscribeLocalEvent<DamageModifyEnchantComponent, EnchantUpgradedEvent>(OnUpgraded);
         SubscribeLocalEvent<DamageModifyEnchantComponent, DamageModifyEvent>(OnDamageModify);
+        // Pirate: use the same unbreaking factor for Trauma-style item wear.
+        SubscribeLocalEvent<DamageModifyEnchantComponent, DurabilityChangeAttemptEvent>(OnDurabilityModify);
     }
 
     private void OnAdded(Entity<DamageModifyEnchantComponent> ent, ref EnchantAddedEvent args)
@@ -38,5 +41,14 @@ public sealed class DamageModifyEnchantSystem : EntitySystem
             return;
 
         args.Damage = args.Damage * ent.Comp.Modifier;
+    }
+
+    private void OnDurabilityModify(Entity<DamageModifyEnchantComponent> ent, ref DurabilityChangeAttemptEvent args)
+    {
+        // Pirate: Unbreaking reduces wear, but must not make repairs less effective.
+        if (args.Damage <= 0 || ent.Comp.ProtectWearer || _enchanting.GetEnchantedItem(ent) != args.Uid)
+            return;
+
+        args.Damage *= ent.Comp.Modifier;
     }
 }
