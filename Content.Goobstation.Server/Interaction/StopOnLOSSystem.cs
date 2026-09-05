@@ -42,9 +42,9 @@ public sealed class StopOnLOSSystem : EntitySystem
                     observers.Add(ent);
             }
 
-            if (observers.Count == 0)
-                comp.CanMove = true;
-
+            // Aggregate LOS across all observers first — mutating CanMove inside the loop
+            // made the result depend on GetNearbyHostiles order (last miss could unlock movement).
+            var isObserved = false;
             foreach (var target in observers)
             {
                 var direction = _transform.GetWorldPosition(entity) - _transform.GetWorldPosition(target);
@@ -62,16 +62,14 @@ public sealed class StopOnLOSSystem : EntitySystem
 
                 var notOccluded = _examine.InRangeUnOccluded(target, entity, comp.SightRange, null);
 
-                if (difference < comp.SightAngle && notOccluded && comp.CanMove)
+                if (difference < comp.SightAngle && notOccluded)
                 {
-                    comp.CanMove = false;
+                    isObserved = true;
                     break;
                 }
-
-                if ((difference >= comp.SightAngle || !notOccluded) && !comp.CanMove)
-                    comp.CanMove = true;
             }
 
+            comp.CanMove = !isObserved;
             _blocker.UpdateCanMove(entity);
         }
     }
