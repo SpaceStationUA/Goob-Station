@@ -21,9 +21,12 @@
             - !type:TargetInLOSPrecondition
               targetKey: Target
               rangeKey: RangedRange
+              # Impassable walls still block; lockers/crates (Opaque/MachineLayer) do not.
+              opaqueKey: false
           operator: !type:GunOperator
             targetKey: Target
             requireLOS: true
+            opaqueKey: false
           services:
             - !type:UtilityService
               id: RangedService
@@ -53,10 +56,11 @@
             - !type:TargetInLOSPrecondition
               targetKey: Target
               rangeKey: RangedRange
-              opaqueKey: true
+              # Impassable walls still block; lockers/crates (Opaque/MachineLayer) do not.
+              opaqueKey: false
           operator: !type:GunOperator
             targetKey: Target
-            opaqueKey: true
+            opaqueKey: false
           services:
             - !type:UtilityService
               id: RangedService
