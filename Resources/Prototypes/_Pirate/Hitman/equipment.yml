@@ -319,9 +319,11 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/spy_device.rsi
-    state: icon
+    layers:
+    - state: icon
   - type: Item
     sprite: Objects/Tools/spy_device.rsi
+    heldPrefix: icon
     storedSprite:
       state: icon
       sprite: Objects/Tools/spy_device.rsi
