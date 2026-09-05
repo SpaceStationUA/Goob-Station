@@ -6,9 +6,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/syndihandheldcrewmonitor.rsi
-    state: syndiscanner
+    layers:
+    - state: syndiscanner
   - type: Item
     sprite: Objects/Specific/Medical/syndihandheldcrewmonitor.rsi
+    heldPrefix: syndiscanner
+    storedSprite: null
   - type: PowerCellDraw
     useCharge: 0
 
