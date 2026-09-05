@@ -127,6 +127,8 @@
   parent: BaseGameRule
   id: MimeSpawn
   components:
+  - type: GameRule
+    chaosScore: 100 # Pirate - Secret+ requires a chaos score for fireable rules.
   - type: StationEvent
     weight: 10
     duration: 1
