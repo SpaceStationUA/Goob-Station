@@ -5291,3 +5291,9 @@ Entries:
       message: Оновлено upstream Goobstation.
   id: 510
   time: '2026-09-04T23:32:19.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Відновлено продовження збірки меха Gygax
+  id: 511
+  time: '2026-09-05T00:09:46.0000000+00:00'
