@@ -4,8 +4,9 @@ using Content.Shared.Medical.CrewMonitoring;
 namespace Content.Server.Medical.CrewMonitoring;
 
 [RegisterComponent]
-// [Access(typeof(CrewMonitoringServerSystem))] ADT-Tweak - New Monitor: ConsoleSystem also accesses server component
-[Access(typeof(CrewMonitoringServerSystem), typeof(CrewMonitoringConsoleSystem))]
+// Pirate: the listening-post relay also owns remote server snapshots.
+[Access(typeof(CrewMonitoringServerSystem), typeof(CrewMonitoringConsoleSystem),
+    typeof(Content.Server._Pirate.ListeningPost.Systems.LongRangeCrewMonitoringServerSystem))]
 public sealed partial class CrewMonitoringServerComponent : Component
 {
     // ADT-Tweak Start - New Monitor
