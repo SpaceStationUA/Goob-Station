@@ -82,7 +82,7 @@
   - type: GhostRole
     name: ghost-role-information-syndicate-marshal-name
     description: ghost-role-information-syndicate-marshal-description
-    rules: ghost-role-information-rules-cybersun
+    rules: ghost-role-information-syndicate-marshal-rules
     mindRoles:
     - MindRoleGhostRoleCybersun
     raffle:

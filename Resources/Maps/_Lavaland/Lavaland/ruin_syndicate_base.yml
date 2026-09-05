@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 09/05/2026 14:43:07
-  entityCount: 10708
+  time: 09/05/2026 15:02:16
+  entityCount: 10706
 maps: []
 grids:
 - 1
@@ -5710,8 +5710,8 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-            Oxygen: 23.57087
-            Nitrogen: 88.67137
+            Oxygen: 21.6852
+            Nitrogen: 81.57766
         - volume: 2500
           temperature: 293.14975
           moles:
@@ -7259,7 +7259,7 @@ entities:
       pos: -35.5,11.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -3715.2314
+      secondsUntilStateChange: -3798.638
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8143,6 +8143,16 @@ entities:
       deviceLists:
       - 10457
       - 10469
+- proto: AllTraitorCodesPaper
+  entities:
+  - uid: 10704
+    components:
+    - type: Transform
+      parent: 9374
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 9374
 - proto: AmeController
   entities:
   - uid: 2923
@@ -10253,8 +10263,11 @@ entities:
   - uid: 9377
     components:
     - type: Transform
-      pos: 13.5,-8.5
-      parent: 1
+      parent: 9374
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 9374
 - proto: BoxFolderGrey
   entities:
   - uid: 44
@@ -24897,6 +24910,19 @@ entities:
     components:
     - type: Transform
       parent: 9679
+    - type: GroupExamine
+      group:
+      - hoverMessage: ""
+        contextText: verb-examine-group-other
+        icon: /Textures/Interface/examine-star.png
+        components:
+        - Armor
+        - ClothingSpeedModifier
+        entries:
+        - message: Зменшує швидкість бігу на [color=yellow]10%[/color].
+          priority: 0
+          component: ClothingSpeedModifier
+        title: null
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
@@ -24905,6 +24931,19 @@ entities:
     components:
     - type: Transform
       parent: 9680
+    - type: GroupExamine
+      group:
+      - hoverMessage: ""
+        contextText: verb-examine-group-other
+        icon: /Textures/Interface/examine-star.png
+        components:
+        - Armor
+        - ClothingSpeedModifier
+        entries:
+        - message: Зменшує швидкість бігу на [color=yellow]10%[/color].
+          priority: 0
+          component: ClothingSpeedModifier
+        title: null
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
@@ -25715,16 +25754,6 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 9680
-  - uid: 10704
-    components:
-    - type: Transform
-      pos: 13.5,-8.5
-      parent: 1
-  - uid: 10705
-    components:
-    - type: Transform
-      pos: 13.5,-8.5
-      parent: 1
 - proto: ClothingMaskBreath
   entities:
   - uid: 959
@@ -32763,16 +32792,22 @@ entities:
       parent: 1192
     - type: Physics
       canCollide: False
-  - uid: 10707
+  - uid: 10705
     components:
     - type: Transform
-      pos: 13.488705,-8.602604
-      parent: 1
-  - uid: 10708
+      parent: 9374
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 9374
+  - uid: 10706
     components:
     - type: Transform
-      pos: 13.488705,-8.602604
-      parent: 1
+      parent: 9374
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 9374
 - proto: EncryptionKeyInterdyne
   entities:
   - uid: 2977
@@ -56292,43 +56327,35 @@ entities:
     - type: Transform
       pos: 13.5,-8.5
       parent: 1
-    - type: Lock
-      locked: False
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PolygonShape
-            radius: 0.01
-            vertices:
-            - -0.25,-0.48
-            - 0.25,-0.48
-            - 0.25,0.48
-            - -0.25,0.48
-          mask:
-          - Impassable
-          - MidImpassable
-          - LowImpassable
-          - BlobImpassable
-          layer:
-          - Opaque
-          density: 75
-          hard: True
-          restitution: 0
-          friction: 0.4
-    - type: PlaceableSurface
-      isPlaceable: True
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 10706
+          - 9377
+          - 9376
+          - 10703
+          - 9375
+          - 10705
+          - 10704
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
     - type: AccessReader
       accessListsOriginal: []
       access:
       - - SyndicateAgent
     - type: EntityStorage
-      removedMasks: 84
       air:
         volume: 200
         immutable: False
         temperature: 293.14673
-        moles: {}
-      open: True
+        moles:
+          Oxygen: 1.8856695
+          Nitrogen: 7.0937095
 - proto: Handcuffs
   entities:
   - uid: 10176
@@ -57622,12 +57649,12 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 9841
-          - 10666
-          - 10107
-          - 9839
-          - 9623
           - 9812
+          - 10666
+          - 9623
+          - 9839
+          - 10107
+          - 9841
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -57651,12 +57678,12 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 9844
-          - 10671
-          - 10670
-          - 10669
           - 9803
+          - 10671
           - 10672
+          - 10669
+          - 10670
+          - 9844
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -59146,8 +59173,9 @@ entities:
   - uid: 9376
     components:
     - type: Transform
-      pos: 13.5,-8.5
-      parent: 1
+      parent: 9374
+    - type: Physics
+      canCollide: False
     - type: Paper
       stampState: paper_stamp-syndicate
       stampedBy:
@@ -59163,6 +59191,8 @@ entities:
 
 
         — Вище командування
+    - type: InsideEntityStorage
+      storage: 9374
 - proto: ParamedHypo
   entities:
   - uid: 1881
@@ -66552,8 +66582,11 @@ entities:
   - uid: 10703
     components:
     - type: Transform
-      pos: 13.5,-8.5
-      parent: 1
+      parent: 9374
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 9374
 - proto: SynthesizerInstrument
   entities:
   - uid: 9681
@@ -67756,8 +67789,11 @@ entities:
   - uid: 9375
     components:
     - type: Transform
-      pos: 13.5,-8.5
-      parent: 1
+      parent: 9374
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 9374
 - proto: TelescopicBaton
   entities:
   - uid: 1153
@@ -68238,13 +68274,6 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 9788
-- proto: TraitorCodePaper
-  entities:
-  - uid: 10706
-    components:
-    - type: Transform
-      pos: 13.5,-8.5
-      parent: 1
 - proto: TrashBagBlue
   entities:
   - uid: 8951

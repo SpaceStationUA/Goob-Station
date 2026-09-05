@@ -48,7 +48,9 @@ public sealed partial class EatCorpseSystem : EntitySystem
         MobStateComponent? targetState = null)
     {
         if (!Resolve(eaterUid, ref eater)
-            || !Resolve(targetUid, ref targetState, ref targetBody))
+            // Pirate: corpse eater log spam - NPC planning asks this about every nearby hostile,
+            // Pirate: corpse eater log spam - and a bodyless one (turret, drone) is a quiet "no", not an error.
+            || !Resolve(targetUid, ref targetState, ref targetBody, false))
             return false;
 
         if (!_mobState.IsDead(targetUid))
