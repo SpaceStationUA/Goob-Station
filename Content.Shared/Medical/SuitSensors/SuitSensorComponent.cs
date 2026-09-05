@@ -107,4 +107,8 @@ public sealed partial class SuitSensorComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables]
     public bool PreviousControlsLocked = false;
+    // ADT-Tweak-Start - New Monitor: sensor attached directly to a mob.
+    [DataField, AutoNetworkedField]
+    public bool OnMob = false;
+
 }

@@ -4,7 +4,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Emp;
 using Content.Shared.Examine;
@@ -41,7 +40,6 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
     // ADT-Tweak Start - New Monitor: wearer -> OnMob sensor index
     /// <summary>
@@ -160,19 +158,19 @@ public abstract class SharedSuitSensorSystem : EntitySystem
 
     private void IndexOnMobSensor(Entity<SuitSensorComponent> ent)
     {
-        if (!ent.Comp.OnMob || ent.Comp.User == null)
+        if (!ent.Comp.OnMob || ent.Comp.User is not { } wearer)
             return;
 
-        _onMobSensorsByWearer[ent.Comp.User.Value] = ent.Owner;
+        _onMobSensorsByWearer[wearer] = ent.Owner;
     }
 
     private void UnindexOnMobSensor(Entity<SuitSensorComponent> ent)
     {
-        if (!ent.Comp.OnMob || ent.Comp.User == null)
+        if (!ent.Comp.OnMob || ent.Comp.User is not { } wearer)
             return;
 
-        if (_onMobSensorsByWearer.TryGetValue(ent.Comp.User.Value, out var indexed) && indexed == ent.Owner)
-            _onMobSensorsByWearer.Remove(ent.Comp.User.Value);
+        if (_onMobSensorsByWearer.TryGetValue(wearer, out var indexed) && indexed == ent.Owner)
+            _onMobSensorsByWearer.Remove(wearer);
     }
     // ADT-Tweak End
 
@@ -425,10 +423,11 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         // ADT-Tweak Start - New Monitor: prefer active OnMob sensor over uniform
         // Prefer an *active* OnMob sensor over the uniform. An Off OnMob sensor
         // must not silence the jumpsuit, or that wearer vanishes from monitors.
+        var wearer = sensor.User;
         if (!sensor.OnMob &&
-            sensor.User != null &&
-            _onMobSensorsByWearer.TryGetValue(sensor.User.Value, out var onMobUid) &&
-            TryComp(onMobUid, out SuitSensorComponent? onMob) &&
+            wearer is { } wearerUid &&
+            _onMobSensorsByWearer.TryGetValue(wearerUid, out var onMobUid) &&
+            TryComp(onMobUid, out var onMob) &&
             onMob.Mode != SuitSensorMode.SensorOff)
         {
             return null;
@@ -504,7 +503,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
                 // ADT-Tweak Start - NewMonitor:
                 // Damage / threshold only for vitals+ modes — skip for binary.
                 if (TryComp<DamageableComponent>(sensor.User.Value, out var damageable))
-                    status.TotalDamage = _damageableSystem.GetTotalDamage((sensor.User.Value, damageable)).Int();
+                    status.TotalDamage = damageable.TotalDamage.Int();
 
                 if (_mobThresholdSystem.TryGetThresholdForState(sensor.User.Value, MobState.Critical, out var critThreshold))
                     status.TotalDamageThreshold = critThreshold.Value.Int();
