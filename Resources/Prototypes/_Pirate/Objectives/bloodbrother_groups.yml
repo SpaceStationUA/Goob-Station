@@ -3,7 +3,6 @@
   weights:
     BloodBrotherObjectiveGroupState: 1
     BloodBrotherObjectiveGroupSteal: 1
-    BloodBrotherObjectiveGroupKill: 1
 
 - type: weightedRandom
   id: BloodBrotherObjectiveGroupState
@@ -26,9 +25,3 @@
     BloodBrotherHandTeleporterStealObjective: 0.5
     BloodBrotherLawbringerStealObjective: 0.5
     BloodBrotherAccessConfiguratorStealObjective: 1
-
-- type: weightedRandom
-  id: BloodBrotherObjectiveGroupKill
-  weights:
-    BloodBrotherKillRandomPersonObjective: 0.85
-    BloodBrotherKillRandomHeadObjective: 0.25

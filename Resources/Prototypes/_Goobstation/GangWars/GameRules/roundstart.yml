@@ -17,7 +17,7 @@
     definitions:
     - prefRoles: [ GangLeader ]
       max: 4
-      playerRatio: 15
+      playerRatio: 10 # Pirate edit - was 15
       jobBlacklist: [ Captain, HeadOfPersonnel, HeadOfSecurity, ChiefEngineer, ChiefMedicalOfficer, ResearchDirector, BlueshieldOfficer, NanotrasenRepresentative ] # QM / Det should be allowed
       blacklist:
         components:
