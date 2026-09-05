@@ -176,8 +176,8 @@
   - type: ChamberMagazineAmmoProvider
     autoEject: true
   - type: GunWieldBonus
-    minAngle: -8
-    maxAngle: -25
+    minAngle: -10
+    maxAngle: -30
   - type: MagazineVisuals
     magState: mag
     steps: 1

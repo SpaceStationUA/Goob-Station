@@ -74,35 +74,32 @@
       sprite: _Pirate/Objects/Weapons/Guns/SMGs/BRDI_R25_antique.rsi
 
 - type: entity
-  name: M470-L
-  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband, SolAllianceInfo]
+  name: M470-L "Витязь"
+  parent: [BaseWeaponSubMachineGun, BaseGunWieldable, BaseSecurityContraband, SolAllianceInfo]
   id: WeaponSubMachineGunSol
   suffix: SAN
-  description: Розроблена Zavodskoi Interstellar як зменшена версія їхньої M469, M470-L — це зброя особистого захисту, призначена для використання військовослужбовцями другої ланки всіх родів військ Соляріанської армії, такими як війська підтримки та члени екіпажу ВМС. Використовує магазини .35 калібру.
+  description: Розроблена компанією Zavodskiy Interstellar як зменшена версія моделі M469. M470-L є зброєю індивідуального захисту, призначеною для особового складу збройних сил Соларіанського Альянсу - зокрема екіпажу флоту. Легка конструкція дозволяє вести вогонь з однієї руки з малою віддачею, проте дворучний хват все ще комфортніше.
   components:
   - type: Sprite
-    sprite: _Pirate/Objects/Weapons/Guns/SMGs/sol_smg.rsi
+    sprite:  _Pirate/Objects/Weapons/Guns/SMGs/sol_smg/40x32.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: _Pirate/Objects/Weapons/Guns/SMGs/sol_smg.rsi
-  - type: ChamberMagazineAmmoProvider
-    autoEject: true
-    boltClosed: null
+    sprite:  _Pirate/Objects/Weapons/Guns/SMGs/sol_smg/32x32.rsi
   - type: Gun
-    minAngle: 4
+    minAngle: 5
     maxAngle: 20
-    fireRate: 6
-    burstFireRate: 8
-    angleIncrease: 2
+    fireRate: 8.33
+    burstFireRate: 8.33
+    angleIncrease: 1.5
     angleDecay: 16
     selectedMode: FullAuto
     availableModes:
     - FullAuto
-    - SemiAuto
+    - Burst
     soundGunshot:
       path: /Audio/_Pirate/Weapons/Guns/Gunshots/smg.ogg
   - type: ItemSlots
@@ -129,8 +126,13 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+  - type: GunWieldBonus
+    minAngle: -3
+    maxAngle: -10
   - type: Multishot
     missChance: 0.3
   - type: Item
+    sprite:  _Pirate/Objects/Weapons/Guns/SMGs/sol_smg/32x32.rsi
+    size: Normal
     shape:
     - 0,0,2,1
