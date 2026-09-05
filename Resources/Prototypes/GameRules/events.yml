@@ -44,7 +44,6 @@
     - id: KingRatMigration
     - id: Fugitive # Pirate
     - id: BorerSpawn # Pirate
-    - id: ListeningPost # Pirate
     # - id: RevenantSpawn # Goob
     - id: EeepEvent # Harmony Eeep Port - imp
     # - id: SyndicateDeadDrop # Pirate: syndicate drop console - replaced by the always-on SyndicateDropDispatcher

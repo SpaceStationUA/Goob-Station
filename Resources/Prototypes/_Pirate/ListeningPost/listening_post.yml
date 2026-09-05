@@ -1,123 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Role and event
-
-- type: antag
-  id: ListeningPost
-  name: roles-antag-listening-post-name
-  antagonist: true
-  objective: roles-antag-listening-post-objective
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 72h
-  - !type:DepartmentTimeRequirement
-    department: Security
-    time: 11.1h
-  - !type:DepartmentTimeRequirement
-    department: Civilian
-    time: 11.1h
-  - !type:DepartmentTimeRequirement
-    department: Command
-    time: 11.1h
-
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleListeningPost
-  name: Listening Post Role
-  components:
-  - type: MindRole
-    roleType: Cybersun
-    subtype: role-subtype-lpo
-    antagPrototype: ListeningPost
-    exclusiveAntag: true
-  - type: ListeningPostRole
-
-- type: entity
-  categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseCharacterPodStructure
-  id: SpawnPointGhostSyndicateListener
-  components:
-  - type: GhostRole
-    name: ghost-role-information-listeningop-name
-    description: ghost-role-information-listeningop-description
-    rules: ghost-role-information-listeningop-rules
-    mindRoles:
-    - MindRoleListeningPost
-    raffle:
-      settings: default
-  - type: GhostRoleAntagSpawner
-  - type: AntagCharacterPod
-
-- type: entity
-  parent: BaseGameRule
-  id: ListeningPost
-  components:
-  - type: GameRule
-    chaosScore: 300
-  - type: StationEvent
-    earliestStart: 30
-    weight: 4
-    minimumPlayers: 25
-    maxOccurrences: 1
-    duration: null
-    chaos:
-      Hostile: 20
-      Friend: 20
-    eventType: HostilesSpawn
-  # Pirate: PrecognitionResult is unavailable in the local psionics implementation.
-  - type: RuleGrids
-  - type: LoadFarGridRule
-    path: /Maps/_Pirate/Nonstations/listening_post.yml
-    distanceModifier: 13
-  - type: DebrisSpawnerRule
-    count: 6
-    distanceModifier: 3
-  - type: AntagLoadProfileRule
-  - type: AntagProfileDetailsRule
-  - type: AntagSelection
-    agentName: listening-post-round-end-agent-name
-    definitions:
-    - spawnerPrototype: SpawnPointGhostSyndicateListener
-      min: 2
-      max: 2
-      pickPlayer: false
-      startingGear: SyndicateListenerGear
-      roleLoadout:
-      - RoleSurvivalStandard
-      components:
-      # Pirate: no RandomHumanoidAppearance/RandomMetadata here. Antag selection adds definition
-      # components after the profile is loaded, and adding them to a map initialized entity fires
-      # their map init, which would randomise the appearance and name right back over the character.
-      - type: AutoImplant
-        implants:
-        - DeathAcidifierImplant
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      # Pirate: Binary is a collective-mind channel here, not a radio channel.
-      - type: ReceiveOnlyCollectiveMind
-        channel: Binary
-      - type: TargetObjectiveImmune
-      mindRoles:
-      - MindRoleListeningPost
-  - type: DynamicRuleCost
-    cost: 50
-
-# Operative equipment
-
-- type: startingGear
-  id: SyndicateListenerGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitPyjamaSyndicateBlack
-    head: ClothingHeadPyjamaSyndicateBlack
-    ears: ClothingHeadsetAltSyndicateListening
-    gloves: ClothingHandsGlovesCombat
-    shoes: ClothingShoesSlippers
-    id: SyndiListeningPostPDA
-    back: ClothingBackpackSyndicate
-    pocket1: AgentIDCard
-    pocket2: HandheldStationMapRecordsTablet
-
 - type: entity
   parent: ClothingHeadsetAltSyndicate
   id: ClothingHeadsetAltSyndicateListening
@@ -129,6 +11,11 @@
       - EncryptionKeyStationMaster
   # Pirate: bridge radio coverage between the remote post and the station.
   - type: ListeningPostRadio
+  # Pirate: lets the wearer eavesdrop on Binary without being able to pose as a silicon on it.
+  - type: ClothingGrantComponent
+    component:
+    - type: ReceiveOnlyCollectiveMind
+      channel: Binary
   - type: Sprite
     sprite: _Pirate/Clothing/Ears/Headsets/syndicate_listening.rsi
   - type: Clothing
@@ -176,8 +63,6 @@
     sprite: _Pirate/Clothing/Belt/syndbelt_overlay.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Belt/syndbelt_overlay.rsi
-
-# Listening post machines
 
 - type: entity
   parent: ComputerCrewMonitoring
@@ -250,6 +135,8 @@
   suffix: Syndicate, Long Range
   components:
   - type: LongRangeSurveillanceMonitor
+  - type: SurveillanceCameraMonitor
+    neverAutomaticallyHeartbeat: true
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -325,6 +212,8 @@
     responsePings: false
   - type: Emagged
 
+# The round's single dead drop dispatcher. Spawned into nullspace by the first console that needs it, so
+# every console shares one countdown, one drop site and one set of packages. Tune the drops here.
 - type: entity
   id: SyndicateDropDispatcher
   name: dead drop dispatcher

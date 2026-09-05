@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Shared.Loudspeaker.Events; // goob - loudspeakers
 using System.Collections.Immutable; // Goobstation - Starlight collective mind port
@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using Content.Server._Goobstation.Wizard.Systems;
-using Content.Server._Pirate.ListeningPost.Components; // Pirate: listening post receive-only interception
+using Content.Shared._Pirate.ListeningPost.Interception; // Pirate: listening post receive-only interception
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Effects;
@@ -485,7 +485,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp) || !sourseCollectiveMindComp.Minds.ContainsKey(collectiveMind.ID))
             return;
 
-        // Pirate: listening post operatives may intercept Binary but cannot impersonate silicons on it.
+        // Pirate: interception headsets may listen in on a collective channel but cannot talk on it.
         if (TryComp<ReceiveOnlyCollectiveMindComponent>(source, out var receiveOnly) &&
             receiveOnly.Channel.Id == collectiveMind.ID)
         {
