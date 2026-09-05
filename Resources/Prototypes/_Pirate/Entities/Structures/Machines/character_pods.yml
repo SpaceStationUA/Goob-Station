@@ -73,22 +73,3 @@
     settings: LavalandSyndieSoldierTeamLeader
     extraComponents:
     - type: TargetObjectiveImmune
-
-- type: entity
-  parent: BaseCharacterPod
-  id: CharacterPodSyndicateMarshal
-  suffix: Syndicate Marshal
-  components:
-  - type: GhostRole
-    name: ghost-role-information-syndicate-marshal-name
-    description: ghost-role-information-syndicate-marshal-description
-    rules: ghost-role-information-syndicate-marshal-rules
-    mindRoles:
-    - MindRoleSyndicateMarshal
-    raffle:
-      settings: default
-  - type: CharacterPod
-    settings: SyndicateMarshalPod
-    # Sits on a nonstation map, as unreachable as the Lavaland base soldiers above.
-    extraComponents:
-    - type: TargetObjectiveImmune

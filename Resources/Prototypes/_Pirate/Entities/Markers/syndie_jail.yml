@@ -25,19 +25,3 @@
     blacklist:
       components:
       - MobState
-
-- type: entity
-  categories: [ Spawner ]
-  parent: MarkerBase
-  id: SyndicateMarshalSpawner
-  name: syndicate marshal spawner
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Markers/cross.rsi
-      state: green
-    - sprite: Clothing/Head/Hats/syndiecap_maa.rsi
-      state: icon
-  - type: ConditionalSpawner
-    prototypes:
-    - MobHumanSyndicateMarshal
