@@ -12,3 +12,11 @@
   frequency: 1777
   color: "#5e8e31"
   longRange: true
+
+- type: radioChannel
+  id: Cybersun
+  name: chat-radio-cybersun
+  keycode: "и"
+  frequency: 1445
+  color: "#6d3f40"
+  mapWide: true

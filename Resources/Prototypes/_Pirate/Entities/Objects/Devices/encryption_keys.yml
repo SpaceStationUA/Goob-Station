@@ -34,3 +34,20 @@
         state: crypt_red
       - sprite: _Pirate/Objects/Devices/encryption_keys.rsi
         state: interdyne_evil
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCybersun
+  name: Криптографічний ключ Кіберсану
+  description: Криптографічний ключ корпоративного радіоканалу Кіберсану.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Cybersun
+    defaultChannel: Cybersun
+  - type: Sprite
+    layers:
+    - sprite: Objects/Devices/encryption_keys.rsi
+      state: crypt_red
+    - sprite: Objects/Devices/encryption_keys.rsi
+      state: synd_label

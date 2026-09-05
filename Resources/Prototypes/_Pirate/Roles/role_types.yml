@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: roleType
+  id: Cybersun
+  name: role-type-cybersun-name
+  color: '#6d3f40'
+  symbol: "⚔"

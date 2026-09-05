@@ -39,6 +39,14 @@ public sealed partial class RadioChannelPrototype : IPrototype
     [DataField("longRange"), ViewVariables]
     public bool LongRange = false;
 
+    #region Pirate: map-wide radio
+    /// <summary>
+    /// Allows a powered telecom server to cover every grid on its map without relaying to other maps.
+    /// </summary>
+    [DataField("mapWide"), ViewVariables]
+    public bool MapWide = false;
+    #endregion
+
     /// <summary>
     /// Whitelist for entities that can send or receive this radio channel messages
     /// </summary>

@@ -66,6 +66,7 @@
     - CargoBoards # Pirate start - tweak fab recepies | Add more circuits to engi fab
     - MedicalBoards
     - ServiceBoards # Pirate end
+    - AdvancedEmitters        # Omu - advanced emitters
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NailgunEvilStatic
