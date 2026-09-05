@@ -26,6 +26,10 @@
             "directions": 4
         },
         {
+            "name": "icon-storage",
+            "directions": 1
+        },
+        {
             "name": "icon",
             "directions": 1
         }
