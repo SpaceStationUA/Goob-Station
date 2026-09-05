@@ -151,8 +151,8 @@ public sealed class RCDSystem : EntitySystem
         #region Pirate: chem plumbing
         if (component.IsRpd || component.IsRPLD)
         {
-            var modeLoc = $"rcd-rpd-mode-{component.CurrentMode.ToString().ToLowerInvariant()}";
-            args.PushMarkup(Loc.GetString("rcd-component-examine-rpd-mode", ("mode", Loc.GetString(modeLoc))));
+            args.PushMarkup(Loc.GetString("rcd-component-examine-rpd-mode",
+                ("mode", GetModeName(NormalizeMode(component.CurrentMode)))));
         }
         #endregion
     }
@@ -946,7 +946,7 @@ public sealed class RCDSystem : EntitySystem
         if ((!component.IsRpd && !component.IsRPLD) || !prototype.HasLayers)
             return AtmosPipeLayer.Primary;
 
-        return ClampPipeLayer(component.CurrentMode switch
+        return ClampPipeLayer(NormalizeMode(component.CurrentMode) switch
         {
             RpdMode.Primary => AtmosPipeLayer.Primary,
             RpdMode.Secondary => AtmosPipeLayer.Secondary,
@@ -984,7 +984,21 @@ public sealed class RCDSystem : EntitySystem
 
     public RpdMode GetCurrentRpdMode(EntityUid uid, RCDComponent? component = null)
     {
-        return Resolve(uid, ref component) ? component.CurrentMode : RpdMode.Free;
+        return Resolve(uid, ref component) ? NormalizeMode(component.CurrentMode) : RpdMode.Free;
+    }
+
+    /// <summary>
+    /// Upstream shipped five pipe layers, so <see cref="RpdMode"/> used to carry Quaternary(3) and
+    /// Quinary(4). This fork only has three layers and those names are gone, but CurrentMode is a
+    /// networked byte that also persists on saved maps, so older state can still hold 3 or 4. Both
+    /// used to mean "the topmost layer", so fold them onto Tertiary instead of letting them fall
+    /// through to the Primary default.
+    /// </summary>
+    public static RpdMode NormalizeMode(RpdMode mode)
+    {
+        return mode is RpdMode.Primary or RpdMode.Secondary or RpdMode.Tertiary or RpdMode.Free
+            ? mode
+            : RpdMode.Tertiary;
     }
     #endregion
 

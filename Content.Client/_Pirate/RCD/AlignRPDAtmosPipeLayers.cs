@@ -155,7 +155,9 @@ public sealed class AlignRPDAtmosPipeLayers : PlacementMode
 
     private AtmosPipeLayer GetLayerForMode(RCDComponent rcd, EntityUid gridId)
     {
-        return rcd.CurrentMode switch
+        // Legacy saved/networked state can still hold the removed Quaternary(3)/Quinary(4) values;
+        // NormalizeMode folds them onto Tertiary so the preview agrees with the server.
+        return RCDSystem.NormalizeMode(rcd.CurrentMode) switch
         {
             RpdMode.Primary => AtmosPipeLayer.Primary,
             RpdMode.Secondary => AtmosPipeLayer.Secondary,
