@@ -22,5 +22,7 @@ ent-PhotoAlbumDepartmentEngineering = фотоальбом інженерног�
     .desc = { ent-PhotoAlbum.desc }
 ent-PhotoAlbumDepartmentMedical = фотоальбом медичного відділу
     .desc = { ent-PhotoAlbum.desc }
+ent-PhotoAlbumCybersun = фотоальбом Cybersun
+    .desc = { ent-PhotoAlbum.desc }
 ent-PhotoAlbumMakeshift = саморобний фотоальбом
     .desc = Саморобна книжка зі спогадами. Покладіть туди фотографії, щоб вони потрапили у фінальне зведення раунду. Використайте ручку, щоб налаштувати назви, описи та підписи фото.
