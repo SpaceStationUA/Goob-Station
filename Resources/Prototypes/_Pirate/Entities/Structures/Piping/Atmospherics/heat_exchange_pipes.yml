@@ -1,0 +1,234 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  parent: HeatExchanger
+  id: PirateHeatExchangePipeBase
+  name: inline radiator
+  description: Transfers heat between the pipe and its surroundings. Doesn't need gas flow. Only connects to other heat exchange pipes.
+  placement:
+    mode: AlignAtmosPipeLayers
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe.rsi
+    drawdepth: ThinPipeAlt1
+    layers:
+    - state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
+  - type: PipeAppearance
+    sprite:
+    - sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe.rsi
+      state: pipeConnector
+    - sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt1.rsi
+      state: pipeConnector
+    - sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt2.rsi
+      state: pipeConnector
+  - type: AtmosPipeLayers
+    numberOfPipeLayers: 3
+    spriteLayersRsiPaths:
+      enum.PipeVisualLayers.Pipe:
+        Primary: _Pirate/Structures/Piping/Atmospherics/he_pipe.rsi
+        Secondary: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt1.rsi
+        Tertiary: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt2.rsi
+  - type: HeatExchanger
+    inlet: pipe
+    outlet: pipe
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:HeatExchangePipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+  - type: Construction
+    graph: PirateHeatExchangePipe
+    node: heStraight
+
+- type: entity
+  parent: PirateHeatExchangePipeBase
+  id: HeatExchangerInlineManifold
+  suffix: Manifold
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeTJunction
+      map: [ "enum.PipeVisualLayers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:HeatExchangePipeNode
+        nodeGroupID: Pipe
+        pipeDirection: TSouth
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: HeatExchangerInlineManifold
+      Secondary: HeatExchangerInlineManifoldAlt1
+      Tertiary: HeatExchangerInlineManifoldAlt2
+  - type: Construction
+    graph: PirateHeatExchangePipe
+    node: heManifold
+
+- type: entity
+  parent: [GasPipeLayerAlt1, HeatExchangerInlineManifold]
+  id: HeatExchangerInlineManifoldAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt1.rsi
+  - type: Construction
+    node: heManifoldAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, HeatExchangerInlineManifold]
+  id: HeatExchangerInlineManifoldAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipe
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt2.rsi
+  - type: Construction
+    node: heManifoldAlt2
+
+- type: entity
+  parent: PirateHeatExchangePipeBase
+  id: HeatExchangerInlineFourway
+  suffix: Fourway
+  components:
+  - type: Sprite
+    layers:
+    - state: pipeFourway
+      map: [ "enum.PipeVisualLayers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:HeatExchangePipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: HeatExchangerInlineFourway
+      Secondary: HeatExchangerInlineFourwayAlt1
+      Tertiary: HeatExchangerInlineFourwayAlt2
+  - type: Construction
+    graph: PirateHeatExchangePipe
+    node: heFourway
+
+- type: entity
+  parent: [GasPipeLayerAlt1, HeatExchangerInlineFourway]
+  id: HeatExchangerInlineFourwayAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt1.rsi
+  - type: Construction
+    node: heFourwayAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, HeatExchangerInlineFourway]
+  id: HeatExchangerInlineFourwayAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipe
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt2.rsi
+  - type: Construction
+    node: heFourwayAlt2
+
+- type: entity
+  parent: PirateHeatExchangePipeBase
+  id: HeatExchangerInlineJunction
+  name: heat exchange junction
+  suffix: Junction
+  description: Ties a heat exchange pipe run into ordinary pipework. Insulated, so it radiates no heat of its own.
+  components:
+  - type: HeatExchanger
+    inlet: pipe
+    outlet: pipe
+    convectionCoefficient: 0
+    radiationCoefficient: 0
+  - type: Sprite
+    layers:
+    - state: junction
+      map: [ "enum.PipeVisualLayers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:HeatExchangeJunctionPipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+        heatExchangeDirection: South
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: HeatExchangerInlineJunction
+      Secondary: HeatExchangerInlineJunctionAlt1
+      Tertiary: HeatExchangerInlineJunctionAlt2
+  - type: Construction
+    graph: PirateHeatExchangePipe
+    node: heJunction
+
+- type: entity
+  parent: [GasPipeLayerAlt1, HeatExchangerInlineJunction]
+  id: HeatExchangerInlineJunctionAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt1.rsi
+  - type: Construction
+    node: heJunctionAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, HeatExchangerInlineJunction]
+  id: HeatExchangerInlineJunctionAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipe
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt2.rsi
+  - type: Construction
+    node: heJunctionAlt2
+
+- type: entity
+  parent: [GasPipeLayerAlt1, HeatExchangerInline]
+  id: HeatExchangerInlineAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt1.rsi
+  - type: Construction
+    node: heStraightAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, HeatExchangerInline]
+  id: HeatExchangerInlineAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipe
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt2.rsi
+  - type: Construction
+    node: heStraightAlt2
+
+- type: entity
+  parent: [GasPipeLayerAlt1, HeatExchangerInlineBend]
+  id: HeatExchangerInlineBendAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipeAlt2
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt1.rsi
+  - type: Construction
+    node: heBendAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, HeatExchangerInlineBend]
+  id: HeatExchangerInlineBendAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: ThinPipe
+    sprite: _Pirate/Structures/Piping/Atmospherics/he_pipe_alt2.rsi
+  - type: Construction
+    node: heBendAlt2

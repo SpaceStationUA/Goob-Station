@@ -6,14 +6,15 @@
   name: gar mesons
   description: Do the impossible, see the invisible!
   components:
-  # Pirate: meson vision - ported from Moffstation PR #1688 (funky-station/forky-station#102).
+  # Pirate: meson vision
   - type: TrayScanner
     range: 10
     enabled: true # Pirate: meson vision
     toggleOnActivate: false # Pirate: meson vision
+    requireWorn: true # Pirate: meson vision
   - type: GoggleShader
     shader: Goggles
-    color: "#5AB43CCC"
+    color: "#5AB43C80" # Pirate: meson vision
     enabled: true # Pirate: meson vision
   - type: Tag # Goobstation
     tags:

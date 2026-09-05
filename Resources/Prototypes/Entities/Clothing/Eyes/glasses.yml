@@ -62,18 +62,30 @@
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/meson.rsi
+    layers: # Pirate: meson vision
+    - state: icon-on
+      map: ["base"]
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
-  # Pirate: meson vision - always on.
+  - type: Appearance # Pirate: meson vision
+  - type: GenericVisualizer # Pirate: meson vision
+    visuals:
+      enum.TrayScannerVisual.Visual:
+        base:
+          On: { state: icon-on }
+          Off: { state: icon }
+  # Pirate: meson vision
   - type: TrayScanner
     range: 10
     enabled: true
     toggleOnActivate: false # Pirate: meson vision
+    requireWorn: true # Pirate: meson vision
+    toggleAction: ActionToggleTrayScanner # Pirate: meson vision
   - type: GoggleShader
     shader: Goggles
-    color: "#5AB43CCC"
+    color: "#5AB43C80" # Pirate: meson vision
     enabled: true
-  - type: StaticPrice # Pirate: meson vision - price
+  - type: StaticPrice # Pirate: meson vision
     price: 50
   - type: IdentityBlocker
     coverage: EYES
@@ -297,14 +309,32 @@
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/thermal.rsi
+    layers: # Pirate: thermal vision
+    - state: icon-on
+      map: ["base"]
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/thermal.rsi
+  - type: Appearance # Pirate: thermal vision
+  - type: GenericVisualizer # Pirate: thermal vision
+    visuals:
+      enum.ThermalSightVisual.Visual:
+        base:
+          On: { state: icon-on }
+          Off: { state: icon }
+  - type: ThermalSight # Pirate: thermal vision
+    enabled: true
+  - type: GoggleShader # Pirate: thermal vision
+    shader: Goggles
+    color: "#F1674380"
+    enabled: true
+  - type: StaticPrice # Pirate: thermal vision
+    price: 50
   - type: Armor
-    coverage: # defends you well only against heat lol # GOOBSTATION???? # Goob start
+    coverage: # GOOBSTATION???? # Goob start
     - Head
     modifiers:
       coefficients:
-        Heat: 0.8
+        # Pirate: thermal vision
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
