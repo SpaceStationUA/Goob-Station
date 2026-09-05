@@ -15,3 +15,7 @@ syndicate-ransom-announcement =
 syndicate-ransom-return-announcement-sender = Автоматизована торгова станція
 syndicate-ransom-return-announcement = На станцію [{$station}] надійшла несанкціонована доставка від [НЕВІДОМОГО ВІДПРАВНИКА]. Екіпаж має оглянути її та за бажанням забрати вміст.
 syndicate-ransom-memory-loss = Після викупу ви не пам'ятаєте, де були та хто вас викрав.
+
+extraction-announcement-sender = Термінал вилучення
+extraction-announcement-hostage = Ціль доставлено до бази: {$name}. Перемістіть її до камери утримання.
+extraction-announcement-loot = Вантаж доставлено до бази: {$name}. Заберіть його з майданчика вилучення.

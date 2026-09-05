@@ -84,11 +84,10 @@
     description: ghost-role-information-syndicate-marshal-description
     rules: ghost-role-information-syndicate-marshal-rules
     mindRoles:
-    - MindRoleSyndicateMarshal
+    - MindRoleGhostRoleCybersun
     raffle:
       settings: default
   - type: CharacterPod
-    settings: SyndicateMarshalPod
-    # Sits on a nonstation map, as unreachable as the Lavaland base soldiers above.
+    settings: LavalandSyndieMarshal
     extraComponents:
     - type: TargetObjectiveImmune

@@ -9,6 +9,7 @@
       key_slots:
       - EncryptionKeySyndie
       - EncryptionKeyStationMaster
+      - EncryptionKeyCybersun
   # Pirate: bridge radio coverage between the remote post and the station.
   - type: ListeningPostRadio
   # Pirate: lets the wearer eavesdrop on Binary without being able to pose as a silicon on it.

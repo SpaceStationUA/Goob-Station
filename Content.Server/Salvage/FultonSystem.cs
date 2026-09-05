@@ -55,6 +55,7 @@ public sealed class FultonSystem : SharedFultonSystem
 
     private void Fulton(EntityUid uid, FultonedComponent component)
     {
+        var delivered = false; // Pirate: extraction announcements
         if (!Deleted(component.Beacon) &&
             TryComp(component.Beacon, out TransformComponent? beaconXform) &&
             !Container.IsEntityOrParentInContainer(component.Beacon.Value, xform: beaconXform) &&
@@ -75,9 +76,11 @@ public sealed class FultonSystem : SharedFultonSystem
                 Entity = GetNetEntity(uid, metadata),
                 Coordinates = GetNetCoordinates(oldCoords),
             });
+
+            delivered = true; // Pirate: extraction announcements
         }
         // Pirate: syndicate fultons use this event.
-        var ev = new FultonedEvent();
+        var ev = new FultonedEvent(delivered); // Pirate: extraction announcements
         RaiseLocalEvent(uid, ref ev);
 
         Audio.PlayPvs(component.Sound, uid);
