@@ -24329,30 +24329,30 @@ Entries:
   changes:
     - type: Add
       message: >-
-        sponsored by the Goobs Hugbox Citizens' Party, Join today! Gangwars
-        playtesting is here! Heavily in dev and admin only for now. Checkout the
-        guidebook!
+        За підтримки Партії громадян Goobs Hugbox. Приєднуйтеся вже сьогодні! Тестування Gangwars
+        уже доступне. Функція активно розробляється й наразі доступна лише адміністраторам.
+        Деталі шукайте в гайдбуці!
   id: 2864
   time: '2026-09-05T01:30:04.0000000+00:00'
 - author: GNUtopia
   changes:
     - type: Fix
-      message: Hydrakin are now forced to sleep by cryo chems
+      message: Гідракіни тепер засинають від кріогенних хімікатів.
     - type: Fix
-      message: Hydrakin are now poisoned by theobromine
+      message: Теобромін тепер отруює гідракінів.
   id: 2865
   time: '2026-09-05T02:13:13.0000000+00:00'
 - author: Duuckie
   changes:
     - type: Fix
-      message: Bleeding should be comparable to pre-upstream levels of bleeding.
+      message: Кровотеча тепер відповідає рівням до upstream-оновлення.
   id: 2866
   time: '2026-09-05T02:15:40.0000000+00:00'
 - author: redmagicspider
   changes:
     - type: Fix
-      message: Blind/visually impaired characters can now hear whispers.
+      message: Сліпі та слабкозорі персонажі тепер можуть чути шепіт.
     - type: Fix
-      message: Visually impaired (not totally blind) characters can see sign language.
+      message: Слабкозорі, але не повністю сліпі персонажі тепер можуть бачити жестову мову.
   id: 2867
   time: '2026-09-05T02:17:43.0000000+00:00'
