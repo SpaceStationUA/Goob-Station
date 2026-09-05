@@ -73,3 +73,21 @@
     settings: LavalandSyndieSoldierTeamLeader
     extraComponents:
     - type: TargetObjectiveImmune
+
+- type: entity
+  parent: BaseCharacterPod
+  id: CharacterPodSyndicateMarshal
+  suffix: Syndicate Marshal
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-marshal-name
+    description: ghost-role-information-syndicate-marshal-description
+    rules: ghost-role-information-rules-cybersun
+    mindRoles:
+    - MindRoleGhostRoleCybersun
+    raffle:
+      settings: default
+  - type: CharacterPod
+    settings: LavalandSyndieMarshal
+    extraComponents:
+    - type: TargetObjectiveImmune

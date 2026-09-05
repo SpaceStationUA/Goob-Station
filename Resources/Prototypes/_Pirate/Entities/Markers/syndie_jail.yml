@@ -9,6 +9,12 @@
     whitelist:
       components:
       - MobState
+  - type: ExtractionAnnouncement
+    channel: Cybersun
+    message: extraction-announcement-hostage
+    senderName: extraction-announcement-sender
+  # Announcements must not depend on the base telecom server being intact and powered.
+  - type: TelecomExempt
 
 - type: entity
   parent: MarkerBase
@@ -25,3 +31,8 @@
     blacklist:
       components:
       - MobState
+  - type: ExtractionAnnouncement
+    channel: Cybersun
+    message: extraction-announcement-loot
+    senderName: extraction-announcement-sender
+  - type: TelecomExempt

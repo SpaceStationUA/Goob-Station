@@ -28,6 +28,17 @@
   equipment:
     ears: ClothingHeadsetAltSyndicateCybersun
 
+# The marshal guards whatever the fultons deliver, so it is a footsoldier with a sidearm
+# instead of a rifle and keeps the same Cybersun headset the rest of the base runs on.
+- type: startingGear
+  id: LavalandSyndicateMarshalGear
+  parent: LavalandSyndicateFootsoldierGear
+  equipment:
+    outerClothing: ClothingOuterWinterSyndieCapArmored
+    id: SyndiPDA
+    pocket1: WeaponRevolverPythonAP
+    pocket2: SpeedLoaderMagnumAP
+
 - type: randomHumanoidSettings
   id: LavalandSyndieSoldier
   parent: SyndieSoldier
@@ -42,4 +53,12 @@
   components:
   - type: Loadout
     prototypes: [ LavalandSyndicateFootsoldierTeamLeaderGear ]
+    roleLoadout: [ RoleSurvivalSyndicate ]
+
+- type: randomHumanoidSettings
+  id: LavalandSyndieMarshal
+  parent: SyndieSoldier
+  components:
+  - type: Loadout
+    prototypes: [ LavalandSyndicateMarshalGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]
