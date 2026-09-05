@@ -50,10 +50,10 @@ public sealed partial class SyndicateDropDispatcherComponent : Component
     public int MaxDropHistory = 10;
 
     [DataField]
-    public TimeSpan MinPodCooldown = TimeSpan.FromMinutes(20);
+    public TimeSpan MinPodCooldown = TimeSpan.FromMinutes(5);
 
     [DataField]
-    public TimeSpan MaxPodCooldown = TimeSpan.FromMinutes(40);
+    public TimeSpan MaxPodCooldown = TimeSpan.FromMinutes(20);
 
 
 

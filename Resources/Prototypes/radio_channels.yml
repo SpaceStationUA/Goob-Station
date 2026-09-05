@@ -70,7 +70,7 @@
   name: chat-radio-syndicate
   keycode: 'й'
   frequency: 1213
-  color: "#a66a4c" # Pirate: cybersun radio
+  color: "#8f4a4b" # Pirate: cybersun radio
   longRange: true
 
 - type: radioChannel

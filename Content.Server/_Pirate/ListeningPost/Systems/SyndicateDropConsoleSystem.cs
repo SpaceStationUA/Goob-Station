@@ -161,7 +161,22 @@ public sealed class SyndicateDropConsoleSystem : EntitySystem
         }
     }
 
+    public int AddCharges(int charges)
+    {
+        if (charges <= 0 || !TryGetDispatcher(out var dispatcher))
+            return 0;
 
+        var comp = dispatcher.Value.Comp;
+        var granted = Math.Min(charges, comp.MaxCharges - comp.Charges);
+
+        if (granted <= 0)
+            return 0;
+
+        comp.Charges += granted;
+        UpdateUis();
+
+        return granted;
+    }
 
     private void OnUiOpened(Entity<SyndicateDropConsoleComponent> ent, ref BoundUIOpenedEvent args)
     {
