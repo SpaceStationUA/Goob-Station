@@ -220,7 +220,19 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 
         // DrawingControl is a plain Control in NavMapControl, so LayoutContainer
         // anchors do nothing there — replace it so overlays can sit in corners.
-        var oldDrawing = topContainer.Children[1];
+        Control? oldDrawing = null;
+        foreach (var child in topContainer.Children)
+        {
+            if (child.Name == "DrawingControl")
+            {
+                oldDrawing = child;
+                break;
+            }
+        }
+
+        if (oldDrawing == null)
+            throw new InvalidOperationException("NavMapControl is missing DrawingControl.");
+
         topContainer.RemoveChild(oldDrawing);
         var drawingArea = new LayoutContainer
         {

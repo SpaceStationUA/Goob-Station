@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server._Pirate.Medical.CrewMonitoring; // Pirate: departmental handheld monitors
 using Content.Server.Medical.SuitSensors;
+using Content.Server._Pirate.ListeningPost.Components;
 using Content.Goobstation.Shared.CrewMonitoring;
 using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
@@ -17,8 +18,8 @@ using Content.Shared.PowerCell;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Medical.CrewMonitoring;
+using Content.Shared._Pirate.ListeningPost;
 using Content.Shared.Medical.SuitSensor;
-using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 // Pirate -Start
@@ -390,7 +391,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
                 continue;
             }
 
-            var current = CollectAlertStates(FilterSensors(comp, comp.ConnectedSensors.Values));
+            var current = CollectAlertStates(FilterSensors(uid, comp, comp.ConnectedSensors.Values));
             comp.KnownAlertStates.Clear();
             foreach (var (owner, isDead) in current)
                 comp.KnownAlertStates[owner] = isDead;
@@ -426,7 +427,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
                 continue;
             }
 
-            if (!HasAlertCondition(FilterSensors(comp, comp.ConnectedSensors.Values)))
+            if (!HasAlertCondition(FilterSensors(uid, comp, comp.ConnectedSensors.Values)))
             {
                 comp.NextCritAlertTime = TimeSpan.Zero;
                 continue;
@@ -461,7 +462,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         }
 
         // Match UI filter (department handhelds) so alerts only cover visible crew.
-        var current = CollectAlertStates(FilterSensors(comp, comp.ConnectedSensors.Values));
+        var current = CollectAlertStates(FilterSensors(uid, comp, comp.ConnectedSensors.Values));
 
         var shouldPlay = false;
         foreach (var (owner, isDead) in current)
@@ -657,7 +658,8 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
 
     private void OnSetAlertVolume(EntityUid uid, CrewMonitoringConsoleComponent component, CrewMonitoringSetAlertVolumeMessage args)
     {
-        component.AlertVolume = Math.Clamp(args.Volume, 0f, 1f);
+        if (!float.IsNaN(args.Volume) && !float.IsInfinity(args.Volume))
+            component.AlertVolume = Math.Clamp(args.Volume, 0f, 1f);
         UpdateUserInterface(uid, component);
     }
     // Pirate End
@@ -698,7 +700,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         var serverName = component.LastServerName;
         var serverAddress = component.LastServerAddress;
 
-        var allSensors = FilterSensors(component, sourceSensors.Values);
+        var allSensors = FilterSensors(uid, component, sourceSensors.Values);
 
         var serverOnline = isOnline;
         var alertActive = HasAlertCondition(allSensors);
@@ -744,19 +746,18 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         if (xform.GridUid != null)
             TryPopulateNavMap(component, xform.GridUid.Value);
 
-        if (component.SelectedServerUid != null &&
-            TryComp(component.SelectedServerUid.Value, out TransformComponent? serverXform) &&
-            TryComp<WirelessNetworkComponent>(component.SelectedServerUid.Value, out var wireless))
-        {
-            EnsureNavMapsAround(component, serverXform, wireless.Range);
-            return;
-        }
-
         if (component.LastReferenceFrame != null &&
             TryGetEntity(component.LastReferenceFrame.FrameEntity, out var frameUid) &&
             HasComp<MapGridComponent>(frameUid.Value))
         {
             TryPopulateNavMap(component, frameUid.Value);
+        }
+
+        if (component.SelectedServerUid != null &&
+            TryComp(component.SelectedServerUid.Value, out TransformComponent? serverXform) &&
+            TryComp<WirelessNetworkComponent>(component.SelectedServerUid.Value, out var wireless))
+        {
+            EnsureNavMapsAround(component, serverXform, wireless.Range);
         }
     }
 
@@ -811,26 +812,22 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
     }
 
     private List<SuitSensorStatus> FilterSensors(
+        EntityUid consoleUid,
         CrewMonitoringConsoleComponent component,
         IEnumerable<SuitSensorStatus> values)
     {
-        EnsureDepartmentCache(component);
+        EnsureDepartmentCache(consoleUid, component);
 
-        var isCommandOnly = HasComp<CrewMonitorScanningComponent>(component.Owner);
+        var isCommandOnly = HasComp<CrewMonitorScanningComponent>(consoleUid);
         var source = values.Where(sensor => sensor.IsCommandTracker == isCommandOnly);
 
+        // An unresolved prototype must not hide every sensor from the monitor.
         if (component.IsEmagged || component.CachedDepartmentNames.Count == 0)
             return source is List<SuitSensorStatus> list ? list : source.ToList();
 
         var filtered = new List<SuitSensorStatus>();
         foreach (var sensor in source)
         {
-            if (sensor.JobDepartments.Count == 0)
-            {
-                filtered.Add(sensor);
-                continue;
-            }
-
             foreach (var dept in sensor.JobDepartments)
             {
                 if (component.CachedDepartmentNames.Contains(dept))
@@ -844,10 +841,21 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         return filtered;
     }
 
-    private void EnsureDepartmentCache(CrewMonitoringConsoleComponent component)
+    private void EnsureDepartmentCache(EntityUid consoleUid, CrewMonitoringConsoleComponent component)
     {
-        if (component.CachedDepartmentNames.Count > 0 || component.Departments.Count == 0)
+        if (component.CachedDepartmentNames.Count > 0)
             return;
+
+        if (TryComp<CrewMonitoringDepartmentFilterComponent>(consoleUid, out var departmentFilter))
+        {
+            foreach (var dept in departmentFilter.ShownDepartments)
+            {
+                if (_proto.TryIndex<DepartmentPrototype>(dept.ToString(), out var department))
+                    component.CachedDepartmentNames.Add(Loc.GetString(department.Name));
+            }
+
+            return;
+        }
 
         foreach (var dept in component.Departments)
         {
@@ -960,6 +968,17 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         if (Deleted(consoleUid) || Deleted(serverUid))
             return false;
 
+        // Pirate: remote listening-post pairs are authorized by their dedicated marker;
+        // ordinary servers still require same-station ownership.
+        var isLongRangePair = HasComp<LongRangeCrewMonitorComponent>(consoleUid) &&
+                              HasComp<LongRangeCrewMonitoringServerComponent>(serverUid);
+        if (!isLongRangePair &&
+            (_station.GetOwningStation(consoleUid) is not { } consoleStation ||
+             _station.GetOwningStation(serverUid) != consoleStation))
+        {
+            return false;
+        }
+
         var consoleXform = Transform(consoleUid);
         var serverXform = Transform(serverUid);
         if (consoleXform.MapID != serverXform.MapID)
@@ -968,7 +987,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         // Wireless packet range is determined by the sender. Crew monitor
         // updates are sent by the monitoring server.
         if (TryComp<WirelessNetworkComponent>(serverUid, out var wireless) &&
-            (serverXform.WorldPosition - consoleXform.WorldPosition).Length() > wireless.Range)
+            (_transform.GetWorldPosition(serverUid) - _transform.GetWorldPosition(consoleUid)).Length() > wireless.Range)
         {
             return false;
         }
