@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
 using Content.Shared.DoAfter;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -9,6 +7,11 @@ namespace Content.Shared.Medical.SuitSensor;
 [Serializable, NetSerializable]
 public sealed class SuitSensorStatus
 {
+
+    // Pirate: Start - New Monitor
+    public static List<string> NewDepartments() => new();
+    // Pirate: End
+
     public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, string job, string jobIcon, List<string> jobDepartments)
     {
         OwnerUid = ownerUid;
@@ -27,11 +30,26 @@ public sealed class SuitSensorStatus
     public string JobIcon;
     public List<string> JobDepartments;
     public bool IsAlive;
+    // # Pirate Start - New Monitor: true MobState.Critical (unconscious), not high damage
+    /// <summary>
+    /// Wearer is in <c>MobState.Critical</c> (unconscious softcrit), not merely near the damage threshold.
+    /// </summary>
+    public bool IsCritical;
+    // # Pirate End
     public int? TotalDamage;
     public int? TotalDamageThreshold;
-    public float? DamagePercentage => TotalDamageThreshold == null || TotalDamage == null ? null : TotalDamage / (float) TotalDamageThreshold;
+    public float? DamagePercentage => TotalDamageThreshold == null || TotalDamage == null ? null : TotalDamage / (float)TotalDamageThreshold;
     public NetCoordinates? Coordinates;
-    public bool IsCommandTracker = false; ///Goob station
+    public bool IsCommandTracker = false; // Goobstation
+    public SuitSensorMode Mode; // Pirate: NewMonitor
+    // # Pirate Start - New Monitor: live vs last-known flag for UI
+    /// <summary>
+    /// Whether the monitoring server is currently receiving this sensor.
+    /// False retains the last-known data/position while allowing the UI to show
+    /// the entry as inactive.
+    /// </summary>
+    public bool IsActive = true;
+    // # Pirate End
 }
 
 [Serializable, NetSerializable]
@@ -58,24 +76,24 @@ public enum SuitSensorMode : byte
     SensorCords = 3
 }
 
-public static class SuitSensorConstants
-{
-    public const string NET_OWNER_UID = "ownerUid";
-    public const string NET_NAME = "name";
-    public const string NET_JOB = "job";
-    public const string NET_JOB_ICON = "jobIcon";
-    public const string NET_JOB_DEPARTMENTS = "jobDepartments";
-    public const string NET_IS_ALIVE = "alive";
-    public const string NET_TOTAL_DAMAGE = "vitals";
-    public const string NET_TOTAL_DAMAGE_THRESHOLD = "vitalsThreshold";
-    public const string NET_COORDINATES = "coords";
-    public const string NET_SUIT_SENSOR_UID = "uid";
-
-    public const string NET_IS_COMMAND = "iscommand"; ///Goob Sation
-
-    ///Used by the CrewMonitoringServerSystem to send the status of all connected suit sensors to each crew monitor
-    public const string NET_STATUS_COLLECTION = "suit-status-collection";
-}
+// # Pirate Start - New Monitor: SuitSensorConstants unused (no DeviceNet suit-sensor packets)
+// public static class SuitSensorConstants
+// {
+//     public const string NET_OWNER_UID = "ownerUid";
+//     public const string NET_NAME = "name";
+//     public const string NET_JOB = "job";
+//     public const string NET_JOB_ICON = "jobIcon";
+//     public const string NET_JOB_DEPARTMENTS = "jobDepartments";
+//     public const string NET_IS_ALIVE = "alive";
+//     public const string NET_TOTAL_DAMAGE = "vitals";
+//     public const string NET_TOTAL_DAMAGE_THRESHOLD = "vitalsThreshold";
+//     public const string NET_COORDINATES = "coords";
+//     public const string NET_SUIT_SENSOR_UID = "uid";
+//     public const string NET_SUIT_SENSOR_MODE = "mode"; // Pirate: //
+//     ///Used by the CrewMonitoringServerSystem to send the status of all connected suit sensors to each crew monitor
+//     public const string NET_STATUS_COLLECTION = "suit-status-collection";
+// }
+// # Pirate End
 
 [Serializable, NetSerializable]
 public sealed partial class SuitSensorChangeDoAfterEvent : DoAfterEvent

@@ -102,6 +102,10 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             }
         }
 
+        // Invalidate geometry caches only when chunk data actually changed.
+        if (modifiedChunks.Count > 0)
+            component.DataVersion++;
+
         // Refresh beacons
         component.Beacons.Clear();
         foreach (var (nuid, beacon) in beacons)

@@ -1,38 +1,7 @@
-- files: ["echion.ogg"]
-  license: CC-BY-3.0
-  copyright: "Made by jalastram on opengameart"
-  source: "https://opengameart.org/content/collaboration-sound-effects-machine-001"
-
-- files: ["echion_off.ogg"]
+- files: ["crew_monitor_crit_alert.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Made by Q009 on opengameart"
-  source: "https://opengameart.org/content/q009s-weapon-sounds"
-
-- files: ["echion_on.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "Made by Q009 on opengameart"
-  source: "https://opengameart.org/content/q009s-weapon-sounds"
-
-- files: ["coffeemaker_brew.ogg"]
-  license: "CC-BY-4.0"
-  copyright: "Originally made by Adriana Lopez (Acekat13X31), edited by tgstation contributors"
-  source: "https://freesound.org/people/Acekat13X31/sounds/515685/"
-
-
-- files: ["sink_faucet.ogg", "sink_faucet-3s.ogg"]
-  license: "CC0-1.0"
-  copyright: "Made by FOSSarts on freesound, ported from tgstation. sink_faucet-3s.ogg is the same sound trimmed to 3s."
-  source: "https://freesound.org/people/FOSSarts/sounds/740086/"
-
-- files: ["wring.ogg"]
-  license: "CC-BY-4.0"
-  copyright: "Created by everythingsounds on Freesound, edited for SS14"
-  source: "https://freesound.org/people/everythingsounds/sounds/602902/"
-
-- files: ["motion_detector_click.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "Taken from cmss13"
-  source: "https://github.com/cmss13-devs/cmss13/blob/7853d79df1827a2a4907fb3162b6319662dbc1ba/sound/machines/click.ogg"
+  copyright: "Created by discord: 1.wswiss.1 for Adventure Time."
+  source: "https://github.com/AdventureTimeSS14/space_station_ADT"
 
 - files: ["lathe_print.ogg"]
   license: "CC-BY-SA-3.0"
