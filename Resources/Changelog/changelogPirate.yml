@@ -5463,3 +5463,9 @@ Entries:
       message: Видалено музику Bolgarich і Caravan Palace з гри.
   id: 521
   time: '2026-09-06T16:46:51.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Приховано особисті щити за стінами
+  id: 522
+  time: '2026-09-06T17:10:20.0000000+00:00'
