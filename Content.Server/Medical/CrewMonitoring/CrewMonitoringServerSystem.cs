@@ -320,13 +320,16 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
                 continue;
             }
 
-            EnsureReferenceFrame(uid, server);
-            RemoveTimedOutSensors(server);
-
-            if (TryComp<WirelessNetworkComponent>(uid, out var wireless) &&
-                TryComp<TransformComponent>(uid, out var serverXform))
+            if (!HasComp<LongRangeCrewMonitoringServerComponent>(uid))
             {
-                CullOutOfRangeSensors(server, wireless, serverXform);
+                EnsureReferenceFrame(uid, server);
+                RemoveTimedOutSensors(server);
+
+                if (TryComp<WirelessNetworkComponent>(uid, out var wireless) &&
+                    TryComp<TransformComponent>(uid, out var serverXform))
+                {
+                    CullOutOfRangeSensors(server, wireless, serverXform);
+                }
             }
 
             // Heartbeat keeps the console "online"; full payload is the persistent
@@ -544,6 +547,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
             Timestamp = timestamp,
             IsAlive = source.IsAlive,
             IsCritical = source.IsCritical,
+            IsCommandTracker = source.IsCommandTracker,
             TotalDamage = source.TotalDamage,
             TotalDamageThreshold = source.TotalDamageThreshold,
             Coordinates = coordinates,
@@ -564,6 +568,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
             existing.JobIcon != incoming.JobIcon ||
             existing.IsAlive != incoming.IsAlive ||
             existing.IsCritical != incoming.IsCritical ||
+            existing.IsCommandTracker != incoming.IsCommandTracker ||
             existing.TotalDamage != incoming.TotalDamage ||
             existing.TotalDamageThreshold != incoming.TotalDamageThreshold ||
             !Nullable.Equals(existing.Coordinates, framedCoords) ||
