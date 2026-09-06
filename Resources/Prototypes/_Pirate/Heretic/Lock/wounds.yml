@@ -3,7 +3,7 @@
 - type: entity
   id: WeepingAvulsion
   parent: WoundBase
-  name: weeping avulsion
+  name: "розрив тканин, що не загоюється"
   components:
   - type: Wound
     damageType: Slash

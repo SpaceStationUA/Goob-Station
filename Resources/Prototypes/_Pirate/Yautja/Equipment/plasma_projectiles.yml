@@ -193,7 +193,7 @@
 - type: entity
   parent: GoobYautjaPlasmaBoltBase
   id: GoobYautjaCasterStunBolt
-  name: "оглушливий болт"
+  name: "оглушувальний болт"
   categories: [ HideSpawnMenu ]
   components:
   - type: StaminaDamageOnCollide

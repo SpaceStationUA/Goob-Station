@@ -79,8 +79,8 @@
 - type: entity
   parent: BaseMantisRanged
   id: MantisRangedPistol
-  name: OCC-P12 "Kalliste"
-  description: "A sleek mantis sidearm favored for its balance and effortless precision. It uses specialized magazines called \"casters,\" each containing an anomaly core that continually forms its own bullets. Issued with both banishing and silencing casters for confronting supernatural threats and rogue psions. Designed for the Outer Chamber Crucible by special commission."
+  name: "ОКК-П12 «Калліста»"
+  description: "Витончена ручна зброя псіо-екстрасенса, яку цінують за збалансованість і невимушену точність. Вона використовує спеціальні магазини, що називаються «кастерами», кожен із яких містить ядро аномалії, що безперервно формує власні кулі. Постачається з кастерами для вигнання та заглушення, призначеними для боротьби з надприродними загрозами й бунтівними псіоніками. Розроблена для Зовнішньої Палати Круцибла на спеціальне замовлення."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Battery/Mantis/mantis-pistol.rsi
@@ -121,8 +121,8 @@
 - type: entity
   parent: BaseMantisRanged
   id: MantisRangedRevolver
-  name: OCC-P06 "Charon"
-  description: "A gilded mantis revolver engineered for measured control and heavy, deliberate impact. It uses specialized cylinders called \"casters,\" each containing an anomaly core that continually forms its own bullets. Issued with both banishing and silencing casters for confronting supernatural threats and rogue psions. Designed for the Outer Chamber Crucible by special commission."
+  name: "ОКК-П06 «Харон»"
+  description: "Позолочений револьвер псіо-екстрасенса, створений для виваженого контролю та важких, прицільних ударів. Він використовує спеціальні барабани, що називаються «кастерами», кожен із яких містить ядро аномалії, що безперервно формує власні кулі. Постачається з кастерами для вигнання та заглушення, призначеними для боротьби з надприродними загрозами й бунтівними псіоніками. Розроблений для Зовнішньої Палати Круцибла на спеціальне замовлення."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Battery/Mantis/mantis-revolver.rsi
@@ -163,8 +163,8 @@
 - type: entity
   parent: BaseMantisRanged
   id: MantisRangedShotgun
-  name: OCC-S05 "Empusa"
-  description: "A vicious sawn-off mantis shotgun designed to dominate close-range encounters. It uses specialized cylinders called \"casters,\" each containing an anomaly core that continually forms its own pellets. Issued with both banishing and silencing casters for confronting supernatural threats and rogue psions. Designed for the Outer Chamber Crucible by special commission."
+  name: "ОКК-С05 «Емпуса»"
+  description: "Лютий обріз псіо-екстрасенса, створений для панування в ближньому бою. Він використовує спеціальні барабани, що називаються «кастерами», кожен із яких містить ядро аномалії, що безперервно формує власний дріб. Постачається з кастерами для вигнання та заглушення, призначеними для боротьби з надприродними загрозами й бунтівними псіоніками. Розроблений для Зовнішньої Палати Круцибла на спеціальне замовлення."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Battery/Mantis/mantis-shotgun.rsi
@@ -208,8 +208,8 @@
 - type: entity
   parent: BaseMantisRanged
   id: MantisRangedSubMachineGun
-  name: OCC-A24 "Strix"
-  description: "A compact, fast-cycling mantis submachine gun built for relentless fire in tight spaces. It uses specialized magazines called \"casters,\" each containing an anomaly core that continually forms its own bullets. Issued with both banishing and silencing casters for confronting supernatural threats and rogue psions. Designed for the Outer Chamber Crucible by special commission."
+  name: "ОКК-А24 «Стрікс»"
+  description: "Компактний, скорострільний пістолет-кулемет псіо-екстрасенса, створений для невпинного вогню в тісних приміщеннях. Він використовує спеціальні магазини, що називаються «кастерами», кожен із яких містить ядро аномалії, що безперервно формує власні кулі. Постачається з кастерами для вигнання та заглушення, призначеними для боротьби з надприродними загрозами й бунтівними псіоніками. Розроблений для Зовнішньої Палати Круцибла на спеціальне замовлення."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Guns/Battery/Mantis/mantis-submachinegun.rsi

@@ -1,8 +1,8 @@
 - type: entity
-  name: Вулкан-М
+  name: "Вулкан-М"
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleVulcanM
-  description: Компактна гвинтівка компонування "буллпап", втілення надійності класичної платформи у ергономічному корпусі. Менша віддача, вища точність. Використовує гвинтівкові магазини .30 калібру.
+  description: "Компактна гвинтівка компонування \"буллпап\", втілення надійності класичної платформи у ергономічному корпусі. Менша віддача, вища точність. Використовує гвинтівкові магазини .30 калібру."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Rifles/vulcan.rsi
@@ -55,10 +55,10 @@
   - type: Appearance
 
 - type: entity
-  name: Бандит
+  name: "Бандит"
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleBandit
-  description: Точна та надійна гвинтівка компонування "буллпап", доведена до досконалості Scarborough Arms. Використовує безгільзові гвинтівкові набої .30 калібру.
+  description: "Точна та надійна гвинтівка компонування \"буллпап\", доведена до досконалості Scarborough Arms. Використовує безгільзові гвинтівкові набої .30 калібру."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Rifles/bandit.rsi
@@ -109,7 +109,7 @@
   - type: Appearance
 
 - type: entity
-  name: M469
+  name: "M469"
   parent: [BaseWeaponRifle, BaseSecurityContraband, SolAllianceInfo]
   id: WeaponRifleSol
   suffix: SAN

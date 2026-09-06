@@ -8,8 +8,8 @@
 - type: entity
   parent: OfficeChairBase
   id: SomberChairCushion
-  name: somber floor cushion
-  description: "A firm pillow to sit on, useful for meditation."
+  name: "похмура підлогова подушка"
+  description: "Тверда подушка для сидіння, корисна під час медитації."
   placement:
     mode: SnapgridCenter
   components:
@@ -50,8 +50,8 @@
 - type: entity
   parent: OfficeChairBase
   id: SomberChairLeather
-  name: somber leather chair
-  description: "A plush leather office chair with electrum accents."
+  name: "похмуре шкіряне крісло"
+  description: "М’яке шкіряне офісне крісло з електрумовими акцентами."
   placement:
     mode: SnapgridCenter
   components:
@@ -92,8 +92,8 @@
 - type: entity
   parent: UnanchoredChairBase
   id: SomberChairWood
-  name: somber wood chair
-  description: "An expensive chair made of gloomy, patterned wood with electrum accents."
+  name: "похмурий дерев’яний стілець"
+  description: "Дорогий стілець із похмурого візерунчастого дерева з електрумовими акцентами."
   placement:
     mode: SnapgridCenter
   components:
@@ -134,8 +134,8 @@
 - type: entity
   parent: VehicleWheelchair
   id: SomberChairLeatherMantisWheelchair
-  name: mantis chair
-  description: "A plush leather office chair concealing strange bluespace mechanisms that let it compact into an electrum orb. It hovers just above the ground and can be steered with psionic influence."
+  name: "крісло псіо-екстрасенса"
+  description: "М’яке шкіряне офісне крісло з прихованими дивними блюспейс-механізмами, завдяки яким воно стискається в електрумову кулю. Воно ширяє над самою підлогою, а керувати ним можна псіонічним впливом."
   placement:
     mode: SnapgridCenter
   components:
@@ -180,9 +180,9 @@
 - type: entity
   parent: SomberChairLeatherMantisWheelchair
   id: SomberChairLeatherMantisWheelchairFolded
-  name: bound mantis chair
+  name: "зв’язане крісло псіо-екстрасенса"
   suffix: Folded, Not Tabletop
-  description: "An electrum orb concealing strange bluespace mechanisms that let it unfold into a plush leather office chair. Useful for mantes with mobility restrictions, or simply as versatile office furniture."
+  description: "Електрумова куля з прихованими дивними блюспейс-механізмами, завдяки яким вона розкладається в м’яке шкіряне офісне крісло. Корисне для псіо-екстрасенсів з обмеженою мобільністю або просто як універсальні офісні меблі."
   placement:
     mode: PlaceFree
   components:

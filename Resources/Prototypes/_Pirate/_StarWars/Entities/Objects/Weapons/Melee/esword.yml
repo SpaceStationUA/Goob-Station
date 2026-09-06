@@ -1,8 +1,8 @@
 - type: entity
-  name: Енергетичний меч Дарта Вейдера
+  name: "Енергетичний меч Дарта Вейдера"
   parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
   id: EnergySwordDarthVader
-  description: Навіть найтупіший меч стане найстрашнішою зброєю в умілих руках злості.
+  description: "Навіть найтупіший меч стає найстрашнішою зброєю в умілих руках злості."
   suffix: StarWars
   components:
   - type: Sprite

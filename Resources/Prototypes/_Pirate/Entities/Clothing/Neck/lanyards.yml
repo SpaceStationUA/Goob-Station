@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckLanyard
-  name: lanyard
-  description: Use this to display information about yourself to others, or brag about your captain-stamped paperwork!
+  name: "ланьярд"
+  description: "Дає змогу показувати іншим інформацію про себе або хизуватися паперами зі штампом капітана!"
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Neck/Misc/lanyard.rsi

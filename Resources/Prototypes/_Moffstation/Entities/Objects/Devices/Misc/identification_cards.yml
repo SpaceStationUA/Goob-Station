@@ -2,7 +2,7 @@
 - type: entity
   parent: SyndicateIDCard
   id: SyndicateIDCardAgent
-  description: A card necessary to access various areas aboard the station. Comes with access duplication functionality.
+  description: "Картка, необхідна для доступу до різних зон станції. Дає змогу дублювати рівні доступу."
   suffix: Agent
   components:
   - type: AgentIDCard

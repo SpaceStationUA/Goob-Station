@@ -5,8 +5,8 @@
 - type: entity
   parent: BaseLogicItem
   id: AccessScanner
-  name: RFID access scanner
-  description: A LV-powered radio beacon that scans for nearby ID card accesses. Use a screwdriver to modify its range.
+  name: "сканер доступу RFID"
+  description: "Радіомаяк із живленням від мережі низької напруги, який сканує рівні доступу найближчих ID-карток. Викруткою можна змінити його радіус дії."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Devices/access_scanner.rsi
@@ -52,8 +52,8 @@
 - type: entity
   parent: BaseItem
   id: AccessScannerUnfinished
-  name: unfinished access scanner
-  description: A bunch of scrap electronics being fashioned into some kind of radio device.
+  name: "незавершений сканер доступу"
+  description: "Купа електронного брухту, з якого намагаються скласти якийсь радіопристрій."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Devices/access_scanner.rsi
@@ -65,8 +65,8 @@
 - type: entity
   parent: [ BaseMinorContraband, Handcuffs ]
   id: BarbHandcuffs # TODO: Needs to damage on remove attempt
-  name: barbed wire handcuffs
-  description: Used to detain people you intend to kill.
+  name: "наручники з колючого дроту"
+  description: "Для затримання людей, яких ви маєте намір убити."
   components:
   - type: Handcuff
     cuffedRSI: _Pirate/Objects/Misc/cuffs_barbwire.rsi
@@ -82,9 +82,9 @@
 - type: entity
   parent: MaterialBase
   id: BarbedWire
-  name: barbed wire
+  name: "колючий дріт"
   suffix: Full
-  description: Some wire with barbs cut into it.
+  description: "Дріт із нарізаними на ньому колючками."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Materials/barbwire.rsi
@@ -121,8 +121,8 @@
 - type: entity
   parent: [ BaseStructure, BaseMinorContraband ]
   id: BarbedWireStructure
-  name: barbed wire
-  description: A large mass of steel wire with nasty barbs.
+  name: "колючий дріт"
+  description: "Велика маса сталевого дроту з небезпечними колючками."
   placement:
     mode: SnapgridCenter
     snap:
@@ -211,9 +211,9 @@
 - type: entity
   parent: [ BaseItem, BaseSecurityContraband ]
   id: BaseMagazineGaussgun
-  name: gauss magazine
+  name: "магазин гаус-гармати"
   suffix: Full
-  description:  15 round magazine for Gaussguns, can contain a variety of ammo types.
+  description: "Магазин для гаус-гармат на 15 набоїв, який може містити боєприпаси різних типів."
   components:
   - type: Tag
     tags:
@@ -404,7 +404,7 @@
   abstract: true
   parent: BaseStructure
   id: BaseWeaponTurretIndestructible
-  name: turret
+  name: "турель"
   components:
   # Pirate: Trauma's separate viewcone overlay is not local and performs a global client query.
   - type: InteractionOutline
@@ -559,8 +559,8 @@
     price: 100
 - type: entity
   id: BoogieBotSpawner
-  name: boogie bot
-  description: Get down on it!
+  name: "бугі-бот"
+  description: "Запалюй!"
   components:
   - type: Sprite
     sprite: _Pirate/Mobs/Silicon/Bots/boogiebot.rsi
@@ -577,8 +577,8 @@
 - type: entity
   parent: BaseCartridgeGaussgun
   id: CartridgeBallBearing
-  name: ball bearing
-  description: A small projectile suitable for gauss guns.
+  name: "кулька підшипника"
+  description: "Невеликий снаряд для гаус-гармат."
   components:
   - type: CartridgeAmmo
     proto: GaussgunBearing
@@ -590,8 +590,8 @@
 - type: entity
   parent: CartridgeRocketRPG2HE
   id: CartridgeRocketRPG2AP
-  name: rocket-propelled armor piercing grenade
-  description: A warhead for the RPG-2, this one is armor piercing, and good against mechs, borgs, and structures. Requires a direct hit to be effective.
+  name: "реактивна бронебійна граната"
+  description: "Боєголовка для РПГ-2. Бронебійна, ефективна проти мехів, боргів і конструкцій. Для належного ефекту потрібне пряме влучання."
   components:
   - type: CartridgeAmmo
     proto: BulletRPG2AP
@@ -604,8 +604,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: CartridgeRocketRPG2HE
-  name: rocket-propelled high explosive grenade
-  description: A warhead for the RPG-2, this one is high explosive and launches shrapnel everywhere.
+  name: "реактивна осколково-фугасна граната"
+  description: "Боєголовка для РПГ-2. Вибухає з великою потужністю й розкидає уламки навсібіч."
   components:
   - type: Item
     shape:
@@ -627,8 +627,8 @@
 - type: entity
   parent: [ Clothing, ClothingSlotBase, BaseRevMajorContraband ]
   id: ClothingBackpackFlamethrower
-  name: flamethrower back tank
-  description: Accepts custom fuel tanks to fuel a flamethrower.
+  name: "заплічний бак вогнемета"
+  description: "Приймає спеціальні паливні баки для живлення вогнемета."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Back/Backpacks/flamethrower.rsi
@@ -682,8 +682,8 @@
 - type: entity
   parent: [BaseItem]
   id: CraftingGaussAmmoImprov
-  name: unfinished ball bearings
-  description: Some unfinished gauss ammo.
+  name: "незавершені кульки підшипників"
+  description: "Незавершені боєприпаси для гаус-гармати."
   components:
   - type: Sprite
     sprite: Objects/Materials/parts.rsi
@@ -694,8 +694,8 @@
 - type: entity
   parent: [BaseItem, BaseMajorContraband]
   id: CraftingGaussMagazineImprov
-  name: unfinished improvised magazine
-  description: An unfinished magazine for a gauss weapon.
+  name: "незавершений саморобний магазин"
+  description: "Незавершений магазин для гаус-зброї."
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
@@ -706,8 +706,8 @@
 - type: entity
   parent: [BaseItem, BaseMajorContraband]
   id: CraftingGaussPistol
-  name: incomplete gauss pistol
-  description: An unfinished gauss pistol.
+  name: "незавершений гаус-пістолет"
+  description: "Незавершений гаус-пістолет."
   abstract: true
   components:
   - type: Sprite
@@ -810,8 +810,8 @@
 - type: entity
   parent: [ BaseItem, BaseMajorContraband ]
   id: CraftingGaussRifle
-  name: incomplete gauss rifle
-  description: An unfinished gauss rifle.
+  name: "незавершена гаус-гвинтівка"
+  description: "Незавершена гаус-гвинтівка."
   abstract: true
   components:
   - type: Sprite
@@ -943,7 +943,7 @@
 - type: entity
   parent: BaseFloorTileAstro # it's made of plastic...
   id: FloorTileItemPlastic
-  name: plastic tile
+  name: "пластикова плитка"
   components:
   - type: Sprite
     state: steel # no plastic tile item sprites
@@ -961,7 +961,7 @@
 - type: entity
   parent: FloorTileItemPlastic
   id: FloorTileItemPlasticDark
-  name: dark plastic tile
+  name: "темна пластикова плитка"
   components:
   - type: Sprite
     state: dark
@@ -978,7 +978,7 @@
 - type: entity
   parent: FloorTileItemPlastic
   id: FloorTileItemPlasticWhite
-  name: white plastic tile
+  name: "біла пластикова плитка"
   components:
   - type: Sprite
     state: white
@@ -991,12 +991,12 @@
   - type: Stack
     stackType: FloorTilePlasticWhite
   - type: Construction
-    name: white plastic tile
+    name: "біла пластикова плитка"
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: FuelTankFlamethrower
-  name: flamethrower fuel tank
-  description: A fuel tank for the flamethrower. Loaded with napalm that sticks to your newly-charred corpses as it burns.
+  name: "паливний бак вогнемета"
+  description: "Паливний бак для вогнемета. Заправлений напалмом, який під час горіння прилипає до щойно обвуглених тіл."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Flamethrower/fuel.rsi
@@ -1023,8 +1023,8 @@
 - type: entity
   parent: [ ProjectileGrenadeBase, BaseRevMajorContraband, TimerGrenadeBase ]
   id: GrenadeShrapnelRev
-  name: improvised shrapnel bomb
-  description: Releases a deadly spray of shrapnel that causes severe bleeding.
+  name: "саморобна осколкова бомба"
+  description: "Вивільняє смертоносний потік уламків, що спричиняє сильну кровотечу."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Bombs/ied.rsi
@@ -1062,8 +1062,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband ]
   id: IncompleteWoodenSword
-  name: incomplete wooden sword
-  description: An uncarved wooden sword.
+  name: "незавершений дерев'яний меч"
+  description: "Необтесаний дерев'яний меч."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/incomplete_bat.rsi
@@ -1088,8 +1088,8 @@
 - type: entity
   id: Killdozer
   parent: [ BaseMech, IndustrialMech, BaseRevMajorContraband ]
-  name: killdozer
-  description: Oh no
+  name: "кілдозер"
+  description: "О ні"
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -1144,8 +1144,8 @@
 - type: entity
   parent: [ BaseMagazineGaussgun ]
   id: MagazineGaussgunImprov
-  name: improvised gauss magazine
-  description: A low quality magazine for gauss guns, it will work in a pinch.
+  name: "саморобний магазин гаус-гармати"
+  description: "Низькоякісний магазин для гаус-гармат, який згодиться в скрутній ситуації."
   suffix: Empty
   components:
   - type: BallisticAmmoProvider
@@ -1205,8 +1205,8 @@
 - type: entity
   parent: MobSiliconBase
   id: MobDuckBot
-  name: duck bot
-  description: An amusing duck
+  name: "качкобот"
+  description: "Кумедна качка"
   components:
   - type: Sprite
     sprite: _Pirate/Mobs/Silicon/Bots/duckbot.rsi
@@ -1255,8 +1255,8 @@
   - ShowSecurityIcons
   - StripableInventoryBase
   id: MobSecuritron
-  name: securitron
-  description: Tiders hate this one simple trick!
+  name: "сек'юритрон"
+  description: "Тайдерам ненависний цей простий трюк!"
   components:
   - type: Sprite
     sprite: _Pirate/Mobs/Silicon/Bots/beepsky.rsi
@@ -1342,8 +1342,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband ]
   id: NailBoardUnfinished
-  name: unfinished nail board
-  description: Needs some nails.
+  name: "незавершена дошка з цвяхами"
+  description: "Потрібно ще кілька цвяхів."
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -1365,8 +1365,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband, WoodDurabilityWeak ]
   id: NailBoardWeapon
-  name: nail board
-  description: A nasty weapon that also works as a trap.
+  name: "дошка з цвяхами"
+  description: "Неприємна зброя, яка також слугує пасткою."
   components:
   - type: WeaponClass
     class: Bludgeon
@@ -1406,8 +1406,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband, MetalToolDurability ]
   id: PipeSpear
-  name: pipe shank
-  description: A pipe sharpened to a nasty point, could be a great throwing weapon.
+  name: "заточка з труби"
+  description: "Труба, загострена до небезпечного вістря; може стати чудовою метальною зброєю."
   components:
   - type: WeaponClass
     class: Knife
@@ -1444,8 +1444,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband ]
   id: PipeSpearUnfinished
-  name: unfinished pipe shank
-  description: Needs to be sharpened.
+  name: "незавершена заточка з труби"
+  description: "Її потрібно загострити."
   components:
   - type: WeaponClass
     class: Knife
@@ -1473,8 +1473,8 @@
 - type: entity
   parent: BaseRevMajorContraband
   id: PowerArmorFrame
-  name: P.O.W.A.R armor frame
-  description: Precise Orbital WAR, armor
+  name: "каркас броні P.O.W.A.R"
+  description: "Точна орбітальна ВІЙНА — броня"
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -1545,8 +1545,8 @@
 - type: entity
   parent: BaseRevComponent
   id: RevBolt
-  name: pile of bolts
-  description: Some bolts, used in quite a few devices.
+  name: "купа болтів"
+  description: "Кілька болтів, які використовують у багатьох пристроях."
   components:
   - type: Sprite
     layers:
@@ -1564,8 +1564,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevBulletPress
-  name: bullet press
-  description: Creates ammo by pressing the bullet into the casing, this one is automated.
+  name: "прес для набоїв"
+  description: "Створює набої, запресовуючи кулю в гільзу; ця модель автоматизована."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/bulletpress.rsi
@@ -1586,8 +1586,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevForge
-  name: industrial forge
-  description: This jury rigged machine can produce all sorts of useful (and dangerous) components.
+  name: "промислова кузня"
+  description: "Ця нашвидкуруч зібрана машина здатна виробляти всілякі корисні й небезпечні деталі."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/revforge.rsi
@@ -1627,8 +1627,8 @@
 - type: entity
   parent: BaseRevComponent
   id: RevGear
-  name: gear
-  description: A gear, used in quite a few devices.
+  name: "шестерня"
+  description: "Шестерня, яку використовують у багатьох пристроях."
   components:
   - type: Sprite
     layers:
@@ -1646,8 +1646,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevMedFab
-  name: hidden medifab
-  description: A hidden subfloor fabricator that can make medical equipment.
+  name: "прихований медифаб"
+  description: "Прихований під підлогою фабрикатор, здатний виробляти медичне спорядження."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/hiddenmedifab.rsi
@@ -1686,8 +1686,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevMicroelectronicsAssembler
-  name: microelectronics assembler
-  description: Allows the creation of illegal technology useful to the revolution.
+  name: "збирач мікроелектроніки"
+  description: "Дозволяє створювати незаконні технології, корисні для революції."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/microelectronicsassembler.rsi
@@ -1718,8 +1718,8 @@
 - type: entity
   parent: BaseRevComponent
   id: RevNut
-  name: pile of nuts
-  description: Some nuts, used in quite a few devices.
+  name: "купа гайок"
+  description: "Кілька гайок, які використовують у багатьох пристроях."
   components:
   - type: Sprite
     layers:
@@ -1737,8 +1737,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevPlasmaFoundry
-  name: phoron foundry
-  description: An advanced foundry powered by phoron sheets, it melts metals incredibly fast and produces advanced components.
+  name: "фороновий ливарний цех"
+  description: "Просунутий ливарний агрегат на форонових листах, який надзвичайно швидко плавить метали й виробляє складні компоненти."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/plasmaforge.rsi
@@ -1769,8 +1769,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevPowerArmorStand
-  name: P.O.W.A.R armor stand
-  description: A P.O.W.A.R armor stand, used for showing off P.O.W.A.R armor.
+  name: "стійка для броні P.O.W.A.R"
+  description: "Стійка для демонстрації броні P.O.W.A.R."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/powerarmorstand.rsi
@@ -1792,8 +1792,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevPrinter
-  name: 3D printer
-  description: Makes either cute little guys or gun parts, zero inbetween. This one can print both metal and plastic.
+  name: "3D-принтер"
+  description: "Друкує або милих маленьких хлопців, або деталі зброї — нічого посередині. Ця модель працює і з металом, і з пластиком."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/printer.rsi
@@ -1814,8 +1814,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevPrintingPress
-  name: printing press
-  description: A printing press for mass producing media, or in your case anti-NT propaganda.
+  name: "друкарський верстат"
+  description: "Друкарський верстат для масового виробництва медіа або, у вашому випадку, пропаганди проти НТ."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/revprintingpress.rsi
@@ -1835,8 +1835,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevRadioBench
-  name: telecommunications workshop
-  description: A device for hacking into nearby signals, allows the production of radiochips, turrets, as well as some upgrades for other machines.
+  name: "телекомунікаційна майстерня"
+  description: "Пристрій для злому найближчих сигналів, що дозволяє виготовляти радіочипи, турелі й поліпшення для інших машин."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/telecommsbench.rsi
@@ -1857,8 +1857,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevTechAnalyzer
-  name: tech analyzer
-  description: Scans NT tech and produces tech disks for the microelectronics assembler to create.
+  name: "аналізатор технологій"
+  description: "Сканує технології НТ і створює технологічні диски, з яких збирач мікроелектроніки може виготовити пристрої."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/techanalyzer.rsi
@@ -1879,8 +1879,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevTelesphere
-  name: telesphere
-  description: An experimental device, it can be used to remotely steal materials from passing trade ships using phoron. Additionally; it can be used as a material silo for the revolution.
+  name: "телесфера"
+  description: "Експериментальний пристрій для дистанційного викрадення матеріалів із торгових кораблів, що пролітають повз, за допомогою форону. Також може слугувати матеріальним силосом революції."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/telesphere.rsi
@@ -1915,8 +1915,8 @@
 - type: entity
   parent: BaseItem
   id: RevUnfinishedComponent
-  name: steel chunk
-  description: A misshapen lump of steel, clearly being worked into something.
+  name: "сталевий уламок"
+  description: "Деформована грудка сталі, з якої явно намагаються щось виготовити."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Revs/components.rsi
@@ -1928,8 +1928,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: RevUnfinishedFuelTank
-  name: unfinished fuel tank
-  description: An unfinished flamethrower fuel tank
+  name: "незавершений паливний бак"
+  description: "Незавершений паливний бак вогнемета"
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Flamethrower/unfinished.rsi
@@ -1964,8 +1964,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMinorContraband ]
   id: RevUnfinishedGun
-  name: misshapen steel chunk
-  description: A sheet of steel bent into the rough shape of a gun. It needs a lot more work before firing.
+  name: "деформований сталевий уламок"
+  description: "Лист сталі, зігнутий у грубу подобу зброї. До першого пострілу ще дуже багато роботи."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Pistols/unfinished.rsi
@@ -1979,8 +1979,8 @@
 - type: entity
   parent: [ BaseMachine, BaseMinorContraband ]
   id: RevUnfinishedMachine
-  name: steel contraption
-  description: A large mass of steel worked into some kind of machine. Only a madman knows what this could be!
+  name: "сталева конструкція"
+  description: "Велика маса сталі, оброблена у формі якоїсь машини. Лише божевільний знає, що з цього вийде!"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/unfinished.rsi
@@ -1992,8 +1992,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: RevUnfinishedRocket
-  name: unfinished rocket
-  description: An unfinished rocket.
+  name: "незавершена ракета"
+  description: "Незавершена ракета."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Rockets/unfinished.rsi
@@ -2005,8 +2005,8 @@
 - type: entity
   parent: RevUnfinishedMachine
   id: RevUnfinishedTurret
-  name: turret base
-  description: A lump of steel mounted to a tripod, not very imposing.
+  name: "основа турелі"
+  description: "Грудка сталі на тринозі — не надто переконлива."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Defences/turrets.rsi
@@ -2028,7 +2028,7 @@
   parent: RevUnfinishedTurret
   id: RevUnfinishedTurretBarrel
   suffix: Barrel
-  description: A homemade anti-personnel turret. It still needs more work to be done, though keep your eyes clear of its barrel.
+  description: "Саморобна протипіхотна турель. Вона ще потребує доопрацювання, а поки тримайте очі подалі від її ствола."
   components:
   - type: Sprite
     state: unfinished-barrel
@@ -2037,8 +2037,8 @@
 - type: entity
   parent: BaseRevIndustry
   id: RevUniformPrinter
-  name: military uniform printer
-  description: Creates armored clothing for the troops.
+  name: "принтер військової форми"
+  description: "Виготовляє броньований одяг для військ."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Machines/uniformprinter.rsi
@@ -2059,8 +2059,8 @@
 - type: entity
   parent: Screen
   id: SignalScreen
-  name: signal screen
-  description: Displays text from signals sent to its text port.
+  name: "сигнальний екран"
+  description: "Відображає текст із сигналів, надісланих до його текстового порту."
   components:
   - type: Screen
     ignoreNetwork: true
@@ -2114,8 +2114,8 @@
 - type: entity
   parent: SpearPipebomb
   id: SpearIED
-  name: fire bomb spear
-  description: Risky, but deadly.
+  name: "спис із запалювальною бомбою"
+  description: "Ризиковано, але смертельно."
   components:
   - type: WeaponClass
     class: Polearm
@@ -2143,8 +2143,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband, SpearDurabilityWeak ]
   id: SpearPipebomb
-  name: pipe bomb spear
-  description: Risky, but deadly.
+  name: "спис із трубною бомбою"
+  description: "Ризиковано, але смертельно."
   components:
   - type: WeaponClass
     class: Polearm
@@ -2254,8 +2254,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband, WoodDurability ]
   id: SwordNail
-  name: nail sword
-  description: A wooden sword with nails sticking out of it.
+  name: "меч із цвяхами"
+  description: "Дерев'яний меч із цвяхами, що стирчать із нього."
   components:
   - type: WeaponClass
     class: Bludgeon
@@ -2284,8 +2284,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband ]
   id: SwordNailUnfinished
-  name: unfinished nail sword
-  description: Still needs some nails.
+  name: "незавершений меч із цвяхами"
+  description: "Потрібно ще кілька цвяхів."
   components:
   - type: Construction
     graph: NailSword
@@ -2301,8 +2301,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband, WoodDurability ]
   id: SwordScrap
-  name: scrap sword
-  description: A wooden sword with jagged metal sticking out of it.
+  name: "меч із брухту"
+  description: "Дерев'яний меч із гострими уламками металу, що стирчать із нього."
   components:
   - type: WeaponClass
     class: Bludgeon
@@ -2331,8 +2331,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband ]
   id: SwordScrapUnfinished
-  name: unfinished scrap sword
-  description: Still needs some blades.
+  name: "незавершений меч із брухту"
+  description: "Потрібно ще кілька лез."
   components:
   - type: Construction
     graph: ScrapSword
@@ -2348,8 +2348,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband, MetalToolDurability ]
   id: SwordWelded
-  name: welded sword
-  description: A sword made by welding two pieces of metal to a tang, a bit unwieldy.
+  name: "зварений меч"
+  description: "Меч, зроблений приварюванням двох шматків металу до хвостовика; трохи незграбний."
   components:
   - type: WeaponClass
     class: Sword
@@ -2377,8 +2377,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband ]
   id: SwordWeldedUnfinished
-  name: unfinished welded sword
-  description: An unfinished welded sword.
+  name: "незавершений зварений меч"
+  description: "Незавершений зварений меч."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/sword_welded_unfinished.rsi
@@ -2394,8 +2394,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband, WoodDurability ]
   id: SwordWood
-  name: wooden sword
-  description: A wooden sword.
+  name: "дерев'яний меч"
+  description: "Дерев'яний меч."
   components:
   - type: WeaponClass
     class: Bludgeon # can't exactly stab with it
@@ -2430,8 +2430,8 @@
 - type: entity
   parent: [ BaseStructure, BaseMinorContraband ]
   id: TrapPipeBomb
-  name: pipe bomb trap
-  description: A pipebomb linked to a remote signal. Can be disarmed with wirecutters.
+  name: "пастка з трубною бомбою"
+  description: "Трубна бомба, під'єднана до дистанційного сигналу. Її можна знешкодити кусачками."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Defences/trap_pipebomb.rsi
@@ -2487,8 +2487,8 @@
 - type: entity
   parent: [ BaseMinorContraband ]
   id: TrapTripWire
-  name: trip wire
-  description: A wire that sends a signal when walked over, can be disarmed with wirecutters.
+  name: "розтяжка"
+  description: "Дріт, який надсилає сигнал, коли на нього наступають. Його можна знешкодити кусачками."
   placement:
     mode: SnapgridCenter
     snap:
@@ -2558,8 +2558,8 @@
     defaultTarget: null
 - type: entity
   id: UnfinishedKilldozer
-  name: pile of metal parts
-  description: This feels forboding
+  name: "купа металевих деталей"
+  description: "Від цього віє лихим передчуттям"
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -2593,8 +2593,8 @@
 - type: entity
   parent: BaseStructure
   id: WallInsulation
-  name: insulation
-  description: Noise blocking insulation.
+  name: "звукоізоляція"
+  description: "Ізоляція, що блокує шум."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/insulation.rsi
@@ -2638,8 +2638,8 @@
 - type: entity
   parent: Stunbaton
   id: Wandsky
-  name: commander wandsky
-  description: A technological marvel used for directing securitrons.
+  name: "командир Вандський"
+  description: "Технологічне диво для керування сек'юритронами."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Tools/commanderwandsky.rsi
@@ -2678,8 +2678,8 @@
 - type: entity
   parent: MaterialBase
   id: WeaponBracing
-  name: weapon bracing
-  description: Bracing materials used to repair many weapons.
+  name: "підсилення зброї"
+  description: "Підсилювальні матеріали для ремонту багатьох видів зброї."
   suffix: full
   components:
   - type: Tag
@@ -2708,8 +2708,8 @@
 - type: entity
   parent: [ BaseSecurityContraband, BaseGunWieldable, BaseWeaponGaussgun ]
   id: WeaponGaussgun
-  name: coil gun
-  description: Requires both a battery and ammunition to operate, a cheaper alternative to ballistic firearms.
+  name: "котушкова гармата"
+  description: "Для роботи потребує і акумулятора, і боєприпасів; дешевша альтернатива балістичній зброї."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/gaussgun.rsi
@@ -2732,7 +2732,7 @@
 - type: entity
   parent: [ BaseMajorContraband, WeaponGaussgun ]
   id: WeaponGaussgunImprov
-  name: gauss rifle
+  name: "гаус-гвинтівка"
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/improv_gaussgun.rsi
@@ -2750,8 +2750,8 @@
 - type: entity
   parent: [ BaseMajorContraband, BaseWeaponGaussgun ]
   id: WeaponGaussgunPistol
-  name: gauss pistol
-  description: A much ligher alternative to the gauss gun, but far more innacurate and only semiautomatic.
+  name: "гаус-пістолет"
+  description: "Значно легша альтернатива гаус-гарматі, але набагато менш точна й лише самозарядна."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Gaussguns/gausspistol.rsi
@@ -2784,8 +2784,8 @@
 - type: entity
   parent: [ BaseWeaponLauncher, BaseRevMajorContraband, BaseGunWieldable ]
   id: WeaponLauncherRPG2
-  name: RPG-2
-  description: An ancient old earth rocket launcher.
+  name: "РПГ-2"
+  description: "Стародавній ракетний гранатомет із давньої Землі."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Launchers/RPG2.rsi
@@ -2832,8 +2832,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: WeaponLightMachineGunProletariat
-  name: Proletariat
-  description: An ancient LMG named for the classes it was used to oppress, until that class got ahold of it. Takes .22 short turret mags.
+  name: "Пролетарій"
+  description: "Стародавній ручний кулемет, названий на честь класів, для пригнічення яких його використовували, доки цей клас не заволодів ним. Приймає турельні магазини .22 short."
   components:
   - type: WeaponClass
     class: Rifle # .22, it's like a 2-handed pistol come on
@@ -2943,8 +2943,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: WeaponPistolLiberator
-  name: Liberator
-  description: A shitty little pistol that can only hold 6 rounds and has to be hand fed.
+  name: "Визволитель"
+  description: "Паскудний маленький пістолет лише на 6 набоїв, який доводиться заряджати вручну."
   suffix: Full
   components:
   - type: WeaponClass
@@ -2992,8 +2992,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: WeaponSMGResistance
-  name: Resistance
-  description: A small and innaccurate gun, cannot hit anything but at least it has a magazine.
+  name: "Спротив"
+  description: "Невелика й неточна зброя, яка ні в що не влучає, але принаймні має магазин."
   suffix: Full
   components:
   - type: WeaponClass
@@ -3092,8 +3092,8 @@
 - type: entity
   parent: [ BaseMajorContraband, BaseWeaponShotgun, BaseGunWieldable ]
   id: WeaponShotgunDevastator
-  name: Devastator
-  description: A 4 barrel shotgun, inaccurate as hell but the results speak for themselves. Uses 12 gauge shotgun shells.
+  name: "Спустошувач"
+  description: "Чотириствольний дробовик, до біса неточний, але результат говорить сам за себе. Використовує набої 12 калібру."
   suffix: Full
   components:
   - type: Sprite
@@ -3144,8 +3144,8 @@
 - type: entity
   parent: BaseWeaponTurretRevolutionary
   id: WeaponTurretRevolutionaryPistolFull
-  name: improvised pistol turret
-  description: Fires at anything without the proper IFF signal, can only hold ten rounds which must be hand loaded. Careful with this thing.
+  name: "саморобна пістолетна турель"
+  description: "Стріляє в усе без належного сигналу IFF. Вміщує лише десять набоїв, які треба заряджати вручну. Будьте з нею обережні."
   components:
   - type: Gun
     fireRate: 0.5
@@ -3171,8 +3171,8 @@
 - type: entity
   parent: BaseWeaponTurretRevolutionaryMagazine
   id: WeaponTurretRevolutionarySMG
-  name: improvised smg turret
-  description: Fires at anything without the proper IFF signal. This one is magazine loaded, but extremely innaccurate.
+  name: "саморобна турель із пістолетом-кулеметом"
+  description: "Стріляє в усе без належного сигналу IFF. Заряджається магазином, але надзвичайно неточна."
   suffix: Empty
   components:
   - type: Gun
@@ -3211,8 +3211,8 @@
 - type: entity
   parent: MaterialBase
   id: Whetstone
-  name: whetstone
-  description: A whetstone, used to maintain bladed weapons.
+  name: "точильний камінь"
+  description: "Точильний камінь для догляду за клинковою зброєю."
   suffix: full
   components:
   - type: Sprite
