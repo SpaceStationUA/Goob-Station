@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Halloween event reagent: grants temporary invulnerability while metabolizing.
+- type: reagent
+  id: PhantomCocoa
+  name: reagent-name-phantom-cocoa
+  group: Foods
+  desc: reagent-desc-phantom-cocoa
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: chocolate
+  color: "#f6fbff"
+  metabolisms:
+    Food:
+      metabolismRate: 1
+      effects:
+      - !type:TemporaryGodmode
+        seconds: 15
+
+# Halloween event reagent: grants temporary invisibility while metabolizing.
+- type: reagent
+  id: SpectralCocoa
+  name: reagent-name-spectral-cocoa
+  group: Foods
+  desc: reagent-desc-spectral-cocoa
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: chocolate
+  color: "#eef3ff"
+  metabolisms:
+    Food:
+      metabolismRate: 1
+      effects:
+      - !type:TemporaryInvisibility
+        seconds: 15
+        visibility: -1.5
