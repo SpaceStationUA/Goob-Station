@@ -26,9 +26,31 @@ public abstract class SharedBiomeSystem : EntitySystem
     // Goob - Cache Noise
     private readonly ConcurrentDictionary<(FastNoiseLite, int), FastNoiseLite> _noiseCache = new();
 
+    /// <summary>
+    /// Cached non-space tile pool for <see cref="BiomeRandomTileLayer"/> with an empty tile list.
+    /// </summary>
+    private List<ContentTileDefinition>? _nonSpaceTiles;
+
     protected void ClearNoiseCache()
     {
         _noiseCache.Clear();
+    }
+
+    private List<ContentTileDefinition> GetNonSpaceTiles()
+    {
+        if (_nonSpaceTiles != null)
+            return _nonSpaceTiles;
+
+        _nonSpaceTiles = new List<ContentTileDefinition>();
+        foreach (var proto in ProtoManager.EnumeratePrototypes<ContentTileDefinition>())
+        {
+            if (proto.Abstract || proto.MapAtmosphere || proto.Sprite == null)
+                continue;
+
+            _nonSpaceTiles.Add(proto);
+        }
+
+        return _nonSpaceTiles;
     }
 
     private T Pick<T>(List<T> collection, float value)
@@ -146,6 +168,14 @@ public abstract class SharedBiomeSystem : EntitySystem
                 continue;
             }
 
+            if (layer is BiomeRandomTileLayer randomTileLayer)
+            {
+                if (TryGetRandomTile(indices, noiseCopy, randomTileLayer, out tile))
+                    return true;
+
+                continue;
+            }
+
             if (layer is not BiomeTileLayer tileLayer)
                 continue;
 
@@ -157,6 +187,46 @@ public abstract class SharedBiomeSystem : EntitySystem
 
         tile = null;
         return false;
+    }
+
+    private bool TryGetRandomTile(Vector2i indices, FastNoiseLite noise, BiomeRandomTileLayer layer, [NotNullWhen(true)] out Tile? tile)
+    {
+        List<ContentTileDefinition> pool;
+        if (layer.Tiles.Count > 0)
+        {
+            pool = new List<ContentTileDefinition>(layer.Tiles.Count);
+            foreach (var tileId in layer.Tiles)
+            {
+                if (!ProtoManager.TryIndex(tileId, out ContentTileDefinition? def) || def.MapAtmosphere)
+                    continue;
+
+                pool.Add(def);
+            }
+        }
+        else
+        {
+            pool = GetNonSpaceTiles();
+        }
+
+        if (pool.Count == 0)
+        {
+            tile = null;
+            return false;
+        }
+
+        // Separate noise axis so pick is stable and independent of threshold sampling.
+        var pickValue = (noise.GetNoise(indices.X * 3f, indices.Y * 3f, pool.Count) + 1f) / 2f;
+        var tileDef = Pick(pool, pickValue);
+
+        byte variant = 0;
+        if (tileDef.Variants > 1)
+        {
+            var variantValue = (noise.GetNoise(indices.X * 8, indices.Y * 8, tileDef.Variants) + 1f) * 100;
+            variant = _tile.PickVariant(tileDef, (int)variantValue);
+        }
+
+        tile = new Tile(tileDef.TileId, variant);
+        return true;
     }
 
     /// <summary>
@@ -234,8 +304,53 @@ public abstract class SharedBiomeSystem : EntitySystem
             {
                 case BiomeDummyLayer:
                     continue;
+                case BiomeMazeEntityLayer mazeLayer:
+                {
+                    if (!mazeLayer.AllowAllTiles && !mazeLayer.AllowedTiles.Contains(tileId))
+                        continue;
+
+                    if (!IsMazeWall(indices, seed, mazeLayer.CellSize, mazeLayer.WallThickness, mazeLayer.LoopChance, mazeLayer.PillarChance))
+                        continue;
+
+                    var pickNoise = GetNoise(mazeLayer.Noise, seed);
+                    var noiseValue = pickNoise.GetNoise(indices.X, indices.Y, i);
+                    entity = Pick(mazeLayer.Entities, (noiseValue + 1f) / 2f);
+                    return true;
+                }
+                case BiomeMazeAdjacentEntityLayer adjLayer:
+                {
+                    if (!adjLayer.AllowAllTiles && !adjLayer.AllowedTiles.Contains(tileId))
+                        continue;
+
+                    // Never on walls.
+                    if (IsMazeWall(indices, seed, adjLayer.CellSize, adjLayer.WallThickness, adjLayer.LoopChance, adjLayer.PillarChance))
+                        continue;
+
+                    if (adjLayer.RequireAdjacentWall &&
+                        !IsAdjacentToMazeWall(indices, seed, adjLayer.CellSize, adjLayer.WallThickness, adjLayer.LoopChance, adjLayer.PillarChance))
+                        continue;
+
+                    if (adjLayer.Spacing > 1 && PositiveMod(indices.X + indices.Y, adjLayer.Spacing) != 0)
+                        continue;
+
+                    // Per-layer salt so Chance rolls are independent across adjacent layers.
+                    if (adjLayer.Chance < 1f &&
+                        Hash01(seed, indices.X, indices.Y, 77 + i) >= adjLayer.Chance)
+                        continue;
+
+                    var adjNoise = GetNoise(adjLayer.Noise, seed);
+                    var adjValue = adjNoise.GetNoise(indices.X, indices.Y);
+                    adjValue = adjLayer.Invert ? adjValue * -1 : adjValue;
+                    if (adjValue < adjLayer.Threshold)
+                        continue;
+
+                    var adjPick = adjNoise.GetNoise(indices.X, indices.Y, i);
+                    entity = Pick(adjLayer.Entities, (adjPick + 1f) / 2f);
+                    return true;
+                }
                 case IBiomeWorldLayer worldLayer:
-                    if (!worldLayer.AllowedTiles.Contains(tileId))
+                    if (layer is not BiomeEntityLayer { AllowAllTiles: true } &&
+                        !worldLayer.AllowedTiles.Contains(tileId))
                         continue;
 
                     break;
@@ -271,8 +386,8 @@ public abstract class SharedBiomeSystem : EntitySystem
                 return false;
             }
 
-            var noiseValue = noiseCopy.GetNoise(indices.X, indices.Y, i);
-            entity = Pick(biomeLayer.Entities, (noiseValue + 1f) / 2f);
+            var entityNoiseValue = noiseCopy.GetNoise(indices.X, indices.Y, i);
+            entity = Pick(biomeLayer.Entities, (entityNoiseValue + 1f) / 2f);
             return true;
         }
 
@@ -310,8 +425,42 @@ public abstract class SharedBiomeSystem : EntitySystem
             {
                 case BiomeDummyLayer:
                     continue;
+                case BiomeMazeEntityLayer mazeLayer:
+                    if (!mazeLayer.AllowAllTiles && !mazeLayer.AllowedTiles.Contains(tileId))
+                        continue;
+
+                    if (IsMazeWall(indices, seed, mazeLayer.CellSize, mazeLayer.WallThickness, mazeLayer.LoopChance, mazeLayer.PillarChance))
+                    {
+                        decals = null;
+                        return false;
+                    }
+
+                    continue;
+                case BiomeMazeAdjacentEntityLayer adjLayer:
+                    if (!adjLayer.AllowAllTiles && !adjLayer.AllowedTiles.Contains(tileId))
+                        continue;
+
+                    // Same as entity layer: blocks decals where a light/prop would spawn.
+                    if (!IsMazeWall(indices, seed, adjLayer.CellSize, adjLayer.WallThickness, adjLayer.LoopChance, adjLayer.PillarChance) &&
+                        (!adjLayer.RequireAdjacentWall ||
+                         IsAdjacentToMazeWall(indices, seed, adjLayer.CellSize, adjLayer.WallThickness, adjLayer.LoopChance, adjLayer.PillarChance)) &&
+                        (adjLayer.Spacing <= 1 || PositiveMod(indices.X + indices.Y, adjLayer.Spacing) == 0) &&
+                        (adjLayer.Chance >= 1f || Hash01(seed, indices.X, indices.Y, 77 + i) < adjLayer.Chance))
+                    {
+                        var adjNoise = GetNoise(adjLayer.Noise, seed);
+                        var adjValue = adjNoise.GetNoise(indices.X, indices.Y);
+                        adjValue = adjLayer.Invert ? adjValue * -1 : adjValue;
+                        if (adjValue >= adjLayer.Threshold)
+                        {
+                            decals = null;
+                            return false;
+                        }
+                    }
+
+                    continue;
                 case IBiomeWorldLayer worldLayer:
-                    if (!worldLayer.AllowedTiles.Contains(tileId))
+                    if (layer is not BiomeEntityLayer { AllowAllTiles: true } &&
+                        !worldLayer.AllowedTiles.Contains(tileId))
                         continue;
 
                     break;
@@ -396,5 +545,165 @@ public abstract class SharedBiomeSystem : EntitySystem
         noiseCopy.SetFractalOctaves(noiseCopy.GetFractalOctaves());
         _noiseCache[(seedNoise, seed)] = noiseCopy; // Goob - Cache Noise
         return noiseCopy;
+    }
+
+    /// <summary>
+    /// Orthogonal lattice maze. Every cell has a passage (binary tree); optional loops.
+    /// Dark = walls on the lattice; light = open corridor cells.
+    /// </summary>
+    private static bool IsMazeWall(Vector2i indices, BiomeMazeEntityLayer layer, int seed)
+    {
+        return IsMazeWall(indices, seed, layer.CellSize, layer.WallThickness, layer.LoopChance, layer.PillarChance);
+    }
+
+    private static bool IsMazeWall(
+        Vector2i indices,
+        int seed,
+        int cellSize,
+        int wallThickness,
+        float loopChance,
+        float pillarChance)
+    {
+        cellSize = Math.Max(3, cellSize);
+        var thickness = Math.Clamp(wallThickness, 1, cellSize - 1);
+
+        var lx = PositiveMod(indices.X, cellSize);
+        var ly = PositiveMod(indices.Y, cellSize);
+        var cx = FloorDiv(indices.X, cellSize);
+        var cy = FloorDiv(indices.Y, cellSize);
+
+        var onVert = lx < thickness;
+        var onHoriz = ly < thickness;
+
+        // Open corridor interior (light) — only rare pillars.
+        if (!onVert && !onHoriz)
+            return Hash01(seed, indices.X, indices.Y, 17) < pillarChance;
+
+        // Lattice corner / intersection — always wall.
+        if (onVert && onHoriz)
+            return true;
+
+        if (onVert)
+        {
+            // Vertical lattice at column cx = east wall of cell (cx - 1, cy).
+            return !IsVerticalPassage(seed, cx - 1, cy, loopChance);
+        }
+
+        // Horizontal lattice at row cy = north wall of cell (cx, cy - 1).
+        return !IsHorizontalPassage(seed, cx, cy - 1, loopChance);
+    }
+
+    private static bool IsAdjacentToMazeWall(
+        Vector2i indices,
+        int seed,
+        int cellSize,
+        int wallThickness,
+        float loopChance,
+        float pillarChance)
+    {
+        return IsMazeWall(indices + new Vector2i(1, 0), seed, cellSize, wallThickness, loopChance, pillarChance)
+               || IsMazeWall(indices + new Vector2i(-1, 0), seed, cellSize, wallThickness, loopChance, pillarChance)
+               || IsMazeWall(indices + new Vector2i(0, 1), seed, cellSize, wallThickness, loopChance, pillarChance)
+               || IsMazeWall(indices + new Vector2i(0, -1), seed, cellSize, wallThickness, loopChance, pillarChance);
+    }
+
+    /// <summary>
+    /// Offset from the corridor tile to a neighbouring maze wall tile.
+    /// If several walls touch the tile, picks one stably from the seed.
+    /// </summary>
+    protected static bool TryGetNearestMazeWallOffset(
+        Vector2i indices,
+        int seed,
+        int cellSize,
+        int wallThickness,
+        float loopChance,
+        float pillarChance,
+        out Vector2i wallOffset)
+    {
+        // Prefer cardinal order with a stable hash so chunk reloads match.
+        // Avoid collection expressions / ReadOnlySpan here — they emit
+        // InlineArrayAsReadOnlySpan and fail Content.Shared ILVerify/SandboxTest.
+        var dirs = new[]
+        {
+            new Vector2i(0, 1),
+            new Vector2i(1, 0),
+            new Vector2i(0, -1),
+            new Vector2i(-1, 0),
+        };
+
+        Vector2i? best = null;
+        var bestScore = float.MaxValue;
+
+        foreach (var dir in dirs)
+        {
+            if (!IsMazeWall(indices + dir, seed, cellSize, wallThickness, loopChance, pillarChance))
+                continue;
+
+            var score = Hash01(seed, indices.X, indices.Y, 91 + dir.X * 5 + dir.Y * 11);
+            if (best != null && score >= bestScore)
+                continue;
+
+            best = dir;
+            bestScore = score;
+        }
+
+        if (best == null)
+        {
+            wallOffset = default;
+            return false;
+        }
+
+        wallOffset = best.Value;
+        return true;
+    }
+
+    /// <summary>Binary tree: each cell carves East or North; LoopChance also opens the other.</summary>
+    private static bool CarvesEast(int seed, int cx, int cy)
+    {
+        return Hash01(seed, cx, cy, 41) < 0.5f;
+    }
+
+    private static bool IsVerticalPassage(int seed, int cx, int cy, float loopChance)
+    {
+        // East wall of cell (cx, cy).
+        if (CarvesEast(seed, cx, cy))
+            return true;
+
+        // Loop: also open east even when tree chose north.
+        return Hash01(seed, cx, cy, 43) < loopChance;
+    }
+
+    private static bool IsHorizontalPassage(int seed, int cx, int cy, float loopChance)
+    {
+        // North wall of cell (cx, cy).
+        if (!CarvesEast(seed, cx, cy))
+            return true;
+
+        return Hash01(seed, cx, cy, 47) < loopChance;
+    }
+
+    private static int FloorDiv(int a, int b)
+    {
+        return a >= 0 ? a / b : (a - (b - 1)) / b;
+    }
+
+    private static int PositiveMod(int a, int b)
+    {
+        var r = a % b;
+        return r < 0 ? r + b : r;
+    }
+
+    /// <summary>Deterministic 0..1 hash from seed + coords.</summary>
+    private static float Hash01(int seed, int x, int y, int salt)
+    {
+        unchecked
+        {
+            var h = (uint)seed;
+            h = (h ^ (uint)x) * 0x9E3779B1u;
+            h = (h ^ (uint)y) * 0x85EBCA6Bu;
+            h = (h ^ (uint)salt) * 0xC2B2AE35u;
+            h ^= h >> 16;
+            return (h & 0xFFFFFFu) / 16777215f;
+        }
     }
 }

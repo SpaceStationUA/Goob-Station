@@ -17,3 +17,4 @@ tiles-wood-black-broken = зламана чорна дерев'яна підло
 tiles-wood-black-large-broken = зламана велика чорна дерев'яна підлога
 tiles-wood-black-chess-broken = зламана шахова чорна дерев'яна підлога
 tiles-wood-black-parquet-broken = зламаний чорний дерев'яний паркет
+tiles-backroom-floor = підлога бекрумс

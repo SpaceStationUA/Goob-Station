@@ -1,0 +1,159 @@
+# Ported from SpaceStationUA/station (Resources/Prototypes/_Pirate/Mobs/Demons/mime.yml — MONSTER)
+
+- type: entity
+  parent:
+  - BaseMob
+  - MobCombat
+  - MobPolymorphable
+  id: WeenMonsterPlayer
+  name: Monster
+  description: Something seems off...
+  suffix: геловін
+  components:
+  - type: Eye
+    drawFov: false
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#b51d02"
+    castShadows: false
+  - type: Perishable
+  - type: Stamina
+    baseCritThreshold: 500
+  - type: Damageable
+    damageContainer: Biological
+  - type: NoSlip
+  - type: StatusEffects
+    allowed:
+    - SlowedDown
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4.5
+  - type: Sprinter
+    staminaDrainRate: 1
+    sprintSpeedMultiplier: 1.45
+    timeBetweenSprints: 0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 230
+        mask:
+        - MobMask
+        layer:
+        - MobMask
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      collection: MetalThud
+    damage:
+      groups:
+        Brute: 50
+  - type: Sprite
+    sprite: _Pirate/Mobs/Customization/monster.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: active
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: active
+      Critical:
+        Base: active
+      Dead:
+        Base: active
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      850: Critical
+      1000: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      600: 0.7
+      850: 0.5
+  - type: MobState
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+  - type: ThermalVision
+    isActive: false
+    isEquipment: false
+    toggleAction: ToggleThermalVision
+    color: "#d06764"
+    lightRadius: 8
+  - type: BackroomsPreySense
+  - type: Pinpointer
+    alert: QueenFinder
+    isActive: true
+    canToggle: true
+    canEmag: false
+    canExamine: false
+    canTargetMultiple: true
+    canRetarget: false
+  - type: ActionGrant
+    actions:
+    - ActionBackroomsPreySense
+  - type: UserInterface
+    interfaces:
+      enum.BackroomsPreySenseUiKey.Key:
+        type: BackroomsPreySenseBui
+  - type: BloodCrawl
+    requireBlood: false
+    jaunt: MonsterJaunt
+    actionId: ActionMonsterDisperse
+    enterJauntSound: null
+    exitJauntSound: null
+    blood:
+    - Blood
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+    - Xeno
+
+- type: entity
+  parent: WeenMonsterPlayer
+  id: WeenMonsterAI
+  name: Monster
+  suffix: AI, геловін
+  description: Something seems off...
+  components:
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+      VisionRadius: !type:Single
+        15
+      AggroVisionRadius: !type:Single
+        15
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: MovementAlwaysTouching
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: entity
+  parent: WeenMonsterAI
+  id: WeenMonsterGhostRole
+  name: Monster
+  suffix: AI, Ghost role, геловін
+  description: Something seems off...
+  components:
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: false
+    makeSentient: true
+    name: ghost-role-information-ween-monster-name
+    description: ghost-role-information-ween-monster-description
+    rules: ghost-role-information-ween-monster-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable

@@ -1,0 +1,53 @@
+# Backrooms walls — ported from SpaceStationUA/station (sprites by Sh1Nima)
+
+- type: entity
+  parent: BaseWall
+  id: WallBackrooms
+  name: backrooms wall
+  description: Yellowed drywall that somehow never ends.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Walls/backrooms.rsi
+  - type: Icon
+    sprite: _Pirate/Structures/Walls/backrooms.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: backrooms
+  - type: BlockWeather
+
+- type: entity
+  parent: BaseWall
+  id: WallBackroomsIndestructible
+  name: backrooms wall
+  suffix: indestructible
+  description: Yellowed drywall that somehow never ends.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Walls/backrooms.rsi
+  - type: Icon
+    sprite: _Pirate/Structures/Walls/backrooms.rsi
+  - type: IconSmooth
+    key: walls
+    base: backrooms
+  - type: BlockWeather
+  - type: Destructible

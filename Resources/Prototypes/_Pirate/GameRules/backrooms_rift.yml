@@ -1,0 +1,36 @@
+# Isolated backrooms rift floor (no station event — spawn manually / via map).
+
+- type: entity
+  id: BackroomsRiftFloor
+  name: world rift
+  description: The floor looks wrong. Stepping here would be a mistake.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      rift:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        hard: false
+        layer:
+        - SlipLayer
+        mask:
+        - ItemMask
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+  - type: TeleportToBackroomsOnStep
+  - type: PointLight
+    enabled: true
+    radius: 2.5
+    energy: 2
+    color: "#FFFFFF"
+  - type: Tag
+    tags:
+    - HideContextMenu

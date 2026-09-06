@@ -1,0 +1,46 @@
+# Ported from SpaceStationUA/station — Halloween candy bags
+# Sprites remapped from __TEMP → _Pirate/Structures/Decoration/Halloween
+
+- type: entity
+  name: paper bag
+  id: PaperBagCandy
+  parent: CandyBucket
+  suffix: halloween
+  description: A festive bag for storing treats.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/Halloween/paper_bag.rsi
+    layers:
+    - state: empty_icon
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Storage
+    grid:
+    - 0,0,4,2
+
+- type: entity
+  name: pumpkin bag
+  id: PumpkinBagCandy
+  parent: CandyBucket
+  suffix: halloween
+  description: A festive pumpkin bag for storing treats.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/Halloween/pumpkin_bag.rsi
+    layers:
+    - state: empty_icon
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Storage
+    grid:
+    - 0,0,4,2
+
+- type: loadout
+  id: LoadoutItemPaperBag
+  storage:
+    back:
+    - PaperBagCandy
+
+- type: loadout
+  id: LoadoutItemPumpkinBagCandy
+  storage:
+    back:
+    - PumpkinBagCandy

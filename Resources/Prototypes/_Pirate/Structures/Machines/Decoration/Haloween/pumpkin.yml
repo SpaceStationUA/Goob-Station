@@ -1,0 +1,27 @@
+# Ported from SpaceStationUA/station — Halloween pumpkins
+
+- type: entity
+  parent: BaseItem
+  id: PiratePumpkin
+  name: pumpkin
+  description: A traditional spooky decoration.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/pumpkin.rsi
+    state: animated
+  - type: Item
+    size: Normal
+
+- type: entity
+  parent: BaseItem
+  id: PiratePumpkinMany
+  name: pumpkin
+  description: A traditional spooky decoration.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Decoration/pumpkin_many.rsi
+    state: icon
+  - type: Item
+    size: Normal

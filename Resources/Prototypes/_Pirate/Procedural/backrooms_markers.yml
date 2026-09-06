@@ -1,0 +1,9 @@
+# Backrooms mob markers — expedition-style (radius spacing, no per-tile spam).
+
+- type: biomeMarkerLayer
+  id: BackroomsTarantulas
+  prototype: MobGiantSpiderAngry
+  radius: 40
+  maxCount: 16
+  minGroupSize: 1
+  maxGroupSize: 2

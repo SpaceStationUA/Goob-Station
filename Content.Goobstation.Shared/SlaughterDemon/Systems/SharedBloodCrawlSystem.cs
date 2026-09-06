@@ -50,7 +50,7 @@ public abstract class SharedBloodCrawlSystem : EntitySystem
 
     private void OnBloodCrawl(EntityUid uid, BloodCrawlComponent component, BloodCrawlEvent args)
     {
-        if (!IsStandingOnBlood((uid, component)))
+        if (component.RequireBlood && !IsStandingOnBlood((uid, component)))
         {
             _popup.PopupPredicted(Loc.GetString("slaughter-blood-jaunt-fail"), uid, uid);
             _actions.SetCooldown(args.Action.Owner, component.ActionCooldown);

@@ -23,6 +23,12 @@ public sealed partial class BiomeEntityLayer : IBiomeWorldLayer
     /// <inheritdoc/>
     [DataField("invert")] public bool Invert { get; private set; } = false;
 
+    /// <summary>
+    /// If true, spawn on any biome tile (ignores <see cref="AllowedTiles"/>).
+    /// </summary>
+    [DataField]
+    public bool AllowAllTiles;
+
     [DataField(required: true)]
     public List<EntProtoId> Entities = new();
 }

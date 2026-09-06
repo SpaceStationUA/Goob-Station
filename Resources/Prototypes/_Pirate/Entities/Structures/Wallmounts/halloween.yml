@@ -1,0 +1,53 @@
+# Ported from SpaceStationUA/station — Halloween wallmounts
+
+- type: entity
+  parent: PosterBase
+  id: HalloweenPosterHalloweenFamily
+  name: ghost family
+  description: Picture of a family of ghosts, they look happy.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/halloween.rsi
+    state: picture_family
+    noRot: true
+
+- type: entity
+  parent: PosterBase
+  id: HalloweenPosterHalloweencounts
+  name: count's painting
+  description: Picture of some kind of vampire, the sight of him makes you feel cold.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/halloween.rsi
+    state: counts_painting
+    noRot: true
+
+- type: entity
+  parent: BaseSign
+  id: HalloweenCheckboxes
+  name: checkboxes
+  description: Black and orange flags, it's got a halloween feel to it.
+  suffix: halloween
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/halloween.rsi
+    state: checkboxes
+    noRot: true
+
+- type: entity
+  parent: BaseSign
+  id: HalloweenLightbulbs
+  name: light bulbs
+  description: Hanging garland, not the best source of light.
+  suffix: halloween
+  components:
+  - type: PointLight
+    radius: 2.0
+    energy: 2.5
+    color: "#e8b964"
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/halloween.rsi
+    state: light_bulbs
+    noRot: true

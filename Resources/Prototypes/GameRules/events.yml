@@ -44,6 +44,8 @@
     - id: KingRatMigration
     - id: Fugitive # Pirate
     - id: BorerSpawn # Pirate
+    # - id: ListeningPost # Pirate: removed with listening station
+    # - id: MimeSpawn # Pirate - halloween slendermime (isolated, no auto-spawn)
     # - id: RevenantSpawn # Goob
     - id: EeepEvent # Harmony Eeep Port - imp
     # - id: SyndicateDeadDrop # Pirate: syndicate drop console - replaced by the always-on SyndicateDropDispatcher
