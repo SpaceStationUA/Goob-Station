@@ -21,11 +21,11 @@ using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-// ADT-Tweak-Start
+// Pirate -Start
 using Content.Shared.PowerCell.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
-// ADT-Tweak-End
+// Pirate -End
 
 namespace Content.Server.Medical.CrewMonitoring;
 
@@ -33,20 +33,20 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _cell = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    // ADT-Tweak Start - New Monitor: server subscriber
+    // Pirate Start - New Monitor: server subscriber
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly CrewMonitoringServerSystem _crewServers = default!;
     [Dependency] private readonly SuitSensorSystem _suitSensors = default!;
-    // ADT-Tweak End
+    // Pirate End
 
 
-    // ADT-Tweak-Start
+    // Pirate -Start
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    // ADT-Tweak-End
+    // Pirate -End
 
-    // ADT-Tweak Start - New Monitor: scan/select/alerts/navmap/offline
+    // Pirate Start - New Monitor: scan/select/alerts/navmap/offline
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
@@ -58,15 +58,15 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
     private const float CritAlertResyncDelay = 1.0f;
     private float _consoleUpdateAccumulator;
     private List<Entity<MapGridComponent>> _navMapGridBuffer = new();
-    // ADT-Tweak End
+    // Pirate End
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
-        SubscribeLocalEvent<CrewMonitoringConsoleComponent, GotEmaggedEvent>(OnEmagged); // ADT-Tweak
-        // ADT-Tweak Start - New Monitor: BUI + server update subscriptions
+        SubscribeLocalEvent<CrewMonitoringConsoleComponent, GotEmaggedEvent>(OnEmagged); // Pirate
+        // Pirate Start - New Monitor: BUI + server update subscriptions
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, CrewMonitoringSetAlertMutedMessage>(OnSetAlertMuted);
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, CrewMonitoringSetAlertVolumeMessage>(OnSetAlertVolume);
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, CrewMonitoringSelectServerMessage>(OnSelectServer);
@@ -76,10 +76,10 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, CrewMonitoringResetSensorsMessage>(OnResetSensors);
         SubscribeLocalEvent<CrewMonitoringServerComponent, EntityTerminatingEvent>(OnServerTerminating);
         SubscribeLocalEvent<CrewMonitoringServerComponent, CrewMonitoringServerUpdateEvent>(OnServerUpdate);
-        // ADT-Tweak End
+        // Pirate End
     }
 
-    // ADT-Tweak Start - New Monitor: scan / select / alert update loops
+    // Pirate Start - New Monitor: scan / select / alert update loops
     private void OnScanStart(EntityUid uid, CrewMonitoringConsoleComponent component, CrewMonitoringScanStartMessage args)
     {
         component.HasScanned = false;
@@ -153,9 +153,9 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         PopulateNavMapsForConsole(uid, component);
         UpdateUserInterface(uid, component);
     }
-    // ADT-Tweak End
+    // Pirate End
 
-    // ADT-Tweak Start - New Monitor: reset snapshots + force re-ingest
+    // Pirate Start - New Monitor: reset snapshots + force re-ingest
     private void OnResetSensors(EntityUid uid, CrewMonitoringConsoleComponent component, CrewMonitoringResetSensorsMessage args)
     {
         if (!component.HasScanned)
@@ -305,7 +305,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         PopulateNavMapsForConsole(uid, component);
         // Fresh selection: empty KnownAlertStates → one beep if anyone is already crit/dead.
         component.KnownAlertStates.Clear();
-        ProcessCritAlertSound(uid, component); //ADT-Tweak: NewMonitor
+        ProcessCritAlertSound(uid, component); // Pirate: NewMonitor
         UpdateUserInterface(uid, component);
     }
 
@@ -360,14 +360,14 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
 
             comp.OfflineStateSent = true;
             comp.ServersListDirty = true;
-            comp.KnownAlertStates.Clear(); //ADT-Tweak: NewMonitor — re-alert after reconnect
+            comp.KnownAlertStates.Clear(); // Pirate: NewMonitor — re-alert after reconnect
             comp.NextCritAlertTime = TimeSpan.Zero;
             UpdateUserInterface(uid, comp);
         }
     }
-    // ADT-Tweak End
+    // Pirate End
 
-    // ADT-Tweak Start - New Monitor: edge + 30s reminder crit/dead alerts
+    // Pirate Start - New Monitor: edge + 30s reminder crit/dead alerts
     /// <summary>
     /// After Reset Sensors silence window: one beep if any crit/dead remain, then resume edges.
     /// </summary>
@@ -523,7 +523,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
 
     private bool TryPlayCritAlertSound(EntityUid uid, CrewMonitoringConsoleComponent comp)
     {
-        //ADT-Tweak: Aghost UI - no beep from the ghost. Physical in-world monitors still PlayPvs.
+        // Pirate: Aghost UI - no beep from the ghost. Physical in-world monitors still PlayPvs.
         if (comp.SuppressCritAlertSound || comp.AlertMuted || comp.AlertVolume <= 0.01f)
             return false;
 
@@ -539,9 +539,9 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         _audio.PlayPvs(comp.CritAlertSound, uid, AudioParams.Default.WithVolume(volumeDb));
         return true;
     }
-    // ADT-Tweak End
+    // Pirate End
 
-    // ADT-Tweak Start - New Monitor: OnRemove unsubscribes from server
+    // Pirate Start - New Monitor: OnRemove unsubscribes from server
     private void OnRemove(EntityUid uid, CrewMonitoringConsoleComponent component, ComponentRemove args)
     {
         if (component.SelectedServerUid != null && TryComp<CrewMonitoringServerComponent>(component.SelectedServerUid.Value, out var serverComp))
@@ -549,9 +549,9 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         component.ConnectedSensors = new();
         component.LastReferenceFrame = null;
     }
-    // ADT-Tweak End
+    // Pirate End
 
-    // ADT-Tweak Start - New Monitor: server update / alert BUI handlers
+    // Pirate Start - New Monitor: server update / alert BUI handlers
     private void OnServerTerminating(EntityUid uid, CrewMonitoringServerComponent component, ref EntityTerminatingEvent args)
     {
         var subscribers = component.SubscriberConsoles.ToArray();
@@ -644,7 +644,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         console.LastGridUid =
             serverXform.GridUid != null ? GetNetEntity(serverXform.GridUid.Value) : null;
 
-        ProcessCritAlertSound(consoleUid, console); //ADT-Tweak: NewMonitor — edge alert on snapshot
+        ProcessCritAlertSound(consoleUid, console); // Pirate: NewMonitor — edge alert on snapshot
         UpdateUserInterface(consoleUid, console);
         return true;
     }
@@ -660,14 +660,14 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         component.AlertVolume = Math.Clamp(args.Volume, 0f, 1f);
         UpdateUserInterface(uid, component);
     }
-    // ADT-Tweak End
+    // Pirate End
 
     private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
     {
         if (!_cell.TryUseActivatableCharge(uid))
             return;
 
-        // ADT-Tweak Start - New Monitor: re-subscribe + populate navmaps on UI open
+        // Pirate Start - New Monitor: re-subscribe + populate navmaps on UI open
         // Re-attach to the selected server if the previous subscription was dropped
         // (server idle cleanup, restart, etc.) while the console kept SelectedServerUid.
         if (component.SelectedServerUid != null &&
@@ -678,11 +678,11 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         }
 
         PopulateNavMapsForConsole(uid, component);
-        // ADT-Tweak End
+        // Pirate End
         UpdateUserInterface(uid, component);
     }
 
-    // ADT-Tweak Start - New Monitor: extended UpdateUserInterface state
+    // Pirate Start - New Monitor: extended UpdateUserInterface state
     private void UpdateUserInterface(EntityUid uid, CrewMonitoringConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -735,9 +735,9 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
             component.LastReferenceFrame,
             component.AlertVolume));
     }
-    // ADT-Tweak End
+    // Pirate End
 
-    // ADT-Tweak Start - New Monitor: navmap / filter / server discovery helpers
+    // Pirate Start - New Monitor: navmap / filter / server discovery helpers
     private void PopulateNavMapsForConsole(EntityUid uid, CrewMonitoringConsoleComponent component)
     {
         var xform = Transform(uid);
@@ -801,7 +801,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
             }
 
             // Alert only for dead or MobState.Critical (unconscious), not high damage while awake.
-            if (!sensor.IsAlive || sensor.IsCritical) //ADT-Tweak: NewMonitor
+            if (!sensor.IsAlive || sensor.IsCritical) // Pirate: NewMonitor
             {
                 return true;
             }
@@ -1005,5 +1005,5 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
         UpdateUserInterface(uid, component);
         ev.Handled = true;
     }
-    // ADT-Tweak-End
+    // Pirate -End
 }

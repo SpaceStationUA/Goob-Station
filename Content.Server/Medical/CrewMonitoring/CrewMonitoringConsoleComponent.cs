@@ -1,7 +1,7 @@
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Medical.CrewMonitoring;
 using Robust.Shared.Audio;
-using Robust.Shared.Network;    // ADT-Tweak - New Monitor
+using Robust.Shared.Network;    // Pirate: New Monitor
 
 namespace Content.Server.Medical.CrewMonitoring;
 
@@ -21,7 +21,7 @@ public sealed partial class CrewMonitoringConsoleComponent : Component
     public float SensorTimeout = 10f;
 
 
-    // ADT-Tweak-Start
+    // Pirate: Start
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool IsEmagged = false;
 
@@ -40,7 +40,7 @@ public sealed partial class CrewMonitoringConsoleComponent : Component
         Params = AudioParams.Default.WithVolume(8),
     };
 
-    // ADT-Tweak Start - New Monitor: alerts, server selection, scan, snapshot pipeline
+    // Pirate: Start - New Monitor: alerts, server selection, scan, snapshot pipeline
     /// <summary>
     /// Cached localized department names for this console's filter.
     /// </summary>
@@ -177,6 +177,11 @@ public sealed partial class CrewMonitoringConsoleComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan? ScanStartedAt;
+    /// <summary>
+    /// Earliest time at which Reset Sensors may force another report burst.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public TimeSpan NextResetAllowedAt;
 
     /// <summary>
     /// Servers discovered by the last scan/rescan. New servers are not added until rescan.
@@ -189,5 +194,5 @@ public sealed partial class CrewMonitoringConsoleComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     public bool ServersListDirty = true;
-    // ADT-Tweak End
+    // Pirate: End
 }

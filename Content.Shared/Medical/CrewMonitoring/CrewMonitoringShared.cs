@@ -4,7 +4,7 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Medical.CrewMonitoring;
 
-// ADT-Tweak Start - New Monitor: server reference frame for framed coordinates
+// Pirate Start - New Monitor: server reference frame for framed coordinates
 [Serializable, NetSerializable]
 public sealed class CrewMonitoringReferenceFrame
 {
@@ -25,9 +25,9 @@ public sealed class CrewMonitoringReferenceFrame
         Name = name;
     }
 }
-// ADT-Tweak End
+// Pirate End
 
-// ADT-Tweak Start - New Monitor: server list entry for scan/select UI
+// Pirate Start - New Monitor: server list entry for scan/select UI
 [Serializable, NetSerializable]
 public sealed class CrewMonitoringServerEntry
 {
@@ -55,7 +55,7 @@ public sealed class CrewMonitoringServerEntry
         GridName = gridName ?? string.Empty;
     }
 }
-// ADT-Tweak End
+// Pirate End
 
 [Serializable, NetSerializable]
 public enum CrewMonitoringUIKey
@@ -63,7 +63,7 @@ public enum CrewMonitoringUIKey
     Key
 }
 
-// ADT-Tweak-Start
+// Pirate -Start
 [Serializable, NetSerializable]
 public enum CrewMonitoringDepartment
 {
@@ -78,15 +78,15 @@ public enum CrewMonitoringDepartment
     Silicon,
     Specific
 }
-// ADT-Tweak-End
+// Pirate -End
 
 [Serializable, NetSerializable]
 public sealed class CrewMonitoringState : BoundUserInterfaceState
 {
     public List<SuitSensorStatus> Sensors;
-    public bool IsEmagged; // ADT-Tweak
+    public bool IsEmagged; // Pirate
 
-    // ADT-Tweak Start - New Monitor: BUI state fields (online, alerts, servers, scan, frame)
+    // Pirate Start - New Monitor: BUI state fields (online, alerts, servers, scan, frame)
     /// <summary>
     /// True if console is receiving data from a server.
     /// </summary>
@@ -179,11 +179,11 @@ public sealed class CrewMonitoringState : BoundUserInterfaceState
         ServerGridUid = serverGridUid;
         SelectedServerUid = selectedServerUid;
         ReferenceFrame = referenceFrame;
-        // ADT-Tweak End
+        // Pirate End
     }
 }
 
-// ADT-Tweak Start - New Monitor: scan/select/alert BUI messages
+// Pirate Start - New Monitor: scan/select/alert BUI messages
 [Serializable, NetSerializable]
 public sealed class CrewMonitoringScanStartMessage : BoundUserInterfaceMessage
 {
@@ -242,4 +242,4 @@ public sealed class CrewMonitoringSelectServerMessage : BoundUserInterfaceMessag
         Server = server;
     }
 }
-// ADT-Tweak End
+// Pirate End

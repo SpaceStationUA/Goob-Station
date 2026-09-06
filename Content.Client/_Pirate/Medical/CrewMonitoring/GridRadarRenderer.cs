@@ -142,32 +142,53 @@ public sealed class GridRadarRenderer
 
     private void MergeCollinearEdges()
     {
-        var changed = true;
-        while (changed)
+        // Boundary edges are axis-aligned. Group by their supporting line and
+        // orientation, then sort and merge adjacent intervals in each group.
+        var groups = new Dictionary<(float Line, bool Horizontal), List<(Vector2 Start, Vector2 End)>>();
+        foreach (var edge in _edges)
         {
-            changed = false;
-            for (var i = 0; i < _edges.Count; i++)
+            var horizontal = edge.Start.Y == edge.End.Y;
+            var line = horizontal ? edge.Start.Y : edge.Start.X;
+            var key = (line, horizontal);
+            if (!groups.TryGetValue(key, out var group))
             {
-                var (start, end) = _edges[i];
-                for (var j = i + 1; j < _edges.Count; j++)
-                {
-                    var (nextStart, nextEnd) = _edges[j];
-                    if (!end.Equals(nextStart) ||
-                        !CollinearSimplifier.IsCollinear(
-                            start,
-                            end,
-                            nextEnd,
-                            10f * float.Epsilon))
-                    {
-                        continue;
-                    }
-
-                    _edges[i] = (start, nextEnd);
-                    _edges.RemoveAt(j);
-                    changed = true;
-                    break;
-                }
+                group = new List<(Vector2 Start, Vector2 End)>();
+                groups.Add(key, group);
             }
+
+            if ((horizontal && edge.Start.X <= edge.End.X) ||
+                (!horizontal && edge.Start.Y <= edge.End.Y))
+                group.Add(edge);
+            else
+                group.Add((edge.End, edge.Start));
+        }
+
+        _edges.Clear();
+        foreach (var group in groups.Values)
+        {
+            group.Sort(static (left, right) =>
+            {
+                var leftCoordinate = left.Start.X + left.Start.Y;
+                var rightCoordinate = right.Start.X + right.Start.Y;
+                return leftCoordinate.CompareTo(rightCoordinate);
+            });
+
+            var merged = group[0];
+            for (var i = 1; i < group.Count; i++)
+            {
+                var next = group[i];
+                var adjacent = merged.End == next.Start;
+                if (adjacent && CollinearSimplifier.IsCollinear(merged.Start, merged.End, next.End, 10f * float.Epsilon))
+                {
+                    merged.End = next.End;
+                    continue;
+                }
+
+                _edges.Add(merged);
+                merged = next;
+            }
+
+            _edges.Add(merged);
         }
     }
 

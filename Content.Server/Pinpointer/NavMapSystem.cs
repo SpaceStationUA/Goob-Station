@@ -301,11 +301,13 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             if (category == NavMapChunkType.Invalid)
                 continue;
 
-            var directions = (int)airtight.AirBlockedDirection;
-            tileData |= directions << (int) category;
+            var directions = (int) airtight.AirBlockedDirection;
+            // Category values are bit offsets; keep only the four direction bits
+            // before shifting to avoid sign/extra-bit contamination.
+            tileData |= (directions & AllDirMask) << (int) category;
         }
 
-        // ADT-Tweak Start - New Monitor: also mask Window bits under airlocks
+        // Pirate: Start - New Monitor: also mask Window bits under airlocks
         // Remove walls that intersect with doors (unless they can both physically fit on the same tile)
         // TODO NAVMAP why can this even happen?
         // Is this for blast-doors or something?
@@ -314,12 +316,12 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         var shiftedAirlockToWindow = (tileData & AirlockMask) >> ((int) NavMapChunkType.Airlock - (int) NavMapChunkType.Window);
         tileData &= ~shiftedAirlockToWall;
         tileData &= ~shiftedAirlockToWindow;
-        // ADT-Tweak End
+        // Pirate: End
 
         return (tileData, chunk);
     }
 
-    // #ADT-Tweak Start - New Monitor: force-rebuild navmap for Window category
+    // # Pirate Start - New Monitor: force-rebuild navmap for Window category
     /// <summary>
     /// Ensures a grid has a fully populated <see cref="NavMapComponent"/> (walls, windows, floors).
     /// Always rebuilds so category layout changes (e.g. windows) apply immediately.
@@ -332,7 +334,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         var navMap = EnsureComp<NavMapComponent>(gridUid);
         RefreshGrid(gridUid, navMap, mapGrid);
     }
-    // #ADT-Tweak End
+    // # Pirate End
 
     private bool PruneEmpty(Entity<NavMapComponent> entity, NavMapChunk chunk)
     {

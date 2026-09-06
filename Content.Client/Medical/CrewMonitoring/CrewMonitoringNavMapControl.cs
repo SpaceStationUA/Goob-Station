@@ -19,7 +19,7 @@ namespace Content.Client.Medical.CrewMonitoring;
 
 public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 {
-    // #ADT-Tweak Start - New Monitor: radar/navmap fields + corner alert UI
+    // # Pirate Start - New Monitor: radar/navmap fields + corner alert UI
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IParallelManager _parallel = default!;
 
@@ -35,7 +35,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         Math.Max(1, MidPoint - (int)(MinimapMargin * UIScale));
 
     private readonly SharedTransformSystem _transform;
-    private readonly SharedShuttleSystem _shuttles; // ADT-Tweak: фильтр стелс-кораблей по IFF
+    private readonly SharedShuttleSystem _shuttles; // Pirate: фильтр стелс-кораблей по IFF
     private readonly GridRadarRenderer _gridRenderer;
     private readonly IGameTiming _gameTiming;
     private List<Entity<MapGridComponent>> _grids = new();
@@ -81,13 +81,13 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
     /// <summary>Pressed = alerts enabled (not muted).</summary>
     public event Action<bool>? OnAlertEnabledChanged;
     public event Action<float>? OnAlertVolumeChanged;
-    // #ADT-Tweak End
+    // # Pirate End
 
-    // #ADT-Tweak Start - New Monitor: ctor radar + corner controls
+    // # Pirate Start - New Monitor: ctor radar + corner controls
     public CrewMonitoringNavMapControl()
     {
         _transform = EntManager.System<SharedTransformSystem>();
-        _shuttles = EntManager.System<SharedShuttleSystem>(); // ADT-Tweak
+        _shuttles = EntManager.System<SharedShuttleSystem>(); // Pirate: stealth shuttle filter
         _gameTiming = IoCManager.Resolve<IGameTiming>();
         _gridRenderer = new GridRadarRenderer(
             EntManager.System<SharedMapSystem>(),
@@ -255,9 +255,9 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         // Recenter on the connected monitoring server, not the grid physics center.
         RecenterButton.OnPressed += _ => RecenterToConnectedServer();
     }
-    //ADT-Tweak End
+    // Pirate: End
 
-    //ADT-Tweak Start - New Monitor: theme / alert / draw / foreign nav helpers
+    // Pirate: Start - New Monitor: theme / alert / draw / foreign nav helpers
     /// <summary>
     /// Snaps the map view to <see cref="SensorRangeCenter"/> (connected server) when available.
     /// </summary>
@@ -456,8 +456,10 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 
         if (!_freezeGridTransforms)
         {
+            if (!CaptureFrozenTransforms())
+                return;
+
             _freezeGridTransforms = true;
-            CaptureFrozenTransforms();
             return;
         }
 
@@ -672,26 +674,26 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
             ref _grids,
             approx: true,
             includeMap: false);
-        _grids.RemoveAll(g => !_shuttles.CanDraw(g.Owner)); // ADT-Tweak
+        _grids.RemoveAll(g => !_shuttles.CanDraw(g.Owner)); // Pirate: filter stealth shuttles
         _cachedGridQueryMap = mapId;
         _cachedGridQueryCenter = coverageCenter;
         _cachedGridQueryRange = coverageRange;
         _cachedGridQueryTime = now;
     }
 
-    private void CaptureFrozenTransforms()
+    private bool CaptureFrozenTransforms()
     {
         ClearFrozenTransforms();
 
         if (MapUid == null ||
             !EntManager.TryGetComponent<TransformComponent>(MapUid.Value, out var frameXform))
         {
-            return;
+            return false;
         }
 
         var mapId = frameXform.MapID;
         if (!TryGetCoverage(mapId, out var coverageCenter, out var coverageRange))
-            return;
+            return false;
 
         RefreshGridQuery(mapId, coverageCenter, coverageRange);
 
@@ -718,6 +720,8 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 
             _frozenBlipWorldPositions[entity] = mapPosition.Position;
         }
+
+        return true;
     }
 
     private void ClearFrozenTransforms()
@@ -1146,13 +1150,13 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         if (closest.IsValid())
             SelectTrackedEntity(closest);
     }
-    //ADT-Tweak End
+    // Pirate: End
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        if (Focus == null || !TrackedEntities.TryGetValue(Focus.Value, out var blip))   //ADT-Tweak - New Monitor
+        if (Focus == null || !TrackedEntities.TryGetValue(Focus.Value, out var blip))   // Pirate: New Monitor
         {
             _trackedEntityLabel.Text = string.Empty;
             _trackedEntityPanel.Visible = false;
@@ -1162,7 +1166,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         }
 
         if (!LocalizedNames.TryGetValue(Focus.Value, out var name))
-        //ADT-Tweak Start - New Monitor: rewritten FrameUpdate
+        // Pirate: Start - New Monitor: rewritten FrameUpdate
             name = Loc.GetString("navmap-unknown-entity");
 
         Vector2 position;
@@ -1183,7 +1187,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
                 ("x", MathF.Round(position.X)),
                 ("y", MathF.Round(position.Y)));
         _trackedEntityPanel.Visible = true;
-        // #ADT-Tweak End
+        // # Pirate End
     }
 
     private readonly record struct FrozenGridSnapshot(EntityUid Uid, Matrix3x2 GridToWorld);

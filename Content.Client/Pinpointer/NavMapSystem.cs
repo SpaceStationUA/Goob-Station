@@ -102,9 +102,9 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             }
         }
 
-        // ADT-Tweak Start - New Monitor: invalidate client wall/window line caches
-        component.DataVersion++;
-        // ADT-Tweak End
+        // Invalidate geometry caches only when chunk data actually changed.
+        if (modifiedChunks.Count > 0)
+            component.DataVersion++;
 
         // Refresh beacons
         component.Beacons.Clear();

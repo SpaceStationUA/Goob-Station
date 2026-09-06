@@ -1,7 +1,7 @@
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 
-// Pirate CrewMonitor visual helper.
+// Pirate: CrewMonitor visual helper.
 namespace Content.Client.Medical.CrewMonitoring;
 
 /// <summary>
@@ -19,10 +19,12 @@ public sealed class CrtScanlineBackground : Control
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        for (var y = 0; y < PixelHeight; y++)
+        var width = PixelWidth;
+        for (var y = 0; y < PixelHeight; y += 2)
         {
-            var color = (y & 1) == 0 ? LightLine : DarkLine;
-            handle.DrawRect(new UIBox2(0, y, PixelWidth, y + 1), color);
+            handle.DrawRect(new UIBox2(0, y, width, y + 1), LightLine);
+            if (y + 1 < PixelHeight)
+                handle.DrawRect(new UIBox2(0, y + 1, width, y + 2), DarkLine);
         }
     }
 }

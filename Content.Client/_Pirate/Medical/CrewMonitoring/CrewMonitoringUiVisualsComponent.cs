@@ -11,5 +11,5 @@ public sealed partial class CrewMonitoringUiVisualsComponent : Component
     /// Source color for the whole inner UI palette (CRT, frames, chrome, map wash).
     /// </summary>
     [DataField]
-    public string ThemeColor = "#6A7080";
+    public Color ThemeColor = Color.FromHex("#6A7080");
 }

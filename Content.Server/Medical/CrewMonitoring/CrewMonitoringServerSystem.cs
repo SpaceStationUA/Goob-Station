@@ -2,10 +2,12 @@ using System.Numerics;
 using Content.Server._Pirate.Medical.CrewMonitoring;
 using Content.Server._Pirate.Medical.SuitSensors;
 using Content.Server.DeviceNetwork.Components;
+using Content.Server._Pirate.ListeningPost.Components;
 using Content.Shared.Medical.SuitSensors;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Station.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Medical.CrewMonitoring;
@@ -16,16 +18,18 @@ namespace Content.Server.Medical.CrewMonitoring;
 
 public sealed class CrewMonitoringServerSystem : EntitySystem
 {
-    // ADT-Tweak Start - New Monitor: publish/subscriber fields
+    // Pirate: Start - New Monitor: publish/subscriber fields
     // [Dependency] private readonly SuitSensorSystem _sensors = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     private const float PublishInterval = 0.5f;
     private float _publishAccumulator;
     private readonly List<string> _removeBuffer = new();
+    private bool _urgentFlushPending;
 
     /// <summary>
     /// Number of monitoring servers that currently have at least one console subscriber.
@@ -35,7 +39,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
 
     /// <summary>True when any crew-monitor console is listening to any server.</summary>
     public bool HasAnySubscribers => _serversWithSubscribers > 0;
-    // ADT-Tweak End
+    // Pirate: End
 
 
     public override void Initialize()
@@ -43,14 +47,14 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<CrewMonitoringServerComponent, ComponentRemove>(OnRemove);
 
-        // ADT-Tweak Start - New Monitor: Initialize subscriptions
+        // Pirate: Start - New Monitor: Initialize subscriptions
         SubscribeLocalEvent<CrewMonitoringServerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SuitSensorComponent, SuitSensorReportEvent>(OnSensorReport);
-        // ADT-Tweak End
+        // Pirate: End
     }
 
 
-    // ADT-Tweak Start - New Monitor: subscriber API + IngestReport
+    // Pirate: Start - New Monitor: subscriber API + IngestReport
     /// <summary>
     /// Registers a console as listening to this server. Enables global sensor reporting on first subscriber.
     /// </summary>
@@ -98,6 +102,15 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         {
             // Idle servers must not ingest sensor traffic at all.
             if (server.SubscriberConsoles.Count == 0)
+                continue;
+            var serverStation = _station.GetOwningStation(serverUid);
+            var wearerStation = _station.GetOwningStation(report.Wearer);
+            if (!serverStation.HasValue || serverStation != wearerStation)
+                continue;
+
+            // Long-range relays collect their explicitly selected remote station;
+            // direct sensor reports must not populate their local snapshot.
+            if (HasComp<Content.Server._Pirate.ListeningPost.Components.LongRangeCrewMonitoringServerComponent>(serverUid))
                 continue;
 
             if (!power.Powered)
@@ -208,7 +221,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         }
 
         if (anyUrgentDirty)
-            PublishToSubscribers();
+            _urgentFlushPending = true;
     }
 
     /// <summary>
@@ -238,9 +251,9 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         _serversWithSubscribers = Math.Max(0, _serversWithSubscribers - 1);
         EnterIdle(server);
     }
-    // ADT-Tweak End
+    // Pirate: End
 
-    // ADT-Tweak Start - New Monitor: map init + report relay
+    // Pirate: Start - New Monitor: map init + report relay
     private void OnMapInit(EntityUid uid, CrewMonitoringServerComponent component, MapInitEvent args)
     {
         component.ServerAddress ??= $"10.0.{_random.Next(256)}.{_random.Next(256)}";
@@ -253,12 +266,18 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     {
         IngestReport(in report);
     }
-    // ADT-Tweak End
+    // Pirate: End
 
-    // ADT-Tweak Start - New Monitor: publish tick Update
+    // Pirate: Start - New Monitor: publish tick Update
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        if (_urgentFlushPending)
+        {
+            _urgentFlushPending = false;
+            PublishToSubscribers();
+        }
 
         _publishAccumulator += frameTime;
         if (_publishAccumulator < PublishInterval)
@@ -341,9 +360,9 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         // Dead or true softcrit (unconscious) — not merely high damage while awake.
         return !status.IsAlive || status.IsCritical;
     }
-    // ADT-Tweak End
+    // Pirate: End
 
-    // ADT-Tweak Start - New Monitor: snapshot helpers
+    // Pirate: Start - New Monitor: snapshot helpers
     /// <summary>Shared empty snapshot — must never be mutated.</summary>
     private static readonly Dictionary<string, SuitSensorStatus> EmptySensorSnapshot = new();
 
@@ -378,9 +397,9 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         if (changed)
             server.SnapshotDirty = true;
     }
-    // ADT-Tweak End
+    // Pirate: End
 
-    // ADT-Tweak Start - New Monitor: OnRemove clears subscribers/snapshots
+    // Pirate: Start - New Monitor: OnRemove clears subscribers/snapshots
     private void OnRemove(
         EntityUid uid,
         CrewMonitoringServerComponent component,
@@ -394,9 +413,9 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         component.SubscriberConsoles.Clear();
         component.ReferenceFrame = null;
     }
-    // ADT-Tweak End
+    // Pirate: End
 
-    // ADT-Tweak Start - New Monitor: reference frame / timeout / cull helpers
+    // Pirate: Start - New Monitor: reference frame / timeout / cull helpers
     /// <summary>
     /// Rebuilds the reference frame only when grid/map, origin, range, or name actually changed.
     /// </summary>
@@ -563,5 +582,5 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
 
         return true;
     }
-    // ADT-Tweak End
+    // Pirate: End
 }

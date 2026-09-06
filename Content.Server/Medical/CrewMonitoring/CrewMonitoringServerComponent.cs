@@ -9,7 +9,7 @@ namespace Content.Server.Medical.CrewMonitoring;
     typeof(Content.Server._Pirate.ListeningPost.Systems.LongRangeCrewMonitoringServerSystem))]
 public sealed partial class CrewMonitoringServerComponent : Component
 {
-    // ADT-Tweak Start - New Monitor
+    // Pirate Start - New Monitor
     /// <summary>
     ///     Live sensors currently in range of this server.
     /// </summary>
@@ -20,17 +20,17 @@ public sealed partial class CrewMonitoringServerComponent : Component
     /// power loss, or idle, so consoles retain the last known position.
     /// </summary>
     public readonly Dictionary<string, SuitSensorStatus> LastSensorSnapshot = new();
-    // ADT-Tweak End
+    // Pirate End
 
     /// <summary>
     ///     After what time sensor consider to be lost.
     /// </summary>
     [DataField("sensorTimeout"), ViewVariables(VVAccess.ReadWrite)]
-    // ADT-Tweak Start - New Monitor: 10s -> 3s sensor timeout
+    // Pirate Start - New Monitor: 10s -> 3s sensor timeout
     public float SensorTimeout = 3f;
-    // ADT-Tweak End
+    // Pirate End
 
-    // ADT-Tweak Start - New Monitor: reference frame + server identity
+    // Pirate Start - New Monitor: reference frame + server identity
     /// <summary>
     /// Grid or map frame used by all coordinates in the current snapshot.
     /// </summary>
@@ -62,5 +62,5 @@ public sealed partial class CrewMonitoringServerComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public bool SnapshotDirty = true;
-    // ADT-Tweak End
+    // Pirate End
 }

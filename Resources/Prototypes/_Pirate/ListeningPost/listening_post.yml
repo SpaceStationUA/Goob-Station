@@ -68,8 +68,10 @@
   parent: ComputerCrewMonitoring
   id: ComputerCrewMonitoringSyndicate
   suffix: Syndicate, Long Range
-  # Pirate: DeltaV's mapper-only MappingCategories component is unavailable here.
   components:
+  - type: Tag
+    tags:
+    - Syndicate
   - type: LongRangeCrewMonitor
 
 - type: entity
@@ -100,6 +102,9 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: Tag
+    tags:
+    - Syndicate
   - type: LongRangeCrewMonitoringServer
   - type: CrewMonitoringServer
   - type: DeviceNetwork

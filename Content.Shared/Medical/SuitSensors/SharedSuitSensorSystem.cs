@@ -40,23 +40,23 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    // ADT-Tweak Start - New Monitor: wearer -> OnMob sensor index
+    // Pirate: Start - New Monitor: wearer -> OnMob sensor index
     /// <summary>
     /// Wearer → OnMob suit-sensor entity. Avoids an O(S) EntityQuery in GetSensorState.
     /// </summary>
     private readonly Dictionary<EntityUid, EntityUid> _onMobSensorsByWearer = new();
-    // ADT-Tweak End
+    // Pirate: End
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SuitSensorComponent, ComponentStartup>(OnStartup); //ADT-Tweak: NewMonitor
+        SubscribeLocalEvent<SuitSensorComponent, ComponentStartup>(OnStartup); // Pirate: NewMonitor
         SubscribeLocalEvent<SuitSensorComponent, ComponentShutdown>(OnShutdown);
-        // ADT-Tweak Start - New Monitor: PlayerSpawnCompleteEvent station assignment unused
+        // Pirate: Start - New Monitor: PlayerSpawnCompleteEvent station assignment unused
         // SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
-        // ADT-Tweak End
+        // Pirate: End
         SubscribeLocalEvent<SuitSensorComponent, ClothingGotEquippedEvent>(OnEquipped);
         SubscribeLocalEvent<SuitSensorComponent, ClothingGotUnequippedEvent>(OnUnequipped);
         SubscribeLocalEvent<SuitSensorComponent, EmpPulseEvent>(OnEmpPulse);
@@ -72,13 +72,13 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     private void OnMapInit(Entity<SuitSensorComponent> ent, ref MapInitEvent args)
     {
         // Fallback
-        // ADT-Tweak Start - New Monitor: OnMob self-user + index at map init
+        // Pirate: Start - New Monitor: OnMob self-user + index at map init
         if (ent.Comp.OnMob)
         {
             ent.Comp.User = ent.Owner;
             IndexOnMobSensor(ent);
         }
-        // ADT-Tweak End
+        // Pirate: End
 
         // generate random mode
         if (ent.Comp.RandomMode)
@@ -93,17 +93,17 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             };
             ent.Comp.Mode = _random.Pick(modesDist);
         }
-        // ADT-Tweak Start - NewMonitor:
+        // Pirate: Start - NewMonitor:
         // Spread initial reports over the first interval so a round start does
         // not update every uniform on the same tick.
         ent.Comp.NextUpdate =
             _timing.CurTime +
             TimeSpan.FromSeconds(_random.NextFloat() * (float) ent.Comp.UpdateRate.TotalSeconds);
-        // ADT-Tweak End
+        // Pirate: End
         Dirty(ent);
     }
 
-    // ADT-Tweak Start - New Monitor: OnMob startup/shutdown indexing
+    // Pirate: Start - New Monitor: OnMob startup/shutdown indexing
     private void OnStartup(Entity<SuitSensorComponent> ent, ref ComponentStartup args)
     {
         if (!ent.Comp.OnMob)
@@ -121,7 +121,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         if (dirty)
             Dirty(ent);
     }
-    // ADT-Tweak Start - New Monitor: Deleted
+    // Pirate: Start - New Monitor: Deleted
     // private void OnPlayerSpawn(PlayerSpawnCompleteEvent ev)
     // {
     //     // If the player spawns in arrivals then the grid underneath them may not be appropriate.
@@ -147,9 +147,9 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     //     }
     // }
 
-    // ADT-Tweak End
+    // Pirate: End
 
-    // ADT-Tweak Start - New Monitor: New indexing
+    // Pirate: Start - New Monitor: New indexing
     protected virtual void OnShutdown(Entity<SuitSensorComponent> ent, ref ComponentShutdown args)
     {
         UnindexOnMobSensor(ent);
@@ -171,11 +171,11 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         if (_onMobSensorsByWearer.TryGetValue(wearer, out var indexed) && indexed == ent.Owner)
             _onMobSensorsByWearer.Remove(wearer);
     }
-    // ADT-Tweak End
+    // Pirate: End
 
     private void OnEquipped(Entity<SuitSensorComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        if (ent.Comp.OnMob) //ADT-Tweak: NewMonitor
+        if (ent.Comp.OnMob) // Pirate: NewMonitor
             return;
 
         ent.Comp.User = args.Wearer;
@@ -184,7 +184,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
 
     private void OnUnequipped(Entity<SuitSensorComponent> ent, ref ClothingGotUnequippedEvent args)
     {
-        if (ent.Comp.OnMob) //ADT-Tweak: NewMonitor
+        if (ent.Comp.OnMob) // Pirate: NewMonitor
             return;
 
         ent.Comp.User = null;
@@ -250,14 +250,14 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
             return;
 
-        //ADT-Tweak-Start
+        // Pirate: Start
         if (!ent.Comp.OnMob)
         {
             // check if target is incapacitated (cuffed, dead, etc)
             if (ent.Comp.User != null && args.User != ent.Comp.User && _actionBlocker.CanInteract(ent.Comp.User.Value, null))
                 return;
         }
-        //ADT-Tweak-End
+        // Pirate: End
 
         args.Verbs.UnionWith(new[]
         {
@@ -270,10 +270,10 @@ public abstract class SharedSuitSensorSystem : EntitySystem
 
     private void OnInsert(Entity<SuitSensorComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
-        //ADT-Tweak-Start
+        // Pirate: Start
         if (ent.Comp.OnMob)
             return;
-        //ADT-Tweak-End
+        // Pirate: End
 
         if (args.Container.ID != ent.Comp.ActivationContainer)
             return;
@@ -284,10 +284,10 @@ public abstract class SharedSuitSensorSystem : EntitySystem
 
     private void OnRemove(Entity<SuitSensorComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
-        //ADT-Tweak-Start
+        // Pirate: Start
         if (ent.Comp.OnMob)
             return;
-        //ADT-Tweak-End
+        // Pirate: End
 
         if (args.Container.ID != ent.Comp.ActivationContainer)
             return;
@@ -305,7 +305,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             Priority = -(int)mode, // sort them in descending order
             Category = VerbCategory.SetSensor,
             // Must close: otherwise the sensor submenu stays open after a click.
-            CloseMenu = true, //ADT-Tweak: NewMonitor
+            CloseMenu = true, // Pirate: NewMonitor
             Act = () => TrySetSensor(ent.AsNullable(), mode, userUid)
         };
     }
@@ -419,7 +419,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         var sensor = ent.Comp1;
         var transform = ent.Comp2;
 
-        // ADT-Tweak Start - New Monitor: prefer active OnMob sensor over uniform
+        // Pirate: Start - New Monitor: prefer active OnMob sensor over uniform
         // Prefer an *active* OnMob sensor over the uniform. An Off OnMob sensor
         // must not silence the jumpsuit, or that wearer vanishes from monitors.
         var wearer = sensor.User;
@@ -440,13 +440,13 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         {
             return null;
         }
-        // ADT-Tweak End
+        // Pirate: End
 
         // try to get mobs id from ID slot
         var userName = Loc.GetString("suit-sensor-component-unknown-name");
         var userJob = Loc.GetString("suit-sensor-component-unknown-job");
         var userJobIcon = "JobIconNoId";
-        List<string>? userJobDepartments = null;    // ADT-Tweak - New Monitor
+        List<string>? userJobDepartments = null;    // Pirate: New Monitor
 
         if (_idCardSystem.TryFindIdCard(sensor.User.Value, out var card))
         {
@@ -455,7 +455,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             if (card.Comp.LocalizedJobTitle != null)
                 userJob = card.Comp.LocalizedJobTitle;
             userJobIcon = card.Comp.JobIcon;
-            // ADT-Tweak Start - New Monitor
+            // Pirate: Start - New Monitor
             if (card.Comp.JobDepartments.Count > 0)
             {
                 userJobDepartments = new List<string>(card.Comp.JobDepartments.Count);
@@ -468,27 +468,27 @@ public abstract class SharedSuitSensorSystem : EntitySystem
                 if (userJobDepartments.Count == 0)
                     userJobDepartments = null;
             }
-            // ADT-Tweak End
+            // Pirate: End
         }
 
-        userJobDepartments ??= SuitSensorStatus.NoDepartments;  // ADT-Tweak - New Monitor
+        userJobDepartments ??= SuitSensorStatus.NewDepartments();
 
         // get health mob state
         var isAlive = false;
-        var isCritical = false; // ADT-Tweak - New Monitor: IsCritical = MobState.Critical only — high damage while conscious is NOT crit.
+        var isCritical = false; // Pirate: New Monitor: IsCritical = MobState.Critical only — high damage while conscious is NOT crit.
         if (TryComp(sensor.User.Value, out MobStateComponent? mobState))
         {
             isAlive = !_mobStateSystem.IsDead(sensor.User.Value, mobState);
-            isCritical = _mobStateSystem.IsCritical(sensor.User.Value, mobState); //ADT-Tweak: NewMonitor
+            isCritical = _mobStateSystem.IsCritical(sensor.User.Value, mobState); // Pirate: NewMonitor
         }
 
         var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(ent.Owner), userName, userJob, userJobIcon, userJobDepartments)
         {
-            // ADT-Tweak Start - NewMonitor
+            // Pirate: Start - NewMonitor
             IsAlive = isAlive,
             IsCritical = isCritical,
             IsCommandTracker = sensor.CommandTracker,
-            // ADT-Tweak End
+            // Pirate: End
         };
         switch (sensor.Mode)
         {
@@ -499,7 +499,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             case SuitSensorMode.SensorCords:
             {
                 status.IsAlive = isAlive;
-                // ADT-Tweak Start - NewMonitor:
+                // Pirate: Start - NewMonitor:
                 // Damage / threshold only for vitals+ modes — skip for binary.
                 if (TryComp<DamageableComponent>(sensor.User.Value, out var damageable))
                     status.TotalDamage = damageable.TotalDamage.Int();
@@ -509,7 +509,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
 
                 if (sensor.Mode != SuitSensorMode.SensorCords)
                     break;
-                // ADT-Tweak End
+                // Pirate: End
 
                 EntityCoordinates coordinates;
                 var xformQuery = GetEntityQuery<TransformComponent>();
@@ -534,12 +534,12 @@ public abstract class SharedSuitSensorSystem : EntitySystem
                 break;
             }
         }
-        status.Mode = sensor.Mode;   //ADT-Tweak - NewMonitor: Preserve current sensor mode so the monitor UI can filter and mask data correctly.
+        status.Mode = sensor.Mode;   // Pirate: NewMonitor: Preserve current sensor mode so the monitor UI can filter and mask data correctly.
 
         return status;
     }
 
-    // ADT-Tweak Start - NewMonitor: Unused Networking
+    // Pirate: Start - NewMonitor: Unused Networking
     // /// <summary>
     // /// Create a device network package from the suit sensors status.
     // /// </summary>
@@ -601,5 +601,5 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     //     };
     //     return status;
     // }
-    // ADT-Tweak End
+    // Pirate: End
 }

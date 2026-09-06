@@ -100,8 +100,10 @@ public sealed class CrewMonitoringVerticalSlider : Control
     private void ApplyPosition(float localY)
     {
         var pad = 4f;
+        // RelativePosition is in logical UI units, while PixelHeight is physical pixels.
+        var physicalY = localY * UIScale;
         var usable = Math.Max(1f, PixelHeight - pad * 2f);
-        var ratio = 1f - Math.Clamp((localY - pad) / usable, 0f, 1f);
+        var ratio = 1f - Math.Clamp((physicalY - pad) / usable, 0f, 1f);
         Value = ratio;
     }
 }

@@ -27,12 +27,12 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Medical.CrewMonitoring;
 
 [GenerateTypedNameReferences]
-public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - New Monitor new parent
+public sealed partial class CrewMonitoringWindow : BaseWindow   // Pirate: New Monitor new parent
 {
-    private static readonly List<CrewMonitoringServerEntry> EmptyServerList = new();     //ADT-Tweak - New Monitor: Servers
+    private static readonly List<CrewMonitoringServerEntry> EmptyServerList = new();     // Pirate: New Monitor: Servers
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;  // ADT-Tweak - New Monitor: cache
+    [Dependency] private readonly IResourceCache _resourceCache = default!;  // Pirate: New Monitor: cache
     private readonly SharedTransformSystem _transformSystem;
     private readonly SpriteSystem _spriteSystem;
 
@@ -40,7 +40,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
     private bool _tryToScrollToListFocus;
     private Texture? _blipTexture;
 
-    // ADT-Tweak Start - New Monitor
+    // Pirate: Start - New Monitor
     private Texture? _serverBlipTexture;
     private EntityUid? _monitorUid;
 
@@ -111,6 +111,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
     private Texture? _critStatusTextureB;
     private float _scanProgress;
     private float _scanWaitingRetry;
+    private int _scanRetryCount;
     private bool _rescanInProgress;
     private float _rescanProgress;
     private ProgressBar? _rescanProgressBar;
@@ -178,7 +179,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         get => null;
         set { }
     }
-    // ADT-Tweak End
+    // Pirate: End
 
     public CrewMonitoringWindow()
     {
@@ -188,7 +189,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         _transformSystem = _entManager.System<SharedTransformSystem>();
         _spriteSystem = _entManager.System<SpriteSystem>();
 
-        // ADT-Tweak Start - New Monitor: ctor + chassis/theme setup
+        // Pirate: Start - New Monitor: ctor + chassis/theme setup
         SetupChassisRailStyleBoxes();
 
         CloseButton.OnPressed += _ => Close();
@@ -197,7 +198,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         NavMap.ZLevelSelectedAction += (grid, depth) => OnZLevelSelected?.Invoke(grid, depth); // Pirate: multiz
         NavMap.OnAlertEnabledChanged += enabled => OnAlertMutedChanged?.Invoke(!enabled);
         NavMap.OnAlertVolumeChanged += volume => OnAlertVolumeChanged?.Invoke(volume);
-        ApplyScreenTheme(null);
+        ApplyScreenTheme(Color.FromHex("#6A7080"));
 
         StartScanButton.OnPressed += _ =>
         {
@@ -207,10 +208,11 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
             ScanLoadingPercent.Text = "0%";
             _scanProgress = 0;
             _scanWaitingRetry = 0;
+            _scanRetryCount = 0;
             OnScanStarted?.Invoke();
         };
 
-        // ADT-Tweak Start - New Monitor: reset + wounded-only filter wiring
+        // Pirate: Start - New Monitor: reset + wounded-only filter wiring
         ResetSensorsButton.OnPressed += _ => OnResetSensors?.Invoke();
         WoundedOnlyCheckbox.OnToggled += _ =>
         {
@@ -218,9 +220,9 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
             if (_lastSensorsState != null)
                 ShowSensors(_lastSensorsState, _lastMonitorUid, _lastMonitorCoords);
         };
-        // ADT-Tweak End
+        // Pirate: End
 
-        // ADT-Tweak Start - New Monitor: Deprecated
+        // Pirate: Start - New Monitor: Deprecated
         // public void Set(string stationName, EntityUid? mapUid)
         // {
         //     _blipTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")));
@@ -235,9 +237,9 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         //     StationName.Text = stationName;
         //     NavMap.ForceNavMapUpdate();
         // }
-        // ADT-Tweak End
+        // Pirate: End
 
-        // ADT-Tweak Start - New Monitor: former Set() init (args were unused)
+        // Pirate: Start - New Monitor: former Set() init (args were unused)
         _blipTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")));
         _serverBlipTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_square.png")));
 
@@ -247,7 +249,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         StationName.AddStyleClass("LabelBig");
         StationName.Text = Loc.GetString("crew-monitoring-ui-scan-initializing");
         NavMap.ForceNavMapUpdate();
-        // ADT-Tweak End
+        // Pirate: End
     }
 
     /// <summary>
@@ -309,9 +311,8 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
     /// <summary>
     /// Builds CRT / frame / chrome / map / tabs / buttons from one hue while keeping shade relationships.
     /// </summary>
-    public void ApplyScreenTheme(string? themeHex)
+    public void ApplyScreenTheme(Color theme)
     {
-        var theme = Color.FromHex(themeHex ?? "#6A7080", Color.FromHex("#6A7080"));
         var hsv = Color.ToHsv(theme);
         var h = hsv.X;
         var s = Math.Clamp(hsv.Y, 0.12f, 0.9f);
@@ -384,7 +385,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         StartScanButton.StyleBoxOverride = startScanBox;
         StartScanButton.ModulateSelfOverride = Color.White;
         StartScanButton.Label.FontOverride = _resourceCache.NotoStack(variation: "Bold", size: 16);
-        StartScanButton.Label.FontColorOverride = Color.White; //ADT-Tweak: NewMonitor
+        StartScanButton.Label.FontColorOverride = Color.White; // Pirate: NewMonitor
         StartScanButton.Label.ModulateSelfOverride = Color.White;
 
         // Checkboxes: same brightness class as the ONLINE indicator.
@@ -408,6 +409,10 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
             Color.FromHsv(new Vector4(h, Math.Clamp(s * 0.7f, 0.35f, 0.75f), Math.Clamp(hsv.Z * 1.15f, 0.72f, 0.95f), 1f)),
             _buttonStyle,
             Color.FromHsv(new Vector4(h, Math.Clamp(s * 0.55f, 0.25f, 0.7f), 0.28f, 1f)));
+    }
+    public void ApplyScreenTheme(string? themeHex)
+    {
+        ApplyScreenTheme(Color.FromHex(themeHex ?? "#6A7080", Color.FromHex("#6A7080")));
     }
 
     /// <summary>
@@ -512,13 +517,13 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
     {
         return DragMode.Move;
     }
-    // ADT-Tweak End
+    // Pirate: End
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        // ADT-Tweak Start - New Monitor: rewritten FrameUpdate
+        // Pirate: Start - New Monitor: rewritten FrameUpdate
         if (ScanLoadingPanel.Visible && _scanProgress < 1f)
         {
             _scanProgress += (float) args.DeltaSeconds / ScanDuration;
@@ -543,16 +548,18 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                 ScanLoadingPercent.Text = "100%";
                 ScanLoadingStatus.Text = Loc.GetString("crew-monitoring-ui-scan-waiting");
                 OnScanComplete?.Invoke();
-                // Keep poking the server while HasScanned stays false (lost start/complete).
                 _scanWaitingRetry = 0.75f;
+                _scanRetryCount = 0;
             }
         }
         else if (ScanLoadingPanel.Visible && _scanProgress >= 1f && StartScanPanel.Visible)
         {
             _scanWaitingRetry -= (float) args.DeltaSeconds;
-            if (_scanWaitingRetry <= 0f)
+            if (_scanWaitingRetry <= 0f && _scanRetryCount < 4)
             {
                 _scanWaitingRetry = 0.75f;
+                _scanRetryCount++;
+                ScanLoadingStatus.Text = Loc.GetString("crew-monitoring-ui-no-server-label");
                 OnScanComplete?.Invoke();
             }
         }
@@ -575,7 +582,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         if (_tryToScrollToListFocus)
             TryToScrollToFocus();
 
-        UpdateCriticalBlink(); // ADT-Tweak: NewMonitor crit blink
+        UpdateCriticalBlink(); // Pirate: NewMonitor crit blink
 
         _monitorBlipTimer += (float) args.DeltaSeconds;
         if (_monitorBlipTimer >= MonitorBlipMinInterval)
@@ -584,10 +591,10 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
             UpdateMonitorBlip(force: false);
         }
     }
-    // ADT-Tweak End
+    // Pirate: End
 
 
-    // ADT-Tweak Start - New Monitor: crit blink helpers
+    // Pirate: Start - New Monitor: crit blink helpers
     private void EnsureCritTextures()
     {
         if (_critStatusTextureA != null)
@@ -658,9 +665,9 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                 blip.Scale);
         }
     }
-    // ADT-Tweak End
+    // Pirate: End
 
-    // ADT-Tweak-start (P4A) Обновление мониторинга. Категория "Нужна помощь"
+    // Pirate: start (P4A) Обновление мониторинга. Категория "Нужна помощь"
     public void ShowSensors(CrewMonitoringState state, EntityUid monitor, EntityCoordinates? monitorCoords)
     {
         _monitorUid = monitor;
@@ -677,8 +684,8 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         if (hasScanned)
         {
             ScanLoadingPanel.Visible = false;
-            _scanProgress = 0;
             _scanWaitingRetry = 0;
+            _scanRetryCount = 0;
         }
 
         ServerStatusContainer.Visible = hasScanned;
@@ -934,7 +941,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         if (sensors.Count == 0)
         {
             NoServerLabel.Visible = true;
-            NoServerLabel.Text = Loc.GetString("crew-monitoring-ui-no-server-label");   //ADT-Tweak - New Monitor
+            NoServerLabel.Text = Loc.GetString("crew-monitoring-ui-no-server-label");   // Pirate: New Monitor
             UpdateGridMotionFreeze(state, syncBlips: true);
             return;
         }
@@ -951,20 +958,16 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                     continue;
 
 
-                switch (sensor.Mode)
+                // Binary mode intentionally clears damage while preserving the last-known coordinates.
+                if (sensor.Mode == SuitSensorMode.SensorBinary)
                 {
-                    case SuitSensorMode.SensorBinary:
-                        // Keep Coordinates if the server retained a last-known pin.
-                        sensor.TotalDamage = null;
-                        sensor.TotalDamageThreshold = null;
-                        break;
-                    case SuitSensorMode.SensorVitals:
-                        // Same: do not clear Coordinates — last GPS must survive mode downgrade.
-                        break;
+                    sensor.TotalDamage = null;
+                    sensor.TotalDamageThreshold = null;
                 }
+                // Vitals mode retains both damage and coordinates unchanged.
             }
         }
-    // ADT-Tweak End
+    // Pirate: End
 
         // Collect one status per user, using the sensor with the most data available.
         Dictionary<NetEntity, SuitSensorStatus> uniqueSensorsMap = new();
@@ -984,12 +987,12 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         }
         var uniqueSensors = uniqueSensorsMap.Values.ToList();
 
-        // ADT-Tweak Start - New Monitor: wounded-only client filter
+        // Pirate: Start - New Monitor: wounded-only client filter
         if (WoundedOnlyCheckbox.Pressed)
             uniqueSensors = uniqueSensors.Where(IsWoundedOrWorse).ToList();
-        // ADT-Tweak End
+        // Pirate: End
 
-        // ADT-Tweak Start - New Monitor: Отделяем без сознания (crit), мёртвых и тяжело раненых (health≈4).
+        // Pirate: Start - New Monitor: Отделяем без сознания (crit), мёртвых и тяжело раненых (health≈4).
         var needsHelpSensors = uniqueSensors
             .Where(s => s.IsActive &&
                         s.Mode != SuitSensorMode.SensorOff &&
@@ -997,7 +1000,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                          s.IsCritical ||
                          s.DamagePercentage != null && s.DamagePercentage.Value >= 0.8f))
             .ToList();
-        // ADT-Tweak End
+        // Pirate: End
         var otherSensors = uniqueSensors.Except(needsHelpSensors).ToList();
 
         // Сначала добавляем департамент "Требуется помощь", если есть такие
@@ -1019,7 +1022,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
 
             PopulateDepartmentList(needsHelpSensors);
         }
-        var orderedSensors = otherSensors.OrderBy(j => j.Job).ThenBy(n => n.Name);  //ADT-Tweak - New Monitor
+        var orderedSensors = otherSensors.OrderBy(j => j.Job).ThenBy(n => n.Name);  // Pirate: New Monitor
         var assignedSensors = new HashSet<SuitSensorStatus>();
         var departments = otherSensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n);
 
@@ -1071,7 +1074,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
             PopulateDepartmentList(remainingSensors);
         }
 
-        UpdateMonitorBlip(force: true); // ADT-Tweak Start - New Monitor
+        UpdateMonitorBlip(force: true); // Pirate: Start - New Monitor
         // After rebuild: rising-edge freezes grids; syncBlips refreshes marker snapshots only.
         UpdateGridMotionFreeze(state, syncBlips: true);
     }
@@ -1087,7 +1090,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         NavMap.SetGridTransformsFrozen(freeze, syncBlips && freeze);
     }
 
-    // ADT-Tweak Start - New Monitor: blips / header / rescan / server UI helpers
+    // Pirate: Start - New Monitor: blips / header / rescan / server UI helpers
     private void UpdateExistingCrewBlips(List<SuitSensorStatus> sensors, bool isEmagged)
     {
         if (!NavMap.Visible || _blipTexture == null)
@@ -1293,9 +1296,9 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
 
         NavMap.SetAlertControls(!state.AlertMuted, state.AlertVolume);
     }
-    // ADT-Tweak-end (P4A)
+    // Pirate: end (P4A)
 
-    // ADT-Tweak Start - New Monitor: rewritten PopulateDepartmentList, wounded-only filter predicate
+    // Pirate: Start - New Monitor: rewritten PopulateDepartmentList, wounded-only filter predicate
     /// <summary>
     /// True for damage starting at health2 ("неоч") up through critical and dead.
     /// Binary sensors without vitals only match when dead.
@@ -1311,7 +1314,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         // Same mapping as the crew-monitor RSI: Round(4 * pct) → health0..4 / critical.
         return MathF.Round(4f * pct) >= 2f;
     }
-    // ADT-Tweak End
+    // Pirate: End
 
     private void PopulateDepartmentList(IEnumerable<SuitSensorStatus> departmentSensors)
     {
@@ -1325,30 +1328,29 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
 
             var coordinates = _entManager.GetCoordinates(sensor.Coordinates);
 
-            // ADT-Tweak Start - New Monitor: False coordinates flush
+            // Pirate: Start - New Monitor: False coordinates flush
             if (coordinates != null && !coordinates.Value.IsValid(_entManager))
                 coordinates = null;
-            // ADT-Tweak End
+            // Pirate: End
 
             // Add a button that will hold a username and other details
             NavMap.LocalizedNames.TryAdd(sensor.SuitSensorUid, sensor.Name + ", " + sensor.Job);
 
-            var isCritical = sensor.IsAlive && sensor.IsCritical; // ADT-Tweak
-
+            var isCritical = sensor.IsAlive && sensor.IsCritical; // Pirate:
             var sensorButton = new CrewMonitoringButton()
             {
                 SuitSensorUid = sensor.SuitSensorUid,
                 Coordinates = coordinates,
                 Disabled = coordinates == null,
                 HorizontalExpand = true,
-                // ADT-Tweak Start - New Monitor
+                // Pirate: Start - New Monitor
                 SensorMode = sensor.Mode,
                 SensorActive = sensor.IsActive,
                 IsCritical = isCritical,
                 MaxHeight = 36,
                 // Map tint only: live GPS uses status colors; last-known pin stays gray.
                 StatusColor = GetMapBlipBaseColor(sensor, out _),
-                // ADT-Tweak End
+                // Pirate: End
             };
 
             var selected = sensor.SuitSensorUid == _trackedEntity;
@@ -1360,7 +1362,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
             {
                 Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
-                MinWidth = 0,   // ADT-Tweak - New Monitor
+                MinWidth = 0,   // Pirate: New Monitor
             };
 
             sensorButton.AddChild(mainContainer);
@@ -1369,12 +1371,12 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
             var statusContainer = new BoxContainer()
             {
                 Orientation = LayoutOrientation.Horizontal,
-                // ADT-Tweak Start - New Monitor
+                // Pirate: Start - New Monitor
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1,
                 MinWidth = 0,
                 MaxWidth = float.PositiveInfinity,
-                //ADT-Tweak End
+                // Pirate: End
             };
 
             mainContainer.AddChild(statusContainer);
@@ -1386,10 +1388,10 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                 TextureScale = new Vector2(0.25f, 0.25f),
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center,
-                HorizontalExpand = false,   // ADT-Tweak - New Monitor
+                HorizontalExpand = false,   // Pirate: New Monitor
             };
 
-            // ADT-Tweak Start - New Monitor: coords dot — maroon / yellow / green only.
+            // Pirate: Start - New Monitor: coords dot — maroon / yellow / green only.
             suitCoordsIndicator.Modulate = GetCoordsDotColor(sensor);
 
             statusContainer.AddChild(suitCoordsIndicator);
@@ -1419,21 +1421,21 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center,
                     Margin = new Thickness(0, 1, 3, 0),
-                    HorizontalExpand = false,   // ADT-Tweak - New Monitor
+                    HorizontalExpand = false,   // Pirate: New Monitor
                 };
 
                 statusIcon.SetFromSpriteSpecifier(specifier);
                 statusIcon.DisplayRect.TextureScale = new Vector2(2f, 2f);
                 statusContainer.AddChild(statusIcon);
             }
-            // ADT-Tweak End
+            // Pirate: End
 
             // User name
             var nameLabel = new Label()
             {
                 Text = sensor.Name,
                 HorizontalExpand = true,
-                MinWidth = 0,   //ADT-Tweak - New Monitor
+                MinWidth = 0,   // Pirate: New Monitor
                 ClipText = true,
             };
 
@@ -1444,11 +1446,11 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
             {
                 Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
-                // ADT-Tweak Start - New Monitor
+                // Pirate: Start - New Monitor
                 SizeFlagsStretchRatio = 1,
                 MinWidth = 0,
                 Margin = new Thickness(8, 0, 0, 0),
-                // ADT-Tweak End
+                // Pirate: End
             };
 
             mainContainer.AddChild(jobContainer);
@@ -1462,7 +1464,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                     VerticalAlignment = VAlignment.Center,
                     Texture = _spriteSystem.Frame0(proto.Icon),
                     Margin = new Thickness(5, 0, 5, 0),
-                    HorizontalExpand = false,   // ADT-Tweak - New Monitor
+                    HorizontalExpand = false,   // Pirate: New Monitor
                 };
 
                 jobContainer.AddChild(jobIcon);
@@ -1473,19 +1475,19 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
             {
                 Text = sensor.Job,
                 HorizontalExpand = true,
-                MinWidth = 0,   // ADT-Tweak - New Monitor
+                MinWidth = 0,   // Pirate: New Monitor
                 ClipText = true,
-                Align = Label.AlignMode.Left,   // ADT-Tweak - New Monitor
+                Align = Label.AlignMode.Left,   // Pirate: New Monitor
             };
 
             jobContainer.AddChild(jobLabel);
 
-            ApplySensorRowStyle(sensorButton, selected);    // ADT-Tweak - New Monitor
+            ApplySensorRowStyle(sensorButton, selected);    // Pirate: New Monitor
 
             // Add user coordinates to the navmap
             if (coordinates != null && NavMap.Visible && _blipTexture != null)
             {
-                // ADT-Tweak start
+                // Pirate: start
                 var localCoords = CoordinatesToLocal(coordinates.Value);
                 if (localCoords == null)
                     continue;
@@ -1494,13 +1496,13 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                 var blipColor = (_trackedEntity == null || sensor.SuitSensorUid == _trackedEntity)
                     ? blipBase
                     : blipBase * Color.DimGray;
-                // ADT-Tweak end
+                // Pirate: end
                 NavMap.TrackedEntities.TryAdd(sensor.SuitSensorUid,
                     new NavMapBlip
                     (localCoords.Value,
                     _blipTexture,
                     blipColor,
-                    blinks: !isCriticalBlip && sensor.SuitSensorUid == _trackedEntity));    // ADT-Tweak - New Monitor
+                    blinks: !isCriticalBlip && sensor.SuitSensorUid == _trackedEntity));    // Pirate: New Monitor
 
                 NavMap.Focus = _trackedEntity;
 
@@ -1551,11 +1553,11 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
 
             if (castSensor.SuitSensorUid == prevTrackedEntity)
             {
-                ApplySensorRowStyle(castSensor, selected: false);   // ADT-Tweak Start - New Monitor
+                ApplySensorRowStyle(castSensor, selected: false);   // Pirate: Start - New Monitor
             }
             else if (castSensor.SuitSensorUid == currTrackedEntity)
             {
-                ApplySensorRowStyle(castSensor, selected: true);    // ADT-Tweak Start - New Monitor
+                ApplySensorRowStyle(castSensor, selected: true);    // Pirate: Start - New Monitor
             }
 
             if (castSensor?.Coordinates == null)
@@ -1563,7 +1565,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
 
             if (NavMap.TrackedEntities.TryGetValue(castSensor.SuitSensorUid, out var data))
             {
-                // ADT-Tweak Start - New Monitor
+                // Pirate: Start - New Monitor
                 var localCoords = CoordinatesToLocal(data.Coordinates);
                 if (localCoords == null)
                     continue;
@@ -1576,11 +1578,11 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
                 var blipColor = (currTrackedEntity == null || castSensor.SuitSensorUid == currTrackedEntity)
                     ? blipBase
                     : blipBase * Color.DimGray;
-                // ADT-Tweak end
+                // Pirate: end
                 data = new NavMapBlip
                     (localCoords.Value,
                     data.Texture,
-                    blipColor, // ADT-Tweak
+                    blipColor, // Pirate: apply dimming to non-selected sensors
                     blinks: !castSensor.IsCritical && castSensor.SuitSensorUid == currTrackedEntity);
 
                 NavMap.TrackedEntities[castSensor.SuitSensorUid] = data;
@@ -1612,7 +1614,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         foreach (var sensor in SensorsTable.Children)
         {
             if (sensor is CrewMonitoringButton sensorButton &&
-                sensorButton.SuitSensorUid == _trackedEntity)   // ADT-Tweak Start - New Monitor
+                sensorButton.SuitSensorUid == _trackedEntity)   // Pirate: Start - New Monitor
                 return true;
 
             nextScrollPosition += sensor.Height;
@@ -1624,7 +1626,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
         return false;
     }
 
-    // ADT-Tweak Start - New Monitor: nullable CoordinatesToLocal
+    // Pirate: Start - New Monitor: nullable CoordinatesToLocal
     /// <summary>
     /// Keeps each marker in its native coordinate frame. The radar converts
     /// every marker through map space, so moving grids and open space remain
@@ -1637,9 +1639,9 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
 
         return refCoords;
     }
-    // ADT-Tweak End
+    // Pirate: End
 
-    // ADT-Tweak start
+    // Pirate: start
     private bool IsLiveGpsTracking(SuitSensorStatus sensor)
     {
         return _serverOnline &&
@@ -1749,7 +1751,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // ADT-Tweak - N
 
         return new SpriteSpecifier.Rsi(new ResPath(rsi), "alive");
     }
-    // ADT-Tweak end
+    // Pirate: end
 
     private void ClearOutDatedData()
     {
@@ -1767,11 +1769,11 @@ public sealed class CrewMonitoringButton : Button
     public int IndexInTable;
     public NetEntity SuitSensorUid;
     public EntityCoordinates? Coordinates;
-    // #ADT-Tweak Start - New Monitor: button sensor mode/active
+    // # Pirate Start - New Monitor: button sensor mode/active
     public SuitSensorMode SensorMode;
     public bool SensorActive;
     public bool IsCritical;
     public TextureRect? CritStatusIcon;
-    // #ADT-Tweak End
-    public Color StatusColor; // ADT-Tweak
+    // # Pirate End
+    public Color StatusColor; // Pirate: status color for the sensor row
 }
