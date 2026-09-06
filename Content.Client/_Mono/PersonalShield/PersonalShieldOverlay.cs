@@ -30,7 +30,8 @@ public sealed partial class PersonalShieldOverlay : Overlay
     // entity's parameters (e.g. one shield's color bleeding into another).
     private readonly Dictionary<EntityUid, ShaderInstance> _shaderInstances = new();
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    // Draw before the FOV pass so walls hide shields outside the visible area.
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
     public PersonalShieldOverlay()
     {
