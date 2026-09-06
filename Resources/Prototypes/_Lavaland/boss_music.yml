@@ -15,15 +15,6 @@
     collection: HierophantMusic
 
 - type: bossMusic
-  id: Colossus
-  fade: true
-  fadeInTime: 5
-  fadeOutTime: 8
-  positionOnEnd: 0
-  sound:
-    path: /Audio/_Lavaland/Mobs/Bosses/Parabellum.ogg
-
-- type: bossMusic
   id: Bubblegum
   fade: true
   fadeInTime: 5
@@ -31,15 +22,6 @@
   positionOnEnd: 0
   sound:
     path: /Audio/_Lavaland/Mobs/Bosses/bubblegum.ogg
-
-- type: bossMusic
-  id: AshDrake
-  fade: true
-  fadeInTime: 5
-  fadeOutTime: 8
-  positionOnEnd: 0
-  sound:
-    path: /Audio/_Lavaland/Mobs/Bosses/tearofveil.ogg
 
 - type: bossMusic
   id: Miniboss

@@ -85,12 +85,6 @@
     path: /Audio/StationEvents/last_call.ogg
 
 - type: jukebox
-  id: running_out
-  name: Bolgarich - Running Out
-  path:
-    path: /Audio/StationEvents/running_out.ogg
-
-- type: jukebox
   id: sound_station_14
   name: Donchan - Sound Station 14
   path:

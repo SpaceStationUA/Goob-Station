@@ -79,8 +79,6 @@
       params:
         volume: 5
   - type: TileMovement
-  - type: BossMusic
-    soundId: Colossus
   - type: CombatPower # Goobstation
     factor: 25 # times more dangerous than a crew-member
   - type: Aggressive # also required component for aggro checking

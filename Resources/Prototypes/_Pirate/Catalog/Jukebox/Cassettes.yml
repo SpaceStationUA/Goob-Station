@@ -51,33 +51,3 @@
   name: Qwesta - Gatecrashers
   path:
     path: /Audio/_Pirate/Cassette/Hijack/Gatecrashers.ogg
-
-- type: jukebox
-  id: PirateCassetteTheFallenQueen
-  name: Bolgarich - The Fallen Queen
-  path:
-    path: /Audio/_Pirate/Cassette/Lobby/the_fallen_queen.ogg
-
-- type: jukebox
-  id: PirateCassetteHikingInTheFog
-  name: Bolgarich - Hiking in the Fog
-  path:
-    path: /Audio/_Pirate/Cassette/Hijack/hiking_in_the_fog.ogg
-
-- type: jukebox
-  id: PirateCassetteTangoWithBloodshed
-  name: Bolgarich - Tango with Bloodshed
-  path:
-    path: /Audio/_Pirate/Cassette/Hijack/tango_with_bloodshed.ogg
-
-- type: jukebox
-  id: PirateCassetteDestinyOfColonists
-  name: Bolgarich - Destiny of Colonists
-  path:
-    path: /Audio/_Pirate/Cassette/Hijack/Destiny_of_Colonists.ogg
-
-- type: jukebox
-  id: PirateCassetteGigaXOWeLose
-  name: Bolgarich - GigaXO We Lose
-  path:
-    path: /Audio/_Pirate/Cassette/Hijack/GigaXO_we_lose.ogg
