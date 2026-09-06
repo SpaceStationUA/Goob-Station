@@ -1,9 +1,9 @@
 # Mk 32 "Universal"
 - type: entity
-  name: "mk32 \"Універсал\""
+  name: mk32 "Universal"
   parent: BaseWeaponPistol
   id: WeaponPistolUniversal
-  description: "Дорогий та міцний пістолет з пристойним калібром. Використовує набої .45 магнум."
+  description: Дорогий та міцний пістолет з пристойним калібром. Використовує набої .45 магнум.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Pistols/universal.rsi
@@ -60,15 +60,15 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
-  name: "mk32 \"Універсал\""
+  name: mk32 "Universal"
   parent: WeaponPistolUniversal
   id: WeaponPistolUniversalSecurity
-  description: "Дорогий та міцний пістолет з пристойним калібром. Використовує набої .45 магнум. Символ на ручці вказує, що ця зброя належить до старшого офіцера безпеки SCC."
+  description: Дорогий та міцний пістолет з пристойним калібром. Використовує набої .45 магнум. Символ на ручці вказує, що ця зброя належить до старшого офіцера безпеки SCC.
   suffix: Security Loadouts
 
 # M8
 - type: entity
-  name: "M8"
+  name: M8
   parent: [BaseWeaponPistol, BaseSecurityContraband, SolAllianceInfo]
   id: WeaponPistolSol
   suffix: SAN

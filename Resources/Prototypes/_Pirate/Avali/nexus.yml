@@ -7,8 +7,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: AvaliNexusImplant
-  name: "імплант зв'язку з Нексусом"
-  description: "Дивний пристрій технології авалі, що надає доступ до Нексуса."
+  name: Nexus uplink
+  description: A weird piece of Avali tech that gives access to the Nexus.
   categories: [HideSpawnMenu]
   components:
   - type: ImplantGrantCollectiveMind

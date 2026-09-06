@@ -1,5 +1,5 @@
 - type: entity
-  name: "M63"
+  name: M63
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband, SolAllianceInfo]
   id: WeaponShotgunSol
   suffix: SAN

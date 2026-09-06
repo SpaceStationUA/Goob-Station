@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: SyndieFulton
-  name: "фултон"
-  description: "Використовується для вилучення контейнерів, предметів або примусового вербування людей до вашої бази операцій. Під ручкою є крихітне тавро у формі вафлі."
+  name: fulton
+  description: Used to extract containers, items, or forcibly recruit people into your base of operations. A tiny waffle-shaped maker's mark is stamped beneath the handle.
   components:
   - type: Sprite
     sprite: Objects/Tools/fulton.rsi # TODO: unique sprite

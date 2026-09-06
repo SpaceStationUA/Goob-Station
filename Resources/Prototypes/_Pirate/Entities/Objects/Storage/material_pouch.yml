@@ -4,8 +4,8 @@
 - type: entity
   parent: BaseStorageItem
   id: MaterialPouch
-  name: "підсумок для матеріалів"
-  description: "Підсумок для листів матеріалів і боєприпасів УЗК, який примудряється висіти там, де зазвичай була б кишеня."
+  name: material pouch
+  description: A pouch for sheets and RCD ammunition that manages to hang where you would normally put things in your pocket.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Storage/material_pouch.rsi

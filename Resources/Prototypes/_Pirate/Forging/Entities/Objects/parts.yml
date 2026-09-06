@@ -4,8 +4,8 @@
 - type: entity
   parent: [ReagentPacketBase, ItemHeftyBase]
   id: ReagentContainerCement
-  name: "мішок цементу"
-  description: "Змішайте цемент із водою перед формуванням цегли."
+  name: cement bag
+  description: A bag of cement, mix it with water to prepare it.
   components:
   - type: Appearance
   - type: Item
@@ -32,8 +32,8 @@
 - type: entity
   parent: BaseItem
   id: WetCement
-  name: "мокрий цемент"
-  description: "Свіжий цемент, який треба сформувати у цеглу."
+  name: wet cement
+  description: Fresh cement, needs to be molded into bricks.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Materials/materials.rsi
@@ -53,8 +53,8 @@
 - type: entity
   parent: BaseItem
   id: WetBrick
-  name: "сира цегла"
-  description: "Щойно сформована цегла; залиште її висохнути."
+  name: wet brick
+  description: A newly made wet brick, leave it out to dry for a while.
   components:
   - type: Damageable
   - type: Destructible
@@ -145,8 +145,8 @@
 - type: entity
   parent: [ BaseWorkableSteel, BaseAnvilPiece ]
   id: AnvilTopUnfinished
-  name: "незавершена верхня частина ковадла"
-  description: "Надайте їй форми ударами!"
+  name: unfinished anvil top
+  description: Beat it into shape!
   components:
   - type: Sprite
     layers:
@@ -162,8 +162,8 @@
 - type: entity
   parent: BaseAnvilPiece
   id: AnvilTop
-  name: "верхня частина ковадла"
-  description: "Верхня частина ковадла. Коли вона охолоне, установіть її на нижню частину."
+  name: anvil top
+  description: The top part of an anvil. Put it on the bottom half once it has cooled down.
   components:
   - type: Sprite
     layers:
@@ -182,8 +182,8 @@
 - type: entity
   parent: [ BaseWorkableSteel, BaseAnvilPiece ]
   id: AnvilBottomUnfinished
-  name: "незавершена нижня частина ковадла"
-  description: "Надайте їй форми ударами!"
+  name: unfinished anvil bottom
+  description: Beat it into shape!
   components:
   - type: Sprite
     layers:
@@ -199,8 +199,8 @@
 - type: entity
   parent: BaseAnvilPiece
   id: AnvilBottom
-  name: "нижня частина ковадла"
-  description: "Нижня частина ковадла."
+  name: anvil bottom
+  description: The bottom part of an anvil.
   components:
   - type: Sprite
     layers:
@@ -216,8 +216,8 @@
 - type: entity
   parent: BaseItem
   id: AnvilUnwelded
-  name: "незварене ковадло"
-  description: "Обидві частини ковадла, які треба зварити для завершення."
+  name: unwelded anvil
+  description: Both parts of an anvil, needs to be welded to complete.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/forging.rsi

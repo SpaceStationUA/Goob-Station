@@ -4,8 +4,8 @@
 - type: entity
   id: ActionToggleEngineeringGoggles
   parent: BaseAction
-  name: "Перемкнути режим"
-  description: "Перемикає режими окулярів."
+  name: Toggle mode
+  description: Cycles the goggles' mode.
   components:
   - type: Action
     itemIconStyle: NoItem

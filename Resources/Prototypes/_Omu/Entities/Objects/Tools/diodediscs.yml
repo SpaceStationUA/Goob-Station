@@ -11,8 +11,8 @@
 - type: entity
   parent: BaseDiodeDisc
   id: DiodeDiscElectroDisruptive
-  name: "електродестабілізаційний діодний диск"
-  description: "Діодний диск для використання в емітері. Спричиняє в суперматерії подію виправлення причинності, завдяки чому вона відновлює свою цілісність."
+  name: Electro-Disruptive Diode disc
+  description: A diode disc for use within an emitter, this one will trigger a causality rectifying event within a supermatter, causing it to repair itself.
   components:
   - type: DiodeDisc
     newBolt: EmitterBoltElectroDisruptive
@@ -23,8 +23,8 @@
 - type: entity
   parent: BaseDiodeDisc
   id: DiodeDiscElectroBehavioural
-  name: "електроповедінковий діодний диск"
-  description: "Діодний диск для використання в емітері. Спричиняє в суперматерії каскадну подію причинності, яка пошкоджує її, але значно збільшує вихід енергії. Також позитивно впливає на здоров'я пацієнтів!"
+  name: Electro-Behavioural Diode disc
+  description: A diode disc for use within an emitter, this one will trigger a causality cascading event within a supermatter, causing damage but increasing energy output significantly. It also has a postive effect on patients health!
   components:
   - type: DiodeDisc
     newBolt: EmitterBoltElectroBehavioural
@@ -33,7 +33,7 @@
       upgrade: emitter-electro-behavioural
 
 - type: entity
-  name: "промінь емітера"
+  name: emitter bolt
   id: EmitterBoltElectroDisruptive
   parent: EmitterBolt
   categories: [ HideSpawnMenu ]
@@ -51,7 +51,7 @@
     energyDamage: -60
 
 - type: entity
-  name: "промінь емітера"
+  name: emitter bolt
   id: EmitterBoltElectroBehavioural
   parent: EmitterBolt
   categories: [ HideSpawnMenu ]

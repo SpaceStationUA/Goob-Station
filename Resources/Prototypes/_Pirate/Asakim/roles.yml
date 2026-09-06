@@ -14,7 +14,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleAsakim
-  name: "роль Асакима"
+  name: Asakim Role
   components:
   - type: MindRole
     roleType: FreeAgent
@@ -41,7 +41,7 @@
 - type: entity
   parent: MobAsakim
   id: MobAsakimGhostrole
-  name: "воїн Асаким"
+  name: asakim warrior
   suffix: Asakim
   components:
   - type: RandomHumanoidAppearance

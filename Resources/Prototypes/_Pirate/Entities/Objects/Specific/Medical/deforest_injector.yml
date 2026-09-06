@@ -1,8 +1,8 @@
 - type: entity
   parent: [ AdvancedJetInjector, BaseMedicalContraband ]
   id: DeforestJetInjector
-  name: "ін'єктор DeForest"
-  description: "Сучасний високоякісний ін'єктор із меншою місткістю та швидкою ін'єкцією."
+  name: DeForest jet injector
+  description: A modern high-quality injector with a smaller capacity and fast injection.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Medical/deforest_jetinjector.rsi

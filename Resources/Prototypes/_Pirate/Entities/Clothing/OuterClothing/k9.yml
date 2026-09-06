@@ -12,8 +12,8 @@
 - type: entity
   parent: [K9ClothingBase, ClothingOuterHardsuitBase]
   id: ClothingOuterHardsuitCombatK9
-  name: "бойовий скафандр K9"
-  description: "Бойовий скафандр для собак, створений для захисту від будь-яких ворогів у середовищі з низьким тиском. Має позначки служби безпеки станції."
+  name: K9 бойовий скафандр
+  description: Бойовий скафандр для собак, створений для захисту від будь-яких ворогів у середовищі з низьким тиском. Має позначки служби безпеки станції.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/OuterClothing/Hardsuits/Combat/k9.rsi
@@ -51,8 +51,8 @@
 - type: entity
   parent: [K9ClothingBase, ClothingHeadHardsuitWithLightBase]
   id: ClothingHeadHelmetHardsuitCombatK9
-  name: "шолом бойового скафандра K9"
-  description: "Шолом для бойового скафандра службового пса."
+  name: шолом бойового скафандра K9
+  description: Шолом для бойового скафандра службового пса.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hardsuits/Combat/k9.rsi
@@ -65,8 +65,8 @@
 - type: entity
   parent: ClothingOuterHardsuitCombatK9
   id: ClothingOuterHardsuitCombatRiotK9
-  name: "протиударний скафандр K9"
-  description: "Собачий бойовий скафандр для контролю натовпу та протидії озброєним противникам у середовищі з низьким тиском."
+  name: протиударний скафандр K9
+  description: Собачий бойовий скафандр для контролю натовпу та протидії озброєним противникам у середовищі з низьким тиском.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/OuterClothing/Hardsuits/Combat/k9_riot.rsi
@@ -88,8 +88,8 @@
 - type: entity
   parent: [K9ClothingBase, ClothingHeadHardsuitWithLightBase]
   id: ClothingOuterHardsuitCombatRiotK9Helmet
-  name: "шолом протиударного скафандра K9"
-  description: "Шолом для протиударного скафандра службового пса."
+  name: шолом протиударного скафандра K9
+  description: Шолом для протиударного скафандра службового пса.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hardsuits/Combat/k9_riot.rsi
@@ -103,8 +103,8 @@
   # Pirate: DeltaV's ClothingOuterArmorDuraVest is absent locally; keep its effective components on the K9-only item.
   parent: [K9ClothingBase, ClothingOuterBaseMedium]
   id: ClothingOuterArmorDuraVestK9
-  name: "дюратканинний жилет K9"
-  description: "Щільний і міцний бронежилет для собак, укріплений дюратканиною для захисту від гострих предметів і ударів."
+  name: дюратканинний жилет K9
+  description: Щільний і міцний бронежилет для собак, укріплений дюратканиною для захисту від гострих предметів і ударів.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/OuterClothing/Armor/duravest.rsi

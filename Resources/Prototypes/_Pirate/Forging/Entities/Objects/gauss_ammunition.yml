@@ -13,8 +13,8 @@
 - type: entity
   parent: BaseCartridgeGaussgun
   id: CartridgeDisc
-  name: "лезовий диск"
-  description: "Невеликий снаряд для гаус-гармат. Трохи пробиває броню та спричиняє кровотечу."
+  name: razor disc
+  description: A small projectile suitable for gauss guns. This one slightly pierces armor and causes bleeding.
   components:
   - type: CartridgeAmmo
     proto: GaussgunDisk
@@ -24,8 +24,8 @@
 - type: entity
   parent: BaseCartridgeGaussgun
   id: CartridgeShard
-  name: "уламковий набій"
-  description: "Невеликий снаряд для гаус-гармат. Після пострілу розлітається на уламки й майже неефективний проти броньованих цілей."
+  name: shardshot
+  description: A small projectile suitable for gauss guns. This one splits into shards when shot and is nearly useless against armored targets.
   components:
   - type: CartridgeAmmo
     proto: GaussgunShardSpread
@@ -35,7 +35,7 @@
 - type: entity
   parent: [ BaseForgedReadyItem, CartridgeBallBearing ]
   id: CartridgeBallBearingForged
-  name: "кулька підшипника"
+  name: ball bearing
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -47,7 +47,7 @@
 - type: entity
   parent: [ BaseForgedReadyItem, CartridgeDisc ]
   id: CartridgeDiscForged
-  name: "лезовий диск"
+  name: razor disc
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -59,7 +59,7 @@
 - type: entity
   parent: [ BaseForgedReadyItem, CartridgeShard ]
   id: CartridgeShardForged
-  name: "уламковий набій"
+  name: shardshot
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -119,7 +119,7 @@
 - type: entity
   parent: BaseGaussgunAmmo
   id: GaussgunBearing
-  name: "кулька підшипника"
+  name: ball bearing
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -142,7 +142,7 @@
 - type: entity
   parent: BaseGaussgunAmmo
   id: GaussgunShard
-  name: "уламок"
+  name: shard
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -156,7 +156,7 @@
 - type: entity
   parent: BaseGaussgunAmmo
   id: GaussgunDisk
-  name: "гострий диск"
+  name: sharp disk
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
