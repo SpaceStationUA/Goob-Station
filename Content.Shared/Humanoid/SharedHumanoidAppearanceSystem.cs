@@ -347,6 +347,33 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
     }
 
     /// <summary>
+    ///     Pirate: Sets the eye color of this humanoid mob. Like <see cref="SetSkinColor"/>, verifies the
+    ///     color against the species' eye coloration strategy (when one is set), and raises
+    ///     <see cref="EyeColorInitEvent"/> so species systems can track eye color changes.
+    /// </summary>
+    public void SetEyeColor(EntityUid uid, Color eyeColor, bool sync = true, bool verify = true, HumanoidAppearanceComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid))
+            return;
+
+        if (verify
+            && _proto.TryIndex(humanoid.Species, out var species)
+            && species.EyeColoration is { } eyeColorationId
+            && _proto.TryIndex(eyeColorationId, out var eyeColoration))
+        {
+            eyeColor = eyeColoration.Strategy.EnsureVerified(eyeColor);
+        }
+
+        humanoid.EyeColor = eyeColor;
+
+        var ev = new EyeColorInitEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        if (sync)
+            Dirty(uid, humanoid);
+    }
+
+    /// <summary>
     ///     Sets the color of this humanoid mob's base layer. See <see cref="SetBaseLayerId"/> for a
     ///     description of how base layers work.
     /// </summary>
@@ -486,9 +513,8 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
 
         SetSpecies(uid, profile.Species, false, humanoid);
         SetSex(uid, profile.Sex, false, humanoid);
-        humanoid.EyeColor = profile.Appearance.EyeColor;
-        var ev = new EyeColorInitEvent(); // Pirate
-        RaiseLocalEvent(uid, ref ev);  // Pirate
+        // Pirate: verify eye color against the species' eye coloration and raise EyeColorInitEvent.
+        SetEyeColor(uid, profile.Appearance.EyeColor, false, humanoid: humanoid);
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
 
