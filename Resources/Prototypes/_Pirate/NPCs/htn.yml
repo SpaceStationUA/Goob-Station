@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: familiars follow their master, but still fight nearby faction enemies.
+
+- type: htnCompound
+  id: FamiliarFollowCompound
+  branches:
+    # Fight nearby enemies - but only while close to the master (leashed to FollowTarget).
+    - preconditions:
+        - !type:CoordinatesInRangePrecondition
+          targetKey: FollowTarget
+          rangeKey: FollowRange
+      tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    # Head to the follow target (the master).
+    - tasks:
+        - !type:HTNCompoundTask
+          task: FollowCompound
+    # Idle near the follow target.
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound

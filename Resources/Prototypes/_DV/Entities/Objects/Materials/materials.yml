@@ -267,3 +267,16 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: PsionicEruptionPower
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalRemilia
+  name: кристал Ремілії
+  description: Маленький псіонічний кристал. Прислухаючись, можна почути тихий писк крил за гранню реальності.
+  components:
+  - type: Sprite
+    color: "#b04ddb"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: SummonFamiliarPower
+      prototype: MobBatRemilia

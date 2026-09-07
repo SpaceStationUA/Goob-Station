@@ -170,3 +170,12 @@
   components:
   - type: TimedDespawn
     lifetime: 120
+
+# Familiar summoning powers
+- type: entity
+  id: RemiliaFamiliarPowerEntity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SummonFamiliarPower
+    # Pirate: familiars are added purely by prototype - point this at any mob proto.
+    prototype: MobBatRemilia

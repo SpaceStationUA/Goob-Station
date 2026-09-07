@@ -145,8 +145,15 @@ telekinetic-pulse-power-metapsionic-feedback = {CAPITALIZE($entity)} має су
 # Псіонічний спалах
 psionic-flash-power-initialization-feedback = Осліплююче світло виривається зсередини мого розуму, здатне палити зір тих, хто наважиться подивитися на мене.
 psionic-flash-power-metapsionic-feedback = {CAPITALIZE($entity)} випромінює осліплюючу псіонічну ауру.
+# Прикликання фамільяра
+psionic-familiar-already-summoned = Ваш фамільяр вже поруч із вами.
+psionic-familiar-summoned = Крила розгортаються з темряви — ваш фамільяр тут.
+psionic-familiar-died = Ваш фамільяр загинув. Його крила розсипалися в нічний пил...
+# Ремілія
+psionic-power-name-remilia = Ремілія
+remilia-power-initialization-feedback = З глибин між сном іявою до мене прилетіла вона. Маленька, люта, і любить фрукти.
+remilia-power-metapsionic-feedback = {CAPITALIZE($entity)} поділяє душу з нічним створінням, що любить фрукти.
 # Відгуки для конкретних сутностей
-# ПРИМІТКА: наступні три не мають прототипів сутностей у цій збірці - зарезервовані на майбутнє
 mantis-pendulum-hot-message = Маятник стає неприємно гарячим у вашій руці.
 assay-body = Виявлено псіонічні здібності у {$entity}:
 assay-response-refuse = Я тобі нічого не скажу!
