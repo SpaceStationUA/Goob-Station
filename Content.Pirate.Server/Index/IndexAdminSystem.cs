@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Shared.MisandryBox.JumpScare;
+using Content.Pirate.Shared.Caduceus;
 using Content.Pirate.Shared.Index;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
@@ -37,7 +38,7 @@ public sealed class IndexAdminSystem : EntitySystem
             subs.Event<IndexAdminAddKarmaMessage>(OnAddKarma);
             subs.Event<IndexAdminRemoveKarmaMessage>(OnRemoveKarma);
             subs.Event<IndexAdminSendPrescriptionMessage>(OnSendPrescription);
-            subs.Event<IndexAdminGuaranteeFpoonMessage>(OnGuaranteeFpoon);
+            subs.Event<IndexAdminSetNextWeaponMessage>(OnSetNextWeapon);
             subs.Event<IndexAdminJumpscareMessage>(OnJumpscare);
         });
     }
@@ -129,12 +130,16 @@ public sealed class IndexAdminSystem : EntitySystem
         _pager.UpdateAdminUi(ent);
     }
 
-    private void OnGuaranteeFpoon(Entity<IndexPagerComponent> ent, ref IndexAdminGuaranteeFpoonMessage args)
+    private void OnSetNextWeapon(Entity<IndexPagerComponent> ent, ref IndexAdminSetNextWeaponMessage args)
     {
         if (!IsIndexAdmin(args.Actor) || !TryGetMember(ent, out var memberUid))
             return;
 
-        _pager.SetGuaranteeFpoon(memberUid, args.Enabled);
+        // Inactive is the inert slime, not a weapon form - ignore it instead of bricking the queue.
+        if (args.Weapon == CaduceusForm.Inactive)
+            return;
+
+        _pager.SetNextWeapon(memberUid, args.Weapon);
         _pager.UpdateAdminUi(ent);
     }
 

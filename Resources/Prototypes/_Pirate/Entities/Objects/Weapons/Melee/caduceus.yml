@@ -32,7 +32,7 @@
         weaponClass: Knife
         damage:
           types:
-            Slash: 20
+            Slash: 9
         attackRate: 2.5
         range: 1.4
         angle: 55
@@ -42,11 +42,13 @@
         transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_hatchet.ogg
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
+        animationRotation: 180
+        wideAnimationRotation: 180
       Stiletto:
         weaponClass: Knife
         damage:
           types:
-            Piercing: 24
+            Piercing: 11
         attackRate: 2.0
         range: 1.2
         angle: 40
@@ -60,7 +62,7 @@
         weaponClass: Sword
         damage:
           types:
-            Slash: 44
+            Slash: 30
         attackRate: 1.0
         range: 1.6
         angle: 65
@@ -70,11 +72,13 @@
         transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_bsword.ogg
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
+        animationRotation: 180
+        wideAnimationRotation: 180
       Rapier:
         weaponClass: Sword
         damage:
           types:
-            Piercing: 36
+            Piercing: 22
         attackRate: 1.4
         range: 1.7
         maxHits: 2
@@ -91,7 +95,7 @@
         weaponClass: Bludgeon
         damage:
           types:
-            Blunt: 60
+            Blunt: 38
         attackRate: 0.8
         range: 1.4
         angle: 55
@@ -101,11 +105,13 @@
         transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_hammer.ogg
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
+        animationRotation: 180
+        wideAnimationRotation: 180
       Greatsword:
         weaponClass: Sword
         damage:
           types:
-            Slash: 70
+            Slash: 44
         attackRate: 0.7
         range: 1.8
         angle: 85
@@ -115,11 +121,13 @@
         transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_gsword.ogg
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
+        animationRotation: 180
+        wideAnimationRotation: 180
       Lance:
         weaponClass: Polearm
         damage:
           types:
-            Piercing: 66
+            Piercing: 55
         attackRate: 0.7
         range: 2.4
         maxHits: 2
@@ -136,7 +144,7 @@
         weaponClass: Bludgeon
         damage:
           types:
-            Slash: 40
+            Slash: 63
         attackRate: 0.6
         range: 2.3
         angle: 105
@@ -146,11 +154,13 @@
         transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_whip.ogg
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
+        animationRotation: 180
+        wideAnimationRotation: 180
       Scythe:
         weaponClass: Polearm
         damage:
           types:
-            Slash: 50
+            Slash: 68
         attackRate: 0.6
         range: 2.1
         angle: 90
@@ -162,6 +172,8 @@
         transformSound: /Audio/_Pirate/Weapons/Melee/Caduceus/index_vial_scythe.ogg
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
+        animationRotation: 180
+        wideAnimationRotation: 180
       Fpoon:
         # Non-zero damage is required for the suicide mechanic (lethal damage is spread from this).
         damage:
@@ -171,3 +183,5 @@
         range: 1.2
         iconState: fpoon
         inhandRsi: _Pirate/Objects/Weapons/Melee/Caduceus/vial_fpoon.rsi
+        animationRotation: 180
+        wideAnimationRotation: 180
