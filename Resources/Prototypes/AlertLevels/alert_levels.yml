@@ -118,7 +118,7 @@
       shuttleTime: 600
     cyan: # Pirate: Malf AI Doomsday protocol.
       announcement: alert-level-cyan-announcement
-      sound: /Audio/_Pirate/MalfAI/cyan.ogg
+      sound: /Audio/Misc/cyan.ogg
       color: Cyan
       emergencyLightColor: Cyan
       forceEnableEmergencyLights: true

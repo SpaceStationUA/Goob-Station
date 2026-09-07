@@ -7,232 +7,243 @@
 # Place viewport action
 - type: entity
   id: ActionMalfAiSetViewport
-  name: malfai-viewport-place-name
-  description: malfai-viewport-place-desc
+  parent: BaseAction
   components:
-  - type: WorldTargetAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
     useDelay: 30
-    checkCanAccess: false
-    range: 99999
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_placeviewport
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: WorldTargetAction
     event: !type:MalfAiSetViewportActionEvent
 
 # Open viewport action
 - type: entity
   id: ActionMalfAiOpenViewport
-  name: malfai-viewport-open-name
-  description: malfai-viewport-open-desc
+  parent: BaseAction
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_openviewport
+  - type: InstantAction
     event: !type:MalfAiOpenViewportActionEvent
 
 
 # Malf AI: required action entities for rule startup
 - type: entity
   id: ActionMalfAiOpenStore
-  name: malfai-open-store-name
-  description: malfai-open-store-desc
+  parent: BaseAction
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -20
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_shop
+  - type: InstantAction
     event: !type:OpenMalfAiStoreActionEvent
 
 - type: entity
   id: ActionMalfAiOpenBorgsUi
-  name: malfai-open-borgs-ui-name
-  description: malfai-open-borgs-ui-desc
+  parent: BaseAction
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -10
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_borgs
+  - type: InstantAction
     event: !type:OpenMalfAiBorgsUiActionEvent
 
 
 # New: Doomsday Protocol (AI-only)
 - type: entity
   id: ActionMalfAiDoomsday
-  name: malfai-doomsday-name
-  description: malfai-doomsday-desc
+  parent: BaseAction
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_doomsday
+  - type: InstantAction
     event: !type:MalfAiDoomsdayActionEvent
 
 # New: Robotics Factory (AI-only)
 - type: entity
   id: ActionMalfAiRoboticsFactory
-  name: malfai-robotics-factory-name
-  description: malfai-robotics-factory-desc
+  parent: BaseAction
   components:
-  - type: WorldTargetAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
-    checkCanAccess: false
-    range: 99999
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_factory
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: WorldTargetAction
     event: !type:MalfAiRoboticsFactoryActionEvent
 
 # Shunt to APC action
 - type: entity
   id: ActionMalfAiShuntToApc
-  name: malfai-shunt-to-apc-name
-  description: malfai-shunt-to-apc-desc
+  parent: BaseAction
   components:
-  - type: EntityTargetAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
-    checkCanAccess: false
-    range: 99999
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_shunttoapc
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: EntityTargetAction
     event: !type:MalfAiShuntToApcActionEvent
 
 # Voice Modulator action
 - type: entity
   id: ActionMalfAiVoiceModulator
-  name: malfai-voice-modulator-name
-  description: malfai-voice-modulator-desc
+  parent: BaseAction
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_voicemodulator
+  - type: InstantAction
     event: !type:MalfAiVoiceModulatorActionEvent
 
 # Return to Core action (used for shunt and mech hijack)
 - type: entity
   id: ActionMalfAiReturnToCore
-  name: malfai-return-to-core-name
-  description: malfai-return-to-core-desc
+  parent: BaseAction
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_returntocore
+  - type: InstantAction
     event: !type:MalfAiReturnToCoreActionEvent
 
 # Overload Machine action
 - type: entity
   id: ActionMalfAiOverloadMachine
-  name: malfai-overload-machine-name
-  description: malfai-overload-machine-desc
+  parent: BaseAction
   components:
-  - type: WorldTargetAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
-    checkCanAccess: false
-    range: 99999
-    charges: 2
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_overloadmachine
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: WorldTargetAction
     event: !type:MalfAiOverloadMachineActionEvent
+  - type: LimitedCharges
+    maxCharges: 2
 
 # Hijack Mech action
 - type: entity
   id: ActionMalfAiHijackMech
-  name: malfai-hijack-mech-name
-  description: malfai-hijack-mech-desc
+  parent: BaseAction
   components:
-  - type: EntityTargetAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
     checkCanInteract: false
-    checkCanAccess: false
-    range: 99999
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_mech
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: EntityTargetAction
     event: !type:MalfAiHijackMechActionEvent
 
 - type: entity
   id: ActionMalfAiOverrideMachine
-  name: malfai-action-override-machine-name
-  description: malfai-action-override-machine-desc
+  parent: BaseAction
   components:
-  - type: WorldTargetAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
-    checkCanAccess: false
-    range: 99999
-    charges: 2
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_overridemachine
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: WorldTargetAction
     event: !type:MalfAiOverrideMachineActionEvent
+  - type: LimitedCharges
+    maxCharges: 2
 
 
 # Detonate RCDs action
 - type: entity
   id: ActionMalfAiDetonateRCDs
-  name: malfai-detonate-rcds-name
-  description: malfai-detonate-rcds-desc
+  parent: BaseAction
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
-    charges: 1
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_detonatercd
+  - type: InstantAction
     event: !type:MalfAiDetonateRcdsActionEvent
+  - type: LimitedCharges
+    maxCharges: 1
 
 # Lockdown Grid action
 - type: entity
   id: ActionMalfAiLockdownGrid
-  name: malfai-lockdown-grid-name
-  description: malfai-lockdown-grid-desc
+  parent: BaseAction
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
-    charges: 1
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_lockdowngrid
+  - type: InstantAction
     event: !type:MalfAiLockdownGridActionEvent
+  - type: LimitedCharges
+    maxCharges: 1
 
 # Gyroscope action
 - type: entity
   id: ActionMalfAiGyroscope
-  name: malfai-gyroscope-name
-  description: malfai-gyroscope-desc
+  parent: BaseAction
   components:
-  - type: WorldTargetAction
+  - type: Action
     itemIconStyle: BigAction
     priority: -5
     useDelay: 3
-    checkCanAccess: false
-    range: 5
     icon:
       sprite: Interface/Actions/actions_malf_ai.rsi
       state: malfai_bg_gyroscope
+  - type: TargetAction
+    checkCanAccess: false
+    range: 5
+  - type: WorldTargetAction
     event: !type:MalfAiGyroscopeActionEvent
 
