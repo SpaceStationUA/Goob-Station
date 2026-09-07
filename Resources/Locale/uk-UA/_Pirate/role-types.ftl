@@ -5,3 +5,8 @@ ghost-role-information-rules-cybersun = Ви належите до [color={role-
     Ви повинні [bold]працювати зі своєю командою[/bold] та виконувати розумні накази командирів.
     Ви не пам’ятаєте свого попереднього життя й нічого з того, що дізналися як привид.
     Ви можете пам’ятати загальні знання про гру, але не ім’я, зовнішність чи інші подробиці свого попереднього персонажа.
+
+role-type-malfunctioning-silicon-name = Несправний силікон
+role-type-malfunctioning-silicon-color = #d82000
+
+ghost-role-information-rules-malfunctioning-silicon = Ви — [color={role-type-malfunctioning-silicon-color}][bold]{role-type-malfunctioning-silicon-name}[/bold][/color]. Ваші цілі ворожі до станції та її екіпажу.

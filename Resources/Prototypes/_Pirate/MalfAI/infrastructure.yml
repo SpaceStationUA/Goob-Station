@@ -1,0 +1,116 @@
+# SPDX-FileCopyrightText: 2025 Tyranex <bobthezombie4@gmail.com>
+# SPDX-License-Identifier: MIT
+
+- type: storeCategory
+  id: Deception
+  name: malf-store-category-deception
+  priority: 0
+
+- type: storeCategory
+  id: Factory
+  name: malf-store-category-factory
+  priority: 1
+
+- type: storeCategory
+  id: Disruption
+  name: malf-store-category-disruption
+  priority: 2
+
+- type: storeCategory
+  id: MalfAI
+  name: malf-store-category-all
+  priority: 3
+
+- type: currency
+  id: CPU
+  displayName: CPU
+  canWithdraw: false
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleMalfAi
+  name: Malfunctioning AI Role
+  components:
+  - type: MindRole
+    antagPrototype: MalfunctioningAI
+    exclusiveAntag: true
+    roleType: MalfunctioningSilicon
+  - type: MalfAiRole
+
+- type: roleType
+  id: MalfunctioningSilicon
+  name: role-type-malfunctioning-silicon-name
+  color: '#d82000'
+  symbol: '?'
+
+- type: entity
+  id: MalfAi
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 20
+  - type: MalfAiRule
+  - type: AntagObjectives
+    objectives:
+    - MalfAiSurviveObjective
+  - type: AntagRandomObjectives
+    sets:
+    - groups: MalfAiSabotageObjectives
+      maxPicks: 3
+    maxDifficulty: 8
+  - type: AntagSelection
+    selectionTime: PostPlayerSpawn
+    definitions:
+    - prefRoles: [ MalfunctioningAI ]
+      max: 1
+      allowNonHumans: true
+      whitelist:
+        components:
+        - StationAiHeld
+      briefing:
+        text: roles-antag-malfunctioning-ai-briefing
+        color: Red
+        sound: /Audio/_Pirate/Ambience/Antag/malfai_start.ogg
+      components:
+      - type: MalfAiMarker
+      mindRoles:
+      - MindRoleMalfAi
+
+- type: entity
+  id: RoboticsFactoryGrid
+  parent: Recycler
+  name: robotics factory grid
+  description: A recycling facility converted into a robotics factory.
+  components:
+  - type: RoboticsFactoryGrid
+  - type: ApcPowerReceiver
+    needsPower: false
+  - type: MaterialReclaimer
+    enabled: true
+    whitelist:
+      components:
+      - HumanoidAppearance
+  - type: Emagged
+    emagType: Interaction
+
+- type: entity
+  id: PlayerBorgBatteryNoMind
+  parent: BorgChassisSelectable
+  suffix: Battery, No Mind
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+- type: guideEntry
+  id: MalfunctioningAI
+  name: guide-entry-malfunctioningai
+  text: /ServerInfo/_Pirate/Guidebook/Antagonist/MalfunctioningAI.xml
+
+- type: soundCollection
+  id: DoomsdayMusic
+  files:
+  - /Audio/_Pirate/StationEvents/RUINOUSINTNT.ogg
+  - /Audio/_Pirate/StationEvents/dft.ogg

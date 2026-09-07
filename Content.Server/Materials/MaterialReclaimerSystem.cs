@@ -182,6 +182,12 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (!Resolve(uid, ref component))
             return;
 
+        // Pirate: robotics factories convert crew before ordinary recycling.
+        var processEvent = new MaterialReclaimerProcessEntityEvent(item);
+        RaiseLocalEvent(uid, processEvent);
+        if (processEvent.Handled)
+            return;
+
         base.Reclaim(uid, item, completion, component);
 
         // Pirate: emagged recyclers disable mobs without destroying them.

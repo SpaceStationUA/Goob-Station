@@ -19,6 +19,7 @@ using Content.Server._White.StoreDiscount;
 using Content.Shared.Mind;
 using Content.Shared.Polymorph;
 using Content.Server.Polymorph.Systems;
+using Content.Shared._Pirate.MalfAI; // Pirate
 
 namespace Content.Server.Store.Systems;
 
@@ -48,6 +49,7 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
         SubscribeLocalEvent<StoreComponent, IntrinsicStoreActionEvent>(OnIntrinsicStoreAction);
+        SubscribeLocalEvent<StoreComponent, OpenMalfAiStoreActionEvent>(OnMalfAiOpenStore); // Pirate
 
         SubscribeLocalEvent<StoreComponent, PolymorphedEvent>(OnPolymorphed); // goob edit
 
@@ -215,6 +217,15 @@ public sealed partial class StoreSystem : EntitySystem
     private void OnIntrinsicStoreAction(Entity<StoreComponent> ent, ref IntrinsicStoreActionEvent args)
     {
         ToggleUi(args.Performer, ent.Owner, ent.Comp);
+    }
+
+    // Pirate: Malf AI intrinsic store action.
+    private void OnMalfAiOpenStore(Entity<StoreComponent> ent, ref OpenMalfAiStoreActionEvent args)
+    {
+        if (!HasComp<MalfAiMarkerComponent>(args.Performer) || args.Performer != ent.Owner)
+            return;
+        ToggleUi(args.Performer, ent.Owner, ent.Comp);
+        args.Handled = true;
     }
 
 }
