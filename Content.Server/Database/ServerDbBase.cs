@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
@@ -202,6 +202,50 @@ namespace Content.Server.Database
             prefs.ConstructionFavorites = favorites;
 
             await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<string?> GetUkraineAlarmRegionAsync(NetUserId userId)
+        {
+            await using var db = await GetDb();
+            await EnsureUkraineAlarmTableAsync(db.DbContext);
+
+            var connection = db.DbContext.Database.GetDbConnection();
+            await using var command = connection.CreateCommand();
+            command.CommandText = "SELECT region_id FROM pirate_ukraine_alarm_preferences WHERE user_id = @user_id";
+
+            var userParam = command.CreateParameter();
+            userParam.ParameterName = "@user_id";
+            userParam.Value = userId.UserId;
+            command.Parameters.Add(userParam);
+
+            if (connection.State != System.Data.ConnectionState.Open)
+                await connection.OpenAsync();
+
+            var result = await command.ExecuteScalarAsync();
+            return result as string;
+        }
+
+        public async Task SetUkraineAlarmRegionAsync(NetUserId userId, string regionId)
+        {
+            await using var db = await GetDb();
+            await EnsureUkraineAlarmTableAsync(db.DbContext);
+
+            await db.DbContext.Database.ExecuteSqlAsync($"""
+DELETE FROM pirate_ukraine_alarm_preferences WHERE user_id = {userId.UserId}
+""");
+            await db.DbContext.Database.ExecuteSqlAsync($"""
+INSERT INTO pirate_ukraine_alarm_preferences (user_id, region_id) VALUES ({userId.UserId}, {regionId})
+""");
+        }
+
+        private static async Task EnsureUkraineAlarmTableAsync(ServerDbContext db)
+        {
+            await db.Database.ExecuteSqlRawAsync("""
+CREATE TABLE IF NOT EXISTS pirate_ukraine_alarm_preferences (
+    user_id uuid PRIMARY KEY,
+    region_id text NOT NULL
+)
+""");
         }
 
         private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db)
@@ -2680,3 +2724,4 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         }
     }
 }
+
