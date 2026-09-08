@@ -247,6 +247,8 @@ public sealed class XenomorphsRuleSystem : GameRuleSystem<XenomorphsRuleComponen
         {
             component.Announced = true;
 
+            RaiseLocalEvent(new XenomorphsAnnouncedEvent());
+
             if (!string.IsNullOrEmpty(component.Announcement))
                 _chat.DispatchGlobalAnnouncement(Loc.GetString(component.Announcement), component.Sender != null ? Loc.GetString(component.Sender) : null, colorOverride: component.AnnouncementColor);
 

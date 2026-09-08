@@ -967,7 +967,7 @@
 
 #Syndicate Elite Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband]
+  parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband, MonoPersonalShieldClothing]
   id: ClothingOuterHardsuitSyndieElite
   name: syndicate elite hardsuit # Goob edit
   description: An elite version of the blood-red hardsuit, with improved mobility and fireproofing. Property of Gorlex Marauders. # Goob edit
@@ -976,6 +976,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
+  - type: PersonalShield
+    color: "#A31616F2"
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -997,12 +999,12 @@
       NerveDamage: 0
     modifiers:
       coefficients:
-        Blunt: 0.55
-        Slash: 0.55
-        Piercing: 0.55
-        Heat: 0.2
+        Blunt: 0.61
+        Slash: 0.61
+        Piercing: 0.61
+        Heat: 0.22
         Radiation: 0.01
-        Caustic: 0.4
+        Caustic: 0.44
   - type: Item
     size: Huge
   - type: ClothingSpeedModifier
@@ -1024,7 +1026,7 @@
         Blunt: 6 # Pirate ^
 
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband]
+  parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband, MonoPersonalShieldClothing]
   id: ClothingOuterHardsuitSyndieCommander
   name: syndicate commander hardsuit # Goob edit
   description: A bulked up version of the blood-red hardsuit, purpose-built for the commander of a syndicate operative squad. Has significantly improved armor for those deadly front-lines firefights. # Goob edit
@@ -1033,6 +1035,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
+  - type: PersonalShield
+    color: "#A31616F2"
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
@@ -1049,12 +1053,12 @@
       NerveDamage: 0
     modifiers:
       coefficients:
-        Blunt: 0.35
-        Slash: 0.35
-        Piercing: 0.3
-        Heat: 0.45
-        Radiation: 0.2
-        Caustic: 0.4
+        Blunt: 0.39
+        Slash: 0.39
+        Piercing: 0.33
+        Heat: 0.5
+        Radiation: 0.22
+        Caustic: 0.44
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -1078,7 +1082,7 @@
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband]
+  parent: [ClothingOuterHardsuitBase, BaseSyndicateContraband, MonoPersonalShieldClothing]
   id: ClothingOuterHardsuitJuggernaut
   name: cybersun juggernaut suit
   description: A suit made by the cutting edge R&D department at Cybersun to be hyper resilient.
@@ -1087,6 +1091,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
+  - type: PersonalShield
+    color: "#D62828F2"
   - type: PressureProtection
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
@@ -1103,12 +1109,12 @@
       NerveDamage: 1
     modifiers:
       coefficients:
-        Blunt: 0.2
-        Slash: 0.2
-        Piercing: 0.2
-        Heat: 0.2
-        Radiation: 0.2
-        Caustic: 0.2
+        Blunt: 0.22
+        Slash: 0.22
+        Piercing: 0.22
+        Heat: 0.22
+        Radiation: 0.22
+        Caustic: 0.22
   - type: ClothingSpeedModifier
     walkModifier: 0.65
     sprintModifier: 0.65
@@ -1133,7 +1139,7 @@
 
 #Wizard Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, ClothingOuterWizardBaseArmor, BaseMagicalContraband] # Goob edit
+  parent: [ClothingOuterHardsuitBase, ClothingOuterWizardBaseArmor, BaseMagicalContraband, MonoPersonalShieldClothing] # Goob edit
   id: ClothingOuterHardsuitWizard
   name: wizard hardsuit # Goob edit
   description: A bizarre gem-encrusted suit that radiates magical energies.
@@ -1142,6 +1148,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
+  - type: PersonalShield
+    color: "#9B59B6F2"
   - type: PressureProtection
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
@@ -1154,12 +1162,12 @@
       NerveDamage: 1
     modifiers:
       coefficients:
-        Blunt: 0.35
-        Slash: 0.35
-        Piercing: 0.35
-        Heat: 0.35
-        Radiation: 0.05
-        Caustic: 0.1
+        Blunt: 0.39
+        Slash: 0.39
+        Piercing: 0.39
+        Heat: 0.39
+        Radiation: 0.06
+        Caustic: 0.11
   - type: ClothingSpeedModifier
     walkModifier: 0.9 # Goob edit
     sprintModifier: 0.9 # Goob edit
@@ -1308,7 +1316,7 @@
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieCommander ]
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieCommander, MonoPersonalShieldClothing ]
   id: ClothingOuterHardsuitERTLeader
   name: ERT leader's hardsuit # Goob edit
   description: A protective hardsuit worn by the leader of an emergency response team. # Goob edit
@@ -1317,13 +1325,15 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: PersonalShield
+    color: "#3A7DCDF2"
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHelmetHardsuitERTLeader
 
 #ERT Chaplain Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie ]
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie, MonoPersonalShieldClothing ]
   id: ClothingOuterHardsuitERTChaplain
   name: ERT chaplain's hardsuit # Goob edit
   description: A protective hardsuit worn by the chaplains of an Emergency Response Team. # Goob edit
@@ -1332,6 +1342,17 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi #if you change this, please update the humanoid.yml with a better markers sprite.
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi
+  - type: PersonalShield
+    color: "#3A7DCDF2"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHelmetHardsuitERTChaplain
@@ -1347,6 +1368,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
+  - type: PersonalShield
+    color: "#3A7DCDF2"
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHelmetHardsuitERTEngineer
@@ -1355,7 +1378,7 @@
 
 #ERT Medic Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieMedic ]
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieMedic, MonoPersonalShieldClothing ]
   id: ClothingOuterHardsuitERTMedical
   name: ERT medic's hardsuit # Goob edit
   description: A protective hardsuit worn by the medics of an emergency response team. # Goob edit
@@ -1364,13 +1387,24 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: PersonalShield
+    color: "#3A7DCDF2"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHelmetHardsuitERTMedical
 
 #ERT Security Hardsuit
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie ]
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndie, MonoPersonalShieldClothing ]
   id: ClothingOuterHardsuitERTSecurity
   name: ERT security's hardsuit # Goob edit
   description: A protective hardsuit worn by the security officers of an emergency response team. # Goob edit
@@ -1379,6 +1413,17 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+  - type: PersonalShield
+    color: "#3A7DCDF2"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHelmetHardsuitERTSecurity
@@ -1398,13 +1443,15 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+  - type: PersonalShield
+    color: "#3A7DCDF2"
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHelmetHardsuitERTJanitor
 
 #Deathsquad
 - type: entity # Goobstation - Start
-  parent: [ BaseCentcommContraband, ClothingOuterHardsuitBase ]
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitBase, MonoPersonalShieldClothing ]
   id: ClothingOuterHardsuitDeathsquad # Todo - This should be a modsuit when those are done.
   name: PI-52 "Lucifer" hardsuit # Goob edit
   description: A famous hardsuit used by Central Command's death-squadrons, often shown in movies by Nanotrasen intended to increase recruitment. # Goob edit
@@ -1413,6 +1460,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+  - type: PersonalShield
+    color: "#00A3FFF2"
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -1440,14 +1489,14 @@
       NerveDamage: 1
     modifiers:
       coefficients:
-        Blunt: 0.1 # Best armor in the game - Yeah no shit.
-        Slash: 0.1
-        Piercing: 0.1
-        Heat: 0.1
-        Cold: 0.1
-        Cellular: 0.1
-        Radiation: 0.1
-        Caustic: 0.1
+        Blunt: 0.11 # Best armor in the game - Yeah no shit.
+        Slash: 0.11
+        Piercing: 0.11
+        Heat: 0.11
+        Cold: 0.11
+        Cellular: 0.11
+        Radiation: 0.11
+        Caustic: 0.11
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0

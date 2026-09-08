@@ -14,6 +14,4 @@ public sealed partial class SecurityBorgLethalModeComponent : Component
     [DataField]
     public int LethalMode = 1;
 
-    [DataField]
-    public HashSet<string> AllowedAlertLevels = new();
 }

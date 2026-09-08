@@ -216,7 +216,7 @@ public sealed partial class RadioSystem : EntitySystem
 
         var sourceCoverage = _zLevels.GetGridCoverage(radioSource); // Pirate: multiz
         var sourceMapId = sourceCoverage.FallbackMapId; // Pirate: multiz
-        var hasActiveServer = HasActiveServer(sourceCoverage, channel.ID); // Pirate: multiz
+        var hasActiveServer = HasActiveServer(sourceCoverage, channel.ID, channel.MapWide); // Pirate: map-wide radio - extends Pirate: multiz
         var sourceServerExempt = _exemptQuery.HasComp(radioSource);
         var sourceCoverageExempt = HasComp<ListeningPostRadioComponent>(radioSource); // Pirate: listening post radio
 
@@ -250,10 +250,14 @@ public sealed partial class RadioSystem : EntitySystem
             // Pirate end - Handheld Radios port
 
             var receiverCoverageExempt = HasComp<ListeningPostRadioComponent>(receiver); // Pirate: listening post radio
-            if (!channel.LongRange && !_zLevels.IsInCoverage(sourceCoverage, receiver, transform) && // Pirate: multiz
+            #region Pirate: map-wide radio
+            var receiverInMapWideCoverage = channel.MapWide && transform.MapID == sourceMapId;
+            if (!channel.LongRange && !receiverInMapWideCoverage &&
+                !_zLevels.IsInCoverage(sourceCoverage, receiver, transform) && // Pirate: multiz
                 !radio.GlobalReceive && !sourceCoverageExempt && !receiverCoverageExempt &&
                 !(HasActiveTransmitter(transform.MapID) && HasActiveTransmitter(sourceMapId))) // goob - intermap transmitters
                 continue;
+            #endregion
 
             // don't need telecom server for long range channels or handheld radios and intercoms
             var needServer = !channel.LongRange && !sourceServerExempt;
@@ -358,12 +362,16 @@ public sealed partial class RadioSystem : EntitySystem
     // Einstein Engines - Language end
 
     /// <inheritdoc cref="TelecomServerComponent"/>
-    private bool HasActiveServer(CEZGridCoverage coverage, string channelId) // Pirate: multiz
+    private bool HasActiveServer(CEZGridCoverage coverage, string channelId, bool mapWide) // Pirate: map-wide radio - extends Pirate: multiz
     {
         var servers = EntityQueryEnumerator<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>(); // Pirate: multiz
         while (servers.MoveNext(out var server, out _, out var keys, out var power, out var transform)) // Pirate: multiz
         {
-            var serverInCoverage = _zLevels.IsInCoverage(coverage, server, transform); // Pirate: multiz
+            #region Pirate: map-wide radio
+            var serverInCoverage = mapWide
+                ? transform.MapID == coverage.FallbackMapId
+                : _zLevels.IsInCoverage(coverage, server, transform); // Pirate: multiz
+            #endregion
 
             if (serverInCoverage && // Pirate: multiz
                 power.Powered &&

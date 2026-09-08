@@ -37,3 +37,29 @@
     radioChannels:
     - InterdynePrivat
     - Interdyne
+
+# Cybersun counterpart of the Lavaland "Last Breath" implant. Reports only over the Cybersun
+# channel, transmitted from that channel's telecom server, so it always reaches the Cybersun base
+# wherever that base happens to be.
+- type: entity
+  parent: BaseSubdermalImplant
+  id: DeathRattleImplantCybersun
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    permanent: true
+    whitelist:
+      components:
+      - MobState
+  - type: MansusGraspBlockTrigger
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    - Dead
+  - type: RemoteRattleOnTrigger
+    radioChannel: Cybersun
+    targetUser: true
+    reportCoordinates: true
+    messages:
+      Critical: cybersun-deathrattle-implant-critical-message
+      Dead: cybersun-deathrattle-implant-dead-message

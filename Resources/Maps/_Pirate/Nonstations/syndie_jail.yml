@@ -5595,7 +5595,7 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Power Room
-- proto: SyndicateMarshalSpawner
+- proto: CharacterPodSyndicateMarshal
   entities:
   - uid: 526
     components:

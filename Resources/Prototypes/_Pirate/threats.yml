@@ -1,0 +1,5 @@
+# Pirate: ninja threats - Eeeplet (baby electric sheep) as a comms console threat.
+- type: ninjaHackingThreat
+  id: Eeeplet
+  announcement: terror-eeeplet
+  rule: EeepEvent

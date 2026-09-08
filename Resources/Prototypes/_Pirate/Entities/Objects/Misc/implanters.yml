@@ -13,3 +13,11 @@
   components:
   - type: Implanter
     implant: RadioImplantInterdyne
+
+- type: entity
+  id: DeathRattleImplanterCybersun
+  parent: BaseImplantOnlyImplanterSyndi
+  suffix: Cybersun Death Rattle
+  components:
+  - type: Implanter
+    implant: DeathRattleImplantCybersun

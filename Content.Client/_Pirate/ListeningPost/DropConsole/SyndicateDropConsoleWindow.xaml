@@ -1,0 +1,94 @@
+
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
+                      Title="{Loc 'syndicate-drop-console-window-title'}"
+                      Resizable="False"
+                      SetSize="948 830"
+                      MinSize="948 830">
+    <BoxContainer Orientation="Vertical">
+        <controls:StripeBack>
+            <PanelContainer>
+                <Label Name="StationName" Text="{Loc 'syndicate-drop-console-no-station'}" StyleClasses="font-large" Align="Center"/>
+            </PanelContainer>
+        </controls:StripeBack>
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+            <ui:NavMapControl Name="NavMapScreen"/>
+
+            <BoxContainer Orientation="Vertical" SetWidth="280" Margin="6 0 4 0">
+                <Label Text="{Loc 'syndicate-drop-console-mode-header'}" StyleClasses="LabelKeyText"/>
+                <Button Name="ModeButton" Text="{Loc 'syndicate-drop-console-mode-auto'}" Margin="0 2 0 2"/>
+                <RichTextLabel Name="ModeDescription" Margin="0 0 0 4"/>
+
+                <PanelContainer StyleClasses="LowDivider"/>
+
+                <BoxContainer Orientation="Horizontal" Margin="0 4 0 0">
+                    <Label Text="{Loc 'syndicate-drop-console-next-header'}" StyleClasses="LabelKeyText"
+                           VerticalAlignment="Center"/>
+                    <Label Name="Countdown" Text="--:--" StyleClasses="LabelBig"
+                           HorizontalExpand="True" HorizontalAlignment="Right"/>
+                </BoxContainer>
+                <Control SetHeight="6"/>
+
+                <PanelContainer StyleClasses="LowDivider"/>
+
+                <Label Text="{Loc 'syndicate-drop-console-target-header'}" StyleClasses="LabelKeyText" Margin="0 4 0 0"/>
+                <GridContainer Columns="3" HorizontalAlignment="Center" Margin="0 2 0 2">
+                    <PanelContainer/>
+                    <Button Name="TargetUp">
+                        <TextureRect SetSize="16 16" Stretch="KeepAspectCentered" Margin="4 2 4 2"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_arrow_north.png"/>
+                    </Button>
+                    <PanelContainer/>
+                    <Button Name="TargetLeft">
+                        <TextureRect SetSize="16 16" Stretch="KeepAspectCentered" Margin="4 2 4 2"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_arrow_west.png"/>
+                    </Button>
+                    <Label Name="TargetPos" Text="{Loc 'syndicate-drop-console-target-none'}" StyleClasses="LabelKeyText"
+                           HorizontalExpand="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Name="TargetRight">
+                        <TextureRect SetSize="16 16" Stretch="KeepAspectCentered" Margin="4 2 4 2"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_arrow_east.png"/>
+                    </Button>
+                    <PanelContainer/>
+                    <Button Name="TargetDown">
+                        <TextureRect SetSize="16 16" Stretch="KeepAspectCentered" Margin="4 2 4 2"
+                                     TexturePath="/Textures/Interface/NavMap/beveled_arrow_south.png"/>
+                    </Button>
+                    <PanelContainer/>
+                </GridContainer>
+                <Button Name="ClearTargetButton" Text="{Loc 'syndicate-drop-console-target-clear'}" Margin="0 0 0 8"/>
+
+                <PanelContainer StyleClasses="LowDivider"/>
+
+                <Label Name="ChargeHeader" Text="{Loc 'syndicate-drop-console-charges-header'}" StyleClasses="LabelKeyText" Margin="0 4 0 0"/>
+                <Button Name="LaunchButton" Text="{Loc 'syndicate-drop-console-launch'}" Disabled="True" Margin="0 2 0 8"/>
+
+                <PanelContainer StyleClasses="LowDivider"/>
+
+                <Label Text="{Loc 'syndicate-drop-console-pod-header'}" StyleClasses="LabelKeyText" Margin="0 4 0 0"/>
+                <RichTextLabel Name="PodWarning" Margin="0 0 0 2"/>
+                <Label Name="PodStatus" StyleClasses="WindowFooterText"/>
+                <Button Name="PodSendButton" Text="{Loc 'syndicate-drop-console-pod-send'}" StyleClasses="negative"
+                        Disabled="True" Margin="0 2 0 8"/>
+
+                <PanelContainer StyleClasses="LowDivider"/>
+
+                <Label Name="HistoryHeader" Text="{Loc 'syndicate-drop-console-history-header'}" StyleClasses="LabelKeyText" Margin="0 4 0 0"/>
+                <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                    <BoxContainer Name="HistoryList" Orientation="Vertical" HorizontalExpand="True"/>
+                </ScrollContainer>
+            </BoxContainer>
+        </BoxContainer>
+
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 0 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'syndicate-drop-console-footer-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'syndicate-drop-console-footer-right'}" StyleClasses="WindowFooterText"
+                       HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 2 0" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

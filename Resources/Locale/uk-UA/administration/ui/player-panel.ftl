@@ -7,6 +7,7 @@ player-panel-rolebans = Загалом рольових блокувань: {$to
 player-panel-notes = Всього нотаток: {$totalNotes}
 player-panel-playtime = Час гри: {$days}d:{$hours}h:{$minutes}m
 player-panel-shared-connections = Твінки: {$sharedConnections}
+player-panel-trust-score = Рівень довіри: {TOSTRING($trustScore, "P0")}
 player-panel-copy-username = Копіювати нік
 player-panel-show-notes = Примітки
 player-panel-show-bans = Показати бани

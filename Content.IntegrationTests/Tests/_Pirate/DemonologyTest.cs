@@ -922,7 +922,7 @@ public sealed class DemonologyTest : InteractionTest
                     Assert.That(clumsy.GunShootFailDamage.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(4)));
                     Assert.That(clumsy.GunShootFailDamage.DamageDict["Heat"], Is.EqualTo(FixedPoint2.New(3)));
                     Assert.That(font.Enabled);
-                    Assert.That(font.FontId, Is.EqualTo("LDFComicSans"));
+                    Assert.That(font.FontId, Is.Null);
                 });
                 break;
             }

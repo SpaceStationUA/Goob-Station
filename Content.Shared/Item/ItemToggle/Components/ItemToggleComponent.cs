@@ -42,6 +42,19 @@ public sealed partial class ItemToggleComponent : Component
     public bool WieldToggle = true;
 
     /// <summary>
+    /// Frontier: allow alt-verbs.
+    /// If this is set to true, the item can be toggled via its alternative verb (alt-click).
+    /// </summary>
+    [DataField]
+    public bool OnAltUse = false;
+
+    /// <summary>
+    /// Frontier: the priority of the alternative verb if enabled.
+    /// </summary>
+    [DataField]
+    public int AltPriority;
+
+    /// <summary>
     ///     The localized text to display in the verb to activate.
     /// </summary>
     [DataField]

@@ -4,13 +4,14 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
-using Content.Shared.Pinpointer; // Pirate: multiz
+using Content.Server.Pinpointer; // Pirate: multiz
 using Content.Shared.SurveillanceCamera;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 
 // Goobstation
 using Content.Goobstation.Common.SurveillanceCamera;
+using Content.Shared._Pirate.ListeningPost; // Pirate: long range cameras
 using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.Monitoring; // Pirate: multiz
 using Content.Shared.UserInterface;
@@ -26,6 +27,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     [Dependency] private readonly SurveillanceCameraSystem _surveillanceCameras = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly NavMapSystem _navMap = default!; // Pirate: multiz
 
     // Goobstation
     [Dependency] private readonly PvsOverrideSystem _pvsOverrideSystem = default!;
@@ -61,11 +63,16 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         if (!HasComp<MapGridComponent>(targetGrid.Value))
             return;
 
-        var xform = Transform(uid);
-        if (xform.GridUid == null || !IsValidZMonitoringGrid(xform.GridUid.Value, targetGrid.Value))
+        // Pirate: long range cameras - a remote console roots its nav map on the target station, so its own
+        // grid is the wrong thing to check the selected floor against.
+        var sourceGrid = Transform(uid).GridUid;
+        if (TryComp<LongRangeSurveillanceMonitorComponent>(uid, out var longRange) && longRange.TargetGrid is { } remoteGrid)
+            sourceGrid = remoteGrid;
+
+        if (sourceGrid == null || !IsValidZMonitoringGrid(sourceGrid.Value, targetGrid.Value))
             return;
 
-        EnsureComp<NavMapComponent>(targetGrid.Value);
+        _navMap.EnsureNavMap(targetGrid.Value);
     }
 
     private bool IsValidZMonitoringGrid(EntityUid sourceGrid, EntityUid targetGrid)
@@ -379,6 +386,21 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
         }
         // Goobstation end
     }
+
+    #region Pirate: long range cameras
+    public void ConnectDirectly(EntityUid uid, EntityUid camera, string address, SurveillanceCameraMonitorComponent? monitor = null)
+    {
+        if (!Resolve(uid, ref monitor))
+            return;
+
+        if (monitor.ActiveCameraAddress == address && monitor.ActiveCamera == camera)
+            return;
+
+        monitor.NextCameraAddress = null;
+        monitor.ActiveCameraAddress = address;
+        TrySwitchCameraByUid(uid, camera, monitor);
+    }
+    #endregion
 
     public void DisconnectCamera(EntityUid uid, bool removeViewers, SurveillanceCameraMonitorComponent? monitor = null) // Pirate: FPV drones
     {

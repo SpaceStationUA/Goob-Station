@@ -1,6 +1,7 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Server._Pirate.Ghost.Roles; // Pirate: character pods
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
@@ -485,6 +486,13 @@ public sealed class GhostRoleSystem : EntitySystem
             Log.Warning($"Server rejected ghost role request '{roleEnt.Comp.RoleName}' for '{player.Name}' - client missed requirement check?");
             return;
         }
+
+        #region Pirate: character pods - let a role reject this player before the raffle starts.
+        var takeAttempt = new GhostRoleTakeAttemptEvent(player);
+        RaiseLocalEvent(roleEnt.Owner, ref takeAttempt);
+        if (takeAttempt.Cancelled)
+            return;
+        #endregion
 
         // Decide to do a raffle or not
         if (roleEnt.Comp.RaffleConfig is not null)

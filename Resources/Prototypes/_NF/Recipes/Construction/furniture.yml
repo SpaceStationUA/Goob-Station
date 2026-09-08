@@ -1,140 +1,101 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate new sofas: _Pirate\Recipes\Construction\furniture.yml
 # Seat
-- type: construction
-  id: BenchSofaMiddle
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaMiddleNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  # Pirate: effective Trauma skill requirements and quality.
-  theory:
-    FurnitureKnowledge: 1
-  practical:
-    TailoringKnowledge: 2
+# - type: construction
+#   id: BenchSofaMiddle
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaMiddleNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaLeft
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaLeftNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  # Pirate: effective Trauma skill requirements and quality.
-  theory:
-    FurnitureKnowledge: 1
-  practical:
-    TailoringKnowledge: 2
+# - type: construction
+#   id: BenchSofaLeft
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaLeftNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaRight
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaRightNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  # Pirate: effective Trauma skill requirements and quality.
-  theory:
-    FurnitureKnowledge: 1
-  practical:
-    TailoringKnowledge: 2
+# - type: construction
+#   id: BenchSofaRight
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaRightNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorner
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCornerNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  # Pirate: effective Trauma skill requirements and quality.
-  theory:
-    FurnitureKnowledge: 1
-  practical:
-    TailoringKnowledge: 2
+# - type: construction
+#   id: BenchSofaCorner
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCornerNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorpMiddle
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCorpMiddleNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  # Pirate: effective Trauma skill requirements and quality.
-  theory:
-    FurnitureKnowledge: 1
-  practical:
-    TailoringKnowledge: 2
+# - type: construction
+#   id: BenchSofaCorpMiddle
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCorpMiddleNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorpLeft
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCorpLeftNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  # Pirate: effective Trauma skill requirements and quality.
-  theory:
-    FurnitureKnowledge: 1
-  practical:
-    TailoringKnowledge: 2
+# - type: construction
+#   id: BenchSofaCorpLeft
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCorpLeftNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorpRight
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCorpRightNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  # Pirate: effective Trauma skill requirements and quality.
-  theory:
-    FurnitureKnowledge: 1
-  practical:
-    TailoringKnowledge: 2
+# - type: construction
+#   id: BenchSofaCorpRight
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCorpRightNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
-- type: construction
-  id: BenchSofaCorpCorner
-  graph: SofasGraph
-  startNode: start
-  targetNode: BenchSofaCorpCornerNode
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  # Pirate: effective Trauma skill requirements and quality.
-  theory:
-    FurnitureKnowledge: 1
-  practical:
-    TailoringKnowledge: 2
+# - type: construction
+#   id: BenchSofaCorpCorner
+#   graph: SofasGraph
+#   startNode: start
+#   targetNode: BenchSofaCorpCornerNode
+#   category: construction-category-furniture
+#   objectType: Structure
+#   placementMode: SnapgridCenter
+#   canBuildInImpassable: false
+#   conditions:
+#     - !type:TileNotBlocked
 
 - type: construction
   id: BenchSteelMiddle

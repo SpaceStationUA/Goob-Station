@@ -14,18 +14,212 @@
 
 #region Крісла
 - type: construction
-  name: construction-name-barbell-chair
   id: BarbellChairRecipe
   graph: TPSeat
   startNode: start
   targetNode: barbellchair
   category: construction-category-furniture
-  description: construction-desc-barbell-chair
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+#region Дивани
+### Чорний диван
+- type: construction
+  id: SofaBlackMiddleRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofablackmiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+- type: construction
+  id: SofaBlackLeftSideRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofablackleft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+- type: construction
+  id: SofaBlackRightSideRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofablackright
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+- type: construction
+  id: SofaBlackCornerRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofablackcorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+### Білий диван
+- type: construction
+  id: SofaWhiteMiddleRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofawhitemiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+- type: construction
+  id: SofaWhiteLeftSideRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofawhiteleft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+- type: construction
+  id: SofaWhiteRightSideRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofawhiteright
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+- type: construction
+  id: SofaWhiteCornerRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofawhitecorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+### Червоний диван
+- type: construction
+  id: SofaRedMiddleRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofaredmiddle
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+- type: construction
+  id: SofaRedLeftSideRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofaredleft
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+- type: construction
+  id: SofaRedRightSideRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofaredright
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
+
+- type: construction
+  id: SofaRedCornerRecipe
+  graph: TPSofas
+  startNode: start
+  targetNode: sofaredcorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  theory:
+    FurnitureKnowledge: 1
+  practical:
+    TailoringKnowledge: 2
 
 #region Ліжка
 - type: construction

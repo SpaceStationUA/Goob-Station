@@ -21,3 +21,11 @@
     roleType: TeamAntagonist
     subtype: roles-antag-vampire-thrall-name
   - type: VampireThrall
+
+- type: entity
+  parent: MindRoleGhostRoleTeamAntagonist
+  id: MindRoleGhostRoleCybersun
+  name: Ghost Role (Cybersun)
+  components:
+  - type: MindRole
+    roleType: Cybersun

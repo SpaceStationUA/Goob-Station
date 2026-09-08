@@ -79,9 +79,6 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
         if (data.VisibleToOwner && viewer == ent.Owner) // WD EDIT: not always show our icons to our entity
             return true;
 
-        if (data.VisibleToGhosts && HasComp<GhostComponent>(viewer))
-            return true;
-
         if (data.HideInContainer && (ent.Comp.Flags & MetaDataFlags.InContainer) != 0)
             return false;
 
@@ -93,6 +90,10 @@ public sealed class StatusIconSystem : SharedStatusIconSystem
 
         if (data.ShowTo != null && !_entityWhitelist.IsValid(data.ShowTo, viewer))
             return false;
+
+        // Pirate: apply the viewer whitelist before allowing ghost visibility.
+        if (HasComp<GhostComponent>(viewer))
+            return data.VisibleToGhosts;
 
         return true;
     }

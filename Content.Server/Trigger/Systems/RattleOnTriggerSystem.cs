@@ -75,7 +75,7 @@ public sealed class RattleOnTriggerSystem : EntitySystem
         #endregion
     }
     #region Pirates: death rattle update
-    private string GetPositionText(MapCoordinates pos, bool reportCoordinates)
+    public string GetPositionText(MapCoordinates pos, bool reportCoordinates) // Pirates: death rattle update - reused by RemoteRattleOnTriggerSystem
     {
         var location = CapitalizeFirst(
             FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(pos)),

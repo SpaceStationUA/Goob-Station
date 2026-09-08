@@ -4,5 +4,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared._Pirate.ListeningPost;
 
-[RegisterComponent, NetworkedComponent]
-public sealed partial class LongRangeCrewMonitorComponent : Component;
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class LongRangeCrewMonitorComponent : Component
+{
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? TargetGrid;
+}

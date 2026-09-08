@@ -1,0 +1,3 @@
+emitter-electro-disrutpive = [color=cyan]Електродестабілізаційний[/color]: [color=green]підвищує цілісність[/color] ціною [color=red]зменшення внутрішньої енергії[/color].
+emitter-electro-behavioural = [color=cyan]Електроповедінковий[/color]: [color=green]підвищує внутрішню енергію[/color] ціною [color=red]різкого зниження цілісності![/color].
+research-technology-advanced-emitters = Технологія емітерів із діодними дисками

@@ -1026,13 +1026,13 @@ MagazinePistolMindbreaker: MagazinePistolCryptobiolin
 SpawnMobGoidaBot: SpawnMobPotyzhnobot
 PinkHandcuffs: null
 AsimovCircuitBoard: CrewsimovCircuitBoard
-# Pirate: random medical vendor variations.
+# random medical vendor variations.
 VendingMachineMedical: RandomVendingMedical
 VendingMachineMedicalBase: RandomVendingMedicalCivilian
 VendingMachineWallMedical: RandomVendingMedicalWall
 VendingMachineWallMedicalCivilian: RandomVendingMedicalCivilianWall
 Bush: FloraBigBush01
-# Pirate: stairs
+# stairs
 Stairs: SteelCenterStairs
 StairStage: SteelCenterStairs
 StairWhite: SteelWhiteCenterStairs
@@ -1041,4 +1041,13 @@ StairDark: SteelDarkCenterStairs
 StairStageDark: SteelDarkCenterStairs
 StairWood: WoodCenterStairs
 StairStageWood: WoodCenterStairs
+# sofas
+BenchSofaCorpMiddle: SofaBlack
+BenchSofaCorpLeft: SofaBlackRight
+BenchSofaCorpRight: SofaBlackLeft
+BenchSofaCorpCorner: SofaBlackCorner
+BenchSofaMiddle: SofaWhite
+BenchSofaLeft: SofaWhiteRight
+BenchSofaRight: SofaWhiteLeft
+BenchSofaCorner: SofaWhiteCorner
 # PIRATE END

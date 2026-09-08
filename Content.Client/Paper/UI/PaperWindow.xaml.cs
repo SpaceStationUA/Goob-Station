@@ -253,6 +253,7 @@ namespace Content.Client.Paper.UI
 
             PaperContent.ModulateSelfOverride = visuals.ContentImageModulate;
             WrittenTextLabel.ModulateSelfOverride = visuals.FontAccentColor;
+            BlankPaperIndicator.ModulateSelfOverride = visuals.FontAccentColor; // Pirate: fine ticket
             FillStatus.ModulateSelfOverride = visuals.FontAccentColor;
             MacroHint.ModulateSelfOverride = visuals.FontAccentColor; // Pirate: paperwork tags
 

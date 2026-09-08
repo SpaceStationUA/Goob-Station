@@ -55,6 +55,8 @@ public sealed class DeafnessBlindnessSystem : EntitySystem
         // Pirate: PoorVision also uses PermanentBlindnessComponent, but only full blindness should block sight-only chat.
         if (!args.RequiresSight || ent.Comp.Blindness != 0)
             return;
-        args.Cancel();
+        if (ent.Comp.Blindness <= 0)
+            args.Cancel();
+        // Goob edit end
     }
 }

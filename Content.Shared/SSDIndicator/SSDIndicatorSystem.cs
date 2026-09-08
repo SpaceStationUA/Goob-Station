@@ -49,9 +49,10 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     private void ClearSSDState(EntityUid uid, SSDIndicatorComponent component)
     {
-        var stateChanged = component.IsSSD || component.FallAsleepTime != TimeSpan.Zero;
+        var stateChanged = component.IsSSD || component.HadPlayer || component.FallAsleepTime != TimeSpan.Zero;
 
         component.IsSSD = false;
+        component.HadPlayer = true; // Goobstation
         component.FallAsleepTime = TimeSpan.Zero;
         _statusEffects.TryRemoveStatusEffect(uid, StatusEffectSSDSleeping);
 
@@ -119,6 +120,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
             // Forces the entity to sleep when the time has come
             if (!ssd.IsSSD
+                || !ssd.HadPlayer // Goobstation
                 || ssd.NextUpdate > curTime
                 || ssd.FallAsleepTime > curTime
                 || TerminatingOrDeleted(uid))

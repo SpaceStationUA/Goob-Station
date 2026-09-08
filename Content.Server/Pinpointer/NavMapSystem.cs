@@ -228,6 +228,20 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
 
     #region: Grid functions
 
+    #region Pirate: navmap on non-station grids
+    public void EnsureNavMap(EntityUid grid)
+    {
+        if (!_gridQuery.TryComp(grid, out var mapGrid))
+            return;
+
+        if (_navQuery.TryComp(grid, out var navMap) && navMap.Chunks.Count > 0)
+            return;
+
+        navMap ??= EnsureComp<NavMapComponent>(grid);
+        RefreshGrid(grid, navMap, mapGrid);
+    }
+    #endregion
+
     private void RefreshGrid(EntityUid uid, NavMapComponent component, MapGridComponent mapGrid)
     {
         // Clear stale data

@@ -171,6 +171,16 @@
     albumKey: default
 
 - type: entity
+  id: PhotoAlbumCybersun
+  parent: PhotoAlbumRed
+  name: "фотоальбом Cybersun"
+  components:
+  - type: PersistentPhotoAlbum
+    ownerKind: department
+    ownerId: cybersun
+    albumKey: default
+
+- type: entity
   id: PhotoAlbumMakeshift
   parent: PhotoAlbum
   name: "саморобний фотоальбом"

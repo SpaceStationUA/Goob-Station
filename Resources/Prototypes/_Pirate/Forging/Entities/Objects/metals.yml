@@ -18,6 +18,7 @@
   - type: Temperature
     currentTemperature: 290
     specificHeat: 500
+    atmosTemperatureTransferEfficiency: 0.005 # Pirate: forged metal must retain heat in the forge
   # TODO: melting into a reagent puddle above extreme temperature
   # TODO: picking up a 1200C ingot should melt your hands off
 

@@ -27,9 +27,14 @@ public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
         {
             gridUid = xform.GridUid;
 
-            if (EntMan.HasComponent<LongRangeCrewMonitorComponent>(Owner))
+            // Pirate: listening post long-range monitor - the server hands the console the station grid it
+            // resolved, which is the only way to reach a station on another map. The same-map search stays as
+            // the fallback for a console whose server has not ticked yet.
+            if (EntMan.TryGetComponent<LongRangeCrewMonitorComponent>(Owner, out var longRange))
             {
-                gridUid = EntMan.System<LongRangeCrewMonitorSystem>().FindLargestStationGridInMap(xform.MapID) ?? xform.GridUid;
+                gridUid = longRange.TargetGrid
+                          ?? EntMan.System<LongRangeCrewMonitorSystem>().FindLargestStationGridInMap(xform.MapID)
+                          ?? xform.GridUid;
             }
 
             if (EntMan.TryGetComponent<MetaDataComponent>(gridUid, out var metaData))

@@ -144,11 +144,12 @@
     contentImagePath: /Textures/Interface/Paper/paper_content_lined.svg.96dpi.png
     backgroundModulate: "#f07575"
     contentImageModulate: "#f07575"
+    fontAccentColor: "#191919"
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: /Textures/_Pirate/Interface/Paper/paper_heading_fine.svg.96dpi.png
     headerMargin: 0.0, 12.0, 0.0, 0.0
-    maxWritableArea: 200.0, 300.0
+    maxWritableArea: 350.0, 300.0
   - type: Tag
     tags:
     - Document
@@ -351,8 +352,16 @@
     sprite: _Pirate/Clothing/Eyes/Glasses/secvision.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Eyes/Glasses/secvision.rsi
-  - type: NightVision
-    isEquipment: true
+  - type: MonolithNightVision # Gen 1 monotube
+    relayOverlay: true
+    goggleEffect: true
+    action: MonolithToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 1
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF26"
+    amplification: 6
   - type: IdentityBlocker
     coverage: EYES
   # Pirate: target has no Impstation PluralName component.

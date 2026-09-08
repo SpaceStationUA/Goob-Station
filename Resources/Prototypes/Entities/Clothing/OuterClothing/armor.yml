@@ -311,7 +311,7 @@
 
 # Armor covering multiple body parts including limbs
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSyndicateContraband ]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSyndicateContraband, MonoPersonalShieldClothing ]
   id: ClothingOuterArmorRaid
   name: syndicate raid suit
   description: A somewhat flexible and well-armored suit with a powerful shoulder mounted flashlight manufactured in the Gorlex Marauder's iconic blood-red color scheme, it does not protect its wearer from space.
@@ -325,6 +325,8 @@
       shader: unshaded
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/syndie-raid.rsi
+  - type: PersonalShield
+    color: "#A31616F2"
   - type: Armor
     # Goob start
     coverage:
@@ -343,11 +345,11 @@
       NerveDamage: 0
     modifiers:
       coefficients:
-        Blunt: 0.3
-        Slash: 0.3
-        Piercing: 0.3
-        Heat: 0.3
-        Caustic: 0.3
+        Blunt: 0.33
+        Slash: 0.33
+        Piercing: 0.33
+        Heat: 0.33
+        Caustic: 0.33
     # Goob end
   - type: ExplosionResistance
     damageCoefficient: 0.35

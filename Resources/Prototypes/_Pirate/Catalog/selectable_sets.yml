@@ -522,7 +522,7 @@
   name: "набір «Руйнівник»"
   description: selectable-set-ert-Breacher-description
   sprite:
-    sprite: _Goobstation/Objects/Weapons/Guns/Lever/combatshotgun.rsi
+    sprite: _Goobstation/Objects/Weapons/Guns/Lever/combatshotgun_icon_48x.rsi
     state: base
   content:
     - ClothingEyesThermalVisionGoggles

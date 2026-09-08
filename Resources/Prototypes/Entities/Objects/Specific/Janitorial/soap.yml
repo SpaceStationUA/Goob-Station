@@ -71,6 +71,7 @@
     solution: soap
   - type: BadFood
   - type: CleansForensics
+  - type: PaintRemover # Pirate: light paint
   - type: StainCleaner # Pirate: stains
   - type: FloorCleaner # Goobstation
     cleanDelay: 12

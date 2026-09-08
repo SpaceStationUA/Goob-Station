@@ -19,6 +19,12 @@ public sealed partial class ConstructionPrototype
     [DataField]
     public Dictionary<EntProtoId, int>? Practical;
 
+    /// <summary>
+    /// Experience granted to the listed skills when this construction is completed.
+    /// </summary>
+    [DataField]
+    public Dictionary<EntProtoId, int> Experience = new();
+
     [DataField]
     public ProtoId<QualityPrototype>? QualityPrototype;
 

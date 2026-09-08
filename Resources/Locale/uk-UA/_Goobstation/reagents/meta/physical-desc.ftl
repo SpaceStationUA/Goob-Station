@@ -14,3 +14,4 @@ reagent-physical-desc-sigma = сигма
 reagent-physical-desc-ling = живий
 reagent-physical-desc-comforting = заспокійливий
 reagent-physical-desc-alien = інопланетний
+reagent-physical-desc-bitter = гіркий

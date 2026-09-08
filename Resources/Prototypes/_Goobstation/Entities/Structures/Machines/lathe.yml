@@ -66,6 +66,7 @@
     - CargoBoards # Pirate start - tweak fab recepies | Add more circuits to engi fab
     - MedicalBoards
     - ServiceBoards # Pirate end
+    - AdvancedEmitters        # Omu - advanced emitters
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NailgunEvilStatic
@@ -108,6 +109,7 @@
     - ToolsStatic
     #- SharedBoardsStatic Pirate removed
     - CargoBoardsStatic
+    - CargoBoardsStaticGoob
     - CablesStatic
     - PartsStatic
     - LatheMiscStatic
@@ -118,6 +120,7 @@
     dynamicPacks:
     - AdvancedTools
     - Mining
+    - MiningLavaland # Lavaland Change
     - PowerCells
     - Equipment
     # - ServiceWeapons

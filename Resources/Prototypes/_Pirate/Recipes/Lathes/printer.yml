@@ -505,6 +505,15 @@
 
 # Охоронна бюрократія
 - type: latheRecipe
+  id: FineTicketRecipe
+  result: FineTicket
+  categories: [SecurityBureaucracy]
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+
+- type: latheRecipe
   id: PrintedDocumentOrderParolePrisonerRecipe
   result: PrintedDocumentOrderParolePrisoner
   categories: [SecurityBureaucracy]

@@ -3,11 +3,11 @@
 - type: weightedRandom
   id: NinjaThreats
   weights:
-    Dragon: 1
+    Colossus: 1 # Pirate: ninja threats - was Dragon
     # Revenant: 1 # Goob - Removed in favor of LoneOperative
     SlaughterDemon: 1 # Goobstation begin
     # Wraith: 1
-    LoneOperative: 1
+    Eeeplet: 1 # Pirate: ninja threats - was LoneOperative
     TerrorSpider: 0.5 # Pirate - Starlight terror spider threat
     # Slasher: 1 # Pirate disable
     # Goobstation end

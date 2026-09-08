@@ -40,6 +40,7 @@ public sealed class ItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnOnWielded);
         SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand, before: [typeof(ClothingSystem)]); // Goobstation - order changes, batons used before equipped
         SubscribeLocalEvent<ItemToggleComponent, GetVerbsEvent<ActivationVerb>>(OnActivateVerb);
+        SubscribeLocalEvent<ItemToggleComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternateVerb); // Frontier: alt-verb toggle
         SubscribeLocalEvent<ItemToggleComponent, ActivateInWorldEvent>(OnActivate);
 
         SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
@@ -98,6 +99,41 @@ public sealed class ItemToggleSystem : EntitySystem
         args.Verbs.Add(new ActivationVerb()
         {
             Text = !ent.Comp.Activated ? Loc.GetString(ent.Comp.VerbToggleOn) : Loc.GetString(ent.Comp.VerbToggleOff),
+            Act = () =>
+            {
+                Toggle((ent.Owner, ent.Comp), user, predicted: ent.Comp.Predictable);
+            }
+        });
+    }
+
+    private void OnAlternateVerb(Entity<ItemToggleComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || !ent.Comp.OnAltUse)
+            return;
+
+        var user = args.User;
+
+        if (ent.Comp.Activated)
+        {
+            var ev = new ItemToggleDeactivateAttemptEvent(args.User);
+            RaiseLocalEvent(ent.Owner, ref ev);
+
+            if (ev.Cancelled)
+                return;
+        }
+        else
+        {
+            var ev = new ItemToggleActivateAttemptEvent(args.User);
+            RaiseLocalEvent(ent.Owner, ref ev);
+
+            if (ev.Cancelled)
+                return;
+        }
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Text = !ent.Comp.Activated ? Loc.GetString(ent.Comp.VerbToggleOn) : Loc.GetString(ent.Comp.VerbToggleOff),
+            Priority = ent.Comp.AltPriority,
             Act = () =>
             {
                 Toggle((ent.Owner, ent.Comp), user, predicted: ent.Comp.Predictable);

@@ -16,6 +16,7 @@
   priority: 1
   showTo:
     components:
+      - ShowAntagIcons # Pirate: expose to admin ghosts
       - VampireThrall
       - Vampire
   isShaded: true
