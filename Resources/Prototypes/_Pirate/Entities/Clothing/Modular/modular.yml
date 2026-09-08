@@ -120,6 +120,17 @@
     sprite: _Pirate/Clothing/Modular/Advanced/control.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Advanced/control.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+      back-reptilian:
+      - state: equipped-BACKPACK-reptilian
+  - type: ToggleableVisuals
+    clothingVisuals:
+      back:
+      - state: sealed-equipped-BACKPACK
+      back-reptilian:
+      - state: sealed-equipped-BACKPACK-reptilian
   - type: ContainerFill
     containers:
       suit_core: &core-slot-plasma #<-- &
@@ -223,6 +234,17 @@
     sprite: _Pirate/Clothing/Modular/Advanced/gauntlets.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Advanced/gauntlets.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+      gloves-reptilian:
+      - state: equipped-HAND-reptilian
+  - type: ToggleableVisuals
+    clothingVisuals:
+      gloves:
+      - state: sealed-equipped-HAND
+      gloves-reptilian:
+      - state: sealed-equipped-HAND-reptilian
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Advanced/gauntlets.rsi
@@ -564,6 +586,17 @@
     sprite: _Pirate/Clothing/Modular/Atmospheric/control.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Atmospheric/control.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+      back-reptilian:
+      - state: equipped-BACKPACK-reptilian
+  - type: ToggleableVisuals
+    clothingVisuals:
+      back:
+      - state: sealed-equipped-BACKPACK
+      back-reptilian:
+      - state: sealed-equipped-BACKPACK-reptilian
   - type: ContainerFill
     containers:
       suit_core: *core-slot
@@ -671,6 +704,17 @@
     sprite: _Pirate/Clothing/Modular/Atmospheric/gauntlets.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Atmospheric/gauntlets.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+      gloves-reptilian:
+      - state: equipped-HAND-reptilian
+  - type: ToggleableVisuals
+    clothingVisuals:
+      gloves:
+      - state: sealed-equipped-HAND
+      gloves-reptilian:
+      - state: sealed-equipped-HAND-reptilian
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Atmospheric/gauntlets.rsi
@@ -688,6 +732,21 @@
     sprite: _Pirate/Clothing/Modular/Atmospheric/boots.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Atmospheric/boots.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+      shoes-reptilian:
+      - state: equipped-FEET-reptilian
+      shoes-vox:
+      - state: equipped-FEET-vox
+  - type: ToggleableVisuals
+    clothingVisuals:
+      shoes:
+      - state: sealed-equipped-FEET
+      shoes-reptilian:
+      - state: sealed-equipped-FEET-reptilian
+      shoes-vox:
+      - state: sealed-equipped-FEET-vox
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Atmospheric/boots.rsi
@@ -1592,6 +1651,17 @@
     sprite: _Pirate/Clothing/Modular/Engineering/control.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Engineering/control.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+      back-reptilian:
+      - state: equipped-BACKPACK-reptilian
+  - type: ToggleableVisuals
+    clothingVisuals:
+      back:
+      - state: sealed-equipped-BACKPACK
+      back-reptilian:
+      - state: sealed-equipped-BACKPACK-reptilian
   - type: ContainerFill
     containers:
       suit_core: *core-slot
@@ -1693,6 +1763,17 @@
     sprite: _Pirate/Clothing/Modular/Engineering/gauntlets.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Engineering/gauntlets.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+      gloves-reptilian:
+      - state: equipped-HAND-reptilian
+  - type: ToggleableVisuals
+    clothingVisuals:
+      gloves:
+      - state: sealed-equipped-HAND
+      gloves-reptilian:
+      - state: sealed-equipped-HAND-reptilian
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Engineering/gauntlets.rsi
