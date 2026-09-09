@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by belay5 (Discord) | equipped-MASK-vox sprited by PuroSlavKing (Github). Pulled-down (up-) states taken from NovaSector at commit https://github.com/NovaSector/NovaSector/commit/9d5bb13a76866960c76cb78217e7436e65239268",
+  "copyright": "Worn states taken from SS14's Clothing/Mask/neckgaiter.rsi (sprited by belay5 (Discord); equipped-MASK-vox by PuroSlavKing (Github), equipped-MASK-feroxi by RedTerror, hydrakin by Zethine / @synthetic_086 (discord)). Icon and pulled-down (up-) states taken from NovaSector at commit https://github.com/NovaSector/NovaSector/commit/9d5bb13a76866960c76cb78217e7436e65239268",
   "size": {
     "x": 32,
     "y": 32
@@ -28,6 +28,18 @@
     },
     {
       "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-feroxi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-hydrakin",
       "directions": 4
     },
     {
