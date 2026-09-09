@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 09/08/2026 16:50:46
-  entityCount: 10857
+  time: 09/09/2026 15:02:31
+  entityCount: 10899
 maps: []
 grids:
 - 1
@@ -259,6 +259,8 @@ entities:
             1873: 17,-5
             1874: 18,-1
             3577: 10,-7
+            4060: 7,25
+            4061: 5,25
         - node:
             color: '#9C2020FF'
             id: Bot
@@ -2992,10 +2994,20 @@ entities:
           decals:
             3641: 11,-2
         - node:
+            color: '#3C3C3CFF'
+            id: SidinCornerNe
+          decals:
+            4053: 8,24
+        - node:
             color: '#434343FF'
             id: SidinCornerNe
           decals:
             3489: 2,-1
+        - node:
+            color: '#3C3C3CFF'
+            id: SidinCornerNw
+          decals:
+            4052: 6,24
         - node:
             color: '#434343FF'
             id: SidinCornerNw
@@ -3007,6 +3019,11 @@ entities:
           decals:
             3660: -5,-9
         - node:
+            color: '#3C3C3CFF'
+            id: SidinCornerSe
+          decals:
+            4055: 8,23
+        - node:
             color: '#434343FF'
             id: SidinCornerSe
           decals:
@@ -3016,6 +3033,11 @@ entities:
             id: SidinCornerSe
           decals:
             3662: -4,-10
+        - node:
+            color: '#3C3C3CFF'
+            id: SidinCornerSw
+          decals:
+            4054: 6,23
         - node:
             color: '#434343FF'
             id: SidinCornerSw
@@ -3085,6 +3107,11 @@ entities:
             2324: -3,-22
             2325: 0,-22
         - node:
+            color: '#3C3C3CFF'
+            id: SidinLineN
+          decals:
+            4057: 7,24
+        - node:
             color: '#434343FF'
             id: SidinLineN
           decals:
@@ -3098,6 +3125,11 @@ entities:
             2352: 2,-20
             2353: -2,-20
             3493: 1,-1
+        - node:
+            color: '#3C3C3CFF'
+            id: SidinLineS
+          decals:
+            4056: 7,23
         - node:
             color: '#434343FF'
             id: SidinLineS
@@ -5084,7 +5116,8 @@ entities:
           0,-3:
             0: 49083
           0,-2:
-            0: 57218
+            0: 57090
+            1: 128
           0,-1:
             0: 65528
           0,-8:
@@ -5147,7 +5180,8 @@ entities:
           1,-3:
             0: 49083
           1,-2:
-            0: 49080
+            0: 49048
+            3: 32
           1,-1:
             0: 47755
           1,0:
@@ -5210,11 +5244,13 @@ entities:
             0: 20207
             6: 40960
           -1,1:
-            0: 57582
+            0: 57454
+            3: 128
           -1,2:
             0: 3822
           0,2:
-            0: 61422
+            0: 61418
+            5: 4
           -4,-8:
             0: 65535
           -5,-8:
@@ -5411,9 +5447,11 @@ entities:
           8,3:
             0: 13107
           0,1:
-            0: 36590
+            0: 35566
+            5: 1024
           0,3:
-            0: 60942
+            5: 6
+            0: 60936
           0,4:
             0: 61166
           1,1:
@@ -5421,7 +5459,8 @@ entities:
           1,2:
             0: 48123
           1,3:
-            0: 48011
+            5: 1
+            0: 48010
           1,4:
             0: 48123
           2,1:
@@ -5435,7 +5474,8 @@ entities:
           3,3:
             0: 30577
           3,4:
-            0: 16368
+            0: 16240
+            3: 128
           4,5:
             0: 65535
           3,5:
@@ -6066,6 +6106,22 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 9680
+  - uid: 10858
+    components:
+    - type: Transform
+      parent: 1098
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1098
+  - uid: 10859
+    components:
+    - type: Transform
+      parent: 1098
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1098
 - proto: AirAlarm
   entities:
   - uid: 6774
@@ -6073,6 +6129,11 @@ entities:
     - type: Transform
       pos: -11.5,-4.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7721
@@ -6090,6 +6151,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -17.5,-28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7731
@@ -6103,6 +6169,11 @@ entities:
     - type: Transform
       pos: -13.5,-19.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7729
@@ -6149,6 +6220,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-15.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7718
@@ -6177,6 +6253,11 @@ entities:
     - type: Transform
       pos: -14.5,2.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7584
@@ -6193,6 +6274,11 @@ entities:
     - type: Transform
       pos: -14.5,9.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7578
@@ -6224,6 +6310,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: -16.5,9.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7573
@@ -6254,6 +6345,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,-3.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7692
@@ -6284,6 +6380,11 @@ entities:
     - type: Transform
       pos: -2.5,2.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7714
@@ -6305,6 +6406,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 9.5,-1.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7766
@@ -6338,6 +6444,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 9.5,-10.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7629
@@ -6380,6 +6491,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 14.5,-27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7523
@@ -6397,6 +6513,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 11.5,-19.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7743
@@ -6411,6 +6532,11 @@ entities:
     - type: Transform
       pos: 17.5,-25.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7527
@@ -6423,6 +6549,11 @@ entities:
     - type: Transform
       pos: 23.5,-23.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7530
@@ -6436,6 +6567,11 @@ entities:
     - type: Transform
       pos: 24.5,-14.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7640
@@ -6546,6 +6682,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,15.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: Fixtures
       fixtures: {}
   - uid: 7675
@@ -6554,6 +6695,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,24.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: Fixtures
       fixtures: {}
   - uid: 7676
@@ -6595,6 +6741,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: -15.5,16.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7684
@@ -6609,6 +6760,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,24.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7569
@@ -6650,6 +6806,11 @@ entities:
     - type: Transform
       pos: -1.5,-18.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7521
@@ -6667,6 +6828,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,-10.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 9434
@@ -6701,6 +6867,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-6.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 9462
@@ -6720,6 +6891,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,-15.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 7749
@@ -6751,6 +6927,11 @@ entities:
     - type: Transform
       pos: -37.5,17.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 10426
@@ -6772,6 +6953,11 @@ entities:
     - type: Transform
       pos: -32.5,11.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 10416
@@ -6798,6 +6984,11 @@ entities:
     - type: Transform
       pos: -26.5,11.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 10450
@@ -6815,6 +7006,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -29.5,13.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+      access:
+      - - SyndicateAgent
     - type: DeviceList
       devices:
       - 10445
@@ -6850,6 +7046,13 @@ entities:
     - type: Transform
       pos: -19.5,-28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+      - - Engineering
+      - - Research
+      access:
+      - - SyndicateAgent
 - proto: Airlock
   entities:
   - uid: 73
@@ -7172,6 +7375,10 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 6.5,9.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
     - type: DoorBolt
       boltsDown: True
   - uid: 9123
@@ -7291,7 +7498,7 @@ entities:
       pos: -35.5,11.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -7056.673
+      secondsUntilStateChange: -8815.367
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -7352,12 +7559,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,17.5
       parent: 1
-- proto: AirlockMedical
+- proto: AirlockMedicalGlassLocked
   entities:
-  - uid: 1009
+  - uid: 2598
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 12.5,12.5
       parent: 1
 - proto: AirlockScience
@@ -8537,6 +8743,16 @@ entities:
       - - SyndicateAgent
     - type: Fixtures
       fixtures: {}
+- proto: ApparatusSuitModule
+  entities:
+  - uid: 2597
+    components:
+    - type: Transform
+      parent: 9185
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 9185
 - proto: AppleSeeds
   entities:
   - uid: 10146
@@ -9077,13 +9293,6 @@ entities:
       parent: 1
     - type: ResearchPointSource
       pointspersecond: 15
-- proto: BaseUplinkRadio
-  entities:
-  - uid: 109
-    components:
-    - type: Transform
-      pos: 16.502455,19.540415
-      parent: 1
 - proto: Beaker
   entities:
   - uid: 10113
@@ -9244,6 +9453,12 @@ entities:
     - type: Transform
       pos: -16.5,11.5
       parent: 1
+  - uid: 10890
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 16.5,17.5
+      parent: 1
 - proto: BenchRedComfy
   entities:
   - uid: 391
@@ -9322,6 +9537,10 @@ entities:
     - type: Transform
       pos: 0.5,25.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 9627
     components:
     - type: Transform
@@ -9449,243 +9668,415 @@ entities:
     - type: Transform
       pos: -21.5,13.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3654
     components:
     - type: Transform
       pos: -21.5,14.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3655
     components:
     - type: Transform
       pos: -21.5,15.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3656
     components:
     - type: Transform
       pos: -22.5,19.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3657
     components:
     - type: Transform
       pos: -22.5,20.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3658
     components:
     - type: Transform
       pos: -22.5,21.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3659
     components:
     - type: Transform
       pos: -20.5,24.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3660
     components:
     - type: Transform
       pos: -20.5,25.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3661
     components:
     - type: Transform
       pos: -20.5,26.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3662
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -19.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3663
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -18.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3664
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -17.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3665
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -16.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3668
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,29.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 3669
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -8.5,29.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5068
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 20.5,-31.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5069
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 21.5,-31.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5070
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 22.5,-31.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5071
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 23.5,-31.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5072
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 26.5,-29.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5073
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 26.5,-28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5074
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,-28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5075
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,-27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5077
     components:
     - type: Transform
       pos: 14.5,-28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5078
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 11.5,-32.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5079
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-32.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5080
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-32.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5081
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-32.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5082
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-32.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5550
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -22.5,-22.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5551
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -21.5,-19.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5552
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -22.5,-28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5553
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -22.5,-30.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5554
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -21.5,-32.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5555
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -20.5,-32.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5556
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -19.5,-32.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5557
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -18.5,-32.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5558
     components:
     - type: Transform
       pos: -23.5,-15.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5559
     components:
     - type: Transform
       pos: -23.5,-14.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5560
     components:
     - type: Transform
       pos: -23.5,-13.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5561
     components:
     - type: Transform
       pos: -23.5,-12.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5562
     components:
     - type: Transform
       pos: -23.5,-11.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5563
     components:
     - type: Transform
       pos: -23.5,-10.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5572
     components:
     - type: Transform
@@ -9703,84 +10094,144 @@ entities:
     - type: Transform
       pos: -17.5,-25.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5581
     components:
     - type: Transform
       pos: 26.5,-5.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5582
     components:
     - type: Transform
       pos: 26.5,-4.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5583
     components:
     - type: Transform
       pos: 26.5,-3.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5584
     components:
     - type: Transform
       pos: 26.5,0.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5585
     components:
     - type: Transform
       pos: 26.5,1.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5586
     components:
     - type: Transform
       pos: 26.5,2.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5593
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 26.5,10.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5594
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 26.5,14.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5595
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 26.5,15.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5604
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 12.5,28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5605
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 13.5,28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5606
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5607
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 15.5,28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5608
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 16.5,28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5611
     components:
     - type: Transform
@@ -9805,36 +10256,60 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5615
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5616
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5617
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5618
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 5619
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,27.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 8869
     components:
     - type: Transform
@@ -9901,24 +10376,40 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -24.5,8.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 9854
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -25.5,8.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 9855
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -25.5,11.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 9856
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -24.5,11.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 9951
     components:
     - type: Transform
@@ -9931,12 +10422,20 @@ entities:
       rot: 3.141592653589793 rad
       pos: -29.5,15.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 10077
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -31.5,4.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
 - proto: Bloodpack
   entities:
   - uid: 910
@@ -10434,6 +10933,16 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 10161
+- proto: BoxLethalshot
+  entities:
+  - uid: 10862
+    components:
+    - type: Transform
+      parent: 978
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 978
 - proto: BoxLightMixed
   entities:
   - uid: 286
@@ -10738,6 +11247,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -37.5,8.5
+      parent: 1
+  - uid: 10880
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,3.5
       parent: 1
 - proto: ButtonFrameGrey
   entities:
@@ -26008,6 +26523,22 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 3399
+  - uid: 10860
+    components:
+    - type: Transform
+      parent: 1098
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1098
+  - uid: 10861
+    components:
+    - type: Transform
+      parent: 1098
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1098
 - proto: ClothingHandsGlovesHop
   entities:
   - uid: 3421
@@ -28173,6 +28704,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -20.5,13.5
       parent: 1
+  - uid: 10896
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 18.5,18.5
+      parent: 1
 - proto: ComputerAlert
   entities:
   - uid: 1805
@@ -28834,22 +29371,57 @@ entities:
     - type: Transform
       pos: 2.5,6.5
       parent: 1
-  - uid: 1098
-    components:
-    - type: Transform
-      pos: 2.5,12.5
-      parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 895
+          - 10862
+          - 10863
+          - 10864
+          - 10865
+          - 10866
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+  - uid: 1098
+    components:
+    - type: Transform
+      pos: 2.5,12.5
+      parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
           - 893
+          - 10858
+          - 2071
+          - 895
           - 894
           - 2044
-          - 2071
+          - 10859
+          - 10860
+          - 10861
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -33868,6 +34440,35 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -13.5,22.5
+      parent: 1
+    - type: Fixtures
+      fixtures: {}
+  - uid: 10885
+    components:
+    - type: Transform
+      pos: 9.5,16.5
+      parent: 1
+    - type: Fixtures
+      fixtures: {}
+  - uid: 10887
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -30.5,11.5
+      parent: 1
+    - type: Fixtures
+      fixtures: {}
+  - uid: 10888
+    components:
+    - type: Transform
+      pos: 20.5,-1.5
+      parent: 1
+    - type: Fixtures
+      fixtures: {}
+  - uid: 10889
+    components:
+    - type: Transform
+      pos: 21.5,10.5
       parent: 1
     - type: Fixtures
       fixtures: {}
@@ -45661,6 +46262,13 @@ entities:
     - type: Transform
       pos: -8.5,-28.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+      - - Engineering
+      - - Research
+      access:
+      - - SyndicateAgent
 - proto: GasMinerNitrogenStation
   entities:
   - uid: 2566
@@ -45829,17 +46437,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -19.5,-22.5
-      parent: 1
-  - uid: 2597
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -16.5,-23.5
-      parent: 1
-  - uid: 2598
-    components:
-    - type: Transform
-      pos: -16.5,-22.5
       parent: 1
   - uid: 2606
     components:
@@ -46590,6 +47187,17 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -20.5,-24.5
+      parent: 1
+  - uid: 10867
+    components:
+    - type: Transform
+      pos: -15.5,-22.5
+      parent: 1
+  - uid: 10868
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -15.5,-23.5
       parent: 1
 - proto: GasPipeBendAlt1
   entities:
@@ -47382,12 +47990,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -17.5,-22.5
-      parent: 1
-  - uid: 2586
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -15.5,-23.5
       parent: 1
   - uid: 2587
     components:
@@ -50471,6 +51073,12 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 10869
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -16.5,-22.5
+      parent: 1
 - proto: GasPipeStraightAlt1
   entities:
   - uid: 2761
@@ -56326,6 +56934,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -19.5,-18.5
       parent: 1
+    - type: GasVolumePump
+      enabled: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GeneratorRTG
@@ -56954,6 +57564,14 @@ entities:
     - type: Transform
       pos: 2.5,8.5
       parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
     - type: AccessReader
       accessListsOriginal: []
       access:
@@ -56964,9 +57582,15 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 3502
           - 3500
           - 3501
-          - 3502
+          - 10870
+          - 10871
+          - 10872
+          - 10873
+          - 10874
+          - 10875
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -56997,15 +57621,23 @@ entities:
     - type: Transform
       pos: 1.5,12.5
       parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 137
           - 3503
           - 138
+          - 137
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -57021,8 +57653,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
+          Oxygen: 1.8856695
+          Nitrogen: 7.0937095
     - type: AccessReader
       accessListsOriginal: []
       access:
@@ -57273,6 +57905,16 @@ entities:
     components:
     - type: Transform
       pos: 10.5,-0.5
+      parent: 1
+  - uid: 10876
+    components:
+    - type: Transform
+      pos: -21.5,8.5
+      parent: 1
+  - uid: 10892
+    components:
+    - type: Transform
+      pos: -22.5,8.5
       parent: 1
 - proto: HoloFan
   entities:
@@ -57874,6 +58516,11 @@ entities:
     - type: Transform
       pos: -8.5,-22.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+      access:
+      - - SyndicateAgent
 - proto: LockableButtonSecurity
   entities:
   - uid: 10044
@@ -57983,26 +58630,26 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 1780
           - 308
           - 279
-          - 283
-          - 266
-          - 255
-          - 254
-          - 253
-          - 9023
-          - 9021
-          - 8993
-          - 9024
-          - 9022
-          - 38
-          - 28
-          - 53
-          - 40
-          - 37
-          - 339
           - 8994
+          - 339
+          - 37
+          - 40
+          - 53
+          - 28
+          - 38
+          - 9022
+          - 9024
+          - 8993
+          - 9021
+          - 9023
+          - 253
+          - 254
+          - 255
+          - 266
+          - 283
+          - 1780
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -58122,31 +58769,31 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
+          Oxygen: 1.8968438
+          Nitrogen: 7.1357465
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 3438
-          - 3435
           - 3752
-          - 3437
-          - 3434
-          - 3433
-          - 9045
-          - 9043
-          - 9042
-          - 9041
-          - 9040
-          - 9046
-          - 9044
-          - 3255
-          - 3421
-          - 3436
           - 2248
+          - 3436
+          - 3421
+          - 3255
+          - 9044
+          - 9046
+          - 9040
+          - 9041
+          - 9042
+          - 9043
+          - 9045
+          - 3433
+          - 3434
+          - 3437
+          - 3435
+          - 3438
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -58869,6 +59516,82 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 2075
+- proto: MagazinePistolHighCapacity
+  entities:
+  - uid: 10870
+    components:
+    - type: Transform
+      parent: 1160
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1160
+  - uid: 10871
+    components:
+    - type: Transform
+      parent: 1160
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1160
+  - uid: 10872
+    components:
+    - type: Transform
+      parent: 1160
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1160
+  - uid: 10873
+    components:
+    - type: Transform
+      parent: 1160
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1160
+  - uid: 10874
+    components:
+    - type: Transform
+      parent: 1160
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1160
+  - uid: 10875
+    components:
+    - type: Transform
+      parent: 1160
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1160
+- proto: MagazineShotgun
+  entities:
+  - uid: 10863
+    components:
+    - type: Transform
+      parent: 978
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 978
+  - uid: 10864
+    components:
+    - type: Transform
+      parent: 978
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 978
+  - uid: 10865
+    components:
+    - type: Transform
+      parent: 978
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 978
 - proto: MagnetSuitModule
   entities:
   - uid: 2178
@@ -59434,11 +60157,25 @@ entities:
     - type: Transform
       pos: -12.5,-20.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+      - - Engineering
+      - - Research
+      access:
+      - - SyndicateAgent
   - uid: 10854
     components:
     - type: Transform
       pos: -15.5,-29.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+      - - Engineering
+      - - Research
+      access:
+      - - SyndicateAgent
 - proto: NitrousOxideCanister
   entities:
   - uid: 2056
@@ -59504,6 +60241,16 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 1743
+- proto: OreBagSuitModule
+  entities:
+  - uid: 2586
+    components:
+    - type: Transform
+      parent: 9185
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 9185
 - proto: OreProcessorIndustrialMachineCircuitboard
   entities:
   - uid: 2357
@@ -59523,6 +60270,13 @@ entities:
     - type: Transform
       pos: -11.5,-20.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+      - - Engineering
+      - - Research
+      access:
+      - - SyndicateAgent
 - proto: Paper
   entities:
   - uid: 10709
@@ -59951,6 +60705,16 @@ entities:
     - type: Transform
       pos: 15.492184,-10.415753
       parent: 1
+- proto: PaperDispenserSuitModule
+  entities:
+  - uid: 109
+    components:
+    - type: Transform
+      parent: 2160
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 2160
 - proto: PaperFugitiveReport
   entities:
   - uid: 9378
@@ -60611,6 +61375,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -38.5,7.5
+      parent: 1
+  - uid: 10895
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 17.5,19.5
       parent: 1
 - proto: PlasmaWindowDirectional
   entities:
@@ -61303,6 +62073,13 @@ entities:
     - type: Transform
       pos: 2.5497289,-17.41959
       parent: 1
+- proto: PlushieLizardJobBotanist
+  entities:
+  - uid: 10899
+    components:
+    - type: Transform
+      pos: -9.138605,25.57074
+      parent: 1
 - proto: PlushieLizardJobChef
   entities:
   - uid: 2230
@@ -61404,6 +62181,13 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 3397
+- proto: PlushieXeno
+  entities:
+  - uid: 10894
+    components:
+    - type: Transform
+      pos: -16.52047,11.504597
+      parent: 1
 - proto: PortableGeneratorPacman
   entities:
   - uid: 2937
@@ -61481,11 +62265,6 @@ entities:
     components:
     - type: Transform
       pos: 8.5,-5.5
-      parent: 1
-  - uid: 10008
-    components:
-    - type: Transform
-      pos: -21.5,8.5
       parent: 1
 - proto: PottedPlant18
   entities:
@@ -63178,6 +63957,36 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-0.5
+      parent: 1
+  - uid: 10882
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,27.5
+      parent: 1
+  - uid: 10883
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.5,27.5
+      parent: 1
+  - uid: 10884
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 7.5,27.5
+      parent: 1
+  - uid: 10891
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -22.5,8.5
+      parent: 1
+  - uid: 10893
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -21.5,8.5
       parent: 1
 - proto: RailingCorner
   entities:
@@ -65737,6 +66546,19 @@ entities:
           - Toggle
     - type: Fixtures
       fixtures: {}
+  - uid: 10877
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,3.5
+      parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        1099:
+        - - Pressed
+          - Toggle
+    - type: Fixtures
+      fixtures: {}
 - proto: SignBarbershop
   entities:
   - uid: 2390
@@ -65994,16 +66816,28 @@ entities:
     - type: Transform
       pos: 6.5,-19.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 342
     components:
     - type: Transform
       pos: 8.5,-24.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 452
     components:
     - type: Transform
       pos: 13.5,-23.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal: []
+      access:
+      - - SyndicateAgent
   - uid: 2402
     components:
     - type: Transform
@@ -66021,11 +66855,21 @@ entities:
     - type: Transform
       pos: 21.5,9.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Medical
+      access:
+      - - SyndicateAgent
   - uid: 80
     components:
     - type: Transform
       pos: 13.5,12.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Medical
+      access:
+      - - SyndicateAgent
   - uid: 1036
     components:
     - type: Transform
@@ -66036,6 +66880,11 @@ entities:
     - type: Transform
       pos: 13.5,6.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Medical
+      access:
+      - - SyndicateAgent
 - proto: SMESAdvanced
   entities:
   - uid: 2854
@@ -66424,6 +67273,21 @@ entities:
     - type: Transform
       pos: -19.5,-31.5
       parent: 1
+  - uid: 10878
+    components:
+    - type: Transform
+      pos: -17.5,-18.5
+      parent: 1
+  - uid: 10879
+    components:
+    - type: Transform
+      pos: -15.5,-18.5
+      parent: 1
+  - uid: 10881
+    components:
+    - type: Transform
+      pos: -16.5,-18.5
+      parent: 1
 - proto: SpawnMechRipley2
   entities:
   - uid: 3034
@@ -66657,6 +67521,13 @@ entities:
     components:
     - type: Transform
       pos: 11.5,11.5
+      parent: 1
+- proto: StationRadioReceiver
+  entities:
+  - uid: 10008
+    components:
+    - type: Transform
+      pos: 16.5,19.5
       parent: 1
 - proto: SteelCenterStairs
   entities:
@@ -66951,8 +67822,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
+          Oxygen: 1.8856695
+          Nitrogen: 7.0937095
     - type: AccessReader
       accessListsOriginal: []
       access:
@@ -66963,12 +67834,13 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 2163
           - 2188
-          - 2161
-          - 2168
-          - 2166
           - 27
+          - 2166
+          - 2168
+          - 2161
+          - 2163
+          - 109
   - uid: 2463
     components:
     - type: Transform
@@ -67062,19 +67934,22 @@ entities:
         immutable: False
         temperature: 293.1465
         moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
+          Oxygen: 1.8856695
+          Nitrogen: 7.0937095
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 9186
           - 2519
+          - 2586
+          - 9186
           - 2520
           - 2517
           - 2515
+          - 1009
+          - 2597
 - proto: SuitStorageEVASyndicate
   entities:
   - uid: 2011
@@ -67097,6 +67972,14 @@ entities:
     - type: Transform
       pos: 4.5,12.5
       parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
   - uid: 3377
     components:
     - type: Transform
@@ -67520,7 +68403,7 @@ entities:
   - uid: 1151
     components:
     - type: Transform
-      pos: 5.481509,12.506857
+      pos: 5.5105143,12.478493
       parent: 1
   - uid: 9037
     components:
@@ -67559,7 +68442,7 @@ entities:
   - uid: 3455
     components:
     - type: Transform
-      pos: -10.553516,24.712652
+      pos: -10.28875,24.641052
       parent: 1
   - uid: 8994
     components:
@@ -69356,6 +70239,13 @@ entities:
     - type: Transform
       pos: -8.5,-25.5
       parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+      - - Engineering
+      - - Research
+      access:
+      - - SyndicateAgent
 - proto: TurboItemRecharger
   entities:
   - uid: 185
@@ -69618,6 +70508,11 @@ entities:
     - type: Transform
       pos: -0.22347784,17.8334
       parent: 1
+  - uid: 10886
+    components:
+    - type: Transform
+      pos: 4.703492,-6.299141
+      parent: 1
 - proto: VasePlant3
   entities:
   - uid: 273
@@ -69669,6 +70564,11 @@ entities:
     - type: Transform
       pos: -30.1865,7.133995
       parent: 1
+  - uid: 10897
+    components:
+    - type: Transform
+      pos: 19.653507,19.589537
+      parent: 1
 - proto: VasePlant6
   entities:
   - uid: 3845
@@ -69697,6 +70597,13 @@ entities:
     components:
     - type: Transform
       pos: 9.675884,4.838522
+      parent: 1
+- proto: VasePlant8
+  entities:
+  - uid: 10898
+    components:
+    - type: Transform
+      pos: -10.671562,25.062927
       parent: 1
 - proto: VehicleKeyATV
   entities:
@@ -69748,7 +70655,8 @@ entities:
     - type: AccessReader
       accessListsOriginal:
       - - Chapel
-      access: []
+      access:
+      - - SyndicateAgent
 - proto: VendingMachineChefvend
   entities:
   - uid: 2412
@@ -70009,6 +70917,16 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 3259
+- proto: VisorSecuritySuitModule
+  entities:
+  - uid: 1009
+    components:
+    - type: Transform
+      parent: 9185
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 9185
 - proto: WallmountTelevision
   entities:
   - uid: 9619
@@ -75709,6 +76627,16 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 1162
+- proto: WeaponShotgunBulldog
+  entities:
+  - uid: 10866
+    components:
+    - type: Transform
+      parent: 978
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 978
 - proto: WeaponTaser
   entities:
   - uid: 10177
