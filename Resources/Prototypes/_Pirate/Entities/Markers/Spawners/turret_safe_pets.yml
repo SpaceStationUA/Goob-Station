@@ -1,0 +1,19 @@
+- type: entity
+  parent: SpawnMobCow
+  id: SpawnMobCowTurretExempt
+  name: Cow Spawner
+  suffix: Turret Exempt
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCowTurretExempt
+
+- type: entity
+  parent: SpawnMobAlexander
+  id: SpawnMobAlexanderTurretExempt
+  name: Alexander Spawner
+  suffix: Chef Pet, Turret Exempt
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobAlexanderTurretExempt
