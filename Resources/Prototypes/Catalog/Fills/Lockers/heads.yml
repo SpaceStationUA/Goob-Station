@@ -204,7 +204,7 @@
   table: !type:AllSelector
     children:
     - id: ClothingMaskGasAtmos
-    - id: ClothingOuterHardsuitEngineeringWhite
+    - id: UndeterminedVoidsuitChiefEngineer # Pirate: modsuit parity - let the CE pick hardsuit or modsuit.
     - id: ClothingShoesBootsMagAdv
     - id: JetpackVoidFilled
     - id: OxygenTankFilled

@@ -51,3 +51,13 @@ selectable-set-merc-viper-name = Viper
 selectable-set-merc-viper-description =
     A machine pistol that punches above its weight. Semi-auto, or rock and roll.
     Includes: the Viper pistol (.35 auto), 2 magazines and a small ammo box.
+
+selectable-set-chief-engineer-voidsuit-name = Chief Engineer's hardsuit
+selectable-set-chief-engineer-voidsuit-desc =
+    A heavily shielded hardsuit made for the chief engineer. Immune to radiation,
+    the supermatter, the tesla and containment fields.
+
+selectable-set-chief-engineer-modsuit-name = Chief Engineer's 'advanced' MODsuit
+selectable-set-chief-engineer-modsuit-desc =
+    A preassembled command MODsuit with the same shielding as the hardsuit, plus welding
+    and radiation modules, a jetpack, advanced magnetic boots, expanded storage and a plasma core.
