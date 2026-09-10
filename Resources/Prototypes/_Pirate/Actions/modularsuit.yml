@@ -9,7 +9,7 @@
     useDelay: 0.5
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: deploy }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: retract }
-    itemIconStyle: BigAction
+    itemIconStyle: NoItem # Pirate: ERT modsuits: drop the suit sprite from the corner of the action
   - type: InstantAction
     event: !type:ToggleDeploySuitActionEvent
 
@@ -23,7 +23,7 @@
   - type: Action
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate-ready }
-    itemIconStyle: BigAction
+    itemIconStyle: NoItem # Pirate: ERT modsuits: drop the suit sprite from the corner of the action
   - type: InstantAction
     event: !type:ToggleActivateSuitActionEvent
 
@@ -118,7 +118,7 @@
   components:
   - type: Action
     startDelay: true
-    useDelay: 20
+    useDelay: 10 # Pirate: ERT modsuits: halved from 20.
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: energyshield }
   - type: InstantAction
     event: !type:ActivateEnergyShieldModuleEvent

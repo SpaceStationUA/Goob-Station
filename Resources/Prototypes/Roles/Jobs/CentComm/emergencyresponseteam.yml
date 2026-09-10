@@ -25,7 +25,8 @@
   parent: ERTLeaderGearEVA
   id: ERTLeaderGear
   equipment:
-    shoes: ClothingShoesBootsMagEmergencyResponseTeam # Goobstation
+    back: ClothingBackpackERTLeader  # Pirate: ERT resprite
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     head: ClothingHeadHelmetERTLeader
     outerClothing: ClothingOuterArmourDurathread # Goobstation
     pocket2: FlashlightSeclite
@@ -43,16 +44,15 @@
   id: ERTLeaderGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTLeader
-    back: ClothingBackpackERTLeader
-    shoes: ClothingShoesBootsMagEmergencyResponseTeam # Goobstation
+    back: ClothingModularControllerERTLeaderPreassembled  # Pirate: ERT resprite
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     mask: ClothingMaskGasERT
     eyes: ClothingEyesHudMedSec
     neck: ExecutiveIDCard # Goobstation - Executive Access!
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitERTLeader
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingFilledERT # Goobstation
+    belt: ClothingBeltERTSecurity  # Pirate: ERT resprite
     pocket1: WeaponPulsePistol # Literally described as "Favored sidearm of NT ERT operatives". Is never used anywhere else.
     pocket2: CombatKnife
     suitstorage: WeaponDisablerSMG
@@ -165,7 +165,7 @@
     outerClothing: ClothingOuterHardsuitERTChaplain
     id: ERTChaplainPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingERT
+    belt: ClothingBeltERTChaplain  # Pirate: ERT resprite
     pocket1: WeaponPulsePistol # Goobstation Literally described as "Favored sidearm of NT ERT operatives".
     pocket2: CombatKnife
   storage:
@@ -228,7 +228,8 @@
   parent: ERTEngineerGearEVA
   id: ERTEngineerGear
   equipment:
-    shoes: ClothingShoesBootsMagEmergencyResponseTeam # Goobstation
+    back: ClothingBackpackERTEngineer  # Pirate: ERT resprite
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     head: ClothingHeadHelmetERTEngineer
     neck: ExecutiveIDCard # Goobstation - Executive Access!
     eyes: ClothingEyesGlassesMeson
@@ -257,18 +258,17 @@
   id: ERTEngineerGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTEngineer
-    back: ClothingBackpackERTEngineer
-    shoes: ClothingShoesBootsMagEmergencyResponseTeam # Goobstation
+    back: ClothingModularControllerERTEngineerPreassembled  # Pirate: ERT resprite
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     neck: ExecutiveIDCard # Goobstation - Executive Access!
     mask: ClothingMaskGasERT
     eyes: ClothingEyesHudDiagnostic
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitERTEngineer
     id: ERTEngineerPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingERT
+    belt: ClothingBeltERTEngineer  # Pirate: ERT resprite
     pocket1: WeaponPulsePistol # Goobstation
-    pocket2: CombatKnife
+    pocket2: MaterialPouch  # Pirate: ERT resprite
   storage:
     back:
     - RCD
@@ -278,18 +278,20 @@
     - PartRodMetal
     - SheetPlasteel # End of first line
     - MiningDrillDiamond
-    - RCDAmmo
-    - RCDAmmo
+    - SheetPlasteel  # Pirate: ERT resprite
+    - MetalFoamGrenade  # Pirate: ERT resprite
+    - AirGrenade  # Pirate: ERT resprite
+    - CombatKnife  # Pirate: ERT resprite
     - CableMVStack
     - CableHVStack
     - CableApcStack
-    - SheetPlasteel
+    - RCDAmmo  # Pirate: ERT resprite
+    - RCDAmmo  # Pirate: ERT resprite
+    pocket2:  # Pirate: ERT resprite
     - SheetSteel
     - SheetGlass
     - RCDAmmo
     - RCDAmmo
-    - MetalFoamGrenade
-    - AirGrenade
     belt:
     - JawsOfLife
     - PowerDrill
@@ -355,7 +357,8 @@
   parent: ERTSecurityGearEVA
   id: ERTSecurityGear
   equipment:
-    shoes: ClothingShoesBootsMagEmergencyResponseTeam # Goobstation
+    back: ClothingBackpackERTSecurity  # Pirate: ERT resprite
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     head: ClothingHeadHelmetERTSecurity
     outerClothing: ClothingOuterArmourDurathread # Goobstation
     pocket2: FlashlightSeclite
@@ -364,16 +367,15 @@
   id: ERTSecurityGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
-    back: ClothingBackpackERTSecurity
-    shoes: ClothingShoesBootsMagEmergencyResponseTeam # Goobstation
+    back: ClothingModularControllerERTSecurityPreassembled  # Pirate: ERT resprite
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
     neck: ExecutiveIDCard # Goobstation - Executive Access!
-    outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingFilledERT # Goobstation
+    belt: ClothingBeltERTSecurity  # Pirate: ERT resprite
     pocket1: WeaponPulsePistol # Goobstation Death to Crew aligned Ballistics
     pocket2: CombatKnife
   storage:
@@ -400,15 +402,15 @@
 - type: startingGear
   id: ERTSecurityGearArmedRifle
   equipment:
+    back: ClothingModularControllerERTSecurityPreassembled  # Pirate: ERT resprite
     jumpsuit: ClothingUniformJumpsuitERTSecurity
-    shoes: ClothingShoesBootsMagERT
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     mask: ClothingMaskGasERT
     eyes: ClothingEyesHudSecurity
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingERT
+    belt: ClothingBeltERTSecurity  # Pirate: ERT resprite
     pocket2: CombatKnife
     suitstorage: WeaponRifleLecter
   inhand:
@@ -546,7 +548,8 @@
   parent: ERTMedicalGearEVA
   id: ERTMedicalGear
   equipment:
-    shoes: ClothingShoesBootsMagEmergencyResponseTeam # Goobstation
+    back: ClothingBackpackERTMedical  # Pirate: ERT resprite
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     head: ClothingHeadHelmetERTMedic
     outerClothing: ClothingOuterArmourDurathread # Goobstation
     pocket2: FlashlightSeclite
@@ -555,16 +558,15 @@
   id: ERTMedicalGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTMedic
-    back: ClothingBackpackERTMedical
-    shoes: ClothingShoesBootsMagEmergencyResponseTeam # Goobstation
+    back: ClothingModularControllerERTMedicalPreassembled  # Pirate: ERT resprite
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     mask: ClothingMaskGasERT
     neck: ExecutiveIDCard # Goobstation - Executive Access!
     eyes: ClothingEyesGlassesMedSec # Goobstation
     gloves: ClothingHandsGlovesNitrile
-    outerClothing: ClothingOuterHardsuitERTMedical
     id: ERTMedicPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityWebbingFilledMedical # Fancier
+    belt: ClothingBeltERTMedical  # Pirate: ERT resprite
     pocket1: WeaponPulsePistol # Goobstation Literally described as "Favored sidearm of NT ERT operatives".
   storage:
     back:
@@ -663,6 +665,7 @@
   parent: ERTJanitorGearEVA
   id: ERTJanitorGear
   equipment:
+    back: ClothingBackpackERTJanitor  # Pirate: ERT resprite
     shoes: ClothingShoesGaloshes
     head: ClothingHeadHelmetERTJanitor
     outerClothing: ClothingOuterArmourDurathread # Goobstation
@@ -671,15 +674,14 @@
   id: ERTJanitorGearEVA
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTJanitor
-    back: ClothingBackpackERTJanitor
-    shoes: ClothingShoesBootsMagEmergencyResponseTeam # Goobstation
+    back: ClothingModularControllerERTJanitorPreassembled  # Pirate: ERT resprite
+    shoes: ClothingShoesBootsJack  # Pirate: ERT resprite
     mask: ClothingMaskGasERT
     neck: ExecutiveIDCard # Goobstation - Executive Access!
     gloves: ClothingHandsGlovesColorPurple
-    outerClothing: ClothingOuterHardsuitERTJanitor
     id: ERTJanitorPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingERT # Goobstation fuck it
+    belt: ClothingBeltERTJanitor  # Pirate: ERT resprite
     pocket2: CombatKnife
     pocket1: WeaponPulsePistol # Goobstation Literally described as "Favored sidearm of NT ERT operatives".
     suitstorage: WeaponLauncherHydra # Goobstation
