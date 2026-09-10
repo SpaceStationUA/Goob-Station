@@ -392,7 +392,9 @@ public sealed partial class IngestionSystem : EntitySystem
             return;
 
         // Tell the food that it's time to die.
-        var finishedEv = new FullyEatenEvent(args.User);
+        // User must be the eater (entity), not the DoAfter actor — force-feeding otherwise
+        // applies FullyEaten handlers (e.g. ranching egg triggers) to the feeder.
+        var finishedEv = new FullyEatenEvent(entity);
         RaiseLocalEvent(food, ref finishedEv);
 
         var afterEatingEv = new AfterEatingEvent(food);// goob moth eating
