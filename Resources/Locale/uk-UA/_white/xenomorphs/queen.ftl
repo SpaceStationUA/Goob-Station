@@ -4,3 +4,5 @@ xenomorphs-queen-not-enough-plasma = Недостатньо плазми. Пот
 xenomorphs-queen-promotion-invalid-target = Підвищувати можна лише інших ксеноморфів.
 xenomorphs-queen-already-praetorian = Цей ксеноморф вже є преторіанцем!
 xenomorphs-queen-promotion-success = Підвищено { $target } до преторіана!
+xenomorphs-queen-finder-cycle = Відстежуємо { $target }.
+xenomorphs-queen-finder-none = Немає лідерів вулика для відстеження.

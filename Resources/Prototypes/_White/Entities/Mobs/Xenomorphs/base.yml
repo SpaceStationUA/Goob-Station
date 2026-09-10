@@ -16,15 +16,15 @@
         Toxin: -5
         Airloss: -10
         Brute: -4
+  - type: QueenFinder
   - type: Pinpointer
-    whitelist:
-      components:
-      - XenomorphQueen
+    # Targets are filled by QueenFinderSystem (Empress → Queen → egg-sack → Praetorian).
     alert: QueenFinder
     isActive: true
     canToggle: false
     canEmag: false
     canExamine: false
+    canTargetMultiple: true
   - type: ThermalVision
     toggleAction: ToggleThermalVisionXenomorph
     color: white
