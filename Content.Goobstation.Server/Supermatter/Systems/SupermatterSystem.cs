@@ -128,7 +128,7 @@ public sealed class SupermatterSystem : SharedSupermatterSystem
 
     public void Cycle(EntityUid uid, SupermatterComponent sm)
     {
-        if (sm.TimeLocked < _gameTiming.CurTime.TotalMinutes - sm.TimeToUnlock)
+        if (sm.Surge && sm.TimeLocked < _gameTiming.CurTime.TotalMinutes - sm.TimeToUnlock) // Pirate: supermatter alert spam - TimeLocked stays 0 until a surge, so this was true every cycle past TimeToUnlock minutes; gate on Surge so it only fires on the real locked->unlocked transition
         {
             sm.Surge = false;
             _chatmanager.SendAdminAlert($"SM variables unlocked at time {_gameTiming.CurTime.TotalMinutes}");
