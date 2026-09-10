@@ -76,7 +76,7 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         if (_gameTiming.CurTime < ent.Comp.NextTickTime || _mobState.IsDead(ent))
             return;
 
-        // Active personal shield (ІПШ) — drop off instead of free growth with no damage.
+        // Active personal shield — drop off instead of free growth with no damage.
         if (_personalShield.HasActiveShield(ent) && ent.Comp.SourceEntityUid is { } latchedSlime
             && TryComp<SlimeComponent>(latchedSlime, out var slimeComp))
         {
@@ -283,7 +283,7 @@ public sealed partial class SlimeLatchSystem : EntitySystem
             || _mobState.IsDead(target) // target dead
             || !_actionBlocker.CanInteract(ent, target) // can't reach
             || !HasComp<MobStateComponent>(target) // make any mob work
-            || _personalShield.HasActiveShield(target) // ІПШ blocks latch (no free growth)
+            || _personalShield.HasActiveShield(target) // personal shield blocks latch (no free growth)
             || (TryComp<HumanoidAppearanceComponent>(target, out var humanoid) && humanoid.Species == "SlimePerson")); // Pirate: slime kinship - slimes don't hunt their own kind
     }
 

@@ -453,8 +453,8 @@ public sealed class PortedSupportIntegrationTest
 
             Assert.That(buckleSystem.TryBuckle(victim, holder, cross, buckle, popup: false), Is.True);
             var strapLock = entMan.GetComponent<StrapLockComponent>(cross);
-            var damage = entMan.GetComponent<DamageableComponent>(victim).TotalDamage;
-            initialDamage = damage.Float();
+            var damageable = entMan.GetComponent<DamageableComponent>(victim);
+            initialDamage = damageable.Damage.DamageDict.GetValueOrDefault("Blunt").Float();
 
             var canDrag = new CanDragEvent();
             var frame = entMan.SpawnEntity("PowerArmorFrame", map.GridCoords);
@@ -497,7 +497,8 @@ public sealed class PortedSupportIntegrationTest
         await server.WaitAssertion(() =>
         {
             var buckle = entMan.GetComponent<BuckleComponent>(victim);
-            var damage = entMan.GetComponent<DamageableComponent>(victim).TotalDamage;
+            var blunt = entMan.GetComponent<DamageableComponent>(victim).Damage.DamageDict
+                .GetValueOrDefault("Blunt").Float();
             Assert.Multiple(() =>
             {
                 Assert.That(buckle.Buckled, Is.False);
@@ -505,7 +506,9 @@ public sealed class PortedSupportIntegrationTest
                 Assert.That(entMan.HasComponent<StrapLockHeldComponent>(victim), Is.False);
                 Assert.That(entMan.HasComponent<StrapLockHoldingComponent>(holder), Is.False);
                 Assert.That(server.System<SharedHandsSystem>().CountFreeHands(holder), Is.EqualTo(2));
-                Assert.That(damage.Float(), Is.EqualTo(initialDamage + 10f).Within(0.01f),
+                // CrucifixDropped is Blunt:10 — assert that type only so ambient tick damage
+                // (asphyxiation/bloodloss) does not flake TotalDamage.
+                Assert.That(blunt, Is.EqualTo(initialDamage + 10f).Within(0.01f),
                     "Leaving holding range must apply CrucifixDropped exactly once.");
             });
 
