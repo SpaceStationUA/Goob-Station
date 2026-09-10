@@ -26,8 +26,15 @@ public sealed class TurretStartupStateSystem : EntitySystem
     {
         var enabled = ent.Comp.ArmamentState >= 0;
 
-        if (enabled && TryComp<BatteryWeaponFireModesComponent>(ent, out var fireModes))
-            _fireModes.TrySetFireMode((ent, fireModes), ent.Comp.ArmamentState);
+        // Keep the turret retracted if the requested fire mode cannot be applied.
+        if (enabled
+            && TryComp<BatteryWeaponFireModesComponent>(ent, out var fireModes)
+            && !_fireModes.TrySetFireMode((ent, fireModes), ent.Comp.ArmamentState))
+        {
+            Log.Error(
+                $"{ToPrettyString(ent)} could not be set to armament state {ent.Comp.ArmamentState}; leaving it retracted.");
+            enabled = false;
+        }
 
         if (TryComp<DeployableTurretComponent>(ent, out var turret))
             _turret.TrySetState((ent, turret), enabled);
