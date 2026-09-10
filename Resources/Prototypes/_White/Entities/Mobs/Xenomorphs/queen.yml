@@ -102,7 +102,7 @@
   components:
   - type: XenomorphEvolution
     evolutionActionId: ActionEvolutionEmpress
-    max: 720
+    max: 1800 # 30 minutes at 1 point/sec
     pointsPerSecond: 1
     evolvesTo:
     - prototype: MobXenomorphEmpress
