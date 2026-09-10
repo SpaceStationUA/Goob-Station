@@ -820,6 +820,10 @@
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Mask/neckgaiterwhite.rsi
   - type: Clothing
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Mask/neckgaiterwhite.rsi
+  # Own graph, overriding the one inherited from ClothingMaskNeckGaiter.
+  - type: Construction
+    graph: NeckGaiterWhite
+    node: neckGaiter
 
 
 
