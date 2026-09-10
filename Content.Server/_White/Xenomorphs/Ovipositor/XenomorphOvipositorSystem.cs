@@ -5,6 +5,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
+using Content.Shared._White.Xenomorphs.Egg;
 using Content.Shared._White.Xenomorphs.HiveAnnounce;
 using Content.Shared._White.Xenomorphs.Ovipositor;
 using Content.Server.DoAfter;
@@ -29,6 +30,7 @@ public sealed class XenomorphOvipositorSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     public override void Initialize()
     {
@@ -160,12 +162,29 @@ public sealed class XenomorphOvipositorSystem : EntitySystem
 
     private void LayEggBeside(EntityUid uid, XenomorphOvipositorComponent component)
     {
+        // Always advance cooldown so we don't spin every frame at the cap.
+        component.NextLayEggAt = _timing.CurTime + component.LayEggCooldown;
+        Dirty(uid, component);
+
+        if (CountNearbyUnplantedEggs(uid, component) >= component.MaxNearbyUnplantedEggs)
+            return;
+
         var coords = Transform(uid).Coordinates;
         // Drop beside the empress (not into hands).
         Spawn(component.EggPrototype, coords.Offset(_random.NextVector2(0.6f, 1.1f)));
+    }
 
-        component.NextLayEggAt = _timing.CurTime + component.LayEggCooldown;
-        Dirty(uid, component);
+    private int CountNearbyUnplantedEggs(EntityUid uid, XenomorphOvipositorComponent component)
+    {
+        var count = 0;
+        foreach (var egg in _lookup.GetEntitiesInRange<XenomorphPlantableEggComponent>(
+                     _transform.GetMapCoordinates(uid), component.NearbyEggRange))
+        {
+            if (MetaData(egg).EntityPrototype?.ID == component.EggPrototype.Id)
+                count++;
+        }
+
+        return count;
     }
 
     private void SetAttached(EntityUid uid, XenomorphOvipositorComponent component, bool attached)

@@ -31,6 +31,18 @@ public sealed partial class XenomorphOvipositorComponent : Component
     public EntProtoId EggPrototype = "XenomorphEmpressEgg";
 
     /// <summary>
+    /// Skip laying while this many unplanted eggs of <see cref="EggPrototype"/> are already nearby.
+    /// </summary>
+    [DataField]
+    public int MaxNearbyUnplantedEggs = 6;
+
+    /// <summary>
+    /// Range used for <see cref="MaxNearbyUnplantedEggs"/>.
+    /// </summary>
+    [DataField]
+    public float NearbyEggRange = 8f;
+
+    /// <summary>
     /// Visual effect spawned at the empress when forced off the ovipositor by damage.
     /// </summary>
     [DataField]

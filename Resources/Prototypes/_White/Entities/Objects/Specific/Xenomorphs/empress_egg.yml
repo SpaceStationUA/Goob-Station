@@ -13,6 +13,8 @@
     size: Normal
   - type: XenomorphPlantableEgg
     plantedPrototype: XenomorphEgg
+  - type: TimedDespawn
+    lifetime: 90
   - type: Tag
     tags:
     - XenomorphItem
