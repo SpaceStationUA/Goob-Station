@@ -31,25 +31,27 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: XenomorphEmpress
+  # Dead/crit must stay within PartXenomorph integrity (750) or AllMobsCanDie
+  # (and one-shot lethal hits on the root part) never reach the dead threshold.
   - type: MobThresholds
     thresholds:
       0: Alive
-      980: Critical
-      1000: Dead
+      735: Critical
+      750: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      800: 0.9
-      860: 0.7
-      920: 0.6
+      600: 0.9
+      645: 0.7
+      690: 0.6
   - type: PassiveDamage
     allowedStates:
     - Alive
     - Critical
     damage:
       types:
-        Heat: -0.5
+        Heat: -1
       groups:
-        Brute: -0.5
+        Brute: -1
 
 - type: entity
   parent: BaseMobXenomorphEmpress
