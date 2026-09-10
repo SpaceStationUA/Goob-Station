@@ -14,7 +14,6 @@ using Content.Shared._FarHorizons.StarSystem.Helpers;
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared.Atmos; // Far Horizons: sky-layer atmosphere
 using Content.Shared.Parallax.Biomes;
-using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Physics;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
@@ -23,6 +22,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._FarHorizons.Planets;
@@ -43,9 +43,11 @@ public sealed partial class CEPlanetSystem : EntitySystem
     [Dependency] private readonly BiomeSystem _biome = default!;
     [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly ITileDefinitionManager _tiledef = default!; // Far Horizons: landing pads
     [Dependency] private readonly EntityLookupSystem _lookup = default!; // Far Horizons: landing pads
     [Dependency] private readonly AtmosphereSystem _atmos = default!; // Far Horizons: sky-layer atmosphere
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!; // Far Horizons: landing pads
+
+    private readonly HashSet<EntityUid> _excavateEnts = new();
 
     /// <summary>
     /// Number of sky layers in a planet stack, excluding the ground layer. Kept low for
@@ -314,70 +316,84 @@ public sealed partial class CEPlanetSystem : EntitySystem
     }
 
     /// <summary>
-    /// Replaces obstacles (rocks, walls) in a disc around <paramref name="worldPos"/> on a planet
-    /// surface with the biome's base fill floor — ships touch down on clear ground and players
-    /// landing from the sky don't spawn inside walls. The biome never regenerates cleared tiles.
+    /// Replaces obstacles (rocks, walls) under a landing pad with clear ground — ships touch down
+    /// without rocks inside their hull and players landing from the sky don't spawn inside walls.
+    /// Mirrors upstream FTL <c>Smimsh</c>: ReserveTiles flattens the pad and marks its tiles
+    /// biome-modified so the biome never regenerates terrain there, and hard blockers are found
+    /// via broadphase queries that include the sundries tree (bodyless anchored walls are
+    /// invisible to plain Static lookups).
     /// </summary>
     public void ExcavateLandingPad(EntityUid mapUid, Vector2 worldPos, float radius)
     {
-        if (!TryComp<MapGridComponent>(mapUid, out var mapGrid))
-            return;
-
-        var floor = GetBiomeFillFloor(mapUid);
-        if (floor.IsEmpty)
-            return;
-
-        ExcavateTiles(mapUid, mapGrid, floor, Box2.CenteredAround(worldPos, new Vector2(radius, radius)));
+        Excavate(mapUid, [Box2.CenteredAround(worldPos, new Vector2(radius, radius))], EntityUid.Invalid);
     }
 
     /// <summary>Clears the footprint of <paramref name="gridUid"/> (plus a margin) down to the biome fill floor.</summary>
     public void ExcavateLandingPad(EntityUid mapUid, EntityUid gridUid, float margin = 2f)
     {
-        if (!TryComp<MapGridComponent>(mapUid, out var mapGrid) ||
-            !TryComp<MapGridComponent>(gridUid, out var deckGrid))
+        if (!TryComp(gridUid, out MapGridComponent? deckGrid) ||
+            !TryComp(gridUid, out FixturesComponent? fixtures))
             return;
 
-        var floor = GetBiomeFillFloor(mapUid);
-        if (floor.IsEmpty)
-            return;
-
-        var bounds = Transform(gridUid).WorldMatrix.TransformBox(deckGrid.LocalAABB).Enlarged(margin);
-        ExcavateTiles(mapUid, mapGrid, floor, bounds);
-    }
-
-    private void ExcavateTiles(EntityUid mapUid, MapGridComponent mapGrid, Tile floor, Box2 bounds)
-    {
-        var tiles = new List<(Vector2i GridIndices, Tile Tile)>();
-        foreach (var tileRef in _map.GetLocalTilesIntersecting(mapUid, mapGrid, bounds, false))
+        // Per-fixture AABBs in map space, like FTL Smimsh — L-shaped decks stay precise.
+        var rel = _physics.GetRelativePhysicsTransform((gridUid, Transform(gridUid)), (mapUid, Transform(mapUid)));
+        var aabbs = new List<Box2>();
+        foreach (var fixture in fixtures.Fixtures.Values)
         {
-            if (tileRef.Tile.IsEmpty || tileRef.Tile.TypeId == floor.TypeId)
+            if (!fixture.Hard)
                 continue;
 
-            tiles.Add((tileRef.GridIndices, floor));
+            aabbs.Add(fixture.Shape.ComputeAABB(rel, 0).Enlarged(margin));
         }
 
-        if (tiles.Count > 0)
-            _map.SetTiles(mapUid, mapGrid, tiles);
+        if (aabbs.Count == 0)
+            aabbs.Add(Transform(gridUid).WorldMatrix.TransformBox(deckGrid.LocalAABB).Enlarged(margin));
 
-        // Rocks and wall decor are anchored entities, not tiles — remove them too, otherwise
-        // they stay standing inside a landed ship's hull or under a player's touchdown spot.
-        var toDelete = new List<EntityUid>();
-        foreach (var ent in _lookup.GetEntitiesIntersecting(Transform(mapUid).MapID, bounds, LookupFlags.Static))
+        Excavate(mapUid, aabbs, gridUid);
+    }
+
+    private void Excavate(EntityUid mapUid, List<Box2> aabbs, EntityUid deck)
+    {
+        if (!TryComp(mapUid, out MapGridComponent? mapGrid))
+            return;
+
+        TryComp(mapUid, out BiomeComponent? biome);
+
+        var tiles = new List<(Vector2i, Tile)>();
+        var toDelete = new HashSet<EntityUid>();
+
+        foreach (var aabb in aabbs)
         {
-            // Only terrain decor anchored to the surface grid itself — never parts of the
-            // landing ship (its own grid) or of a building standing on the surface (outpost).
-            if (Transform(ent).GridUid != mapUid ||
-                !TryComp<FixturesComponent>(ent, out var fixtures))
-                continue;
+            // Fills empty tiles with the biome fill and marks every intersecting tile modified,
+            // so the biome never regenerates rocks/terrain inside the pad afterwards.
+            tiles.Clear();
+            _biome.ReserveTiles(mapUid, aabb, tiles, biome, mapGrid);
 
-            foreach (var fixture in fixtures.Fixtures.Values)
+            // Rocks and wall decor are anchored entities, not tiles — delete hard blockers so
+            // they never end up inside a landed ship's hull. Uncontained covers the sundries
+            // tree; the map's own broadphase is resolved from mapUid.
+            _excavateEnts.Clear();
+            _lookup.GetLocalEntitiesIntersecting(mapUid, aabb, _excavateEnts, LookupFlags.Uncontained);
+
+            foreach (var ent in _excavateEnts)
             {
-                if (!fixture.Hard ||
-                    (fixture.CollisionLayer & (int) (CollisionGroup.Impassable | CollisionGroup.HighImpassable)) == 0)
+                if (ent == deck || toDelete.Contains(ent))
+                    continue;
+
+                var entXform = Transform(ent);
+
+                // Only things owned by the planet surface itself; structures on other grids
+                // (outposts, ruins, ships) stay untouched.
+                if (entXform.GridUid is { } grid && grid != mapUid)
+                    continue;
+
+                if (!TryComp(ent, out FixturesComponent? fx))
+                    continue;
+
+                if (!IsHardBlocker(fx))
                     continue;
 
                 toDelete.Add(ent);
-                break;
             }
         }
 
@@ -385,24 +401,17 @@ public sealed partial class CEPlanetSystem : EntitySystem
             QueueDel(ent);
     }
 
-    /// <summary>The biome's lowest-threshold tile layer — the ground fill a cleared pad should become.</summary>
-    private Tile GetBiomeFillFloor(EntityUid mapUid)
+    /// <summary>True when the entity has a hard impassable fixture (a wall, rock, airlock...).</summary>
+    private static bool IsHardBlocker(FixturesComponent fixtures)
     {
-        if (!TryComp<BiomeComponent>(mapUid, out var biome))
-            return Tile.Empty;
-
-        var floor = Tile.Empty;
-        var floorThreshold = float.MaxValue;
-        foreach (var layer in biome.Layers)
+        foreach (var fixture in fixtures.Fixtures.Values)
         {
-            if (layer is not BiomeTileLayer tileLayer || tileLayer.Threshold >= floorThreshold)
-                continue;
-
-            floorThreshold = tileLayer.Threshold;
-            floor = new Tile(_tiledef[tileLayer.Tile].TileId);
+            if (fixture.Hard &&
+                (fixture.CollisionLayer & (int) (CollisionGroup.Impassable | CollisionGroup.HighImpassable)) != 0)
+                return true;
         }
 
-        return floor;
+        return false;
     }
 
     /// <summary>
