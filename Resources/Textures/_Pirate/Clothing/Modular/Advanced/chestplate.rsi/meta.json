@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Baystation12 contributors; 2022 Chief Engineer hardsuit redesign by AzlanOnPC / SomeAngryMiner (commit author PumpkinSoup), PR #31725: https://github.com/Baystation12/Baystation12/pull/31725. Source: https://github.com/Baystation12/Baystation12/tree/2cf874d0176ed5b06bed870177ea80950c7bbd69 (ce_rig, ce_rig_sealed).",
+  "copyright": "Baystation12 contributors; 2022 Chief Engineer hardsuit redesign by AzlanOnPC / SomeAngryMiner (commit author PumpkinSoup), PR #31725: https://github.com/Baystation12/Baystation12/pull/31725. Source: https://github.com/Baystation12/Baystation12/tree/2cf874d0176ed5b06bed870177ea80950c7bbd69 (ce_rig, ce_rig_sealed). Feroxi adaptation for Lanos Station (2026), with Bay Engineering ear/snout details credited to YERO and RedTerror. Reptilian adaptation uses Bay Unathi equipment art. Vulpkanin helmet profile by YERO.",
   "size": {
     "x": 32,
     "y": 32
@@ -35,6 +35,22 @@
     },
     {
       "name": "sealed-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-feroxi",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-OUTERCLOTHING-feroxi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-OUTERCLOTHING-vulpkanin",
       "directions": 4
     }
   ]
