@@ -186,7 +186,7 @@ uplink-syndie-noslip-module-desc = Секретний прототип Cybersun 
 uplink-syndie-plate-compression-name = модуль стиснення бронепластин
 uplink-syndie-plate-compression-desc = Експериментальний модуль, що стискає бронепластини та дає змогу пролазити крізь вентиляцію. Під час роботи костюм неможливо зняти.
 uplink-syndie-energy-shield-module-name = модуль енергетичного щита Mk. II
-uplink-syndie-energy-shield-module-desc = Зменшена версія корабельного дефлекторного щита, з подвоєним резервуаром. Гасить будь-які атаки, доки не вичерпає заряд.
+uplink-syndie-energy-shield-module-desc = Зменшена версія корабельного дефлекторного щита, з подвоєним резервуаром. Гасить лише атаки, що не обходять щит, доки не вичерпає заряд.
 
 uplink-syndie-modsuit-name = попередньо зібраний MOD-костюм Синдикату
 uplink-syndie-modsuit-desc = Набір із бойовим MOD-костюмом Gorlex Marauders, батареєю надвисокої ємності, штатними модулями та спорядженням для роботи у вакуумі.

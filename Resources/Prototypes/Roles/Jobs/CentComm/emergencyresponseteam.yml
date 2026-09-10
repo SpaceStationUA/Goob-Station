@@ -240,6 +240,9 @@
     pocket1: WeaponPulsePistol # Literally described as "Favored sidearm of NT ERT operatives".
     pocket2: GasAnalyzer
   storage:
+    # Pirate: ERT resprite - this variant keeps the gas analyzer in pocket2, so the
+    # material pouch fill inherited from ERTEngineerGearEVA has to be cleared.
+    pocket2: []  # Pirate: ERT resprite
     back:
     - trayScanner
     - RCD
@@ -410,7 +413,7 @@
     gloves: ClothingHandsGlovesCombat
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltERTSecurity  # Pirate: ERT resprite
+    belt: ClothingBeltERTSecurityEmpty  # Pirate: ERT resprite - this gear fills the belt itself
     pocket2: CombatKnife
     suitstorage: WeaponRifleLecter
   inhand:

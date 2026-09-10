@@ -11,6 +11,18 @@
   - type: Clothing
     sprite: Clothing/Belt/security.rsi
 
+# Unfilled twin of ClothingBeltERTSecurity, for starting gear that supplies its own
+# belt contents (ERTSecurityGearArmedRifle). The filled parent leaves no room for them.
+- type: entity
+  parent: ClothingBeltMilitaryWebbingERT
+  id: ClothingBeltERTSecurityEmpty
+  suffix: ERT, security look, empty
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/security.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/security.rsi
+
 - type: entity
   parent: ClothingBeltMilitaryWebbingERT
   id: ClothingBeltERTEngineer

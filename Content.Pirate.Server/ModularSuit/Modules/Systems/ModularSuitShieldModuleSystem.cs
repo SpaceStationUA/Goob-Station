@@ -39,10 +39,13 @@ public sealed partial class ModularSuitShieldModuleSystem : EntitySystem
         if (wearer is not { } user || TerminatingOrDeleted(user))
             return;
 
-        var shield = EnsureComp<PersonalShieldComponent>(user);
+        // ComponentStartup runs before SelfDriven is set, so initialize new shields here.
+        var existed = EnsureComp<PersonalShieldComponent>(user, out var shield);
         shield.SelfDriven = true;
         shield.Enabled = true;
         shield.Shield = module.Comp.Shield;
+        if (!existed)
+            shield.Runtime.Charge = shield.Shield.MaxCharge;
         shield.Color = module.Comp.ShieldColor;
         Dirty(user, shield);
 
