@@ -25,7 +25,7 @@ public sealed class AtmosLinksCommand : LocalizedEntityCommands
     {
         return args.Length switch
         {
-            1 => CompletionResult.FromHintOptions(["toggle", "on", "off"], "on/off/toggle"),
+            1 => CompletionResult.FromHintOptions(["toggle", "on", "off", "allmaps"], "on/off/toggle, allmaps"),
             2 => CompletionResult.FromHintOptions(["allmaps"], "allmaps"),
             _ => CompletionResult.Empty,
         };
@@ -45,13 +45,27 @@ public sealed class AtmosLinksCommand : LocalizedEntityCommands
             return;
         }
 
-        var mode = args.Length > 0 ? args[0].ToLowerInvariant() : "toggle";
+        // Mode and flag may come in either order, and "atmoslinks allmaps" on its own still toggles.
+        var mode = AtmosLinksMode.Toggle;
         var options = new AtmosLinkOverlayOptions();
 
-        for (var i = 1; i < args.Length; i++)
+        foreach (var arg in args)
         {
-            switch (args[i].ToLowerInvariant())
+            switch (arg.ToLowerInvariant())
             {
+                case "on":
+                case "true":
+                case "1":
+                    mode = AtmosLinksMode.On;
+                    break;
+                case "off":
+                case "false":
+                case "0":
+                    mode = AtmosLinksMode.Off;
+                    break;
+                case "toggle":
+                    mode = AtmosLinksMode.Toggle;
+                    break;
                 case "allmaps":
                 case "all":
                     options.AllMaps = true;
@@ -62,26 +76,12 @@ public sealed class AtmosLinksCommand : LocalizedEntityCommands
             }
         }
 
-        bool enable;
-        switch (mode)
+        var enable = mode switch
         {
-            case "on":
-            case "true":
-            case "1":
-                enable = true;
-                break;
-            case "off":
-            case "false":
-            case "0":
-                enable = false;
-                break;
-            case "toggle":
-                enable = !_atmosLinks.IsEnabled(player);
-                break;
-            default:
-                shell.WriteLine(Help);
-                return;
-        }
+            AtmosLinksMode.On => true,
+            AtmosLinksMode.Off => false,
+            _ => !_atmosLinks.IsEnabled(player),
+        };
 
         if (!enable)
         {
@@ -91,6 +91,13 @@ public sealed class AtmosLinksCommand : LocalizedEntityCommands
         }
 
         var report = _atmosLinks.Enable(player, options);
+
+        if (report == null)
+        {
+            shell.WriteError("You aren't on a map, so there is nothing to scan. Teleport to one first, "
+                + "or use \"atmoslinks on allmaps\".");
+            return;
+        }
 
         shell.WriteLine(options.AllMaps
             ? "Atmos link overlay enabled for all maps."
@@ -116,10 +123,17 @@ public sealed class AtmosLinksCommand : LocalizedEntityCommands
 
         if (report.Desynced.Count > 0)
         {
-            shell.WriteError(
-                $"{report.Desynced.Count} device(s) are missing their back-reference, run \"synchronizedevicelists\" to fix:");
+            shell.WriteError($"{report.Desynced.Count} list/device mismatch(es) - \"synchronizedevicelists\" "
+                + "repairs missing back-references, the ones pointing the other way need a re-link:");
             WriteCapped(shell, report.Desynced);
         }
+    }
+
+    private enum AtmosLinksMode : byte
+    {
+        Toggle,
+        On,
+        Off,
     }
 
     private void WriteCapped(IConsoleShell shell, List<string> lines)

@@ -55,10 +55,15 @@ public sealed class AtmosLinkOverlaySystem : EntitySystem
         return _observers.ContainsKey(session);
     }
 
-    public AtmosLinkReport Enable(ICommonSession session, AtmosLinkOverlayOptions options)
+    // Null when the session isn't on a map and didn't ask for every map; the overlay stays off.
+    public AtmosLinkReport? Enable(ICommonSession session, AtmosLinkOverlayOptions options)
     {
+        var report = SendTo(session, options);
+        if (report == null)
+            return null;
+
         _observers[session] = options;
-        return SendTo(session, options);
+        return report;
     }
 
     public void Disable(ICommonSession session)
@@ -86,23 +91,33 @@ public sealed class AtmosLinkOverlaySystem : EntitySystem
         }
     }
 
-    private AtmosLinkReport SendTo(ICommonSession session, AtmosLinkOverlayOptions options)
+    private AtmosLinkReport? SendTo(ICommonSession session, AtmosLinkOverlayOptions options)
     {
         MapId? map = null;
         if (!options.AllMaps)
-            map = GetSessionMap(session);
+        {
+            // BuildReport reads a null map as "every map", so a mapless session is refused here instead of
+            // silently widening the scan to the whole server.
+            if (!TryGetSessionMap(session, out var sessionMap))
+                return null;
+
+            map = sessionMap;
+        }
 
         var report = BuildReport(map);
         RaiseNetworkEvent(new AtmosLinkOverlayDataEvent(report.Groups, report.Orphans), session.Channel);
         return report;
     }
 
-    private MapId? GetSessionMap(ICommonSession session)
+    private bool TryGetSessionMap(ICommonSession session, out MapId map)
     {
-        if (session.AttachedEntity is not { } player || !TryComp<TransformComponent>(player, out var xform))
-            return null;
+        map = MapId.Nullspace;
 
-        return xform.MapID == MapId.Nullspace ? null : xform.MapID;
+        if (session.AttachedEntity is not { } player || !TryComp<TransformComponent>(player, out var xform))
+            return false;
+
+        map = xform.MapID;
+        return map != MapId.Nullspace;
     }
 
     public AtmosLinkReport BuildReport(MapId? map)
@@ -112,12 +127,14 @@ public sealed class AtmosLinkOverlaySystem : EntitySystem
         // Reverse index of every device list in the world, not just the ones on this map, so a device linked
         // from another grid doesn't get reported as unlinked.
         var linked = new HashSet<EntityUid>();
+        var listed = new HashSet<(EntityUid List, EntityUid Device)>();
         var listQuery = AllEntityQuery<DeviceListComponent>();
         while (listQuery.MoveNext(out var listUid, out var listComp))
         {
             foreach (var device in _deviceList.GetAllDevices(listUid, listComp))
             {
                 linked.Add(device);
+                listed.Add((listUid, device));
             }
         }
 
@@ -144,6 +161,25 @@ public sealed class AtmosLinkOverlaySystem : EntitySystem
             report.DeviceCount++;
 
             var coords = GetNetCoordinates(xform.Coordinates);
+
+            // Mirror of the check further down: the device claims a list that doesn't hold it.
+            // "synchronizedevicelists" only fills in missing back-references, so this direction gets its own
+            // wording - it needs a re-link to clear.
+            foreach (var deviceList in netComp.DeviceLists)
+            {
+                if (Deleted(deviceList))
+                {
+                    report.Desynced.Add(
+                        $"{ToPrettyString(uid)} still points at a deleted device list ({deviceList})");
+                    continue;
+                }
+
+                if (!listed.Contains((deviceList, uid)))
+                {
+                    report.Desynced.Add(
+                        $"{ToPrettyString(uid)} thinks it is in {ToPrettyString(deviceList)}, which doesn't list it");
+                }
+            }
 
             if (TryComp<DeviceListComponent>(uid, out var list))
             {
