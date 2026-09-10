@@ -114,6 +114,9 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
         var comp = EnsureComp<StarSystemMapComponent>(mapUid.Value);
         SetSeed((mapUid.Value, comp), _ticker.RoundId, false);
 
+        // Far Horizons: directional starlight with wall shadows, ported from Monolith (#4494).
+        EnsureComp<StarLightComponent>(mapUid.Value);
+
         // Find the station grid — the anchor for the star, lavaland and nukie placement.
         EntityUid? stationGrid = null;
         foreach (var grid in ev.Grids)

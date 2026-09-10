@@ -2,6 +2,7 @@ using Content.Shared._FarHorizons.CCVar;
 using Content.Shared._FarHorizons.StarSystem;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client._FarHorizons.StarSystem;
@@ -11,9 +12,11 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IMapManager _mapMan = default!;
 
     private PlanetOverlay _planetOverlay = default!;
     private AsteroidBeltOverlay _beltOverlay = default!;
+    private StarLightOverlay _starLightOverlay = default!;
 
     public override void Initialize()
     {
@@ -21,6 +24,7 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
         SubscribeLocalEvent<StarSystemMapComponent, AfterAutoHandleStateEvent>(OnStateChanged);
         _planetOverlay = new(EntityManager, _protoMan);
         _beltOverlay = new(EntityManager, _protoMan);
+        _starLightOverlay = new(EntityManager, _mapMan, _protoMan, _overlayMan, _cfg);
 
         _cfg.OnValueChanged(FHCCVars.RenderStarSystem, EnsureStarSystem, true);
     }
@@ -41,6 +45,9 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
 
             if (!_overlayMan.HasOverlay<AsteroidBeltOverlay>())
                 _overlayMan.AddOverlay(_beltOverlay);
+
+            if (!_overlayMan.HasOverlay<StarLightOverlay>())
+                _overlayMan.AddOverlay(_starLightOverlay);
         }
         else
         {
@@ -50,8 +57,12 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
             if (_overlayMan.HasOverlay<AsteroidBeltOverlay>())
                 _overlayMan.RemoveOverlay(_beltOverlay);
 
+            if (_overlayMan.HasOverlay<StarLightOverlay>())
+                _overlayMan.RemoveOverlay(_starLightOverlay);
+
             _planetOverlay.ResetShader();
             _beltOverlay.ResetShader();
+            _starLightOverlay.ResetMemory();
         }
     }
 
@@ -60,5 +71,6 @@ public sealed partial class StarSystemMapSystem : SharedStarSystemMapSystem
         ent.Comp.StarSystem = MakePlanetarySystem(ent);
         _planetOverlay.ResetShader();
         _beltOverlay.ResetShader();
+        _starLightOverlay.ResetMemory();
     }
 }

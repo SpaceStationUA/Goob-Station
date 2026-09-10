@@ -3,6 +3,11 @@
 # Far Horizons: Star System shaders
 
 - type: shader
+  id: StarLight
+  kind: source
+  path: "/Textures/_FarHorizons/Shaders/StarSystem/star_light.swsl"
+
+- type: shader
   id: MainSequenceStar
   kind: source
   path: "/Textures/_FarHorizons/Shaders/StarSystem/main_sequence_star.swsl"
