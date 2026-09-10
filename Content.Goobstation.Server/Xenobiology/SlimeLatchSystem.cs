@@ -25,6 +25,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Chemistry.Components;
+using Content.Shared._Mono.PersonalShield;
 
 namespace Content.Goobstation.Server.Xenobiology;
 
@@ -43,6 +44,7 @@ public sealed partial class SlimeLatchSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
+    [Dependency] private readonly SharedPersonalShieldSystem _personalShield = default!;
 
     public override void Initialize()
     {
@@ -73,6 +75,14 @@ public sealed partial class SlimeLatchSystem : EntitySystem
     {
         if (_gameTiming.CurTime < ent.Comp.NextTickTime || _mobState.IsDead(ent))
             return;
+
+        // Active personal shield (ІПШ) — drop off instead of free growth with no damage.
+        if (_personalShield.HasActiveShield(ent) && ent.Comp.SourceEntityUid is { } latchedSlime
+            && TryComp<SlimeComponent>(latchedSlime, out var slimeComp))
+        {
+            Unlatch((latchedSlime, slimeComp));
+            return;
+        }
 
         ent.Comp.NextTickTime = _gameTiming.CurTime + ent.Comp.Interval;
         _damageable.TryChangeDamage(ent, ent.Comp.Damage, ignoreResistances: true, targetPart: TargetBodyPart.All);
@@ -175,6 +185,12 @@ public sealed partial class SlimeLatchSystem : EntitySystem
             return;
         }
 
+        if (_personalShield.HasActiveShield(args.Target))
+        {
+            _popup.PopupEntity(Loc.GetString("slime-latch-fail-personal-shield", ("ent", args.Target)), ent, ent);
+            return;
+        }
+
         if (CanLatch((args.Performer, slime), args.Target))
         {
             StartSlimeLatchDoAfter((args.Performer, slime), args.Target);
@@ -186,6 +202,12 @@ public sealed partial class SlimeLatchSystem : EntitySystem
 
     private bool StartSlimeLatchDoAfter(Entity<SlimeComponent> ent, EntityUid target)
     {
+        if (_personalShield.HasActiveShield(target))
+        {
+            _popup.PopupEntity(Loc.GetString("slime-latch-fail-personal-shield", ("ent", target)), ent, ent);
+            return false;
+        }
+
         if (_mobState.IsDead(target))
         {
             var targetDeadPopup = Loc.GetString("slime-latch-fail-target-dead", ("ent", target));
@@ -227,7 +249,8 @@ public sealed partial class SlimeLatchSystem : EntitySystem
 
     private void OnDoAfterAttempt(EntityUid uid, SlimeComponent comp, ref DoAfterAttemptEvent<SlimeLatchDoAfterEvent> args)
     {
-        if (HasComp<BeingLatchedComponent>(args.Event.Target))
+        if (args.Event.Target is { } target
+            && (HasComp<BeingLatchedComponent>(target) || _personalShield.HasActiveShield(target)))
             args.Cancel();
     }
 
@@ -260,6 +283,7 @@ public sealed partial class SlimeLatchSystem : EntitySystem
             || _mobState.IsDead(target) // target dead
             || !_actionBlocker.CanInteract(ent, target) // can't reach
             || !HasComp<MobStateComponent>(target) // make any mob work
+            || _personalShield.HasActiveShield(target) // ІПШ blocks latch (no free growth)
             || (TryComp<HumanoidAppearanceComponent>(target, out var humanoid) && humanoid.Species == "SlimePerson")); // Pirate: slime kinship - slimes don't hunt their own kind
     }
 

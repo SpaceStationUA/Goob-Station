@@ -166,6 +166,20 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// True if <paramref name="wearer"/> currently has a formed personal shield (ІПШ) from worn gear.
+    /// </summary>
+    public bool HasActiveShield(EntityUid wearer)
+    {
+        foreach (var item in _inventory.GetHandOrInventoryEntities(wearer))
+        {
+            if (TryComp(item, out PersonalShieldComponent? shield) && shield.IsUp)
+                return true;
+        }
+
+        return false;
+    }
+
     // Oops!
     public void Fracture(Entity<PersonalShieldComponent> ent)
     {

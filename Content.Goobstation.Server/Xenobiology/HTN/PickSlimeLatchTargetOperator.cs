@@ -66,6 +66,7 @@ public sealed partial class PickSlimeLatchTargetOperator : HTNOperator
             if (_ent.HasComponent<BeingLatchedComponent>(entity)
             || _ent.HasComponent<SlimeDamageOvertimeComponent>(entity) // it's taken
             || _mobSystem.IsDead(entity)
+            || !_latch.CanLatch((owner, slimeComp), entity)
             || (growthComp.IsFirstStage && entity == slimeComp.Tamer) // no killing tamer
             || (entity == slimeComp.Tamer && _hunger.IsHungerAboveState(owner, HungerThreshold.Peckish)) // no killing tamer unless very hungry
             || (_ent.TryGetComponent<HumanoidAppearanceComponent>(entity, out var targetHumanoid) && targetHumanoid.Species == "SlimePerson")) // Pirate: slime kinship - slimes don't hunt their own kind

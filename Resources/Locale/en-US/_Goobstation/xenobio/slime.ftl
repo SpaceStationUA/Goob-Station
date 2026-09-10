@@ -8,6 +8,8 @@ slime-latch-fail-already-latched = You can't latch to the {$ent}, it latched by 
 
 slime-latch-fail-max-entities = You cannot consume the {$ent}, you are full!
 
+slime-latch-fail-personal-shield = You cannot latch onto {$ent} — their personal shield blocks you!
+
 slime-eat-corpse-success = {THE($eater)} is trying to tear something away from {THE($target)}!
 
 slime-eat-corpse-fail-not-eatable = {THE($target)} don't look eatable.
