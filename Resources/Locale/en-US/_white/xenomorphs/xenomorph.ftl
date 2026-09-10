@@ -37,4 +37,4 @@ xenomorphs-hive-announce-dialog-title = Hive announce
 xenomorphs-hive-announce-dialog-prompt = Message
 xenomorphs-hive-announce-empty = Empty message.
 xenomorphs-hive-announce-sent = The hive heard our screech.
-xenomorphs-hive-announce-wrap = a screech in your head{"\u000a"}[italic]{$message}[/italic]
+xenomorphs-hive-announce-wrap = a screech in your head{"\u000a"}{"[italic]"}{$message}{"[/italic]"}
