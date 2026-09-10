@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server._White.Xenomorphs.Egg;
 
@@ -34,6 +35,17 @@ public sealed class XenomorphPlantableEggSystem : EntitySystem
         var tile = _map.GetTileRef(grid, mapGrid, coords);
         if (tile.Tile.IsEmpty)
         {
+            _popup.PopupEntity(Loc.GetString("xenomorphs-egg-plant-fail"), args.User, args.User);
+            return;
+        }
+
+        // Don't plant on walls / other eggs / hard anchored entities.
+        var indices = _map.TileIndicesFor(grid, mapGrid, coords);
+        foreach (var anchored in _map.GetAnchoredEntities(grid, mapGrid, indices))
+        {
+            if (!TryComp<PhysicsComponent>(anchored, out var body) || !body.CanCollide || !body.Hard)
+                continue;
+
             _popup.PopupEntity(Loc.GetString("xenomorphs-egg-plant-fail"), args.User, args.User);
             return;
         }
