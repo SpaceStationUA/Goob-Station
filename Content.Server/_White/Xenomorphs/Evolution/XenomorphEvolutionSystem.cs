@@ -5,6 +5,7 @@ using Content.Server.DoAfter;
 using Content.Server.Jittering;
 using Content.Server.Mind;
 using Content.Server.Popups;
+using Content.Shared._White.Actions;
 using Content.Shared._White.RadialSelector;
 using Content.Shared._White.Xenomorphs;
 using Content.Shared._White.Xenomorphs.Xenomorph;
@@ -32,6 +33,7 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly JitteringSystem _jitter = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly PlasmaCostActionSystem _plasmaCost = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -66,7 +68,11 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
                 return;
             }
 
-            args.Handled = Evolve(uid, component.EvolvesTo.First().Prototype, component.EvolutionDelay);
+            if (!Evolve(uid, component.EvolvesTo.First().Prototype, component.EvolutionDelay))
+                return;
+
+            DeductEvolutionPlasma(uid, args.Action);
+            args.Handled = true;
             return;
         }
 
@@ -87,11 +93,18 @@ public sealed class XenomorphEvolutionSystem : EntitySystem
         if (!IsAvailableEvolution(component.EvolvesTo, args.SelectedItem))
             return;
 
-        if (Evolve(uid, args.SelectedItem, component.EvolutionDelay))
+        if (!Evolve(uid, args.SelectedItem, component.EvolutionDelay))
             return;
 
+        DeductEvolutionPlasma(uid, component.EvolutionAction);
         var actor = args.Actor;
         _ui.CloseUi(uid, RadialSelectorUiKey.Key, actor);
+    }
+
+    private void DeductEvolutionPlasma(EntityUid uid, EntityUid? action)
+    {
+        if (action is { } actionUid && TryComp<PlasmaCostActionComponent>(actionUid, out var plasmaCost))
+            _plasmaCost.DeductPlasma(uid, plasmaCost.PlasmaCost);
     }
 
     private void OnXenomorphEvolutionDoAfter(EntityUid uid, XenomorphEvolutionComponent component, ref XenomorphEvolutionDoAfterEvent args)

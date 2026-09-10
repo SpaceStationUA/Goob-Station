@@ -1,38 +1,61 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Wall-mounted resin nest — buckle humans to walls (CM nest_overlay).
 - type: entity
+  parent: BaseWallmount
   id: XenoNest
   name: alien nest
   description: It's a gruesome pile of thick, sticky resin shaped like a nest.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wall
   components:
-  - type: Physics
-    bodyType: Static
   - type: Sprite
     sprite: _RMC14/Structures/Xenos/xeno_weeds.rsi
     state: nest_overlay
-    drawdepth: Overdoors # Goobstation - render above most things
+    drawdepth: Overdoors
+  - type: Physics
+    bodyType: Static
+    canCollide: false
   - type: Fixtures
     fixtures:
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+          bounds: "-0.4,-0.4,0.4,0.4"
         layer:
         - SlipLayer
         mask:
         - ItemMask
         density: 1000
         hard: false
-  - type: Clickable
   - type: Damageable
     damageContainer: Biological
+    damageModifierSet: Resin
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 80
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: blood
+  - type: WallMount
+    arc: 360
+  - type: Strap
+    position: Stand
+    buckleOffset: "0,0.15"
+    buckleDoafterTime: 3
+    selfUnBuckleDelay: 120
+    buckleOnInteractHand: false
+    whitelist:
+      components:
+      - HumanoidAppearance
+    blacklist:
+      components:
+      - Xenomorph
+  - type: BlockHandsOnBuckle
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: XenoResinBreak

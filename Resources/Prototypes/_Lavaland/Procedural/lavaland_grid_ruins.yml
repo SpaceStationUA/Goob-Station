@@ -195,3 +195,12 @@
   path: /Maps/_Lavaland/Lavaland/reclaimer_shuttle_ruin.yml
   priority: -1 # highest priority
   patchToPlanet: false
+
+- type: lavalandGridRuin
+  id: JockeyShuttle
+  name: lavaland-ruin-jockey-shuttle
+  path: /Maps/_Lavaland/Lavaland/ruin_jockey_shuttle.yml
+  priority: -1 # highest priority
+  minDistance: 180
+  spawnAttempts: 20
+  patchToPlanet: false

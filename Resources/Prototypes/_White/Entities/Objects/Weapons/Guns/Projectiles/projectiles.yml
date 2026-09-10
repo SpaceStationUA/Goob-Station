@@ -4,9 +4,31 @@
   name: neurotoxin spit
   categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    sprite: _RMC14/Objects/Xeno/xeno_projectiles.rsi
+    layers:
+    - state: neurotoxin
+      shader: unshaded
   - type: StaminaDamageOnCollide
     damage: 65
   - type: Projectile
     damage:
       types:
         Caustic: 1
+
+- type: entity
+  id: BulletXenomorphAcidSpit
+  parent: BulletAcid
+  name: acid chemical spit
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _RMC14/Objects/Xeno/xeno_projectiles.rsi
+    layers:
+    - state: xeno_acid_weak
+      shader: unshaded
+  - type: Projectile
+    ignoreResistances: false
+    damage:
+      types:
+        Heat: 21

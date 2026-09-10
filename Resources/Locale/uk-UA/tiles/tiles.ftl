@@ -137,6 +137,7 @@ tiles-astro-asteroid-sand-borderless = безмежний астероїдний
 tiles-techmaint-floor-dark = темна підлога техобслуговування
 tiles-dirt-planet-floor = брудна підлога планети
 tiles-xeno-floor = ксенопідлога
+tiles-xeno-hive-floor = обшивка вулика
 tiles-xeno-steel = ксеносталева плитка
 tiles-xeno-steel-corner = кутова ксеносталева плитка
 tiles-xeno-maint = ксенотехнічне обслуговування

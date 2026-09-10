@@ -111,16 +111,21 @@
     slotId: acid_gland
     onAdd:
     - type: XenomorphAcid
+      acidLifeTime: 5
+      structureAcidLifeTime: 100
       damagePerSecond:
         types:
           Caustic: 20
-          Heat: 20 # Goobstation
+          Heat: 20
+          Structural: 25
+    - type: XenomorphSpitMode
   # <Goobstation>
   - type: AcidGland
-  # - type: OrganActions
-  #   actions:
-  #   - ActionAcid
-  # </Goobstation> commented until acid if fixed
+  - type: OrganActions
+    actions:
+    - ActionAcid
+    - ActionXenomorphSpitMode
+  # </Goobstation>
 
 - type: entity
   parent: BaseXenomorphOrgan
@@ -141,11 +146,15 @@
     - type: Gun
       fireRate: 0.75
       useKey: false
-      selectedMode: FullAuto
+      actionFireOnly: true # only via ActionNeurotoxinSpit icon, never RMB
+      selectedMode: SemiAuto
       availableModes:
-      - FullAuto
+      - SemiAuto
       soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
   - type: NeurotoxinGland # Goobstation
+  - type: OrganActions
+    actions:
+    - ActionNeurotoxinSpit
 
 - type: entity
   parent: BaseXenomorphOrgan
@@ -175,13 +184,10 @@
     state: resin_spinner
   - type: Organ
     slotId: resin_spinner
+    onAdd:
+    - type: XenomorphConstruction
   # <Goobstation>
   - type: ResinSpinner
-  - type: OrganActions
-    actions:
-    - ActionSpawnWallResin
-    - ActionSpawnResinDoor
-    - ActionSpawnResinNest
   # </Goobstation>
 
 - type: entity

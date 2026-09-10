@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._White.Xenomorphs.Acid.Components;
 
@@ -6,7 +7,17 @@ namespace Content.Shared._White.Xenomorphs.Acid.Components;
 public sealed partial class AcidCorrodingComponent : Component
 {
     [DataField]
-    public DamageSpecifier DamagePerSecond;
+    public DamageSpecifier DamagePerSecond = new();
+
+    [DataField]
+    public EntProtoId AshPrototype = "Ash";
+
+    /// <summary>
+    /// If true, when the acid expires the target is deleted and replaced with ash (gel style).
+    /// If false, only the acid effect is removed (legacy structure corrosion).
+    /// </summary>
+    [DataField]
+    public bool DissolveToAsh = true;
 
     [ViewVariables]
     public TimeSpan AcidExpiresAt;

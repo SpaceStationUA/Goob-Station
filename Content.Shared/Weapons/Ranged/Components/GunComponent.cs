@@ -135,6 +135,13 @@ public sealed partial class GunComponent : Component
     public bool UseKey = true;
 
     /// <summary>
+    /// If true, this gun ignores Use/UseSecondary input and can only be fired via actions.
+    /// Used for xenomorph neurotoxin spit.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ActionFireOnly;
+
+    /// <summary>
     /// Where the gun is being requested to shoot.
     /// </summary>
     [ViewVariables]

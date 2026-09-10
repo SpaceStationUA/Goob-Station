@@ -165,6 +165,7 @@ tiles-astro-ironsand-borderless = borderless astro-ironsand
 tiles-desert-astro-sand = desert astro-sand
 tiles-wood-large = large wood
 tiles-xeno-floor = xeno floor
+tiles-xeno-hive-floor = hive plating
 tiles-xeno-steel = xeno steel tile
 tiles-xeno-steel-corner = xeno steel corner tile
 tiles-xeno-maint = xeno techmaint

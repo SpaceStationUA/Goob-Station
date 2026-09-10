@@ -192,6 +192,10 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
         }
 
+        // Action-only guns (e.g. xenomorph neurotoxin spit) ignore Use/UseSecondary.
+        if (gun.Comp.ActionFireOnly)
+            return;
+
         if (TryComp<EntropicPlumeAffectedComponent>(entity, out var affected) &&
             affected.NextAttack + TimeSpan.FromSeconds(0.1f) > Timing.CurTime) // Goobstation
             return;

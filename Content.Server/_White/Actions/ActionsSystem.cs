@@ -4,6 +4,7 @@ using Content.Shared._White.Actions.Events;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Coordinates;
 using Content.Shared.DoAfter;
+using Content.Shared.Wall;
 using Content.Goobstation.Maths.FixedPoint;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
@@ -114,6 +115,8 @@ public sealed class ActionsSystem : EntitySystem
         if (_container.IsEntityOrParentInContainer(user))
             return false;
 
+        var placedTile = false;
+
         if (tileId != null)
         {
             if (_transform.GetGrid(coordinates) is not { } grid || !TryComp(grid, out MapGridComponent? mapGrid))
@@ -123,14 +126,28 @@ public sealed class ActionsSystem : EntitySystem
             var tile = new Tile(tileDef.TileId);
 
             _mapSystem.SetTile(grid, mapGrid, coordinates, tile);
+            placedTile = true;
         }
 
         _audio.PlayPvs(audio, coordinates);
 
-        if (entProtoId == null || CheckTileBlocked(coordinates, collisionLayer, collisionMask))
-            return false;
+        if (entProtoId == null)
+            return placedTile;
 
-        Spawn(entProtoId, coordinates);
+        if (CheckTileBlocked(coordinates, collisionLayer, collisionMask))
+            return placedTile;
+
+        var spawned = Spawn(entProtoId, coordinates);
+
+        // Face wallmounts (e.g. xeno wall nests) toward the placer / into the room.
+        if (HasComp<WallMountComponent>(spawned))
+        {
+            var userPos = _transform.GetWorldPosition(user);
+            var targetPos = _transform.ToMapCoordinates(coordinates).Position;
+            var toUser = userPos - targetPos;
+            if (toUser.LengthSquared() > 0.01f)
+                _transform.SetWorldRotation(spawned, toUser.ToWorldAngle());
+        }
 
         return true;
     }

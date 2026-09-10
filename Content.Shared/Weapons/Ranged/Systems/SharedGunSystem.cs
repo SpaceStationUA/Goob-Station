@@ -175,6 +175,10 @@ public abstract partial class SharedGunSystem : EntitySystem
             HasComp<ItemComponent>(user)) // Goobstation - carryable entities (e.g. felinids) can't shoot while held
             return;
 
+        // Action-only body guns (xenomorph spit) cannot be fired via Use/RMB.
+        if (gun.Comp.ActionFireOnly)
+            return;
+
         if (gun.Owner != GetEntity(msg.Gun))
             return;
 
@@ -244,13 +248,27 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // Last resort is check if the entity itself is a gun.
-        if (TryComp(entity, out gunComp))
+        // Skip ActionFireOnly body-guns (xenomorph spit) — those fire only via actions.
+        if (TryComp(entity, out gunComp) && !gunComp.ActionFireOnly)
         {
             gun = (entity, gunComp);
             return true;
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Gets a body-mounted action-only gun (e.g. xenomorph spit), ignoring held weapons.
+    /// </summary>
+    public bool TryGetActionFireGun(EntityUid entity, out Entity<GunComponent> gun)
+    {
+        gun = default;
+        if (!TryComp(entity, out GunComponent? gunComp) || !gunComp.ActionFireOnly)
+            return false;
+
+        gun = (entity, gunComp);
+        return true;
     }
 
     private void StopShooting(Entity<GunComponent> ent)

@@ -16,6 +16,8 @@
   - type: Xenomorph
     caste: Queen
   - type: XenomorphQueen
+  - type: XenomorphMachineUser
+  - type: ComplexInteraction
   - type: TailLash
     tailDamage:
       groups:
@@ -62,6 +64,8 @@
     damage:
       groups:
         Brute: 50
+    range: 1.8 # large lavaland fauna (goliath etc.)
+    altDisarm: false
   - type: Deathgasp
     prototype: XenomorphQueenDeathgasp
   - type: Speech
@@ -96,6 +100,12 @@
   parent: BaseMobXenomorphQueen
   id: MobXenomorphQueen
   components:
+  - type: XenomorphEvolution
+    evolutionActionId: ActionEvolutionEmpress
+    max: 720
+    pointsPerSecond: 1
+    evolvesTo:
+    - prototype: MobXenomorphEmpress
   - type: GhostRole
     allowMovement: true
     allowSpeech: true
@@ -108,6 +118,17 @@
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+        requireInputValidation: false
+      enum.SurgeryUIKey.Key:
+        type: SurgeryBui
+      enum.RadialSelectorUiKey.Key:
+        type: TrackedRadialSelectorMenuBUI
 
 - type: entity
   parent: [BaseMobXenomorphDungeon, BaseMobXenomorphQueen]

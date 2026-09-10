@@ -5,6 +5,17 @@
   suffix: Yautja
   components:
     - type: InteractionOutline
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.35,-0.35,0.35,0.35"
+          density: 55
+          mask:
+          - TableMask
+          layer:
+          - MidImpassable
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: StrongMetallic
@@ -244,56 +255,17 @@
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
       state: "pred_trophy_vendor_top_right"
 
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureN32x32HunterPropsBoneThrone
-  name: "кістяний трон Яутжа"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
-      drawdepth: Objects
-      layers:
-        - state: "bone_throne"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
-      state: "bone_throne"
-
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureN32x32HunterPropsBoneThroneTop
-  name: "верх кістяного трону Яутжа"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
-      drawdepth: Objects
-      layers:
-        - state: "bone_throne_top"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
-      state: "bone_throne_top"
-
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureN32x32HunterPropsClosed
-  name: "закрите Яутжа"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
-      drawdepth: Objects
-      layers:
-        - state: "closed"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
-      state: "closed"
-
+# Furniture moved to furniture.yml (real chairs/beds/tables).
+# - GoobYautjaStructureN32x32HunterPropsBoneThrone
+# - GoobYautjaStructureN32x32HunterPropsBoneThroneTop
+# Locker: GoobYautjaStructureN32x32HunterPropsClosed → furniture.yml
+# Open visual only (not spawnable):
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureN32x32HunterPropsOpen
-  name: "відкрите Яутжа"
-  description: "Стародавня структура мисливських угідь Яутжа."
+  categories: [ HideSpawnMenu ]
+  name: "яутжа шафа відкрита (шар)"
+  description: "Відкритий вигляд шафи. Не окремий об'єкт."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
@@ -3219,49 +3191,10 @@
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
       state: "vat_boiling"
 
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesChair
-  name: "яутжа стілець"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "chair"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "chair"
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesChairBuckledOverlay
-  name: "яутжа стілець пристебнутий шар"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "chair_buckled_overlay"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "chair_buckled_overlay"
-
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesComfychair
-  name: "яутжа зручний стілець"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "comfychair"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "comfychair"
+# Furniture moved to furniture.yml
+# - GoobYautjaStructureYautjaMachinesChair
+# - GoobYautjaStructureYautjaMachinesChairBuckledOverlay
+# - GoobYautjaStructureYautjaMachinesComfychair
 
 - type: entity
   parent: GoobYautjaStructureBase
@@ -3370,6 +3303,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMwbloody
+  categories: [ HideSpawnMenu ]
   name: "яутжа мв кривавий"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3400,6 +3334,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMwbloody1
+  categories: [ HideSpawnMenu ]
   name: "яутжа мв кривавий 1"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3415,6 +3350,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMwbloody0
+  categories: [ HideSpawnMenu ]
   name: "яутжа мв кривавий 0"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3426,26 +3362,13 @@
     - type: Icon
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
       state: "mwbloody0"
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesFridge
-  name: "яутжа холодильник"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "fridge"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "fridge"
-
+# Fridge / freezer → furniture.yml (ClosetBase). Animation / open frames:
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFridge1
-  name: "яутжа холодильник 1"
-  description: "Стародавня структура мисливських угідь Яутжа."
+  categories: [ HideSpawnMenu ]
+  name: "яутжа холодильник (кадр)"
+  description: "Кадр анімації холодильника."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3459,8 +3382,9 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFridgebroken
+  categories: [ HideSpawnMenu ]
   name: "яутжа зламаний холодильник"
-  description: "Стародавня структура мисливських угідь Яутжа."
+  description: "Декор зламаного холодильника."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3474,8 +3398,9 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFridgeopen
-  name: "яутжа відкритий холодильник"
-  description: "Стародавня структура мисливських угідь Яутжа."
+  categories: [ HideSpawnMenu ]
+  name: "яутжа холодильник відкритий (шар)"
+  description: "Відкритий вигляд холодильника. Не окремий об'єкт."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3504,6 +3429,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesGrbloody
+  categories: [ HideSpawnMenu ]
   name: "яутжа кривава мясорубка"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3578,7 +3504,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDinnerware
-  name: "яутжа посуд"
+  name: "автомат посуду Яутжа"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
@@ -3593,6 +3519,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDinnerwareVend
+  categories: [ HideSpawnMenu ]
   name: "яутжа видача посуду"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3608,6 +3535,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDinnerwareDeny
+  categories: [ HideSpawnMenu ]
   name: "яутжа відмова посуду"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3620,20 +3548,7 @@
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
       state: "dinnerware-deny"
 
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesBlue
-  name: "яутжа синій"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "blue"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "blue"
+# Canister → furniture.yml (StorageCanister)
 
 - type: entity
   parent: GoobYautjaStructureBase
@@ -3668,6 +3583,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMixer0Nopower
+  categories: [ HideSpawnMenu ]
   name: "яутжа міксер 0 без живлення"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3682,6 +3598,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesMixer1Nopower
+  categories: [ HideSpawnMenu ]
   name: "яутжа міксер 1 без живлення"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3712,6 +3629,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker1
+  categories: [ HideSpawnMenu ]
   name: "яутжа мензурка 1"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3727,6 +3645,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker2
+  categories: [ HideSpawnMenu ]
   name: "яутжа мензурка 2"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3742,6 +3661,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker3
+  categories: [ HideSpawnMenu ]
   name: "яутжа мензурка 3"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3757,6 +3677,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker4
+  categories: [ HideSpawnMenu ]
   name: "яутжа мензурка 4"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3772,6 +3693,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesBeaker5
+  categories: [ HideSpawnMenu ]
   name: "яутжа мензурка 5"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -3843,26 +3765,13 @@
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
       state: "tank_broken"
 
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesFreezer
-  name: "яутжа морозильник"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "freezer"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "freezer"
-
+# Freezer → furniture.yml. Animation frames:
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFreezer0
-  name: "яутжа морозильник 0"
-  description: "Стародавня структура мисливських угідь Яутжа."
+  categories: [ HideSpawnMenu ]
+  name: "яутжа морозильник (кадр 0)"
+  description: "Кадр анімації морозильника."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -3876,8 +3785,9 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFreezer1
-  name: "яутжа морозильник 1"
-  description: "Стародавня структура мисливських угідь Яутжа."
+  categories: [ HideSpawnMenu ]
+  name: "яутжа морозильник (кадр 1)"
+  description: "Кадр анімації морозильника."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4111,56 +4021,14 @@
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
       state: "smallmonitor"
 
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesAbed
-  name: "яутжа ліжко 1"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "abed"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "abed"
-
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesBed
-  name: "яутжа ліжко"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "bed"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "bed"
-
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesClosed
-  name: "закрите Яутжа"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "closed"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "closed"
-
+# Furniture moved to furniture.yml (Abed, Bed, Tables, Locker Closed)
+# Open visual only:
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesOpen
-  name: "відкрите Яутжа"
-  description: "Стародавня структура мисливських угідь Яутжа."
+  categories: [ HideSpawnMenu ]
+  name: "яутжа шафа відкрита (шар)"
+  description: "Відкритий вигляд шафи. Не окремий об'єкт."
   components:
     - type: Sprite
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
@@ -4170,50 +4038,6 @@
     - type: Icon
       sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
       state: "open"
-
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesTable1
-  name: "яутжа стіл 1"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "table1"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "table1"
-
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesTable2Idle
-  name: "яутжа стіл 2 простій"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "table2-idle"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "table2-idle"
-- type: entity
-  parent: GoobYautjaStructureBase
-  id: GoobYautjaStructureYautjaMachinesTable2Active
-  name: "яутжа стіл 2 активний"
-  description: "Стародавня структура мисливських угідь Яутжа."
-  components:
-    - type: Sprite
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      drawdepth: Objects
-      layers:
-        - state: "table2-active"
-    - type: Icon
-      sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
-      state: "table2-active"
 
 - type: entity
   parent: GoobYautjaStructureBase
@@ -4337,6 +4161,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDoorctrlDenied
+  categories: [ HideSpawnMenu ]
   name: "яутжа doorctrl заборонено"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -4456,7 +4281,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesSeeds
-  name: "яутжа насіння"
+  name: "автомат насіння Яутжа"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
@@ -4471,7 +4296,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesNutri
-  name: "яутжа поживні"
+  name: "автомат добрив Яутжа"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
     - type: Sprite
@@ -4486,6 +4311,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesNutriDeny
+  categories: [ HideSpawnMenu ]
   name: "яутжа поживні відмова"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -4650,6 +4476,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesDispensing
+  categories: [ HideSpawnMenu ]
   name: "яутжа видача"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:
@@ -4665,6 +4492,7 @@
 - type: entity
   parent: GoobYautjaStructureBase
   id: GoobYautjaStructureYautjaMachinesFilling
+  categories: [ HideSpawnMenu ]
   name: "яутжа наповнення"
   description: "Стародавня структура мисливських угідь Яутжа."
   components:

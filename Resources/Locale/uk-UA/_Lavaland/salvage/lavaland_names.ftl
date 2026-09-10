@@ -36,3 +36,4 @@ lavaland-ruin-mug = Фабрика кухлів
 lavaland-ruin-temple = Храм Нар'Сі
 lavaland-ruin-flock-large = Дивні скляні руїни
 lavaland-ruin-reclaimer = НТ-утилізатор
+lavaland-ruin-jockey-shuttle = Корабель жокея

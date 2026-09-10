@@ -10,8 +10,20 @@ public sealed partial class XenomorphAcidComponent : Component
     public EntProtoId AcidId = "XenomorphAcid";
 
     [DataField]
-    public TimeSpan AcidLifeTime = TimeSpan.FromSeconds(100);
+    public EntProtoId AshPrototype = "Ash";
+
+    /// <summary>
+    /// How long acid lasts on items/corpses before they dissolve into ash.
+    /// </summary>
+    [DataField]
+    public TimeSpan AcidLifeTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// How long acid lasts on anchored structures (walls/doors/etc.) while dealing DoT.
+    /// </summary>
+    [DataField]
+    public TimeSpan StructureAcidLifeTime = TimeSpan.FromSeconds(100);
 
     [DataField]
-    public DamageSpecifier DamagePerSecond;
+    public DamageSpecifier DamagePerSecond = new();
 }
