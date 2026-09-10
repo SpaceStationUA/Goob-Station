@@ -62,7 +62,13 @@ public sealed partial class PersonalShieldOverlay : Overlay
             if (shield.Runtime.Form <= 0f && shield.Runtime.Shatter <= 0f)
                 continue;
 
-            if (!_inventory.TryGetContainingEntity(uid, out var wearer))
+            // Pirate: ERT modsuits - a self-driven shield is granted straight to the mob
+            EntityUid? wearer;
+            if (_inventory.TryGetContainingEntity(uid, out var containing))
+                wearer = containing;
+            else if (shield.SelfDriven)
+                wearer = uid;
+            else
                 continue;
 
             if (!_entManager.TryGetComponent(wearer, out SpriteComponent? sprite) || !sprite.Visible)

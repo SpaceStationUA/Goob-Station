@@ -25,6 +25,11 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
         SubscribeLocalEvent<PersonalShieldComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<PersonalShieldComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PersonalShieldComponent, MapInitEvent>(OnMapInit);
+        #region Pirate: ERT resprite
+        SubscribeLocalEvent<PersonalShieldComponent, DamageModifyEvent>(OnDamageModifyDirect,
+            before: [typeof(SharedArmorSystem)]);
+        SubscribeLocalEvent<PersonalShieldComponent, ComponentStartup>(OnStartup);
+        #endregion
     }
 
     private void OnMapInit(Entity<PersonalShieldComponent> ent, ref MapInitEvent args)
@@ -33,7 +38,31 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
         Dirty(ent, ent.Comp);
     }
 
-    private void OnDamageModify(Entity<PersonalShieldComponent> ent, ref InventoryRelayedEvent<DamageModifyEvent> args)
+    #region Pirate: ERT resprite
+    private void OnStartup(EntityUid uid, PersonalShieldComponent comp, ComponentStartup args)
+    {
+        if (!comp.SelfDriven)
+            return;
+
+        comp.Runtime.Charge = comp.Shield.MaxCharge;
+        Dirty(uid, comp);
+    }
+
+    private void OnDamageModifyDirect(EntityUid uid, PersonalShieldComponent comp, DamageModifyEvent args)
+    {
+        if (!comp.SelfDriven)
+            return;
+
+        Soak((uid, comp), args);
+    }
+    #endregion
+
+    private void OnDamageModify(Entity<PersonalShieldComponent> ent, ref InventoryRelayedEvent<DamageModifyEvent> args) // Pirate: ERT resprite
+    {
+        Soak(ent, args.Args); // Pirate: ERT resprite
+    }
+
+    private void Soak(Entity<PersonalShieldComponent> ent, DamageModifyEvent args) // Pirate: ERT resprite
     {
         // Armor-piercing damage never raises a DamageModifyEvent (see DamageableSystem),
         // so it inherently bypasses the shield.
@@ -43,7 +72,7 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
             return;
 
         // Only positive damage soaks the shield; healing is left untouched.
-        var incoming = DamageSpecifier.GetPositive(args.Args.Damage).GetTotal().Float();
+        var incoming = DamageSpecifier.GetPositive(args.Damage).GetTotal().Float(); // Pirate: ERT resprite
         if (incoming <= 0f)
             return;
 
@@ -53,10 +82,10 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
         var scale = (incoming - soaked) / incoming;
         if (!MathHelper.CloseTo(scale, 1f))
         {
-            foreach (var (type, value) in args.Args.Damage.DamageDict)
+            foreach (var (type, value) in args.Damage.DamageDict) // Pirate: ERT resprite
             {
                 if (value > 0)
-                    args.Args.Damage.DamageDict[type] = value * scale;
+                    args.Damage.DamageDict[type] = value * scale; // Pirate: ERT resprite
             }
         }
 
@@ -135,10 +164,19 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
             }
 
             // The shield only runs while worn in an inventory slot and toggled on.
-            var worn = _inventory.TryGetContainingEntity(uid, out _);
+            #region Pirate: ERT resprite
+            var worn = shield.SelfDriven || _inventory.TryGetContainingEntity(uid, out _);
             var running = worn
-                          && TryComp<ItemToggleComponent>(uid, out var toggle)
-                          && toggle.Activated;
+                          && (shield.SelfDriven
+                              ? shield.Enabled
+                              : TryComp<ItemToggleComponent>(uid, out var toggle) && toggle.Activated);
+
+            if (shield.SelfDriven && !shield.Enabled && shield.Runtime.Form <= 0f)
+            {
+                RemCompDeferred<PersonalShieldComponent>(uid);
+                continue;
+            }
+            #endregion
             var step = frameTime / MathF.Max(cfg.SpinupTime, 0.01f);
 
             if (running)
@@ -149,6 +187,10 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
                 {
                     // Fully formed: burns charge while active.
                     shield.Runtime.Charge = MathF.Max(shield.Runtime.Charge - cfg.PowerDraw * frameTime, 0f);
+                    #region Pirate: ERT resprite
+                    if (shield.SelfDriven)
+                        shield.Runtime.Charge = MathF.Min(shield.Runtime.Charge + cfg.RegenRate * frameTime, cfg.MaxCharge);
+                    #endregion
                     if (shield.Runtime.Charge <= 0f)
                         Fracture(ent);
                 }

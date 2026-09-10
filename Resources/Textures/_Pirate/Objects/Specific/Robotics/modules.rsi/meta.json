@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprite taken from https://github.com/ss220-space/Paradise",
+  "copyright": "Sprite taken from https://github.com/ss220-space/Paradise. energy_shield_syndie is a Pirate recolour of energy_shield.",
   "size": {
     "x": 32,
     "y": 32
@@ -140,6 +140,9 @@
     },
     {
       "name": "energy_shield"
+    },
+    {
+      "name": "energy_shield_syndie"
     },
     {
       "name": "noslip"

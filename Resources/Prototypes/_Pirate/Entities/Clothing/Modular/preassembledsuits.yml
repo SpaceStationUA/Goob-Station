@@ -311,7 +311,7 @@
     - JetpackAdvancedSuitModule
     - ArmorBossterSuitModule
     - StorageSyndicateSuitModule
-    - FlashlightSuitModuleGreen
+    - AdvancedFlashlightSuitModuleGreen
   - type: ItemSlots
     slots:
       cell_slot:

@@ -9,7 +9,7 @@
     useDelay: 0.5
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: deploy }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: retract }
-    itemIconStyle: BigAction
+    itemIconStyle: NoItem # Pirate: ERT modsuits: drop the suit sprite from the corner of the action
   - type: InstantAction
     event: !type:ToggleDeploySuitActionEvent
 
@@ -23,7 +23,7 @@
   - type: Action
     icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate }
     iconOn: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: activate-ready }
-    itemIconStyle: BigAction
+    itemIconStyle: NoItem # Pirate: ERT modsuits: drop the suit sprite from the corner of the action
   - type: InstantAction
     event: !type:ToggleActivateSuitActionEvent
 
@@ -108,20 +108,6 @@
       - PaperOffice
       activateSound:
         path: "/Audio/Machines/printer.ogg"
-
-- type: entity
-  parent: BaseAction
-  id: ActivateEnergyShieldModuleAction
-  name: "[color=#58c4e8]Activate Energy Shield[/color]"
-  description: "Generates a personal protective forcefield that blocks incoming attacks. Consumes significant power."
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    startDelay: true
-    useDelay: 20
-    icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: energyshield }
-  - type: InstantAction
-    event: !type:ActivateEnergyShieldModuleEvent
 
 - type: entity
   parent: BaseAction
