@@ -814,7 +814,7 @@
 - type: entity
   parent: ClothingMaskNeckGaiter
   id: ClothingMaskNeckGaiterWhite
-  name: neck gaiter
+  name: white neck gaiter
   components:
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Mask/neckgaiterwhite.rsi

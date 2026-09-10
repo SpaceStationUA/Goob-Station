@@ -1,0 +1,45 @@
+# SPDX-FileCopyrightText: 2026 CyberLanos <cyber.lanos00@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+- type: constructionGraph
+  id: NeckGaiter
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: neckGaiter
+      steps:
+      - material: Cloth
+        amount: 2
+        doAfter: 3
+  - node: neckGaiter
+    entity: ClothingMaskNeckGaiter
+
+- type: constructionGraph
+  id: NeckGaiterRed
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: neckGaiter
+      steps:
+      - material: Cloth
+        amount: 2
+        doAfter: 3
+  - node: neckGaiter
+    entity: ClothingMaskNeckGaiterRed
+
+- type: constructionGraph
+  id: NeckGaiterWhite
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: neckGaiter
+      steps:
+      - material: Cloth
+        amount: 2
+        doAfter: 3
+  - node: neckGaiter
+    entity: ClothingMaskNeckGaiterWhite

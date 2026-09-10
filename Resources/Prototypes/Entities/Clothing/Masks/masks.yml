@@ -840,6 +840,7 @@
     sprite: _Pirate/Clothing/Mask/neckgaiter.rsi
   - type: BreathMask
   - type: Mask
+  - type: IngestionBlocker # Pirate: syndrobe - covers the mouth while worn up, auto-disabled when pulled down.
   - type: HideLayerClothing
     layers:
       Snout: MASK
