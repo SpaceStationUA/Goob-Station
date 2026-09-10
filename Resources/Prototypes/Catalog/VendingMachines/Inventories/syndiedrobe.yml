@@ -3,32 +3,54 @@
 - type: vendingMachineInventory
   id: SyndieDrobeInventory
   startingInventory:
-    ClothingBackpackMessengerSyndicate: 2 # Frontier
-    ClothingHeadHatOutlawHat: 3
-    ClothingHeadHatSyndie: 5
-    ClothingMaskNeckGaiter: 5
-    ClothingOuterWinterSyndie: 5
-    ClothingHeadHatSyndieMAA: 3
-    ClothingOuterWinterSyndieCap: 3
-    ClothingOuterCoatSyndieCap: 3
-    ClothingUniformJumpsuitSyndieFormal: 5
-    ClothingUniformJumpskirtSyndieFormalDress: 5
-    ClothingUniformJumpsuitOperative: 5
-    ClothingUniformJumpskirtOperative: 5
-    ClothingUniformJumpsuitCasualSyndicate: 5 # Goobstation
-    ClothingNeckScarfStripedSyndieGreen: 2
-    ClothingNeckScarfStripedSyndieRed: 2
-    ClothingShoesBootsWinterSyndicate: 2
-    ClothingHeadHatBunnyearsSyndicate: 3 # Pirate
-    CardBoxSyndicate: 2 # GoobStation
+    #region Pirate: syndiedrobe
+    ClothingBackpackMessengerSyndicate: 6 # Frontier
+    ClothingHeadHatOutlawHat: 8
+    ClothingHeadHatSyndie: 8
+    ClothingMaskNeckGaiter: 8
+    ClothingOuterWinterSyndie: 8
+    ClothingHeadHatSyndieMAA: 8
+    ClothingOuterWinterSyndieCap: 8
+    ClothingOuterCoatSyndieCap: 8
+    ClothingUniformJumpsuitSyndieFormal: 8
+    ClothingUniformJumpskirtSyndieFormalDress: 8
+    ClothingUniformJumpsuitOperative: 8
+    ClothingUniformJumpskirtOperative: 8
+    ClothingUniformJumpsuitCasualSyndicate: 8 # Goobstation
+    ClothingNeckScarfStripedSyndieGreen: 6
+    ClothingNeckScarfStripedSyndieRed: 6
+    ClothingShoesBootsWinterSyndicate: 6
+    ClothingHeadHatBunnyearsSyndicate: 8 # Pirate
+    CardBoxSyndicate: 6 # GoobStation
+    ClothingUniformJumpsuitSyndieTactical: 8
+    ClothingUniformJumpskirtSyndieTactical: 8
+    ClothingUniformJumpsuitBloodRedPajamas: 8
+    ClothingUniformJumpsuitCamoGreen: 8
+    ClothingUniformJumpsuitSyndieCombat: 8
+    ClothingShoesBootsCombat: 8
+    ClothingMaskGasSyndicate: 8
+    ClothingHeadHatSyndieEngineTechCover: 8
+    ClothingHeadHatBeretSyndieBrig: 8
+    ClothingNeckSyndicateNeckpin: 8
+    #endregion Pirate: syndiedrobe
   contrabandInventory:
-    ToyFigurineFootsoldier: 1
-    ToyFigurineNukieElite: 1
-    ToyFigurineNukieCommander: 1
-    ClothingUniformJumpskirtTacticalMaid: 5
-    ClothingHeadHatTacticalMaidHeadband: 5
-    ClothingHandsTacticalMaidGloves: 5
-    ClothingShoesRealJordans: 1 # Goobstation
+    #region Pirate: syndiedrobe
+    ToyFigurineFootsoldier: 5
+    ToyFigurineNukieElite: 5
+    ToyFigurineNukieCommander: 5
+    ClothingUniformJumpskirtTacticalMaid: 8
+    ClothingHeadHatTacticalMaidHeadband: 8
+    ClothingHandsTacticalMaidGloves: 8
+    ClothingShoesRealJordans: 5 # Goobstation
+    CombatKnife: 5
+    ClothingUniformJumpsuitSyndieInsulated: 6
+    ClothingShoesBootsCombatInsulated: 6
+    #endregion Pirate: syndiedrobe
   emaggedInventory:
-    ClothingOuterCoatSyndieCapArmored: 1
-    ClothingOuterWinterSyndieCapArmored: 1
+    #region Pirate: syndiedrobe
+    ClothingOuterCoatSyndieCapArmored: 5
+    ClothingOuterWinterSyndieCapArmored: 5
+    SurvivalKnife: 5
+    CigPackSyndicate: 8
+    ClothingHandsGlovesCombat: 8
+    #endregion Pirate: syndiedrobe

@@ -833,10 +833,18 @@
   name: neck gaiter
   description: Stylish neck gaiter for your neck, can protect from the cosmic wind?...
   components:
+  #region Pirate: syndrobe
   - type: Sprite
-    sprite: Clothing/Mask/neckgaiter.rsi
+    sprite: _Pirate/Clothing/Mask/neckgaiter.rsi
   - type: Clothing
-    sprite: Clothing/Mask/neckgaiter.rsi
+    sprite: _Pirate/Clothing/Mask/neckgaiter.rsi
+  - type: BreathMask
+  - type: Mask
+  - type: HideLayerClothing
+    layers:
+      Snout: MASK
+    hideOnToggle: true
+  #endregion Pirate: syndrobe
   - type: IdentityBlocker
     coverage: MOUTH
   - type: Tag
@@ -849,10 +857,12 @@
   id: ClothingMaskNeckGaiterRed
   name: red neck gaiter
   components:
+  # Pirate: syndrobe - _Pirate copy adds the pulled-down states the inherited
+  # Mask toggle needs; without them the gaiter vanishes when pulled down.
   - type: Sprite
-    sprite: Clothing/Mask/neckgaiterred.rsi
+    sprite: _Pirate/Clothing/Mask/neckgaiterred.rsi
   - type: Clothing
-    sprite: Clothing/Mask/neckgaiterred.rsi
+    sprite: _Pirate/Clothing/Mask/neckgaiterred.rsi
 
 - type: entity
   parent: ClothingMaskClownBase

@@ -1,0 +1,17 @@
+- type: entity
+  parent: MobCow
+  id: MobCowTurretExempt
+  suffix: Turret Exempt
+  components:
+  - type: Access
+    tags:
+    - TurretExempt
+
+- type: entity
+  parent: MobAlexander
+  id: MobAlexanderTurretExempt
+  suffix: Turret Exempt
+  components:
+  - type: Access
+    tags:
+    - TurretExempt

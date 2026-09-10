@@ -10,3 +10,6 @@ role-type-malfunctioning-silicon-name = Несправний силікон
 role-type-malfunctioning-silicon-color = #d82000
 
 ghost-role-information-rules-malfunctioning-silicon = Ви — [color={role-type-malfunctioning-silicon-color}][bold]{role-type-malfunctioning-silicon-name}[/bold][/color]. Ваші цілі ворожі до станції та її екіпажу.
+
+roles-antag-cybersun-name = { role-type-cybersun-name }
+roles-antag-cybersun-objective = Працюйте зі своєю командою та виконуйте розумні накази командирів.
