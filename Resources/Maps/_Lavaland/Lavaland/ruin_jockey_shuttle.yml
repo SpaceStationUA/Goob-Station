@@ -327,30 +327,6 @@ entities:
       dNAs: []
       fibers: []
       fingerprints: []
-    - type: StoreRefund
-      balanceSpent:
-        Telecrystal: 60
-      data:
-        id: UplinkBowHardlight
-        description: uplink-hardlight-bow-desc
-        categories:
-        - UplinkWeaponry
-        cost:
-          Telecrystal: 60
-        conditions:
-        - !type:StoreWhitelistCondition
-          blacklist:
-            tags:
-            - NukeOpsUplink
-        icon:
-          sprite: /Textures/_Goobstation/Objects/Weapons/Guns/Bow/hardlight_bow.rsi
-          state: icon
-        productEntity: BowHardlight
-        purchaseAmount: 2
-        components: []
-        blockRefundListings: []
-        name: uplink-hardlight-bow-name
-      storeEntity: invalid
 - proto: BruteAutoInjector
   entities:
   - uid: 492
@@ -954,23 +930,6 @@ entities:
       dNAs: []
       fibers: []
       fingerprints: []
-    - type: StoreRefund
-      balanceSpent:
-        Telecrystal: 10
-      data:
-        id: UplinkCombatMedkit
-        description: uplink-combat-medkit-desc
-        categories:
-        - UplinkChemicals
-        cost:
-          Telecrystal: 10
-        productEntity: MedkitCombatFilled
-        purchaseAmount: 1
-        reputation: 20
-        components: []
-        blockRefundListings: []
-        name: uplink-combat-medkit-name
-      storeEntity: invalid
 - proto: NutrimentImplanter
   entities:
   - uid: 432
@@ -978,25 +937,6 @@ entities:
     - type: Transform
       pos: -7.3865757,-6.3404765
       parent: 1
-    - type: StoreRefund
-      balanceSpent:
-        Telecrystal: 5
-      data:
-        id: UplinkNutrimentImplanter
-        description: uplink-nutriment-implant-desc
-        categories:
-        - UplinkImplants
-        cost:
-          Telecrystal: 5
-        icon:
-          sprite: Objects/Consumable/Food/burger.rsi
-          state: bacon
-        productEntity: NutrimentImplanter
-        purchaseAmount: 4
-        components: []
-        blockRefundListings: []
-        name: uplink-nutriment-implant-name
-      storeEntity: invalid
   - uid: 496
     mapInit: true
     paused: true
@@ -1027,25 +967,6 @@ entities:
       dNAs: []
       fibers: []
       fingerprints: []
-    - type: StoreRefund
-      balanceSpent:
-        Telecrystal: 5
-      data:
-        id: UplinkNutrimentImplanter
-        description: uplink-nutriment-implant-desc
-        categories:
-        - UplinkImplants
-        cost:
-          Telecrystal: 5
-        icon:
-          sprite: Objects/Consumable/Food/burger.rsi
-          state: bacon
-        productEntity: NutrimentImplanter
-        purchaseAmount: 4
-        components: []
-        blockRefundListings: []
-        name: uplink-nutriment-implant-name
-      storeEntity: invalid
 - proto: NutrimentPumpImplant
   entities:
   - uid: 497

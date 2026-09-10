@@ -250,6 +250,8 @@
   - type: EntityStorageVisuals
     stateBaseClosed: closed
     stateBaseOpen: open
+    stateDoorClosed: closed
+    stateDoorOpen: open
   - type: Icon
     sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
     state: closed
@@ -273,6 +275,8 @@
   - type: EntityStorageVisuals
     stateBaseClosed: closed
     stateBaseOpen: open
+    stateDoorClosed: closed
+    stateDoorOpen: open
   - type: Icon
     sprite: _Pirate/Yautja/Structures/32x32_hunter_props.rsi
     state: closed
@@ -296,6 +300,8 @@
   - type: EntityStorageVisuals
     stateBaseClosed: fridge
     stateBaseOpen: fridgeopen
+    stateDoorClosed: fridge
+    stateDoorOpen: fridgeopen
   - type: Icon
     sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
     state: fridge
@@ -319,6 +325,8 @@
   - type: EntityStorageVisuals
     stateBaseClosed: freezer
     stateBaseOpen: freezer
+    stateDoorClosed: freezer
+    stateDoorOpen: freezer
   - type: Icon
     sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
     state: freezer

@@ -38,4 +38,4 @@ xenomorphs-hive-announce-dialog-title = Оголошення рою
 xenomorphs-hive-announce-dialog-prompt = Повідомлення
 xenomorphs-hive-announce-empty = Порожнє повідомлення.
 xenomorphs-hive-announce-sent = Рой почув наш вереск.
-xenomorphs-hive-announce-wrap = вереск в твоїй голові{"\n"}[italic]{$message}[/italic]
+xenomorphs-hive-announce-wrap = вереск в твоїй голові{"\u000a"}[italic]{$message}[/italic]

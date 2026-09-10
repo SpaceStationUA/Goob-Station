@@ -5,6 +5,7 @@ using Content.Shared._White.Actions.Events;
 using Content.Shared._White.RadialSelector;
 using Content.Shared._White.Xenomorphs.Construction;
 using Content.Shared.Actions;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -47,8 +48,14 @@ public sealed class XenomorphConstructionSystem : EntitySystem
         component.SecreteAction = null;
     }
 
-    private bool HasResinSpinner(EntityUid uid) =>
-        _body.TryGetBodyOrganEntityComps<ResinSpinnerComponent>(uid, out _);
+    private bool HasResinSpinner(EntityUid uid)
+    {
+        // Avoid Resolve(Body) ERROR logs during entity spawn/delete tests (no body yet).
+        if (!TryComp<BodyComponent>(uid, out var body))
+            return false;
+
+        return _body.TryGetBodyOrganEntityComps<ResinSpinnerComponent>((uid, body), out _);
+    }
 
     private void EnsureActions(EntityUid uid, XenomorphConstructionComponent component)
     {
