@@ -35,9 +35,20 @@
   id: BaseCharacterPod
   categories: [ Spawner ]
 
+- type: entity
+  abstract: true
+  parent: BaseCharacterPod
+  id: BaseCharacterPodCybersun
+  components:
+  - type: RadioSpawnAnnouncement
+    channel: Cybersun
+    message: cybersun-pod-wake-announcement
+    senderName: cybersun-announcement-sender
+  - type: TelecomExempt
+
 
 - type: entity
-  parent: BaseCharacterPod
+  parent: BaseCharacterPodCybersun
   id: CharacterPodSyndieSoldier
   suffix: Syndicate Soldier
   components:
@@ -57,7 +68,7 @@
     - type: TargetObjectiveImmune
 
 - type: entity
-  parent: BaseCharacterPod
+  parent: BaseCharacterPodCybersun
   id: CharacterPodSyndieSoldierTeamLeader
   suffix: Syndicate Team Leader
   components:
@@ -75,7 +86,7 @@
     - type: TargetObjectiveImmune
 
 - type: entity
-  parent: BaseCharacterPod
+  parent: BaseCharacterPodCybersun
   id: CharacterPodSyndicateMarshal
   suffix: Syndicate Marshal
   components:
