@@ -167,7 +167,7 @@ public sealed partial class SharedPersonalShieldSystem : EntitySystem
     }
 
     /// <summary>
-    /// True if <paramref name="wearer"/> currently has a formed personal shield (ІПШ) from worn gear.
+    /// True if <paramref name="wearer"/> currently has a formed personal shield from worn gear.
     /// </summary>
     public bool HasActiveShield(EntityUid wearer)
     {
