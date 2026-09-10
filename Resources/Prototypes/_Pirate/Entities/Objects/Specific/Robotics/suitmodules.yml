@@ -630,6 +630,9 @@
           components:
           - BallisticAmmoProvider
           - ChamberMagazineAmmoProvider
+          - MagazineAmmoProvider
+          - BatteryAmmoProvider
+          - RevolverAmmoProvider
 
 - type: entity
   parent: BaseSuitModule
