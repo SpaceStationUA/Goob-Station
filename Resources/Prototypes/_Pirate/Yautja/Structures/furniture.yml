@@ -324,9 +324,9 @@
       visible: false
   - type: EntityStorageVisuals
     stateBaseClosed: freezer
-    stateBaseOpen: freezer
+    stateBaseOpen: freezer_1
     stateDoorClosed: freezer
-    stateDoorOpen: freezer
+    stateDoorOpen: freezer_1
   - type: Icon
     sprite: _Pirate/Yautja/Structures/yautja_machines.rsi
     state: freezer
