@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Interdyne and CaptainInterdyne icon made by Nazar_m | Other Interdyne icon made by kraftorset (discord), AdminAssistant made by noctyrnal (github), (All security, CBURN): made by Vareniko, BloodBrother made by Ermucat (GitHub), Hitman icon by stormyatt (GitHub), SecurityK9Officer by BarryNorfolk (GitHub)",
+    "copyright": "Interdyne and CaptainInterdyne icon made by Nazar_m | Other Interdyne icon made by kraftorset (discord), AdminAssistant made by noctyrnal (github), (All security, CBURN): made by Vareniko, BloodBrother made by Ermucat (GitHub), Hitman icon by stormyatt (GitHub), SecurityK9Officer by BarryNorfolk (GitHub) | The Syndicate* states are the DS-2 sechud set ported from NovaSector (https://github.com/NovaSector/NovaSector) at commit 9d5bb13a76866960c76cb78217e7436e65239268, file modular_nova/master_files/icons/mob/huds/hud.dmi, CC-BY-SA-3.0. Source icon state -> state here: hud_ds2generalstaff -> SyndicateSoldier, hud_ds2maa -> SyndicateMarshal, hud_ds2captain -> SyndicateTeamLeader, hud_ds2brigofficer -> SyndicateBrigOfficer, hud_ds2corpliaison -> SyndicateLiaison, hud_ds2doctor -> SyndicateDoctor, hud_ds2researcher -> SyndicateResearcher, hud_ds2enginetech -> SyndicateEngineer, hud_ds2miningofficer -> SyndicateMiner, hud_ds2prisoner -> SyndicatePrisoner",
 
     "size": {
         "x": 8,
@@ -141,6 +141,36 @@
         },
         {
             "name": "SecurityK9Officer"
+        },
+        {
+            "name": "SyndicateSoldier"
+        },
+        {
+            "name": "SyndicateMarshal"
+        },
+        {
+            "name": "SyndicateTeamLeader"
+        },
+        {
+            "name": "SyndicateBrigOfficer"
+        },
+        {
+            "name": "SyndicateLiaison"
+        },
+        {
+            "name": "SyndicateDoctor"
+        },
+        {
+            "name": "SyndicateResearcher"
+        },
+        {
+            "name": "SyndicateEngineer"
+        },
+        {
+            "name": "SyndicateMiner"
+        },
+        {
+            "name": "SyndicatePrisoner"
         }
     ]
 }

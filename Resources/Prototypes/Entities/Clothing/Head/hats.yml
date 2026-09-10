@@ -623,7 +623,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/outlawhat.rsi
   - type: StaticPrice
-    price: 500
+    price: 10 # Pirate: syndrobe - was 500, matches every other hat
   - type: Tag
     tags:
     - PetWearable

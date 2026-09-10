@@ -20,6 +20,12 @@ public sealed partial class CharacterPodComponent : Component
     [DataField]
     public int AvailableTakeovers = 1;
 
+    #region Pirate: cybersun starting balance
+    /// <summary>Initial bank balance for pods that bypass job spawning.</summary>
+    [DataField]
+    public int StartingBalance;
+    #endregion Pirate: cybersun starting balance
+
     [ViewVariables]
     public int CurrentTakeovers;
 }

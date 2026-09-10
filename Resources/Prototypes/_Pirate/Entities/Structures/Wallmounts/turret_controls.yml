@@ -29,3 +29,12 @@
     - Interdyne
     - InterdyneCommand
     - InterdyneOfficer
+    - TurretExempt
+
+- type: entity
+  parent: WeaponEnergyTurretInterdyneControlPanel
+  id: WeaponEnergyTurretInterdyneControlPanelActive
+  suffix: Interdyne, Lethal, Active
+  components:
+  - type: DeployableTurretController
+    armamentState: 1

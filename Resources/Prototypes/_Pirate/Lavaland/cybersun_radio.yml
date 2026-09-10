@@ -21,12 +21,14 @@
   parent: SyndicateFootsoldierGear
   equipment:
     ears: ClothingHeadsetAltSyndicateCybersun
+    id: SyndiPDALavalandSoldier
 
 - type: startingGear
   id: LavalandSyndicateFootsoldierTeamLeaderGear
   parent: SyndicateFootsoldierTeamLeaderGear
   equipment:
     ears: ClothingHeadsetAltSyndicateCybersun
+    id: SyndiPDALavalandTeamLeader
 
 # The marshal guards whatever the fultons deliver, so it is a footsoldier with a sidearm
 # instead of a rifle and keeps the same Cybersun headset the rest of the base runs on.
@@ -35,7 +37,7 @@
   parent: LavalandSyndicateFootsoldierGear
   equipment:
     outerClothing: ClothingOuterWinterSyndieCapArmored
-    id: SyndiPDA
+    id: SyndiPDALavalandMarshal
     pocket1: WeaponRevolverPythonAP
     pocket2: SpeedLoaderMagnumAP
 

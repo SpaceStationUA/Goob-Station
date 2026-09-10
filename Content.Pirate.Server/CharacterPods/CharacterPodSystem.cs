@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Pirate.Banking; // Pirate: cybersun starting balance
 using Content.Server._Pirate.Ghost.Roles;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
@@ -17,6 +18,9 @@ namespace Content.Pirate.Server.CharacterPods;
 
 public sealed class CharacterPodSystem : EntitySystem
 {
+    #region Pirate: cybersun starting balance
+    [Dependency] private readonly BankCardSystem _bankCard = default!;
+    #endregion Pirate: cybersun starting balance
     [Dependency] private readonly CharacterProfileSpawnSystem _profileSpawn = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -86,6 +90,11 @@ public sealed class CharacterPodSystem : EntitySystem
 
         if (usesCharacter)
             _profileSpawn.ApplyProfileDetails(mob, profile, args.Player);
+
+        #region Pirate: cybersun starting balance
+        if (ent.Comp.StartingBalance > 0)
+            _bankCard.TryGiveFlatBalance(mob, ent.Comp.StartingBalance);
+        #endregion Pirate: cybersun starting balance
 
         args.TookRole = true;
 

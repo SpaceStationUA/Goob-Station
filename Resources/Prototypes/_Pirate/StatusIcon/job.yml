@@ -39,3 +39,93 @@
     sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
     state: SecurityK9Officer
   jobName: role-name-k9-officer
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateSoldier
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicateSoldier
+  jobName: job-name-syndicate-soldier
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateMarshal
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicateMarshal
+  jobName: job-name-syndicate-marshal
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateTeamLeader
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicateTeamLeader
+  jobName: job-name-syndicate-team-leader
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateBrigOfficer
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicateBrigOfficer
+  jobName: job-name-syndicate-brig-officer
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateLiaison
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicateLiaison
+  jobName: job-name-syndicate-liaison
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateDoctor
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicateDoctor
+  jobName: job-name-syndicate-doctor
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateResearcher
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicateResearcher
+  jobName: job-name-syndicate-researcher
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateEngineer
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicateEngineer
+  jobName: job-name-syndicate-engineer
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateMiner
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicateMiner
+  jobName: job-name-syndicate-miner
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicatePrisoner
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
+    state: SyndicatePrisoner
+  jobName: job-name-syndicate-prisoner
+  allowSelection: false

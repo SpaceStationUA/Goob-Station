@@ -8,8 +8,17 @@
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Interdyne
+    - TurretExempt
 #  - type: Machine (Потім додам)
 #    board: WeaponEnergyTurretSecurityMachineCircuitboard
   - type: DeviceNetwork
     receiveFrequencyId: TurretControl
     transmitFrequencyId: Turret
+
+- type: entity
+  parent: WeaponEnergyTurretInterdyne
+  id: WeaponEnergyTurretInterdyneActive
+  suffix: Interdyne, Lethal, Active
+  components:
+  - type: TurretStartupState
+    armamentState: 1
