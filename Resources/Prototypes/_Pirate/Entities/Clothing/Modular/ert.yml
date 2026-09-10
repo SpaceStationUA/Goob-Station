@@ -1177,30 +1177,9 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: BaseSuitModule
+  parent: EnergyShieldSuitModule
   id: EnergyShieldAdvancedSuitModule
-  name: energy shield module Mk. II
-  description: "A deflector array that spins a charged barrier around the wearer. Unlike cheaper emitters, which collapse after intercepting a set number of impacts, this one bleeds off a shared pool of energy and shrugs off anything that lands until that pool is spent."
-  components:
-  - type: Sprite
-    state: energy_shield
-  - type: ModularSuitShieldModule
-    shieldColor: "#3A7DCDF2"
-    shield:
-      maxCharge: 40
-      regenRate: 0.5
-      spinupTime: 2
-      breakCooldown: 12
-      powerDraw: 0
-  - type: ModularSuitModule
-    modulePart: Torso
-    modulePrefix: 'C'
-    canBeDisabled: true
-    active: true
-    powerUsage: 0.6
-    verbIcon:
-      sprite: _Pirate/Objects/Specific/Robotics/modules.rsi
-      state: energy_shield
+  categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: AdvancedFlashlightSuitModule

@@ -20,11 +20,11 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelEnergyShieldModuleBundle
   name: energy shield module bundle
-  description: Contains five energy shield modules for a full team.
+  description: Contains five Mk. II energy shield modules for a full team.
   components:
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: EnergyShieldSuitModule
+        - id: EnergyShieldSyndicateSuitModule
           amount: 5

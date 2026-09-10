@@ -266,6 +266,14 @@
   - type: ModularSuitLightModule
     lightColor: "#ee8e2e"
 
+- type: entity
+  parent: AdvancedFlashlightSuitModule
+  id: AdvancedFlashlightSuitModuleGreen
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ModularSuitLightModule
+    lightColor: "#83db2b"
+
 # Visor
 - type: entity
   parent: BaseSuitModule
@@ -1122,20 +1130,48 @@
   parent: BaseSuitModule
   id: EnergyShieldSuitModule
   name: energy shield suit module
-  description: "A personal, protective forcefield typically seen in military applications. This advanced deflector shield is essentially a scaled down version of those seen on starships, and the power cost can be an easy indicator of this. However, it is capable of blocking nearly any incoming attack, though with its' low amount of separate charges, the user remains mortal."
+  description: "A deflector array that spins a charged barrier around the wearer. Unlike cheaper emitters, which collapse after intercepting a set number of impacts, this one bleeds off a shared pool of energy and shrugs off anything that lands until that pool is spent."
   components:
   - type: Sprite
     state: energy_shield
-  - type: ModularSuitActionModule
-    action: ActivateEnergyShieldModuleAction
+  - type: ModularSuitShieldModule
+    shieldColor: "#3A7DCDF2"
+    shield:
+      maxCharge: 40
+      regenRate: 0.5
+      spinupTime: 2
+      breakCooldown: 12
+      powerDraw: 0
   - type: ModularSuitModule
     modulePart: Torso
     modulePrefix: 'C'
-    powerInstanceUsage: 10
-    powerUsage: 0.4
+    canBeDisabled: true
+    active: true
+    powerUsage: 0.6
     verbIcon:
       sprite: *modules-rsi
       state: energy_shield
+
+- type: entity
+  parent: EnergyShieldSuitModule
+  id: EnergyShieldSyndicateSuitModule
+  name: energy shield module Mk. II
+  description: "A deflector array that spins a charged barrier around the wearer. Unlike cheaper emitters, which collapse after intercepting a set number of impacts, this one bleeds off a shared pool of energy and shrugs off anything that lands until that pool is spent. The Mk. II carries twice the reservoir of the model it supersedes, and fires up a filthy blood red."
+  components:
+  - type: Sprite
+    state: energy_shield_syndie
+  - type: ModularSuitShieldModule
+    shieldColor: "#A31616F2"
+    shield:
+      maxCharge: 80
+      regenRate: 0.5
+      spinupTime: 2
+      breakCooldown: 12
+      powerDraw: 0
+  - type: ModularSuitModule
+    verbIcon:
+      sprite: *modules-rsi
+      state: energy_shield_syndie
 
 - type: entity
   parent: EMPShieldSuitModule

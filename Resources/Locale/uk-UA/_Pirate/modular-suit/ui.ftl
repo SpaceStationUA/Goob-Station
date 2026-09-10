@@ -147,8 +147,6 @@ ent-ToggleHolsterModuleAction = [color=#58c4e8]Перемкнути кобуру
     .desc = Висуває або ховає кобуру для швидкого доступу до зброї.
 ent-ActivatePaperDispenserModuleAction = [color=#58c4e8]Активувати диспенсер паперу[/color]
     .desc = Синтезує папір за допомогою передових факсових і принтерних технологій, перетворюючи енергію костюма на канцелярські матеріали.
-ent-ActivateEnergyShieldModuleAction = [color=#58c4e8]Активувати енергетичний щит[/color]
-    .desc = Створює персональне захисне поле, що блокує вхідні атаки.
 ent-ActivateBurgerDispenserModuleAction = [color=#58c4e8]Активувати диспенсер бургерів[/color]
     .desc = Створює їстівний бургер з енергії костюма. Результат може відрізнятися.
 ent-ActivateTanningModuleAction = [color=#58c4e8]Активувати засмагу[/color]
@@ -187,8 +185,8 @@ uplink-syndie-noslip-module-name = модуль захисту від ковза
 uplink-syndie-noslip-module-desc = Секретний прототип Cybersun Industries, що забезпечує ідеальне зчеплення з поверхнею без споживання енергії та магнітної сигнатури.
 uplink-syndie-plate-compression-name = модуль стиснення бронепластин
 uplink-syndie-plate-compression-desc = Експериментальний модуль, що стискає бронепластини та дає змогу пролазити крізь вентиляцію. Під час роботи костюм неможливо зняти.
-uplink-syndie-energy-shield-module-name = модуль енергетичного щита
-uplink-syndie-energy-shield-module-desc = Зменшена версія корабельного дефлекторного щита. Блокує майже будь-які атаки ціною значного споживання енергії.
+uplink-syndie-energy-shield-module-name = модуль енергетичного щита Mk. II
+uplink-syndie-energy-shield-module-desc = Зменшена версія корабельного дефлекторного щита, з подвоєним резервуаром. Гасить будь-які атаки, доки не вичерпає заряд.
 
 uplink-syndie-modsuit-name = попередньо зібраний MOD-костюм Синдикату
 uplink-syndie-modsuit-desc = Набір із бойовим MOD-костюмом Gorlex Marauders, батареєю надвисокої ємності, штатними модулями та спорядженням для роботи у вакуумі.
@@ -210,5 +208,5 @@ uplink-syndie-quick-carry-module-desc = Підсилює сервопривод�
 
 uplink-syndie-holding-storage-module-name = блюспейс-модуль сховища MOD-костюма
 uplink-syndie-holding-storage-module-desc = Значно розширює внутрішнє сховище костюма. Перед встановленням потрібно вийняти штатний модуль сховища.
-uplink-energy-shield-module-bundle-name = набір модулів енергетичного щита
-uplink-energy-shield-module-bundle-desc = П'ять модулів енергетичного щита у зручній сумці для оснащення всієї команди.
+uplink-energy-shield-module-bundle-name = набір модулів енергетичного щита Mk. II
+uplink-energy-shield-module-bundle-desc = П'ять модулів енергетичного щита Mk. II у зручній сумці для оснащення всієї команди.

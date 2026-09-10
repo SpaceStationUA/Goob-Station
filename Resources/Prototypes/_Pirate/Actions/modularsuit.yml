@@ -111,20 +111,6 @@
 
 - type: entity
   parent: BaseAction
-  id: ActivateEnergyShieldModuleAction
-  name: "[color=#58c4e8]Activate Energy Shield[/color]"
-  description: "Generates a personal protective forcefield that blocks incoming attacks. Consumes significant power."
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Action
-    startDelay: true
-    useDelay: 10 # Pirate: ERT modsuits: halved from 20.
-    icon: { sprite: _Pirate/Interface/Actions/actions_modules.rsi, state: energyshield }
-  - type: InstantAction
-    event: !type:ActivateEnergyShieldModuleEvent
-
-- type: entity
-  parent: BaseAction
   id: ActivateBurgerDispenserModuleAction
   name: "[color=#58c4e8]Activate Burger Dispenser[/color]"
   description: "Creates an edible burger using the suit's power. The exact type of burger may vary. Earl Grey tea not available."
