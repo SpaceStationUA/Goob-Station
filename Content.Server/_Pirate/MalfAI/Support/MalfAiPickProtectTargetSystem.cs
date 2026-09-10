@@ -5,7 +5,6 @@ using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.Random;
-using System.Linq;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -15,7 +14,6 @@ namespace Content.Server.Objectives.Systems;
 public sealed class MalfAiPickProtectTargetSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
 
@@ -44,54 +42,49 @@ public sealed class MalfAiPickProtectTargetSystem : EntitySystem
         picked = default;
 
         var candidates = new List<EntityUid>();
-        var mindOwner = Comp<MindComponent>(mind).OwnedEntity;
-
-        // First priority: Find traitors
-        var traitorMinds = EntityQuery<MindComponent>()
-            .Where(m => m.OwnedEntity != null &&
-                       (mindOwner == null || m.OwnedEntity != mindOwner) &&
-                       _role.MindHasRole<TraitorRoleComponent>(m.Owner))
-            .ToList();
-
-        foreach (var traitorMind in traitorMinds)
+        var traitorMinds = new List<Entity<MindComponent>>();
+        var query = EntityQueryEnumerator<MindComponent>();
+        while (query.MoveNext(out var candidate, out var candidateMind))
         {
-            if (traitorMind.OwnedEntity != null)
-                candidates.Add(traitorMind.OwnedEntity.Value);
+            if (candidate == mind ||
+                candidateMind.OwnedEntity == null ||
+                !_role.MindHasRole<TraitorRoleComponent>(candidate))
+                continue;
+
+            traitorMinds.Add((candidate, candidateMind));
+            candidates.Add(candidate);
         }
 
-        // Second priority: Find traitor targets from their objectives
+        // Second priority: Find traitor targets from their objectives.
         if (candidates.Count == 0)
         {
-            var traitorTargets = new HashSet<EntityUid>();
-
             foreach (var traitorMind in traitorMinds)
             {
-                foreach (var obj in traitorMind.Objectives)
+                foreach (var objective in traitorMind.Comp.Objectives)
                 {
-                    if (TryComp<TargetObjectiveComponent>(obj, out var targetComp) && targetComp.Target != null)
-                        traitorTargets.Add(targetComp.Target.Value);
+                    if (TryComp<TargetObjectiveComponent>(objective, out var target) &&
+                        target.Target is { } targetMind &&
+                        targetMind != mind)
+                        candidates.Add(targetMind);
                 }
             }
-
-            candidates.AddRange(traitorTargets.Where(t => mindOwner == null || t != mindOwner.Value));
         }
 
-        // Fallback: any crew member
+        // Fallback: any crew member.
         if (candidates.Count == 0)
         {
-            var allPlayers = EntityQuery<MindComponent>()
-                .Where(m => m.OwnedEntity != null && (mindOwner == null || m.OwnedEntity != mindOwner))
-                .Select(m => m.OwnedEntity!.Value)
-                .ToList();
-            candidates.AddRange(allPlayers);
+            query = EntityQueryEnumerator<MindComponent>();
+            while (query.MoveNext(out var candidate, out var candidateMind))
+            {
+                if (candidate != mind && candidateMind.OwnedEntity != null)
+                    candidates.Add(candidate);
+            }
         }
 
-        if (candidates.Count > 0)
-        {
-            picked = _random.Pick(candidates);
-            return true;
-        }
+        if (candidates.Count == 0)
+            return false;
 
-        return false;
+        picked = _random.Pick(candidates);
+        return true;
     }
 }

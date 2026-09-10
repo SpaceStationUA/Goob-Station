@@ -3,11 +3,11 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Shared._Pirate.MalfAI;
-using Content.Server.Mind;
-using Content.Server.Objectives.Components;
+using Content.Server.Power.Components;
 using Content.Shared.Mind;
-using Content.Shared.Objectives.Components; // For ObjectiveGetProgressEvent
-using Robust.Shared.GameObjects; // For Entity<T>
+using Content.Shared.Objectives.Components;
+using Content.Shared.Silicons.StationAi;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -18,6 +18,7 @@ public sealed class MalfAiObjectiveSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -73,11 +74,15 @@ public sealed class MalfAiObjectiveSystem : EntitySystem
 
     private void OnSurviveGetProgress(Entity<MalfAiSurviveObjectiveComponent> objective, ref ObjectiveGetProgressEvent args)
     {
-        if (args.Mind.OwnedEntity != null &&
-            HasComp<MalfAiMarkerComponent>((EntityUid)args.Mind.OwnedEntity))
-        {
+        if (args.Mind.OwnedEntity is { } ai &&
+            HasComp<MalfAiMarkerComponent>(ai) &&
+            !_mind.IsCharacterDeadIc(args.Mind) &&
+            _containers.TryGetContainingContainer((ai, null, null), out var container) &&
+            (HasComp<StationAiCoreComponent>(container.Owner) ||
+             HasComp<ApcComponent>(container.Owner) &&
+             TryComp<MalfAiShuntedComponent>(ai, out var shunted) &&
+             shunted.CoreHolder is { } core && HasComp<StationAiCoreComponent>(core)))
             args.Progress = 1.0f;
-        }
         else
         {
             args.Progress = 0.0f;

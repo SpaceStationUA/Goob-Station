@@ -2,13 +2,13 @@
 //
 // SPDX-License-Identifier: MIT
 
-using System;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI.Actions;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.CCVar;
@@ -19,7 +19,6 @@ using Content.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Localization;
 
 namespace Content.Server._Pirate.MalfAI;
 
@@ -39,6 +38,7 @@ public sealed class MalfAiDoomsdaySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly Content.Server.Silicons.StationAi.StationAiSystem _stationAi = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private const string DoomsdayAlertLevel = "cyan";
     private const float DoomsdaySongBuffer = 1.5f; // seconds before alert
@@ -51,7 +51,7 @@ public sealed class MalfAiDoomsdaySystem : EntitySystem
         SubscribeLocalEvent<StationAiHeldComponent, MalfAiDoomsdayActionEvent>(OnDoomsdayAction);
 
         // Cancel when AI is removed from its core container.
-        SubscribeLocalEvent<MalfAiDoomsdayComponent, EntRemovedFromContainerMessage>(OnEntRemovedFromContainer);
+        SubscribeLocalEvent<MalfAiDoomsdayComponent, EntGotRemovedFromContainerMessage>(OnEntRemovedFromContainer);
     }
 
     public override void Update(float frameTime)
@@ -169,7 +169,7 @@ public sealed class MalfAiDoomsdaySystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnEntRemovedFromContainer(Entity<MalfAiDoomsdayComponent> ent, ref EntRemovedFromContainerMessage msg)
+    private void OnEntRemovedFromContainer(Entity<MalfAiDoomsdayComponent> ent, ref EntGotRemovedFromContainerMessage msg)
     {
         // Only care about removal from the recorded core holder container.
         if (!ent.Comp.Active || msg.Container.Owner != ent.Comp.CoreHolder)
@@ -180,7 +180,7 @@ public sealed class MalfAiDoomsdaySystem : EntitySystem
 
     private bool StillInRecordedCore(EntityUid ai, MalfAiDoomsdayComponent comp)
     {
-        if (!HasComp<StationAiHeldComponent>(ai))
+        if (!HasComp<StationAiHeldComponent>(ai) || _mobState.IsDead(ai))
             return false;
         if (!_containers.TryGetContainingContainer((ai, null, null), out var container))
             return false;

@@ -3,13 +3,12 @@
 // SPDX-License-Identifier: MIT
 
 using Robust.Client.Graphics;
+using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using System;
+using Robust.Shared.Utility;
 using System.Numerics;
 
 namespace Content.Client._Pirate.MalfAI.Theme;
@@ -80,6 +79,7 @@ public sealed class MalfEffectOverlay : Control
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private MalfEffectConfig _config = new();
     private ShaderInstance? _shaderInstance;
@@ -175,7 +175,7 @@ public sealed class MalfEffectOverlay : Control
             Layer = MalfRenderLayer.Underlay,
             Speed = speed,
             Scale = 1,
-            SpriteTexture = "/Textures/_Pirate/MalfAI/error.rsi/error.png"
+            SpriteTexture = "/Textures/error.rsi"
         };
         return overlay;
     }
@@ -212,7 +212,7 @@ public sealed class MalfEffectOverlay : Control
                 {
                     try
                     {
-                        _spriteTexture = _resourceCache.GetResource<TextureResource>(_config.SpriteTexture).Texture;
+                        _spriteTexture = _entityManager.System<SpriteSystem>().Frame0(new SpriteSpecifier.Rsi(new ResPath(_config.SpriteTexture), "error"));
                     }
                     catch
                     {

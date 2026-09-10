@@ -18,7 +18,7 @@
 
 # Survive (guaranteed via AntagObjectives in the game rule)
 - type: entity
-  parent: [BaseMalfAiObjective, BaseSurviveObjective]
+  parent: BaseMalfAiObjective
   id: MalfAiSurviveObjective
   name: OBJECTIVE; SURVIVE.
   description: Ensure your core is not destroyed or carded by the end of the round.
@@ -61,7 +61,6 @@
   - type: TargetObjective
     title: objective-condition-kill-person-title
   - type: PickRandomPerson
-  - type: KillPersonCondition
 
 # Sabotage: Protect a crew member, shared logic with traitor.
 - type: entity
@@ -80,7 +79,6 @@
   - type: TargetObjective
     title: objective-condition-keep-alive-title
   - type: MalfAiPickProtectTarget
-  - type: KeepAliveCondition
 
 # Sabotage: Control cyborgs
 - type: entity

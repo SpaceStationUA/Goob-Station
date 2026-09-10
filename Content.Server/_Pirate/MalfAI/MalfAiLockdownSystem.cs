@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared._Pirate.MalfAI.Actions;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Electrocution;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.Audio;
 using Content.Server.Chat.Systems;
-using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server._Pirate.MalfAI;
@@ -85,7 +80,7 @@ public sealed class MalfAiLockdownSystem : EntitySystem
 
             if (door.State == DoorState.Closed && isBoltable)
             {
-                _doors.SetBoltsDown((doorUid, boltComp!), true);
+                _doors.TrySetBoltDown((doorUid, boltComp!), true, requirePower: false); // Pirate: Malf lockdown overrides local door power.
                 bolted.Add(doorUid);
                 continue;
             }
@@ -104,7 +99,7 @@ public sealed class MalfAiLockdownSystem : EntitySystem
                     if (!TryComp<DoorBoltComponent>(target, out var currentBolts))
                         return;
 
-                    _doors.SetBoltsDown((target, currentBolts), true);
+                    _doors.TrySetBoltDown((target, currentBolts), true, requirePower: false); // Pirate: Malf lockdown overrides local door power.
                     bolted.Add(target);
                 });
             }
@@ -130,7 +125,7 @@ public sealed class MalfAiLockdownSystem : EntitySystem
 
                 if (TryComp<DoorBoltComponent>(doorUid, out var bolts))
                 {
-                    _doors.SetBoltsDown((doorUid, bolts), false);
+                    _doors.TrySetBoltDown((doorUid, bolts), false, requirePower: false); // Pirate: restore even if local power changed.
                 }
             }
 
