@@ -4,6 +4,11 @@
   parent: BaseGameRule
   id: CosmicCult
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - CosmicCultSkills
+  # Pirate: skill chips end
   - type: CosmicCultRule
   - type: GameRule
     minPlayers: 25

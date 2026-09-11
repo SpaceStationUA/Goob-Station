@@ -1,0 +1,334 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipArmorsmithing
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ArmorKnowledge: 50
+      MetalworkingKnowledge: 25
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipArmorsmithing2
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ArmorKnowledge: 75
+      MetalworkingKnowledge: 25
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipWeaponsmithing
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      WeaponsKnowledge: 50
+      MetalworkingKnowledge: 25
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipWeaponsmithing2
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      WeaponsKnowledge: 75
+      MetalworkingKnowledge: 25
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipBlacksmith
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MetalworkingKnowledge: 50
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipBlacksmith2
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MetalworkingKnowledge: 75
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipWoodworker
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      CarvingKnowledge: 50
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipWoodworker2
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      CarvingKnowledge: 75
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipGunsmith
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      GunsmithingKnowledge: 50
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipGunsmith2
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      GunsmithingKnowledge: 75
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipMechanic
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MechanicsKnowledge: 50
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipMechanic2
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MechanicsKnowledge: 75
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipElectronics
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ElectronicsKnowledge: 50
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipElectronics2
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ElectronicsKnowledge: 75
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipTailor
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      TailoringKnowledge: 50
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipTailor2
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      TailoringKnowledge: 75
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipStoner
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      SmokeablesKnowledge: 50
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipDatabase
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      FabricationKnowledge: 50
+      DoorsKnowledge: 50
+      AirlocksKnowledge: 50
+      BotsKnowledge: 50
+      FurnitureKnowledge: 50
+      InfrastructureKnowledge: 50
+      ElectronicsKnowledge: 50
+      WallsKnowledge: 50
+      WindowsKnowledge: 50
+      ArmorKnowledge: 25
+      MetalworkingKnowledge: 25
+      WeaponsKnowledge: 25
+      CarvingKnowledge: 25
+      GunsmithingKnowledge: 25
+      MechanicsKnowledge: 25
+      TailoringKnowledge: 25
+
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipEducation
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      LiteracyKnowledge: 100
+      DoorsKnowledge: 50
+      AirlocksKnowledge: 50
+      BotsKnowledge: 50
+      FurnitureKnowledge: 50
+      InfrastructureKnowledge: 50
+      ElectronicsKnowledge: 50
+      WallsKnowledge: 50
+      WindowsKnowledge: 50
+      SmokeablesKnowledge: 50
+      FabricationKnowledge: 50
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipCombatEducation
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      LiteracyKnowledge: 100
+      DoorsKnowledge: 50
+      AirlocksKnowledge: 50
+      BotsKnowledge: 50
+      FurnitureKnowledge: 50
+      InfrastructureKnowledge: 50
+      ElectronicsKnowledge: 50
+      WallsKnowledge: 50
+      WindowsKnowledge: 50
+      SmokeablesKnowledge: 50
+      FabricationKnowledge: 50
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipEchelonEducation
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      LiteracyKnowledge: 100
+      DoorsKnowledge: 50
+      AirlocksKnowledge: 50
+      BotsKnowledge: 50
+      FurnitureKnowledge: 50
+      InfrastructureKnowledge: 50
+      ElectronicsKnowledge: 50
+      WallsKnowledge: 50
+      WindowsKnowledge: 50
+      SmokeablesKnowledge: 50
+      FabricationKnowledge: 50
+
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipMagLit
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MagicalLiteracyKnowledge: 100
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipJanitor
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      JanitorKnowledge: 50
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipClown
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      BananiumKnowledge: 100
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipDoctor
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      FirstAidKnowledge: 50
+      KnowledgeWeaponsLaser: -25
+      ShootingKnowledge: -25
+      KnowledgeWeaponsMining: -25
+      KnowledgeWeaponsTool: -25
+      KnowledgeWeaponsPistol: -25
+      KnowledgeWeaponsRifle: -25
+      KnowledgeWeaponsShotgun: -25
+      KnowledgeWeaponsBludgeon: -25
+      KnowledgeWeaponsShortBlade: -25
+      KnowledgeWeaponsLongBlade: -25
+      KnowledgeWeaponsNonLethal: -25
+      KnowledgeWeaponsPolearm: -25
+      MeleeKnowledge: -25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipChemist
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ChemistryKnowledge: 100
+      KnowledgeWeaponsLaser: -25
+      ShootingKnowledge: -25
+      KnowledgeWeaponsMining: -25
+      KnowledgeWeaponsTool: -25
+      KnowledgeWeaponsPistol: -25
+      KnowledgeWeaponsRifle: -25
+      KnowledgeWeaponsShotgun: -25
+      KnowledgeWeaponsBludgeon: -25
+      KnowledgeWeaponsShortBlade: -25
+      KnowledgeWeaponsLongBlade: -25
+      KnowledgeWeaponsNonLethal: -25
+      KnowledgeWeaponsPolearm: -25
+      MeleeKnowledge: -25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipSurgeon
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      SurgeryKnowledge: 50
+      KnowledgeWeaponsLaser: -25
+      ShootingKnowledge: -25
+      KnowledgeWeaponsMining: -25
+      KnowledgeWeaponsTool: -25
+      KnowledgeWeaponsPistol: -25
+      KnowledgeWeaponsRifle: -25
+      KnowledgeWeaponsShotgun: -25
+      KnowledgeWeaponsBludgeon: -25
+      KnowledgeWeaponsShortBlade: -25
+      KnowledgeWeaponsLongBlade: -25
+      KnowledgeWeaponsNonLethal: -25
+      KnowledgeWeaponsPolearm: -25
+      MeleeKnowledge: -25
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipCMO
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      FirstAidKnowledge: 75
+      ChemistryKnowledge: 100
+      SurgeryKnowledge: 75

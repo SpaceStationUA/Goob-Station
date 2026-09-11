@@ -57,6 +57,13 @@
   - Brig
   - Cryogenics
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEchelonEducation
+    - SkillChipDatabase
+    - SkillChipTool
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial

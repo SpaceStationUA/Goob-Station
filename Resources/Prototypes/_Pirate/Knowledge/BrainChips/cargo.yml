@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: cargoProduct
+  id: CargoSkillChips
+  icon:
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    state: icon
+  product: CrateSkillChipsCargo
+  cost: 1000
+  category: cargoproduct-category-name-cargo
+  group: market
+
+- type: cargoProduct
+  id: EngineeringSkillChips
+  icon:
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    state: icon
+  product: CrateSkillChipsEngi
+  cost: 4500
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: MedicalSkillChips
+  icon:
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    state: icon
+  product: CrateSkillChipsMed
+  cost: 2500
+  category: cargoproduct-category-name-medical
+  group: market
+
+- type: cargoProduct
+  id: ScienceSkillChips
+  icon:
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    state: icon
+  product: CrateSkillChipsSci
+  cost: 2500
+  category: cargoproduct-category-name-science
+  group: market
+
+- type: cargoProduct
+  id: SecuritySkillChips
+  icon:
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    state: icon
+  product: CrateSkillChipsSec
+  cost: 8000
+  category: cargoproduct-category-name-security
+  group: market

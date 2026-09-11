@@ -774,6 +774,13 @@
   id: SyndieSoldierTeamLeader
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: TriggerOnSpawn
+    - type: EntityEffectOnTrigger
+      effects:
+      - !type:InstallOrganChip
+        chip: SkillChipSyndieSoldierTeamLeader
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -794,6 +801,13 @@
   id: SyndieSoldier
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: TriggerOnSpawn
+    - type: EntityEffectOnTrigger
+      effects:
+      - !type:InstallOrganChip
+        chip: SkillChipSyndieSoldier
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -814,6 +828,13 @@
   id: SyndieVisitor
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: TriggerOnSpawn
+    - type: EntityEffectOnTrigger
+      effects:
+      - !type:InstallOrganChip
+        chip: SkillChipSyndieVisitor
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -831,6 +852,13 @@
   id: PirateScooner
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: TriggerOnSpawn
+    - type: EntityEffectOnTrigger
+      effects:
+      - !type:InstallOrganChip
+        chip: SkillChipPirateScooner
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -850,6 +878,13 @@
   id: PirateCaptainScooner
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: TriggerOnSpawn
+    - type: EntityEffectOnTrigger
+      effects:
+      - !type:InstallOrganChip
+        chip: SkillChipPirateCaptainScooner
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -871,6 +906,13 @@
   id: VisitorBlackmarketeer
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: TriggerOnSpawn
+    - type: EntityEffectOnTrigger
+      effects:
+      - !type:InstallOrganChip
+        chip: SkillChipBlackmarketeer
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-blackmarketeer-name
       description: ghost-role-information-blackmarketeer-description
@@ -887,6 +929,13 @@
   id: Cossack
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: TriggerOnSpawn
+    - type: EntityEffectOnTrigger
+      effects:
+      - !type:InstallOrganChip
+        chip: SkillChipCossack
+    # Pirate: skill chips end
     - type: RussianAccent
     - type: ScrambledAccent
     - type: SlurredAccent

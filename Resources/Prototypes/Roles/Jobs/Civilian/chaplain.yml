@@ -25,6 +25,13 @@
   - Chapel
   - Maintenance
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipMarksmanship
+    - SkillChipMagLit
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: BibleUser #Lets them heal with bibles

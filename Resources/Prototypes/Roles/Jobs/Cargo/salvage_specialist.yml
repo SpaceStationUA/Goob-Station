@@ -27,6 +27,14 @@
   - Salvage
   - Maintenance
   - External
+  # Pirate: skill chips
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipMining
+    - SkillChipShortBlade
+  # Pirate: skill chips end
 - type: startingGear
   id: SalvageSpecialistGear
   equipment:

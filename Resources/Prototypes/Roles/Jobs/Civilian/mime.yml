@@ -23,6 +23,11 @@
   - Theatre
   - Maintenance
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: MimePowers

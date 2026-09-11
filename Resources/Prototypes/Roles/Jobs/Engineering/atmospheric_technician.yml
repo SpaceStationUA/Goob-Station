@@ -28,6 +28,13 @@
   - External
   - Atmospherics
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipDatabase
+    - SkillChipBludgeon
+  # Pirate: skill chips end
   - !type:GiveItemOnHolidaySpecial
     holiday: FirefighterDay
     prototype: FireAxe

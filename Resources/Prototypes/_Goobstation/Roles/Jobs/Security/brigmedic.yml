@@ -36,6 +36,13 @@
   - External
   - Cryogenics
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipDoctor
+    - SkillChipSurgeon
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial

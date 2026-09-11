@@ -30,6 +30,12 @@
   extendedAccess:
   - Chemistry
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipDoctor
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: SurgerySpeedModifier

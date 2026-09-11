@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseBrainChip
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    layers:
+    - state: icon
+  - type: Item
+    size: Tiny
+  - type: OrganChip
+    whitelist:
+      components:
+      - Brain
+  # EMP disables the chip without harming the host.
+  - type: Cybernetics
+  - type: GuideHelp
+    guides:
+    - PirateBrainChips
+
+- type: entity
+  abstract: true
+  parent: BaseBrainChip
+  id: BaseSkillChipMRAM
+  components:
+  - type: KnowledgeGrantOnWear
+    examinable: true
+
+- type: entity
+  abstract: true
+  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  id: BaseSkillChipAPTR
+
+- type: entity
+  abstract: true
+  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  id: BaseSkillChipPSON
+  components:
+  - type: OrganChip
+    canRemove: false
+
+- type: entity
+  abstract: true
+  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  id: BaseSkillChipHPYS

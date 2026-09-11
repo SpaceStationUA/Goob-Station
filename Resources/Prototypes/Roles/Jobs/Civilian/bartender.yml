@@ -30,6 +30,14 @@
   extendedAccess:
   - Kitchen
   - Hydroponics
+  # Pirate: skill chips
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipShotgun
+    - SkillChipUnarmed
+  # Pirate: skill chips end
 
 - type: startingGear
   id: BartenderGear

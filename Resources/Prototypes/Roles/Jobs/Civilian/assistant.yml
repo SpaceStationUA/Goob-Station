@@ -13,6 +13,12 @@
   access:
   - Maintenance
   special: # Goobstation
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipTiderDampener
+    - SkillChipEducation
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: NpcFactionMember

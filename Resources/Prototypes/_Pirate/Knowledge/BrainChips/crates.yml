@@ -1,0 +1,100 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateSkillChipsCargo
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SkillChipMining
+          amount: 3
+
+- type: entity
+  parent: CrateEngineeringSecure
+  id: CrateSkillChipsEngi
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SkillChipDatabase
+          amount: 3
+        - id: SkillChipTool
+          amount: 3
+        - id: SkillChipBludgeon
+          amount: 3
+
+- type: entity
+  parent: CrateMedicalSecure
+  id: CrateSkillChipsMed
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SkillChipDoctor
+          amount: 3
+        - id: SkillChipChemist
+          amount: 3
+        - id: SkillChipSurgeon
+          amount: 3
+
+- type: entity
+  parent: CrateScienceSecure
+  id: CrateSkillChipsSci
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SkillChipDatabase
+          amount: 5
+        - id: SkillChipEducation
+          amount: 4
+
+- type: entity
+  parent: CrateSecgear
+  id: CrateSkillChipsSec
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SkillChipMarksmanship
+          amount: 3
+        - id: SkillChipNonLethal
+          amount: 3
+        - id: SkillChipShortBlade
+          amount: 3
+
+- type: entity
+  parent: CrateSyndicate
+  id: CrateSyndicateCombatSkillChips
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:GroupSelector
+        rolls: 8
+        children:
+        - !type:GroupSelector
+          weight: 0.5
+          children:
+          - id: SkillChipUnarmed
+          - id: SkillChipBludgeon
+          - id: SkillChipShortBlade
+          - id: SkillChipLongBlade
+          - id: SkillChipPolearm
+          - id: SkillChipNonLethal
+          - id: SkillChipTool
+          - id: SkillChipEnergy
+        - !type:GroupSelector
+          children:
+          - id: SkillChipPistol
+          - id: SkillChipRifle
+          - id: SkillChipShotgun
+          - id: SkillChipSniper
+          - id: SkillChipLaser
+          - id: SkillChipHeavy
+          - id: SkillChipSMG

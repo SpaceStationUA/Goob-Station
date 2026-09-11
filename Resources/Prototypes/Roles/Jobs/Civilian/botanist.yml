@@ -26,6 +26,13 @@
       - OrionExpress
   # Pirate contractor end
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipTool
+    - SkillChipStoner
+  # Pirate: skill chips end
   - !type:GiveItemOnHolidaySpecial
     holiday: FourTwenty
     prototype: CannabisSeeds

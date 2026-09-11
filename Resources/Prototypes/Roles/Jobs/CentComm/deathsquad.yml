@@ -18,6 +18,11 @@
   - NanotrasenRepresentative
   - BlueshieldOfficer
   special: # Goobstation Start - I basically re-did all of deathsquads stuff so. - Sol
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipDeathSquad
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant, DeathRattleImplantCentcomm ]
   - !type:AddComponentSpecial

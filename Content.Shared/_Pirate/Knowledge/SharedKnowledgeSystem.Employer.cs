@@ -39,10 +39,10 @@ public sealed partial class SharedKnowledgeSystem
         var targetMastery = Math.Min(GetMastery(baseLevel) + Math.Min(mastery, maxMastery), maxMastery);
         var level = Math.Max(GetInverseMastery(targetMastery) - baseLevel, 0);
 
-        knowledge.Comp.TemporaryLevel += level - bonus.Level;
         bonus.Mastery = mastery;
         bonus.Level = level;
-        Dirty(knowledge);
+        // Pirate: skill chips - the aggregate is owned by the source-aware ledger now.
+        RecalculateTemporaryLevel(knowledge);
     }
 
     private void MergeEmployerBonus(Entity<KnowledgeComponent> source, Entity<KnowledgeComponent> destination)

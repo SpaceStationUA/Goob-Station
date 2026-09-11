@@ -21,6 +21,11 @@
   - Service
   - Maintenance
   special: # Goobstation start - Librarian should speak most languages.
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipLongBlade
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ LibrarianTranslatorImplant ] # Goobstation end
 

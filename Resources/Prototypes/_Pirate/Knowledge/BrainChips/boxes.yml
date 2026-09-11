@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: ToteBase
+  id: BoxSkillChipsBase
+  abstract: true
+  components:
+  - type: Storage
+    whitelist: null
+
+- type: entity
+  parent: BoxSkillChipsBase
+  id: BoxSkillChipsService
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SkillChipEducation
+          amount: 6
+        - id: SkillChipCombatEducation
+          amount: 4
+        - id: SkillChipEchelonEducation
+        - id: SkillChipClown
+        - id: SkillChipStoner
+
+- type: entity
+  parent: BoxSkillChipsBase
+  id: BoxSkillChipsCargo
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SkillChipMining
+          amount: 3
+
+- type: entity
+  parent: BoxSkillChipsBase
+  id: BoxSkillChipsEngi
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SkillChipTool
+          amount: 6
+        - id: SkillChipDatabase
+          amount: 6
+
+- type: entity
+  parent: BoxSkillChipsBase
+  id: BoxSkillChipsMed
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SkillChipDoctor
+          amount: 5
+        - id: SkillChipSurgeon
+          amount: 5
+        - id: SkillChipChemist
+          amount: 2
+
+- type: entity
+  parent: BoxSkillChipsBase
+  id: BoxSkillChipsSci
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: SkillChipDatabase
+          amount: 6

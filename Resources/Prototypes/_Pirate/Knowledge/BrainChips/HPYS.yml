@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseSkillChipHPYS
+  id: SkillChipThrowing
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ThrowingKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipHPYS
+  id: SkillChipThrowingTampered
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ThrowingKnowledge: 50

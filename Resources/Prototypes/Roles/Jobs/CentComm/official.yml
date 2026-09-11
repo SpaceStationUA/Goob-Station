@@ -26,6 +26,11 @@
   - NanotrasenRepresentative
   - BlueshieldOfficer
   special: # Goobstation
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipERT
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant, DeathRattleImplantCentcomm ]
 

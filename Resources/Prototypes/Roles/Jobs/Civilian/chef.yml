@@ -32,6 +32,12 @@
   - Hydroponics
   - Bar
   special: # Goobstation - Martial Arts
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipShortBlade
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
       - type: GrantCqc
