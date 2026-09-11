@@ -3,6 +3,10 @@
   name: job-name-admin-assistant
   description: job-description-admin-assistant
   playTimeTracker: JobAdministrativeAssistant
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEchelonEducation
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering

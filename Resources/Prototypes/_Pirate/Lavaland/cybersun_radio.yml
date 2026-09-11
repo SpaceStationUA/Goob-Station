@@ -61,6 +61,10 @@
   id: LavalandSyndieMarshal
   parent: SyndieSoldier
   components:
+  - type: EntityEffectOnTrigger
+    effects:
+    - !type:InstallOrganChip
+      chip: SkillChipSyndieMarshal
   - type: Loadout
     prototypes: [ LavalandSyndicateMarshalGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]

@@ -5,6 +5,12 @@
   icon: "JobIconInterdyneMed"
   canBeAntag: false
   playTimeTracker: JobInterdyneMed
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipDoctor
+    - SkillChipEducation
+    - SkillChipSurgeon
   access:
     - Maintenance
     - External

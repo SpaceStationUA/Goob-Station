@@ -40,6 +40,14 @@
       ShootingKnowledge: 28
 
 - type: entity
+  parent: SkillChipSyndieSoldier
+  id: SkillChipSyndieMarshal
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsNonLethal: 50
+
+- type: entity
   parent: BaseSkillChipAPTR
   id: SkillChipSyndieVisitor
   components:

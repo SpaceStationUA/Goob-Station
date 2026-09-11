@@ -2,6 +2,11 @@
   id: Gangwars
   parent: BaseGameRule
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - GangSkills
+  # Pirate: skill chips end
   - type: GameRule
     minPlayers: 0
     chaosScore: 1000

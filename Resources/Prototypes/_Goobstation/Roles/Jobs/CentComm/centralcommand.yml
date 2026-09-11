@@ -20,6 +20,11 @@
   - NanotrasenRepresentative
   - BlueshieldOfficer
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipERT
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant ]
 
@@ -60,6 +65,11 @@
     - NanotrasenRepresentative
     - BlueshieldOfficer
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipERT
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant ]
 
@@ -101,6 +111,11 @@
     - NanotrasenRepresentative
     - BlueshieldOfficer
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEchelonEducation
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant ]
 
@@ -143,6 +158,11 @@
     - NanotrasenRepresentative
     - BlueshieldOfficer
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipERT
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant]
 
@@ -185,6 +205,11 @@
   - NanotrasenRepresentative
   - BlueshieldOfficer
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEchelonEducation
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant ]
 
@@ -223,6 +248,11 @@
   - NanotrasenRepresentative
   - BlueshieldOfficer
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEchelonEducation
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant ]
 
@@ -276,6 +306,11 @@
     - NanotrasenRepresentative
     - BlueshieldOfficer
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEchelonEducation
+  # Pirate: skill chips end
     - !type:AddImplantSpecial
       implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant ]
 

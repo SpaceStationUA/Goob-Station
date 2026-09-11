@@ -2,6 +2,11 @@
   parent: BaseGameRule
   id: Conspirators
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
+  # Pirate: skill chips end
   - type: GameRule
     minPlayers: 15 # Pirate edit - was 24
     chaosScore: 650

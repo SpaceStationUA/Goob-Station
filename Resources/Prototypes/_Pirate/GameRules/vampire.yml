@@ -2,6 +2,9 @@
   parent: BaseGameRule
   id: Vampire
   components:
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
   - type: GameRule
     minPlayers: 10
     chaosScore: 100

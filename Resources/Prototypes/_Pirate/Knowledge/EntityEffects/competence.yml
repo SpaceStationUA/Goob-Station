@@ -60,6 +60,28 @@
       KnowledgeWeaponsTool: 60
 
 - type: entityEffect
+  id: BloodCultSkills
+  effects:
+  - !type:GrantSkills
+    skills:
+      KnowledgeWeaponsShortBlade: 50
+      KnowledgeWeaponsLongBlade: 50
+      MeleeKnowledge: 50
+      WeaponsKnowledge: 50
+      MagicalLiteracyKnowledge: 88
+
+- type: entityEffect
+  id: GangSkills
+  effects:
+  - !type:GrantSkills
+    skills:
+      MeleeKnowledge: 25
+      ShootingKnowledge: 25
+      WeaponsKnowledge: 25
+      ThrowingKnowledge: 25
+      FirstAidKnowledge: 25
+
+- type: entityEffect
   id: GhoulSkills
   effects:
   - !type:GrantTemporarySkills

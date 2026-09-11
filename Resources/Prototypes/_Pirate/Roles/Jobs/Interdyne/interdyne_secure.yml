@@ -5,6 +5,12 @@
   icon: "JobIconInterdyneSecure"
   canBeAntag: false
   playTimeTracker: JobInterdyneSecure
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipRifle
+    - SkillChipNonLethal
   access:
     - Maintenance
     - External

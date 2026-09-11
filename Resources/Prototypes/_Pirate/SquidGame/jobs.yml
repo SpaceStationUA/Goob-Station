@@ -4,6 +4,11 @@
   name: job-name-squidgame-player
   description: job-description-squidgame-player
   playTimeTracker: JobSquidGamePlayer
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipTiderDampener
+    - SkillChipEducation
   startingGear: SquidGamePlayer
   icon: "JobIconSquidGamePlayer"
   supervisors: job-supervisors-squidgame-guards
@@ -96,6 +101,11 @@
     #    - Foreigner
     #    - ForeignerLight
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipPistol
+    - SkillChipNonLethal
   - !type:AddComponentSpecial
     components:
     - type: MindShield
@@ -137,6 +147,11 @@
     #    - Foreigner
     #    - ForeignerLight
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipPistol
+    - SkillChipNonLethal
   - !type:AddComponentSpecial
     components:
     - type: MindShield
@@ -180,6 +195,11 @@
     #    - Foreigner
     #    - ForeignerLight
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipPistol
+    - SkillChipNonLethal
   - !type:AddComponentSpecial
     components:
     - type: MindShield
@@ -222,6 +242,11 @@
     #    - Foreigner
     #    - ForeignerLight
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipPistol
+    - SkillChipNonLethal
   - !type:AddComponentSpecial
     components:
     - type: MindShield

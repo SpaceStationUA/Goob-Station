@@ -39,6 +39,11 @@
   - External
   - Cryogenics
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipLaser
+    - SkillChipNonLethal
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
