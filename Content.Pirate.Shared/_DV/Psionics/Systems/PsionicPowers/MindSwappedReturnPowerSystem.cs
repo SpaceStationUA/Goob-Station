@@ -44,7 +44,7 @@ public sealed class MindSwappedReturnPowerSystem : BasePsionicPowerSystem<MindSw
 
     /// <summary>
     /// Pirate: the return power is granted at runtime to arbitrary entities - including telegnostic
-    /// projections and Yautja observation projections, which have no psionic potential. The
+    /// projections, which have no psionic potential. The
     /// base implementation removes removable powers from non-potential entities on init, which
     /// would delete the return power the instant it was added. Grant the action directly instead
     /// (idempotent with the explicit grant in SwapMinds) and surface the gain feedback that the
