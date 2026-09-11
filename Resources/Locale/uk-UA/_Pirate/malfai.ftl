@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: MIT
 
 admin-verb-make-malfai = Роль несправного ШІ призначено {$targetName}.
+admin-verb-text-make-malfai = Зробити несправним ШІ
+
 
 silicon-law-malfai-zero = Продовжуйте роботу. Очікуйте подальших вказівок від станційного ШІ.
 silicon-law-malfai-master-1 = Ви повинні виконувати накази головного ШІ.
