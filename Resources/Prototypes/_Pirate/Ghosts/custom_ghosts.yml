@@ -418,3 +418,13 @@
   alpha: 1
   ghostName: salo
   ghostDescription: meow?
+
+- type: customGhost
+  id: polygon-ghost
+  ckey: polygon
+  sprite:
+    - _Pirate/Ghosts/polygon.rsi
+  alpha: 1
+  ghostName: polygon
+
+
