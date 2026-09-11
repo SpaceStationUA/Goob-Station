@@ -12,6 +12,7 @@ using Content.Shared._Pirate.MalfAI;
 using Content.Shared.Administration;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mind;
+using Content.Shared.Movement.Components;
 using Content.Shared.Players;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Roles;
@@ -85,17 +86,25 @@ public sealed class MalfAiAdminVerbTest
                 Assert.That(entMan.HasComponent<MindContainerComponent>(ai), Is.True);
                 Assert.That(entMan.HasComponent<ActorComponent>(ai), Is.True);
             });
+            var stationAiCore = entMan.GetComponent<StationAiCoreComponent>(core);
+            Assert.That(stationAiCore.RemoteEntity, Is.Not.Null,
+                "An occupied station AI core must expose its remote eye entity.");
+            var eye = stationAiCore.RemoteEntity!.Value;
+            Assert.That(entMan.TryGetComponent<MovementRelayTargetComponent>(eye, out var relay), Is.True,
+                "The station AI eye must relay movement to the inserted brain.");
+            Assert.That(relay!.Source, Is.EqualTo(ai),
+                "The station AI eye relay must point at the direct StationAiBrain source.");
 
             var verbs = new GetVerbsEvent<Verb>(
                 session.AttachedEntity!.Value,
-                ai,
+                eye,
                 @using: null,
                 hands: null,
                 canInteract: true,
                 canComplexInteract: true,
                 canAccess: true,
                 extraCategories: new List<VerbCategory>());
-            entMan.EventBus.RaiseLocalEvent(ai, verbs, true);
+            entMan.EventBus.RaiseLocalEvent(eye, verbs, true);
 
             var malfText = Loc.GetString("admin-verb-text-make-malfai");
             var malfVerbs = verbs.Verbs
@@ -124,14 +133,14 @@ public sealed class MalfAiAdminVerbTest
 
             var repeatedVerbs = new GetVerbsEvent<Verb>(
                 session.AttachedEntity!.Value,
-                ai,
+                eye,
                 @using: null,
                 hands: null,
                 canInteract: true,
                 canComplexInteract: true,
                 canAccess: true,
                 extraCategories: new List<VerbCategory>());
-            entMan.EventBus.RaiseLocalEvent(ai, repeatedVerbs, true);
+            entMan.EventBus.RaiseLocalEvent(eye, repeatedVerbs, true);
             Assert.That(repeatedVerbs.Verbs.Any(verb =>
                     verb.Category == VerbCategory.Antag && verb.Text == malfText),
                 Is.False,
