@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Worn states taken from SS14's Clothing/Mask/neckgaiterred.rsi (originally sprited by belay5 (Discord), recoloured by Nairod (Github); equipped-MASK-vox by PuroSlavKing (Github) recoloured by Flareguy, equipped-MASK-feroxi by RedTerror). Pulled-down (up-) states taken from NovaSector at commit https://github.com/NovaSector/NovaSector/commit/9d5bb13a76866960c76cb78217e7436e65239268",
+  "copyright": "Worn states by belay5 (Discord) and Nairod (Github); Vox state by PuroSlavKing (Github), recoloured by Flareguy; Feroxi state by RedTerror. Pulled-down states from NovaSector commit https://github.com/NovaSector/NovaSector/commit/9d5bb13a76866960c76cb78217e7436e65239268.",
   "size": {
     "x": 32,
     "y": 32

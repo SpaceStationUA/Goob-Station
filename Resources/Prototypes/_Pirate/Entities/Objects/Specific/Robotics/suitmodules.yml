@@ -118,6 +118,8 @@
   - type: ModularSuitActionModule
     action: ToggleLightModuleAction
   - type: ModularSuitLightModule
+    lightEnergy: 3
+    lightRadius: 5
     guaranteedRemoved:
     - type: RgbLightController
   - type: ModularSuitModule
@@ -139,8 +141,8 @@
   abstract: true
   components:
   - type: ModularSuitLightModule
-    lightEnergy: 3
-    lightRadius: 6
+    lightEnergy: 5
+    lightRadius: 8
 
 - type: entity
   parent: BaseFlashlightSuitModule
@@ -636,6 +638,9 @@
           components:
           - BallisticAmmoProvider
           - ChamberMagazineAmmoProvider
+          - MagazineAmmoProvider
+          - BatteryAmmoProvider
+          - RevolverAmmoProvider
 
 - type: entity
   parent: BaseSuitModule

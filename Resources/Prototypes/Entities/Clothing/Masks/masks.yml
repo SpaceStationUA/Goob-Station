@@ -840,6 +840,7 @@
     sprite: _Pirate/Clothing/Mask/neckgaiter.rsi
   - type: BreathMask
   - type: Mask
+  - type: IngestionBlocker # Pirate: syndrobe - covers the mouth while worn up, auto-disabled when pulled down.
   - type: HideLayerClothing
     layers:
       Snout: MASK
@@ -847,6 +848,9 @@
   #endregion Pirate: syndrobe
   - type: IdentityBlocker
     coverage: MOUTH
+  - type: Construction # Pirate: gaiter crafting
+    graph: NeckGaiter # Pirate: gaiter crafting
+    node: neckGaiter # Pirate: gaiter crafting
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -863,6 +867,9 @@
     sprite: _Pirate/Clothing/Mask/neckgaiterred.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Mask/neckgaiterred.rsi
+  - type: Construction # Pirate: gaiter crafting - own graph, overrides the inherited one.
+    graph: NeckGaiterRed # Pirate: gaiter crafting
+    node: neckGaiter # Pirate: gaiter crafting
 
 - type: entity
   parent: ClothingMaskClownBase

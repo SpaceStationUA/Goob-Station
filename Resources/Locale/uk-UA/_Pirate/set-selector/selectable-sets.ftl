@@ -45,3 +45,9 @@ selectable-set-merc-cobra-description = Інтегрований глушник 
 selectable-set-merc-viper-name = Вайпер
 selectable-set-merc-viper-description = Пістолет-кулемет, що б'є вище своєї ваги. Напівавтомат або шквал вогню.
     Включає: пістолет Вайпер (.35 авто), 2 магазини та малу коробку патронів.
+selectable-set-chief-engineer-voidsuit-name = Хардсют головного інженера
+selectable-set-chief-engineer-voidsuit-desc = Важко екранований хардсют для головного інженера. Імунітет до радіації,
+    суперматерії, тесли та полів стримування.
+selectable-set-chief-engineer-modsuit-name = «Просунутий» МОДсют головного інженера
+selectable-set-chief-engineer-modsuit-desc = Зібраний командний МОДсют з тим самим екрануванням, що й хардсют, а також
+    модулі зварювання та радіації, джетпак, просунуті магнітні черевики, розширене сховище та плазмове ядро.

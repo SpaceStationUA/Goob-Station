@@ -174,6 +174,12 @@
     # Pirate: Shitmed applies armor only to explicitly covered body parts.
     coverage:
     - Head
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+      NerveDamage: 0
     modifiers:
       coefficients:
         Blunt: 0.90
@@ -181,6 +187,11 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.25
+  - type: IgniteFromGasImmunity
+    parts:
+    - Head
+  - type: WetnessBlocker
+    slots: [HEAD, MASK, EYES]
   - type: PointLight
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
@@ -265,6 +276,12 @@
     - Foot
     - Tail
     - Other
+    traumaDeductions:
+      Dismemberment: 0.2
+      OrganDamage: 0.2
+      BoneDamage: 0.2
+      VeinsDamage: 0
+      NerveDamage: 0
     modifiers:
       coefficients:
         Blunt: 0.90
@@ -272,6 +289,23 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.25
+  - type: IgniteFromGasImmunity
+    parts:
+    - Chest
+    - Groin
+    - LeftArm
+    - RightArm
+    - LeftLeg
+    - RightLeg
+    - LeftFoot
+    - RightFoot
+  - type: WetnessBlocker
+    slots: [OUTERCLOTHING, INNERCLOTHING, GLOVES, FEET]
+  - type: DamageOnShootProtection
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 3
   - type: ModularSuitPart
     partType: Torso
   - type: Tag
