@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Antag.Components;
@@ -10,6 +11,7 @@ using Content.Server.Roles;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared.Administration;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Roles;
@@ -18,6 +20,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests._Pirate;
@@ -134,7 +137,7 @@ public sealed class MalfAiAdminVerbTest
                 Is.False,
                 "An already assigned Malf AI must not receive a duplicate Malf verb.");
 
-            var ordinary = entMan.SpawnEntity("MobHuman", map.GridCoords.Offset(2, 0));
+            var ordinary = entMan.SpawnEntity("MobHuman", map.GridCoords.Offset(new Vector2(2, 0)));
 
             var ordinaryMind = mindSystem.CreateMind(null, "Ordinary human");
             mindSystem.TransferTo(ordinaryMind, ordinary, ghostCheckOverride: true);
