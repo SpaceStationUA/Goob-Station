@@ -1,30 +1,34 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.Common.Sleeping;
+using Content.Goobstation.Maths.FixedPoint;
 using Content.Goobstation.Shared.Xenobiology;
 using Content.Goobstation.Shared.Xenobiology.Components;
 using Content.Goobstation.Shared.Xenobiology.Components.Equipment;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Climbing.Events;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
-using Content.Shared.Body.Systems;
-using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Goobstation.Maths.FixedPoint;
-using Content.Shared.Chemistry.Components;
 
 namespace Content.Goobstation.Server.Xenobiology;
 
@@ -43,12 +47,23 @@ public sealed partial class SlimeLatchSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physic = default!;
 
+    private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
+    private EntityQuery<HungerComponent> _hungerQuery;
+    private EntityQuery<SlimeComponent> _slimeQuery;
+    private EntityQuery<XenoVacuumTankComponent> _tankQuery;
+    private EntityQuery<MobStateComponent> _mobQuery;
+    private EntityQuery<BeingLatchedComponent> _latchedQuery;
+
+
+    private TimeSpan _updateDelay = TimeSpan.FromSeconds(1);
+    private TimeSpan _nextUpdate;
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SlimeLatchEvent>(OnLatchAttempt);
+        SubscribeLocalEvent<SlimeComponent, SlimeLatchEvent>(OnLatchAttempt);
         SubscribeLocalEvent<SlimeComponent, SlimeLatchDoAfterEvent>(OnSlimeLatchDoAfter);
         SubscribeLocalEvent<SlimeComponent, DoAfterAttemptEvent<SlimeLatchDoAfterEvent>>(OnDoAfterAttempt);
 
@@ -57,65 +72,104 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         SubscribeLocalEvent<SlimeComponent, PullAttemptEvent>(OnPullAttempt);
         SubscribeLocalEvent<SlimeComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
         SubscribeLocalEvent<SlimeComponent, EntGotInsertedIntoContainerMessage>(OnEntGotInsertedIntoContainer);
-        SubscribeLocalEvent<SlimeComponent, SlimeMitosisEvent>(OnSlimeMitosis);
+        SubscribeLocalEvent<SlimeComponent, SelfBeforeClimbEvent>(OnSelfBeforeClimb);
+        SubscribeLocalEvent<SlimeComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
+        SubscribeLocalEvent<SlimeDamageOvertimeComponent, WakeDamageOverrideEvent>(OnWakeOverride);
+        SubscribeLocalEvent<SlimeDamageOvertimeComponent, TryingToSleepEvent>(OnSleepOverride);
+
+        _bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
+        _hungerQuery = GetEntityQuery<HungerComponent>();
+        _slimeQuery = GetEntityQuery<SlimeComponent>();
+        _tankQuery = GetEntityQuery<XenoVacuumTankComponent>();
+        _mobQuery = GetEntityQuery<MobStateComponent>();
+        _latchedQuery = GetEntityQuery<BeingLatchedComponent>();
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var sodQuery = EntityQueryEnumerator<SlimeDamageOvertimeComponent>();
-        while (sodQuery.MoveNext(out var uid, out var dotComp))
+        var now = _gameTiming.CurTime;
+
+        if (now < _nextUpdate)
+            return;
+
+        _nextUpdate = now + _updateDelay;
+
+        var query = EntityQueryEnumerator<SlimeDamageOvertimeComponent, BodyComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var dotComp, out var _, out var _))
+        {
+            if (_mobState.IsDead(uid))
+                continue;
+
             UpdateHunger((uid, dotComp));
+        }
     }
 
     private void UpdateHunger(Entity<SlimeDamageOvertimeComponent> ent)
     {
-        if (_gameTiming.CurTime < ent.Comp.NextTickTime || _mobState.IsDead(ent))
-            return;
+        var addedHunger = (float) ent.Comp.Damage.GetTotal();
 
-        ent.Comp.NextTickTime = _gameTiming.CurTime + ent.Comp.Interval;
         _damageable.TryChangeDamage(ent, ent.Comp.Damage, ignoreResistances: true, targetPart: TargetBodyPart.All);
 
         if (ent.Comp.SourceEntityUid is not { } source)
             return;
 
-        var addedHunger = (float) ent.Comp.Damage.GetTotal();
-        if (TryComp<HungerComponent>(source, out var hunger))
-        {
+        if (_hungerQuery.TryComp(source, out var hunger))
             _hunger.ModifyHunger(source, addedHunger, hunger);
-            Dirty(source, hunger);
-        }
 
         var stomachList = _body.GetBodyOrganEntityComps<StomachComponent>(source);
 
         if (stomachList.Count == 0)
             return;
 
-        FixedPoint2 availabaleVolume = 0;
+        FixedPoint2 availableVolume = 0;
         foreach (var stomach in stomachList)
         {
             if (_solutionContainer.ResolveSolution(stomach.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp1.Solution, out var sol))
-                availabaleVolume += sol.AvailableVolume;
+                availableVolume += sol.AvailableVolume;
         }
 
-        if (TryComp<BloodstreamComponent>(ent, out var bloodstream)
-            && _solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var blood)
-            && _solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var chem))
+        if (_bloodstreamQuery.TryComp(ent, out var bloodstream)
+            && _solutionContainer.ResolveSolution(ent.Owner, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var blood))
         {
-            FixedPoint2 bloodProportion = blood.Volume/(chem.Volume + blood.Volume);
-            FixedPoint2 chemProportion = 1 - bloodProportion;
-            FixedPoint2 bloodTransfer = FixedPoint2.Min(ent.Comp.SuctionUnits * bloodProportion, availabaleVolume * bloodProportion);
-            FixedPoint2 chemTransfer = FixedPoint2.Min(ent.Comp.SuctionUnits * chemProportion, availabaleVolume * chemProportion);
+            var chem = blood; // Don't resolve twice
+
+            var totalVolume = chem.Volume + blood.Volume;
+
+            if (totalVolume <= 0)
+                return;
+
+            var bloodProportion = blood.Volume / totalVolume;
+            var chemProportion = 1 - bloodProportion;
+            var bloodTransfer = FixedPoint2.Min(ent.Comp.SuctionUnits * bloodProportion, availableVolume * bloodProportion);
+            var chemTransfer = FixedPoint2.Min(ent.Comp.SuctionUnits * chemProportion, availableVolume * chemProportion);
+
+            var stomachCount = FixedPoint2.New(stomachList.Count);
             foreach (var stomach in stomachList)
             {
-                var bloodSolution = blood.SplitSolutionWithout(bloodTransfer/FixedPoint2.New(stomachList.Count), ent.Comp.ToxinReagent); // we don't want slime sucking it's own toxin instad of drinking blood
+                var bloodSolution = blood.SplitSolutionWithout(bloodTransfer / stomachCount, ent.Comp.ToxinReagent); // we don't want slime sucking it's own toxin instad of drinking blood
                 _stomach.TryTransferSolution(stomach.Owner, bloodSolution, stomach); // blood first, other chemicals later
-                var chemSolution = blood.SplitSolution(chemTransfer/FixedPoint2.New(stomachList.Count));
+
+                var chemSolution = chem.SplitSolution(chemTransfer / stomachCount);
                 _stomach.TryTransferSolution(stomach.Owner, chemSolution, stomach);
             }
+
             chem.AddReagent(ent.Comp.ToxinReagent, ent.Comp.ToxinUnits);
         }
+    }
+
+    private void OnWakeOverride(Entity<SlimeDamageOvertimeComponent> ent, ref WakeDamageOverrideEvent args)
+    {
+        args.IgnoreDamage = true;
+    }
+
+    private void OnSleepOverride(Entity<SlimeDamageOvertimeComponent> ent, ref TryingToSleepEvent args)
+    {
+        if (!TryComp<MobStateComponent>(ent.Owner, out var mobState))
+            return;
+
+        args.Cancelled = mobState.CurrentState != MobState.Alive;
     }
 
     private void OnMobStateChangedSOD(Entity<SlimeDamageOvertimeComponent> ent, ref MobStateChangedEvent args)
@@ -124,7 +178,7 @@ public sealed partial class SlimeLatchSystem : EntitySystem
             return;
 
         var source = ent.Comp.SourceEntityUid;
-        if (source.HasValue && TryComp<SlimeComponent>(source, out var slime))
+        if (source.HasValue && _slimeQuery.TryComp(source, out var slime))
             Unlatch((source.Value, slime));
     }
 
@@ -147,27 +201,25 @@ public sealed partial class SlimeLatchSystem : EntitySystem
 
     private void OnEntGotRemovedFromContainer(Entity<SlimeComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
+        if (!_tankQuery.HasComp(args.Container.Owner))
+            return;
+
         Unlatch(ent);
     }
 
     private void OnEntGotInsertedIntoContainer(Entity<SlimeComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
-        Unlatch(ent);
-    }
-
-    private void OnSlimeMitosis(Entity<SlimeComponent> ent, ref SlimeMitosisEvent args)
-    {
-        Unlatch(ent);
-    }
-
-    private void OnLatchAttempt(SlimeLatchEvent args)
-    {
-        if (TerminatingOrDeleted(args.Target)
-        || TerminatingOrDeleted(args.Performer)
-        || !TryComp<SlimeComponent>(args.Performer, out var slime))
+        if (!_tankQuery.HasComp(args.Container.Owner))
             return;
 
-        var ent = new Entity<SlimeComponent>(args.Performer, slime);
+        Unlatch(ent);
+    }
+
+    private void OnLatchAttempt(Entity<SlimeComponent> ent, ref SlimeLatchEvent args)
+    {
+        if (TerminatingOrDeleted(args.Target)
+        || TerminatingOrDeleted(ent.Owner))
+            return;
 
         if (IsLatched(ent))
         {
@@ -175,13 +227,19 @@ public sealed partial class SlimeLatchSystem : EntitySystem
             return;
         }
 
-        if (CanLatch((args.Performer, slime), args.Target))
+        if (CanLatch(ent, args.Target))
         {
-            StartSlimeLatchDoAfter((args.Performer, slime), args.Target);
+            StartSlimeLatchDoAfter(ent, args.Target);
             return;
         }
 
         // improvement space (tm)
+    }
+
+    private void OnUpdateCanMove(Entity<SlimeComponent> ent, ref UpdateCanMoveEvent args)
+    {
+        if (IsLatched(ent))
+            args.Cancel();
     }
 
     private bool StartSlimeLatchDoAfter(Entity<SlimeComponent> ent, EntityUid target)
@@ -189,7 +247,7 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         if (_mobState.IsDead(target))
         {
             var targetDeadPopup = Loc.GetString("slime-latch-fail-target-dead", ("ent", target));
-            _popup.PopupEntity(targetDeadPopup, ent, ent);
+            _popup.PopupPredicted(targetDeadPopup, ent, ent);
 
             return false;
         }
@@ -197,18 +255,13 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         if (ent.Comp.Stomach.Count >= ent.Comp.MaxContainedEntities)
         {
             var maxEntitiesPopup = Loc.GetString("slime-latch-fail-max-entities", ("ent", target));
-            _popup.PopupEntity(maxEntitiesPopup, ent, ent);
+            _popup.PopupPredicted(maxEntitiesPopup, ent, ent);
 
             return false;
         }
 
-        if (HasComp<BeingLatchedComponent>(target))
-        {
-            var maxEntitiesPopup = Loc.GetString("slime-latch-fail-already-latched", ("ent", target));
-            _popup.PopupEntity(maxEntitiesPopup, ent, ent);
-
-            return false;
-        }
+        var attemptPopup = Loc.GetString("slime-latch-attempt", ("slime", ent), ("ent", target));
+        _popup.PopupPredicted(attemptPopup, ent, ent, PopupType.MediumCaution);
 
         var doAfterArgs = new DoAfterArgs(EntityManager, ent, ent.Comp.LatchDoAfterDuration, new SlimeLatchDoAfterEvent(), ent, target)
         {
@@ -220,9 +273,13 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         if (!_doAfter.TryStartDoAfter(doAfterArgs))
             return false;
 
-        var attemptPopup = Loc.GetString("slime-latch-attempt", ("slime", ent), ("ent", target));
-        _popup.PopupEntity(attemptPopup, ent, PopupType.MediumCaution);
         return true;
+    }
+
+    private void OnSelfBeforeClimb(Entity<SlimeComponent> ent, ref SelfBeforeClimbEvent args)
+    {
+        if (IsLatched(ent))
+            Unlatch(ent); // Unlatch first so no accident dot
     }
 
     private void OnDoAfterAttempt(EntityUid uid, SlimeComponent comp, ref DoAfterAttemptEvent<SlimeLatchDoAfterEvent> args)
@@ -238,9 +295,6 @@ public sealed partial class SlimeLatchSystem : EntitySystem
 
         if (args.Handled || args.Cancelled)
             return;
-
-        if (!CanLatch(ent, target)) // Pirate: slime morph
-            return; // Pirate: slime morph
 
         Latch(ent, target);
         args.Handled = true;
@@ -259,7 +313,8 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         return !(IsLatched(ent) // already latched
             || _mobState.IsDead(target) // target dead
             || !_actionBlocker.CanInteract(ent, target) // can't reach
-            || !HasComp<MobStateComponent>(target) // make any mob work
+            || !_mobQuery.HasComp(target) // any mob
+            || _latchedQuery.HasComp(target) // already claimed
             || (TryComp<HumanoidAppearanceComponent>(target, out var humanoid) && humanoid.Species == "SlimePerson")); // Pirate: slime kinship - slimes don't hunt their own kind
     }
 
@@ -278,17 +333,22 @@ public sealed partial class SlimeLatchSystem : EntitySystem
 
         _xform.SetCoordinates(ent, Transform(target).Coordinates);
         _xform.SetParent(ent, target);
-        if (TryComp<InputMoverComponent>(ent, out var inpm))
-            inpm.CanMove = false;
 
         ent.Comp.LatchedTarget = target;
+        Dirty(ent);
+        _actionBlocker.UpdateCanMove(ent.Owner);
 
         EnsureComp<BeingLatchedComponent>(target);
         EnsureComp(target, out SlimeDamageOvertimeComponent comp);
         comp.SourceEntityUid = ent;
 
+        var physic = EnsureComp<PhysicsComponent>(ent.Owner);
+        var fixture = EnsureComp<FixturesComponent>(ent.Owner);
+        _physic.SetCanCollide(ent.Owner, false, force: true, manager: fixture, body: physic); // For some reaosn the slime will collide with host and moving them
+
+
         _audio.PlayEntity(ent.Comp.EatSound, ent, ent);
-        _popup.PopupEntity(Loc.GetString("slime-action-latch-success", ("slime", ent), ("target", target)), ent, PopupType.SmallCaution);
+        _popup.PopupPredicted(Loc.GetString("slime-action-latch-success", ("slime", ent), ("target", target)), ent, ent);
 
         Dirty(ent);
         Dirty(target, comp);
@@ -307,14 +367,16 @@ public sealed partial class SlimeLatchSystem : EntitySystem
         RemCompDeferred<BeingLatchedComponent>(target);
         RemCompDeferred<SlimeDamageOvertimeComponent>(target);
 
-        if (TryComp<TransformComponent>(target, out var targetXform)
-            && _xform.IsParentOf(targetXform, ent.Owner))
-            _xform.SetParent(ent.Owner, _xform.GetParentUid(target));
+        _xform.SetParent(ent, _xform.GetParentUid(target)); // deparent it. probably.
 
-        if (TryComp<InputMoverComponent>(ent, out var inpm))
-            inpm.CanMove = true;
+        var physic = EnsureComp<PhysicsComponent>(ent.Owner);
+        var fixture = EnsureComp<FixturesComponent>(ent.Owner);
+        _physic.SetCanCollide(ent.Owner, true, force: true, manager: fixture, body: physic); // Make the slime collide back
+
 
         ent.Comp.LatchedTarget = null;
+        _actionBlocker.UpdateCanMove(ent.Owner);
+        Dirty(ent);
     }
 
     #endregion
