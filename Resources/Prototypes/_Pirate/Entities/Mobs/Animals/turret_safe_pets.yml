@@ -15,3 +15,12 @@
   - type: Access
     tags:
     - TurretExempt
+
+- type: entity
+  parent: MobCleanBot
+  id: MobCleanBotTurretExempt
+  suffix: Turret Exempt
+  components:
+  - type: Access
+    tags:
+    - TurretExempt

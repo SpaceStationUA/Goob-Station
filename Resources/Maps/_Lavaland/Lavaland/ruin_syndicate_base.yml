@@ -61058,16 +61058,6 @@ entities:
     - type: Transform
       pos: 4.595714,-10.990052
       parent: 1
-  - uid: 9748
-    components:
-    - type: Transform
-      pos: -16.53991,17.519941
-      parent: 1
-  - uid: 9765
-    components:
-    - type: Transform
-      pos: -9.021428,24.538452
-      parent: 1
 - proto: PhotoCamera
   entities:
   - uid: 457
@@ -67306,7 +67296,7 @@ entities:
     - type: Transform
       pos: -2.5,-26.5
       parent: 1
-- proto: SpawnMobCleanBot
+- proto: SpawnMobCleanBotTurretExempt
   entities:
   - uid: 898
     components:
