@@ -12,6 +12,10 @@ using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared._Goobstation.Wizard.Refund; // Goob
 using Content.Shared._Pirate.Reputation; // Pirate: traitor contracts.
+using Content.Shared.Actions.Events; // Pirate: companion actions.
+using Content.Shared.Actions.Components;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Database;
 using Content.Goobstation.Maths.FixedPoint;
@@ -41,6 +45,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly ActionUpgradeSystem _actionUpgrade = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly ReputationSystem _reputation = default!; // Pirate: traitor contracts.
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -224,6 +229,8 @@ public sealed partial class StoreSystem
             component.BalanceSpent[currency] += value;
         }
 
+        Dirty(uid, component);
+
         // goobstation - heretics
         // i am too tired of making separate systems for knowledge adding
         // and all that shit. i've had like 4 failed attempts
@@ -259,22 +266,60 @@ public sealed partial class StoreSystem
             }
         }
 
-        //give action
+        // Give action, recharging an existing limited-action purchase when configured.
         if (!string.IsNullOrWhiteSpace(listing.ProductAction))
         {
-            EntityUid? actionId;
-            // I guess we just allow duplicate actions?
-            // Allow duplicate actions and just have a single list buy for the buy-once ones.
-            if (!_mind.TryGetMind(buyer, out var mind, out _))
-                actionId = _actions.AddAction(buyer, listing.ProductAction);
-            else
-                actionId = _actionContainer.AddAction(mind, listing.ProductAction);
+            EntityUid? actionId = null;
+            var existingActionFound = false;
 
-            // Add the newly bought action entity to the list of bought entities
-            // And then add that action entity to the relevant product upgrade listing, if applicable
-            if (actionId != null)
+            if (!_mind.TryGetMind(buyer, out var mind, out _))
             {
-                HandleRefundComp(uid, component, actionId.Value, listing.Cost, listing); // Goob edit
+                if (TryComp<ActionsComponent>(buyer, out var buyerActions))
+                {
+                    foreach (var existingAction in buyerActions.Actions)
+                    {
+                        if (TryComp<MetaDataComponent>(existingAction, out var metadata) &&
+                            metadata.EntityPrototype?.ID == listing.ProductAction)
+                        {
+                            if (listing.ProductActionCharges is > 0)
+                                AddPurchasedActionCharges(existingAction, listing.ProductActionCharges.Value); // Pirate
+
+                            actionId = existingAction;
+                            existingActionFound = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!existingActionFound)
+                    actionId = _actions.AddAction(buyer, listing.ProductAction);
+            }
+            else
+            {
+                if (TryComp<ActionsContainerComponent>(mind, out var mindActions))
+                {
+                    foreach (var existingAction in mindActions.Container.ContainedEntities)
+                    {
+                        if (TryComp<MetaDataComponent>(existingAction, out var metadata) &&
+                            metadata.EntityPrototype?.ID == listing.ProductAction)
+                        {
+                            if (listing.ProductActionCharges is > 0)
+                                AddPurchasedActionCharges(existingAction, listing.ProductActionCharges.Value); // Pirate
+
+                            actionId = existingAction;
+                            existingActionFound = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!existingActionFound)
+                    actionId = _actionContainer.AddAction(mind, listing.ProductAction);
+            }
+
+            if (actionId != null && !existingActionFound)
+            {
+                HandleRefundComp(uid, component, actionId.Value, listing.Cost, listing);
 
                 if (listing.ProductUpgradeId != null)
                 {
@@ -324,7 +369,15 @@ public sealed partial class StoreSystem
 
         if (listing.ProductEvent != null)
         {
-            if (!listing.RaiseProductEventOnUser)
+            if (listing.ProductEvent is ActionPurchaseCompanionEvent companionEvent)
+            {
+                companionEvent.Buyer = GetNetEntity(buyer);
+                if (!listing.RaiseProductEventOnUser)
+                    RaiseLocalEvent(companionEvent);
+                else
+                    RaiseLocalEvent(buyer, companionEvent);
+            }
+            else if (!listing.RaiseProductEventOnUser)
                 RaiseLocalEvent(listing.ProductEvent);
             else
                 RaiseLocalEvent(buyer, listing.ProductEvent);
@@ -412,6 +465,7 @@ public sealed partial class StoreSystem
         }
 
         component.Balance[msg.Currency] -= msg.Amount;
+        Dirty(uid, component);
         UpdateUserInterface(buyer, uid, component);
     }
 
@@ -518,6 +572,8 @@ public sealed partial class StoreSystem
             if (component.BalanceSpent.ContainsKey(currency))
                 component.BalanceSpent[currency] -= value;
         }
+
+        Dirty(uid, component);
 
         if (refundComp.Data.ProductUpgradeId != null)
         {

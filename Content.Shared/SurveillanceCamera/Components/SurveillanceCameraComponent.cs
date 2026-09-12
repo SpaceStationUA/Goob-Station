@@ -27,7 +27,7 @@ public sealed partial class SurveillanceCameraComponent : Component
 
     // If this camera is active or not. Deactivating a camera
     // will not allow it to obtain any new viewers.
-    [DataField]
+    [DataField, AutoNetworkedField] // Pirate: camera X-ray must agree with the server's active state.
     public bool Active = true;
 
     // This one isn't easy to deal with. Will require a UI

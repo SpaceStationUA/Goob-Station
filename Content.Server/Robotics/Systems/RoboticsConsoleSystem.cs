@@ -3,16 +3,23 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Radio.EntitySystems;
-using Content.Shared.Lock;
-using Content.Shared.Database;
+using Content.Shared.CCVar;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.Database;
+using Content.Shared.Lock;
 using Content.Shared.Robotics;
 using Content.Shared.Robotics.Components;
 using Content.Shared.Robotics.Systems;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared._Pirate.MalfAI;
+using Content.Shared.Store;
+using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
+using Content.Shared.Store.Components;
+using Content.Goobstation.Maths.FixedPoint;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
-using Content.Shared.DeviceNetwork.Events;
-
 namespace Content.Server.Research.Systems;
 
 /// <summary>
@@ -28,6 +35,8 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
     // almost never timing out more than 1 per tick so initialize with that capacity
     private List<string> _removing = new(1);
 
@@ -41,7 +50,7 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
             subs.Event<BoundUIOpenedEvent>(OnOpened);
             subs.Event<RoboticsConsoleDisableMessage>(OnDisable);
             subs.Event<RoboticsConsoleDestroyMessage>(OnDestroy);
-            // TODO: camera stuff
+            subs.Event<RoboticsConsoleImposeLawMessage>(OnImposeLaw);
         });
     }
 
@@ -131,11 +140,10 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         if (!ent.Comp.Cyborgs.Remove(args.Address, out var data))
             return;
 
-        var payload = new NetworkPayload()
+        var payload = new NetworkPayload
         {
             [DeviceNetworkConstants.Command] = RoboticsConsoleConstants.NET_DESTROY_COMMAND
         };
-
         _deviceNetwork.QueuePacket(ent, args.Address, payload);
 
         var message = Loc.GetString(ent.Comp.DestroyMessage, ("name", data.Name));
@@ -144,6 +152,33 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
 
         ent.Comp.NextDestroy = now + ent.Comp.DestroyCooldown;
         Dirty(ent, ent.Comp);
+    }
+
+    private void OnImposeLaw(Entity<RoboticsConsoleComponent> ent, ref RoboticsConsoleImposeLawMessage args)
+    {
+        if (!HasComp<MalfAiMarkerComponent>(args.Actor) || !HasComp<StationAiHeldComponent>(args.Actor))
+            return;
+
+        if (_lock.IsLocked(ent.Owner) || !ent.Comp.Cyborgs.ContainsKey(args.Address))
+            return;
+
+        if (!TryComp<StoreComponent>(args.Actor, out var store))
+            return;
+
+        var cpu = new ProtoId<CurrencyPrototype>("CPU");
+        var cost = FixedPoint2.New(_cfg.GetCVar(CCVars.MalfAiImposeLawCpuCost));
+        if (!store.Balance.TryGetValue(cpu, out var balance) || balance < cost)
+            return;
+
+        store.Balance[cpu] = balance - cost;
+        Dirty(args.Actor, store);
+
+        var payload = new NetworkPayload
+        {
+            [DeviceNetworkConstants.Command] = RoboticsConsoleConstants.NET_IMPOSE_LAW0_COMMAND,
+            ["imposer"] = args.Actor
+        };
+        _deviceNetwork.QueuePacket(ent, args.Address, payload);
     }
 
     private void UpdateUserInterface(Entity<RoboticsConsoleComponent> ent)

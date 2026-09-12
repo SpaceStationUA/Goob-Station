@@ -64,6 +64,9 @@
     - id: ParadoxCloneSpawn
     #- id: RevenantSpawn  # GoobStation - removed till rework
     - id: SleeperAgents
+    - id: MalfAiMidround # Pirate - rare, eligible station AI only.
+      conditions:
+      - !type:MalfAiAvailableCondition
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: BlobSpawn # Goobstation - Blob

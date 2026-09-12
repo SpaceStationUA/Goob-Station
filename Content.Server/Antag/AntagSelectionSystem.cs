@@ -664,7 +664,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
 
         // todo: expand this to allow for more fine antag-selection logic for game rules.
-        if (!_jobs.CanBeAntag(session))
+        // Pirate: a station AI may malfunction, but must remain ineligible for ordinary antagonist roles.
+        var malfAi = def.PrefRoles.Count == 1 && def.PrefRoles[0] == "MalfunctioningAI" &&
+                     HasComp<Content.Shared.Silicons.StationAi.StationAiHeldComponent>(session.AttachedEntity);
+        if (!_jobs.CanBeAntag(session) && !malfAi)
             return false;
 
         return true;

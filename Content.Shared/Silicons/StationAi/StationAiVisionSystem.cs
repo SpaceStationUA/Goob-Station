@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Numerics;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationAi;
 using Robust.Shared.Map.Components;
@@ -66,21 +67,26 @@ public sealed class StationAiVisionSystem : EntitySystem
     /// <summary>
     /// Returns whether a tile is accessible based on vision.
     /// </summary>
-    public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false)
+    public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false, bool xrayCameras = false, float xrayRange = 0f, Vector2? xrayOrigin = null)
     {
         _viewportTiles.Clear();
         _opaque.Clear();
         _seeds.Clear();
         _viewportTiles.Add(tile);
+        // Pirate - upgraded cameras may reach farther than ordinary vision seeds.
+        if (xrayCameras)
+            expansionSize = Math.Max(expansionSize, xrayRange);
         var localBounds = _lookup.GetLocalBounds(tile, grid.Comp2.TileSize);
         var expandedBounds = localBounds.Enlarged(expansionSize);
 
         _seedJob.Grid = (grid.Owner, grid.Comp2);
         _seedJob.ExpandedBounds = expandedBounds;
         _parallel.ProcessNow(_seedJob);
+        _job.XrayCameras = xrayCameras;
+        _job.XrayRange = xrayRange;
+        _job.XrayOrigin = xrayOrigin;
         _job.Data.Clear();
         FastPath = fastPath;
-
         foreach (var seed in _seeds)
         {
             if (!seed.Comp.Enabled)
@@ -148,23 +154,40 @@ public sealed class StationAiVisionSystem : EntitySystem
         return anyOccluders;
     }
 
+    private bool IsActiveCamera(EntityUid uid, Vector2? origin = null, float range = 0f)
+    {
+        if (!TryComp<Content.Shared.SurveillanceCamera.Components.SurveillanceCameraComponent>(uid, out var camera)
+            || !camera.Active
+            || HasComp<Content.Shared._Pirate.MalfAI.CameraUpgradeOmitterComponent>(uid))
+            return false;
+
+        return origin is not { } position || range <= 0f ||
+               Vector2.DistanceSquared(_xforms.GetWorldPosition(Transform(uid)), position) <= range * range;
+    }
+
     /// <summary>
     /// Gets a byond-equivalent for tiles in the specified worldAABB.
     /// </summary>
     /// <param name="expansionSize">How much to expand the bounds before to find vision intersecting it. Makes this the largest vision size + 1 tile.</param>
-    public void GetView(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f)
+    public void GetView(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f, bool xrayCameras = false, float xrayRange = 0f, Vector2? xrayOrigin = null)
     {
         _viewportTiles.Clear();
         _opaque.Clear();
         _seeds.Clear();
 
         // TODO: Would be nice to be able to run this while running the other stuff.
+        // Pirate - include every camera whose upgraded coverage can reach the viewport.
+        if (xrayCameras)
+            expansionSize = Math.Max(expansionSize, xrayRange);
         _seedJob.Grid = (grid.Owner, grid.Comp2);
         var invMatrix = _xforms.GetInvWorldMatrix(grid);
         var localAabb = invMatrix.TransformBox(worldBounds);
         var enlargedLocalAabb = invMatrix.TransformBox(worldBounds.Enlarged(expansionSize));
         _seedJob.ExpandedBounds = enlargedLocalAabb;
         _parallel.ProcessNow(_seedJob);
+        _job.XrayCameras = xrayCameras;
+        _job.XrayRange = xrayRange;
+        _job.XrayOrigin = xrayOrigin;
         _job.Data.Clear();
         FastPath = false;
 
@@ -312,7 +335,9 @@ public sealed class StationAiVisionSystem : EntitySystem
         public required IEntityManager EntManager;
         public required SharedMapSystem Maps;
         public required StationAiVisionSystem System;
-
+        public bool XrayCameras;
+        public float XrayRange;
+        public Vector2? XrayOrigin;
         public Entity<MapGridComponent> Grid;
         public List<Entity<StationAiVisionComponent>> Data = new();
 
@@ -328,14 +353,21 @@ public sealed class StationAiVisionSystem : EntitySystem
         {
             var seed = Data[index];
             var seedXform = EntManager.GetComponent<TransformComponent>(seed);
+            // Pirate - x-ray coverage supplements ordinary line of sight instead of shrinking it.
+            var xrayCamera = XrayCameras && System.IsActiveCamera(seed.Owner, XrayOrigin, XrayRange);
+            var xrayRange = XrayRange > 0f ? XrayRange : seed.Comp.Range;
+            var unoccluded = !seed.Comp.Occluded || System.FastPath;
 
             // Fastpath just get tiles in range.
             // Either xray-vision or system is doing a quick-and-dirty check.
-            if (!seed.Comp.Occluded || System.FastPath)
+            if (unoccluded || xrayCamera)
             {
+                // Pirate - tile queries need grid-local positions, including on moved/rotated stations.
+                var localPosition = Maps.WorldToLocal(Grid.Owner, Grid.Comp, System._xforms.GetWorldPosition(seedXform));
                 var squircles = Maps.GetLocalTilesIntersecting(Grid.Owner,
                     Grid.Comp,
-                    new Circle(System._xforms.GetWorldPosition(seedXform), seed.Comp.Range), ignoreEmpty: false);
+                    new Circle(localPosition,
+                        unoccluded ? Math.Max(seed.Comp.Range, xrayCamera ? xrayRange : 0f) : xrayRange), ignoreEmpty: false);
 
                 lock (VisibleTiles)
                 {
@@ -345,7 +377,8 @@ public sealed class StationAiVisionSystem : EntitySystem
                     }
                 }
 
-                return;
+                if (unoccluded || xrayRange >= seed.Comp.Range)
+                    return;
             }
 
             // Code based upon https://github.com/OpenDreamProject/OpenDream/blob/c4a3828ccb997bf3722673620460ebb11b95ccdf/OpenDreamShared/Dream/ViewAlgorithm.cs

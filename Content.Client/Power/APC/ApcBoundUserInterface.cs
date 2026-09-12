@@ -3,6 +3,7 @@
 using Content.Client.Power.APC.UI;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
+using Content.Shared._Pirate.MalfAI; // Pirate
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -24,6 +25,8 @@ namespace Content.Client.Power.APC
             _menu = this.CreateWindow<ApcMenu>();
             _menu.SetEntity(Owner);
             _menu.OnBreaker += BreakerPressed;
+            _menu.OnSiphon += () => SendMessage(new ApcSiphonCpuMessage()); // Pirate
+            _menu.SetSiphonVisible(EntMan.HasComponent<MalfAiMarkerComponent>(PlayerManager.LocalEntity));
 
             var hasAccess = false;
             if (PlayerManager.LocalEntity != null)

@@ -116,3 +116,10 @@
       emergencyLightColor: "#8A3324"
       forceEnableEmergencyLights: true
       shuttleTime: 600
+    cyan: # Pirate: Malf AI Doomsday protocol.
+      announcement: alert-level-cyan-announcement
+      sound: /Audio/Misc/cyan.ogg
+      color: Cyan
+      emergencyLightColor: Cyan
+      forceEnableEmergencyLights: true
+      shuttleTime: 600

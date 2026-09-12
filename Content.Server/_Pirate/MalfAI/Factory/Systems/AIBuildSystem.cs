@@ -1,0 +1,264 @@
+// SPDX-FileCopyrightText: 2025 Tyranex <bobthezombie4@gmail.com>
+//
+// SPDX-License-Identifier: MIT
+
+using Content.Server._Pirate.MalfAI.Factory.Components;
+using Content.Shared.DoAfter;
+using Content.Shared._Pirate.MalfAI.Factory;
+using Content.Shared._Pirate.MalfAI.Factory.Components;
+using Content.Shared._Pirate.MalfAI;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
+using Content.Shared.Wall;
+using Content.Shared._Pirate.MalfAI.Actions;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Silicons.StationAi;
+
+namespace Content.Server._Pirate.MalfAI.Factory.Systems;
+
+/// <summary>
+/// Event to request building a prototype at a specific location
+/// </summary>
+public sealed partial class AIBuildRequestEvent : EntityEventArgs
+{
+    public EntityUid Requester { get; }
+    public EntityCoordinates Target { get; }
+    public string Prototype { get; }
+
+    public AIBuildRequestEvent(EntityUid requester, EntityCoordinates target, string prototype)
+    {
+        Requester = requester;
+        Target = target;
+        Prototype = prototype;
+    }
+}
+
+
+/// <summary>
+/// System that handles AI building requests by spawning prototypes at specified locations
+/// </summary>
+public sealed partial class AIBuildSystem : EntitySystem
+{
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly Content.Shared.Actions.SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<AIBuildRequestEvent>(OnBuildRequest);
+        SubscribeLocalEvent<MalfAiMarkerComponent, AIBuildDoAfterEvent>(OnBuildDoAfter);
+        SubscribeLocalEvent<MalfAiMarkerComponent, MalfAiBuildWallActionEvent>(OnBuildWall);
+    }
+
+    private void OnBuildWall(Entity<MalfAiMarkerComponent> ent, ref MalfAiBuildWallActionEvent args)
+    {
+        if (args.Handled || !CanBuildWall(ent, args.Target))
+            return;
+
+        var grid = Comp<MapGridComponent>(args.Target.EntityId);
+        var tile = grid.TileIndicesFor(args.Target);
+        var target = new EntityCoordinates(args.Target.EntityId, (tile.X + 0.5f) * grid.TileSize, (tile.Y + 0.5f) * grid.TileSize);
+        args.Handled = CanBuildWall(ent, target) && TryStartBuild(ent, target, "WallSolid");
+    }
+
+    private bool CanBuildWall(EntityUid requester, EntityCoordinates target)
+    {
+        if (!target.IsValid(EntityManager) || !_stationAi.TryGetCore(requester, out var core) ||
+            !HasComp<StationAiOverlayComponent>(requester) ||
+            !IsTileFree(target))
+            return false;
+
+        var origin = TryComp<MalfAiShuntedComponent>(requester, out var shunted)
+            ? shunted.CoreHolder ?? core.Owner
+            : core.Owner;
+        if (!Exists(origin) || !_transform.InRange(target, Transform(origin).Coordinates, 10f))
+            return false;
+
+        var grid = Comp<MapGridComponent>(target.EntityId);
+        var bounds = _lookup.GetLocalBounds(grid.TileIndicesFor(target), grid.TileSize);
+        var occupants = new HashSet<Entity<MobStateComponent>>();
+        _lookup.GetLocalEntitiesIntersecting(target.EntityId, bounds, occupants, LookupFlags.Dynamic | LookupFlags.Sundries);
+        return occupants.Count == 0;
+    }
+
+    /// <summary>
+    /// Handles build requests from AI entities
+    /// </summary>
+    private void OnBuildRequest(AIBuildRequestEvent args)
+        => TryStartBuild(args.Requester, args.Target, args.Prototype);
+
+    private bool TryStartBuild(EntityUid requester, EntityCoordinates target, string prototype)
+    {
+        // Validate coordinates
+        if (!target.IsValid(EntityManager))
+        {
+            Log.Debug($"AIBuild: Invalid coordinates {target} for prototype '{prototype}'");
+            return false;
+        }
+
+        // Validate tile is free
+        if (!IsTileFree(target))
+        {
+            Log.Debug($"AIBuild: Tile at {target} is occupied, cannot build '{prototype}'");
+            return false;
+        }
+
+        // Start building process with DoAfter
+        var doAfterEvent = new AIBuildDoAfterEvent(GetNetCoordinates(target), prototype);
+        var delay = TimeSpan.FromSeconds(3.0f); // 3 second build time
+
+        // Try to get the AI's visible eye entity (RemoteEntity) for DoAfter display
+        EntityUid doAfterUser = requester;
+        var aiCore = SharedMalfAiHelpers.ResolveAiCoreFrom(EntityManager, _transform, requester);
+        if (aiCore != EntityUid.Invalid &&
+            TryComp<Content.Shared.Silicons.StationAi.StationAiCoreComponent>(aiCore, out var coreComp) &&
+            coreComp.RemoteEntity.HasValue)
+        {
+            doAfterUser = coreComp.RemoteEntity.Value;
+        }
+
+        var doAfterArgs = new DoAfterArgs(EntityManager, doAfterUser, delay, doAfterEvent, eventTarget: requester)
+        {
+            BreakOnMove = true, // Cancel if the AI eye moves during the build
+            BreakOnDamage = true,
+            BreakOnHandChange = false,
+            CancelDuplicate = false,
+            BlockDuplicate = true,
+            DuplicateCondition = DuplicateConditions.SameEvent,
+            NeedHand = false,
+            Hidden = false
+        };
+
+        if (!_doAfter.TryStartDoAfter(doAfterArgs))
+        {
+            Log.Debug($"AIBuild: Did not start DoAfter for '{prototype}' build request");
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Handles completion of the build process
+    /// </summary>
+    private void OnBuildDoAfter(EntityUid uid, Content.Shared._Pirate.MalfAI.MalfAiMarkerComponent component, AIBuildDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        args.Handled = true;
+
+        var location = GetCoordinates(args.Location);
+
+        if (args.Prototype == "WallSolid" && !CanBuildWall(uid, location))
+            return;
+
+        if (!IsTileFree(location))
+        {
+            Log.Debug($"AIBuild: Tile at {location} became occupied during build");
+            return;
+        }
+
+        try
+        {
+            // Spawn the entity
+            var spawned = EntityManager.SpawnEntity(args.Prototype, location);
+
+            // If this is a robotics factory grid, remember who built it so we can assign borgs later.
+            var isFactory = false;
+            if (HasComp<RoboticsFactoryGridComponent>(spawned))
+            {
+                isFactory = true;
+                var owner = EnsureComp<MalfFactoryOwnerComponent>(spawned);
+                owner.Controller = uid; // uid is the AI entity that received the DoAfter completion
+            }
+
+            // Anchor the entity if possible
+            TryAnchorEntity(spawned);
+
+            // On success, remove the Robotics Factory action from the Malf AI that built it.
+            if (isFactory)
+                RemoveRoboticsFactoryAction(uid);
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"AIBuild: Failed to spawn '{args.Prototype}' at {location}: {ex}");
+        }
+    }
+
+    private void RemoveRoboticsFactoryAction(EntityUid performer)
+    {
+        // Pirate: action events now live on the target action component.
+        if (!TryComp<Content.Shared.Actions.Components.ActionsComponent>(performer, out var actionsComp))
+            return;
+
+        var toRemove = new List<EntityUid>();
+        foreach (var (actId, actComp) in _actions.GetActions(performer, actionsComp))
+        {
+            if (TryComp<Content.Shared.Actions.Components.WorldTargetActionComponent>(actId, out var target) &&
+                target.Event is Content.Shared.Actions.Events.MalfAiRoboticsFactoryActionEvent)
+                toRemove.Add(actId);
+        }
+
+        foreach (var id in toRemove)
+        {
+            _actions.RemoveAction(performer, id);
+            // Purchased actions also live on the mind; delete the consumed action there too.
+            QueueDel(id);
+        }
+    }
+
+    /// <summary>
+    /// Checks if a tile is free for building
+    /// </summary>
+    private bool IsTileFree(EntityCoordinates coordinates)
+    {
+        if (!coordinates.IsValid(EntityManager))
+            return false;
+
+        if (!TryComp<MapGridComponent>(coordinates.EntityId, out var grid))
+            return false;
+
+        var tile = grid.TileIndicesFor(coordinates);
+        var tileRef = grid.GetTileRef(tile);
+
+        // Check if the tile exists and is not empty space
+        if (tileRef.Tile.IsEmpty)
+            return false;
+
+        // Check for anchored entities, but allow building on subfloor and wall-mounted entities
+        foreach (var entity in grid.GetAnchoredEntities(tile))
+        {
+            // Allow building over entities with SubFloorHideComponent (cables, pipes, disposal pipes)
+            if (HasComp<Content.Shared.SubFloor.SubFloorHideComponent>(entity))
+                continue;
+
+            // Wall-mounted devices use a component, not a tag prototype.
+            if (HasComp<WallMountComponent>(entity))
+                continue;
+
+            // Block building on other anchored entities (walls, doors, machines, etc.)
+            return false;
+        }
+
+        return true;
+    }
+    /// <summary>
+    /// Attempts to anchor an entity if it can be anchored
+    /// </summary>
+    private void TryAnchorEntity(EntityUid entity)
+    {
+        if (!TryComp<TransformComponent>(entity, out var transform))
+            return;
+
+        if (transform.Anchored)
+            return;
+
+        // Try to anchor the entity
+        transform.Anchored = true;
+    }
+}

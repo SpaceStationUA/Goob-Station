@@ -1,0 +1,309 @@
+# SPDX-FileCopyrightText: 2025 Tyranex <bobthezombie4@gmail.com>
+# SPDX-FileCopyrightText: 2025 YourName
+#
+# SPDX-License-Identifier: MIT
+
+# Bundle: Viewport actions (Set + Open)
+# Place viewport action
+- type: entity
+  id: ActionMalfAiSetViewport
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    useDelay: 30
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_placeviewport
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: WorldTargetAction
+    event: !type:MalfAiSetViewportActionEvent
+
+# Open viewport action
+- type: entity
+  id: ActionMalfAiOpenViewport
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_openviewport
+  - type: InstantAction
+    event: !type:MalfAiOpenViewportActionEvent
+
+
+# Malf AI: required action entities for rule startup
+- type: entity
+  id: ActionMalfAiOpenStore
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_shop
+  - type: InstantAction
+    event: !type:OpenMalfAiStoreActionEvent
+
+- type: entity
+  id: ActionMalfAiOpenBorgsUi
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -10
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_borgs
+  - type: InstantAction
+    event: !type:OpenMalfAiBorgsUiActionEvent
+
+
+# New: Doomsday Protocol (AI-only)
+- type: entity
+  id: ActionMalfAiDoomsday
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_doomsday
+  - type: InstantAction
+    event: !type:MalfAiDoomsdayActionEvent
+
+# New: Robotics Factory (AI-only)
+- type: entity
+  id: ActionMalfAiRoboticsFactory
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_factory
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: WorldTargetAction
+    event: !type:MalfAiRoboticsFactoryActionEvent
+
+# Remote wall construction
+- type: entity
+  id: ActionMalfAiBuildWall
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    useDelay: 30
+    icon:
+      sprite: _Pirate/Structures/Walls/solid.rsi
+      state: full
+  - type: TargetAction
+    checkCanAccess: false
+    range: 0 # The server enforces 10 tiles from the original core, not the brain's APC or eye.
+  - type: WorldTargetAction
+    event: !type:MalfAiBuildWallActionEvent
+
+# Direct cyborg subversion
+- type: entity
+  id: ActionMalfAiSubvertBorg
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 60
+    checkCanInteract: false # Targets are validated by the ability, not the AI machine whitelist.
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_borgs
+  - type: TargetAction
+    checkCanAccess: false
+    range: 0 # Server validates camera coverage and 10 tiles from the eye.
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - BorgChassis
+    event: !type:MalfAiSubvertBorgActionEvent
+  - type: LimitedCharges
+    maxCharges: 1
+
+- type: entity
+  id: ActionMalfAiEmp
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 60
+    checkCanInteract: false # IPCs are not on the ordinary AI interaction whitelist.
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_overloadmachine
+  - type: TargetAction
+    checkCanAccess: false
+    range: 0 # Server validates camera coverage and 10 tiles from the eye.
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - BorgChassis
+      - HumanoidAppearance
+    event: !type:MalfAiEmpActionEvent
+
+# Shunt to APC action
+- type: entity
+  id: ActionMalfAiShuntToApc
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_shunttoapc
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: EntityTargetAction
+    event: !type:MalfAiShuntToApcActionEvent
+
+# Voice Modulator action
+- type: entity
+  id: ActionMalfAiVoiceModulator
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_voicemodulator
+  - type: InstantAction
+    event: !type:MalfAiVoiceModulatorActionEvent
+
+# Return to Core action (used for shunt and mech hijack)
+- type: entity
+  id: ActionMalfAiReturnToCore
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_returntocore
+  - type: InstantAction
+    event: !type:MalfAiReturnToCoreActionEvent
+
+# Overload Machine action
+- type: entity
+  id: ActionMalfAiOverloadMachine
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_overloadmachine
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: WorldTargetAction
+    event: !type:MalfAiOverloadMachineActionEvent
+  - type: LimitedCharges
+    maxCharges: 2
+
+# Hijack Mech action
+- type: entity
+  id: ActionMalfAiHijackMech
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_mech
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: EntityTargetAction
+    event: !type:MalfAiHijackMechActionEvent
+
+- type: entity
+  id: ActionMalfAiOverrideMachine
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_overridemachine
+  - type: TargetAction
+    checkCanAccess: false
+    range: 99999
+  - type: WorldTargetAction
+    event: !type:MalfAiOverrideMachineActionEvent
+  - type: LimitedCharges
+    maxCharges: 2
+
+
+# Detonate RCDs action
+- type: entity
+  id: ActionMalfAiDetonateRCDs
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_detonatercd
+  - type: InstantAction
+    event: !type:MalfAiDetonateRcdsActionEvent
+  - type: LimitedCharges
+    maxCharges: 1
+
+# Station lockdown action
+- type: entity
+  id: ActionMalfAiLockdownGrid
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    useDelay: 300
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_lockdowngrid
+  - type: InstantAction
+    event: !type:MalfAiLockdownGridActionEvent
+
+# Gyroscope action
+- type: entity
+  id: ActionMalfAiGyroscope
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    useDelay: 3
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_gyroscope
+  - type: TargetAction
+    checkCanAccess: false
+    range: 5
+  - type: WorldTargetAction
+    event: !type:MalfAiGyroscopeActionEvent
