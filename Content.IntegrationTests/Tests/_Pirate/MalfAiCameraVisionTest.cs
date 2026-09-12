@@ -5,6 +5,7 @@ using System.Numerics;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
 using Content.Shared.SurveillanceCamera.Components;
+using Content.Shared.SurveillanceCamera;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -40,8 +41,8 @@ public sealed class MalfAiCameraVisionTest
             }
 
             camera = entMan.SpawnEntity(null, new EntityCoordinates(map.Grid.Owner, 0.5f, 0.5f));
-            entMan.EnsureComponent<StationAiVisionComponent>(camera).Range = 7;
-            entMan.EnsureComponent<SurveillanceCameraComponent>(camera).Active = true;
+            entMan.EnsureComponent<StationAiVisionComponent>(camera);
+            entMan.EnsureComponent<SurveillanceCameraComponent>(camera);
             // A full barrier keeps ordinary camera line of sight away from the target.
             for (var y = -8; y <= 8; y++)
                 entMan.SpawnEntity("WallSolid", new EntityCoordinates(map.Grid.Owner, 1.5f, y + 0.5f));
@@ -66,7 +67,7 @@ public sealed class MalfAiCameraVisionTest
             vision.GetView(grid, bounds, tiles, xrayCameras: true, xrayRange: 6, xrayOrigin: origin);
             Assert.That(tiles, Does.Contain(target));
 
-            entMan.GetComponent<SurveillanceCameraComponent>(camera).Active = false;
+            entMan.System<SharedSurveillanceCameraSystem>().SetActive(camera, false);
             Assert.That(vision.IsAccessible(grid, target, xrayCameras: true, xrayRange: 6, xrayOrigin: origin), Is.False);
         });
         await pair.CleanReturnAsync();

@@ -6,7 +6,6 @@ using Content.Server.Station.Systems;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI.Actions;
 using Content.Shared.Emp;
-using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Containers;
@@ -110,24 +109,23 @@ public sealed class MalfAiRemoteActionsTest
             var containers = entMan.System<SharedContainerSystem>();
             var friendlyCell = containers.GetContainer(ally, "cell_slot").ContainedEntities.Single();
             var enemyCell = containers.GetContainer(enemy, "cell_slot").ContainedEntities.Single();
-            var friendlyBattery = entMan.GetComponent<BatteryComponent>(friendlyCell);
-            var enemyBattery = entMan.GetComponent<BatteryComponent>(enemyCell);
-            var friendlyCharge = friendlyBattery.CurrentCharge;
-            Assert.That(enemyBattery.CurrentCharge, Is.GreaterThan(0));
+            var batteries = entMan.System<SharedBatterySystem>();
+            var friendlyCharge = batteries.GetCharge(friendlyCell);
+            Assert.That(batteries.GetCharge(enemyCell), Is.GreaterThan(0));
             var emp = new MalfAiEmpActionEvent { Performer = ai, Target = enemy };
             entMan.EventBus.RaiseLocalEvent(ai, emp);
             Assert.Multiple(() =>
             {
                 Assert.That(emp.Handled, Is.True);
-                Assert.That(enemyBattery.CurrentCharge, Is.Zero);
-                Assert.That(friendlyBattery.CurrentCharge, Is.EqualTo(friendlyCharge));
+                Assert.That(batteries.GetCharge(enemyCell), Is.Zero);
+                Assert.That(batteries.GetCharge(friendlyCell), Is.EqualTo(friendlyCharge));
                 Assert.That(entMan.HasComponent<EmpDisabledComponent>(core), Is.False);
                 Assert.That(entMan.HasComponent<EmpDisabledComponent>(ai), Is.False);
                 Assert.That(entMan.HasComponent<EmpDisabledComponent>(ally), Is.False);
             });
             // Friendly-fire protection belongs to this ability, not a permanent EMP immunity.
             entMan.System<SharedEmpSystem>().TryEmpEffects(friendlyCell, 50000, TimeSpan.FromSeconds(1));
-            Assert.That(friendlyBattery.CurrentCharge, Is.Zero);
+            Assert.That(batteries.GetCharge(friendlyCell), Is.Zero);
         });
         await pair.CleanReturnAsync();
     }

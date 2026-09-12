@@ -3,6 +3,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Mind;
+using Content.Server._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI.Actions;
 using Content.Shared.Players;

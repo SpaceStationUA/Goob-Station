@@ -2,6 +2,7 @@
 
 using Content.Goobstation.Common.Speech;
 using Content.Shared._Pirate.MalfAI;
+using Content.Shared.Actions;
 using Content.Shared.Chat;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Silicons.StationAi;
