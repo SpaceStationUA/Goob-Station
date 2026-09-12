@@ -66,9 +66,10 @@ public sealed class MalfAiVoiceModulatorTest
             var card = entMan.SpawnEntity("PassengerIDCard", map.GridCoords);
             entMan.GetComponent<IdCardComponent>(card).JobIcon = "JobIconCaptain";
             var inventory = entMan.System<InventorySystem>();
-            Assert.That(inventory.TryEquip(human, card, "id"), Is.True);
             uniform = entMan.SpawnEntity("ClothingUniformJumpsuitColorGrey", map.GridCoords);
             Assert.That(inventory.TryEquip(human, uniform, "jumpsuit"), Is.True);
+            // The ID slot depends on wearing a jumpsuit.
+            Assert.That(inventory.TryEquip(human, card, "id"), Is.True);
             entMan.System<SharedSuitSensorSystem>().SetSensor(
                 (uniform, entMan.GetComponent<SuitSensorComponent>(uniform)), SuitSensorMode.SensorVitals, human);
             target = entMan.GetNetEntity(human);
