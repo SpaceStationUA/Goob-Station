@@ -10,7 +10,7 @@ using Content.Shared._Pirate.MalfAI;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Content.Shared.Tag;
+using Content.Shared.Wall;
 using Content.Shared._Pirate.MalfAI.Actions;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Silicons.StationAi;
@@ -44,7 +44,6 @@ public sealed partial class AIBuildSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly Content.Shared.Actions.SharedActionsSystem _actions = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
@@ -238,9 +237,8 @@ public sealed partial class AIBuildSystem : EntitySystem
             if (HasComp<Content.Shared.SubFloor.SubFloorHideComponent>(entity))
                 continue;
 
-            // Allow building over entities with WallMount tag (cameras, lights, wall-mounted devices)
-            // I may have forgot a few here, add this tag if noticed missing
-            if (_tagSystem.HasTag(entity, "WallMount"))
+            // Wall-mounted devices use a component, not a tag prototype.
+            if (HasComp<WallMountComponent>(entity))
                 continue;
 
             // Block building on other anchored entities (walls, doors, machines, etc.)

@@ -63,7 +63,7 @@ public sealed class MalfAiVoiceModulatorTest
             var speech = entMan.GetComponent<SpeechComponent>(human);
             speech.SpeechVerb = "Robotic";
             speech.SpeechSounds = "Borg";
-            var card = entMan.SpawnEntity("IDCardStandard", map.GridCoords);
+            var card = entMan.SpawnEntity("PassengerIDCard", map.GridCoords);
             entMan.GetComponent<IdCardComponent>(card).JobIcon = "JobIconCaptain";
             var inventory = entMan.System<InventorySystem>();
             Assert.That(inventory.TryEquip(human, card, "id"), Is.True);

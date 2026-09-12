@@ -191,6 +191,7 @@ public sealed class MalfAiBorgFactoryTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
         var entMan = server.ResolveDependency<IEntityManager>();
+        var map = await pair.CreateTestMap();
         var before = entMan.Count<RoboticsFactoryGridComponent>();
         await server.WaitPost(() =>
         {
@@ -198,6 +199,11 @@ public sealed class MalfAiBorgFactoryTest
             entMan.EnsureComponent<MalfAiMarkerComponent>(requester);
             entMan.EventBus.RaiseEvent(EventSource.Local, new Content.Server._Pirate.MalfAI.Factory.Systems.AIBuildRequestEvent(
                 requester, Robust.Shared.Map.EntityCoordinates.Invalid, "RoboticsFactoryGrid"));
+            var wall = entMan.SpawnEntity("WallSolid", map.GridCoords);
+            Assert.That(entMan.GetComponent<TransformComponent>(wall).Anchored, Is.True);
+            // Occupied tiles must be rejected without looking up the nonexistent WallMount tag.
+            entMan.EventBus.RaiseEvent(EventSource.Local, new AIBuildRequestEvent(
+                requester, map.GridCoords, "RoboticsFactoryGrid"));
         });
         await server.WaitRunTicks(2);
         await server.WaitAssertion(() => Assert.That(entMan.Count<RoboticsFactoryGridComponent>(), Is.EqualTo(before)));

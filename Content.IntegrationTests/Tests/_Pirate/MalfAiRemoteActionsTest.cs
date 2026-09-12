@@ -5,6 +5,8 @@ using System.Numerics;
 using Content.Server.Station.Systems;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI.Actions;
+using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Emp;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Silicons.StationAi;
@@ -99,6 +101,17 @@ public sealed class MalfAiRemoteActionsTest
             entMan.EnsureComponent<MalfAiMarkerComponent>(ai);
             enemy = entMan.SpawnEntity("PlayerBorgBatteryNoMind", new EntityCoordinates(map.Grid.Owner, 2.5f, 0.5f));
             ally = entMan.SpawnEntity("PlayerBorgBatteryNoMind", new EntityCoordinates(map.Grid.Owner, 1.5f, 0.5f));
+            var ipc = entMan.SpawnEntity("MobIPC", new EntityCoordinates(map.Grid.Owner, 3.5f, 0.5f));
+            var actions = entMan.System<SharedActionsSystem>();
+            var empAction = actions.AddAction(ai, "ActionMalfAiEmp")!.Value;
+            var subvertAction = actions.AddAction(ai, "ActionMalfAiSubvertBorg")!.Value;
+            // Exercise the same target validation as a player's click, not just the handler.
+            Assert.That(actions.ValidateEntityTarget(ai, enemy,
+                (empAction, entMan.GetComponent<EntityTargetActionComponent>(empAction))), Is.True);
+            Assert.That(actions.ValidateEntityTarget(ai, ipc,
+                (empAction, entMan.GetComponent<EntityTargetActionComponent>(empAction))), Is.True);
+            Assert.That(actions.ValidateEntityTarget(ai, ally,
+                (subvertAction, entMan.GetComponent<EntityTargetActionComponent>(subvertAction))), Is.True);
             var subvert = new MalfAiSubvertBorgActionEvent { Performer = ai, Target = ally };
             entMan.EventBus.RaiseLocalEvent(ai, subvert);
             Assert.That(subvert.Handled, Is.True);
