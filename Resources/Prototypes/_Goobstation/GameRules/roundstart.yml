@@ -17,6 +17,11 @@
   parent: BaseGameRule
   id: Changeling
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - ChangelingSkills
+  # Pirate: skill chips end
   - type: ChangelingRule
   - type: GameRule
     minPlayers: 15
@@ -419,6 +424,11 @@
   parent: BaseGameRule
   id: Devil
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - GangSkills
+  # Pirate: skill chips end
   - type: DevilRule
   - type: GameRule
     minPlayers: 15

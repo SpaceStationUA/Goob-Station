@@ -19,6 +19,7 @@
     - UplinkJob
     - UplinkPointless
     - UplinkObjectives # Pirate: contract supplies and objective unlocks
+    - UplinkSkills # Pirate: skill chips
     - UplinkSales # WD EDIT
     currencyWhitelist:
     - Telecrystal

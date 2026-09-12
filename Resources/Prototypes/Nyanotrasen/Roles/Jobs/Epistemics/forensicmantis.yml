@@ -31,6 +31,13 @@
   - Maintenance
   - Mantis
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipDatabase
+    - SkillChipCloseQuarters
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
       - type: CanEnchant

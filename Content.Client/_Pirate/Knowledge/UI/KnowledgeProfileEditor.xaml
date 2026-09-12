@@ -11,7 +11,8 @@
         <Button Name="ResetButton" Text="{Loc 'knowledge-editor-reset'}" ToolTip="{Loc 'knowledge-editor-reset-tooltip'}" Margin="0 0 6 0" />
         <Button Name="SaveButton" Text="{Loc 'knowledge-editor-apply'}" ToolTip="{Loc 'knowledge-editor-apply-tooltip'}" />
     </BoxContainer>
+    <BoxContainer Name="Legend" Orientation="Horizontal" Margin="0 0 0 8" SeparationOverride="12" />
     <ScrollContainer HScrollEnabled="False" VerticalExpand="True">
-        <BoxContainer Name="Skills" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2" />
+        <BoxContainer Name="Skills" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="12" />
     </ScrollContainer>
 </BoxContainer>

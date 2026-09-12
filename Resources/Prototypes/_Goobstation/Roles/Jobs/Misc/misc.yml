@@ -29,6 +29,11 @@
   - NuclearOperative
   - SyndicateAgent
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ FreedomImplant, NutrimentPumpImplant, SpaceProofImplant ]
 
@@ -64,6 +69,11 @@
   - NuclearOperative
   - SyndicateAgent
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEchelonEducation
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ VaporizeImplant, ShiftImplant, BlinkImplant, FreedomImplant, ScramImplant, StopTimeImplant, NutrimentPumpImplant, SpaceProofImplant ]
 
@@ -105,6 +115,11 @@
   - NuclearOperative
   - SyndicateAgent
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipERT
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ FreedomImplant, ScramImplant, NutrimentPumpImplant, SpaceProofImplant, StypticStimulatorImplant, DeathAcidifierImplant, UplinkImplant ]
   - !type:AddComponentSpecial
@@ -160,6 +175,11 @@
   - NuclearOperative
   - SyndicateAgent
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipERT
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ FreedomImplant, ScramImplant, NutrimentPumpImplant, StypticStimulatorImplant, UplinkImplant, MindShieldImplant, BluespaceLifelineImplant, KravMagaImplant ]
   - !type:AddComponentSpecial

@@ -683,10 +683,11 @@
   parent: BaseSuitModule
   id: EMPShieldSuitModule
   name: empshield suit module
-  description: "A field inhibitor installed into the suit, protecting it against feedback such as electromagnetic pulses that would otherwise damage the electronic systems of the suit or devices on the wearer. However, it will take from the suit's power to do so. Luckily, your PDA already has one of these."
+  description: "A field inhibitor installed into the suit, protecting the wearer and all carried or implanted devices from electromagnetic pulses. Intercepting a pulse consumes a large burst of suit power. Luckily, your PDA already has one of these."
   components:
   - type: Sprite
     state: empshield
+  - type: ModularSuitEmpShieldModule
   - type: ModularSuitModuleWearerEffect
     activeComponents:
     - type: EmpResistance
@@ -699,6 +700,7 @@
     tags: [ EMPShieldSuitModule ]
     modulePart: Torso
     powerUsage: 0.3
+    powerInstanceUsage: 25
     verbIcon:
       sprite: *modules-rsi
       state: empshield
@@ -1182,7 +1184,7 @@
   parent: EMPShieldSuitModule
   id: EMPShieldAdvancedSuitModule
   name: advanced empshield suit module
-  description: "A next-generation field inhibitor that completely negates electromagnetic interference without any power draw. How it works is a trade secret of Cybersun Industries."
+  description: "A next-generation field inhibitor that completely negates electromagnetic interference without passive power draw. Intercepting a pulse still consumes a large burst of suit power. How it works is a trade secret of Cybersun Industries."
   components:
   - type: ModularSuitModule
     modulePrefix: 'C'

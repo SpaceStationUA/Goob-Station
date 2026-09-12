@@ -113,6 +113,11 @@
   parent: BaseGameRule
   id: TunnelClownMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - ChangelingSkills
+  # Pirate: skill chips end
   - type: StationEvent
     weight: 1.5
     duration: null
@@ -148,6 +153,11 @@
   parent: BaseGameRule
   id: SingulothKnightsMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: StationEvent
     weight: 1
     duration: null
@@ -185,6 +195,11 @@
   parent: BaseGameRule
   id: DarkLordMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: StationEvent
     weight: 2
     duration: null
@@ -224,6 +239,11 @@
   parent: BaseGameRule
   id: ChosenOneMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: GameRule
     chaosScore: 50
   - type: AntagSpawner
@@ -250,6 +270,11 @@
   parent: BaseGameRule
   id: MimeAssassinMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
+  # Pirate: skill chips end
   - type: StationEvent
     weight: 1.2
     duration: null
@@ -289,6 +314,11 @@
   parent: BaseGameRule
   id: DarkPriestMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: StationEvent
     weight: 0.05
     duration: null
@@ -327,6 +357,11 @@
   parent: BaseGameRule
   id: VoxRaidersMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
+  # Pirate: skill chips end
   - type: AntagObjectives
     objectives:
     - EscapeThiefShuttleObjective

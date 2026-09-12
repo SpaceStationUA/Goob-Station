@@ -5,6 +5,12 @@
   icon: "JobIconInterdyneShaftMiners"
   canBeAntag: false
   playTimeTracker: JobInterdyneShaftMiners
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipMining
+    - SkillChipShortBlade
   access:
     - Maintenance
     - External

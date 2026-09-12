@@ -17,3 +17,13 @@
   - type: ConditionalSpawner
     prototypes:
     - MobAlexanderTurretExempt
+
+- type: entity
+  parent: SpawnMobCleanBot
+  id: SpawnMobCleanBotTurretExempt
+  name: CleanBot Spawner
+  suffix: Turret Exempt
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCleanBotTurretExempt

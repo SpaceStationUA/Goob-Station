@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseSkillChipPSON
+  id: SkillChipMagicalDampener
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MagicalLiteracyKnowledge: -1000
+
+- type: entity
+  parent: BaseSkillChipPSON
+  id: SkillChipCombatDampener
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsHeavy: -1000
+      KnowledgeWeaponsLaser: -1000
+      ShootingKnowledge: -1000
+      KnowledgeWeaponsMining: -1000
+      KnowledgeWeaponsPistol: -1000
+      KnowledgeWeaponsRifle: -1000
+      KnowledgeWeaponsShotgun: -1000
+      KnowledgeWeaponsSniper: -1000
+      KnowledgeWeaponsShield: -1000
+      KnowledgeWeaponsBludgeon: -1000
+      KnowledgeWeaponsShortBlade: -1000
+      KnowledgeWeaponsLongBlade: -1000
+      KnowledgeWeaponsNonLethal: -1000
+      KnowledgeWeaponsPolearm: -1000
+      MeleeKnowledge: -1000
+
+- type: entity
+  parent: SkillChipCombatDampener
+  id: SkillChipMindPurge
+
+- type: entity
+  parent: BaseSkillChipPSON
+  id: SkillChipTiderDampener
+  components:
+  - type: OrganChip
+    canRemove: true
+    canSelfRemove: false
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: -15
+      ShootingKnowledge: -15

@@ -30,8 +30,6 @@
     ears: ClothingHeadsetAltSyndicateCybersun
     id: SyndiPDALavalandTeamLeader
 
-# The marshal guards whatever the fultons deliver, so it is a footsoldier with a sidearm
-# instead of a rifle and keeps the same Cybersun headset the rest of the base runs on.
 - type: startingGear
   id: LavalandSyndicateMarshalGear
   parent: LavalandSyndicateFootsoldierGear
@@ -45,6 +43,11 @@
   id: LavalandSyndieSoldier
   parent: SyndieSoldier
   components:
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipSyndieSoldier
+    - SkillChipFieldMedicine
+    - SkillChipDatabase
   - type: Loadout
     prototypes: [ LavalandSyndicateFootsoldierGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]
@@ -53,6 +56,11 @@
   id: LavalandSyndieSoldierTeamLeader
   parent: SyndieSoldierTeamLeader
   components:
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipSyndieSoldierTeamLeader
+    - SkillChipFieldMedicine
+    - SkillChipDatabase
   - type: Loadout
     prototypes: [ LavalandSyndicateFootsoldierTeamLeaderGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]
@@ -61,6 +69,11 @@
   id: LavalandSyndieMarshal
   parent: SyndieSoldier
   components:
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipSyndieMarshal
+    - SkillChipFieldMedicine
+    - SkillChipDatabase
   - type: Loadout
     prototypes: [ LavalandSyndicateMarshalGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]

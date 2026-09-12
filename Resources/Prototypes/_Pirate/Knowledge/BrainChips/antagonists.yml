@@ -1,0 +1,113 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  id: SkillChipNukie
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: 50
+      ShootingKnowledge: 50
+      KnowledgeWeaponsShield: 50
+      KnowledgeWeaponsBludgeon: 50
+      KnowledgeWeaponsShortBlade: 50
+      KnowledgeWeaponsLongBlade: 50
+      KnowledgeWeaponsPolearm: 20
+      KnowledgeWeaponsPistol: 50
+      KnowledgeWeaponsRifle: 75
+      KnowledgeWeaponsMining: 25
+      KnowledgeWeaponsSniper: 50
+      KnowledgeWeaponsHeavy: 50
+      KnowledgeWeaponsEnergy: 50
+      KnowledgeWeaponsSMG: 50
+      KnowledgeWeaponsLaser: 20
+      WeaponsKnowledge: 50
+      ThrowingKnowledge: 25
+      FirstAidKnowledge: 25
+      WallsKnowledge: 25
+      InfrastructureKnowledge: 25
+      ElectronicsKnowledge: 25
+      FabricationKnowledge: 25
+
+- type: entity
+  parent: SkillChipNukie
+  id: SkillChipSyndieSoldierTeamLeader
+
+- type: entity
+  parent: SkillChipNukie
+  id: SkillChipSyndieSoldier
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: 28
+      ShootingKnowledge: 28
+
+- type: entity
+  parent: SkillChipSyndieSoldier
+  id: SkillChipSyndieMarshal
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsNonLethal: 50
+
+- type: entity
+  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  id: SkillChipSyndieVisitor
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: 15
+      ShootingKnowledge: 15
+      KnowledgeWeaponsShortBlade: 10
+      KnowledgeWeaponsPistol: 10
+
+- type: entity
+  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  id: SkillChipPirateCaptainScooner
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: 50
+      ShootingKnowledge: 35
+      KnowledgeWeaponsShortBlade: 20
+      KnowledgeWeaponsLongBlade: 80
+      KnowledgeWeaponsPistol: 50
+      KnowledgeWeaponsRifle: 50
+      FirstAidKnowledge: 15
+
+- type: entity
+  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  id: SkillChipPirateScooner
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: 30
+      ShootingKnowledge: 25
+      KnowledgeWeaponsShortBlade: 20
+      KnowledgeWeaponsLongBlade: 40
+      KnowledgeWeaponsPistol: 25
+      KnowledgeWeaponsRifle: 25
+      FirstAidKnowledge: 5
+
+- type: entity
+  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  id: SkillChipBlackmarketeer
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: 20
+      ShootingKnowledge: 20
+      KnowledgeWeaponsShortBlade: 10
+      KnowledgeWeaponsPistol: 10
+
+- type: entity
+  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  id: SkillChipCossack
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: 25
+      ShootingKnowledge: 25
+      KnowledgeWeaponsBludgeon: 10
+      KnowledgeWeaponsShortBlade: 10
+      KnowledgeWeaponsRifle: 30

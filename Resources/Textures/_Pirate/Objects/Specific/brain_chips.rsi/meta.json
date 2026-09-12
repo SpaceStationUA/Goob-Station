@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by @legendary_lamb_59637 (discord) for Trauma Station, taken from https://github.com/Trauma-Station/Trauma-Station at commit f1819e0d7047486791badc221450c5956f3e0a51",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "rsic": false,
+    "states": [
+        {
+            "name": "icon"
+        }
+    ]
+}

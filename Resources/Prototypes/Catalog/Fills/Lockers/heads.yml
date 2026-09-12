@@ -4,6 +4,8 @@
   id: LockerFillQuarterMaster
   table: !type:AllSelector
     children:
+    # Pirate: skill chips
+    - id: BoxSkillChipsCargo
     - id: BoxEncryptionKeyCargo
     - id: BoxFolderQmClipboard
     - id: BoxQMCircuitboards
@@ -125,6 +127,8 @@
   id: LockerFillHeadOfPersonnel
   table: !type:AllSelector
     children:
+    # Pirate: skill chips
+    - id: BoxSkillChipsService
     - id: AccessConfigurator
     - id: BoxEncryptionKeyPassenger
     - id: BoxEncryptionKeyService
@@ -169,6 +173,8 @@
   id: LockerFillChiefEngineerNoHardsuit
   table: !type:AllSelector
     children:
+    # Pirate: skill chips
+    - id: BoxSkillChipsEngi
     - id: AccessConfigurator
     - id: BoxEncryptionKeyEngineering
     - id: CigarCase
@@ -241,6 +247,8 @@
   id: LockerFillChiefMedicalOfficerNoHardsuit
   table: !type:AllSelector
     children:
+    # Pirate: skill chips
+    - id: BoxSkillChipsMed
     - id: BoxEncryptionKeyMedical
     # - id: ClothingBackpackDuffelSurgeryFilled # Goobstation - tools in webbing
     - id: ClothingEyesHudMedical
@@ -319,6 +327,8 @@
   id: LockerFillResearchDirectorNoHardsuit
   table: !type:AllSelector
     children:
+    # Pirate: skill chips
+    - id: BoxSkillChipsSci
     - id: Intellicard
     - id: BoxEncryptionKeyScience
     - id: BoxRDCircuitboards

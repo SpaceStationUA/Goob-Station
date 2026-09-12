@@ -2,6 +2,9 @@
   parent: BaseGameRule
   id: BountyHunterSpawn
   components:
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
   - type: StationEvent
     weight: 7
     duration: null

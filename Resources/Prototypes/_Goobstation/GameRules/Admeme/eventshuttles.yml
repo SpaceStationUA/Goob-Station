@@ -102,6 +102,12 @@
   parent: BaseGameRule
   id: ContractorSpawn
   components:
+  # Pirate: skill chips start - ContractorSpawnMidround and TokenContractorSpawn inherit this.
+  - type: AntagPlayerEffects
+    effects:
+    - !type:InstallOrganChip
+      chip: SkillChipSyndieSoldier
+  # Pirate: skill chips end
   - type: StationEvent
     earliestStart: 15
     reoccurrenceDelay: 45

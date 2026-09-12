@@ -2,6 +2,9 @@
   parent: BaseGameRule
   id: HitmanRule
   components:
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
   - type: GameRule
   - type: HitmanRule
   - type: AntagObjectives
@@ -64,6 +67,9 @@
   parent: BaseUnknownShuttleRule
   id: HitmanShuttle
   components:
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
   - type: StationEvent
     weight: 2
     minimumPlayers: 25

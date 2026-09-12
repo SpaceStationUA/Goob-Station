@@ -23,6 +23,13 @@
   - External
   - Cryogenics
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipClown
+    - SkillChipUnarmed
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: Clumsy

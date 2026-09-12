@@ -5,6 +5,11 @@
   icon: "JobIconInterdynePilot"
   canBeAntag: false
   playTimeTracker: JobInterdynePilot
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipPistol
   access:
     - Maintenance
     - External

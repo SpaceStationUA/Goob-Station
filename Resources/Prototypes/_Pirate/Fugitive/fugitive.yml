@@ -172,6 +172,9 @@
   parent: BaseGameRule
   id: Fugitive
   components:
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
   - type: GameRule
     chaosScore: 100 # Pirate: required by the local chaos scheduler.
   - type: StationEvent

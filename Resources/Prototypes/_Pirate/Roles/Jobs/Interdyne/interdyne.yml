@@ -5,6 +5,11 @@
   icon: "JobIconInterdyne"
   canBeAntag: false
   playTimeTracker: JobInterdyne
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipDatabase
   access:
     - Maintenance
     - External

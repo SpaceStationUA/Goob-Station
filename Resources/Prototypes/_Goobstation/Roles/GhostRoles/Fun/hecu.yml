@@ -5,6 +5,12 @@
   name: job-name-hecu
   description: job-description-hecu
   playTimeTracker: JobHecuOperative
+  # Pirate: skill chips start
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipERT
+  # Pirate: skill chips end
   setPreference: false
   startingGear: HECUOperativeGear
   icon: "JobIconNanotrasen"

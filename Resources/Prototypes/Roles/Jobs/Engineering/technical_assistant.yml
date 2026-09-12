@@ -32,6 +32,12 @@
   - Engineering
   - External
   special: # Goobstation
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipDatabaseBasic
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: EngineeringStaff

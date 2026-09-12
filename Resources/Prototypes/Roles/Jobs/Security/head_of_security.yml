@@ -73,6 +73,12 @@
   - GenpopEnter
   - GenpopLeave
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipCombatHOS
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial

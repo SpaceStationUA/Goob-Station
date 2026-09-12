@@ -63,6 +63,11 @@
   parent: EventHumanoidMindShielded
   randomizeName: false
   components:
+  # Pirate: skill chips start
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipERT
+  # Pirate: skill chips end
   - type: AutoImplant
     implants:
     - MindShieldImplant
@@ -91,6 +96,11 @@
   parent: CentcommHumanoid # Goobstation
   speciesWhitelist: Human # Pirate - Death Squad equipment is human-only.
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipDeathSquad
+    # Pirate: skill chips end
     - type: AutoImplant
       implants: [ FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant, DeathRattleImplantCentcomm] # Goobstation
     - type: DeathSquadMember # Goobstation
@@ -131,6 +141,11 @@
   parent: CentcommHumanoid # Goobstation
   speciesWhitelist: Human # Pirate - ERT equipment is human-only.
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipERT
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
       description: ghost-role-information-ert-leader-description
@@ -308,6 +323,12 @@
   id: ERTEngineer
   parent: ERTLeader
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipERT
+      - SkillChipDatabase
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
       description: ghost-role-information-ert-engineer-description
@@ -528,6 +549,12 @@
   id: ERTMedical
   parent: ERTLeader
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipERT
+      - SkillChipCMO
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
       description: ghost-role-information-ert-medical-description
@@ -603,6 +630,11 @@
   id: CBURNAgent
   parent: CentcommHumanoid
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipERT
+    # Pirate: skill chips end
     - type: AutoImplant
       implants: [ FreedomImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant ] # Goobstation
     - type: Loadout

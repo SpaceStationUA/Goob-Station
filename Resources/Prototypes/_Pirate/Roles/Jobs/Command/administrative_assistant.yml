@@ -40,6 +40,10 @@
     - Command
     - Maintenance
   special:
+    - !type:OrganChipsSpecial
+      chips:
+      - SkillChipEchelonEducation
+      - SkillChipService
     - !type:AddImplantSpecial
       implants: [MindShieldImplant]
     - !type:AddComponentSpecial
