@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 09/09/2026 15:02:31
-  entityCount: 10899
+  time: 09/12/2026 10:02:28
+  entityCount: 10900
 maps: []
 grids:
 - 1
@@ -7498,7 +7498,7 @@ entities:
       pos: -35.5,11.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -8815.367
+      secondsUntilStateChange: -8874.145
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -17605,6 +17605,11 @@ entities:
     components:
     - type: Transform
       pos: -5.5,-32.5
+      parent: 1
+  - uid: 10900
+    components:
+    - type: Transform
+      pos: 23.5,-30.5
       parent: 1
 - proto: CableHV
   entities:
@@ -29720,7 +29725,7 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 10069
-- proto: CryogenicSleepUnit
+- proto: CryogenicSleepUnitCybersun
   entities:
   - uid: 139
     components:
@@ -56934,8 +56939,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -19.5,-18.5
       parent: 1
-    - type: GasVolumePump
-      enabled: True
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GeneratorRTG
@@ -67296,7 +67299,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,-4.5
       parent: 1
-- proto: SpawnMobAlexander
+- proto: SpawnMobAlexanderTurretExempt
   entities:
   - uid: 2240
     components:
@@ -67330,7 +67333,7 @@ entities:
     - type: Transform
       pos: 8.5,-21.5
       parent: 1
-- proto: SpawnMobCow
+- proto: SpawnMobCowTurretExempt
   entities:
   - uid: 2141
     components:
@@ -75822,7 +75825,7 @@ entities:
       fingerprints: []
     - type: InsideEntityStorage
       storage: 1379
-- proto: WeaponEnergyTurretInterdyne
+- proto: WeaponEnergyTurretInterdyneActive
   entities:
   - uid: 1096
     components:
@@ -76423,7 +76426,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 10511
-- proto: WeaponEnergyTurretInterdyneControlPanel
+- proto: WeaponEnergyTurretInterdyneControlPanelActive
   entities:
   - uid: 10511
     components:
