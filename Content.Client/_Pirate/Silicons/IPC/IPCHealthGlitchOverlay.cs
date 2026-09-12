@@ -20,6 +20,7 @@ public sealed partial class IPCHealthGlitchOverlay : Overlay
     public override bool RequestScreenTexture => true;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     private readonly ShaderInstance _glitchShader;
+    private float _strength;
 
     public IPCHealthGlitchOverlay()
     {
@@ -33,12 +34,13 @@ public sealed partial class IPCHealthGlitchOverlay : Overlay
     /// </summary>
     public void SetStrength(float strength)
     {
-        _glitchShader.SetParameter("strength", Math.Clamp(strength, 0f, 1f));
+        _strength = Math.Clamp(strength, 0f, 1f);
+        _glitchShader.SetParameter("strength", _strength);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (ScreenTexture is null)
+        if (_strength <= 0f || ScreenTexture is null)
             return;
 
         _glitchShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);

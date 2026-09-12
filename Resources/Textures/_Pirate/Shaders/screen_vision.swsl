@@ -157,7 +157,7 @@ void fragment() {
 	// --- Rolling tracking bar ---
 	highp float roll_y = fract(t * max(roll_speed, 0.0001));
 	highp float roll_distance = abs(cuv.y - roll_y);
-	highp float roll_bar = smoothstep(0.20, 0.0, roll_distance);
+	highp float roll_bar = 1.0 - smoothstep(0.0, 0.20, roll_distance);
 
 	color += roll_bar * roll_strength * vec3(0.12);
 
@@ -195,7 +195,7 @@ void fragment() {
 
 	// --- Vignette ---
 	highp vec2 vignette_uv = cuv - 0.5;
-	highp float vignette_mask = smoothstep(0.9, 0.2, dot(vignette_uv, vignette_uv) * 2.2);
+	highp float vignette_mask = 1.0 - smoothstep(0.2, 0.9, dot(vignette_uv, vignette_uv) * 2.2);
 
 	color *= mix(1.0 - vignette, 1.0, vignette_mask);
 

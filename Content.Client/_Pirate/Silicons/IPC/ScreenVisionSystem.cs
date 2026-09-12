@@ -57,6 +57,14 @@ public sealed partial class ScreenVisionSystem : EntitySystem
 
     private void OnScreenVisionMapInit(Entity<ScreenVisionComponent> entity, ref MapInitEvent args)
     {
+        // ScreenVisionComponent is networked, so this can fire for remote IPCs.
+        // Only apply the glitch overlay for the local player; otherwise reset it.
+        if (entity.Owner != _playerMan.LocalEntity)
+        {
+            _glitchOverlay.SetStrength(0f);
+            return;
+        }
+
         if (entity.Comp.HealthGlitch)
             UpdateGlitchStrength(entity);
     }
