@@ -11,6 +11,7 @@
     requiredSlot:
       - neck
     slot: head
+  # Pirate: our ToggleableClothingSystem ensures a Container here, not a ContainerSlot
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
