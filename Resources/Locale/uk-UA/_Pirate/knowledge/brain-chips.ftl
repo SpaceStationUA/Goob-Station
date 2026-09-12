@@ -139,6 +139,7 @@ ent-SkillChipClown = ПЗП-чип (спогади клоуна)
     .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipDoctor = ПЗП-чип (спогади лікаря)
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Медична підготовка йде в комплекті з придушувачем агресивних рефлексів.
+ent-SkillChipService = ПЗП-чип (сервісний персонал)
 ent-SkillChipChemist = ПЗП-чип (спогади хіміка)
     .desc = { ent-SkillChipDoctor.desc }
 ent-SkillChipSurgeon = ПЗП-чип (спогади хірурга)

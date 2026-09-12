@@ -37,6 +37,7 @@
     chips:
     - SkillChipEducation
     - SkillChipShortBlade
+    - SkillChipService
   # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:

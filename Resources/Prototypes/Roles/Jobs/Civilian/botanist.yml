@@ -30,7 +30,7 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipEducation
-    - SkillChipTool
+    - SkillChipService
     - SkillChipStoner
   # Pirate: skill chips end
   - !type:GiveItemOnHolidaySpecial

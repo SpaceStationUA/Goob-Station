@@ -139,6 +139,7 @@ ent-SkillChipClown = MRAM-chip (memories of a clown)
     .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipDoctor = MRAM-chip (memories of a doctor)
     .desc = A sterilised microchip assembly that interfaces directly with brain tissue. The medical training comes bundled with a suppressor for violent reflexes.
+ent-SkillChipService = MRAM-chip (service staff)
 ent-SkillChipChemist = MRAM-chip (memories of a chemist)
     .desc = { ent-SkillChipDoctor.desc }
 ent-SkillChipSurgeon = MRAM-chip (memories of a surgeon)

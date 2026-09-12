@@ -36,7 +36,7 @@
     chips:
     - SkillChipEducation
     - SkillChipShotgun
-    - SkillChipUnarmed
+    - SkillChipService
   # Pirate: skill chips end
 
 - type: startingGear

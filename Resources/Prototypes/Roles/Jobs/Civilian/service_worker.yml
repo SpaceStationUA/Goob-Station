@@ -33,6 +33,7 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipEducation
+    - SkillChipService
   # Pirate: skill chips end
   - !type:AddImplantSpecial # Service workers can understand a chef's communications.
     implants: [ BasicSpaceItalianTranslatorImplant ]
