@@ -9,7 +9,11 @@ using Content.Server.Store.Systems;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI.Actions;
 using Content.Shared.CCVar;
+using Content.Shared.Actions.Components;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Store;
@@ -126,8 +130,49 @@ public sealed class MalfAiEconomyDisruptionTest
         await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task LockdownBoltsElectrifiesAndRestoresGridDoors()
+    [TestCase("MalfAiOverloadMachine", 50)]
+    [TestCase("MalfAiOverrideMachine", 75)]
+    public async Task RepeatPurchasePreservesEveryPaidCharge(string listingId, int price)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var entMan = server.EntMan;
+
+        await server.WaitAssertion(() =>
+        {
+            var ai = entMan.SpawnEntity(null, map.GridCoords);
+            var store = entMan.EnsureComponent<StoreComponent>(ai);
+            store.Categories.Add("MalfAI");
+            store.CurrencyWhitelist.Add("CPU");
+            store.Balance["CPU"] = FixedPoint2.New(price * 3);
+            server.System<StoreSystem>().RefreshAllListings(store);
+            var listing = store.Listings.Single(item => item.ID == listingId);
+
+            entMan.EventBus.RaiseLocalEvent(ai, new StoreBuyListingMessage(listing) { Actor = ai });
+            var action = entMan.GetComponent<ActionsComponent>(ai).Actions.Single();
+            var charges = entMan.GetComponent<LimitedChargesComponent>(action);
+            var system = entMan.System<SharedChargesSystem>();
+            Assert.That(system.GetCurrentCharges((action, charges)), Is.EqualTo(2));
+
+            entMan.EventBus.RaiseLocalEvent(ai, new StoreBuyListingMessage(listing) { Actor = ai });
+            Assert.That(system.GetCurrentCharges((action, charges)), Is.EqualTo(4));
+            system.AddCharges((action, charges), -1);
+            entMan.EventBus.RaiseLocalEvent(ai, new StoreBuyListingMessage(listing) { Actor = ai });
+            Assert.Multiple(() =>
+            {
+                Assert.That(system.GetCurrentCharges((action, charges)), Is.EqualTo(5));
+                Assert.That(store.Balance["CPU"].Float(), Is.Zero);
+                Assert.That(entMan.GetComponent<ActionsComponent>(ai).Actions.Count, Is.EqualTo(1));
+            });
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase(false, false)]
+    [TestCase(true, false)]
+    [TestCase(true, true)]
+    public async Task LockdownBoltsElectrifiesAndRestoresGridDoors(bool initiallyBolted, bool overlapping)
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -148,6 +193,8 @@ public sealed class MalfAiEconomyDisruptionTest
         await pair.RunTicksSync(5);
         await server.WaitAssertion(() =>
         {
+            entMan.System<SharedDoorSystem>().TrySetBoltDown(
+                (door, entMan.GetComponent<DoorBoltComponent>(door)), initiallyBolted, requirePower: false);
             var doorComp = entMan.GetComponent<DoorComponent>(door);
             var airlock = entMan.GetComponent<AirlockComponent>(door);
             var bolts = entMan.GetComponent<DoorBoltComponent>(door);
@@ -156,7 +203,7 @@ public sealed class MalfAiEconomyDisruptionTest
             {
                 Assert.That(doorComp.State, Is.EqualTo(DoorState.Closed));
                 Assert.That(airlock.Safety, Is.True);
-                Assert.That(bolts.BoltsDown, Is.False);
+                Assert.That(bolts.BoltsDown, Is.EqualTo(initiallyBolted));
                 Assert.That(electrified.Enabled, Is.False);
             });
 
@@ -166,6 +213,8 @@ public sealed class MalfAiEconomyDisruptionTest
                 Duration = 0.1f,
             };
             entMan.EventBus.RaiseLocalEvent(ai, lockdown);
+            if (overlapping)
+                entMan.EventBus.RaiseLocalEvent(ai, new MalfAiLockdownGridActionEvent { Performer = ai, Duration = 0.5f });
             Assert.Multiple(() =>
             {
                 Assert.That(lockdown.Handled, Is.True);
@@ -176,6 +225,16 @@ public sealed class MalfAiEconomyDisruptionTest
         });
 
         await pair.RunSeconds(0.25f);
+        if (overlapping)
+        {
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(entMan.GetComponent<ElectrifiedComponent>(door).Enabled, Is.True);
+                Assert.That(entMan.GetComponent<AirlockComponent>(door).Safety, Is.False);
+                Assert.That(entMan.GetComponent<MalfAiLockdownDoorComponent>(door).ActiveLockdowns, Is.EqualTo(1));
+            });
+            await pair.RunSeconds(0.5f);
+        }
         await server.WaitAssertion(() =>
         {
             var airlock = entMan.GetComponent<AirlockComponent>(door);
@@ -183,9 +242,10 @@ public sealed class MalfAiEconomyDisruptionTest
             var electrified = entMan.GetComponent<ElectrifiedComponent>(door);
             Assert.Multiple(() =>
             {
-                Assert.That(bolts.BoltsDown, Is.False);
+                Assert.That(bolts.BoltsDown, Is.EqualTo(initiallyBolted));
                 Assert.That(airlock.Safety, Is.True);
                 Assert.That(electrified.Enabled, Is.False);
+                Assert.That(entMan.GetComponent<DoorComponent>(door).State, Is.EqualTo(DoorState.Closed));
             });
         });
 

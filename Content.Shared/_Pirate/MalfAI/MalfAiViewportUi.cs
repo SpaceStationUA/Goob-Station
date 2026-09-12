@@ -38,3 +38,9 @@ public sealed class MalfAiViewportOpenEvent : EntityEventArgs
 public sealed class MalfAiViewportCloseEvent : EntityEventArgs
 {
 }
+
+[Serializable, NetSerializable]
+public sealed class MalfAiViewportClosedEvent(NetEntity? anchorEntity) : EntityEventArgs
+{
+    public readonly NetEntity? AnchorEntity = anchorEntity;
+}

@@ -52,28 +52,33 @@ public sealed class MalfAiLockdownSystem : EntitySystem
         if (gridUid == null)
             return;
 
-        var affected = new List<EntityUid>();
-        var bolted = new List<EntityUid>();
-        var electrified = new List<EntityUid>();
-        var safetyDisabled = new List<EntityUid>();
+        var affected = new List<Entity<MalfAiLockdownDoorComponent>>();
         var query = EntityQueryEnumerator<DoorComponent, TransformComponent>();
         while (query.MoveNext(out var doorUid, out var door, out var dXform))
         {
             if (dXform.GridUid != gridUid)
                 continue;
 
-            affected.Add(doorUid);
+            // Overlapping lockdowns share the state from before the first activation.
+            if (!TryComp<MalfAiLockdownDoorComponent>(doorUid, out var saved))
+            {
+                saved = AddComp<MalfAiLockdownDoorComponent>(doorUid);
+                saved.WasOpen = door.State is DoorState.Open or DoorState.Opening;
+                saved.BoltsDown = CompOrNull<DoorBoltComponent>(doorUid)?.BoltsDown;
+                saved.Electrified = CompOrNull<ElectrifiedComponent>(doorUid)?.Enabled;
+                saved.Safety = CompOrNull<AirlockComponent>(doorUid)?.Safety;
+            }
+            saved.ActiveLockdowns++;
+            affected.Add((doorUid, saved));
 
             if (TryComp<ElectrifiedComponent>(doorUid, out var electrifiedComp) && !electrifiedComp.Enabled)
             {
                 _electrify.SetElectrified((doorUid, electrifiedComp), true);
-                electrified.Add(doorUid);
             }
 
             if (TryComp<AirlockComponent>(doorUid, out var airlock) && airlock.Safety)
             {
                 _airlocks.SetSafety(airlock, false);
-                safetyDisabled.Add(doorUid);
             }
 
             var isBoltable = TryComp<DoorBoltComponent>(doorUid, out var boltComp);
@@ -81,7 +86,6 @@ public sealed class MalfAiLockdownSystem : EntitySystem
             if (door.State == DoorState.Closed && isBoltable)
             {
                 _doors.TrySetBoltDown((doorUid, boltComp!), true, requirePower: false); // Pirate: Malf lockdown overrides local door power.
-                bolted.Add(doorUid);
                 continue;
             }
 
@@ -93,59 +97,38 @@ public sealed class MalfAiLockdownSystem : EntitySystem
                 var target = doorUid;
                 Timer.Spawn(boltDelay, () =>
                 {
-                    if (!Exists(target))
+                    if (!TryComp<MalfAiLockdownDoorComponent>(target, out var current) || current != saved)
                         return;
 
                     if (!TryComp<DoorBoltComponent>(target, out var currentBolts))
                         return;
 
                     _doors.TrySetBoltDown((target, currentBolts), true, requirePower: false); // Pirate: Malf lockdown overrides local door power.
-                    bolted.Add(target);
                 });
             }
         }
 
         Timer.Spawn(duration, () =>
         {
-            foreach (var doorUid in electrified)
+            foreach (var (doorUid, saved) in affected)
             {
-                if (!Exists(doorUid))
+                if (!TryComp<MalfAiLockdownDoorComponent>(doorUid, out var current) || current != saved)
                     continue;
 
-                if (TryComp<ElectrifiedComponent>(doorUid, out var ecomp) && ecomp.Enabled)
-                {
-                    _electrify.SetElectrified((doorUid, ecomp), false);
-                }
-            }
-
-            foreach (var doorUid in bolted)
-            {
-                if (!Exists(doorUid))
+                if (--saved.ActiveLockdowns > 0)
                     continue;
 
-                if (TryComp<DoorBoltComponent>(doorUid, out var bolts))
-                {
-                    _doors.TrySetBoltDown((doorUid, bolts), false, requirePower: false); // Pirate: restore even if local power changed.
-                }
-            }
+                RemComp<MalfAiLockdownDoorComponent>(doorUid);
+                if (saved.Electrified is { } electrified && TryComp<ElectrifiedComponent>(doorUid, out var ecomp))
+                    _electrify.SetElectrified((doorUid, ecomp), electrified);
+                if (saved.Safety is { } safety && TryComp<AirlockComponent>(doorUid, out var airlock))
+                    _airlocks.SetSafety(airlock, safety);
 
-            foreach (var doorUid in safetyDisabled)
-            {
-                if (!Exists(doorUid))
-                    continue;
-
-                if (TryComp<AirlockComponent>(doorUid, out var airlock) && !airlock.Safety)
-                {
-                    _airlocks.SetSafety(airlock, true);
-                }
-            }
-
-            foreach (var doorUid in affected)
-            {
-                if (!Exists(doorUid))
-                    continue;
-
-                _doors.TryOpen(doorUid);
+                // Restore only doors that were open; closed and pre-bolted doors stay closed.
+                if (saved.BoltsDown is { } bolted && TryComp<DoorBoltComponent>(doorUid, out var bolts))
+                    _doors.TrySetBoltDown((doorUid, bolts), bolted, requirePower: false);
+                if (saved.WasOpen)
+                    _doors.TryOpen(doorUid);
             }
         });
     }

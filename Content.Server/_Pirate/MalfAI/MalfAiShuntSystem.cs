@@ -118,7 +118,10 @@ public sealed class MalfAiShuntSystem : EntitySystem
 
         // Close any viewport while the AI is in a local APC eye.
         if (TryComp<MalfAiViewportComponent>(ai, out var comp))
+        {
             comp.Selected = null;
+            comp.IsWindowOpen = false;
+        }
 
         if (TryComp<ActorComponent>(ai, out var actor) && actor.PlayerSession != null)
             RaiseNetworkEvent(new MalfAiViewportCloseEvent(), actor.PlayerSession);

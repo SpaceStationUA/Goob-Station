@@ -41,6 +41,17 @@ public sealed class MalfAiViewportSystem : EntitySystem
         SubscribeLocalEvent<StationAiHeldComponent, MalfAiOpenViewportActionEvent>(OnToggleViewport);
         SubscribeLocalEvent<StationAiHeldComponent, ComponentInit>(OnAiInit);
         SubscribeLocalEvent<ActionPurchaseCompanionEvent>(OnActionPurchaseCompanion);
+        SubscribeNetworkEvent<MalfAiViewportClosedEvent>(OnViewportClosed);
+    }
+
+    private void OnViewportClosed(MalfAiViewportClosedEvent ev, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } ai ||
+            !TryComp<MalfAiViewportComponent>(ai, out var viewport) ||
+            ev.AnchorEntity != GetNetEntity(viewport.ViewportAnchor))
+            return;
+
+        viewport.IsWindowOpen = false;
     }
 
     private bool HasActionPrototype(EntityUid uid, string protoId)
@@ -143,6 +154,7 @@ public sealed class MalfAiViewportSystem : EntitySystem
             }
             var ev = new MalfAiViewportOpenEvent(target.MapId, target.Position, comp.WindowSize, comp.Title, rotation, comp.ZoomLevel, GetNetEntity(comp.ViewportAnchor));
             RaiseNetworkEvent(ev, actor.PlayerSession);
+            comp.IsWindowOpen = true;
         }
 
         args.Handled = true;

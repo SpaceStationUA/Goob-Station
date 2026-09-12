@@ -3,6 +3,9 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server._Pirate.MalfAI.Factory.Components;
+using Content.Server._Pirate.MalfAI.Factory.Systems;
+using Content.Shared.Actions;
+using Content.Shared.DoAfter;
 using Content.Shared.Materials;
 using Content.Shared.Mind;
 using Content.Shared.Players;
@@ -11,6 +14,8 @@ using Content.Shared.Silicons.StationAi;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI.Factory.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests._Pirate;
 
@@ -143,6 +148,40 @@ public sealed class MalfAiBorgFactoryTest
             Assert.That(entMan.GetComponent<MindComponent>(mind).OwnedEntity, Is.EqualTo(borg));
         });
 
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task FactoryPurchaseOnlyAllowsOneConcurrentBuild()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var entMan = server.EntMan;
+        EntityUid action = default;
+        var before = entMan.Count<RoboticsFactoryGridComponent>();
+
+        await server.WaitAssertion(() =>
+        {
+            var maps = entMan.System<SharedMapSystem>();
+            maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(0, 0), new Tile(1));
+            maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(1, 0), new Tile(1));
+            var ai = entMan.SpawnEntity("StationAiBrain", map.GridCoords);
+            entMan.EnsureComponent<MalfAiMarkerComponent>(ai);
+            entMan.EnsureComponent<DoAfterComponent>(ai);
+            action = entMan.System<SharedActionsSystem>().AddAction(ai, "ActionMalfAiRoboticsFactory")!.Value;
+
+            entMan.EventBus.RaiseEvent(EventSource.Local,
+                new AIBuildRequestEvent(ai, map.GridCoords, "RoboticsFactoryGrid"));
+            entMan.EventBus.RaiseEvent(EventSource.Local,
+                new AIBuildRequestEvent(ai, map.GridCoords.Offset(new Vector2(1, 0)), "RoboticsFactoryGrid"));
+        });
+        await pair.RunSeconds(3.5f);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(entMan.Count<RoboticsFactoryGridComponent>(), Is.EqualTo(before + 1));
+            Assert.That(entMan.EntityExists(action), Is.False);
+        });
         await pair.CleanReturnAsync();
     }
 

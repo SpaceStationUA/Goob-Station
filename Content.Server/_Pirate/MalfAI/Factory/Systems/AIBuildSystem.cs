@@ -95,7 +95,8 @@ public sealed partial class AIBuildSystem : EntitySystem
             BreakOnDamage = true,
             BreakOnHandChange = false,
             CancelDuplicate = false,
-            BlockDuplicate = false,
+            BlockDuplicate = true,
+            DuplicateCondition = DuplicateConditions.SameEvent,
             NeedHand = false,
             Hidden = false
         };
@@ -111,8 +112,10 @@ public sealed partial class AIBuildSystem : EntitySystem
     /// </summary>
     private void OnBuildDoAfter(EntityUid uid, Content.Shared._Pirate.MalfAI.MalfAiMarkerComponent component, AIBuildDoAfterEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || args.Handled)
             return;
+
+        args.Handled = true;
 
         var location = GetCoordinates(args.Location);
 
@@ -165,7 +168,11 @@ public sealed partial class AIBuildSystem : EntitySystem
         }
 
         foreach (var id in toRemove)
+        {
             _actions.RemoveAction(performer, id);
+            // Purchased actions also live on the mind; delete the consumed action there too.
+            QueueDel(id);
+        }
     }
 
     /// <summary>

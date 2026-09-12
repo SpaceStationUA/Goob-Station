@@ -282,7 +282,7 @@ public sealed partial class StoreSystem
                             metadata.EntityPrototype?.ID == listing.ProductAction)
                         {
                             if (listing.ProductActionCharges is > 0)
-                                _charges.AddCharges((existingAction, null), listing.ProductActionCharges.Value);
+                                AddPurchasedActionCharges(existingAction, listing.ProductActionCharges.Value); // Pirate
 
                             actionId = existingAction;
                             existingActionFound = true;
@@ -304,7 +304,7 @@ public sealed partial class StoreSystem
                             metadata.EntityPrototype?.ID == listing.ProductAction)
                         {
                             if (listing.ProductActionCharges is > 0)
-                                _charges.AddCharges((existingAction, null), listing.ProductActionCharges.Value);
+                                AddPurchasedActionCharges(existingAction, listing.ProductActionCharges.Value); // Pirate
 
                             actionId = existingAction;
                             existingActionFound = true;
