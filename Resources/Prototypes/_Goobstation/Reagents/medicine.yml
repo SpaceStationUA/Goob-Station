@@ -1342,6 +1342,10 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectOpiateNod
+        type: Add
+        time: 2
       - !type:HealthChange
         damage:
           types:
@@ -1379,6 +1383,10 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 5
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectOpiateNod
+        type: Add
+        time: 4
       - !type:HealthChange
         damage:
           types:

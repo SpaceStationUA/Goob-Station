@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float tripPower; // 0..1, driven by remaining hallucination effect time
+
+// Chromatic aberration: color channels split away from each other toward the edges
+const highp float AberrationStrength = 0.005;
+
+// Kaleidoscope: the outer edge of the screen folds into mirrored segments
+const highp float KaleidoSegments = 8.0;
+const highp float KaleidoStart = 0.3; // fraction of screen radius where folding begins
+const highp float KaleidoBlend = 0.7; // how strongly the fold replaces the plain view
+
+void fragment() {
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+    highp vec2 centered = coord - vec2(0.5);
+    highp float r = length(centered) * 2.0;
+    highp float a = atan(centered.y, centered.x);
+
+    // Kaleidoscope fold: mirror the angle into segments, applied near the screen edge
+    highp float seg = 6.2831853 / KaleidoSegments;
+    highp float fa = mod(a, seg);
+    fa = abs(fa - seg * 0.5);
+    highp vec2 kaledCoord = vec2(cos(fa), sin(fa)) * length(centered) + vec2(0.5);
+    highp float kamt = smoothstep(KaleidoStart, 0.75, r) * KaleidoBlend * tripPower;
+    highp vec2 uv = mix(coord, kaledCoord, kamt);
+
+    // Chromatic aberration: split channels radially, stronger at edges
+    highp vec2 dir = normalize(centered + vec2(0.0001, 0.0));
+    highp vec2 off = dir * AberrationStrength * tripPower * (0.3 + r);
+
+    highp vec4 base = zTextureSpec(SCREEN_TEXTURE, uv);
+    highp vec4 red = zTextureSpec(SCREEN_TEXTURE, uv + off);
+    highp vec4 blue = zTextureSpec(SCREEN_TEXTURE, uv - off);
+    COLOR = vec4(red.r, base.g, blue.b, base.a);
+}

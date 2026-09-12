@@ -79,6 +79,62 @@
   components:
   - type: SeeingRainbowsStatusEffect
 
+# Stimulant rush: screen shakes and vibrates
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectStimRush
+  name: hyper
+  components:
+  - type: StimRushStatusEffect
+
+# Opiate nod: vision blurs, drifts and doubles up
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectOpiateNod
+  name: nodding off
+  components:
+  - type: OpiateNodStatusEffect
+
+# Trippy: screen edges fold and colors split apart
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectTrippy
+  name: kaleidoscope
+  components:
+  - type: TrippyStatusEffect
+
+# Vision failing: sight blurs and tunnels as eyes give out
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectVisionFade
+  name: fading eyesight
+  components:
+  - type: VisionFadeStatusEffect
+
+# Desaturation: the world drains of color, nothing matters anymore
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectDesaturate
+  name: numb
+  components:
+  - type: DesaturationStatusEffect
+
+# Dreamy: slow soft waves, gentle blur
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectDreamy
+  name: dreaming
+  components:
+  - type: DreamyStatusEffect
+
+# Bad trip: the walls are breathing wrong
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectBadTrip
+  name: bad trip
+  components:
+  - type: BadTripStatusEffect
+
 # Causes your vision to become blurry and gives me a headache.
 - type: entity
   parent: MobStatusEffectDebuff

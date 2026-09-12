@@ -610,8 +610,10 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 15
-      - !type:Drunk
-        boozePower: 15
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectTrippy
+        type: Add
+        time: 10
       - !type:PopupMessage
         type: Local
         messages: [ "frezon-lungs-cold" ]
@@ -688,8 +690,7 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 500
-      - !type:Drunk
-        boozePower: 500
+      - !type:ModifyStatusEffect
         minScale: 1
         # Goob start
         conditions:
@@ -701,6 +702,9 @@
           - Hydrakin # i hate them
           inverted: true
         # Goob end
+        effectProto: StatusEffectTrippy
+        type: Add
+        time: 250
       - !type:PopupMessage
         type: Local
         messages: [ "frezon-lungs-cold" ]
