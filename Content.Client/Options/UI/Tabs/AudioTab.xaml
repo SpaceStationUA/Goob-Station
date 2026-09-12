@@ -31,6 +31,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
                 <CheckBox Name="RestartSoundsCheckBox" Text="{Loc 'ui-options-restart-sounds'}" />
                 <CheckBox Name="EventMusicCheckBox" Text="{Loc 'ui-options-event-music'}" />
+                <!-- Pirate: transcribed announcement sounds -->
+                <CheckBox Name="TranscribedAnnouncementSoundsCheckBox"
+                          Text="{Loc 'ui-options-transcribed-announcement-sounds'}"
+                          ToolTip="{Loc 'ui-options-transcribed-announcement-sounds-tooltip'}" />
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
                 <CheckBox Name="BwoinkSoundCheckBox" Text="{Loc 'ui-options-bwoink-sound'}" />
                 <!-- Pirate: radio sounds -->
