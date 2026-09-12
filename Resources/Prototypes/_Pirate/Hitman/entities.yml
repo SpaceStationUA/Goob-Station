@@ -1,7 +1,7 @@
 - type: entity
   id: HitmanCase
-  name: hitman case
-  description: A case containing the tools of the trade of a hitman.
+  name: "кейс найманого убивці"
+  description: "Кейс із професійними інструментами найманого убивці."
   parent: ToolboxThief
   components:
   - type: Sprite
@@ -20,8 +20,8 @@
 
 - type: entity
   id: HitmanBusinessCard
-  name: hitman business card
-  description: A black card with a crosshair. There's something on the back.
+  name: "візитівка найманого убивці"
+  description: "Чорна картка з прицілом. На звороті щось написано."
   parent: [Paper, BaseMajorContraband]
   components:
   - type: Sprite
@@ -48,8 +48,8 @@
 - type: entity
   parent: BaseImplantAction
   id: ActionCreateHitmanCard
-  name: Create hitman card
-  description: creates a calling card you can write on
+  name: "Створити візитівку"
+  description: "створює візитівку, на якій можна писати"
   components:
   - type: Action
     checkCanInteract: false
@@ -62,7 +62,7 @@
 
 - type: entity
   id: HitmanCardImplanter
-  name: hitman card implanter
+  name: "імплантер візитівки"
   parent: BaseImplantOnlyImplanterSyndi
   components:
   - type: Implanter
@@ -71,8 +71,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: HitmanCardImplant
-  name: hitman card implant
-  description: This implant lets the user make a calling card at will
+  name: "імплант візитівки"
+  description: "Дозволяє користувачеві створювати візитівки за бажанням"
   categories: [HideSpawnMenu]
   components:
   - type: SubdermalImplant

@@ -4,7 +4,7 @@
 - type: entity
   parent: PirateHeatExchangePipeBase
   id: HeatExchangerInline
-  name: inline radiator
+  name: "вбудований радіатор"
   suffix: Straight
   components:
   - type: AtmosPipeLayers

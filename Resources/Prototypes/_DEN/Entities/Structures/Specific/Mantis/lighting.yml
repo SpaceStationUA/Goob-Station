@@ -9,8 +9,8 @@
 - type: entity
   parent: BaseStructure
   id: LightSomberEidoliteWellLamp
-  name: eidolite well lamp
-  description: "An eidolite pyramid that draws energy from the noosphere to produce light, recessed into the ground. You can turn it on by hand."
+  name: "ейдолітова лампа-колодязь"
+  description: "Ейдолітова піраміда, заглиблена в землю, яка черпає енергію з Ноосфери та перетворює її на світло. Її можна ввімкнути вручну."
   suffix: Off
   components:
   - type: Sprite
@@ -81,7 +81,7 @@
 - type: entity
   parent: LightSomberEidoliteWellLamp
   id: LightSomberEidoliteWellLampOn
-  description: "An eidolite pyramid that draws energy from the noosphere to produce light, recessed into the ground. The switch on this one takes a few tries..."
+  description: "Ейдолітова піраміда, заглиблена в землю, яка черпає енергію з Ноосфери та перетворює її на світло. Вимикач на цій спрацьовує лише після кількох спроб..."
   suffix: DO NOT MAP # If you do, it'll appear on, but they'll have to interact with it twice before it turns off again. It's more fun to manually light the office anyway
   components:
   - type: PointLight
@@ -90,8 +90,8 @@
 - type: entity
   parent: LightSomberEidoliteWellLamp
   id: LightSomberEidoliteFloorLamp
-  name: eidolite floor lamp
-  description: "An eidolite pyramid that draws energy from the noosphere to produce light, mounted on a mnemolith column. You can turn it on by hand."
+  name: "ейдолітова підлогова лампа"
+  description: "Ейдолітова піраміда на мнемолітовій колоні, яка черпає енергію з Ноосфери та перетворює її на світло. Її можна ввімкнути вручну."
   suffix: Off
   components:
   - type: Sprite
@@ -119,7 +119,7 @@
 - type: entity
   parent: LightSomberEidoliteFloorLamp
   id: LightSomberEidoliteFloorLampOn
-  description: "An eidolite pyramid that draws energy from the noosphere to produce light, mounted on a mnemolith column. The switch on this one takes a few tries..."
+  description: "Ейдолітова піраміда на мнемолітовій колоні, яка черпає енергію з Ноосфери та перетворює її на світло. Вимикач на цій спрацьовує лише після кількох спроб..."
   suffix: DO NOT MAP # If you do, it'll appear on, but they'll have to interact with it twice before it turns off again. It's more fun to manually light the office anyway
   components:
   - type: PointLight

@@ -268,7 +268,7 @@
   parent: BasePlushie
   id: PlushieNilaMil
   name: "плюшева слаймолюдка-ботанік"
-  description: Смішна іграшка вашої слизової знайомої! На етикетці написано "Міла Ніл.  So evil...""
+  description: "Кумедна іграшка вашої слизької знайомої! На етикетці написано: «Міла Ніл. Така зла...»"
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Fun/Plushies/toys.rsi
@@ -309,7 +309,7 @@
   parent: BasePlushie
   id: PlushieBlakinka
   name: "плюшева блакитна тіньовичка"
-  description: Плюшева іграшка домашнього тіньовика, морда іграшки виглядає ліниво на стільки, на скільки це можливо. Змусьте цю іграшку працювати замість вас! # Коли весілля з Малваром?
+  description: "Плюшева іграшка домашнього тіньовика, морда іграшки виглядає ліниво на стільки, на скільки це можливо. Змусьте цю іграшку працювати замість вас!" # Коли весілля з Малваром?
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Fun/Plushies/blakinka.rsi

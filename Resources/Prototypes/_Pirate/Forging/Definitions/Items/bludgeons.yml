@@ -3,7 +3,7 @@
 - type: forgedItem
   id: MorningstarHead
   category: Bludgeons
-  name: morningstar head
+  name: "головка моргенштерна"
   construction: ForgedMediumHandle
   finished: ForgedMorningstar
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/morningstar_head.rsi
@@ -16,7 +16,7 @@
 - type: forgedItem
   id: WarhammerHead
   category: Bludgeons
-  name: warhammer head
+  name: "головка бойового молота"
   construction: ForgedMediumHandle
   finished: ForgedWarhammer
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/warhammer_head.rsi

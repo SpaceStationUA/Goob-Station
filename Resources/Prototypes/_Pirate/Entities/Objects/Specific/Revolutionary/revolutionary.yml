@@ -4,11 +4,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
 
 - type: entity
-  name: RevCoin
+  name: "RevCoin"
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: RevCoin
   suffix: 100 RC
-  description: The universal language of revolution.
+  description: "Універсальна мова революції."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Revolutionary/revcoin.rsi

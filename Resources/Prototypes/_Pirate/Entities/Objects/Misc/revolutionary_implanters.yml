@@ -5,8 +5,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: RevolutionaryLieutenantImplant
-  name: revolutionary lieutenant implant
-  description: Appoints a revolutionary as a lieutenant and grants access to the leadership radio channel.
+  name: "імплант революційного лейтенанта"
+  description: "Призначає революціонера лейтенантом і підключає його до захищеного каналу керівництва."
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
@@ -26,8 +26,8 @@
 - type: entity
   parent: BaseImplantOnlyImplanterSyndi
   id: LieutenantRevolutionaryImplanter
-  name: revolutionary lieutenant implanter
-  description: A single-use implanter used to appoint a revolutionary lieutenant.
+  name: "імплантер революційного лейтенанта"
+  description: "Одноразовий імплантер для призначення лейтенанта революції."
   components:
   - type: Implanter
     implant: RevolutionaryLieutenantImplant

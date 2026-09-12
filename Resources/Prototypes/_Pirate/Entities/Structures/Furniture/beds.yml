@@ -1,8 +1,8 @@
 - type: entity
   parent: Bed
   id: DoubleBed
-  name: двоспальне ліжко
-  description: Велике ліжко для двох людей. На нього можна постелити дві ковдри або одну велику.
+  name: "двоспальне ліжко"
+  description: "Велике ліжко для двох людей. На нього можна постелити дві ковдри або одну велику."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/bed_double.rsi
@@ -25,7 +25,7 @@
 - type: entity
   parent: Bed
   id: BedWood
-  name: дерев'яне ліжко
+  name: "дерев’яне ліжко"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/beds.rsi
@@ -37,7 +37,7 @@
 - type: entity
   parent: DoubleBed
   id: DoubleBedWood
-  name: дерев'яне двоспальне ліжко
+  name: "дерев’яне двоспальне ліжко"
   components:
   - type: Sprite
     state: bed_double-wood

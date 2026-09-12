@@ -3,7 +3,7 @@
 # Impstation's disabler bolt base, kept under a Pirate ID so the global Goobstation
 # BulletDisabler (which has its own ion damage and stamina tuning) is untouched.
 - type: entity
-  name: disabler bolt
+  name: "заряд дизейблера SecLink"
   id: BaseBulletDisablerSeclink
   parent: BaseBullet
   abstract: true
@@ -57,13 +57,13 @@
     forceSound: true
 
 - type: entity
-  name: disabler bolt
+  name: "заряд дизейблера SecLink"
   id: BulletDisablerSeclink
   parent: BaseBulletDisablerSeclink
   categories: [HideSpawnMenu]
 
 - type: entity
-  name: auto disabler bolt
+  name: "заряд автоматичного дизейблера"
   id: BulletAutoDisabler
   parent: BaseBulletDisablerSeclink
   categories: [HideSpawnMenu]
@@ -77,7 +77,7 @@
     damage: 17
 
 - type: entity
-  name: disabler magnum bolt
+  name: "посилений заряд дизейблера"
   id: BulletMagnumDisabler
   parent: BaseBulletDisablerSeclink
   categories: [HideSpawnMenu]
@@ -93,10 +93,10 @@
 # The target has no Impstation BaseDisablerPistol, so the standard SecLink pistol
 # starts from the local WeaponDisabler and overrides the source's charge/fire data.
 - type: entity
-  name: disabler
+  name: "дизейблер SecLink"
   parent: WeaponDisabler
   id: WeaponDisablerSeclink
-  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  description: "Зброя самооборони, що виснажує органічні цілі, доки вони не знепритомніють."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Disablers/disabler.rsi
@@ -130,10 +130,10 @@
       DisablerToken: 1
 
 - type: entity
-  name: discombobulator
+  name: "дезорієнтатор"
   parent: WeaponDisablerSeclink
   id: WeaponFunnyDisabler
-  description: A self-defense weapon that humours organic targets, entertaining them until they collapse.
+  description: "Зброя самооборони, що розважає органічні цілі, доки вони не знепритомніють."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Disablers/clowndisabler.rsi
@@ -155,10 +155,10 @@
       DisablerToken: 1
 
 - type: entity
-  name: pocket disabler
+  name: "кишеньковий дизейблер"
   parent: WeaponDisablerSeclink
   id: WeaponPocketDisabler
-  description: A compact version of the iconic Disabler, but packs no less of a punch!
+  description: "Компактна версія культового дизейблера, яка не поступається йому силою пострілу"
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Disablers/disablerderringer.rsi
@@ -190,10 +190,10 @@
       DisablerToken: 1
 
 - type: entity
-  name: auto disabler
+  name: "автоматичний дизейблер"
   parent: WeaponDisablerSeclink
   id: WeaponAutoDisabler
-  description: A Disabler built for sustained, automatic fire at the cost of stunning power.
+  description: "Дизейблер для тривалого автоматичного вогню ціною меншої сили кожного пострілу."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Disablers/autodisabler.rsi
@@ -236,10 +236,10 @@
       DisablerToken: 1
 
 - type: entity
-  name: magnum disabler
+  name: "дизейблер «Магнум»"
   parent: WeaponDisablerSeclink
   id: WeaponStunProjector
-  description: A disabler built for powerful single shots.
+  description: "Дизейблер, розрахований на поодинокі постріли підвищеної потужності."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Disablers/stunprojector.rsi

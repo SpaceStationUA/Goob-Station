@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: NuclearReactorMonitorComputerCircuitboard
-  name: nuclear reactor monitor computer board
-  description: A computer printed circuit board for a nuclear reactor monitor.
+  name: "комп'ютерна плата монітора ядерного реактора"
+  description: "Комп'ютерна друкована плата монітора ядерного реактора."
   components:
     - type: Sprite
       state: cpu_engineering
@@ -12,8 +12,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: GasTurbineMonitorComputerCircuitboard
-  name: gas turbine monitor computer board
-  description: A computer printed circuit board for a gas turbine monitor.
+  name: "комп'ютерна плата монітора газової турбіни"
+  description: "Комп'ютерна друкована плата монітора газової турбіни."
   components:
     - type: Sprite
       state: cpu_engineering

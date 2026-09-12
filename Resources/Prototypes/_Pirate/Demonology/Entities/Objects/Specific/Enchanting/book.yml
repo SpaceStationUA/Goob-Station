@@ -3,8 +3,8 @@
 - type: entity
   parent: [BaseItem, BaseMagicalContraband]
   id: BloodEnchanter
-  name: defaced bible
-  description: A defaced bible, useful for enchanting with blood magic.
+  name: "спотворена Біблія"
+  description: "Спотворена Біблія, придатна для зачарування кров'ю."
   components:
   - type: ContainerContainer
     containers:

@@ -1,8 +1,8 @@
 - type: entity
   parent: CratePlastic
   id: CrateFunSwimRings
-  name: swim ring crate
-  description: A crate containing eight swim rings, for your beach party occasions!
+  name: "ящик із плавальними кільцями"
+  description: "Ящик із вісьмома плавальними кільцями для вашої пляжної вечірки!"
   components:
   - type: EntityTableContainerFill
     containers:

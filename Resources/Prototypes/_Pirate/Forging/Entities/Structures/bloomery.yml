@@ -6,7 +6,7 @@
   abstract: true
   parent: BaseStructure
   id: BaseBloomery
-  name: unlit bloomery
+  name: "незапалена сиродутна піч"
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Forging/bloomery.rsi
@@ -38,7 +38,7 @@
   abstract: true
   parent: BaseBloomery
   id: BaseBloomeryLit
-  name: lit bloomery
+  name: "запалена сиродутна піч"
   components:
   - type: Sprite
     state: burning
@@ -53,8 +53,8 @@
   abstract: true
   parent: BaseBloomery
   id: BaseBloomeryComplete
-  name: smoking bloomery
-  description: Looks ready, smash it open.
+  name: "димна сиродутна піч"
+  description: "Схоже, усе готово. Розбийте її."
   components:
   - type: Sprite
     state: complete
@@ -64,8 +64,8 @@
 - type: entity
   parent: BaseBloomery
   id: BloomeryCold
-  name: unlit bloomery
-  description: Needs to be loaded with charcoal and metal scraps before firing.
+  name: "незапалена сиродутна піч"
+  description: "Завантажте її деревним вугіллям і металевим брухтом."
   components:
   - type: Destructible
     thresholds:
@@ -86,7 +86,7 @@
   parent: BaseBloomery
   id: BloomeryColdBrass
   suffix: Brass
-  description: Loaded with brass, just needs firing.
+  description: "Завантажена латунню, залишилося лише запалити."
   components:
   - type: Destructible
     thresholds:
@@ -113,7 +113,7 @@
   parent: BaseBloomery
   id: BloomeryColdPlasteel
   suffix: Plasteel
-  description: Loaded with plasteel, just needs firing.
+  description: "Завантажена пласталлю, залишилося лише запалити."
   components:
   - type: Destructible
     thresholds:
@@ -141,7 +141,7 @@
   parent: BaseBloomery
   id: BloomeryColdSteel
   suffix: Steel
-  description: Loaded with steel, just needs firing.
+  description: "Завантажена сталлю, залишилося лише запалити."
   components:
   - type: Destructible
     thresholds:
@@ -170,7 +170,7 @@
   parent: BaseBloomeryLit
   id: BloomeryLitBrass
   suffix: Brass
-  description: Loaded with brass, give it some time to burn and it will be ready.
+  description: "Завантажена латунню; дайте їй час прогоріти, після чого метал буде готовий."
   components:
   - type: Destructible
     thresholds:
@@ -193,7 +193,7 @@
   parent: BaseBloomeryLit
   id: BloomeryLitSteel
   suffix: Steel
-  description: Loaded with steel, give it some time to burn and it will be ready.
+  description: "Завантажена сталлю; дайте їй час прогоріти, після чого метал буде готовий."
   components:
   - type: Destructible
     thresholds:
@@ -215,8 +215,8 @@
 - type: entity
   parent: BaseBloomeryLit
   id: BloomeryLitPlasteel
-  name: lit bloomery
-  description: Loaded with plasteel, give it some time to burn and it will be ready.
+  name: "запалена сиродутна піч"
+  description: "Завантажена пласталлю; дайте їй час прогоріти, після чого метал буде готовий."
   categories: [HideSpawnMenu]
   components:
   - type: Destructible

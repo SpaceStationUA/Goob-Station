@@ -1,8 +1,8 @@
 - type: entity
   parent: FloorWaterEntity
   id: FloorWaterEntityPool
-  name: pool water
-  description: You do NOT want to drink this.
+  name: "вода в басейні"
+  description: "Ви точно НЕ хочете це пити."
   components:
   - type: Sprite
     sprite: _DEN/Tiles/Planet/water.rsi

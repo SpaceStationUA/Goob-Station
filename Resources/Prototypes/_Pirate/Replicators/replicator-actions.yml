@@ -8,8 +8,8 @@
 - type: entity
   parent: BaseAction
   id: ActionReplicatorSpawnNest
-  name: Manufacture Nest
-  description: Create a new nest for your hive.
+  name: "Створити гніздо"
+  description: "Створити нове гніздо для вашого вулика."
   components:
   - type: Action
     itemIconStyle: NoItem
@@ -30,8 +30,8 @@
 - type: entity
   id: ActionReplicatorUpgrade1
   parent: BaseReplicatorLevelupAction
-  name: Downgrade (Replicator)
-  description: Shed nanites. Reconfigure.
+  name: "Повернутися до Реплікатора"
+  description: "Позбутися частини нанітів і змінити конфігурацію."
   components:
   - type: Action
     itemIconStyle: NoItem
@@ -44,8 +44,8 @@
 - type: entity
   id: ActionReplicatorUpgrade2
   parent: BaseReplicatorLevelupAction
-  name: Upgrade (Deconstructor)
-  description: Gather nanites. Gain manipulation.
+  name: "Стати Деконструктором"
+  description: "Зібрати наніти й отримати інструменти."
   components:
   - type: Action
     itemIconStyle: NoItem
@@ -59,8 +59,8 @@
 - type: entity
   id: ActionReplicatorUpgrade2Alt
   parent: BaseReplicatorLevelupAction
-  name: Upgrade (Defender)
-  description: Gather nanites. Gain weaponry.
+  name: "Стати Захисником"
+  description: "Зібрати наніти й отримати озброєння."
   components:
   - type: Action
     itemIconStyle: NoItem
@@ -74,8 +74,8 @@
 - type: entity
   id: ActionReplicatorUpgrade3
   parent: BaseReplicatorLevelupAction
-  name: Upgrade (Protector)
-  description: Gather nanites. Become stronger.
+  name: "Стати Протектором"
+  description: "Зібрати наніти й посилити корпус."
   components:
   - type: Action
     itemIconStyle: NoItem

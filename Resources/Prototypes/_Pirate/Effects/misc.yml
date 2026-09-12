@@ -1,6 +1,6 @@
 - type: entity
   id: CEDustEffect
-  name: dust effect
+  name: "ефект пилу"
   suffix: VFX
   categories: [ ForkFiltered ]
   save: false

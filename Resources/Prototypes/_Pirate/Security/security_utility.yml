@@ -4,8 +4,8 @@
 - type: entity
   id: EnergyDomeTurtle
   parent: BaseItem
-  name: BR-40c "Turtle"
-  description: A compact one-handed energy barrier with very low passive power consumption. It can be linked with a multitool.
+  name: "BR-40c «Черепаха»"
+  description: "Компактний одноручний генератор захисного енергокупола з дуже низьким пасивним споживанням. Може бути під'єднаний мультитулом."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Tools/EnergyDome/reinhardt.rsi
@@ -67,8 +67,8 @@
 - type: entity
   id: HandheldSecurityMonitor
   parent: BaseItem
-  name: security camera tablet
-  description: Displays feeds from the station camera network and security body cameras.
+  name: "планшет камер СБ"
+  description: "Показує станційні камери та бодікамери офіцерів служби безпеки."
   components:
   - type: Sprite
     sprite: Objects/Devices/tablets.rsi
@@ -106,8 +106,8 @@
 - type: entity
   id: HandheldBrigmedicCrewMonitor
   parent: [ PowerCellSlotMediumItem, BaseHandheldComputer, BaseSecurityContraband ]
-  name: BrigBuddy 5000
-  description: A handheld crew monitor that only tracks security personnel. It does not assess their emotional stability or competence.
+  name: "BrigBuddy 5000"
+  description: "Портативний монітор стану, який відстежує лише співробітників служби безпеки."
   components:
   - type: Tag
     tags:
@@ -171,8 +171,8 @@
 - type: entity
   id: RMCMotionDetector
   parent: [ BaseItem, PowerCellSlotSmallItem ]
-  name: pulse motion detector
-  description: Detects nearby living beings that moved recently. Each scan consumes battery charge.
+  name: "імпульсний детектор руху"
+  description: "Виявляє живих істот, які нещодавно рухалися поблизу. Кожне сканування витрачає заряд батареї."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Tools/motion_detector.rsi

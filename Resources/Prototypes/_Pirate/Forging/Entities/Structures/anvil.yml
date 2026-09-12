@@ -5,8 +5,8 @@
 - type: entity
   parent: [ BaseMetallicSteel, BaseMachine ]
   id: AnvilComplete
-  name: ковадло
-  description: Використовується для перетворення злитків на готові вироби.
+  name: "ковадло"
+  description: "Важке сталеве ковадло для надання форми гарячому металу."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Forging/anvil.rsi

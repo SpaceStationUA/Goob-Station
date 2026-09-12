@@ -1,9 +1,9 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitTCAFArmsman
-  name: форма бійця TCAF
+  name: "форма бійця TCAF"
   suffix: TCAF
-  description: Уніформа, яку носять чинні та колишні військовослужбовці збройних сил Тау-Кита.
+  description: "Уніформа, яку носять чинні та колишні військовослужбовці збройних сил Тау-Кита."
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Uniforms/TCAF_armsman.rsi
@@ -13,9 +13,9 @@
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitTCFLLegate
-  name: Уніформа легата TCFL
+  name: "Уніформа легата TCFL"
   suffix: TCAF
-  description: Уніформа, яку носять офіцери-легати іноземного легіону Тау Кита.
+  description: "Уніформа, яку носять офіцери-легати іноземного легіону Тау Кита."
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Uniforms/TCFL_legate.rsi
@@ -25,9 +25,9 @@
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitTCFLPilot
-  name: Уніформа пілота TCFL
+  name: "Уніформа пілота TCFL"
   suffix: TCAF
-  description: Уніформа, яку носять чинні та колишні пілоти іноземного легіону Тау-Кита.
+  description: "Уніформа, яку носять чинні та колишні пілоти іноземного легіону Тау-Кита."
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Uniforms/TCFL_pilot.rsi
@@ -37,9 +37,9 @@
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitTCFLSentinel
-  name: уніформа вартового TCFL
+  name: "уніформа вартового TCFL"
   suffix: TCAF
-  description: Уніформа, яку носять вартові збройних сил Тау-Кита.
+  description: "Уніформа, яку носять вартові збройних сил Тау-Кита."
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Uniforms/TCFL_sentinel.rsi
@@ -49,9 +49,9 @@
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitTCFLVolunteer
-  name: уніформа рядового TCFL
+  name: "уніформа рядового TCFL"
   suffix: TCAF
-  description: Форма рядового складу Легіону іноземців Тау Кита. Будучи повністю добровільною службою, що приймає всіх незалежно від раси, виду чи віросповідання, TCFL починається для кожного саме з цього рангу.
+  description: "Форма рядового складу Легіону іноземців Тау Кита. Будучи повністю добровільною службою, що приймає всіх незалежно від раси, виду чи віросповідання, TCFL починається для кожного саме з цього рангу."
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Uniforms/TCFL_volunteer.rsi

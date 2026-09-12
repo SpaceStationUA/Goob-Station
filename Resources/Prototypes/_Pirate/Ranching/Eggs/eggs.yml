@@ -4,7 +4,7 @@
   abstract: true
   parent: FoodEggBase
   id: BaseRanchingEgg
-  name: egg
+  name: "яйце"
   components:
   - type: Perishable
     rotAfter: 99999999 # For my birthday wish I wish to remove rotting
@@ -195,7 +195,7 @@
 - type: entity
   parent: BaseItem
   id: PigeonEggInedible
-  name: egg
+  name: "яйце"
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Objects/Misc/eggs.rsi
@@ -245,7 +245,7 @@
 - type: entity
   parent: BaseItem
   id: GoldenEgg
-  name: golden chicken egg
+  name: "золоте куряче яйце"
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Objects/Misc/eggs.rsi
@@ -256,8 +256,8 @@
 - type: entity
   parent: WaterBalloonBase
   id: ClownEgg
-  name: egg?
-  description: doesn't look very eggy to me.
+  name: "яйце?"
+  description: "воно не дуже схоже на яйце."
   components:
   - type: Sprite
     state: egg-honk

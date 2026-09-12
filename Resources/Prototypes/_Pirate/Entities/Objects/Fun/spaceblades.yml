@@ -3,8 +3,8 @@
 - type: entity
   id: SpaceBlade
   parent: BaseItem
-  name: space blade
-  description: Let it drip.
+  name: "космолезо"
+  description: "Нехай крапає."
   abstract: true
   components:
   - type: Sprite
@@ -108,7 +108,7 @@
 - type: entity
   id: SpaceBladeRune
   parent: SpaceBlade
-  description: Birthday parties are yearly reminders that as soon as you're born you start dying, unless you let it rip.
+  description: "Дні народження щороку нагадують: щойно народившись, ви починаєте помирати. Хіба що розкрутите його на повну."
   components:
   - type: Sprite
     state: rune
@@ -116,7 +116,7 @@
 - type: entity
   id: SpaceBladeMc
   parent: SpaceBlade
-  description: Let it McDrip.
+  description: "Нехай МакКрапає."
   components:
   - type: Sprite
     state: mcblade
@@ -135,7 +135,7 @@
 - type: entity
   id: SpaceBladeContra
   parent: [SpaceBlade, BaseSyndicateContraband]
-  description: Let it reap.
+  description: "Нехай пожинає."
   components:
   - type: Sprite
     state: contraband
@@ -169,7 +169,7 @@
 - type: entity
   id: SpaceBladeWeh
   parent: SpaceBlade
-  description: Let it weh!
+  description: "Нехай буде «вех»!"
   components:
   - type: Sprite
     state: weh
@@ -209,8 +209,8 @@
 - type: entity
   id: SpaceBladePizza
   parent: [SpaceBlade, PlasticBanana]
-  name: space blade
-  description: Let it mama mia, not safe for ages under 3.
+  name: "космолезо"
+  description: "Нехай крутиться, мамма міа! Не для дітей до 3 років."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Fun/spaceblade.rsi
@@ -219,8 +219,8 @@
 - type: entity
   id: SpaceBladeSingularity
   parent: [BaseMajorContraband, SpaceBlade] # Pirate: local equivalent of the source C3 contraband tier.
-  name: space blade
-  description: Let it consume.
+  name: "космолезо"
+  description: "Нехай поглинає."
   components:
   - type: Sprite
     state: singularity
@@ -235,8 +235,8 @@
 - type: entity
   id: SpaceBladeClown
   parent: SpaceBlade
-  name: space blade
-  description: Let it honk.
+  name: "космолезо"
+  description: "Нехай хонкає."
   components:
   - type: Sprite
     state: clown
@@ -289,8 +289,8 @@
 - type: entity
   id: SpaceBladeBoxTrash
   parent: BaseItem
-  name: unfolded space blade box
-  description: A small, unfolded cardboard toy box.
+  name: "розгорнута коробка від космолеза"
+  description: "Маленька розгорнута картонна коробка від іграшки."
   components:
   - type: PhysicalComposition
     materialComposition:
@@ -306,8 +306,8 @@
 - type: entity
   id: MysterySpaceBladeBox
   parent: BaseItem
-  name: mystery space blade box
-  description: A box containing a mystery space blade. The side depicts a few blacked-out rare space blades.
+  name: "таємнича коробка з космолезом"
+  description: "Коробка з таємничим космолезом. На боці зображено кілька затемнених рідкісних космолез."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Fun/spaceblade.rsi

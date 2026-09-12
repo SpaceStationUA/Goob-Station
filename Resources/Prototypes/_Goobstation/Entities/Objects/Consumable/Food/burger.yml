@@ -1,8 +1,8 @@
 - type: entity
-  name: nothing burger
+  name: "нічогобургер"
   parent: FoodBurgerBase
   id: FoodBurgerChud
-  description: A burger for when nothing happens.
+  description: "Бургер для випадків, коли нічого не відбувається."
   components:
   - type: FlavorProfile
     flavors:
@@ -28,8 +28,8 @@
 
 - type: entity
   parent: FoodBurgerBase
-  name: mothroachburger
-  description: The last lamp it saw was the one inside the microwave.
+  name: "бургер із тарганомолі"
+  description: "Остання лампа, яку він бачив, була всередині мікрохвильовки."
   id: FoodBurgerMustard
   components:
   - type: FlavorProfile

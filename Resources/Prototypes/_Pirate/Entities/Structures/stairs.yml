@@ -1,8 +1,8 @@
 - type: entity
   id: SteelDarkCenterStairs
-  name: stairs
+  name: "сходи"
   suffix: Steel , center
-  description: The greatest invention since rocket-propelled grenades.
+  description: "Найвеличніший винахід від часів реактивних гранат."
   placement:
     mode: SnapgridCenter
   components:
@@ -41,9 +41,9 @@
 
 - type: entity
   id: WoodCenterStairs
-  name: stairs
+  name: "сходи"
   suffix: Wood, center
-  description: The greatest invention since rocket-propelled grenades.
+  description: "Найвеличніший винахід від часів реактивних гранат."
   placement:
     mode: SnapgridCenter
   components:

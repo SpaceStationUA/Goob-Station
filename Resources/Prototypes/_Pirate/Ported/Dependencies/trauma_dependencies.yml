@@ -44,8 +44,8 @@
 - type: entity
   parent: MobSiliconBase
   id: BaseMobBoogieBot
-  name: boogie bot
-  description: Get down on it!
+  name: "бугі-бот"
+  description: "Запалюй!"
   abstract: true
   categories: [ HideSpawnMenu ]
   components:
@@ -163,8 +163,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: WeaponFlamethrower
-  name: flamethrower
-  description: A flamethrower, draws its fuel from the backpack tank.
+  name: "вогнемет"
+  description: "Вогнемет, що отримує паливо із заплічного бака."
   components:
   - type: WeaponClass
     class: Heavy
@@ -204,8 +204,8 @@
 
 - type: entity
   id: WeaponMechMosinPorts
-  name: firing-port mosins
-  description: Several Mosin rifles modified to fit killdozer firing ports.
+  name: "мосінки для стрілецьких портів"
+  description: "Кілька гвинтівок Мосіна, модифікованих для стрілецьких портів кілдозера."
   parent: [ BaseMechWeaponRange, IndustrialMechEquipment ]
   components:
   - type: Sprite
@@ -244,8 +244,8 @@
 - type: entity
   parent: [ BaseItem, BaseMinorContraband ]
   id: NailBoardTrap
-  name: nail board
-  description: A nasty trap that can injure a foot.
+  name: "дошка з цвяхами"
+  description: "Небезпечна пастка, яка може травмувати ступню."
   placement:
     mode: SnapgridCenter
   components:

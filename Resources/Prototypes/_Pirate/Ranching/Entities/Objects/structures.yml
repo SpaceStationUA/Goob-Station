@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseMachinePowered
   id: RanchIncubator
-  name: incubator
-  description: Put an egg in here to make a chicken!
+  name: "інкубатор"
+  description: "Дозволяє висиджувати незапліднені курячі яйця за допомогою електрики"
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Structures/Machines/ranchobjects.rsi
@@ -38,8 +38,8 @@
 
 - type: entity
   id: ChickenCarrier
-  name: chicken carrier
-  description: Allows chickens to be carried comfortably. It smells vaguely of toilet water and explosives.
+  name: "переноска для курей"
+  description: "Дозволяє безпечно переносити одну курку."
   parent: PetCarrier
   components:
   - type: Sprite
@@ -71,8 +71,8 @@
 - type: entity
   parent: BaseStructure
   id: RanchBox
-  name: nesting box
-  description: Was nice place for a hen to lay her eggs. Due to advancements in bluespace chickens science they no longer have to.
+  name: "гніздівля"
+  description: "Колись кури відкладали яйця тут, але сучасним породам вона вже не потрібна."
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Structures/Machines/ranchobjects.rsi

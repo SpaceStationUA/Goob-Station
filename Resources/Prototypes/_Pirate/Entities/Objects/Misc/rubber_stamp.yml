@@ -1,5 +1,5 @@
 - type: entity
-  name: administrative assistant rubber stamp
+  name: "адміністративний асистент гумова печатка"
   parent: RubberStampBase
   id: RubberStampAdminAssistant
   suffix: DO NOT MAP
@@ -13,7 +13,7 @@
     state: stamp-admin-assistant
 
 - type: entity
-  name: Печатка офіцера Інтердайну
+  name: "печатка офіцера Інтердайну"
   parent: RubberStampBase
   id: RubberStampOfficerInterdyne
   suffix: DO NOT MAP
@@ -26,7 +26,7 @@
     state: stamp-syndicate
 
 - type: entity
-  name: Печатка Замістника Офіцера Інтердайну
+  name: "печатка заступника офіцера Інтердайну"
   parent: RubberStampBase
   id: RubberStampDeputyInterdyne
   suffix: DO NOT MAP
@@ -41,11 +41,11 @@
 # Listening post
 
 - type: entity
-  name: notary stamp
+  name: "нотаріальна печатка"
   parent: RubberStampBase
   id: RubberStampNotary
   suffix: DO NOT MAP
-  description: An old-fashioned seal for marking important documents, made of polished bronze.
+  description: "Старомодна печатка з полірованої бронзи для позначення важливих документів."
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-notary
@@ -56,7 +56,7 @@
     state: stamp-notary
 
 - type: entity
-  name: chief justice stamp
+  name: "печатка головного судді"
   parent: RubberStampBase
   id: RubberStampChiefJustice
   suffix: DO NOT MAP
@@ -70,11 +70,11 @@
     state: stamp-cj
 
 - type: entity
-  name: prosecutor's rubber stamp
+  name: "печатка прокурора"
   parent: RubberStampBase
   id: RubberStampProsec
   suffix: DO NOT MAP
-  description: A rubber stamp for stamping important documents. A more legal way to annoy Security.
+  description: "Гумова печатка для важливих документів. Більш законний спосіб дошкуляти Службі безпеки."
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-prosec
@@ -85,7 +85,7 @@
     state: stamp-prosec
 
 - type: entity
-  name: chemist's rubber stamp
+  name: "печатка хіміка"
   parent: RubberStampBase
   id: RubberStampChemist
   suffix: DO NOT MAP
@@ -99,7 +99,7 @@
     state: stamp-chemist
 
 - type: entity
-  name: doctor's rubber stamp
+  name: "печатка лікаря"
   parent: RubberStampBase
   id: RubberStampDoctor
   suffix: DO NOT MAP
@@ -113,11 +113,11 @@
     state: stamp-doctor
 
 - type: entity
-  name: legal carp stamp
+  name: "печатка коропа-юриста"
   parent: RubberStampBase
   id: RubberStampCarpy
   suffix: DO NOT MAP
-  description: A stamp specially designed for legal carps, to mark documents that aren't fishy.
+  description: "Спеціально створена для коропів-юристів, щоб позначати документи, у яких немає нічого підозрілого."
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-carpy

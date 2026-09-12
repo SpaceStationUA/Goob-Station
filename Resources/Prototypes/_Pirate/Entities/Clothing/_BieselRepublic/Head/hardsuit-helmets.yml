@@ -1,9 +1,9 @@
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitTCAFTacsuit
-  name: шолом тактичного скафандру TCAF
+  name: "шолом тактичного скафандра TCAF"
   suffix: TCAF
-  description: Сучасний шолом, що використовується зі стандартним тактичним скафандром TCAF
+  description: "Сучасний шолом, що використовується зі стандартним тактичним скафандром TCAF"
   categories: [HideSpawnMenu]
   components:
   - type: Sprite

@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: empty blood vial
+  name: "порожня ампула крові"
   parent: [DrinkBaseMaterialGlass, DrinkBaseCup, DrinkVisualsFillOverlay, BaseMagicalContraband]
-  description: An empty vial, needs to be filled with blood.
+  description: "Порожня ампула, яку потрібно наповнити кров'ю."
   id: BloodVial
   components:
   - type: Spillable
@@ -43,9 +43,9 @@
     node: unfinished
 
 - type: entity
-  name: filled blood vial
+  name: "наповнена ампула крові"
   parent: [BaseItem, BaseMagicalContraband]
-  description: A blood vial imbued with black magic, useful for a variety of things.
+  description: "Ампула крові, наділена чорною магією; корисна для різних цілей."
   id: BloodVialFull
   components:
   - type: StaticPrice

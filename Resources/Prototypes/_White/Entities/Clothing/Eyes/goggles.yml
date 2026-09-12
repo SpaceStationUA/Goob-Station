@@ -4,8 +4,8 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesNightVisionGoggles
-  name: night vision goggles
-  description: Now you can see in the dark!
+  name: "окуляри нічного бачення"
+  description: "Тепер ви можете бачити в темряві!"
   components:
   - type: Sprite
     sprite: _White/Clothing/Eyes/Goggles/nightvision.rsi
@@ -29,7 +29,7 @@
 - type: entity
   parent: ClothingEyesNightVisionGoggles
   id: ClothingEyesNightVisionGogglesGen1
-  name: night vision goggles (GEN1)
+  name: "окуляри нічного бачення (покоління 1)"
   suffix: DEBUG
   components:
   - type: MonolithNightVision
@@ -43,7 +43,7 @@
 - type: entity
   parent: ClothingEyesNightVisionGoggles
   id: ClothingEyesNightVisionGogglesGen2
-  name: night vision goggles (GEN2)
+  name: "окуляри нічного бачення (покоління 2)"
   suffix: DEBUG
   components:
   - type: MonolithNightVision
@@ -57,7 +57,7 @@
 - type: entity
   parent: ClothingEyesNightVisionGoggles
   id: ClothingEyesNightVisionGogglesGen3
-  name: night vision goggles (GEN3)
+  name: "окуляри нічного бачення (покоління 3)"
   suffix: DEBUG
   components:
   - type: MonolithNightVision
@@ -71,7 +71,7 @@
 - type: entity
   parent: ClothingEyesNightVisionGoggles
   id: ClothingEyesNightVisionGogglesGen4
-  name: night vision goggles (GEN4)
+  name: "окуляри нічного бачення (покоління 4)"
   suffix: DEBUG
   components:
   - type: MonolithNightVision
@@ -86,8 +86,8 @@
 - type: entity
   parent: [ClothingEyesNightVisionGoggles, ShowMedicalIcons, BaseSyndicateContraband]
   id: ClothingEyesNightVisionGogglesSyndie
-  name: syndicate night vision goggles
-  description: A high-tech pair of night vision goggles. Has medical analysis technology.
+  name: "окуляри нічного бачення синдикату"
+  description: "Високотехнологічні окуляри нічного бачення. Мають технологію медичного аналізу."
   components:
   - type: Sprite
     sprite: _White/Clothing/Eyes/Goggles/snightvision.rsi
@@ -112,8 +112,8 @@
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesThermalVisionGoggles
-  name: thermal vision goggles
-  description: Now you can see everyone!
+  name: "тепловізійні окуляри"
+  description: "Тепер ви можете бачити всіх!"
   components:
   - type: Sprite
     sprite: _White/Clothing/Eyes/Goggles/thermal.rsi
@@ -130,8 +130,8 @@
 - type: entity
   parent: [ClothingEyesBase, BaseSyndicateContraband]
   id: ClothingEyesThermalVisionGogglesSyndie
-  name: thermal vision goggles
-  description: A high-tech pair of thermal goggles.
+  name: "тепловізійні окуляри"
+  description: "Високотехнологічні тепловізійні окуляри."
   components:
   - type: Sprite
     sprite: _White/Clothing/Eyes/Goggles/sthermals.rsi

@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseAction
   id: CockatricePowerAction
-  name: Cockatrice's power
-  description: The Cockatrice's egg has given you the power to turn people into stone statues!
+  name: "сила кокатриса"
+  description: "Перетворює вибрану істоту на кам'яну статую"
   components:
   - type: Action
     useDelay: 10
@@ -31,8 +31,8 @@
 - type: entity
   parent: BaseAction
   id: ZappyPowerAction
-  name: Zappy's power
-  description: The Zappy's egg has given you the power to summon clouds of thunder!
+  name: "сила блискавичної курки"
+  description: "Викликає кілька грозових хмар"
   components:
   - type: Action
     useDelay: 10
@@ -51,8 +51,8 @@
 - type: entity
   parent: BaseAction
   id: ActionFireballPhoenix
-  name: Phoenix Fireball
-  description: Fires an explosive fireball towards the clicked location.
+  name: "вогняна куля фенікса"
+  description: "Випускає вибухову вогняну кулю у вибраному напрямку."
   components:
   - type: Sprite
     sprite: _Goobstation/Wizard/actions.rsi
@@ -81,8 +81,8 @@
 - type: entity
   parent: BaseAction
   id: ActionMutationShockTouch
-  name: Shock Touch
-  description: Channel electricity to your hand to shock people with. Mostly harmless! Mostly...
+  name: "електричний дотик"
+  description: "Дозволяє вдарити ціль струмом через дотик, не обходячи ізоляцію."
   components:
   - type: Action
     useDelay: 7

@@ -4,8 +4,8 @@
 - type: entity
   parent: BaseAction
   id: ActionSlimeMorph
-  name: Morph
-  description: Reshape your body - recolor yourself, or take on the look of someone you have studied.
+  name: "Перевтілитись"
+  description: "Змініть своє тіло - перефарбуйтеся або прийміть вигляд того, кого ви вивчили."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action

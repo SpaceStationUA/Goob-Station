@@ -7,7 +7,7 @@
 # the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
 - type: entity
   id: SpawnPointGhostReplicatorBase
-  name: replicator spawn point
+  name: "точка появи Реплікатора"
   abstract: true
   parent: MarkerBase
   components:

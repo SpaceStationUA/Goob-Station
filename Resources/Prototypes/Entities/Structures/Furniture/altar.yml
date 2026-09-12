@@ -3,8 +3,8 @@
 - type: entity
   id: AltarBase
   parent: BaseStructure
-  name: altar
-  description: Altar of the Gods.
+  name: "вівтар"
+  description: "Вівтар богів."
   abstract: true
   components:
   - type: Anchorable
@@ -39,7 +39,7 @@
 - type: entity
   id: AltarNanotrasen
   parent: AltarBase
-  name: nanotrasen altar
+  name: "вівтар Нанотрейзен"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-nanotrasen-feedback
@@ -60,7 +60,7 @@
 - type: entity
   id: AltarChaos
   parent: AltarNanotrasen
-  name: chaos altar
+  name: "вівтар хаосу"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-chaos-feedback
@@ -85,7 +85,7 @@
 - type: entity
   id: AltarDruid
   parent: AltarNanotrasen
-  name: druid altar
+  name: "друїдський вівтар"
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
@@ -104,7 +104,7 @@
 - type: entity
   id: AltarToolbox
   parent: AltarNanotrasen
-  name: toolbox altar
+  name: "вівтар ящику для інструментів"
   components:
   - type: AssayResponse  # Pirate
     replaceMessage: altar-toolbox-feedback
@@ -125,7 +125,7 @@
 - type: entity
   id: AltarSpaceChristian
   parent: AltarNanotrasen
-  name: space-Christian altar
+  name: "космічно-християнський вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-space-christian-feedback
@@ -153,7 +153,7 @@
 - type: entity
   id: AltarSatana
   parent: AltarNanotrasen
-  name: satanic altar
+  name: "сатанинський вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-satanic-feedback
@@ -174,7 +174,7 @@
 - type: entity
   id: AltarTechnology
   parent: AltarNanotrasen
-  name: technology altar
+  name: "вівтар технологій"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-technology-feedback
@@ -202,7 +202,7 @@
 - type: entity
   id: AltarConvertFestival
   parent: AltarBase
-  name: festival altar
+  name: "вівтар фестивалю"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-festival-feedback
@@ -219,7 +219,7 @@
 - type: entity
   id: AltarConvertMaint
   parent: AltarConvertFestival
-  name: maint altar
+  name: "вівтар технічних тунелей"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-maint-feedback
@@ -246,7 +246,7 @@
 - type: entity
   id: AltarConvertBlue
   parent: AltarConvertFestival
-  name: blue altar
+  name: "блакитний вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-blue-feedback
@@ -274,7 +274,7 @@
 - type: entity
   id: AltarConvertBurden
   parent: AltarConvertFestival
-  name: burden altar
+  name: "вівтар тягару"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-burden-feedback
@@ -295,7 +295,7 @@
 - type: entity
   id: AltarConvert
   parent: AltarConvertFestival
-  name: convert altar
+  name: "перетворюючий вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-convert-feedback
@@ -319,7 +319,7 @@
 - type: entity
   id: AltarConvertOrange
   parent: AltarConvertFestival
-  name: orange altar
+  name: "помаранчевий вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-orange-feedback
@@ -340,7 +340,7 @@
 - type: entity
   id: AltarConvertRed
   parent: AltarConvertFestival
-  name: red altar
+  name: "червоний вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-red-feedback
@@ -361,7 +361,7 @@
 - type: entity
   id: AltarConvertWhite
   parent: AltarConvertFestival
-  name: white altar
+  name: "білий вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-white-feedback
@@ -382,7 +382,7 @@
 - type: entity
   id: AltarConvertYellow
   parent: AltarConvertFestival
-  name: yellow altar
+  name: "жовтий вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-yellow-feedback
@@ -403,7 +403,7 @@
 - type: entity
   id: AltarHeaven
   parent: AltarBase
-  name: heaven altar
+  name: "небесний вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-heaven-feedback
@@ -431,7 +431,7 @@
 - type: entity
   id: AltarFangs
   parent: AltarHeaven
-  name: fanged altar
+  name: "ікластий вівтар"
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-fangs-feedback
@@ -450,8 +450,8 @@
 - type: entity
   id: AltarBananium
   parent: AltarBase
-  name: honkmother altar
-  description: A bananium altar dedicated to the honkmother.
+  name: "вівтар Хонкоматері"
+  description: "Банановий вівтар, присвячений матері-берегині."
   components:
   - type: AssayResponse # Pirate
     replaceMessage: altar-honkmother-feedback

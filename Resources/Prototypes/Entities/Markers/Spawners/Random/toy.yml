@@ -421,7 +421,7 @@
 - type: entity
   parent: MarkerBase
   id: ToySpawner90
-  name: Toy Spawner
+  name: "спавнер іграшок"
   suffix: 90
   components:
   - type: Sprite
@@ -437,7 +437,7 @@
 - type: entity
   parent: MarkerBase
   id: PlushieSpawner50
-  name: Plushie Spawner
+  name: "спавнер плюшевих іграшок"
   suffix: 50
   components:
   - type: Sprite
@@ -453,7 +453,7 @@
 - type: entity
   parent: MarkerBase
   id: SpacemenFigurineSpawner90
-  name: Spacemen Minifigure Spawner
+  name: "спавнер мініфігурок космонавтів"
   suffix: 90
   components:
   - type: Sprite
@@ -469,7 +469,7 @@
 - type: entity
   parent: MarkerBase
   id: MechFigurineSpawner50
-  name: Mech Figurine Spawner
+  name: "спавнер фігурок мехів"
   suffix: 50
   components:
   - type: Sprite
@@ -485,7 +485,7 @@
 - type: entity
   parent: MarkerBase
   id: ToyWeaponSpawner90
-  name: Toy Weapon Spawner
+  name: "спавнер іграшкової зброї"
   suffix: 90
   components:
   - type: Sprite
@@ -501,7 +501,7 @@
 - type: entity
   parent: MarkerBase
   id: CapGunSpawner90
-  name: Cap Gun Spawner
+  name: "спавнер пістолетів із пістонами"
   suffix: 90
   components:
   - type: Sprite
@@ -517,7 +517,7 @@
 - type: entity
   parent: MarkerBase
   id: MiscToySpawner90
-  name: Miscellaneous Toy Spawner
+  name: "спавнер різних іграшок"
   suffix: 90
   components:
   - type: Sprite
@@ -533,7 +533,7 @@
 - type: entity
   parent: MarkerBase
   id: ToySoundMakerSpawner90
-  name: Toy Sound Maker Spawner
+  name: "спавнер іграшок зі звуком"
   suffix: 90
   components:
   - type: Sprite
@@ -549,7 +549,7 @@
 - type: entity
   parent: MarkerBase
   id: CrayonSpawner90
-  name: Crayon Spawner
+  name: "спавнер крейди"
   suffix: 90
   components:
   - type: Sprite

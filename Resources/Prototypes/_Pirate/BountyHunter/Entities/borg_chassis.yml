@@ -1,8 +1,8 @@
 - type: entity
   id: BorgChassisBountyHunter
   parent: BaseBorgChassisBountyHunter
-  name: reclaimed cyborg
-  description: A man-machine hybrid that assists in station activity. This one is patched together with spare parts.
+  name: "перероблений кіборг"
+  description: "Гібрид людини й машини, що допомагає на станції. Цей зібраний із запасних деталей."
   components:
   - type: Sprite
     sprite: _Pirate/BountyHunter/Mobs/Silicon/chassis.rsi

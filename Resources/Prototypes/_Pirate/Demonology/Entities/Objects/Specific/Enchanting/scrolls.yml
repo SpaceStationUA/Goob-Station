@@ -4,8 +4,8 @@
   abstract: true
   parent: BasePaper
   id: BaseEnchantingScroll
-  name: enchanted scroll
-  description: A scroll imbued with an enchantment. Could do any number of things.
+  name: "зачарований сувій"
+  description: "Сувій, наділений зачаруванням. Може робити що завгодно."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Objects/Specific/empty_scroll.rsi
@@ -26,8 +26,8 @@
 - type: entity
   parent: BaseItem
   id: EnchantingScrollEmpty
-  name: scroll
-  description: An empty scroll waiting to be filled with an enchantment.
+  name: "сувій"
+  description: "Порожній сувій, що чекає на зачарування."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Objects/Specific/empty_scroll.rsi

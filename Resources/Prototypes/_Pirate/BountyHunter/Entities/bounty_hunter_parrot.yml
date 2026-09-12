@@ -1,9 +1,9 @@
 ﻿# Parrot Familiar and reinforcement 'radio'
 - type: entity
   parent: [ MobParrot ]
-  name: bounty hunter parrot
+  name: "папуга мисливця за головами"
   id: MobParrotBountyHunter
-  description: Infiltrates your domain, spies on you, and is somehow still a cool pet. This one is keeping a keen eye on your belongings.
+  description: "Проникає у ваші володіння, шпигує за вами й усе одно лишається крутим улюбленцем. Цей особливо пильно стежить за вашими речами."
   components:
   - type: Item
     size: Large
@@ -56,7 +56,7 @@
 # BH parrot body. They get a hand!
 - type: body
   id: BountyHunterParrot
-  name: "parrot"
+  name: "папуга"
   root: chest
   slots:
     chest:

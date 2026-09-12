@@ -4,379 +4,379 @@
 - type: lobbyBackground
   id: cqcm
   background: /Textures/LobbyScreens/cqcm.webp
-  name: CQCM
+  name: "CQCM"
   artist: blooodyspy
 
 - type: lobbyBackground
   id: mime2
   background: /Textures/LobbyScreens/mime2.webp
-  name: Mime.
+  name: "Мім."
   artist: .cheeki
 
 - type: lobbyBackground
   id: cargopoker
   background: /Textures/LobbyScreens/cargopoker.webp
-  name: Cargo Poker Night
+  name: "Вечір покеру у вантажному відділі"
   artist: _Chorinea_
 
 - type: lobbyBackground
   id: suboptimal
   background: /Textures/LobbyScreens/suboptimal.webp
-  name: Suboptimal
+  name: "Неоптимально"
   artist: 4vvv
 
 - type: lobbyBackground
   id: uristvshiero
   background: /Textures/LobbyScreens/uristvshiero.webp
-  name: Human Urist vs Hierophant
+  name: "Людина Уріст проти Ієрофанта"
   artist: 51fishstack
 
 - type: lobbyBackground
   id: tuffthragg
   background: /Textures/LobbyScreens/tuffthragg.webp
-  name: Tuff Thragg
+  name: "Тафф Треґґ"
   artist: Arraydeess
 
 - type: lobbyBackground
   id: spacedragon
   background: /Textures/LobbyScreens/spacedragon.webp
-  name: Space Dragon
+  name: "Космічний дракон"
   artist: asardonicsailor
 
 - type: lobbyBackground
   id: medbayexperience
   background: /Textures/LobbyScreens/medbayexperience.webp
-  name: Medbay Experience
+  name: "Досвід медвідсіку"
   artist: bloomyex
 
 - type: lobbyBackground
   id: fuckyoudeath
   background: /Textures/LobbyScreens/fuckyoudeath.webp
-  name: Fuck You, Death
+  name: "Пішла ти, Смерте"
   artist: boiwab
 
 - type: lobbyBackground
   id: thatfuckingratthatihate
   background: /Textures/LobbyScreens/thatfuckingratthatihate.webp
-  name: That Fucking Rat That I Hate
+  name: "Той довбаний щур, якого я ненавиджу"
   artist: bright1905
 
 - type: lobbyBackground
   id: whiskeyechowhiskeytime
   background: /Textures/LobbyScreens/whiskeyechowhiskeytime.webp
-  name: Whiskey Echo Whiskey Time
+  name: "Час «Віскі Ехо Віскі»"
   artist: brizby
 
 - type: lobbyBackground
   id: theantags
   background: /Textures/LobbyScreens/theantags.webp
-  name: The Antags
+  name: "Антаги"
   artist: cattom.
 
 - type: lobbyBackground
   id: thewalkingzed
   background: /Textures/LobbyScreens/thewalkingzed.webp
-  name: The Walking Zed
+  name: "Ходячий Зед"
   artist: cattom.
 
 - type: lobbyBackground
   id: screamemoji
   background: /Textures/LobbyScreens/screamemoji.webp
-  name: Scream Emoji
+  name: "Емодзі-крик"
   artist: chknnug
 
 - type: lobbyBackground
   id: pathofkino
   background: /Textures/LobbyScreens/pathofkino.webp
-  name: Path of Kino
+  name: "Шлях Кіно"
   artist: dlooodyspy
 
 - type: lobbyBackground
   id: drMothroach
   background: /Textures/LobbyScreens/drMothroach.webp
-  name: Dr. Mothroach
+  name: "Доктор Тарганоміль"
   artist: dr.cerb
 
 - type: lobbyBackground
   id: 1000_research_assistants
   background: /Textures/LobbyScreens/1000_research_assistants.webp
-  name: 1000 Research Assistants
+  name: "1000 наукових асистентів"
   artist: fanciest_british_frog
 
 - type: lobbyBackground
   id: honkhonk
   background: /Textures/LobbyScreens/honkhonk.webp
-  name: Honk Honk
+  name: "Хонк-хонк"
   artist: feathergothic
 
 - type: lobbyBackground
   id: weregoingtohell
   background: /Textures/LobbyScreens/We'reGoingToHell.webp
-  name: We're Going to Hell
+  name: "Ми йдемо до пекла"
   artist: i.void.destroyer
 
 - type: lobbyBackground
   id: GloryToNanoTrasen
   background: /Textures/LobbyScreens/GloryToNanoTrasen.webp
-  name: Glory to Nano Trasen, what a stupid quote
+  name: "Слава НаноТрейзен, яка дурна цитата"
   artist: iron_diamond
 
 - type: lobbyBackground
   id: ClownSpider
   background: /Textures/LobbyScreens/ClownSpider.webp
-  name: Clown Spider
+  name: "Клоун-павук"
   artist: mr.fisher
 
 - type: lobbyBackground
   id: SpaceStation64
   background: /Textures/LobbyScreens/SpaceStation64.webp
-  name: Space Station 64
+  name: "Космічна станція 64"
   artist: mr.fisher
 
 - type: lobbyBackground
   id: JustAnotherShift
   background: /Textures/LobbyScreens/JustAnotherShift.webp
-  name: Just Another Shift
+  name: "Просто ще одна зміна"
   artist: frflyffufox
 
 - type: lobbyBackground
   id: aCalmEvac
   background: /Textures/LobbyScreens/aCalmEvac.webp
-  name: A Calm Evac
+  name: "Спокійна евакуація"
   artist: navi__.
 
 - type: lobbyBackground
   id: ChitnidsDiscoverFire
   background: /Textures/LobbyScreens/ChitnidsDiscoverFire.webp
-  name: Chitnids Discovering Fire
+  name: "Хітиніди відкривають для себе вогонь"
   artist: olivehojoe
 
 - type: lobbyBackground
   id: Get_Off_MrHonker's_Wild_Ride
   background: /Textures/LobbyScreens/Get_Off_MrHonker's_Wild_Ride.webp
-  name: I Want to Get Off Mr. Honker's Wild Ride
+  name: "Я хочу зійти з шаленого атракціону містера Хонкера"
   artist: onetruehudson
 
 - type: lobbyBackground
   id: AnythingButYourJob
   background: /Textures/LobbyScreens/AnythingButYourJob.webp
-  name: Anything But Your Actual Job
+  name: "Що завгодно, крім вашої справжньої роботи"
   artist: orangealligator
 
 - type: lobbyBackground
   id: TooManyCooks
   background: /Textures/LobbyScreens/TooManyCooks.webp
-  name: Too Many Cooks
+  name: "Забагато кухарів"
   artist: orangealligator
 
 - type: lobbyBackground
   id: Anyone_know_what_blew_up
   background: /Textures/LobbyScreens/Anyone_know_what_blew_up.webp
-  name: Does Anyone Know What Blew Up?
+  name: "Хтось знає, що вибухнуло?"
   artist: orchard.
 
 - type: lobbyBackground
   id: PunPunWasTheEnemyAllAlong
   background: /Textures/LobbyScreens/PunPunWasTheEnemyAllAlong.webp
-  name: Pun Pun Was The Enemy All Along
+  name: "Пун Пун увесь цей час був ворогом"
   artist: orchard.
 
 - type: lobbyBackground
   id: CriminallyUnderpaidBabysitter
   background: /Textures/LobbyScreens/CriminallyUnderpaidBabysitter.webp
-  name: Criminally Underpaid Babysitter
+  name: "Нянька, якій злочинно мало платять"
   artist: orchard.
 
 - type: lobbyBackground
   id: FleshHereticMoneyGang
   background: /Textures/LobbyScreens/FleshHereticMoneyGang.webp
-  name: Flesh Heretic Money Gang
+  name: "Грошова банда єретиків плоті"
   artist: Pinkabee
 
 - type: lobbyBackground
   id: NormalNanotrasenMoment
   background: /Textures/LobbyScreens/NormalNanotrasenMoment.webp
-  name: Normal Nanotrasen Moment
+  name: "Звичайний момент НаноТрейзен"
   artist: pistos2225
 
 - type: lobbyBackground
   id: Memories
   background: /Textures/LobbyScreens/Memories.webp
-  name: Memories
+  name: "Спогади"
   artist: redmon2225
 
 - type: lobbyBackground
   id: Standoff
   background: /Textures/LobbyScreens/Standoff.webp
-  name: Standoff
+  name: "Протистояння"
   artist: rtx420
 
 - type: lobbyBackground
   id: ThreeBrizbyMoon
   background: /Textures/LobbyScreens/ThreeBrizbyMoon.webp
-  name: Three Brizby Moon
+  name: "Місяць трьох Брізбі"
   artist: singularjames
 
 - type: lobbyBackground
   id: AFriendlyGameOfCards
   background: /Textures/LobbyScreens/AFriendlyGameOfCards.webp
-  name: A Friendly Game of Cards
+  name: "Дружня гра в карти"
   artist: stradfarian
 
 - type: lobbyBackground
   id: AngrySecoff
   background: /Textures/LobbyScreens/AngrySecoff.webp
-  name: Angry Sec Off
+  name: "Розлючений офіцер безпеки"
   artist: sup0380
 
 - type: lobbyBackground
   id: Cargonia
   background: /Textures/LobbyScreens/Cargonia.webp
-  name: Cargonia
+  name: "Каргонія"
   artist: suportik
 
 - type: lobbyBackground
   id: ButNobodyCared
   background: /Textures/LobbyScreens/ButNobodyCared.webp
-  name: But Nobody Cared
+  name: "Але всім було байдуже"
   artist: synthetic_086
 
 - type: lobbyBackground
   id: Sa-Tider-o_Gojo
   background: /Textures/LobbyScreens/Sa-Tider-o_Gojo.webp
-  name: Sa-Tider-o_Gojo
+  name: "Са-Тайдер-о Ґодзьо"
   artist: theninetails_
 
 - type: lobbyBackground
   id: Bingle
   background: /Textures/LobbyScreens/Bingle.webp
-  name: Bingle
+  name: "Бінґл"
   artist: yellownes
 
 - type: lobbyBackground
   id: CEMoneyStack
   background: /Textures/LobbyScreens/CEMoneyStack.webp
-  name: CE Money Stack
+  name: "Стос грошей старшого інженера"
   artist: zymshok
 
 - type: lobbyBackground
   id: MushroomAnnihilator
   background: /Textures/LobbyScreens/MushroomAnnihilator.webp
-  name: Mango Flavored Mushroom Annihilator
+  name: "Грибний анігілятор зі смаком манго"
   artist: zymshok
 
 - type: lobbyBackground
   id: MyZaDiskGotStolen
   background: /Textures/LobbyScreens/MyZaDiskGotStolen.webp
-  name: My Za Disk Got Stolen
+  name: "У мене вкрали диск «За»"
   artist: zymshok
 
 - type: lobbyBackground
   id: cqcm1
   background: /Textures/LobbyScreens/cqcm1.webp
-  name: CQCM 1
+  name: "CQCM 1"
   artist: blooodyspy
 
 - type: lobbyBackground
   id: cqcm2
   background: /Textures/LobbyScreens/cqcm2.webp
-  name: CQCM 2
+  name: "CQCM 2"
   artist: blooodyspy
 
 - type: lobbyBackground
   id: cqcm3
   background: /Textures/LobbyScreens/cqcm3.webp
-  name: CQCM 3
+  name: "CQCM 3"
   artist: blooodyspy
 
 - type: lobbyBackground
   id: goob
   background: /Textures/LobbyScreens/goob.webp
-  name: Goob
+  name: "Губ"
   artist: Diebeck
 
 - type: lobbyBackground
   id: GoobNukie
   background: /Textures/LobbyScreens/GoobNukie.webp
-  name: Goob Nukie
+  name: "Губ-ядерник"
   artist: Cheeki
 
 - type: lobbyBackground
   id: grandtheftgoob
   background: /Textures/LobbyScreens/grandtheftgoob.webp
-  name: Grand Theft Goob
+  name: "Велике викрадення Губа"
   artist: Piras314
 
 - type: lobbyBackground
   id: greytideworldwide
   background: /Textures/LobbyScreens/greytideworldwide.webp
-  name: Greytide Worldwide
+  name: "Сіроприлив по всьому світу"
   artist: Piras314
 
 - type: lobbyBackground
   id: heretic
   background: /Textures/LobbyScreens/heretic.webp
-  name: Heretic
+  name: "Єретик"
   artist: Cheeki
 
 - type: lobbyBackground
   id: mime
   background: /Textures/LobbyScreens/mime.webp
-  name: Mime
+  name: "Мім"
   artist: Diebeck
 
 - type: lobbyBackground
   id: tideractivities
   background: /Textures/LobbyScreens/tideractivities.webp
-  name: Tider Activities
+  name: "Діяльність тайдерів"
   artist: asardonicsailor
 
 - type: lobbyBackground
   id: moneyspread-bingle
   background: /Textures/LobbyScreens/binglemoneyspread.webp
-  name: Bingle Flex
+  name: "Бінгл Флекс"
   artist: LFMoth
 
 - type: lobbyBackground
   id: stargoob
   background: /Textures/LobbyScreens/StarGoob.webp
-  name: GoobWars
+  name: "ГубВійни"
   artist: Jvne
 
 - type: lobbyBackground
   id: ling-in-my-vents
   background: /Textures/LobbyScreens/sec_theres_ling_in_my_vents.webp
-  name: Sec theres ling in my vents
+  name: "СБ, у моїй вентиляції лінг"
   artist: blooodyspy
 
 - type: lobbyBackground
   id: we-all-love-ai
   background: /Textures/LobbyScreens/we_all_love_ai.webp
-  name: We all love ai
+  name: "Ми всі любимо ШІ"
   artist: blooodyspy
 
 - type: lobbyBackground
   id: syndi-kek
   background: /Textures/LobbyScreens/syndi_kek.webp
-  name: Syndi kek
+  name: "Синді кек"
   artist: blooodyspy
 
 - type: lobbyBackground
   id: etu-hop
   background: /Textures/LobbyScreens/fuckingkillHoPalready.webp
-  name: E tu, HoP?
+  name: "І ти, ГП?"
   artist: MsMunde
 
 - type: lobbyBackground
   id: nukies-bridge
   background: /Textures/LobbyScreens/nukies_bridge.webp
-  name: Nukies Bridge!!
+  name: "Місток ядерників!!"
   artist: seyriix
 
 - type: lobbyBackground
   id: etzils-hungry
   background: /Textures/LobbyScreens/etzilshungry.webp
-  name: Etzil's Hungry
+  name: "Етзіл голодний"
   artist: IdiotVibes
 
 # Pirate
@@ -384,35 +384,35 @@
 - type: lobbyBackground
   id: bloody-clown
   background: /Textures/LobbyScreens/bloodyclown.jpg
-  name: Bloody Clown
+  name: "Кривавий клоун"
   artist: Redmon
 
 - type: lobbyBackground
   id: Cyberpsychosis
   background: /Textures/LobbyScreens/Cyberpsychosis.webp
-  name: Cyberpsychosis
+  name: "Кіберпсихоз"
   artist: Redmon
 
 - type: lobbyBackground
   id: engiborg-recharge
   background: /Textures/LobbyScreens/engiborgrecharge.jpg
-  name: Engi borg
+  name: "Інженерний борґ"
   artist: Redmon
 
 - type: lobbyBackground
   id: katana
   background: /Textures/LobbyScreens/katana.jpg
-  name: Katana
+  name: "Катана"
   artist: Redmon
 
 - type: lobbyBackground
   id: nuclear-operative
   background: /Textures/LobbyScreens/nuclearoperative.jpg
-  name: Nuclear Operative
+  name: "Ядерний оперативник"
   artist: Redmon
 
 - type: lobbyBackground
   id: nuclear-plan
   background: /Textures/LobbyScreens/nuclearplan.jpg
-  name: Ideal Nuclear Plan
+  name: "Ідеальний ядерний план"
   artist: Redmon

@@ -1,9 +1,9 @@
 - type: entity
   abstract: true
-  name: base cudgel
+  name: "основа кийка"
   parent: [ BaseItem, BaseMinorContraband ]
   id: WeaponCudgelBase
-  description: A piece of wood sharpened for easier grip. A primitive hunters favorite, perfect for barbaric destruction!
+  description: "Шматок дерева, обтесаний для зручнішого хвату. Улюблена зброя первісного мисливця, ідеальна для варварського руйнування!"
   components:
   - type: MeleeWeapon
     animationRotation: -135
@@ -29,7 +29,7 @@
   - type: UndetectableContraband
 
 - type: entity
-  name: wood cudgel
+  name: "дерев'яний кийок"
   parent: WeaponCudgelBase
   id: WeaponCudgelWood
   components:
@@ -60,7 +60,7 @@
     node: cudgel
 
 - type: entity
-  name: ashwood cudgel
+  name: "ясеневий кийок"
   parent: WeaponCudgelBase
   id: WeaponCudgelAshwood
   components:
@@ -92,10 +92,10 @@
     node: cudgel
 
 - type: entity
-  name: incomplete wooden cudgel
+  name: "незавершений дерев'яний кийок"
   parent: [ BaseItem, BaseMinorContraband ]
   id: IncompleteWoodCudgel
-  description: A few planks of wood stuck together.
+  description: "Кілька дерев'яних дощок, складених докупи."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/incomplete_bat.rsi
@@ -113,10 +113,10 @@
     node: incompleteCudgel
 
 - type: entity
-  name: incomplete ashwood cudgel
+  name: "незавершений ясеневий кийок"
   parent: [ BaseItem, BaseMinorContraband ]
   id: IncompleteAshwoodCudgel
-  description: A few planks of wood stuck together.
+  description: "Кілька дерев'яних дощок, складених докупи."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/incomplete_bat.rsi

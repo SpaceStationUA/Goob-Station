@@ -3,8 +3,8 @@
 - type: entity
   id: BannerBase
   parent: BaseStructureDynamic
-  name: base banner
-  description: It's the concept of a banner, you shouldn't be seeing this.
+  name: "базовий банер"
+  description: "Це концепція банера, ви не повинні цього бачити."
   abstract: true
   components:
   - type: Sprite
@@ -42,8 +42,8 @@
 - type: entity
   id: BannerNanotrasen
   parent: BannerBaseTP # Pirate edit
-  name: nanotrasen banner
-  description: A banner displaying the Nanotrasen logo. It looks rather cheap.
+  name: "банер нанотрейзен"
+  description: "Банер з логотипом Nanotrasen. Виглядає досить дешево."
   components:
   - type: Sprite
   # Pirate edit start
@@ -63,8 +63,8 @@
 - type: entity
   id: BannerCargo
   parent: BannerBaseTP # Pirate edit
-  name: cargo banner
-  description: A banner displaying the colors of the cargo department. Not. Cargonia.
+  name: "вантажний банер"
+  description: "Банер, що відображає кольори вантажного відділу. Не. Каргонія."
   components:
   - type: Sprite
   # Pirate edit start
@@ -84,8 +84,8 @@
 - type: entity
   id: BannerEngineering
   parent: BannerBaseTP # Pirate edit
-  name: engineering banner
-  description: A banner displaying the colors of the engineering department. Scrungularty.
+  name: "банер інженерії"
+  description: "Банер, що відображає кольори інженерного відділу. Скрунгуларті."
   components:
   - type: Sprite
   # Pirate edit start
@@ -105,8 +105,8 @@
 - type: entity
   id: BannerMedical
   parent: BannerBaseTP # Pirate edit
-  name: medical banner
-  description: A banner displaying the colors of the medical department. How sterile.
+  name: "банер медицини"
+  description: "Банер, що відображає кольори медичного відділення. Як стерильно."
   components:
   - type: Sprite
   # Pirate edit start
@@ -126,8 +126,8 @@
 - type: entity
   id: BannerRevolution
   parent: BannerBaseTP # Pirate edit
-  name: revolution banner
-  description: A banner displaying revolution. Viva!
+  name: "банер революції"
+  description: "Банер із зображенням революції. Віва!"
   components:
   - type: Sprite
   # Pirate edit start
@@ -147,8 +147,8 @@
 - type: entity
   id: BannerSyndicate
   parent: BannerBaseTP # Pirate edit
-  name: syndicate banner
-  description: A banner from which, according to the syndicate, you should feel hatred for NT.
+  name: "банер синдикату"
+  description: "Прапор, від якого, на думку синдикату, ви повинні відчувати ненависть до НТ."
   components:
   - type: Sprite
   # Pirate edit start
@@ -168,8 +168,8 @@
 - type: entity
   id: BannerScience
   parent: BannerBaseTP # Pirate edit
-  name: science banner
-  description: A banner displaying the colors of the science department. Where science has no bounds, and regulations are rarely followed.
+  name: "науковий банер"
+  description: "Банер, що відображає кольори наукового відділу. Де наука не має меж, а правила рідко дотримуються."
   components:
   - type: Sprite
   # Pirate edit start
@@ -189,8 +189,8 @@
 - type: entity
   id: BannerSecurity
   parent: BannerBaseTP # Pirate edit
-  name: security banner
-  description: A banner displaying the colors of the security department. You're surprised it's not vandalised.
+  name: "банер служби безпеки"
+  description: "Банер, що відображає кольори відділу безпеки. Ви здивовані, що він не пошкоджений вандалами."
   components:
   - type: Sprite
   # Pirate edit start
@@ -210,8 +210,8 @@
 - type: entity
   id: BannerBlue
   parent: BannerBaseTP # Pirate edit
-  name: blue banner
-  description: A banner displaying the color blue. Dabudidabudai.
+  name: "синій прапор"
+  description: "Банер із зображенням синього кольору. Дабудідабудай."
   components:
   - type: Sprite
   # Pirate edit start
@@ -231,8 +231,8 @@
 - type: entity
   id: BannerRed
   parent: BannerBaseTP # Pirate edit
-  name: red banner
-  description: A banner displaying the color red. The edgy one.
+  name: "червоний прапор"
+  description: "Банер з червоним кольором. Гострий банер."
   components:
   - type: Sprite
   # Pirate edit start
@@ -252,8 +252,8 @@
 - type: entity
   id: BannerYellow
   parent: BannerBaseTP # Pirate edit
-  name: yellow banner
-  description: A banner displaying the color yellow. Reminds you of ducks and lemon stands.
+  name: "жовтий прапор"
+  description: "Банер, що відображає жовтий колір. Нагадує качок та лимонні кіоски."
   components:
   - type: Sprite
   # Pirate edit start
@@ -273,8 +273,8 @@
 - type: entity
   id: BannerGreen
   parent: BannerBaseTP # Pirate edit
-  name: green banner
-  description: A banner displaying the color green. Grass, leaves, guacamole.
+  name: "зелений прапор"
+  description: "Банер із зображенням зеленого кольору. Трава, листя, гуакамоле."
   components:
   - type: Sprite
   # Pirate edit start

@@ -11,8 +11,8 @@
 - type: entity
   parent: [ BaseStorageItem, BaseBagOpenClose ]
   id: MantisCase
-  name: amaranth case # Generic version with no whitelist, but also doesn't fit in the mantis belt. Gift box?
-  description: "A case made of exotic, extremely durable hardwood."
+  name: "амарантовий футляр" # Generic version with no whitelist, but also doesn't fit in the mantis belt. Gift box?
+  description: "Футляр з екзотичної, надзвичайно міцної деревини."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Storage/boxmantis.rsi
@@ -34,8 +34,8 @@
 - type: entity
   parent: MantisCase
   id: MantisCaseSmall
-  name: amaranth case (small)
-  description: "A case made of exotic, extremely durable hardwood."
+  name: "амарантовий футляр (малий)"
+  description: "Футляр з екзотичної, надзвичайно міцної деревини."
   components:
   - type: Sprite
     layers:
@@ -55,8 +55,8 @@
 - type: entity
   parent: MantisCase
   id: MantisCaseLarge
-  name: amaranth case (long)
-  description: "A case made of exotic, extremely durable hardwood."
+  name: "амарантовий футляр (довгий)"
+  description: "Футляр з екзотичної, надзвичайно міцної деревини."
   components:
   - type: Sprite
     layers:
@@ -77,8 +77,8 @@
 - type: entity
   parent: MantisCase
   id: MantisCaseExtraLarge
-  name: amaranth case (extra long)
-  description: "A case made of exotic, extremely durable hardwood."
+  name: "амарантовий футляр (наддовгий)"
+  description: "Футляр з екзотичної, надзвичайно міцної деревини."
   components:
   - type: Sprite
     layers:
@@ -104,8 +104,8 @@
 - type: entity
   parent: [MantisCaseLarge, BaseMantisContraband] # Contraband since its contents are
   id: MantisCaseTools
-  name: mantis tools case # In the mantis locker
-  description: "An amaranth case to store your things. A Greek psi is carved into the top, marking it as yours."
+  name: "футляр інструментів псіо-екстрасенса" # In the mantis locker
+  description: "Амарантовий футляр для ваших речей. На кришці вирізьблена грецька літера псі, що позначає його як ваш."
   components:
   - type: Sprite
     layers:
@@ -142,8 +142,8 @@
 - type: entity
   parent: [MantisCaseSmall, BaseMantisContraband] # Contraband since its contents are
   id: MantisCaseChemicals
-  name: mantis chemicals case # In the mantis locker
-  description: "An amaranth case to carry your chemicals. Conveniently portable, but the slots inside will only fit their original contents. A watchful eye is carved into the top, marking it as yours."
+  name: "футляр хімікатів псіо-екстрасенса" # In the mantis locker
+  description: "Амарантовий футляр для перенесення ваших хімікатів. Його зручно носити, але внутрішні гнізда підходять лише для початкового вмісту. На кришці вирізьблене пильне око, що позначає футляр як ваш."
   components:
   - type: Sprite
     layers:
@@ -177,8 +177,8 @@
 - type: entity
   parent: MantisCase
   id: MantisCaseCandles
-  name: mnemolith candle case # Loadout option
-  description: "An amaranth case of mixed mnemolith candles. Conveniently portable, but the slots inside will only fit their original contents."
+  name: "футляр мнемолітових свічок" # Loadout option
+  description: "Амарантовий футляр із набором різних мнемолітових свічок. Його зручно носити, але внутрішні гнізда підходять лише для початкового вмісту."
   components:
   - type: Sprite
     layers:
@@ -212,8 +212,8 @@
   parent: [MantisCaseLarge, BaseMantisContraband] # Contraband since its contents are
   id: MantisCaseRestraints
   suffix: DO NOT MAP # Kept as an empty shell - its contents and loadout were removed on request
-  name: mantis restraints case
-  description: "An amaranth case with a carved restraint motif. The shackles that once filled it have been decommissioned, but it's still a handsome keepsake."
+  name: "футляр засобів стримування псіо-екстрасенса"
+  description: "Амарантовий футляр із вирізьбленим мотивом кайданів. Кайдани, які колись його наповнювали, списали, але він і досі лишається гарною пам’яткою."
   components:
   - type: Sprite
     layers:

@@ -2,8 +2,8 @@
 - type: entity
   parent: [ClothingEyesHudEpistemics, BaseFoldable]
   id: ClothingEyesHudEpistemicsMantis
-  name: mantis psionics lens # This would have an unshaded lens if foldable clothing could move multiple layers...
-  description: "An eidolite lens that displays registered psions, if there are any. Wearable over either eye."
+  name: "псіонічна лінза псіо-екстрасенса" # This would have an unshaded lens if foldable clothing could move multiple layers...
+  description: "Ейдолітова лінза, що показує зареєстрованих псіоніків, якщо такі є. Її можна носити над будь-яким оком."
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Eyes/Hud/epi_mantis.rsi

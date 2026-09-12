@@ -11,8 +11,8 @@
 - type: entity
   parent: ClosetBase
   id: SomberCloset
-  name: somber cabinet
-  description: "An expensive cabinet made of gloomy, patterned wood."
+  name: "похмура шафа із замком"
+  description: "Дорога шафа з похмурого візерунчастого дерева."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Storage/sombercloset.rsi
@@ -95,9 +95,9 @@
 - type: entity
   parent: SomberCloset
   id: SomberClosetLocker
-  name: somber cabinet
+  name: "похмура шафа із замком"
   suffix: Locking
-  description: "An expensive, locking cabinet made of gloomy, patterned wood."
+  description: "Дорога шафа із замком, виготовлена з похмурого візерунчастого дерева."
   components:
   - type: AccessReader
   - type: Lock
@@ -124,8 +124,8 @@
 - type: entity
   parent: BaseWallCloset
   id: SomberWallCloset
-  name: somber wall cabinet
-  description: "An expensive wall cabinet made of gloomy, patterned wood. Unfortunately, the shelves are unstable, and it's likely to dump your things in the floor..."
+  name: "похмура настінна шафка із замком"
+  description: "Дорога настінна шафка з похмурого візерунчастого дерева. На жаль, полиці нестійкі й, найімовірніше, вивалять ваші речі на підлогу..."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Storage/somberwallcloset.rsi
@@ -186,9 +186,9 @@
 - type: entity
   parent: SomberWallCloset
   id: SomberWallClosetLocker
-  name: somber wall cabinet
+  name: "похмура настінна шафка із замком"
   suffix: Locking
-  description: "An expensive, locking wall cabinet made of gloomy, patterned wood. Unfortunately, the shelves are unstable, and it's likely to dump your things in the floor..."
+  description: "Дорога настінна шафка із замком, виготовлена з похмурого візерунчастого дерева. На жаль, полиці нестійкі й, найімовірніше, вивалять ваші речі на підлогу..."
   components:
   - type: AccessReader
   - type: Lock
@@ -211,8 +211,8 @@
 - type: entity
   parent: Bookshelf
   id: BookshelfSomber
-  name: somber bookshelf
-  description: "A gloomy bookshelf full of gloomy books."
+  name: "похмура книжкова шафа"
+  description: "Похмура книжкова шафа, повна похмурих книжок."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Furniture/somberbookshelf.rsi
@@ -249,8 +249,8 @@
 - type: entity
   parent: BookshelfFilled
   id: BookshelfSomberFilled
-  name: somber bookshelf
-  description: "A gloomy bookshelf full of gloomy books."
+  name: "похмура книжкова шафа"
+  description: "Похмура книжкова шафа, повна похмурих книжок."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Furniture/somberbookshelf.rsi

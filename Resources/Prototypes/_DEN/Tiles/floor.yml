@@ -1,6 +1,6 @@
 - type: tile
   id: FloorTilePool
-  name: pool tile
+  name: "плитка для басейну"
   sprite: /Textures/_DEN/Tiles/pool.rsi/pool.png
   variants: 4
   placementVariants:
@@ -18,7 +18,7 @@
 
 - type: tile
   id: FloorTilePoolDark
-  name: dark pool tile
+  name: "темна плитка для басейну"
   sprite: /Textures/_DEN/Tiles/pool.rsi/pool-dark.png
   variants: 4
   placementVariants:

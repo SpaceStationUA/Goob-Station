@@ -3,7 +3,7 @@
 - type: forgedItem
   id: ArrowHeads
   category: Projectiles
-  name: arrow heads
+  name: "наконечники стріл"
   construction: ForgedArrow
   finished: ForgedArrow
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/arrowheads.rsi
@@ -15,7 +15,7 @@
 
 - type: forgedItem
   id: CoilgunBearings
-  name: coilgun bearing ammunition
+  name: "боєприпаси з кульками підшипників для гаус-гармати"
   category: Projectiles
   result: CartridgeBallBearingForged
   work: 50
@@ -28,7 +28,7 @@
 
 - type: forgedItem
   id: CoilgunDisk
-  name: coilgun disk ammunition
+  name: "дискові боєприпаси для гаус-гармати"
   category: Projectiles
   result: CartridgeDiscForged
   work: 50
@@ -41,7 +41,7 @@
 
 - type: forgedItem
   id: CoilgunShard
-  name: coilgun shard ammunition
+  name: "уламкові боєприпаси для гаус-гармати"
   category: Projectiles
   result: CartridgeShardForged
   work: 100

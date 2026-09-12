@@ -12,8 +12,8 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSomberMantis
-  name: mantis reliquary conduit
-  description: "An occult-machine interface through which mantes summon equipment from the Reliquary by thought alone."
+  name: "канал Релікварію псіо-екстрасенса"
+  description: "Окультно-машинний інтерфейс, через який псіо-екстрасенси самою лише думкою викликають спорядження з Релікварію."
   components:
   - type: VendingMachine
     pack: MantisReliquaryInventory
@@ -125,8 +125,8 @@
 - type: entity
   parent: VendingMachineSomberMantis
   id: VendingMachineSomberMantisWall
-  name: mantis reliquary wall conduit
-  description: "A wall-mounted, occult-machine interface through which mantes summon equipment from the Reliquary by thought alone."
+  name: "настінний канал Релікварію псіо-екстрасенса"
+  description: "Настінний окультно-машинний інтерфейс, через який псіо-екстрасенси самою лише думкою викликають спорядження з Релікварію."
   suffix: DO NOT MAP # Wall vending machines can only be used from the south side and then they throw the item through the north wall
   placement: # Just leaving this prototype here for if we ever fix that... Also I have to change all the sprites and must preserve these
     mode: SnapgridCenter

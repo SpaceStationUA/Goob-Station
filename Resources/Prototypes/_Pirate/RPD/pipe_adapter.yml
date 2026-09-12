@@ -1,6 +1,6 @@
 - type: rcd
   id: CEMultizAtmosPipeAdapter
-  name: floor pipe adapter
+  name: "підлоговий адаптер труби"
   category: Piping
   sprite: /Textures/_Pirate/Interface/Radial/RPD/pipe_adapter.png
   mode: ConstructObject

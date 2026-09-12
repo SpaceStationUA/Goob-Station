@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseGrenade
   id: CartridgeStickyGrenade
-  name: sticky grenade round
-  description: Sticks to whatever it hits, then explodes after 3 seconds.
+  name: "патрон липкої гранати"
+  description: "Прилипає до всього, у що влучає, а через 3 секунди вибухає."
   categories: [ HideSpawnMenu ]
   components:
   - type: CartridgeAmmo

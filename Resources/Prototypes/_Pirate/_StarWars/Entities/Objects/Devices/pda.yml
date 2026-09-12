@@ -2,7 +2,7 @@
   parent: CentcomPDA
   id: GalacticRespublicPDA
   name: "кПК Галактичної Республіки"
-  description: "Рви та шматуй, доки не буде зроблено."
+  description: "Рви та шматуй, доки справу не буде зроблено."
   suffix: StarWars
   components:
   - type: Appearance

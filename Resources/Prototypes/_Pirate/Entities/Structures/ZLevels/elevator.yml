@@ -1,8 +1,8 @@
 - type: entity
   parent: MarkerBase
   id: ElevatorController
-  name: elevator controller
-  description: Coordinates an elevator cab. A mapping marker placed inside the shaft.
+  name: "контролер ліфта"
+  description: "Керує кабіною ліфта. Маркер мапи, розміщений у шахті."
   components:
   # MarkerBase: visible in the editor, hidden in-round.
   - type: Sprite
@@ -22,8 +22,8 @@
 - type: entity
   parent: BaseWallmount
   id: ElevatorPanel
-  name: elevator control panel
-  description: Calls an elevator cab to the chosen floor.
+  name: "панель керування ліфтом"
+  description: "Викликає кабіну ліфта на вибраний поверх."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/ZLevels/Elevator/elevator_panel.rsi
@@ -40,8 +40,8 @@
 - type: entity
   parent: BaseWallmount
   id: ElevatorCallButton
-  name: elevator call button
-  description: Summons the elevator to this floor.
+  name: "кнопка виклику ліфта"
+  description: "Викликає ліфт на цей поверх."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/ZLevels/Elevator/elevator_button.rsi
@@ -52,8 +52,8 @@
 - type: entity
   parent: BaseWallmount
   id: ElevatorIndicator
-  name: elevator floor indicator
-  description: Shows the elevator's current floor and direction.
+  name: "індикатор поверху ліфта"
+  description: "Показує поточний поверх і напрямок руху ліфта."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/ZLevels/Elevator/lift_indicator.rsi
@@ -85,8 +85,8 @@
 # Legacy object cab floor; prefer the tile prototypes in _Pirate/Turf/elevator.yml.
 - type: entity
   id: ElevatorPlatform
-  name: elevator platform
-  description: The floor of an elevator cab.
+  name: "платформа ліфта"
+  description: "Підлога кабіни ліфта."
   placement:
     mode: SnapgridCenter
   components:
@@ -113,8 +113,8 @@
 # Invisible looping speaker spawned in the cab and carried to its current deck.
 - type: entity
   id: ElevatorMusicSpeaker
-  name: elevator music
-  description: You can't see this — it's mounted in the elevator cab.
+  name: "музика ліфта"
+  description: "Цього не видно — динамік встановлено в кабіні ліфта."
   components:
   - type: Transform
   # Starts disabled; the elevator enables it at init.
@@ -128,8 +128,8 @@
 # Telegraph shown on each destination tile while the cab descends.
 - type: entity
   id: ElevatorTravelWarning
-  name: elevator hazard
-  description: Stand clear.
+  name: "небезпека ліфта"
+  description: "Відійдіть подалі."
   components:
   - type: Transform
     anchored: true

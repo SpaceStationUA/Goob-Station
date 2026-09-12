@@ -3,7 +3,7 @@
 - type: forgedItem
   id: HammerHead
   category: Tools
-  name: hammer head
+  name: "головка молота"
   construction: ForgedShortHandle
   finished: ForgedHammer
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/hammerhead.rsi
@@ -12,7 +12,7 @@
 - type: forgedItem
   id: ScrewdriverShank
   category: Tools
-  name: screwdriver shank
+  name: "стрижень викрутки"
   construction: ForgedShortHandle
   finished: ForgedScrewdriver
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/screwdriver.rsi
@@ -28,7 +28,7 @@
 - type: forgedItem
   id: PickaxeHead
   category: Tools
-  name: pickaxe head
+  name: "головка кайла"
   construction: ForgedMediumHandle
   finished: ForgedPickaxe
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/pickaxe_head.rsi
@@ -44,7 +44,7 @@
 - type: entity
   parent: [ BaseForgedReadyItem, Crowbar ]
   id: ForgedCrowbar
-  name: crowbar
+  name: "лом"
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -60,7 +60,7 @@
 - type: entity
   parent: [ BaseForgedReadyItem, Wrench ]
   id: ForgedWrench
-  name: wrench
+  name: "гайковий ключ"
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

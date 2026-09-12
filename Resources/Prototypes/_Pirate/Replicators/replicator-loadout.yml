@@ -36,8 +36,8 @@
 - type: entity
   id: ReplicatorT1Weapon
   parent: [ BaseWeaponBatterySmall, BaseItem ]
-  name: replicator stun projector
-  description: You will protect the nest.
+  name: "проєктор оглушення Реплікатора"
+  description: "Ви захищатимете гніздо."
   suffix: Unremoveable
   categories: [HideSpawnMenu]
   components:
@@ -77,7 +77,7 @@
 
 - type: entity
   id: ReplicatorT2AltWeapon
-  name: defender stun projector
+  name: "проєктор оглушення Захисника"
   parent: ReplicatorT1Weapon
   categories: [HideSpawnMenu]
   components:
@@ -96,8 +96,8 @@
 - type: entity
   id: ReplicatorT2AltMeleeWeapon
   parent: ReplicatorT3Weapon
-  name: defender whip
-  description: You are a weapon.
+  name: "батіг Захисника"
+  description: "Ви — зброя."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -118,8 +118,8 @@
 - type: entity
   id: ReplicatorT3Weapon
   parent: BaseItem
-  name: protector arm
-  description: You are a weapon.
+  name: "рука Протектора"
+  description: "Ви — зброя."
   categories: [ HideSpawnMenu ]
   components:
   - type: Tag
@@ -150,9 +150,9 @@
 - type: entity
   parent: PinpointerBase
   id: PinpointerReplicator
-  name: internal gyroscope
+  name: "внутрішній гіроскоп"
   suffix: ReplicatorNest
-  description: Locates the Nest.
+  description: "Вказує напрямок до гнізда."
   components:
   - type: Sprite
     sprite: Objects/Devices/pinpointer.rsi
@@ -184,8 +184,8 @@
 - type: entity
   parent: BaseReplicatorAACTablet
   id: ReplicatorAAC
-  name: verbal interface
-  description: Communication.
+  name: "вербальний інтерфейс"
+  description: "Засіб комунікації."
   components:
   - type: AACTablet
     phraseGroup: ReplicatorPhrases

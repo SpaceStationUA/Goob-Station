@@ -99,8 +99,8 @@
   parent: [ MobEeepBase ]
   id: MobEeeplet
   suffix: "baby"
-  name: eeeplet
-  description: Electric sheep dream of teslas.
+  name: "ііпля"
+  description: "Електричним вівцям сняться котушки Тесли."
   components:
     - type: GhostRole
       allowMovement: true
@@ -171,8 +171,8 @@
   id: EeepSpark
   parent: TeslaMiniEnergyBall
   categories: [ HideSpawnMenu ]
-  name: eeep spark
-  description: You monster.
+  name: "іскра ііпа"
+  description: "Ти чудовисько."
   components:
     - type: TimedDespawn
       lifetime: 10
@@ -186,8 +186,8 @@
   parent: [ MobEeepBase ]
   id: MobEeep
   suffix: "adult"
-  name: eeep
-  description: Uh oh.
+  name: "ііп"
+  description: "Ой-йой."
   components:
     - type: GhostRole
       allowMovement: true

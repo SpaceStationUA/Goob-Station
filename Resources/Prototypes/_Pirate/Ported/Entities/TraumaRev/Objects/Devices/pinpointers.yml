@@ -3,8 +3,8 @@
 - type: entity
   parent: [ PinpointerBase, BaseRevMajorContraband ]
   id: PinpointerCommand
-  name: command pinpointer
-  description: A handheld tracking device that tracks the nearest command member.
+  name: "пінпойнтер командування"
+  description: "Ручний пристрій стеження, який відстежує найближчого члена командування."
   components:
   - type: Sprite
     layers:
