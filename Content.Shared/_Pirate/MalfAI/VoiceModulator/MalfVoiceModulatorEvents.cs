@@ -32,6 +32,7 @@ public sealed class MalfVoiceModulatorState
     public List<MalfVoiceModulatorOption> Verbs { get; }
     public List<MalfVoiceModulatorOption> Sounds { get; }
     public List<MalfVoiceModulatorOption> JobIcons { get; }
+    public List<MalfVoiceModulatorCrewMember> Crew { get; }
 
     public MalfVoiceModulatorState(
         string name,
@@ -42,7 +43,8 @@ public sealed class MalfVoiceModulatorState
         string? jobIcon,
         List<MalfVoiceModulatorOption> verbs,
         List<MalfVoiceModulatorOption> sounds,
-        List<MalfVoiceModulatorOption> jobIcons)
+        List<MalfVoiceModulatorOption> jobIcons,
+        List<MalfVoiceModulatorCrewMember> crew)
     {
         Name = name;
         Verb = verb;
@@ -53,8 +55,32 @@ public sealed class MalfVoiceModulatorState
         Verbs = verbs;
         Sounds = sounds;
         JobIcons = jobIcons;
+        Crew = crew;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed record MalfVoiceModulatorCrewMember(NetEntity Entity, string Name, string Job,
+    string JobIcon, MalfVoiceCrewHealth Health);
+
+[Serializable, NetSerializable]
+public enum MalfVoiceCrewHealth : byte
+{
+    Unknown,
+    Healthy,
+    Wounded,
+    Critical,
+    Dead,
+}
+
+[Serializable, NetSerializable]
+public sealed class MalfVoiceModulatorCopyCrewEvent(NetEntity target) : EntityEventArgs
+{
+    public NetEntity Target = target;
+}
+
+[Serializable, NetSerializable]
+public sealed class MalfVoiceModulatorRefreshCrewEvent : EntityEventArgs;
 
 [Serializable, NetSerializable]
 public sealed class MalfVoiceModulatorOption

@@ -11,6 +11,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Tag;
+using Content.Shared._Pirate.MalfAI.Actions;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Silicons.StationAi;
 
 namespace Content.Server._Pirate.MalfAI.Factory.Systems;
 
@@ -42,36 +45,68 @@ public sealed partial class AIBuildSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly Content.Shared.Actions.SharedActionsSystem _actions = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<AIBuildRequestEvent>(OnBuildRequest);
         SubscribeLocalEvent<MalfAiMarkerComponent, AIBuildDoAfterEvent>(OnBuildDoAfter);
+        SubscribeLocalEvent<MalfAiMarkerComponent, MalfAiBuildWallActionEvent>(OnBuildWall);
+    }
+
+    private void OnBuildWall(Entity<MalfAiMarkerComponent> ent, ref MalfAiBuildWallActionEvent args)
+    {
+        if (args.Handled || !CanBuildWall(ent, args.Target))
+            return;
+
+        var grid = Comp<MapGridComponent>(args.Target.EntityId);
+        var tile = grid.TileIndicesFor(args.Target);
+        var target = new EntityCoordinates(args.Target.EntityId, (tile.X + 0.5f) * grid.TileSize, (tile.Y + 0.5f) * grid.TileSize);
+        args.Handled = CanBuildWall(ent, target) && TryStartBuild(ent, target, "WallSolid");
+    }
+
+    private bool CanBuildWall(EntityUid requester, EntityCoordinates target)
+    {
+        if (!target.IsValid(EntityManager) || !_stationAi.TryGetCore(requester, out var core) ||
+            !HasComp<StationAiOverlayComponent>(requester) ||
+            !IsTileFree(target))
+            return false;
+
+        var origin = TryComp<MalfAiShuntedComponent>(requester, out var shunted)
+            ? shunted.CoreHolder ?? core.Owner
+            : core.Owner;
+        if (!Exists(origin) || !_transform.InRange(target, Transform(origin).Coordinates, 10f))
+            return false;
+
+        var grid = Comp<MapGridComponent>(target.EntityId);
+        var bounds = _lookup.GetLocalBounds(grid.TileIndicesFor(target), grid.TileSize);
+        var occupants = new HashSet<Entity<MobStateComponent>>();
+        _lookup.GetLocalEntitiesIntersecting(target.EntityId, bounds, occupants, LookupFlags.Dynamic | LookupFlags.Sundries);
+        return occupants.Count == 0;
     }
 
     /// <summary>
     /// Handles build requests from AI entities
     /// </summary>
     private void OnBuildRequest(AIBuildRequestEvent args)
+        => TryStartBuild(args.Requester, args.Target, args.Prototype);
+
+    private bool TryStartBuild(EntityUid requester, EntityCoordinates target, string prototype)
     {
-        var requester = args.Requester;
-        var target = args.Target;
-        var prototype = args.Prototype;
-
-
         // Validate coordinates
         if (!target.IsValid(EntityManager))
         {
             Log.Debug($"AIBuild: Invalid coordinates {target} for prototype '{prototype}'");
-            return;
+            return false;
         }
 
         // Validate tile is free
         if (!IsTileFree(target))
         {
             Log.Debug($"AIBuild: Tile at {target} is occupied, cannot build '{prototype}'");
-            return;
+            return false;
         }
 
         // Start building process with DoAfter
@@ -103,7 +138,9 @@ public sealed partial class AIBuildSystem : EntitySystem
         if (!_doAfter.TryStartDoAfter(doAfterArgs))
         {
             Log.Debug($"AIBuild: Did not start DoAfter for '{prototype}' build request");
+            return false;
         }
+        return true;
     }
 
     /// <summary>
@@ -118,6 +155,8 @@ public sealed partial class AIBuildSystem : EntitySystem
 
         var location = GetCoordinates(args.Location);
 
+        if (args.Prototype == "WallSolid" && !CanBuildWall(uid, location))
+            return;
 
         if (!IsTileFree(location))
         {

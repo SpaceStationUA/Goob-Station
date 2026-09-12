@@ -16,10 +16,13 @@ public sealed class MalfAiSyndicateCommsSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<MalfAiMarkerComponent, MalfAiSyndicateKeysUnlockedEvent>(OnSyndicateKeysUnlocked);
+        SubscribeLocalEvent<IntrinsicRadioTransmitterComponent, ComponentStartup>(OnTransmitterStartup);
+        SubscribeLocalEvent<ActiveRadioComponent, ComponentStartup>(OnReceiverStartup);
     }
 
     private void OnSyndicateKeysUnlocked(EntityUid uid, MalfAiMarkerComponent component, MalfAiSyndicateKeysUnlockedEvent args)
     {
+        EnsureComp<MalfAiSyndicateKeysComponent>(uid);
         // Add or get the IntrinsicRadioTransmitterComponent for sending syndicate messages
         var transmitterComp = EnsureComp<IntrinsicRadioTransmitterComponent>(uid);
         transmitterComp.Channels.Add("Syndicate");
@@ -30,4 +33,19 @@ public sealed class MalfAiSyndicateCommsSystem : EntitySystem
 
         // IntrinsicRadioTransmitterComponent and ActiveRadioComponent are server-only and don't need network synchronization
     }
+
+    private void OnTransmitterStartup(Entity<IntrinsicRadioTransmitterComponent> ent, ref ComponentStartup args)
+    {
+        if (HasComp<MalfAiSyndicateKeysComponent>(ent))
+            ent.Comp.Channels.Add("Syndicate");
+    }
+
+    private void OnReceiverStartup(Entity<ActiveRadioComponent> ent, ref ComponentStartup args)
+    {
+        if (HasComp<MalfAiSyndicateKeysComponent>(ent))
+            ent.Comp.Channels.Add("Syndicate");
+    }
 }
+
+[RegisterComponent]
+public sealed partial class MalfAiSyndicateKeysComponent : Component;

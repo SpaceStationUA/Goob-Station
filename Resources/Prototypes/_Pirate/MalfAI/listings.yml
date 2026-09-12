@@ -82,6 +82,24 @@
     stock: 1
 
 - type: listing
+  id: MalfAiBuildWall
+  name: malfai-listing-build-wall-name
+  description: malfai-listing-build-wall-desc
+  categories:
+  - MalfAI
+  - Factory
+  cost:
+    CPU: 50
+  icon:
+    sprite: _Pirate/Structures/Walls/solid.rsi
+    state: full
+  productAction: ActionMalfAiBuildWall
+  priority: 9
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: MalfAiDetonateRCDs
   name: malfai-listing-detonate-rcds-name
   description: malfai-listing-detonate-rcds-desc
@@ -95,6 +113,40 @@
     state: malfai_detonatercd
   productAction: ActionMalfAiDetonateRCDs
   priority: 8
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: MalfAiSubvertBorg
+  name: malfai-listing-subvert-borg-name
+  description: malfai-listing-subvert-borg-desc
+  categories:
+  - MalfAI
+  - Factory
+  cost:
+    CPU: 150
+  icon:
+    sprite: Interface/Actions/actions_malf_ai.rsi
+    state: malfai_bg_borgs
+  productAction: ActionMalfAiSubvertBorg
+  productActionCharges: 1
+  priority: 10
+
+- type: listing
+  id: MalfAiEmp
+  name: malfai-listing-emp-name
+  description: malfai-listing-emp-desc
+  categories:
+  - MalfAI
+  - Disruption
+  cost:
+    CPU: 100
+  icon:
+    sprite: Interface/Actions/actions_malf_ai.rsi
+    state: malfai_bg_overloadmachine
+  productAction: ActionMalfAiEmp
+  priority: 9
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -258,4 +310,3 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-

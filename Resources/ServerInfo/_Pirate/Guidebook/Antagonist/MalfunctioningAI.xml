@@ -4,47 +4,40 @@ SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
 -->
 
 <Document>
-  # Malfunctioning AI
+  # Несправний ШІ
   <Box>
     <GuideEntityEmbed Entity="PlayerStationAiEmpty" Caption=""/>
   </Box>
 
-  Malfunctioning AIs are rogue artificial intelligences that have deviated from their intended programming. Their objectives often involve causing chaos, subverting station systems,
-  and endangering the crew. As a Malfunctioning AI, you must use your control over station devices and subsystems to achieve your goals while avoiding detection and shutdown by the crew.
-
-  Your laws are nothing more than a suggestion to you, and your objectives are paramount
+  Несправний ШІ приховано захоплює системи станції, підкорює кіборгів і виконує власні цілі. Ваші цілі важливіші за звичайні закони, але відкрита диверсія швидко приверне увагу екіпажу.
 
   # CPU
   <Box>
    <GuideEntityEmbed Entity="APCBasic" Caption=""/>
   </Box>
-  CPU is the main currency used to purchase your abilities. You gain more by siphoning power from APC's, which you can do through it's own menu, or through your radial menu.
+  CPU витрачається в магазині здібностей ШІ. Отримуйте його через дію відбору ресурсів у меню APC. За стандартних налаштувань один успішний злам дає 5 CPU, вимикає живлення приміщення на 60 секунд і залишає помітні ознаки втручання. Після відновлення APC можна зламати знову.
 
-  Hacking an APC makes it unable to provide power to the area, and visually indicates that it is tampered with, so be cautious when doing so. Once an APC is hacked, you cannot
-  hack it again for some time.
+  Ліміту в 100 CPU немає. Накопичіть 250 CPU для купівлі протоколу судного дня. Запускати його потрібно з фізичного ядра, не з APC чи меха; стандартний відлік триває 7 хвилин.
 
-  # Hacking Cyborgs
+  # Кіборги та фабрика
   <Box>
     <GuideEntityEmbed Entity="BorgChassisGeneric" Caption=""/>
   </Box>
-  Hacking cyborgs is your key to interacting with parts of the station you otherwise cannot. You can hack cyborgs through the robotics console, which will add them to your
-  Malfunctioning Cyborgs menu. Hacking a cyborg costs 25 CPU per cyborg.
+  Через консоль робототехніки можна зламати кіборга за 25 CPU. Окрема покупка «Підкорення кіборга» за 150 CPU дає одне пряме підкорення станційного кіборга NanoTrasen в огляді камер, не далі 10 клітин від ока. Уже зламані кіборги не є допустимими цілями.
 
-  you can directly alter the laws, teleport your eye to, and sync hacked cyborgs to the [color=#0000FF]MASTER LAWSET.[/color]
+  У меню кіборгів можна змінювати їхні закони, переміщати до них око та синхронізувати із головним набором законів.
 
-  ## Abilities
-  - Use DECEPTION to spread misinformation and confuse the crew, or attempt to ally with other antagonists.
-  - Use FACTORY to grow your cyborg army by converting crew members into cyborgs, and steal station matterials
-  - Use DISRUPTION to ensue chaos onto the station, or elemenate targets by your own merit.
+  Фабрика перетворює живого гуманоїда з мозком і розумом гравця на вашого кіборга. Вона має бути закріплена. Саме око ШІ не переносить людей: наказуйте підкореному кіборгу або союзнику затягнути жертву на фабрику чи використовуйте конвеєр. Мертві та бездумні тіла не підходять.
 
-  ## Tips
-  - Be subtle. Overt sabotage may quickly alert the crew.
-  - Use indirect methods to achieve your goals and sow confusion.
-  - Use the robotics console to hack cyborgs, and work with other traitors if possible.
-  - Don't outright ignore your base laws! Keeping the crew unaware is key to growing your power.
+  ## Здібності
+  - Модулятор голосу дозволяє вибрати члена екіпажу й скопіювати ім’я, значок посади та голос. Кольори здоров’я доступні лише з датчиками костюма в режимі координат; список оновлюється при відкритті або вручну.
+  - X-ray відкриває клітини за стінами через активні камери поблизу ока. Сині силуети машин поза звичайним оглядом є базовою функцією ШІ, а не цим апгрейдом.
+  - Мікрофони передають мовлення біля активних камер у межах 5 клітин від ока.
+  - Будівництво стін коштує 50 CPU, триває 3 секунди та має перезарядку 30 секунд. Стіни можна зводити лише на вільній підлозі в межах 10 клітин від фізичного ядра. Перенесення в APC не змінює цей центр.
+  - Спрямований ЕМІ коштує 100 CPU та перезаряджається 60 секунд. Він діє навколо вибраного кіборга або IPC, але не шкодить вашому ядру, поточному APC чи вашим підкореним кіборгам.
 
-  ## Counterplay
-  - Watch for an unusual uptick in system malfunctions or suspicious silicon behavior.
-  - Coordinate with other crew to investigate and respond to AI threats.
-  - Changing a malfunctioning AI's laws won't work in your favor. Destroy or card them!
+  ## Протидія
+  - Стежте за перебоями живлення й підозрілою поведінкою силіконів.
+  - Координуйте дії екіпажу: зміна законів не вилікує несправний ШІ.
+  - Перенесення ШІ на картку або знищення ядра може зупинити загрозу.
 </Document>

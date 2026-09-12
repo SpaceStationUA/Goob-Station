@@ -6,6 +6,15 @@ using Content.Server.Mind;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI.Actions;
 using Content.Shared.Players;
+using Content.Shared.Actions;
+using Content.Shared.Containers;
+using Content.Shared.Store;
+using Content.Shared.Radio.Components;
+using Content.Server.Chat.Systems;
+using Content.Shared.StationAi;
+using Content.Shared.SurveillanceCamera.Components;
+using Robust.Shared.Player;
+using System.Collections.Generic;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Containers;
@@ -50,6 +59,7 @@ public sealed class MalfAiShuntTest
             minds.TransferTo(mind!.Value, ai, ghostCheckOverride: true);
             server.PlayerMan.SetAttachedEntity(session, ai);
             entMan.EnsureComponent<MalfAiMarkerComponent>(ai);
+            entMan.EventBus.RaiseLocalEvent(ai, new MalfAiSyndicateKeysUnlockedEvent());
             apc = entMan.SpawnEntity("APCBasic", map.GridCoords.Offset(new Vector2(2, 0)));
         });
 
@@ -70,6 +80,27 @@ public sealed class MalfAiShuntTest
             Assert.That(Holder(containers, apc).ContainedEntities, Does.Contain(ai));
             Assert.That(entMan.HasComponent<StationAiCoreComponent>(apc), Is.True);
             Assert.That(entMan.GetComponent<StationAiCoreComponent>(apc).RemoteEntity, Is.Not.Null);
+            Assert.That(entMan.HasComponent<StationAiOverlayComponent>(ai), Is.True);
+            Assert.That(entMan.GetComponent<ActiveRadioComponent>(ai).Channels, Does.Contain("Syndicate"));
+            Assert.That(entMan.GetComponent<IntrinsicRadioTransmitterComponent>(ai).Channels, Does.Contain("Syndicate"));
+            Assert.That(entMan.System<SharedUserInterfaceSystem>().HasUi(ai, StoreUiKey.Key), Is.True);
+            Assert.That(entMan.System<SharedActionsSystem>().GetActions(ai).Any(action =>
+                entMan.GetComponent<MetaDataComponent>(action.Owner).EntityPrototype?.ID == "ActionJumpToCore"), Is.True);
+
+            var eye = entMan.GetComponent<StationAiCoreComponent>(apc).RemoteEntity!.Value;
+            var camera = entMan.SpawnEntity(null, entMan.GetComponent<TransformComponent>(eye).Coordinates);
+            entMan.EnsureComponent<StationAiVisionComponent>(camera);
+            entMan.EnsureComponent<SurveillanceCameraComponent>(camera);
+            var source = entMan.SpawnEntity(null, entMan.GetComponent<TransformComponent>(camera).Coordinates);
+            var recipients = new Dictionary<ICommonSession, ChatSystem.ICChatRecipientData>();
+            var speech = new ExpandICChatRecipientsEvent(source, 10, recipients);
+            entMan.EventBus.RaiseEvent(EventSource.Local, speech);
+            Assert.That(recipients.ContainsKey(session), Is.False);
+            entMan.EventBus.RaiseLocalEvent(ai, new MalfAiCameraMicrophonesUnlockedEvent());
+            recipients[session] = new ChatSystem.ICChatRecipientData(30, false, true, false);
+            entMan.EventBus.RaiseEvent(EventSource.Local, speech);
+            Assert.That(recipients[session].InLOS, Is.True);
+            Assert.That(recipients[session].HideChatOverride, Is.False);
 
             var ret = new MalfAiReturnToCoreActionEvent { Performer = ai };
             entMan.EventBus.RaiseLocalEvent(ai, ret, true);
@@ -85,6 +116,10 @@ public sealed class MalfAiShuntTest
                 Assert.That(Holder(containers, core).ContainedEntities, Does.Contain(ai));
                 Assert.That(entMan.HasComponent<StationAiCoreComponent>(apc), Is.False);
                 Assert.That(entMan.HasComponent<StationAiHolderComponent>(apc), Is.False);
+                Assert.That(entMan.HasComponent<ContainerCompComponent>(apc), Is.False);
+                Assert.That(entMan.HasComponent<StationAiOverlayComponent>(ai), Is.True);
+                Assert.That(entMan.GetComponent<ActiveRadioComponent>(ai).Channels, Does.Contain("Syndicate"));
+                Assert.That(entMan.System<SharedUserInterfaceSystem>().HasUi(ai, StoreUiKey.Key), Is.True);
             });
         });
 

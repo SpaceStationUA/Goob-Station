@@ -32,6 +32,9 @@ public sealed partial class MalfAiShuntedComponent : Component
     /// </summary>
     [NonSerialized]
     public bool AddedApcCore;
+
+    [NonSerialized]
+    public bool AddedApcGrant;
     /// <summary>
     /// The Return to Core action entity granted while shunted.
     /// Server-only runtime state; not networked.

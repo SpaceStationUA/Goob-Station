@@ -96,6 +96,66 @@
   - type: WorldTargetAction
     event: !type:MalfAiRoboticsFactoryActionEvent
 
+# Remote wall construction
+- type: entity
+  id: ActionMalfAiBuildWall
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -5
+    useDelay: 30
+    icon:
+      sprite: _Pirate/Structures/Walls/solid.rsi
+      state: full
+  - type: TargetAction
+    checkCanAccess: false
+    range: 0 # The server enforces 10 tiles from the original core, not the brain's APC or eye.
+  - type: WorldTargetAction
+    event: !type:MalfAiBuildWallActionEvent
+
+# Direct cyborg subversion
+- type: entity
+  id: ActionMalfAiSubvertBorg
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 60
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_borgs
+  - type: TargetAction
+    checkCanAccess: false
+    range: 0 # Server validates camera coverage and 10 tiles from the eye.
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - BorgChassis
+    event: !type:MalfAiSubvertBorgActionEvent
+  - type: LimitedCharges
+    maxCharges: 1
+
+- type: entity
+  id: ActionMalfAiEmp
+  parent: BaseAction
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    useDelay: 60
+    icon:
+      sprite: Interface/Actions/actions_malf_ai.rsi
+      state: malfai_bg_overloadmachine
+  - type: TargetAction
+    checkCanAccess: false
+    range: 0 # Server validates camera coverage and 10 tiles from the eye.
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - BorgChassis
+      - HumanoidAppearance
+    event: !type:MalfAiEmpActionEvent
+
 # Shunt to APC action
 - type: entity
   id: ActionMalfAiShuntToApc
@@ -246,4 +306,3 @@
     range: 5
   - type: WorldTargetAction
     event: !type:MalfAiGyroscopeActionEvent
-

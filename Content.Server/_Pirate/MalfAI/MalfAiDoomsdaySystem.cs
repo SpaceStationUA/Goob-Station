@@ -130,7 +130,7 @@ public sealed class MalfAiDoomsdaySystem : EntitySystem
         }
 
         var holder = container.Owner;
-        if (!HasComp<StationAiCoreComponent>(holder))
+        if (!HasComp<StationAiCoreComponent>(holder) || HasComp<MalfAiShuntedComponent>(ai))
         {
             ShowDoomsdayPopup(ai.Owner, "malfai-doomsday-popup-need-core");
             args.Handled = true;

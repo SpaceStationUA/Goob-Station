@@ -86,8 +86,9 @@ public sealed class MalfAiOverloadSystem : EntitySystem
 
         // Create a forced explosion even if the machine is not inherently explosive.
         var desiredRadius = 2.0f;
-        var slope = 1.0f;
-        var maxIntensity = 4.0f;
+        // Double blast intensity/damage while keeping its two-tile footprint.
+        var slope = 2.0f;
+        var maxIntensity = 8.0f;
         var total = _explosion.RadiusToIntensity(desiredRadius, slope, maxIntensity);
         _explosion.QueueExplosion(mapCoords, ExplosionSystem.DefaultExplosionPrototypeId, total, slope, maxIntensity, targetMachine.Value);
         // Delete the machine afterwards to match the previous behavior of delete: true

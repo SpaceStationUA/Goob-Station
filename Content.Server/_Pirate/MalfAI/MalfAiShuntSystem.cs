@@ -9,6 +9,7 @@ using Content.Shared.Silicons.StationAi;
 using Content.Server.Power.Components;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
+using Content.Shared.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
@@ -38,6 +39,9 @@ public sealed class MalfAiShuntSystem : EntitySystem
 
     private void OnShuntToApc(Entity<StationAiHeldComponent> ai, ref MalfAiShuntToApcActionEvent args)
     {
+        if (args.Handled)
+            return;
+
         var popupTarget = GetAiEyeForPopup(ai.Owner) ?? ai.Owner;
 
         // Only Malf AI can shunt.
@@ -50,6 +54,9 @@ public sealed class MalfAiShuntSystem : EntitySystem
             return;
         }
         var target = args.Target;
+        if (TryComp<ContainerCompComponent>(target, out var existingGrant) &&
+            (existingGrant.Proto != "AiHeld" || existingGrant.Container != StationAiHolderComponent.Container))
+            return;
 
         // Ensure the AI is currently inside a holder (core or other) and get that holder.
         if (!_containers.TryGetContainingContainer((ai.Owner, null, null), out var currentContainer) || currentContainer is not ContainerSlot)
@@ -67,6 +74,7 @@ public sealed class MalfAiShuntSystem : EntitySystem
         var addedApcHolder = !HasComp<StationAiHolderComponent>(target);
         EnsureComp<StationAiHolderComponent>(target);
         var destContainer = _containers.EnsureContainer<ContainerSlot>(target, StationAiHolderComponent.Container);
+        destContainer.ShowContents = true;
         var addedApcCore = !HasComp<StationAiCoreComponent>(target);
         EnsureComp<StationAiCoreComponent>(target);
 
@@ -86,8 +94,14 @@ public sealed class MalfAiShuntSystem : EntitySystem
         var previousHolder = currentHolder;
         var previousAddedApcHolder = shunted.AddedApcHolder;
         var previousAddedApcCore = shunted.AddedApcCore;
+        var previousAddedApcGrant = shunted.AddedApcGrant;
         if (shunted.CoreHolder == null)
             shunted.CoreHolder = currentHolder;
+
+        // The same bundle as a real core supplies actions, UI, radio and the camera-coverage overlay.
+        var addedApcGrant = existingGrant == null;
+        if (addedApcGrant)
+            AddComp(target, new ContainerCompComponent { Proto = "AiHeld", Container = StationAiHolderComponent.Container });
 
         // Move the AI brain to the APC. Roll back if the container rejects the transfer.
         _containers.Remove(ai.Owner, currentContainer);
@@ -100,6 +114,8 @@ public sealed class MalfAiShuntSystem : EntitySystem
                 RemCompDeferred<StationAiCoreComponent>(target);
             if (addedApcHolder)
                 RemCompDeferred<StationAiHolderComponent>(target);
+            if (addedApcGrant)
+                RemCompDeferred<ContainerCompComponent>(target);
             _popup.PopupEntity(Loc.GetString("malfai-shunt-invalid-target"), popupTarget, ai);
             return;
         }
@@ -109,9 +125,12 @@ public sealed class MalfAiShuntSystem : EntitySystem
                 RemCompDeferred<StationAiCoreComponent>(previousHolder);
             if (previousAddedApcHolder)
                 RemCompDeferred<StationAiHolderComponent>(previousHolder);
+            if (previousAddedApcGrant)
+                RemCompDeferred<ContainerCompComponent>(previousHolder);
         }
         shunted.AddedApcHolder = addedApcHolder;
         shunted.AddedApcCore = addedApcCore;
+        shunted.AddedApcGrant = addedApcGrant;
 
         // Ensure the AI stays marked as held.
         EnsureComp<StationAiHeldComponent>(ai);
@@ -233,8 +252,11 @@ public sealed class MalfAiShuntSystem : EntitySystem
             RemCompDeferred<StationAiCoreComponent>(holder);
         if (shunted.AddedApcHolder)
             RemCompDeferred<StationAiHolderComponent>(holder);
+        if (shunted.AddedApcGrant)
+            RemCompDeferred<ContainerCompComponent>(holder);
         shunted.AddedApcCore = false;
         shunted.AddedApcHolder = false;
+        shunted.AddedApcGrant = false;
     }
 
     /// <summary>

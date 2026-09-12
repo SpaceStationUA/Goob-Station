@@ -67,6 +67,10 @@
       whitelist:
         components:
         - StationAiHeld
+      blacklist:
+        components:
+        - MalfAiMarker
+      chaosScore: 400
       briefing:
         text: roles-antag-malfunctioning-ai-briefing
         color: Red
@@ -75,6 +79,19 @@
       - type: MalfAiMarker
       mindRoles:
       - MindRoleMalfAi
+
+- type: entity
+  id: MalfAiMidround
+  parent: MalfAi
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 20
+    weight: 2
+    maxOccurrences: 1
+    duration: null
+    occursDuringRoundEnd: false
+    eventType: HostilesSpawn
 
 - type: entity
   id: RoboticsFactoryGrid

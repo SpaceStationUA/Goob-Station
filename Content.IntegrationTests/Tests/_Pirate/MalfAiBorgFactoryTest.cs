@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server._Pirate.MalfAI.Factory.Components;
 using Content.Server._Pirate.MalfAI.Factory.Systems;
+using Content.Server.Materials;
 using Content.Shared.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.Materials;
@@ -67,9 +68,8 @@ public sealed class MalfAiBorgFactoryTest
 
         await server.WaitPost(() =>
         {
-            var processed = new MaterialReclaimerProcessEntityEvent(human);
-            entMan.EventBus.RaiseLocalEvent(factory, processed);
-            Assert.That(processed.Handled, Is.True);
+            // Exercise the same intake pipeline as a body pushed onto the factory.
+            Assert.That(entMan.System<MaterialReclaimerSystem>().TryStartProcessItem(factory, human), Is.True);
         });
 
         await server.WaitRunTicks(5);

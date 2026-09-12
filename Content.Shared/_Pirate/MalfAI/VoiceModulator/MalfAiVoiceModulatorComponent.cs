@@ -5,6 +5,7 @@
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech;
 using Content.Shared.StatusIcon;
+using Content.Goobstation.Common.Barks;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -60,4 +61,19 @@ public sealed partial class MalfAiVoiceModulatorComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? JobName;
+
+    // Server-side snapshots keep a copied voice independent of subsequent changes to its owner.
+    [DataField]
+    public bool CopyingVoice;
+
+    [DataField]
+    public ProtoId<BarkPrototype>? CopiedBark;
+
+    [DataField]
+    public ProtoId<BarkPrototype>? OriginalBark;
+
+    [DataField]
+    public bool BarkOverridden;
+
+    public List<MalfVoiceModulatorCrewMember> CrewSnapshot = new();
 }

@@ -16,12 +16,16 @@ using Content.Server.Silicons.Laws;
 using Content.Shared.Mind;
 using Content.Server.Objectives;
 using Robust.Shared.Random;
+using Content.Shared._Pirate.MalfAI;
+using Content.Shared.Mobs.Systems;
+using Robust.Shared.Enums;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
 /// <summary>
-/// Handles Malf AI rule startup behavior. When the rule is added mid-round via admin command,
-/// immediately assigns the currently active Station AI as the Malf AI.
+/// Configures selected Malf AIs and checks eligibility for the mid-round event.
+/// AntagSelectionSystem owns assignment, including preferences and mid-round timing.
 /// </summary>
 public sealed class MalfAiRuleSystem : GameRuleSystem<MalfAiRuleComponent>
 {
@@ -35,6 +39,9 @@ public sealed class MalfAiRuleSystem : GameRuleSystem<MalfAiRuleComponent>
     [Dependency] private readonly SharedRoleSystem _sharedRoleSystem = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     private readonly ISawmill _sawmill = Logger.GetSawmill("malfai");
 
     public override void Initialize()
@@ -42,6 +49,7 @@ public sealed class MalfAiRuleSystem : GameRuleSystem<MalfAiRuleComponent>
         base.Initialize();
         SubscribeLocalEvent<MalfAiRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntitySelected);
         SubscribeLocalEvent<MalfAiRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
+        SubscribeLocalEvent<MalfAiCandidateCheckEvent>(OnCandidateCheck);
     }
 
     private void SeedDefaultLaws(EntityUid rule)
@@ -142,35 +150,24 @@ public sealed class MalfAiRuleSystem : GameRuleSystem<MalfAiRuleComponent>
         SeedDefaultLaws(uid);
     }
 
-    protected override void Added(EntityUid uid, MalfAiRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    private void OnCandidateCheck(MalfAiCandidateCheckEvent args)
     {
-        base.Added(uid, component, gameRule, args);
+        var existing = AllEntityQuery<MalfAiMarkerComponent>();
+        if (existing.MoveNext(out _, out _))
+            return;
 
-        // Preselect (pending) the current Station AI, if any, respecting preferences and whitelist.
-        // This does not force assignment; actual assignment happens per AntagSelection timing.
-        if (TryComp<AntagSelectionComponent>(uid, out var ruleAntagComp))
-        {
-            var ruleAntagEnt = new Entity<AntagSelectionComponent>(uid, ruleAntagComp);
-            var def = ruleAntagComp.Definitions.FirstOrDefault();
-            if (!def.Equals(default(AntagSelectionDefinition)))
-            {
-                var session = _players.Sessions.FirstOrDefault(s =>
-                    s.AttachedEntity != null && HasComp<StationAiHeldComponent>(s.AttachedEntity));
-                if (session?.AttachedEntity == null)
-                {
-                    _sawmill.Warning("[MalfAI] No valid session found for MalfAi.");
-                    return;
-                }
+        if (!_prototypes.Index<EntityPrototype>("MalfAi").TryGetComponent<AntagSelectionComponent>(
+                out var selection, EntityManager.ComponentFactory))
+            return;
 
-                // If we are mid-round (i.e., game rule was added after round started), assign immediately.
-                // Otherwise, just preselect and let the normal selection flow handle it.
-                var ticker = EntitySystem.Get<GameTicker>();
-                var isMidRound = ticker.RunLevel == GameRunLevel.InRound;
+        var candidates = _players.Sessions.Where(session =>
+            session.Status == SessionStatus.InGame &&
+            session.AttachedEntity is { } ai &&
+            _mobState.IsAlive(ai) && _stationAi.TryGetCore(ai, out _)).ToList();
 
-                _sawmill.Debug($"[MalfAI] {(isMidRound ? "Assigning" : "Preselecting")} {session.Name} as Malf AI.");
-                _antag.TryMakeAntag(ruleAntagEnt, session, def, ignoreSpawner: true, checkPref: true, onlyPreSelect: !isMidRound);
-            }
-        }
+        // Use the normal role preferences, bans and multi-antag checks without assigning anyone.
+        args.Available = selection.Definitions.Any(def =>
+            _antag.GetPlayerPool((EntityUid.Invalid, selection), candidates, def).Count > 0);
     }
 
     private void OnObjectivesTextGetInfo(EntityUid uid, MalfAiRuleComponent component, ref ObjectivesTextGetInfoEvent args)

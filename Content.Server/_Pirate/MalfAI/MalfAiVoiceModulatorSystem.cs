@@ -6,6 +6,13 @@ using Content.Server.Speech;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Goobstation.Common.Speech;
+using Content.Goobstation.Common.Barks;
+using Content.Shared.Access.Systems;
+using Content.Shared.Humanoid;
+using Content.Shared.Mind.Components;
+using Content.Shared.Station;
+using Content.Shared.Medical.SuitSensor;
+using Content.Shared.Medical.SuitSensors;
 using Content.Shared.Actions;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared.Chat;
@@ -43,6 +50,9 @@ public sealed class MalfAiVoiceModulatorSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly SharedJobSystem _jobs = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCards = default!;
+    [Dependency] private readonly SharedStationSystem _stations = default!;
+    [Dependency] private readonly SharedSuitSensorSystem _sensors = default!;
 
     public override void Initialize()
     {
@@ -62,6 +72,9 @@ public sealed class MalfAiVoiceModulatorSystem : EntitySystem
         SubscribeNetworkEvent<MalfVoiceModulatorToggleEvent>(OnToggle);
         SubscribeNetworkEvent<MalfVoiceModulatorAccentToggleEvent>(OnAccentToggle);
         SubscribeNetworkEvent<MalfVoiceModulatorChangeJobIconEvent>(OnChangeJobIcon);
+        SubscribeNetworkEvent<MalfVoiceModulatorCopyCrewEvent>(OnCopyCrew);
+        SubscribeNetworkEvent<MalfVoiceModulatorRefreshCrewEvent>(OnRefreshCrew);
+        SubscribeLocalEvent<MalfAiVoiceModulatorComponent, ComponentShutdown>(OnShutdown);
     }
 
     private void OnVoiceModulator(MalfAiVoiceModulatorActionEvent ev)
@@ -70,6 +83,7 @@ public sealed class MalfAiVoiceModulatorSystem : EntitySystem
             return;
 
         var component = EnsureComp<MalfAiVoiceModulatorComponent>(ai);
+        component.CrewSnapshot = BuildCrew(ai);
         SendState(ai, actor, component);
         ev.Handled = true;
     }
@@ -117,6 +131,8 @@ public sealed class MalfAiVoiceModulatorSystem : EntitySystem
             return;
 
         component.SpeechSounds = ev.SpeechSounds;
+        component.CopyingVoice = false;
+        UpdateBark(ai, component);
         Dirty(ai, component);
         SendState(ai, component);
     }
@@ -127,6 +143,7 @@ public sealed class MalfAiVoiceModulatorSystem : EntitySystem
             return;
 
         component.Active = !component.Active;
+        UpdateBark(ai, component);
         Dirty(ai, component);
         _identity.QueueIdentityUpdate(ai);
         SendState(ai, component);
@@ -190,11 +207,91 @@ public sealed class MalfAiVoiceModulatorSystem : EntitySystem
 
     private void OnGetSpeechSound(Entity<MalfAiVoiceModulatorComponent> ent, ref GetSpeechSoundEvent args)
     {
-        if (!ent.Comp.Active || ent.Comp.SpeechSounds is not { } sounds)
+        if (!ent.Comp.Active || (!ent.Comp.CopyingVoice && ent.Comp.SpeechSounds == null))
             return;
 
-        args.SpeechSoundProtoId = sounds;
+        args.SpeechSoundProtoId = ent.Comp.SpeechSounds;
         args.Handled = true;
+    }
+
+    private void OnRefreshCrew(MalfVoiceModulatorRefreshCrewEvent ev, EntitySessionEventArgs args)
+    {
+        if (TryGetMalfAi(args.SenderSession.AttachedEntity, out var ai, out var component))
+        {
+            component.CrewSnapshot = BuildCrew(ai);
+            SendState(ai, component);
+        }
+    }
+
+    private bool CanCopyCrew(EntityUid ai, EntityUid target)
+    {
+        if (ai == target || !HasComp<HumanoidAppearanceComponent>(target) ||
+            !TryComp<MindContainerComponent>(target, out var mind) || mind.Mind == null ||
+            !HasComp<SpeechComponent>(target) || !_stationAi.TryGetCore(ai, out var core))
+            return false;
+
+        var station = _stations.GetOwningStation(core.Owner);
+        return station != null && _stations.GetOwningStation(target) == station;
+    }
+
+    private void OnCopyCrew(MalfVoiceModulatorCopyCrewEvent ev, EntitySessionEventArgs args)
+    {
+        if (!TryGetMalfAi(args.SenderSession.AttachedEntity, out var ai, out var component) ||
+            !TryGetEntity(ev.Target, out var target) || target is not { } crew || !CanCopyCrew(ai, crew))
+            return;
+
+        var speech = Comp<SpeechComponent>(crew);
+        var sound = new GetSpeechSoundEvent();
+        RaiseLocalEvent(crew, ref sound);
+        component.VoiceName = Name(crew);
+        component.SpeechVerb = speech.SpeechVerb;
+        component.SpeechSounds = sound.Handled ? sound.SpeechSoundProtoId : speech.SpeechSounds;
+        component.JobIconProtoId = "JobIconUnknown";
+        component.JobName = null;
+        if (_idCards.TryFindIdCard(crew, out var card))
+        {
+            component.JobIconProtoId = card.Comp.JobIcon;
+            component.JobName = card.Comp.LocalizedJobTitle;
+        }
+        component.CopyingVoice = true;
+        component.CopiedBark = CompOrNull<SpeechSynthesisComponent>(crew)?.VoicePrototypeId;
+        component.Active = true;
+        component.AccentHide = true;
+        UpdateBark(ai, component);
+        Dirty(ai, component);
+        _identity.QueueIdentityUpdate(ai);
+        _adminLog.Add(LogType.Action, LogImpact.Medium,
+            $"AI voice modulator: {ToPrettyString(ai)} copied the voice of {ToPrettyString(crew)}");
+        SendState(ai, component);
+    }
+
+    private void UpdateBark(EntityUid ai, MalfAiVoiceModulatorComponent component)
+    {
+        var voice = CompOrNull<SpeechSynthesisComponent>(ai);
+        if (component.Active && component.CopyingVoice)
+        {
+            if (!component.BarkOverridden)
+                component.OriginalBark = voice?.VoicePrototypeId;
+            voice ??= EnsureComp<SpeechSynthesisComponent>(ai);
+            voice.VoicePrototypeId = component.CopiedBark;
+            component.BarkOverridden = true;
+            Dirty(ai, voice);
+        }
+        else if (component.BarkOverridden)
+        {
+            if (voice != null)
+            {
+                voice.VoicePrototypeId = component.OriginalBark;
+                Dirty(ai, voice);
+            }
+            component.BarkOverridden = false;
+        }
+    }
+
+    private void OnShutdown(Entity<MalfAiVoiceModulatorComponent> ent, ref ComponentShutdown args)
+    {
+        ent.Comp.CopyingVoice = false;
+        UpdateBark(ent, ent.Comp);
     }
 
     private void OnTransformJobIcon(Entity<MalfAiVoiceModulatorComponent> ent, ref TransformSpeakerJobIconEvent args)
@@ -270,7 +367,39 @@ public sealed class MalfAiVoiceModulatorSystem : EntitySystem
             component.JobIconProtoId,
             verbs,
             sounds,
-            jobIcons);
+            jobIcons,
+            component.CrewSnapshot);
+    }
+
+    private List<MalfVoiceModulatorCrewMember> BuildCrew(EntityUid ai)
+    {
+        var crew = new List<MalfVoiceModulatorCrewMember>();
+        // Only explicit UI refreshes sample sensors. Never expose health without coordinate mode.
+        var health = new Dictionary<NetEntity, MalfVoiceCrewHealth>();
+        var sensors = EntityQueryEnumerator<SuitSensorComponent, TransformComponent>();
+        while (sensors.MoveNext(out var sensorUid, out var sensor, out var xform))
+        {
+            if (sensor.Mode != SuitSensorMode.SensorCords || sensor.User is not { } wearer || !CanCopyCrew(ai, wearer))
+                continue;
+            var status = _sensors.GetSensorState((sensorUid, sensor, xform));
+            if (status?.Coordinates == null)
+                continue;
+            health[status.OwnerUid] = !status.IsAlive ? MalfVoiceCrewHealth.Dead
+                : status.IsCritical ? MalfVoiceCrewHealth.Critical
+                : status.TotalDamage is > 0 ? MalfVoiceCrewHealth.Wounded
+                : MalfVoiceCrewHealth.Healthy;
+        }
+        var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MindContainerComponent, SpeechComponent>();
+        while (query.MoveNext(out var uid, out _, out _, out _))
+        {
+            if (!CanCopyCrew(ai, uid))
+                continue;
+            var job = _idCards.TryFindIdCard(uid, out var card) ? card.Comp.LocalizedJobTitle : null;
+            var net = GetNetEntity(uid);
+            crew.Add(new(net, Name(uid), job ?? string.Empty,
+                card.Comp?.JobIcon.ToString() ?? "JobIconUnknown", health.GetValueOrDefault(net)));
+        }
+        return crew.OrderBy(member => member.Name).ToList();
     }
 
     private EntityUid? GetAiEyeForPopup(EntityUid aiUid)

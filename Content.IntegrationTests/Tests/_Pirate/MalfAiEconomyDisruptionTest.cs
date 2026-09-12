@@ -169,6 +169,32 @@ public sealed class MalfAiEconomyDisruptionTest
         await pair.CleanReturnAsync();
     }
 
+    [Test]
+    public async Task CpuCanAccumulateBeyondOneHundredAndPurchaseDoomsday()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        await server.WaitAssertion(() =>
+        {
+            var entMan = server.EntMan;
+            var ai = entMan.SpawnEntity(null, Robust.Shared.Map.MapCoordinates.Nullspace);
+            var store = entMan.EnsureComponent<StoreComponent>(ai);
+            store.Categories.Add("MalfAI");
+            store.CurrencyWhitelist.Add("CPU");
+            var stores = server.System<StoreSystem>();
+            stores.RefreshAllListings(store);
+            for (var i = 0; i < 50; i++)
+                Assert.That(stores.TryAddCurrency(new() { ["CPU"] = FixedPoint2.New(5) }, ai, store), Is.True);
+
+            Assert.That(store.Balance["CPU"].Float(), Is.EqualTo(250));
+            var listing = store.Listings.Single(item => item.ID == "MalfAiDoomsday");
+            entMan.EventBus.RaiseLocalEvent(ai, new StoreBuyListingMessage(listing) { Actor = ai });
+            Assert.That(listing.PurchaseAmount, Is.EqualTo(1));
+            Assert.That(store.Balance["CPU"].Float(), Is.Zero);
+        });
+        await pair.CleanReturnAsync();
+    }
+
     [TestCase(false, false)]
     [TestCase(true, false)]
     [TestCase(true, true)]

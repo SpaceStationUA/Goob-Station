@@ -362,9 +362,11 @@ public sealed class StationAiVisionSystem : EntitySystem
             // Either xray-vision or system is doing a quick-and-dirty check.
             if (unoccluded || xrayCamera)
             {
+                // Pirate - tile queries need grid-local positions, including on moved/rotated stations.
+                var localPosition = Maps.WorldToLocal(Grid.Owner, Grid.Comp, System._xforms.GetWorldPosition(seedXform));
                 var squircles = Maps.GetLocalTilesIntersecting(Grid.Owner,
                     Grid.Comp,
-                    new Circle(System._xforms.GetWorldPosition(seedXform),
+                    new Circle(localPosition,
                         unoccluded ? Math.Max(seed.Comp.Range, xrayCamera ? xrayRange : 0f) : xrayRange), ignoreEmpty: false);
 
                 lock (VisibleTiles)

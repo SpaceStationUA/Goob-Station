@@ -34,16 +34,26 @@ public sealed class MalfVoiceModulatorSystem : EntitySystem
         _window.OnJobIconChanged -= OnJobIconChanged;
         _window.OnToggle -= OnToggle;
         _window.OnAccentToggle -= OnAccentToggle;
+        _window.OnCrewSelected -= OnCrewSelected;
+        _window.OnRefreshCrew -= OnRefreshCrew;
         _window.OnConfirm += OnConfirm;
         _window.OnVerbChanged += OnVerbChanged;
         _window.OnSoundChanged += OnSoundChanged;
         _window.OnJobIconChanged += OnJobIconChanged;
         _window.OnToggle += OnToggle;
         _window.OnAccentToggle += OnAccentToggle;
+        _window.OnCrewSelected += OnCrewSelected;
+        _window.OnRefreshCrew += OnRefreshCrew;
         _window.UpdateState(ev.State);
-        _window.OpenCentered();
-        _window.MoveToFront();
+        if (!_window.IsOpen)
+            _window.OpenCentered();
     }
+
+    private void OnCrewSelected(NetEntity target)
+        => RaiseNetworkEvent(new MalfVoiceModulatorCopyCrewEvent(target));
+
+    private void OnRefreshCrew()
+        => RaiseNetworkEvent(new MalfVoiceModulatorRefreshCrewEvent());
 
     private void OnConfirm(string name)
     {
