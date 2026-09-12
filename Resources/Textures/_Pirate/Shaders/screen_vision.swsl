@@ -1,0 +1,213 @@
+// Based on the shader by banwarfarms, from:
+// https://godotshaders.com/shader/test-crt-vcr/
+// Shader code from source is under a CC0 license.
+
+uniform sampler2D SCREEN_TEXTURE;
+
+// --- Color controls ---
+uniform highp float brightness ;// 1.02;
+uniform highp float contrast ;// 1.08;
+uniform highp float saturation ;// 1.10;
+uniform highp float gamma ;// 1.05;
+
+// --- CRT geometry / lens ---
+uniform highp float curvature ;// 0.14;
+uniform highp float corner_soften ;// 0.06;
+uniform highp float vignette ;// 0.38;
+
+// --- Scanlines / phosphor ---
+uniform highp float scanline_strength ;// 0.95;
+uniform highp float scanline_density ;// 1.15;
+uniform highp float interlace_strength ;// 0.20;
+
+// Shadow mask / RGB triads.
+// Turn mask_strength down if the screen-door effect is too strong.
+uniform highp float mask_strength ;// 0.22;
+uniform highp float mask_scale ;// 1.0;
+
+// --- VHS / VCR artifacts ---
+uniform highp float chroma_offset_px ;// 1.6;
+uniform highp float luma_smear_px ;// 2.2;
+uniform highp float jitter_px ;// 1.8;
+uniform highp float wobble_px ;// 1.5;
+
+uniform highp float tape_noise ;// 0.22;
+uniform highp float tape_lines ;// 0.35;
+
+uniform highp float roll_speed ;// 0.10;
+uniform highp float roll_strength ;// 0.15;
+
+// --- Cheap bloom-ish glow ---
+uniform highp float glow_strength ;// 0.25;
+uniform highp float glow_threshold ;// 0.65;
+
+highp float hash11(highp float n) {
+	return fract(sin(n) * 43758.5453123);
+}
+
+highp float hash12(highp vec2 p) {
+	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+highp vec2 crt_curve(highp vec2 uv, highp float k) {
+	// Barrel distortion style curve.
+	highp vec2 cc = uv * 2.0 - 1.0;
+	highp vec2 d = cc * cc;
+	cc *= 1.0 + k * vec2(d.y, d.x);
+	return cc * 0.5 + 0.5;
+}
+
+highp float inside01(highp vec2 uv) {
+	// Returns 1.0 if uv is inside the 0.0 to 1.0 screen area.
+	return step(0.0, uv.x) * step(uv.x, 1.0) * step(0.0, uv.y) * step(uv.y, 1.0);
+}
+
+highp vec3 apply_color_controls(highp vec3 color) {
+	// Brightness.
+	color *= brightness;
+
+	// Contrast around 0.5.
+	color = mix(vec3(0.5), color, contrast);
+
+	// Saturation.
+	highp float luma = dot(color, vec3(0.2126, 0.7152, 0.0722));
+	color = mix(vec3(luma), color, saturation);
+
+	// Gamma.
+	color = pow(max(color, vec3(0.0)), vec3(1.0 / max(gamma, 0.0001)));
+
+	return color;
+}
+
+highp vec3 triad_mask(highp vec2 frag_xy) {
+	// Simple RGB triad mask across the X axis.
+	highp float x = floor(frag_xy.x / max(mask_scale, 0.0001));
+	highp float triad_index = mod(x, 3.0);
+
+	if (triad_index < 1.0) {
+		return vec3(1.10, 0.85, 0.85);
+	}
+
+	if (triad_index < 2.0) {
+		return vec3(0.85, 1.10, 0.85);
+	}
+
+	return vec3(0.85, 0.85, 1.10);
+}
+
+highp vec3 sample_screen(highp vec2 uv) {
+	return zTextureSpec(SCREEN_TEXTURE, uv).rgb;
+}
+
+void fragment() {
+	highp vec2 px = SCREEN_PIXEL_SIZE;
+	highp vec2 res = 1.0 / px;
+	highp float t = TIME;
+
+	// Start from screen UV.
+	highp vec2 uv = UV;
+
+	// --- VHS line jitter ---
+	highp float y_line = floor(uv.y * res.y);
+	highp float jitter_random = hash11(y_line + floor(t * 15.0) * 37.0);
+	highp float jitter = (jitter_random - 0.5) * 2.0;
+	uv.x += jitter * jitter_px * px.x;
+
+	// --- Slow horizontal wobble ---
+	uv.x += sin(uv.y * 8.0 + t * 1.2) * wobble_px * px.x;
+
+	// --- CRT curve ---
+	highp vec2 cuv = crt_curve(uv, curvature);
+	highp float in_bounds = inside01(cuv);
+
+	// --- Rounded corners / soft screen edge ---
+	highp vec2 corner_distance = abs(cuv - 0.5) * 2.0;
+	highp float edge = max(corner_distance.x, corner_distance.y);
+	highp float corner_mask = 1.0 - smoothstep(1.0 - corner_soften, 1.0, edge);
+
+	// --- Chromatic aberration / VHS chroma shift ---
+	highp vec2 chroma_offset = vec2(chroma_offset_px * px.x, 0.0);
+
+	highp float red = sample_screen(cuv + chroma_offset).r;
+	highp float green = sample_screen(cuv).g;
+	highp float blue = sample_screen(cuv - chroma_offset).b;
+
+	highp vec3 color = vec3(red, green, blue);
+
+	// --- Luma smear / horizontal ghosting ---
+	highp float smear = luma_smear_px * px.x;
+
+	highp vec3 smear_right = sample_screen(cuv + vec2(smear, 0.0));
+	highp vec3 smear_left = sample_screen(cuv - vec2(smear, 0.0));
+	highp vec3 smeared_color = (color + smear_right + smear_left) / 3.0;
+
+	color = mix(color, smeared_color, 0.35);
+
+	// --- Scanlines ---
+	highp float scanline_wave = sin(cuv.y * res.y * 3.14159 * scanline_density);
+	highp float scanline_darkening = 0.5 - 0.5 * scanline_wave;
+	highp float scanline_multiplier = 1.0 - scanline_strength * scanline_darkening;
+
+	color *= scanline_multiplier;
+
+	// --- Interlacing flicker ---
+	highp float field = mod(floor(FRAGCOORD.y) + floor(t * 60.0), 2.0);
+	color *= 1.0 - interlace_strength * field * 0.10;
+
+	// --- Rolling tracking bar ---
+	highp float roll_y = fract(t * max(roll_speed, 0.0001));
+	highp float roll_distance = abs(cuv.y - roll_y);
+	highp float roll_bar = smoothstep(0.20, 0.0, roll_distance);
+
+	color += roll_bar * roll_strength * vec3(0.12);
+
+	// --- Random horizontal tape tracking lines ---
+	highp float line_random = hash11(y_line * 0.7 + floor(t * 12.0) * 11.0);
+	highp float tape_line = smoothstep(0.985, 1.0, line_random) * tape_lines;
+
+	color += tape_line * vec3(0.18);
+
+	// --- Grain ---
+	highp float noise = hash12(FRAGCOORD.xy + vec2(t * 120.0, t * 90.0));
+	highp float grain = (noise - 0.5) * 2.0;
+
+	color += grain * tape_noise * 0.06;
+
+	// --- Occasional white specks ---
+	highp float speck_random = hash12(FRAGCOORD.xy * 0.73 + t * 40.0);
+	highp float speck = smoothstep(0.995, 1.0, speck_random);
+
+	color += speck * tape_noise * 0.25;
+
+	// --- Cheap glow on bright pixels ---
+	highp vec3 center_color = color;
+
+	highp vec3 glow_right = sample_screen(cuv + vec2(px.x, 0.0));
+	highp vec3 glow_left = sample_screen(cuv - vec2(px.x, 0.0));
+	highp vec3 glow_up = sample_screen(cuv + vec2(0.0, px.y));
+	highp vec3 glow_down = sample_screen(cuv - vec2(0.0, px.y));
+
+	highp vec3 blur = (center_color + glow_right + glow_left + glow_up + glow_down) / 5.0;
+	highp float brightness_value = dot(blur, vec3(0.2126, 0.7152, 0.0722));
+	highp vec3 glow = max(blur - vec3(glow_threshold), vec3(0.0));
+
+	color += glow * glow_strength * (0.5 + 0.5 * brightness_value);
+
+	// --- Vignette ---
+	highp vec2 vignette_uv = cuv - 0.5;
+	highp float vignette_mask = smoothstep(0.9, 0.2, dot(vignette_uv, vignette_uv) * 2.2);
+
+	color *= mix(1.0 - vignette, 1.0, vignette_mask);
+
+	// --- Shadow mask / RGB triads ---
+	highp vec3 mask = triad_mask(FRAGCOORD.xy);
+	color *= mix(vec3(1.0), mask, mask_strength);
+
+	// --- Color grading ---
+	color = apply_color_controls(color);
+
+	// Outside the curved screen / rounded edges fades to black.
+	color *= in_bounds * corner_mask;
+
+	COLOR = vec4(color, 1.0);
+}
