@@ -288,15 +288,17 @@
         effectProto: StatusEffectForcedSleeping # Pirate: healium nerf
         time: 1
         type: Update # Pirate: healium nerf
-      - !type:Drunk
-        boozePower: 0.5 # Pirate: healium nerf
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectOpiateNod
+        type: Add
+        time: 4
         conditions:
         - !type:ReagentCondition
           reagent: Healium
           min: 4
       - !type:Oxygenate
         conditions:
-        - !type:MetabolizerTypeCondition # Fuck you
+        - !type:MetabolizerTypeCondition #Fuck you
           type: [Hydrakin]
     Gas:
       #region Pirate: healium nerf
@@ -338,6 +340,14 @@
         visualType: Medium
         messages: [ "effect-sleepy" ]
         probability: 0.01
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectOpiateNod
+        type: Add
+        time: 4
+        conditions:
+        - !type:ReagentCondition
+          reagent: Healium
+          min: 4
       - !type:ModifyStatusEffect # Pirate: healium nerf
         conditions:
         - !type:ReagentCondition
@@ -349,12 +359,6 @@
         effectProto: StatusEffectForcedSleeping # Pirate: healium nerf
         time: 1
         type: Update # Pirate: healium nerf
-      - !type:Drunk
-        boozePower: 0.5 # Pirate: healium nerf
-        conditions:
-        - !type:ReagentCondition
-          reagent: Healium
-          min: 4
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition # Fuck you
