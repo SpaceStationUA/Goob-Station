@@ -67,8 +67,9 @@ public sealed partial class SurveillanceCameraMonitorWindow : FancyWindow // Goo
         // Pirate start: translucent VHS/CRT artifact overlay on the camera feed.
         // Ported from godotshaders.com/shader/vhs-and-crt-monitor-effect (CC0).
         // Rendered as an alpha-blended artifact layer over the feed; respects the
-        // "Disable vision filters" accessibility option.
-        _noVisionFiltersChanged = v => CameraViewVHS.Visible = !v;
+        // "Disable vision filters" accessibility option and is only shown while a
+        // camera feed is connected.
+        _noVisionFiltersChanged = v => UpdateVHSOverlay();
         _configurationManager.OnValueChanged(DCCVars.NoVisionFilters, _noVisionFiltersChanged, invokeImmediately: true);
 
         CameraViewVHS.Stretch = TextureRect.StretchMode.Scale;
@@ -85,6 +86,17 @@ public sealed partial class SurveillanceCameraMonitorWindow : FancyWindow // Goo
     }
 
     #region Pirate: accessibility for VHS overlay
+
+    private bool _hasFeed;
+
+    /// <summary>
+    /// Shows the VHS overlay only while a camera feed is connected and the
+    /// "Disable vision filters" accessibility option is off.
+    /// </summary>
+    private void UpdateVHSOverlay()
+    {
+        CameraViewVHS.Visible = _hasFeed && !_configurationManager.GetCVar(DCCVars.NoVisionFilters);
+    }
 
     protected override void Dispose(bool disposing)
     {
@@ -238,6 +250,8 @@ public sealed partial class SurveillanceCameraMonitorWindow : FancyWindow // Goo
         CameraView.Eye = eye ?? _defaultEye;
         CameraView.Visible = !eyeChanged && !_isSwitching;
         CameraDisconnectButton.Disabled = eye == null;
+        _hasFeed = eye != null; // Pirate: VHS overlay only with a connected feed
+        UpdateVHSOverlay(); // Pirate
 
         if (eye != null)
         {
@@ -272,6 +286,8 @@ public sealed partial class SurveillanceCameraMonitorWindow : FancyWindow // Goo
         _isSwitching = false;
         CameraView.Visible = CameraView.Eye != _defaultEye;
         CameraViewBackground.Visible = CameraView.Eye == _defaultEye;
+        _hasFeed = CameraView.Eye != _defaultEye; // Pirate
+        UpdateVHSOverlay(); // Pirate
         // Goobstation start
         if (_resolveCameraName.TryGetValue(_currentAddress, out var name))
             CameraStatus.Text = Loc.GetString("surveillance-camera-monitor-ui-status",

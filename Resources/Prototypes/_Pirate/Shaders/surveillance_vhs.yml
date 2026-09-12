@@ -6,16 +6,16 @@
   kind: source
   path: "/Textures/_Pirate/Shaders/surveillance_vhs.swsl"
   params:
-    scanlines_opacity: 0.35
+    scanlines_opacity: 0.25
     scanlines_width: 0.25
-    grille_opacity: 0.15
+    grille_opacity: 0.10
     resolution: 180,160
-    roll_speed: 8.0
+    roll_speed: 3.0
     roll_size: 15.0
     roll_variation: 1.8
-    roll_intensity: 0.10
-    noise_opacity: 0.25
-    noise_speed: 5.0
-    static_noise_intensity: 0.05
+    roll_intensity: 0.06
+    noise_opacity: 0.12
+    noise_speed: 2.0
+    static_noise_intensity: 0.02
     vignette_intensity: 0.4
     vignette_opacity: 0.5
