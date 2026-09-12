@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-using Content.Shared.Drugs;
+using Content.Shared._Pirate.Drugs;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -8,11 +8,11 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Drugs;
+namespace Content.Client._Pirate.Drugs;
 
-public sealed class DreamyOverlay : Overlay
+public sealed class VisionFadeOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "Dreamy";
+    private static readonly ProtoId<ShaderPrototype> Shader = "VisionFade";
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -22,20 +22,20 @@ public sealed class DreamyOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
-    private readonly ShaderInstance _dreamShader;
+    private readonly ShaderInstance _fadeShader;
 
-    public float CurrentDreamPower = 0.0f;
+    public float CurrentFadePower = 0.0f;
 
-    private const float MaxDreamPower = 100f;
+    private const float MaxFadePower = 100f;
 
-    private const float DreamPowerScale = 8f;
+    private const float FadePowerScale = 10f;
 
     private float _visualScale = 0;
 
-    public DreamyOverlay()
+    public VisionFadeOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _dreamShader = _prototypeManager.Index(Shader).InstanceUnique();
+        _fadeShader = _prototypeManager.Index(Shader).InstanceUnique();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -46,14 +46,14 @@ public sealed class DreamyOverlay : Overlay
             return;
 
         var statusSys = _sysMan.GetEntitySystem<Shared.StatusEffectNew.StatusEffectsSystem>();
-        if (!statusSys.TryGetMaxTime<DreamyStatusEffectComponent>(playerEntity.Value, out var status))
+        if (!statusSys.TryGetMaxTime<VisionFadeStatusEffectComponent>(playerEntity.Value, out var status))
             return;
 
         var time = status.Item2;
 
-        var power = time == null ? MaxDreamPower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxDreamPower);
+        var power = time == null ? MaxFadePower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxFadePower);
 
-        CurrentDreamPower += DreamPowerScale * (power - CurrentDreamPower) * args.DeltaSeconds / (power + 1);
+        CurrentFadePower += FadePowerScale * (power - CurrentFadePower) * args.DeltaSeconds / (power + 1);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -64,7 +64,9 @@ public sealed class DreamyOverlay : Overlay
         if (args.Viewport.Eye != eyeComp.Eye)
             return false;
 
-        _visualScale = Math.Clamp(CurrentDreamPower / 40f, 0.0f, 1.0f);
+        // Quick ramp up: sharp onset fits eye pain, and avoids undercutting the
+        // existing TemporaryBlindness that hits when the reagent dose is high
+        _visualScale = Math.Clamp(CurrentFadePower / 20f, 0.0f, 1.0f);
         return _visualScale > 0;
     }
 
@@ -74,9 +76,9 @@ public sealed class DreamyOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
-        _dreamShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _dreamShader.SetParameter("dreamPower", _visualScale);
-        handle.UseShader(_dreamShader);
+        _fadeShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _fadeShader.SetParameter("fadePower", _visualScale);
+        handle.UseShader(_fadeShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
     }

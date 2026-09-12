@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-using Content.Shared.Drugs;
+using Content.Shared._Pirate.Drugs;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -8,11 +8,11 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Drugs;
+namespace Content.Client._Pirate.Drugs;
 
-public sealed class StimRushOverlay : Overlay
+public sealed class DesaturationOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "StimRush";
+    private static readonly ProtoId<ShaderPrototype> Shader = "Desaturate";
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -22,23 +22,20 @@ public sealed class StimRushOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
-    private readonly ShaderInstance _stimShader;
+    private readonly ShaderInstance _greyShader;
 
-    public float CurrentRushPower = 0.0f;
+    public float CurrentGreyPower = 0.0f;
 
-    /// <summary>
-    ///     Caps the visual intensity, so mega overdoses don't melt the player's eyes.
-    /// </summary>
-    private const float MaxRushPower = 100f;
+    private const float MaxGreyPower = 100f;
 
-    private const float RushPowerScale = 8f;
+    private const float GreyPowerScale = 8f;
 
     private float _visualScale = 0;
 
-    public StimRushOverlay()
+    public DesaturationOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _stimShader = _prototypeManager.Index(Shader).InstanceUnique();
+        _greyShader = _prototypeManager.Index(Shader).InstanceUnique();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -49,14 +46,14 @@ public sealed class StimRushOverlay : Overlay
             return;
 
         var statusSys = _sysMan.GetEntitySystem<Shared.StatusEffectNew.StatusEffectsSystem>();
-        if (!statusSys.TryGetMaxTime<StimRushStatusEffectComponent>(playerEntity.Value, out var status))
+        if (!statusSys.TryGetMaxTime<DesaturationStatusEffectComponent>(playerEntity.Value, out var status))
             return;
 
         var time = status.Item2;
 
-        var power = time == null ? MaxRushPower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxRushPower);
+        var power = time == null ? MaxGreyPower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxGreyPower);
 
-        CurrentRushPower += RushPowerScale * (power - CurrentRushPower) * args.DeltaSeconds / (power + 1);
+        CurrentGreyPower += GreyPowerScale * (power - CurrentGreyPower) * args.DeltaSeconds / (power + 1);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -67,7 +64,7 @@ public sealed class StimRushOverlay : Overlay
         if (args.Viewport.Eye != eyeComp.Eye)
             return false;
 
-        _visualScale = Math.Clamp(CurrentRushPower / 60f, 0.0f, 1.0f);
+        _visualScale = Math.Clamp(CurrentGreyPower / 40f, 0.0f, 1.0f);
         return _visualScale > 0;
     }
 
@@ -77,9 +74,9 @@ public sealed class StimRushOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
-        _stimShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _stimShader.SetParameter("rushPower", _visualScale);
-        handle.UseShader(_stimShader);
+        _greyShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _greyShader.SetParameter("greyPower", _visualScale);
+        handle.UseShader(_greyShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
     }

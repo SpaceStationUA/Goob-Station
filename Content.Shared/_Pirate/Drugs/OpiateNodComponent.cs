@@ -2,7 +2,7 @@
 
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Drugs;
+namespace Content.Shared._Pirate.Drugs;
 
 /// <summary>
 ///     Adds a shader to the client that scales with the effect duration.

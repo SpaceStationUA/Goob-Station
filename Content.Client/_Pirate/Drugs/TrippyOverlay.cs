@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-using Content.Shared.Drugs;
+using Content.Shared._Pirate.Drugs;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -8,11 +8,11 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Drugs;
+namespace Content.Client._Pirate.Drugs;
 
-public sealed class DesaturationOverlay : Overlay
+public sealed class TrippyOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "Desaturate";
+    private static readonly ProtoId<ShaderPrototype> Shader = "Trippy";
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -22,20 +22,20 @@ public sealed class DesaturationOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
-    private readonly ShaderInstance _greyShader;
+    private readonly ShaderInstance _trippyShader;
 
-    public float CurrentGreyPower = 0.0f;
+    public float CurrentTripPower = 0.0f;
 
-    private const float MaxGreyPower = 100f;
+    private const float MaxTripPower = 100f;
 
-    private const float GreyPowerScale = 8f;
+    private const float TripPowerScale = 8f;
 
     private float _visualScale = 0;
 
-    public DesaturationOverlay()
+    public TrippyOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _greyShader = _prototypeManager.Index(Shader).InstanceUnique();
+        _trippyShader = _prototypeManager.Index(Shader).InstanceUnique();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -46,14 +46,14 @@ public sealed class DesaturationOverlay : Overlay
             return;
 
         var statusSys = _sysMan.GetEntitySystem<Shared.StatusEffectNew.StatusEffectsSystem>();
-        if (!statusSys.TryGetMaxTime<DesaturationStatusEffectComponent>(playerEntity.Value, out var status))
+        if (!statusSys.TryGetMaxTime<TrippyStatusEffectComponent>(playerEntity.Value, out var status))
             return;
 
         var time = status.Item2;
 
-        var power = time == null ? MaxGreyPower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxGreyPower);
+        var power = time == null ? MaxTripPower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxTripPower);
 
-        CurrentGreyPower += GreyPowerScale * (power - CurrentGreyPower) * args.DeltaSeconds / (power + 1);
+        CurrentTripPower += TripPowerScale * (power - CurrentTripPower) * args.DeltaSeconds / (power + 1);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -64,7 +64,7 @@ public sealed class DesaturationOverlay : Overlay
         if (args.Viewport.Eye != eyeComp.Eye)
             return false;
 
-        _visualScale = Math.Clamp(CurrentGreyPower / 40f, 0.0f, 1.0f);
+        _visualScale = Math.Clamp(CurrentTripPower / 50f, 0.0f, 1.0f);
         return _visualScale > 0;
     }
 
@@ -74,9 +74,9 @@ public sealed class DesaturationOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
-        _greyShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _greyShader.SetParameter("greyPower", _visualScale);
-        handle.UseShader(_greyShader);
+        _trippyShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _trippyShader.SetParameter("tripPower", _visualScale);
+        handle.UseShader(_trippyShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
     }
