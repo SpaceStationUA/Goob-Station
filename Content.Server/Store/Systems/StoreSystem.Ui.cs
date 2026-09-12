@@ -229,6 +229,8 @@ public sealed partial class StoreSystem
             component.BalanceSpent[currency] += value;
         }
 
+        Dirty(uid, component);
+
         // goobstation - heretics
         // i am too tired of making separate systems for knowledge adding
         // and all that shit. i've had like 4 failed attempts
@@ -463,6 +465,7 @@ public sealed partial class StoreSystem
         }
 
         component.Balance[msg.Currency] -= msg.Amount;
+        Dirty(uid, component);
         UpdateUserInterface(buyer, uid, component);
     }
 
@@ -569,6 +572,8 @@ public sealed partial class StoreSystem
             if (component.BalanceSpent.ContainsKey(currency))
                 component.BalanceSpent[currency] -= value;
         }
+
+        Dirty(uid, component);
 
         if (refundComp.Data.ProductUpgradeId != null)
         {

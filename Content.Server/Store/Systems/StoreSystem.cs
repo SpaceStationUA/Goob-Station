@@ -210,6 +210,7 @@ public sealed partial class StoreSystem : EntitySystem
                 store.Balance[type.Key] += type.Value;
         }
 
+        Dirty(uid, store);
         UpdateUserInterface(null, uid, store);
         return true;
     }
