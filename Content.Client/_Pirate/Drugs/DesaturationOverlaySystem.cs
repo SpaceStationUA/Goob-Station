@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-using Content.Shared.Drugs;
+using Content.Shared._Pirate.Drugs;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -9,7 +9,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Drugs;
+namespace Content.Client._Pirate.Drugs;
 
 /// <summary>
 ///     System to handle desaturation (numb) overlays.

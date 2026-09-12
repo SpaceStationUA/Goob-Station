@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-using Content.Shared.Drugs;
+using Content.Shared._Pirate.Drugs;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -8,11 +8,11 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Drugs;
+namespace Content.Client._Pirate.Drugs;
 
-public sealed class VisionFadeOverlay : Overlay
+public sealed class StimRushOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "VisionFade";
+    private static readonly ProtoId<ShaderPrototype> Shader = "StimRush";
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -22,20 +22,23 @@ public sealed class VisionFadeOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
-    private readonly ShaderInstance _fadeShader;
+    private readonly ShaderInstance _stimShader;
 
-    public float CurrentFadePower = 0.0f;
+    public float CurrentRushPower = 0.0f;
 
-    private const float MaxFadePower = 100f;
+    /// <summary>
+    ///     Caps the visual intensity, so mega overdoses don't melt the player's eyes.
+    /// </summary>
+    private const float MaxRushPower = 100f;
 
-    private const float FadePowerScale = 10f;
+    private const float RushPowerScale = 8f;
 
     private float _visualScale = 0;
 
-    public VisionFadeOverlay()
+    public StimRushOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _fadeShader = _prototypeManager.Index(Shader).InstanceUnique();
+        _stimShader = _prototypeManager.Index(Shader).InstanceUnique();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -46,14 +49,14 @@ public sealed class VisionFadeOverlay : Overlay
             return;
 
         var statusSys = _sysMan.GetEntitySystem<Shared.StatusEffectNew.StatusEffectsSystem>();
-        if (!statusSys.TryGetMaxTime<VisionFadeStatusEffectComponent>(playerEntity.Value, out var status))
+        if (!statusSys.TryGetMaxTime<StimRushStatusEffectComponent>(playerEntity.Value, out var status))
             return;
 
         var time = status.Item2;
 
-        var power = time == null ? MaxFadePower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxFadePower);
+        var power = time == null ? MaxRushPower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxRushPower);
 
-        CurrentFadePower += FadePowerScale * (power - CurrentFadePower) * args.DeltaSeconds / (power + 1);
+        CurrentRushPower += RushPowerScale * (power - CurrentRushPower) * args.DeltaSeconds / (power + 1);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -64,9 +67,7 @@ public sealed class VisionFadeOverlay : Overlay
         if (args.Viewport.Eye != eyeComp.Eye)
             return false;
 
-        // Quick ramp up: sharp onset fits eye pain, and avoids undercutting the
-        // existing TemporaryBlindness that hits when the reagent dose is high
-        _visualScale = Math.Clamp(CurrentFadePower / 20f, 0.0f, 1.0f);
+        _visualScale = Math.Clamp(CurrentRushPower / 60f, 0.0f, 1.0f);
         return _visualScale > 0;
     }
 
@@ -76,9 +77,9 @@ public sealed class VisionFadeOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
-        _fadeShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _fadeShader.SetParameter("fadePower", _visualScale);
-        handle.UseShader(_fadeShader);
+        _stimShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _stimShader.SetParameter("rushPower", _visualScale);
+        handle.UseShader(_stimShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
     }

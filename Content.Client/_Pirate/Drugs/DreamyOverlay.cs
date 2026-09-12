@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-using Content.Shared.Drugs;
+using Content.Shared._Pirate.Drugs;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -8,11 +8,11 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Drugs;
+namespace Content.Client._Pirate.Drugs;
 
-public sealed class OpiateNodOverlay : Overlay
+public sealed class DreamyOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "OpiateNod";
+    private static readonly ProtoId<ShaderPrototype> Shader = "Dreamy";
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -22,20 +22,20 @@ public sealed class OpiateNodOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
-    private readonly ShaderInstance _nodShader;
+    private readonly ShaderInstance _dreamShader;
 
-    public float CurrentNodPower = 0.0f;
+    public float CurrentDreamPower = 0.0f;
 
-    private const float MaxNodPower = 100f;
+    private const float MaxDreamPower = 100f;
 
-    private const float NodPowerScale = 8f;
+    private const float DreamPowerScale = 8f;
 
     private float _visualScale = 0;
 
-    public OpiateNodOverlay()
+    public DreamyOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _nodShader = _prototypeManager.Index(Shader).InstanceUnique();
+        _dreamShader = _prototypeManager.Index(Shader).InstanceUnique();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -46,14 +46,14 @@ public sealed class OpiateNodOverlay : Overlay
             return;
 
         var statusSys = _sysMan.GetEntitySystem<Shared.StatusEffectNew.StatusEffectsSystem>();
-        if (!statusSys.TryGetMaxTime<OpiateNodStatusEffectComponent>(playerEntity.Value, out var status))
+        if (!statusSys.TryGetMaxTime<DreamyStatusEffectComponent>(playerEntity.Value, out var status))
             return;
 
         var time = status.Item2;
 
-        var power = time == null ? MaxNodPower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxNodPower);
+        var power = time == null ? MaxDreamPower : (float) Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxDreamPower);
 
-        CurrentNodPower += NodPowerScale * (power - CurrentNodPower) * args.DeltaSeconds / (power + 1);
+        CurrentDreamPower += DreamPowerScale * (power - CurrentDreamPower) * args.DeltaSeconds / (power + 1);
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -64,7 +64,7 @@ public sealed class OpiateNodOverlay : Overlay
         if (args.Viewport.Eye != eyeComp.Eye)
             return false;
 
-        _visualScale = Math.Clamp(CurrentNodPower / 50f, 0.0f, 1.0f);
+        _visualScale = Math.Clamp(CurrentDreamPower / 40f, 0.0f, 1.0f);
         return _visualScale > 0;
     }
 
@@ -74,9 +74,9 @@ public sealed class OpiateNodOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
-        _nodShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _nodShader.SetParameter("nodPower", _visualScale);
-        handle.UseShader(_nodShader);
+        _dreamShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _dreamShader.SetParameter("dreamPower", _visualScale);
+        handle.UseShader(_dreamShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
     }
