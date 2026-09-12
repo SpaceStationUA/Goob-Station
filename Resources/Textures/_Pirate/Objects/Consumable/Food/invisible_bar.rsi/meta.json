@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Invisible chocolate bar made by the SpaceStationUA community for Halloween events.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "invisible-chocolatebar"
+    },
+    {
+      "name": "invisible-chocolatebar-open"
+    },
+    {
+      "name": "invisible-chocolatebar-trash"
+    },
+    {
+      "name": "invisible-chocolatebar-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "invisible-chocolatebar-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "invisible-chocolatebar-open-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "invisible-chocolatebar-open-inhand-left",
+      "directions": 4
+    }
+  ]
+}
