@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+# Pirate: ported from starcup PR #933 (Den cosmetics). The rest of the
+# upstream file's entities are either already in _Pirate or depend on starcup-only contraband bases.
+
+## FASHION
+## FASHION
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPinstripeDress
+  name: pinstripe dress
+  description: With a capital P, and that rhymes with T, and that stands for 'twirl'!
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/pinstripe_dress.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/pinstripe_dress.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtDisheveled
+  name: disheveled suitskirt
+  description: Here, let me straighten your tie.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/disheveled_skirt.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/disheveled_skirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtRippedPunk
+  name: ripped punk skirt
+  description: A black ripped skirt and a fishnet top. Real punks always ignore the 'Dry Clean Only' tag.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/rippedpunk.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Uniforms/Jumpskirt/rippedpunk.rsi

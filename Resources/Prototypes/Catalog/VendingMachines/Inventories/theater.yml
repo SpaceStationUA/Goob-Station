@@ -23,7 +23,15 @@
     ClothingOuterSanta: 2
     ClothingHeadHatSkub: 2
     ClothingOuterSkub: 2
+    ClothingHeadHatGreenEscoffion: 1 # starcup
+    ClothingHeadHatPrincess: 1 # starcup
     ClothingHeadHatBeretFrench: 2
+    # starcup #983 additions (imp / feath.)
+    ClothingHeadHatFeatheredCap: 1 # starcup
+    ClothingMaskKitsune: 1 # Den - Kitsune mask
+    ClothingMaskOniBlue: 1 # Nyano - Clothing addition
+    ClothingMaskOniRed: 1 # Nyano - Clothing addition
+    ClothingHeadHatCuteTiara: 1 # starcup
     ClothingOuterSuitChicken: 2
     ClothingHeadHatChickenhead: 2
     ClothingOuterSuitMonkey: 2
@@ -31,13 +39,22 @@
     ClothingHeadHatShrineMaidenWig: 2
     ClothingOuterSuitShrineMaiden: 2
     Gohei: 2
+    ClothingNeckCloakRedHood: 1
     ClothingOuterSuitWitchRobes: 2
     ClothingHeadHatWitch1: 2
     Broomstick: 2 # Goobstation
+    ClothingMaskItalianMoustache: 2 # starcup
+    # begin starcup additions #933
+    ClothingUniformJumpskirtDressCheongsamBlue: 1
+    ClothingUniformJumpskirtDressCheongsamGreen: 1
+    ClothingUniformJumpskirtDressCheongsamPurple: 1
+    ClothingUniformJumpskirtDressCheongsamRed: 1
+    # end starcup additions
     ClothingHeadHatRedRacoon: 2
     ClothingOuterRedRacoon: 2
     ClothingHeadPaperSack: 2
     ClothingHeadPaperSackSmile: 2
+    ClothingHandsGlovesEvening: 1 # starcup #933
     ClothingEyesBlindfold: 1
     ClothingHeadRastaHat: 2
     ClothingUniformJumpsuitDameDane: 2
@@ -69,8 +86,15 @@
     ClothingOuterSuitTutu: 2 # Goob
     ClothingHeadHatTinfoilHat: 2 # Goobstation
     ClothingHeadHatBunnyearsClown: 1 # Pirate
+  # begin starcup additions #933
+    ClothingUniformJumpskirtDressSpider: 1
+    ClothingUniformJumpsuitCowboyBrown: 1
+    ClothingUniformJumpsuitCowboyGrey: 1
+  # end starcup additions
   contrabandInventory:
     ClothingHeadHatRichard: 1
+    # starcup #983 additions (tiaras)
+    ClothingHeadHatCuteTiara: 1 # starcup
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1
     ClothingOuterDogi: 1

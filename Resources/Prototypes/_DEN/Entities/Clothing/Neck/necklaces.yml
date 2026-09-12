@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+# Pirate: ported from starcup PR #933.
+# All base necklaces already exist in _Pirate/Entities/Clothing/ee_generic.yml;
+# only the new ruby pendant is added here. Engraveable component not ported
+# (our fork doesn't have that C# component).
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckNecklacePendantGoldRuby # starcup - picked red for the pendant's color.
+  name: ruby pendant necklace # starcup - changed name
+  description: A heavy red gemstone tethered to a golden necklace by a chain. The gem is warm to the touch. # starcup - tweaked description
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Necklaces/pendant_gold.rsi
+    layers:
+    - state: icon
+    - state: pendant-icon
+      color: "#ef5348" # starcup - courage of the heart is very rare.
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Necklaces/pendant_gold.rsi
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+      - state: pendant-equipped-NECK
+        color: "#ef5348" # starcup

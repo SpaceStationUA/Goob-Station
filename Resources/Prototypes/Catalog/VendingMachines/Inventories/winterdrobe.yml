@@ -30,10 +30,21 @@
     ClothingOuterFlannelRed: 2
     ClothingOuterFlannelBlue: 2
     ClothingOuterFlannelGreen: 2
-    ClothingOuterCoatBomber: 3
-    ClothingHeadHatCanadaBeanie: 4
+    ClothingOuterCoatBomber: 3 # starcup 3->2
+    ClothingHeadHatCanadaBeanie: 2 # starcup 4->2
     ClothingHeadHatSantahat: 2
     ClothingHeadHatXmasCrown: 2
+    # Begin starcup #983 additions (DEN)
+    ClothingHeadHatFuzzyEarmuffsCream: 2
+    ClothingHeadHatBeanieBlackAbsurd: 2
+    ClothingHeadHatBeanieBlueAbsurd: 2
+    ClothingHeadHatBeanieWhiteAbsurd: 2
+    ClothingHeadHatBeanieBlack: 2
+    ClothingHeadHatBeanieWinterBlack: 2
+    ClothingHeadHatTrapperBlack: 2
+    ClothingHeadHatTrapperGray: 2
+    ClothingHeadHatTrapperBeige: 2
+    # End starcup #983 additions
   contrabandInventory:
     ClothingOuterDavidsJacket: 1 # Goobstation
     ClothingNeckScarfStripedSyndieGreen: 3

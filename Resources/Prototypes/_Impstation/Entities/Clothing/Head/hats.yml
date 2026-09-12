@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+# Pirate: ported from starcup PR #983 (feat: Fashionable Headwear)
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatPrincess
+  name: princess hat
+  description: Did you know these are actually called hennins? # starcup - fixed plural/capitalization
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/princesshat.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/princesshat.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGreenEscoffion
+  name: green escoffion
+  description: Fit for the kind of fancy princess who knows what this hat is called. # starcup
+#  description: Fit for some kind of fancy princess, bet you didn't know this kind of hat has a name. # starcup - sorry, the comma splice got to me
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/greenescoffion.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/greenescoffion.rsi

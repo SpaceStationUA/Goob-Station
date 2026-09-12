@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+# Pirate: ported from starcup PR #984 (feat: Fashionable Neckwear)
+
+# Plain Cloaks
+- type: entity
+  parent: ClothingNeckCloakColorable
+  id: ClothingNeckCloakColorableBlack
+  name: plain black cloak
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#373737"
+      right:
+      - state: inhand-right
+        color: "#373737"
+  - type: Clothing
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        color: "#373737"
+  - type: Sprite
+    color: "#373737"
+
+- type: entity
+  parent: ClothingNeckCloakColorable
+  id: ClothingNeckCloakColorableGray
+  name: plain gray cloak
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#686859"
+      right:
+      - state: inhand-right
+        color: "#686859"
+  - type: Clothing
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        color: "#686859"
+  - type: Sprite
+    color: "#686859"

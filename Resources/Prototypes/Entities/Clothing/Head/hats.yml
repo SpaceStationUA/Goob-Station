@@ -874,7 +874,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCanadaBeanie
-  name: beanie
+  name: red and white toque # starcup - renamed from "beanie"
   description: Red, white and snug. It radiates a homely feeling, if your home happens to be chilly and filled with coffeehouses.
   components:
   - type: Sprite
@@ -1351,20 +1351,25 @@
   description: A magician's top hat.
   components:
   - type: Icon
-    sprite: Clothing/Head/Hats/magician.rsi
+    sprite: _Impstation/Clothing/Head/Hats/magician.rsi # imp edit
     state: "icon"
   - type: Sprite
     state: "icon"
-    sprite: Clothing/Head/Hats/magician.rsi
+    sprite: _Impstation/Clothing/Head/Hats/magician.rsi # imp edit
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-HELMET
         offset: "0, 0.12"
-    sprite: Clothing/Head/Hats/magician.rsi
+      # imp edit start
+      head-reptilian:
+      - state: equipped-HELMET-reptilian
+        offset: "0, 0.12"
+      # imp edit end
+    sprite: _Impstation/Clothing/Head/Hats/magician.rsi # imp edit
   - type: Item
     size: Small
-    sprite: Clothing/Head/Hats/magician.rsi
+    sprite: _Impstation/Clothing/Head/Hats/magician.rsi # imp edit
     storedRotation: 0
   - type: Storage
     grid:

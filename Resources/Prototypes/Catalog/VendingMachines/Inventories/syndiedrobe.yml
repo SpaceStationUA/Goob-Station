@@ -46,6 +46,7 @@
     CombatKnife: 5
     ClothingUniformJumpsuitSyndieInsulated: 6
     ClothingShoesBootsCombatInsulated: 6
+    ClothingNeckColorableCollarBloodred: 1 # starcup #984
     #endregion Pirate: syndiedrobe
   emaggedInventory:
     #region Pirate: syndiedrobe

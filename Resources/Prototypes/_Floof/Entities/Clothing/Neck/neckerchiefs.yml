@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: 2025 M3739
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckNeckerchief
+  name: white neckerchief # starcup - added color specifier
+  description: A unique neckwear choice evoking an adventurous spirit. The origins of this style remain a mystery to this day.
+  components:
+  - type: Sprite
+    sprite: _Floof/Clothing/Neck/Neckerchiefs/Neckerchief.rsi
+  - type: Clothing
+    sprite: _Floof/Clothing/Neck/Neckerchiefs/Neckerchief.rsi

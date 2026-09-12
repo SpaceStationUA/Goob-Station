@@ -1,0 +1,661 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: loadouts ported from starcup PRs #983 (feat: Fashionable Headwear)
+# and #984 (feat: Fashionable Neckwear). Categories mirror starcup's
+# distribution, adapted to our _Pirate loadout structure.
+
+## Head
+
+# Beanies
+- type: loadout
+  id: BeaniePink
+  equipment:
+    head: ClothingHeadHatBeaniePink
+  groupBy: "basicbeanie"
+
+- type: loadout
+  id: BeanieNavyBlue
+  equipment:
+    head: ClothingHeadHatBeanieNavyBlue
+  groupBy: "basicbeanie"
+
+- type: loadout
+  id: BeanieBlack
+  equipment:
+    head: ClothingHeadHatBeanieBlack
+  groupBy: "basicbeanie"
+
+- type: loadout
+  id: BeanieBlue
+  equipment:
+    head: ClothingHeadHatBeanieBlue
+  groupBy: "basicbeanie"
+
+- type: loadout
+  id: BeanieDarkGreen
+  equipment:
+    head: ClothingHeadHatBeanieGreen
+  groupBy: "basicbeanie"
+
+# Winter beanies
+- type: loadout
+  id: BeanieWinterPink
+  equipment:
+    head: ClothingHeadHatBeanieWinterPink
+  groupBy: "basicbeanie"
+
+- type: loadout
+  id: BeanieWinterNavyBlue
+  equipment:
+    head: ClothingHeadHatBeanieWinterNavyBlue
+  groupBy: "basicbeanie"
+
+- type: loadout
+  id: BeanieWinterBlack
+  equipment:
+    head: ClothingHeadHatBeanieWinterBlack
+  groupBy: "basicbeanie"
+
+- type: loadout
+  id: BeanieWinterBlue
+  equipment:
+    head: ClothingHeadHatBeanieWinterBlue
+  groupBy: "basicbeanie"
+
+# Toques
+- type: loadout
+  id: ToqueBlack
+  equipment:
+    head: ClothingHeadHatBeanieBlackAbsurd
+  groupBy: "toque"
+
+- type: loadout
+  id: ToqueBlackPin
+  equipment:
+    head: ClothingHeadHatBeanieBlackWithPinAbsurd
+  groupBy: "toque"
+
+- type: loadout
+  id: ToqueBlue
+  equipment:
+    head: ClothingHeadHatBeanieBlueAbsurd
+  groupBy: "toque"
+
+- type: loadout
+  id: ToqueKhaki
+  equipment:
+    head: ClothingHeadHatBeanieKhakiAbsurd
+  groupBy: "toque"
+
+- type: loadout
+  id: ToqueNavyBlue
+  equipment:
+    head: ClothingHeadHatBeanieNavyBlueAbsurd
+  groupBy: "toque"
+
+- type: loadout
+  id: ToqueWhite
+  equipment:
+    head: ClothingHeadHatBeanieWhiteAbsurd
+  groupBy: "toque"
+
+- type: loadout
+  id: ToquePink
+  equipment:
+    head: ClothingHeadHatBeaniePinkAbsurd
+  groupBy: "toque"
+
+# Trapper hats
+- type: loadout
+  id: TrapperHatBeige
+  equipment:
+    head: ClothingHeadHatTrapperBeige
+  groupBy: "trapperhat"
+
+- type: loadout
+  id: TrapperHatBlack
+  equipment:
+    head: ClothingHeadHatTrapperBlack
+  groupBy: "trapperhat"
+
+- type: loadout
+  id: TrapperHatGray
+  equipment:
+    head: ClothingHeadHatTrapperGray
+  groupBy: "trapperhat"
+
+- type: loadout
+  id: TrapperHatRed
+  equipment:
+    head: ClothingHeadHatTrapperRed
+  groupBy: "trapperhat"
+
+- type: loadout
+  id: TrapperHatGreen
+  equipment:
+    head: ClothingHeadHatTrapperGreen
+  groupBy: "trapperhat"
+
+- type: loadout
+  id: TrapperHatBlue
+  equipment:
+    head: ClothingHeadHatTrapperBlue
+  groupBy: "trapperhat"
+
+- type: loadout
+  id: TrapperHatPurple
+  equipment:
+    head: ClothingHeadHatTrapperPurple
+  groupBy: "trapperhat"
+
+- type: loadout
+  id: TrapperHatPink
+  equipment:
+    head: ClothingHeadHatTrapperPink
+  groupBy: "trapperhat"
+
+# Earmuffs
+- type: loadout
+  id: CreamEarmuffs
+  equipment:
+    head: ClothingHeadHatFuzzyEarmuffsCream
+  groupBy: "earmuffs"
+
+- type: loadout
+  id: BlackEarmuffs
+  equipment:
+    head: ClothingHeadHatFuzzyEarmuffsBlack
+  groupBy: "earmuffs"
+
+- type: loadout
+  id: BrownEarmuffs
+  equipment:
+    head: ClothingHeadHatFuzzyEarmuffsBrown
+  groupBy: "earmuffs"
+
+# Hijabs (white one already exists as LoadoutHeadHijabColorable)
+- type: loadout
+  id: PinkHijab
+  equipment:
+    head: ClothingHeadHatHijabPink
+  groupBy: "hijab"
+
+- type: loadout
+  id: BlackHijab
+  equipment:
+    head: ClothingHeadHatHijabBlack
+  groupBy: "hijab"
+
+- type: loadout
+  id: BlueHijab
+  equipment:
+    head: ClothingHeadHatHijabBlue
+  groupBy: "hijab"
+
+- type: loadout
+  id: NavyBlueHijab
+  equipment:
+    head: ClothingHeadHatHijabNavyBlue
+  groupBy: "hijab"
+
+- type: loadout
+  id: CreamHijab
+  equipment:
+    head: ClothingHeadHatHijabCream
+  groupBy: "hijab"
+
+# Flat caps (grey one already exists as LoadoutHeadGreyFlatcap)
+- type: loadout
+  id: BrownFlatCap
+  equipment:
+    head: ClothingHeadHatBrownFlatcap
+  groupBy: "flatcaps"
+
+- type: loadout
+  id: BrownFlatCapFancy
+  equipment:
+    head: ClothingHeadHatFlatcapBartenderOrion
+  groupBy: "flatcaps"
+
+- type: loadout
+  id: WhiteFlatCapFancy
+  equipment:
+    head: ClothingHeadHatFlatcapBartenderIdris
+  groupBy: "flatcaps"
+
+- type: loadout
+  id: BlueFlatCapFancy
+  equipment:
+    head: ClothingHeadHatFlatcapBartenderNanotrasen
+  groupBy: "flatcaps"
+
+# Artist berets (tintable one already exists as LoadoutHeadBeretArtist)
+- type: loadout
+  id: RedBeretArtist
+  equipment:
+    head: ClothingHeadHatBeretArtistRed
+
+- type: loadout
+  id: BlackBeretArtist
+  equipment:
+    head: ClothingHeadHatBeretArtistBlack
+
+# Assorted
+- type: loadout
+  id: BlackSunVisor
+  equipment:
+    head: ClothingHeadHatSunVisorBlack
+
+- type: loadout
+  id: SimpleTiara
+  equipment:
+    head: ClothingHeadHatSimpleTiara
+
+# Costume (Pirate: available through passenger groups, no musician job here)
+- type: loadout
+  id: MagiciansTophat
+  equipment:
+    head: ClothingHeadHatMagician
+
+## Eyes
+
+- type: loadout
+  id: WhiteHalfMask
+  equipment:
+    eyes: ClothingEyesGlassesWhiteHalfMask
+
+# Rimless glasses
+- type: loadout
+  id: RimlessGlasses
+  equipment:
+    eyes: ClothingEyesGlassesRimless
+  groupBy: "rimless"
+
+- type: loadout
+  id: RimlessGlassesBlue
+  equipment:
+    eyes: ClothingEyesGlassesRimlessBlue
+  groupBy: "rimless"
+
+- type: loadout
+  id: RimlessGlassesPink
+  equipment:
+    eyes: ClothingEyesGlassesRimlessPink
+  groupBy: "rimless"
+
+- type: loadout
+  id: RimlessGlassesRed
+  equipment:
+    eyes: ClothingEyesGlassesRimlessRed
+  groupBy: "rimless"
+
+# Tinted glasses
+- type: loadout
+  id: TintedGlasses
+  equipment:
+    eyes: ClothingEyesGlassesHipster
+  groupBy: "tinted"
+
+- type: loadout
+  id: TintedGlassesBlue
+  equipment:
+    eyes: ClothingEyesGlassesHipsterBlue
+  groupBy: "tinted"
+
+- type: loadout
+  id: TintedGlassesPink
+  equipment:
+    eyes: ClothingEyesGlassesHipsterPink
+  groupBy: "tinted"
+
+- type: loadout
+  id: TintedGlassesRed
+  equipment:
+    eyes: ClothingEyesGlassesHipsterRed
+  groupBy: "tinted"
+
+## Masks
+
+- type: loadout
+  id: KitsuneMask
+  equipment:
+    mask: ClothingMaskKitsune
+
+## Neck
+
+# Chokers & collars (bell collar already exists as LoadoutNeckBellCollar)
+- type: loadout
+  id: SpikedCollar
+  equipment:
+    neck: ClothingNeckSpikedCollar
+  groupBy: "choker"
+
+- type: loadout
+  id: BloodredChoker
+  equipment:
+    neck: ClothingNeckColorableCollarBloodred
+  groupBy: "choker"
+
+- type: loadout
+  id: PinkChoker
+  equipment:
+    neck: ClothingNeckColorableCollarPink
+  groupBy: "choker"
+
+- type: loadout
+  id: BlueChoker
+  equipment:
+    neck: ClothingNeckColorableCollarBlue
+  groupBy: "choker"
+
+- type: loadout
+  id: BlackChoker
+  equipment:
+    neck: ClothingNeckColorableCollarBlack
+  groupBy: "choker"
+
+- type: loadout
+  id: WhiteChoker
+  equipment:
+    neck: ClothingNeckColorableCollar
+  groupBy: "choker"
+
+# Neckerchiefs
+- type: loadout
+  id: WhiteNeckerchief
+  equipment:
+    neck: ClothingNeckNeckerchief
+  groupBy: "neckerchief"
+
+- type: loadout
+  id: GrayNeckerchief
+  equipment:
+    neck: ClothingNeckNeckerchiefGray
+  groupBy: "neckerchief"
+
+- type: loadout
+  id: DarkGreenNeckerchief
+  equipment:
+    neck: ClothingNeckNeckerchiefDarkGreen
+  groupBy: "neckerchief"
+
+- type: loadout
+  id: BlackNeckerchief
+  equipment:
+    neck: ClothingNeckNeckerchiefBlack
+  groupBy: "neckerchief"
+
+- type: loadout
+  id: PinkNeckerchief
+  equipment:
+    neck: ClothingNeckNeckerchiefPink
+  groupBy: "neckerchief"
+
+- type: loadout
+  id: BrownNeckerchief
+  equipment:
+    neck: ClothingNeckNeckerchiefBrown
+  groupBy: "neckerchief"
+
+# Cloaks (plain white cloak variant is the loadout-rolled base; mantles already exist as LoadoutNeckOldMantle/LoadoutNeckUnathiMantle)
+- type: loadout
+  id: WhiteCloak
+  equipment:
+    neck: ClothingNeckCloakColorable
+  groupBy: "cloak"
+
+- type: loadout
+  id: BlackCloak
+  equipment:
+    neck: ClothingNeckCloakColorableBlack
+  groupBy: "cloak"
+
+- type: loadout
+  id: GrayCloak
+  equipment:
+    neck: ClothingNeckCloakColorableGray
+  groupBy: "cloak"
+
+- type: loadout
+  id: RedHoodCloak
+  equipment:
+    neck: ClothingNeckCloakRedHood
+  groupBy: "cloak"
+
+## Passenger fashion head subgroups (Pirate: mirrors starcup #983 passenger head distribution)
+
+- type: loadoutGroup
+  id: PiratePassengerFashionHead
+  name: loadout-group-pirate-fashion-head
+  minLimit: 0
+  loadouts:
+  # beanies (white/tintable variants already exist as LoadoutHead* prototypes)
+  - BeaniePink
+  - BeanieNavyBlue
+  - BeanieBlack
+  - BeanieBlue
+  - BeanieDarkGreen
+  - BeanieWinterPink
+  - BeanieWinterNavyBlue
+  - BeanieWinterBlack
+  - BeanieWinterBlue
+  # toques
+  - ToqueBlack
+  - ToqueBlackPin
+  - ToqueBlue
+  - ToqueKhaki
+  - ToqueNavyBlue
+  - ToqueWhite
+  - ToquePink
+  # trapper hats
+  - TrapperHatBlack
+  - TrapperHatGray
+  - TrapperHatBeige
+  - TrapperHatRed
+  - TrapperHatGreen
+  - TrapperHatBlue
+  - TrapperHatPurple
+  - TrapperHatPink
+  # earmuffs
+  - CreamEarmuffs
+  - BlackEarmuffs
+  - BrownEarmuffs
+  # hijabs (white one already exists as LoadoutHeadHijabColorable)
+  - PinkHijab
+  - BlackHijab
+  - BlueHijab
+  - NavyBlueHijab
+  - CreamHijab
+  # flat caps (grey/brown basic ones already exist upstream)
+  - BrownFlatCap
+  - BrownFlatCapFancy
+  - WhiteFlatCapFancy
+  - BlueFlatCapFancy
+  # berets
+  - RedBeretArtist
+  - BlackBeretArtist
+  # assorted
+  - BlackSunVisor
+  - SimpleTiara
+  # starcup #933: bows & ribbons
+  - HairBowBlack
+  - HairBowRed
+  - HairRibbonBlack
+  - HairRibbonRed
+  - HairRibbonLargeBlack
+  - HairRibbonLargeRed
+  # costume (Pirate: no musician job here, so passenger-accessible per starcup #983 intents)
+  - MagiciansTophat
+  - WhiteHalfMask
+  - KitsuneMask
+
+- type: loadoutGroup
+  id: PiratePassengerFashionNeck
+  name: loadout-group-pirate-fashion-neck
+  minLimit: 0
+  loadouts:
+  # chokers & collars (bell collar already exists as LoadoutNeckBellCollar)
+  - LoadoutNeckBellCollar
+  - SpikedCollar
+  - BloodredChoker
+  - PinkChoker
+  - BlueChoker
+  - BlackChoker
+  - WhiteChoker
+  # neckerchiefs
+  - WhiteNeckerchief
+  # starcup #933: neck ribbons & jewelry
+  - NeckRibbonBlack
+  - NeckRibbonRed
+  - RubyPendantNecklace
+  - GrayNeckerchief
+  - DarkGreenNeckerchief
+  - BlackNeckerchief
+  - PinkNeckerchief
+  - BrownNeckerchief
+  # cloaks & mantles (mantles already exist as LoadoutNeckOldMantle/LoadoutNeckUnathiMantle)
+  - LoadoutNeckOldMantle
+  - LoadoutNeckUnathiMantle
+  - WhiteCloak
+  - BlackCloak
+  - GrayCloak
+  - RedHoodCloak
+
+## Starcup #933 (Den cosmetics port) items
+
+# Head bows & ribbons
+- type: loadout
+  id: HairBowBlack
+  equipment:
+    head: ClothingHeadHatBowBlack
+  groupBy: "hairbow"
+
+- type: loadout
+  id: HairBowRed
+  equipment:
+    head: ClothingHeadHatBowRed
+  groupBy: "hairbow"
+
+- type: loadout
+  id: HairRibbonBlack
+  equipment:
+    head: ClothingHeadHatRibbonBlack
+  groupBy: "hairribbon"
+
+- type: loadout
+  id: HairRibbonRed
+  equipment:
+    head: ClothingHeadHatRibbonRed
+  groupBy: "hairribbon"
+
+- type: loadout
+  id: HairRibbonLargeBlack
+  equipment:
+    head: ClothingHeadHatRibbonLargeBlack
+  groupBy: "hairribbonlarge"
+
+- type: loadout
+  id: HairRibbonLargeRed
+  equipment:
+    head: ClothingHeadHatRibbonLargeRed
+  groupBy: "hairribbonlarge"
+
+# Neck ribbons & jewelry
+- type: loadout
+  id: NeckRibbonBlack
+  equipment:
+    neck: ClothingNeckTieRibbonBlack
+  groupBy: "neckribbon"
+
+- type: loadout
+  id: NeckRibbonRed
+  equipment:
+    neck: ClothingNeckTieRibbonRed
+  groupBy: "neckribbon"
+
+- type: loadout
+  id: RubyPendantNecklace
+  equipment:
+    neck: ClothingNeckNecklacePendantGoldRuby
+  groupBy: "necklace"
+
+# Diner uniforms
+- type: loadout
+  id: DinerUniformTeal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDinerTeal
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformPink
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDinerPink
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformPinkDark
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDinerPinkDark
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformRed
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDinerFastFood
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformSkirtTeal
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDinerTeal
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformSkirtPink
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDinerPink
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformSkirtPinkDark
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDinerPinkDark
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformSkirtRed
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDinerFastFood
+  groupBy: "diner"
+
+# Skirts & dresses
+- type: loadout
+  id: PinstripeDress
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtPinstripeDress
+
+- type: loadout
+  id: DisheveledSuitskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDisheveled
+
+- type: loadout
+  id: RippedPunkSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtRippedPunk
+
+- type: loadoutGroup
+  id: PiratePassengerFashionUniform
+  name: loadout-group-pirate-fashion-uniform
+  minLimit: 0
+  loadouts:
+  - DinerUniformTeal
+  - DinerUniformPink
+  - DinerUniformPinkDark
+  - DinerUniformRed
+  - DinerUniformSkirtTeal
+  - DinerUniformSkirtPink
+  - DinerUniformSkirtPinkDark
+  - DinerUniformSkirtRed
+  - PinstripeDress
+  - DisheveledSuitskirt
+  - RippedPunkSkirt
