@@ -12,7 +12,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Goobstation.Shared.Teleportation.Systems;
 
-public partial class SharedRandomTeleportSystem
+public sealed partial class SharedRandomTeleportSystem
 {
     [Dependency] private readonly SharedStationSystem _stationSystem = default!;
 
