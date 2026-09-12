@@ -394,6 +394,10 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnHolderRemove(Entity<StationAiHolderComponent> ent, ref ComponentRemove args)
     {
+        // Pirate: replicated slot/container removal must not delete ItemSlots twice during shunt cleanup.
+        if (_timing.ApplyingState)
+            return;
+
         _slots.RemoveItemSlot(ent.Owner, ent.Comp.Slot);
     }
 

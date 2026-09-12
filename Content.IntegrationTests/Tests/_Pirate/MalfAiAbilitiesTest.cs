@@ -52,9 +52,18 @@ public sealed class MalfAiAbilitiesTest
 
         await server.WaitAssertion(() =>
         {
+            // Keep the RCD on an actual grid tile when transform traversal runs.
+            entMan.System<SharedMapSystem>().SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(1, 0), new Tile(1));
             ai = entMan.SpawnEntity(null, map.GridCoords);
             entMan.EnsureComponent<StoreComponent>(ai);
             rcd = entMan.SpawnEntity("RCD", map.GridCoords.Offset(new Vector2(1, 0)));
+        });
+
+        await pair.RunTicksSync(2);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(entMan.GetComponent<TransformComponent>(ai).GridUid, Is.EqualTo(map.Grid.Owner));
+            Assert.That(entMan.GetComponent<TransformComponent>(rcd).GridUid, Is.EqualTo(map.Grid.Owner));
 
             var action = new MalfAiDetonateRcdsActionEvent { Performer = ai };
             entMan.EventBus.RaiseLocalEvent(ai, action);
@@ -62,7 +71,11 @@ public sealed class MalfAiAbilitiesTest
             Assert.That(entMan.EntityExists(rcd), Is.True, "RCDs must survive until the warning countdown ends.");
         });
 
-        await pair.RunSeconds(5.25f);
+        await pair.RunSeconds(4f);
+        await server.WaitAssertion(() =>
+            Assert.That(entMan.EntityExists(rcd), Is.True, "The warning countdown must last five seconds."));
+
+        await pair.RunSeconds(1.25f);
         await server.WaitAssertion(() =>
             Assert.That(entMan.EntityExists(rcd), Is.False,
                 "The RCD detonation action did not remove the armed RCD after its five-second delay."));

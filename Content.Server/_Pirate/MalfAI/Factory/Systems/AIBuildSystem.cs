@@ -42,7 +42,6 @@ public sealed partial class AIBuildSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly Content.Shared.Actions.SharedActionsSystem _actions = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
-    private static readonly ISawmill Sawmill = Logger.GetSawmill("ai.build.system");
 
     public override void Initialize()
     {
@@ -64,14 +63,14 @@ public sealed partial class AIBuildSystem : EntitySystem
         // Validate coordinates
         if (!target.IsValid(EntityManager))
         {
-            Sawmill.Warning($"AIBuild: Invalid coordinates {target} for prototype '{prototype}'");
+            Log.Debug($"AIBuild: Invalid coordinates {target} for prototype '{prototype}'");
             return;
         }
 
         // Validate tile is free
         if (!IsTileFree(target))
         {
-            Sawmill.Warning($"AIBuild: Tile at {target} is occupied, cannot build '{prototype}'");
+            Log.Debug($"AIBuild: Tile at {target} is occupied, cannot build '{prototype}'");
             return;
         }
 
@@ -103,7 +102,7 @@ public sealed partial class AIBuildSystem : EntitySystem
 
         if (!_doAfter.TryStartDoAfter(doAfterArgs))
         {
-            Sawmill.Warning($"AIBuild: Failed to start DoAfter for '{prototype}' build request");
+            Log.Debug($"AIBuild: Did not start DoAfter for '{prototype}' build request");
         }
     }
 
@@ -122,7 +121,7 @@ public sealed partial class AIBuildSystem : EntitySystem
 
         if (!IsTileFree(location))
         {
-            Sawmill.Warning($"AIBuild: Tile at {location} became occupied during build");
+            Log.Debug($"AIBuild: Tile at {location} became occupied during build");
             return;
         }
 
@@ -149,7 +148,7 @@ public sealed partial class AIBuildSystem : EntitySystem
         }
         catch (Exception ex)
         {
-            Sawmill.Error($"AIBuild: Failed to spawn '{args.Prototype}' at {location}: {ex}");
+            Log.Error($"AIBuild: Failed to spawn '{args.Prototype}' at {location}: {ex}");
         }
     }
 
