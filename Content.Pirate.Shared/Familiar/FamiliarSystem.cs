@@ -12,8 +12,8 @@ namespace Content.Pirate.Shared.Familiar;
 /// </summary>
 public sealed class FamiliarSystem : CommonFamiliarSystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
     private EntityQuery<FamiliarMasterComponent> _familiarQuery;
+    private EntityQuery<MindContainerComponent> _mindContainerQuery;
     private EntityQuery<MindComponent> _mindQuery;
 
     public override void Initialize()
@@ -21,6 +21,7 @@ public sealed class FamiliarSystem : CommonFamiliarSystem
         base.Initialize();
 
         _familiarQuery = GetEntityQuery<FamiliarMasterComponent>();
+        _mindContainerQuery = GetEntityQuery<MindContainerComponent>();
         _mindQuery = GetEntityQuery<MindComponent>();
         SubscribeLocalEvent<FamiliarMasterComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<PickupFamiliarComponent, GotEquippedHandEvent>(OnEquippedHand);
@@ -46,7 +47,7 @@ public sealed class FamiliarSystem : CommonFamiliarSystem
         if (CopyMaster(master, uid))
             return;
 
-        if (_mind.GetMind(master) is { } mind)
+        if (GetMindOrSelf(master) is { } mind)
             master = mind;
 
         if (comp.Master == master)
@@ -56,7 +57,7 @@ public sealed class FamiliarSystem : CommonFamiliarSystem
         comp.MasterName = GetName(master);
         Dirty(uid, comp);
 
-        if (_mind.GetMind(uid) is { } familiarMind)
+        if (GetMindOrSelf(uid) is { } familiarMind && familiarMind != uid)
             CopyMaster(uid, familiarMind);
     }
 
@@ -69,7 +70,7 @@ public sealed class FamiliarSystem : CommonFamiliarSystem
         // a fallback for callers that already pass the mind itself.
         if (!_familiarQuery.TryComp(source, out var sourceComp))
         {
-            if (_mind.GetMind(source) is not { } sourceMind ||
+            if (GetMindOrSelf(source) is not { } sourceMind ||
                 !_familiarQuery.TryComp(sourceMind, out sourceComp))
                 return false;
         }
@@ -86,10 +87,19 @@ public sealed class FamiliarSystem : CommonFamiliarSystem
     /// </summary>
     public string? GetMasterName(EntityUid uid)
     {
-        if (_mind.GetMind(uid) is { } mind && GetMasterName(mind) is { } name)
+        if (GetMindOrSelf(uid) is { } mind &&
+            _familiarQuery.CompOrNull(mind)?.MasterName is { } name)
             return name;
 
         return _familiarQuery.CompOrNull(uid)?.MasterName;
+    }
+
+    private EntityUid? GetMindOrSelf(EntityUid uid)
+    {
+        if (_mindQuery.HasComp(uid))
+            return uid;
+
+        return _mindContainerQuery.CompOrNull(uid)?.Mind;
     }
 
     private string GetName(EntityUid uid)
