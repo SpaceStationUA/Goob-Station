@@ -30,6 +30,14 @@
     - type: Geiger
       attachedToSuit: true
 
+- type: entity # Pirate: ported from starcup #983/#984 - Really light jackets and hoods.
+  abstract: true
+  id: TemperatureProtectionMinimal
+  components:
+  - type: TemperatureProtection
+    heatingCoefficient: 0.8
+    coolingCoefficient: 0.8
+
 - type: entity
   abstract: true
   id: AllowSuitStorageClothing

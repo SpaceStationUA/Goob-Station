@@ -3721,12 +3721,29 @@
   parent: ClothingNeckBase
   id: ClothingNeckBellCollar
   name: bell collar
-  description: A way to inform others about your presence, or just to annoy everyone around you!
+  # Pirate: description resprited/reworked to match starcup #984 (leather-brown resprite, activateable jingle)
+  description: A fashionable accessory for making sure everyone knows you're here.
   components:
   - type: Sprite
-    sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Misc/bellcollar.rsi
+    sprite: _DEN/Clothing/Neck/Collars/collar_bell.rsi # Pirate: starcup resprite
   - type: Clothing
-    sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Misc/bellcollar.rsi
+    sprite: _DEN/Clothing/Neck/Collars/collar_bell.rsi # Pirate: starcup resprite
+  # begin Pirate: starcup #984 - replaces EmitsSoundOnMove
+  - type: UseDelay
+    delay: 0.5
+  - type: EmitSoundOnLand
+    sound: &JingleSound
+      collection: FootstepJester
+      params:
+        variation: 0.07
+        volume: -5
+  - type: EmitSoundOnActivate
+    sound: *JingleSound
+  - type: EmitSoundOnTrigger
+    sound: *JingleSound
+  - type: EmitSoundOnCollide
+    sound: *JingleSound
+  # end Pirate
 
 - type: entity
   parent: ClothingNeckBase
@@ -3752,10 +3769,10 @@
 
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, TemperatureProtectionMinimal ] # Pirate: starcup #984 gave temp protection
   id: ClothingNeckUnathiMantle
   name: hide mantle
-  description: A rather grisly selection of cured hides and skin, sewn together to form a ragged mantle.
+  description: A rather grisly selection of cured hides and skin, sewn together to form a ragged mantle. Unathi of Yss traditionally tan these over lava vents. # Pirate: starcup #984 lore
   components:
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/mantles/unathimantle.rsi

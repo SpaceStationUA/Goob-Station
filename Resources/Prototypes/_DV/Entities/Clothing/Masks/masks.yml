@@ -14,15 +14,7 @@
   #    protection: 0.05
   - type: IdentityBlocker
 
-- type: entity
-  parent: ClothingMaskOniBase
-  id: ClothingMaskOniBlue
-  name: blue demon mask # starcup - oni are just people
-  components:
-  - type: Sprite
-    sprite: _DV/Clothing/Mask/mask_oni_blue.rsi # starcup - moved to DV namespace
-  - type: Clothing
-    sprite: _DV/Clothing/Mask/mask_oni_blue.rsi # starcup - moved to DV namespace
+# Pirate: ClothingMaskOniBlue already exists in _Pirate/Hitman/equipment.yml — only base + red added by starcup #983
 
 - type: entity
   parent: ClothingMaskOniBase

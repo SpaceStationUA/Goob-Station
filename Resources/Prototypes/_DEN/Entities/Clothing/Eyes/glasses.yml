@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+# Pirate: ported from starcup PR #983 (feat: Fashionable Headwear)
+
+- type: entity
+  id: ClothingEyesGlassesRimless
+  name: rimless glasses
+  description: A pair of round, rimless glasses. Barely there.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Eyes/Glasses/rimless.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Eyes/Glasses/rimless.rsi
+    slots:
+    - HEAD
+    - EYES
+#  - type: VisionCorrection
+  - type: Tag
+    tags:
+    - WhitelistChameleon

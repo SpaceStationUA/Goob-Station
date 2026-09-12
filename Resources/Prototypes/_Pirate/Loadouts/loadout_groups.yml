@@ -459,6 +459,7 @@
   - PiratePassengerPortedNeck
   - PiratePassengerFreshNeck
   - PiratePassengerExpansionNeck
+  - PiratePassengerFashionNeck
 
 
 - type: loadoutGroup
@@ -510,6 +511,7 @@
   - PiratePassengerPortedHead
   - PiratePassengerFreshHead
   - PiratePassengerExpansionHead
+  - PiratePassengerFashionHead
 
 
 - type: loadoutGroup
