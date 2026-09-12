@@ -6,7 +6,6 @@ using Content.Shared.Mobs.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
-
 namespace Content.Client._Pirate.Silicons.IPC;
 
 /// <summary>
@@ -37,9 +36,10 @@ public sealed partial class ScreenVisionSystem : EntitySystem
         SubscribeLocalEvent<ScreenVisionComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ScreenVisionComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
-        // Health glitch drivers (directed at the owner entity).
-        SubscribeLocalEvent<ScreenVisionComponent, DamageChangedEvent>(OnHealthChanged);
-        SubscribeLocalEvent<ScreenVisionComponent, MobStateChangedEvent>(OnHealthChanged);
+        // NOTE(Pirate: port): do not rely on DamageChangedEvent/MobStateChangedEvent here -
+        // they are mostly processed server-side and their component-state changes
+        // are not guaranteed to re-raise them on the client, so the glitch would
+        // never update. We poll the local player's health in Update() instead.
 
         Subs.CVar(_cfg, DCCVars.NoVisionFilters, OnNoVisionFiltersChanged);
 
@@ -61,6 +61,28 @@ public sealed partial class ScreenVisionSystem : EntitySystem
             UpdateGlitchStrength(entity);
     }
 
+    private const float GlitchUpdateInterval = 0.25f;
+    private float _glitchUpdateAccumulator;
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        _glitchUpdateAccumulator += frameTime;
+        if (_glitchUpdateAccumulator < GlitchUpdateInterval)
+            return;
+
+        _glitchUpdateAccumulator = 0f;
+
+        if (_playerMan.LocalEntity is not { Valid: true } player)
+            return;
+
+        if (!EntityManager.TryGetComponent<ScreenVisionComponent>(player, out var comp))
+            return;
+
+        UpdateGlitchStrength((player, comp));
+    }
+
     private void OnScreenVisionShutdown(Entity<ScreenVisionComponent> entity, ref ComponentShutdown args)
     {
         if (entity.Owner != _playerMan.LocalEntity)
@@ -78,18 +100,6 @@ public sealed partial class ScreenVisionSystem : EntitySystem
     private void OnPlayerDetached(Entity<ScreenVisionComponent> entity, ref LocalPlayerDetachedEvent args)
     {
         UpdateOverlays(false);
-    }
-
-    private void OnHealthChanged(Entity<ScreenVisionComponent> entity, ref DamageChangedEvent args)
-    {
-        if (entity.Owner == _playerMan.LocalEntity)
-            UpdateGlitchStrength(entity);
-    }
-
-    private void OnHealthChanged(Entity<ScreenVisionComponent> entity, ref MobStateChangedEvent args)
-    {
-        if (entity.Owner == _playerMan.LocalEntity)
-            UpdateGlitchStrength(entity);
     }
 
     private void OnNoVisionFiltersChanged(bool enabled)
@@ -132,7 +142,7 @@ public sealed partial class ScreenVisionSystem : EntitySystem
                         break;
                     case MobState.Alive:
                         if (EntityManager.TryGetComponent<DamageableComponent>(entity, out var damageable))
-                            strength = Math.Clamp(damageable.TotalDamage.Float() / 60f, 0f, 0.35f);
+                            strength = Math.Clamp((damageable.TotalDamage.Float() - 20f) / 40f, 0f, 0.6f);
                         break;
                 }
             }

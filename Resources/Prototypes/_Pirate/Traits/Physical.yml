@@ -220,9 +220,14 @@
   category: Physical
   cost: 1
   conditions:
-    - !type:IsSpeciesCondition
-      species:
-        - IPC
+    - !type:AnyOfCondition
+      conditions:
+        - !type:IsSpeciesCondition
+          species:
+            - IPC
+        - !type:IsSpeciesCondition
+          species:
+            - Cyborg
   components:
   - type: ScreenVision
 #endregion
