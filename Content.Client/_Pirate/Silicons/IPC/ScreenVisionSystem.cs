@@ -146,14 +146,14 @@ public sealed partial class ScreenVisionSystem : EntitySystem
                 switch (state.CurrentState)
                 {
                     case MobState.Dead:
-                        strength = 1f;
+                        strength = 0.75f;
                         break;
                     case MobState.Critical:
-                        strength = 0.7f;
+                        strength = 0.4f;
                         break;
                     case MobState.Alive:
                         if (EntityManager.TryGetComponent<DamageableComponent>(entity, out var damageable))
-                            strength = Math.Clamp((damageable.TotalDamage.Float() - 20f) / 40f, 0f, 0.6f);
+                            strength = Math.Clamp((damageable.TotalDamage.Float() - 40f) / 60f, 0f, 0.25f);
                         break;
                 }
             }

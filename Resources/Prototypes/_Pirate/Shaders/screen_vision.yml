@@ -34,3 +34,6 @@
   path: "/Textures/_Pirate/Shaders/ipc_health_glitch.swsl"
   params:
     strength: 0.0
+    # Pirate: lower burst frequency so mid-health glitches are occasional,
+    # not constant (scale also depends on strength)
+    shake_rate: 0.1
