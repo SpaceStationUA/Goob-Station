@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float nodPower; // 0..1, driven by remaining opiate effect time
+
+// Progressive blur: strength ramps with nodPower
+const highp float BlurStrength = 2.5; // in pixels
+
+// Slow head-nodding drift: the screen sinks down and bobs back up
+const highp float NodStrength = 0.03;
+const highp float NodFreq = 0.7;
+
+// Double vision: a second smeared copy of what you see
+const highp float DoubleVisionStrength = 0.03;
+const highp float DoubleVisionFreq = 0.9;
+
+// Vignette: edges of vision darken and close in at high doses
+const highp float VignetteStart = 0.35;
+const highp float VignetteStrength = 0.85;
+
+void fragment() {
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+
+    // Head-nod: an asymmetric downward bob, like you keep sinking and drifting back
+    highp float nod = pow(0.5 - 0.5 * cos(TIME * NodFreq * 6.2831853), 2.0);
+    highp vec2 drift = vec2(0.0, NodStrength * nodPower * nod);
+
+    // Double vision: a ghost image drifting horizontally alongside
+    highp float dbl = DoubleVisionStrength * nodPower * sin(TIME * DoubleVisionFreq * 3.0);
+
+    // Box blur around the drifting sample point
+    highp vec2 uv = coord + drift;
+    highp vec2 blur = BlurStrength * SCREEN_PIXEL_SIZE;
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, uv) * 0.35;
+    color += zTextureSpec(SCREEN_TEXTURE, uv + vec2(blur.x, 0.0)) * 0.2;
+    color += zTextureSpec(SCREEN_TEXTURE, uv - vec2(blur.x, 0.0)) * 0.2;
+    color += zTextureSpec(SCREEN_TEXTURE, uv + vec2(0.0, blur.y)) * 0.2;
+    color += zTextureSpec(SCREEN_TEXTURE, uv + blur) * 0.05;
+
+    // Ghost sample: the whole screen drifts smoothly from side to side, no seam
+    highp vec4 ghost = zTextureSpec(SCREEN_TEXTURE, uv + vec2(dbl, 0.0));
+    color = mix(color, ghost, 0.4 * nodPower);
+
+    // Vignette closing in
+    highp vec2 centered = coord - vec2(0.5);
+    highp float dist = length(centered) * 2.0;
+    highp float vig = smoothstep(VignetteStart, 1.1, dist) * VignetteStrength * nodPower;
+    color.rgb = mix(color.rgb, vec3(0.0, 0.0, 0.0), vig);
+
+    COLOR = color;
+}
