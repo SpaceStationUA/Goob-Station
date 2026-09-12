@@ -476,6 +476,13 @@
   # assorted
   - BlackSunVisor
   - SimpleTiara
+  # starcup #933: bows & ribbons
+  - HairBowBlack
+  - HairBowRed
+  - HairRibbonBlack
+  - HairRibbonRed
+  - HairRibbonLargeBlack
+  - HairRibbonLargeRed
   # costume (Pirate: no musician job here, so passenger-accessible per starcup #983 intents)
   - MagiciansTophat
   - WhiteHalfMask
@@ -496,6 +503,10 @@
   - WhiteChoker
   # neckerchiefs
   - WhiteNeckerchief
+  # starcup #933: neck ribbons & jewelry
+  - NeckRibbonBlack
+  - NeckRibbonRed
+  - RubyPendantNecklace
   - GrayNeckerchief
   - DarkGreenNeckerchief
   - BlackNeckerchief
@@ -508,3 +519,143 @@
   - BlackCloak
   - GrayCloak
   - RedHoodCloak
+
+## Starcup #933 (Den cosmetics port) items
+
+# Head bows & ribbons
+- type: loadout
+  id: HairBowBlack
+  equipment:
+    head: ClothingHeadHatBowBlack
+  groupBy: "hairbow"
+
+- type: loadout
+  id: HairBowRed
+  equipment:
+    head: ClothingHeadHatBowRed
+  groupBy: "hairbow"
+
+- type: loadout
+  id: HairRibbonBlack
+  equipment:
+    head: ClothingHeadHatRibbonBlack
+  groupBy: "hairribbon"
+
+- type: loadout
+  id: HairRibbonRed
+  equipment:
+    head: ClothingHeadHatRibbonRed
+  groupBy: "hairribbon"
+
+- type: loadout
+  id: HairRibbonLargeBlack
+  equipment:
+    head: ClothingHeadHatRibbonLargeBlack
+  groupBy: "hairribbonlarge"
+
+- type: loadout
+  id: HairRibbonLargeRed
+  equipment:
+    head: ClothingHeadHatRibbonLargeRed
+  groupBy: "hairribbonlarge"
+
+# Neck ribbons & jewelry
+- type: loadout
+  id: NeckRibbonBlack
+  equipment:
+    neck: ClothingNeckTieRibbonBlack
+  groupBy: "neckribbon"
+
+- type: loadout
+  id: NeckRibbonRed
+  equipment:
+    neck: ClothingNeckTieRibbonRed
+  groupBy: "neckribbon"
+
+- type: loadout
+  id: RubyPendantNecklace
+  equipment:
+    neck: ClothingNeckNecklacePendantGoldRuby
+  groupBy: "necklace"
+
+# Diner uniforms
+- type: loadout
+  id: DinerUniformTeal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDinerTeal
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformPink
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDinerPink
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformPinkDark
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDinerPinkDark
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformRed
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitDinerFastFood
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformSkirtTeal
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDinerTeal
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformSkirtPink
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDinerPink
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformSkirtPinkDark
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDinerPinkDark
+  groupBy: "diner"
+
+- type: loadout
+  id: DinerUniformSkirtRed
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDinerFastFood
+  groupBy: "diner"
+
+# Skirts & dresses
+- type: loadout
+  id: PinstripeDress
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtPinstripeDress
+
+- type: loadout
+  id: DisheveledSuitskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtDisheveled
+
+- type: loadout
+  id: RippedPunkSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtRippedPunk
+
+- type: loadoutGroup
+  id: PiratePassengerFashionUniform
+  name: loadout-group-pirate-fashion-uniform
+  minLimit: 0
+  loadouts:
+  - DinerUniformTeal
+  - DinerUniformPink
+  - DinerUniformPinkDark
+  - DinerUniformRed
+  - DinerUniformSkirtTeal
+  - DinerUniformSkirtPink
+  - DinerUniformSkirtPinkDark
+  - DinerUniformSkirtRed
+  - PinstripeDress
+  - DisheveledSuitskirt
+  - RippedPunkSkirt

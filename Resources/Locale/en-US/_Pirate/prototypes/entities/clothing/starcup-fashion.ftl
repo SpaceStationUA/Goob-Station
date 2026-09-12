@@ -4,3 +4,4 @@
 
 loadout-group-pirate-fashion-head = Fashionable headwear
 loadout-group-pirate-fashion-neck = Fashionable neckwear
+loadout-group-pirate-fashion-uniform = Fashionable outfits
