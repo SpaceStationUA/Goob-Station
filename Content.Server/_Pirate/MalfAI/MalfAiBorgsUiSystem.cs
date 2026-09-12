@@ -50,7 +50,7 @@ public sealed class MalfAiBorgsUiSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!args.Performer.IsValid())
+        if (!HasComp<MalfAiMarkerComponent>(ai.Owner) || !args.Performer.IsValid())
             return;
 
         // Open/Toggle the Borgs UI for the performer (AI entity)
@@ -130,6 +130,9 @@ public sealed class MalfAiBorgsUiSystem : EntitySystem
 
     private void OnOpenMasterLawset(Entity<Content.Shared.Silicons.StationAi.StationAiHeldComponent> ai, ref MalfAiOpenMasterLawsetMessage msg)
     {
+        if (!HasComp<MalfAiMarkerComponent>(ai.Owner))
+            return;
+
         // Open the editable Malf AI Laws EUI for the AI user, targeting the master lawset on the rule entity.
         if (!_playerManager.TryGetSessionByEntity(ai.Owner, out var session))
             return;

@@ -35,8 +35,8 @@ public sealed class MalfAiGyroscopeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        // Subscribe to the world-targeted action event.
-        SubscribeLocalEvent<MalfAiGyroscopeActionEvent>(OnGyroscope);
+        // The action event is raised on the entity that owns the action.
+        SubscribeLocalEvent<StationAiHeldComponent, MalfAiGyroscopeActionEvent>(OnGyroscope);
     }
 
     public override void Update(float frameTime)
@@ -114,8 +114,11 @@ public sealed class MalfAiGyroscopeSystem : EntitySystem
         }
     }
 
-    private void OnGyroscope(MalfAiGyroscopeActionEvent ev)
+    private void OnGyroscope(EntityUid uid, StationAiHeldComponent component, ref MalfAiGyroscopeActionEvent ev)
     {
+        if (ev.Handled || !HasComp<MalfAiMarkerComponent>(uid))
+            return;
+
         // Resolve the actual AI core entity to move.
         var core = ev.Performer;
 
@@ -164,6 +167,8 @@ public sealed class MalfAiGyroscopeSystem : EntitySystem
         // Resolve current map position and clicked position.
         var startMap = _xform.GetMapCoordinates(core);
         var targetMap = ev.Target.ToMap(EntityManager, _xform);
+        if (startMap.MapId != targetMap.MapId)
+            return;
 
         // Calculate direction vector from core to clicked position
         var clickDirection = targetMap.Position - startMap.Position;
@@ -176,7 +181,7 @@ public sealed class MalfAiGyroscopeSystem : EntitySystem
         var angle = MathF.Atan2(clickDirection.Y, clickDirection.X);
 
         // Define circle radius - use sqrt(2) ≈ 1.414 to cover all adjacent tiles including diagonals
-        var circleRadius = 1.414f;
+        var circleRadius = MathF.Sqrt(2f);
 
         // Find the closest point on the circle in the direction of the click
         var circleX = MathF.Cos(angle) * circleRadius;
@@ -211,8 +216,8 @@ public sealed class MalfAiGyroscopeSystem : EntitySystem
         // Obstruction check: block traversal if a wall/closed door is between start and end.
         // Use the standard unobstructed interaction check so open doors pass and walls/closed doors block.
         // This check now uses the calculated endMap position after lengthdir calculation.
-        // Using 1.414f range to match the circle radius that covers all adjacent tiles.
-        var unobstructed = _interaction.InRangeUnobstructed(core, endMap, 1.414f);
+        // Include a small tolerance so rounding cannot reject an adjacent diagonal tile.
+        var unobstructed = _interaction.InRangeUnobstructed(core, endMap, circleRadius + 0.01f);
 
         if (!unobstructed)
         {

@@ -37,6 +37,9 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared._CorvaxNext.Silicons.Borgs;
+using Content.Shared._Pirate.MalfAI; // Pirate - malf camera access
+using Content.Shared.CCVar; // Pirate - malf camera access
+using Robust.Shared.Configuration; // Pirate - malf camera access
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.StationAi;
@@ -67,6 +70,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly StationAiVisionSystem _vision = default!;
+    [Dependency] private readonly IConfigurationManager _malfConfig = default!; // Pirate
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
@@ -215,7 +219,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         lock (_vision)
         {
-            if (_vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile, fastPath: true))
+            // Pirate - use the same upgraded camera coverage as the client's overlay.
+            var xray = TryComp<MalfAiCameraUpgradeComponent>(args.Actor, out var upgrade) && upgrade.EnabledEffective;
+            if (_vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile, fastPath: true,
+                    xrayCameras: xray, xrayRange: _malfConfig.GetCVar(CCVars.MalfAiCameraUpgradeRange),
+                    xrayOrigin: _xforms.GetWorldPosition(viewer)))
             {
                 args.Result = BoundUserInterfaceRangeResult.Pass;
             }
@@ -266,7 +274,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         var targetTile = Maps.LocalToTile(targetXform.GridUid.Value, grid, targetXform.Coordinates);
 
-        args.InRange = _vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile);
+        // Pirate - allow interaction with tiles revealed by the purchased camera upgrade.
+        var xray = TryComp<MalfAiCameraUpgradeComponent>(ent.Owner, out var upgrade) && upgrade.EnabledEffective;
+        args.InRange = _vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile,
+            xrayCameras: xray, xrayRange: _malfConfig.GetCVar(CCVars.MalfAiCameraUpgradeRange),
+            xrayOrigin: _xforms.GetWorldPosition(viewer));
     }
 
 

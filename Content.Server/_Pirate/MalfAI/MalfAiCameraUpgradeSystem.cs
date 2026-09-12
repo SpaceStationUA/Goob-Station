@@ -3,9 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Shared._Pirate.MalfAI;
-using Content.Shared._Pirate.MalfAI.Actions;
 using Content.Shared.Silicons.StationAi;
-using Robust.Shared.Timing;
 
 namespace Content.Server._Pirate.MalfAI;
 
@@ -14,17 +12,12 @@ namespace Content.Server._Pirate.MalfAI;
 /// </summary>
 public sealed class MalfAiCameraUpgradeSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-
     public override void Initialize()
     {
         base.Initialize();
 
-        // Core presence changes (enable when entering core if desired; disable on leaving)
         SubscribeLocalEvent<StationAiHeldComponent, ComponentStartup>(OnHeldStartup);
         SubscribeLocalEvent<StationAiHeldComponent, ComponentShutdown>(OnHeldShutdown);
-
-        // Grant-on-purchase event
         SubscribeLocalEvent<MalfAiMarkerComponent, MalfAiCameraUpgradeUnlockedEvent>(OnCameraUpgradeUnlocked);
     }
 
@@ -32,15 +25,12 @@ public sealed class MalfAiCameraUpgradeSystem : EntitySystem
     {
         var comp = EnsureComp<MalfAiCameraUpgradeComponent>(uid);
         comp.EnabledDesired = true;
-
-        // Effective only while the AI is in its core (StationAiHeldComponent present).
         comp.EnabledEffective = HasComp<StationAiHeldComponent>(uid);
         Dirty(uid, comp);
     }
 
     private void OnHeldStartup(EntityUid uid, StationAiHeldComponent held, ref ComponentStartup args)
     {
-        // AI has entered/exists in core: if desired, make effective true.
         if (!TryComp(uid, out MalfAiCameraUpgradeComponent? comp))
             return;
 
@@ -54,7 +44,6 @@ public sealed class MalfAiCameraUpgradeSystem : EntitySystem
 
     private void OnHeldShutdown(EntityUid uid, StationAiHeldComponent held, ref ComponentShutdown args)
     {
-        // AI has left the core (carded/shunted): immediately disable effective.
         if (!TryComp(uid, out MalfAiCameraUpgradeComponent? comp))
             return;
 

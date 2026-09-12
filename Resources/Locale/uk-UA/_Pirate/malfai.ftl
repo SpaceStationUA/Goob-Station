@@ -133,6 +133,11 @@ malf-voice-name-placeholder = Ім’я голосу…
 malf-voice-confirm-button = Підтвердити
 malf-voice-invalid-name = Введіть припустиме ім’я голосу.
 malf-voice-updated = Голос ШІ змінено.
+malf-voice-sound-none = За замовчуванням
+malf-voice-job-none = Без іконки професії
+malf-voice-speech-style = Манера мовлення
+malf-voice-speech-sound = Звук голосу
+malf-voice-job-icon = Іконка професії в радіоефірі
 malf-gyro-blocked = Переміщення ядра заблоковане.
 
 malf-borgs-window-title = Кіборги несправного ШІ

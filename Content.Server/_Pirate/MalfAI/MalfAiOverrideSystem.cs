@@ -18,6 +18,8 @@ using Content.Shared.CombatMode;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using TransformComponent = Robust.Shared.GameObjects.TransformComponent;
 
@@ -37,6 +39,7 @@ public sealed class MalfAiOverrideSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly Content.Server.Silicons.StationAi.StationAiSystem _stationAi = default!;
 
     public override void Initialize()
@@ -89,8 +92,11 @@ public sealed class MalfAiOverrideSystem : EntitySystem
         // Step 1: Unanchor the machine to make it mobile.
         if (TryComp<TransformComponent>(targetMachine.Value, out var transform))
         {
-            transform.Anchored = false;
+            _transform.Unanchor(targetMachine.Value, transform);
         }
+
+        // Input-driven mobs require a controller body; unanchoring leaves machines Dynamic.
+        _physics.TrySetBodyType(targetMachine.Value, BodyType.KinematicController);
 
         // Step 2: Make it hostile by adding NPC faction.
         var factionComp = EnsureComp<NpcFactionMemberComponent>(targetMachine.Value);

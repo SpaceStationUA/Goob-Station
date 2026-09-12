@@ -65,18 +65,23 @@ public sealed class CyborgFactorySystem : EntitySystem
         if (TryComp<MetaDataComponent>(entity, out var meta))
             priorName = meta.EntityName;
 
-        // Validate the entity for conversion
-        if (!ValidateEntityForConversion(entity, out var mindId))
+        // Validate the entity for conversion before any irreversible operation.
+        if (!ValidateEntityForConversion(entity, out _))
+            return;
+
+        // Verify a brain exists before the irreversible gib operation. Some valid mind
+        // containers (for example synthetic bodies) have no extractable brain.
+        if (!HasExtractableBrain(entity))
             return;
 
         var spawnCoords = Transform(factoryUid).Coordinates;
 
-        // Process gibbing and extract brain
+        // Once conversion starts, the recycler must not process the same body again on failure.
+        args.Handled = true;
+
+        // Process gibbing and extract the brain.
         if (!ProcessEntityGibbing(entity, out var brainUid))
-        {
-            args.Handled = true;
             return;
-        }
 
         // Create cyborg from brain
         if (!CreateCyborgFromBrain(brainUid, spawnCoords, out var cyborg, out var mmi))
@@ -96,6 +101,17 @@ public sealed class CyborgFactorySystem : EntitySystem
         args.Handled = true;
     }
 
+    private bool HasExtractableBrain(EntityUid entity)
+    {
+        if (HasComp<BrainComponent>(entity))
+            return true;
+
+        if (!TryComp<BodyComponent>(entity, out var body))
+            return false;
+
+        return _body.GetBodyOrgans(entity, body).Any(organ => HasComp<BrainComponent>(organ.Id));
+    }
+
     /// <summary>
     /// Validates if an entity can be converted to a cyborg
     /// </summary>
@@ -105,27 +121,19 @@ public sealed class CyborgFactorySystem : EntitySystem
 
         // Check if entity has a mind
         if (!TryComp<MindContainerComponent>(entity, out var mindContainer) || !mindContainer.HasMind)
-        {
             return false;
-        }
 
         // Check if entity is already a cyborg (has BorgChassis component)
         if (HasComp<BorgChassisComponent>(entity))
-        {
             return false;
-        }
 
         // Get the mind
         if (!_mind.TryGetMind(entity, out mindId, out var mind))
-        {
             return false;
-        }
 
         // Check if mind has a user (player-controlled)
         if (mind.UserId == null)
-        {
             return false;
-        }
 
         return true;
     }
@@ -137,12 +145,16 @@ public sealed class CyborgFactorySystem : EntitySystem
     {
         brainUid = EntityUid.Invalid;
 
+        if (HasComp<BrainComponent>(entity))
+        {
+            brainUid = entity;
+            return true;
+        }
+
         // Gib the entity and obtain its brain organ entity
         var gibbed = _body.GibBody(entity, gibOrgans: true);
         if (gibbed.Count == 0)
-        {
             return false;
-        }
 
         foreach (var ent in gibbed)
         {
@@ -174,14 +186,16 @@ public sealed class CyborgFactorySystem : EntitySystem
 
         // Spawn a cyborg chassis and insert the MMI into the borg's brain container
         cyborg = EntityManager.SpawnEntity(CyborgPrototype, spawnCoords);
-        if (!TryComp<BorgChassisComponent>(cyborg, out var chassis))
+        if (!TryComp<BorgChassisComponent>(cyborg, out var chassis) || !_containers.Insert(mmi, chassis.BrainContainer))
         {
+            // Preserve the player's brain if the newly spawned chassis rejects the MMI.
+            if (_containers.TryGetContainingContainer(brainUid, out var brainContainer))
+                _containers.Remove(brainUid, brainContainer);
             QueueDel(cyborg);
             QueueDel(mmi);
             return false;
         }
 
-        _containers.Insert(mmi, chassis.BrainContainer);
         return true;
     }
 

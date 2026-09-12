@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 
@@ -20,7 +21,17 @@ public sealed partial class MalfAiShuntedComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? CoreHolder;
+    /// <summary>
+    /// Whether the temporary APC StationAiHolderComponent was added by shunting.
+    /// </summary>
+    [NonSerialized]
+    public bool AddedApcHolder;
 
+    /// <summary>
+    /// Whether the temporary APC StationAiCoreComponent was added by shunting.
+    /// </summary>
+    [NonSerialized]
+    public bool AddedApcCore;
     /// <summary>
     /// The Return to Core action entity granted while shunted.
     /// Server-only runtime state; not networked.

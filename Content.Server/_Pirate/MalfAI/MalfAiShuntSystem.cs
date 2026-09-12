@@ -60,43 +60,68 @@ public sealed class MalfAiShuntSystem : EntitySystem
 
         var currentHolder = currentContainer.Owner;
 
-        // Prepare destination holder on the APC.
-        // Ensure the APC has a suitable slot/container to hold the AI brain.
-        var destContainer = _containers.EnsureContainer<ContainerSlot>(target, StationAiHolderComponent.Container);
-
-        // Ensure APC can be interacted with via intellicard by adding a StationAiHolderComponent dynamically.
-        // This links the existing container to an ItemSlot so the standard intellicard transfer logic works.
+        // APCs are not StationAiCore entities by default. The shared Station AI lifecycle
+        // owns the eye/PVS relay, so give this temporary holder the same core component
+        // before insertion; otherwise removing the brain from the real core clears the eye
+        // and leaves the player with no visible destination or input relay.
+        var addedApcHolder = !HasComp<StationAiHolderComponent>(target);
         EnsureComp<StationAiHolderComponent>(target);
+        var destContainer = _containers.EnsureContainer<ContainerSlot>(target, StationAiHolderComponent.Container);
+        var addedApcCore = !HasComp<StationAiCoreComponent>(target);
+        EnsureComp<StationAiCoreComponent>(target);
 
-        // Edge case popup for if there's another malf AI occupying. Which probably will never happen, but still.
+        // Edge case popup for if there's another AI occupying the APC.
         if (destContainer.ContainedEntities.Count != 0)
         {
+            if (addedApcCore)
+                RemCompDeferred<StationAiCoreComponent>(target);
+            if (addedApcHolder)
+                RemCompDeferred<StationAiHolderComponent>(target);
             _popup.PopupEntity(Loc.GetString("malfai-shunt-apc-occupied"), popupTarget, ai);
             return;
         }
 
-        // Remember the original core holder for return if we haven't recorded it yet.
+        // Preserve the original core and remember any temporary APC holder being left.
         var shunted = EnsureComp<MalfAiShuntedComponent>(ai);
+        var previousHolder = currentHolder;
+        var previousAddedApcHolder = shunted.AddedApcHolder;
+        var previousAddedApcCore = shunted.AddedApcCore;
         if (shunted.CoreHolder == null)
-        {
-            // The first shunt: assume the current holder is the AI core.
             shunted.CoreHolder = currentHolder;
-        }
 
-        // Move the AI brain to the APC.
+        // Move the AI brain to the APC. Roll back if the container rejects the transfer.
         _containers.Remove(ai.Owner, currentContainer);
-        _containers.Insert(ai.Owner, destContainer);
+        if (!_containers.Insert(ai.Owner, destContainer))
+        {
+            _containers.Insert(ai.Owner, currentContainer);
+            if (shunted.CoreHolder == currentHolder && shunted.ReturnAction == null)
+                RemCompDeferred<MalfAiShuntedComponent>(ai);
+            if (addedApcCore)
+                RemCompDeferred<StationAiCoreComponent>(target);
+            if (addedApcHolder)
+                RemCompDeferred<StationAiHolderComponent>(target);
+            _popup.PopupEntity(Loc.GetString("malfai-shunt-invalid-target"), popupTarget, ai);
+            return;
+        }
+        if (previousHolder != target && HasComp<ApcComponent>(previousHolder))
+        {
+            if (previousAddedApcCore)
+                RemCompDeferred<StationAiCoreComponent>(previousHolder);
+            if (previousAddedApcHolder)
+                RemCompDeferred<StationAiHolderComponent>(previousHolder);
+        }
+        shunted.AddedApcHolder = addedApcHolder;
+        shunted.AddedApcCore = addedApcCore;
 
         // Ensure the AI stays marked as held.
         EnsureComp<StationAiHeldComponent>(ai);
 
-        // --- Begin UI cleanup logic moved from MalfAiViewportSystem ---
+        // Close any viewport while the AI is in a local APC eye.
         if (TryComp<MalfAiViewportComponent>(ai, out var comp))
             comp.Selected = null;
 
         if (TryComp<ActorComponent>(ai, out var actor) && actor.PlayerSession != null)
             RaiseNetworkEvent(new MalfAiViewportCloseEvent(), actor.PlayerSession);
-        // --- End UI cleanup logic ---
 
         // Grant Return to Core action while shunted, and remember the action entity for removal.
         if (shunted.ReturnAction == null)
@@ -105,14 +130,16 @@ public sealed class MalfAiShuntSystem : EntitySystem
             if (returnAction != null)
                 shunted.ReturnAction = returnAction.Value;
         }
-
-
-        _popup.PopupEntity(Loc.GetString("malfai-shunt-success"), popupTarget, ai);
+        _popup.PopupEntity(Loc.GetString("malfai-shunt-success"), GetAiEyeForPopup(ai.Owner) ?? ai.Owner, ai);
         args.Handled = true;
     }
 
+
     private void OnReturnToCore(Entity<StationAiHeldComponent> ai, ref MalfAiReturnToCoreActionEvent args)
     {
+        if (args.Handled)
+            return;
+
         var popupTarget = GetAiEyeForPopup(ai.Owner) ?? ai.Owner;
 
         // Only Malf AI can return via this action.
@@ -145,18 +172,12 @@ public sealed class MalfAiShuntSystem : EntitySystem
         var coreHolder = shunted.CoreHolder.Value;
         if (Deleted(coreHolder) || !HasComp<StationAiCoreComponent>(coreHolder))
         {
-            // Eject from current container and drop next to the current holder (e.g., APC)
             _containers.Remove(ai.Owner, currentContainer);
             _transform.DropNextTo(ai.Owner, currentContainer.Owner);
-
-            // Cleanup: remove return action and clear recorded core holder
-            if (shunted.ReturnAction != null)
-            {
-                _actions.RemoveAction(shunted.ReturnAction.Value);
-                shunted.ReturnAction = null;
-            }
+            CleanupShuntAction(shunted);
+            CleanupApcHolder(currentContainer.Owner, shunted);
             shunted.CoreHolder = null;
-
+            RemCompDeferred<MalfAiShuntedComponent>(ai);
             _popup.PopupEntity("Core not found!", popupTarget, ai);
             args.Handled = true;
             return;
@@ -172,35 +193,45 @@ public sealed class MalfAiShuntSystem : EntitySystem
             return;
         }
 
-        // Move back into the core holder.
+        // Move back into the core holder atomically.
         var previousHolder = currentContainer.Owner;
         _containers.Remove(ai.Owner, currentContainer);
-        _containers.Insert(ai.Owner, coreContainer);
+        if (!_containers.Insert(ai.Owner, coreContainer))
+        {
+            _containers.Insert(ai.Owner, currentContainer);
+            _popup.PopupEntity(Loc.GetString("malfai-return-core-occupied"), popupTarget, ai);
+            return;
+        }
 
-        // Keep the AI marked as held.
         EnsureComp<StationAiHeldComponent>(ai);
+        CleanupApcHolder(previousHolder, shunted);
+        CleanupShuntAction(shunted);
+        shunted.CoreHolder = null;
+        RemCompDeferred<MalfAiShuntedComponent>(ai);
 
-        // If we had dynamically added a StationAiHolderComponent to an APC, clean it up when empty.
-        if (HasComp<ApcComponent>(previousHolder))
-        {
-            var prevContainer = _containers.EnsureContainer<ContainerSlot>(previousHolder, StationAiHolderComponent.Container);
-            if (prevContainer.ContainedEntities.Count == 0)
-                RemCompDeferred<StationAiHolderComponent>(previousHolder);
-        }
-
-        // Close any open viewport UI on return as well (safety: this ensures a fresh open at core).
-        if (TryComp<ActorComponent>(ai, out var actor) && actor.PlayerSession != null)
-            RaiseNetworkEvent(new MalfAiViewportCloseEvent(), actor.PlayerSession);
-
-        // Remove the return action after use.
-        if (shunted.ReturnAction != null)
-        {
-            _actions.RemoveAction(shunted.ReturnAction.Value);
-            shunted.ReturnAction = null;
-        }
-
-        _popup.PopupEntity(Loc.GetString("malfai-return-success"), popupTarget, ai);
+        _popup.PopupEntity(Loc.GetString("malfai-return-success"), GetAiEyeForPopup(ai.Owner) ?? ai.Owner, ai);
         args.Handled = true;
+    }
+
+    private void CleanupShuntAction(MalfAiShuntedComponent shunted)
+    {
+        if (shunted.ReturnAction is not { } action)
+            return;
+        _actions.RemoveAction(action);
+        shunted.ReturnAction = null;
+    }
+
+    private void CleanupApcHolder(EntityUid holder, MalfAiShuntedComponent shunted)
+    {
+        if (!HasComp<ApcComponent>(holder))
+            return;
+
+        if (shunted.AddedApcCore)
+            RemCompDeferred<StationAiCoreComponent>(holder);
+        if (shunted.AddedApcHolder)
+            RemCompDeferred<StationAiHolderComponent>(holder);
+        shunted.AddedApcCore = false;
+        shunted.AddedApcHolder = false;
     }
 
     /// <summary>

@@ -3,143 +3,121 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-// SPDX-FileCopyrightText: 2025 Tyranex <bobthezombie4@gmail.com>
-
-// SPDX-License-Identifier: MIT
-
-using System;
 using Content.Server.Chat.Systems;
-using Content.Server.Popups;
 using Content.Server.SurveillanceCamera;
 using Content.Shared.Speech.Components;
 using Content.Shared.SurveillanceCamera.Components;
 using Content.Shared._Pirate.MalfAI;
-using Content.Shared._Pirate.MalfAI.Actions;
-using Content.Shared.Popups;
+using Content.Shared.GameTicking;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Player;
-
 using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server._Pirate.MalfAI;
 
 /// <summary>
-/// Server-side logic for the Malf AI "Camera Microphones" upgrade:
-/// - Handles the toggle action (starts disabled).
-/// - Relays local IC chat (speech/emotes/whispers) to the Malf AI if both:
-///   (a) the speaker is within voice range of a microphone-enabled camera, and
-///   (b) the AI Eye is within 5 tiles (component-configurable) of that same camera.
-/// - Ignores occlusion and supports cross-grid/z-level.
-/// - Deduplicates per chat event by only adding the AI recipient once per event.
+/// Relays local IC speech to a Malf AI whose active core is near an enabled camera microphone.
 /// </summary>
 public sealed class MalfAiCameraMicrophonesSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly Content.Server.Silicons.StationAi.StationAiSystem _stationAi = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        // Add recipients to IC chat when conditions are satisfied.
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandRecipients);
-
-        // Grant-on-purchase event (from store): enable the camera microphones without an action toggle.
         SubscribeLocalEvent<MalfAiMarkerComponent, MalfAiCameraMicrophonesUnlockedEvent>(OnCameraMicrophonesUnlocked);
+        SubscribeLocalEvent<StationAiHeldComponent, ComponentStartup>(OnHeldStartup);
+        SubscribeLocalEvent<StationAiHeldComponent, ComponentShutdown>(OnHeldShutdown);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
     private void OnCameraMicrophonesUnlocked(EntityUid uid, MalfAiMarkerComponent marker, MalfAiCameraMicrophonesUnlockedEvent ev)
     {
-        // Ensure the per-AI microphones component exists and mark it enabled permanently.
         var comp = EnsureComp<MalfAiCameraMicrophonesComponent>(uid);
         comp.EnabledDesired = true;
-        comp.EnabledEffective = true;
+        // Actual core connectivity is checked when relaying speech, so buying while carded
+        // does not permanently disable the upgrade after the AI returns to its core.
+        comp.EnabledEffective = HasComp<StationAiHeldComponent>(uid);
         Dirty(uid, comp);
     }
 
-    /// <summary>
-    /// Gets the AI eye entity for popup positioning, falls back to core if eye unavailable
-    /// </summary>
-    private EntityUid? GetAiEyeForPopup(EntityUid aiUid)
+    private void OnHeldStartup(EntityUid uid, StationAiHeldComponent held, ref ComponentStartup args)
     {
-        if (!_stationAi.TryGetCore(aiUid, out var core) || core.Comp?.RemoteEntity == null)
-            return null;
-
-        return core.Comp.RemoteEntity.Value;
+        if (TryComp(uid, out MalfAiCameraMicrophonesComponent? microphones))
+        {
+            microphones.EnabledEffective = microphones.EnabledDesired;
+            Dirty(uid, microphones);
+        }
     }
+
+    private void OnHeldShutdown(EntityUid uid, StationAiHeldComponent held, ref ComponentShutdown args)
+    {
+        if (TryComp(uid, out MalfAiCameraMicrophonesComponent? microphones) && microphones.EnabledEffective)
+        {
+            microphones.EnabledEffective = false;
+            Dirty(uid, microphones);
+        }
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        var microphoneQuery = EntityQueryEnumerator<MalfAiCameraMicrophonesComponent>();
+        while (microphoneQuery.MoveNext(out var uid, out var microphones))
+        {
+            microphones.EnabledEffective = false;
+            microphones.EnabledDesired = false;
+            Dirty(uid, microphones);
+        }
+    }
+
+
 
     private void OnExpandRecipients(ExpandICChatRecipientsEvent ev)
     {
-        // If the message has no audible range, nothing to do (e.g., non-IC chat).
-        // Otherwise ev.VoiceRange is the effective local range (handles whisper/shout automatically).
-        var voiceRange = ev.VoiceRange;
-        if (voiceRange <= 0f)
+        if (ev.VoiceRange <= 0f || !TryComp(ev.Source, out TransformComponent? sourceXform))
             return;
 
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        if (!TryComp<TransformComponent>(ev.Source, out var sourceXform))
-            return;
-        var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
-
-
-        // Iterate all candidate Malf AIs with the upgrade enabled.
-        var aiQuery = EntityQueryEnumerator<MalfAiMarkerComponent, StationAiHeldComponent, MalfAiCameraMicrophonesComponent, TransformComponent>();
-        while (aiQuery.MoveNext(out var aiUid, out _, out _, out var micComp, out _))
+        var sourceCoordinates = sourceXform.Coordinates;
+        var aiQuery = EntityQueryEnumerator<MalfAiMarkerComponent, MalfAiCameraMicrophonesComponent, ActorComponent>();
+        while (aiQuery.MoveNext(out var aiUid, out _, out var microphoneUpgrade, out var actor))
         {
-            if (!micComp.EnabledEffective)
+            if (!microphoneUpgrade.EnabledEffective || !_stationAi.TryGetCore(aiUid, out var core))
                 continue;
 
-            // Resolve the AI eye (remote entity).
-            if (!_stationAi.TryGetCore(aiUid, out var core) || core.Comp?.RemoteEntity == null)
+            if (core.Comp?.RemoteEntity is not { } eye || !TryComp(eye, out TransformComponent? eyeXform))
                 continue;
 
-            var eye = core.Comp.RemoteEntity.Value;
-            if (!TryComp<TransformComponent>(eye, out var eyeXform))
-                continue;
-            var eyePos = _xforms.GetWorldPosition(eyeXform, xformQuery);
+            var cameraQuery = EntityQueryEnumerator<SurveillanceCameraMicrophoneComponent,
+                ActiveListenerComponent, SurveillanceCameraComponent, TransformComponent>();
+            var heard = false;
+            var closestSourceDistance = float.MaxValue;
 
-            // Find cameras where BOTH the speaker AND the AI eye are in range of the SAME camera.
-            var minRangeToSource = float.MaxValue;
-            var any = false;
-
-            // Re-enumerate cameras each AI (keeps logic simple; overhead is minimal).
-            var camEnum = EntityQueryEnumerator<SurveillanceCameraMicrophoneComponent, ActiveListenerComponent, SurveillanceCameraComponent, TransformComponent>();
-            while (camEnum.MoveNext(out var camUid, out _, out _, out var camComp, out var camXform))
+            while (cameraQuery.MoveNext(out _, out var cameraMicrophone, out var listener, out var camera, out var cameraXform))
             {
-                // Only consider cameras that can have viewers (Active true).
-                if (!camComp.Active)
+                if (!camera.Active || !cameraMicrophone.Enabled)
                     continue;
 
-                var camPos = _xforms.GetWorldPosition(camXform, xformQuery);
-
-                // AI eye must be within the configured radius (default 5 tiles) of this camera.
-                var eyeDist = (camPos - eyePos).Length();
-                if (eyeDist > micComp.RadiusTiles)
+                if (!cameraXform.Coordinates.TryDistance(EntityManager, eyeXform.Coordinates, out var eyeDistance) ||
+                    eyeDistance > microphoneUpgrade.RadiusTiles)
                     continue;
 
-                // Source must be within the message's local voice range of the same camera.
-                var srcDist = (camPos - sourcePos).Length();
-                if (srcDist > voiceRange)
+                if (!cameraXform.Coordinates.TryDistance(EntityManager, sourceCoordinates, out var sourceDistance) ||
+                    sourceDistance > ev.VoiceRange || sourceDistance > listener.Range)
                     continue;
 
-                // Both conditions satisfied for this specific camera - AI can hear this speaker
-                any = true;
-                if (srcDist < minRangeToSource)
-                    minRangeToSource = srcDist;
+                heard = true;
+                closestSourceDistance = MathF.Min(closestSourceDistance, sourceDistance);
             }
 
-            if (!any)
-                continue;
-
-            // Add the AI player's session as a recipient once (dedup automatically via TryAdd).
-            if (TryComp(aiUid, out ActorComponent? actor))
+            if (heard)
             {
-                // "As if physically present": add to chat normally (log to chat, not camera-only bubble).
-                // Range is the (min) distance from the speaker to the chosen camera to preserve obfuscation behavior.
-                // The flags here mirror normal IC delivery rather than camera-view-only injection.
-                ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(minRangeToSource, true, false));
+                // TryAdd preserves normal local-chat delivery when the AI is already in range,
+                // while ensuring multiple cameras cannot duplicate one message.
+                ev.Recipients.TryAdd(actor.PlayerSession,
+                    new ICChatRecipientData(closestSourceDistance, false, false, InLOS: true));
             }
         }
     }

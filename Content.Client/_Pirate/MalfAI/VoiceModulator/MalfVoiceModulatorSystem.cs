@@ -6,7 +6,6 @@ using Content.Client._Pirate.MalfAI.Theme;
 using Content.Shared._Pirate.MalfAI;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client._Pirate.MalfAI.VoiceModulator;
@@ -27,15 +26,52 @@ public sealed class MalfVoiceModulatorSystem : EntitySystem
     private void OnOpenUi(MalfVoiceModulatorOpenUiEvent ev)
     {
         _malfFont ??= MalfUiTheme.GetFont(_res, 12);
-
         _window ??= new MalfVoiceModulatorWindow(_malfFont);
-        _window.OnConfirm += name =>
-        {
-            RaiseNetworkEvent(new MalfVoiceModulatorSubmitNameEvent(name));
-            _window?.Close();
-        };
 
+        _window.OnConfirm -= OnConfirm;
+        _window.OnVerbChanged -= OnVerbChanged;
+        _window.OnSoundChanged -= OnSoundChanged;
+        _window.OnJobIconChanged -= OnJobIconChanged;
+        _window.OnToggle -= OnToggle;
+        _window.OnAccentToggle -= OnAccentToggle;
+        _window.OnConfirm += OnConfirm;
+        _window.OnVerbChanged += OnVerbChanged;
+        _window.OnSoundChanged += OnSoundChanged;
+        _window.OnJobIconChanged += OnJobIconChanged;
+        _window.OnToggle += OnToggle;
+        _window.OnAccentToggle += OnAccentToggle;
+        _window.UpdateState(ev.State);
         _window.OpenCentered();
         _window.MoveToFront();
+    }
+
+    private void OnConfirm(string name)
+    {
+        RaiseNetworkEvent(new MalfVoiceModulatorSubmitNameEvent(name));
+    }
+
+    private void OnVerbChanged(string? verb)
+    {
+        RaiseNetworkEvent(new MalfVoiceModulatorChangeVerbEvent(verb));
+    }
+
+    private void OnSoundChanged(string? sound)
+    {
+        RaiseNetworkEvent(new MalfVoiceModulatorChangeSoundEvent(sound));
+    }
+
+    private void OnJobIconChanged(string? icon)
+    {
+        RaiseNetworkEvent(new MalfVoiceModulatorChangeJobIconEvent(icon));
+    }
+
+    private void OnToggle()
+    {
+        RaiseNetworkEvent(new MalfVoiceModulatorToggleEvent());
+    }
+
+    private void OnAccentToggle()
+    {
+        RaiseNetworkEvent(new MalfVoiceModulatorAccentToggleEvent());
     }
 }

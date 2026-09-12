@@ -44,9 +44,7 @@ public sealed class MalfAiHijackMechSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<MalfAiMarkerComponent, MalfAiHijackMechActionEvent>(OnHijackMechMarker);
 
-        // Also handle cases where the AI is removed from any container (e.g., forced eject) by listening on the AI entity itself.
-        // This avoids duplicate subscriptions with SharedMechSystem which already listens on MechPilotComponent for the same event.
-        SubscribeLocalEvent<StationAiHeldComponent, EntGotRemovedFromContainerMessage>(OnAiRemovedFromContainer);
+        SubscribeLocalEvent<MalfAiMechHijackComponent, EntGotRemovedFromContainerMessage>(OnAiRemovedFromContainer);
         // While hijacking, Return to Core should directly trigger ReturnFromHijack even if the AI lacks StationAiHeld.
         SubscribeLocalEvent<MalfAiMechHijackComponent, MalfAiReturnToCoreActionEvent>(OnReturnToCoreWhileHijacked);
 
@@ -68,7 +66,7 @@ public sealed class MalfAiHijackMechSystem : EntitySystem
         var popupTarget = GetAiEyeForPopup(aiUid) ?? aiUid;
 
         // Must be Malfunctioning AI
-        if (!HasComp<MalfAiMarkerComponent>(aiUid))
+        if (args.Handled || !HasComp<MalfAiMarkerComponent>(aiUid) || HasComp<MalfAiMechHijackComponent>(aiUid))
             return;
 
         // Validate target mech (entity-targeted)
@@ -117,11 +115,17 @@ public sealed class MalfAiHijackMechSystem : EntitySystem
 
         // Try to insert the AI brain as pilot
         var inserted = _mech.TryInsert(target, pilotUid, mech);
-        if (!inserted)
+        if (!inserted || mech.PilotSlot.ContainedEntity != pilotUid)
         {
+            RemComp<MalfAiMechHijackComponent>(pilotUid);
+            // TryInsert can set up pilot controls before the container rejects insertion.
+            if (TryComp<MechPilotComponent>(pilotUid, out var pilot) && pilot.Mech == target)
+                _mech.TryEject(target, mech, pilotUid);
+            if (previousContainer != null)
+                _containers.Insert(pilotUid, previousContainer);
+
             var pilotPopupTarget = GetAiEyeForPopup(pilotUid) ?? pilotUid;
             _popup.PopupEntity(Loc.GetString("malfai-hijack-insert-failed"), pilotPopupTarget, pilotUid);
-            RemComp<MalfAiMechHijackComponent>(pilotUid);
             return;
         }
 
@@ -140,7 +144,12 @@ public sealed class MalfAiHijackMechSystem : EntitySystem
             hijack.AddedCombatComp = true;
         }
 
-        Timer.Spawn(HijackDuration, () => ReturnFromHijack(pilotUid));
+        Timer.Spawn(HijackDuration, () =>
+        {
+            // A timer from an earlier hijack must not end a later one.
+            if (TryComp<MalfAiMechHijackComponent>(pilotUid, out var current) && current == hijack)
+                ReturnFromHijack(pilotUid);
+        });
 
         var successPopupTarget = GetAiEyeForPopup(pilotUid) ?? pilotUid;
         _popup.PopupEntity(Loc.GetString("malfai-hijack-success"), successPopupTarget, pilotUid);
@@ -158,13 +167,17 @@ public sealed class MalfAiHijackMechSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnAiRemovedFromContainer(EntityUid uid, StationAiHeldComponent comp, EntGotRemovedFromContainerMessage args)
+    private void OnAiRemovedFromContainer(EntityUid uid, MalfAiMechHijackComponent comp, EntGotRemovedFromContainerMessage args)
     {
-        // If a hijacking AI gets removed from any container (e.g., forced eject), return them to core.
-        if (HasComp<MalfAiMechHijackComponent>(uid))
+        if (args.Container.Owner != comp.HijackedMech)
+            return;
+
+        // Finish mech ejection and its control cleanup before attaching the core's eye again.
+        Timer.Spawn(TimeSpan.Zero, () =>
         {
-            ReturnFromHijack(uid);
-        }
+            if (TryComp<MalfAiMechHijackComponent>(uid, out var current) && current == comp)
+                ReturnFromHijack(uid);
+        });
     }
 
 
@@ -186,6 +199,9 @@ public sealed class MalfAiHijackMechSystem : EntitySystem
         if (!TryComp<MalfAiMechHijackComponent>(ai, out var hijack))
             return;
 
+        // Container removal raises callbacks synchronously; prevent recursive returns.
+        RemComp<MalfAiMechHijackComponent>(ai);
+
         // Remove any temporary Return-to-Core action granted during hijack.
         if (hijack.ReturnAction != null)
         {
@@ -197,7 +213,10 @@ public sealed class MalfAiHijackMechSystem : EntitySystem
         // Remove from current container if any (e.g., mech pilot slot).
         if (_containers.TryGetContainingContainer(ai, out var container))
         {
-            _containers.Remove(ai, container);
+            if (container.Owner == hijack.HijackedMech)
+                _mech.TryEject(container.Owner, pilot: ai);
+            else
+                _containers.Remove(ai, container);
         }
 
         // Insert back into the AI core holder if possible; if invalid, eject to floor and notify.
@@ -234,8 +253,6 @@ public sealed class MalfAiHijackMechSystem : EntitySystem
             RemComp<CombatModeComponent>(ai);
             hijack.AddedCombatComp = false;
         }
-
-        RemComp<MalfAiMechHijackComponent>(ai);
 
         // Small UX: notify on successful return when core existed.
         if (hijack.CoreHolder != null && !Deleted(hijack.CoreHolder.Value) && HasComp<StationAiCoreComponent>(hijack.CoreHolder.Value))

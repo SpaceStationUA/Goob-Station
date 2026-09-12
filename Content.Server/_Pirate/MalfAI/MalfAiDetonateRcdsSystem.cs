@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -11,14 +12,12 @@ using Content.Shared.RCD.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Server._Pirate.MalfAI;
 
-/// <summary>
-/// Handles the Malf AI Detonate RCDs action. Extracted from MalfAiShopSystem.
-/// </summary>
 public sealed class MalfAiDetonateRcdsSystem : EntitySystem
 {
     [Dependency] private readonly ExplosionSystem _explosions = default!;
@@ -39,14 +38,13 @@ public sealed class MalfAiDetonateRcdsSystem : EntitySystem
 
     private void OnDetonateAllRcdsAction(EntityUid uid, Content.Shared.Store.Components.StoreComponent comp, ref MalfAiDetonateRcdsActionEvent args)
     {
-        var performer = args.Performer != default ? args.Performer : uid;
-        ArmRcdsOnGrid(performer);
+        var origin = args.Performer != default ? args.Performer : uid;
+        // Defer until the next tick so entities spawned in the same action callback
+        // have completed component initialization and are visible to the query.
+        Timer.Spawn(TimeSpan.FromSeconds(1.0 / 30.0), () => ArmRcdsOnGrid(origin));
         args.Handled = true;
     }
 
-    /// <summary>
-    /// Arms all RCDs on the same grid as the given entity, warning holders, beeping each second, then detonating and deleting them.
-    /// </summary>
     private void ArmRcdsOnGrid(EntityUid origin)
     {
         if (!Exists(origin))
@@ -54,43 +52,30 @@ public sealed class MalfAiDetonateRcdsSystem : EntitySystem
 
         var perfXform = Transform(origin);
         var gridUid = perfXform.GridUid;
-        if (gridUid == null)
+        var mapId = perfXform.MapID;
+        if (gridUid == null && mapId == MapId.Nullspace)
             return;
 
-        var query = EntityQueryEnumerator<RCDComponent, TransformComponent>();
+        var query = EntityManager.AllEntityQueryEnumerator<RCDComponent, TransformComponent>();
         while (query.MoveNext(out var rcdUid, out _, out var xform))
         {
-            if (xform.GridUid != gridUid)
+            if (gridUid != null
+                ? xform.GridUid != gridUid
+                : xform.MapID != mapId)
                 continue;
-
-            // Skip detonation if RCD has a cyborg module component (engi borgs protection)
             if (HasComp<BorgModuleComponent>(rcdUid))
                 continue;
 
-            if (_containers.TryGetContainingContainer((rcdUid, xform, null), out var container))
-            {
-                var owner = container.Owner;
-                if (TryComp<HandsComponent>(owner, out var hands) && _hands.IsHolding((owner, hands), rcdUid))
-                {
-                    var msg = Loc.GetString("detonate_rcd_warning");
-                    _popup.PopupEntity(msg, owner, owner, PopupType.LargeCaution);
-                }
-            }
+            if (_containers.TryGetContainingContainer((rcdUid, xform, null), out var container) && TryComp<HandsComponent>(container.Owner, out var hands) && _hands.IsHolding((container.Owner, hands), rcdUid))
+                _popup.PopupEntity(Loc.GetString("detonate_rcd_warning"), container.Owner, container.Owner, PopupType.LargeCaution);
 
             var targetRcd = rcdUid;
-
-            var totalSeconds = (int) Math.Floor(RcdDetonationDelay.TotalSeconds);
-            for (var s = 1; s <= totalSeconds; s++)
+            for (var s = 1; s < RcdDetonationDelay.TotalSeconds; s++)
             {
-                var delay = TimeSpan.FromSeconds(s);
-                if (delay >= RcdDetonationDelay)
-                    break;
-
-                Timer.Spawn(delay, () =>
+                Timer.Spawn(TimeSpan.FromSeconds(s), () =>
                 {
-                    if (!Exists(targetRcd))
-                        return;
-                    _audio.PlayPvs(RcdBeepSound, targetRcd);
+                    if (Exists(targetRcd))
+                        _audio.PlayPvs(RcdBeepSound, targetRcd);
                 });
             }
 
@@ -98,13 +83,10 @@ public sealed class MalfAiDetonateRcdsSystem : EntitySystem
             {
                 if (!Exists(targetRcd))
                     return;
-
-                var currentXform = Transform(targetRcd);
-                var coords = _xform.GetMapCoordinates(targetRcd, currentXform);
+                var coords = _xform.GetMapCoordinates(targetRcd, Transform(targetRcd));
+                Del(targetRcd);
                 _explosions.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId,
                     totalIntensity: 4f, slope: 1f, maxTileIntensity: 2f, cause: origin, maxTileBreak: 0);
-
-                QueueDel(targetRcd);
             });
         }
     }

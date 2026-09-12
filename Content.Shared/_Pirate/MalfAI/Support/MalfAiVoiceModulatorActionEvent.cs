@@ -4,8 +4,8 @@
 
 namespace Content.Shared.Actions;
 
-// Placeholder event for the Malf AI Voice Modulator ability.
-// Behavior will be implemented later.
+// Intrinsic Malf AI action event. Server validates the Malf marker and core state
+// before opening the localized voice-modulator UI.
 public sealed partial class MalfAiVoiceModulatorActionEvent : InstantActionEvent
 {
 }
