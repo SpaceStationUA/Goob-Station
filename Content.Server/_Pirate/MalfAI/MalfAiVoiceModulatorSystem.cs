@@ -394,10 +394,12 @@ public sealed class MalfAiVoiceModulatorSystem : EntitySystem
         {
             if (!CanCopyCrew(ai, uid))
                 continue;
-            var job = _idCards.TryFindIdCard(uid, out var card) ? card.Comp.LocalizedJobTitle : null;
+            var hasCard = _idCards.TryFindIdCard(uid, out var card);
+            var job = hasCard ? card.Comp.LocalizedJobTitle : null;
+            string jobIcon = hasCard ? card.Comp.JobIcon : "JobIconUnknown";
             var net = GetNetEntity(uid);
             crew.Add(new(net, Name(uid), job ?? string.Empty,
-                card.Comp?.JobIcon.ToString() ?? "JobIconUnknown", health.GetValueOrDefault(net)));
+                jobIcon, health.GetValueOrDefault(net)));
         }
         return crew.OrderBy(member => member.Name).ToList();
     }

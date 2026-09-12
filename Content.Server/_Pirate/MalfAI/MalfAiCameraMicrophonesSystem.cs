@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Chat.Systems;
+using Content.Server.SurveillanceCamera;
 using Content.Shared.StationAi;
 using Content.Shared.SurveillanceCamera.Components;
 using Content.Shared._Pirate.MalfAI;

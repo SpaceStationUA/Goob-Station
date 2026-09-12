@@ -34,7 +34,7 @@ public sealed class MalfAiEmpSystem : EntitySystem
     private void OnEmp(Entity<MalfAiMarkerComponent> ent, ref MalfAiEmpActionEvent args)
     {
         if (args.Handled || !_ai.TryGetCore(ent.Owner, out var core) ||
-            core.Comp.RemoteEntity is not { } eye || !HasComp<StationAiOverlayComponent>(ent))
+            core.Comp?.RemoteEntity is not { } eye || !HasComp<StationAiOverlayComponent>(ent))
             return;
 
         var originalCore = CompOrNull<MalfAiShuntedComponent>(ent)?.CoreHolder ?? core.Owner;
