@@ -5573,3 +5573,9 @@ Entries:
       message: Кастом гост для polygon
   id: 531
   time: '2026-09-11T16:05:19.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Tweak
+      message: Оновлено upstream Goobstation.
+  id: 532
+  time: '2026-09-12T09:11:10.0000000+00:00'
