@@ -22,7 +22,7 @@ public sealed class GhostRoleChipIntegrationTest
     [
         ("Mercenary", ["SkillChipFreelancer"]),
         ("ERTLeader", ["SkillChipERT"]),
-        ("ERTEngineer", ["SkillChipERT"]),
+        ("ERTEngineer", ["SkillChipERT", "SkillChipDatabase"]),
         ("DeathSquad", ["SkillChipDeathSquad"]),
         ("SyndieSoldier", ["SkillChipSyndieSoldier"]),
         ("LavalandSyndieMarshal",

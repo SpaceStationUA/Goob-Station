@@ -76,7 +76,7 @@ public sealed class SpawnedMobKnowledgeIntegrationTest
 
             var store = knowledge.GetContainer(human)!.Value;
             Assert.That(knowledge.GetKnowledge(store, "KnowledgeWeaponsRifle")!.Value.Comp.TemporaryLevel,
-                Is.EqualTo(50), "Chip did not apply before the mind was added.");
+                Is.EqualTo(75), "Chip did not apply before the mind was added.");
         });
 
         await server.WaitPost(() =>
@@ -97,7 +97,7 @@ public sealed class SpawnedMobKnowledgeIntegrationTest
 
             var rifle = knowledge.GetKnowledge(store, "KnowledgeWeaponsRifle");
             Assert.That(rifle, Is.Not.Null, "Applying the baseline destroyed the chip's skills.");
-            Assert.That(rifle!.Value.Comp.TemporaryLevel, Is.EqualTo(50),
+            Assert.That(rifle!.Value.Comp.TemporaryLevel, Is.EqualTo(75),
                 "The chip's bonus was not put back after the profile rebuilt the store.");
         });
 
