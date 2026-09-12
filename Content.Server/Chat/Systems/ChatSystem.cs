@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using Content.Server._Goobstation.Wizard.Systems;
+using Content.Server._Pirate.AlertLevel; // Pirate: announcement audio settings
 using Content.Shared._Pirate.ListeningPost.Interception; // Pirate: listening post receive-only interception
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -40,7 +41,6 @@ using Content.Shared.Whitelist;
 using Content.Goobstation.Common.Chat;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
@@ -73,7 +73,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly PirateAlertLevelAudioSystem _announcementAudio = default!; // Pirate: announcement audio settings
     [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly GhostVisibilitySystem _ghostVisibility = default!; // Goobstation Change
@@ -415,7 +415,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, default, false, true, colorOverride);
         if (playSound)
         {
-            _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
+            _announcementAudio.PlayAnnouncement(announcementSound ?? DefaultAnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f)); // Pirate: announcement audio settings
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
@@ -436,7 +436,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source ?? default, false, true, colorOverride);
         if (playSound)
         {
-            _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
+            _announcementAudio.PlayAnnouncement(announcementSound ?? DefaultAnnouncementSound, filter, AudioParams.Default.WithVolume(-2f)); // Pirate: announcement audio settings
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
     }
@@ -469,7 +469,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (playDefaultSound)
         {
-            _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
+            _announcementAudio.PlayAnnouncement(announcementSound ?? DefaultAnnouncementSound, filter, AudioParams.Default.WithVolume(-2f)); // Pirate: announcement audio settings
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");

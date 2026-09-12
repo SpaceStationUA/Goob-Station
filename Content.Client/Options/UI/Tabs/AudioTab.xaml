@@ -16,6 +16,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <ui:OptionSlider Name="SliderVolumeAmbientMusic" Title="{Loc 'ui-options-ambient-music-volume'}" />
                 <ui:OptionSlider Name="SliderVolumeAmbience" Title="{Loc 'ui-options-ambience-volume'}" />
                 <ui:OptionSlider Name="SliderVolumeLobby" Title="{Loc 'ui-options-lobby-volume'}" />
+                <ui:OptionSlider Name="SliderVolumeAnnouncements" Title="{Loc 'ui-options-announcement-volume'}" /> <!-- Pirate: announcement audio settings -->
                 <ui:OptionSlider Name="SliderVolumeCassettes" Title="{Loc 'rmc-ui-options-cassettes-volume'}" /> <!-- Pirate: CMU cassettes -->
                 <ui:OptionSlider Name="SliderVolumeStationRadio" Title="{Loc 'ui-options-station-radio-volume'}" /> <!-- Pirate: station radio receiver volume -->
                 <ui:OptionSlider Name="SliderVolumeInterface" Title="{Loc 'ui-options-interface-volume'}" />
@@ -31,7 +32,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
                 <CheckBox Name="RestartSoundsCheckBox" Text="{Loc 'ui-options-restart-sounds'}" />
                 <CheckBox Name="EventMusicCheckBox" Text="{Loc 'ui-options-event-music'}" />
-                <!-- Pirate: transcribed announcement sounds -->
+                <!-- Pirate: announcement audio settings -->
                 <CheckBox Name="TranscribedAnnouncementSoundsCheckBox"
                           Text="{Loc 'ui-options-transcribed-announcement-sounds'}"
                           ToolTip="{Loc 'ui-options-transcribed-announcement-sounds-tooltip'}" />

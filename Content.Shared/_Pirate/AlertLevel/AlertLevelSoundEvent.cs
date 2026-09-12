@@ -29,3 +29,19 @@ public sealed class AlertLevelSoundEvent : EntityEventArgs
         LegacyAudioParams = legacyAudioParams;
     }
 }
+
+/// <summary>
+/// Carries a regular announcement sound so the receiving client can apply its volume preference.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class AnnouncementSoundEvent : EntityEventArgs
+{
+    public readonly ResolvedSoundSpecifier Specifier;
+    public readonly AudioParams AudioParams;
+
+    public AnnouncementSoundEvent(ResolvedSoundSpecifier specifier, AudioParams audioParams)
+    {
+        Specifier = specifier;
+        AudioParams = audioParams;
+    }
+}

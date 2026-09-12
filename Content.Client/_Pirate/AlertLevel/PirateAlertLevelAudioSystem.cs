@@ -3,6 +3,7 @@
 
 using Content.Shared._Pirate.AlertLevel;
 using Content.Shared._Pirate.CCVars;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -10,7 +11,7 @@ using Robust.Shared.Player;
 namespace Content.Client._Pirate.AlertLevel;
 
 /// <summary>
-/// Plays the alert-level recording selected in this client's audio settings.
+/// Plays announcement recordings using this client's audio settings.
 /// </summary>
 public sealed class PirateAlertLevelAudioSystem : EntitySystem
 {
@@ -21,6 +22,7 @@ public sealed class PirateAlertLevelAudioSystem : EntitySystem
     {
         base.Initialize();
         SubscribeNetworkEvent<AlertLevelSoundEvent>(OnAlertLevelSound);
+        SubscribeNetworkEvent<AnnouncementSoundEvent>(OnAnnouncementSound);
     }
 
     private void OnAlertLevelSound(AlertLevelSoundEvent ev)
@@ -29,6 +31,18 @@ public sealed class PirateAlertLevelAudioSystem : EntitySystem
         var specifier = transcribed ? ev.TranscribedSpecifier : ev.LegacySpecifier;
         var audioParams = transcribed ? ev.TranscribedAudioParams : ev.LegacyAudioParams;
 
-        _audio.PlayGlobal(specifier, Filter.Local(), false, audioParams);
+        Play(specifier, audioParams);
+    }
+
+    private void OnAnnouncementSound(AnnouncementSoundEvent ev)
+    {
+        Play(ev.Specifier, ev.AudioParams);
+    }
+
+    private void Play(ResolvedSoundSpecifier specifier, AudioParams audioParams)
+    {
+        var volume = SharedAudioSystem.GainToVolume(_cfg.GetCVar(PirateVars.AnnouncementVolume));
+
+        _audio.PlayGlobal(specifier, Filter.Local(), false, audioParams.AddVolume(volume));
     }
 }

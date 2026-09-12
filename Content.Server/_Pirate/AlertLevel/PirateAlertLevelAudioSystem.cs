@@ -9,7 +9,7 @@ using Robust.Shared.Player;
 namespace Content.Server._Pirate.AlertLevel;
 
 /// <summary>
-/// Sends both the transcribed and legacy alert recordings to clients for per-player selection.
+/// Sends announcement recordings to clients for per-player sound and volume selection.
 /// </summary>
 public sealed class PirateAlertLevelAudioSystem : EntitySystem
 {
@@ -47,6 +47,14 @@ public sealed class PirateAlertLevelAudioSystem : EntitySystem
                 legacy,
                 transcribedSound.Params,
                 legacySound?.Params ?? transcribedSound.Params),
+            recipients,
+            recordReplay: true);
+    }
+
+    public void PlayAnnouncement(SoundSpecifier sound, Filter recipients, AudioParams audioParams)
+    {
+        RaiseNetworkEvent(
+            new AnnouncementSoundEvent(_audio.ResolveSound(sound), audioParams),
             recipients,
             recordReplay: true);
     }
