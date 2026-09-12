@@ -10,11 +10,10 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.Mind;
 using Content.Shared.Silicons.StationAi;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Player;
-using Robust.Server.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Log;
 
@@ -30,11 +29,10 @@ public sealed class MalfAiViewportSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly SharedViewSubscriberSystem _viewSubscriber = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-
     public override void Initialize()
     {
 
@@ -95,35 +93,21 @@ public sealed class MalfAiViewportSystem : EntitySystem
             return;
         }
 
-        // Clean up any existing anchor entity
+        // The viewport anchor is an independent eye/view subscription. It must never become the
+        // player's attached entity: attaching it would replace the main viewport eye globally.
         if (comp.ViewportAnchor != null && EntityManager.EntityExists(comp.ViewportAnchor.Value))
         {
-            // Properly detach player session if attached
-            if (EntityManager.TryGetComponent<ActorComponent>(comp.ViewportAnchor.Value, out var oldActor) &&
-                oldActor.PlayerSession != null)
-            {
-                _playerManager.SetAttachedEntity(oldActor.PlayerSession, null);
-            }
             EntityManager.DeleteEntity(comp.ViewportAnchor.Value);
             comp.ViewportAnchor = null;
         }
 
-        // Create invisible anchor entity at the target location with eye component for camera functionality
+        // Create a networked eye at the selected location. The client binds this eye only to the
+        // dedicated ScalingViewport, while the view subscription keeps the remote area in PVS.
         comp.ViewportAnchor = EntityManager.SpawnEntity(null, target);
+        EntityManager.AddComponent<EyeComponent>(comp.ViewportAnchor.Value);
 
-        // Add actor component to make it a proper client eye
-        var actorComp = EntityManager.AddComponent<ActorComponent>(comp.ViewportAnchor.Value);
-
-        // Make the anchor act as an active renderer by attaching the player's session to it
-        // This ensures the client receives updates from the anchor's perspective
         if (TryComp<ActorComponent>(uid, out var playerActor) && playerActor.PlayerSession != null)
-        {
-            // Use player manager to properly attach the session to the anchor entity
-            _playerManager.SetAttachedEntity(playerActor.PlayerSession, comp.ViewportAnchor.Value);
-        }
-
-        // Add the camera upgrade omitter component to prevent this anchor from being considered for camera upgrades
-        EntityManager.AddComponent<CameraUpgradeOmitterComponent>(comp.ViewportAnchor.Value);
+            _viewSubscriber.AddViewSubscriber(comp.ViewportAnchor.Value, playerActor.PlayerSession);
 
         // Apply grid north rotation to the anchor entity's transform so viewport faces grid north
         float anchorRotation = 0f;

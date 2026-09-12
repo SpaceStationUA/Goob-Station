@@ -2,10 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
-using Content.Client.Eye;
 using Content.Shared._Pirate.MalfAI;
-using Robust.Client.UserInterface;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client._Pirate.MalfAI;
 
@@ -14,8 +11,6 @@ namespace Content.Client._Pirate.MalfAI;
 /// </summary>
 public sealed class MalfAiViewportSystem : EntitySystem
 {
-    [Dependency] private readonly IUserInterfaceManager _ui = default!;
-    [Dependency] private readonly EyeLerpingSystem _eyeLerpingSystem = default!;
 
     private MalfAiViewportWindow? _window;
 
