@@ -49,3 +49,33 @@
   cost: 8000
   category: cargoproduct-category-name-security
   group: market
+
+- type: cargoProduct
+  id: CraftingSkillChips
+  icon:
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    state: icon
+  product: CrateSkillChipsCrafting
+  cost: 3000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: CraftingSkillChipsAdvanced
+  icon:
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    state: icon
+  product: CrateSkillChipsCraftingAdvanced
+  cost: 7000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: ArmorySkillChips
+  icon:
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    state: icon
+  product: CrateSkillChipsArmory
+  cost: 5500
+  category: cargoproduct-category-name-armory
+  group: market

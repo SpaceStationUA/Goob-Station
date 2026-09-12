@@ -328,6 +328,8 @@ public sealed class SkillChipPrototypeIntegrityTest
                      {
                          "CrateSkillChipsCargo", "CrateSkillChipsEngi", "CrateSkillChipsMed",
                          "CrateSkillChipsSci", "CrateSkillChipsSec", "CrateSyndicateCombatSkillChips",
+                         "CrateSkillChipsCrafting", "CrateSkillChipsCraftingAdvanced",
+                         "CrateSkillChipsArmory",
                      })
             {
                 Assert.That(prototypes.HasIndex<EntityPrototype>(crate), Is.True, $"Missing crate {crate}.");

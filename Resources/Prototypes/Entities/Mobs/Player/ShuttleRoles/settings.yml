@@ -258,7 +258,7 @@
       chips:
       - SkillChipCombatEducation
       - SkillChipMining
-      - SkillChipShortBlade
+      - SkillChipCloseQuarters
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-salvagespec
@@ -304,7 +304,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipEducation
-      - SkillChipDatabase
+      - SkillChipDatabaseBasic
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-technical-assistant
@@ -433,7 +433,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipEducation
-      - SkillChipChemist
+      - SkillChipDoctor
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-psychologist
@@ -494,6 +494,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipEducation
+      - SkillChipDatabaseBasic
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-research-assistant
@@ -509,6 +510,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipEducation
+      - SkillChipDatabase
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-scientist
@@ -563,7 +565,7 @@
       chips:
       - SkillChipEducation
       - SkillChipShotgun
-      - SkillChipUnarmed
+      - SkillChipService
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-bartender
@@ -579,7 +581,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipEducation
-      - SkillChipTool
+      - SkillChipService
       - SkillChipStoner
     # Pirate: skill chips end
     - type: GhostRole
@@ -612,7 +614,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipEducation
-      - SkillChipMarksmanship
+      - SkillChipCloseQuarters
       - SkillChipMagLit
     # Pirate: skill chips end
     - type: BibleUser
@@ -633,6 +635,7 @@
       chips:
       - SkillChipEducation
       - SkillChipShortBlade
+      - SkillChipService
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-chef
@@ -716,7 +719,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipLongBlade
+      - SkillChipGunsmith
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-librarian
@@ -808,6 +811,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipEducation
+      - SkillChipService
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-serviceworker

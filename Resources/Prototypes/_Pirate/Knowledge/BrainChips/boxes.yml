@@ -23,6 +23,8 @@
         - id: SkillChipEchelonEducation
         - id: SkillChipClown
         - id: SkillChipStoner
+        - id: SkillChipService
+          amount: 4
 
 - type: entity
   parent: BoxSkillChipsBase
@@ -47,6 +49,8 @@
           amount: 6
         - id: SkillChipDatabase
           amount: 6
+        - id: SkillChipDatabaseBasic
+          amount: 4
 
 - type: entity
   parent: BoxSkillChipsBase
@@ -73,3 +77,5 @@
         children:
         - id: SkillChipDatabase
           amount: 6
+        - id: SkillChipDatabaseBasic
+          amount: 4

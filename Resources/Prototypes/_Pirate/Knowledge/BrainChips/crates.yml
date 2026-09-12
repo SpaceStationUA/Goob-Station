@@ -21,6 +21,8 @@
         children:
         - id: SkillChipDatabase
           amount: 3
+        - id: SkillChipDatabaseBasic
+          amount: 3
         - id: SkillChipTool
           amount: 3
         - id: SkillChipBludgeon
@@ -51,6 +53,8 @@
         children:
         - id: SkillChipDatabase
           amount: 5
+        - id: SkillChipDatabaseBasic
+          amount: 4
         - id: SkillChipEducation
           amount: 4
 
@@ -62,12 +66,67 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: SkillChipMarksmanship
+        - id: SkillChipSidearms
           amount: 3
         - id: SkillChipNonLethal
           amount: 3
-        - id: SkillChipShortBlade
+        - id: SkillChipBludgeon
           amount: 3
+        - id: SkillChipShield
+          amount: 2
+        - id: SkillChipMarksmanship
+          amount: 2
+
+- type: entity
+  parent: CrateEngineeringSecure
+  id: CrateSkillChipsCrafting
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SkillChipBlacksmith
+          amount: 2
+        - id: SkillChipMechanic
+          amount: 2
+        - id: SkillChipElectronics
+          amount: 2
+        - id: SkillChipTailor
+          amount: 2
+        - id: SkillChipWoodworker
+          amount: 2
+
+- type: entity
+  parent: CrateEngineeringSecure
+  id: CrateSkillChipsCraftingAdvanced
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SkillChipBlacksmith2
+        - id: SkillChipMechanic2
+        - id: SkillChipElectronics2
+        - id: SkillChipTailor2
+        - id: SkillChipWoodworker2
+
+- type: entity
+  parent: CrateSecgear
+  id: CrateSkillChipsArmory
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SkillChipArmorsmithing
+          amount: 2
+        - id: SkillChipWeaponsmithing
+          amount: 2
+        - id: SkillChipGunsmith
+          amount: 2
+        - id: SkillChipArmorsmithing2
+        - id: SkillChipWeaponsmithing2
+        - id: SkillChipGunsmith2
 
 - type: entity
   parent: CrateSyndicate
