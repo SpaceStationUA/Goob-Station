@@ -29,8 +29,6 @@ public sealed class MalfAiCameraMicrophonesSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandRecipients);
         SubscribeLocalEvent<MalfAiMarkerComponent, MalfAiCameraMicrophonesUnlockedEvent>(OnCameraMicrophonesUnlocked);
-        SubscribeLocalEvent<StationAiHeldComponent, ComponentStartup>(OnHeldStartup);
-        SubscribeLocalEvent<StationAiHeldComponent, ComponentShutdown>(OnHeldShutdown);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
@@ -42,24 +40,6 @@ public sealed class MalfAiCameraMicrophonesSystem : EntitySystem
         // does not permanently disable the upgrade after the AI returns to its core.
         comp.EnabledEffective = HasComp<StationAiHeldComponent>(uid);
         Dirty(uid, comp);
-    }
-
-    private void OnHeldStartup(EntityUid uid, StationAiHeldComponent held, ref ComponentStartup args)
-    {
-        if (TryComp(uid, out MalfAiCameraMicrophonesComponent? microphones))
-        {
-            microphones.EnabledEffective = microphones.EnabledDesired;
-            Dirty(uid, microphones);
-        }
-    }
-
-    private void OnHeldShutdown(EntityUid uid, StationAiHeldComponent held, ref ComponentShutdown args)
-    {
-        if (TryComp(uid, out MalfAiCameraMicrophonesComponent? microphones) && microphones.EnabledEffective)
-        {
-            microphones.EnabledEffective = false;
-            Dirty(uid, microphones);
-        }
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)

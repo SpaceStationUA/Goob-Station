@@ -16,6 +16,8 @@ public sealed class MalfAiCameraUpgradeSystem : EntitySystem
     {
         base.Initialize();
 
+        // Component lifecycle events allow one subscriber per component/event pair.
+        // Keep both camera upgrades here, including AIs that only bought microphones.
         SubscribeLocalEvent<StationAiHeldComponent, ComponentStartup>(OnHeldStartup);
         SubscribeLocalEvent<StationAiHeldComponent, ComponentShutdown>(OnHeldShutdown);
         SubscribeLocalEvent<MalfAiMarkerComponent, MalfAiCameraUpgradeUnlockedEvent>(OnCameraUpgradeUnlocked);
@@ -31,6 +33,12 @@ public sealed class MalfAiCameraUpgradeSystem : EntitySystem
 
     private void OnHeldStartup(EntityUid uid, StationAiHeldComponent held, ref ComponentStartup args)
     {
+        if (TryComp<MalfAiCameraMicrophonesComponent>(uid, out var microphones))
+        {
+            microphones.EnabledEffective = microphones.EnabledDesired;
+            Dirty(uid, microphones);
+        }
+
         if (!TryComp(uid, out MalfAiCameraUpgradeComponent? comp))
             return;
 
@@ -44,6 +52,12 @@ public sealed class MalfAiCameraUpgradeSystem : EntitySystem
 
     private void OnHeldShutdown(EntityUid uid, StationAiHeldComponent held, ref ComponentShutdown args)
     {
+        if (TryComp<MalfAiCameraMicrophonesComponent>(uid, out var microphones) && microphones.EnabledEffective)
+        {
+            microphones.EnabledEffective = false;
+            Dirty(uid, microphones);
+        }
+
         if (!TryComp(uid, out MalfAiCameraUpgradeComponent? comp))
             return;
 
