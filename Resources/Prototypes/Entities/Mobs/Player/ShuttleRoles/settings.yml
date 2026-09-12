@@ -161,7 +161,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipCombatEducation
-      - SkillChipLaser
+      - SkillChipSidearms
       - SkillChipNonLethal
     # Pirate: skill chips end
     - type: GhostRole
@@ -178,7 +178,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipCombatEducation
-      - SkillChipLaser
+      - SkillChipSidearms
       - SkillChipNonLethal
     # Pirate: skill chips end
     - type: GhostRole
@@ -195,7 +195,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipCombatEducation
-      - SkillChipPistol
+      - SkillChipSidearms
       - SkillChipBludgeon
     # Pirate: skill chips end
     - type: GhostRole
@@ -212,7 +212,8 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipCombatEducation
-      - SkillChipLaser
+      - SkillChipSidearms
+      - SkillChipShotgun
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-warden

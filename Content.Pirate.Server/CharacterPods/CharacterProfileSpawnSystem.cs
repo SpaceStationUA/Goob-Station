@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Collections.Generic;
 using Content.Pirate.Server.Contractors.Systems;
 using Content.Server._Pirate.Character.Info;
 using Content.Server._Pirate.Traits;
 using Content.Server.Humanoid;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Preferences.Managers;
+using Content.Shared._Pirate.Body.Chips;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -24,6 +26,7 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly OrganChipSystem _chips = default!;
     [Dependency] private readonly NationalitySystem _nationality = default!;
     [Dependency] private readonly PirateCharacterInfoSystem _characterInfo = default!;
     [Dependency] private readonly SharedKnowledgeSystem _knowledge = default!;
@@ -96,6 +99,30 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
         _nationality.ApplyNationality(mob, profile, session);
     }
 
+    public void ApplySkillsForTest(EntityUid mob, HumanoidCharacterProfile profile)
+        => ApplySkills(mob, profile);
+
+    private readonly List<EntityUid> _pendingRestore = new();
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (_pendingRestore.Count == 0)
+            return;
+
+        foreach (var mob in _pendingRestore)
+        {
+            if (TerminatingOrDeleted(mob))
+                continue;
+
+            _knowledge.ReplayCompetency(mob);
+            _chips.ReconcileInstalledChipModifiers(mob);
+        }
+
+        _pendingRestore.Clear();
+    }
+
     private void ApplySkills(EntityUid mob, HumanoidCharacterProfile profile)
     {
         var speciesId = CompOrNull<HumanoidAppearanceComponent>(mob)?.Species ?? profile.Species;
@@ -105,5 +132,8 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
 
         _knowledge.ApplyProfile(mob, species.Knowledge, profile.Knowledge);
         _knowledge.ApplyEmployerBonuses(mob, profile.Employer);
+
+        // Rebuild after queued knowledge deletions have run.
+        _pendingRestore.Add(mob);
     }
 }
