@@ -235,6 +235,7 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipERT
+    - SkillChipDatabase
   # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant, DeathRattleImplantCentcomm ]
@@ -568,6 +569,7 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipERT
+    - SkillChipCMO
   # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, FreedomImplant, BluespaceLifelineImplant, RadioImplantCentcomm, NutrimentPumpImplant, StypticStimulatorImplant, DeathRattleImplantCentcomm ]

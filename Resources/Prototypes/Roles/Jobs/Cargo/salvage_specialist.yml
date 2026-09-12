@@ -33,7 +33,7 @@
     chips:
     - SkillChipCombatEducation
     - SkillChipMining
-    - SkillChipShortBlade
+    - SkillChipCloseQuarters
   # Pirate: skill chips end
 - type: startingGear
   id: SalvageSpecialistGear

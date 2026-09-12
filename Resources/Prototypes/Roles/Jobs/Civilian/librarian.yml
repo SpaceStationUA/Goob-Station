@@ -24,7 +24,7 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipLongBlade
+    - SkillChipGunsmith
   # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ LibrarianTranslatorImplant ] # Goobstation end

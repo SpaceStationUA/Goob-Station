@@ -36,6 +36,7 @@
     chips:
     - SkillChipEducation
     - SkillChipDatabase
+    - SkillChipCloseQuarters
   # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:

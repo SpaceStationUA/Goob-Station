@@ -118,6 +118,22 @@
 
 - type: entity
   parent: BaseSkillChipAPTR
+  id: SkillChipCloseQuarters
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: 25
+      KnowledgeWeaponsBludgeon: 25
+      KnowledgeWeaponsShortBlade: 25
+      KnowledgeWeaponsLongBlade: 25
+      KnowledgeWeaponsPolearm: 25
+      KnowledgeWeaponsNonLethal: 25
+      KnowledgeWeaponsTool: 25
+      KnowledgeWeaponsShield: 25
+      KnowledgeWeaponsEnergy: 25
+
+- type: entity
+  parent: BaseSkillChipAPTR
   id: SkillChipShortBlade
   components:
   - type: KnowledgeGrantOnWear

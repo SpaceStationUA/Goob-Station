@@ -14,7 +14,8 @@
       KnowledgeWeaponsLongBlade: 50
       KnowledgeWeaponsPolearm: 20
       KnowledgeWeaponsPistol: 50
-      KnowledgeWeaponsRifle: 50
+      KnowledgeWeaponsRifle: 75
+      KnowledgeWeaponsMining: 25
       KnowledgeWeaponsSniper: 50
       KnowledgeWeaponsHeavy: 50
       KnowledgeWeaponsEnergy: 50

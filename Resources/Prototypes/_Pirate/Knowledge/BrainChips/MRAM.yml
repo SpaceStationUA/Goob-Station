@@ -293,19 +293,20 @@
   - type: KnowledgeGrantOnWear
     skills:
       FirstAidKnowledge: 50
-      KnowledgeWeaponsLaser: -25
-      ShootingKnowledge: -25
-      KnowledgeWeaponsMining: -25
-      KnowledgeWeaponsTool: -25
-      KnowledgeWeaponsPistol: -25
-      KnowledgeWeaponsRifle: -25
-      KnowledgeWeaponsShotgun: -25
-      KnowledgeWeaponsBludgeon: -25
-      KnowledgeWeaponsShortBlade: -25
-      KnowledgeWeaponsLongBlade: -25
-      KnowledgeWeaponsNonLethal: -25
-      KnowledgeWeaponsPolearm: -25
-      MeleeKnowledge: -25
+      ChemistryKnowledge: 25
+      KnowledgeWeaponsLaser: -10
+      ShootingKnowledge: -10
+      KnowledgeWeaponsMining: -10
+      KnowledgeWeaponsTool: -10
+      KnowledgeWeaponsPistol: -10
+      KnowledgeWeaponsRifle: -10
+      KnowledgeWeaponsShotgun: -10
+      KnowledgeWeaponsBludgeon: -10
+      KnowledgeWeaponsShortBlade: -10
+      KnowledgeWeaponsLongBlade: -10
+      KnowledgeWeaponsNonLethal: -10
+      KnowledgeWeaponsPolearm: -10
+      MeleeKnowledge: -10
 
 - type: entity
   parent: BaseSkillChipMRAM
@@ -335,19 +336,19 @@
   - type: KnowledgeGrantOnWear
     skills:
       SurgeryKnowledge: 50
-      KnowledgeWeaponsLaser: -25
-      ShootingKnowledge: -25
-      KnowledgeWeaponsMining: -25
-      KnowledgeWeaponsTool: -25
-      KnowledgeWeaponsPistol: -25
-      KnowledgeWeaponsRifle: -25
-      KnowledgeWeaponsShotgun: -25
-      KnowledgeWeaponsBludgeon: -25
-      KnowledgeWeaponsShortBlade: -25
-      KnowledgeWeaponsLongBlade: -25
-      KnowledgeWeaponsNonLethal: -25
-      KnowledgeWeaponsPolearm: -25
-      MeleeKnowledge: -25
+      KnowledgeWeaponsLaser: -10
+      ShootingKnowledge: -10
+      KnowledgeWeaponsMining: -10
+      KnowledgeWeaponsTool: -10
+      KnowledgeWeaponsPistol: -10
+      KnowledgeWeaponsRifle: -10
+      KnowledgeWeaponsShotgun: -10
+      KnowledgeWeaponsBludgeon: -10
+      KnowledgeWeaponsShortBlade: -10
+      KnowledgeWeaponsLongBlade: -10
+      KnowledgeWeaponsNonLethal: -10
+      KnowledgeWeaponsPolearm: -10
+      MeleeKnowledge: -10
 
 - type: entity
   parent: BaseSkillChipMRAM

@@ -71,6 +71,7 @@ ent-SkillChipEnergy = ГАРТ-чип (енергетична зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
 ent-SkillChipBludgeon = ГАРТ-чип (дрючки)
     .desc = { ent-BaseSkillChipAPTR.desc }
+ent-SkillChipCloseQuarters = ГАРТ-чип (ближній бій)
 ent-SkillChipShortBlade = ГАРТ-чип (короткі клинки)
     .desc = { ent-BaseSkillChipAPTR.desc }
 ent-SkillChipLongBlade = ГАРТ-чип (довгі клинки)

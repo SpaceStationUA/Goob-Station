@@ -27,7 +27,7 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipEducation
-    - SkillChipChemist
+    - SkillChipDoctor
   # Pirate: skill chips end
 
 - type: startingGear

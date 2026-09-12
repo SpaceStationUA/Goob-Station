@@ -29,7 +29,7 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipEducation
-    - SkillChipMarksmanship
+    - SkillChipCloseQuarters
     - SkillChipMagLit
   # Pirate: skill chips end
   - !type:AddComponentSpecial

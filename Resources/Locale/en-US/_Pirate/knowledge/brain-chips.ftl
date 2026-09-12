@@ -71,6 +71,7 @@ ent-SkillChipEnergy = APTR-chip (energy weapon training)
     .desc = { ent-BaseSkillChipAPTR.desc }
 ent-SkillChipBludgeon = APTR-chip (bludgeon training)
     .desc = { ent-BaseSkillChipAPTR.desc }
+ent-SkillChipCloseQuarters = APTR-chip (close quarters training)
 ent-SkillChipShortBlade = APTR-chip (short blade training)
     .desc = { ent-BaseSkillChipAPTR.desc }
 ent-SkillChipLongBlade = APTR-chip (long blade training)
