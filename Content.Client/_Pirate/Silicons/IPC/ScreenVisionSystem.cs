@@ -111,13 +111,24 @@ public sealed partial class ScreenVisionSystem : EntitySystem
     private void UpdateOverlays(bool add = true)
     {
         var want = add && _enabled;
-        if (want)
-            _overlayMan.AddOverlay(_overlay);
-        else
-            _overlayMan.RemoveOverlay(_overlay);
 
-        if (!want)
+        if (want)
+        {
+            _overlayMan.AddOverlay(_overlay);
+            _overlayMan.AddOverlay(_glitchOverlay);
+        }
+        else
+        {
+            _overlayMan.RemoveOverlay(_overlay);
+            _overlayMan.RemoveOverlay(_glitchOverlay);
             _glitchOverlay.SetStrength(0f);
+        }
+
+        if (_playerMan.LocalEntity is { Valid: true } player
+            && EntityManager.TryGetComponent<ScreenVisionComponent>(player, out var comp))
+        {
+            UpdateGlitchStrength((player, comp));
+        }
     }
 
     /// <summary>
