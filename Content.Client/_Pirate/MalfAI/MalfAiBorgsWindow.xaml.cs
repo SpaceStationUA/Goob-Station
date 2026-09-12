@@ -46,11 +46,6 @@ public sealed partial class MalfAiBorgsWindow : FancyWindow
             // Set black backdrop for Malf theme
             RootBackdrop.PanelOverride = MalfUiTheme.CreateBackdropStyle();
 
-            // Add scrolling error backdrop behind all UI elements - insert at beginning so it appears behind
-            var errorBackdrop = MalfEffectOverlay.CreateErrorBackdrop();
-            RootBackdrop.AddChild(errorBackdrop);
-            errorBackdrop.SetPositionInParent(0); // Move to first position (behind all other elements)
-
             // Add CRT static overlay using the unified effect system - this stays on top
             var staticOverlay = MalfEffectOverlay.CreateStaticOverlay();
             RootBackdrop.AddChild(staticOverlay);

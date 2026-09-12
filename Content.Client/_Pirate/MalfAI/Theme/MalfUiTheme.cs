@@ -22,9 +22,14 @@ public static class MalfUiTheme
     public static readonly Color Accent = new(0f, 1f, 0f);
 
     /// <summary>
-    /// Path to the KodeMono font used in Malf-themed UIs.
+    /// Path to the KodeMono font used as the primary font in Malf-themed UIs.
     /// </summary>
     public const string FontPath = "/Fonts/_DV/KodeMono/KodeMono-Regular.ttf";
+
+    /// <summary>
+    /// Path to the fallback font used for glyphs unavailable in KodeMono.
+    /// </summary>
+    public const string FontFallbackPath = "/Fonts/_Goobstation/NotoSansMono/NotoSansMono-Regular.ttf";
 
     // Cached stylesheets for common font sizes to avoid repeated allocations
     private static Stylesheet? _cachedStylesheet12;
@@ -33,10 +38,10 @@ public static class MalfUiTheme
     private static readonly object _cacheLock = new();
 
     /// <summary>
-    /// Loads the Malf font from resources.
+    /// Loads the Malf font stack from resources, using NotoSansMono for missing glyphs.
     /// </summary>
     public static Font GetFont(IResourceCache cache, int size = 12)
-        => cache.GetFont(FontPath, size);
+        => cache.GetFont(new[] { FontPath, FontFallbackPath }, size);
 
     /// <summary>
     /// Creates the main black panel style with a green border.
