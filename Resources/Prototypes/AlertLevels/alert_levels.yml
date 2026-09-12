@@ -42,7 +42,7 @@
       announcement: alert-level-orange-announcement
       selectable: true
       sound:
-        path: /Audio/_Pirate/Nuclear/Machines/orange.ogg
+        path: /Audio/_Pirate/Announcements/Alerts/code_orange.ogg
       color: "#ff8119"
       emergencyLightColor: "#ff8119"
       forceEnableEmergencyLights: true
@@ -78,7 +78,7 @@
       announcement: alert-level-omicron-announcement
       selectable: false
       sound:
-        path: /Audio/_Goobstation/Misc/omicron.ogg
+        path: /Audio/_Pirate/Announcements/Alerts/code_omicron.ogg # Pirate
       disableSelection: true
       color: Ivory
       emergencyLightColor: Ivory
@@ -111,7 +111,7 @@
       shuttleTime: 600
     amber: # Goobstation
       announcement: alert-level-amber-announcement
-      sound: /Audio/_Goobstation/Announcements/amberalarm.ogg
+      sound: /Audio/_Pirate/Announcements/Alerts/code_amber.ogg # Pirate
       color: "#8A3324"
       emergencyLightColor: "#8A3324"
       forceEnableEmergencyLights: true
