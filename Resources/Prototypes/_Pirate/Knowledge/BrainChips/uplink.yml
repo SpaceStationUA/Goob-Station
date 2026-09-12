@@ -28,7 +28,7 @@
   productEntity: SkillChipUnarmed
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -39,7 +39,7 @@
   productEntity: SkillChipBludgeon
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -50,7 +50,7 @@
   productEntity: SkillChipShortBlade
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -61,7 +61,7 @@
   productEntity: SkillChipLongBlade
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -72,7 +72,7 @@
   productEntity: SkillChipPolearm
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -83,7 +83,7 @@
   productEntity: SkillChipNonLethal
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -94,7 +94,7 @@
   productEntity: SkillChipTool
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -105,7 +105,7 @@
   productEntity: SkillChipEnergy
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -117,7 +117,7 @@
   productEntity: SkillChipSMG
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -128,7 +128,7 @@
   productEntity: SkillChipPistol
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -139,7 +139,7 @@
   productEntity: SkillChipRifle
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -150,7 +150,7 @@
   productEntity: SkillChipShotgun
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -161,7 +161,7 @@
   productEntity: SkillChipSniper
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -172,7 +172,7 @@
   productEntity: SkillChipLaser
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
 
@@ -183,6 +183,6 @@
   productEntity: SkillChipHeavy
   cost:
     Telecrystal: 5
-  discountCategory: null
+  saleBlacklist: true
   categories:
   - UplinkSkills
