@@ -210,4 +210,19 @@
      - BorgChassis
   components:
     - type: Trainability
+
+# Pirate: ported from starcup PR #911 (MKC screen vision trait, adapted to the
+# EinsteinEngines IPC species used by this fork). IPC-only opt-in trait.
+- type: trait
+  id: ScreenVision
+  name: trait-screenvision-name
+  description: trait-screenvision-desc
+  category: Physical
+  cost: 1
+  conditions:
+    - !type:IsSpeciesCondition
+      species:
+        - IPC
+  components:
+  - type: ScreenVision
 #endregion
