@@ -62,6 +62,10 @@
         time: 3
       # Side effects
       - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStimRush
+        type: Add
+        time: 3
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
@@ -132,6 +136,10 @@
         type: Remove
       # Side effects
       - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStimRush
+        type: Add
+        time: 2
       - !type:PopupMessage
         visualType: Medium
         messages: ["ephedrine-effect-tight-pain", "ephedrine-effect-heart-pounds"]
@@ -252,6 +260,10 @@
         time: 3
       # Side effects
       - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStimRush
+        type: Add
+        time: 4
       # OD
       - !type:HealthChange
         conditions:
@@ -349,6 +361,10 @@
         effectProto: StatusEffectSeeingRainbow
         time: 16
         type: Add
+      - !type:ModifyStatusEffect # slow and dreamy, not tripping edges
+        effectProto: StatusEffectDreamy
+        type: Add
+        time: 16
 
 - type: reagent
   id: Nicotine
@@ -418,6 +434,18 @@
         effectProto: StatusEffectSeeingRainbow
         time: 10
         type: Add
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectTrippy
+        type: Add
+        time: 5
+      - !type:ModifyStatusEffect # too much brain damage: the trip goes bad
+        conditions:
+        - !type:ReagentCondition
+          reagent: Impedrezene
+          min: 20
+        effectProto: StatusEffectBadTrip
+        type: Add
+        time: 3
       - !type:Vomit # Vomiting is a symptom of brain damage
         probability: 0.05
       - !type:Drunk # Headaches and slurring are major symptoms of brain damage, this is close enough
@@ -450,6 +478,10 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectTrippy
+        type: Add
+        time: 5
 
 - type: reagent
   id: Bananadine
@@ -477,6 +509,10 @@
             Radiation: -0.5
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 5
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectTrippy
         type: Add
         time: 5
 
@@ -571,6 +607,14 @@
           min: 20
         probability: 0.03
         #If anyone wants to add a light dimming or grayscale effect when under 20u, be my guest
+      - !type:ModifyStatusEffect # vision starts failing before you go fully blind
+        conditions:
+        - !type:ReagentCondition
+          reagent: NorepinephricAcid
+          min: 2
+        effectProto: StatusEffectVisionFade
+        type: Add
+        time: 2
       - !type:GenericStatusEffect
         key: TemporaryBlindness
         component: TemporaryBlindness
@@ -628,6 +672,14 @@
       - !type:Emote
         emote: Cough
         probability: 0.08
+      - !type:ModifyStatusEffect # vision starts failing before you go fully blind
+        conditions:
+        - !type:ReagentCondition
+          reagent: TearGas
+          min: 1
+        effectProto: StatusEffectVisionFade
+        type: Add
+        time: 1.5
       - !type:GenericStatusEffect
         key: TemporaryBlindness
         component: TemporaryBlindness
@@ -708,6 +760,10 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectTrippy
+        type: Add
+        time: 5
 
 - type: reagent # Assmos - /tg/ gases
   id: NitrosylPlasmide
@@ -724,6 +780,10 @@
     Narcotic:
       effects:
       - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDreamy # the wakey-wakey psych gas, slow wash
+        type: Add
+        time: 10
       - !type:ModifyStatusEffect
         effectProto: StatusEffectStunned
         time: 3

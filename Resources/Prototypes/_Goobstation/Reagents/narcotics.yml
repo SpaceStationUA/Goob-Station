@@ -106,8 +106,18 @@
         component: SeeingRainbows
         type: Add
         time: 20
-      - !type:Drunk
-        boozePower: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectOpiateNod
+        type: Add
+        time: 3
+      - !type:ModifyStatusEffect # bigger dose: everything goes grey, the emotions shut down
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fentanyl
+          min: 10
+        effectProto: StatusEffectDesaturate
+        type: Add
+        time: 3
       - !type:Emote # Now a bunch of emotes
         emote: Scream
         probability: 0.05
@@ -436,12 +446,22 @@
         component: SeeingRainbows
         type: Add
         time: 20
-      - !type:Drunk
-        boozePower: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectOpiateNod
+        type: Add
+        time: 4
         conditions:
         - !type:ReagentCondition
           reagent: Heroin
           min: 10.5
+      - !type:ModifyStatusEffect # bigger dose: everything goes grey, the emotions shut down
+        conditions:
+        - !type:ReagentCondition
+          reagent: Heroin
+          min: 15
+        effectProto: StatusEffectDesaturate
+        type: Add
+        time: 4
       - !type:AdjustConsciousness
         allowNewModifiers: true
         modifierType: Pain
