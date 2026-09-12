@@ -50,7 +50,7 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipCombatEducation
-    - SkillChipLaser
+    - SkillChipSidearms
     - SkillChipNonLethal
   # Pirate: skill chips end
   - !type:AddImplantSpecial

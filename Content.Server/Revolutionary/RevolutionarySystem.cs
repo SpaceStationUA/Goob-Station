@@ -7,6 +7,7 @@ using Content.Pirate.Shared.Revolutionary.Components;
 using Content.Shared.Polymorph;
 using Content.Shared.Revolutionary;
 using Content.Shared.Revolutionary.Components;
+using Content.Shared._Pirate.Revolutionary; // Pirate: skill chips
 
 namespace Content.Server.Revolutionary;
 
@@ -15,6 +16,7 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem  // Goob Sta
     [Dependency] private readonly LanguageSystem _languageSystem = default!;
     [Dependency] private readonly PolymorphSystem _polymorph = default!;
     [Dependency] private readonly SharedRevolutionaryLieutenantSystem _lieutenantSystem = default!; // Pirate
+    [Dependency] private readonly RevolutionaryKnowledgeSystem _revKnowledge = default!; // Pirate: skill chips
 
     public override void Initialize()
     {
@@ -59,7 +61,10 @@ public sealed class RevolutionarySystem : SharedRevolutionarySystem  // Goob Sta
             case RevolutionaryComponent revComp:
                 _languageSystem.RemoveLanguage(uid, revComp.Language);
                 if (!TerminatingOrDeleted(uid))
+                {
                     RemComp<RevolutionaryLieutenantComponent>(uid); // Pirate - revoke lieutenant status on deconversion.
+                    _revKnowledge.Forget(uid); // Pirate: skill chips - deconverted revs forget how to build rev gear.
+                }
                 break;
         }
     }

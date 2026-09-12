@@ -4,10 +4,10 @@
   Компетентність на станції не береться з повітря: її фізично постачають [color=#a4885c]мозкові чипи[/color], вставлені у ваш мозок. Саме тому інженер уміє будувати, а лікар - оперувати.
 
   <Box>
-    <GuideEntityEmbed Entity="SkillChipEducation" Caption="MRAM"/>
-    <GuideEntityEmbed Entity="SkillChipLaser" Caption="APTR"/>
-    <GuideEntityEmbed Entity="SkillChipTiderDampener" Caption="PSON"/>
-    <GuideEntityEmbed Entity="SkillChipThrowing" Caption="HPYS"/>
+    <GuideEntityEmbed Entity="SkillChipEducation" Caption="ПЗП"/>
+    <GuideEntityEmbed Entity="SkillChipLaser" Caption="ГАРТ"/>
+    <GuideEntityEmbed Entity="SkillChipTiderDampener" Caption="ОТРУ"/>
+    <GuideEntityEmbed Entity="SkillChipThrowing" Caption="СОМА"/>
   </Box>
 
   ## Слоти
@@ -26,10 +26,10 @@
 
   ## Що дають чипи
 
-  - [color=#a4885c]MRAM[/color] - пам'ять про професію: ремесло, медицина, грамотність.
-  - [color=#a4885c]APTR[/color] - рефлекси та поводження зі зброєю.
-  - [color=#a4885c]PSON[/color] - навпаки, притлумлює навички та переписує особистість.
-  - [color=#a4885c]HPYS[/color] - гормональні зміни, що покращують фізичні дані.
+  - [color=#a4885c]ПЗП[/color] (постійний запам'ятовувальний пристрій) - пам'ять про професію: ремесло, медицина, грамотність.
+  - [color=#a4885c]ГАРТ[/color] (гібридна адаптація рефлексів і тактики) - рефлекси та поводження зі зброєю.
+  - [color=#a4885c]ОТРУ[/color] (обнулення та редагування установок) - навпаки, притлумлює навички та переписує особистість.
+  - [color=#a4885c]СОМА[/color] (соматичний оптимізатор метаболічної адаптації) - гормональні зміни, що покращують фізичні дані.
 
   Медичні чипи (лікар, хімік, хірург) навмисно [color=#cf5252]знижують[/color] бойові навички - за компетентність у медицині платять руками, що вагаються натиснути гачок. Нейродемпфери знижують навички ще сильніше.
 

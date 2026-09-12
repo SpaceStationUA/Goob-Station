@@ -35,14 +35,34 @@ public sealed partial class SharedKnowledgeSystem
         var baseLevel = knowledge.Comp.LearnedLevel + knowledge.Comp.TemporaryLevel - bonus.Level;
         // Level 100 has an internal mastery beyond the last displayed rank. An employer must
         // not upgrade an already-masterful skill into that extra level range.
-        var maxMastery = MasteryNames.Length - 1;
-        var targetMastery = Math.Min(GetMastery(baseLevel) + Math.Min(mastery, maxMastery), maxMastery);
-        var level = Math.Max(GetInverseMastery(targetMastery) - baseLevel, 0);
+        var level = GetEmployerBonusLevel(baseLevel, mastery);
 
         bonus.Mastery = mastery;
         bonus.Level = level;
         // Pirate: skill chips - the aggregate is owned by the source-aware ledger now.
         RecalculateTemporaryLevel(knowledge);
+    }
+
+    public static int GetEmployerBonusLevel(int baseLevel, int mastery)
+    {
+        var maxMastery = MasteryNames.Length - 1;
+        var targetMastery = Math.Min(GetMastery(baseLevel) + Math.Min(mastery, maxMastery), maxMastery);
+        return Math.Max(GetInverseMastery(targetMastery) - baseLevel, 0);
+    }
+
+    public static int GetProfilePreviewLevel(
+        int profileMastery,
+        int jobLevel,
+        int employerMastery,
+        out int profileLevel,
+        out int employerLevel)
+    {
+        profileLevel = GetInverseMastery(profileMastery);
+        var levelBeforeEmployer = profileLevel + jobLevel;
+        employerLevel = employerMastery > 0
+            ? GetEmployerBonusLevel(levelBeforeEmployer, employerMastery)
+            : 0;
+        return Math.Clamp(levelBeforeEmployer + employerLevel, 0, 100);
     }
 
     private void MergeEmployerBonus(Entity<KnowledgeComponent> source, Entity<KnowledgeComponent> destination)

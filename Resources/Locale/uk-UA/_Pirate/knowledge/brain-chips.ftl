@@ -36,155 +36,167 @@ knowledge-grant-on-wear-examine-negative = - [color=red]{ $level }[/color] [bold
 
 ent-BaseBrainChip = мозковий чип
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною.
-ent-BaseSkillChipMRAM = MRAM-чип
+ent-BaseSkillChipMRAM = ПЗП-чип
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей підкидає спогади про навички, яких ви ніколи не вчили.
-ent-BaseSkillChipAPTR = APTR-чип
+ent-BaseSkillChipAPTR = ГАРТ-чип
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей дає рефлекси та вроджене розуміння зброї.
-ent-BaseSkillChipPSON = PSON-чип
+ent-BaseSkillChipPSON = ОТРУ-чип
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей притлумлює вроджені навички та переписує особистість.
-ent-BaseSkillChipHPYS = HPYS-чип
+ent-BaseSkillChipHPYS = СОМА-чип
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей зміщує гормональний баланс, покращуючи фізичні дані.
 
-# APTR
+# APTR (ГАРТ)
 
-ent-SkillChipHeavy = APTR-чип (важка зброя)
+ent-SkillChipHeavy = ГАРТ-чип (важка зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipLaser = APTR-чип (лазерна зброя)
+ent-SkillChipLaser = ГАРТ-чип (лазерна зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipMarksmanship = APTR-чип (влучність)
+ent-SkillChipMarksmanship = ГАРТ-чип (влучність)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipMining = APTR-чип (шахтарський інструмент)
+ent-SkillChipMining = ГАРТ-чип (шахтарський інструмент)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipTool = APTR-чип (бойовий інструмент)
+ent-SkillChipTool = ГАРТ-чип (бойовий інструмент)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipPistol = APTR-чип (пістолети)
+ent-SkillChipPistol = ГАРТ-чип (пістолети)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipRifle = APTR-чип (довгоствольна зброя)
+ent-SkillChipRifle = ГАРТ-чип (довгоствольна зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipSMG = APTR-чип (пістолети-кулемети)
+ent-SkillChipSMG = ГАРТ-чип (пістолети-кулемети)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipShotgun = APTR-чип (дробовики)
+ent-SkillChipShotgun = ГАРТ-чип (дробовики)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipSniper = APTR-чип (снайперська зброя)
+ent-SkillChipSniper = ГАРТ-чип (снайперська зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipEnergy = APTR-чип (енергетична зброя)
+ent-SkillChipEnergy = ГАРТ-чип (енергетична зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipBludgeon = APTR-чип (дрючки)
+ent-SkillChipBludgeon = ГАРТ-чип (дрючки)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipShortBlade = APTR-чип (короткі клинки)
+ent-SkillChipShortBlade = ГАРТ-чип (короткі клинки)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipLongBlade = APTR-чип (довгі клинки)
+ent-SkillChipLongBlade = ГАРТ-чип (довгі клинки)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipNonLethal = APTR-чип (нелетальна зброя)
+ent-SkillChipNonLethal = ГАРТ-чип (нелетальна зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipPolearm = APTR-чип (древкова зброя)
+ent-SkillChipPolearm = ГАРТ-чип (древкова зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipUnarmed = APTR-чип (рукопашний бій)
+ent-SkillChipUnarmed = ГАРТ-чип (рукопашний бій)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipShield = APTR-чип (щити)
+ent-SkillChipShield = ГАРТ-чип (щити)
     .desc = { ent-BaseSkillChipAPTR.desc }
-ent-SkillChipCombatHOS = MRAM-чип (розширена бойова підготовка)
+ent-SkillChipCombatHOS = ПЗП-чип (розширена бойова підготовка)
     .desc = { ent-BaseSkillChipMRAM.desc }
 
-# MRAM
+# MRAM (ПЗП)
 
-ent-SkillChipArmorsmithing = MRAM-чип (спогади бронника)
+ent-SkillChipArmorsmithing = ПЗП-чип (спогади бронника)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipArmorsmithing2 = MRAM-чип (спогади майстра-бронника)
+ent-SkillChipArmorsmithing2 = ПЗП-чип (спогади майстра-бронника)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipWeaponsmithing = MRAM-чип (спогади зброяра)
+ent-SkillChipWeaponsmithing = ПЗП-чип (спогади зброяра)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipWeaponsmithing2 = MRAM-чип (спогади майстра-зброяра)
+ent-SkillChipWeaponsmithing2 = ПЗП-чип (спогади майстра-зброяра)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipBlacksmith = MRAM-чип (спогади коваля)
+ent-SkillChipBlacksmith = ПЗП-чип (спогади коваля)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipBlacksmith2 = MRAM-чип (спогади майстра-коваля)
+ent-SkillChipBlacksmith2 = ПЗП-чип (спогади майстра-коваля)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipWoodworker = MRAM-чип (спогади столяра)
+ent-SkillChipWoodworker = ПЗП-чип (спогади столяра)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipWoodworker2 = MRAM-чип (спогади майстра-столяра)
+ent-SkillChipWoodworker2 = ПЗП-чип (спогади майстра-столяра)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipGunsmith = MRAM-чип (спогади рушничного майстра)
+ent-SkillChipGunsmith = ПЗП-чип (спогади рушничного майстра)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipGunsmith2 = MRAM-чип (спогади старшого рушничного майстра)
+ent-SkillChipGunsmith2 = ПЗП-чип (спогади старшого рушничного майстра)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipMechanic = MRAM-чип (спогади механіка)
+ent-SkillChipMechanic = ПЗП-чип (спогади механіка)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipMechanic2 = MRAM-чип (спогади майстра-механіка)
+ent-SkillChipMechanic2 = ПЗП-чип (спогади майстра-механіка)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipElectronics = MRAM-чип (спогади електрика)
+ent-SkillChipElectronics = ПЗП-чип (спогади електрика)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipElectronics2 = MRAM-чип (спогади майстра-електрика)
+ent-SkillChipElectronics2 = ПЗП-чип (спогади майстра-електрика)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipTailor = MRAM-чип (спогади кравця)
+ent-SkillChipTailor = ПЗП-чип (спогади кравця)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipTailor2 = MRAM-чип (спогади майстра-кравця)
+ent-SkillChipTailor2 = ПЗП-чип (спогади майстра-кравця)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipStoner = MRAM-чип (спогади торчка)
+ent-SkillChipStoner = ПЗП-чип (спогади торчка)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipDatabase = MRAM-чип (база креслень)
+ent-SkillChipDatabase = ПЗП-чип (база креслень)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipEducation = MRAM-чип (стандартна освіта клона)
+ent-SkillChipEducation = ПЗП-чип (стандартна освіта клона)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipCombatEducation = MRAM-чип (бойова освіта клона)
+ent-SkillChipCombatEducation = ПЗП-чип (бойова освіта клона)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipEchelonEducation = MRAM-чип (командна освіта клона)
+ent-SkillChipEchelonEducation = ПЗП-чип (командна освіта клона)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipMagLit = MRAM-чип (спогади культиста)
+ent-SkillChipMagLit = ПЗП-чип (спогади культиста)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipJanitor = MRAM-чип (спогади прибиральника)
+ent-SkillChipJanitor = ПЗП-чип (спогади прибиральника)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipClown = MRAM-чип (спогади клоуна)
+ent-SkillChipClown = ПЗП-чип (спогади клоуна)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipDoctor = MRAM-чип (спогади лікаря)
+ent-SkillChipDoctor = ПЗП-чип (спогади лікаря)
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Медична підготовка йде в комплекті з придушувачем агресивних рефлексів.
-ent-SkillChipChemist = MRAM-чип (спогади хіміка)
+ent-SkillChipChemist = ПЗП-чип (спогади хіміка)
     .desc = { ent-SkillChipDoctor.desc }
-ent-SkillChipSurgeon = MRAM-чип (спогади хірурга)
+ent-SkillChipSurgeon = ПЗП-чип (спогади хірурга)
     .desc = { ent-SkillChipDoctor.desc }
-ent-SkillChipCMO = MRAM-чип (спогади головного хірурга)
+ent-SkillChipCMO = ПЗП-чип (спогади головного хірурга)
     .desc = { ent-BaseSkillChipMRAM.desc }
 
-# PSON
+# PSON (ОТРУ)
 
-ent-SkillChipMagicalDampener = PSON-чип (випалення магічного хисту)
+ent-SkillChipMagicalDampener = ОТРУ-чип (випалення магічного хисту)
     .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipCombatDampener = PSON-чип (випалення бойового хисту)
+ent-SkillChipCombatDampener = ОТРУ-чип (випалення бойового хисту)
     .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipMindPurge = PSON-чип (випалення розуму)
+ent-SkillChipMindPurge = ОТРУ-чип (випалення розуму)
     .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipTiderDampener = PSON-чип (нейродемпфер)
+ent-SkillChipTiderDampener = ОТРУ-чип (нейродемпфер)
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей збиває запал. Щоб вийняти його, знадобиться друг.
 
-# HPYS
+# HPYS (СОМА)
 
-ent-SkillChipThrowing = HPYS-чип (координація рук і очей)
+ent-SkillChipThrowing = СОМА-чип (координація рук і очей)
     .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipThrowingTampered = HPYS-чип (підкручена координація рук і очей)
+ent-SkillChipThrowingTampered = СОМА-чип (розігнана координація рук і очей)
     .desc = { ent-BaseSkillChipHPYS.desc }
 
 # Центком
 
-ent-SkillChipDeathSquad = PSON-чип (перезапис: ескадрон смерті)
+ent-SkillChipDeathSquad = ОТРУ-чип (перезапис: ескадрон смерті)
     .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipERT = PSON-чип (перезапис: ЗШР)
+ent-SkillChipERT = ОТРУ-чип (перезапис: ГШР)
     .desc = { ent-BaseSkillChipPSON.desc }
 
 # Антагоністи
 
-ent-SkillChipNukie = MRAM-чип (горлекс)
+ent-SkillChipNukie = ПЗП-чип (горлекс)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipSyndieSoldierTeamLeader = MRAM-чип (командир синдикату)
+ent-SkillChipSyndieSoldierTeamLeader = ПЗП-чип (командир синдикату)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipSyndieSoldier = MRAM-чип (боєць синдикату)
+ent-SkillChipSyndieSoldier = ПЗП-чип (боєць синдикату)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipSyndieVisitor = MRAM-чип (гість синдикату)
+ent-SkillChipFieldMedicine = ПЗП-чип (польова медицина)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipPirateCaptainScooner = MRAM-чип (піратський капітан)
+ent-SkillChipFreelancer = ОТРУ-чип (перезапис: фрілансер)
+    .desc = { ent-BaseSkillChipPSON.desc }
+ent-SkillChipSidearms = ГАРТ-чип (особиста зброя)
+    .desc = { ent-BaseSkillChipAPTR.desc }
+ent-SkillChipSidearmsAdvanced = ГАРТ-чип (особиста зброя: просунутий)
+    .desc = { ent-BaseSkillChipAPTR.desc }
+ent-SkillChipDatabaseBasic = ПЗП-чип (елементарна база креслень)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipPirateScooner = MRAM-чип (пірат)
+ent-SkillChipSyndieMarshal = ПЗП-чип (маршал синдикату)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipBlackmarketeer = MRAM-чип (чорний ділок)
+ent-SkillChipSyndieVisitor = ПЗП-чип (гість синдикату)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipCossack = MRAM-чип (козак)
+ent-SkillChipPirateCaptainScooner = ПЗП-чип (піратський капітан)
+    .desc = { ent-BaseSkillChipMRAM.desc }
+ent-SkillChipPirateScooner = ПЗП-чип (пірат)
+    .desc = { ent-BaseSkillChipMRAM.desc }
+ent-SkillChipBlackmarketeer = ПЗП-чип (чорний ділок)
+    .desc = { ent-BaseSkillChipMRAM.desc }
+ent-SkillChipCossack = ПЗП-чип (козак)
     .desc = { ent-BaseSkillChipMRAM.desc }

@@ -19,6 +19,6 @@ public sealed partial class HumanoidProfileEditor
     private void UpdatePirateKnowledgeEditor()
     {
         if (Profile is not null)
-            KnowledgeEditor.SetProfile(Profile.Species, Profile.Knowledge);
+            KnowledgeEditor.SetProfile(Profile);
     }
 }

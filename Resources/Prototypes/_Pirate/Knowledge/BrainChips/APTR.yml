@@ -10,6 +10,25 @@
 
 - type: entity
   parent: BaseSkillChipAPTR
+  id: SkillChipSidearms
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsPistol: 28
+      KnowledgeWeaponsLaser: 28
+
+- type: entity
+  parent: BaseSkillChipAPTR
+  id: SkillChipSidearmsAdvanced
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsPistol: 50
+      KnowledgeWeaponsLaser: 50
+      ShootingKnowledge: 50
+
+- type: entity
+  parent: BaseSkillChipAPTR
   id: SkillChipLaser
   components:
   - type: KnowledgeGrantOnWear

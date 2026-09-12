@@ -71,8 +71,8 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipCombatEducation
-    - SkillChipLaser
-    - SkillChipPistol
+    - SkillChipSidearmsAdvanced
+    - SkillChipFieldMedicine
   # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, BluespaceLifelineImplant ] # Go big, or go home.

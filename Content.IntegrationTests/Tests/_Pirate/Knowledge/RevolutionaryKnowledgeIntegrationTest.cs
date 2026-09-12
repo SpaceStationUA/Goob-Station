@@ -5,7 +5,9 @@ using System.Linq;
 using Content.Shared._Pirate.EntityEffects.Knowledge;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared._Pirate.Revolutionary;
+using Content.Pirate.Shared.Revolutionary.Components;
 using Content.Shared.EntityEffects;
+using Content.Shared.Mindshield.Components;
 using Content.Shared.Revolutionary.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -43,12 +45,61 @@ public sealed class RevolutionaryKnowledgeIntegrationTest
             var learned = knowledge.GetKnowledge(store.Value, RevolutionaryKnowledgeSystem.RevolutionaryKnowledge);
             Assert.That(learned, Is.Not.Null,
                 "Revolutionaries must receive RevolutionaryKnowledge, or every rev recipe is uncraftable.");
-            Assert.That(learned!.Value.Comp.LearnedLevel, Is.EqualTo(100),
-                "Rev recipes ask for mastery well above zero.");
+            Assert.That(learned!.Value.Comp.LearnedLevel, Is.EqualTo(RevolutionaryKnowledgeSystem.RevLevel),
+                "The rank and file start at their own rung.");
 
-            entMan.RemoveComponent<RevolutionaryComponent>(human);
+            entMan.AddComponent<RevolutionaryLieutenantComponent>(human);
+            Assert.That(learned.Value.Comp.LearnedLevel, Is.EqualTo(RevolutionaryKnowledgeSystem.LieutenantLevel),
+                "A lieutenant should outrank the rank and file.");
+
+            entMan.RemoveComponent<RevolutionaryLieutenantComponent>(human);
+            Assert.That(learned.Value.Comp.LearnedLevel, Is.EqualTo(RevolutionaryKnowledgeSystem.RevLevel),
+                "A demoted lieutenant keeps only what an ordinary revolutionary knows.");
+
+            var headRev = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            entMan.AddComponent<RevolutionaryComponent>(headRev);
+            entMan.AddComponent<HeadRevolutionaryComponent>(headRev);
+            var headStore = knowledge.GetContainer(headRev);
+            Assert.That(
+                knowledge.GetKnowledge(headStore!.Value, RevolutionaryKnowledgeSystem.RevolutionaryKnowledge)!
+                    .Value.Comp.LearnedLevel,
+                Is.EqualTo(RevolutionaryKnowledgeSystem.HeadLevel),
+                "Head revolutionaries should hold the top rung.");
+
+            entMan.AddComponent<MindShieldComponent>(human);
+
+            Assert.That(entMan.HasComponent<RevolutionaryComponent>(human), Is.False,
+                "A mindshield should have deconverted this revolutionary.");
             Assert.That(knowledge.GetKnowledge(store.Value, RevolutionaryKnowledgeSystem.RevolutionaryKnowledge),
-                Is.Null, "A deconverted revolutionary must forget how to build revolutionary gear.");
+                Is.Null, "A mindshielded revolutionary must forget how to build revolutionary gear.");
+
+            var deconverted = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            entMan.AddComponent<RevolutionaryComponent>(deconverted);
+            var deconvertedStore = knowledge.GetContainer(deconverted)!.Value;
+            Assert.That(
+                knowledge.GetKnowledge(deconvertedStore, RevolutionaryKnowledgeSystem.RevolutionaryKnowledge),
+                Is.Not.Null);
+
+            entMan.RemoveComponent<RevolutionaryComponent>(deconverted);
+            Assert.That(
+                knowledge.GetKnowledge(deconvertedStore, RevolutionaryKnowledgeSystem.RevolutionaryKnowledge),
+                Is.Null,
+                "A revolutionary deconverted by the rule must forget how to build revolutionary gear.");
+
+            var exLieutenant = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            entMan.AddComponent<RevolutionaryComponent>(exLieutenant);
+            entMan.AddComponent<RevolutionaryLieutenantComponent>(exLieutenant);
+            var exStore = knowledge.GetContainer(exLieutenant)!.Value;
+            Assert.That(
+                knowledge.GetKnowledge(exStore, RevolutionaryKnowledgeSystem.RevolutionaryKnowledge)!
+                    .Value.Comp.LearnedLevel,
+                Is.EqualTo(RevolutionaryKnowledgeSystem.LieutenantLevel));
+
+            entMan.RemoveComponent<RevolutionaryComponent>(exLieutenant);
+            Assert.That(
+                knowledge.GetKnowledge(exStore, RevolutionaryKnowledgeSystem.RevolutionaryKnowledge),
+                Is.Null,
+                "A deconverted lieutenant must lose the knowledge outright, not fall back to 75.");
         });
 
         await pair.CleanReturnAsync();

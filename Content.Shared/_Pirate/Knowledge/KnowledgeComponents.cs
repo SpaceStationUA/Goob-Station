@@ -91,4 +91,7 @@ public sealed partial class KnowledgeContainerComponent : Component
 
     [DataField, AutoNetworkedField]
     public Dictionary<EntProtoId, EntityUid> Knowledge = new();
+
+    [DataField]
+    public bool ProfileApplied;
 }

@@ -4,11 +4,6 @@
   name: job-name-squidgame-player
   description: job-description-squidgame-player
   playTimeTracker: JobSquidGamePlayer
-  special:
-  - !type:OrganChipsSpecial
-    chips:
-    - SkillChipTiderDampener
-    - SkillChipEducation
   startingGear: SquidGamePlayer
   icon: "JobIconSquidGamePlayer"
   supervisors: job-supervisors-squidgame-guards
@@ -63,6 +58,10 @@
     #    - Thieving
     #    - Voracious
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipTiderDampener
+    - SkillChipEducation
   - !type:AddComponentSpecial
     components:
     - type: MindShield

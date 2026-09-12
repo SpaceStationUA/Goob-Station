@@ -6,5 +6,10 @@
   - Diona
   - Vox
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipFreelancer
+    # Pirate: skill chips end
     - type: Loadout
       prototypes: [ MercenaryGear ]

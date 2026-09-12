@@ -138,6 +138,7 @@ public sealed partial class KnowledgeTab : BoxContainer
                 ("mastery", SharedKnowledgeSystem.GetMasteryString(
                     SharedKnowledgeSystem.GetMastery(info.NetLevel)))),
             StyleClasses = { KnowledgeStyleClasses.SkillDetails },
+            FontColorOverride = KnowledgeStyleColors.ForLevel(info.NetLevel),
         });
         summary.AddChild(labels);
 

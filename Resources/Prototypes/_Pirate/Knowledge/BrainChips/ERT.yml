@@ -86,3 +86,7 @@
       MechanicsKnowledge: 50
       TailoringKnowledge: 50
       JanitorKnowledge: 50
+
+- type: entity
+  parent: SkillChipERT
+  id: SkillChipFreelancer

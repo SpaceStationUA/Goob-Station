@@ -11,28 +11,48 @@ public sealed class RevolutionaryKnowledgeSystem : EntitySystem
 
     public static readonly EntProtoId RevolutionaryKnowledge = "RevolutionaryKnowledge";
 
+    public const int HeadLevel = 100;
+
+    public const int LieutenantLevel = 88;
+
+    public const int RevLevel = 75;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RevolutionaryComponent, MapInitEvent>(OnRevInit);
-        SubscribeLocalEvent<RevolutionaryComponent, ComponentShutdown>(OnRevShutdown);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, MapInitEvent>(OnHeadRevInit);
+
     }
 
     private void OnRevInit(Entity<RevolutionaryComponent> ent, ref MapInitEvent args)
+        => Grant(ent.Owner, RevLevel);
+
+    private void OnHeadRevInit(Entity<HeadRevolutionaryComponent> ent, ref MapInitEvent args)
+        => Grant(ent.Owner, HeadLevel);
+
+    public void Grant(EntityUid uid, int level)
     {
-        if (_knowledge.GetContainer(ent.Owner) is not { } store)
+        if (_knowledge.GetContainer(uid) is not { } store)
             return;
 
-        _knowledge.EnsureKnowledge(store, RevolutionaryKnowledge, 100, popup: false);
+        _knowledge.EnsureKnowledge(store, RevolutionaryKnowledge, level, popup: false);
     }
 
-    private void OnRevShutdown(Entity<RevolutionaryComponent> ent, ref ComponentShutdown args)
+    public void SetRank(EntityUid uid, int level)
     {
-        // Skip teardown when the entity is already being deleted.
-        if (TerminatingOrDeleted(ent.Owner))
+        if (TerminatingOrDeleted(uid) || _knowledge.GetContainer(uid) is null)
             return;
 
-        _knowledge.RemoveKnowledge(ent.Owner, RevolutionaryKnowledge);
+        _knowledge.SetKnowledgeProgress(uid, RevolutionaryKnowledge, level, 0);
+    }
+
+    public void Forget(EntityUid uid)
+    {
+        if (TerminatingOrDeleted(uid))
+            return;
+
+        _knowledge.RemoveKnowledge(uid, RevolutionaryKnowledge);
     }
 }

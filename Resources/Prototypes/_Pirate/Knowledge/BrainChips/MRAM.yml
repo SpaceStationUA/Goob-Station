@@ -159,6 +159,32 @@
 
 - type: entity
   parent: BaseSkillChipMRAM
+  id: SkillChipFieldMedicine
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      FirstAidKnowledge: 50
+      SurgeryKnowledge: 50
+      ChemistryKnowledge: 50
+
+- type: entity
+  parent: BaseSkillChipMRAM
+  id: SkillChipDatabaseBasic
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      FabricationKnowledge: 25
+      DoorsKnowledge: 25
+      AirlocksKnowledge: 25
+      BotsKnowledge: 25
+      FurnitureKnowledge: 25
+      InfrastructureKnowledge: 25
+      ElectronicsKnowledge: 25
+      WallsKnowledge: 25
+      WindowsKnowledge: 25
+
+- type: entity
+  parent: BaseSkillChipMRAM
   id: SkillChipDatabase
   components:
   - type: KnowledgeGrantOnWear

@@ -65,7 +65,8 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipCombatEducation
-    - SkillChipLaser
+    - SkillChipSidearms
+    - SkillChipShotgun
   # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

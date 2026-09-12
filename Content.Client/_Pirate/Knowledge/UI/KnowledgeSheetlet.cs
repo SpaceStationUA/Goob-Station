@@ -3,6 +3,7 @@
 using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.Stylesheets;
+using Content.Shared._Pirate.Knowledge;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -18,6 +19,24 @@ public static class KnowledgeStyleClasses
     public const string SkillName = "KnowledgeSkillName";
     public const string SkillDetails = "KnowledgeSkillDetails";
     public const string SkillExperience = "KnowledgeSkillExperience";
+}
+
+public static class KnowledgeStyleColors
+{
+    private static readonly Color[] MasteryColors =
+    [
+        Color.FromHex("#7D8490"),
+        Color.FromHex("#79D279"),
+        Color.FromHex("#5ABBEF"),
+        Color.FromHex("#B58CFF"),
+        Color.FromHex("#FFD166"),
+    ];
+
+    public static Color ForLevel(int level)
+    {
+        var mastery = SharedKnowledgeSystem.GetMastery(level);
+        return MasteryColors[Math.Clamp(mastery, 0, MasteryColors.Length - 1)];
+    }
 }
 
 [CommonSheetlet]

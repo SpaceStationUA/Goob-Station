@@ -30,6 +30,7 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipEducation
+    - SkillChipDatabaseBasic
   # Pirate: skill chips end
 
 - type: startingGear

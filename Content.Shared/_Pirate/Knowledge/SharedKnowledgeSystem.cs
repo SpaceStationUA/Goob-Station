@@ -770,6 +770,9 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
         EnsureProfileValid(parentId, ref profile);
         ApplyProfile(store, profile, parent.PointsLimit);
+
+        store.Comp.ProfileApplied = true;
+        Dirty(store);
     }
 
     public void ApplyProfile(Entity<KnowledgeContainerComponent> store, KnowledgeProfile profile)

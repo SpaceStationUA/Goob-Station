@@ -15,6 +15,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -30,6 +31,7 @@ public sealed class KnowledgeUiIntegrationTest
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var client = pair.Client;
+        var loc = client.ResolveDependency<ILocalizationManager>();
         KnowledgeProfileEditor editor = null!;
         KnowledgeProfile? applied = null;
         var applyCount = 0;
@@ -41,6 +43,7 @@ public sealed class KnowledgeUiIntegrationTest
         Button resetButton = null!;
         BoxContainer skills = null!;
         Label pointsLabel = null!;
+        Label firstAidLevel = null!;
 
         await client.WaitAssertion(() =>
         {
@@ -55,12 +58,25 @@ public sealed class KnowledgeUiIntegrationTest
             resetButton = FindNamed<Button>(editor, "ResetButton");
             skills = FindNamed<BoxContainer>(editor, "Skills");
             pointsLabel = FindNamed<Label>(editor, "PointsLabel");
+            firstAidLevel = FindNamed<Label>(editor, "SkillLevelFirstAidKnowledge");
 
             Assert.Multiple(() =>
             {
                 Assert.That(skills.ChildCount, Is.GreaterThan(0));
                 Assert.That(saveButton.Disabled, Is.True);
                 Assert.That(resetButton.Disabled, Is.True);
+                Assert.That(firstAidLevel.FontColorOverride, Is.EqualTo(KnowledgeStyleColors.ForLevel(0)));
+                Assert.That(FindNamed<BoxContainer>(editor, "Legend").ChildCount, Is.EqualTo(5));
+                Assert.That(FindNamed<PanelContainer>(editor, "SkillBarFirstAidKnowledge"), Is.Not.Null);
+                Assert.That(
+                    FindNamed<PanelContainer>(editor, "SkillRowFirstAidKnowledge").ToolTip,
+                    Does.Contain(loc.GetString(
+                        "knowledge-editor-breakdown",
+                        ("profile", 0),
+                        ("job", "0"),
+                        ("employer", "0"),
+                        ("total", 0))));
+                Assert.That(TryFindNamed<Label>(editor, "PreviewLabel", out _), Is.False);
             });
 
             (firstAidDecrease, firstAidIncrease) = GetSkillButtons(client.ProtoMan, skills, "FirstAidKnowledge");
@@ -76,6 +92,7 @@ public sealed class KnowledgeUiIntegrationTest
                 Assert.That(resetButton.Disabled, Is.False);
                 Assert.That(pointsLabel.Text, Does.Contain("9"));
                 Assert.That(firstAidDecrease.Disabled, Is.False);
+                Assert.That(firstAidLevel.FontColorOverride, Is.EqualTo(KnowledgeStyleColors.ForLevel(25)));
             });
         });
 
@@ -243,6 +260,7 @@ public sealed class KnowledgeUiIntegrationTest
                 Assert.That(labels[0].Text, Is.EqualTo(knowledge.GetKnowledgeInfo(firstAid.Value).Name));
                 Assert.That(labels[1].Text, Does.Contain("50"));
                 Assert.That(labels[1].Text, Does.Contain(SharedKnowledgeSystem.GetMasteryString(2)));
+                Assert.That(labels[1].FontColorOverride, Is.EqualTo(KnowledgeStyleColors.ForLevel(50)));
                 Assert.That(progress.MinValue, Is.Zero);
                 Assert.That(progress.MaxValue, Is.EqualTo(19));
                 Assert.That(progress.Value, Is.EqualTo(7));
@@ -488,12 +506,10 @@ public sealed class KnowledgeUiIntegrationTest
         BoxContainer skills,
         EntProtoId id)
     {
-        var expectedName = prototypes.Index<EntityPrototype>(id).Name;
-        var row = skills.Children
-            .OfType<BoxContainer>()
-            .Single(control => control.Children.FirstOrDefault() is Label label && label.Text == expectedName);
-        var children = row.Children.ToArray();
-        return ((Button) children[1], (Button) children[3]);
+        _ = prototypes.Index<EntityPrototype>(id);
+        return (
+            FindNamed<Button>(skills, $"Decrease{id}"),
+            FindNamed<Button>(skills, $"Increase{id}"));
     }
 
     private static string GetSkillName(PanelContainer row)

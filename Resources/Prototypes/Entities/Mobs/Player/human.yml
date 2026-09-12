@@ -68,11 +68,9 @@
   suffix: Human, NukeOps
   components:
   # Pirate: skill chips start
-  - type: TriggerOnSpawn
-  - type: EntityEffectOnTrigger
-    effects:
-    - !type:InstallOrganChip
-      chip: SkillChipNukie
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipNukie
   # Pirate: skill chips end
   - type: NukeOperative
   - type: RandomMetadata
@@ -91,11 +89,9 @@
   components:
   # Pirate: skill chips start - the rule covers rule-spawned nukies, this covers the mob
   # being spawned directly (admin spawn, maps, any hookup that bypasses the rule).
-  - type: TriggerOnSpawn
-  - type: EntityEffectOnTrigger
-    effects:
-    - !type:InstallOrganChip
-      chip: SkillChipNukie
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipNukie
   # Pirate: skill chips end
   - type: NukeOperative
   - type: RandomHumanoidAppearance

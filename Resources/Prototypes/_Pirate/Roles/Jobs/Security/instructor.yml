@@ -42,7 +42,7 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipCombatEducation
-    - SkillChipLaser
+    - SkillChipSidearmsAdvanced
     - SkillChipNonLethal
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

@@ -22,15 +22,11 @@
   parent: VisitorHead
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
-      - !type:InstallOrganChip
-        chip: SkillChipLaser
-      - !type:InstallOrganChip
-        chip: SkillChipLongBlade
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+      - SkillChipLaser
+      - SkillChipLongBlade
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-captain
@@ -44,15 +40,11 @@
   parent: VisitorHead
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
-      - !type:InstallOrganChip
-        chip: SkillChipDatabase
-      - !type:InstallOrganChip
-        chip: SkillChipTool
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+      - SkillChipDatabase
+      - SkillChipTool
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-ce
@@ -66,15 +58,11 @@
   parent: VisitorHead
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipCMO
-      - !type:InstallOrganChip
-        chip: SkillChipPistol
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCMO
+      - SkillChipPistol
+      - SkillChipEchelonEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-cmo
@@ -88,13 +76,10 @@
   parent: VisitorHead
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
-      - !type:InstallOrganChip
-        chip: SkillChipLaser
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+      - SkillChipLaser
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-hop
@@ -108,13 +93,10 @@
   parent: VisitorHead
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipCombatEducation
-      - !type:InstallOrganChip
-        chip: SkillChipCombatHOS
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipCombatHOS
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-hos
@@ -128,11 +110,9 @@
   parent: VisitorHead
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-rd
@@ -146,15 +126,11 @@
   parent: VisitorHead
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
-      - !type:InstallOrganChip
-        chip: SkillChipUnarmed
-      - !type:InstallOrganChip
-        chip: SkillChipMining
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+      - SkillChipUnarmed
+      - SkillChipMining
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-qm
@@ -182,15 +158,11 @@
   parent: VisitorSecurity
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipCombatEducation
-      - !type:InstallOrganChip
-        chip: SkillChipLaser
-      - !type:InstallOrganChip
-        chip: SkillChipNonLethal
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipLaser
+      - SkillChipNonLethal
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-cadet
@@ -203,15 +175,11 @@
   parent: VisitorSecurity
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipCombatEducation
-      - !type:InstallOrganChip
-        chip: SkillChipLaser
-      - !type:InstallOrganChip
-        chip: SkillChipNonLethal
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipLaser
+      - SkillChipNonLethal
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-security
@@ -224,15 +192,11 @@
   parent: VisitorSecurity
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipCombatEducation
-      - !type:InstallOrganChip
-        chip: SkillChipPistol
-      - !type:InstallOrganChip
-        chip: SkillChipBludgeon
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipPistol
+      - SkillChipBludgeon
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-detective
@@ -245,13 +209,10 @@
   parent: VisitorSecurity
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipCombatEducation
-      - !type:InstallOrganChip
-        chip: SkillChipLaser
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipLaser
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-warden
@@ -277,11 +238,9 @@
   parent: VisitorCargonian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-cargotech
@@ -294,15 +253,11 @@
   parent: VisitorCargonian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipCombatEducation
-      - !type:InstallOrganChip
-        chip: SkillChipMining
-      - !type:InstallOrganChip
-        chip: SkillChipShortBlade
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipMining
+      - SkillChipShortBlade
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-salvagespec
@@ -328,15 +283,11 @@
   parent: VisitorEngineering
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipDatabase
-      - !type:InstallOrganChip
-        chip: SkillChipBludgeon
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDatabase
+      - SkillChipBludgeon
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-atmostech
@@ -349,13 +300,10 @@
   parent: VisitorEngineering
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipDatabase
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDatabase
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-technical-assistant
@@ -368,15 +316,11 @@
   parent: VisitorEngineering
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipDatabase
-      - !type:InstallOrganChip
-        chip: SkillChipTool
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDatabase
+      - SkillChipTool
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-engineer
@@ -402,15 +346,11 @@
   parent: VisitorMedical
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipDoctor
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipSurgeon
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipDoctor
+      - SkillChipEducation
+      - SkillChipSurgeon
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-intern
@@ -423,15 +363,11 @@
   parent: VisitorMedical
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipDoctor
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipSurgeon
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipDoctor
+      - SkillChipEducation
+      - SkillChipSurgeon
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-doctor
@@ -444,15 +380,11 @@
   parent: VisitorMedical
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipDoctor
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipSurgeon
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipDoctor
+      - SkillChipEducation
+      - SkillChipSurgeon
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-paramedic
@@ -465,13 +397,10 @@
   parent: VisitorMedical
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipDoctor
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDoctor
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-medical-virologist-name
@@ -484,13 +413,10 @@
   parent: VisitorMedical
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipDoctor
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDoctor
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-medical-geneticist-name
@@ -503,13 +429,10 @@
   parent: VisitorMedical
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipChemist
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipChemist
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-psychologist
@@ -522,13 +445,10 @@
   parent: VisitorMedical
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipChemist
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipChemist
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-chemist
@@ -541,13 +461,10 @@
   parent: VisitorMedical
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipSurgeon
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipSurgeon
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-medical-dentist-name
@@ -573,11 +490,9 @@
   parent: VisitorScience
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-research-assistant
@@ -590,11 +505,9 @@
   parent: VisitorScience
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-scientist
@@ -645,15 +558,11 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipShotgun
-      - !type:InstallOrganChip
-        chip: SkillChipUnarmed
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipShotgun
+      - SkillChipUnarmed
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-bartender
@@ -666,15 +575,11 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipTool
-      - !type:InstallOrganChip
-        chip: SkillChipStoner
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipTool
+      - SkillChipStoner
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-botanist
@@ -687,13 +592,10 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipUnarmed
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipUnarmed
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-boxer
@@ -706,15 +608,11 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipMarksmanship
-      - !type:InstallOrganChip
-        chip: SkillChipMagLit
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipMarksmanship
+      - SkillChipMagLit
     # Pirate: skill chips end
     - type: BibleUser
     - type: CurseImmune # Goobstation - Wraith
@@ -730,13 +628,10 @@
   parent: VisitorCivilianChef #Goobstation
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipShortBlade
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipShortBlade
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-chef
@@ -750,15 +645,11 @@
   randomizeName: false
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipNonLethal
-      - !type:InstallOrganChip
-        chip: SkillChipClown
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipNonLethal
+      - SkillChipClown
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-clown
@@ -774,15 +665,11 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
-      - !type:InstallOrganChip
-        chip: SkillChipJanitor
-      - !type:InstallOrganChip
-        chip: SkillChipThrowing
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipJanitor
+      - SkillChipThrowing
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-janitor
@@ -795,11 +682,9 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-lawyer
@@ -812,11 +697,9 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-civilian-centcom-lawyer-name
@@ -830,11 +713,9 @@
   parent: VisitorCivilianLibrarian #Goobstation
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipLongBlade
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipLongBlade
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-librarian
@@ -847,11 +728,9 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-musician
@@ -864,11 +743,9 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-musician
@@ -881,11 +758,9 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-musician
@@ -898,11 +773,9 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: MimePowers
     - type: GhostRole
@@ -916,11 +789,9 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-reporter
@@ -933,11 +804,9 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-serviceworker
@@ -950,11 +819,9 @@
   parent: VisitorCivilian
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-zookeeper
@@ -987,11 +854,9 @@
   randomizeName: false
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -1015,11 +880,9 @@
   randomizeName: false
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -1043,11 +906,9 @@
   randomizeName: false
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -1071,11 +932,9 @@
   randomizeName: false
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -1099,11 +958,9 @@
   randomizeName: false
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -1127,11 +984,9 @@
   randomizeName: false
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -1155,11 +1010,9 @@
   randomizeName: false
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEchelonEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
@@ -1187,11 +1040,9 @@
   randomizeName: false
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipEducation
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-cargo-technican-name
@@ -1226,11 +1077,9 @@
   parent: EventHumanoid
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipSyndieSoldierTeamLeader
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipSyndieSoldierTeamLeader
     # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
@@ -1253,11 +1102,9 @@
   parent: EventHumanoid
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipSyndieSoldier
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipSyndieSoldier
     # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
@@ -1280,11 +1127,9 @@
   parent: EventHumanoid
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipSyndieVisitor
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipSyndieVisitor
     # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
@@ -1304,11 +1149,9 @@
   parent: EventHumanoid
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipPirateScooner
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipPirateScooner
     # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
@@ -1330,11 +1173,9 @@
   parent: EventHumanoid
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipPirateCaptainScooner
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipPirateCaptainScooner
     # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
@@ -1358,11 +1199,9 @@
   parent: EventHumanoid
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipBlackmarketeer
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipBlackmarketeer
     # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-blackmarketeer-name
@@ -1381,11 +1220,9 @@
   parent: EventHumanoid
   components:
     # Pirate: skill chips start
-    - type: TriggerOnSpawn
-    - type: EntityEffectOnTrigger
-      effects:
-      - !type:InstallOrganChip
-        chip: SkillChipCossack
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCossack
     # Pirate: skill chips end
     - type: RussianAccent
     - type: ScrambledAccent
