@@ -130,8 +130,12 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
         if (!_prototype.TryIndex<SpeciesPrototype>(speciesId, out var species))
             return;
 
-        _knowledge.ApplyProfile(mob, species.Knowledge, profile.Knowledge);
-        _knowledge.ApplyEmployerBonuses(mob, profile.Employer);
+        // knowledgeable trait start
+        var pointsBonus = Content.Shared._Pirate.Traits.Assorted.KnowledgeableComponent.GetBonusPoints(
+            _prototype,
+            profile.TraitPreferences);
+        // knowledgeable trait end
+        _knowledge.ApplyProfile(mob, species.Knowledge, profile.Knowledge, pointsBonus);
 
         // Rebuild after queued knowledge deletions have run.
         _pendingRestore.Add(mob);

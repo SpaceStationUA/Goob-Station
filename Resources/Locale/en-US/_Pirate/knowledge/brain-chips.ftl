@@ -5,6 +5,7 @@ verb-categories-organ-chips = Chips
 organ-chip-verb-none = No { $organ } chips installed
 organ-chip-verb-remove-known = Remove { $chip }
 organ-chip-verb-remove-unknown = Remove { $organ } chip { $index }
+organ-chip-unchipped = No neural augmentation for brain chips.
 
 organ-chip-insert-start-self = You start slotting a chip into your { $organ }!
 organ-chip-insert-start-other = You start slotting a chip into { CAPITALIZE($target) }'s { $organ }!

@@ -28,7 +28,12 @@ public sealed partial class HumanoidCharacterProfile
         var systems = collection.Resolve<IEntitySystemManager>();
         var knowledge = systems.GetEntitySystem<SharedKnowledgeSystem>();
         var parent = prototypes.Index<SpeciesPrototype>(Species).Knowledge;
-        knowledge.EnsureProfileValid(parent, ref Knowledge);
+        // Pirate start - knowledgeable trait
+        var pointsBonus = Content.Shared._Pirate.Traits.Assorted.KnowledgeableComponent.GetBonusPoints(
+            prototypes,
+            TraitPreferences);
+        // Pirate end - knowledgeable trait
+        knowledge.EnsureProfileValid(parent, ref Knowledge, pointsBonus);
     }
 
     private void AddPirateKnowledgeHash(ref HashCode hash)

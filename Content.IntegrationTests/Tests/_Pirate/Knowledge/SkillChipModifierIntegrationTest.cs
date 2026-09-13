@@ -192,47 +192,6 @@ public sealed class SkillChipModifierIntegrationTest
     }
 
     [Test]
-    public async Task RemovalPreservesTheEmployerBonus()
-    {
-        const string employerId = "IdrisIncorporated";
-        const string employerSkill = "FirstAidKnowledge";
-
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var entMan = server.EntMan;
-        var knowledge = server.System<SharedKnowledgeSystem>();
-        var chips = server.System<OrganChipSystem>();
-
-        await server.WaitAssertion(() =>
-        {
-            var employer =
-                server.ProtoMan.Index<Content.Shared._Pirate.Contractors.Prototypes.EmployerPrototype>(employerId);
-            Assert.That(employer.KnowledgeBonuses.ContainsKey(employerSkill), Is.True,
-                $"{employerId} no longer grants {employerSkill}; pick another employer for this test.");
-
-            var human = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
-            var store = knowledge.EnsureKnowledgeContainer(human);
-            knowledge.EnsureKnowledge(store, employerSkill, 10, popup: false);
-
-            knowledge.ApplyEmployerBonuses(human, employerId);
-            var withEmployer = knowledge.GetKnowledge(store, employerSkill)!.Value.Comp.TemporaryLevel;
-            Assert.That(withEmployer, Is.Not.Zero, "The employer bonus did not apply at all.");
-
-            Assert.That(chips.InstallChip(human, "PirateTestChipFirstAid"), Is.True);
-            Assert.That(knowledge.GetKnowledge(store, employerSkill)!.Value.Comp.TemporaryLevel,
-                Is.EqualTo(withEmployer + 28), "The chip did not stack on top of the employer bonus.");
-
-            RemoveChip(server, human, "PirateTestChipFirstAid");
-            var final = knowledge.GetKnowledge(store, employerSkill)!.Value;
-            Assert.That(final.Comp.TemporaryLevel, Is.EqualTo(withEmployer),
-                "Removing the chip ate the employer bonus.");
-            Assert.That(final.Comp.LearnedLevel, Is.EqualTo(10));
-        });
-
-        await pair.CleanReturnAsync();
-    }
-
-    [Test]
     public async Task DeletedChipIsCleanedDuringReconciliation()
     {
         await using var pair = await PoolManager.GetServerClient();
