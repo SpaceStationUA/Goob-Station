@@ -25,4 +25,11 @@ public sealed partial class PirateCVars
     /// </summary>
     public static readonly CVarDef<string> PirateRoundWipeArt =
         CVarDef.Create("pirate.roundwipe_art", "/Textures/LobbyScreens/toppirates1.webp", CVar.CLIENT);
+
+    /// <summary>
+    ///     Mask variant for the wipe: -1 = random, 0 = dither cells, 1 = staggered
+    ///     bands, 2 = centered circle, 3 = sweep, 4 = precise stripes.
+    /// </summary>
+    public static readonly CVarDef<int> PirateRoundWipeMask =
+        CVarDef.Create("pirate.roundwipe_mask", -1, CVar.CLIENT);
 }

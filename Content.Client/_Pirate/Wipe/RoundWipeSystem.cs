@@ -2,6 +2,8 @@
 
 using Content.Goobstation.Common.CCVar;
 using Content.Shared.GameTicking;
+using Content.Goobstation.Common.CCVar;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Client;
@@ -38,11 +40,10 @@ public sealed class RoundWipeSystem : EntitySystem
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private static readonly TimeSpan Failsafe = TimeSpan.FromSeconds(60);
-    private static readonly TimeSpan ReleaseTime = TimeSpan.FromSeconds(1.4);
+    private static readonly TimeSpan ReleaseTime = TimeSpan.FromSeconds(3);
 
-    // End-of-round case: art holds for this long (dissolving in place), it does not
-    // wait for the next attach.
-    private static readonly TimeSpan RoundEndHold = TimeSpan.FromSeconds(5);
+    // covers idle ("breathing") for this long before the dissolve starts
+    private static readonly TimeSpan Hold = TimeSpan.FromSeconds(1);
 
     // Connection state lives across system re-initialization (content modules
     // re-init on every connect), otherwise a second system instance would spawn a
@@ -73,7 +74,6 @@ public sealed class RoundWipeSystem : EntitySystem
         SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnAttached);
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnDetached);
         SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-        SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEnd);
 
         _config.OnValueChanged(PirateCVars.PirateRoundWipe, v => _enabled = v, invokeImmediately: true);
         _config.OnValueChanged(PirateCVars.PirateRoundWipeArt, v => _artPath = v, invokeImmediately: true);
@@ -106,21 +106,6 @@ public sealed class RoundWipeSystem : EntitySystem
         }
     }
 
-    private void OnRoundEnd(RoundEndMessageEvent msg)
-    {
-        // Round is ending on the server (the "restarting" chat arrives around the
-        // same time): wipe out to a fresh screen for ~5s that covers the restart.
-        // Must be in the round to react; pregame lobby clients just watch it.
-        if (!_enabled)
-            return;
-        if (_player.LocalEntity == null)
-            return;
-        if (_panel != null)
-            return;
-
-        TryStartCover(needAttach: false);
-    }
-
     private void OnJoinGame(TickerJoinGameEvent args)
     {
         if (!_enabled || !_armed)
@@ -142,16 +127,17 @@ public sealed class RoundWipeSystem : EntitySystem
             needAttach = false;
 
         _armed = false;
-        _mode = _random.Next(0, 4);
+        var maskCvar = _config.GetCVar(PirateCVars.PirateRoundWipeMask);
+        _mode = maskCvar >= 0 ? maskCvar : _random.Next(0, 4);
         _seed = (float) _random.NextDouble();
         _coverRealTime = _timing.RealTime;
         _releaseElapsed = TimeSpan.Zero;
         _needAttach = needAttach;
         _attachSeen = !needAttach;
         _panel = new RoundWipeUiPanel(art, _mode, _seed) { Progress = 0f };
-        LayoutContainer.SetAnchorPreset(_panel, LayoutContainer.LayoutPreset.Wide);
         _ui.RootControl.AddChild(_panel);
-        Log.Info($"[WIPE] cover started mode={_mode} needAttach={needAttach}");
+        AnchorsForce();
+        Log.Info($"[WIPE] cover started mask={_mode} art={_artPath} root={_ui.RootControl.Size}");
     }
 
     private void RaisePanel()
@@ -167,6 +153,14 @@ public sealed class RoundWipeSystem : EntitySystem
         {
             _panel.SetPositionLast();
         }
+        AnchorsForce();
+    }
+
+    private static void AnchorsForce()
+    {
+        if (_panel == null)
+            return;
+        LayoutContainer.SetAnchorPreset(_panel, LayoutContainer.LayoutPreset.Wide);
     }
 
     private void StopPanel(string reason)
@@ -183,11 +177,13 @@ public sealed class RoundWipeSystem : EntitySystem
 
     private void OnRoundRestart(RoundRestartCleanupEvent args)
     {
-        // Re-arm for the next join. Round-end covers keep playing over whatever
-        // comes next (the lobby); join covers with a dead load are dropped.
+        // The round teardown ("restart..."): cover the world reset into the next
+        // round/lobby, then arm for the next join. Join covers waiting on a dead
+        // load are dropped.
         if (_panel != null && _needAttach && !_release)
             StopPanel("roundrestart");
         _armed = true;
+        TryStartCover(needAttach: false);
     }
 
     private void OnDetached(LocalPlayerDetachedEvent args)
@@ -205,7 +201,7 @@ public sealed class RoundWipeSystem : EntitySystem
 
         _attachSeen = true;
         // Release only once the hold is done (and the world is attached for join covers).
-        if (!_release && _timing.RealTime - _coverRealTime >= RoundEndHold)
+        if (!_release && _timing.RealTime - _coverRealTime >= Hold)
         {
             _release = true;
             Log.Info($"[WIPE] attach -> release after {(float) (_timing.RealTime - _coverRealTime).TotalSeconds:F3}s");
@@ -235,10 +231,10 @@ public sealed class RoundWipeSystem : EntitySystem
             {
                 // join covers: at least Hold, and only once the player attached;
                 // failsafe guards against stuck loads
-                if ((elapsed >= RoundEndHold && _attachSeen) || elapsed >= Failsafe)
+                if ((elapsed >= Hold && _attachSeen) || elapsed >= Failsafe)
                     _release = true;
             }
-            else if (elapsed >= RoundEndHold)
+            else if (elapsed >= Hold)
             {
                 // round-end covers do not wait for the next attach
                 _release = true;
