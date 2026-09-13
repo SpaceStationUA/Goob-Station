@@ -41,9 +41,11 @@ public sealed class RoundWipeSystem : EntitySystem
 
     private static readonly TimeSpan Failsafe = TimeSpan.FromSeconds(60);
     private static readonly TimeSpan ReleaseTime = TimeSpan.FromSeconds(3);
+    private static TimeSpan HoldSpan => TimeSpan.FromSeconds(_holdCache);
 
     // covers idle ("breathing") for this long before the dissolve starts
-    private static readonly TimeSpan Hold = TimeSpan.FromSeconds(1);
+    // hold is a cvar (pirate.roundwipe_hold), default 1s
+    private static float _holdCache = 1f;
 
     // Connection state lives across system re-initialization (content modules
     // re-init on every connect), otherwise a second system instance would spawn a
@@ -53,7 +55,7 @@ public sealed class RoundWipeSystem : EntitySystem
 
     /// <summary>Whether the wipe is armed. Armed after leaving a round; a cover can
     /// only start while armed, so mid-round re-attaches do nothing.</summary>
-    private static bool _armed;
+    private static bool _armed = true;
 
     private static RoundWipeUiPanel? _panel;
     private static TimeSpan _coverRealTime;
@@ -80,7 +82,11 @@ public sealed class RoundWipeSystem : EntitySystem
         _config.OnValueChanged(PirateCVars.PirateRoundWipeArt, v => _artPath = v, invokeImmediately: true);
 
         _state.OnStateChanged += OnStateChange;
+        _config.OnValueChanged(PirateCVars.PirateRoundWipeTest, v => _testMode = v, invokeImmediately: true);
+        _config.OnValueChanged(PirateCVars.PirateRoundWipeHold, v => _holdCache = v, invokeImmediately: true);
     }
+
+    private static bool _testMode;
 
     private void OnStateChange(StateChangedEventArgs args)
     {
@@ -201,6 +207,14 @@ public sealed class RoundWipeSystem : EntitySystem
     private void OnAttached(LocalPlayerAttachedEvent args)
     {
         Log.Info($"[WIPE] attach armed={_armed} panel={_panel != null}");
+
+        // dev: isolated shader test - force a cover that releases right after the hold
+        if (_panel == null && _testMode && _enabled)
+        {
+            TryStartCover(needAttach: false);
+            return;
+        }
+
         if (_panel == null)
             return;
 
@@ -233,11 +247,11 @@ public sealed class RoundWipeSystem : EntitySystem
                 // the live world, not the loading screen); failsafe guards against
                 // stuck loads
                 if ((_attachRealTime > TimeSpan.Zero
-                     && _timing.RealTime - _attachRealTime >= Hold)
+                     && _timing.RealTime - _attachRealTime >= HoldSpan)
                     || elapsed >= Failsafe)
                     _release = true;
             }
-            else if (elapsed >= Hold)
+            else if (elapsed >= HoldSpan)
             {
                 // round-end covers do not wait for the next attach
                 _release = true;

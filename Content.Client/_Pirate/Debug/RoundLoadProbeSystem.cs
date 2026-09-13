@@ -30,9 +30,18 @@ public sealed class RoundLoadProbeSystem : EntitySystem
 
     private static readonly TimeSpan[] ShotOffsets =
     [
-        TimeSpan.FromMilliseconds(300),
-        TimeSpan.FromMilliseconds(700),
-        TimeSpan.FromMilliseconds(1200)
+        TimeSpan.FromMilliseconds(250),
+        TimeSpan.FromMilliseconds(500),
+        TimeSpan.FromMilliseconds(750),
+        TimeSpan.FromSeconds(1),
+        TimeSpan.FromSeconds(1.25),
+        TimeSpan.FromSeconds(1.5),
+        TimeSpan.FromSeconds(2),
+        TimeSpan.FromSeconds(2.5),
+        TimeSpan.FromSeconds(3),
+        TimeSpan.FromSeconds(3.5),
+        TimeSpan.FromSeconds(4),
+        TimeSpan.FromSeconds(4.5)
     ];
 
     private bool _enabled;
@@ -96,7 +105,6 @@ public sealed class RoundLoadProbeSystem : EntitySystem
         {
             Log.Info($"[PROBE] stable after {since.TotalSeconds:F2}s of attach");
             _stableFrames = int.MinValue;
-            _enabled = false;
         }
     }
 
