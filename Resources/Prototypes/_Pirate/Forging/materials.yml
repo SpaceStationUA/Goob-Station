@@ -35,9 +35,9 @@
 - type: entity
   parent: OreBase
   id: Charcoal
-  name: "деревне вугілля"
+  name: charcoal
   suffix: Full
-  description: "Деревина, випалена з мінімальним доступом кисню; горить значно гарячіше за звичайне дерево."
+  description: Created by burning wood with minimal oxygen, it burns much hotter than wood.
   components:
   - type: Stack
     stackType: Charcoal
@@ -92,9 +92,9 @@
 - type: entity
   parent: MaterialBase
   id: Brick
-  name: "цегла"
+  name: brick
   suffix: Full
-  description: "Теплоізоляційна цегла, придатна для сиродутної печі."
+  description: An insulative brick, perfect for a bloomery.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Materials/materials.rsi

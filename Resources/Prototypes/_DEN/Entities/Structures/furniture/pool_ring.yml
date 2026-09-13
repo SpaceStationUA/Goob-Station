@@ -2,8 +2,8 @@
   abstract: true
   parent: [SeatBase, BaseItem]
   id: BaseSwimRing
-  name: "плавальне кільце"
-  description: "Також відоме як надувний круг, внутрішня камера або водяний пончик. Надувна гумова іграшка для відпочинку на воді."
+  name: swim ring
+  description: Also known as a floatie, or inner tube, or water donut. An inflatable rubber toy for resting on top of the water.
   components:
   - type: Sprite
     sprite: _DEN/Structures/Furniture/pool_ring.rsi
@@ -18,7 +18,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingBlack
-  name: "чорне плавальне кільце"
+  name: black swim ring
   components:
   - type: Sprite
     state: black
@@ -30,7 +30,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingBlue
-  name: "синє плавальне кільце"
+  name: blue swim ring
   components:
   - type: Sprite
     state: blue
@@ -42,7 +42,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingCyan
-  name: "ціанове плавальне кільце"
+  name: cyan swim ring
   components:
   - type: Sprite
     state: cyan
@@ -54,7 +54,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingGreen
-  name: "зелене плавальне кільце"
+  name: green swim ring
   components:
   - type: Sprite
     state: green
@@ -66,7 +66,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingMagenta
-  name: "пурпурове плавальне кільце"
+  name: magenta swim ring
   components:
   - type: Sprite
     state: magenta
@@ -78,7 +78,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingPink
-  name: "рожеве плавальне кільце"
+  name: pink swim ring
   components:
   - type: Sprite
     state: pink
@@ -90,7 +90,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingPurple
-  name: "фіолетове плавальне кільце"
+  name: purple swim ring
   components:
   - type: Sprite
     state: purple
@@ -102,7 +102,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingRainbow
-  name: "райдужне плавальне кільце"
+  name: rainbow swim ring
   components:
   - type: Sprite
     state: rainbow
@@ -114,7 +114,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingRed
-  name: "червоне плавальне кільце"
+  name: red swim ring
   components:
   - type: Sprite
     state: red
@@ -126,7 +126,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingTrans
-  name: "пастельне плавальне кільце"
+  name: pastel swim ring
   components:
   - type: Sprite
     state: trans
@@ -138,7 +138,7 @@
 - type: entity
   parent: BaseSwimRing
   id: SwimRingYellow
-  name: "жовте плавальне кільце"
+  name: yellow swim ring
   components:
   - type: Sprite
     state: yellow

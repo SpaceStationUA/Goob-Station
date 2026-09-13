@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: "кортикальний бурильник"
+  name: Cortical Borer
   parent: SimpleSpaceMobBase
   id: MobCorticalBorer
-  description: "Паразитичний черв, що проникає в мозок носія та відкладає яйця."
+  description: A worm that burrows into brains and lays its eggs.
   components:
   - type: GhostRole
     makeSentient: true
@@ -118,8 +118,8 @@
 - type: entity
   parent: BaseItem
   id: CorticalBorerEgg
-  name: "яйце кортикального бурильника"
-  description: "Воно тривожно вологе й м'яке."
+  name: cortical borer egg
+  description: This egg is disturbingly wet and soft.
   components:
   - type: Sprite
     sprite: _Pirate/Mobs/Aliens/cortical_borer_egg.rsi

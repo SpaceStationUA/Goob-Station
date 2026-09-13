@@ -6,8 +6,8 @@
 - type: entity
   id: ProjectileBloodBoil
   parent: BaseBullet
-  name: "згущена кров"
-  description: "Згусток киплячої крові, наповнений нечестивою силою."
+  name: concentrated blood
+  description: Oh no.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

@@ -3,7 +3,7 @@
 - type: material
   id: BarbedWire
   stackEntity: BarbedWire1
-  name: "materials-barbedwire"
+  name: materials-barbedwire
   unit: materials-unit-roll
   icon: { sprite: /Textures/_Pirate/Objects/Materials/barbwire.rsi, state: icon }
   color: "#929292"
@@ -12,7 +12,7 @@
 - type: material
   id: Whetstone
   stackEntity: Whetstone1
-  name: "materials-whetstone"
+  name: materials-whetstone
   unit: materials-unit-use
   icon: { sprite: _Pirate/Objects/Tools/whetstone.rsi, state: icon }
   color: "#000000"
@@ -21,7 +21,7 @@
 - type: material
   id: Bracing
   stackEntity: WeaponBracing1
-  name: "materials-bracing"
+  name: materials-bracing
   unit: materials-unit-use
   icon: { sprite: _Pirate/Objects/Tools/weaponreinforcement.rsi, state: icon }
   color: "#000000"

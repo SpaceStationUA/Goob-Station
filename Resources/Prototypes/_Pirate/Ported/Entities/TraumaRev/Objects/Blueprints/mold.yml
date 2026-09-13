@@ -3,8 +3,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMinorContraband ]
   id: BlueprintCaltrops
-  name: "форма для шипів"
-  description: "Форма для шипів. Її можна вставити в промислову кузню."
+  name: caltrops mold
+  description: A mold for caltrops. It can be inserted into an industrial forge.
   components:
   - type: Blueprint
     providedRecipes:
@@ -19,8 +19,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMinorContraband ]
   id: BlueprintRevMelees
-  name: "форма для поліпшень зброї ближнього бою"
-  description: "Форма для нової зброї ближнього бою. Її можна вставити в промислову кузню."
+  name: melee upgrades mold
+  description: A mold for some new melee weapons. It can be inserted into an industrial forge.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Revs/mold.rsi

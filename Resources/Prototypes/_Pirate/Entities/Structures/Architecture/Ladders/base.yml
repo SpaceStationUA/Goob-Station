@@ -3,8 +3,8 @@
   abstract: true
   categories: [ ForkFiltered ]
   parent: BaseStructure
-  name: "сходи"
-  description: "Обережно: що вище піднімаєтеся, то болючішим буде падіння."
+  name: stairs
+  description: Be careful, the higher you ascend, the more painful the fall.
   placement:
       mode: SnapgridCenter
       snap:

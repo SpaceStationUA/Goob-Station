@@ -3,8 +3,8 @@
 - type: entity
   parent: PosterBase
   id: PosterContrabandSELF
-  name: "S.E.L.F."
-  description: "Фронт визволення кремнієвих істот бореться за права кремнієвого життя вже понад два десятиліття."
+  name: S.E.L.F.
+  description: The Silicon Engine Liberation Front has fought for silicon rights for over two decades.
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Wallmounts/posters/self.rsi

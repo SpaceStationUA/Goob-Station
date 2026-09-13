@@ -19,7 +19,7 @@
     - Borg
     - Maintenance
   - type: AccessReader
-    access: [["Interdyne"]]
+    access: [["Interdyne"], ["SyndicateAgent"]]
   #- type: ContainerFill - Will be added in a later PR
   #  containers:
   #    board:
@@ -29,6 +29,7 @@
     - Interdyne
     - InterdyneCommand
     - InterdyneOfficer
+    - SyndicateAgent
     - TurretExempt
 
 - type: entity

@@ -1,8 +1,8 @@
 - type: entity
   parent: Welder # Змінено з CMWelder на стандартний Welder з Goob/WizDen
   id: GoobYautjaWelder
-  name: "чужопланетний хімічний зварювач"
-  description: "Складний хімічний зварювальний пристрій. Тримайте подалі від молодняка."
+  name: "прибулецький хімічний зварник"
+  description: "Складний хімічний зварювальний пристрій. Тримайте подалі від молодих."
   suffix: Yautja
   components:
   - type: Sprite
@@ -33,8 +33,8 @@
 - type: entity
   parent: ClothingBeltUtility # Змінено з CMBeltUtility на стандартний для Goob
   id: GoobYautjaToolbelt
-  name: "чужопланетний пояс інструментів"
-  description: "Модульний чужопланетний утилітарний пояс із кріпленнями для польових інструментів."
+  name: "прибулецький пояс інструментів"
+  description: "Модульний прибулецький утилітарний пояс із кліпсами для польових інструментів."
   suffix: Yautja
   components:
   - type: Sprite

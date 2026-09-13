@@ -1,7 +1,7 @@
 - type: entity
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   id: BorgModuleStickyGrenadeLauncher
-  name: "модуль кіборга з гранатометом липких гранат"
+  name: sticky grenade launcher cyborg module
   components:
   - type: Sprite
     layers:
@@ -16,7 +16,7 @@
 - type: entity
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   id: BorgModuleSyndicateDoorControl
-  name: "модуль кіборга для керування дверима"
+  name: door control cyborg module
   components:
   - type: Sprite
     layers:
@@ -33,7 +33,7 @@
 - type: entity
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   id: BorgModuleSyndicateJammer
-  name: "модуль кіборга з радіоглушником"
+  name: jammer cyborg module
   components:
   - type: Sprite
     layers:
@@ -48,7 +48,7 @@
 - type: entity
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   id: BorgModuleSyndicateDartgun
-  name: "модуль кіборга з дротикометом"
+  name: dart gun cyborg module
   components:
   - type: Sprite
     layers:
@@ -82,7 +82,7 @@
 - type: entity
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   id: BorgModuleSyndicateTopical
-  name: "модуль кіборга для зовнішнього лікування"
+  name: topical cyborg module
   components:
   - type: Sprite
     layers:
@@ -142,7 +142,7 @@
 - type: entity
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   id: BorgModuleSyndicateSurgery
-  name: "хірургічний модуль кіборга"
+  name: surgery cyborg module
   components:
   - type: Sprite
     layers:
@@ -158,7 +158,7 @@
 - type: entity
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   id: BorgModuleSyndicateRescue
-  name: "рятувальний модуль кіборга"
+  name: rescue cyborg module
   components:
   - type: Sprite
     layers:
@@ -177,7 +177,7 @@
 - type: entity
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   id: BorgModuleSyndicateChameleonProjector
-  name: "модуль кіборга з проєктором-хамелеоном"
+  name: chameleon projector cyborg module
   components:
   - type: Sprite
     layers:

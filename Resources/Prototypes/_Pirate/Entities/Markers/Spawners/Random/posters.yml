@@ -1,7 +1,7 @@
 - type: entity
   parent: MarkerBase
   id: RandomPosterSol
-  name: "випадковий постер Солу"
+  name: Рандомний постер Солу
   suffix: SAN
   components:
   - type: Sprite

@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseStructure
   id: CharcoalForgeUnlit
-  name: "незапалена ковальська піч"
-  description: "Піч на деревному вугіллі, яку треба розпалити."
+  name: unlit charcoal forge
+  description: A charcoal forge, will burn for a long time when lit.
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Forging/forge.rsi
@@ -58,8 +58,8 @@
 - type: entity
   parent: CharcoalForgeUnlit
   id: CharcoalForgeLit
-  name: "ковальська піч"
-  description: "Гаряча піч для нагрівання металу."
+  name: charcoal forge
+  description: A charcoal forge, it will be burning for quite some time.
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Forging/forge.rsi

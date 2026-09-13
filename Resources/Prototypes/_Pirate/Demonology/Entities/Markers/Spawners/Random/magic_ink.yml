@@ -3,7 +3,7 @@
 - type: entity
   parent: MarkerBase
   id: RandomInkSpawner
-  name: "випадкове магічне чорнило"
+  name: random magic ink
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Objects/Enchanting/inks.rsi

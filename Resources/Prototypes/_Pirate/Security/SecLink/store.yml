@@ -17,11 +17,11 @@
 
 # Token entities.
 - type: entity
-  name: "жетон кийка"
+  name: baton token
   parent: [BaseItem, BaseSecurityContraband]
   id: BatonToken
   suffix: 3 BT
-  description: "Жетон для придбання електрокийка через рацію SecLink. Він не має лимонного смаку."
+  description: This is a Baton Token, used in the SecLink radio to purchase a stun baton. It is not lemon flavored.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Security/seclink.rsi
@@ -57,11 +57,11 @@
     count: 5
 
 - type: entity
-  name: "жетон дизейблера"
+  name: disabler token
   parent: [BaseItem, BaseSecurityContraband]
   id: DisablerToken
   suffix: 3 DT
-  description: "Жетон для придбання дизейблера через рацію SecLink. Центральне Командування нагадує, що він неїстівний і не має смаку блакитної малини."
+  description: This is a Disabler Token, used in the SecLink radio to purchase a disabler. CentComm would like to remind you that these tokens are not edible, and that this token is not blue raspberry flavored.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Security/seclink.rsi
@@ -97,11 +97,11 @@
     count: 5
 
 - type: entity
-  name: "жетон спорядження"
+  name: utility token
   parent: [BaseItem, BaseSecurityContraband]
   id: UtilityToken
   suffix: 3 UT
-  description: "Жетон для придбання допоміжного спорядження через рацію SecLink. Після низки «випадкових» госпіталізацій НДВ надало йому штучного виноградного смаку, щоб відбити бажання його їсти."
+  description: This is a Utility Token, used in the SecLink radio to purchase a utility option. Due to several hospitalization from "accidental" consumption, R&D has given this token an artificial grape flavor to dissuade officers from eating it.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Security/seclink.rsi
@@ -214,8 +214,8 @@
 - type: entity
   parent: [BaseItem, StorePresetSeclink, BaseSecurityContraband]
   id: BaseSeclinkRadio
-  name: "рація SecLink"
-  description: "Усередині встановлено мініатюрний телепортатор, що обмінює жетони SecLink на корисне спорядження. Пристрій виглядає підозріло знайомим, але це напевно випадковість."
+  name: SecLink radio
+  description: Housing a miniature teleporter, you can use this to trade your SecLink Tokens for useful equipment! It's a little suspiciously familiar, but it's probably nothing to worry about.
   suffix: 1OfEach
   components:
   - type: SecLinkStore
