@@ -3,10 +3,13 @@
 using Content.Goobstation.Common.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
+using Robust.Client;
 using Robust.Shared.Player;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -14,10 +17,11 @@ using Robust.Shared.Timing;
 namespace Content.Client._Pirate.Wipe;
 
 /// <summary>
-///     Spawns the round-start wipe overlay when the server tells the client to join
-///     the game, covering the world-streaming glitches under a dissolve from the
-///     splash/lobby art into the live view. Releases when the local player attaches
-///     (plus a short pad), or on a failsafe timer.
+///     Spawns the round-start wipe when the client joins a round: a fullscreen art
+///     panel covers the lobby/loading screens, then a world-space overlay dissolves
+///     it into the live game, hiding world-streaming glitches between join and the
+///     first stable frames. Releases when the local player attaches (plus a short
+///     pad), or on a failsafe timer.
 /// </summary>
 public sealed class RoundWipeSystem : EntitySystem
 {
@@ -27,6 +31,8 @@ public sealed class RoundWipeSystem : EntitySystem
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IBaseClient _client = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private bool _enabled;
     private string _artPath = "";
@@ -36,6 +42,9 @@ public sealed class RoundWipeSystem : EntitySystem
     private bool _armed = true;
 
     private RoundWipeOverlay? _overlay;
+
+    /// <summary>Whether a wipe was started by JoinGame (true) or is pending via attach fallback.</summary>
+    private RoundWipeUiPanel? _uiPanel;
 
     public override void Initialize()
     {
@@ -48,21 +57,60 @@ public sealed class RoundWipeSystem : EntitySystem
 
         _config.OnValueChanged(PirateCVars.PirateRoundWipe, v => _enabled = v, invokeImmediately: true);
         _config.OnValueChanged(PirateCVars.PirateRoundWipeArt, v => _artPath = v, invokeImmediately: true);
+
+        _client.RunLevelChanged += OnRunLevelChanged;
+    }
+
+    private void OnRunLevelChanged(object? sender, RunLevelChangedEventArgs args)
+    {
+        if (!_enabled || !_armed)
+            return;
+
+        // Direct connects (lobby disabled) have no JoinGame event; the freeze the wipe
+        // should cover happens while connecting, so cover from the Connected runlevel.
+        if (args.NewLevel == ClientRunLevel.Connected && !_config.GetCVar(CCVars.GameLobbyEnabled))
+        {
+            TryStartCover();
+        }
     }
 
     private void OnJoinGame(TickerJoinGameEvent args)
     {
-        if (!_enabled || !_armed || !TryGetArt(out var art))
+        if (!_enabled || !_armed)
+            return;
+
+        TryStartCover();
+    }
+
+    private void TryStartCover()
+    {
+        if (!TryGetArt(out var art))
             return;
 
         _armed = false;
+        var panel = new RoundWipeUiPanel(art);
+        _uiPanel = panel;
+        _ui.RootControl.AddChild(panel);
+        panel.Visible = true;
+        
+
         StartWipe(art);
+    }
+
+    private void CleanupUiPanel()
+    {
+        if (_uiPanel != null)
+        {
+            _uiPanel.Parent?.RemoveChild(_uiPanel);
+            _uiPanel = null;
+        }
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent args)
     {
         // Returned to lobby (or a new round); re-arm for the next join.
         _armed = true;
+        CleanupUiPanel();
         _overlay?.Release();
     }
 
@@ -70,6 +118,7 @@ public sealed class RoundWipeSystem : EntitySystem
     {
         _lastDetach = _timing.RealTime;
         _armed = true;
+        CleanupUiPanel();
         _overlay?.Release();
     }
 
@@ -109,7 +158,8 @@ public sealed class RoundWipeSystem : EntitySystem
     private void StartWipe(Texture art)
     {
         var mode = _random.Next(0, 4);
-        var overlay = new RoundWipeOverlay(art, (float) _random.NextDouble(), mode)
+        var seed = (float) _random.NextDouble();
+        var overlay = new RoundWipeOverlay(art, seed, mode)
         {
             ZIndex = 100
         };

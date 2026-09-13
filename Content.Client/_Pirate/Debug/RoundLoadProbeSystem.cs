@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
 
+using Robust.Client.ResourceManagement;
+using SixLabors.ImageSharp;
+using System.IO;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -10,6 +15,7 @@ namespace Content.Client._Pirate.Debug;
 /// <summary>
 ///     Dev probe: measures client round-join timeline for the wipe overlay project.
 ///     Logs [PROBE] lines when pirate.roundprobe=true: attach + time until frame pacing stabilizes.
+///     Also dumps a PNG to /tmp/wipe-*.png at attach+delay to verify overlay rendering.
 ///     Client-only measurements, no gameplay effect.
 /// </summary>
 public sealed class RoundLoadProbeSystem : EntitySystem
@@ -22,10 +28,18 @@ public sealed class RoundLoadProbeSystem : EntitySystem
     private static readonly TimeSpan StableThreshold = TimeSpan.FromMilliseconds(50);
     private const int StableFramesRequired = 10;
 
+    private static readonly TimeSpan[] ShotOffsets =
+    [
+        TimeSpan.FromMilliseconds(300),
+        TimeSpan.FromMilliseconds(700),
+        TimeSpan.FromMilliseconds(1200)
+    ];
+
     private bool _enabled;
     private TimeSpan _attachTime;
     private bool _attachLogged;
     private int _stableFrames;
+    private int _nextShot;
 
     public override void Initialize()
     {
@@ -43,6 +57,7 @@ public sealed class RoundLoadProbeSystem : EntitySystem
 
         _attachLogged = true;
         _attachTime = _timing.RealTime;
+        _nextShot = 0;
         Log.Info("[PROBE] attach t=0");
     }
 
@@ -53,6 +68,7 @@ public sealed class RoundLoadProbeSystem : EntitySystem
 
         _attachLogged = false;
         _stableFrames = 0;
+        _nextShot = 0;
         Log.Info("[PROBE] detach");
     }
 
@@ -63,6 +79,14 @@ public sealed class RoundLoadProbeSystem : EntitySystem
         if (!_enabled || !_attachLogged)
             return;
 
+        var since = _timing.RealTime - _attachTime;
+
+        if (_nextShot < ShotOffsets.Length && since >= ShotOffsets[_nextShot])
+        {
+            Capture(_nextShot, since);
+            _nextShot++;
+        }
+
         if (_timing.RealFrameTime <= StableThreshold)
             _stableFrames++;
         else
@@ -70,10 +94,35 @@ public sealed class RoundLoadProbeSystem : EntitySystem
 
         if (_stableFrames >= StableFramesRequired)
         {
-            var elapsed = _timing.RealTime - _attachTime;
-            Log.Info($"[PROBE] stable after {elapsed.TotalSeconds:F2}s of attach");
-            _stableFrames = int.MinValue; // one report per attach
+            Log.Info($"[PROBE] stable after {since.TotalSeconds:F2}s of attach");
+            _stableFrames = int.MinValue;
             _enabled = false;
+        }
+    }
+
+    private void Capture(int idx, TimeSpan since)
+    {
+        try
+        {
+            IoCManager.Resolve<IClyde>().Screenshot(ScreenshotType.Final, img =>
+            {
+                try
+                {
+                    var res = IoCManager.Resolve<IResourceManager>();
+                    var path = new Robust.Shared.Utility.ResPath($"/Screenshots/wipe-shot{idx}.png");
+                    using var fs = res.UserData.Open(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+                    img.SaveAsPng(fs);
+                    Log.Info($"[PROBE] screenshot {idx} at {since.TotalSeconds:F2}s -> {path}");
+                }
+                catch (Exception e)
+                {
+                    Log.Warning($"[PROBE] screenshot fork failed: {e.Message}");
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            Log.Warning($"[PROBE] screenshot failed: {e.Message}");
         }
     }
 }
