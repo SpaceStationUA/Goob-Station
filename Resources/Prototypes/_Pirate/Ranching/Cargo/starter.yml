@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseFlatpack
   id: RanchIncubatorFlatpack
-  name: "флетпак інкубатора"
-  description: "Набір для збирання інкубатора для курячих яєць."
+  name: incubator flatpack
+  description: A flatpack used for constructing a ranching incubator.
   components:
   - type: Flatpack
     entity: RanchIncubator
@@ -12,7 +12,7 @@
 - type: entity
   parent: BaseChemistryBottleFilled
   id: ChemistryBottleNanoMachines
-  name: "пляшка наномашин"
+  name: nanomachine bottle
   suffix: nanomachines
   components:
   - type: Label
@@ -28,8 +28,8 @@
 - type: entity
   parent: CrateLivestock
   id: CratePirateRanchingStarter
-  name: "стартовий ящик птахівника"
-  description: "Містить племінну групу білих курей, яйця та обладнання для початку розведення."
+  name: chicken ranching starter crate
+  description: Contains a breeding flock and the equipment needed to start a chicken ranch.
   components:
   - type: EntityTableContainerFill
     containers:

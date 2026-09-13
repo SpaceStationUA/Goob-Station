@@ -18,7 +18,7 @@
   abstract: true
   parent: BaseForgeItem
   id: BaseMetalScraps
-  description: "Щоб зробити його придатним до використання, потрібно переплавити в сиродутній печі."
+  description: Needs to be melted in a bloomery to be made useful.
   components:
   - type: Construction
     node: scraps
@@ -27,7 +27,7 @@
   abstract: true
   parent: BaseForgeItem
   id: BaseMetalBloom
-  description: "Надайте йому форми ударами молота!"
+  description: Refine it by smashing it with a hammer into shape!
   components:
   - type: Metallic
     workable: true # starts with workable heat out of the bloomery
@@ -69,7 +69,7 @@
 - type: entity
   parent: [ BaseMetalScraps, BaseMetallicBrass ]
   id: BrassScraps
-  name: "латунний брухт"
+  name: brass scraps
   components:
   - type: Tag
     tags:
@@ -84,8 +84,8 @@
 - type: entity
   parent: [ BaseForgeItem, BaseMetallicBrass ]
   id: OverheatedBrass
-  name: "перегріта латунь"
-  description: "Метал перегрівся й став крихким; розбийте його, щоб знову зробити придатним до використання."
+  name: overheated brass
+  description: The metal has overheated and become brittle, smash it apart to make it usable.
   components:
   - type: Damageable
   - type: Destructible
@@ -110,7 +110,7 @@
 - type: entity
   parent: [ BaseWorkableBrass, BaseMetalBloom, BrassOverheatable ]
   id: BrassBloom
-  name: "латунна криця"
+  name: brass bloom
   components:
   - type: Sprite
     layers:
@@ -122,8 +122,8 @@
 - type: entity
   parent: [ BaseWorkableBrass, BaseMetalIngot, BrassOverheatable]
   id: BrassIngot
-  name: "латунний зливок"
-  description: "М'який метал, який можна кувати за відносно низьких температур."
+  name: brass ingot
+  description: A softer piece of metal, can be forged at relatively low temperatures.
   components:
   - type: Sprite
     layers:
@@ -149,8 +149,8 @@
 - type: entity
   parent: [ BaseMetalScraps, BaseMetallicSteel ]
   id: SteelScraps
-  name: "сталевий брухт"
-  description: "Щоб зробити його придатним до використання, потрібно переплавити в сиродутній печі."
+  name: steel scraps
+  description: Needs to be melted in a bloomery to be made useful.
   components:
   - type: Tag
     tags:
@@ -165,8 +165,8 @@
 - type: entity
   parent: [ BaseForgeItem, BaseMetallicSteel ]
   id: OverheatedSteel
-  name: "перегріта сталь"
-  description: "Метал перегрівся й став крихким; розбийте його, щоб знову зробити придатним до використання."
+  name: overheated steel
+  description: The metal has overheated and become brittle, smash it apart to make it usable.
   components:
   - type: Damageable
   - type: Destructible
@@ -191,7 +191,7 @@
 - type: entity
   parent: [ BaseWorkableSteel, BaseMetalBloom, SteelOverheatable ]
   id: SteelBloom
-  name: "сталева криця"
+  name: steel bloom
   components:
   - type: Sprite
     layers:
@@ -204,8 +204,8 @@
 - type: entity
   parent: [ BaseWorkableSteel, BaseMetalIngot, SteelOverheatable ]
   id: SteelIngot
-  name: "сталевий зливок"
-  description: "Міцний метал, який можна кувати за помірно високих температур."
+  name: steel ingot
+  description: A strong piece of metal, can be forged at moderately high temperatures.
   components:
   - type: Sprite
     layers:
@@ -235,8 +235,8 @@
 - type: entity
   parent: [ BaseMetalScraps, BaseMetallicPlasteel ]
   id: PlasteelScraps
-  name: "пласталевий брухт"
-  description: "Щоб зробити його придатним до використання, потрібно переплавити в сиродутній печі."
+  name: plasteel scraps
+  description: Needs to be melted in a bloomery to be made useful.
   components:
   - type: Tag
     tags:
@@ -251,8 +251,8 @@
 - type: entity
   parent: [ BaseForgeItem, BaseMetallicPlasteel ]
   id: OverheatedPlasteel
-  name: "перегріта пласталь"
-  description: "Метал перегрівся й став крихким; розбийте його, щоб знову зробити придатним до використання."
+  name: overheated plasteel
+  description: The metal has overheated and become brittle, smash it apart to make it usable.
   components:
   - type: Damageable
   - type: Destructible
@@ -277,8 +277,8 @@
 - type: entity
   parent: [ BaseWorkablePlasteel, BaseMetalBloom, PlasteelOverheatable ]
   id: PlasteelBloom
-  name: "пласталева криця"
-  description: "Надайте йому форми ударами молота!"
+  name: plasteel bloom
+  description: Refine it by smashing it with a hammer into shape!
   components:
   - type: Sprite
     layers:
@@ -291,8 +291,8 @@
 - type: entity
   parent: [ BaseWorkablePlasteel, BaseMetalIngot, PlasteelOverheatable ]
   id: PlasteelIngot
-  name: "пласталевий зливок"
-  description: "Надзвичайно міцний метал, який можна кувати за екстремальних температур."
+  name: plasteel ingot
+  description: A very robust piece of metal, can be forged at extreme temperatures.
   components:
   - type: Sprite
     layers:
@@ -318,8 +318,8 @@
 - type: entity
   parent: [ BaseMetalScraps, BaseMetallicGold ]
   id: GoldScraps
-  name: "золотий брухт"
-  description: "Його потрібно нагріти й надати форми придатного до використання зливка. Золото не має домішок чи оксидів, тож не потребує кричного переділу."
+  name: gold scraps
+  description: Needs to be heated and shaped into a usable ingot. Gold has no impurities or oxides to need blooming.
   components:
   - type: Sprite
     layers:
@@ -336,7 +336,7 @@
 - type: entity
   parent: MarkerBase
   id: GoldMolten
-  name: "спавнер розплавленого золота"
+  name: molten gold spawner
   components:
   - type: PuddleSpawner
     solution:
@@ -348,8 +348,8 @@
 - type: entity
   parent: [ BaseWorkableGold, BaseMetalIngot, GoldOverheatable ]
   id: GoldIngot
-  name: "золотий зливок"
-  description: "Блискучий і рідкісний метал, який можна кувати за низьких температур. Кайло з нього ви б не робили."
+  name: gold ingot
+  description: A shiny and rare metal, can be forged at low temperatures. You wouldn't make a pickaxe out of this.
   components:
   - type: Sprite
     layers:
@@ -376,8 +376,8 @@
 - type: entity
   parent: [ BaseMetalScraps, BaseMetallicSilver ]
   id: SilverScraps
-  name: "срібний брухт"
-  description: "Його потрібно нагріти й надати форми придатного до використання зливка."
+  name: silver scraps
+  description: Needs to be heated and shaped into a usable ingot.
   components:
   - type: Sprite
     layers:
@@ -394,7 +394,7 @@
 - type: entity
   parent: MarkerBase
   id: SilverMolten
-  name: "спавнер розплавленого срібла"
+  name: molten silver spawner
   components:
   - type: PuddleSpawner
     solution:
@@ -406,8 +406,8 @@
 - type: entity
   parent: [ BaseWorkableSilver, BaseMetalIngot, SilverOverheatable ]
   id: SilverIngot
-  name: "срібний зливок"
-  description: "Блискучий і відносно дешевий метал, який можна кувати за дуже низьких температур."
+  name: silver ingot
+  description: A shiny and relatively cheap metal, can be forged at very low temperatures.
   components:
   - type: Sprite
     layers:
@@ -434,8 +434,8 @@
 - type: entity
   parent: [ BaseForgeItem, AdamantineOverheatable ]
   id: AdamantineScraps
-  name: "адамантиновий брухт"
-  description: "Уламки колись великого витвору дворфійського ремесла; за дуже високої температури вони знову стануть придатними до обробки."
+  name: adamantine scraps
+  description: Fragments of a once great work of craftsdwarfship, with a great deal of heat it could become workable again.
   components:
   - type: Tag
     tags:
@@ -451,8 +451,8 @@
 - type: entity
   parent: [ BaseForgeItem, BaseMetallicAdamantine ]
   id: OverheatedAdamantine
-  name: "перегрітий адамантин"
-  description: "Метал перегрівся й утратив форму; його можна обробити знову, якщо довести до належної температури."
+  name: overheated adamantine
+  description: The metal has overheated and lost it's shape, could be worked again if brought to the right temperature.
   components:
   - type: Sprite
     layers:
@@ -467,8 +467,8 @@
 - type: entity
   parent: [ BaseWorkableAdamantine, BaseMetalIngot, AdamantineOverheatable ]
   id: AdamantineIngot
-  name: "адамантиновий зливок"
-  description: "Метал, про який пишуть частіше, ніж бачать на власні очі; для обробки потребує надзвичайно високої температури."
+  name: adamantine ingot
+  description: A metal that is written about more often than it is seen, requires extreme heat to be workable.
   components:
   - type: Sprite
     layers:

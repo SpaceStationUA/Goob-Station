@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesBootsMantis
-  name: "черевики псіо-екстрасенса" # DeltaV - Rename Forensic Mantis to Psionic Mantis
-  description: "М'які, зручні та придатні для пересіченої місцевості."
+  name: psionic mantis' boots # DeltaV - Rename Forensic Mantis to Psionic Mantis
+  description: Soft, comfortable, and good for rough terrain.
   components:
   - type: Sprite
     sprite: Nyanotrasen/Clothing/Shoes/Boots/mantis_boots.rsi

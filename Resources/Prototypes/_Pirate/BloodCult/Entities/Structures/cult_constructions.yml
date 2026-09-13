@@ -6,8 +6,8 @@
 - type: entity
   id: BloodCultWall
   parent: BaseWall
-  name: "стіна культу"
-  description: "Утримує культ усередині, а екіпаж - зовні."
+  name: cult wall
+  description: Keeps the cult in and the crew out.
   components:
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
@@ -27,8 +27,8 @@
 - type: entity
   id: BloodCultDoor
   parent: BaseMaterialDoor
-  name: "рунічні двері"
-  description: "Важкі двері з дивною сяйливою руною."
+  name: runed door
+  description: A heavy door carrying a strange glowing rune.
   placement:
     mode: SnapgridCenter
   components:

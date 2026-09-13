@@ -1,8 +1,8 @@
 # Construction
 - type: entity
   id: ModularSuitConstruction
-  name: "конструкція модульного костюма"
-  description: "Частково зібраний каркас модульного костюма. Для завершення потребує ядра, частин броні, обшивки та батареї."
+  name: modular construction
+  description: "A partially assembled modular suit frame. Requires a core, armor parts, plating, and a power cell to complete."
   components:
   - type: Animateable
   - type: Clickable
@@ -56,8 +56,8 @@
 - type: entity
   parent: ModularSuitConstruction
   id: ModularSuitConstructionFinished
-  name: "конструкція модульного костюма"
-  description: "Повністю зібраний каркас модульного костюма. Готовий до встановлення обшивки та вставлення батареї."
+  name: modular construction
+  description: "A fully assembled modular suit frame. Ready for plating installation and power cell insertion."
   components:
   - type: Sprite
     state: mod8
@@ -82,8 +82,8 @@
 - type: entity
   parent: BaseModularSuitCore
   id: ModularSuitCoreStandard
-  name: "ядро модульного костюма"
-  description: "Стандартне ядро костюма від «Накамура Інжиніринг». Забезпечує базовий розподіл живлення в модульних костюмах."
+  name: modular suit core
+  description: "Nakamura Engineering's standard suit core. Provides baseline power distribution for modular suits."
   components:
   - type: Sprite
     state: mod-core-standard
@@ -98,8 +98,8 @@
 - type: entity
   parent: BaseModularSuitCore
   id: ModularSuitCorePlasma
-  name: "плазмове ядро модульного костюма"
-  description: "Удосконалене ядро на плазмовому паливі. Має вдвічі більшу місткість за стандартні моделі й ідеально підходить для тривалих операцій."
+  name: modular suit plasma core
+  description: "An advanced plasma-fueled core. Offers twice the capacity of standard models, perfect for extended operations."
   components:
   - type: Sprite
     state: mod-core-plasma
@@ -117,8 +117,8 @@
 - type: entity
   parent: BaseModularSuitCore
   id: ModularSuitCoreInfinite
-  name: "нескінченне ядро модульного костюма"
-  description: "Експериментальне ядро з необмеженим джерелом енергії. Де ви взагалі це взяли?"
+  name: modular suit infinite core
+  description: "An experimental core with an unlimited power source. Where did you even get this?"
   components:
   - type: Sprite
     state: mod-core-infinite
@@ -132,8 +132,8 @@
 - type: entity
   parent: BaseItem
   id: ModularSuitHelmet
-  name: "шолом модульного костюма"
-  description: "Герметичний шолом для модульних костюмів. Захищає голову та містить інтерфейси для візорних модулів."
+  name: modular suit helmet
+  description: "A sealed helmet for modular suits. Provides head protection and houses visor module interfaces."
   components:
   - type: Item
     size: Normal
@@ -152,8 +152,8 @@
 - type: entity
   parent: BaseItem
   id: ModularSuitChestPlate
-  name: "нагрудник модульного костюма"
-  description: "Основна бронепластина модульного костюма. Захищає торс і слугує точкою кріплення для більшості модулів."
+  name: modular suit chestplate
+  description: "The primary armor plate for modular suits. Protects the torso and serves as the mounting point for most modules."
   components:
   - type: Item
     size: Normal
@@ -172,8 +172,8 @@
 - type: entity
   parent: BaseItem
   id: ModularSuitGauntlets
-  name: "рукавиці модульного костюма"
-  description: "Посилені рукавиці з інтегрованими сервосистемами. Дають змогу встановлювати модулі для рук."
+  name: modular suit gauntlets
+  description: "Reinforced gauntlets with integrated servo systems. Allow installation of hand-related modules."
   components:
   - type: Item
     size: Small
@@ -193,8 +193,8 @@
 - type: entity
   parent: BaseItem
   id: ModularSuitBoots
-  name: "чоботи модульного костюма"
-  description: "Герметичні чоботи із системами магнітного кріплення. Слугують основою для модулів мобільності."
+  name: modular suit boots
+  description: "Sealed boots with magnetic anchoring systems. Serve as the foundation for mobility-related modules."
   components:
   - type: Item
     size: Normal
@@ -222,8 +222,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: BasicPlating
-  name: "базова обшивка костюма"
-  description: "Стандартна обшивка від «Накамура Інжиніринг». Забезпечує базовий захист із дещо поліпшеною рухливістю."
+  name: base suit plating
+  description: "Nakamura Engineering's standard plating. Offers baseline protection with slightly improved mobility."
   components:
   - type: Sprite
     state: standard-plating
@@ -234,8 +234,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: CivilianPlating
-  name: "цивільна обшивка костюма"
-  description: "Легка цивільна обшивка. Не захищає від вакууму, зате зовсім не обмежує рухів."
+  name: civilian suit plating
+  description: "Lightweight civilian plating. Offers no vacuum protection, but doesn't hinder movement at all."
   components:
   - type: Sprite
     sprite: *mod-rsi
@@ -247,8 +247,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: ClownPlating
-  name: "клоунська обшивка костюма"
-  description: "Обшивка від «Хонк Лтд.». Захищає від середовищ із низьким вмістом гумору. Більшість технологій витрачено на зниження енергоспоживання."
+  name: clown suit plating
+  description: "Honk Ltd. plating. Protects against low-humor environments. Most of the tech went into reducing power consumption."
   components:
   - type: Sprite
     sprite: *mod-rsi
@@ -260,8 +260,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: EngineeringPlating
-  name: "інженерна обшивка костюма"
-  description: "Класична інженерна обшивка від «Накамура Інжиніринг». Має чудову стійкість до жару й електрики."
+  name: engineering suit plating
+  description: "Nakamura Engineering's classic engineer plating. Features excellent heat and electrical resistance."
   components:
   - type: Sprite
     sprite: *mod-rsi
@@ -273,8 +273,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: AtmosPlating
-  name: "атмосферна обшивка костюма"
-  description: "Спеціалізована обшивка для атмосферних техніків. Забезпечує надзвичайну термостійкість, вищу за стандартні інженерні моделі."
+  name: atmospheric suit plating
+  description: "Specialized plating for atmospheric technicians. Provides extreme thermal resistance beyond standard engineering models."
   components:
   - type: Sprite
     sprite: *mod-rsi
@@ -286,8 +286,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: WhiteEngineeringPlating
-  name: "удосконалена обшивка костюма"
-  description: "Удосконалений інженерний костюм із полірованим білим покриттям. Забезпечує чудовий захист від кислоти й вогню."
+  name: advanced suit plating
+  description: "An upgraded engineering suit with a polished white finish. Offers superior acid and fire protection."
   components:
   - type: Sprite
     sprite: *mod-rsi
@@ -299,8 +299,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: SecurityPlating
-  name: "охоронна обшивка костюма"
-  description: "Охоронна обшивка від «Ападайн Текнолоджіз». Забезпечує високий рівень захисту коштом вантажопідйомності."
+  name: security suit plating
+  description: "Apadyne Technologies security plating. Provides high protection at the cost of carrying capacity."
   components:
   - type: Sprite
     sprite: *mod-rsi
@@ -312,8 +312,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: RedSecurityPlating
-  name: "обшивка костюма вартового"
-  description: "Удосконалена охоронна обшивка. Має посилений захист і кращу рухливість порівняно зі стандартними моделями."
+  name: safeguard suit plating
+  description: "Advanced security plating. Features enhanced protection and mobility compared to standard models."
   components:
   - type: Sprite
     sprite: *mod-rsi
@@ -325,8 +325,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: RescuePlating
-  name: "рятувальна обшивка костюма"
-  description: "Спеціалізована медична обшивка для евакуації з небезпечних середовищ. Має вбудовану систему швидкого перенесення."
+  name: rescue suit plating
+  description: "Specialized medical plating designed for extraction from hazardous environments. Includes an integrated quick-carry system."
   components:
   - type: Sprite
     sprite: *mod-rsi
@@ -338,8 +338,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: MedicalPlating
-  name: "медична обшивка костюма"
-  description: "Легка обшивка від медичної корпорації «ДеФорест». Надає перевагу рухливості, зберігаючи достатній захист."
+  name: medical suit plating
+  description: "DeForest Medical Corporation's lightweight plating. Prioritizes mobility while maintaining adequate protection."
   components:
   - type: Sprite
     sprite: *mod-rsi
@@ -351,8 +351,8 @@
 - type: entity
   parent: BaseModularSuitPlating
   id: RDPlating
-  name: "дослідницька обшивка костюма"
-  description: "Приватна військова обшивка від «Ауссек Арморі» для вибухових досліджень. Громіздка, але забезпечує всебічний захист."
+  name: research suit plating
+  description: "Aussec Armory's private military plating for explosive research. Bulky, but offers comprehensive protection."
   components:
   - type: Sprite
     sprite: *mod-rsi

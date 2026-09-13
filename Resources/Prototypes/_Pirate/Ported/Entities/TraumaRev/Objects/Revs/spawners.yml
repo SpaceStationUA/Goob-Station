@@ -3,8 +3,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMinorContraband ]
   id: RevDropPodTraps
-  name: "маяк десантної капсули (форма для шипів)"
-  description: "Зламує найближчу вантажну капсулу з потрібними предметами й перенаправляє її до вас."
+  name: drop pod beacon (caltrop mold)
+  description: Hacks a nearby shipping pod containing needed items and reroutes it to your location.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Revs/droppodbeacon.rsi
@@ -49,7 +49,7 @@
 - type: entity
   parent: RevDropPodTraps
   id: RevDropPodMelees
-  name: "маяк десантної капсули (форма для поліпшень зброї ближнього бою)"
+  name: drop pod beacon (melee upgrades mold)
   components:
   - type: Destructible
     thresholds:
@@ -69,7 +69,7 @@
   parent: SpawnSupplyEmpty
   id: SpawnPodRevTraps
   categories: [ HideSpawnMenu ]
-  name: "революційна капсула зі шипами"
+  name: rev caltrops pod
   components:
   - type: SpawnOnDespawn
     prototype: BlueprintCaltrops
@@ -78,7 +78,7 @@
   parent: SpawnSupplyEmpty
   id: SpawnPodRevMelees
   categories: [ HideSpawnMenu ]
-  name: "революційна капсула з поліпшеннями зброї ближнього бою"
+  name: rev melee upgrades pod
   components:
   - type: SpawnOnDespawn
     prototype: BlueprintRevMelees

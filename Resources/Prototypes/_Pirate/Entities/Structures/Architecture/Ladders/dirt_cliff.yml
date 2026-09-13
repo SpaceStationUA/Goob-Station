@@ -1,8 +1,8 @@
 - type: entity
   id: CEZLevelsStairsDirtCliffBase
   abstract: true
-  name: "земляний обрив"
-  description: "Грубий земляний обрив, яким можна піднятися між поверхами."
+  name: dirt cliff
+  description: A rough dirt cliff face that can be climbed between floors.
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Architecture/Ladders/dirt_cliff.rsi

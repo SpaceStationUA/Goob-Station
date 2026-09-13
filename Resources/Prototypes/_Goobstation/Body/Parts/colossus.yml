@@ -3,7 +3,7 @@
 # Not parenting this shit to BaseItem cause i dont want this to be an item.
 - type: entity
   id: PartColossus
-  name: "частина тіла Колоса"
+  name: "Colossus body part"
   abstract: true
   components:
   # Goobstation edit start
@@ -108,7 +108,7 @@
 
 - type: entity
   id: ChestColossus
-  name: "груди колоса"
+  name: colossus chest
   parent: [PartColossus]
   components:
   - type: Sprite
@@ -150,7 +150,7 @@
 
 - type: body
   id: ColossusBody
-  name: "тіло колоса"
+  name: colossusbody
   root: chest
   slots:
     chest:

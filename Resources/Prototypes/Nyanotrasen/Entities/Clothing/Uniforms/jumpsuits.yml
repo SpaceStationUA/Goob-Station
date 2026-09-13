@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMantis
-  name: "форма псіо-екстрасенса" # DeltaV - Rename Forensic Mantis to Psionic Mantis
-  description: "Змодельована за зразком стародавньої піхотної форми, ця уніформа забезпечує чудову рухливість у напружених ситуаціях."
+  name: psionic mantis' uniform # DeltaV - Rename Forensic Mantis to Psionic Mantis
+  description: Modeled after an ancient infantry uniform, this uniform has superior mobility for tense situations.
   components:
   - type: Sprite
     sprite: Nyanotrasen/Clothing/Uniforms/Jumpsuit/mantis_uniform.rsi
@@ -12,8 +12,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformSkirtMantis
-  name: "спідниця-комбінезон псіо-екстрасенса" # DeltaV - Rename Forensic Mantis to Psionic Mantis
-  description: "Адаптована зі стародавньої піхотної форми, ця спідниця-комбінезон забезпечує чудову рухливість у напружених ситуаціях."
+  name: psionic mantis' jumpskirt # DeltaV - Rename Forensic Mantis to Psionic Mantis
+  description: Adapted from an ancient infantry uniform, this jumpskirt has superior mobility for tense situations.
   components:
   - type: Sprite
     sprite: Nyanotrasen/Clothing/Uniforms/Jumpskirt/mantis_jumpskirt.rsi

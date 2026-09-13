@@ -4,8 +4,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSodaJerkCap
-  name: "кепка працівника содового бару"
-  description: "Колись мене не сприймали серйозно, аж поки я не став до стійки содового бару."
+  name: soda jerk cap
+  description: I was a wimp before the soda jerk.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/Hats/SodaJerkCap.rsi
@@ -15,8 +15,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSodaJerk
-  name: "уніформа працівника содового бару"
-  description: "Тепер я працюю за содовою стійкою, і всі мене люблять!"
+  name: soda jerk jumpsuit
+  description: Now I'm a jerk, and now everyone loves me!
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/SodaJerk.rsi

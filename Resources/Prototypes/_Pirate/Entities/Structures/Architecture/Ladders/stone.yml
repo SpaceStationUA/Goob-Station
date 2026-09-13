@@ -1,7 +1,7 @@
 - type: entity
   id: CEZLevelsStairsStoneBase
   abstract: true
-  name: "кам'яні сходи"
+  name: stone stairs
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Architecture/Ladders/stone.rsi

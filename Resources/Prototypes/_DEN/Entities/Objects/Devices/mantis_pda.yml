@@ -10,8 +10,8 @@
 - type: entity # TheDen - Changed pretty much everything
   parent: BasePDA
   id: ForensicMantisPDA
-  name: "пДА псіо-екстрасенса"
-  description: "Цей ПДА позначає свого власника як члена Зовнішньої Палати — мантіса, що грецькою означає «провидець». Око на його дисплеї, здається, стежить за кожним, хто наважиться подивитися у відповідь. Його носять у кишені, бо ви не змогли змусити себе повісити цей шмат пластику на пояс."
+  name: mantis PDA
+  description: "This PDA marks its bearer as a member of the Outer Chamber--a mantis, the Greek word for \"seer.\" The eye on its display seems to track whoever dares to look back. Carried in a pocket, because you couldn't bear to hang this hunk of plastic on your belt."
   components:
   - type: Item # I gave them custom sprites so they don't need the color codes that I added later
     sprite: _DEN/Objects/Devices/pda.rsi

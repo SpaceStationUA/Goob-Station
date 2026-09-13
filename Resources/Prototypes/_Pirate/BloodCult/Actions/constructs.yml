@@ -6,8 +6,8 @@
 - type: entity
   id: ActionBloodCultPhaseShift
   parent: BaseAction
-  name: "Фазовий зсув"
-  description: "Прослизніть за завісу, щоб ненадовго проходити крізь стіни й атаки."
+  name: Phase Shift
+  description: Slip beyond the veil for a short time, passing through walls and attacks.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -23,8 +23,8 @@
 - type: entity
   id: ActionBloodCultSummonFloor
   parent: BaseAction
-  name: "Створити підлогу культу"
-  description: "Перетворіть вибрану ділянку підлоги на поверхню культу крові."
+  name: Summon Cult Floor
+  description: Twist the floor into a blood cult surface.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -46,8 +46,8 @@
 - type: entity
   id: ActionBloodCultSummonWall
   parent: BaseAction
-  name: "Мале будівництво"
-  description: "Підніміть у вибраному місці стіну культу."
+  name: Lesser Construction
+  description: Raise a cult wall at the chosen location.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -73,8 +73,8 @@
 - type: entity
   id: ActionBloodCultSummonDoor
   parent: BaseAction
-  name: "Створити двері культу"
-  description: "Підніміть у вибраному місці рунічні двері."
+  name: Summon Cult Door
+  description: Raise a runed door at the chosen location.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -99,8 +99,8 @@
 - type: entity
   id: ActionBloodCultSummonSoulStone
   parent: BaseAction
-  name: "Створити камінь душі"
-  description: "Простягніть волю крізь завісу й створіть камінь для добровільної душі."
+  name: Summon Soul Stone
+  description: Reach through the veil and summon a soul stone seeking a willing spirit.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action

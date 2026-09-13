@@ -3,7 +3,7 @@
 - type: entity
   parent: BaseEnchant
   id: EnchantLaser
-  name: "лазерне зачарування"
+  name: Laser
   components:
   - type: Enchant
     maxLevel: 1

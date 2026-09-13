@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseBullet
   id: BulletStickyGrenade
-  name: "липка граната"
+  name: sticky grenade
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

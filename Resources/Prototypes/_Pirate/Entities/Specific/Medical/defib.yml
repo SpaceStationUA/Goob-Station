@@ -61,8 +61,8 @@
 - type: entity
   id: DefibrillatorBeltCompact
   parent: DefibrillatorBeltBase
-  name: "поясний дефібрилятор"
-  description: "Компактний дефібрилятор із кріпленням на пояс для медиків, яким потрібні вільні руки."
+  name: belt defibrillator
+  description: A compact defibrillator with a belt clip, for medics who need their hands free.
   components:
   - type: DefibrillatorSelfDrain
     drainPerSecond: 0.05
@@ -90,8 +90,8 @@
 - type: entity
   id: DefibrillatorBeltCMO
   parent: [ DefibrillatorBeltBase, BaseCommandContraband ]
-  name: "поясний дефібрилятор головного лікаря"
-  description: "Преміальний поясний дефібрилятор, виданий головному лікарю. Добре поєднується з нагрудним розвантаженням."
+  name: chief medical officer's belt defibrillator
+  description: A premium belt defibrillator issued to the Chief Medical Officer. Pairs well with a chest rig.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Medical/defibcmo.rsi
@@ -128,8 +128,8 @@
 - type: entity
   id: DefibrillatorBeltCombat
   parent: [ DefibrillatorBeltBase, BaseSyndicateContraband ]
-  name: "бойовий поясний дефібрилятор"
-  description: "Міцний червоний поясний дефібрилятор для польових медиків. У скруті згодиться і як електрошокер."
+  name: combat belt defibrillator
+  description: A rugged red belt defibrillator for field medics. Doubles as a taser in a pinch.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Medical/defibcombat.rsi
@@ -165,8 +165,8 @@
 - type: entity
   id: DefibrillatorBeltNT
   parent: [ DefibrillatorBeltCombat, BaseCentcommContraband ]
-  name: "елітний дефібрилятор НаноТрейзен"
-  description: "Найсучасніший поясний дефібрилятор для елітних оперативників НаноТрейзен. Самозарядна батарея, реанімація крізь товстий одяг і вельми болісний розряд."
+  name: elite Nanotrasen defibrillator
+  description: A state-of-the-art belt defibrillator issued to elite Nanotrasen operatives. Self-recharging battery, revives through thick clothing, and can deliver a nasty shock.
   components:
   - type: Contraband
     severity: Restricted
@@ -226,8 +226,8 @@
 - type: entity
   id: DefibrillatorPaddles
   parent: BaseItem
-  name: "електроди дефібрилятора"
-  description: "Пара електродів із пластиковими руків’ями, що завдають потужного розряду. Перш ніж бігти далі, поверніть їх у пояс."
+  name: defibrillator paddles
+  description: A pair of plastic-gripped paddles that deliver a powerful shock. Store them back in your belt before running off.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Medical/defibpaddles.rsi
@@ -243,7 +243,7 @@
 - type: entity
   id: DefibrillatorPaddlesCMO
   parent: DefibrillatorPaddles
-  name: "електроди дефібрилятора головного лікаря"
+  name: CMO defibrillator paddles
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Medical/defibpaddles.rsi
@@ -253,7 +253,7 @@
 - type: entity
   id: DefibrillatorPaddlesCombat
   parent: DefibrillatorPaddles
-  name: "бойові електроди дефібрилятора"
+  name: combat defibrillator paddles
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Medical/defibpaddles_combat.rsi
@@ -282,7 +282,7 @@
 - type: entity
   id: DefibrillatorPaddlesNT
   parent: DefibrillatorPaddles
-  name: "елітні електроди дефібрилятора НаноТрейзен"
+  name: elite Nanotrasen defibrillator paddles
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Medical/defibpaddles_nt.rsi

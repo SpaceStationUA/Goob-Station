@@ -1,8 +1,8 @@
 - type: entity
-  name: "бластерна гвинтівка E-11"
+  name: Зброя штурмовика
   parent: BaseWeaponBatterySmall
   id: WeaponEnergyGunE11
-  description: "Надійна та перевірена часом зброя"
+  description: Надійна та перевірена часом зброя
   suffix: StarWars
   components:
   - type: Sprite

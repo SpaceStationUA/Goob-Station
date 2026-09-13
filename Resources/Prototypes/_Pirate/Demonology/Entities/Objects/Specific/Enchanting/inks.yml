@@ -4,7 +4,7 @@
   abstract: true
   parent: [BaseItem, BaseMagicalContraband]
   id: BaseInk
-  description: "Пляшка магічного чорнила, яке можна використати на сувої для підготовки зачарування або прокляття."
+  description: A vial of magical ink, can be used on a scroll to prepare an enchantment or curse.
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Objects/Enchanting/inks.rsi
@@ -26,7 +26,7 @@
 - type: entity
   parent: BaseItem
   id: MagicInkRandom
-  name: "випадкове магічне чорнило"
+  name: random magic ink
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Objects/Enchanting/inks.rsi
@@ -44,7 +44,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkAshartine
-  name: "ашартин"
+  name: ashartine
   suffix: Sharpness
   components:
   - type: Sprite
@@ -56,7 +56,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkAsimel
-  name: "асимел"
+  name: asimel
   suffix: Fire Aspect
   components:
   - type: Sprite
@@ -68,7 +68,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkAzurapetra
-  name: "азура петра"
+  name: azura petra
   suffix: Fortune
   components:
   - type: Sprite
@@ -80,7 +80,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkCatwink
-  name: "кетвінк"
+  name: catwink
   suffix: Insulated
   components:
   - type: Sprite
@@ -92,7 +92,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkEndozult
-  name: "ендозульт"
+  name: endozult
   suffix: Knockback
   components:
   - type: Sprite
@@ -104,7 +104,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkHithine
-  name: "хітин"
+  name: hithine
   suffix: Lavaforged
   components:
   - type: Sprite
@@ -116,7 +116,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkHoundsgall
-  name: "хаундсґолл"
+  name: houndsgall
   suffix: Protection
   components:
   - type: Sprite
@@ -128,7 +128,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkIndothine
-  name: "індотин"
+  name: indothine
   suffix: Fire Protection
   components:
   - type: Sprite
@@ -140,7 +140,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkMarakat
-  name: "маракат"
+  name: marakat
   suffix: Slippery
   components:
   - type: Sprite
@@ -152,7 +152,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkNillycant
-  name: "нілікант"
+  name: nillycant
   suffix: Thorns
   components:
   - type: Sprite
@@ -164,7 +164,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkNocimat
-  name: "носімат"
+  name: nocimat
   suffix: Unbreaking
   components:
   - type: Sprite
@@ -176,7 +176,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkOrpimentexultant
-  name: "екзальтований орпімент"
+  name: orpiment exultant
   suffix: Unslippable
   components:
   - type: Sprite
@@ -188,7 +188,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkPorphyrine
-  name: "порфірин"
+  name: porphyrine
   suffix: Electrified
   components:
   - type: Sprite
@@ -200,7 +200,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkPosithane
-  name: "позитан"
+  name: posithane
   suffix: Focus
   components:
   - type: Sprite
@@ -211,7 +211,7 @@
 
 - type: entity
   parent: BaseInk
-  name: "піроендін"
+  name: pyroendine
   id: MagicInkPyroendine
   suffix: Laser
   components:
@@ -224,7 +224,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkRaggath
-  name: "раґґат"
+  name: raggath
   suffix: Magic Protection
   components:
   - type: Sprite
@@ -236,7 +236,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkRubiginosus
-  name: "рубігінозус"
+  name: rubiginosus
   suffix: magnetized
   components:
   - type: Sprite
@@ -248,7 +248,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkStargallink
-  name: "старґолл"
+  name: stargall
   suffix: Poison
   components:
   - type: Sprite
@@ -260,7 +260,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkTerragall
-  name: "терраґолл"
+  name: terragall
   suffix: Rotting
   components:
   - type: Sprite
@@ -272,7 +272,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkUnden
-  name: "унден"
+  name: unden
   suffix: Sentience
   components:
   - type: Sprite
@@ -286,7 +286,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkPerhibiate
-  name: "пергібіат"
+  name: perhibiate
   suffix: Curse of Burning
   components:
   - type: Sprite
@@ -298,7 +298,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkPerinsabate
-  name: "перінсабат"
+  name: perinsabate
   suffix: Curse of Clumsy
   components:
   - type: Sprite
@@ -310,7 +310,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkPerinculate
-  name: "перінкулат"
+  name: perinculate
   suffix: Curse of Slowness
   components:
   - type: Sprite
@@ -322,7 +322,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkPurpuraatramentum
-  name: "пурпура атраментум"
+  name: purpura tramentum
   suffix: Curse of Gravity
   components:
   - type: Sprite
@@ -334,7 +334,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkPyrathene
-  name: "піратен"
+  name: pyrathene
   suffix: Curse of Invisibility
   components:
   - type: Sprite
@@ -346,7 +346,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkUzult
-  name: "узульт"
+  name: uzult
   suffix: Curse of Binding
   components:
   - type: Sprite
@@ -358,7 +358,7 @@
 - type: entity
   parent: BaseInk
   id: MagicInkYewgallink
-  name: "юґолл"
+  name: yewgall
   suffix: Curse of Vanishing
   components:
   - type: Sprite

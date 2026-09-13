@@ -49,8 +49,8 @@
   # Pirate: SolutionDart is not a local parent; all solution behavior is explicit below.
   parent: BaseRevForgedWeapon
   id: RevMace
-  name: "кована булава"
-  description: "Міцна булава, що приголомшує ворогів. Вибиває з цілей дух і заважає їм говорити."
+  name: forged mace
+  description: A robust mace, stuns enemies. Knocks the air out of targets and makes them struggle to speak.
   components:
   - type: WeaponClass
     class: NonLethal # perfect for the clown
@@ -91,8 +91,8 @@
 - type: entity
   parent: [BaseRevForgedWeapon, KnifeDurabilitySharpenOnly]
   id: RevSword
-  name: "кований меч"
-  description: "Дворучний меч, що завдає значної шкоди."
+  name: forged sword
+  description: A two handed sword, deals heavy damage.
   components:
   - type: WeaponClass
     class: Sword
@@ -157,8 +157,8 @@
 - type: entity
   parent: BaseRevForgedWeapon
   id: RevPitchfork
-  name: "ковані вила"
-  description: "Великі вила, які можна кидати й які мають збільшену дальність ближнього бою."
+  name: forged pitchfork
+  description: A large pitchfork, can be thrown and has extended melee range.
   components:
   - type: WeaponClass
     class: Polearm
@@ -199,8 +199,8 @@
 - type: entity
   parent: [BaseRevForgedWeapon, KnifeDurabilitySharpenOnly]
   id: RevKnife
-  name: "кований ніж"
-  description: "Невеликий кований ніж. Його легко приховати, можна змастити отрутою та використовувати разом зі щитом."
+  name: forged knife
+  description: A small forged knife. It is concealable, can be tipped with poison and is usable with a shield.
   components:
   - type: WeaponClass
     class: Knife
@@ -282,8 +282,8 @@
 - type: entity
   parent: BaseRevMeleeWeapon
   id: RevTorch
-  name: "бойовий смолоскип"
-  description: "Удосконалений смолоскип зі сталевою головкою. Підпалює ворогів під час удару."
+  name: combat torch
+  description: A refined torch mounted with a steel head. Lights enemies on fire when hit.
   components:
   - type: WeaponClass
     class: Polearm # i imagine youd poke people with it
@@ -314,9 +314,9 @@
 
 - type: entity
   parent: [ BaseItem, BaseRevMinorContraband ]
-  name: "шипи"
+  name: caltrops
   id: Caltrops
-  description: "Зброя-пастка, призначена для розкладання на підлозі. Її можна кинути, щоб швидко закріпити пастку на місці."
+  description: A weapon designed to be laid on the floor as a trap, can be thrown for a quick trap anchored in place.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Revs/caltrops.rsi
@@ -370,8 +370,8 @@
 - type: entity
   parent: BaseRevForgedWeapon
   id: RevMaul
-  name: "кована кувалда"
-  description: "Міцна кувалда, призначена для пробивання броні. Безумовно, не нелетальна зброя."
+  name: forged maul
+  description: A robust maul, designed to hit through armor. Definitely not a non-lethal option.
   components:
   - type: WeaponClass
     class: Bludgeon
@@ -409,8 +409,8 @@
 - type: entity
   parent: BaseRevForgedWeapon
   id: RevKunai
-  name: "кований кунай"
-  description: "Лопатка, яку часто кидають фанати аніме; у вправних руках здатна на багато. Червоне руків'я відлякує демонів."
+  name: forged kunai
+  description: A shovel often thrown by weebs, capable of a lot if you know what you're doing. The red handle wards off demons.
   components:
   - type: WeaponClass
     class: Knife

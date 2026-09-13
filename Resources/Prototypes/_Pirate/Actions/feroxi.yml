@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseAction
   id: ActionSharkVisionPulse
-  name: "Відчути кров у воді"
-  description: "Дозволяє відчувати кров і тих, хто стікає кров'ю."
+  name: Sense Blood in the Water
+  description: Enables you to sense blood and those who are bleeding.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -20,8 +20,8 @@
 - type: entity
   parent: BaseToggleAction
   id: ActionFeroxiDive
-  name: "Пірнути"
-  description: "Зануритись під воду. Над поверхнею залишається тільки спинний плавець, ти пливеш на 50% швидше, б'єш без зброї удвічі сильніше, а твої кроки стають безшумними."
+  name: Dive
+  description: Slip beneath the surface. Only your dorsal fin stays visible, you swim 50% faster, your unarmed strikes hit twice as hard, and your footsteps fall silent.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -32,8 +32,8 @@
 - type: entity
   parent: BaseToggleAction
   id: ActionFeroxiSurface
-  name: "Виринути"
-  description: "Піднятись назад із води. Ти виринаєш сам, якщо покидаєш воду, якщо тебе збили з ніг або важко поранили."
+  name: Surface
+  description: Rise back out of the water. You surface on your own if you leave the water, or if you are knocked down or badly hurt.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action

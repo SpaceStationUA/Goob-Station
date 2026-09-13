@@ -55,7 +55,7 @@
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetMercenary
   name: "шолом МОД-костюма «Гекон»"
-  description: "Легкий шолом із теплим бурштиновим світлом візора: ставка на швидкість, а не на витривалість. Подряпини на щелепі підказують, що попередньому власникові щастило не завжди."
+  description: "Легкий шолом із теплим бурштиновим світлом візора - ставка на швидкість, а не на витривалість. Подряпини на щелепі підказують, що попередньому власникові щастило не завжди."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -119,7 +119,7 @@
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateMercenary
   name: "нагрудник МОД-костюма «Гекон»"
-  description: "Композитна бронепластина, з якої не раз зафарбовували емблеми приватних армій. Свою справу знає, а чиї це тепер кольори, краще не питати."
+  description: "Композитна бронепластина, з якої не раз зафарбовували емблеми приватних армій. Свою справу знає, а от чиї це кольори тепер - краще не питати."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -164,7 +164,7 @@
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsMercenary
   name: "рукавиці МОД-костюма «Гекон»"
-  description: "Рукавиці з частковою ізоляцією та стертими до блиску накладками на пальцях. Розраховані радше на надійне утримання зброї, ніж на роботу з проводкою."
+  description: "Рукавиці з частковою ізоляцією та стертими до блиску накладками на пальцях. Розраховані радше на надійний хват зброї, ніж на роботу з проводкою."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -193,7 +193,7 @@
   parent: ClothingModularBootsBase
   id: ClothingModularBootsMercenary
   name: "чоботи МОД-костюма «Гекон»"
-  description: "Броньовані чоботи з протектором, стертим на десятку різних планет. Пахнуть пилом, машинним маслом і чужими грошима."
+  description: "Броньовані чоботи з протектором, збитим на десятку різних планет. Пахнуть пилом, машинним маслом і чужими грошима."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

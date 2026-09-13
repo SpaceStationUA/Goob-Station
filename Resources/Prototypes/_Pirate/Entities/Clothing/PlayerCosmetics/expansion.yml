@@ -6,8 +6,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionFlamingHalo
-  name: "полум'яний німб"
-  description: "Живе кільце золотого полум'я, що ширяє над головою."
+  name: flaming halo
+  description: A living ring of golden flame that hovers above the wearer.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Head/lustrohalo.rsi
@@ -24,8 +24,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionBlackCatEars
-  name: "анімовані чорні котячі вушка"
-  description: "Чорні котячі вушка, що час від часу ворушаться самі."
+  name: animated black cat ears
+  description: Black cat ears that twitch with a life of their own.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/blackcatears.rsi
@@ -35,8 +35,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionVoidWizardHood
-  name: "каптур чаклуна порожнечі"
-  description: "Інкрустований самоцвітами каптур, оживлений фіолетовою магією."
+  name: void wizard hood
+  description: A gem-set hood animated by deep violet magic.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/wizard.rsi
@@ -46,8 +46,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionPyromancerHood
-  name: "каптур піроманта"
-  description: "Палаючий каптур із поглядом кольору жарин."
+  name: pyromancer hood
+  description: A blazing hood with an ember-bright gaze.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/wizardfire.rsi
@@ -57,8 +57,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionCryomancerHood
-  name: "каптур кріоманта"
-  description: "Крижаний каптур із холодним блакитним сяйвом."
+  name: cryomancer hood
+  description: An icy hood with a cold blue glow.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Head/wizardfrost.rsi
@@ -68,8 +68,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathChamomile
-  name: "ромашковий вінок"
-  description: "Сонячний вінок із квітів ромашки."
+  name: chamomile wreath
+  description: A sunny wreath of chamomile flowers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/chamomile.rsi
@@ -79,8 +79,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathCornflower
-  name: "волошковий вінок"
-  description: "Ніжний вінок із синіх волошок."
+  name: cornflower wreath
+  description: A delicate wreath of blue cornflowers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/cornflower.rsi
@@ -90,8 +90,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathGeranium
-  name: "вінок із герані"
-  description: "Яскравий вінок із рожевих квітів герані."
+  name: geranium wreath
+  description: A vivid wreath of pink geranium blossoms.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/geranium.rsi
@@ -101,8 +101,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathLilyOfTheValley
-  name: "вінок із конвалій"
-  description: "Вінок із крихітних білих дзвіночків конвалії."
+  name: lily of the valley wreath
+  description: A wreath of tiny white lily bells.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/lily_of_the_valley.rsi
@@ -112,8 +112,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathPeony
-  name: "півонієвий вінок"
-  description: "Пишний вінок із великих квітів півонії."
+  name: peony wreath
+  description: A lush wreath of full peony blooms.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/peony.rsi
@@ -123,8 +123,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathPinkLily
-  name: "вінок із рожевих лілій"
-  description: "Ніжний вінок із рожевих лілій."
+  name: pink lily wreath
+  description: A soft wreath of pink lilies.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_lily.rsi
@@ -134,8 +134,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathPinkTulip
-  name: "вінок із рожевих тюльпанів"
-  description: "Витончений вінок із рожевих тюльпанів."
+  name: pink tulip wreath
+  description: A graceful wreath of pink tulips.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_tulip.rsi
@@ -145,8 +145,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathRedRose
-  name: "вінок із червоних троянд"
-  description: "Пристрасний вінок із темно-червоних троянд."
+  name: red rose wreath
+  description: A passionate wreath of deep red roses.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/red_rose.rsi
@@ -156,8 +156,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathSunflower
-  name: "соняшниковий вінок"
-  description: "Веселий вінок із яскравих соняшників."
+  name: sunflower wreath
+  description: A cheerful wreath of bright sunflowers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/sunflower.rsi
@@ -167,8 +167,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathWhiteLily
-  name: "вінок із білих лілій"
-  description: "Елегантний вінок із чистих білих лілій."
+  name: white lily wreath
+  description: An elegant wreath of white lilies.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_lily.rsi
@@ -178,8 +178,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathWhiteRose
-  name: "вінок із білих троянд"
-  description: "Бездоганний вінок із білих троянд."
+  name: white rose wreath
+  description: A pristine wreath of white roses.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_rose.rsi
@@ -189,8 +189,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWreathYellowTulip
-  name: "вінок із жовтих тюльпанів"
-  description: "Яскравий вінок із золотавих тюльпанів."
+  name: yellow tulip wreath
+  description: A vibrant wreath of golden tulips.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/yellow_tulip.rsi
@@ -200,8 +200,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionFlyAgaricHat
-  name: "капелюх-мухомор"
-  description: "Яскрава шапинка гриба, перетворена на капелюх."
+  name: fly agaric hat
+  description: A bright mushroom cap fashioned into a hat.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Misc/fly_agaric_hat.rsi
@@ -211,8 +211,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionCowHorns
-  name: "прикрашені коров'ячі ріжки"
-  description: "Невеликі коров'ячі ріжки з тендітними прикрасами."
+  name: decorated cow horns
+  description: Small cow horns dressed up with delicate accessories.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Misc/cow_horns.rsi
@@ -222,8 +222,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionDemonHorns
-  name: "демонічні роги"
-  description: "Вигнуті чорні роги з пустотливим маленьким хвостиком."
+  name: demon horns
+  description: Curved black horns with a mischievous little tail.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Misc/demon_horns.rsi
@@ -234,8 +234,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionTechpriestHood
-  name: "каптур техножерця"
-  description: "Суворий червоний каптур, оздоблений кабелями й металом."
+  name: tech-priest hood
+  description: A severe red hood trimmed with cables and metal.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Head/chaplain_techpriest_hood.rsi
@@ -245,8 +245,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: PirateExpansionWitchHunterHat
-  name: "капелюх мисливця на відьом"
-  description: "Широкий чорний капелюх із суворою червоною стрічкою."
+  name: witch hunter hat
+  description: A broad black hat with a stern red band.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Head/witchunterhat.rsi
@@ -257,8 +257,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: PirateExpansionAngelPin
-  name: "значок ангела"
-  description: "Маленький анімований ангел на згадку про добрі вчинки."
+  name: angel pin
+  description: A tiny animated angel marking a trail of good deeds.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Neck/angeldevil.rsi
@@ -270,8 +270,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: PirateExpansionDevilPin
-  name: "значок диявола"
-  description: "Маленький анімований диявол, що радіє кожному сумнівному вчинку."
+  name: devil pin
+  description: A tiny animated devil celebrating every questionable deed.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Neck/angeldevil.rsi
@@ -283,8 +283,8 @@
 - type: entity
   parent: ClothingMultipleHeadphones
   id: PirateExpansionHighEndHeadphones
-  name: "висококласні навушники"
-  description: "Преміальні навушники з анімованим підсвічуванням, яке можна вмикати й вимикати."
+  name: high-end headphones
+  description: Premium headphones with animated lights that can be switched on and off.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Multiple/headphones_high-end.rsi
@@ -302,8 +302,8 @@
 - type: entity
   parent: ClothingMultipleHeadphones
   id: PirateExpansionPurpleCatHeadphones
-  name: "фіолетові котячі навушники"
-  description: "Фіолетові навушники з котячими вушками, анімованим світлом і вимикачем."
+  name: purple cat headphones
+  description: Purple cat-ear headphones with animated lights and a power switch.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Box/Multiple/headphones_purple_cat.rsi
@@ -321,8 +321,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateExpansionBloodMantle
-  name: "жива кривава мантія"
-  description: "Срібна мантія, яку можна пробудити до повільного моторошного стікання."
+  name: living blood mantle
+  description: A silver mantle that can awaken into a slow, unsettling drip.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/blood_mantle.rsi
@@ -337,8 +337,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateExpansionBeerWings
-  name: "золоті пивні крила"
-  description: "Іскристі золоті крила з жвавим мерехтінням."
+  name: golden beer wings
+  description: Sparkling golden wings with a lively shimmer.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/beer_wings.rsi
@@ -348,8 +348,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateExpansionDemonWings
-  name: "демонічні крила"
-  description: "Темні гостро складені крила для драматичного силуету."
+  name: demon wings
+  description: Dark, sharply folded wings for a dramatic silhouette.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/demon_wings.rsi
@@ -359,8 +359,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateExpansionArcticFoxCape
-  name: "плащ арктичної лисиці"
-  description: "Світлий хутряний плащ із величним зимовим силуетом."
+  name: arctic fox cape
+  description: A pale fur cape with a grand, wintry shape.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Neck/arctic_fox_cape.rsi
@@ -370,8 +370,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateExpansionHolocarpCloak
-  name: "плащ голокарпа"
-  description: "Плащ із нескінченно плинної проєкції голокарпа."
+  name: holocarp cloak
+  description: A cloak made from an endlessly flowing holocarp projection.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/golo.rsi
@@ -381,8 +381,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateExpansionFireCloak
-  name: "плащ живого вогню"
-  description: "Анімований плащ, що горить, але не випромінює тепла."
+  name: living fire cloak
+  description: An animated cloak that burns without giving off heat.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/fire.rsi
@@ -392,8 +392,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateExpansionWhiteholeCloak
-  name: "плащ білої діри"
-  description: "Анімований плащ із неможливим маленьким всесвітом у центрі."
+  name: white-hole cloak
+  description: An animated cloak with an impossible little universe at its center.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/whitehole.rsi
@@ -403,8 +403,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateExpansionAngelWings
-  name: "сяйливі ангельські крила"
-  description: "Широка пара чистих білих церемоніальних крил."
+  name: radiant angel wings
+  description: A broad pair of clean white ceremonial wings.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/StarHorizon/Neck/wingsagel.rsi
@@ -414,8 +414,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: PirateExpansionTsdMantle
-  name: "зоряна фіолетова мантія"
-  description: "Темно-фіолетова мантія, пронизана анімованими вогниками."
+  name: starry violet mantle
+  description: A dark violet mantle traced by animated lights.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Neck/tsd_mantles.rsi
@@ -431,8 +431,8 @@
 - type: entity
   parent: ClothingMaskPullableBase
   id: PirateExpansionWatchdogRespirator
-  name: "респіратор «Вартовий»"
-  description: "Темний промисловий респіратор із поляризованим червоним візором."
+  name: Watchdog respirator
+  description: A dark industrial respirator with a polarized red visor.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Monolith/Mask/gasdi-watchdog.rsi
@@ -444,7 +444,7 @@
   abstract: true
   parent: ClothingHandsBase
   id: PirateExpansionCatPawsBase
-  description: "Надзвичайно м'які рукавиці-лапки з маленькими подушечками."
+  description: Extra-soft paw mittens with tiny pads.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Hands/paws.rsi
@@ -454,7 +454,7 @@
 - type: entity
   parent: PirateExpansionCatPawsBase
   id: PirateExpansionCatPawsWhite
-  name: "білі рукавиці-лапки"
+  name: white cat paw mittens
   components:
   - type: Sprite
     state: white
@@ -466,7 +466,7 @@
 - type: entity
   parent: PirateExpansionCatPawsBase
   id: PirateExpansionCatPawsBrown
-  name: "коричневі рукавиці-лапки"
+  name: brown cat paw mittens
   components:
   - type: Sprite
     state: brown
@@ -478,7 +478,7 @@
 - type: entity
   parent: PirateExpansionCatPawsBase
   id: PirateExpansionCatPawsBlack
-  name: "чорні рукавиці-лапки"
+  name: black cat paw mittens
   components:
   - type: Sprite
     state: black
@@ -490,7 +490,7 @@
 - type: entity
   parent: PirateExpansionCatPawsBase
   id: PirateExpansionCatPawsBlackWhite
-  name: "чорно-білі рукавиці-лапки"
+  name: black and white cat paw mittens
   components:
   - type: Sprite
     state: black_white
@@ -502,8 +502,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionElegantMaidGloves
-  name: "елегантні рукавички покоївки"
-  description: "Бездоганні довгі рукавички охайного формального крою."
+  name: elegant maid gloves
+  description: Pristine long gloves with a neat formal cut.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Hands/elegantmaidgloves.rsi
@@ -513,8 +513,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionRedRegaliaGloves
-  name: "червоні рукавички регалії"
-  description: "Насичено-червоні формальні рукавички для владного образу."
+  name: red regalia gloves
+  description: Deep red formal gloves made for a commanding look.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Hands/red_regalia.rsi
@@ -524,8 +524,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionLongBlackGloves
-  name: "довгі чорні рукавички"
-  description: "Лаконічні чорні рукавички значно вище зап'ястя."
+  name: long black gloves
+  description: Sleek black gloves reaching well above the wrist.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/long_black.rsi
@@ -535,8 +535,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionLongWhiteGloves
-  name: "довгі білі рукавички"
-  description: "Яскраві білі рукавички значно вище зап'ястя."
+  name: long white gloves
+  description: Bright white gloves reaching well above the wrist.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/long_white.rsi
@@ -546,8 +546,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionEmpressGloves
-  name: "рукавички імператриці світла"
-  description: "Сліпучо-сині рукавички холодного сяйливого кольору."
+  name: empress of light gloves
+  description: Brilliant blue gloves with a cold luminous color.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/empress_of_light_gloves.rsi
@@ -557,8 +557,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionGoldenEraGloves
-  name: "рукавички золотої епохи"
-  description: "Чорні рукавички з тонкими золотими деталями."
+  name: golden era gloves
+  description: Black gloves finished with fine golden details.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Hands/goldenera.rsi
@@ -568,8 +568,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPrideAceWarmers
-  name: "асексуальні прайд-нарукавники"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: asexual pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/ace.rsi
@@ -579,8 +579,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPrideAroWarmers
-  name: "аромантичні прайд-нарукавники"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: aromantic pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/aro.rsi
@@ -590,8 +590,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPrideBiWarmers
-  name: "бісексуальні прайд-нарукавники"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: bisexual pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/bi.rsi
@@ -601,8 +601,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPrideGayWarmers
-  name: "нарукавники гей-прайду"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: gay pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/gay.rsi
@@ -612,8 +612,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPrideIntersexWarmers
-  name: "інтерсекс-прайд нарукавники"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: intersex pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/inter.rsi
@@ -623,8 +623,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPrideLesbianWarmers
-  name: "лесбійські прайд-нарукавники"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: lesbian pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/lesbian.rsi
@@ -634,8 +634,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPrideNonbinaryWarmers
-  name: "небінарні прайд-нарукавники"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: non-binary pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/non.rsi
@@ -645,8 +645,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPridePanWarmers
-  name: "пансексуальні прайд-нарукавники"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: pansexual pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/pan.rsi
@@ -656,8 +656,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPrideRainbowWarmers
-  name: "райдужні прайд-нарукавники"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: rainbow pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/rainbow.rsi
@@ -667,8 +667,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPrideTransWarmers
-  name: "трансгендерні прайд-нарукавники"
-  description: "Смугасті нарукавники в кольорах прайду."
+  name: transgender pride arm warmers
+  description: Striped pride arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Pride/trans.rsi
@@ -678,8 +678,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionBeeWarmers
-  name: "бджолині нарукавники"
-  description: "Веселі чорно-жовті нарукавники."
+  name: bee arm warmers
+  description: Cheerful black and yellow arm warmers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/beewarmer.rsi
@@ -689,8 +689,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionCoderWarmers
-  name: "нарукавники кодера"
-  description: "Темні нарукавники для довгих ночей за терміналом."
+  name: coder arm warmers
+  description: Dark arm warmers made for long nights at a terminal.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/coderwarmer.rsi
@@ -700,8 +700,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionValidCoderWarmers
-  name: "нарукавники справжнього кодера"
-  description: "Червоно-чорні нарукавники для винятково валідного коду."
+  name: valid coder arm warmers
+  description: Red and black arm warmers for exceptionally valid code.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/codervalidwarmer.rsi
@@ -711,8 +711,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionPurpleStripeWarmers
-  name: "фіолетові смугасті нарукавники"
-  description: "М'які нарукавники з яскравими фіолетовими смугами."
+  name: purple striped arm warmers
+  description: Soft arm warmers with vivid purple stripes.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/stripewarmerpurple.rsi
@@ -722,8 +722,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionRainbowStripeWarmers
-  name: "райдужні смугасті нарукавники"
-  description: "М'які нарукавники з яскравими райдужними смугами."
+  name: rainbow striped arm warmers
+  description: Soft arm warmers with bright rainbow stripes.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/stripewarmerrainbow.rsi
@@ -733,8 +733,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionWhiteStripeWarmers
-  name: "білі смугасті нарукавники"
-  description: "М'які нарукавники з чистими білими смугами."
+  name: white striped arm warmers
+  description: Soft arm warmers with clean white stripes.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Warmers/stripewarmerwhite.rsi
@@ -744,8 +744,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionBallMittens
-  name: "рукавиці-кульки"
-  description: "Круглі м'які рукавиці чудернацької форми."
+  name: ball mittens
+  description: Round padded mittens with a wonderfully silly shape.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Mittens/ball_mittens.rsi
@@ -755,8 +755,8 @@
 - type: entity
   parent: ClothingHandsBase
   id: PirateExpansionKittenMittens
-  name: "рукавиці-кошенята"
-  description: "М'які рожеві рукавиці у вигляді маленьких кошенят."
+  name: kitten mittens
+  description: Soft pink mittens decorated like tiny kittens.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Panta/Hands/Mittens/kitten_mittens.rsi
@@ -767,8 +767,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionBlueGalaxySuit
-  name: "синій галактичний костюм"
-  description: "Темний костюм, яким повільно рухається синя галактика."
+  name: blue galaxy suit
+  description: A dark suit crossed by a slowly moving blue galaxy.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/galaxy_blue.rsi
@@ -778,8 +778,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionRedGalaxySuit
-  name: "червоний галактичний костюм"
-  description: "Темний костюм, яким повільно рухається червона галактика."
+  name: red galaxy suit
+  description: A dark suit crossed by a slowly moving red galaxy.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/galaxy_red.rsi
@@ -789,8 +789,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionFloweredBlackDress
-  name: "чорна сукня з квітами"
-  description: "Чорна вечірня сукня, всипана яскравими квітами."
+  name: flowered black dress
+  description: A black evening dress scattered with bright flowers.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/dresseswithflowers.rsi
@@ -801,8 +801,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionFlowerPrincessDress
-  name: "сукня квіткової принцеси"
-  description: "Розкішна бузкова сукня у формі багатошарових пелюсток."
+  name: flower princess dress
+  description: A lavish lilac dress shaped like layered petals.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/flower_princess.rsi
@@ -813,8 +813,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionFlyAgaricDress
-  name: "сукня-мухомор"
-  description: "Світла сукня, натхненна ніжкою яскравого гриба."
+  name: fly agaric dress
+  description: A pale gown inspired by the stem of a bright mushroom.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/fly_agaric.rsi
@@ -825,8 +825,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionGentleYellowDress
-  name: "ніжна жовта сукня"
-  description: "Тепла жовта сукня з охайним білим оздобленням."
+  name: gentle yellow dress
+  description: A warm yellow gown with clean white trim.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/gentle_yellow.rsi
@@ -837,8 +837,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionSpiderDress
-  name: "павутинна сукня"
-  description: "Темна сукня з виразною білою павутиною."
+  name: spiderweb dress
+  description: A dark dress woven with a striking white web.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/spider.rsi
@@ -849,8 +849,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionTangoDress
-  name: "сукня танго"
-  description: "Драматична червоно-чорна сукня для танцювального майданчика."
+  name: tango dress
+  description: A dramatic red and black dress made for the dance floor.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Uniforms/tango_dress.rsi
@@ -861,8 +861,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionGothicDress
-  name: "готична сукня"
-  description: "Ретельно складена багатошарова чорно-біла готична сукня."
+  name: gothic dress
+  description: A carefully layered black and white gothic dress.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_gothic.rsi
@@ -872,8 +872,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionGrandRedDress
-  name: "пишна червона сукня"
-  description: "Розлога багряна бальна сукня зі сміливим силуетом."
+  name: grand red dress
+  description: A sweeping crimson ball gown with a bold silhouette.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_red.rsi
@@ -884,8 +884,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionVictorianBlackDress
-  name: "чорна вікторіанська сукня"
-  description: "Формальна чорна вікторіанська сукня зі стриманими червоними акцентами."
+  name: black Victorian dress
+  description: A formal black Victorian dress with restrained red accents.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_black.rsi
@@ -896,8 +896,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionVictorianRedDress
-  name: "червона вікторіанська сукня"
-  description: "Насичено-багряна вікторіанська сукня із золотими деталями."
+  name: red Victorian dress
+  description: A rich crimson Victorian dress with golden details.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/dress_victorian_red.rsi
@@ -908,8 +908,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionLadyDress
-  name: "монохромна сукня леді"
-  description: "Повітряна монохромна сукня з широкою багатошаровою спідницею."
+  name: lady's monochrome dress
+  description: An airy monochrome dress with a broad layered skirt.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/lady.rsi
@@ -920,8 +920,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionBlueSchoolDress
-  name: "синя шкільна сукня"
-  description: "Охайне синє шкільне вбрання з грайливим червоним бантом."
+  name: blue school dress
+  description: A neat blue school outfit with a playful red bow.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Uniforms/schoolskirt.rsi
@@ -931,8 +931,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionVintageDress
-  name: "вінтажна рожева сукня"
-  description: "Вінтажна червоно-рожева сукня з чітко скроєним верхом."
+  name: vintage rose dress
+  description: A vintage red and rose dress with a sharply tailored top.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Uniforms/dress_vintage.rsi
@@ -942,8 +942,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: PirateExpansionZeroKimono
-  name: "чорно-золоте кімоно"
-  description: "Сучасне чорне кімоно зі сміливим золотим оздобленням."
+  name: black and gold kimono
+  description: A modern black kimono with bold golden trim.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Uniforms/kimono_zero.rsi
@@ -954,8 +954,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateExpansionVoidWizardRobes
-  name: "шати чаклуна порожнечі"
-  description: "Темно-фіолетові шати з мінливими магічними візерунками."
+  name: void wizard robes
+  description: Deep violet robes embroidered with shifting arcane shapes.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/wizard.rsi
@@ -968,8 +968,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateExpansionPyromancerRobes
-  name: "живі шати піроманта"
-  description: "Анімовані шати, вогняний візерунок яких ніколи не завмирає."
+  name: living pyromancer robes
+  description: Animated robes whose fiery pattern never stops moving.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/wizardfire.rsi
@@ -982,8 +982,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateExpansionCryomancerRobes
-  name: "шати кріоманта"
-  description: "Світлі крижані шати навколо яскраво-блакитного осердя."
+  name: cryomancer robes
+  description: Pale icy robes shaped around a brilliant blue core.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/wizardfrost.rsi
@@ -996,8 +996,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateExpansionTechpriestRobes
-  name: "анімовані шати техножерця"
-  description: "Важкі червоні шати з невпинним рухом механічних деталей."
+  name: animated tech-priest robes
+  description: Heavy red robes alive with a procession of mechanical details.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Outer/chaplain_techpriest.rsi
@@ -1010,8 +1010,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateExpansionWitchHunterRobes
-  name: "шати мисливця на відьом"
-  description: "Темний мисливський плащ із суворою золотою емблемою."
+  name: witch hunter robes
+  description: A dark hunter's coat marked by a severe golden emblem.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Ganimed/Outer/witch_hunter_robe.rsi
@@ -1021,8 +1021,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateExpansionBrimstoneRobes
-  name: "сірчані шати"
-  description: "Чорні окультні шати, розсічені суворим червоним символом."
+  name: brimstone robes
+  description: Black occult robes cut through by a severe red symbol.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/brimstone.rsi
@@ -1035,8 +1035,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateExpansionRatvarRobes
-  name: "шати Ратвара"
-  description: "Темно-бронзові шати зі старовинним годинниковим візерунком."
+  name: Ratvar robes
+  description: Dark bronze robes patterned like old clockwork.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/ratvar_robes.rsi
@@ -1046,8 +1046,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateExpansionRoughSweater
-  name: "грубий зелений светр"
-  description: "Об'ємний зелений светр навмисно грубої в'язки."
+  name: rough green sweater
+  description: A chunky green sweater with a deliberately rough knit.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/rough_sweater.rsi
@@ -1057,8 +1057,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: PirateExpansionSoftSweater
-  name: "м'який неоновий светр"
-  description: "М'який синій светр із яскраво-рожевими акцентами."
+  name: soft neon sweater
+  description: A soft blue sweater with bright pink accents.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Outer/soft_sweater.rsi

@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitDarthVader
-  name: "Скафандр Дарта Вейдера"
-  description: "Чорний костюм, просякнутий ненавистю та злобою, на який важко навіть поглянути."
+  name: Скафандр Дарта Вейдера
+  description: Чорний, пропитаний ненавистю та злобою костюм, на який й погляд тяжко кинути.
   suffix: StarWars
   components:
   - type: Sprite
@@ -46,8 +46,8 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitShturm
-  name: "Костюм штурмовика"
-  description: "Дешевий костюм, наче одноразовий, яких ще тисячі."
+  name: Костюм штурмовика
+  description: Дешевий костюм, ніби зроблений на один раз й таких ще тисячі.
   suffix: StarWars
   components:
   - type: Sprite
