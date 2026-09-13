@@ -69,7 +69,7 @@ public sealed class RoundWipeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TickerJoinGameEvent>(OnJoinGame);
+        SubscribeNetworkEvent<TickerJoinGameEvent>(OnJoinGame);
         SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnAttached);
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnDetached);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
