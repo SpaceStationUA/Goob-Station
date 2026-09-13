@@ -1,48 +1,48 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Goobstation.Common.CCVar;
-using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
 using Robust.Client.State;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
+using Robust.Client.UserInterface;
+using Content.Client.Lobby;
+using Robust.Client.UserInterface.Controls;
+using Content.Client.MainMenu;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
-using Content.Client.Lobby;
-using Content.Client.Lobby.UI;
-using Robust.Client.UserInterface.Controls;
-using Content.Client.GameTicking.Managers;
-using Robust.Client.Console;
-using Robust.Shared.Console;
 
 namespace Content.Client._Pirate.Wipe;
 
 /// <summary>
-///     Drives the round-start wipe: a fullscreen UI panel shows the splash art while
-///     the client loads into a round (from join/connect until the player attaches),
-///     then dissolves it into the live game. Also logs the load timeline when the
-///     probe is active.
+///     Drives the round-start wipe: a fullscreen UI panel shows the lobby art
+///     around round transitions:
+///       - when a round the player is ready for starts in the lobby,
+///       - when joining a running round from the lobby,
+///       - when a round ends / restarts ("restarting..." on the live server),
+///     holding ~5s and dissolving into the live game. It does not cover plain
+///     connect/reconnect/loading screens.
 /// </summary>
 public sealed class RoundWipeSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IStateManager _state = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IConsoleHost _console = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
-    private static readonly TimeSpan MaxCover = TimeSpan.FromSeconds(60);
+    private static readonly TimeSpan Failsafe = TimeSpan.FromSeconds(60);
     private static readonly TimeSpan ReleaseTime = TimeSpan.FromSeconds(1.4);
-    private static readonly TimeSpan ReattachGrace = TimeSpan.FromSeconds(5);
+
+    // End-of-round case: art holds for this long (dissolving in place), it does not
+    // wait for the next attach.
+    private static readonly TimeSpan RoundEndHold = TimeSpan.FromSeconds(5);
 
     // Connection state lives across system re-initialization (content modules
     // re-init on every connect), otherwise a second system instance would spawn a
@@ -50,16 +50,19 @@ public sealed class RoundWipeSystem : EntitySystem
     private static bool _enabled;
     private static string _artPath = "";
 
-    /// <summary>Whether the wipe is armed. Armed after leaving a round, so only
-    /// lobby→round transitions wipe; mid-round re-attaches do nothing.</summary>
-    private static bool _armed = true;
+    /// <summary>Whether the wipe is armed. Armed after leaving a round; a cover can
+    /// only start while armed, so mid-round re-attaches do nothing.</summary>
+    private static bool _armed;
+
     private static RoundWipeUiPanel? _panel;
     private static TimeSpan _coverRealTime;
     private static TimeSpan _releaseElapsed;
     private static bool _release;
     private static float _seed;
     private static int _mode;
-
+    private static float _hold;
+    private static bool _needAttach;
+    private static bool _attachSeen;
     private static TimeSpan _lastDetach;
 
     public override void Initialize()
@@ -70,83 +73,52 @@ public sealed class RoundWipeSystem : EntitySystem
         SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnAttached);
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnDetached);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEnd);
 
         _config.OnValueChanged(PirateCVars.PirateRoundWipe, v => _enabled = v, invokeImmediately: true);
         _config.OnValueChanged(PirateCVars.PirateRoundWipeArt, v => _artPath = v, invokeImmediately: true);
 
-        _client.RunLevelChanged += OnRunLevelChanged;
-
-        LobbyState.OnLobbyGuiReady += OnLobbyGuiReady;
-        _console.AnyCommandExecuted += OnAnyCommand;
         _state.OnStateChanged += OnStateChange;
-
-        // --connect flows switch runlevel before content systems exist, so the
-        // Connecting event is missed; catch up here.
-        if (_client.RunLevel is ClientRunLevel.Connecting or ClientRunLevel.Connected)
-        {
-            Log.Info($"[WIPE] init catch-up at runlevel {_client.RunLevel}");
-            TryStartCover();
-        }
     }
 
     private void OnStateChange(StateChangedEventArgs args)
     {
         RaisePanel();
-        if (args.NewState is LobbyState && _panel != null && !_release)
+        if (args.NewState is LobbyState)
         {
-            // Pre-game lobby: no join pending, drop the cover and re-arm.
-            StopPanel("lobby");
+            // Pre-game lobby reached. Drop the cover only if it waits for an attach
+            // (i.e. it was started for a join that got cancelled); round-end covers
+            // keep playing over the lobby.
+            if (_panel != null && _needAttach && !_release)
+            {
+                StopPanel("lobby");
+                _armed = true;
+            }
+            else
+            {
+                _armed = true;
+            }
+        }
+        else if (args.NewState is MainScreen)
+        {
+            // back at the main menu (disconnect): re-arm
             _armed = true;
         }
     }
 
-    private void OnAnyCommand(IConsoleShell shell, string command, string argStr, string[] args)
+    private void OnRoundEnd(RoundEndMessageEvent msg)
     {
-        // Late-join job dialogs and the console send "joingame"; cover from that
-        // exact click, before the server has processed the join.
-        if (!_enabled || !_armed)
+        // Round is ending on the server (the "restarting" chat arrives around the
+        // same time): wipe out to a fresh screen for ~5s that covers the restart.
+        // Must be in the round to react; pregame lobby clients just watch it.
+        if (!_enabled)
+            return;
+        if (_player.LocalEntity == null)
+            return;
+        if (_panel != null)
             return;
 
-        if (command != "joingame")
-            return;
-        if (!_entityManager.System<ClientGameTicker>().IsGameStarted && !_release)
-            return;
-
-        TryStartCover();
-    }
-
-    private LobbyGui? _lobby;
-
-    private void OnLobbyGuiReady(LobbyGui lobby)
-    {
-        _lobby = lobby;
-        // Cover as soon as the player clicks Join in the lobby (the ticker event only
-        // arrives after the server has processed the join, which can be seconds later).
-        lobby.ReadyButton.OnPressed += _ =>
-        {
-            if (!_enabled || !_armed)
-                return;
-
-            var ticker = _entityManager.System<Content.Client.GameTicking.Managers.ClientGameTicker>();
-            if (!ticker.IsGameStarted)
-                return;
-
-            TryStartCover();
-        };
-    }
-
-    private void OnRunLevelChanged(object? sender, RunLevelChangedEventArgs args)
-    {
-        Log.Info($"[WIPE] runlevel {args.OldLevel} -> {args.NewLevel} armed={_armed} panel={_panel != null}");
-        RaisePanel();
-        if (!_enabled || !_armed)
-            return;
-
-        // Cover from the first connect attempt (right after the handshake), so the
-        // whole network/content-load freeze is under the art. If the player ends up in a pregame
-        // lobby, the LobbyState handler removes the panel and re-arms.
-        if (args.NewLevel == ClientRunLevel.Connecting || args.NewLevel == ClientRunLevel.Connected)
-            TryStartCover();
+        TryStartCover(needAttach: false);
     }
 
     private void OnJoinGame(TickerJoinGameEvent args)
@@ -154,10 +126,12 @@ public sealed class RoundWipeSystem : EntitySystem
         if (!_enabled || !_armed)
             return;
 
-        TryStartCover();
+        // Round starting with us ready, or joining from the lobby: the ticker
+        // switches into the game right after this event.
+        TryStartCover(needAttach: true);
     }
 
-    private void TryStartCover()
+    private void TryStartCover(bool needAttach)
     {
         if (_panel != null || !TryGetArt(out var art))
             return;
@@ -167,55 +141,12 @@ public sealed class RoundWipeSystem : EntitySystem
         _seed = (float) _random.NextDouble();
         _coverRealTime = _timing.RealTime;
         _releaseElapsed = TimeSpan.Zero;
+        _needAttach = needAttach;
+        _attachSeen = !needAttach;
         _panel = new RoundWipeUiPanel(art, _mode, _seed) { Progress = 0f };
         LayoutContainer.SetAnchorPreset(_panel, LayoutContainer.LayoutPreset.Wide);
         _ui.RootControl.AddChild(_panel);
-        Log.Info($"[WIPE] cover started mode={_mode} art={_artPath}");
-    }
-
-    private void OnRoundRestart(RoundRestartCleanupEvent args)
-    {
-        // Returned to lobby (or a new round); re-arm for the next join.
-        StopPanel("roundrestart");
-        _armed = true;
-    }
-
-    private void OnDetached(LocalPlayerDetachedEvent args)
-    {
-        _lastDetach = _timing.RealTime;
-        _armed = true;
-        StopPanel("detach" + _timing.RealTime);
-    }
-
-    private void OnAttached(LocalPlayerAttachedEvent args)
-    {
-        Log.Info($"[WIPE] attach armed={_armed} panel={_panel != null}");
-        if (_panel != null)
-        {
-            // World is ready: start the dissolve (unless the failsafe already did).
-            if (!_release)
-            {
-                _release = true;
-                Log.Info($"[WIPE] attach -> release after {(float)(_timing.RealTime - _coverRealTime).TotalSeconds:F3}s");
-            }
-            return;
-        }
-
-        // No cover happened (e.g. attached without a join): fall back to starting the
-        // wipe at attach, ignoring quick mid-round hops.
-        if (!_enabled || !_armed)
-            return;
-
-        if (_timing.RealTime - _lastDetach < ReattachGrace)
-            return;
-
-        _armed = false;
-        TryStartCover();
-        if (_panel != null)
-        {
-            _release = true;
-            Log.Info("[WIPE] attach -> release (fallback start)");
-        }
+        Log.Info($"[WIPE] cover started mode={_mode} needAttach={needAttach}");
     }
 
     private void RaisePanel()
@@ -245,6 +176,37 @@ public sealed class RoundWipeSystem : EntitySystem
         _releaseElapsed = TimeSpan.Zero;
     }
 
+    private void OnRoundRestart(RoundRestartCleanupEvent args)
+    {
+        // Re-arm for the next join. Round-end covers keep playing over whatever
+        // comes next (the lobby); join covers with a dead load are dropped.
+        if (_panel != null && _needAttach && !_release)
+            StopPanel("roundrestart");
+        _armed = true;
+    }
+
+    private void OnDetached(LocalPlayerDetachedEvent args)
+    {
+        _lastDetach = _timing.RealTime;
+        _armed = true;
+        StopPanel("detach");
+    }
+
+    private void OnAttached(LocalPlayerAttachedEvent args)
+    {
+        Log.Info($"[WIPE] attach armed={_armed} panel={_panel != null}");
+        if (_panel == null)
+            return;
+
+        _attachSeen = true;
+        // Release only once the hold is done (and the world is attached for join covers).
+        if (!_release && _timing.RealTime - _coverRealTime >= RoundEndHold)
+        {
+            _release = true;
+            Log.Info($"[WIPE] attach -> release after {(float) (_timing.RealTime - _coverRealTime).TotalSeconds:F3}s");
+        }
+    }
+
     private bool TryGetArt(out Texture art)
     {
         art = default!;
@@ -258,27 +220,28 @@ public sealed class RoundWipeSystem : EntitySystem
         if (_panel == null)
             return;
 
-        // state changes (combat HUD, chat) can be re-parented after us; keep the
-        // wipe panel the last child of the root so it draws above everything
-        if (_panel.Parent != _ui.RootControl)
+        // force the cover above freshly-spawned HUD/chat controls
+        RaisePanel();
+
+        if (!_release)
         {
-            _panel.Orphan();
-            _ui.RootControl.AddChild(_panel);
-        }
-        else
-        {
-            _panel.SetPositionLast();
+            var elapsed = _timing.RealTime - _coverRealTime;
+            if (_needAttach)
+            {
+                // join covers: at least Hold, and only once the player attached;
+                // failsafe guards against stuck loads
+                if ((elapsed >= RoundEndHold && _attachSeen) || elapsed >= Failsafe)
+                    _release = true;
+            }
+            else if (elapsed >= RoundEndHold)
+            {
+                // round-end covers do not wait for the next attach
+                _release = true;
+            }
         }
 
         if (_release)
-        {
             _releaseElapsed += TimeSpan.FromSeconds(frameTime);
-        }
-        else if (_timing.RealTime - _coverRealTime >= MaxCover)
-        {
-            _release = true;
-            Log.Warning("[WIPE] failsafe release after long cover");
-        }
 
         if (_panel != null)
         {
