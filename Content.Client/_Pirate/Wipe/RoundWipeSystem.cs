@@ -72,7 +72,7 @@ public sealed class RoundWipeSystem : EntitySystem
         SubscribeNetworkEvent<TickerJoinGameEvent>(OnJoinGame);
         SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnAttached);
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnDetached);
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEnd);
 
         _config.OnValueChanged(PirateCVars.PirateRoundWipe, v => _enabled = v, invokeImmediately: true);
@@ -135,6 +135,11 @@ public sealed class RoundWipeSystem : EntitySystem
     {
         if (_panel != null || !TryGetArt(out var art))
             return;
+
+        // The attach event often lands BEFORE the ticker join message; if the player
+        // is already attached, count the attach as seen right away.
+        if (needAttach && _player.LocalEntity != null)
+            needAttach = false;
 
         _armed = false;
         _mode = _random.Next(0, 4);
