@@ -44,21 +44,23 @@ public sealed class RoundWipeSystem : EntitySystem
     private static readonly TimeSpan ReleaseTime = TimeSpan.FromSeconds(1.4);
     private static readonly TimeSpan ReattachGrace = TimeSpan.FromSeconds(5);
 
-    private bool _enabled;
-    private string _artPath = "";
+    // Connection state lives across system re-initialization (content modules
+    // re-init on every connect), otherwise a second system instance would spawn a
+    // duplicate panel.
+    private static bool _enabled;
+    private static string _artPath = "";
 
     /// <summary>Whether the wipe is armed. Armed after leaving a round, so only
     /// lobby→round transitions wipe; mid-round re-attaches do nothing.</summary>
-    private bool _armed = true;
+    private static bool _armed = true;
+    private static RoundWipeUiPanel? _panel;
+    private static TimeSpan _coverRealTime;
+    private static TimeSpan _releaseElapsed;
+    private static bool _release;
+    private static float _seed;
+    private static int _mode;
 
-    private RoundWipeUiPanel? _panel;
-    private TimeSpan _coverRealTime;
-    private TimeSpan _releaseElapsed;
-    private bool _release;
-    private float _seed;
-    private int _mode;
-
-    private TimeSpan _lastDetach;
+    private static TimeSpan _lastDetach;
 
     public override void Initialize()
     {
@@ -89,6 +91,7 @@ public sealed class RoundWipeSystem : EntitySystem
 
     private void OnStateChange(StateChangedEventArgs args)
     {
+        RaisePanel();
         if (args.NewState is LobbyState && _panel != null && !_release)
         {
             // Pre-game lobby: no join pending, drop the cover and re-arm.
@@ -135,6 +138,7 @@ public sealed class RoundWipeSystem : EntitySystem
     private void OnRunLevelChanged(object? sender, RunLevelChangedEventArgs args)
     {
         Log.Info($"[WIPE] runlevel {args.OldLevel} -> {args.NewLevel} armed={_armed} panel={_panel != null}");
+        RaisePanel();
         if (!_enabled || !_armed)
             return;
 
@@ -211,6 +215,21 @@ public sealed class RoundWipeSystem : EntitySystem
         {
             _release = true;
             Log.Info("[WIPE] attach -> release (fallback start)");
+        }
+    }
+
+    private void RaisePanel()
+    {
+        if (_panel == null)
+            return;
+        if (_panel.Parent != _ui.RootControl)
+        {
+            _panel.Orphan();
+            _ui.RootControl.AddChild(_panel);
+        }
+        else
+        {
+            _panel.SetPositionLast();
         }
     }
 
