@@ -77,6 +77,14 @@ public sealed class RoundWipeSystem : EntitySystem
         LobbyState.OnLobbyGuiReady += OnLobbyGuiReady;
         _console.AnyCommandExecuted += OnAnyCommand;
         _state.OnStateChanged += OnStateChange;
+
+        // --connect flows switch runlevel before content systems exist, so the
+        // Connecting event is missed; catch up here.
+        if (_client.RunLevel is ClientRunLevel.Connecting or ClientRunLevel.Connected)
+        {
+            Log.Info($"[WIPE] init catch-up at runlevel {_client.RunLevel}");
+            TryStartCover();
+        }
     }
 
     private void OnStateChange(StateChangedEventArgs args)
@@ -84,7 +92,7 @@ public sealed class RoundWipeSystem : EntitySystem
         if (args.NewState is LobbyState && _panel != null && !_release)
         {
             // Pre-game lobby: no join pending, drop the cover and re-arm.
-            StopPanel();
+            StopPanel("lobby");
             _armed = true;
         }
     }
@@ -126,6 +134,7 @@ public sealed class RoundWipeSystem : EntitySystem
 
     private void OnRunLevelChanged(object? sender, RunLevelChangedEventArgs args)
     {
+        Log.Info($"[WIPE] runlevel {args.OldLevel} -> {args.NewLevel} armed={_armed} panel={_panel != null}");
         if (!_enabled || !_armed)
             return;
 
@@ -163,7 +172,7 @@ public sealed class RoundWipeSystem : EntitySystem
     private void OnRoundRestart(RoundRestartCleanupEvent args)
     {
         // Returned to lobby (or a new round); re-arm for the next join.
-        StopPanel();
+        StopPanel("roundrestart");
         _armed = true;
     }
 
@@ -171,18 +180,19 @@ public sealed class RoundWipeSystem : EntitySystem
     {
         _lastDetach = _timing.RealTime;
         _armed = true;
-        StopPanel();
+        StopPanel("detach" + _timing.RealTime);
     }
 
     private void OnAttached(LocalPlayerAttachedEvent args)
     {
+        Log.Info($"[WIPE] attach armed={_armed} panel={_panel != null}");
         if (_panel != null)
         {
             // World is ready: start the dissolve (unless the failsafe already did).
             if (!_release)
             {
                 _release = true;
-                Log.Info($"[WIPE] attach -> release after {_timing.RealTime - _coverRealTime:0.000}s");
+                Log.Info($"[WIPE] attach -> release after {(float)(_timing.RealTime - _coverRealTime).TotalSeconds:F3}s");
             }
             return;
         }
@@ -204,13 +214,13 @@ public sealed class RoundWipeSystem : EntitySystem
         }
     }
 
-    private void StopPanel()
+    private void StopPanel(string reason)
     {
         if (_panel != null)
         {
             _panel.Orphan();
             _panel = null;
-            Log.Info("[WIPE] panel removed");
+            Log.Info($"[WIPE] panel removed reason={reason}");
         }
         _release = false;
         _releaseElapsed = TimeSpan.Zero;
@@ -255,7 +265,7 @@ public sealed class RoundWipeSystem : EntitySystem
         {
             _panel.Progress = _release ? MathF.Min(1f, (float) (_releaseElapsed / ReleaseTime)) : 0f;
             if (_panel.Progress >= 1f)
-                StopPanel();
+                StopPanel("done");
         }
     }
 }
