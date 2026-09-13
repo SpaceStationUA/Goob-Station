@@ -54,7 +54,7 @@ void fragment() {
     artUv.x += sin(TIME * 2.1 + seed * 7.0 + 1.3) * idle * 0.5;
 
     highp vec4 art = zTextureSpec(artTexture, clamp(artUv, 0.0, 1.0));
-    highp vec4 game = zTextureSpec(SCREEN_TEXTURE, coord);
+    highp vec4 game = progress > 0.0 ? zTextureSpec(SCREEN_TEXTURE, coord) : art;
 
     // punch the dissolve through with a dithered edge, hard binary per cell
     highp float m = mask(coord);

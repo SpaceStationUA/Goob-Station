@@ -28,7 +28,7 @@ public sealed class RoundWipeOverlay : Overlay
     private static readonly TimeSpan MaxCover = TimeSpan.FromSeconds(15);
     private static readonly TimeSpan ReleaseTime = TimeSpan.FromMilliseconds(1400);
     private static readonly TimeSpan LingerTime = TimeSpan.FromMilliseconds(150);
-    private const float CoveredProgress = 0.1f;
+    private const float CoveredProgress = 0.0f;
 
     private TimeSpan _coverElapsed;
     private TimeSpan _releaseElapsed;
@@ -37,6 +37,9 @@ public sealed class RoundWipeOverlay : Overlay
     private WipePhase _phase = WipePhase.Cover;
 
     private enum WipePhase { Cover, Release, Done }
+
+    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override bool RequestScreenTexture => true;
 
     public RoundWipeOverlay(Texture art, float seed, int maskMode)
     {
@@ -93,23 +96,19 @@ public sealed class RoundWipeOverlay : Overlay
 
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
-    protected override bool BeforeDraw(in OverlayDrawArgs args)
-    {
-        return ScreenTexture != null;
-    }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
         var progress = _phase switch
         {
             WipePhase.Cover => CoveredProgress,
-            WipePhase.Release => MathF.Min(1f, CoveredProgress + (float)(_releaseElapsed / ReleaseTime) * (1f - CoveredProgress)),
+            WipePhase.Release => (float)(_releaseElapsed / ReleaseTime),
             _ => 1f,
         };
 
         // art cover-fit: map screen uv into the art's texture space
         var screen = (Vector2) args.Viewport.Size;
-        var artSize = (Vector2) _art.Size;
+        var artSize = _art != null ? (Vector2) _art.Size : Vector2.One;
         Vector2 scale, offset;
         var screenAspect = screen.X / screen.Y;
         var artAspect = artSize.X / artSize.Y;
@@ -129,8 +128,10 @@ public sealed class RoundWipeOverlay : Overlay
         // shader sampling: artUv = (uv - 0.5) * scale + 0.5, so pre-invert
         scale = new Vector2(1f / scale.X, 1f / scale.Y);
 
-        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture!);
-        _shader.SetParameter("artTexture", _art);
+        if (ScreenTexture != null)
+            _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        if (_art != null)
+            _shader.SetParameter("artTexture", _art);
         _shader.SetParameter("progress", progress);
         _shader.SetParameter("maskMode", _maskMode);
         _shader.SetParameter("seed", _seed);
