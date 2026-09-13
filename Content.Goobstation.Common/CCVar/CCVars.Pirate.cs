@@ -24,5 +24,5 @@ public sealed partial class PirateCVars
     ///     Texture path of the "before" frame for the round-start wipe.
     /// </summary>
     public static readonly CVarDef<string> PirateRoundWipeArt =
-        CVarDef.Create("pirate.roundwipe_art", "/Textures/Logo/splashlogo.png", CVar.CLIENT);
+        CVarDef.Create("pirate.roundwipe_art", "/Textures/LobbyScreens/toppirates1.webp", CVar.CLIENT);
 }
