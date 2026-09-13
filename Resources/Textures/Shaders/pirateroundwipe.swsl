@@ -2,7 +2,7 @@
 
 uniform sampler2D artTexture; // the "before" frame (splash / lobby art)
 uniform highp float progress; // 0 = art fully opaque, 1 = art invisible
-uniform highp float maskMode; // 0 = dither cells, 1 = staggered bands, 2 = centered circle, 3 = sweep, 4 = precise stripes
+uniform highp float maskMode; // 0 = dither cells, 1 = staggered bands, 2 = centered circle, 3 = sweep, 4 = precise stripes, 5 = art stripes
 uniform highp float seed;
 uniform highp vec2 artScale; // maps screen uv into the art's cover-cropped uv space
 uniform highp vec2 artOffset;
@@ -12,6 +12,18 @@ const highp float BandCount = 7.0;
 
 highp float hash(highp vec2 co) {
     return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+// mode 5: dissolve the art stripe-by-stripe. The lobby art's own diagonal color
+// bands (8 of them, slope ~0.135 uv) each vanish as a unit on their own timer,
+// with a per-pixel dither inside a short window; other stripes stay intact.
+highp float stripeArtMask(highp vec2 coord) {
+    highp float a = clamp(coord.x - coord.y * 0.135, 0.0, 0.9999);
+    highp float band = floor(a * 8.0);
+    highp float rng = hash(vec2(band, seed * 61.17));
+    highp float start = rng * 0.75;
+    highp float gone = clamp((progress - start) / 0.25, 0.0, 1.0);
+    highp float pix = hash(floor(coord * SCREEN_PIXEL_SIZE) + band * 7.31);
+    return 1.0 - clamp(gone - pix, 0.0, 1.0);
 }
 
 // mode 4: precise pixel-locked vertical stripes. Each stripe dissolves from the
@@ -59,6 +71,10 @@ highp float mask(highp vec2 coord) {
 
     if (maskMode > 3.5 && maskMode < 4.5) {
         return stripeMask(coord);
+    }
+
+    if (maskMode > 4.5 && maskMode < 5.5) {
+        return stripeArtMask(coord);
     }
 
     // sweep across, dithered at the edge

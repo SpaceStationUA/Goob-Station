@@ -64,6 +64,7 @@ public sealed class RoundWipeSystem : EntitySystem
     private static float _hold;
     private static bool _needAttach;
     private static bool _attachSeen;
+    private static TimeSpan _attachRealTime;
     private static TimeSpan _lastDetach;
 
     public override void Initialize()
@@ -123,8 +124,12 @@ public sealed class RoundWipeSystem : EntitySystem
 
         // The attach event often lands BEFORE the ticker join message; if the player
         // is already attached, count the attach as seen right away.
+        _attachRealTime = TimeSpan.FromTicks(0);
         if (needAttach && _player.LocalEntity != null)
+        {
             needAttach = false;
+            _attachRealTime = _timing.RealTime;
+        }
 
         _armed = false;
         var maskCvar = _config.GetCVar(PirateCVars.PirateRoundWipeMask);
@@ -200,12 +205,7 @@ public sealed class RoundWipeSystem : EntitySystem
             return;
 
         _attachSeen = true;
-        // Release only once the hold is done (and the world is attached for join covers).
-        if (!_release && _timing.RealTime - _coverRealTime >= Hold)
-        {
-            _release = true;
-            Log.Info($"[WIPE] attach -> release after {(float) (_timing.RealTime - _coverRealTime).TotalSeconds:F3}s");
-        }
+        _attachRealTime = _timing.RealTime;
     }
 
     private bool TryGetArt(out Texture art)
@@ -229,9 +229,12 @@ public sealed class RoundWipeSystem : EntitySystem
             var elapsed = _timing.RealTime - _coverRealTime;
             if (_needAttach)
             {
-                // join covers: at least Hold, and only once the player attached;
-                // failsafe guards against stuck loads
-                if ((elapsed >= Hold && _attachSeen) || elapsed >= Failsafe)
+                // join covers: hold counts from the ATTACH (the breathing happens over
+                // the live world, not the loading screen); failsafe guards against
+                // stuck loads
+                if ((_attachRealTime > TimeSpan.Zero
+                     && _timing.RealTime - _attachRealTime >= Hold)
+                    || elapsed >= Failsafe)
                     _release = true;
             }
             else if (elapsed >= Hold)
