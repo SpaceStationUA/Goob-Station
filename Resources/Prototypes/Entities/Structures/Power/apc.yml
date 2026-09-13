@@ -29,12 +29,6 @@
     sprite: Structures/Power/apc.rsi
     layers:
     - state: base
-    - state: base # Pirate - icon layer for an AI shunted into the APC.
-      map: ["enum.StationAiVisualLayers.Icon"]
-      scale: 0.25, 0.25 # Pirate - fit a full AI icon inside the APC display.
-      offset: -0.0625, 0.0625
-      shader: unshaded
-      visible: false
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
       visible: false
@@ -56,6 +50,12 @@
     - state: channel2-auto_on
       shader: unshaded
       map: ["enum.ApcVisualLayers.Environment"]
+    - state: base # Pirate - draw the shunted AI above the opaque APC display indicators.
+      map: ["enum.StationAiVisualLayers.Icon"]
+      scale: 0.25, 0.25 # Pirate - fit a full AI icon inside the APC display.
+      offset: -0.0625, 0.0625
+      shader: unshaded
+      visible: false
   - type: Appearance
   - type: ApcVisuals
   - type: Battery
