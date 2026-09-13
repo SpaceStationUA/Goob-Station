@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-uniform sampler2D SCREEN_TEXTURE;
 uniform sampler2D artTexture; // the "before" frame (splash / lobby art)
-uniform highp float progress; // 0..1: 0 = art only, 1 = live game only
+uniform highp float progress; // 0 = art fully opaque, 1 = art invisible
 uniform highp float maskMode; // 0 = dither cells, 1 = staggered bands, 2 = centered circle, 3 = sweep
 uniform highp float seed;
 uniform highp vec2 artScale; // maps screen uv into the art's cover-cropped uv space
@@ -54,14 +53,12 @@ void fragment() {
     artUv.x += sin(TIME * 2.1 + seed * 7.0 + 1.3) * idle * 0.5;
 
     highp vec4 art = zTextureSpec(artTexture, clamp(artUv, 0.0, 1.0));
-    highp vec4 game = progress > 0.0 ? zTextureSpec(SCREEN_TEXTURE, coord) : art;
 
     // punch the dissolve through with a dithered edge, hard binary per cell
     highp float m = mask(coord);
     highp float edge = 0.02;
     highp float t = smoothstep(m - edge, m + edge, progress);
-    // art alpha fades fast after its cells get eaten so there are no ghost pixels
     highp float artAlpha = 1.0 - t;
 
-    COLOR = mix(game, art, artAlpha);
+    COLOR = art * artAlpha;
 }
