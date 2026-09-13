@@ -1,0 +1,67 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D artTexture; // the "before" frame (splash / lobby art)
+uniform highp float progress; // 0..1: 0 = art only, 1 = live game only
+uniform highp float maskMode; // 0 = dither cells, 1 = staggered bands, 2 = centered circle, 3 = sweep
+uniform highp float seed;
+uniform highp vec2 artScale; // maps screen uv into the art's cover-cropped uv space
+uniform highp vec2 artOffset;
+
+const highp float CellSize = 6.0; // art is dithered in ~8px blocks; 6 reads well on both
+const highp float BandCount = 7.0;
+
+highp float hash(highp vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+// normalized mask 0..1: pixels where mask > progress already show the game
+highp float mask(highp vec2 coord) {
+    highp vec2 cells = floor(coord * SCREEN_PIXEL_SIZE * 1080.0 / CellSize);
+    highp float r = hash(cells + seed * 61.17);
+
+    if (maskMode < 0.5) {
+        // chunky dither cells
+        return r;
+    }
+
+    if (maskMode > 0.5 && maskMode < 1.5) {
+        // staggered diagonal bands, dithered inside each band
+        highp float d = (coord.x + coord.y - 1.0) * 0.5; // along the diagonal
+        highp float band = floor(fract(d + seed * 0.173) * BandCount);
+        return fract(band * 0.61803 + r * 0.5 + 0.25);
+    }
+
+    if (maskMode > 1.5 && maskMode < 2.5) {
+        // growing circle from the center
+        highp vec2 centered = coord - vec2(0.5);
+        highp float dist = length(centered) * 2.0;
+        return clamp(dist / 1.05, 0.0, 1.0);
+    }
+
+    // sweep across, dithered at the edge
+    highp float along = clamp(coord.x * 0.75 + coord.y * 0.25, 0.0, 1.05);
+    return clamp(along / 1.05, 0.0, 1.0) * 0.5 + r * 0.5;
+}
+
+void fragment() {
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+
+    // idle shimmer while the art is up and "still" (cover phase)
+    highp float idle = (1.0 - progress) * 0.0012;
+    highp vec2 artUv = (coord - vec2(0.5)) * artScale + vec2(0.5) + artOffset;
+    artUv.y += sin(TIME * 2.7 + seed * 10.0) * idle;
+    artUv.x += sin(TIME * 2.1 + seed * 7.0 + 1.3) * idle * 0.5;
+
+    highp vec4 art = zTextureSpec(artTexture, clamp(artUv, 0.0, 1.0));
+    highp vec4 game = zTextureSpec(SCREEN_TEXTURE, coord);
+
+    // punch the dissolve through with a dithered edge, hard binary per cell
+    highp float m = mask(coord);
+    highp float edge = 0.02;
+    highp float t = smoothstep(m - edge, m + edge, progress);
+    // art alpha fades fast after its cells get eaten so there are no ghost pixels
+    highp float artAlpha = 1.0 - t;
+
+    COLOR = mix(game, art, artAlpha);
+}
