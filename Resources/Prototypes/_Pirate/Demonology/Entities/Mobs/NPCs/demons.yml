@@ -4,8 +4,8 @@
   abstract: true
   parent: [ MobSpaceBasic, MobCombat ]
   id: BaseDemon
-  name: demon
-  description: It came from hell.
+  name: "демон"
+  description: "Він прийшов із пекла."
   components:
   - type: HTN
     rootTask:
@@ -94,7 +94,7 @@
 - type: entity
   parent: BaseBullet
   id: DemonAcid
-  name: demonic acid spit
+  name: "демонічний плювок кислотою"
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -114,8 +114,8 @@
 - type: entity
   parent: BaseDemon
   id: MinorDemonGuy
-  name: twisted clown
-  description: What happens when a clown pies one too many chaplains. Actions have consequences.
+  name: "скручений клоун"
+  description: "Що буває, коли клоун закидає пирогами надто багато капеланів. За вчинки доводиться відповідати."
   components:
   - type: Fixtures
     fixtures:
@@ -173,8 +173,8 @@
 - type: entity
   parent: BaseDemon
   id: MinorDemonIncel
-  name: jealousy incarnate
-  description: A hellish creature that dwells in the second layer of hell, tiringly talkative.
+  name: "втілена заздрість"
+  description: "Пекельна істота, що мешкає у другому шарі пекла й невтомно базікає."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/incel.rsi
@@ -206,8 +206,8 @@
 - type: entity
   parent: [ BaseDemon, InventoryBase ]
   id: MinorDemonUrist
-  name: sinner
-  description: A wicked human sent to suffer in hell forever.
+  name: "грішник"
+  description: "Порочна людина, приречена страждати в пеклі вічно."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/human.rsi
@@ -254,8 +254,8 @@
 - type: entity
   parent: BaseDemon
   id: MinorDemonIan
-  name: flesh hound
-  description: After enough time in hell, souls begin to assume a more… primal form.
+  name: "гончак із плоті"
+  description: "Після достатнього часу в пеклі душі починають набувати більш… первісної форми."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/ian.rsi
@@ -293,8 +293,8 @@
 - type: entity
   parent: [ BaseDemon, InventoryBase ]
   id: MinorDemonVox
-  name: outcast
-  description: Hated by even the most repulsive demons, it wanders the planes of Hell alone.
+  name: "вигнанець"
+  description: "Його ненавидять навіть найогидніші демони; він самотньо блукає площинами пекла."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/vox.rsi
@@ -375,8 +375,8 @@
 - type: entity
   parent: [ BaseDemon, InventoryBase ]
   id: MinorDemonVulp
-  name: wrathful beast
-  description: The dominant species of a bygone era, now tortured in Hell for their hubris.
+  name: "лютий звір"
+  description: "Домінантний вид минулої ери, тепер він мучиться в пеклі за свою пиху."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/vulp.rsi
@@ -415,8 +415,8 @@
 - type: entity
   parent: BaseDemon
   id: MinorDemonCentifiend
-  name: lesser centifiend
-  description: A juvenile demon, it progresses the potent diseases of its greater brethren.
+  name: "молодший центіфієнд"
+  description: "Юний демон, що поширює могутні хвороби своїх старших побратимів."
   components:
   - type: Fixtures
     fixtures:
@@ -472,8 +472,8 @@
 - type: entity
   parent: BaseDemon
   id: MinorDemonFlesh
-  name: miserable flesh thing
-  description: A disgusting living mass of fat, muscle tissue, mucus and blood. The ritual must have failed somehow, and this wretched thing is the result.
+  name: "жалюгідна плоть"
+  description: "Огидна жива маса жиру, м'язової тканини, слизу й крові. Ритуал, мабуть, провалився, і це його жалюгідний результат."
   components:
   - type: Fixtures
     fixtures:
@@ -522,8 +522,8 @@
 - type: entity
   parent: BaseDemon
   id: MediumDemonCentifiend
-  name: centifiend
-  description: One of the most common demons in Hell, this oversized arthropod spreads pestilence with its bite.
+  name: "центіфієнд"
+  description: "Один із найпоширеніших демонів пекла, ця величезна членистонога істота поширює чуму своїм укусом."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/centifiend.rsi
@@ -568,8 +568,8 @@
 - type: entity
   parent: BaseDemon
   id: MediumDemonChad
-  name: prideful demon
-  description: It takes great pride in its mustache. It used to take pride in its skin…
+  name: "гордовитий демон"
+  description: "Він дуже пишається своїми вусами. Колись він пишався своєю шкірою…"
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/chad.rsi
@@ -600,8 +600,8 @@
 - type: entity
   parent: BaseDemon
   id: MediumDemonHamlet
-  name: hellmet
-  description: Bred as livestock in hell, rumors say Hellmets taste like chicken.
+  name: "геллмет"
+  description: "Кажуть, геллмети, яких у пеклі розводять як худобу, на смак як курятина."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/hamlet.rsi
@@ -653,8 +653,8 @@
 - type: entity
   parent: BaseDemon
   id: MediumDemonMindflayer
-  name: mindflayer
-  description: A primordial beast, it's kin have existed since the dawn of Hell. Barely intelligent, it uses inate psychic abilities to feed on the intellect of its prey.
+  name: "пожирач розуму"
+  description: "Первісна істота, її родичі існують від самого світанку пекла. Майже нерозумна, вона живиться інтелектом здобичі за допомогою природних псіонічних здібностей."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/mindflayer.rsi
@@ -701,8 +701,8 @@
 - type: entity
   parent: BaseDemon
   id: MediumDemonAbomination
-  name: abomination
-  description: A grotesque amalgamation of sickly flesh, muscle quivers underneath it's rotting skin and it constantly drools a corrosive mucus.
+  name: "мерзота"
+  description: "Огидне злиття хворої плоті; м'язи сіпаються під гнилою шкірою, а істота постійно випльовує їдкий слиз."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/abomination.rsi
@@ -749,8 +749,8 @@
 - type: entity
   parent: BaseDemon
   id: MediumDemonImp
-  name: imp
-  description: Miserable, weak and disfigured beings, they often find themselves the lackeys of more powerful demons. Lords of Hell often use imps as cannon fodder for their armies.
+  name: "біс"
+  description: "Жалюгідні, слабкі й понівечені істоти, що часто стають прислужниками могутніших демонів. Володарі пекла часто використовують бісів як гарматне м'ясо своїх армій."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/imp.rsi
@@ -784,8 +784,8 @@
 - type: entity
   parent: BaseDemon
   id: MediumDemonDark
-  name: darkling
-  description: Strange shadowy beings, darklings hide in the deepest recesses of Hell, only emerging to drag down the odd sinner into the darkness.
+  name: "темник"
+  description: "Дивні тіньові істоти, темники ховаються в найглибших закутках пекла й лише зрідка виходять, щоб стягнути грішника в темряву."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/dark.rsi
@@ -817,8 +817,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorAngelHuman
-  name: Aspect of Greed
-  description: After consuming a great number of Hellish souls, it's possible a lowly Sinner may become an Aspect. Humans embody the aspect of Greed.
+  name: "втілення жадібності"
+  description: "Поглинувши безліч пекельних душ, жалюгідний грішник може стати Втіленням. Люди уособлюють жадібність."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/fat.rsi
@@ -869,8 +869,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorAngelLizard
-  name: Aspect of Predation
-  description: After consuming a great number of Hellish souls, it's possible a lowly Sinner may become an aspect. Lizards embody the aspect of Predation.
+  name: "втілення хижацтва"
+  description: "Поглинувши безліч пекельних душ, жалюгідний грішник може стати Втіленням. Ящери уособлюють хижацтво."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/buff.rsi
@@ -919,8 +919,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorAngelMoth
-  name: Aspect of Madness
-  description: After consuming a great number of Hellish souls, it's possible a lowly Sinner may become an aspect. Moths embody the aspect of Madness.
+  name: "втілення безумства"
+  description: "Поглинувши безліч пекельних душ, жалюгідний грішник може стати Втіленням. Молі уособлюють безумство."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/normal.rsi
@@ -954,8 +954,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorDemonBosche
-  name: bosche
-  description: Born from the dreams of a mad painter, all it knows is to consume.
+  name: "боше"
+  description: "Народжений зі снів божевільного художника, він знає лише одне — поглинати."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/bosche.rsi
@@ -1002,8 +1002,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorDemonFeverbird
-  name: feverbird
-  description: Your head hurts. Something is wrong. Onion layer one. Onion layer two. Onion layer three…
+  name: "лихоманкоптах"
+  description: "У вас болить голова. Щось не так. Шар цибулі перший. Шар цибулі другий. Шар цибулі третій…"
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/feverbird.rsi
@@ -1058,8 +1058,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorDemonHanged
-  name: hanged
-  description: After being sent to the gallows, the souls of criminals enter the flora of Hell, they are back to exact revenge.
+  name: "повішений"
+  description: "Після страти на шибениці душі злочинців входять у флору пекла й повертаються, щоб помститися."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/hanger.rsi
@@ -1114,8 +1114,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorDemonHiver
-  description: Weaker demons that formed a symbiotic relationship with infernal bees. yes Hell has bees, lots of them.
-  name: hiver
+  description: "Слабші демони, що утворили симбіоз із пекельними бджолами. Так, у пеклі є бджоли — і їх багато."
+  name: "гівер"
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/hiver.rsi
@@ -1158,7 +1158,7 @@
 - type: entity
   parent: BeeLaughter
   id: BeeLaughterDemon
-  name: demon bee
+  name: "демон-бджола"
   components:
   - type: FadingTimedDespawn
     lifetime: 5
@@ -1167,8 +1167,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorDemonSteamer
-  name: steamer
-  description: Steamers are demons that were born from the souls of those who died to welderbombing. Their anger manifests as blazing oil within their gut.
+  name: "паровик"
+  description: "Паровики — демони, народжені з душ тих, хто загинув через вибух зварювального апарата. Їхня лють проявляється як палаюча олія в утробі."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/steamer.rsi
@@ -1224,8 +1224,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorDemonButcher
-  name: butcher
-  description: The butchers march through hell, like a plague of locusts, flaying and consuming all in their path.
+  name: "м'ясник"
+  description: "М'ясники марширують пеклом, мов навала сарани, здираючи шкіру й пожираючи все на своєму шляху."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/butcher.rsi
@@ -1258,8 +1258,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorDemonGhost
-  name: Spectre
-  description: Torn from their bodies, they seek to warm their hands on the warm flesh of the living.
+  name: "спектр"
+  description: "Вирвані зі своїх тіл, вони прагнуть зігріти руки об теплу плоть живих."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/spectre.rsi
@@ -1298,8 +1298,8 @@
 - type: entity
   parent: BaseDemon
   id: MajorDemonSaturn
-  name: saturnite
-  description: Many demonologists perform rituals to give themselves stronger physical forms, saturnites form when said rituals go terribly wrong.
+  name: "сатурніт"
+  description: "Чимало демонологів проводять ритуали, щоб надати собі сильніших фізичних форм; сатурніти виникають, коли такі ритуали жахливо провалюються."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Mobs/Monsters/Demons/saturn.rsi

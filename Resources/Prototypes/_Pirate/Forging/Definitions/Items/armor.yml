@@ -5,7 +5,7 @@
   abstract: true
   id: ChainmailSheet
   category: Armor
-  name: chainmail sheet
+  name: "кольчужне полотно"
   tag: ForgedChainmailSheet
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/chainmail.rsi
 
@@ -16,7 +16,7 @@
   abstract: true
   id: ArmorPlate
   category: Armor
-  name: plate
+  name: "пластина"
   tag: ForgedArmorPlate
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/armor_plate.rsi
   work: 200
@@ -32,7 +32,7 @@
   abstract: true
   id: ShieldBoss
   category: Armor
-  name: shield boss # big boss
+  name: "умбон" # big boss
   tag: ForgedShieldBoss
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/shield_boss.rsi
 

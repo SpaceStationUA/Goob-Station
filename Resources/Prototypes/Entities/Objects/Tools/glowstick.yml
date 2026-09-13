@@ -4,8 +4,8 @@
   abstract: true
   parent: BaseItem
   id: GlowstickBase
-  name: glowstick
-  description: Useful for raves and emergencies.
+  name: "світлова паличка"
+  description: "Корисна для рейвів і надзвичайних ситуацій."
   components:
   - type: SpaceGarbage
   - type: ExpendableLight
@@ -75,7 +75,7 @@
 - type: entity
   parent: GlowstickBase
   id: GlowstickRed
-  name: red glowstick
+  name: "червона світло-паличка"
   components:
   - type: ExpendableLight
     spentName: expendable-light-spent-red-glowstick-name
@@ -86,7 +86,7 @@
 - type: entity
   parent: GlowstickBase
   id: GlowstickPurple
-  name: purple glowstick
+  name: "фіолетова світло-паличка"
   components:
   - type: ExpendableLight
     spentName: expendable-light-spent-purple-glowstick-name
@@ -97,7 +97,7 @@
 - type: entity
   parent: GlowstickBase
   id: GlowstickYellow
-  name: yellow glowstick
+  name: "жовта світло-паличка"
   components:
   - type: ExpendableLight
     spentName: expendable-light-spent-yellow-glowstick-name
@@ -108,7 +108,7 @@
 - type: entity
   parent: GlowstickBase
   id: GlowstickBlue
-  name: blue glowstick
+  name: "блакитна світло-паличка"
   components:
   - type: ExpendableLight
     spentName: expendable-light-spent-blue-glowstick-name
@@ -119,7 +119,7 @@
 - type: entity
   parent: GlowstickBase
   id: GlowstickGreen
-  name: green glowstick
+  name: "зелена світлова паличка"
   components:
   - type: ExpendableLight
     spentName: expendable-light-spent-green-glowstick-name
@@ -131,7 +131,7 @@
 # THE FOLLOWING ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
 # ----------------------------------------------------------------------------
 - type: entity
-  name: light pulse test
+  name: "тест світловим імпульсом"
   parent: BaseItem
   id: LightBehaviourTest1
   categories: [ HideSpawnMenu ]
@@ -162,7 +162,7 @@
       enabled: true
 
 - type: entity
-  name: color cycle test
+  name: "тест кольорового циклу"
   parent: BaseItem
   id: LightBehaviourTest2
   categories: [ HideSpawnMenu ]
@@ -194,7 +194,7 @@
       - green
 
 - type: entity
-  name: multi-behaviour light test
+  name: "мультиповедінковий світловий тест"
   parent: BaseItem
   id: LightBehaviourTest3
   categories: [ HideSpawnMenu ]
@@ -234,7 +234,7 @@
       - green
 
 - type: entity
-  name: light fade in test
+  name: "згасання світла в тесті"
   parent: BaseItem
   id: LightBehaviourTest4
   categories: [ HideSpawnMenu ]
@@ -265,7 +265,7 @@
       enabled: true
 
 - type: entity
-  name: light pulse radius test
+  name: "тест на радіус дії світлового імпульсу"
   parent: BaseItem
   id: LightBehaviourTest5
   categories: [ HideSpawnMenu ]
@@ -296,7 +296,7 @@
       enabled: true
 
 - type: entity
-  name: light randomize radius test
+  name: "тест на рандомізацію радіусу дії світла"
   parent: BaseItem
   id: LightBehaviourTest6
   categories: [ HideSpawnMenu ]

@@ -46,8 +46,8 @@
 - type: entity
   parent: BaseCarvedRune
   id: EnchantingRuneCarved
-  name: unfinished rune
-  description: An unfinished rune, needs blood.
+  name: "незавершена руна"
+  description: "Незавершена руна, потребує крові."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Structures/Runes/enchanting.rsi
@@ -57,8 +57,8 @@
 - type: entity
   parent: BaseSummoningRune
   id: EnchantingRune
-  name: enchantment rune
-  description: A rune used for enchanting items.
+  name: "руна зачарування"
+  description: "Руна для зачарування предметів."
   components:
   - type: PlaceableSurface
   - type: EnchantingTable
@@ -107,8 +107,8 @@
 - type: entity
   parent: BaseDemonRune
   id: MinorDemonRune
-  name: minor summoning circle
-  description: A rune used to summon minor demons.
+  name: "мале коло призову"
+  description: "Руна для призову малих демонів."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Structures/Runes/minor.rsi
@@ -134,8 +134,8 @@
 - type: entity
   parent: BaseCarvedRune
   id: MinorRuneCarved
-  name: unfinished rune
-  description: An unfinished rune, needs blood.
+  name: "незавершена руна"
+  description: "Незавершена руна, потребує крові."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Structures/Runes/minor.rsi
@@ -147,8 +147,8 @@
 - type: entity
   parent: BaseDemonRune
   id: MediumDemonRune
-  name: summoning circle
-  description: A rune used to summon demons.
+  name: "коло призову"
+  description: "Руна для призову демонів."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Structures/Runes/medium.rsi
@@ -172,8 +172,8 @@
 - type: entity
   parent: BaseCarvedRune
   id: MediumRuneCarved
-  name: unfinished rune
-  description: An unfinished rune, needs blood.
+  name: "незавершена руна"
+  description: "Незавершена руна, потребує крові."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Structures/Runes/medium.rsi
@@ -185,8 +185,8 @@
 - type: entity
   parent: BaseDemonRune
   id: MajorDemonRune
-  name: major summoning circle
-  description: A rune used to summon major demons.
+  name: "велике коло призову"
+  description: "Руна для призову великих демонів."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Structures/Runes/major.rsi
@@ -214,8 +214,8 @@
 - type: entity
   parent: BaseCarvedRune
   id: MajorRuneCarved
-  name: unfinished rune
-  description: An unfinished rune, needs blood.
+  name: "незавершена руна"
+  description: "Незавершена руна, потребує крові."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Structures/Runes/major.rsi

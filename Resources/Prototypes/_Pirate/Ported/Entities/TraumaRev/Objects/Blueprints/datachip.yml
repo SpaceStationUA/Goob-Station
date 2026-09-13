@@ -4,8 +4,8 @@
   abstract: true
   parent: [ BaseItem, BaseRevMinorContraband ]
   id: BaseBlueprintDatachip
-  name: data chip
-  description: A datachip, can be inserted into a microelectronics assembler to make new useful tech.
+  name: "чип даних"
+  description: "Чип даних, який можна вставити в збирач мікроелектроніки для створення нових корисних технологій."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Revs/datachip.rsi
@@ -17,7 +17,7 @@
 - type: entity
   parent: BaseBlueprintDatachip
   id: DataChipAIBoard
-  name: data chip (AI Override Board)
+  name: "чип даних (плата перевизначення ШІ)"
   components:
   - type: Blueprint
     providedRecipes:
@@ -26,7 +26,7 @@
 - type: entity
   parent: BaseBlueprintDatachip
   id: DataChipReflectivePlate
-  name: data chip (Reflective Plate)
+  name: "чип даних (відбивна пластина)"
   components:
   - type: Blueprint
     providedRecipes:
@@ -35,7 +35,7 @@
 - type: entity
   parent: BaseBlueprintDatachip
   id: DataChipFakeMindshield
-  name: data chip (Fake Mindshield)
+  name: "чип даних (підроблений захист розуму)"
   components:
   - type: Blueprint
     providedRecipes:
@@ -44,7 +44,7 @@
 - type: entity
   parent: BaseBlueprintDatachip
   id: DataChipShieldRipper
-  name: data chip (Mindshield Ripper)
+  name: "чип даних (виривач захисту розуму)"
   components:
   - type: Blueprint
     providedRecipes:

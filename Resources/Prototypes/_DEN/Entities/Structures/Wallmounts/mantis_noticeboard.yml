@@ -6,8 +6,8 @@
 - type: entity
   parent: NoticeBoard
   id: SomberNoticeBoard
-  name: mantis pinboard
-  description: "Is there a job for a witcher?" # This is also the other notice board's description and I'm keeping it unless I get vetoed (crossing my arms)
+  name: "дошка оголошень псіо-екстрасенса"
+  description: "Чи є робота для відьмака?" # This is also the other notice board's description and I'm keeping it unless I get vetoed (crossing my arms)
   components:
   - type: Sprite
     sprite: _DEN/Structures/Specific/Mantis/mantisnoticeboard.rsi

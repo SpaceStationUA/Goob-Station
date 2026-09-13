@@ -5,8 +5,8 @@
 - type: entity
   parent: ActionBlink
   id: ActionDemonRift
-  name: Demon Blink
-  description: Click somewhere to teleport to it.
+  name: "демонічний стрибок"
+  description: "Клацніть десь, щоб телепортуватися туди."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Actions/demon.rsi
@@ -25,8 +25,8 @@
 - type: entity
   parent: ActionRepulseNoRobes
   id: ActionDemonRepulse
-  name: Demonic Pulse
-  description: Release a pulse of raw demonic energy, pushing everyone away from you.
+  name: "демонічний імпульс"
+  description: "Вивільніть імпульс чистої демонічної енергії, відштовхуючи всіх навколо."
   components:
   - type: Sprite
     sprite: _Pirate/Demonology/Actions/demon.rsi
@@ -42,8 +42,8 @@
 
 - type: entity
   id: ActionDemonGaze
-  name: Demon Gaze
-  description: Generates a massive death beam that eradicates everything in it's path. Has it's own gravitational pull, sucking in new victims.
+  name: "погляд демона"
+  description: "Створює величезний промінь смерті, що знищує все на своєму шляху. Він має власне гравітаційне тяжіння й затягує нових жертв."
   components:
   - type: Sprite
     sprite: _Goobstation/Heretic/abilities_heretic.rsi

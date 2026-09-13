@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatMantis
-  name: psionic mantis' jacket # DeltaV - Rename Forensic Mantis to Psionic Mantis
-  description: Modeled after an ancient infantry uniform, this jacket may guard you against the unknown in your journey for the truth.
+  name: "куртка псіо-екстрасенса" # DeltaV - Rename Forensic Mantis to Psionic Mantis
+  description: "Змодельована за зразком стародавньої піхотної форми, ця куртка може захистити вас від невідомого на шляху до істини."
   components:
   - type: Sprite
     sprite: Nyanotrasen/Clothing/OuterClothing/Coats/mantis_jacket.rsi

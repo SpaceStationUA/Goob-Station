@@ -1,8 +1,8 @@
 - type: entity
   parent: FireAxeCabinet
   id: SpareIdCabinet
-  name: spare ID cabinet
-  description: There is a small label that reads "For emergency use only".
+  name: "сейф резервного ID"
+  description: "На маленькій табличці написано: «Лише для надзвичайних ситуацій»."
   components:
   - type: Destructible
     thresholds:

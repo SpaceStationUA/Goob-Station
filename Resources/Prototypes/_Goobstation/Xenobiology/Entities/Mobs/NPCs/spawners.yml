@@ -12,7 +12,7 @@
 - type: entity
   parent: MarkerBase
   id: XenobioSlimeBabySpawner
-  name: random T1 xenobio slime spawner
+  name: "випадковий спавнер ксенобіо-слаймів T1"
   components:
   - type: Sprite
     layers:

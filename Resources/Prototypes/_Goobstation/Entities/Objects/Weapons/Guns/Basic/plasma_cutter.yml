@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: plasma cutter
+  name: "плазмовий різак"
   parent: BaseWeaponBatterySmall
   id: WeaponPlasmaCutter
-  description: A mining weapon that can mine an entire tunnel with a single shot.
+  description: "Шахтарська зброя, здатна одним пострілом прокласти цілий тунель."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/cutter.rsi
@@ -41,10 +41,10 @@
     startingCharge: 0
 
 - type: entity
-  name: super plasma cutter
+  name: "суперплазмовий різак"
   parent: [ WeaponPlasmaCutter, BaseSalvageContraband ]
   id: WeaponSuperPlasmaCutter
-  description: A strong mining weapon that can mine even bigger tunnels through rocks.
+  description: "Потужна шахтарська зброя, здатна прокладати крізь каміння ще більші тунелі."
   components:
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/super_cutter.rsi

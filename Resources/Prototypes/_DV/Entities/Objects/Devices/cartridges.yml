@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseItem
   id: GlimmerMonitorCartridge
-  name: glimmer monitor cartridge
-  description: A cartridge that keeps track of glimmer.
+  name: "картридж для монітора мерехтіння"
+  description: "Картридж, який відстежує мерехтіння."
   components:
   - type: Sprite
     sprite: _DV/Objects/Devices/cartridge.rsi
@@ -45,8 +45,8 @@
 - type: entity
   parent: BaseItem
   id: NanoChatCartridge
-  name: NanoChat cartridge
-  description: Lets you message other people!
+  name: "Картридж NanoChat"
+  description: "Дозволяє надсилати повідомлення іншим людям!"
   components:
   - type: Sprite
     sprite: _DV/Objects/Devices/cartridge.rsi

@@ -9,8 +9,8 @@
 - type: entity
   id: CigaretteMnemolith
   parent: Cigarette
-  name: mnemolith cigarette
-  description: "The smoke clings to your thoughts, enhancing your awareness of the noosphere."
+  name: "мнемолітова сигарета"
+  description: "Дим чіпляється за ваші думки, загострюючи усвідомлення Ноосфери."
   components:
   - type: Smokable
     inhaleAmount: 0.05 # The default value, included here for reference if mnemolith is rebalanced
@@ -40,8 +40,8 @@
 - type: entity
   id: CigPackMnemolith
   parent: CigPackBase
-  name: Mnemolith Cigarettes
-  description: "Cigarettes containing powdered mnemolith, used by mantes to heighten their extrasensory perception. Potential psychological impact aside, there are no known lasting effects."
+  name: "мнемолітові сигарети"
+  description: "Сигарети з порошком мнемоліту, які псіо-екстрасенси використовують для загострення екстрасенсорного сприйняття. Попри можливий психологічний вплив, відомих тривалих наслідків немає."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Consumable/Smokeables/Cigarettes/Packs/mantis.rsi

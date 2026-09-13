@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: LauncherStickyGrenadeRegenerating
-  name: sticky grenade launcher
-  description: A self-reloading launcher that fires sticky grenades. They embed into whatever they hit and explode after 3 seconds.
+  name: "гранатомет липких гранат"
+  description: "Самозарядний гранатомет, що стріляє липкими гранатами. Вони застрягають у тому, у що влучають, і вибухають через 3 секунди."
   suffix: Regenerating
   components:
   - type: Sprite

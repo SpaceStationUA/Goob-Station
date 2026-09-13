@@ -4,8 +4,8 @@
 - type: entity
   parent: BaseToggleAction
   id: ActionCaduceusToggle
-  name: Активувати Кадуцей
-  description: Дістати або заспокоїти слиз.
+  name: "Активувати Кадуцей"
+  description: "Вивільнити або заспокоїти слиз."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -20,8 +20,8 @@
 - type: entity
   parent: BaseAction
   id: ActionCaduceusSwap
-  name: Змінити форму
-  description: skip, skip, skip, when this game gets fucking good?
+  name: "Змінити форму"
+  description: "гортай, гортай, гортай, коли ця довбана гра вже стане цікавою?"
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
@@ -35,8 +35,8 @@
 - type: entity
   parent: BaseAction
   id: ActionCaduceusHold
-  name: Затриматися
-  description: Дає вдарити ще стільки ж разів у цій формі, але це не по канону, не робіть так
+  name: "Затриматися"
+  description: "Дає вдарити ще стільки ж разів у цій формі, але це не по канону, не робіть так"
   categories: [ HideSpawnMenu ]
   components:
   - type: Action

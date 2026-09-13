@@ -61,6 +61,12 @@ public sealed partial class AudioTab : Control
             SliderVolumeLobby,
             scale: ContentAudioSystem.LobbyMultiplier);
 
+        #region Pirate: announcement audio settings
+        Control.AddOptionPercentSlider(
+            PirateVars.AnnouncementVolume,
+            SliderVolumeAnnouncements);
+        #endregion
+
         Control.AddOptionPercentSlider(
             PirateVars.VolumeGainCassettes,
             SliderVolumeCassettes);
@@ -107,6 +113,7 @@ public sealed partial class AudioTab : Control
         Control.AddOptionCheckBox(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox);
         Control.AddOptionCheckBox(CCVars.RestartSoundsEnabled, RestartSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.EventMusicEnabled, EventMusicCheckBox);
+        Control.AddOptionCheckBox(PirateVars.TranscribedAnnouncementSounds, TranscribedAnnouncementSoundsCheckBox); // Pirate: announcement audio settings
         Control.AddOptionCheckBox(CCVars.AdminSoundsEnabled, AdminSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.BwoinkSoundEnabled, BwoinkSoundCheckBox);
         Control.AddOptionCheckBox(CCVars.RadioSoundsEnabled, RadioSoundsCheckBox); // Pirate: radio sounds

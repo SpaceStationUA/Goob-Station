@@ -19,7 +19,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepPrepareFaceReconstruction
-  name: Prepare facial tissue
+  name: "Підготувати тканини обличчя"
   components:
   - type: SurgeryStep
     tool:
@@ -38,7 +38,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: SurgeryStepTreatFaceMutilation
-  name: Reconstruct facial tissue
+  name: "Реконструювати тканини обличчя"
   components:
   - type: SurgeryStep
     tool:
@@ -57,7 +57,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryReconstructFace
-  name: Reconstruct Face
+  name: "Реконструювати обличчя"
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision

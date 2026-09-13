@@ -6,8 +6,8 @@
 - type: entity
   id: ActionCyberdeckHack
   parent: BaseAction
-  name: Hack Device
-  description: Hack electronics in your field of view with the Cyberdeck implant. Some targets may react explosively.
+  name: "Зламати пристрій"
+  description: "Зламайте електроніку в полі зору за допомогою імпланта кібердеки. Деякі цілі можуть вибухнути."
   components:
   - type: Action
     itemIconStyle: BigAction
@@ -24,8 +24,8 @@
 - type: entity
   id: ActionCyberdeckVision
   parent: BaseMentalAction
-  name: Activate Cyber Vision
-  description: Connect your brain directly to the station network and project yourself through it.
+  name: "Активувати кіберзір"
+  description: "Під'єднайте мозок до мережі станції та спроєктуйте себе в неї."
   components:
   - type: Action
     useDelay: 2
@@ -40,8 +40,8 @@
 - type: entity
   id: ActionCyberdeckVisionReturn
   parent: BaseMentalAction
-  name: Return
-  description: Disconnect from the station network and return to your body.
+  name: "Повернутися"
+  description: "Від'єднайтеся від мережі станції та поверніться у своє тіло."
   components:
   - type: Action
     useDelay: 2
