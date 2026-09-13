@@ -8,13 +8,17 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
+using Robust.Client.State;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 using Content.Client.Lobby;
 using Content.Client.Lobby.UI;
+using Robust.Client.UserInterface.Controls;
 using Content.Client.GameTicking.Managers;
+using Robust.Client.Console;
+using Robust.Shared.Console;
 
 namespace Content.Client._Pirate.Wipe;
 
@@ -31,7 +35,9 @@ public sealed class RoundWipeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IBaseClient _client = default!;
+    [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private static readonly TimeSpan MaxCover = TimeSpan.FromSeconds(60);
@@ -69,6 +75,33 @@ public sealed class RoundWipeSystem : EntitySystem
         _client.RunLevelChanged += OnRunLevelChanged;
 
         LobbyState.OnLobbyGuiReady += OnLobbyGuiReady;
+        _console.AnyCommandExecuted += OnAnyCommand;
+        _state.OnStateChanged += OnStateChange;
+    }
+
+    private void OnStateChange(StateChangedEventArgs args)
+    {
+        if (args.NewState is LobbyState && _panel != null && !_release)
+        {
+            // Pre-game lobby: no join pending, drop the cover and re-arm.
+            StopPanel();
+            _armed = true;
+        }
+    }
+
+    private void OnAnyCommand(IConsoleShell shell, string command, string argStr, string[] args)
+    {
+        // Late-join job dialogs and the console send "joingame"; cover from that
+        // exact click, before the server has processed the join.
+        if (!_enabled || !_armed)
+            return;
+
+        if (command != "joingame")
+            return;
+        if (!_entityManager.System<ClientGameTicker>().IsGameStarted && !_release)
+            return;
+
+        TryStartCover();
     }
 
     private LobbyGui? _lobby;
@@ -96,9 +129,10 @@ public sealed class RoundWipeSystem : EntitySystem
         if (!_enabled || !_armed)
             return;
 
-        // Direct connects (lobby disabled) have no JoinGame event; the client goes
-        // straight to a world load after connecting, so cover from there.
-        if (args.NewLevel == ClientRunLevel.Connected && !_config.GetCVar(CCVars.GameLobbyEnabled))
+        // Cover from the first connect attempt (right after the handshake), so the
+        // whole network/content-load freeze is under the art. If the player ends up in a pregame
+        // lobby, the LobbyState handler removes the panel and re-arms.
+        if (args.NewLevel == ClientRunLevel.Connecting || args.NewLevel == ClientRunLevel.Connected)
             TryStartCover();
     }
 
@@ -121,6 +155,7 @@ public sealed class RoundWipeSystem : EntitySystem
         _coverRealTime = _timing.RealTime;
         _releaseElapsed = TimeSpan.Zero;
         _panel = new RoundWipeUiPanel(art, _mode, _seed) { Progress = 0f };
+        LayoutContainer.SetAnchorPreset(_panel, LayoutContainer.LayoutPreset.Wide);
         _ui.RootControl.AddChild(_panel);
         Log.Info($"[WIPE] cover started mode={_mode} art={_artPath}");
     }

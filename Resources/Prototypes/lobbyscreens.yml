@@ -416,3 +416,15 @@
   background: /Textures/LobbyScreens/nuclearplan.jpg
   name: Ideal Nuclear Plan
   artist: Redmon
+
+- type: lobbyBackground
+  id: topped-pirates1
+  background: /Textures/LobbyScreens/toppirates1.webp
+  name: Пірати
+  artist: SpaceStationUA
+
+- type: lobbyBackground
+  id: topped-pirates2
+  background: /Textures/LobbyScreens/toppirates2.webp
+  name: Пірати II
+  artist: SpaceStationUA
