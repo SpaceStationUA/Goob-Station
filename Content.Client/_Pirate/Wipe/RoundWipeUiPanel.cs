@@ -5,6 +5,8 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using System.Numerics;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
@@ -27,6 +29,12 @@ public sealed class RoundWipeUiPanel : Control
     private readonly float _seed;
     private readonly float _maskMode;
 
+    // Control drawing coordinates are physical render-target pixels, but Control.Size
+    // is in UI units (physical / UI scale). Scale the dest so the art fills the
+    // whole window at any UI scale setting.
+    private float _uiScale = 1f;
+    private bool _uiScaleDirty = true;
+
     public RoundWipeUiPanel(Texture art, int maskMode, float seed)
     {
         IoCManager.InjectDependencies(this);
@@ -42,6 +50,16 @@ public sealed class RoundWipeUiPanel : Control
         base.Draw(handle);
         if (Size.X <= 0 || Size.Y <= 0)
             return;
+
+        if (_uiScaleDirty)
+        {
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            var cvarScale = cfg.GetCVar(CVars.DisplayUIScale);
+            if (cvarScale == 0f)
+                cvarScale = IoCManager.Resolve<IClyde>().DefaultWindowScale.X;
+            _uiScale = cvarScale;
+            _uiScaleDirty = false;
+        }
 
         // cover-fit: crop source rect to match the screen aspect ratio
         var texSize = (Vector2) _art.Size;
@@ -61,7 +79,7 @@ public sealed class RoundWipeUiPanel : Control
             src = UIBox2.FromDimensions(0, y0, 1, visible);
         }
 
-        var dest = UIBox2.FromDimensions(0, 0, Size.X, Size.Y);
+        var dest = UIBox2.FromDimensions(0, 0, Size.X * _uiScale, Size.Y * _uiScale);
         var srcSize = new Vector2(src.Size.X, src.Size.Y);
         _shader.SetParameter("artTexture", _art);
         _shader.SetParameter("progress", Progress);
@@ -72,5 +90,11 @@ public sealed class RoundWipeUiPanel : Control
         handle.UseShader(_shader);
         handle.DrawTextureRectRegion(_art, dest, src);
         handle.UseShader(null);
+    }
+
+    protected override void UIScaleChanged()
+    {
+        base.UIScaleChanged();
+        _uiScaleDirty = true;
     }
 }
