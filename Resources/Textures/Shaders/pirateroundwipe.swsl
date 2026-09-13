@@ -2,7 +2,7 @@
 
 uniform sampler2D artTexture; // the "before" frame (splash / lobby art)
 uniform highp float progress; // 0 = art fully opaque, 1 = art invisible
-uniform highp float maskMode; // 0 = dither cells, 1 = staggered bands, 2 = centered circle, 3 = sweep
+uniform highp float maskMode; // 0 = dither cells, 1 = staggered bands, 2 = centered circle, 3 = sweep, 4 = precise stripes
 uniform highp float seed;
 uniform highp vec2 artScale; // maps screen uv into the art's cover-cropped uv space
 uniform highp vec2 artOffset;
@@ -12,6 +12,25 @@ const highp float BandCount = 7.0;
 
 highp float hash(highp vec2 co) {
     return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+// mode 4: precise pixel-locked vertical stripes. Each stripe dissolves from the
+// top down; a 12px fringe between the revealed and intact areas carries the
+// dither, everything else inside and outside the fringe stays solid.
+highp float stripeMask(highp vec2 coord) {
+    highp float stripeFrac = SCREEN_PIXEL_SIZE.x * 24.0;
+    highp float bx = floor(coord.x / stripeFrac);
+    highp float rng = hash(vec2(bx, seed * 61.17));
+    highp float r = hash(floor(coord * SCREEN_PIXEL_SIZE) + seed * 61.17);
+    highp float staggerSpan = 0.35;
+    highp float p = clamp(progress * (1.0 + staggerSpan) - rng * staggerSpan, 0.0, 1.0);
+    highp float fringe = SCREEN_PIXEL_SIZE.y * 12.0;
+    highp float diff = coord.y - p;
+    if (diff <= -fringe)
+        return 0.0;
+    if (diff >= fringe)
+        return 1.0;
+    return clamp(0.5 + diff / (2.0 * fringe) + (r - 0.5) * 0.9, 0.0, 1.0);
 }
 
 // normalized mask 0..1: pixels where mask > progress already show the game
@@ -38,10 +57,15 @@ highp float mask(highp vec2 coord) {
         return clamp(dist / 1.05, 0.0, 1.0);
     }
 
+    if (maskMode > 3.5 && maskMode < 4.5) {
+        return stripeMask(coord);
+    }
+
     // sweep across, dithered at the edge
     highp float along = clamp(coord.x * 0.75 + coord.y * 0.25, 0.0, 1.05);
     return clamp(along / 1.05, 0.0, 1.0) * 0.5 + r * 0.5;
 }
+
 
 void fragment() {
     highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
