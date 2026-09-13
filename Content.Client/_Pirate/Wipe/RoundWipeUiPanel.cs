@@ -1,25 +1,39 @@
 // SPDX-License-Identifier: MIT
 
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using System.Numerics;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client._Pirate.Wipe;
 
 /// <summary>
-///     Fullscreen art panel shown while the client is loading into a round.
-///     Draws the cover-cropped art so it hands off seamlessly to the world-space
-///     wipe overlay (which samples the same art the same way) once gameplay starts.
+///     Fullscreen wipe panel drawn on top of everything (above the HUD) that shows
+///     the splash art while the client loads into a round, then dissolves it into
+///     the live game once the world is rendering.
 /// </summary>
 public sealed class RoundWipeUiPanel : Control
 {
+    private static readonly ProtoId<ShaderPrototype> ShaderProto = "PirateRoundWipe";
+
+    private readonly ShaderInstance _shader;
     private readonly Texture _art;
 
-    public RoundWipeUiPanel(Texture art)
+    public float Progress { get; set; }
+
+    private readonly float _seed;
+    private readonly float _maskMode;
+
+    public RoundWipeUiPanel(Texture art, int maskMode, float seed)
     {
+        IoCManager.InjectDependencies(this);
         _art = art;
+        _seed = seed;
+        _maskMode = maskMode;
+        _shader = IoCManager.Resolve<IPrototypeManager>().Index(ShaderProto).InstanceUnique();
         MouseFilter = MouseFilterMode.Ignore;
     }
 
@@ -29,7 +43,7 @@ public sealed class RoundWipeUiPanel : Control
         if (Size.X <= 0 || Size.Y <= 0)
             return;
 
-        // compute cover-fit: crop source rect to match the screen aspect ratio
+        // cover-fit: crop source rect to match the screen aspect ratio
         var texSize = (Vector2) _art.Size;
         var texAspect = texSize.X / texSize.Y;
         var screenAspect = Size.X / Size.Y;
@@ -48,6 +62,15 @@ public sealed class RoundWipeUiPanel : Control
         }
 
         var dest = UIBox2.FromDimensions(0, 0, Size.X, Size.Y);
+        var srcSize = new Vector2(src.Size.X, src.Size.Y);
+        _shader.SetParameter("artTexture", _art);
+        _shader.SetParameter("progress", Progress);
+        _shader.SetParameter("maskMode", _maskMode);
+        _shader.SetParameter("seed", _seed);
+        _shader.SetParameter("artScale", srcSize);
+        _shader.SetParameter("artOffset", new Vector2(src.Left, src.Top));
+        handle.UseShader(_shader);
         handle.DrawTextureRectRegion(_art, dest, src);
+        handle.UseShader(null);
     }
 }
