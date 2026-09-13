@@ -102,15 +102,18 @@ public sealed class OrganChipSystem : EntitySystem
             return;
 
         foreach (var organ in _body.GetBodyOrganEntityComps<OrganChipContainerComponent>((ent.Owner, body)))
-        {
-            if (organ.Comp1.Container is not { } container)
-                continue;
+            RemoveChips(organ.Comp1);
+    }
 
-            foreach (var chip in container.ContainedEntities.ToArray())
-            {
-                _containers.Remove(chip, container);
-                QueueDel(chip);
-            }
+    private void RemoveChips(OrganChipContainerComponent component)
+    {
+        if (component.Container is not { } container)
+            return;
+
+        foreach (var chip in container.ContainedEntities.ToArray())
+        {
+            _containers.Remove(chip, container);
+            QueueDel(chip);
         }
     }
     // unchipped trait end
@@ -240,6 +243,14 @@ public sealed class OrganChipSystem : EntitySystem
     {
         if (TerminatingOrDeleted(args.Body))
             return;
+
+        // unchipped trait start
+        if (HasComp<UnchippedComponent>(args.Body))
+        {
+            RemoveChips(ent.Comp);
+            return;
+        }
+        // unchipped trait end
 
         var ev = new OrganChipInsertedEvent(ent.Owner, args.Body);
         RelayChips(ent, ref ev);

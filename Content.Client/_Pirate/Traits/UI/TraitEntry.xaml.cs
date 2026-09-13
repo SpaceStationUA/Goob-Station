@@ -113,7 +113,7 @@ public sealed partial class TraitEntry : PanelContainer
             LogMan = _logManager,
             JobId = jobId?.Id,
             SpeciesId = profile?.Species.Id,
-            Profile = profile
+            Profile = profile?.WithTraitPreferences(selectedTraits)
         };
 
         foreach (var condition in _trait.Conditions)
@@ -125,26 +125,6 @@ public sealed partial class TraitEntry : PanelContainer
                 if (!string.IsNullOrEmpty(tooltip))
                     _failedConditionTooltips.Add(tooltip);
             }
-        }
-
-        var conflictingNames = new List<string>();
-        foreach (var conflictId in _trait.Conflicts)
-        {
-            if (selectedTraits.Contains(conflictId) && conflictId != _trait.ID)
-            {
-                MeetsConditions = false;
-                if (_prototype.TryIndex(conflictId, out var conflictingTrait))
-                {
-                    conflictingNames.Add(Loc.GetString(conflictingTrait.Name));
-                }
-            }
-        }
-
-        if (conflictingNames.Count > 0)
-        {
-            var conflictTooltip = Loc.GetString("trait-conditions-conflict-tooltip",
-                ("traits", string.Join(", ", conflictingNames)));
-            TooltipSupplier = _ => CreateMarkupTooltip(conflictTooltip);
         }
 
         var canAfford = remainingPoints >= TraitCost || selectedTraits.Contains(_trait.ID);

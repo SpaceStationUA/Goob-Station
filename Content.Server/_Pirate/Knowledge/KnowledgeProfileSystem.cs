@@ -6,6 +6,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared._Pirate.Roles;
+using Content.Shared._Pirate.Traits.Assorted;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Roles;
@@ -53,7 +54,10 @@ public sealed class KnowledgeProfileSystem : EntitySystem
                 continue;
             }
 
-            _knowledge.ApplyProfile(uid, species.Knowledge, new KnowledgeProfile());
+            var pointsBonus = TryComp<KnowledgeableComponent>(uid, out var knowledgeable)
+                ? knowledgeable.BonusPoints
+                : 0;
+            _knowledge.ApplyProfile(uid, species.Knowledge, new KnowledgeProfile(), pointsBonus);
 
             // Restore grants lost when ApplyProfile rebuilds the store.
             _knowledge.ReplayCompetency(uid);
