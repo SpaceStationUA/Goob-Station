@@ -1,10 +1,3 @@
-## Trait Categories
-trait-category-mental = Ментальні
-trait-category-medical = Медичні
-trait-category-physical = Фізичні
-trait-category-meta = Мета
-trait-category-accents = Акценти
-
 ## Traits Editor UI
 trait-editor-title = Особливості
 trait-editor-points-label = Доступні Очки
