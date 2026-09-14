@@ -289,15 +289,17 @@
         component: ForcedSleeping
         time: 1
         type: Add
-      - !type:Drunk
-        boozePower: 45
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectOpiateNod
+        type: Add
+        time: 4
         conditions:
         - !type:ReagentCondition
           reagent: Healium
           min: 4
       - !type:Oxygenate
         conditions:
-        - !type:MetabolizerTypeCondition # Fuck you
+        - !type:MetabolizerTypeCondition #Fuck you
           type: [Hydrakin]
     Gas:
       effects:
@@ -335,6 +337,14 @@
         visualType: Medium
         messages: [ "effect-sleepy" ]
         probability: 0.01
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectOpiateNod
+        type: Add
+        time: 4
+        conditions:
+        - !type:ReagentCondition
+          reagent: Healium
+          min: 4
       - !type:GenericStatusEffect
         conditions:
         - !type:ReagentCondition
@@ -347,12 +357,6 @@
         component: ForcedSleeping
         time: 1
         type: Add
-      - !type:Drunk
-        boozePower: 45
-        conditions:
-        - !type:ReagentCondition
-          reagent: Healium
-          min: 4
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition # Fuck you
