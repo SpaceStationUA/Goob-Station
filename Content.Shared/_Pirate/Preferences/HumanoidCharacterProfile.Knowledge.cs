@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Content.Shared._Pirate.Knowledge;
+using Content.Shared._Pirate.Traits.Assorted;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
 
@@ -28,11 +29,7 @@ public sealed partial class HumanoidCharacterProfile
         var systems = collection.Resolve<IEntitySystemManager>();
         var knowledge = systems.GetEntitySystem<SharedKnowledgeSystem>();
         var parent = prototypes.Index<SpeciesPrototype>(Species).Knowledge;
-        // Pirate start - knowledgeable trait
-        var pointsBonus = Content.Shared._Pirate.Traits.Assorted.KnowledgeableComponent.GetBonusPoints(
-            prototypes,
-            TraitPreferences);
-        // Pirate end - knowledgeable trait
+        var pointsBonus = KnowledgeableComponent.GetBonusPoints(prototypes, TraitPreferences);
         knowledge.EnsureProfileValid(parent, ref Knowledge, pointsBonus);
     }
 

@@ -100,13 +100,13 @@ public sealed partial class SharedKnowledgeSystem
         }
     }
 
-    // Rebuild the aggregate from source contributions.
+    // Rebuild the aggregate from employer and source contributions.
     public void RecalculateTemporaryLevel(Entity<KnowledgeComponent> knowledge)
     {
         if (!OwnsModifierLedger)
             return;
 
-        var total = 0;
+        var total = CompOrNull<EmployerKnowledgeBonusComponent>(knowledge.Owner)?.Level ?? 0;
 
         if (TryComp<KnowledgeTemporaryModifierSourcesComponent>(knowledge.Owner, out var sources))
         {

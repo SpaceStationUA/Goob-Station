@@ -7,49 +7,43 @@
   description: trait-language-foreigner-light-desc
   category: LanguageTraits
   cost: -1
-  conditions: # Pirate
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - Foreigner
-        - SignLanguage
   components:
   - type: ForeignerTrait
     cantUnderstand: false
     baseTranslator: TranslatorForeigner
+  conflicts: # Pirate
+    - Foreigner
+    - SignLanguage
+
 - type: trait
   id: Foreigner
   name: trait-language-foreigner-name
   description: trait-language-foreigner-desc
   category: LanguageTraits
   cost: -2
-  conditions: # Pirate
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - ForeignerLight
-        - SignLanguage
   components:
   - type: ForeignerTrait
     baseTranslator: TranslatorForeigner
+  conflicts: # Pirate
+    - ForeignerLight
+    - SignLanguage
+
 - type: trait
   id: SignLanguage
   name: trait-language-signlanguage-name
   description: trait-language-signlanguage-desc
   category: LanguageTraits
   cost: 1
-  conditions: # Pirate
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - ForeignerLight
-        - Foreigner
   components:
   - type: LanguageSpeaker
   languagesSpoken:
     - Sign
   languagesUnderstood:
     - Sign
+  conflicts: # Pirate
+    - ForeignerLight
+    - Foreigner
+
 # Not commented since this is another general-ish language.
 - type: trait
   id: SolCommon
@@ -57,7 +51,7 @@
   description: trait-language-solcommon-desc
   category: LanguageTraits
   cost: 1
-  conditions: # Pirate
+  conditions:
     - !type:IsNationalityCondition
       nationalities:
         - Solarian
@@ -76,7 +70,7 @@
   description: trait-language-tradeband-desc
   category: LanguageTraits
   cost: 1
-  conditions: # Pirate
+  conditions:
     - !type:IsNationalityCondition
       nationalities:
         - Eridanian

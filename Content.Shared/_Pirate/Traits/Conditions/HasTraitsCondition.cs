@@ -25,7 +25,7 @@ public sealed partial class HasTraitsCondition : BaseTraitCondition
                 : trait.Id)
             .ToList();
 
-        return Loc.GetString(Invert ? "trait-condition-trait-not" : "trait-condition-trait-is",
+        return loc.GetString(Invert ? "trait-condition-trait-not" : "trait-condition-trait-is",
             ("traits", string.Join(", ", names)));
     }
 }

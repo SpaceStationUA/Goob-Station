@@ -124,6 +124,25 @@ public sealed class TraitSystem : SharedTraitSystem
                 continue;
             }
 
+            var conflictFound = false;
+            foreach (var validTraitId in validTraits)
+            {
+                if (trait.Conflicts.Contains(validTraitId))
+                {
+                    conflictFound = true;
+                    break;
+                }
+
+                if (_prototypeManager.TryIndex(validTraitId, out var validTrait) && validTrait.Conflicts.Contains(traitId))
+                {
+                    conflictFound = true;
+                    break;
+                }
+            }
+
+            if (conflictFound)
+                continue;
+
             validTraits.Add(traitId);
         }
 

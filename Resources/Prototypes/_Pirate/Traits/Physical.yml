@@ -5,11 +5,8 @@
   description: trait-heat-resistant-desc
   category: Physical
   cost: 2
-  conditions:
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - TraitHeatWeakness
+  conflicts:
+    - TraitHeatWeakness
   components:
     - type: TempResistant
       heatModifier: 1.05
@@ -20,11 +17,8 @@
   description: trait-heat-weakness-desc
   category: Physical
   cost: -1
-  conditions:
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - TraitHeatResistant
+  conflicts:
+    - TraitHeatResistant
   components:
     - type: TempResistant
       heatModifier: 0.95
@@ -35,11 +29,8 @@
   description: trait-cold-resistant-desc
   category: Physical
   cost: 2
-  conditions:
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - TraitColdWeakness
+  conflicts:
+    - TraitColdWeakness
   components:
     - type: TempResistant
       coldModifier: 0.95
@@ -50,11 +41,8 @@
   description: trait-cold-weakness-desc
   category: Physical
   cost: -1
-  conditions:
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - TraitColdResistant
+  conflicts:
+    - TraitColdResistant
   components:
     - type: TempResistant
       coldModifier: 1.05
@@ -112,11 +100,9 @@
   description: trait-high-pain-tolerance-desc
   category: Physical
   cost: 5
+  conflicts:
+    - TraitLowPainTolerance
   conditions:
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - TraitLowPainTolerance
     - !type:IsSpeciesCondition
       invert: true
       species:
@@ -131,11 +117,9 @@
   description: trait-low-pain-tolerance-desc
   category: Physical
   cost: -2
+  conflicts:
+    - TraitHighPainTolerance
   conditions:
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - TraitHighPainTolerance
     - !type:IsSpeciesCondition
       invert: true
       species:

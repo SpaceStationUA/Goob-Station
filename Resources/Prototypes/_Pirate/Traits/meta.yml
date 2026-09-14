@@ -72,15 +72,12 @@
   name: trait-experienced-name
   description: trait-experienced-desc
   category: Meta
-  cost: 3
-  conditions:
-    - !type:HasTraitsCondition
-      invert: true
-      traits:
-        - Unchipped
+  cost: 2
+  conflicts:
+    - ExperiencedAlt
   components:
     - type: Knowledgeable
-      bonusPoints: 3
+      bonusPoints: 6
 
 - type: trait
   id: ExperiencedAlt
@@ -88,6 +85,8 @@
   description: trait-experienced-alt-desc
   category: Meta
   cost: 3
+  conflicts:
+    - Experienced
   conditions:
     - !type:HasTraitsCondition
       traits:
@@ -95,4 +94,6 @@
   components:
     - type: Knowledgeable
       bonusPoints: 10
+      requiredTraits:
+        - Unchipped
 #endregion
