@@ -1537,6 +1537,7 @@
   - SecurityMeleeKnife
   - SecurityMeleePolyBaton
   - SecurityMeleeSpear
+  - LoadoutSecurityGlaive # Pirate
 
 - type: loadoutGroup
   id: SecurityGloves

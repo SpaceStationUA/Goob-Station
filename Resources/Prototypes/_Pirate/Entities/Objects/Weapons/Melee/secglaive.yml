@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  name: Телескопічна глефа
+  parent: [ BaseSword, BaseSecurityContraband ]
+  id: SecurityGlaive
+  description: Зброя для лояльної гвардії
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Melee/secglaive.rsi
+  - type: WeaponClass # Pirate: Knowledge system, overrides BaseSword's Sword class
+    class: Polearm
+  - type: Sharp
+    butcherDelayModifier: 2
+  - type: MeleeWeapon
+    attackRate: 1
+    angle: 90
+    range: 1.75
+    damage:
+      types:
+        Slash: 10
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Slash: 10
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: _Pirate/Objects/Weapons/Melee/secglaive.rsi
+    size: Large
+    shape:
+    - 0,0,3,1
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Melee/secglaive.rsi
+    slots:
+    - Back
+    - suitStorage
+  - type: Tag
+    tags:
+    - Spear
+  - type: DisarmMalus
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
+        Slash: 10
+  - type: StaminaDamageOnCollide # Pirate: replaces upstream staminaCost, removed from DamageOtherOnHit in this fork
+    damage: 5
+  - type: EmbeddableProjectile
+  # Pirate: EmbedPassiveDamage does not exist in this fork, omitted.
+  - type: ThrowingAngle
+    angle: 225
