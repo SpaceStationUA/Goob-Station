@@ -153,15 +153,6 @@ public sealed partial class TraitsTab : BoxContainer
                 }
             }
 
-            foreach (var conflict in trait.Conflicts)
-            {
-                if (!_selectedTraits.Contains(conflict))
-                    continue;
-
-                RevertTraitToggle(traitId);
-                return;
-            }
-
             _selectedTraits.Add(traitId);
             if (countsTowardsGlobalLimit)
                 _currentTraitCount++;
@@ -198,8 +189,8 @@ public sealed partial class TraitsTab : BoxContainer
         if (trait.Category != null)
             UpdateCategoryStats(trait.Category.Value);
 
-        UpdateAllConditions();
         OnTraitsChanged?.Invoke(_selectedTraits);
+        UpdateAllConditions();
     }
 
     private bool CountsTowardsGlobalLimit(TraitPrototype trait)

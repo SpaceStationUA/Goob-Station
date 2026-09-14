@@ -1,10 +1,3 @@
-## Trait Categories
-trait-category-mental = Ментальні
-trait-category-medical = Медичні
-trait-category-physical = Фізичні
-trait-category-meta = Мета
-trait-category-accents = Акценти
-
 ## Traits Editor UI
 trait-editor-title = Особливості
 trait-editor-points-label = Доступні Очки
@@ -38,7 +31,6 @@ trait-conditions-tooltip = [bold]Вимоги:[/bold]
     {$requirements}
 trait-conditions-not-met-tooltip = Вимоги не виконані:
     {$requirements}
-trait-conditions-conflict-tooltip = Конфлікт із: [color=yellow]{$traits}[/color]
 trait-conditions-points-tooltip = [color=yellow]Недостатньо очок для вибору.[/color]
 
 

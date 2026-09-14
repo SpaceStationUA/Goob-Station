@@ -127,26 +127,6 @@ public sealed partial class TraitEntry : PanelContainer
             }
         }
 
-        var conflictingNames = new List<string>();
-        foreach (var conflictId in _trait.Conflicts)
-        {
-            if (selectedTraits.Contains(conflictId) && conflictId != _trait.ID)
-            {
-                MeetsConditions = false;
-                if (_prototype.TryIndex(conflictId, out var conflictingTrait))
-                {
-                    conflictingNames.Add(Loc.GetString(conflictingTrait.Name));
-                }
-            }
-        }
-
-        if (conflictingNames.Count > 0)
-        {
-            var conflictTooltip = Loc.GetString("trait-conditions-conflict-tooltip",
-                ("traits", string.Join(", ", conflictingNames)));
-            TooltipSupplier = _ => CreateMarkupTooltip(conflictTooltip);
-        }
-
         var canAfford = remainingPoints >= TraitCost || selectedTraits.Contains(_trait.ID);
         UpdateDisabledState(canAfford);
     }
