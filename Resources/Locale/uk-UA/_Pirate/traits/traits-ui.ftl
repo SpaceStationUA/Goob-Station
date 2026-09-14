@@ -38,7 +38,6 @@ trait-conditions-tooltip = [bold]Вимоги:[/bold]
     {$requirements}
 trait-conditions-not-met-tooltip = Вимоги не виконані:
     {$requirements}
-trait-conditions-conflict-tooltip = Конфлікт із: [color=yellow]{$traits}[/color]
 trait-conditions-points-tooltip = [color=yellow]Недостатньо очок для вибору.[/color]
 
 
