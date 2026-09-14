@@ -1,0 +1,12 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'ukraine-alarm-region-window-title'}"
+               MinSize="420 520">
+    <BoxContainer Orientation="Vertical" Margin="8 8 8 8" SeparationOverride="8">
+        <Label Text="{Loc 'ukraine-alarm-region-window-description'}" />
+        <LineEdit Name="RegionSearch" PlaceHolder="{Loc 'ukraine-alarm-region-window-search'}" />
+        <ScrollContainer VerticalExpand="True">
+            <BoxContainer Name="RegionList" Orientation="Vertical" SeparationOverride="4" />
+        </ScrollContainer>
+    </BoxContainer>
+</DefaultWindow>
+

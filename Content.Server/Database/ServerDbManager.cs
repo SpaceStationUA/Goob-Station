@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
+﻿// SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Collections.Immutable;
 using System.IO;
@@ -49,6 +49,10 @@ namespace Content.Server.Database
         Task SaveAdminOOCColorAsync(NetUserId userId, Color color);
 
         Task SaveConstructionFavoritesAsync(NetUserId userId, List<ProtoId<ConstructionPrototype>> constructionFavorites);
+
+        Task<string?> GetUkraineAlarmRegionAsync(NetUserId userId);
+
+        Task SetUkraineAlarmRegionAsync(NetUserId userId, string regionId);
 
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
@@ -567,6 +571,18 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetPlayerPreferencesAsync(userId, cancel));
+        }
+
+        public Task<string?> GetUkraineAlarmRegionAsync(NetUserId userId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetUkraineAlarmRegionAsync(userId));
+        }
+
+        public Task SetUkraineAlarmRegionAsync(NetUserId userId, string regionId)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SetUkraineAlarmRegionAsync(userId, regionId));
         }
 
         public Task AssignUserIdAsync(string name, NetUserId userId)
@@ -1618,3 +1634,4 @@ namespace Content.Server.Database
         }
     }
 }
+
