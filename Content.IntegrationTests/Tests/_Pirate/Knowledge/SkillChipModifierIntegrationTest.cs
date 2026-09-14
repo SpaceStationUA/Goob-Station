@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared._Pirate.Body.Chips;
+using Content.Shared._Pirate.Contractors.Prototypes;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Body.Systems;
 using Robust.Shared.Containers;
@@ -15,6 +17,38 @@ namespace Content.IntegrationTests.Tests._Pirate.Knowledge;
 public sealed class SkillChipModifierIntegrationTest
 {
     private const string Skill = "MeleeKnowledge";
+
+    [Test]
+    public async Task EmployerBonusesMatchConfiguredSpecialties()
+    {
+        var expected = new Dictionary<string, string[]>
+        {
+            ["Unemployed"] = ["JanitorKnowledge"],
+            ["NanoTrasen"] = ["ChemistryKnowledge", "ElectronicsKnowledge"],
+            ["IdrisIncorporated"] = ["CookingKnowledge", "TailoringKnowledge"],
+            ["OrionExpress"] = ["MechanicsKnowledge", "ElectronicsKnowledge"],
+            ["ZengHuPharmaceuticals"] = ["SurgeryKnowledge", "ChemistryKnowledge"],
+            ["HephaestusIndustries"] = ["FabricationKnowledge", "MetalworkingKnowledge"],
+            ["ZavodskiyInterstellar"] = ["WeaponsKnowledge", "GunsmithingKnowledge"],
+            ["PMCG"] = ["ShootingKnowledge", "FirstAidKnowledge"],
+            ["EinsteinEngines"] = ["MechanicsKnowledge", "ElectronicsKnowledge"],
+            ["Interdyne"] = [],
+        };
+
+        await using var pair = await PoolManager.GetServerClient();
+
+        await pair.Server.WaitAssertion(() =>
+        {
+            foreach (var (employerId, skills) in expected)
+            {
+                var employer = pair.Server.ProtoMan.Index<EmployerPrototype>(employerId);
+                Assert.That(employer.KnowledgeBonuses.Keys, Is.EquivalentTo(skills), employerId);
+                Assert.That(employer.KnowledgeBonuses.Values, Is.All.EqualTo(1), employerId);
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
 
     [TestPrototypes]
     private const string TestPrototypes = @"
@@ -60,11 +94,11 @@ public sealed class SkillChipModifierIntegrationTest
 
 - type: entity
   parent: BaseSkillChipMRAM
-  id: PirateTestChipFirstAid
+  id: PirateTestChipCooking
   components:
   - type: KnowledgeGrantOnWear
     skills:
-      FirstAidKnowledge: 28
+      CookingKnowledge: 28
 
 - type: entity
   parent: BaseSkillChipMRAM
@@ -195,7 +229,7 @@ public sealed class SkillChipModifierIntegrationTest
     public async Task RemovalPreservesTheEmployerBonus()
     {
         const string employerId = "IdrisIncorporated";
-        const string employerSkill = "FirstAidKnowledge";
+        const string employerSkill = "CookingKnowledge";
 
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -218,11 +252,11 @@ public sealed class SkillChipModifierIntegrationTest
             var withEmployer = knowledge.GetKnowledge(store, employerSkill)!.Value.Comp.TemporaryLevel;
             Assert.That(withEmployer, Is.Not.Zero, "The employer bonus did not apply at all.");
 
-            Assert.That(chips.InstallChip(human, "PirateTestChipFirstAid"), Is.True);
+            Assert.That(chips.InstallChip(human, "PirateTestChipCooking"), Is.True);
             Assert.That(knowledge.GetKnowledge(store, employerSkill)!.Value.Comp.TemporaryLevel,
                 Is.EqualTo(withEmployer + 28), "The chip did not stack on top of the employer bonus.");
 
-            RemoveChip(server, human, "PirateTestChipFirstAid");
+            RemoveChip(server, human, "PirateTestChipCooking");
             var final = knowledge.GetKnowledge(store, employerSkill)!.Value;
             Assert.That(final.Comp.TemporaryLevel, Is.EqualTo(withEmployer),
                 "Removing the chip ate the employer bonus.");

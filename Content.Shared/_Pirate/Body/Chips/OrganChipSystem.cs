@@ -3,6 +3,7 @@
 using System.Linq;
 using Content.Goobstation.Common.Grab;
 using Content.Shared._Pirate.Knowledge;
+using Content.Shared._Pirate.Traits.Assorted; // unchipped trait
 using Content.Shared._Shitmed.Cybernetics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
@@ -83,6 +84,9 @@ public sealed class OrganChipSystem : EntitySystem
 
         // Reconcile after knowledge-store transfers that do not emit chip events.
         SubscribeLocalEvent<KnowledgeStoreMovedEvent>(OnStoreMoved);
+
+        // unchipped trait
+        SubscribeLocalEvent<UnchippedComponent, ComponentStartup>(OnUnchippedStartup);
     }
 
     private void OnStoreMoved(ref KnowledgeStoreMovedEvent args)
@@ -90,6 +94,29 @@ public sealed class OrganChipSystem : EntitySystem
         ReconcileInstalledChipModifiers(args.Source);
         ReconcileInstalledChipModifiers(args.Destination);
     }
+
+    // unchipped trait start
+    private void OnUnchippedStartup(Entity<UnchippedComponent> ent, ref ComponentStartup args)
+    {
+        if (!_network.IsServer || !TryComp<BodyComponent>(ent.Owner, out var body))
+            return;
+
+        foreach (var organ in _body.GetBodyOrganEntityComps<OrganChipContainerComponent>((ent.Owner, body)))
+            RemoveChips(organ.Comp1);
+    }
+
+    private void RemoveChips(OrganChipContainerComponent component)
+    {
+        if (component.Container is not { } container)
+            return;
+
+        foreach (var chip in container.ContainedEntities.ToArray())
+        {
+            _containers.Remove(chip, container);
+            QueueDel(chip);
+        }
+    }
+    // unchipped trait end
 
     #region Container lifecycle
 
@@ -143,6 +170,14 @@ public sealed class OrganChipSystem : EntitySystem
             reason = "organ-chip-incompatible";
             return false;
         }
+
+        // unchipped trait start
+        if (GetOrganBody(ent.Owner) is { } body && HasComp<UnchippedComponent>(body))
+        {
+            reason = "organ-chip-incompatible";
+            return false;
+        }
+        // unchipped trait end
 
         if (_whitelist.IsWhitelistFail(comp.Whitelist, ent.Owner))
         {
@@ -208,6 +243,14 @@ public sealed class OrganChipSystem : EntitySystem
     {
         if (TerminatingOrDeleted(args.Body))
             return;
+
+        // unchipped trait start
+        if (HasComp<UnchippedComponent>(args.Body))
+        {
+            RemoveChips(ent.Comp);
+            return;
+        }
+        // unchipped trait end
 
         var ev = new OrganChipInsertedEvent(ent.Owner, args.Body);
         RelayChips(ent, ref ev);
@@ -351,6 +394,14 @@ public sealed class OrganChipSystem : EntitySystem
         if (args.Handled || !_chipQuery.TryComp(args.Used, out var chip))
             return;
 
+        // unchipped trait start
+        if (GetOrganBody(ent.Owner) is { } body && BlockUnchippedInteraction(body, args.User))
+        {
+            args.Handled = true;
+            return;
+        }
+        // unchipped trait end
+
         if (_whitelist.IsWhitelistFail(chip.Whitelist, ent.Owner))
         {
             _popup.PopupClient(
@@ -368,6 +419,14 @@ public sealed class OrganChipSystem : EntitySystem
     {
         if (args.Handled || !_chipQuery.TryComp(args.Used, out var chip))
             return;
+
+        // unchipped trait start
+        if (BlockUnchippedInteraction(ent.Owner, args.User))
+        {
+            args.Handled = true;
+            return;
+        }
+        // unchipped trait end
 
         if (FindChipHost(ent.Owner, chip) is not { } host)
             return;
@@ -390,9 +449,22 @@ public sealed class OrganChipSystem : EntitySystem
         }
     }
 
+    // unchipped trait start
+    private bool BlockUnchippedInteraction(EntityUid body, EntityUid user)
+    {
+        if (!HasComp<UnchippedComponent>(body))
+            return false;
+
+        _popup.PopupClient(Loc.GetString("organ-chip-unchipped"), body, user);
+        return true;
+    }
+    // unchipped trait end
+
     private void AddChipVerbs(Entity<OrganChipContainerComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || ent.Comp.Container is not { } container)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract ||
+            GetOrganBody(ent.Owner) is { } body && HasComp<UnchippedComponent>(body) ||
+            ent.Comp.Container is not { } container)
             return;
 
         var organName = Name(ent.Owner);
@@ -701,6 +773,11 @@ public sealed class OrganChipSystem : EntitySystem
                 ? (mob, own)
                 : null;
         }
+
+        // unchipped trait start
+        if (HasComp<UnchippedComponent>(mob))
+            return null;
+        // unchipped trait end
 
         foreach (var organ in _body.GetBodyOrganEntityComps<OrganChipContainerComponent>(mob))
         {

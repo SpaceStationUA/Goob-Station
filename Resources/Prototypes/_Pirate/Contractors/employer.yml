@@ -3,43 +3,42 @@
   id: Unemployed
   nameKey: employer_name_unemployed
   knowledgeBonuses:
-    LiteracyKnowledge: 1
     JanitorKnowledge: 1
 
-### Зоряний Корпоративний Конгромерат
+### Зоряний Корпоративний Конгломерат
 - type: employer
   id: NanoTrasen
   nameKey: employer_name_nanotrasen
   knowledgeBonuses:
-    LiteracyKnowledge: 1
-    FabricationKnowledge: 1
+    ChemistryKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: employer
   id: IdrisIncorporated
   nameKey: employer_name_idrisincorporated
   knowledgeBonuses:
-    LiteracyKnowledge: 1
-    FirstAidKnowledge: 1
+    CookingKnowledge: 1
+    TailoringKnowledge: 1
 
 - type: employer
   id: OrionExpress
   nameKey: employer_name_orionexpress
   knowledgeBonuses:
-    FabricationKnowledge: 1
     MechanicsKnowledge: 1
+    ElectronicsKnowledge: 1
 
 - type: employer
   id: ZengHuPharmaceuticals
   nameKey: employer_name_zenghupharmaceuticals
   knowledgeBonuses:
-    FirstAidKnowledge: 1
+    SurgeryKnowledge: 1
     ChemistryKnowledge: 1
 
 - type: employer
   id: HephaestusIndustries
   nameKey: employer_name_hephaestusindustries
   knowledgeBonuses:
-    MechanicsKnowledge: 1
+    FabricationKnowledge: 1
     MetalworkingKnowledge: 1
 
 - type: employer
@@ -61,8 +60,8 @@
   id: EinsteinEngines
   nameKey: employer_name_einsteinengines
   knowledgeBonuses:
+    MechanicsKnowledge: 1
     ElectronicsKnowledge: 1
-    InfrastructureKnowledge: 1
 
 - type: employer
   id: Interdyne

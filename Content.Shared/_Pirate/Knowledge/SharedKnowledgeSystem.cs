@@ -737,7 +737,10 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         return total;
     }
 
-    public void EnsureProfileValid(ProtoId<KnowledgeProfilePrototype> parentId, ref KnowledgeProfile profile)
+    public void EnsureProfileValid(
+        ProtoId<KnowledgeProfilePrototype> parentId,
+        ref KnowledgeProfile profile,
+        int pointsBonus = 0)
     {
         var parent = _prototypes.Index<KnowledgeProfilePrototype>(parentId);
         profile.Mastery ??= new Dictionary<EntProtoId, int>();
@@ -750,7 +753,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
                 profile.Mastery.Remove(id);
         }
 
-        while (ProfileCost(profile) > parent.PointsLimit && profile.Mastery.Count > 0)
+        while (ProfileCost(profile) > parent.PointsLimit + pointsBonus && profile.Mastery.Count > 0)
         {
             var remove = profile.Mastery
                 .OrderByDescending(pair => SkillCost(pair.Key, pair.Value) ?? 0)
@@ -760,7 +763,11 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         }
     }
 
-    public void ApplyProfile(EntityUid holder, ProtoId<KnowledgeProfilePrototype> parentId, KnowledgeProfile profile)
+    public void ApplyProfile(
+        EntityUid holder,
+        ProtoId<KnowledgeProfilePrototype> parentId,
+        KnowledgeProfile profile,
+        int pointsBonus = 0)
     {
         var store = EnsureKnowledgeContainer(holder);
         ClearKnowledge(store.Owner);
@@ -768,8 +775,8 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         var parent = _prototypes.Index<KnowledgeProfilePrototype>(parentId);
         ApplyProfile(store, parent.Profile);
 
-        EnsureProfileValid(parentId, ref profile);
-        ApplyProfile(store, profile, parent.PointsLimit);
+        EnsureProfileValid(parentId, ref profile, pointsBonus);
+        ApplyProfile(store, profile, parent.PointsLimit + pointsBonus);
 
         store.Comp.ProfileApplied = true;
         Dirty(store);

@@ -3,6 +3,7 @@
 using System.Linq;
 using Content.Shared._Pirate.Contractors.Prototypes;
 using Content.Shared._Pirate.Knowledge;
+using Content.Shared._Pirate.Traits.Assorted;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -34,6 +35,8 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
     private string _employerId = string.Empty;
     private string _jobId = SharedGameTicker.FallbackOverflowJob;
     private bool _modified;
+    private bool _unchipped;
+    private int _skillPointsBonus;
 
     private static readonly Color ProfileColor = Color.FromHex("#6EA8FE");
     private static readonly Color JobColor = Color.FromHex("#55D6BE");
@@ -63,6 +66,8 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
             .Key;
         _jobId = highPriorityJob.Id ?? SharedGameTicker.FallbackOverflowJob;
         _employerId = profile.Employer;
+        _unchipped = profile.TraitPreferences.Contains("Unchipped");
+        _skillPointsBonus = KnowledgeableComponent.GetBonusPoints(_prototypes, profile.TraitPreferences);
         SetProfile(profile.Species, profile.Knowledge, preserveContext: true);
     }
 
@@ -80,6 +85,8 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         {
             _jobId = SharedGameTicker.FallbackOverflowJob;
             _employerId = string.Empty;
+            _unchipped = false;
+            _skillPointsBonus = 0;
         }
 
         if (!_prototypes.TryIndex(speciesId, out SpeciesPrototype? species) ||
@@ -429,6 +436,9 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
 
     private int GetJobLevel(EntProtoId id)
     {
+        if (_unchipped)
+            return 0;
+
         if (!_clientKnowledge.JobChips.TryGetValue(_jobId, out var chips))
             return 0;
 
@@ -460,7 +470,7 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         if (_speciesProfile is null)
             return;
 
-        var remaining = _speciesProfile.PointsLimit - _knowledge.ProfileCost(_profile);
+        var remaining = _speciesProfile.PointsLimit + _skillPointsBonus - _knowledge.ProfileCost(_profile);
         PointsLabel.Text = Loc.GetString("knowledge-editor-points", ("points", remaining));
         PointsLabel.FontColorOverride = remaining < 0 ? Color.Red : Color.White;
     }
@@ -468,7 +478,7 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
     private void SetButtons()
     {
         var valid = _speciesProfile is not null &&
-                    _speciesProfile.PointsLimit - _knowledge.ProfileCost(_profile) >= 0;
+                    _speciesProfile.PointsLimit + _skillPointsBonus - _knowledge.ProfileCost(_profile) >= 0;
         SaveButton.Disabled = !_modified || !valid;
         ResetButton.Disabled = _speciesProfile is null ||
                                (!_modified && (_profile.Mastery is null || _profile.Mastery.Count == 0));

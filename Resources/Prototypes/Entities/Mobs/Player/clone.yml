@@ -87,6 +87,8 @@
   - Lightweight
   - LightStep
   - Vampirism
+  - Unchipped # Pirate: knowledge traits
+  - Knowledgeable # Pirate: knowledge traits
   # Pirate end
   eventComponents:
   - Trainability # Pirate
