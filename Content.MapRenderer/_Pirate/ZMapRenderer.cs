@@ -53,7 +53,14 @@ public static class ZMapRenderer
 
         foreach (var (id, layerFiles) in toRender)
         {
-            await RenderOne(arguments, id, layerFiles, testContext);
+            try
+            {
+                await RenderOne(arguments, id, layerFiles, testContext);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"zMap '{id}' render failed, skipping: {ex.Message}");
+            }
         }
     }
 
@@ -79,8 +86,17 @@ public static class ZMapRenderer
 
             var grids = new List<RenderedGridImage<Rgba32>>();
             await using var painter = new MapPainter(new RenderMapFile { FileName = file }, testContext);
-            await painter.Initialize();
-            await painter.SetupView(showMarkers: arguments.ShowMarkers);
+
+            try
+            {
+                await painter.Initialize();
+                await painter.SetupView(showMarkers: arguments.ShowMarkers);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Layer {depth} of '{id}' failed to initialize (bad map data?): {ex.Message}");
+                continue;
+            }
 
             try
             {
