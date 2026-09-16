@@ -3,8 +3,8 @@
 - type: entity
   parent: FoodApple
   id: FoodDeliciousApple
-  name: "апетитне яблуко"
-  description: "Спокусливий плід, наче щойно з Едему."
+  name: delicious looking apple
+  description: It's a delicious piece of Eden.
   components:
   - type: Produce
     seedId: deliciousApple
@@ -16,8 +16,8 @@
 - type: entity
   parent: FoodApple
   id: FoodMethApple
-  name: "метамфетамінове яблуко"
-  description: "Яблуко, насичене метамфетаміном."
+  name: meth apple
+  description: It's a meth up'ed piece of Eden.
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Objects/Specific/Hydroponics/meth_apple.rsi
@@ -42,8 +42,8 @@
 - type: entity
   parent: FoodCorn
   id: FoodClearCorn
-  name: "прозора кукурудза"
-  description: "Звичайна кукурудза, якби вона була прозорою й містила спирт"
+  name: clear corn
+  description: Corn, but clear!
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Objects/Specific/Hydroponics/clear_corn.rsi
@@ -67,8 +67,8 @@
 - type: entity
   parent: FoodProduceBase
   id: FoodPeanut
-  name: "арахіс"
-  description: "Бобова рослина, яку чомусь назвали горіхом."
+  name: peanut
+  description: A pea, but with nut.
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Objects/Specific/Hydroponics/peanut.rsi
@@ -88,8 +88,8 @@
 - type: entity
   parent: FoodProduceBase
   id: FoodMagicMushroom
-  name: "магічні гриби"
-  description: "Гриби з невеликою, але цілком реальною домішкою магії."
+  name: magic mushrooms
+  description: Mushrooms with just a little bit of magic.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -112,8 +112,8 @@
 - type: entity
   parent: FoodProduceBase
   id: FoodSynthMeat
-  name: "синтом'ясо"
-  description: "Синтетичне м'ясо, вирощене в гідропоніці."
+  name: synthmeat
+  description: Synthetic meat grown in hydroponics.
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Objects/Specific/Hydroponics/synthmeat.rsi
@@ -133,8 +133,8 @@
 - type: entity
   parent: FoodProduceBase
   id: MelonBalloon
-  name: "кавун-кулька"
-  description: "Газонаповнений кавун, здатний літати"
+  name: melon balloon
+  description: Who knew that melons could fly!
   components:
   - type: Sprite
     state: icon
@@ -168,8 +168,8 @@
 - type: entity
   parent: ProduceBaseRuminant
   id: SteelWheatBushel
-  name: "оберемок сталевої пшениці"
-  description: "Важкі стебла пшениці з металевим зерном"
+  name: steel wheat bushel
+  description: Sigh... steel wheat... a-grain?
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Objects/Specific/Hydroponics/steel_wheat.rsi

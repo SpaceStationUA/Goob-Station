@@ -1,8 +1,8 @@
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]
   id: AccessConfiguratorSyndicate
-  name: "конфігуратор доступу Синдикату"
-  description: "Фірмовий конфігуратор доступу Кіберсану, сумісний з усіма ідентифікаційними картками, не виданими НаноТрейзеном. Тепер із функцією швидкої заміни!"
+  name: syndicate access configurator
+  description: A Cybersun-branded access configurator, compatible with all non-NanoTrasen IDs. Now with quick-swap functionality!
   components:
   - type: EmitSoundOnLand
     sound:

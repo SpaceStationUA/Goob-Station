@@ -19,7 +19,7 @@
 - type: entity
   parent: MarkerBase
   id: MarkerSyndieJailLoot
-  name: "маяк здобичі фултона Синдикату"
+  name: syndie fulton loot beacon
   components:
   - type: Sprite
     layers:

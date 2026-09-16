@@ -3,8 +3,8 @@
 - type: entity
   parent: ClothingMaskBandanaBase
   id: ClothingMaskBandRev
-  name: "темно-зелена бандана"
-  description: "Щоб приховати особу або закрити волосся."
+  name: dark green bandana
+  description: To conceal your identity, or cover your hair.
   components:
   - type: Sprite
     sprite: Clothing/Head/Bandanas/merc.rsi

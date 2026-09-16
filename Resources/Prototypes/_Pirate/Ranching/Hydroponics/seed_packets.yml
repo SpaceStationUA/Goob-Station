@@ -3,7 +3,7 @@
 - type: entity
   parent: AppleSeeds
   id: deliciousAppleSeeds
-  name: "пакет насіння апетитного яблука"
+  name: packet of delicious apple seeds
   components:
   - type: Seed
     seedId: deliciousApple
@@ -11,7 +11,7 @@
 - type: entity
   parent: AppleSeeds
   id: MethAppleSeeds
-  name: "пакет насіння метамфетамінового яблука"
+  name: packet of meth apple seeds
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Objects/Specific/Hydroponics/meth_apple.rsi
@@ -21,7 +21,7 @@
 - type: entity
   parent: SeedBase
   id: ClearCornSeeds
-  name: "пакет насіння прозорої кукурудзи"
+  name: packet of clear corn seeds
   components:
   - type: Seed
     seedId: ClearCorn
@@ -31,7 +31,7 @@
 - type: entity
   parent: SeedBase
   id: PeanutSeeds
-  name: "пакет насіння арахісу"
+  name: packet of peanut seeds
   components:
   - type: Seed
     seedId: Peanut
@@ -41,7 +41,7 @@
 - type: entity
   parent: SeedBase
   id: MagicMushroomSeeds
-  name: "пакет спор магічних грибів"
+  name: packet of magic mushroom spores
   components:
   - type: Seed
     seedId: MagicMushrooms
@@ -51,7 +51,7 @@
 - type: entity
   parent: SeedBase
   id: SynthMeatSeeds
-  name: "пакет насіння синтом'яса"
+  name: packet of synthmeat seeds
   components:
   - type: Seed
     seedId: SynthMeat
@@ -61,7 +61,7 @@
 - type: entity
   parent: WatermelonSeeds
   id: BalloonMelonSeeds
-  name: "пакет насіння кавуна-кульки"
+  name: packet of balloon melon seeds
   components:
   - type: Seed
     seedId: BalloonWatermelon
@@ -71,7 +71,7 @@
 - type: entity
   parent: SeedBase
   id: SteelWheatSeeds
-  name: "пакет насіння сталевої пшениці"
+  name: packet of steel wheat seeds
   components:
   - type: Seed
     seedId: SteelWheat

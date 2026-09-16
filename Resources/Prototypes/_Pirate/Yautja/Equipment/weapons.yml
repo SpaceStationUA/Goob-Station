@@ -26,7 +26,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaHarpoon
   name: "великий гарпун"
-  description: "Обважнений гарпун Яутжа, призначений для жорстоких кидків і ближнього бою."
+  description: "Зважений гарпун Яутжа, призначений для жорстоких кидків і ближнього бою."
   components:
   - type: Sharp
   - type: Sprite
@@ -51,7 +51,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaChainwhip
   name: "ланцюжковий батіг"
-  description: "Ланцюгова зброя із шипами для викачування крові й утримання здобичі на небезпечній відстані."
+  description: "Колюче ланцюжкова зброя для викачування крові і утримання здобичі на небезпечній відстані."
   components:
   - type: Sharp
   - type: Sprite
@@ -72,7 +72,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaClanSword
   name: "клановий меч"
-  description: "Важкий клановий клинок Яутжа з широким різальним лезом."
+  description: "Важкий клановий клинок Яутжа з широким ріжучим лезом."
   components:
   - type: Sharp
   - type: Sprite
@@ -90,8 +90,8 @@
 - type: entity
   parent: GoobYautjaClanSword
   id: GoobYautjaRendingSword
-  name: "роздиральний меч"
-  description: "Гачкуватий меч Яутжа, збалансований для роздиральних ударів."
+  name: "розтерзаючий меч"
+  description: "Гачковий меч Яутжа, збалансований для розтерзаючих ударів."
   components:
   - type: Sprite
     state: rending_sword
@@ -101,7 +101,7 @@
 - type: entity
   parent: GoobYautjaClanSword
   id: GoobYautjaPiercingSword
-  name: "пронизувальний меч"
+  name: "пробивний меч"
   description: "Вузький меч Яутжа, збалансований для уколів."
   components:
   - type: Sprite
@@ -117,8 +117,8 @@
 - type: entity
   parent: GoobYautjaClanSword
   id: GoobYautjaSeveringSword
-  name: "розсікальний меч"
-  description: "Жорстокий меч Яутжа з рубальним профілем."
+  name: "розсікаючий меч"
+  description: "Жорстокий меч Яутжа з рубаючим профілем."
   components:
   - type: Sprite
     state: severing_sword
@@ -133,7 +133,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaDualWarScythe
   name: "парна бойова коса"
-  description: "Парна зброя-коса Яутжа для ритуального ближнього бою."
+  description: "Парна косова зброя Яутжа для ритуального ближнього бою."
   components:
   - type: Sharp
   - type: Sprite
@@ -165,7 +165,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaCruelStaff
   name: "жорстокий посох"
-  description: "Обважнений посох Яутжа з посиленими ударними наконечниками."
+  description: "Зважений посох Яутжа з підкріпленими ударними головами."
   components:
   - type: Sprite
     state: cruel_staff
@@ -183,7 +183,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaCombistick
   name: "комбі-палиця"
-  description: "Складаний спис Яутжа з ланцюговою рукояттю для повернення."
+  description: "Складний спис Яутжа з ланцюжковим держаком для повернення."
   components:
   - type: Sharp
   - type: Sprite
@@ -208,7 +208,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaWarAxe
   name: "бойова сокира"
-  description: "Швидка сокира Яутжа, призначена для роздирання та потрошіння здобичі, з ланцюжком, прикріпленим до руків’я."
+  description: "Швидка сокира Яутжа, призначена для роздирання та потрошіння здобичі, з ланцюжком, прикріпленим до руків'я."
   components:
   - type: Sharp
   - type: Sprite
@@ -230,7 +230,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaCeremonialDagger
   name: "церемоніальний кинджал"
-  description: "Компактний ніж Яутжа для обрядів, здобування трофеїв і вбивств зблизька."
+  description: "Компактний ніж Яутжа, що використовується для обрядів, трофеїв та ближніх убивств."
   components:
   - type: Sharp
   - type: Sprite
@@ -294,13 +294,13 @@
   parent: GoobYautjaShieldBase
   id: GoobYautjaClanShield
   name: "клановий щит"
-  description: "Важкий щит Яутжа, створений для полювань зблизька й ритуальної оборони."
+  description: "Важкий щит Яутжа, створений для ближніх полювань і ритуальної оборони."
 
 - type: entity
   parent: GoobYautjaShieldBase
   id: GoobYautjaAncientShield
   name: "стародавній щит"
-  description: "Великий стародавній щит, викуваний із невідомого золотого сплаву."
+  description: "Великий стародавній щит, викуваний з невідомого золотого сплаву."
   components:
   - type: Sprite
     state: ancient_shield
@@ -311,7 +311,7 @@
   parent: GoobYautjaAncientShield
   id: GoobYautjaAncientShieldAlt
   name: "стародавній щит"
-  description: "Оздоблений стародавній щит, у візерунку якого домінує металевий череп ксеноморфа."
+  description: "Орнаментальний стародавній щит, на якому домінує металевий череп ксеноморфа."
   components:
   - type: Sprite
     state: ancient_shield_alt
@@ -322,7 +322,7 @@
   parent: GoobYautjaAncientShield
   id: GoobYautjaAncientShieldTemple
   name: "стародавній щит"
-  description: "Побитий часом стародавній щит із забутим церемоніальним візерунком."
+  description: "Вивітрений стародавній щит із забутим церемоніальним візерунком."
   components:
   - type: Sprite
     state: ancient_shield_temple
@@ -332,7 +332,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaHunterSpear
   name: "мисливський спис"
-  description: "Спис вишуканого дизайну Яутжа, придатний для дворучних уколів. При кидку застрягає в цілі."
+  description: "Спис вишуканого дизайну Яутжа, придатний для двохручних уколів. При кидку застрягає в цілі."
   components:
   - type: Sharp
   - type: Sprite
@@ -369,8 +369,8 @@
 - type: entity
   parent: GoobYautjaWeaponBase
   id: GoobYautjaWarGlaive
-  name: "бойова глефа"
-  description: "Два величезні леза на металевому держаку, вкриті таємничими різьбленими написами."
+  name: "бойова глеф"
+  description: "Дві величезні леза на металевому стрижні, вирізьблені таємничим написом."
   components:
   - type: Sharp
   - type: Sprite
@@ -397,8 +397,8 @@
 - type: entity
   parent: GoobYautjaWarGlaive
   id: GoobYautjaCleavingGlaive
-  name: "рубальна глефа"
-  description: "Величезна однолезова древкова зброя Яутжа."
+  name: "розрубальна глеф"
+  description: "Величезне однолезове древкове Яутжа."
   components:
   - type: Sprite
     state: cleaving_glaive
@@ -410,8 +410,8 @@
 - type: entity
   parent: GoobYautjaWarGlaive
   id: GoobYautjaAncientWarGlaive
-  name: "стародавня бойова глефа"
-  description: "Стародавня бойова глефа зі слідами кислоти. Її лезо все ще небезпечне, але далеке від найкращих часів."
+  name: "стародавня бойова глеф"
+  description: "Стародавня бойова глеф з кислотними шрамами. Її лезо все ще небезпечне, але далеке від найкращих часів."
   components:
   - type: Sprite
     state: ancient_war_glaive
@@ -433,7 +433,7 @@
   parent: GoobYautjaWarGlaive
   id: GoobYautjaLongaxe
   name: "довга сокира"
-  description: "Жахливо велика сокира Яутжа із зазубреним лезом, що трощить кістки."
+  description: "Жахливо велика сокира Яутжа з вищербленим, кістко-руйнуючим лезом."
   components:
   - type: Sprite
     state: longaxe
@@ -446,7 +446,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaDuellingBlade
   name: "дуельний клинок"
-  description: "Примітивний, але смертельний клинок Яутжа для ритуального бою. У двох руках працює як катана: блокує та відбиває удари."
+  description: "Примітивний, але смертельний клинок Яутжа для ритуального бою. У двох руках працює як катана: блок і відбиття."
   components:
   - type: Sharp
   - type: Sprite
@@ -513,7 +513,7 @@
   parent: GoobYautjaWeaponBase
   id: GoobYautjaDuellingKnife
   name: "дуельний ніж"
-  description: "Грубий ритуальний ніж, утиканий гострими як бритва зубцями."
+  description: "Грубий ритуальний ніж, утиканий гостріми як бритва зубами."
   components:
   - type: Sharp
   - type: Sprite
@@ -532,7 +532,7 @@
 - type: entity
   parent: BaseBullet
   id: GoobYautjaSpikeProjectile
-  name: "шип зі сплаву"
+  name: "сплавний шип"
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -563,7 +563,7 @@
   parent: BaseItem
   id: GoobYautjaSpikeLauncher
   name: "пускова установка шипів"
-  description: "Компактний пристрій Яутжа у формі півмісяця, що швидко формує і випускає сплавні шипи. Відновлює заряд кожні 3 секунди."
+  description: "Компактний пристрій Яутжа у формі півмісяця, що швидко формує і випускає сплавні шипи. Регенерує заряд кожні 3 секунди."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/guns.rsi
@@ -605,7 +605,7 @@
   parent: BaseItem
   id: GoobYautjaPlasmaRifle
   name: "плазмова гвинтівка"
-  description: "Рідкісна енергетична гвинтівка Яутжа з внутрішнім самозарядним елементом живлення."
+  description: "Рідкісна енергетична гвинтівка Яутжа з внутрішнім самозарядним осередком."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/guns.rsi

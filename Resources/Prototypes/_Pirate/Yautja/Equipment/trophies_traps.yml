@@ -2,7 +2,7 @@
   parent: BaseItem
   id: GoobYautjaCombiknife
   name: "мисливський бойовий ніж"
-  description: "Зубчасте лезо з чужопланетного сплаву. Дає мисливцеві змогу проводити блискавичну польову хірургію та ампутацію кінцівок."
+  description: "Зубчасте лезо з прибулецького сплаву. Дозволяє мисливцю проводити блискавичну польову хірургію та ампутацію кінцівок."
   components:
   - type: Sprite
     sprite: _Pirate/Yautja/yautja_items.rsi
@@ -32,7 +32,7 @@
 - type: entity
   parent: GoobYautjaTrophyBase
   id: GoobYautjaHumanSkullTrophy
-  name: "відтята голова"
+  name: "відірвана голова"
   description: "Свіжий мисливський трофей, здобутий у чесному поєдинку."
   components:
   - type: Sprite

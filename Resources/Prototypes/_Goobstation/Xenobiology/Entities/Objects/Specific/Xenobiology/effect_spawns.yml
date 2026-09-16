@@ -1,7 +1,7 @@
 - type: entity
   id: XenoExtractChronofield
   parent: Chronofield
-  name: "сепієве хронополе"
+  name: sepia chronofield
   components:
   - type: TimedDespawn
     lifetime: 15
@@ -19,8 +19,8 @@
 
 - type: entity
   id: XenoGooWall
-  name: "драглистий наріст"
-  description: "Це цілком може бути блоб із космічного ЛІДЛу."
+  name: gelatinous growth
+  description: This could very well be the blob from space LIDL.
   placement:
     mode: SnapgridCenter
     snap:

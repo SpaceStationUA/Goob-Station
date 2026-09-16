@@ -5,6 +5,7 @@ verb-categories-organ-chips = Чипи
 organ-chip-verb-none = Чипів не встановлено ({ $organ })
 organ-chip-verb-remove-known = Вийняти { $chip }
 organ-chip-verb-remove-unknown = Вийняти чип { $index } ({ $organ })
+organ-chip-unchipped = Не має аугментації для встановлення мозкових чипів.
 
 organ-chip-insert-start-self = Ви починаєте встановлювати чип у свій { $organ }!
 organ-chip-insert-start-other = Ви починаєте встановлювати чип у { $organ } ({ CAPITALIZE($target) })!

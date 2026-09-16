@@ -1,8 +1,8 @@
 - type: entity
   id: LeatherTentWallStack
   parent: BaseItem
-  name: "пакунок шкіряної стінки намету"
-  description: "Згорнута шкіряна стінка, яку можна швидко встановити."
+  name: leather tent package
+  description: A folded wall of leather which can be quickly constructed.
   suffix: Full
   components:
     - type: Stack
@@ -37,8 +37,8 @@
 - type: entity
   id: ClothTentWallStack
   parent: BaseItem
-  name: "пакунок тканинної стінки намету"
-  description: "Згорнута стінка з цупкої тканини, яку можна швидко встановити."
+  name: cloth tent package
+  description: A folded wall of thick cloth which can be quickly constructed.
   suffix: Full
   components:
     - type: Stack
@@ -73,8 +73,8 @@
 - type: entity
   id: LeatherTentFlapStack
   parent: BaseItem
-  name: "пакунок шкіряної стулки намету"
-  description: "Згорнута шкіряна стулка, яку можна швидко встановити. Її можна прив'язувати у відкритому та закритому положенні."
+  name: leather tent flap package
+  description: A folded wall of leather which can be quickly constructed. This one can be lashed open and closed.
   suffix: Full
   components:
     - type: Stack
@@ -109,8 +109,8 @@
 - type: entity
   id: ClothTentFlapStack
   parent: BaseItem
-  name: "пакунок тканинної стулки намету"
-  description: "Згорнута стулка з цупкої тканини, яку можна швидко встановити. Її можна прив'язувати у відкритому та закритому положенні."
+  name: cloth tent flap package
+  description: A folded wall of thick cloth which can be quickly constructed. This one can be lashed open and closed.
   suffix: Full
   components:
     - type: Stack

@@ -25,3 +25,11 @@
     back:
     - WeaponPistolUniversalSecurity
     - MagazineUniversalMagnum
+
+# Глефа (Pirate)
+- type: loadout
+  id: LoadoutSecurityGlaive
+  dummyEntity: SecurityGlaive
+  storage:
+    back:
+    - SecurityGlaive

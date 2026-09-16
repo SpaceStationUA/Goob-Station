@@ -3,7 +3,7 @@
 - type: entity
   parent: BaseEnchant
   id: CurseSlowing
-  name: "прокляття залізних ніг"
+  name: Iron Foot Curse
   components:
   - type: Enchant
     maxLevel: 1

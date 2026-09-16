@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: "Уріст МакТавен"
+  name: Urist McThaven
   parent: MobThavenBase
   id: MobThaven
   components:

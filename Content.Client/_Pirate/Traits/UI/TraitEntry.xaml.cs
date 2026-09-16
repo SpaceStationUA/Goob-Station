@@ -113,7 +113,7 @@ public sealed partial class TraitEntry : PanelContainer
             LogMan = _logManager,
             JobId = jobId?.Id,
             SpeciesId = profile?.Species.Id,
-            Profile = profile
+            Profile = profile?.WithTraitPreferences(selectedTraits)
         };
 
         foreach (var condition in _trait.Conditions)

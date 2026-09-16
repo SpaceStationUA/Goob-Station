@@ -1,7 +1,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialAshwoodPlank
-  name: "ашвуд"
+  name: ashwood
   suffix: Full
   components:
   - type: Material
@@ -59,7 +59,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialAshwoodStick
-  name: "ясенева палиця"
+  name: ashwood stick
   suffix: Full
   components:
   - type: Material
@@ -120,7 +120,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialWoodStick
-  name: "дерев'яна палиця"
+  name: wood stick
   suffix: Full
   components:
   - type: Material

@@ -58,7 +58,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryOpenIncision
-  name: "Відкритий розріз"
+  name: Open Incision
   components:
   - type: Surgery
     steps:
@@ -68,7 +68,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryStopBloodOutput
-  name: "Зупинити постійну кровотечу"
+  name: Stop Constant Blood Output
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -80,7 +80,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryFixDismemberment
-  name: "Виправити залишки відчленування"
+  name: Fix Dismemberment Leftovers
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -96,7 +96,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryCloseIncision
-  name: "Закритий розріз"
+  name: Close Incision
   components:
   - type: Surgery
     priority: 1
@@ -141,7 +141,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryOpenRibcage
-  name: "Розтин грудної клітки"
+  name: Open Ribcage
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -154,7 +154,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryRemovePart
-  name: "Ампутувати"
+  name: Amputate
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -170,7 +170,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryMendBones
-  name: "Зростити кістки"
+  name: Mend Bones
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -188,7 +188,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryHealOrgans
-  name: "Загоїти органи"
+  name: Heal Organs
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -203,7 +203,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryExtractForeignBody
-  name: "Видалення чужорідного тіла"
+  name: Extract Foreign Body
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -216,7 +216,7 @@
 - type: entity
   parent: BasePartSurgery
   id: SurgeryRepairBrainDamage
-  name: "Лікування пошкодження мозку"
+  name: Repair Brain Damage
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -237,7 +237,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachHead
-  name: "Прикріпити Голову"
+  name: Attach Head
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -256,7 +256,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachGroin
-  name: "Прикріпити пах"
+  name: Attach Groin
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -275,7 +275,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachLeftArm
-  name: "Прикріпити Ліву Руку"
+  name: Attach Left Arm
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -295,7 +295,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachRightArm
-  name: "Прикріпити Праву Руку"
+  name: Attach Right Arm
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -315,7 +315,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachLeftLeg
-  name: "Прикріпити Ліву Ногу"
+  name: Attach Left Leg
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -335,7 +335,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachRightLeg
-  name: "Прикріпити Праву Ногу"
+  name: Attach Right Leg
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -356,7 +356,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachLeftHand
-  name: "Прикріпити Ліву Долоню"
+  name: Attach Left Hand
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -377,7 +377,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachRightHand
-  name: "Прикріпити Праву Долоню"
+  name: Attach Right Hand
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -398,7 +398,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachLeftFoot
-  name: "Прикріпити Ліву Стопу"
+  name: Attach Left Foot
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -419,7 +419,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachRightFoot
-  name: "Прикріпити Праву Стопу"
+  name: Attach Right Foot
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -442,7 +442,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachLegs
-  name: "Приєднати Ноги"
+  name: Attach Legs
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -459,7 +459,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachHands
-  name: "Приєднати Долоні"
+  name: Attach Hands
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -476,7 +476,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachFeet
-  name: "Приєднати Ступні"
+  name: Attach Feet
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -492,7 +492,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryAttachTail
-  name: "Прикріпити хвіст"
+  name: Attach Tail
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -525,7 +525,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryTendWoundsBrute
-  name: "Обробити Рани від Ударів"
+  name: Tend Bruise Wounds
   components:
   - type: Surgery
     steps:
@@ -540,7 +540,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryTendWoundsBurn
-  name: "Обробити Рани від Опіків"
+  name: Tend Burn Wounds
   components:
   - type: Surgery
     steps:
@@ -555,7 +555,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryInsertItem
-  name: "Імплантувати в Порожнину"
+  name: Cavity Implant
   components:
   - type: Surgery
     requirement: SurgeryOpenRibcage
@@ -572,7 +572,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryRemoveBrain
-  name: "Видалити Мозок"
+  name: Remove Brain
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision
@@ -589,7 +589,7 @@
 - type: entity
   parent: BaseSurgeryRemoveOrgan
   id: SurgeryRemoveBorgBrain
-  name: "Видалити позитронний мозок"
+  name: Remove Positronic Brain
   components:
   # TODO: ipc surgery steps
   - type: SurgeryPartCondition
@@ -601,7 +601,7 @@
 - type: entity
   parent: BaseSurgeryInsertOrgan
   id: SurgeryInsertBrain
-  name: "Вставити Мозок"
+  name: Insert Brain
   components:
   - type: SurgeryOrganSlotCondition
     organSlot: brain
@@ -612,7 +612,7 @@
 - type: entity
   parent: BaseSurgeryInsertOrgan
   id: SurgeryInsertBorgBrain
-  name: "Вставити позитронний мозок"
+  name: Insert Positronic Brain
   components:
   - type: SurgeryPartCondition
     parts: [ Chest ]
@@ -625,7 +625,7 @@
 - type: entity
   parent: BaseSurgeryRemoveOrgan
   id: SurgeryRemoveHeart
-  name: "Видалити Серце"
+  name: Remove Heart
   components:
   - type: Surgery
     requirement: SurgeryOpenRibcage
@@ -640,7 +640,7 @@
 - type: entity
   parent: BaseSurgeryInsertOrgan
   id: SurgeryInsertHeart
-  name: "Вставити Серце"
+  name: Insert Heart
   components:
   - type: Surgery
     requirement: SurgeryOpenRibcage
@@ -659,7 +659,7 @@
 - type: entity
   parent: BaseSurgeryRemoveOrgan
   id: SurgeryRemovePump
-  name: "Зняти насос"
+  name: Remove Pump
   components:
   - type: Surgery
     requirement: SurgeryOpenRibcage
@@ -674,7 +674,7 @@
 - type: entity
   parent: BaseSurgeryInsertOrgan
   id: SurgeryInsertPump
-  name: "Встановити насос"
+  name: Insert Pump
   components:
   - type: Surgery
     requirement: SurgeryOpenRibcage
@@ -693,7 +693,7 @@
 - type: entity
   parent: BaseSurgeryRemoveOrgan
   id: SurgeryRemoveLiver
-  name: "Видалити Печінку"
+  name: Remove Liver
   components:
   - type: SurgeryPartCondition
     parts: [ Groin ]
@@ -704,7 +704,7 @@
 - type: entity
   parent: BaseSurgeryInsertOrgan
   id: SurgeryInsertLiver
-  name: "Вставити Печінку"
+  name: Insert Liver
   components:
   - type: Surgery
     steps:
@@ -721,7 +721,7 @@
 - type: entity
   parent: BaseSurgeryRemoveOrgan
   id: SurgeryRemoveLungs
-  name: "Видалити Легені"
+  name: Remove Lungs
   components:
   - type: Surgery
     requirement: SurgeryOpenRibcage
@@ -734,7 +734,7 @@
 - type: entity
   parent: BaseSurgeryInsertOrgan
   id: SurgeryInsertLungs
-  name: "Вставити Легені"
+  name: Insert Lungs
   components:
   - type: Surgery
     requirement: SurgeryOpenRibcage
@@ -753,7 +753,7 @@
 - type: entity
   parent: BaseSurgeryRemoveOrgan
   id: SurgeryRemoveStomach
-  name: "Видалити Шлунок"
+  name: Remove Stomach
   components:
   - type: SurgeryPartCondition
     parts: [ Groin ]
@@ -764,7 +764,7 @@
 - type: entity
   parent: BaseSurgeryInsertOrgan
   id: SurgeryInsertStomach
-  name: "Вставити Шлунок"
+  name: Insert Stomach
   components:
   - type: Surgery
     steps:
@@ -781,7 +781,7 @@
 - type: entity
   parent: BaseSurgeryRemoveOrgan
   id: SurgeryRemoveEyes
-  name: "Видалити Очі"
+  name: Remove Eyes
   components:
   - type: SurgeryOrganCondition
     organ:
@@ -790,7 +790,7 @@
 - type: entity
   parent: BaseSurgeryInsertOrgan
   id: SurgeryInsertEyes
-  name: "Вставити Очі"
+  name: Insert Eyes
   components:
   - type: Surgery
     steps:
@@ -913,7 +913,7 @@
 - type: entity
   parent: SurgeryInstallAugmentBase
   id: SurgeryInsertPowerCellSlot
-  name: "Вставити слот для елемента живлення"
+  name: Insert Power Cell Slot
   components:
   - type: Surgery
     steps:
@@ -931,7 +931,7 @@
 - type: entity
   parent: SurgeryOpenCavityBase
   id: SurgeryOpenPowerCellSlot
-  name: "Відкрити порожнину для слота елемента живлення"
+  name: Open Cavity For Power Cell Slot
   components:
   - type: SurgeryPartCondition
     parts: [ Chest ]
@@ -941,7 +941,7 @@
 - type: entity
   parent: SurgeryRemoveAugmentBase
   id: SurgeryRemovePowerCellSlot
-  name: "Видалити слот для елемента живлення"
+  name: Remove Power Cell Slot
   components:
   - type: SurgeryPartCondition
     parts: [ Chest ]
@@ -954,7 +954,7 @@
 - type: entity
   parent: SurgeryInstallAugmentBase
   id: SurgeryInsertPowerCellCharger
-  name: "Вставити внутрішній зарядний пристрій для елемента живлення"
+  name: Insert Internal Power Cell Charger
   components:
   - type: Surgery
     steps:
@@ -972,7 +972,7 @@
 - type: entity
   parent: SurgeryOpenCavityBase
   id: SurgeryOpenPowerCellCharger
-  name: "Відкрити порожнину для зарядного пристрою елемента живлення"
+  name: Open Cavity For Power Cell Charger
   components:
   - type: SurgeryPartCondition
     parts: [ Chest ]
@@ -982,7 +982,7 @@
 - type: entity
   parent: SurgeryRemoveAugmentBase
   id: SurgeryRemovePowerCellCharger
-  name: "Видалити внутрішній зарядний пристрій для елемента живлення"
+  name: Remove Internal Power Cell Charger
   components:
   - type: SurgeryPartCondition
     parts: [ Chest ]
@@ -995,7 +995,7 @@
 - type: entity
   parent: SurgeryOpenCavityBase
   id: SurgeryOpenArmAugment
-  name: "Відкрити порожнину для аугментації руки"
+  name: Open Cavity For Arm Augments
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision # no ribcage
@@ -1007,7 +1007,7 @@
 - type: entity
   parent: SurgeryInstallAugmentBase
   id: SurgeryInsertArmAugment
-  name: "Вставити аугментацію руки"
+  name: Insert Arm Augment
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision # no ribcage
@@ -1026,7 +1026,7 @@
 - type: entity
   parent: SurgeryRemoveAugmentBase
   id: SurgeryRemoveArmAugment
-  name: "Видалити аугментацію руки"
+  name: Remove Arm Augment
   components:
   - type: Surgery
     requirement: SurgeryOpenIncision # no ribcage
@@ -1040,7 +1040,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryLobotomize
-  name: "Лоботомія"
+  name: Lobotomize
   categories: [ HideSpawnMenu ]
   components:
   - type: Surgery
@@ -1064,7 +1064,7 @@
 - type: entity
   parent: SurgeryBase
   id: SurgeryMendBrainTissue
-  name: "Відновити мозкову тканину"
+  name: Mend brain tissue
   categories: [ HideSpawnMenu ]
   components:
   - type: Surgery

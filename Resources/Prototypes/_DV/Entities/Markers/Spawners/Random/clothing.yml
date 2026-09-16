@@ -3,7 +3,7 @@
 - type: entity
   parent: MarkerBase
   id: SwimRingSpawner
-  name: "спавнер випадкових плавальних кілець"
+  name: random swim ring spawner
   components:
   - type: Sprite
     layers:

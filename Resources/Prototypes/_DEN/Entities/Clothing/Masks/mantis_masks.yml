@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingMaskBase
   id: ClothingMaskMantisRitual
-  name: "маска звільненого від тягаря"
-  description: "Позолочена поховальна маска, що нагадує давніх правителів; її риси згладжені до виразу спокійної остаточності."
+  name: mask of the unburdened
+  description: "A gilded funerary mask reminiscent of ancient rulers, its features smoothed into an expression of serene finality."
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Mask/mantis_mask_ritual.rsi

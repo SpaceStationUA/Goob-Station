@@ -87,6 +87,8 @@
   - Lightweight
   - LightStep
   - Vampirism
+  - Unchipped # Pirate: knowledge traits
+  - Knowledgeable # Pirate: knowledge traits
   # Pirate end
   eventComponents:
   - Trainability # Pirate
@@ -155,7 +157,7 @@
 
 - type: entity
   id: RandomCloneSpawner
-  name: "Спавнер випадкового клона"
+  name: Random Clone
   suffix: Non-Antag
   components:
   - type: Sprite
