@@ -62,6 +62,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:MalfAiDoomsdayObjectiveCondition
 
 - type: listing
   id: MalfAiRoboticsFactory
