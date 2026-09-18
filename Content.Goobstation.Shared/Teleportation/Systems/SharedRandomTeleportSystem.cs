@@ -21,7 +21,7 @@ using System.Numerics;
 
 namespace Content.Goobstation.Shared.Teleportation.Systems;
 
-public sealed class SharedRandomTeleportSystem : EntitySystem
+public sealed partial class SharedRandomTeleportSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
