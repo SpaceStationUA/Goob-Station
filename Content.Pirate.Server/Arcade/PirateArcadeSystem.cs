@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Content.Pirate.Shared.Arcade;
 using Content.Shared.Popups;
 using Robust.Server.Player;
+using System.Linq;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
@@ -33,6 +34,7 @@ public sealed class PirateArcadeSystem : EntitySystem
         public EntityUid Cab;
         public NetUserId? Seated;
         public string PlayerName = "";
+        public string Game = "";
         public readonly HashSet<INetChannel> Spectators = new();
     }
 
@@ -44,6 +46,7 @@ public sealed class PirateArcadeSystem : EntitySystem
         SubscribeNetworkEvent<PirateArcadeSeatEvent>(OnSeat);
         SubscribeNetworkEvent<PirateArcadeWatchEvent>(OnWatch);
         SubscribeNetworkEvent<PirateArcadeFrameEvent>(OnFrame);
+        SubscribeNetworkEvent<PirateArcadeGameEvent>(OnGame);
         _players.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
@@ -119,6 +122,28 @@ public sealed class PirateArcadeSystem : EntitySystem
 
     // ===== core =====
 
+    private void OnGame(PirateArcadeGameEvent msg, EntitySessionEventArgs args)
+    {
+        var ust = _players.GetSessionByChannel(args.SenderSession.Channel);
+        var cab = EntityManager.GetEntity(msg.Cab);
+        // Only ids with a shipped folder are honored; anything else is
+        // ignored so a hacked client can't point windows at arbitrary paths.
+        if (!PirateArcadeGames.List.Any(g => g.Id == msg.Game))
+            return;
+
+        _sessions.TryGetValue(cab, out var ses);
+        ses ??= _sessions[cab] = new Session { Cab = cab };
+
+        // Free cabinet (any opener picks the title) or the seated player.
+        if (ses.Seated != null && ses.Seated != ust.UserId)
+            return;
+        if (ses.Game == msg.Game)
+            return;
+
+        ses.Game = msg.Game;
+        Broadcast(ses);
+    }
+
     private void TrySeat(EntityUid cab, ICommonSession user)
     {
         if (!_sessions.TryGetValue(cab, out var ses))
@@ -166,6 +191,7 @@ public sealed class PirateArcadeSystem : EntitySystem
             Cab = EntityManager.GetNetEntity(ses.Cab),
             Taken = ses.Seated != null,
             PlayerName = ses.PlayerName,
+            Game = ses.Game,
         });
     }
 

@@ -28,8 +28,10 @@ namespace Content.Pirate.Client._Pirate.WebUI;
 public sealed class WebArcadeWindow : DefaultWindow, IDisposable
 {
     /// <summary>The game + its interactive page (res:// relative).</summary>
-    private const string GameResPath = "_Pirate/WebUI/Arcade/Packabunchas/index.html";
     private const string SpectatorResPath = "_Pirate/WebUI/Arcade/spectator.html";
+
+    /// <summary>Cabinet-loaded game id (mirror of the server's state).</summary>
+    private string _game = "";
 
     private enum Mode { Pending, Player, Spectator }
 
@@ -51,6 +53,15 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
     private readonly Button _standUp = new() { Text = "Встати (кінець запуску)", Visible = false };
     private readonly Button _playSeat = new() { Text = "Почати гру", Visible = false };
 
+    /// <summary>Diegetic game picker: one button per shipped game, the
+    /// loaded one highlighted. Free cabinet: anybody can pick; seated:
+    /// only the player.</summary>
+    private readonly BoxContainer _gameList = new()
+    {
+        Orientation = BoxContainer.LayoutOrientation.Vertical,
+        Margin = new Thickness(0, 4),
+    };
+
     /// <summary>Right panel root; the «/» button collapses it.</summary>
     private BoxContainer? _panelBox;
 
@@ -58,7 +69,6 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
 
     private bool _disposed;
     private Action? _frameUnsub;
-
     public WebArcadeWindow()
     {
         Title = "Ігровий автомат";
@@ -93,11 +103,12 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         });
         right.AddChild(new Label
         {
-            Text = "Мишка: перетягни деталі та запакуй сумки.",
+            Text = "Обери гру, керуй кнопками Панелі.",
             FontColorOverride = Color.Gray,
         });
         _status.ClipText = true;
         right.AddChild(_status);
+        right.AddChild(_gameList);
         right.AddChild(_standUp);
         right.AddChild(_playSeat);
 
@@ -131,6 +142,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         _panelToggle.OnPressed += OnPanelToggle;
         _standUp.OnPressed += OnStandUp;
         _playSeat.OnPressed += OnPlaySeat;
+        RebuildGameList("");
 
         // Leaving as the player ends the run (diegetic: the seat is lost).
         // Windows only *hide* on close (Dispose is not guaranteed), so the
@@ -143,6 +155,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
             else if (_mode == Mode.Spectator)
                 SendWatch(false);
             Unregister();
+            UnsubscribeKeyups();
             _frameUnsub?.Invoke();
             _frameUnsub = null;
             _disposed = true;
@@ -156,7 +169,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
     public void OpenCenteredArcade()
     {
         OpenCentered();
-        _status.Text = "автомат: PACKABUNCHAS (MIT, MattiaFortunati)";
+        _status.Text = $"автомат: {GameLabel(_game)}";
 
         try
         {
@@ -166,7 +179,16 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         }
         catch { }
 
-        try { _web.Url = "res://" + GameResPath; } catch { /* headless dev */ }
+        try { _web.Url = "res://" + GamePath(); } catch { /* headless dev */ }
+
+        // Key-driven games need keyboard focus right away; if the seat
+        // gets taken by someone else the state flips us to the mirror,
+        // which doesn't mind having focus either.
+        ReturnKeysToGame();
+
+        // Mac-CEF upstream never delivers keyups into the page; the client
+        // side bridges Robust's own key stream into the game window.
+        SubscribeKeyups();
 
         SendSeat(true);
         WebArcadeBackend.Subscribe(_cabNet, OnBackendState);
@@ -179,6 +201,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
     {
         if (_disposed)
             return;
+        ApplyGame(s.Game);
         var me = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.Session?.Name ?? "";
 
         if (!s.Taken)
@@ -224,10 +247,10 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         _mode = Mode.Player;
         _standUp.Visible = true;
         _playSeat.Visible = false;
-        _status.Text = "гра: PACKABUNCHAS (твій запуск)";
+        _status.Text = $"гра: {GameLabel(_game)} (твій запуск)";
         try
         {
-            _web.Url = "res://" + GameResPath;
+            _web.Url = "res://" + GamePath();
             // Drives frames when someone watches (the relay only runs then).
             // The capture hook nests inside the page once it has loaded. We
             // re-inject cheaply from FrameUpdate.
@@ -252,6 +275,159 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
     {
         var s = WebArcadeBackend.Snapshot(_cabNet);
         return s.Taken ? "чекаю трансляцію від гравця…" : "автомат вільний — можеш почати гру";
+    }
+
+    // ===== game switcher =====
+
+    private string GamePath()
+    {
+        var def = PirateArcadeGames.List[0].Path;
+        foreach (var (i, _, p) in PirateArcadeGames.List)
+            if (i == _game)
+                return p;
+        return def;
+    }
+
+    private string GameLabel(string id)
+    {
+        var def = PirateArcadeGames.List[0].Label;
+        foreach (var (i, l, _) in PirateArcadeGames.List)
+            if (i == id)
+                return l;
+        return def;
+    }
+
+    private static string? IdOf(string labelOrId)
+    {
+        foreach (var (i, _, _) in PirateArcadeGames.List)
+            if (i == labelOrId)
+                return i;
+        return null;
+    }
+
+    private void ApplyGame(string id)
+    {
+        if (id == "" || id == _game || IdOf(id) == null)
+            return;
+        _game = id;
+        RebuildGameList(_game);
+        _status.Text = _mode == Mode.Player
+            ? $"гра: {GameLabel(id)} (твій запуск)"
+            : $"автомат: {GameLabel(id)}";
+        if (_mode == Mode.Player)
+        {
+            try
+            {
+                _web.Url = "res://" + GamePath();
+            }
+            catch { /* headless dev */ }
+        }
+    }
+
+    /// <summary>One button per shipped title; the loaded one turns green.</summary>
+    private void RebuildGameList(string currentId)
+    {
+        _gameList.RemoveAllChildren();
+        _gameList.AddChild(new Label
+        {
+            Text = "Гру на автоматі:",
+            FontColorOverride = Color.Gray,
+        });
+        foreach (var (id, label, _) in PirateArcadeGames.List)
+        {
+            var cur = label;
+            var gameId = id;
+            var b = new Button { Text = cur, HorizontalExpand = true };
+            if (id == currentId)
+                b.AddStyleClass("StyleClass.Positive");
+            b.OnPressed += _ =>
+            {
+                SendGame(gameId);
+                ReturnKeysToGame();
+            };
+            _gameList.AddChild(b);
+        }
+    }
+
+    private void SendGame(string id) =>
+        IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>()
+            .SendSystemNetworkMessage(new PirateArcadeGameEvent { Cab = _cabNet, Game = id });
+
+    // ===== engine-free keyboard bridge (mac CEF forwarding is upstream-
+    // broken: keyups never reach the page) — the client watches Robust's
+    // raw key stream and synthesizes missing DOM keyups in the page =====
+
+    private Robust.Client.Input.KeyEventAction? _keyHook;
+
+    private void SubscribeKeyups()
+    {
+        if (_keyups != null)
+            return;
+        var mgr = IoCManager.Resolve<Robust.Client.Input.IInputManager>();
+        mgr.FirstChanceOnKeyEvent += OnFirstChanceKey;
+        _keyups = mgr;
+    }
+
+    private void UnsubscribeKeyups()
+    {
+        if (_keyups == null)
+            return;
+        _keyups.FirstChanceOnKeyEvent -= OnFirstChanceKey;
+        _keyups = null;
+    }
+
+    private Robust.Client.Input.IInputManager? _keyups;
+
+    /// <summary>Robust key -> (DOM key, DOM code); games often match
+    /// KeyboardEvent.code ("KeyW"), so the bridge must carry both.</summary>
+    private static readonly System.Collections.Generic.Dictionary<Robust.Client.Input.Keyboard.Key, (string Key, string Code)> KeyNames =
+        new()
+        {
+            [Robust.Client.Input.Keyboard.Key.W] = ("w", "KeyW"),
+            [Robust.Client.Input.Keyboard.Key.A] = ("a", "KeyA"),
+            [Robust.Client.Input.Keyboard.Key.S] = ("s", "KeyS"),
+            [Robust.Client.Input.Keyboard.Key.D] = ("d", "KeyD"),
+            [Robust.Client.Input.Keyboard.Key.J] = ("j", "KeyJ"),
+            [Robust.Client.Input.Keyboard.Key.K] = ("k", "KeyK"),
+            [Robust.Client.Input.Keyboard.Key.Escape] = ("Escape", "Escape"),
+            [Robust.Client.Input.Keyboard.Key.Space] = (" ", "Space"),
+            [Robust.Client.Input.Keyboard.Key.Return] = ("Enter", "Enter"),
+            [Robust.Client.Input.Keyboard.Key.BackSpace] = ("Backspace", "Backspace"),
+            [Robust.Client.Input.Keyboard.Key.Up] = ("ArrowUp", "ArrowUp"),
+            [Robust.Client.Input.Keyboard.Key.Down] = ("ArrowDown", "ArrowDown"),
+            [Robust.Client.Input.Keyboard.Key.Left] = ("ArrowLeft", "ArrowLeft"),
+            [Robust.Client.Input.Keyboard.Key.Right] = ("ArrowRight", "ArrowRight"),
+            [Robust.Client.Input.Keyboard.Key.Shift] = ("Shift", "ShiftLeft"),
+            [Robust.Client.Input.Keyboard.Key.Control] = ("Control", "ControlLeft"),
+        };
+
+    private void OnFirstChanceKey(Robust.Client.Input.KeyEventArgs args, Robust.Client.Input.KeyEventType type)
+    {
+        if (type != Robust.Client.Input.KeyEventType.Up)
+            return;
+        if (!KeyNames.TryGetValue(args.Key, out var kc))
+            return;
+        try
+        {
+            _web.ExecuteJavaScript("window.__tuiKeyUp && window.__tuiKeyUp('" + kc.Key + "','" + kc.Code + "');") ;
+        }
+        catch { /* headless dev */ }
+    }
+
+    /// <summary>
+    ///     Puts keyboard focus back on the web view and tells the page to
+    ///     release any keys it thinks are still held (they got stuck when
+    ///     focus moved to our panel buttons mid-press).
+    /// </summary>
+    private void ReturnKeysToGame()
+    {
+        try
+        {
+            if (!_web.HasKeyboardFocus())
+                _web.GrabKeyboardFocus();
+            _web.ExecuteJavaScript("window.__tuiDrop && window.__tuiDrop();");
+        }
+        catch { /* headless dev */ }
     }
 
     /// <summary>Maps a human hint onto the spectator page's idle line.</summary>
@@ -339,6 +515,57 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         "'use strict';" +
         "if (window.__tuiArcade) { return; }" +
         "window.__tuiArcade = true;" +
+        // Self-heal: if the page loses focus mid-press (UI click, camera
+        // move), the page never sees keyup => "stuck" key. Watchdog
+        // releases anything still held as soon as focus is gone.
+        "window.__tuiKeys = {};" +
+        "window.__tuiDowns = {};" +
+        // Window-level capture filter: CEF-mac delivers key events WITHOUT
+        // `repeat` flags and letter keys arrive as "Unidentified" (mac
+        // nativeKeyCode mapping is broken upstream). Swallow every
+        // duplicate keydown (the game tracks 'held' from a single press)
+        // and rewrite Unidentified keys by keyCode into real ones.
+        "window.__tuiKeyUp = function(k, c) {" +
+        "  try { document.dispatchEvent(new KeyboardEvent('keyup', {key: k, code: c, bubbles: true})); } catch (e) {}" +
+        "  delete window.__tuiDowns[k]; delete window.__tuiKeys[k];" +
+        "  delete window.__tuiDowns['unidentified']; delete window.__tuiKeys['unidentified'];" +
+        // Latch: CEF's event queue flushes stale OS-repeat keydowns AFTER
+        // the release lands; latch swallows them so the game doesn't
+        // re-add the key as held right after a clean release. (Lowercase:
+        // the keydown filter compares against lowercased e.key.)
+        "  var kl = k.toLowerCase();" +
+        "  window.__tuiLatch[kl] = Date.now() + 300;" +
+        "  window.__tuiLatch['unidentified'] = Date.now() + 300;" +
+        "};" +
+        "var __kmap = {87:['w','KeyW'], 65:['a','KeyA'], 83:['s','KeyS'], 68:['d','KeyD'], 74:['j','KeyJ'], 75:['k','KeyK'], 38:['ArrowUp','ArrowUp'], 40:['ArrowDown','ArrowDown'], 37:['ArrowLeft','ArrowLeft'], 39:['ArrowRight','ArrowRight'], 27:['Escape','Escape'], 32:[' ','Space'], 13:['Enter','Enter'], 8:['Backspace','Backspace'], 16:['Shift','ShiftLeft'], 17:['Control','ControlLeft']};" +
+        "window.__tuiLatch = {};" +
+        "window.addEventListener('keydown', function(e) {" +
+        "  var k = (e.key || '').toLowerCase();" +
+        "  if (window.__tuiDowns[k] === 1) { e.stopImmediatePropagation(); return; }" +
+        "  if (window.__tuiLatch[k] && Date.now() < window.__tuiLatch[k]) { e.stopImmediatePropagation(); return; }" +
+        "  window.__tuiDowns[k] = 1;" +
+        "  if ((e.key === 'Unidentified' || e.key === undefined) && e.keyCode && __kmap[e.keyCode]) {" +
+        "    var m = __kmap[e.keyCode];" +
+        "    e.preventDefault(); e.stopImmediatePropagation();" +
+        "    window.dispatchEvent(new KeyboardEvent('keydown', {key: m[0], code: m[1], keyCode: e.keyCode, which: e.keyCode, bubbles: true}));" +
+        "  }" +
+        "}, true);" +
+        "document.addEventListener('keydown', function(e) {" +
+        "  var k = (e.key || '').toLowerCase();" +
+        "  if (window.__tuiKeys[k]) window.__tuiKeys[k] = 1;" +
+        "}, true);" +
+        "document.addEventListener('keyup', function(e) {" +
+        "  var k = (e.key || '').toLowerCase();" +
+        "  delete window.__tuiDowns[k]; delete window.__tuiKeys[k];" +
+        "}, true);" +
+        "window.__tuiDrop = function() {" +
+        "  for (var k in window.__tuiKeys) {" +
+        "    try { document.dispatchEvent(new KeyboardEvent('keyup', {key: k.length==1 ? k.toUpperCase() : k})); } catch (e) {}" +
+        "  }" +
+        "  window.__tuiKeys = {};" +
+        "  window.__tuiDowns = {};" +
+        "};" +
+        "document.addEventListener('blur', window.__tuiDrop);" +
         "window.__tuiSendUi = function(action, obj) {" +
         "  var tx = 't'+Date.now()+'_'+(window.__tuiN = (window.__tuiN || 0)+1);" +
         "  var f = document.createElement('iframe');" +
@@ -349,12 +576,22 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         "  document.documentElement.appendChild(f);" +
         "  setTimeout(function(){ f.remove(); }, 2500);" +
         "};" +
+        // Downscale encode: 10 fps on a ~520px-wide copy — the wire saw
+        // ~4x fewer bytes than the previous 150ms full-size interval.
+        "var oc = document.createElement('canvas');" +
+        "var ox = oc.getContext('2d');" +
         "setInterval(function(){" +
-        "  var c = document.querySelector('canvas');" +
-        "  if (!c) { return; }" +
-        "  var d = c.toDataURL('image/jpeg', 0.5);" +
-        "  if (d && d.length > 26) { window.__tuiSendUi('arcade_frame', {f: d.slice(23)}); }" +
-        "}, 150);" +
+        "  try {" +
+        "    var c = document.querySelector('canvas');" +
+        "    if (!c) { return; }" +
+        "    var w = Math.min(520, c.width);" +
+        "    var h = Math.round(c.height * (w / c.width));" +
+        "    if (oc.width != w || oc.height != h) { oc.width = w; oc.height = h; }" +
+        "    ox.drawImage(c, 0, 0, w, h);" +
+        "    var d = oc.toDataURL('image/jpeg', 0.45);" +
+        "    if (d && d.length > 26) { window.__tuiSendUi('arcade_frame', {f: d.slice(23)}); }" +
+        "  } catch (e) {}" +
+        "}, 100);" +
         "})();";
 
     // One window per cabinet per client: re-open attempts focus the

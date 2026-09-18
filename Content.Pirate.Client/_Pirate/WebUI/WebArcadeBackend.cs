@@ -18,6 +18,7 @@ public static class WebArcadeBackend
     {
         public bool Taken;
         public string PlayerName = "";
+        public string Game = "";
     }
 
     private sealed class Receiver

@@ -28,6 +28,7 @@ public sealed class PirateArcadeClientSystem : EntitySystem
         {
             s.Taken = msg.Taken;
             s.PlayerName = msg.PlayerName;
+            s.Game = msg.Game;
         });
     }
 

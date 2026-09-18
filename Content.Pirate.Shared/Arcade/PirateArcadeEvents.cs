@@ -43,4 +43,32 @@ public sealed class PirateArcadeStateEvent : EntityEventArgs
     public NetEntity Cab;
     public bool Taken;
     public string PlayerName = "";
+    /// <summary>Which game id the cabinet is loaded with (see
+    /// <see cref="PirateArcadeGames.Ids"/>).</summary>
+    public string Game = "";
+}
+
+/// <summary>Client → server: switch the cabinet's game. Allowed from a
+/// free-cabinet window or by the seated player; server re-broadcasts state
+/// and any player's window reloads the picked title.</summary>
+[Serializable, NetSerializable]
+public sealed class PirateArcadeGameEvent : EntityEventArgs
+{
+    public NetEntity Cab;
+    public string Game = "";
+}
+
+/// <summary>The games shipped under res://_Pirate/WebUI/Arcade/. Keep in
+/// sync with the folders there; ids double as safe names server-side.</summary>
+public static class PirateArcadeGames
+{
+    public static readonly (string Id, string Label, string Path)[] List =
+    {
+        ("packabunchas", "Packabunchas", "_Pirate/WebUI/Arcade/Packabunchas/index.html"),
+        ("witchcat", "Witchcat", "_Pirate/WebUI/Arcade/Witchcat/index.html"),
+        ("shuttledeck", "Shuttledeck", "_Pirate/WebUI/Arcade/Shuttledeck/index.html"),
+        ("catculus", "Catculus", "_Pirate/WebUI/Arcade/Catculus/index.html"),
+        ("kuroneko", "Kuro Neko Market", "_Pirate/WebUI/Arcade/KuroNekoMarket/index.html"),
+        ("edgenotfound", "Edge Not Found", "_Pirate/WebUI/Arcade/EdgeNotFound/index.html"),
+    };
 }
