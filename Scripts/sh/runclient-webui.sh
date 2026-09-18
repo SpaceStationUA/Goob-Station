@@ -24,7 +24,7 @@ MODULE_DIR="$REPO/bin/modules/Robust.Client.WebView"
 CEF_BIN="RobustToolbox/Robust.Client.WebView/bin/Tools/net10.0"
 
 echo "==> building..."
-dotnet build Content.Pirate.Client/Content.Pirate.Client.csproj -c Tools -p:BuildWebUI=false
+dotnet build Content.Pirate.Client/Content.Pirate.Client.csproj -c Tools -p:BuildWebUI=false -p:PirateStripWebView=1
 
 echo "==> staging engine module (isolated dir, never next to content assemblies)..."
 mkdir -p "$MODULE_DIR"

@@ -47,7 +47,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
       bin/modules/Robust.Client.WebView (see Scripts/sh/runclient-webui.sh)
       which matches how the launcher unpacks module zips.
     -->
-    <Target Name="StripWebViewModuleOutOfBin" AfterTargets="Build">
+    <Target Name="StripWebViewModuleOutOfBin" Condition="'$(PirateStripWebView)' == '1'" AfterTargets="Build">
       <Delete Files="$(OutputPath)Robust.Client.WebView.dll;$(OutputPath)Robust.Client.WebView.pdb;$(OutputPath)Robust.Client.WebView.deps.json;$(OutputPath)Robust.Client.WebView.runtimeconfig.json;$(OutputPath)SpaceWizards.CefGlue.dll;$(OutputPath)SpaceWizards.CefGlue.pdb" />
     </Target>
 
