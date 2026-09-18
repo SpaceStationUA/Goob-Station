@@ -1021,11 +1021,13 @@ HandheldHealthAnalyzerEmpty: HandheldHealthAnalyzer
 BorgModuleAdvancedChemical: BorgModuleAdvancedTopical
 
 # PIRATE START
-PosterContrabandCommunistState: PosterContrabandSolAlliance
 MagazinePistolMindbreaker: MagazinePistolCryptobiolin
 SpawnMobGoidaBot: SpawnMobPotyzhnobot
 PinkHandcuffs: null
 AsimovCircuitBoard: CrewsimovCircuitBoard
+# decommunization
+PosterContrabandGoobRedFOSS: null
+PosterContrabandCommunistState: PosterContrabandSolAlliance
 # random medical vendor variations.
 VendingMachineMedical: RandomVendingMedical
 VendingMachineMedicalBase: RandomVendingMedicalCivilian
