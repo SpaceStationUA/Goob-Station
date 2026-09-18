@@ -196,7 +196,7 @@ namespace Content.Server.NodeContainer.Nodes
             if (!xform.Anchored || grid == null)
                 yield break;
 
-            var pos = grid.TileIndicesFor(xform.Coordinates);
+            var pos = NodeHelpers.MapSys.TileIndicesFor(grid.Owner, grid, xform.Coordinates);
 
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
@@ -239,7 +239,7 @@ namespace Content.Server.NodeContainer.Nodes
         {
             var offsetPos = pos.Offset(pipeDir.ToDirection());
 
-            foreach (var entity in grid.GetAnchoredEntities(offsetPos))
+            foreach (var entity in NodeHelpers.MapSys.GetAnchoredEntities(grid.Owner, grid, offsetPos))
             {
                 if (!nodeQuery.TryGetComponent(entity, out var container))
                     continue;

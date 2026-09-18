@@ -41,6 +41,7 @@ public sealed partial class AIBuildRequestEvent : EntityEventArgs
 public sealed partial class AIBuildSystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly Content.Shared.Actions.SharedActionsSystem _actions = default!;
@@ -61,7 +62,7 @@ public sealed partial class AIBuildSystem : EntitySystem
             return;
 
         var grid = Comp<MapGridComponent>(args.Target.EntityId);
-        var tile = grid.TileIndicesFor(args.Target);
+        var tile = _mapSystem.TileIndicesFor(grid.Owner, grid, args.Target);
         var target = new EntityCoordinates(args.Target.EntityId, (tile.X + 0.5f) * grid.TileSize, (tile.Y + 0.5f) * grid.TileSize);
         args.Handled = CanBuildWall(ent, target) && TryStartBuild(ent, target, "WallSolid");
     }
@@ -80,7 +81,7 @@ public sealed partial class AIBuildSystem : EntitySystem
             return false;
 
         var grid = Comp<MapGridComponent>(target.EntityId);
-        var bounds = _lookup.GetLocalBounds(grid.TileIndicesFor(target), grid.TileSize);
+        var bounds = _lookup.GetLocalBounds(_mapSystem.TileIndicesFor(grid.Owner, grid, target), grid.TileSize);
         var occupants = new HashSet<Entity<MobStateComponent>>();
         _lookup.GetLocalEntitiesIntersecting(target.EntityId, bounds, occupants, LookupFlags.Dynamic | LookupFlags.Sundries);
         return occupants.Count == 0;
@@ -223,15 +224,15 @@ public sealed partial class AIBuildSystem : EntitySystem
         if (!TryComp<MapGridComponent>(coordinates.EntityId, out var grid))
             return false;
 
-        var tile = grid.TileIndicesFor(coordinates);
-        var tileRef = grid.GetTileRef(tile);
+        var tile = _mapSystem.TileIndicesFor(grid.Owner, grid, coordinates);
+        var tileRef = _mapSystem.GetTileRef(grid.Owner, grid, tile);
 
         // Check if the tile exists and is not empty space
         if (tileRef.Tile.IsEmpty)
             return false;
 
         // Check for anchored entities, but allow building on subfloor and wall-mounted entities
-        foreach (var entity in grid.GetAnchoredEntities(tile))
+        foreach (var entity in _mapSystem.GetAnchoredEntities(grid.Owner, grid, tile))
         {
             // Allow building over entities with SubFloorHideComponent (cables, pipes, disposal pipes)
             if (HasComp<Content.Shared.SubFloor.SubFloorHideComponent>(entity))
