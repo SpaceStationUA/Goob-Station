@@ -13,7 +13,9 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects.Effects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.GameObjects;
 
 namespace Content.Goobstation.Server.Xenobiology.Systems;
 
@@ -79,15 +81,17 @@ public class XenobiologyMiscSystems : EntitySystem
         var mapCoords = transformSys.GetMapCoordinates(uid, xform);
 
 
-        if (!mapMan.TryFindGridAt(mapCoords, out _, out var grid)
-            || !grid.TryGetTileRef(xform.Coordinates, out var tileRef)
+        var mapSystem = EntityManager.System<SharedMapSystem>();
+
+        if (!mapMan.TryFindGridAt(mapCoords, out var gridUid, out var grid)
+            || !mapSystem.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef)
             || tileRef.Tile.IsEmpty)
             return;
 
         if (spreaderSys.RequiresFloorToSpread(args.SmokePrototype.ToString()) && tileRef.Tile.IsEmpty)
             return;
 
-        var coords = grid.MapToGrid(mapCoords);
+        var coords = mapSystem.MapToGrid(gridUid, mapCoords);
         var ent = EntityManager.SpawnAtPosition(args.SmokePrototype, coords.SnapToGrid());
         if (!EntityManager.TryGetComponent<SmokeComponent>(ent, out var smoke))
         {
