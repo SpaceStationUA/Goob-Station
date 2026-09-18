@@ -555,3 +555,76 @@ TOOLS which Debug/DebugOpt/Tools all have). CEF works because the dev
 client's mac bundle embeds it. Long-term fix: ask upstream to publish
 a macOS package of Robust.Client.WebView 27x — Tools/package_webview.py
 already supports PLATFORM_MACOS.
+
+## WebArcade sessions state (2026-09-18, committed & pushed)
+
+### Shipped (see commits 99dd517fdec / 2da734f6049 / a6bac1feb4d)
+- **Six games** in one cabinet, server-authoritative game switcher:
+  id/label/path single-source in `PirateArcadeGames.List` (Shared).
+  Server keeps `Session.Game`; pick allowed from a free cabinet or
+  seated player; unknown ids rejected server-side (no arbitrary
+  res:// pointing). Broadcast `Game` lives in `PirateArcadeStateEvent`
+  — every open window mirrors it, player's window hot-reloads, list
+  shows the loaded game green (Positive style).
+- **Seat/mirror semantics** (user-verified): open claims via
+  `Seat(true)`; server flips losers to spectators; «Встати» releases
+  the seat and the window STAYS OPEN as a mirror view; spectators see
+  an idle line + «Почати гру» button (explicit claim, no auto-grab);
+  per-cabinet window slot releases on window close, NOT Dispose
+  (SS14 windows hide; Dispose never fires on close).
+- **Streaming**: capture hook downscale ~520px wide / JPEG q0.45 /
+  100 ms (~10fps). Measured at full frames earlier: ~0.46 MB/s in
+  per player, ~0.6 MB/s per spectator out, ZERO when idle; the
+  downscale cut legs ~4x at 1.5x the fps (≈0.12 MB/s per leg).
+  Server = dumb per-spectator relay, no tick cost.
+- **Spectator status line**: `spectator.html` has `__tuiStatus(text)`
+  idle-message channel; client pushes hints («чекаю…», «вільний —
+  можеш почати гру»).
+
+### CEF-mac keyboard bridge (content-only, engine untouched)
+Upstream mac keyboard forwarding is broken three ways (verified live
+via CDP key logger on the page): KeyUp NEVER reaches pages; OS
+autorepeat arrives as repeated keydowns without `repeat=true`; letter
+keys arrive as `Unidentified`. Engine hunks were tried and REVERTED
+(user push-back: plain engine; patch stays 2 hunks: ModLoader +
+res:// host re-attach). The working fix is entirely in the capture
+hook inside `WebArcadeWindow.cs`:
+1. window-capture filter swallows duplicate keydowns by held-key
+   tracking (`__tuiDowns`) — works despite missing repeat flag;
+2. `Unidentified` keys rewritten from `keyCode` in-page with proper
+   DOM `code` ("KeyW") — games match on `event.code` (tomato.js etc.)
+   so both key and code must be synthesized;
+3. the CLIENT subscribes `InputManager.FirstChanceOnKeyEvent` and on
+   every physical keyup calls `__tuiKeyUp(key, code)` in the page —
+   synthesizes the missing DOM keyup (tomato.js holds state until the
+   matching keyup);
+4. a 300 ms per-key latch (`__tuiLatch`) swallows the stale repeat
+   queue that CEF flushes right AFTER each release (re-arms held
+   state otherwise; keys lowercase — the latch was first stored under
+   C# "ArrowUp" names and never engaged until lowercased);
+5. focus: our panel buttons steal keyboard focus → `__tuiDrop` 
+   (synthetic keyups for anything held) + `GrabKeyboardFocus` return
+   on every panel button and on window open.
+Debugging pattern that cracked it: CDP attach at localhost:9222 with
+capture-phase recorders on window AND document (kp3/kpfull scripts in
+/tmp/opencode) — events show up ONLY at window-capture, no keyups, so
+log both. Re-instrument after any page reload (game switch wipes it).
+
+### Engine/server packaging notes (mapper test server)
+- `StripWebViewModuleOutOfBin` (mac dev keeps the module in bin/modules
+  so it isn't loaded twice) MUST NOT run for server-side client
+  assembly bakes: it deleted Robust.Client.WebView.dll from
+  bin/Content.Client and the StatusHost died packaging downloads for
+  every connecting client. Gated behind `-p:PirateStripWebView=1`
+  (set by runclient-webui.sh now).
+- Launcher-side mac gap documented in the section above (launchauth
+  workaround).
+
+### Known follow-ups
+- Witchcat loads slowly (roadroller-blob page); maybe pre-shrink dist.
+- Spectator fps/q knobs live in HookScript const if re-tuning needed.
+- Upstream mac module build of Robust.Client.WebView (PLATFORM_MACOS
+  in package_webview.py) lifts the launcher gate for all forks; engine
+  stays on v277.2.1 meanwhile (upstream CDN is on 28x/289).
+- License-ask list: goblins (no license), Black Hole Square,
+  remvst titles (all rights), Non-mewtonian Cat assets (third-party).
