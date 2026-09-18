@@ -5,7 +5,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
 # This is a MacOS/local-development helper for Daniil. It applies
-# WebUIEngineDiff_v277.patch (Web res:// host-path re-attach + ModLoader
+# WebUIEngineDiff_v277.patch (ModLoader dev-context hunk; the res://
+# host re-attach hunk is GONE — content now loads pages with the
+# content prefix inside the URL path, e.g. res://webres/_Pirate/...,
+# which the stock upstream module resolves as-is).
 # default-ALC module resolution) to RobustToolbox. It is NOT needed on
 # Windows, Linux, the production launcher, or CI — those load the WebView
 # module the standard launcher way. After the next Space Wizards engine

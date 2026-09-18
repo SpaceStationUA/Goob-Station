@@ -58,7 +58,7 @@ public sealed class PirateArcadeGameEvent : EntityEventArgs
     public string Game = "";
 }
 
-/// <summary>The games shipped under res://_Pirate/WebUI/Arcade/. Keep in
+/// <summary>The games shipped under res://webres/_Pirate/WebUI/Arcade/. Keep in
 /// sync with the folders there; ids double as safe names server-side.</summary>
 public static class PirateArcadeGames
 {

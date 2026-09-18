@@ -106,7 +106,7 @@ public sealed class WebUiTvDriver
         "    var tx = 't'+Date.now()+'_'+(window.__tuiN = (window.__tuiN || 0)+1);" +
         "    var f = document.createElement('iframe');" +
         "    f.style.display = 'none';" +
-        "    f.src = 'res://_Pirate/WebUI/TV/tui_bridge/' + encodeURIComponent(tx) +" +
+        "    f.src = 'res://webres/_Pirate/WebUI/TV/tui_bridge/' + encodeURIComponent(tx) +" +
         "      '?action=' + encodeURIComponent(action) +" +
         "      (obj ? ('&data=' + encodeURIComponent(JSON.stringify(obj))) : '');" +
         "    document.documentElement.appendChild(f);" +

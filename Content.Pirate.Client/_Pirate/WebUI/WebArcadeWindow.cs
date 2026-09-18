@@ -27,7 +27,13 @@ namespace Content.Pirate.Client._Pirate.WebUI;
 /// </summary>
 public sealed class WebArcadeWindow : DefaultWindow, IDisposable
 {
-    /// <summary>The game + its interactive page (res:// relative).</summary>
+    /// <summary>
+    ///     Arbitrary scheme host; the content-pack prefix lives in the URL
+    ///     PATH (res://webres/_Pirate/...) so the stock upstream Web module
+    ///     (which drops the host) resolves it as /_Pirate/... directly.
+    /// </summary>
+    public const string ResPrefix = "res://webres/";
+
     private const string SpectatorResPath = "_Pirate/WebUI/Arcade/spectator.html";
 
     /// <summary>Cabinet-loaded game id (mirror of the server's state).</summary>
@@ -179,7 +185,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         }
         catch { }
 
-        try { _web.Url = "res://" + GamePath(); } catch { /* headless dev */ }
+        try { _web.Url = ResPrefix + GamePath(); } catch { /* headless dev */ }
 
         // Key-driven games need keyboard focus right away; if the seat
         // gets taken by someone else the state flips us to the mirror,
@@ -250,7 +256,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         _status.Text = $"гра: {GameLabel(_game)} (твій запуск)";
         try
         {
-            _web.Url = "res://" + GamePath();
+            _web.Url = ResPrefix + GamePath();
             // Drives frames when someone watches (the relay only runs then).
             // The capture hook nests inside the page once it has loaded. We
             // re-inject cheaply from FrameUpdate.
@@ -267,7 +273,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         _playSeat.Visible = true;
         UpdateIdle(TakenText());
         _frameUnsub = WebArcadeBackend.SubscribeFrames(_cabNet, OnFrameRelay);
-        try { _web.Url = "res://" + SpectatorResPath; } catch { /* headless dev */ }
+        try { _web.Url = ResPrefix + SpectatorResPath; } catch { /* headless dev */ }
         SendWatch(true);
     }
 
@@ -318,7 +324,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         {
             try
             {
-                _web.Url = "res://" + GamePath();
+                _web.Url = ResPrefix + GamePath();
             }
             catch { /* headless dev */ }
         }
@@ -570,7 +576,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         "  var tx = 't'+Date.now()+'_'+(window.__tuiN = (window.__tuiN || 0)+1);" +
         "  var f = document.createElement('iframe');" +
         "  f.style.display = 'none';" +
-        "  f.src = 'res://_Pirate/WebUI/TV/tui_bridge/' + encodeURIComponent(tx) +" +
+        "  f.src = 'res://webres/_Pirate/WebUI/TV/tui_bridge/' + encodeURIComponent(tx) +" +
         "    '?action=' + encodeURIComponent(action) +" +
         "    (obj ? ('&data=' + encodeURIComponent(JSON.stringify(obj))) : '');" +
         "  document.documentElement.appendChild(f);" +
