@@ -628,3 +628,17 @@ log both. Re-instrument after any page reload (game switch wipes it).
   stays on v277.2.1 meanwhile (upstream CDN is on 28x/289).
 - License-ask list: goblins (no license), Black Hole Square,
   remvst titles (all rights), Non-mewtonian Cat assets (third-party).
+
+### Session disconnect incident (2026-09-19, resolved)
+- Server "went down" mid-session: NO crash in server log — it was an
+  accidental `pkill -f Content.Server` during a cleanup command. Lesson:
+  never blanket-pkill Content.Server/Robust.Client; use scoped patterns.
+- Real bug found by the log dump: after disconnect, the arcade window
+  kept pumping Frame/Seat/Watch events every frame ("Tried to send
+  message while not connected" spam; SendSeat also fired late from
+  OnClose). Fixed: all arcade client sends connection-gated
+  (INetManager.IsConnected) and the window auto-closes in FrameUpdate
+  once disconnected (commit dc880bce48d).
+- Client log DOMINO lesson: post-disconnect IPC spam obscured the real
+  cause in the log flow (tons of stack-trace ERROR lines between real
+  events); expect truncation-heavy logs — grep selectively.
