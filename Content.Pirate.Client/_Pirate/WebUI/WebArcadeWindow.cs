@@ -458,18 +458,31 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         var frame = ExtractString(data, "f");
         if (frame.Length == 0)
             return;
+        if (!NetConnected())
+            return;
 
         IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>()
             .SendSystemNetworkMessage(new PirateArcadeFrameEvent { Cab = _cabNet, Frame = frame });
     }
 
+    private bool NetConnected()
+        => IoCManager.Resolve<Robust.Shared.Network.INetManager>().IsConnected;
+
     private void SendSeat(bool seat)
-        => IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>()
+    {
+        if (!NetConnected())
+            return;
+        IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>()
             .SendSystemNetworkMessage(new PirateArcadeSeatEvent { Cab = _cabNet, Seat = seat });
+    }
 
     private void SendWatch(bool watch)
-        => IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>()
+    {
+        if (!NetConnected())
+            return;
+        IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>()
             .SendSystemNetworkMessage(new PirateArcadeWatchEvent { Cab = _cabNet, Watch = watch });
+    }
 
     private void OnStandUp(Robust.Client.UserInterface.Controls.BaseButton.ButtonEventArgs _)
     {
@@ -490,6 +503,16 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+
+        // Server went away (disconnect/title back to lobby): the window is
+        // meaningless and its sources are dead — close it (OnClose cleans
+        // up; sends are connection-gated, so this is safe while offline).
+        if (!NetConnected())
+        {
+            Close();
+            return;
+        }
+
         _ipc.Pump();
 
         // Periodically (re)install the capture hook in the game page: it is
