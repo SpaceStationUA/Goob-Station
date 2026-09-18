@@ -31,7 +31,6 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
     {
         // Pirate: bridge new upstream entity effects to old downstream reagent-effect handlers.
         using var legacyReaction = LegacyEntityEffectContext.PushReaction(EntityManager, args);
-
         var scale = entity.Comp.ScaleOverride ?? args.ReagentQuantity.Quantity.Float(); // Trauma - Added Scale Override
         // Pirate: one-unit reactions must not scale entity effects by injected volume.
         if (entity.Comp.OneUnitReaction)

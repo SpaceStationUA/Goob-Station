@@ -148,7 +148,7 @@
     variation: 0.125
   sounds:
     Scream:
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+      collection: ReptilianScream # Omu
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
     Honk:
@@ -185,12 +185,13 @@
       collection: MaleYawn
     Belch: # Frontier
       collection: Belch # Frontier
-    Purr: # Pirate: reptilian emotes
-      path: /Audio/_Pirate/Voice/Reptilian/Reptilian_lizard_purr.ogg
-    Rattle: # Pirate: reptilian emotes
-      path: /Audio/_Pirate/Voice/Reptilian/Reptilian_lizard_rattle.ogg
-    ReptilianScreech: # Pirate: reptilian emotes
+    Purr: #Omu
+      path: /Audio/_Omu/Voice/Reptilian/Reptilian_lizard_purr.ogg
+    Rattle: #Omu
+      path: /Audio/_Omu/Voice/Reptilian/Reptilian_lizard_rattle.ogg
+    ReptilianScreech: #Omu
       collection: ReptilianScreech
+
 
 - type: emoteSounds
   id: FemaleReptilian
@@ -198,7 +199,7 @@
     variation: 0.125
   sounds:
     Scream:
-      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+      collection: ReptilianScream # Omu
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
     Honk:
@@ -235,11 +236,11 @@
       collection: FemaleYawn
     Belch: # Frontier
       collection: Belch # Frontier
-    Purr: # Pirate: reptilian emotes
-      path: /Audio/_Pirate/Voice/Reptilian/Reptilian_lizard_purr.ogg
-    Rattle: # Pirate: reptilian emotes
-      path: /Audio/_Pirate/Voice/Reptilian/Reptilian_lizard_rattle.ogg
-    ReptilianScreech: # Pirate: reptilian emotes
+    Purr: #Omu
+      path: /Audio/_Omu/Voice/Reptilian/Reptilian_lizard_purr.ogg
+    Rattle: #Omu
+      path: /Audio/_Omu/Voice/Reptilian/Reptilian_lizard_rattle.ogg
+    ReptilianScreech: #Omu
       collection: ReptilianScreech
 
 - type: emoteSounds
@@ -484,8 +485,8 @@
       collection: BikeHorn
     CatMeow:
       collection: CatMeows # Goobstation - effect standardization
-    Gasp: # Pirate: arachnid emotes - use arachnid-specific gasp instead of generic MaleGasp
-      path: /Audio/_Pirate/Voice/Arachnid/arachnid_gasp.ogg
+    Gasp:
+      collection: MaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
     Surprised: # Goob
@@ -494,14 +495,6 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Belch: # Frontier
       collection: Belch # Frontier
-    Cough: # Pirate: arachnid emotes
-      path: /Audio/_Pirate/Voice/Arachnid/arachnid_cough.ogg
-    Yawn: # Pirate: arachnid emotes
-      path: /Audio/_Pirate/Voice/Arachnid/arachnid_yawn.ogg
-    Crying: # Pirate: arachnid emotes
-      path: /Audio/_Pirate/Voice/Arachnid/arachnid_cry.ogg
-    Sigh: # Pirate: arachnid emotes
-      path: /Audio/_Pirate/Voice/Arachnid/arachnid_sigh.ogg
 
 - type: emoteSounds
   id: UnisexDwarf
@@ -622,8 +615,8 @@
       collection: BikeHorn
     CatMeow:
       collection: CatMeows # Goobstation - effect standardization
-    Gasp: # Pirate: moth emotes - use moth-specific gasp instead of generic MaleGasp
-      path: /Audio/_Pirate/Voice/Moth/moth_gasp.ogg
+    Gasp:
+      collection: MaleGasp
     DefaultDeathgasp:
       collection: MothDeathGasp
     Flap: # Goobstation - Add flap to moths.
@@ -634,20 +627,20 @@
       path: /Audio/_Goobstation/Voice/surprised.ogg
     RobotBeep:
       collection: RobotBeeps
-    Yawn: # Pirate: moth emotes - use moth-specific yawn instead of generic MaleYawn
-      path: /Audio/_Pirate/Voice/Moth/moth_yawn.ogg
+    Yawn:
+      collection: MaleYawn
     Snore:
       collection: Snores
-    Sigh: # Pirate: moth emotes - use moth-specific sigh instead of generic MaleSigh
-      path: /Audio/_Pirate/Voice/Moth/moth_sigh.ogg
-    Crying: # Pirate: moth emotes - use moth-specific cry instead of generic MaleCry
-      path: /Audio/_Pirate/Voice/Moth/moth_cry.ogg
+    Sigh:
+      collection: MaleSigh
+    Crying:
+      collection: MaleCry
     Whistle:
       collection: Whistles
     Sneeze:
       collection: MaleSneezes
-    Cough: # Pirate: moth emotes - use moth-specific cough instead of generic MaleCoughs
-      path: /Audio/_Pirate/Voice/Moth/moth_cough.ogg
+    Cough:
+      collection: MaleCoughs
     Belch: # Frontier
       collection: Belch # Frontier
 
@@ -674,8 +667,8 @@
       collection: BikeHorn
     CatMeow:
       collection: CatMeows # Goobstation - effect standardization
-    Gasp: # Pirate: moth emotes - use moth-specific gasp instead of generic MaleGasp
-      path: /Audio/_Pirate/Voice/Moth/moth_gasp.ogg
+    Gasp:
+      collection: MaleGasp
     DefaultDeathgasp:
       collection: MothDeathGasp
     Flap: # Goobstation - Add flap to moths.
@@ -686,20 +679,20 @@
       path: /Audio/_Goobstation/Voice/surprised.ogg
     RobotBeep:
       collection: RobotBeeps
-    Yawn: # Pirate: moth emotes - use moth-specific yawn instead of generic MaleYawn
-      path: /Audio/_Pirate/Voice/Moth/moth_yawn.ogg
+    Yawn:
+      collection: MaleYawn
     Snore:
       collection: Snores
-    Sigh: # Pirate: moth emotes - use moth-specific sigh instead of generic MaleSigh
-      path: /Audio/_Pirate/Voice/Moth/moth_sigh.ogg
-    Crying: # Pirate: moth emotes - use moth-specific cry instead of generic MaleCry
-      path: /Audio/_Pirate/Voice/Moth/moth_cry.ogg
+    Sigh:
+      collection: MaleSigh
+    Crying:
+      collection: MaleCry
     Whistle:
       collection: Whistles
     Sneeze:
       collection: MaleSneezes
-    Cough: # Pirate: moth emotes - use moth-specific cough instead of generic MaleCoughs
-      path: /Audio/_Pirate/Voice/Moth/moth_cough.ogg
+    Cough:
+      collection: MaleCoughs
     Belch: # Frontier
       collection: Belch # Frontier
 
@@ -726,8 +719,8 @@
       collection: BikeHorn
     CatMeow:
       collection: CatMeows # Goobstation - effect standardization
-    Gasp: # Pirate: moth emotes - use moth-specific gasp instead of generic FemaleGasp
-      path: /Audio/_Pirate/Voice/Moth/moth_gasp.ogg
+    Gasp:
+      collection: FemaleGasp
     DefaultDeathgasp:
       collection: MothDeathGasp
     Flap: # Goobstation - Add flap to moths.
@@ -738,20 +731,20 @@
       path: /Audio/_Goobstation/Voice/surprised.ogg
     RobotBeep:
       collection: RobotBeeps
-    Yawn: # Pirate: moth emotes - use moth-specific yawn instead of generic FemaleYawn
-      path: /Audio/_Pirate/Voice/Moth/moth_yawn.ogg
+    Yawn:
+      collection: FemaleYawn
     Snore:
       collection: Snores
-    Sigh: # Pirate: moth emotes - use moth-specific sigh instead of generic FemaleSigh
-      path: /Audio/_Pirate/Voice/Moth/moth_sigh.ogg
-    Crying: # Pirate: moth emotes - use moth-specific cry instead of generic FemaleCry
-      path: /Audio/_Pirate/Voice/Moth/moth_cry.ogg
+    Sigh:
+      collection: FemaleSigh
+    Crying:
+      collection: FemaleCry
     Whistle:
       collection: Whistles
     Sneeze:
       collection: FemaleSneezes
-    Cough: # Pirate: moth emotes - use moth-specific cough instead of generic FemaleCoughs
-      path: /Audio/_Pirate/Voice/Moth/moth_cough.ogg
+    Cough:
+      collection: FemaleCoughs
     Belch: # Frontier
       collection: Belch # Frontier
 
@@ -802,8 +795,6 @@
         variation: 0.125
     Surprised: # Goob
       path: /Audio/_Goobstation/Voice/surprised.ogg
-    SiliconDeathgasp: # DOWNSTREAM-TPirates: IPC screens
-      collection: BorgDeathGasp # DOWNSTREAM-TPirates: IPC screens
 
 - type: emoteSounds
   id: UnisexSiliconSyndicate
@@ -844,8 +835,6 @@
         variation: 0.125
     Surprised: # Goob
       path: /Audio/_Goobstation/Voice/surprised.ogg
-    SiliconDeathgasp: # DOWNSTREAM-TPirates: IPC screens
-      collection: BorgDeathGasp # DOWNSTREAM-TPirates: IPC screens
 
 - type: emoteSounds
   id: UnisexSiliconXenoborg
