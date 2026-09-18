@@ -1,0 +1,41 @@
+diff --git a/Robust.Client.WebView/Cef/WebViewManagerCef.cs b/Robust.Client.WebView/Cef/WebViewManagerCef.cs
+index c98fbafb6..f5a00f837 100644
+--- a/Robust.Client.WebView/Cef/WebViewManagerCef.cs
++++ b/Robust.Client.WebView/Cef/WebViewManagerCef.cs
+@@ -209,7 +209,16 @@ namespace Robust.Client.WebView.Cef
+ 
+                 _sawmill.Debug($"HANDLING: {request.Url}");
+ 
+-                var resPath = new ResPath(uri.AbsolutePath);
++                // Pirate dev note: CEF canonicalizes res://_Pirate/foo treating the
++                // first path segment as URL host, so uri.AbsolutePath drops the "._Pirate"
++                // leading segment. Re-attach it as a leading path segment so
++                // TryContentFileRead can find the file. Production launcher builds
++                // do not load content this way.
++                var path = uri.AbsolutePath;
++                if (!string.IsNullOrEmpty(uri.Host) && path.StartsWith("/" + uri.Host, StringComparison.OrdinalIgnoreCase) == false)
++                    path = "/" + uri.Host + path;
++
++                var resPath = new ResPath(path);
+                 if (_resourceManager.TryContentFileRead(resPath, out var stream))
+                 {
+                     if (!_parent.TryGetResourceMimeType(resPath.Extension, out var mime))
+diff --git a/Robust.Shared/ContentPack/ModLoader.cs b/Robust.Shared/ContentPack/ModLoader.cs
+index 8d6e55d17..07f8e4d06 100644
+--- a/Robust.Shared/ContentPack/ModLoader.cs
++++ b/Robust.Shared/ContentPack/ModLoader.cs
+@@ -412,6 +412,14 @@ namespace Robust.Shared.ContentPack
+         {
+             // We have to hook AssemblyLoadContext.Default.Resolving so that C# interactive loads assemblies correctly.
+             // Otherwise it would load the assemblies a second time which is an amazing way to have everything break.
++            // Pirate dev note: engines modules must also be resolvable in the content-start
++            // path (Default ALC), where _useLoadContext is false. Without this, dev-built
++            // clients cannot JIT-reference engine module types (e.g. Robust.Client.WebView).
++            // Production (launcher) builds load content under a load context and do not
++            // hit this path.
++            if (!_useLoadContext && TryLoadExtra(name) is { } extra)
++                return extra;
++
+             if (_useLoadContext)
+             {
+                 Sawmill.Verbose($"RESOLVING DEFAULT: {name}");
