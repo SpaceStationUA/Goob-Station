@@ -730,3 +730,24 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
 - Integration tests added (compile-only verified; suite not run — too slow):
   `Content.IntegrationTests/Tests/_Pirate/TV/PirateTvLinkIntegrationTest.cs`
   (mirror+unlink, chain+cycle refusal).
+
+### TV sync v2 (2026-09-19): authoritative clock, non-blocking enforcement
+- **Rewind-on-unpause fixed at the source**: the server now anchors pause
+  to the LIVE room position (`CurrentPos` = Pos + elapsed), ignoring the
+  client's `Arg` entirely; `play` keeps Pos and only restamps. The room
+  clock is now a pure function of Playing, so pause→play cannot jump back
+  to an earlier seek anchor.
+- **Enforcement is event-driven and non-blocking.** The old enforcer set
+  `pointer-events:none` and hid YT chrome — that broke fullscreen, the
+  settings menu and skip-ad, and if you clicked YT's logo/embiggen the
+  video could vanish with no way back. Now listeners on pause/play/
+  seeking/ratechange/volumechange revert playback deviations immediately
+  (~instant bounce-back) while the player UI stays fully usable. Tick
+  dropped 0.5s → 0.15s as a backstop; a paused room is never seeked (a
+  seek on a paused YT player can auto-resume it).
+- Only `.ytp-pause-overlay`/`.ytp-miniplayer-ui` are still hidden (they
+  cover the video); the size/fullscreen toggle and chrome are now left
+  alone, so the player's own fullscreen works.
+- Design rule going forward: **playback state is authoritative
+  server-side and reverted locally; player UI (fullscreen, ads,
+  settings) is the user's.** Don't disable page controls to win sync.

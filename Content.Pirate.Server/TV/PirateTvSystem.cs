@@ -373,12 +373,15 @@ public sealed class PirateTvSystem : EntitySystem
         switch (msg.Op)
         {
             case "pause":
-                // The presser's own video position becomes the room anchor.
+                // Anchor to the LIVE room position, never the client's guess:
+                // the room clock is a pure function of Playing, so pausing at
+                // wherever the room actually is, then resuming, cannot rewind.
+                master.Pos = Math.Max(0, CurrentPos(master, now));
                 master.Playing = false;
-                master.Pos = Math.Max(0, msg.Arg);
                 master.Stamp = now;
                 break;
             case "play":
+                // Keep Pos; just start counting wall time again.
                 master.Playing = true;
                 master.Stamp = now;
                 break;
@@ -484,6 +487,17 @@ public sealed class PirateTvSystem : EntitySystem
     {
         var ent = args.SenderSession.AttachedEntity;
         return ent != null && _admin.IsAdmin(ent.Value);
+    }
+
+    /// <summary>
+    ///     The TV's position right now: Pos plus wall time since Stamp while
+    ///     playing, else Pos. Mirrors the client's VideoPos so both agree.
+    /// </summary>
+    private static double CurrentPos(PirateTvComponent comp, long nowMs)
+    {
+        if (!comp.Playing)
+            return comp.Pos;
+        return comp.Pos + Math.Max(0, nowMs - comp.Stamp) / 1000.0;
     }
 
     /// <summary>Starts playing queue[index] (wraps to 0 past the end).</summary>

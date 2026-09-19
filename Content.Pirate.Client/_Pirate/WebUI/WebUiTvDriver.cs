@@ -39,14 +39,16 @@ public sealed class WebUiTvDriver
     ///     again ~every 500 ms.
     /// </summary>
     /// <param name="enforce">
-    ///     When true, the injected script re-asserts the room's play/pause,
-    ///     position and mute, and suppresses the page's own controls so a
-    ///     stray click cannot desync the room. False while no channel plays.
+    ///     When true, the injected script keeps the page's playback locked to
+    ///     the room clock (play/pause/position/mute) via event listeners, so
+    ///     local clicks/scrubbing bounce back within ~150 ms — WITHOUT
+    ///     disabling the player's UI, so fullscreen, skip-ad and settings
+    ///     still work. False while no channel plays.
     /// </param>
     public void Tick(double dt, double roomPos, bool roomPlaying, bool roomMuted, bool enforce)
     {
         _tickAccumulator += dt;
-        if (_tickAccumulator < 0.5)
+        if (_tickAccumulator < 0.15)
             return;
         _tickAccumulator = 0;
         try
@@ -56,9 +58,8 @@ public sealed class WebUiTvDriver
             // hidden pages, so the work is driven from this engine-side
             // evaluation instead of setInterval.
             var pos = roomPos.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
-            _web.ExecuteJavaScript(HookScript + (enforce
-                ? EnforceScript(pos, roomPlaying, roomMuted)
-                : "") + TickScript);
+            var enforceJs = enforce ? EnforceScript(pos, roomPlaying, roomMuted) : "";
+            _web.ExecuteJavaScript(HookScript + enforceJs + TickScript);
         }
         catch (Exception e)
         {
@@ -67,27 +68,43 @@ public sealed class WebUiTvDriver
     }
 
     /// <summary>
-    ///     Re-asserts the room clock and blocks page-initiated transport:
-    ///     disables the player's own pointer events/controls so clicking the
-    ///     video or its timeline cannot pause/seek, then snaps play/pause,
-    ///     position and mute back to the room's values.
+    ///     Pins playback to the room without disabling the player's UI:
+    ///     installs one-shot listeners (pause/play/seeking/ratechange/
+    ///     volumechange) that immediately revert deviations, plus a small
+    ///     repeat-button guard. Fullscreen, ad-skip and the settings menu are
+    ///     deliberately left alone.
     /// </summary>
     private static string EnforceScript(string pos, bool playing, bool muted)
     {
+        var room = "window.__tuiRoom = { t: " + pos + ", playing: " + (playing ? "true" : "false") +
+                   ", muted: " + (muted ? "true" : "false") + " };";
         return "(function(){" +
                "try {" +
                "  var v = document.querySelector('video');" +
                "  if (!v) { return; }" +
-               "  window.__tuiRoom = { t: " + pos + ", playing: " + (playing ? "true" : "false") +
-               ", muted: " + (muted ? "true" : "false") + " };" +
-               // Suppress the page's own controls so only the remote steers.
-               "  var p = document.querySelector('.html5-video-player');" +
-               "  if (p && p.style.pointerEvents !== 'none') {" +
-               "    p.style.pointerEvents = 'none';" +
-               "    p.style.cursor = 'default';" +
+               room +
+               "  if (!window.__tuiPinned) {" +
+               "    window.__tuiPinned = true;" +
+               "    var r = function() { return window.__tuiRoom; };" +
+               // Revert any local pause/play to the room's intent.
+               "    v.addEventListener('pause', function() {" +
+               "      var q = r(); if (q && q.playing) { try { v.play(); } catch (e) {} }" +
+               "    });" +
+               "    v.addEventListener('play', function() {" +
+               "      var q = r(); if (q && !q.playing) { try { v.pause(); } catch (e) {} }" +
+               "    });" +
+               // Revert scrubbing: any seek away from the room clock snaps back.
+               "    v.addEventListener('seeking', function() {" +
+               "      var q = r(); if (!q) { return; }" +
+               "      if (Math.abs((v.currentTime || 0) - q.t) > 3) {" +
+               "        try { v.currentTime = q.t; } catch (e) {}" +
+               "      }" +
+               "    });" +
+               "    v.addEventListener('ratechange', function() { try { v.playbackRate = 1; } catch (e) {} });" +
+               "    v.addEventListener('volumechange', function() {" +
+               "      var q = r(); if (q && !!v.muted !== q.muted) { try { v.muted = q.muted; } catch (e) {} }" +
+               "    });" +
                "  }" +
-               "  var ctrls = document.querySelectorAll('.ytp-chrome-bottom,.ytp-chrome-controls,.ytp-progress-bar-container,.ytp-gradient-bottom');" +
-               "  for (var i = 0; i < ctrls.length; i++) { ctrls[i].style.display = 'none'; }" +
                "} catch (e) {}" +
                "})();";
     }
@@ -170,11 +187,10 @@ public sealed class WebUiTvDriver
         "    if (!v.paused !== r.playing) {" +
         "      if (r.playing) { v.play(); } else { v.pause(); }" +
         "    }" +
+        // Only chase drift while playing; never seek a paused player (that
+        // can auto-resume it in YouTube).
         "    if (r.playing && (v.duration || 0) > 0) {" +
-        "      var drift = (v.currentTime || 0) - r.t;" +
-        "      if (drift > 3 || drift < -3) { v.currentTime = r.t; }" +
-        "    } else if (!r.playing && (v.duration || 0) > 0 && Math.abs((v.currentTime || 0) - r.t) > 3) {" +
-        "      v.currentTime = r.t;" +
+        "      if (Math.abs((v.currentTime || 0) - r.t) > 3) { v.currentTime = r.t; }" +
         "    }" +
         "    if (!!v.muted !== r.muted) { v.muted = r.muted; }" +
         "  }" +
@@ -182,7 +198,7 @@ public sealed class WebUiTvDriver
         "try {" +
         "  var v = document.querySelector('video');" +
         "  if (!v) { return; }" +
-        "  var bars = document.querySelectorAll('.ytp-chrome-top,.ytp-pause-overlay,.ytp-size-toggle,.ytp-miniplayer-ui');" +
+        "  var bars = document.querySelectorAll('.ytp-pause-overlay,.ytp-miniplayer-ui');" +
         "  for (var i = 0; i < bars.length; i++) { bars[i].style.display = 'none'; }" +
         "} catch (e) {}" +
         "try {" +
