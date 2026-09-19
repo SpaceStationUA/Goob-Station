@@ -1,0 +1,252 @@
+# Pirate port of Starlight Peacekeeper grenade shells and launcher rounds.
+- type: entity
+  id: BasePeacekeeperBox
+  name: grenade cartridge
+  parent: [BaseItem, BaseSecurityContraband]
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - MagazineGrenade
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+      - Grenade
+    capacity: 4
+  - type: Item
+    size: Normal
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Boxes/peacekeeper.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: false
+  - type: Appearance
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 200
+
+- type: entity
+  parent: BasePeacekeeperBox
+  id: BoxPeacekeeperFlash
+  name: peacekeeper flash ammo box
+  description: A box of flash grenades for the Peacekeeper, good for catching up to a running fiend or dispersing crowds.
+  components:
+  - type: BallisticAmmoProvider
+    proto: GrenadeFlash
+    mayTransfer: true
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: flash
+
+- type: entity
+  parent: BasePeacekeeperBox
+  id: BoxPeacekeeperStinger
+  name: peacekeeper stinger ammo box
+  description: A box of stinger grenades for the Peacekeeper, useful for dispersing crowds.
+  components:
+  - type: BallisticAmmoProvider
+    proto: GrenadeStingerlauncher
+    mayTransfer: true
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: stinger
+
+- type: entity
+  parent: BasePeacekeeperBox
+  id: BoxPeacekeeperGas
+  name: peacekeeper tear gas ammo box
+  description: A box of tear gas grenades for the Peacekeeper.
+  components:
+  - type: BallisticAmmoProvider
+    proto: GrenadeGaslauncher
+    mayTransfer: true
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: gas
+
+- type: entity
+  parent: BasePeacekeeperBox
+  id: BoxPeacekeeperBaton
+  name: peacekeeper baton ammo box
+  description: A box of less-lethal baton grenades for the Peacekeeper.
+  components:
+  - type: BallisticAmmoProvider
+    proto: GrenadeBaton
+    mayTransfer: true
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: baton
+
+- type: entity
+  id: GrenadeGaslauncher
+  name: gas grenade
+  description: Able to choke a room or several of your friends.
+  parent: [BaseGrenade, BaseSecurityContraband]
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeGas
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Explosives.rsi
+    layers:
+    - state: gas
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: blast
+    suffix: false
+  - type: Tag
+    tags:
+    - Grenade
+    - NonLethalGrenade
+
+- type: entity
+  id: GrenadeStingerlauncher
+  name: stinger grenade
+  description: An unruly crowd's favourite.
+  parent: [BaseGrenade, BaseSecurityContraband]
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGrenadeStinger
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Explosives.rsi
+    layers:
+    - state: stinger
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+    state: blast
+    suffix: false
+  - type: Tag
+    tags:
+    - Grenade
+    - NonLethalGrenade
+
+- type: entity
+  id: BulletGrenadeStinger
+  name: armed stinger grenade
+  parent: BaseBulletTrigger
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: grenade
+  - type: SpawnOnTrigger
+    proto: Grenade20mmStinger
+  - type: DeleteOnTrigger
+
+- type: entity
+  id: BulletGrenadeGas
+  name: armed gas grenade
+  parent: BaseBulletTrigger
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: grenade
+  - type: SpawnOnTrigger
+    proto: Grenade20mmGas
+  - type: DeleteOnTrigger
+
+- type: entity
+  id: Grenade20mmStinger
+  parent: ProjectileGrenadeBase
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Explosives.rsi
+    layers:
+    - state: armedstinger
+  - type: GenericVisualizer
+    visuals: {}
+  - type: TriggerOnSpawn
+  - type: TimerTrigger
+    beepSound:
+      path: /Audio/Effects/beep1.ogg
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 0.5
+    delay: 1.5
+  - type: ProjectileGrenade
+    triggerKey: timer
+    fillPrototype: PelletClusterLesserRubber
+    capacity: 30
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
+    sound:
+      path: /Audio/Effects/flash_bang.ogg
+  - type: DeleteOnTrigger
+    keysIn:
+    - timer
+
+- type: entity
+  id: Grenade20mmGas
+  parent: ProjectileGrenadeBase
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Explosives.rsi
+    layers:
+    - state: armedgas
+  - type: GenericVisualizer
+    visuals: {}
+  - type: TriggerOnSpawn
+  - type: TimerTrigger
+    delay: 1.5
+  - type: SmokeOnTrigger
+    keysIn:
+    - timer
+    duration: 10
+    spreadAmount: 15
+    smokePrototype: TearGasSmokeWhite
+    solution:
+      reagents:
+      - ReagentId: TearGas
+        Quantity: 20
+  - type: DeleteOnTrigger
+    keysIn:
+    - timer
+
+- type: entity
+  parent: BaseBullet
+  id: PelletClusterLesserRubber
+  categories: [HideSpawnMenu]
+  name: pellet (ball, rubber)
+  components:
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Piercing: 0
+        Blunt: 1
+  - type: StaminaDamageOnCollide
+    damage: 20
+  - type: TimedDespawn
+    lifetime: 0.25

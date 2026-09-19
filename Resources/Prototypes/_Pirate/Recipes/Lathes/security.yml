@@ -72,6 +72,47 @@
   materials:
     Steel: 720
 
+# Peacekeeper grenade launcher and shell boxes
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxPeacekeeperGas
+  result: BoxPeacekeeperGas
+  materials:
+    Steel: 150
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxPeacekeeperStinger
+  result: BoxPeacekeeperStinger
+  materials:
+    Steel: 150
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxPeacekeeperFlash
+  result: BoxPeacekeeperFlash
+  materials:
+    Steel: 150
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: BoxPeacekeeperBaton
+  result: BoxPeacekeeperBaton
+  materials:
+    Steel: 150
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponLauncherPeacekeeper
+  result: WeaponLauncherPeacekeeper
+  materials:
+    Steel: 1200
+    Plastic: 250
+
 ## Різне
 - type: latheRecipe
   id: ClothingNeckBaseShockCollar
