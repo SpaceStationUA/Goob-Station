@@ -74,12 +74,18 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     ///     there — a fresh load starts at 0 and a pre-roll ad eats early
     ///     seeks.
     /// </summary>
-    private bool _needSeek;
+    /// <summary>
+    ///     Set after a room-issued seek (Stamp change) or a (re)navigation:
+    ///     keep re-issuing the seek until the page lands near the target. A
+    ///     fresh load starts at 0 and a pre-roll ad swallows early seeks, so
+    ///     this retries ~once a second until it takes.
+    /// </summary>
+    private bool _pendingRoomSeek;
+    private double _pendingSeekTarget;
+    private long _lastRoomSeekAtMs;
 
-    /// <summary>Last drift-correction seek: rate-limits retries so we never
-    /// re-seek a still-buffering player into a permanent spinner.</summary>
-    private long _lastSeekAtMs;
-    private double _lastSeekTarget = -1;
+    /// <summary>Ambient drift corrections (buffering/ad), at most every 3s.</summary>
+    private long _lastDriftSeekAtMs;
 
     // Room truth we already acted on.
     private string _shownUrl = "";
@@ -426,39 +432,49 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             _appliedPlaying = s.Playing;
         }
 
-        // A room-issued seek bumps Stamp; snap once right away. After a
-        // (re)open the seek is retried, but SLOWLY and never while the page
-        // has no real duration yet — a fresh load reports t≈0/dur=0, and
-        // re-seeking a still-loading player just restarts the buffer forever
-        // (the "spinner with a moving timeline" bug).
+        // A room-issued seek (Stamp changed) must land on EVERY window: retry
+        // it promptly until the page reports a position near the target.
+        // Ambient drift is handled separately below with a gentler policy.
         if (s.Stamp != _appliedSeekStamp)
         {
             _appliedSeekStamp = s.Stamp;
-            _needSeek = true;
-            _lastSeekAtMs = 0;
+            _pendingRoomSeek = true;
+            _pendingSeekTarget = target;
+            _lastRoomSeekAtMs = 0;
         }
 
-        if (_needSeek && !_ourInAd)
+        // Follow the room clock's *advancing* target when playing, so a
+        // late-joining window stays current.
+        if (_pendingRoomSeek)
+            _pendingSeekTarget = s.Playing ? target : s.Pos;
+
+        if (_pendingRoomSeek && !_ourInAd && _ourDur > 0)
         {
-            if (_ourDur <= 0)
+            var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            var want = _pendingSeekTarget;
+            if (Math.Abs(_ourPos - want) < 3)
             {
-                // Not loaded yet: leave it alone this frame.
+                _pendingRoomSeek = false;
             }
-            else if (_ourPos >= 0 && Math.Abs(_ourPos - target) < 3)
+            else if (now - _lastRoomSeekAtMs > 1000)
             {
-                _needSeek = false;
+                _lastRoomSeekAtMs = now;
+                SeekTo(want);
             }
-            else
+        }
+
+        // Gentle ambient drift correction (buffering stutter, ad spillover):
+        // only when not already chasing a room seek, off by >3s, and once
+        // every 3s.
+        if (!_pendingRoomSeek && !_ourInAd && _ourDur > 0 && s.Playing)
+        {
+            if (Math.Abs(_ourPos - target) > 3)
             {
                 var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                // At most one correction every 3s, and after issuing one give
-                // the player time to move before judging it again.
-                if (now - _lastSeekAtMs > 3000)
+                if (now - _lastDriftSeekAtMs > 3000)
                 {
-                    _lastSeekAtMs = now;
-                    _lastSeekTarget = target;
-                    _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
-                                         target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
+                    _lastDriftSeekAtMs = now;
+                    SeekTo(target);
                 }
             }
         }
@@ -485,6 +501,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _appliedPlaying = false;
         _appliedMuted = false;
         _appliedSeekStamp = -1;
+        _pendingRoomSeek = false;
         _status.Text = "канал: (нічого не грає)";
         try { _web.Url = "about:blank"; } catch { /* headless dev */ }
     }
@@ -620,10 +637,22 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _endedPublished = false;
         _appliedPlaying = false;
         _appliedSeekStamp = -1;
-        _needSeek = true;
+        _pendingRoomSeek = true;
+        _pendingSeekTarget = s.Playing
+            ? PirateTvClientState.VideoPos(s, s.Stamp)
+            : s.Pos;
+        _lastRoomSeekAtMs = 0;
         _ourInAd = false;
         _navigatedAtMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         try { _web.Url = s.Url; } catch { /* headless dev */ }
+    }
+
+    /// <summary>Sends a position command to the page and marks our own seek
+    /// so the scrubbing guard doesn't fight it.</summary>
+    private void SeekTo(double pos)
+    {
+        _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
+                             pos.ToString("0.##", CultureInfo.InvariantCulture) + "}");
     }
 
     /// <summary>

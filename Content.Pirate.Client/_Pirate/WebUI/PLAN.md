@@ -802,3 +802,18 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
 - Rule of thumb now baked in: NEVER seek a player whose duration is 0 or
   that was just seeked seconds ago — YouTube punishes it with an endless
   spinner.
+
+### TV sync v6 (2026-09-19): one seek owner
+- Desync after v5: v5 made the C# retry too passive (3s, dur>0 only)
+  AND left the JS also correcting position. Two loops fought, so seeks
+  landed on one window only, unpause didn't resync, and timeline drags
+  stuck.
+- Fix: **position has exactly ONE owner — the C# window.** The JS no
+  longer seeks at all (only play/pause/mute nudge + the user-scrub
+  revert listener). C# distinguishes:
+  * ROOM seek (Stamp changed — includes pause/unpause/±10/next/reopen):
+    `_pendingRoomSeek`, retried ~1/s until the page is within 3s, and the
+    target keeps advancing while playing so late joiners stay current.
+  * AMBIENT drift (no Stamp change): >3s and at most once per 3s.
+- Note: the server bumps Stamp on play too, so unpause now forces a
+  position sync on every window, not just a play flag flip.
