@@ -1,8 +1,8 @@
 - type: entity
-  name: "токсин, що руйнує свідомість"
+  name: mindbreaker toxin
   parent: Pill
   id: PillMindbreakerToxin
-  description: "Видаляє псионіку при попаданні всередину. Легко отруйний."
+  description: Removes psionics when ingested. Mildly poisonous.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -13,10 +13,10 @@
           Quantity: 20
 
 - type: entity
-  name: "токсин душогуб"
+  name: soulbreaker toxin
   parent: Pill
   id: PillSoulbreakerToxin
-  description: "Назавжди руйнує свідомість псіоніка після вживання. Діє лише на справжніх псіоніків."
+  description: Permanently mindbreaks a psionic when ingested. Only works on actual psionics.
   components:
   - type: SolutionContainerManager
     solutions:

@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMimemedal
-  name: "медаль пантоміми"
-  description: "Вручається членам екіпажу, які демонструють неперевершену майстерність пантоміми."
+  name: medal of mimery
+  description: Given to crewmates who display excellent mimery.
   components:
   - type: EmitSoundOnPickup
     sound:

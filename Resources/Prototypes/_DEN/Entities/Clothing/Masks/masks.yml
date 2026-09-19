@@ -9,8 +9,8 @@
 - type: entity
   parent: ClothingMaskBase
   id: ClothingMaskKitsune
-  name: "маска кіцуне"
-  description: "За цією маскою може ховатися будь-яка кіцуне."
+  name: kitsune mask
+  description: It could be any kitsune behind that mask.
 #  description: What does the kitsune say?
   components:
   - type: Sprite

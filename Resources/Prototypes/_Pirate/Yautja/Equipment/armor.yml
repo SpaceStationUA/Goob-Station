@@ -30,14 +30,14 @@
 - type: entity
   parent: GoobYautjaArmorBase
   id: GoobYautjaAncientAlienArmor
-  name: "стародавня чужопланетна броня"
-  description: "Стародавня броня з дивного сплаву. Вона холодна на дотик і має чужопланетну вагу."
+  name: "стародавня прибулецька броня"
+  description: "Стародавня броня з дивного сплаву. Вона холодна на дотик з прибулецькою вагою."
 
 - type: entity
   parent: GoobYautjaArmorBase # Виправлено батька, оскільки HeavyClanArmor відсутній
   id: GoobYautjaStoneArmor
-  name: "чужопланетна кам’яна броня"
-  description: "Броня, повністю зроблена з каменю. Виглядає неймовірно важкою."
+  name: "прибулецька кам'яна броня"
+  description: "Костюм броні, повністю зроблений з каменю. Виглядає неймовірно важким."
   suffix: Yautja, Flavor
   components:
   - type: Sprite
@@ -59,7 +59,7 @@
   parent: GoobYautjaArmorBase
   id: GoobYautjaClanArmor
   name: "клановий обладунок"
-  description: "Легко підбитий обладунок. Виглядає старим, але функціональним."
+  description: "Костюм броні з легким набивкою. Виглядає старим, але функціональним."
 
 - type: entity
   parent: GoobYautjaClanArmor

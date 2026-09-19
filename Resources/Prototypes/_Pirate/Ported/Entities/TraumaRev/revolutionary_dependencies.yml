@@ -60,7 +60,7 @@
 - type: entity
   parent: [ BaseRevMajorContraband, RadioJammer ]
   id: RevRadioJammer
-  name: "революційний радіоглушник"
+  name: revolutionary radio jammer
   components:
   - type: RadioJammer
     selectedPowerLevel: 0
@@ -73,8 +73,8 @@
 - type: entity
   parent: [ BaseFlatpack, BaseRevMajorContraband ]
   id: RevDoorFlatpack
-  name: "флетпак революційного шлюза"
-  description: "Флетпак для побудови дверей, замкнених на революційні картки доступу."
+  name: revolutionary airlock flatpack
+  description: A flatpack used for constructing a door locked to revolutionary access cards.
   components:
   - type: Flatpack
     entity: AirlockRevolutionary
@@ -103,8 +103,8 @@
 - type: entity
   parent: [ BaseSiliconLawboard, BaseRevMajorContraband ]
   id: RevCircuitBoard
-  name: "плата законів (Революційна)"
-  description: "Електронна плата з набором революційних законів."
+  name: law board (Revolutionary)
+  description: An electronics board containing the Revolutionary lawset.
   components:
   - type: SiliconLawProvider
     laws: RevLawset

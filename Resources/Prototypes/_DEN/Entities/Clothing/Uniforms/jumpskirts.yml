@@ -6,7 +6,7 @@
 - type: entity
   parent: ClothingUniformJumpsuitDinerTeal
   id: ClothingUniformJumpskirtDinerTeal
-  name: "бірюзова спідниця-фартух закусочної"
+  name: teal diner uniform
   suffix: jumpskirt
   components:
   - type: Sprite
@@ -17,7 +17,7 @@
 - type: entity
   parent: ClothingUniformJumpskirtDinerTeal
   id: ClothingUniformJumpskirtDinerPink
-  name: "рожева спідниця-фартух закусочної"
+  name: pink diner uniform
   suffix: jumpskirt
   components:
   - type: Sprite
@@ -28,7 +28,7 @@
 - type: entity
   parent: ClothingUniformJumpskirtDinerTeal
   id: ClothingUniformJumpskirtDinerPinkDark
-  name: "рожева спідниця-фартух закусочної"
+  name: pink diner uniform
   suffix: dark jumpskirt
   components:
   - type: Sprite
@@ -39,7 +39,7 @@
 - type: entity
   parent: ClothingUniformJumpskirtDinerTeal
   id: ClothingUniformJumpskirtDinerFastFood
-  name: "червона спідниця-фартух закусочної"
+  name: red diner uniform
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Uniforms/Jumpskirt/diner_fastfood.rsi

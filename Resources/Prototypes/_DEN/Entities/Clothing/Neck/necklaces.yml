@@ -7,8 +7,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckNecklacePendantGoldRuby # starcup - picked red for the pendant's color.
-  name: "намисто із золотим ланцюжком і рубіном" # starcup - changed name
-  description: "Важкий червоний дорогоцінний камінь, прикріплений ланцюжком до золотого намиста. Камінь теплий на дотик." # starcup - tweaked description
+  name: ruby pendant necklace # starcup - changed name
+  description: A heavy red gemstone tethered to a golden necklace by a chain. The gem is warm to the touch. # starcup - tweaked description
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Neck/Necklaces/pendant_gold.rsi

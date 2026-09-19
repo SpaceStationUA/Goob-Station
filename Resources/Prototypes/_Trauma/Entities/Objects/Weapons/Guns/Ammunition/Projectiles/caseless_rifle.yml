@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseBullet
   id: BulletCaselessRifleTranquilizer
-  name: "куля (.25 безгільзовий транквілізатор)"
+  name: bullet (.25 caseless tranq)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -27,7 +27,7 @@
 - type: entity
   parent: BaseBullet
   id: BulletCaselessRiflePoison
-  name: "куля (.25 безгільзовий токсин)"
+  name: bullet (.25 caseless toxin)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile

@@ -4,4 +4,4 @@
 - type: entity
   parent: StatusEffectSlowdown
   id: HoleDestroyedSlowdownStatusEffect
-  name: "уповільнення після знищення гнізда Реплікаторів"
+  name: replicator nest destruction slowdown

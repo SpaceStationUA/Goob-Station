@@ -154,8 +154,8 @@
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: SyndicateSurveillanceServer
-  name: "сервер спостереження"
-  description: "Ретранслятор спостереження. Чиїсь камери — твій екран."
+  name: surveillance server
+  description: A surveillance relay. Someone else's cameras, your screen.
   components:
   - type: Sprite
     sprite: Structures/Machines/server.rsi
@@ -229,8 +229,8 @@
 # every console shares one countdown, one drop site and one set of packages. Tune the drops here.
 - type: entity
   id: SyndicateDropDispatcher
-  name: "диспетчер тайників"
-  description: "Невидимий рахівник, який керує розкладом доставки для кожної диспетчерської консолі."
+  name: dead drop dispatcher
+  description: An invisible bookkeeper that runs the drop schedule for every dispatch console.
   categories: [ HideSpawnMenu ]
   components:
   - type: SyndicateDropDispatcher
@@ -238,8 +238,8 @@
 - type: entity
   parent: BaseComputer
   id: ComputerSyndicateDropConsole
-  name: "консоль диспетчеризації тайників"
-  description: "Далекодійний блюспейс-диспетчер. Самостійно готує вантажі за розкладом і запускає їх на станцію, обрану Верховним командуванням."
+  name: dead drop dispatch console
+  description: A long range bluespace dispatcher. It cooks up supply packages on its own schedule and fires them at a station of High Command's choosing.
   components:
   - type: Sprite
     layers:
@@ -275,8 +275,8 @@
 - type: entity
   parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
   id: SyndicateDropConsoleCircuitboard
-  name: "друкована плата консолі диспетчеризації тайників"
-  description: "Друкована плата комп’ютера для консолі диспетчеризації тайників."
+  name: dead drop dispatch console board
+  description: A computer printed circuit board for a dead drop dispatch console.
   components:
   - type: Sprite
     state: cpu_syndicate

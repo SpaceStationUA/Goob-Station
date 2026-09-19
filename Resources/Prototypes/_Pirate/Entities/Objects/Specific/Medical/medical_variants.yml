@@ -2,8 +2,8 @@
 
 ## DeForest bruise packs
 - type: entity
-  name: "пакет DeForest від забиттів"
-  description: "Медичний пакет DeForest для лікування тупих травм."
+  name: DeForest bruise pack
+  description: DeForest-grade bruise packs for all your needs.
   parent: BaseHealingItem
   id: DeforestBrutePack
   suffix: Full
@@ -37,8 +37,8 @@
       path: /Audio/Items/Medical/brutepack_end.ogg
 
 - type: entity
-  name: "пакет DeForest від забиттів"
-  description: "Медичні пакети DeForest для лікування тупих травм. Сині, кажуть, рідкісні."
+  name: DeForest bruise pack
+  description: DeForest-grade bruise packs for all your needs. The blue ones are supposedly rare.
   parent: DeforestBrutePack
   id: DeforestBrutePack1
   suffix: Single
@@ -59,8 +59,8 @@
 
 ## DeForest ointments
 - type: entity
-  name: "мазь DeForest"
-  description: "Мазь DeForest для лікування опіків, що не діє на їдкі опіки."
+  name: DeForest ointment
+  description: DeForest's soothing ointment treats severe burns but does nothing for caustic burns.
   parent: BaseHealingItem
   id: DeforestOintment
   suffix: Full
@@ -97,8 +97,8 @@
       path: /Audio/Items/Medical/ointment_end.ogg
 
 - type: entity
-  name: "мазь DeForest"
-  description: "Заспокійлива мазь DeForest лікує сильні опіки, але не діє на їдкі опіки. Сині, кажуть, рідкісні."
+  name: DeForest ointment
+  description: DeForest's soothing ointment treats severe burns but does nothing for caustic burns. The blue ones are supposedly rare.
   parent: DeforestOintment
   id: DeforestOintment1
   suffix: Single
@@ -119,8 +119,8 @@
 
 ## Interdyne bruise packs
 - type: entity
-  name: "пакет Інтердайн від забиттів"
-  description: "Медичний пакет Інтердайн для лікування тупих травм."
+  name: Interdyne bruise pack
+  description: Interdyne-grade bruise packs for all your needs.
   parent: BaseHealingItem
   id: SyndicateBrutePack
   suffix: Full
@@ -154,8 +154,8 @@
       path: /Audio/Items/Medical/brutepack_end.ogg
 
 - type: entity
-  name: "пакет Інтердайн від забиттів"
-  description: "Медичні пакети Інтердайна для лікування тупих травм. Червоні, кажуть, рідкісні."
+  name: Interdyne bruise pack
+  description: Interdyne-grade bruise packs for all your needs. The red ones are supposedly rare.
   parent: SyndicateBrutePack
   id: SyndicateBrutePack1
   suffix: Single
@@ -176,8 +176,8 @@
 
 ## Interdyne ointments
 - type: entity
-  name: "мазь Інтердайн"
-  description: "Спеціальна суміш Інтердайн для лікування опіків, що не діє на їдкі опіки."
+  name: Interdyne ointment
+  description: Interdyne's special blend treats severe burns but does nothing for caustic burns.
   parent: BaseHealingItem
   id: SyndicateOintment
   suffix: Full
@@ -214,8 +214,8 @@
       path: /Audio/Items/Medical/ointment_end.ogg
 
 - type: entity
-  name: "мазь Інтердайн"
-  description: "Спеціальна суміш Інтердайна лікує сильні опіки, але не діє на їдкі опіки. Червоні, кажуть, рідкісні."
+  name: Interdyne ointment
+  description: Interdyne's special blend treats severe burns but does nothing for caustic burns. The red ones are supposedly rare.
   parent: SyndicateOintment
   id: SyndicateOintment1
   suffix: Single
@@ -236,8 +236,8 @@
 
 ## NanoMed GOLD bruise packs
 - type: entity
-  name: "золотий пакет від забиттів"
-  description: "Лімітована серія золотих пакетів від забиттів."
+  name: gold bruise pack
+  description: Limited-edition golden bruise packs.
   parent: BaseHealingItem
   id: GoldBrutePack
   suffix: Full
@@ -271,8 +271,8 @@
       path: /Audio/Items/Medical/brutepack_end.ogg
 
 - type: entity
-  name: "золотий пакет від забиттів"
-  description: "Лімітована серія золотих пакетів від забиттів. Вони надзвичайно рідкісні. Бережіть їх."
+  name: gold bruise pack
+  description: Limited-edition golden bruise packs. They're exceedingly rare. Treasure them.
   parent: GoldBrutePack
   id: GoldBrutePack1
   suffix: Single
@@ -293,8 +293,8 @@
 
 ## NanoMed GOLD ointments
 - type: entity
-  name: "золота мазь"
-  description: "Лімітована серія золотої мазі, що лікує також легкі їдкі опіки."
+  name: gold ointment
+  description: Limited-edition golden ointment. It heals mild caustic burns too.
   parent: BaseHealingItem
   id: GoldOintment
   suffix: Full
@@ -332,8 +332,8 @@
       path: /Audio/Items/Medical/ointment_end.ogg
 
 - type: entity
-  name: "золота мазь"
-  description: "Лімітована серія золотої мазі, що лікує також легкі їдкі опіки. Вона надзвичайно рідкісна. Бережіть її."
+  name: gold ointment
+  description: Limited-edition golden ointment. It heals mild caustic burns too. They're exceedingly rare. Treasure it.
   parent: GoldOintment
   id: GoldOintment1
   suffix: Single

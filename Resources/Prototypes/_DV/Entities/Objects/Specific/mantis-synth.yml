@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: ClaridisolSynth
-  name: "синтезатор кларидізолу"
-  description: "Синтезатор, що безперервно виробляє кларидізол"
+  name: claridisol synthesizer
+  description: A synthesizer that makes a continuous supply of claridisol
   components:
   - type: Sprite
     sprite: _DV/Objects/Specific/Psionic/claridisolsynth.rsi

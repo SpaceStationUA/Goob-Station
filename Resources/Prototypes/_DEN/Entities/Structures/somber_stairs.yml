@@ -8,7 +8,7 @@
 - type: entity
   parent: BaseFloorDecoration
   id: StairSomberSteel
-  name: "сталеві сходи"
+  name: steel stairs
   suffix: Somber
   components:
   - type: Anchorable
@@ -34,7 +34,7 @@
 - type: entity
   parent: StairSomberSteel
   id: StairSomberWood
-  name: "дерев’яні сходи"
+  name: wood stairs
   components:
   - type: Sprite
     sprite: _DEN/Structures/stairs.rsi
@@ -69,7 +69,7 @@
 - type: entity
   parent: StairSomberWood
   id: StairSomberAmaranth
-  name: "амарантові сходи"
+  name: amaranth stairs
   components:
   - type: Sprite
     sprite: _DEN/Structures/stairs.rsi
@@ -104,7 +104,7 @@
 - type: entity
   parent: StairSomberSteel
   id: StairSomberMnemolith
-  name: "мнемолітові сходи"
+  name: mnemolith stairs
   components:
   - type: Sprite
     sprite: _DEN/Structures/stairs.rsi
@@ -138,7 +138,7 @@
 - type: entity
   parent: StairSomberSteel
   id: StairStageSomberSteel
-  name: "сталеві сходи"
+  name: steel stairs
   suffix: Somber, Stage
   components:
   - type: Sprite
@@ -149,7 +149,7 @@
 - type: entity
   parent: StairSomberWood
   id: StairStageSomberWood
-  name: "дерев’яні сходи"
+  name: wood stairs
   suffix: Somber, Stage
   components:
   - type: Sprite
@@ -160,7 +160,7 @@
 - type: entity
   parent: StairSomberAmaranth
   id: StairStageSomberAmaranth
-  name: "амарантові сходи"
+  name: amaranth stairs
   suffix: Somber, Stage
   components:
   - type: Sprite
@@ -171,7 +171,7 @@
 - type: entity
   parent: StairSomberMnemolith
   id: StairStageSomberMnemolith
-  name: "мнемолітові сходи"
+  name: mnemolith stairs
   suffix: Somber, Stage
   components:
   - type: Sprite

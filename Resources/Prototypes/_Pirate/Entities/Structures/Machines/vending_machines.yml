@@ -4,9 +4,9 @@
 - type: entity
   parent: VendingMachineMedicalBase
   id: VendingMachineMedicalBaseSyndicate
-  name: "Interdyne Commercial"
+  name: Interdyne Commercial
   suffix: Civilian
-  description: "Медичний автомат від Interdyne Pharmaceutics."
+  description: A medical drug dispenser by Interdyne Pharmaceutics.
   components:
   - type: VendingMachine
     pack: InterdyneCommercialInventory
@@ -38,7 +38,7 @@
 - type: entity
   parent: VendingMachineMedicalBaseSyndicate
   id: VendingMachineMedicalSyndicate
-  name: "Interdyne Enterprise"
+  name: Interdyne Enterprise
   suffix: Departmental
   components:
   - type: VendingMachine
@@ -59,9 +59,9 @@
 - type: entity
   parent: VendingMachineWallmount
   id: VendingMachineWallMedicalCivilianSyndicate
-  name: "настінний Interdyne life-aid commercial"
+  name: Interdyne life-aid commercial
   suffix: Civilian, Wallmount
-  description: "Настінний медичний автомат від Interdyne Pharmaceutics."
+  description: A wall-mounted medical equipment dispenser by Interdyne Pharmaceutics.
   components:
   - type: VendingMachine
     pack: InterdyneCommercialWallInventory
@@ -87,7 +87,7 @@
 - type: entity
   parent: VendingMachineWallMedicalCivilianSyndicate
   id: VendingMachineWallMedicalSyndicate
-  name: "настінний Interdyne life-aid enterprise"
+  name: Interdyne life-aid enterprise
   suffix: Departmental, Wallmount
   components:
   - type: VendingMachine
@@ -109,9 +109,9 @@
 - type: entity
   parent: VendingMachineMedicalBase
   id: VendingMachineMedicalBaseDeforest
-  name: "DeForest Planetary"
+  name: DeForest Planetary
   suffix: Civilian
-  description: "Медичний автомат від DeForest Medical."
+  description: A medical drug dispenser by DeForest Medical.
   components:
   - type: VendingMachine
     pack: DeforestPlanetaryInventory
@@ -143,7 +143,7 @@
 - type: entity
   parent: VendingMachineMedicalBaseDeforest
   id: VendingMachineMedicalDeforest
-  name: "DeForest Interstellar"
+  name: DeForest Interstellar
   suffix: Departmental
   components:
   - type: VendingMachine
@@ -164,9 +164,9 @@
 - type: entity
   parent: VendingMachineWallmount
   id: VendingMachineWallMedicalCivilianDeforest
-  name: "настінний DeForest health-aid planetary"
+  name: DeForest health-aid planetary
   suffix: Civilian, Wallmount
-  description: "Настінний медичний автомат від DeForest Medical."
+  description: A wall-mounted medical equipment dispenser by DeForest Medical.
   components:
   - type: VendingMachine
     pack: DeforestPlanetaryWallInventory
@@ -192,7 +192,7 @@
 - type: entity
   parent: VendingMachineWallMedicalCivilianDeforest
   id: VendingMachineWallMedicalDeforest
-  name: "настінний DeForest health-aid interstellar"
+  name: DeForest health-aid interstellar
   suffix: Departmental, Wallmount
   components:
   - type: VendingMachine
@@ -214,9 +214,9 @@
 - type: entity
   parent: VendingMachineMedicalBase
   id: VendingMachineMedicalBaseGold
-  name: "NanoMed Civilian GOLD"
+  name: NanoMed Civilian GOLD
   suffix: Civilian
-  description: "Рідкісний розкішний медичний автомат."
+  description: A rare luxury medical drug dispenser.
   components:
   - type: VendingMachine
     pack: GoldNanoMedCivilianInventory
@@ -248,7 +248,7 @@
 - type: entity
   parent: VendingMachineMedicalBaseGold
   id: VendingMachineMedicalGold
-  name: "NanoMed Plus GOLD"
+  name: NanoMed Plus GOLD
   suffix: Departmental
   components:
   - type: VendingMachine
@@ -269,9 +269,9 @@
 - type: entity
   parent: VendingMachineWallmount
   id: VendingMachineWallMedicalCivilianGold
-  name: "настінний NanoMed band-aid GOLD"
+  name: NanoMed band-aid GOLD
   suffix: Civilian, Wallmount
-  description: "Рідкісний розкішний настінний медичний автомат."
+  description: A rare luxury wall-mounted medical equipment dispenser.
   components:
   - type: VendingMachine
     pack: GoldNanoMedCivilianWallInventory
@@ -297,7 +297,7 @@
 - type: entity
   parent: VendingMachineWallMedicalCivilianGold
   id: VendingMachineWallMedicalGold
-  name: "настінний NanoMed GOLD"
+  name: NanoMed GOLD
   suffix: Departmental, Wallmount
   components:
   - type: VendingMachine

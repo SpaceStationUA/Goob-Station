@@ -6,13 +6,13 @@
   abstract: true
   parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
   id: BaseClothingHeadHatTrapper
-  name: "шапка-вушанка"
-  description: "Модна й зручна хутряна шапка з подовженими боковими клапанами — вона збереже ваші вуха в теплі."
+  name: trapper hat
+  description: A fashionable and comfortable fur-lined hat with extended flaps on the sides - this hat will keep your ears warm.
 
 - type: entity
   parent: BaseClothingHeadHatTrapper
   id: ClothingHeadHatTrapperBeige
-  name: "бежева шапка-вушанка"
+  name: beige trapper hat
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/trapper_beige.rsi
@@ -22,7 +22,7 @@
 - type: entity
   parent: BaseClothingHeadHatTrapper
   id: ClothingHeadHatTrapperBlack
-  name: "чорна шапка-вушанка"
+  name: black trapper hat
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/trapper_black.rsi
@@ -32,7 +32,7 @@
 - type: entity
   parent: BaseClothingHeadHatTrapper
   id: ClothingHeadHatTrapperBlue
-  name: "синя шапка-вушанка"
+  name: blue trapper hat
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/trapper_blue.rsi
@@ -42,7 +42,7 @@
 - type: entity
   parent: BaseClothingHeadHatTrapper
   id: ClothingHeadHatTrapperGray
-  name: "сіра шапка-вушанка"
+  name: gray trapper hat
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/trapper_gray.rsi
@@ -52,7 +52,7 @@
 - type: entity
   parent: BaseClothingHeadHatTrapper
   id: ClothingHeadHatTrapperGreen
-  name: "зелена шапка-вушанка"
+  name: green trapper hat
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/trapper_green.rsi
@@ -62,7 +62,7 @@
 - type: entity
   parent: BaseClothingHeadHatTrapper
   id: ClothingHeadHatTrapperPink
-  name: "рожева шапка-вушанка"
+  name: pink trapper hat
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/trapper_pink.rsi
@@ -72,7 +72,7 @@
 - type: entity
   parent: BaseClothingHeadHatTrapper
   id: ClothingHeadHatTrapperPurple
-  name: "фіолетова шапка-вушанка"
+  name: purple trapper hat
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/trapper_purple.rsi
@@ -82,7 +82,7 @@
 - type: entity
   parent: BaseClothingHeadHatTrapper
   id: ClothingHeadHatTrapperRed
-  name: "червона шапка-вушанка"
+  name: red trapper hat
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/trapper_red.rsi
@@ -93,8 +93,8 @@
   abstract: true # starcup - used for recoloring
   parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
   id: ClothingHeadHatFuzzyEarmuffs
-  name: "пухнасті навушники"
-  description: "Обруч із подушечками зі штучного хутра на обох кінцях, створений для захисту вух."
+  name: fuzzy earmuffs
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/fuzzy_earmuff.rsi

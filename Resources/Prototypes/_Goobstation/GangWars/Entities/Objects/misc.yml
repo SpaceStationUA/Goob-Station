@@ -1,9 +1,9 @@
 - type: entity
   id: CigarGoldenGang
   parent: CigarGold
-  name: "золотий сигар"
+  name: golden cigar
   suffix: Gang
-  description: "Розкішний сигар із золотим листям, просочений заспокійливою лікувальною сумішшю. Лише найкраще від боса."
+  description: A luxurious gold-leafed cigar laced with a soothing medicinal blend. Only the finest from the boss.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -18,9 +18,9 @@
 - type: entity
   parent: EmergencyMedipen
   id: OmnizineMedipen
-  name: "медипен з омнізином"
+  name: omnizine medipen
   suffix: Gang
-  description: "Шприц з омнізином. Швидко лікує більшість типів ушкоджень."
+  description: A syringe of omnizine. Heals most damage types quickly.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -32,9 +32,9 @@
 
 - type: entity
   id: GangBeginnerBundle
-  name: "набір новачка банди"
+  name: gang beginner bundle
   suffix: Gang
-  description: "Сумка, наповнена всім необхідним новому члену банди для початку."
+  description: A duffel bag packed with everything a new gang member needs to get started.
   parent: ClothingBackpackDuffel
   components:
   - type: StorageFill
@@ -60,9 +60,9 @@
 
 - type: entity
   id: GangClothesBundle
-  name: "набір одягу банди"
+  name: gang clothes bundle
   suffix: Gang
-  description: "Сумка зі свіжим комплектом одягу банди. Демонструй свої кольори."
+  description: A duffel bag containing a fresh set of gang threads. Rep your colors.
   parent: ClothingBackpackDuffel
   components:
   - type: StorageFill
@@ -86,9 +86,9 @@
 - type: entity
   id: GangGL06Bundle
   parent: ClothingBackpackSatchel
-  name: "набір ГЛ-06 РГЛ"
+  name: GL-06 RGL kit
   suffix: Gang
-  description: "Сумка з ручним гранатометом ГЛ-06, зарядженим двома світлошумовими гранатами."
+  description: A satchel bag containing a GL-06 riot grenade launcher pre-loaded with two flash grenade shells.
   components:
   - type: StorageFill
     contents:
@@ -99,8 +99,8 @@
 - type: entity
   parent: [BaseItem, BaseMajorContraband]
   id: Quickhack
-  name: "квікхак"
-  description: "Прихований пристрій, що підробляє сигнали «відкрити» ШІ, щоб відчиняти незаблоковані двері. Розрахований на 5 використань."
+  name: quickhack
+  description: A covert device that fakes AI 'open' signals to unlock unbolted doors. Comes charged for 5 uses.
   components:
   - type: Quickhack
   - type: UseDelay
@@ -119,9 +119,9 @@
 - type: entity
   parent: [EncryptionKey, BaseMajorContraband]
   id: EncryptionKeyGang
-  name: "криптографічний ключ банди"
+  name: gang encryption key
   suffix: Gang
-  description: "Ключ шифрування для зв’язку з бандами."
+  description: An encryption key used to communicate with gangs.
   components:
   - type: EncryptionKey
     channels:
@@ -134,9 +134,9 @@
 
 - type: entity
   id: GangSprayCan
-  name: "балончик банди"
+  name: gang spray can
   suffix: Gang
-  description: "Балончик для позначення території своєї банди. Працює, лише якщо ти належиш до банди."
+  description: A spray can used to mark territory for your gang. Only works if you belong to a gang.
   parent: [BaseItem, BaseMinorContraband]
   components:
   - type: Sprite
@@ -152,11 +152,11 @@
     maxCharges: 5
 
 - type: entity
-  name: "мачете банди"
+  name: gang machete
   suffix: Gang
   parent: Machete
   id: GangMachete
-  description: "Велике лезо з лютим виглядом."
+  description: A large, vicious looking blade.
   components:
   - type: SlasherMassacreMachete
     baseDamagePenalty: 12

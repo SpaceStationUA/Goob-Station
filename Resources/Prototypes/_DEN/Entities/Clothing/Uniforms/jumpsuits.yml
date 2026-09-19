@@ -13,9 +13,9 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDinerTeal
-  name: "бірюзова форма закусочної"
+  name: teal diner uniform
   suffix: jumpsuit
-  description: "Барвиста форма, натхненна вбранням працівників закладів харчування в класичному стилі. Навіює відчуття особливого атмосферного затишку."
+  description: A colorful uniform inspired by the ones worn at classic-style dining establishments. Evocative of a certain kind of atmospheric comfort.
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Uniforms/Jumpsuit/diner_teal.rsi
@@ -25,7 +25,7 @@
 - type: entity
   parent: ClothingUniformJumpsuitDinerTeal
   id: ClothingUniformJumpsuitDinerPink
-  name: "рожева форма закусочної"
+  name: pink diner uniform
   suffix: jumpsuit
   components:
   - type: Sprite
@@ -36,7 +36,7 @@
 - type: entity
   parent: ClothingUniformJumpsuitDinerTeal
   id: ClothingUniformJumpsuitDinerPinkDark
-  name: "рожева форма закусочної"
+  name: pink diner uniform
   suffix: dark jumpsuit
   components:
   - type: Sprite
@@ -47,7 +47,7 @@
 - type: entity
   parent: ClothingUniformJumpsuitDinerTeal
   id: ClothingUniformJumpsuitDinerFastFood
-  name: "червона форма закусочної"
+  name: red diner uniform
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Uniforms/Jumpsuit/diner_fastfood.rsi

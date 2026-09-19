@@ -5,7 +5,7 @@
 - type: entity
   parent: ClothingEyesGlassesRimless
   id: ClothingEyesGlassesRimlessBlue
-  name: "сині безободкові окуляри"
+  name: blue rimless glasses
   components:
   - type: Item
     inhandVisuals:
@@ -29,7 +29,7 @@
 - type: entity
   parent: ClothingEyesGlassesRimless
   id: ClothingEyesGlassesRimlessPink
-  name: "рожеві безободкові окуляри"
+  name: pink rimless glasses
   components:
   - type: Item
     inhandVisuals:
@@ -53,7 +53,7 @@
 - type: entity
   parent: ClothingEyesGlassesRimless
   id: ClothingEyesGlassesRimlessRed
-  name: "червоні безободкові окуляри"
+  name: red rimless glasses
   components:
   - type: Item
     inhandVisuals:
@@ -78,7 +78,7 @@
 - type: entity
   parent: ClothingEyesGlassesHipster
   id: ClothingEyesGlassesHipsterRed
-  name: "червоні окуляри з тонованими лінзами"
+  name: red tinted glasses
   components:
   - type: Item
     inhandVisuals:
@@ -99,7 +99,7 @@
 - type: entity
   parent: ClothingEyesGlassesHipster
   id: ClothingEyesGlassesHipsterPink
-  name: "рожеві окуляри з тонованими лінзами"
+  name: pink tinted glasses
   components:
   - type: Item
     inhandVisuals:
@@ -120,7 +120,7 @@
 - type: entity
   parent: ClothingEyesGlassesHipster
   id: ClothingEyesGlassesHipsterBlue
-  name: "сині окуляри з тонованими лінзами"
+  name: blue tinted glasses
   components:
   - type: Item
     inhandVisuals:

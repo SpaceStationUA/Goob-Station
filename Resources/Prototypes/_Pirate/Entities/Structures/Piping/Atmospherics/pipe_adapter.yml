@@ -1,8 +1,8 @@
 - type: entity
   parent: GasPipeBase
   id: CEMultizAtmosPipeAdapter
-  name: "підлоговий адаптер труби"
-  description: "Вертикальний адаптер для з'єднання відповідних трубопровідних мереж між з'єднаними поверхами."
+  name: floor pipe adapter
+  description: A vertical adapter for linking matching pipe networks between connected floors.
   suffix: Default
   placement:
     mode: AlignAtmosPipeLayers

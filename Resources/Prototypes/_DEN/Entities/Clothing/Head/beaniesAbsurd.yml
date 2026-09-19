@@ -8,8 +8,8 @@
 - type: entity
   parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
   id: ClothingHeadHatBeanieBlackAbsurd
-  name: "чорна шапка" # starcup - toqueified beanie
-  description: "Чорна шапка — улюблений головний убір скейтера або техніка вантажного відділу." # starcup - toqueified beanie
+  name: black toque # starcup - toqueified beanie
+  description: A black toque, a skater's or cargo tech's favorite headwear. # starcup - toqueified beanie
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/beaniesabsurd/black.rsi
@@ -23,8 +23,8 @@
 - type: entity
   parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
   id: ClothingHeadHatBeanieBlackWithPinAbsurd
-  name: "чорна шапка зі шпилькою" # starcup - toqueified beanie
-  description: "Чорна шапка зі шпилькою — улюблений головний убір скейтера або техніка вантажного відділу." # starcup - toqueified beanie
+  name: black toque with a pin # starcup - toqueified beanie
+  description: A black toque with a pin in it, a skater's or cargo tech's favorite headwear. # starcup - toqueified beanie
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/beaniesabsurd/blackwithpin.rsi
@@ -38,8 +38,8 @@
 - type: entity
   parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
   id: ClothingHeadHatBeanieBlueAbsurd
-  name: "синя шапка" # starcup - toqueified beanie
-  description: "Синя шапка — улюблений головний убір скейтера або техніка вантажного відділу." # starcup - toqueified beanie
+  name: blue toque # starcup - toqueified beanie
+  description: A blue toque, a skater's or cargo tech's favorite headwear. # starcup - toqueified beanie
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/beaniesabsurd/blue.rsi
@@ -53,8 +53,8 @@
 - type: entity
   parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
   id: ClothingHeadHatBeanieKhakiAbsurd
-  name: "хакі шапка" # starcup - toqueified beanie
-  description: "Шапка кольору хакі — улюблений головний убір скейтера або техніка вантажного відділу." # starcup - toqueified beanie
+  name: khaki toque # starcup - toqueified beanie
+  description: A khaki toque, a skater's or cargo tech's favorite headwear. # starcup - toqueified beanie
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/beaniesabsurd/khaki.rsi
@@ -68,8 +68,8 @@
 - type: entity
   parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
   id: ClothingHeadHatBeanieNavyBlueAbsurd
-  name: "темно-синя шапка" # starcup - toqueified beanie
-  description: "Темно-синя шапка — улюблений головний убір скейтера або техніка вантажного відділу." # starcup - fixed spelling
+  name: navy blue toque # starcup - toqueified beanie
+  description: A navy blue toque, a skater's or cargo tech's favorite headwear. # starcup - fixed spelling
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/beaniesabsurd/navyblue.rsi
@@ -83,8 +83,8 @@
 - type: entity
   parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
   id: ClothingHeadHatBeanieNavyBlueWithPinAbsurd
-  name: "темно-синя шапка зі шпилькою" # starcup - toqueified beanie
-  description: "Темно-синя шапка зі шпилькою — улюблений головний убір скейтера або техніка вантажного відділу." # fixed spelling
+  name: navy blue toque with a pin # starcup - toqueified beanie
+  description: A navy blue toque with a pin in it, a skater's or cargo tech's favorite headwear. # fixed spelling
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/beaniesabsurd/navybluewithpin.rsi
@@ -98,8 +98,8 @@
 - type: entity
   parent: [ ClothingHeadBase, TemperatureProtectionMinimal ] # starcup - replaced ClothingHeadWinterHatLightBase
   id: ClothingHeadHatBeanieWhiteAbsurd
-  name: "біла шапка" # starcup - toqueified beanie
-  description: "Біла шапка — улюблений головний убір скейтера або техніка вантажного відділу." # starcup - toqueified beanie
+  name: white toque # starcup - toqueified beanie
+  description: A white toque, a skater's or cargo tech's favorite headwear. # starcup - toqueified beanie
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/beaniesabsurd/white.rsi

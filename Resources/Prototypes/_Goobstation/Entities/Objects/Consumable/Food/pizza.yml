@@ -1,8 +1,8 @@
 - type: entity
-  name: "гостра бавовняна піца"
+  name: flamin hot cotton pizza
   parent: FoodPizzaBase
   id: FoodPizzaCottonHot
-  description: "Пласке тісто з тканинної бавовни з надзвичайно гострою бавовняною начинкою. Дуже гостро!"
+  description: Flat fabric cotton dough with super spicy cotton topping. Flamin hot!
   components:
   - type: FlavorProfile
     flavors:
@@ -35,10 +35,10 @@
           Quantity: 5
 
 - type: entity
-  name: "шматок гострої бавовняної піци"
+  name: slice of flamin hot cotton pizza
   parent: FoodPizzaSliceBase
   id: FoodPizzaCottonHotSlice
-  description: "Шматок гострої бавовняної піци. Надзвичайно гостро!"
+  description: A slice of hot cotton pizza. Extra spicy!
   components:
   - type: FlavorProfile
     flavors:

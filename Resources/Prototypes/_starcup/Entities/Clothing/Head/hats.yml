@@ -5,8 +5,8 @@
 - type: entity
   parent: ClothingHeadHatFuzzyEarmuffs
   id: ClothingHeadHatFuzzyEarmuffsCream
-  name: "пухнасті навушники кремового кольору"
-  description: "Обруч із подушечками зі штучного хутра на обох кінцях, створений для захисту вух."
+  name: fuzzy earmuffs
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
   components:
   - type: Item
     inhandVisuals:
@@ -27,8 +27,8 @@
 - type: entity
   parent: ClothingHeadHatFuzzyEarmuffs
   id: ClothingHeadHatFuzzyEarmuffsBlack
-  name: "пухнасті навушники кремового кольору"
-  description: "Обруч із подушечками зі штучного хутра на обох кінцях, створений для захисту вух."
+  name: fuzzy earmuffs
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
   components:
   - type: Item
     inhandVisuals:
@@ -49,8 +49,8 @@
 - type: entity
   parent: ClothingHeadHatFuzzyEarmuffs
   id: ClothingHeadHatFuzzyEarmuffsBrown
-  name: "пухнасті навушники кремового кольору"
-  description: "Обруч із подушечками зі штучного хутра на обох кінцях, створений для захисту вух."
+  name: fuzzy earmuffs
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
   components:
   - type: Item
     inhandVisuals:
@@ -72,8 +72,8 @@
 - type: entity
   parent: ClothingHeadHatBeanieWhiteAbsurd
   id: ClothingHeadHatBeaniePinkAbsurd
-  name: "рожева шапка"
-  description: "Рожева шапка — улюблений головний убір скейтера або техніка вантажного відділу."
+  name: pink toque
+  description: A pink toque, a skater's or cargo tech's favorite headwear.
   components:
   - type: Clothing
     clothingVisuals:
@@ -87,7 +87,7 @@
 - type: entity
   parent: ClothingHeadHatBeanie
   id: ClothingHeadHatBeaniePink
-  name: "рожева шапка"
+  name: pink beanie
   components:
   - type: Clothing
     clothingVisuals:
@@ -100,7 +100,7 @@
 - type: entity
   parent: ClothingHeadHatBeanie
   id: ClothingHeadHatBeanieBlack
-  name: "чорна шапка"
+  name: black beanie
   components:
   - type: Clothing
     clothingVisuals:
@@ -113,7 +113,7 @@
 - type: entity
   parent: ClothingHeadHatBeanie
   id: ClothingHeadHatBeanieNavyBlue
-  name: "темно-синя шапка"
+  name: navy blue beanie
   components:
   - type: Clothing
     clothingVisuals:
@@ -126,7 +126,7 @@
 - type: entity
   parent: ClothingHeadHatBeanie
   id: ClothingHeadHatBeanieBlue
-  name: "синя шапка"
+  name: blue beanie
   components:
   - type: Clothing
     clothingVisuals:
@@ -140,7 +140,7 @@
 - type: entity
   parent: ClothingHeadHatBeanieWinter
   id: ClothingHeadHatBeanieWinterPink
-  name: "рожева зимова шапка"
+  name: pink winter beanie
   components:
   - type: Clothing
     clothingVisuals:
@@ -153,7 +153,7 @@
 - type: entity
   parent: ClothingHeadHatBeanieWinter
   id: ClothingHeadHatBeanieWinterBlack
-  name: "чорна зимова шапка"
+  name: black winter beanie
   components:
   - type: Clothing
     clothingVisuals:
@@ -166,7 +166,7 @@
 - type: entity
   parent: ClothingHeadHatBeanieWinter
   id: ClothingHeadHatBeanieWinterNavyBlue
-  name: "темно-синя зимова шапка"
+  name: navy blue winter beanie
   components:
   - type: Clothing
     clothingVisuals:
@@ -179,7 +179,7 @@
 - type: entity
   parent: ClothingHeadHatBeanieWinter
   id: ClothingHeadHatBeanieWinterBlue
-  name: "синя зимова шапка"
+  name: blue winter beanie
   components:
   - type: Clothing
     clothingVisuals:
@@ -193,7 +193,7 @@
 - type: entity
   parent: ClothingHeadHatHijabColorable
   id: ClothingHeadHatHijabBlue
-  name: "синій хіджаб"
+  name: blue hijab
   components:
   - type: Clothing
     clothingVisuals:
@@ -206,7 +206,7 @@
 - type: entity
   parent: ClothingHeadHatHijabColorable
   id: ClothingHeadHatHijabCream
-  name: "кремовий хіджаб"
+  name: cream hijab
   components:
   - type: Clothing
     clothingVisuals:
@@ -219,7 +219,7 @@
 - type: entity
   parent: ClothingHeadHatHijabColorable
   id: ClothingHeadHatHijabPink
-  name: "рожевий хіджаб"
+  name: pink hijab
   components:
   - type: Clothing
     clothingVisuals:
@@ -232,7 +232,7 @@
 - type: entity
   parent: ClothingHeadHatHijabColorable
   id: ClothingHeadHatHijabNavyBlue
-  name: "темно-синій хіджаб"
+  name: navy blue hijab
   components:
   - type: Clothing
     clothingVisuals:
@@ -245,7 +245,7 @@
 - type: entity
   parent: ClothingHeadHatHijabColorable
   id: ClothingHeadHatHijabBlack
-  name: "чорний хіджаб"
+  name: black hijab
   components:
   - type: Clothing
     clothingVisuals:
@@ -259,7 +259,7 @@
 - type: entity
   parent: ClothingHeadHatSunVisor
   id: ClothingHeadHatSunVisorBlack
-  name: "чорний козирок від сонця"
+  name: black sun visor
   components:
   - type: Clothing
     clothingVisuals:
@@ -273,8 +273,8 @@
 - type: entity
   parent: ClothingHeadHatBeretArtist
   id: ClothingHeadHatBeretArtistBlack
-  name: "чорний берет художника"
-  description: "Обруч із подушечками зі штучного хутра на обох кінцях, створений для захисту вух."
+  name: black artist beret
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
   components:
   - type: Item
     inhandVisuals:
@@ -295,8 +295,8 @@
 - type: entity
   parent: ClothingHeadHatBeretArtist
   id: ClothingHeadHatBeretArtistRed
-  name: "червоний берет художника"
-  description: "Обруч із подушечками зі штучного хутра на обох кінцях, створений для захисту вух."
+  name: red artist beret
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
   components:
   - type: Item
     inhandVisuals:

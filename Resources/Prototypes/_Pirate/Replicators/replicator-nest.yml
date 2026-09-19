@@ -7,8 +7,8 @@
 # the original Bingle PR can be found here: https://github.com/Goob-Station/Goob-Station/pull/1519
 - type: entity
   id: ReplicatorNest
-  name: "гніздо Реплікаторів"
-  description: "Вир нанотехнологій пожирає інфраструктуру станції."
+  name: replicator nest
+  description: A roiling mass of nanotechnology is eating through the station's infrastructure.
   categories: [ HideSpawnMenu ] # don't want admins spawning unlinked nests
   placement:
     mode: SnapGridCenter

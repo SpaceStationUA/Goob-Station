@@ -2,7 +2,7 @@
 
 - type: body
   id: Avali
-  name: "авалі"
+  name: avali
   root: chest
   slots:
     head:

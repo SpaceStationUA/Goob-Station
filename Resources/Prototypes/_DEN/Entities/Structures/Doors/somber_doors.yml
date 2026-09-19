@@ -7,8 +7,8 @@
 - type: entity
   parent: BaseMaterialDoorNavMap
   id: SomberAmaranthDoor
-  name: "похмурі амарантові двері"
-  description: "Двері з екзотичної, надзвичайно міцної деревини. Її також називають «пурпуровим серцем» або, помилково, палісандром."
+  name: somber amaranth door
+  description: "A door made of exotic, extremely durable hardwood. Also called purpleheart, or incorrectly, rosewood."
   components:
   - type: Door
     openSound:
@@ -52,8 +52,8 @@
 - type: entity
   parent: BaseMaterialDoorNavMap
   id: SomberMnemolithDoor
-  name: "похмурі мнемолітові двері"
-  description: "Двері з мнемоліту, темного склоподібного каменю, що утворюється під час сильних ноосферних бур."
+  name: somber mnemolith door
+  description: "A door made of mnemolith, a dark, glassy stone that forms during severe noospheric storms."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Doors/MineralDoors/mnemolith_door.rsi

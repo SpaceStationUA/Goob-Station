@@ -1,9 +1,9 @@
 - type: entity
   parent: MaterialBase
   id: CrystalNormality # this is 1 not full because other stuff may assume its single
-  name: "кристал нормальності"
+  name: normality crystal
   suffix: 1
-  description: "Виглядає... нормально."
+  description: It looks... normal.
   components:
   - type: Sprite
     sprite: Nyanotrasen/Objects/Materials/materials.rsi
@@ -40,9 +40,9 @@
 - type: entity
   parent: BaseItem
   id: BasePsionCrystal
-  name: "псіонічний кристал"
+  name: psion crystal
   categories: [ HideSpawnMenu ]
-  description: "Невеликий кристал налаштованої псіонічної енергії."
+  description: A small crystal of attuned psionic energy.
   components:
   - type: Sprite
     sprite: _DV/Objects/Materials/psicrystal.rsi
@@ -58,8 +58,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalZap
-  name: "кристал розряду"
-  description: "Невеликий псіонічний кристал, який гуде від електрики."
+  name: zap crystal
+  description: A small psionic crystal humming with electricity.
   components:
   - type: Sprite
     color: "#ebd039"
@@ -70,8 +70,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalTeleg
-  name: "кристал телегнозії"
-  description: "Невеликий псіонічний кристал. Усе, що в ньому відбивається, видно майже надто чітко."
+  name: telegnosis crystal
+  description: A small psionic crystal. Everything reflected in it can be seen almost too clearly.
   components:
   - type: Sprite
     color: "#9947b3"
@@ -82,8 +82,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalScream
-  name: "кристал крику"
-  description: "Невеликий псіонічний кристал. Коли тримаєш його, хочеться викричати всі свої емоції."
+  name: scream crystal
+  description: A small psionic crystal. Holding it makes you feel like screaming out all your emotion.
   components:
   - type: Sprite
     color: "#f12121"
@@ -94,8 +94,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalDispel
-  name: "кристал розвіювання"
-  description: "Невеликий псіонічний кристал. Коли тримаєш його, світ довкола здається реальнішим."
+  name: dispel crystal
+  description: A small psionic crystal. Holding it makes the world feel more real around you.
   components:
   - type: Sprite
     color: "#e1f8f7"
@@ -106,8 +106,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalPulse
-  name: "кристал імпульсу"
-  description: "Невеликий псіонічний кристал. Коли тримаєш його, здається, ніби твої чуття загострилися."
+  name: pulse crystal
+  description: A small psionic crystal. Holding it makes you feel as though your senses have been sharpened.
   components:
   - type: Sprite
     color: "#49b852"
@@ -118,8 +118,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalRegen
-  name: "кристал регенерації"
-  description: "Невеликий псіонічний кристал. Коли тримаєш його, почуваєшся здоровіше, але голодніше."
+  name: regen crystal
+  description: A small psionic crystal. Holding it makes you feel healthier, but hungrier.
   components:
   - type: Sprite
     color: "#e0305c"
@@ -130,8 +130,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalPyro
-  name: "кристал пірокінезу"
-  description: "Невеликий псіонічний кристал. Коли тримаєш його, відчуваєш, як спалахує твоя лють."
+  name: pyro crystal
+  description: A small psionic crystal. Holding it makes your rage flare up.
   components:
   - type: Sprite
     color: "#e93313"
@@ -143,8 +143,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalAnoigo
-  name: "кристал Анойго"
-  description: "Невеликий псіонічний кристал. Двері наче самі відчиняються, коли ти наближаєшся."
+  name: anoigo crystal
+  description: A small psionic crystal. Doors seem to swing open at your approach.
   components:
   - type: Sprite
     color: "#d4c9a0"
@@ -155,8 +155,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalHeal
-  name: "цілющий кристал"
-  description: "Невеликий псіонічний кристал. Коли тримаєш його, рани здаються не такими загрозливими."
+  name: healing crystal
+  description: A small psionic crystal. Wounds seem less threatening while holding it.
   components:
   - type: Sprite
     color: "#7ee081"
@@ -177,8 +177,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalRevivify
-  name: "кристал воскресіння"
-  description: "Невеликий псіонічний кристал. Він пульсує в ритмі самого життя."
+  name: revivify crystal
+  description: A small psionic crystal. It hums with the pulse of life itself.
   components:
   - type: Sprite
     color: "#4fe0ff"
@@ -199,8 +199,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalDarkSwap
-  name: "кристал темного обміну"
-  description: "Невеликий псіонічний кристал. Тіні чіпляються за нього навіть при яскравому світлі."
+  name: darkswap crystal
+  description: A small psionic crystal. Shadows cling to it even in bright light.
   components:
   - type: Sprite
     color: "#7100bd"
@@ -211,8 +211,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalAssay
-  name: "кристал аналізу"
-  description: "Невеликий псіонічний кристал. Ти майже відчуваєш знання, що випромінюються з нього."
+  name: assay crystal
+  description: A small psionic crystal. You can almost feel the knowledge radiating from it.
   components:
   - type: Sprite
     color: "#8a00c2"
@@ -223,8 +223,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalShadeskip
-  name: "кристал тіньового кроку"
-  description: "Невеликий псіонічний кристал. Лози кудзу наче тягнуться до нього."
+  name: shadeskip crystal
+  description: A small psionic crystal. Kudzu vines seem to reach toward it.
   components:
   - type: Sprite
     color: "#3c6e47"
@@ -235,8 +235,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalMassSleep
-  name: "кристал масового сну"
-  description: "Невеликий псіонічний кристал. Від погляду на нього важчають повіки."
+  name: mass sleep crystal
+  description: A small psionic crystal. Gazing into it makes your eyelids feel heavy.
   components:
   - type: Sprite
     color: "#4a63d1"
@@ -247,8 +247,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalMindSwap
-  name: "кристал обміну думками"
-  description: "Невеликий псіонічний кристал. Твоє відображення в ньому здається... якимось не таким."
+  name: mind swap crystal
+  description: A small psionic crystal. Your reflection in it seems just... off.
   components:
   - type: Sprite
     color: "#e6a23c"
@@ -259,8 +259,8 @@
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalEruption
-  name: "кристал вибуху"
-  description: "Невеликий псіонічний кристал. Він пульсує ледь стримуваною енергією."
+  name: eruption crystal
+  description: A small psionic crystal. It thrums with barely-contained energy.
   components:
   - type: Sprite
     color: "#c2571a"

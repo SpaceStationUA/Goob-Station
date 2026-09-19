@@ -2,8 +2,8 @@
   parent: BaseSign
   id: GangSignBase
   abstract: true
-  name: "знак банди"
-  description: "Знак банди, який члени банди використовують для позначення своєї території. Напевно, стояти тут — не найкраща ідея."
+  name: gang sign
+  description: A gang sign, used by gang members to mark their territory. Its not a good idea to stand here, probably.
   components:
   - type: Sprite
     drawdepth: WallMountedItems
@@ -181,10 +181,10 @@
 
 - type: entity
   id: GangLocker
-  name: "шафка банди"
+  name: gang locker
   suffix: Gang
   parent: BaseStructure
-  description: "Шафка, що належить банді."
+  description: A locker belonging to a gang.
   components:
   - type: InteractionOutline
   - type: Transform
@@ -231,8 +231,8 @@
 - type: entity
   parent: CrateGeneric
   id: CrateGang
-  name: "ящик банди"
-  description: "Замкнений ящик із різними корисними речами. Його можна відкрити лише поруч із шафкою банди."
+  name: gang crate
+  description: A locked crate containing various goodies. Can only be opened next to a gang locker.
   suffix: Gang
   components:
   - type: Icon
@@ -372,8 +372,8 @@
 - type: entity # Functions as a more common version of the crate. Odds are way lower for everything.
   id: GangDuffelBag
   parent: CrateGeneric
-  name: "сумка банди"
-  description: "Пошарпана сумка з підозрілою опуклістю всередині. Схоже, її заміновано."
+  name: gang duffel bag
+  description: A battered duffel bag with a suspicious bulge inside. Looks like it's been rigged.
   suffix: Gang
   components:
   - type: Icon
