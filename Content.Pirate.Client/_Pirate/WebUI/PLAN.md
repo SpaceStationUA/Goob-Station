@@ -655,3 +655,50 @@ Kept in-tree (needed by arcade/TV): `WebUiTuiIpc` and
 `WebUiSpikeBridge` (its JsonString helper). When revisiting the
 uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
 (dist_resources is git-ignored by upstream layout anyway).
+
+## TV redesign (2026-09-19) — finalized design
+
+### Decisions
+- **Per-TV state** replaces the global singleton. Every television entity
+  owns its channel/queue/clock/lock (was: one `PirateTvSystem` global).
+- **Grouping = in-game DeviceLink** (multitool / network configurator —
+  the Multitool has `NetworkConfigurator`, tools.yml:224). One master
+  (source port) + many mirrors (sink port). **Star topology**: a TV that
+  has mirrors cannot itself become a mirror. Anyone may link.
+- **Mirrors** show the master's channel+queue+clock and **forward all
+  controls** (pick/queue/transport) to the master; the lock lives on the
+  master (group lock). Anyone may control; admins bypass the lock.
+- **Unlink resets the mirror to off/empty** (no preserved local state) —
+  link/unlink is always a clean handoff of the whole state.
+- **Picking: YouTube only** (Twitch dropped for now). Keep the current YT
+  page flow (browse/search/click), but reframed as **find → confirm →
+  added to the queue**. The picker opens from inside the TV window; the
+  separate «Браузер» entity verb goes away.
+- **Diegetic**: stylized on/off state + glow/scanline overlay + examine
+  title; no engine diff.
+- One entity verb «Телевізор» + «Замкнути ТБ».
+- Resilience: close on disconnect (port arcade's fix), error/buffering
+  states + «Далі», Fluent strings (currently hardcoded UA).
+
+### Transport / ownership
+- `PirateTvComponent` (shared, server-authoritative, NOT networked):
+  per-entity state + `Source` NetEntity (set on mirrors).
+- Server owns mutation, **propagates master→mirror**, raises
+  `PirateTvStateEvent { Tv }` to the TVs PVS on change, and answers
+  `PirateTvRequestEvent { Tv }` when a window opens.
+- Client `WebTvBackend` becomes a **per-NetEntity registry**; windows read
+  their TV's entry. Client→server events carry `NetEntity Tv`; server
+  validates existence + proximity (untrusted client invariant).
+
+### Implementation checklist (phases)
+1. Shared: `PirateTvComponent`, events with `Tv`, request event.
+2. Ports yml (source `PirateTvBroadcast`, sink `PirateTvReceive`) + locale;
+   `PirateTvComponent` + `DeviceLinkSource`/`Sink` on `ComputerTelevision`,
+   `WallmountTelevision` (and Somber if it fits).
+3. Server rewrite: per-entity state, link/unlink, propagation, PVS pushes,
+   proximity validation, popups.
+4. Client: per-entity `WebTvBackend`, request on open, windows bound to
+   `TvUid`.
+5. Verbs: one «Телевізор» (+ lock); picker opened from the window.
+6. YT-only parse/hosts; confirm→queue flow.
+7. Polish: disconnect close, error/buffering + «Далі», Fluent.
