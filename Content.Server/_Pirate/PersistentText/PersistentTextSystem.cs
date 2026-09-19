@@ -9,9 +9,11 @@ using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Paper;
 using Content.Server.Preferences.Managers;
+using Content.Server._Pirate.PersistentText;
 using Content.Shared._Pirate.PersistentText;
 using Content.Shared._Pirate.Photo;
 using Content.Shared.GameTicking;
+using Content.Shared.Mind;
 using Content.Shared.Paper;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -25,6 +27,7 @@ public sealed class PersistentTextSystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IServerPreferencesManager _preferences = default!;
     private readonly Dictionary<EntityUid, ResolvedTextPersistenceState> _resolvedTextStates = new();
     private Task? _persistTask;
@@ -107,6 +110,26 @@ public sealed class PersistentTextSystem : EntitySystem
 
                 _resolvedTextStates[uid] = state.Value;
 
+                // Pirate: persistent text (diaries) - bind to the loadout owner at round start.
+                // A fresh spawn always belongs to the spawning player; the stored text
+                // (if any) is restored below regardless.
+                if (persistence.SupportCharacterName)
+                {
+                    // Use the character name from the spawn profile, not the account nick.
+                    var characterName = ev.Profile.Name;
+
+                    if (snapshot?.OwnerUserId != null &&
+                        snapshot.OwnerUserId.Value != ev.Player.UserId.UserId)
+                    {
+                        Log.Warning($"Persistent text {ToPrettyString(uid)} snapshot belongs to another user; adopting the spawning player.");
+                    }
+
+                    persistence.OwnerUserId = ev.Player.UserId;
+                    persistence.OwnerCharacterName = characterName;
+
+                    _paper.UpdatePersistentTextName(uid, persistence);
+                }
+
                 if (snapshot == null || string.IsNullOrEmpty(snapshot.Content))
                     continue;
 
@@ -131,6 +154,19 @@ public sealed class PersistentTextSystem : EntitySystem
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
     {
         WaitForPendingPersistence();
+
+        // Pirate: persistent text (diaries) - direct restarts (commands/votes) can skip
+        // RoundEndTextAppend, so save synchronously here before entities are flushed.
+        try
+        {
+            var snapshots = CollectTextSnapshots();
+            if (snapshots.Count > 0)
+                PersistSnapshotsAsync(snapshots).GetAwaiter().GetResult();
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Failed final persistent text save on round restart: {ex}");
+        }
     }
 
     private async Task PersistSnapshotsAsync(List<PersistentTextSnapshot> snapshots)
@@ -144,7 +180,9 @@ public sealed class PersistentTextSystem : EntitySystem
                     snapshot.ProfileId,
                     snapshot.OwnerId,
                     snapshot.StorageKey,
-                    snapshot.Content);
+                    snapshot.Content,
+                    snapshot.OwnerCharacterName,
+                    snapshot.OwnerUserId);
             }
             catch (Exception ex)
             {
@@ -184,6 +222,8 @@ public sealed class PersistentTextSystem : EntitySystem
                 ProfileId = state.ProfileId,
                 OwnerId = state.OwnerId,
                 StorageKey = state.StorageKey,
+                OwnerCharacterName = persistence.OwnerCharacterName,
+                OwnerUserId = persistence.OwnerUserId?.UserId,
                 SavedAt = DateTime.UtcNow,
                 Content = paper.Content
             };
@@ -210,6 +250,14 @@ public sealed class PersistentTextSystem : EntitySystem
                 persistence.StorageKey);
             if (snapshot == null || Deleted(uid) || !TryComp<PaperComponent>(uid, out paper))
                 return;
+
+            // Pirate: persistent text (diaries) - restore bound owner
+            persistence.OwnerCharacterName = snapshot.OwnerCharacterName;
+            persistence.OwnerUserId = snapshot.OwnerUserId != null
+                ? new NetUserId(snapshot.OwnerUserId.Value)
+                : null;
+            if (persistence.SupportCharacterName)
+                _paper.UpdatePersistentTextName(uid, persistence);
 
             if (string.IsNullOrEmpty(snapshot.Content))
                 return;

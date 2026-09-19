@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 using System;
+using Robust.Shared.Network;
 
 namespace Content.Shared._Pirate.PersistentText;
 
@@ -16,6 +17,8 @@ public sealed class PersistentTextSnapshot
     public int? ProfileId { get; init; }
     public string? OwnerId { get; init; }
     public string StorageKey { get; init; } = string.Empty;
+    public string? OwnerCharacterName { get; init; }
+    public Guid? OwnerUserId { get; init; }
     public DateTime SavedAt { get; init; }
     public string Content { get; init; } = string.Empty;
 }

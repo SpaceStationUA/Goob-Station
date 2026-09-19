@@ -2471,6 +2471,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 ProfileId = entry.ProfileId,
                 OwnerId = entry.OwnerId,
                 StorageKey = entry.StorageKey,
+                OwnerCharacterName = entry.OwnerCharacterName,
+                OwnerUserId = entry.OwnerUserId,
                 SavedAt = NormalizeDatabaseTime(entry.SavedAt),
                 Content = entry.Content
             };
@@ -2482,6 +2484,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             string? ownerId,
             string storageKey,
             string content,
+            string? ownerCharacterName = null,
+            Guid? ownerUserId = null,
             CancellationToken cancel = default)
         {
             await using var db = await GetDb(cancel);
@@ -2518,6 +2522,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             entry.ProfileId = profileId;
             entry.OwnerId = profileId == null ? ownerId : null;
             entry.Content = content;
+            entry.OwnerCharacterName = ownerCharacterName;
+            entry.OwnerUserId = ownerUserId;
 
             await db.DbContext.SaveChangesAsync(cancel);
         }

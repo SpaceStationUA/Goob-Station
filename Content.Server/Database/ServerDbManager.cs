@@ -423,6 +423,8 @@ namespace Content.Server.Database
             string? ownerId,
             string storageKey,
             string content,
+            string? ownerCharacterName = null,
+            Guid? ownerUserId = null,
             CancellationToken cancel = default);
         #endregion
 
@@ -1395,10 +1397,12 @@ namespace Content.Server.Database
             string? ownerId,
             string storageKey,
             string content,
+            string? ownerCharacterName = null,
+            Guid? ownerUserId = null,
             CancellationToken cancel = default)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.UpsertPersistentTextSnapshotAsync(ownerKind, profileId, ownerId, storageKey, content, cancel));
+            return RunDbCommand(() => _db.UpsertPersistentTextSnapshotAsync(ownerKind, profileId, ownerId, storageKey, content, ownerCharacterName, ownerUserId, cancel));
         }
 
         #endregion

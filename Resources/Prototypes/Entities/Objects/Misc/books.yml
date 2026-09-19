@@ -10,6 +10,8 @@
   - type: PersistentText
     ownerKind: profile
     storageKey: randombook
+    supportCharacterName: true
+    appendOwnerName: false
 
 - type: entity
   name: book

@@ -1056,6 +1056,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("content");
 
+                    b.Property<string>("OwnerCharacterName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("owner_character_name");
+
                     b.Property<string>("OwnerId")
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)")
@@ -1066,6 +1071,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)")
                         .HasColumnName("owner_kind");
+
+                    b.Property<Guid?>("OwnerUserId")
+                        .HasMaxLength(36)
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_user_id");
 
                     b.Property<int?>("ProfileId")
                         .HasColumnType("integer")

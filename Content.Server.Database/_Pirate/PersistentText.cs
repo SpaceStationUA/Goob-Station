@@ -29,6 +29,12 @@ public sealed class PersistentText
 
     public DateTime SavedAt { get; set; }
 
+    [StringLength(256)]
+    public string? OwnerCharacterName { get; set; }
+
+    [StringLength(36)]
+    public Guid? OwnerUserId { get; set; }
+
     [Required]
     public string Content { get; set; } = string.Empty;
 }

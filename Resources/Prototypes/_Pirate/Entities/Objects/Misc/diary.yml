@@ -6,7 +6,7 @@
   id: Diary
   parent: BookBase
   name: щоденник
-  description: Особистий щоденник. Написаний текст зберігається між раундами.
+  description: Особистий щоденник. Написаний текст зберігається між раундами, а після першого запису книга прив'язується до вас.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -18,6 +18,11 @@
       color: "#8a5a7a"
     - state: icon_text
     - state: overlay_null
+  # Pirate: persistent text (diaries) - a stamp would make the diary unwritable forever
+  - type: NoStamping
+  # Multiple "pages": huge capacity, the paper UI scrolls
+  - type: Paper
+    contentSize: 50000
 
 - type: entity
   id: DiaryLoadout
@@ -27,3 +32,5 @@
   - type: PersistentText
     ownerKind: profile
     storageKey: diary
+    supportCharacterName: true
+    appendOwnerName: true
