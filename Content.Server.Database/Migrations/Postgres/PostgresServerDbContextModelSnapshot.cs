@@ -1042,6 +1042,62 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("pirate_persistent_photo_album_photos", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PersistentText", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("pirate_persistent_texts_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("content");
+
+                    b.Property<string>("OwnerId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("owner_id");
+
+                    b.Property<string>("OwnerKind")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("owner_kind");
+
+                    b.Property<int?>("ProfileId")
+                        .HasColumnType("integer")
+                        .HasColumnName("profile_id");
+
+                    b.Property<DateTime>("SavedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("saved_at");
+
+                    b.Property<string>("StorageKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("storage_key");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_persistent_texts");
+
+                    b.HasIndex("ProfileId")
+                        .HasDatabaseName("IX_pirate_persistent_texts_profile_id");
+
+                    b.HasIndex("OwnerKind", "OwnerId", "StorageKey")
+                        .IsUnique()
+                        .HasDatabaseName("IX_pirate_persistent_texts_owner_kind_owner_id_storage_key");
+
+                    b.HasIndex("OwnerKind", "ProfileId", "StorageKey")
+                        .IsUnique()
+                        .HasDatabaseName("IX_pirate_persistent_texts_owner_kind_profile_id_storage_key");
+
+                    b.ToTable("pirate_persistent_texts", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.PirateAdminHelpRating", b =>
                 {
                     b.Property<int>("Id")
@@ -1517,16 +1573,16 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("pref_unavailable");
 
-                    b.Property<string>("Sex")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("sex");
-
                     b.Property<string>("Secrets")
                         .IsRequired()
                         .HasMaxLength(4096)
                         .HasColumnType("character varying(4096)")
                         .HasColumnName("secrets");
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("sex");
 
                     b.Property<string>("SkinColor")
                         .IsRequired()
@@ -1571,17 +1627,11 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("LoadoutName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("loadout_name");
-
                     b.Property<string>("CustomColorTint")
                         .HasMaxLength(16)
                         .HasColumnType("character varying(16)")
                         .HasColumnName("custom_color_tint");
 
-                    #region Pirate: loadout
                     b.Property<string>("CustomDescription")
                         .HasColumnType("text")
                         .HasColumnName("custom_description");
@@ -1589,7 +1639,11 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<string>("CustomName")
                         .HasColumnType("text")
                         .HasColumnName("custom_name");
-                    #endregion
+
+                    b.Property<string>("LoadoutName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("loadout_name");
 
                     b.Property<int>("ProfileLoadoutGroupId")
                         .HasColumnType("integer")
@@ -2519,6 +2573,17 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasConstraintName("FK_pirate_persistent_photo_album_photos_pirate_persistent_phot~");
 
                     b.Navigation("Album");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PersistentText", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_pirate_persistent_texts_profile_profile_id");
+
+                    b.Navigation("Profile");
                 });
 
             modelBuilder.Entity("Content.Server.Database.PirateAdminHelpRating", b =>

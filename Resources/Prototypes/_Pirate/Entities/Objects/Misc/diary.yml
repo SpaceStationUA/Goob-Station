@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: 2026 CyberLanos <cyber.lanos00@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+- type: entity
+  id: Diary
+  parent: BookBase
+  name: щоденник
+  description: Особистий щоденник. Написаний текст зберігається між раундами.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#4a1f3d"
+    - state: decor_wingette_circle
+      color: "#8a5a7a"
+    - state: icon_text
+    - state: overlay_null
+
+- type: entity
+  id: DiaryLoadout
+  parent: Diary
+  suffix: loadout
+  components:
+  - type: PersistentText
+    ownerKind: profile
+    storageKey: diary

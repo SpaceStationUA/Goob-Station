@@ -26,6 +26,7 @@ using Robust.Shared.Prototypes;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 using Content.Shared._Pirate.Photo; // Pirate: persistent photo albums
+using Content.Shared._Pirate.PersistentText; // Pirate: persistent text (diaries)
 using System.Collections.Generic; // Pirate: persistent photo albums
 
 namespace Content.Server.Database
@@ -405,6 +406,23 @@ namespace Content.Server.Database
             string albumKey,
             bool isPublic,
             IReadOnlyCollection<PersistentPhotoData> photos,
+            CancellationToken cancel = default);
+        #endregion
+
+        #region Pirate: persistent text (diaries)
+        Task<PersistentTextSnapshot?> GetPersistentTextSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string storageKey,
+            CancellationToken cancel = default);
+
+        Task UpsertPersistentTextSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string storageKey,
+            string content,
             CancellationToken cancel = default);
         #endregion
 
@@ -1354,6 +1372,33 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.UpsertPersistentPhotoAlbumSnapshotAsync(ownerKind, profileId, ownerId, albumKey, isPublic, photos, cancel));
+        }
+
+        #endregion
+
+        #region Pirate: persistent text (diaries)
+
+        public Task<PersistentTextSnapshot?> GetPersistentTextSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string storageKey,
+            CancellationToken cancel = default)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetPersistentTextSnapshotAsync(ownerKind, profileId, ownerId, storageKey, cancel));
+        }
+
+        public Task UpsertPersistentTextSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string storageKey,
+            string content,
+            CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.UpsertPersistentTextSnapshotAsync(ownerKind, profileId, ownerId, storageKey, content, cancel));
         }
 
         #endregion

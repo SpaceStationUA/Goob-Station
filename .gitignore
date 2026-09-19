@@ -312,3 +312,6 @@ Resources/MapImages
 
 config.json
 .github/workflows/update-prs.yaml
+
+# Codebuff: local dotnet tools (dotnet-ef)
+.dotnet-tools/
