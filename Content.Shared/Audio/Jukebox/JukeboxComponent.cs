@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 
+using Content.Shared._Pirate.Audio.Jukebox; // Pirate: jukebox records
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -7,11 +8,17 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Audio.Jukebox;
 
 [NetworkedComponent, RegisterComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SharedJukeboxSystem))]
+[Access(typeof(SharedJukeboxSystem), typeof(SharedJukeboxRecordSystem))] // Pirate: jukebox records
 public sealed partial class JukeboxComponent : Component
 {
     [DataField, AutoNetworkedField]
     public ProtoId<JukeboxPrototype>? SelectedSongId;
+
+    // Pirate: jukebox records
+    /// <summary>Selected record; mutually exclusive with <see cref="SelectedSongId"/>.</summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? SelectedRecord;
+    // End Pirate: jukebox records
 
     // Pirate: Shuffle & Repeat
     /// <summary>

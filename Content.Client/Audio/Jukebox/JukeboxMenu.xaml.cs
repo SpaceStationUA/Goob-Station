@@ -30,6 +30,8 @@ public sealed partial class JukeboxMenu : FancyWindow
     public event Action? OnStopPressed;
     public event Action<JukeboxPlaybackMode>? OnModeChanged; // Frontier
     public event Action<ProtoId<JukeboxPrototype>>? OnSongSelected;
+    public event Action<NetEntity>? OnRecordSelected; // Pirate: jukebox records
+    public event Action? OnEjectPressed; // Pirate: jukebox records
     public event Action<float>? SetTime;
 
     private EntityUid? _audio;
@@ -46,11 +48,26 @@ public sealed partial class JukeboxMenu : FancyWindow
         {
             var entry = MusicList[args.ItemIndex];
 
+            // Pirate: jukebox records - record entries carry the record's NetEntity instead of a prototype id.
+            if (entry.Metadata is NetEntity record)
+            {
+                OnRecordSelected?.Invoke(record);
+                return;
+            }
+            // End Pirate: jukebox records
+
             if (entry.Metadata is not string juke)
                 return;
 
             OnSongSelected?.Invoke(juke);
         };
+
+        // Pirate: jukebox records
+        EjectButton.OnPressed += args =>
+        {
+            OnEjectPressed?.Invoke();
+        };
+        // End Pirate: jukebox records
 
         PlayButton.OnPressed += args =>
         {
@@ -98,7 +115,8 @@ public sealed partial class JukeboxMenu : FancyWindow
     /// <summary>
     /// Re-populates the list of jukebox prototypes available.
     /// </summary>
-    public void Populate(IEnumerable<JukeboxPrototype> jukeboxProtos)
+    public void Populate(IEnumerable<JukeboxPrototype> jukeboxProtos,
+        IEnumerable<(NetEntity Record, string Name)>? records = null) // Pirate: jukebox records
     {
         MusicList.Clear();
 
@@ -106,7 +124,21 @@ public sealed partial class JukeboxMenu : FancyWindow
         {
             MusicList.AddItem(entry.Name, metadata: entry.ID);
         }
+
+        // Pirate: jukebox records - tracks from inserted records go in the same list, marked.
+        foreach (var (record, name) in records ?? [])
+        {
+            MusicList.AddItem(Loc.GetString("jukebox-menu-record-entry", ("track", name)), metadata: record);
+        }
+        // End Pirate: jukebox records
     }
+
+    // Pirate: jukebox records
+    public void SetEjectEnabled(bool enabled)
+    {
+        EjectButton.Disabled = !enabled;
+    }
+    // End Pirate: jukebox records
 
     public void SetPlayPauseButton(bool playing, bool force = false)
     {
