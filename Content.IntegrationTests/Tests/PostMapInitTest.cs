@@ -46,6 +46,24 @@ namespace Content.IntegrationTests.Tests
             AdminTestArenaSystem.ArenaMapPath
         };
 
+        private static readonly string[] ShipyardShuttles =
+        {
+            "/Maps/_Pirate/Shuttles/Shipyard/barge.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/breaker.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/Bumblebee.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/Comet.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/GasTransport.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/Honeybee.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/JSS_MED_Apotherkerin.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/Mini_Ingeniator.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/Munchies.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/pioneer.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/prospector.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/pts.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/ReachButShipyard.yml",
+            "/Maps/_Pirate/Shuttles/Shipyard/SpaceTruck.yml",
+        };
+
         /// <summary>
         /// A dictionary linking maps to collections of entity prototype ids that should be exempt from "DoNotMap" restrictions.
         /// </summary>
@@ -267,13 +285,19 @@ namespace Content.IntegrationTests.Tests
             var cfg = server.ResolveDependency<IConfigurationManager>();
             Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
-            var shuttleFolder = new ResPath("/Maps/Shuttles");
-            var shuttles = resMan
-                .ContentFindFiles(shuttleFolder)
-                .Where(filePath =>
-                    filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+            var shuttleFolders = new[]
+            {
+                new ResPath("/Maps/Shuttles"),
+                new ResPath("/Maps/_Pirate/Shuttles/Shipyard")
+            };
+            var shuttles = shuttleFolders
+                .SelectMany(folder => resMan.ContentFindFiles(folder))
+                .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
-
+            Assert.That(ShipyardShuttles.All(path => shuttles.Contains(new ResPath(path))), Is.True,
+                "All expected Pirate shipyard shuttle maps must be present.");
+            Assert.That(shuttles.Count(path => path.ToString().StartsWith("/Maps/_Pirate/Shuttles/Shipyard/", StringComparison.Ordinal)),
+                Is.EqualTo(ShipyardShuttles.Length));
             await server.WaitPost(() =>
             {
                 Assert.Multiple(() =>

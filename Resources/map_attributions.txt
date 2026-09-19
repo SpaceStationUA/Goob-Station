@@ -74,3 +74,6 @@
 
   - files: ["snowball.yml"]
   authors: Spacemann
+
+- files: ["_Pirate/Shuttles/Shipyard/barge.yml", "_Pirate/Shuttles/Shipyard/breaker.yml", "_Pirate/Shuttles/Shipyard/pioneer.yml", "_Pirate/Shuttles/Shipyard/prospector.yml", "_Pirate/Shuttles/Shipyard/pts.yml"]
+  authors: Starlight Team

@@ -1,0 +1,1 @@
+shipyard-console-menu-title = Меню верфі
