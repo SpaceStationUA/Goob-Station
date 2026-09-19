@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float dreamPower; // 0..1, driven by remaining effect time
+
+// Slow, soft waves: half the drunk shader's pace, gentle amplitude
+const highp float WaveStrength = 0.0025;
+const highp float WaveFrequency = 9.0;
+
+// Soft focus: gentle blur, nothing dramatic
+const highp float BlurStrength = 1.2; // in pixels
+
+void fragment() {
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+
+    // Slow ambient undulation across the screen
+    highp vec2 wave = WaveStrength * dreamPower * vec2(
+        sin(coord.y * WaveFrequency * 6.2831853 + TIME * 1.0),
+        sin(coord.x * WaveFrequency * 0.55 * 6.2831853 - TIME * 0.85));
+
+    // Soft blur around the waved sample point
+    highp vec2 uv = coord + wave;
+    highp vec2 blur = BlurStrength * SCREEN_PIXEL_SIZE;
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, uv) * 0.35;
+    color += zTextureSpec(SCREEN_TEXTURE, uv + vec2(blur.x, 0.0)) * 0.2;
+    color += zTextureSpec(SCREEN_TEXTURE, uv - vec2(blur.x, 0.0)) * 0.2;
+    color += zTextureSpec(SCREEN_TEXTURE, uv + vec2(0.0, blur.y)) * 0.2;
+    color += zTextureSpec(SCREEN_TEXTURE, uv + blur) * 0.05;
+
+    COLOR = color;
+}

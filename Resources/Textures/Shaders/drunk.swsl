@@ -1,22 +1,53 @@
 ﻿uniform sampler2D SCREEN_TEXTURE;
 uniform highp float boozePower;
 const highp float TimeScale = 0.5;
-const highp float DistortionScale = 0.01;
+const highp float DistortionScale = 0.014;
+
+// Squigglevision-style shimmer: quantized time, per-cell random offsets.
+// Only kicks in once fairly drunk; the gentle wavy distortion handles the early "tipsy" stage.
+const highp float SquiggleFps = 6.0;
+const highp float SquiggleStrength = 0.003;
+const highp float SquiggleCellSize = 24.0; // in pixels
+const highp float SquiggleStart = 0.25; // boozePower where the squiggle begins ramping in
+
+// Wavy texture: gentle spatial sine distortion, present from the first sip
+const highp float WaveStrength = 0.004;
+const highp float WaveFrequency = 12.0;
+
+highp float rand(highp vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
 
 void fragment() {
 
-    highp float mod = mix(0.0, DistortionScale, boozePower);    
+    highp float mod = mix(0.0, DistortionScale, boozePower);
     highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
     highp float time = TIME * TimeScale;
 
+    // Squiggle: the screen is split into a grid of cells; every squiggle frame each
+    // cell gets its own random offset direction, ramping in with drunkenness.
+    highp float squiggleAmt = clamp((boozePower - SquiggleStart) / (1.0 - SquiggleStart), 0.0, 1.0);
+    highp float frame = floor(TIME * SquiggleFps);
+    highp vec2 cellId = floor(FRAGCOORD.xy / SquiggleCellSize);
+    highp float r1 = rand(cellId + frame * 0.6180339);
+    highp float r2 = rand(cellId.yx * 1.6180339 + frame * 0.4142135 + 0.37);
+    highp vec2 dir = vec2(cos(r1 * 6.2831853), sin(r1 * 6.2831853));
+    highp vec2 squiggle = dir * SquiggleStrength * (0.4 + r2 * 0.6) * squiggleAmt;
+
+    // Wavy: soft sine waves across the screen; amplitude grows superlinearly with
+    // boozePower so the waves get noticeably stronger the drunker you are
+    highp vec2 wave = WaveStrength * boozePower * (0.5 + boozePower) * vec2(
+        sin(coord.y * WaveFrequency * 6.2831853 + TIME * 2.0),
+        sin(coord.x * WaveFrequency * 0.6 * 6.2831853 - TIME * 1.7));
+
     highp vec2 offset = vec2((mod * 1.5) * sin(time * 1.5), (mod * 2.0) * cos(time * 1.5 - 0.2));
-    highp vec4 tex1 = zTextureSpec(SCREEN_TEXTURE, coord + offset);
-    
+    highp vec4 tex1 = zTextureSpec(SCREEN_TEXTURE, coord + offset + squiggle + wave);
+
     if (boozePower > 0.5) {
         offset = vec2((mod * 2.0 - DistortionScale) * sin(time * 0.333 - 0.2), (mod * 2.0 - DistortionScale) * cos(time * 0.333));
-        tex1 = mix(tex1, zTextureSpec(SCREEN_TEXTURE, coord + offset), mix(0.0, 0.3, boozePower*2.0-1.0));
+        tex1 = mix(tex1, zTextureSpec(SCREEN_TEXTURE, coord + offset - squiggle - wave), mix(0.0, 0.3, boozePower*2.0-1.0));
     }
-    
+
     offset = vec2((mod * 1.0) * sin(time * 1.0 + 0.1), (mod * 1.0) * cos(time * 1.0));
-    COLOR = mix(tex1, zTextureSpec(SCREEN_TEXTURE, coord + offset), mix(0.0, 0.5, boozePower));
+    COLOR = mix(tex1, zTextureSpec(SCREEN_TEXTURE, coord + offset + (squiggle + wave) * 0.5), mix(0.0, 0.5, boozePower));
 }

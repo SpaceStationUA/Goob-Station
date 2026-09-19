@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float fadePower; // 0..1, driven by remaining time until vision fails
+
+// Blurred vision: everything loses focus as your eyes water up
+const highp float BlurStrength = 3.0; // in pixels
+
+// Tunnel vision: the sight narrows as pain takes over
+const highp float TunnelStart = 0.2; // fraction of vision closing at low power
+const highp float TunnelEnd = 0.85; // fraction of vision closed at full power
+
+// Watery eyes: occasional watery refraction ripples
+const highp float TearStrength = 0.004;
+const highp float TearFreq = 3.0;
+
+void fragment() {
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+
+    // Watery ripple: subtle slow vertical shimmer
+    highp vec2 ripple = TearStrength * fadePower * vec2(
+        0.0,
+        sin(coord.y * 40.0 + TIME * TearFreq) +
+        0.5 * sin(coord.x * 25.0 - TIME * TearFreq * 0.7));
+
+    // Blur around the rippled sample point
+    highp vec2 uv = coord + ripple;
+    highp vec2 blur = BlurStrength * fadePower * SCREEN_PIXEL_SIZE;
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, uv) * 0.35;
+    color += zTextureSpec(SCREEN_TEXTURE, uv + vec2(blur.x, 0.0)) * 0.2;
+    color += zTextureSpec(SCREEN_TEXTURE, uv - vec2(blur.x, 0.0)) * 0.2;
+    color += zTextureSpec(SCREEN_TEXTURE, uv + vec2(0.0, blur.y)) * 0.2;
+    color += zTextureSpec(SCREEN_TEXTURE, uv + blur) * 0.05;
+
+    // Tunnel vision: vignette advances inward with the power
+    highp vec2 centered = coord - vec2(0.5);
+    highp float dist = length(centered) * 2.0;
+    highp float edge = mix(TunnelStart, TunnelEnd, fadePower);
+    highp float vig = smoothstep(1.1 - edge, 1.05 - edge * 0.5, dist);
+    color.rgb = mix(color.rgb, vec3(0.0, 0.0, 0.0), vig);
+
+    COLOR = color;
+}

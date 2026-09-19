@@ -27,8 +27,10 @@ public sealed class DrunkOverlay : Overlay
 
     public float CurrentBoozePower = 0.0f;
 
-    private const float VisualThreshold = 10.0f;
-    private const float PowerDivisor = 250.0f;
+    // Low threshold so a faint wavy distortion appears almost immediately, then
+    // everything ramps up the drunker you get.
+    private const float VisualThreshold = 3.0f;
+    private const float PowerDivisor = 130.0f;
     /// <remarks>
     /// This is a magic number based on my person preference of how quickly the bloodloss effect should kick in.
     /// It is entirely arbitrary, and you should change it if it sucks.
@@ -98,14 +100,8 @@ public sealed class DrunkOverlay : Overlay
     /// <param name="boozePower"></param>
     private float BoozePowerToVisual(float boozePower)
     {
-        // Clamp booze power when it's low, to prevent really jittery effects
-        if (boozePower < 50f)
-        {
-            return 0;
-        }
-        else
-        {
-            return Math.Clamp((boozePower - VisualThreshold) / PowerDivisor, 0.0f, 1.0f);
-        }
+        // The wavy distortion component ramps in right away (as soon as there is any visual
+        // booze power); the squiggle shimmer is gated inside the shader itself at higher powers.
+        return Math.Clamp((boozePower - VisualThreshold) / PowerDivisor, 0.0f, 1.0f);
     }
 }

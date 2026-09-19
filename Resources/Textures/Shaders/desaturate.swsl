@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float greyPower; // 0..1: how far the world drains of color
+
+void fragment() {
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, UV);
+
+    // Fade from full color toward desaturated grey as the "nothing matters" sets in
+    highp vec3 grey = vec3(zGrayscale(color.rgb)) * 1.15;
+    COLOR = vec4(mix(color.rgb, grey, greyPower), color.a);
+}
