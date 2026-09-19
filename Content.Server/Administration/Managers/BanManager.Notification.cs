@@ -51,7 +51,12 @@ public sealed partial class BanManager
             return;
         }
 
-        KickMatchingConnectedPlayers(ban, "ban notification");
+        #region Pirate: chat ban management
+        if (ban.Type == Content.Shared.Database.BanType.Server)
+            KickMatchingConnectedPlayers(ban, "ban notification");
+        else if (IsChatBanType(ban.Type))
+            await RefreshMatchingChatBanPlayers(ban);
+        #endregion Pirate: chat ban management
     }
 
     private bool CheckBanRateLimit()
