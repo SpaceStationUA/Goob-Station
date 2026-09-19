@@ -879,3 +879,20 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
   now a small report ~2x/s.
 - TODO before shipping: delete the temporary PirateTvDebugCommand and its
   tvseek/tvdbg console commands, and ApplySeek if unused by tests.
+
+### TV perf v11 (2026-09-19): page-side agent, no per-frame JS
+- Symptom: the SAME YouTube video is smooth in a plain browser window but
+  jumpy/"~10fps" in the TV window. Root cause: the TV executed JS into the
+  page every tick (150-500ms) from the game's frame loop; each
+  ExecuteJavaScript marshals to CEF's UI thread and stalls its compositor.
+- Fix: inject a self-contained page AGENT once. It runs on its own
+  setInterval(~4/s), reads window.__tuiRoom (pushed only when the room state
+  actually changes), corrects play/pause/position (deadband 3.5s, 4s
+  cooldown) and reports via the hash bridge. C# no longer injects per frame;
+  it only pushes on change and for immediate button feedback
+  (ApplyCommand). Position uses an anchored expected() (t + elapsed while
+  playing) since the room Pos is constant during play.
+- OnNavigated() resets the push state so a fresh page load re-installs the
+  agent (C# can't otherwise tell the document changed).
+- Keep in mind: setInterval is throttled while the page is hidden, so when
+  the TV window is minimized reporting pauses — fine, nobody is watching.

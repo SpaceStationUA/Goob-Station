@@ -9,16 +9,15 @@ using Robust.Shared.Log;
 namespace Content.Pirate.Client._Pirate.WebUI;
 
 /// <summary>
-///     Engine-side half of the Pirate TV. Injects a small hook into the
-///     top-level YouTube page (we own the browser, so plain DOM access
-///     works), keeps playback pinned to the room clock without disabling
-///     the player's own UI, and reports playback state back through the
-///     tui_bridge.
+///     Engine-side half of the Pirate TV.
 ///
-///     The scripts are raw string literals on purpose: the old piecewise
-///     "..." + "..." concatenation had accumulated a syntax error that
-///     silently killed the whole injected script (no reports ever arrived,
-///     so every TV drifted on its own).
+///     Design: the page installs a small self-contained agent ONCE; that
+///     agent runs on its own timer — it keeps play/pause/position/mute in
+///     step with the last room state it was given, and reports the video
+///     state back. C# only pushes the room state when it actually changes,
+///     so there is no per-frame `ExecuteJavaScript` (which stalls CEF's
+///     compositor and made the video jumpy while a plain browser window
+///     played the same video smoothly).
 /// </summary>
 public sealed class WebUiTvDriver
 {
@@ -30,35 +29,42 @@ public sealed class WebUiTvDriver
         ipc.SyncDispatch = HandleChannelAction;
     }
 
-    private double _tickAccumulator;
+    // Last room state we pushed into the page; only changes trigger JS.
+    private string _pushedSig = "";
+    private bool _agentInstalled;
 
     /// <summary>
-    ///     Called every frame by the window. Installs the hook (idempotent),
-    ///     applies the room transport, and reports state — all engine-driven,
-    ///     because Chrome throttles page timers on hidden pages.
+    ///     A fresh page load wiped the injected agent; force a re-push on the
+    ///     next Tick so the new document gets the room state.
     /// </summary>
+    public void OnNavigated()
+    {
+        _agentInstalled = false;
+        _pushedSig = "";
+    }
+
+    /// <summary>Push the room state when it changes; make sure the page agent runs.</summary>
     public void Tick(double dt, double roomPos, bool roomPlaying, bool roomMuted, bool enforce)
     {
-        _tickAccumulator += dt;
-        if (_tickAccumulator < 0.25)
-            return;
-        _tickAccumulator = 0;
-        try
+        var pos = roomPos.ToString("0.##", CultureInfo.InvariantCulture);
+        var playing = roomPlaying ? "true" : "false";
+        var muted = roomMuted ? "true" : "false";
+        var sig = enforce ? $"{pos}|{playing}|{muted}" : "off";
+
+        if (!_agentInstalled || sig != _pushedSig)
         {
-            var pos = roomPos.ToString("0.##", CultureInfo.InvariantCulture);
-            var playing = roomPlaying ? "true" : "false";
-            var muted = roomMuted ? "true" : "false";
-            // Only report and pin *mute* from JS; play/pause/position are
-            // driven from C# once the reports are reliable. The old JS
-            // play/pause/seeking listeners fought the player and stalled it
-            // (video froze while reporting playing=true).
-            _web.ExecuteJavaScript(enforce
-                ? PinScript(pos, playing, muted) + ReportScript
-                : ReportScript);
-        }
-        catch (Exception e)
-        {
-            Logger.DebugS("webui.tv", $"tick failed: {e}");
+            _pushedSig = sig;
+            _agentInstalled = true;
+            try
+            {
+                _web.ExecuteJavaScript(enforce
+                    ? AgentScript(pos, playing, muted)
+                    : "window.__tuiRoom = null;");
+            }
+            catch (Exception e)
+            {
+                Logger.DebugS("webui.tv", $"push failed: {e}");
+            }
         }
     }
 
@@ -84,7 +90,7 @@ public sealed class WebUiTvDriver
 
     public event Action<string>? State;
 
-    /// <summary>Sends a control op to the page's &lt;video&gt;.</summary>
+    /// <summary>Immediate one-off control (used for responsive button presses).</summary>
     private static string ControlScript(string commandJson) => $$"""
         (function(){
           try {
@@ -101,82 +107,91 @@ public sealed class WebUiTvDriver
         """;
 
     /// <summary>
-    ///     Stores the room state for the C# loop and keeps mute in step. No
-    ///     play/pause/seek listeners here: they fought YouTube's player
-    ///     (repeated pause/play and micro-seeks) and could stall it outright.
-    ///     Only records whether an ad is showing so C# backs off.
+    ///     The page agent. Installed/updated only when room state changes.
+    ///     It samples the video ~4x/s (its own timer, no engine round-trips):
+    ///     reports state via the hash bridge, and nudges play/pause/position/
+    ///     mute toward the room. Never fights ads and never touches the
+    ///     player's own UI. Correction is deliberately gentle (deadband and a
+    ///     cooldown) so it reads as "notices a change" rather than stutter.
     /// </summary>
-    private static string PinScript(string pos, string playing, string muted) => $$"""
+    private static string AgentScript(string pos, string playing, string muted) => $$"""
         (function(){
           try {
-            var v = document.querySelector('video');
-            if (!v) { return; }
-            window.__tuiRoom = { t: {{pos}}, playing: {{playing}}, muted: {{muted}} };
-            if (!window.__tuiInAd) {
-              window.__tuiInAd = function(){
-                var p = document.querySelector('.html5-video-player');
-                return !!(p && p.classList && p.classList.contains('ad-showing'));
-              };
-            }
-            if (window.__tuiRoom.muted !== undefined && !!v.muted !== window.__tuiRoom.muted) {
-              try { v.muted = window.__tuiRoom.muted; } catch (e) {}
-            }
-          } catch (e) {}
-        })();
-        """;
+            window.__tuiRoom = { t: {{pos}}, playing: {{playing}}, muted: {{muted}}, at: Date.now() };
 
-    /// <summary>
-    ///     Reports the video state back as a `tv_state` bridge action. Kept
-    ///     separate from pinning so a change in one never breaks the other.
-    /// </summary>
-    private const string ReportScript = """
-        (function(){
-          try {
-            var v = document.querySelector('video');
-            if (!v) { return; }
-            var cur = {
-              t: Math.round((v.currentTime || 0) * 2) / 2,
-              dur: Math.round((v.duration || 0) * 2) / 2,
-              playing: !v.paused,
-              muted: !!v.muted,
-              ended: !!v.ended,
-              ad: !!(window.__tuiInAd && window.__tuiInAd()),
-              title: (function(){
-                var m = document.querySelector('meta[property="og:title"]');
-                var t = (m && m.content) || '';
-                if (!t) { t = (document.title || '').replace(/\s*(?:-|—)\s*YouTube\s*$/i, ''); }
-                if (!t || t.indexOf('_') >= 0 || (v.duration || 0) <= 0) { return ''; }
-                return t;
-              })(),
-              err: (v.error && v.error.code) || null
+            if (window.__tuiAgent) { return; }
+            window.__tuiAgent = true;
+
+            var inAd = function(){
+              var p = document.querySelector('.html5-video-player');
+              return !!(p && p.classList && p.classList.contains('ad-showing'));
             };
-            var ser = JSON.stringify(cur);
-            if (ser === window.__tuiSt) { return; }
-            window.__tuiSt = ser;
+            window.__tuiInAd = inAd;
+            window.__tuiLastSeek = 0;
 
-            // Hash bridge: works even where a res:// iframe is CSP-blocked.
-            // The IPC intercepts the fragment navigation and cancels it, so
-            // the page's URL is unchanged. The iframe send is a fallback for
-            // engines that don't intercept fragment navigations.
-            try { location.hash = 'tuireport=tv_state|' + encodeURIComponent(ser); } catch (e) {}
-            try {
-              if (!window.__tuiSendUi) {
-                window.__tuiSendUi = function(action, obj){
-                  var tx = 't' + Date.now() + '_' + (window.__tuiN = (window.__tuiN || 0) + 1);
-                  var f = document.createElement('iframe');
-                  f.style.display = 'none';
-                  f.src = 'res://webres/_Pirate/WebUI/TV/tui_bridge/' + encodeURIComponent(tx) +
-                    '?action=' + encodeURIComponent(action) +
-                    (obj ? ('&data=' + encodeURIComponent(JSON.stringify(obj))) : '');
-                  document.documentElement.appendChild(f);
-                  setTimeout(function(){ f.remove(); }, 2500);
+            var expected = function(){
+              var r = window.__tuiRoom;
+              if (!r) { return -1; }
+              if (!r.playing) { return r.t; }
+              return r.t + Math.max(0, (Date.now() - r.at) / 1000);
+            };
+
+            window.__tuiTick = function(){
+              try {
+                var v = document.querySelector('video');
+                if (!v) { return; }
+                var r = window.__tuiRoom;
+                var ad = inAd();
+
+                if (r && !ad) {
+                  // Transport: follow the room's play/pause.
+                  if (!v.paused !== r.playing) {
+                    if (r.playing) { try { v.play(); } catch (e) {} }
+                    else { try { v.pause(); } catch (e) {} }
+                  }
+                  if (!!v.muted !== r.muted) { try { v.muted = r.muted; } catch (e) {} }
+
+                  // Position: correct only on a real desync (>3.5s) and at
+                  // most every 4s, so normal buffering lag is left alone.
+                  var want = expected();
+                  if (want >= 0 && (v.duration || 0) > 0 && !(v.currentTime <= 1 && want <= 1)) {
+                    if (Math.abs((v.currentTime || 0) - want) > 3.5) {
+                      var now = Date.now();
+                      if (now - window.__tuiLastSeek > 4000) {
+                        window.__tuiLastSeek = now;
+                        try { v.currentTime = want; } catch (e) {}
+                      }
+                    }
+                  }
+                }
+
+                // Report (quantized so the hash changes ~2x/s, not 60x/s).
+                var cur = {
+                  t: Math.round((v.currentTime || 0) * 2) / 2,
+                  dur: Math.round((v.duration || 0) * 2) / 2,
+                  playing: !v.paused,
+                  muted: !!v.muted,
+                  ended: !!v.ended,
+                  ad: ad,
+                  title: (function(){
+                    var m = document.querySelector('meta[property="og:title"]');
+                    var t = (m && m.content) || '';
+                    if (!t) { t = (document.title || '').replace(/\s*(?:-|—)\s*YouTube\s*$/i, ''); }
+                    if (!t || t.indexOf('_') >= 0 || (v.duration || 0) <= 0) { return ''; }
+                    return t;
+                  })(),
+                  err: (v.error && v.error.code) || null
                 };
-              }
-              window.__tuiSendUi('tv_state', cur);
-            } catch (e) {}
+                var ser = JSON.stringify(cur);
+                if (ser === window.__tuiSt) { return; }
+                window.__tuiSt = ser;
+                try { location.hash = 'tuireport=tv_state|' + encodeURIComponent(ser); } catch (e) {}
+              } catch (e) {}
+            };
+
+            window.__tuiTimer = setInterval(window.__tuiTick, 250);
+            window.__tuiTick();
           } catch (e) {}
         })();
         """;
-
-
 }

@@ -76,7 +76,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     /// </summary>
     // Room truth we already acted on.
     private string _shownUrl = "";
-    private long _followedStamp = -1;
     private long _navigatedAtMs;
     private long _strayCheckedAtMs;
     private string _titleSent = "";
@@ -91,9 +90,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     // Last transport the room told us to apply (avoids per-frame fighting).
     private bool _appliedPlaying;
     private bool _appliedMuted;
-
-    /// <summary>Rate-limit for drift seeks so corrections can't thrash.</summary>
-    private long _lastSeekAtMs;
 
     private bool _disposed;
 
@@ -409,11 +405,11 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             return;
         }
 
-        var target = PirateTvClientState.VideoPos(s, s.Stamp);
-
-        // C# owns transport now (the JS listeners were removed because they
-        // stalled the player). Re-assert play/pause whenever the page's own
-        // state diverges from the room, not only on a room change.
+        // Immediate feedback for a user action: apply play/pause and mute the
+        // instant the room state changes. Steady-state playback (position,
+        // and re-correcting drift) is owned by the page agent — doing it here
+        // every frame stalled CEF's compositor (the video went jumpy while a
+        // plain browser window played the same video smoothly).
         if (_ourDur > 0 && !_ourInAd && _ourPlaying != s.Playing)
         {
             _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"" + (s.Playing ? "play" : "pause") + "\"}");
@@ -425,29 +421,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"mute\",\"arg\":" + (s.Muted ? 1 : 0) + "}");
             _appliedMuted = s.Muted;
         }
-
-        // Mirror the room position. Guards, all about not breaking the player:
-        //  * never while an ad is on, or before the real video has a duration;
-        //  * never while both page and room sit at the very start (a fresh
-        //    load would restart its buffer forever).
-        // Deadband 1.5s (so a real desync mid-play is caught, while normal
-        // buffering jitter is not), and one seek per 1.5s so repeated
-        // corrections can't thrash the player.
-        if (_ourInAd || _ourDur <= 0)
-            return;
-        if (_ourPos <= 1 && target <= 1)
-            return;
-        if (Math.Abs(_ourPos - target) > 1.5)
-        {
-            var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            if (now - _lastSeekAtMs > 1500)
-            {
-                _lastSeekAtMs = now;
-                Robust.Shared.Log.Logger.DebugS("webui.tv",
-                    $"[TVDBG] SEEK tv={TvNet()} from={_ourPos:0.0} to={target:0.0}");
-                SeekTo(target);
-            }
-        }
     }
 
     private void UpdateSourceChip(PirateTvClientState.Entry s)
@@ -458,7 +431,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private void ClearPage()
     {
         _shownUrl = "";
-        _followedStamp = -1;
         _ourPos = -1000;
         _ourDur = 0;
         _endedPublished = false;
@@ -593,23 +565,16 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private void NavigateTo(PirateTvClientState.Entry s)
     {
         _shownUrl = s.Url;
-        _followedStamp = -1;
         _ourPos = -1000;
         _ourDur = 0;
         _endedPublished = false;
         _appliedPlaying = false;
         _ourInAd = false;
         _navigatedAtMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        _driver.OnNavigated();
         try { _web.Url = s.Url; } catch { /* headless dev */ }
     }
 
-    /// <summary>Sends a position command to the page and marks our own seek
-    /// so the scrubbing guard doesn't fight it.</summary>
-    private void SeekTo(double pos)
-    {
-        _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
-                             pos.ToString("0.##", CultureInfo.InvariantCulture) + "}");
-    }
 
     /// <summary>
     ///     If a stray click navigated the page away from the room's video
@@ -638,6 +603,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         if (SameVideo(current, room.Url))
             return;
 
+        _driver.OnNavigated();
         try { _web.Url = room.Url; } catch { /* headless dev */ }
         _navigatedAtMs = now;
     }
