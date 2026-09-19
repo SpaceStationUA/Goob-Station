@@ -75,6 +75,22 @@ public sealed class WebUiTuiIpc
             return;
         }
 
+        // Hash-based report bridge (cross-origin pages whose CSP blocks the
+        // res:// iframe): "#tuireport=<action>|<json>". Put the hash back so
+        // the page's URL looks unchanged, and carry the payload.
+        var hashIdx = url.IndexOf("#tuireport=", StringComparison.OrdinalIgnoreCase);
+        if (hashIdx >= 0)
+        {
+            var payload = url[(hashIdx + "#tuireport=".Length)..];
+            var bar = payload.IndexOf('|');
+            var hAction = bar < 0 ? payload : payload[..bar];
+            var hData = bar < 0 ? null : payload[(bar + 1)..];
+            ctx.DoCancel();
+            _pending.Enqueue(("h" + _hashSeq++, Uri.UnescapeDataString(hAction),
+                hData == null ? null : Uri.UnescapeDataString(hData)));
+            return;
+        }
+
         if (url.StartsWith("res://", StringComparison.OrdinalIgnoreCase) ||
             url.StartsWith("usr://", StringComparison.OrdinalIgnoreCase) ||
             url.StartsWith("data:", StringComparison.OrdinalIgnoreCase) ||
@@ -88,6 +104,8 @@ public sealed class WebUiTuiIpc
 
         ctx.DoCancel();
     }
+
+    private int _hashSeq;
 
     private bool IsUrlAllowed(string url)
     {

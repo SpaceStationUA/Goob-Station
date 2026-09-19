@@ -835,3 +835,20 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
   guesses. Remove before shipping.
 - Lesson: keep one writer and one policy for position; verify the
   server with a console probe before touching the client again.
+
+### TV sync v8 (2026-09-19): the real bug — report bridge dead on YouTube
+- The `TVDBG RECV` logs showed `ourPos=-1000 dur=0.0` on EVERY window
+  forever: the page→client `tv_state` report never arrived, so no window
+  knew its own position and each drifted on its own. Server was proven
+  correct by probe (Pos propagates); the break was the JS→C# bridge.
+- Root cause: the report rode a hidden `res://.../tui_bridge/...` IFRAME
+  created inside the YouTube watch page. Cross-origin CSP can block that,
+  and ExecuteJavaScript is fire-and-forget so the failure was invisible.
+- Fix: the TV now reports via a **fragment navigation**
+  (`location.hash = 'tuireport=tv_state|<json>'`), which `WebUiTuiIpc`
+  intercepts in BeforeBrowse and cancels (URL unchanged). Fragments are
+  not subject to frame-src CSP, so it works on YouTube. The res:// iframe
+  send is kept as a fallback. Driver scripts rewritten as C# raw string
+  literals (the old "..."+"..." building is too easy to get subtly wrong).
+- Diagnostic rule: if `ourPos` stays -1000, the bridge is dead — look at
+  the report path first, not the sync math.
