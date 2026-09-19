@@ -410,8 +410,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         }
 
         var target = PirateTvClientState.VideoPos(s, s.Stamp);
-        Robust.Shared.Log.Logger.InfoS("webui.tv.dbg",
-            $"[TVDBG] RECV tv={TvNet()} roomPos={s.Pos:0.0} playing={s.Playing} stamp={s.Stamp} target={target:0.0} ourPos={_ourPos:0.0} dur={_ourDur:0.0} ad={_ourInAd}");
 
         // C# owns transport now (the JS listeners were removed because they
         // stalled the player). Re-assert play/pause whenever the page's own
@@ -445,8 +443,8 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             if (now - _lastSeekAtMs > 1500)
             {
                 _lastSeekAtMs = now;
-                Robust.Shared.Log.Logger.InfoS("webui.tv.dbg",
-                    $"[TVDBG] SEEK tv={TvNet()} from={_ourPos:0.0} to={target:0.0} playing={s.Playing} dur={_ourDur:0.0}");
+                Robust.Shared.Log.Logger.DebugS("webui.tv",
+                    $"[TVDBG] SEEK tv={TvNet()} from={_ourPos:0.0} to={target:0.0}");
                 SeekTo(target);
             }
         }

@@ -864,3 +864,18 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
   reported playing diverges from the room, not only on room change) and
   position (deadband 1.5s, seek rate-limited to 1/1.5s). Report quantizes
   `t`/`dur` to 0.5s so the hash changes ~2/s instead of ~60/s.
+
+### TV sync v10 (2026-09-19): works; trim our overhead
+- Confirmed working end to end: server log shows seek/pause/play/mute
+  applied to the room (pause anchors to the live pos: cmd pause at
+  pos 89.5 -> stored 91.9), and both client windows report
+  ourPos == roomPos == 109.0 after pause. Sync is ideal.
+- Perf: removed the [TVDBG] per-frame client log and per-mutate server
+  log (they allocated strings every frame per open window — real cost)
+  and raised the driver tick 0.15s -> 0.25s. The remaining "~10fps video"
+  feel is dominated by the game loop itself (both logs show
+  "MainLoop: Cannot keep up!" — in singleplayer the server shares the
+  process and admin-log writes were constant), not the TV JS, which is
+  now a small report ~2x/s.
+- TODO before shipping: delete the temporary PirateTvDebugCommand and its
+  tvseek/tvdbg console commands, and ApplySeek if unused by tests.

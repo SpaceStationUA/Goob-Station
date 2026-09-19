@@ -40,7 +40,7 @@ public sealed class WebUiTvDriver
     public void Tick(double dt, double roomPos, bool roomPlaying, bool roomMuted, bool enforce)
     {
         _tickAccumulator += dt;
-        if (_tickAccumulator < 0.15)
+        if (_tickAccumulator < 0.25)
             return;
         _tickAccumulator = 0;
         try

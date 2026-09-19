@@ -379,7 +379,6 @@ public sealed class PirateTvSystem : EntitySystem
 
         var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
         var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        Log.Info($"[TVDBG] cmd={msg.Op} arg={msg.Arg:0.0} tv={uid} root={masterUid} pos={master.Pos:0.0} playing={master.Playing}");
 
         switch (msg.Op)
         {
@@ -544,7 +543,6 @@ public sealed class PirateTvSystem : EntitySystem
     /// </summary>
     private void Mutate(EntityUid uid, PirateTvComponent comp)
     {
-        Log.Info($"[TVDBG] mutate root={uid} pos={comp.Pos:0.0} playing={comp.Playing} queue={comp.Queue.Count}");
         PushState(uid, comp);
 
         var net = GetNetEntity(uid);
