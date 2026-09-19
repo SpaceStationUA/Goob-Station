@@ -10,6 +10,7 @@ vessel-category-large = Великі
 vessel-category-humongous = Величезні
 
 shipyard-console-invalid-price = Ціна судна недійсна.
+shipyard-console-no-bank = Банківський рахунок станції недоступний.
 shipyard-console-purchase-failed = Не вдалося підготувати шатл. Зверніться до Центрального командування.
 shipyard-console-docking = Судно «{$vessel}» прибуде до станції через {$delay} секунд.
 

@@ -9,6 +9,7 @@ vessel-category-medium = Medium
 vessel-category-large = Large
 vessel-category-humongous = Humongous
 shipyard-console-invalid-price = Vessel price is invalid.
+shipyard-console-no-bank = No station bank account is available.
 shipyard-console-purchase-failed = Failed to prepare the shuttle. Contact Central Command.
 shipyard-console-docking = Vessel "{$vessel}" will arrive at the station in {$delay} seconds.
 shipyard-vessel-pts-name = Private Transport Shuttle
