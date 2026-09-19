@@ -4,8 +4,8 @@
 - type: entity
   parent: BaseItem
   id: Caduceus
-  name: Золотий флакон
-  description: Золотий флакон з золотою цепочкою. В середині міститься слиз, що виглядає як чорний метал. Цікава іграшка.
+  name: "золотий флакон"
+  description: "Золотий флакон на золотому ланцюжку. Усередині міститься слиз, схожий на чорний метал. Цікава іграшка."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/Caduceus/icons.rsi

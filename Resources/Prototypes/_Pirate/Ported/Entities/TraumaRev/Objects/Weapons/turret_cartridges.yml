@@ -3,8 +3,8 @@
 - type: entity
   parent: [ BaseCartridge, BaseRevMajorContraband ]
   id: CartridgeTurret
-  name: cartridge (.22 short)
-  description: A weak round with little stopping power, usually mass produced by communists and other assholes.
+  name: "набій (.22 short)"
+  description: "Слабкий набій із малою зупиняльною дією, який зазвичай масово виробляють комуністи та інші покидьки."
   components:
   - type: Tag
     tags:

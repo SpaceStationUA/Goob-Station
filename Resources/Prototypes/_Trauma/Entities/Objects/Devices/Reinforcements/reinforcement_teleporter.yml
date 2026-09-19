@@ -1,8 +1,8 @@
 - type: entity
   parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateNukieMouse
-  name: suspicious moldy cheese
-  description: Moldy cheese with a little worm sticking out of it and a... blinking antenna? Might attract an odd mouse.
+  name: "підозрілий запліснявілий сир"
+  description: "Запліснявілий сир із маленьким черв'яком, що стирчить назовні, і... миготливою антеною? Може привабити дивну мишу."
   components:
   - type: Sprite
     sprite: _Trauma/Objects/Devices/communication.rsi
@@ -22,8 +22,8 @@
 - type: entity
   parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateNukieCarp
-  name: syndicate carp reinforcement radio
-  description: Calls in a syndicate carp ready to assist you.
+  name: "радіо підкріплення коропом Синдикату"
+  description: "Викликає коропа Синдикату, готового допомогти вам."
   components:
   - type: GhostRole
     name: ghost-role-information-nukie-carp-name
@@ -37,8 +37,8 @@
 - type: entity
   parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateNukieSpider
-  name: inexplicably menacing egg
-  description: You're not sure if that's a radio transceiver or an eye blinking at you. Might attract an odd spider.
+  name: "незрозуміло загрозливе яйце"
+  description: "Ви не впевнені, чи це радіопередавач, чи око, що блимає. Може привабити дивного павука."
   components:
   - type: Sprite
     sprite: _Trauma/Mobs/Animals/Syndicate/nukiespider.rsi
@@ -58,8 +58,8 @@
 - type: entity
   parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateCyborgSaboteur
-  name: syndicate saboteur cyborg reinforcement radio
-  description: Calls in a saboteur borg with light weaponry and disruptive gear.
+  name: "радіо підкріплення кіборгом-саботажником Синдикату"
+  description: "Викликає кіборга-саботажника з легкою зброєю та засобами диверсії."
   components:
   - type: GhostRole
     name: ghost-role-information-syndicate-cyborg-saboteur-name
@@ -75,8 +75,8 @@
 - type: entity
   parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateCyborgMedical
-  name: syndicate medical cyborg reinforcement radio
-  description: Calls in a medical borg with good support capabilities and disruptive gear.
+  name: "радіо підкріплення медичним кіборгом Синдикату"
+  description: "Викликає медичного кіборга з хорошими допоміжними можливостями та засобами диверсії."
   components:
   - type: GhostRole
     name: ghost-role-information-syndicate-cyborg-medical-name
@@ -92,8 +92,8 @@
 - type: entity
   parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateBehonker
-  name: behonker reinforcement radio
-  description: Calls in a behonker to assist you in your tomfoolery.
+  name: "радіо підкріплення Бехонкером"
+  description: "Викликає Бехонкера, щоб допомогти вам у ваших витівках."
   components:
   - type: GhostRole
     name: ghost-role-information-syndicate-behonker-name

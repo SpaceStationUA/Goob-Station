@@ -5,7 +5,7 @@
 - type: entity
   parent: [GrenadeBase, FoodBoxPizza]
   id: FoodBoxPizzaBomb
-  name: pizza box
+  name: "коробка піци"
   suffix: Bomb
   components:
   - type: Sprite

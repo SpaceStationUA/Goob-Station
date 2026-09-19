@@ -20,8 +20,8 @@
 - type: entity
   parent: BaseMalfAiObjective
   id: MalfAiSurviveObjective
-  name: OBJECTIVE; SURVIVE.
-  description: Ensure your core is not destroyed or carded by the end of the round.
+  name: "ЦІЛЬ: ВИЖИТИ."
+  description: "Переконайтеся, що ваше ядро не знищено й не вилучено до кінця раунду."
   components:
   - type: Objective
     icon:
@@ -33,8 +33,8 @@
 - type: entity
   parent: BaseMalfAiObjective
   id: MalfAiDoomsdayObjective
-  name: OBJECTIVE; INITIATE DOOMSDAY PROTOCOL.
-  description: Successfully initiate the doomsday protocol.
+  name: "ЦІЛЬ: ЗАПУСТИТИ ПРОТОКОЛ КІНЦЯ СВІТУ."
+  description: "Успішно запустіть протокол кінця світу."
   components:
   - type: Objective
     difficulty: 3
@@ -48,8 +48,8 @@
 - type: entity
   parent: BaseMalfAiObjective
   id: MalfAiAssassinateObjective
-  name: OBJECTIVE; ELIMINATE CREW MEMBER.
-  description: Select a random crew member. If they die, this objective is completed.
+  name: "ЦІЛЬ: ЛІКВІДУВАТИ ЧЛЕНА ЕКІПАЖУ."
+  description: "Оберіть випадкового члена екіпажу. Якщо він помре, ціль буде виконано."
   components:
   - type: Objective
     difficulty: 1
@@ -66,8 +66,8 @@
 - type: entity
   parent: BaseMalfAiObjective
   id: MalfAiProtectObjective
-  name: OBJECTIVE; PROTECT CREW MEMBER.
-  description: Select a crew member and ensure they survive until the end of the round.
+  name: "ЦІЛЬ: ЗАХИСТИТИ ЧЛЕНА ЕКІПАЖУ."
+  description: "Оберіть члена екіпажу та переконайтеся, що він виживе до кінця раунду."
   components:
   - type: Objective
     difficulty: 1
@@ -84,8 +84,8 @@
 - type: entity
   parent: BaseMalfAiObjective
   id: MalfAiControlBorgsObjective
-  name: OBJECTIVE; CONTROL CYBORGS.
-  description: Take control of station cyborgs and use them to further your objectives.
+  name: "ЦІЛЬ: КЕРУВАТИ КІБОРГАМИ."
+  description: "Візьміть під контроль кіборгів станції та використовуйте їх для досягнення своїх цілей."
   components:
   - type: Objective
     difficulty: 2
@@ -142,8 +142,8 @@
 - type: entity
   parent: BaseMalfAiObjective
   id: MalfAiDebugAssassinateObjective
-  name: OBJECTIVE; ELIMINATE CREW MEMBER (DEBUG).
-  description: Debug version - auto-completes for testing purposes.
+  name: "ЦІЛЬ: ЛІКВІДУВАТИ ЧЛЕНА ЕКІПАЖУ (НАЛАГОДЖЕННЯ)."
+  description: "Версія для налагодження — автоматично виконується для тестування."
   components:
   - type: Objective
     difficulty: 1
@@ -157,8 +157,8 @@
 - type: entity
   parent: BaseMalfAiObjective
   id: MalfAiDebugProtectObjective
-  name: OBJECTIVE; PROTECT CREW MEMBER (DEBUG).
-  description: Debug version - auto-completes for testing purposes.
+  name: "ЦІЛЬ: ЗАХИСТИТИ ЧЛЕНА ЕКІПАЖУ (НАЛАГОДЖЕННЯ)."
+  description: "Версія для налагодження — автоматично виконується для тестування."
   components:
   - type: Objective
     difficulty: 1

@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingNeckColorableCollar
   id: ClothingNeckColorableCollarBlack
-  name: black choker
+  name: "чорний чокер"
   components:
   - type: Clothing
     clothingVisuals:
@@ -14,7 +14,7 @@
 - type: entity
   parent: ClothingNeckColorableCollar
   id: ClothingNeckColorableCollarPink
-  name: pink choker
+  name: "рожевий чокер"
   components:
   - type: Clothing
     clothingVisuals:
@@ -27,7 +27,7 @@
 - type: entity
   parent: ClothingNeckColorableCollar
   id: ClothingNeckColorableCollarBlue
-  name: blue choker
+  name: "синій чокер"
   components:
   - type: Clothing
     clothingVisuals:
@@ -40,8 +40,8 @@
 - type: entity
   parent: ClothingNeckColorableCollar
   id: ClothingNeckColorableCollarBloodred
-  name: bloodred choker
-  description: A simple choker. This one is a favorite among fashion-forward Gorlex Marauders.
+  name: "криваво-червоний чокер"
+  description: "Простий чокер. Цей особливо полюбляють модні Горлексські мародери."
   components:
   - type: Clothing
     clothingVisuals:

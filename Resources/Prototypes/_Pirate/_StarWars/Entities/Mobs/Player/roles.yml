@@ -8,7 +8,7 @@
   - type: AutoImplant
     implants: [FreedomImplant, NutrimentPumpImplant, SpaceProofImplant, StypticStimulatorImplant]
   - type: GhostRole
-    name: Дарт Вейдер
+    name: "Дарт Вейдер"
     description: Темний Лорд.
     rules: ad
     raffle:

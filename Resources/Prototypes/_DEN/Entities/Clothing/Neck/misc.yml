@@ -14,8 +14,8 @@
 - type: entity
   parent: ClothingNeckBase # starcup - no leashing, no folding
   id: ClothingNeckCowBellCollar
-  name: cowbell collar
-  description: A way to inform others about the presence of livestock, or just to annoy everyone around you!
+  name: "дзвіночковий нашийник для худоби"
+  description: "Спосіб повідомити інших про присутність худоби — або просто дошкулити всім навколо!"
   components:
     - type: Sprite
       sprite: _DEN/Clothing/Neck/Collars/collar_cowbell.rsi
@@ -44,8 +44,8 @@
 - type: entity
   parent: ClothingNeckBase # starcup - no leashing, no folding
   id: ClothingNeckSpikedCollar
-  name: spiked collar
-  description: A simple leather collar with decorative spikes. # starcup - not foldable
+  name: "шипований нашийник"
+  description: "Простий шкіряний нашийник із декоративними шипами." # starcup - not foldable
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Neck/Collars/collar_spiked.rsi
@@ -55,8 +55,8 @@
 - type: entity
   parent: ClothingNeckBase # starcup - no leashing, no folding
   id: ClothingNeckColorableCollar
-  name: white choker # starcup - decollared
-  description: A plain choker. # starcup - decollared
+  name: "білий чокер" # starcup - decollared
+  description: "Простий чокер." # starcup - decollared
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Neck/Collars/colorable_collar.rsi

@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakColorable
-  name: plain cloak
-  description: A stylish single-color cloak. Doesn't make you any more important, but it's certainly attention-catching.
+  name: "однотонний плащ"
+  description: "Стильний однотонний плащ. Він не зробить вас важливішими, але точно приверне увагу."
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Neck/Cloaks/colorable.rsi

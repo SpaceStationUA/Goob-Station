@@ -1,7 +1,7 @@
 - type: entity
   parent: SpawnMobCow
   id: SpawnMobCowTurretExempt
-  name: Cow Spawner
+  name: "спавнер корови"
   suffix: Turret Exempt
   components:
   - type: ConditionalSpawner
@@ -11,7 +11,7 @@
 - type: entity
   parent: SpawnMobAlexander
   id: SpawnMobAlexanderTurretExempt
-  name: Alexander Spawner
+  name: "спавнер Александра"
   suffix: Chef Pet, Turret Exempt
   components:
   - type: ConditionalSpawner
@@ -21,7 +21,7 @@
 - type: entity
   parent: SpawnMobCleanBot
   id: SpawnMobCleanBotTurretExempt
-  name: CleanBot Spawner
+  name: "спавнер чистобота"
   suffix: Turret Exempt
   components:
   - type: ConditionalSpawner

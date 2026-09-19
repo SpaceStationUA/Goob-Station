@@ -1,7 +1,7 @@
 - type: entity
   parent: TrashMimanaPeel
   id: MimanaPeelStealthy
-  name: mimana peel
+  name: "шкірка мімани"
   suffix: Stealthy
   components:
   - type: Stealth

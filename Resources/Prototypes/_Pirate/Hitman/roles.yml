@@ -31,7 +31,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleHitman
-  name: Hitman
+  name: "Роль найманого убивці"
   components:
   - type: MindRole
     subtype: role-subtype-hitman

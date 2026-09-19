@@ -93,10 +93,10 @@
       - Lead
 
 - type: entity
-  name: ominous pill
+  name: "зловісна пігулка"
   parent: Pill
   id: OminousPill
-  description: This unusual pill bears no markings. You feel a sense of dread, but also... curiosity.
+  description: "На цій дивній пігулці немає позначок. Ви відчуваєте тривогу, але також... цікавість."
   components:
   - type: SolutionContainerManager
     solutions:
@@ -203,10 +203,10 @@
       - Lead
 
 - type: entity
-  name: weird pill
+  name: "дивна пігулка"
   parent: Pill
   id: WeirdPill
-  description: This unusual pill bears no markings. It's probably not deadly. Probably.
+  description: "На цій дивній пігулці немає позначок. Напевно, вона не смертельна. Напевно."
   components:
   - type: SolutionContainerManager
     solutions:
@@ -281,10 +281,10 @@
       - Lead
 
 - type: entity
-  name: golden pill
+  name: "золота пігулка"
   parent: Pill
   id: GoldenPill
-  description: Jackpot! Golden unmarked pill! There could be anything in here!
+  description: "Джекпот! Золота пігулка без позначок. Тут може бути що завгодно!"
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Specific/Chemistry/pills.rsi

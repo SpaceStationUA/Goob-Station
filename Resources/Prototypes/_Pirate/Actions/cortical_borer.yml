@@ -5,8 +5,8 @@
 - type: entity
   parent: BaseAction
   id: ActionCorticalBorerChemMenu
-  name: Chemicals
-  description: Open the chemicals menu.
+  name: "Хімікати"
+  description: "Відкрити меню хімікатів для введення реагентів носієві."
   components:
   - type: Action
     icon: _Pirate/Interface/Action/borer_chem.png
@@ -16,8 +16,8 @@
 - type: entity
   parent: BaseAction
   id: ActionCorticalBorerInfest
-  name: Infest
-  description: Infest a humanoid target with a bloodstream.
+  name: "Заразити"
+  description: "Проникнути в гуманоїда з кровоносною системою."
   components:
   - type: Action
     icon: _Pirate/Interface/Action/borer_infest.png
@@ -35,8 +35,8 @@
 - type: entity
   parent: BaseAction
   id: ActionCorticalBorerEject
-  name: Eject Host
-  description: Eject yourself from your host.
+  name: "Покинути носія"
+  description: "Вибратися з тіла поточного носія."
   components:
   - type: Action
     icon: _Pirate/Interface/Action/borer_eject.png
@@ -47,8 +47,8 @@
 - type: entity
   parent: BaseAction
   id: ActionCheckBlood
-  name: Check Blood
-  description: Inspect your host's blood and condition.
+  name: "Перевірити кров"
+  description: "Дослідити кров і стан свого носія."
   components:
   - type: Action
     icon: _Pirate/Interface/Action/borer_bloodcheck.png
@@ -59,8 +59,8 @@
 - type: entity
   parent: BaseAction
   id: ActionControlHost
-  name: Take Control
-  description: Take full control of your host for 40 seconds while they are awake.
+  name: "Перехопити контроль"
+  description: "Повністю контролювати притомного носія протягом 40 секунд."
   components:
   - type: Action
     icon: _Pirate/Interface/Action/borer_control.png
@@ -71,8 +71,8 @@
 - type: entity
   parent: BaseAction
   id: ActionEndControlHost
-  name: Relinquish Control
-  description: Give up control of the host's body early.
+  name: "Відмовитися від контролю"
+  description: "Достроково повернути носієві контроль над тілом."
   components:
   - type: Action
     icon: _Pirate/Interface/Action/borer_eject.png
@@ -83,8 +83,8 @@
 - type: entity
   parent: BaseAction
   id: ActionLayEggHost
-  name: Lay Egg
-  description: Force your host to vomit an egg. Costs 200 chemicals.
+  name: "Відкласти яйце"
+  description: "Змусити носія виблювати яйце. Витрачає 200 хімікатів."
   components:
   - type: Action
     icon: _Pirate/Interface/Action/borer_egg.png

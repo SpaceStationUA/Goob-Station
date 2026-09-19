@@ -14,14 +14,14 @@
 - type: entity
   parent: MarkerBase
   id: SyndicateDropAnnouncer
-  name: Syndicate High Command
+  name: "Верховне командування Синдикату"
   categories: [ HideSpawnMenu ]
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: SyndicateDropPad
-  name: bluespace launch pad
-  description: Load a crate or a briefcase, then have a dispatch console throw it across the sector. Broadcasts loudly enough that using it twice in a row is asking to be found.
+  name: "блюспейс-пускова платформа"
+  description: "Завантажте ящик або валізу, а потім дозвольте диспетчерській консолі перекинути їх через сектор. Транслює сигнал достатньо гучно, тож використовувати її двічі поспіль — це просити, щоб вас знайшли."
   components:
   - type: InteractionOutline
   - type: Physics
@@ -92,8 +92,8 @@
 - type: entity
   parent: [ BaseMachineCircuitboard, BaseSyndicateContraband ]
   id: SyndicateDropPadMachineCircuitboard
-  name: bluespace launch pad machine board
-  description: A machine printed circuit board for a bluespace launch pad.
+  name: "друкована плата блюспейс-пускової платформи"
+  description: "Друкована плата машини для блюспейс-пускової платформи."
   components:
   - type: Sprite
     state: supply

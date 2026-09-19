@@ -10,8 +10,8 @@
 - type: entity
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: RadioHandheldSyndicate
-  name: syndicate radio
-  description: A tiny listening device which relays what it hears to the syndicate radio channel. It does not have a speaker.
+  name: "жучок Синдикату"
+  description: "Мініатюрний пристрій без динаміка, який передає почуті поблизу розмови в канал Синдикату."
   components:
   - type: TelecomExempt
   - type: RadioMicrophone

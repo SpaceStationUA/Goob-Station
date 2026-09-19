@@ -2,8 +2,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerERTLeader
-  name: ERT leader's modsuit controller
-  description: A modular suit control unit issued to the leader of an emergency response team.
+  name: "контролер модульного костюма лідера ГШР"
+  description: "Блок керування модульним костюмом, виданий лідеру загону швидкого реагування."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsoryLeader/control.rsi
@@ -41,8 +41,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetERTLeader
-  name: ERT leader's modsuit helmet
-  description: A sealed response helmet issued to the leader of an emergency response team.
+  name: "шолом модульного костюма лідера ГШР"
+  description: "Герметичний шолом загону швидкого реагування, виданий його лідеру."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -108,8 +108,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateERTLeader
-  name: ERT leader's modsuit chestplate
-  description: A reinforced response chestplate issued to the leader of an emergency response team.
+  name: "нагрудна пластина модульного костюма лідера ГШР"
+  description: "Посилена нагрудна пластина загону швидкого реагування, видана його лідеру."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -168,8 +168,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsERTLeader
-  name: ERT leader's modsuit gauntlets
-  description: Insulated response gauntlets issued to the leader of an emergency response team.
+  name: "рукавиці модульного костюма лідера ГШР"
+  description: "Утеплені рукавиці загону швидкого реагування, видані його лідеру."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -185,8 +185,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsERTLeader
-  name: ERT leader's modsuit boots
-  description: Sealed response boots issued to the leader of an emergency response team.
+  name: "черевики модульного костюма лідера ГШР"
+  description: "Герметичні черевики загону швидкого реагування, видані його лідеру."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -238,8 +238,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerERTSecurity
-  name: ERT security's modsuit controller
-  description: A modular suit control unit issued to the security officers of an emergency response team.
+  name: "контролер модульного костюма ГШР служби безпеки"
+  description: "Блок керування модульним костюмом, виданий офіцерам служби безпеки загону швидкого реагування."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsorySecurity/control.rsi
@@ -277,8 +277,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetERTSecurity
-  name: ERT security's modsuit helmet
-  description: A sealed response helmet issued to the security officers of an emergency response team.
+  name: "шолом модульного костюма ГШР служби безпеки"
+  description: "Герметичний шолом, виданий офіцерам служби безпеки загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -344,8 +344,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateERTSecurity
-  name: ERT security's modsuit chestplate
-  description: A reinforced response chestplate issued to the security officers of an emergency response team.
+  name: "нагрудна пластина модульного костюма ГШР служби безпеки"
+  description: "Посилена нагрудна пластина, видана офіцерам служби безпеки загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -404,8 +404,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsERTSecurity
-  name: ERT security's modsuit gauntlets
-  description: Insulated response gauntlets issued to the security officers of an emergency response team.
+  name: "рукавиці модульного костюма ГШР служби безпеки"
+  description: "Утеплені рукавиці, видані офіцерам служби безпеки загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -421,8 +421,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsERTSecurity
-  name: ERT security's modsuit boots
-  description: Sealed response boots issued to the security officers of an emergency response team.
+  name: "черевики модульного костюма ГШР служби безпеки"
+  description: "Герметичні черевики, видані офіцерам служби безпеки загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -474,8 +474,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerERTMedical
-  name: ERT medic's modsuit controller
-  description: A modular suit control unit issued to the medics of an emergency response team.
+  name: "контролер модульного костюма медичного ГШР"
+  description: "Блок керування модульним костюмом, виданий медикам загону швидкого реагування."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsoryMedical/control.rsi
@@ -513,8 +513,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetERTMedical
-  name: ERT medic's modsuit helmet
-  description: A sealed response helmet issued to the medics of an emergency response team.
+  name: "шолом модульного костюма медичного ГШР"
+  description: "Герметичний шолом, виданий медикам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -580,8 +580,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateERTMedical
-  name: ERT medic's modsuit chestplate
-  description: A reinforced response chestplate issued to the medics of an emergency response team.
+  name: "нагрудна пластина модульного костюма медичного ГШР"
+  description: "Посилена нагрудна пластина, видана медикам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -640,8 +640,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsERTMedical
-  name: ERT medic's modsuit gauntlets
-  description: Insulated response gauntlets issued to the medics of an emergency response team.
+  name: "рукавиці модульного костюма медичного ГШР"
+  description: "Утеплені рукавиці, видані медикам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -657,8 +657,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsERTMedical
-  name: ERT medic's modsuit boots
-  description: Sealed response boots issued to the medics of an emergency response team.
+  name: "черевики модульного костюма медичного ГШР"
+  description: "Герметичні черевики, видані медикам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -712,8 +712,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerERTEngineer
-  name: ERT engineer's modsuit controller
-  description: A modular suit control unit issued to the engineers of an emergency response team.
+  name: "контролер модульного костюма інженерного ГШР"
+  description: "Блок керування модульним костюмом, виданий інженерам загону швидкого реагування."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsoryEngineering/control.rsi
@@ -751,8 +751,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetERTEngineer
-  name: ERT engineer's modsuit helmet
-  description: A sealed response helmet issued to the engineers of an emergency response team.
+  name: "шолом модульного костюма інженерного ГШР"
+  description: "Герметичний шолом, виданий інженерам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -819,8 +819,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateERTEngineer
-  name: ERT engineer's modsuit chestplate
-  description: A reinforced response chestplate issued to the engineers of an emergency response team.
+  name: "нагрудна пластина модульного костюма інженерного ГШР"
+  description: "Посилена нагрудна пластина, видана інженерам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -876,8 +876,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsERTEngineer
-  name: ERT engineer's modsuit gauntlets
-  description: Insulated response gauntlets issued to the engineers of an emergency response team.
+  name: "рукавиці модульного костюма інженерного ГШР"
+  description: "Утеплені рукавиці, видані інженерам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -893,8 +893,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsERTEngineer
-  name: ERT engineer's modsuit boots
-  description: Sealed response boots issued to the engineers of an emergency response team.
+  name: "черевики модульного костюма інженерного ГШР"
+  description: "Герметичні черевики, видані інженерам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -948,8 +948,8 @@
 - type: entity
   parent: ClothingModularControllerBase
   id: ClothingModularControllerERTJanitor
-  name: ERT janitor's modsuit controller
-  description: A modular suit control unit issued to the janitors of an emergency response team.
+  name: "контролер модульного костюма ГШР прибиральника"
+  description: "Блок керування модульним костюмом, виданий прибиральникам загону швидкого реагування."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsoryJanitorial/control.rsi
@@ -987,8 +987,8 @@
 - type: entity
   parent: ClothingModularHelmetBase
   id: ClothingModularHelmetERTJanitor
-  name: ERT janitor's modsuit helmet
-  description: A sealed response helmet issued to the janitors of an emergency response team.
+  name: "шолом модульного костюма ГШР прибиральника"
+  description: "Герметичний шолом, виданий прибиральникам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1054,8 +1054,8 @@
 - type: entity
   parent: ClothingModularChestPlateBase
   id: ClothingModularChestPlateERTJanitor
-  name: ERT janitor's modsuit chestplate
-  description: A reinforced response chestplate issued to the janitors of an emergency response team.
+  name: "нагрудна пластина модульного костюма ГШР прибиральника"
+  description: "Посилена нагрудна пластина, видана прибиральникам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1111,8 +1111,8 @@
 - type: entity
   parent: ClothingModularGauntletsBase
   id: ClothingModularGauntletsERTJanitor
-  name: ERT janitor's modsuit gauntlets
-  description: Insulated response gauntlets issued to the janitors of an emergency response team.
+  name: "рукавиці модульного костюма ГШР прибиральника"
+  description: "Утеплені рукавиці, видані прибиральникам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -1128,8 +1128,8 @@
 - type: entity
   parent: ClothingModularBootsBase
   id: ClothingModularBootsERTJanitor
-  name: ERT janitor's modsuit boots
-  description: Sealed response boots issued to the janitors of an emergency response team.
+  name: "черевики модульного костюма ГШР прибиральника"
+  description: "Герметичні черевики, видані прибиральникам загону швидкого реагування."
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

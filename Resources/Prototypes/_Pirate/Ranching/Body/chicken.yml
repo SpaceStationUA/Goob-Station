@@ -6,7 +6,7 @@
 - type: entity
   parent: OrganAnimalRuminantStomach
   id: OrganChickenRanchStomach
-  name: chicken stomach
+  name: "шлунок курки"
   categories: [ HideSpawnMenu ]
   components:
   - type: Stomach
@@ -20,7 +20,7 @@
 - type: entity
   parent: OrganChickenRanchStomach
   id: OrganChickenRanchStomach2
-  name: chicken stomach 2
+  name: "шлунок курки 2"
   categories: [ HideSpawnMenu ]
   components:
   - type: Organ
@@ -28,7 +28,7 @@
 
 - type: body
   id: AnimalChickenRanch
-  name: chicken
+  name: "курка"
   root: chest
   slots:
     chest:

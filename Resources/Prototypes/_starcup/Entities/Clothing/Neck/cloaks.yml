@@ -5,7 +5,7 @@
 - type: entity
   parent: ClothingNeckCloakColorable
   id: ClothingNeckCloakColorableBlack
-  name: plain black cloak
+  name: "однотонний чорний плащ"
   components:
   - type: Item
     inhandVisuals:
@@ -26,7 +26,7 @@
 - type: entity
   parent: ClothingNeckCloakColorable
   id: ClothingNeckCloakColorableGray
-  name: plain gray cloak
+  name: "однотонний сірий плащ"
   components:
   - type: Item
     inhandVisuals:

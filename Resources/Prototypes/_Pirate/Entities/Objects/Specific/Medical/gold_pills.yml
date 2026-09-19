@@ -1,6 +1,6 @@
 # Desoxyephedrine
 - type: entity
-  name: gold
+  name: "золота пігулка"
   parent: Pill
   id: PillGold5
   suffix: Gold 5u
@@ -15,7 +15,7 @@
 
 # Here for consistency, but ideally if you're going to map these, use the 5u version instead.
 - type: entity
-  name: gold
+  name: "золота пігулка"
   parent: Pill
   id: PillGold
   suffix: Gold 15u

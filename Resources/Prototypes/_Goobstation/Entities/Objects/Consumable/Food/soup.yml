@@ -1,8 +1,8 @@
 - type: entity
-  name: hellfire chili
+  name: "пекельне чилі"
   parent: FoodBowlBase
   id: FoodSoupChiliHotCold
-  description: Ever wondered what hellfire tastes like?
+  description: "Вам коли-небудь було цікаво, який смак має пекло?"
   components:
   - type: FlavorProfile
     flavors:

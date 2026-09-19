@@ -1,7 +1,7 @@
 - type: tile
   id: ElevatorSolidMetalGrate
   parent: FloorSteel
-  name: solid metal grate
+  name: "суцільна металева решітка"
   zTransparent: true
   sprite: /Textures/_Pirate/Tiles/Elevator/solidgrate5.png
   variants: 1
@@ -12,7 +12,7 @@
 - type: tile
   id: ElevatorPlatformTile
   parent: FloorSteel
-  name: elevator platform
+  name: "плитка платформи ліфта"
   sprite: /Textures/Tiles/lattice.png
   variants: 1
   placementVariants: [1.0]
@@ -22,7 +22,7 @@
 - type: tile
   id: ElevatorLinearTransportModule
   parent: FloorSteel
-  name: linear transport module
+  name: "модуль лінійного транспорту"
   sprite: /Textures/_Pirate/Tiles/Elevator/catwalk.png
   variants: 1
   placementVariants: [1.0]

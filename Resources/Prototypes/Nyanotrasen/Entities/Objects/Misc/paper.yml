@@ -1,9 +1,9 @@
 - type: entity
-  name: psionic mantis' seal # DeltaV - Rename Forensic Mantis to Psionic Mantis
+  name: "печатка псіо-екстрасенса" # DeltaV - Rename Forensic Mantis to Psionic Mantis
   parent: RubberStampBase
   id: RubberStampMantis
   suffix: DO NOT MAP
-  description: An old-fashioned seal for marking important documents, made of polished bronze.
+  description: "Старомодна печатка з полірованої бронзи для позначення важливих документів."
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-mantis

@@ -2,8 +2,8 @@
 - type: entity
   parent: [ClothingNeckPinBase, BaseSyndicateContraband]
   id: ClothingNeckSyndicateNeckpin
-  name: Syndicate neckpin
-  description: A pin specially dedicated to show loyalty to the Syndicate!
+  name: "шпилька на шию Синдикату"
+  description: "Шпилька, створена спеціально для демонстрації відданості Синдикату!"
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Neck/SynDrobe/syndicateneckpin.rsi

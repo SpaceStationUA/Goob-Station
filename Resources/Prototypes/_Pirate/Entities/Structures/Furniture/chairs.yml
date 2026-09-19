@@ -1,9 +1,9 @@
 #region Комфортні
 - type: entity
-  name: brown comfy chair
+  name: "коричневе зручне крісло"
   id: ComfyChairBrown
   parent: ComfyChair
-  description: It looks comfy.
+  description: "Виглядає зручно."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/chairs.rsi
@@ -11,10 +11,10 @@
     state: brown
 
 - type: entity
-  name: gray comfy chair
+  name: "сіре зручне крісло"
   id: ComfyChairGray
   parent: ComfyChair
-  description: It looks comfy.
+  description: "Виглядає зручно."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/chairs.rsi
@@ -22,10 +22,10 @@
     state: gray
 
 - type: entity
-  name: sand comfy chair
+  name: "пісочне зручне крісло"
   id: ComfyChairSand
   parent: ComfyChair
-  description: It looks comfy.
+  description: "Виглядає зручно."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/chairs.rsi
@@ -33,10 +33,10 @@
     state: sand
 
 - type: entity
-  name: warm comfy chair
+  name: "тепле зручне крісло"
   id: ComfyChairWarm
   parent: ComfyChair
-  description: It looks comfy.
+  description: "Виглядає зручно."
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/chairs.rsi
@@ -45,10 +45,10 @@
 
 #region Крісло для штанги
 - type: entity
-  name: barbell chair
+  name: "крісло для штанги"
   id: BarbellChair
   parent: ChairBase
-  description: Крісло, на яке можна повісити штангу.
+  description: "Крісло, на якому можна підняти штангу."
   placement:
     mode: SnapgridCenter
   components:

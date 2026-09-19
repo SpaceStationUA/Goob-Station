@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseStructure
   id: Crucifix
-  name: wooden cross
-  description: A sturdy wooden cross. You could probably nail someone onto it...
+  name: "дерев'яний хрест"
+  description: "Міцний дерев'яний хрест. Схоже, до нього можна когось прибити..."
   components:
   - type: Sprite
     noRot: true

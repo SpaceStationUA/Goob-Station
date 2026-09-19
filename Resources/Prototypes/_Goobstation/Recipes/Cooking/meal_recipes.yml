@@ -2,7 +2,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeLollypop
-  name: lollypop recipe
+  name: "рецепт льодяника"
   result: FoodSnackLollypop
   time: 5
   solids:
@@ -12,7 +12,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeFreedomCheeseBlock
-  name: freedom cheese recipe
+  name: "рецепт сиру свободи"
   result: FoodFreedomCheeseBlock
   time: 5
   solids:
@@ -21,7 +21,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeFriedVoxL
-  name: 'fried "chicken" recipe'
+  name: "рецепт смаженої \"\"курки\""
   result: FoodMeatVoxFried
   time: 10
   solids:
@@ -29,7 +29,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeFriedVoxR
-  name: 'fried "chicken" recipe'
+  name: "рецепт смаженої \"\"курки\""
   result: FoodMeatVoxFried
   time: 10
   solids:
@@ -37,7 +37,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeChudBurger
-  name: nothing burger recipe
+  name: "рецепт нічогобургера"
   result: FoodBurgerChud
   time: 10
   group: Savory
@@ -49,7 +49,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeMothdog
-  name: mothdog recipe
+  name: "рецепт мотдога"
   result: FoodSnackMothdog
   time: 5
   group: Savory
@@ -58,7 +58,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeCottonPizzaHot
-  name: flamin hot cotton pizza recipe
+  name: "рецепт гострої бавовняної піци"
   result: FoodPizzaCottonHot
   time: 30
   group: Moth
@@ -68,7 +68,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeColdBurger
-  name: five below burger recipe
+  name: "рецепт бургера «П’ять нижче»"
   result: FoodBurgerCold
   time: 10
   group: Savory
@@ -79,7 +79,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeHotColdBurger
-  name: five below burger recipe
+  name: "рецепт бургера «П’ять нижче»"
   result: FoodBurgerHotCold
   time: 10
   group: Savory
@@ -91,7 +91,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeColdChiliAlt
-  name: cold chili recipe
+  name: "рецепт холодного чилі"
   result: FoodSoupChiliCold
   time: 20
   group: Soup
@@ -104,7 +104,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeHotColdChili
-  name: hellfire chili recipe
+  name: "рецепт пекельного чилі"
   result: FoodSoupChiliHotCold
   time: 20
   group: Soup
@@ -118,7 +118,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeGappleTartAlt
-  name: golden apple streusel tart recipe
+  name: "рецепт пирога зі штройзелем із золотих яблук"
   result: FoodTartGapple
   time: 15
   group: Pie

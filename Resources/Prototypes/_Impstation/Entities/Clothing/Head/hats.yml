@@ -4,8 +4,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatPrincess
-  name: princess hat
-  description: Did you know these are actually called hennins? # starcup - fixed plural/capitalization
+  name: "капелюшок принцеси"
+  description: "А ви знали, що насправді такі капелюхи називаються геннінами?" # starcup - fixed plural/capitalization
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Head/Hats/princesshat.rsi
@@ -15,8 +15,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatGreenEscoffion
-  name: green escoffion
-  description: Fit for the kind of fancy princess who knows what this hat is called. # starcup
+  name: "зелений ескофіон"
+  description: "Пасує вишуканій принцесі, яка знає назву цього капелюха." # starcup
 #  description: Fit for some kind of fancy princess, bet you didn't know this kind of hat has a name. # starcup - sorry, the comma splice got to me
   components:
   - type: Sprite

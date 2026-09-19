@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseAction
   id: ActionTogglePatrol
-  name: toggle patrol
-  description: Toggles the assigned securitrons' patrol route.
+  name: "перемкнути патрулювання"
+  description: "Перемикає маршрут патрулювання призначених сек'юритронів."
   components:
   - type: Sprite
     layers:
@@ -15,8 +15,8 @@
 - type: entity
   parent: BaseAction
   id: ActionCRWaypoint
-  name: create or remove patrol waypoint
-  description: Adds a waypoint at the target, or removes one already there.
+  name: "створити або прибрати патрульну точку"
+  description: "Додає точку у вибраному місці або прибирає вже наявну."
   components:
   - type: Sprite
     layers:
@@ -34,8 +34,8 @@
 - type: entity
   parent: BaseAction
   id: ActionClearWaypoints
-  name: clear patrol waypoints
-  description: Disables patrol and removes every waypoint from this commander.
+  name: "очистити патрульні точки"
+  description: "Вимикає патрулювання й видаляє всі точки цього командира."
   components:
   - type: Sprite
     layers:
@@ -45,7 +45,7 @@
 
 - type: entity
   id: SecuritronWaypoint
-  name: securitron waypoint
+  name: "патрульна точка сек'юритрона"
   categories: [ HideSpawnMenu ]
   components:
   - type: Transform

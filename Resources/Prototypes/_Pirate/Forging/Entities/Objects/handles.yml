@@ -13,8 +13,8 @@
 - type: entity
   parent: BaseForgingHandle
   id: WoodenHandleUnfinished
-  name: unfinished handle
-  description: A rough wooden pole, use a knife to cut it into shape.
+  name: "незавершене руків'я"
+  description: "Груба дерев'яна жердина; обтешіть її ножем."
   components:
   - type: Sprite
     state: unfinishedhandle
@@ -24,8 +24,8 @@
 - type: entity
   parent: BaseForgingHandle
   id: WoodenHandleShort
-  name: short handle
-  description: A small handle, suitable for small weapons and tools, like knives or screwdrivers. Can be cut into arrow shafts if you have a steady hand.
+  name: "коротке руків'я"
+  description: "Невелике руків'я для малої зброї та інструментів, як-от ножі чи викрутки. Якщо рука не тремтить, його можна розрізати на древка для стріл."
   components:
   - type: Sprite
     state: handlesmall
@@ -38,8 +38,8 @@
 - type: entity
   parent: BaseForgingHandle
   id: WoodenHandleMedium
-  name: medium handle
-  description: A medium handle, suitable for medium sized weapons, such as maces and pickaxes. Can be cut down for smaller handles.
+  name: "середнє руків'я"
+  description: "Руків'я середнього розміру для такої зброї, як булави й кайла. Його можна вкоротити для менших руків'їв."
   components:
   - type: Sprite
     state: handlemedium
@@ -52,8 +52,8 @@
 - type: entity
   parent: BaseForgingHandle
   id: WoodenHandleLong
-  name: wooden pole
-  description: A long wooden pole, suitable for giant weapons such as halberds and spears. Can be cut down for smaller handles.
+  name: "дерев'яна жердина"
+  description: "Довга дерев'яна жердина для великої зброї, як-от алебарди та списи. Її можна вкоротити для менших руків'їв."
   components:
   - type: Sprite
     state: handlelarge
@@ -67,8 +67,8 @@
 - type: entity
   parent: BaseForgingHandle
   id: WoodenArrowShaft
-  name: arrow shaft
-  description: A thin but strong piece of wood, perfect for handmade arrows. You could attach it to a forged arrow head.
+  name: "древко стріли"
+  description: "Тонкий, але міцний шматок дерева, ідеальний для саморобних стріл. До нього можна прикріпити кований наконечник."
   components:
   - type: Sprite
     state: handlesmall # TODO: sprite??

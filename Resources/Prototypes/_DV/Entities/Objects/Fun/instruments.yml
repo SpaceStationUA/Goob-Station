@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseHandheldInstrument
   id: Rickenbacker4003Instrument
-  name: Rickenbacker
-  description: When the chips are down, few people can really swing this thing. # starcup. original: Just a regular bass guitar.
+  name: "Рікенбекер"
+  description: "Коли все йде шкереберть, небагато хто справді може цим розмахувати." # starcup. original: Just a regular bass guitar.
   components:
   - type: Instrument
     program: 33
