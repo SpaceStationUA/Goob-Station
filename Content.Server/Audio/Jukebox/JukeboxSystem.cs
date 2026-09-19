@@ -11,6 +11,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
 using Robust.Shared.Random; // Pirate
+using Content.Shared._Pirate.Audio.Jukebox; // Pirate: jukebox records
 
 namespace Content.Server.Audio.Jukebox;
 
@@ -22,6 +23,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     [Dependency] private readonly IRobustRandom _random = default!; // Pirate
     [Dependency] private readonly TransformSystem _transform = default!; // Pirate
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!; // Pirate
+    [Dependency] private readonly SharedJukeboxRecordSystem _records = default!; // Pirate: jukebox records
 
     public override void Initialize()
     {
@@ -72,13 +74,31 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
             // Pirate: Shuffling feature.
             if (component.PlaybackMode == JukeboxPlaybackMode.Shuffle
-                && !component.FirstPlay
-                && _protoManager.TryGetRandom<JukeboxPrototype>(_random, out var newProto)
-                && newProto is JukeboxPrototype newJukeboxProto)
+                && !component.FirstPlay)
             {
-                component.SelectedSongId = newJukeboxProto;
+                #region Pirate: jukebox records - shuffle picks from inserted records as well
+                var records = _records.GetRecords(uid);
+
+                if (records.Count > 0 &&
+                    _random.Prob(records.Count / (float) (records.Count + _protoManager.Count<JukeboxPrototype>())))
+                {
+                    component.SelectedSongId = null;
+                    component.SelectedRecord = _random.Pick(records).Owner;
+                }
+                else if (_protoManager.TryGetRandom<JukeboxPrototype>(_random, out var newProto)
+                         && newProto is JukeboxPrototype newJukeboxProto)
+                {
+                    component.SelectedSongId = newJukeboxProto;
+                    component.SelectedRecord = null;
+                }
+                #endregion Pirate: jukebox records
             }
             // End Pirate
+
+            // Pirate: jukebox records - a selected record wins over the prototype list.
+            if (_records.TryPlayRecord((uid, component)))
+                return;
+            // End Pirate: jukebox records
 
             if (string.IsNullOrEmpty(component.SelectedSongId) ||
                 !_protoManager.Resolve(component.SelectedSongId, out var jukeboxProto))
@@ -160,6 +180,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         // Pirate: allow selecting songs while they're playing
         bool wasPlaying = Audio.IsPlaying(component.AudioStream);
         component.SelectedSongId = args.SongId;
+        component.SelectedRecord = null; // Pirate: jukebox records
         DirectSetVisualState(uid, JukeboxVisualState.Select);
         component.Selecting = true;
         component.SelectAccumulator = 0;

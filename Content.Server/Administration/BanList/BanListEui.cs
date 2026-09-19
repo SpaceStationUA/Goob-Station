@@ -19,6 +19,7 @@ public sealed class BanListEui : BaseEui
     [Dependency] private readonly IAdminManager _admins = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IBanManager _banManager = default!; // Pirate: chat ban list
 
     public BanListEui()
     {
@@ -29,6 +30,7 @@ public sealed class BanListEui : BaseEui
     private string BanListPlayerName { get; set; } = string.Empty;
     private List<SharedBan> Bans { get; } = new();
     private List<SharedBan> RoleBans { get; } = new();
+    private List<SharedBan> ChatBans { get; } = new(); // Pirate: chat ban list
 
     public override void Opened()
     {
@@ -46,7 +48,7 @@ public sealed class BanListEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return new BanListEuiState(BanListPlayerName, Bans, RoleBans);
+        return new BanListEuiState(BanListPlayerName, Bans, RoleBans, ChatBans); // Pirate: chat ban list
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
@@ -61,6 +63,9 @@ public sealed class BanListEui : BaseEui
     {
         await LoadBansCore(userId, BanType.Server, Bans);
         await LoadBansCore(userId, BanType.Role, RoleBans);
+        await LoadBansCore(userId, BanType.OOC, ChatBans); // Pirate: chat ban list
+        await LoadBansCore(userId, BanType.LOOC, ChatBans); // Pirate: chat ban list
+        await LoadBansCore(userId, BanType.Deadchat, ChatBans); // Pirate: chat ban list
     }
 
     private async Task LoadBansCore(NetUserId userId, BanType banType, List<SharedBan> list)
@@ -79,7 +84,12 @@ public sealed class BanListEui : BaseEui
             ImmutableArray<(string, int cidrMask)> ips = [("*Hidden*", 0)];
             ImmutableArray<string> hwids = ["*Hidden*"];
 
-            if (_admins.HasAdminFlag(Player, AdminFlags.Pii))
+            if (BanManager.IsChatBanType(ban.Type)) // Pirate: chat ban list
+            { // Pirate: chat ban list
+                ips = []; // Pirate: chat ban list
+                hwids = []; // Pirate: chat ban list
+            } // Pirate: chat ban list
+            else if (_admins.HasAdminFlag(Player, AdminFlags.Pii)) // Pirate: chat ban list
             {
                 ips = [..ban.Addresses.Select(a => (a.address.ToString(), a.cidrMask))];
                 hwids = [..ban.HWIds.Select(h => h.ToString())];
@@ -107,6 +117,7 @@ public sealed class BanListEui : BaseEui
     {
         Bans.Clear();
         RoleBans.Clear();
+        ChatBans.Clear(); // Pirate: chat ban list
 
         var userId = new NetUserId(BanListPlayer);
         BanListPlayerName = (await _playerLocator.LookupIdAsync(userId))?.Username ??
@@ -116,6 +127,19 @@ public sealed class BanListEui : BaseEui
 
         StateDirty();
     }
+
+    #region Pirate: chat ban list
+    public override async void HandleMessage(EuiMessageBase msg)
+    {
+        base.HandleMessage(msg);
+
+        if (msg is not PardonChatBanRequest request || !_admins.HasAdminFlag(Player, AdminFlags.Ban))
+            return;
+
+        await _banManager.PardonChatBan(request.BanId, Player.UserId, DateTimeOffset.Now);
+        await LoadFromDb();
+    }
+    #endregion Pirate: chat ban list
 
     public async Task ChangeBanListPlayer(Guid banListPlayer)
     {

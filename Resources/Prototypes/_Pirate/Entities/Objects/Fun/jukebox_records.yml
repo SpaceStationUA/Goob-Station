@@ -1,0 +1,65 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: jukebox records
+# Base record; set path and title in child prototypes.
+
+- type: entity
+  id: PirateJukeboxRecord
+  parent: BaseItem
+  name: "вінілова платівка"
+  description: "Платівка із записаним треком. Вставляється в музичний автомат."
+  components:
+  - type: JukeboxRecord
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/RadioStation/vinyls.rsi
+    layers:
+    - state: red-vinyl-disk
+      map: [ "disk" ]
+  - type: Item
+    size: Small
+  - type: RandomSprite
+    available:
+    - disk:
+        ai-vinyl-disk: null
+        aisad-vinyl-disk: null
+        banana-vinyl-disk: null
+        blue-vinyl-disk: null
+        carrot-vinyl-disk: null
+        cyan-vinyl-disk: null
+        darkblue-vinyl-disk: null
+        devil-vinyl-disk: null
+        earth-vinyl-disk: null
+        ephedrine-vinyl-disk: null
+        floaty-vinyl-disk: null
+        forgotten-vinyl-disk: null
+        glossy-vinyl-disk: null
+        green-vinyl-disk: null
+        greenish-vinyl-disk: null
+        lightblue-vinyl-disk: null
+        lightishred-vinyl-disk: null
+        lime-vinyl-disk: null
+        orange-vinyl-disk: null
+        pink-vinyl-disk: null
+        pizza-vinyl-disk: null
+        purple-vinyl-disk: null
+        red-vinyl-disk: null
+        ttd-vinyl-disk: null
+        valid-vinyl-disk: null
+        white-vinyl-disk: null
+        yellow-vinyl-disk: null
+  - type: Tag
+    tags:
+    - VinylSleeveFit
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 12
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

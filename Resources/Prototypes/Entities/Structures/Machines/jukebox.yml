@@ -18,6 +18,15 @@
     onState: on
     offState: off
     selectState: select
+  #region Pirate: jukebox records
+  - type: JukeboxRecords
+  # The child replaces the parent's container mapping, so retain machine containers.
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      pirate_jukebox_records: !type:Container
+  #endregion Pirate: jukebox records
   - type: Machine
     board: JukeboxCircuitBoard
   - type: Appearance

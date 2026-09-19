@@ -48,6 +48,7 @@
   id: JobSecurityInstructor
   groups:
   - InstructorHead
+  - SecurityEyes
   - InstructorJumpsuit
   - SecurityBackpack
   - SecurityMelee

@@ -524,6 +524,7 @@
   id: JobHeadOfSecurity
   groups:
   - HeadofSecurityHead
+  - SecurityEyes # Pirate: tinted sec eyepatch
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - SecurityBackpack

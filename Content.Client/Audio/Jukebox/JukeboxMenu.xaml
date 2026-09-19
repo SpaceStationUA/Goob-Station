@@ -20,6 +20,9 @@ SPDX-License-Identifier: MIT
             <Button Name="ShuffleButton" Text="{Loc 'jukebox-menu-buttonshuffle'}" ToggleMode="True"/>
             <Button Name="RepeatButton" Text="{Loc 'jukebox-menu-buttonrepeat'}" ToggleMode="True"/>
             <!-- End Pirate: Shuffle & Repeat -->
+            <!-- Pirate: jukebox records -->
+            <Button Name="EjectButton" Text="{Loc 'jukebox-menu-buttoneject'}" Disabled="True"/>
+            <!-- End Pirate: jukebox records -->
             <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right" HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
