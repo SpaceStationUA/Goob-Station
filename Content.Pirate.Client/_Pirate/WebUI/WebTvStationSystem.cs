@@ -38,16 +38,16 @@ public sealed class WebTvStationSystem : EntitySystem
             {
                 if (!DebounceVerify())
                     return;
-                var window = new WebTvWindow();
-                window.TvUid = entity;
-                window.OpenCenteredTv();
+                WebTvWindow.OpenFor(entity.Owner);
             },
             Priority = 12,
         });
 
-        // Room lock, presented like the standard lock verbs of other
-        // station hardware (same icons, locked/unlocked wording).
-        var locked = entity.Comp.Locked;
+        // Lock state lives in the networked room state (the component itself
+        // is server-only), so read the shared mirror — the clicked TV may be
+        // a mirror, in which case its group's lock is what matters.
+        PirateTvClientState.Request(PirateTvClientState.Net(entity.Owner));
+        var locked = PirateTvClientState.Get(PirateTvClientState.Net(entity.Owner)).Locked;
         args.Verbs.Add(new AlternativeVerb
         {
             Text = locked ? "Розблокувати ТБ" : "Замкнути ТБ",

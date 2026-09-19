@@ -218,6 +218,7 @@ public sealed class WebUiTvDriver
         "  var cur = { t: v.currentTime || 0, dur: v.duration || 0," +
         "              playing: !v.paused, muted: !!v.muted," +
         "              ended: !!v.ended," +
+        "              ad: !!(window.__tuiInAd && window.__tuiInAd())," +
         "              title: (function(){" +
         "                 var m = document.querySelector('meta[property=\"og:title\"]');" +
         "                 var t = (m && m.content) || '';" +

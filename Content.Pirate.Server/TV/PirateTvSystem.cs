@@ -376,18 +376,23 @@ public sealed class PirateTvSystem : EntitySystem
                 // Anchor to the LIVE room position, never the client's guess:
                 // the room clock is a pure function of Playing, so pausing at
                 // wherever the room actually is, then resuming, cannot rewind.
+                if (!master.Playing)
+                    break; // already paused — idempotent
                 master.Pos = Math.Max(0, CurrentPos(master, now));
                 master.Playing = false;
                 master.Stamp = now;
                 break;
             case "play":
-                // Keep Pos; just start counting wall time again.
+                if (master.Playing)
+                    break; // already playing — pressing play again must not re-anchor
+                // Resume from the current (paused) position; never touch Pos.
                 master.Playing = true;
                 master.Stamp = now;
                 break;
             case "seekTo":
                 master.Pos = Math.Max(0, msg.Arg);
                 master.Stamp = now;
+                master.Playing = true; // seeking implies we mean to play
                 break;
             case "ended":
                 // Auto-advance, deduped: every mirrored page reports at once.

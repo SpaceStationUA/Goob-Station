@@ -766,3 +766,23 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
   video. Users can still leave deliberately by picking another channel.
 - Design rule refined: playback is reverted to the room clock everywhere
   EXCEPT during ads; the player UI stays the user's.
+
+### TV sync v4 (2026-09-19): idempotent transport, seek retry, one window
+- **Double-play rewind**: pressing play while already playing reset Stamp
+  without advancing Pos, so `VideoPos` snapped back to the old anchor.
+  `play`/`pause` are now idempotent (no-op when already in that state),
+  and `seekTo` sets Playing=true. The clock is fully "Pos + elapsed".
+- **Reopen → ad → starts at 0**: a fresh load begins at 0 and a pre-roll
+  ad swallows the initial seek. Added `_needSeek`: after a (re)navigation
+  the client re-issues the room-position seek every tick (skipping while
+  an ad is showing, `ad` now reported in the page state) until the real
+  video lands within 3s of the target.
+- **Multiple windows per TV**: `WebTvWindow`/`WebTvPickerWindow` keep a
+  static per-NetEntity registry; `OpenFor` focuses the existing window
+  instead of opening a duplicate. Verbs + dev commands go through it.
+- **Lock couldn't unlock**: the verb read `entity.Comp.Locked`, but the
+  component is server-only, so the client always saw false and always
+  sent lock=true. Verbs now read the networked room mirror (and request
+  it on right-click); `Locked` is the group's (mirrors reflect the
+  root), so locking any TV in a net locks the group and every member's
+  verb then offers unlock.

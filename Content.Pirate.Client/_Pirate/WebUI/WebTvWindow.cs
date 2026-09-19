@@ -66,6 +66,15 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private double _ourDur;
     private bool _ourPlaying;
     private bool _ourMuted;
+    private bool _ourInAd;
+
+    /// <summary>
+    ///     Set after (re)navigating: we must seek to the room position, and
+    ///     keep re-issuing it until the page's real (non-ad) video lands
+    ///     there — a fresh load starts at 0 and a pre-roll ad eats early
+    ///     seeks.
+    /// </summary>
+    private bool _needSeek;
 
     // Room truth we already acted on.
     private string _shownUrl = "";
@@ -190,12 +199,49 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
 
         // AlwaysActive browsers survive window closes; drop the browser here
         // to stop background audio.
-        OnClose += () => { try { _web.AlwaysActive = false; } catch { } };
+        OnClose += () =>
+        {
+            try { _web.AlwaysActive = false; } catch { }
+            UnregisterWindow();
+        };
+    }
+
+    // ===== one window per TV (client-side) =====
+
+    private static readonly System.Collections.Generic.Dictionary<int, WebTvWindow> _openByTv = new();
+
+    /// <summary>True when this TV already has a viewer window open.</summary>
+    public static bool TryGetOpen(NetEntity tv, out WebTvWindow? found)
+    {
+        lock (_openByTv)
+            return _openByTv.TryGetValue(tv.GetHashCode(), out found);
+    }
+
+    private void RegisterWindow()
+    {
+        if (TvUid == null)
+            return;
+        var key = PirateTvClientState.Net(TvUid.Value).GetHashCode();
+        lock (_openByTv)
+            _openByTv[key] = this;
+    }
+
+    private void UnregisterWindow()
+    {
+        if (TvUid == null)
+            return;
+        var key = PirateTvClientState.Net(TvUid.Value).GetHashCode();
+        lock (_openByTv)
+        {
+            if (_openByTv.TryGetValue(key, out var w) && w == this)
+                _openByTv.Remove(key);
+        }
     }
 
     /// <summary>Opens centered and shows whatever its TV currently plays.</summary>
     public void OpenCenteredTv()
     {
+        RegisterWindow();
         OpenCentered();
         RequestState();
     }
@@ -280,6 +326,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         var playing = ExtractBool(json, "playing");
         var muted = ExtractBool(json, "muted");
         var ended = ExtractBool(json, "ended");
+        var ad = ExtractBool(json, "ad");
         if (t != null)
             _ourPos = Math.Max(0, t.Value);
         if (dur != null)
@@ -288,6 +335,8 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             _ourPlaying = playing.Value;
         if (muted != null)
             _ourMuted = muted.Value;
+        if (ad != null)
+            _ourInAd = ad.Value;
 
         // Finished = the element says so, or we're within half a second of
         // the end (they behave identically: the room rolls to the next).
@@ -372,13 +421,22 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             _appliedPlaying = s.Playing;
         }
 
-        // A room-issued seek bumps Stamp; snap once right away, then the
-        // enforcer keeps us honest.
+        // A room-issued seek bumps Stamp; snap once right away. After a
+        // (re)open the seek is retried each tick until it lands, because a
+        // fresh load starts at 0 and a pre-roll ad swallows early seeks.
         if (s.Stamp != _appliedSeekStamp)
         {
             _appliedSeekStamp = s.Stamp;
+            _needSeek = true;
+        }
+
+        if (_needSeek && !_ourInAd)
+        {
             _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
                                  target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
+            // Satisfied once the page's real video is close to the target.
+            if (_ourDur > 0 && _ourPos >= 0 && Math.Abs(_ourPos - target) < 3)
+                _needSeek = false;
         }
 
         if (s.Muted != _appliedMuted)
@@ -499,13 +557,26 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private void OnNextPressed(BaseButton.ButtonEventArgs _)
         => PirateTvClientState.Send(new PirateTvCommandEvent { Tv = TvNet(), Op = "manual_next" });
 
-    /// <summary>Opens the YouTube picker bound to the same TV.</summary>
+    /// <summary>Opens the YouTube picker bound to the same TV (reused if open).</summary>
     private void OnPickPressed(BaseButton.ButtonEventArgs _)
     {
         if (TvUid == null || !TvUid.Value.IsValid())
             return;
-        var picker = new WebTvPickerWindow { TvUid = TvUid.Value };
-        picker.OpenCenteredPicker();
+        WebTvPickerWindow.OpenFor(TvUid.Value);
+    }
+
+    /// <summary>Opens (or focuses) the viewer for a TV; no duplicates.</summary>
+    public static void OpenFor(EntityUid tv)
+    {
+        if (TryGetOpen(PirateTvClientState.Net(tv), out var existing) && existing != null)
+        {
+            existing.OpenCentered();
+            existing.MoveToFront();
+            return;
+        }
+
+        var window = new WebTvWindow { TvUid = tv };
+        window.OpenCenteredTv();
     }
 
     private void OnPanelToggle(BaseButton.ButtonEventArgs _)
@@ -525,6 +596,8 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _endedPublished = false;
         _appliedPlaying = false;
         _appliedSeekStamp = -1;
+        _needSeek = true;
+        _ourInAd = false;
         _navigatedAtMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         try { _web.Url = s.Url; } catch { /* headless dev */ }
     }

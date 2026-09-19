@@ -182,7 +182,56 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
 
         // The engine keeps AlwaysActive browsers alive past window closes;
         // drain the browser here so no audio keeps spilling in background.
-        OnClose += () => { try { _web.AlwaysActive = false; } catch { } };
+        OnClose += () =>
+        {
+            try { _web.AlwaysActive = false; } catch { }
+            UnregisterWindow();
+        };
+    }
+
+    // ===== one picker per TV (client-side) =====
+
+    private static readonly System.Collections.Generic.Dictionary<int, WebTvPickerWindow> _openByTv = new();
+
+    public static bool TryGetOpen(NetEntity tv, out WebTvPickerWindow? found)
+    {
+        lock (_openByTv)
+            return _openByTv.TryGetValue(tv.GetHashCode(), out found);
+    }
+
+    private void RegisterWindow()
+    {
+        if (TvUid == null)
+            return;
+        var key = PirateTvClientState.Net(TvUid.Value).GetHashCode();
+        lock (_openByTv)
+            _openByTv[key] = this;
+    }
+
+    private void UnregisterWindow()
+    {
+        if (TvUid == null)
+            return;
+        var key = PirateTvClientState.Net(TvUid.Value).GetHashCode();
+        lock (_openByTv)
+        {
+            if (_openByTv.TryGetValue(key, out var w) && w == this)
+                _openByTv.Remove(key);
+        }
+    }
+
+    /// <summary>Opens (or focuses) the picker for a TV; no duplicates.</summary>
+    public static void OpenFor(EntityUid tv)
+    {
+        if (TryGetOpen(PirateTvClientState.Net(tv), out var existing) && existing != null)
+        {
+            existing.OpenCentered();
+            existing.MoveToFront();
+            return;
+        }
+
+        var window = new WebTvPickerWindow { TvUid = tv };
+        window.OpenCenteredPicker();
     }
 
     /// <summary>Navigates the fenced browser to a YouTube search.</summary>
@@ -203,6 +252,7 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
 
     public void OpenCenteredPicker()
     {
+        RegisterWindow();
         OpenCentered();
         _confirmPanel.Visible = false;
         RefreshRoom();

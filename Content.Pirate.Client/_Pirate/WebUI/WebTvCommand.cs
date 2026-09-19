@@ -32,8 +32,7 @@ public sealed class WebTvCommand : IConsoleCommand
         if (!TryNearestTv(shell, out var uid))
             return;
 
-        var window = new WebTvWindow { TvUid = uid };
-        window.OpenCenteredTv();
+        WebTvWindow.OpenFor(uid);
     }
 
     internal static bool TryNearestTv(IConsoleShell shell, out EntityUid uid)
@@ -95,7 +94,6 @@ public sealed class WebTvPickCommand : IConsoleCommand
         if (!WebTvCommand.TryNearestTv(shell, out var uid))
             return;
 
-        var window = new WebTvPickerWindow { TvUid = uid };
-        window.OpenCenteredPicker();
+        WebTvPickerWindow.OpenFor(uid);
     }
 }
