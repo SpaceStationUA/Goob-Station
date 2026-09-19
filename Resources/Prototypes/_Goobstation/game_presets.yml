@@ -15,6 +15,7 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Traitorling
@@ -30,6 +31,7 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: NukeTraitor
@@ -46,6 +48,7 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: NukeLing
@@ -61,6 +64,7 @@
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: RevTraitor
@@ -76,6 +80,7 @@
     - CalmTraitor
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: RevLing
@@ -92,6 +97,7 @@
     - MeteorSwarmScheduler
     - BasicRoundstartVariation
     - BasicRoundstartVariation
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Blob
@@ -106,6 +112,7 @@
   - AntagStationEventScheduler
   - BasicRoundstartVariation
   - SubGamemodesRule
+  - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Honkops
@@ -121,6 +128,7 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: TheGhost
@@ -136,6 +144,7 @@
     - SubGamemodesRule
     - RareIonStormScheduler
     - SpaceTrafficControlFriendlyEventScheduler
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: TheGuide
@@ -151,6 +160,7 @@
     - SubGamemodesRule
     - IonStormScheduler
     - SpaceTrafficControlEventScheduler
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretPlusLow
@@ -164,6 +174,7 @@
   rules:
     - SecretPlusLow
     - MeteorSwarmMildScheduler
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretPlusMid
@@ -177,6 +188,7 @@
   rules:
     - SecretPlusMid
     - MeteorSwarmScheduler
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretPlusAdmeme
@@ -191,6 +203,7 @@
   rules:
     - SecretPlusAdmeme
     - MeteorSwarmScheduler
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SurvivalPlusMid
@@ -201,9 +214,11 @@
   name: survivalplus-title
   description: survivalplus-description
   showInVote: true
+  minPlayers: 100 # Pirate
   rules:
     - SecretPlusRampingMid
     - MeteorSwarmScheduler
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: Xenomorphs

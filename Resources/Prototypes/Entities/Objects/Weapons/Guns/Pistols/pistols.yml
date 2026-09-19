@@ -7,6 +7,8 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
+  - type: WeaponClass # Pirate
+    class: Pistol
   - type: Sprite
     layers:
       - state: base
@@ -101,6 +103,7 @@
     wideAnimationRotation: 90 # -90 if it takes bayonets (hits with muzzle) 90 if not (hits with butt)
     soundHit:
       collection: MetalThud # Goobstation ^
+  - type: CanTakeAim # PIRATE
 
 - type: entity
   name: Viper
@@ -110,14 +113,24 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-  - type: ItemSlots
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0.03125, 0.15625"
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 2 # DOWNSTREAM-TPirates: gun flashlights - between chamber and magazine
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazinePistolHighCapacity
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3 # DOWNSTREAM-TPirates: gun flashlights - flashlight sits between chamber and magazine
         whitelist:
           tags:
             - MagazinePistol
@@ -129,8 +142,10 @@
         whitelist:
           tags:
             - CartridgePistol
-  - type: ContainerContainer
+  - type: ItemUpgradeable # DOWNSTREAM-TPirates: gun flashlights
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
     containers:
+      flashlight: !type:ContainerSlot
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
@@ -157,8 +172,12 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
-  - type: ContainerContainer
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0.03125, 0.15625"
+  - type: Appearance
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
     containers:
+      flashlight: !type:ContainerSlot
       ballistic-ammo: !type:Container
   - type: BallisticAmmoProvider
     whitelist:
@@ -171,6 +190,17 @@
     autoRefillRate: 4s
     affectedByEmp: true
   - type: AmmoCounter
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 0 # DOWNSTREAM-TPirates: gun flashlights - lowest eject priority
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ItemUpgradeable # DOWNSTREAM-TPirates: gun flashlights
 
 - type: entity
   name: Cobra
@@ -185,6 +215,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "-0.03125, 0.1875"
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
   - type: ChamberMagazineAmmoProvider
@@ -198,14 +230,22 @@
     projectileSpeed: 35 # Goobstation
     availableModes:
     - SemiAuto
-  - type: ItemSlots
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 2 # DOWNSTREAM-TPirates: gun flashlights - between chamber and magazine
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazinePistolCaselessRifle
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3 # DOWNSTREAM-TPirates: gun flashlights - flashlight sits between chamber and magazine
         whitelist:
           tags:
             - MagazinePistolCaselessRifle
@@ -216,8 +256,10 @@
         whitelist:
           tags:
             - CartridgeCaselessRifle
-  - type: ContainerContainer
+  - type: ItemUpgradeable # DOWNSTREAM-TPirates: gun flashlights
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
     containers:
+      flashlight: !type:ContainerSlot
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
@@ -236,6 +278,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0, 0.15625"
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Item
@@ -255,12 +299,22 @@
       flashlight: !type:ContainerSlot
   - type: ItemSlots
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 2
+        insertDelay: 0.4
+        ejectDelay: 0.2
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3
         whitelist:
           tags:
             - MagazinePistol
@@ -272,22 +326,6 @@
         whitelist:
           tags:
             - CartridgePistol
-      flashlight:
-        name: weapon-upgrade-slot-name-flashlight
-        priority: 1
-        insertDelay: 0.4
-        ejectDelay: 0.2
-        ejectOnBreak: true
-        occludesLight: false
-        whitelist:
-          components:
-          - GunUpgradeFlashlight
-  - type: ItemMapper
-    mapLayers:
-      flashlight:
-        whitelist:
-          components:
-          - GunUpgradeFlashlight
   # mk58 upgrade end
   - type: StealTarget
     stealGroup: OfficerHandgun
@@ -305,6 +343,8 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
+    offset: "0, 0.1875"
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
   - type: Gun
@@ -319,14 +359,22 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg # Goob edit
-  - type: ItemSlots
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
     slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 2 # DOWNSTREAM-TPirates: gun flashlights - between chamber and magazine
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
       gun_magazine:
         name: Magazine
         startingItem: MagazineMagnum
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
+        priority: 3 # DOWNSTREAM-TPirates: gun flashlights - flashlight sits between chamber and magazine
         whitelist:
           tags:
             - MagazineMagnum
@@ -337,5 +385,11 @@
         whitelist:
           tags:
             - CartridgeMagnum
+  - type: ItemUpgradeable # DOWNSTREAM-TPirates: gun flashlights
+  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
+    containers:
+      flashlight: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
   - type: Multishot #Goob
     spreadMultiplier: 30

@@ -10,6 +10,7 @@ using Content.Server.NPC.Pathfinding;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Whitelist;
 
 namespace Content.Goobstation.Server.Xenobiology.HTN;
@@ -77,7 +78,9 @@ public sealed partial class PickSlimeLatchTargetOperator : HTNOperator
             if (_latchedQuery.HasComp(entity)
             || _dotQuery.HasComp(entity) // it's taken
             || _mobSystem.IsDead(entity)
-            || growthComp.IsFirstStage && entity == slimeComp.Tamer) // no killing tamer
+            || growthComp.IsFirstStage && entity == slimeComp.Tamer // no killing tamer
+            || entity == slimeComp.Tamer && _hunger.IsHungerAboveState(owner, HungerThreshold.Peckish) // no killing tamer unless very hungry
+            || (_ent.TryGetComponent<HumanoidAppearanceComponent>(entity, out var targetHumanoid) && targetHumanoid.Species == "SlimePerson")) // Pirate: slime kinship - slimes don't hunt their own kind
                 continue;
 
             targets.Add(entity);
