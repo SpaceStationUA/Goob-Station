@@ -27,6 +27,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
     <Import Project="..\RobustToolbox\Imports\Client.props" />
     <Import Project="..\RobustToolbox\Imports\Shared.props" />
+    <Import Project="..\RobustToolbox\Imports\WebView.props" />
 
     <ItemGroup>
       <ProjectReference Include="..\Content.Client\Content.Client.csproj" />
@@ -37,4 +38,17 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
     <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
     <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
+
+    <!--
+      Pirate: Robust.Client.WebView must NOT sit next to the content assemblies.
+      If it does, the engine loads it twice (module ALC via ROBUST_MODULE_* and
+      the default ALC next to content), producing two incompatible copies of
+      its types and breaking IoC registration. The canonical copy lives in
+      bin/modules/Robust.Client.WebView (see Scripts/sh/runclient-webui.sh)
+      which matches how the launcher unpacks module zips.
+    -->
+    <Target Name="StripWebViewModuleOutOfBin" Condition="'$(PirateStripWebView)' == '1'" AfterTargets="Build">
+      <Delete Files="$(OutputPath)Robust.Client.WebView.dll;$(OutputPath)Robust.Client.WebView.pdb;$(OutputPath)Robust.Client.WebView.deps.json;$(OutputPath)Robust.Client.WebView.runtimeconfig.json;$(OutputPath)SpaceWizards.CefGlue.dll;$(OutputPath)SpaceWizards.CefGlue.pdb" />
+    </Target>
+
 </Project>

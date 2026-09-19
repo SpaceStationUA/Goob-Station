@@ -10,7 +10,6 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client._Impstation.Stylesheets;
 
-[Virtual]
 public partial class SyndicateStylesheet : CommonStylesheet
 {
     public override string StylesheetName => "Syndicate";
