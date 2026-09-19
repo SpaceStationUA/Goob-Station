@@ -78,11 +78,11 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     // frame created fresh buttons under the cursor (a storm of hover
     // sounds) and churned the layout.
     private string _queueSignature = "";
-    private long _lastSeekAtMs;
-    private double _lastSeekTarget = -1;
 
     // Last transport the room told us to apply (avoids per-frame fighting).
     private bool _appliedPlaying;
+    private bool _appliedMuted;
+    private long _appliedSeekStamp = -1;
 
     private bool _disposed;
 
@@ -181,7 +181,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _back60.OnPressed += _ => Owner_Send("seek", -60);
         _fwd10.OnPressed += _ => Owner_Send("seek", 10);
         _fwd60.OnPressed += _ => Owner_Send("seek", 60);
-        _mute.OnPressed += _ => Owner_Send("mute", _ourMuted ? 0 : 1);
+        _mute.OnPressed += _ => Owner_Send("mute", Snapshot().Muted ? 0 : 1);
         _next.OnPressed += OnNextPressed;
         _panelToggle.OnPressed += OnPanelToggle;
         _pick.OnPressed += OnPickPressed;
@@ -230,7 +230,12 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
 
         RequestState();
         _ipc.Pump();
-        _driver.Tick(args.DeltaSeconds);
+
+        var room = Snapshot();
+        var enforce = room.Kind != WebTvChannel.WebTvKind.None && room.Url.Length > 0;
+        _driver.Tick(args.DeltaSeconds,
+            PirateTvClientState.VideoPos(room, room.Stamp), room.Playing, room.Muted, enforce);
+
         FollowRoomClock();
         RangeCheck();
     }
@@ -353,66 +358,31 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         }
 
         var target = PirateTvClientState.VideoPos(s, s.Stamp);
-        // Apply transport when the ROOM's play/pause state changes, not on a
-        // per-frame diff: comparing our page truth to the server every frame
-        // let a still-buffering page keep re-issuing play and fight (and
-        // undo) a pause.
+
+        // The driver's enforcer re-asserts play/pause/position/mute every
+        // tick, so we only remember the room truth here (see Tick call in
+        // FrameUpdate). Apply an immediate command too, so a button press
+        // feels instant rather than waiting up to a tick.
         if (s.Playing != _appliedPlaying)
         {
-            // While paused the room clock is a fixed anchor: just pause,
-            // never seek (seeking a paused YouTube player can resume it).
-            if (!s.Playing)
-            {
-                _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"pause\"}");
-                _appliedPlaying = false;
-                return;
-            }
-
-            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"play\"}");
-            _appliedPlaying = true;
+            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"" + (s.Playing ? "play" : "pause") + "\"}");
+            _appliedPlaying = s.Playing;
         }
 
-        // Only chase drift while the room is playing.
-        if (s.Playing)
-            SyncSeek(s, target);
-    }
-
-    /// <summary>
-    ///     Drift correction with hysteresis. Never seeks a player that has
-    ///     not started streaming yet (a fresh video reports t≈0 while it
-    ///     buffers; seeking then spins forever), and at most once a second
-    ///     otherwise.
-    /// </summary>
-    private void SyncSeek(PirateTvClientState.Entry s, double target)
-    {
-        if (_ourPos < 0)
-            return;
-
-        // Fresh/unloaded player: let it buffer and start; do not drag it.
-        if (_ourDur <= 0 || (_ourPos <= 1 && !_ourPlaying))
+        // A room-issued seek bumps Stamp; snap once right away, then the
+        // enforcer keeps us honest.
+        if (s.Stamp != _appliedSeekStamp)
         {
-            _lastSeekTarget = -1;
-            return;
+            _appliedSeekStamp = s.Stamp;
+            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
+                                 target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
         }
 
-        if (Math.Abs(_ourPos - target) <= 5.0)
+        if (s.Muted != _appliedMuted)
         {
-            _lastSeekTarget = -1;
-            return;
+            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"mute\",\"arg\":" + (s.Muted ? 1 : 0) + "}");
+            _appliedMuted = s.Muted;
         }
-
-        var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        if (now - _lastSeekAtMs < 1000)
-            return;
-
-        // If we just seeked to ~this position, let the player catch up.
-        if (_lastSeekTarget >= 0 && Math.Abs(_lastSeekTarget - target) < 2.0)
-            return;
-
-        _lastSeekAtMs = now;
-        _lastSeekTarget = target;
-        _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
-                             target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
     }
 
     private void UpdateSourceChip(PirateTvClientState.Entry s)
@@ -428,6 +398,8 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _ourDur = 0;
         _endedPublished = false;
         _appliedPlaying = false;
+        _appliedMuted = false;
+        _appliedSeekStamp = -1;
         _status.Text = "канал: (нічого не грає)";
         try { _web.Url = "about:blank"; } catch { /* headless dev */ }
     }
@@ -549,6 +521,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _ourDur = 0;
         _endedPublished = false;
         _appliedPlaying = false;
+        _appliedSeekStamp = -1;
         try { _web.Url = s.Url; } catch { /* headless dev */ }
     }
 
@@ -571,15 +544,20 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
                 {
                     Tv = tv,
                     Op = "pause",
-                    Arg = _ourPos < 0 ? 0 : _ourPos,
+                    Arg = _ourPos < 0 ? Snapshot().Pos : _ourPos,
                 });
                 break;
             case "play":
                 PirateTvClientState.Send(new PirateTvCommandEvent { Tv = tv, Op = "play" });
                 break;
+            case "mute":
+                PirateTvClientState.Send(new PirateTvCommandEvent { Tv = tv, Op = "mute", Arg = arg });
+                break;
             case "seek":
                 {
-                    var basePos = _ourPos < 0 ? 0 : _ourPos;
+                    // Seek from the ROOM's position (our page may have drifted).
+                    var s = Snapshot();
+                    var basePos = _ourPos < 0 ? s.Pos : _ourPos;
                     var target = Math.Max(0, basePos + arg);
 
                     // A forward jump that crosses the end rolls to the next

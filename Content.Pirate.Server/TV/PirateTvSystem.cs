@@ -415,7 +415,8 @@ public sealed class PirateTvSystem : EntitySystem
                 master.Queue[master.Now].Title = title;
                 break;
             case "mute":
-                return; // local-only control; no room impact
+                master.Muted = msg.Arg > 0.5;
+                break;
             default:
                 return;
         }
@@ -426,6 +427,7 @@ public sealed class PirateTvSystem : EntitySystem
             "pause" => "ставить на паузу",
             "play" => "вмикає",
             "seekTo" => "перематує",
+            "mute" => master.Muted ? "вимикає звук" : "вмикає звук",
             _ => msg.Op,
         });
     }
@@ -537,6 +539,7 @@ public sealed class PirateTvSystem : EntitySystem
         to.Kind = from.Kind;
         to.Label = from.Label;
         to.Playing = from.Playing;
+        to.Muted = from.Muted;
         to.Pos = from.Pos;
         to.Stamp = from.Stamp;
         to.Locked = from.Locked;
@@ -550,6 +553,7 @@ public sealed class PirateTvSystem : EntitySystem
         comp.Kind = 0;
         comp.Label = "";
         comp.Playing = false;
+        comp.Muted = false;
         comp.Pos = 0;
         comp.Stamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         comp.Locked = false;
@@ -567,6 +571,7 @@ public sealed class PirateTvSystem : EntitySystem
             Kind = comp.Kind,
             Label = comp.Label,
             Playing = comp.Playing,
+            Muted = comp.Muted,
             Pos = comp.Pos,
             Stamp = comp.Stamp,
             Locked = comp.Locked,

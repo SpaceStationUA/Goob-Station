@@ -35,6 +35,7 @@ public static class PirateTvClientState
         public WebTvChannel.WebTvKind Kind = WebTvChannel.WebTvKind.None;
         public string Label = "";
         public bool Playing;
+        public bool Muted;
         public double Pos;
         public long Stamp;
         public bool Locked;
@@ -94,6 +95,7 @@ public static class PirateTvClientState
             Kind = (WebTvChannel.WebTvKind)msg.Kind,
             Label = msg.Label,
             Playing = msg.Playing,
+            Muted = msg.Muted,
             Pos = msg.Pos,
             Stamp = msg.Stamp,
             Locked = msg.Locked,

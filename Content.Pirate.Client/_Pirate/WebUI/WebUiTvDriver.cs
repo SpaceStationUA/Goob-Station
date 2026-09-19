@@ -32,7 +32,18 @@ public sealed class WebUiTvDriver
     /// </summary>
     private double _tickAccumulator;
 
-    public void Tick(double dt)
+    /// <summary>
+    ///     Called from the window's FrameUpdate; drives the idempotent
+    ///     injection plus the room-state enforcer. Each navigation gets a
+    ///     fresh frame, so the guard resets by itself and the hook installs
+    ///     again ~every 500 ms.
+    /// </summary>
+    /// <param name="enforce">
+    ///     When true, the injected script re-asserts the room's play/pause,
+    ///     position and mute, and suppresses the page's own controls so a
+    ///     stray click cannot desync the room. False while no channel plays.
+    /// </param>
+    public void Tick(double dt, double roomPos, bool roomPlaying, bool roomMuted, bool enforce)
     {
         _tickAccumulator += dt;
         if (_tickAccumulator < 0.5)
@@ -40,15 +51,45 @@ public sealed class WebUiTvDriver
         _tickAccumulator = 0;
         try
         {
-            // One inline round per tick: install (idempotent), then report.
-            // Chrome throttles page timers on hidden pages, so the work is
-            // driven from this engine-side evaluation instead of setInterval.
-            _web.ExecuteJavaScript(HookScript + TickScript);
+            // One inline round per tick: install (idempotent), enforce the
+            // room state, then report. Chrome throttles page timers on
+            // hidden pages, so the work is driven from this engine-side
+            // evaluation instead of setInterval.
+            var pos = roomPos.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
+            _web.ExecuteJavaScript(HookScript + (enforce
+                ? EnforceScript(pos, roomPlaying, roomMuted)
+                : "") + TickScript);
         }
         catch (Exception e)
         {
             Logger.DebugS("webui.tv", $"tick failed: {e}");
         }
+    }
+
+    /// <summary>
+    ///     Re-asserts the room clock and blocks page-initiated transport:
+    ///     disables the player's own pointer events/controls so clicking the
+    ///     video or its timeline cannot pause/seek, then snaps play/pause,
+    ///     position and mute back to the room's values.
+    /// </summary>
+    private static string EnforceScript(string pos, bool playing, bool muted)
+    {
+        return "(function(){" +
+               "try {" +
+               "  var v = document.querySelector('video');" +
+               "  if (!v) { return; }" +
+               "  window.__tuiRoom = { t: " + pos + ", playing: " + (playing ? "true" : "false") +
+               ", muted: " + (muted ? "true" : "false") + " };" +
+               // Suppress the page's own controls so only the remote steers.
+               "  var p = document.querySelector('.html5-video-player');" +
+               "  if (p && p.style.pointerEvents !== 'none') {" +
+               "    p.style.pointerEvents = 'none';" +
+               "    p.style.cursor = 'default';" +
+               "  }" +
+               "  var ctrls = document.querySelectorAll('.ytp-chrome-bottom,.ytp-chrome-controls,.ytp-progress-bar-container,.ytp-gradient-bottom');" +
+               "  for (var i = 0; i < ctrls.length; i++) { ctrls[i].style.display = 'none'; }" +
+               "} catch (e) {}" +
+               "})();";
     }
 
     public void ApplyCommand(string commandJson)
@@ -120,6 +161,24 @@ public sealed class WebUiTvDriver
     /// remains its own session but our TV keeps the viewer pinned.</summary>
     private const string TickScript =
         "(function(){" +
+        // Enforce the room's transport BEFORE reporting/deduping, so a local
+        // click or the video's own controls cannot desync us.
+        "try {" +
+        "  var v = document.querySelector('video');" +
+        "  var r = window.__tuiRoom;" +
+        "  if (v && r) {" +
+        "    if (!v.paused !== r.playing) {" +
+        "      if (r.playing) { v.play(); } else { v.pause(); }" +
+        "    }" +
+        "    if (r.playing && (v.duration || 0) > 0) {" +
+        "      var drift = (v.currentTime || 0) - r.t;" +
+        "      if (drift > 3 || drift < -3) { v.currentTime = r.t; }" +
+        "    } else if (!r.playing && (v.duration || 0) > 0 && Math.abs((v.currentTime || 0) - r.t) > 3) {" +
+        "      v.currentTime = r.t;" +
+        "    }" +
+        "    if (!!v.muted !== r.muted) { v.muted = r.muted; }" +
+        "  }" +
+        "} catch (e) {}" +
         "try {" +
         "  var v = document.querySelector('video');" +
         "  if (!v) { return; }" +

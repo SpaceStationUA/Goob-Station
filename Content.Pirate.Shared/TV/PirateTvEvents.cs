@@ -32,6 +32,7 @@ public sealed class PirateTvStateEvent : EntityEventArgs
     public int Kind;
     public string Label = "";
     public bool Playing;
+    public bool Muted;
     public double Pos;
     public long Stamp;
     public bool Locked;

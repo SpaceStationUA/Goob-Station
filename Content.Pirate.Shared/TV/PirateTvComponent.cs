@@ -29,6 +29,10 @@ public sealed partial class PirateTvComponent : Component
     [DataField]
     public bool Playing;
 
+    /// <summary>Room mute state (synced; the remote toggles it for everyone).</summary>
+    [DataField]
+    public bool Muted;
+
     [DataField]
     public double Pos;
 
