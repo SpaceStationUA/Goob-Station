@@ -817,3 +817,21 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
   * AMBIENT drift (no Stamp change): >3s and at most once per 3s.
 - Note: the server bumps Stamp on play too, so unpause now forces a
   position sync on every window, not just a play flag flip.
+
+### TV sync v7 (2026-09-19): server proven, client simplified
+- **Server verified correct by direct probe**: `tvdbg` console command
+  spawned two TVs, linked them, picked, and seeked 42 — logs show
+  `b.Source` set, `b.Playing`/`b.queue` copied, and `b.pos=42.0` after
+  seek. So Pos IS stored and propagated. (Probe kept as
+  `PirateTvServer/PirateTvDebugCommand.cs` + `ApplySeek`, temporary.)
+- Client position logic collapsed to a single authoritative mirror:
+  every frame, if `|_ourPos - target| > 2` and not in an ad and dur>0 and
+  not (page&room both at start), seek to the room target. No more
+  pending/stamp/cooldown state machine (it had too many ways to silently
+  no-op). The `(page<=1 && target<=1)` guard is the only spinner
+  protection; dur>0 the other.
+- Added `[TVDBG] RECV` / `[TVDBG] SEEK` client logs (and `[TVDBG] cmd` /
+  `[TVDBG] mutate` server logs) so a failing round yields data instead of
+  guesses. Remove before shipping.
+- Lesson: keep one writer and one policy for position; verify the
+  server with a console probe before touching the client again.

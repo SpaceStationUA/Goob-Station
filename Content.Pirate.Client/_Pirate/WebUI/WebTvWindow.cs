@@ -74,19 +74,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     ///     there — a fresh load starts at 0 and a pre-roll ad eats early
     ///     seeks.
     /// </summary>
-    /// <summary>
-    ///     Set after a room-issued seek (Stamp change) or a (re)navigation:
-    ///     keep re-issuing the seek until the page lands near the target. A
-    ///     fresh load starts at 0 and a pre-roll ad swallows early seeks, so
-    ///     this retries ~once a second until it takes.
-    /// </summary>
-    private bool _pendingRoomSeek;
-    private double _pendingSeekTarget;
-    private long _lastRoomSeekAtMs;
-
-    /// <summary>Ambient drift corrections (buffering/ad), at most every 3s.</summary>
-    private long _lastDriftSeekAtMs;
-
     // Room truth we already acted on.
     private string _shownUrl = "";
     private long _followedStamp = -1;
@@ -104,7 +91,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     // Last transport the room told us to apply (avoids per-frame fighting).
     private bool _appliedPlaying;
     private bool _appliedMuted;
-    private long _appliedSeekStamp = -1;
 
     private bool _disposed;
 
@@ -421,68 +407,40 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         }
 
         var target = PirateTvClientState.VideoPos(s, s.Stamp);
+        Robust.Shared.Log.Logger.InfoS("webui.tv.dbg",
+            $"[TVDBG] RECV tv={TvNet()} roomPos={s.Pos:0.0} playing={s.Playing} stamp={s.Stamp} target={target:0.0} ourPos={_ourPos:0.0} dur={_ourDur:0.0} ad={_ourInAd}");
 
-        // The driver's enforcer re-asserts play/pause/position/mute every
-        // tick, so we only remember the room truth here (see Tick call in
-        // FrameUpdate). Apply an immediate command too, so a button press
-        // feels instant rather than waiting up to a tick.
+        // Keep the page's play/pause and mute in step immediately (the tick
+        // enforcer also nudges them, but this makes button presses instant).
         if (s.Playing != _appliedPlaying)
         {
             _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"" + (s.Playing ? "play" : "pause") + "\"}");
             _appliedPlaying = s.Playing;
         }
 
-        // A room-issued seek (Stamp changed) must land on EVERY window: retry
-        // it promptly until the page reports a position near the target.
-        // Ambient drift is handled separately below with a gentler policy.
-        if (s.Stamp != _appliedSeekStamp)
-        {
-            _appliedSeekStamp = s.Stamp;
-            _pendingRoomSeek = true;
-            _pendingSeekTarget = target;
-            _lastRoomSeekAtMs = 0;
-        }
-
-        // Follow the room clock's *advancing* target when playing, so a
-        // late-joining window stays current.
-        if (_pendingRoomSeek)
-            _pendingSeekTarget = s.Playing ? target : s.Pos;
-
-        if (_pendingRoomSeek && !_ourInAd && _ourDur > 0)
-        {
-            var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            var want = _pendingSeekTarget;
-            if (Math.Abs(_ourPos - want) < 3)
-            {
-                _pendingRoomSeek = false;
-            }
-            else if (now - _lastRoomSeekAtMs > 1000)
-            {
-                _lastRoomSeekAtMs = now;
-                SeekTo(want);
-            }
-        }
-
-        // Gentle ambient drift correction (buffering stutter, ad spillover):
-        // only when not already chasing a room seek, off by >3s, and once
-        // every 3s.
-        if (!_pendingRoomSeek && !_ourInAd && _ourDur > 0 && s.Playing)
-        {
-            if (Math.Abs(_ourPos - target) > 3)
-            {
-                var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                if (now - _lastDriftSeekAtMs > 3000)
-                {
-                    _lastDriftSeekAtMs = now;
-                    SeekTo(target);
-                }
-            }
-        }
-
         if (s.Muted != _appliedMuted)
         {
             _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"mute\",\"arg\":" + (s.Muted ? 1 : 0) + "}");
             _appliedMuted = s.Muted;
+        }
+
+        // The room clock is authoritative: mirror the position every frame.
+        // Two guards only, both about not breaking the player itself:
+        //  * never while an ad is on (the player is not on our video);
+        //  * never while the real video has no duration yet, nor while both
+        //    the page and the room are at the very start (a fresh load would
+        //    restart its buffer forever).
+        // 2s of slack absorbs normal buffering; one idempotent seek per frame
+        // is cheap and self-corrects any local scrub or ad drift.
+        if (_ourInAd || _ourDur <= 0)
+            return;
+        if (_ourPos <= 1 && target <= 1)
+            return;
+        if (Math.Abs(_ourPos - target) > 2)
+        {
+            Robust.Shared.Log.Logger.InfoS("webui.tv.dbg",
+                $"[TVDBG] SEEK tv={TvNet()} from={_ourPos:0.0} to={target:0.0} roomPos={s.Pos:0.0} playing={s.Playing} dur={_ourDur:0.0}");
+            SeekTo(target);
         }
     }
 
@@ -500,8 +458,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _endedPublished = false;
         _appliedPlaying = false;
         _appliedMuted = false;
-        _appliedSeekStamp = -1;
-        _pendingRoomSeek = false;
         _status.Text = "канал: (нічого не грає)";
         try { _web.Url = "about:blank"; } catch { /* headless dev */ }
     }
@@ -636,12 +592,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _ourDur = 0;
         _endedPublished = false;
         _appliedPlaying = false;
-        _appliedSeekStamp = -1;
-        _pendingRoomSeek = true;
-        _pendingSeekTarget = s.Playing
-            ? PirateTvClientState.VideoPos(s, s.Stamp)
-            : s.Pos;
-        _lastRoomSeekAtMs = 0;
         _ourInAd = false;
         _navigatedAtMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         try { _web.Url = s.Url; } catch { /* headless dev */ }

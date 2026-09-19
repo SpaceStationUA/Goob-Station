@@ -229,6 +229,16 @@ public sealed class PirateTvSystem : EntitySystem
         NavTo(masterUid, master, master.Queue.Count - 1);
     }
 
+    /// <summary>Applies a seek to the room (public for tests/probes).</summary>
+    public void ApplySeek(EntityUid uid, PirateTvComponent comp, double pos)
+    {
+        var (masterUid, master) = ResolveMaster(uid, comp);
+        master.Pos = Math.Max(0, pos);
+        master.Stamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        master.Playing = true;
+        Mutate(masterUid, master);
+    }
+
     private void OnQueueAdd(PirateTvQueueAddEvent msg, EntitySessionEventArgs args)
     {
         if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
@@ -369,6 +379,7 @@ public sealed class PirateTvSystem : EntitySystem
 
         var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
         var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        Log.Info($"[TVDBG] cmd={msg.Op} arg={msg.Arg:0.0} tv={uid} root={masterUid} pos={master.Pos:0.0} playing={master.Playing}");
 
         switch (msg.Op)
         {
@@ -533,6 +544,7 @@ public sealed class PirateTvSystem : EntitySystem
     /// </summary>
     private void Mutate(EntityUid uid, PirateTvComponent comp)
     {
+        Log.Info($"[TVDBG] mutate root={uid} pos={comp.Pos:0.0} playing={comp.Playing} queue={comp.Queue.Count}");
         PushState(uid, comp);
 
         var net = GetNetEntity(uid);
