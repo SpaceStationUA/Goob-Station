@@ -76,6 +76,11 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     /// </summary>
     private bool _needSeek;
 
+    /// <summary>Last drift-correction seek: rate-limits retries so we never
+    /// re-seek a still-buffering player into a permanent spinner.</summary>
+    private long _lastSeekAtMs;
+    private double _lastSeekTarget = -1;
+
     // Room truth we already acted on.
     private string _shownUrl = "";
     private long _followedStamp = -1;
@@ -422,21 +427,40 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         }
 
         // A room-issued seek bumps Stamp; snap once right away. After a
-        // (re)open the seek is retried each tick until it lands, because a
-        // fresh load starts at 0 and a pre-roll ad swallows early seeks.
+        // (re)open the seek is retried, but SLOWLY and never while the page
+        // has no real duration yet — a fresh load reports t≈0/dur=0, and
+        // re-seeking a still-loading player just restarts the buffer forever
+        // (the "spinner with a moving timeline" bug).
         if (s.Stamp != _appliedSeekStamp)
         {
             _appliedSeekStamp = s.Stamp;
             _needSeek = true;
+            _lastSeekAtMs = 0;
         }
 
         if (_needSeek && !_ourInAd)
         {
-            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
-                                 target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
-            // Satisfied once the page's real video is close to the target.
-            if (_ourDur > 0 && _ourPos >= 0 && Math.Abs(_ourPos - target) < 3)
+            if (_ourDur <= 0)
+            {
+                // Not loaded yet: leave it alone this frame.
+            }
+            else if (_ourPos >= 0 && Math.Abs(_ourPos - target) < 3)
+            {
                 _needSeek = false;
+            }
+            else
+            {
+                var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                // At most one correction every 3s, and after issuing one give
+                // the player time to move before judging it again.
+                if (now - _lastSeekAtMs > 3000)
+                {
+                    _lastSeekAtMs = now;
+                    _lastSeekTarget = target;
+                    _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
+                                         target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
+                }
+            }
         }
 
         if (s.Muted != _appliedMuted)

@@ -199,9 +199,19 @@ public sealed class WebUiTvDriver
         "    }" +
         // Snap to the room clock whenever we're not in an ad — playing or
         // paused. This covers reopening a TV (which starts at 0) and the
-        // post-ad drift; 3s of slack keeps normal buffering from thrashing.
+        // post-ad drift. Two guards keep a still-loading player from being
+        // seeked into a permanent spinner: require a real duration, and
+        // rate-limit corrections to one per 3s with a 2s settle window
+        // after issuing one (before we have a fresh position to judge by).
         "    if ((v.duration || 0) > 0 && Math.abs((v.currentTime || 0) - r.t) > 3) {" +
-        "      try { v.currentTime = r.t; } catch (e) {}" +
+        "      var now = Date.now();" +
+        "      if (!window.__tuiLastSeek || now - window.__tuiLastSeek > 3000) {" +
+        "        window.__tuiLastSeek = now;" +
+        "        window.__tuiSeekAt = (v.currentTime || 0);" +
+        "        try { v.currentTime = r.t; window.__tuiSeekTarget = r.t; } catch (e) {}" +
+        "      }" +
+        "    } else if (window.__tuiSeekTarget && Math.abs((v.currentTime || 0) - window.__tuiSeekTarget) < 3) {" +
+        "      window.__tuiSeekTarget = 0;" +
         "    }" +
         "    if (!!v.muted !== r.muted) { v.muted = r.muted; }" +
         "  }" +

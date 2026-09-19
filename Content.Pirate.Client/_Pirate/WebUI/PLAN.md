@@ -786,3 +786,19 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
   it on right-click); `Locked` is the group's (mirrors reflect the
   root), so locking any TV in a net locks the group and every member's
   verb then offers unlock.
+
+### TV sync v5 (2026-09-19): stop seek-thrash spinner
+- Regression: after v4 the "circle spins, timeline advances, no video"
+  bug returned. Cause: `_needSeek` and the JS enforcer re-issued a
+  position seek EVERY tick (7/s / 150ms) until the page caught up; a
+  freshly navigated player reports t≈0 dur=0, so it was seeked before it
+  could load — each seek restarted the buffer, forever.
+- Fix: corrections are now rate-limited and load-aware. C# `_needSeek`
+  does nothing until `dur > 0`, then at most one seek per 3s. The JS
+  snap requires `dur > 0` and a 3s cooldown, and remembers its target so
+  it stops once the position lands. The `seeking` listener still
+  instantly reverts user scrubs (one-shot; self-seeks no-op because
+  |t-target|<3).
+- Rule of thumb now baked in: NEVER seek a player whose duration is 0 or
+  that was just seeked seconds ago — YouTube punishes it with an endless
+  spinner.
