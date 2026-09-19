@@ -34,13 +34,7 @@
     {
       "name": "shipyard",
       "copyright": "Made by Potato1234_x, edited by CrazyPhantom779 (Github) removing blank frame",
-      "directions": 4,
-      "delays": [
-        [0.2, 0.2, 0.2, 0.2],
-        [0.2, 0.2, 0.2, 0.2],
-        [0.2, 0.2, 0.2, 0.2],
-        [0.2, 0.2, 0.2, 0.2]
-      ]
+      "directions": 4
     }
   ]
 }
