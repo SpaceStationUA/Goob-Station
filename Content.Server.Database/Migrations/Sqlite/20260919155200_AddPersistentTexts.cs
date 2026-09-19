@@ -1,4 +1,5 @@
 using System;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     /// <inheritdoc />
+    [DbContext(typeof(SqliteServerDbContext))]
+    [Migration("20260919155200_AddPersistentTexts")]
     public partial class AddPersistentTexts : Migration
     {
         /// <inheritdoc />

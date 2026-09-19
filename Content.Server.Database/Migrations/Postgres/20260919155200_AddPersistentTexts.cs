@@ -1,4 +1,5 @@
 using System;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -7,6 +8,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Content.Server.Database.Migrations.Postgres
 {
     /// <inheritdoc />
+    [DbContext(typeof(PostgresServerDbContext))]
+    [Migration("20260919155200_AddPersistentTexts")]
     public partial class AddPersistentTexts : Migration
     {
         /// <inheritdoc />
