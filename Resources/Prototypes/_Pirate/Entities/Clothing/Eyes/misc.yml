@@ -6,7 +6,7 @@
   parent: ClothingEyesEyepatch
   id: ClothingEyesEyepatchOlive
   name: "оливкова пов'язка на око"
-  description: "Пов'язка на око в оливковому забарвленні найманців. Пасує до бойових рукавиць."
+  description: "Пов'язка на око в оливковому забарвленні"
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Eyes/Misc/eyepatcholive.rsi
