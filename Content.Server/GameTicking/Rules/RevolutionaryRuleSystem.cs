@@ -119,7 +119,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
-        if (component.CommandCheck > _timing.CurTime)
+        if (!component.CommandCheckInitialized || component.CommandCheck > _timing.CurTime)
             return;
 
         component.CommandCheck = _timing.CurTime + component.TimerWait;
