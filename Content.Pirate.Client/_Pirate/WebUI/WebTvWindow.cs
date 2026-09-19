@@ -81,6 +81,9 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private long _lastSeekAtMs;
     private double _lastSeekTarget = -1;
 
+    // Last transport the room told us to apply (avoids per-frame fighting).
+    private bool _appliedPlaying;
+
     private bool _disposed;
 
     public WebTvWindow()
@@ -350,9 +353,28 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         }
 
         var target = PirateTvClientState.VideoPos(s, s.Stamp);
-        SyncSeek(s, target);
-        if (_ourPlaying != s.Playing)
-            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"" + (s.Playing ? "play" : "pause") + "\"}");
+        // Apply transport when the ROOM's play/pause state changes, not on a
+        // per-frame diff: comparing our page truth to the server every frame
+        // let a still-buffering page keep re-issuing play and fight (and
+        // undo) a pause.
+        if (s.Playing != _appliedPlaying)
+        {
+            // While paused the room clock is a fixed anchor: just pause,
+            // never seek (seeking a paused YouTube player can resume it).
+            if (!s.Playing)
+            {
+                _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"pause\"}");
+                _appliedPlaying = false;
+                return;
+            }
+
+            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"play\"}");
+            _appliedPlaying = true;
+        }
+
+        // Only chase drift while the room is playing.
+        if (s.Playing)
+            SyncSeek(s, target);
     }
 
     /// <summary>
@@ -405,6 +427,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _ourPos = -1000;
         _ourDur = 0;
         _endedPublished = false;
+        _appliedPlaying = false;
         _status.Text = "канал: (нічого не грає)";
         try { _web.Url = "about:blank"; } catch { /* headless dev */ }
     }
@@ -525,6 +548,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _ourPos = -1000;
         _ourDur = 0;
         _endedPublished = false;
+        _appliedPlaying = false;
         try { _web.Url = s.Url; } catch { /* headless dev */ }
     }
 
