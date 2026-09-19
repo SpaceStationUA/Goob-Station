@@ -50,6 +50,13 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
     private readonly Button _confirmYes = new() { Text = "Так, переключити" };
     private readonly Button _confirmNo = new() { Text = "Ні, гляну ще" };
 
+    private readonly LineEdit _search = new()
+    {
+        PlaceHolder = "Пошук на YouTube…",
+        HorizontalExpand = true,
+    };
+    private readonly Button _searchGo = new() { Text = "🔍 Знайти" };
+
     // Page the user is currently browsing (tracked from the live URL).
     private string _browsedUrl = "";
     private string _pendingPlaybackUrl = "";
@@ -94,6 +101,18 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
             Text = "Що дивитимемо?",
             FontColorOverride = Color.Gold,
         });
+
+        // Search the fence: typing here drives the YouTube results page.
+        var searchRow = new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Horizontal,
+            SeparationOverride = 4,
+            HorizontalExpand = true,
+        };
+        searchRow.AddChild(_search);
+        searchRow.AddChild(_searchGo);
+        right.AddChild(searchRow);
+
         _here.ClipText = true;
         right.AddChild(_here);
         right.AddChild(_watch);
@@ -158,10 +177,28 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         _queueAdd.OnPressed += OnQueueAddPressed;
         _confirmYes.OnPressed += OnConfirmYes;
         _confirmNo.OnPressed += OnConfirmNo;
+        _searchGo.OnPressed += _ => RunSearch();
+        _search.OnTextEntered += _ => RunSearch();
 
         // The engine keeps AlwaysActive browsers alive past window closes;
         // drain the browser here so no audio keeps spilling in background.
         OnClose += () => { try { _web.AlwaysActive = false; } catch { } };
+    }
+
+    /// <summary>Navigates the fenced browser to a YouTube search.</summary>
+    private void RunSearch()
+    {
+        var query = _search.Text.Trim();
+        if (query.Length == 0)
+            return;
+        try
+        {
+            _web.Url = "https://www.youtube.com/results?search_query=" +
+                       Uri.EscapeDataString(query) + "&hl=uk";
+        }
+        catch { /* headless dev */ }
+        _search.ReleaseKeyboardFocus();
+        try { _web.GrabKeyboardFocus(); } catch { }
     }
 
     public void OpenCenteredPicker()
@@ -169,6 +206,9 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         OpenCentered();
         _confirmPanel.Visible = false;
         RefreshRoom();
+        // Type-to-search on open; the web page keeps its own focus for
+        // scrolling/clicks (handed back in RunSearch and on click).
+        try { _search.GrabKeyboardFocus(); } catch { }
     }
 
     private PirateTvClientState.Entry Snapshot()
@@ -314,6 +354,12 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         if (_pickerQueueBox == null)
             return;
 
+        var signature = s.Locked + "|" + s.QueueNow + "|" + string.Join("|",
+            System.Linq.Enumerable.Select(s.Queue, it => it.Title.Length > 0 ? it.Title : it.Label));
+        if (signature == _queueSignature)
+            return;
+        _queueSignature = signature;
+
         _pickerQueueTitle!.Text = "Черга (" + s.Queue.Count + ")" + (locked ? " [замкнено]" : "");
         _pickerQueueBox.RemoveAllChildren();
         var idx = 0;
@@ -326,6 +372,8 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
                 ev => SendQueue(ev, tv)));
         }
     }
+
+    private string _queueSignature = "";
 
     private static void SendQueue(EntityEventArgs ev, NetEntity tv)
     {

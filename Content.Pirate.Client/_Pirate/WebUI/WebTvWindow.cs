@@ -74,6 +74,13 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private bool _endedPublished;
     private long _endedAtMs;
 
+    // Queue UI is rebuilt only when it actually changes: rebuilding every
+    // frame created fresh buttons under the cursor (a storm of hover
+    // sounds) and churned the layout.
+    private string _queueSignature = "";
+    private long _lastSeekAtMs;
+    private double _lastSeekTarget = -1;
+
     private bool _disposed;
 
     public WebTvWindow()
@@ -343,11 +350,47 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         }
 
         var target = PirateTvClientState.VideoPos(s, s.Stamp);
-        if (Math.Abs(_ourPos - target) > 5.0)
-            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
-                                 target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
+        SyncSeek(s, target);
         if (_ourPlaying != s.Playing)
             _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"" + (s.Playing ? "play" : "pause") + "\"}");
+    }
+
+    /// <summary>
+    ///     Drift correction with hysteresis. Never seeks a player that has
+    ///     not started streaming yet (a fresh video reports t≈0 while it
+    ///     buffers; seeking then spins forever), and at most once a second
+    ///     otherwise.
+    /// </summary>
+    private void SyncSeek(PirateTvClientState.Entry s, double target)
+    {
+        if (_ourPos < 0)
+            return;
+
+        // Fresh/unloaded player: let it buffer and start; do not drag it.
+        if (_ourDur <= 0 || (_ourPos <= 1 && !_ourPlaying))
+        {
+            _lastSeekTarget = -1;
+            return;
+        }
+
+        if (Math.Abs(_ourPos - target) <= 5.0)
+        {
+            _lastSeekTarget = -1;
+            return;
+        }
+
+        var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        if (now - _lastSeekAtMs < 1000)
+            return;
+
+        // If we just seeked to ~this position, let the player catch up.
+        if (_lastSeekTarget >= 0 && Math.Abs(_lastSeekTarget - target) < 2.0)
+            return;
+
+        _lastSeekAtMs = now;
+        _lastSeekTarget = target;
+        _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
+                             target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
     }
 
     private void UpdateSourceChip(PirateTvClientState.Entry s)
@@ -369,6 +412,11 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     /// <summary>Queue rows: click jumps this TV/group to that position.</summary>
     private void RefreshQueue(PirateTvClientState.Entry s)
     {
+        var signature = QueueSignature(s);
+        if (signature == _queueSignature)
+            return;
+        _queueSignature = signature;
+
         _queueTitle.Text = "Черга (" + s.Queue.Count + ")" + (s.Locked ? " [замкнено]" : "");
         _queueBox.RemoveAllChildren();
         var idx = 0;
@@ -379,9 +427,15 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             _queueBox.AddChild(BuildQueueRow(i, item.Title.Length > 0 ? item.Title : item.Label,
                 i == s.QueueNow, s.Locked, ev => SendQueue(ev, tv)));
         }
+    }
 
-        if (s.Stamp != _followedStamp)
-            _followedStamp = s.Stamp;
+    private static string QueueSignature(PirateTvClientState.Entry s)
+    {
+        var sb = new System.Text.StringBuilder();
+        sb.Append(s.Locked ? '1' : '0').Append('|').Append(s.QueueNow);
+        foreach (var item in s.Queue)
+            sb.Append('|').Append(item.Title.Length > 0 ? item.Title : item.Label);
+        return sb.ToString();
     }
 
     private void SendQueue(EntityEventArgs ev, NetEntity tv)
