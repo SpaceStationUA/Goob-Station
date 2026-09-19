@@ -896,3 +896,16 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
   agent (C# can't otherwise tell the document changed).
 - Keep in mind: setInterval is throttled while the page is hidden, so when
   the TV window is minimized reporting pauses — fine, nobody is watching.
+
+### TV feature: done (2026-09-19)
+End state (all verified in playtest, sync confirmed ideal):
+- Per-TV server state, multitool-linked chains (cycles refused), mirrors
+  forward control to the chain root; unlink resets to off, children survive.
+- YouTube-only picker opened from the viewer; one viewer + one picker per
+  TV; queue, lock (group-wide), mute all synced.
+- Page agent owns steady-state sync (no per-frame JS): play/pause/position/
+  mute follow the room clock, ads never fought, player UI (fullscreen,
+  skip-ad, settings) untouched; stray navigation self-heals.
+- Removed the temporary PirateTvDebugCommand/tvseek/tvdbg and ApplySeek.
+Next (not started): the arcade polish pass, and the mac-launcher upstream
+ask (Robust.Client.WebView macOS package) from the earlier plan.

@@ -229,16 +229,6 @@ public sealed class PirateTvSystem : EntitySystem
         NavTo(masterUid, master, master.Queue.Count - 1);
     }
 
-    /// <summary>Applies a seek to the room (public for tests/probes).</summary>
-    public void ApplySeek(EntityUid uid, PirateTvComponent comp, double pos)
-    {
-        var (masterUid, master) = ResolveMaster(uid, comp);
-        master.Pos = Math.Max(0, pos);
-        master.Stamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        master.Playing = true;
-        Mutate(masterUid, master);
-    }
-
     private void OnQueueAdd(PirateTvQueueAddEvent msg, EntitySessionEventArgs args)
     {
         if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
