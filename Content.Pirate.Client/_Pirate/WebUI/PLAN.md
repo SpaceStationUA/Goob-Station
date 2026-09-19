@@ -751,3 +751,18 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
 - Design rule going forward: **playback state is authoritative
   server-side and reverted locally; player UI (fullscreen, ads,
   settings) is the user's.** Don't disable page controls to win sync.
+
+### TV sync v3 (2026-09-19): ads, reopen, stray navigation
+- **Ads**: YouTube runs ads on the same <video> (`.html5-video-player.
+  ad-showing`). We now detect that and STOP all enforcement during the ad
+  (never fight it), then the per-tick snap pulls us back to the room clock
+  right after it ends — fixing the "10s behind after an ad" drift.
+- **Reopen started at 0**: the tick snap now runs whenever not in an ad,
+  playing OR paused (was playing-only), so reopening a TV snaps to the
+  room position within a tick; no manual pause/unpause needed.
+- **Stray navigation self-heals**: clicking another video / the YT logo
+  navigates the page away; the window now notices (compare v= id, 4s
+  grace after our own navigations, 1/s) and re-navigates to the room
+  video. Users can still leave deliberately by picking another channel.
+- Design rule refined: playback is reverted to the room clock everywhere
+  EXCEPT during ads; the player UI stays the user's.

@@ -68,11 +68,11 @@ public sealed class WebUiTvDriver
     }
 
     /// <summary>
-    ///     Pins playback to the room without disabling the player's UI:
-    ///     installs one-shot listeners (pause/play/seeking/ratechange/
-    ///     volumechange) that immediately revert deviations, plus a small
-    ///     repeat-button guard. Fullscreen, ad-skip and the settings menu are
-    ///     deliberately left alone.
+    ///     Pins playback to the room without disabling the player's UI.
+    ///     Installs one-shot listeners (pause/play/seeking/ratechange/
+    ///     volumechange) that revert deviations, and stores the room state
+    ///     (incl. "in an ad") for the per-tick snap in <c>TickScript</c>.
+    ///     Fullscreen, ad-skip and the settings menu are left alone.
     /// </summary>
     private static string EnforceScript(string pos, bool playing, bool muted)
     {
@@ -86,20 +86,29 @@ public sealed class WebUiTvDriver
                "  if (!window.__tuiPinned) {" +
                "    window.__tuiPinned = true;" +
                "    var r = function() { return window.__tuiRoom; };" +
-               // Revert any local pause/play to the room's intent.
+               // Ads run on the same element and are the player's business:
+               // never fight them; the tick snaps back after they end.
+               "    var inAd = function() {" +
+               "      var p = document.querySelector('.html5-video-player');" +
+               "      return !!(p && p.classList && p.classList.contains('ad-showing'));" +
+               "    };" +
+               "    window.__tuiInAd = inAd;" +
+               // Revert any local pause/play to the room's intent (skip ads).
                "    v.addEventListener('pause', function() {" +
-               "      var q = r(); if (q && q.playing) { try { v.play(); } catch (e) {} }" +
+               "      var q = r(); if (q && q.playing && !inAd()) { try { v.play(); } catch (e) {} }" +
                "    });" +
                "    v.addEventListener('play', function() {" +
-               "      var q = r(); if (q && !q.playing) { try { v.pause(); } catch (e) {} }" +
+               "      var q = r(); if (q && !q.playing && !inAd()) { try { v.pause(); } catch (e) {} }" +
                "    });" +
                // Revert scrubbing: any seek away from the room clock snaps back.
                "    v.addEventListener('seeking', function() {" +
-               "      var q = r(); if (!q) { return; }" +
+               "      var q = r(); if (!q || inAd()) { return; }" +
                "      if (Math.abs((v.currentTime || 0) - q.t) > 3) {" +
                "        try { v.currentTime = q.t; } catch (e) {}" +
                "      }" +
                "    });" +
+               // Marks that the ad just ended, so the tick snaps immediately.
+               "    v.addEventListener('playing', function() { window.__tuiAdEnded = true; });" +
                "    v.addEventListener('ratechange', function() { try { v.playbackRate = 1; } catch (e) {} });" +
                "    v.addEventListener('volumechange', function() {" +
                "      var q = r(); if (q && !!v.muted !== q.muted) { try { v.muted = q.muted; } catch (e) {} }" +
@@ -183,14 +192,16 @@ public sealed class WebUiTvDriver
         "try {" +
         "  var v = document.querySelector('video');" +
         "  var r = window.__tuiRoom;" +
-        "  if (v && r) {" +
+        "  var ad = window.__tuiInAd ? window.__tuiInAd() : false;" +
+        "  if (v && r && !ad) {" +
         "    if (!v.paused !== r.playing) {" +
         "      if (r.playing) { v.play(); } else { v.pause(); }" +
         "    }" +
-        // Only chase drift while playing; never seek a paused player (that
-        // can auto-resume it in YouTube).
-        "    if (r.playing && (v.duration || 0) > 0) {" +
-        "      if (Math.abs((v.currentTime || 0) - r.t) > 3) { v.currentTime = r.t; }" +
+        // Snap to the room clock whenever we're not in an ad — playing or
+        // paused. This covers reopening a TV (which starts at 0) and the
+        // post-ad drift; 3s of slack keeps normal buffering from thrashing.
+        "    if ((v.duration || 0) > 0 && Math.abs((v.currentTime || 0) - r.t) > 3) {" +
+        "      try { v.currentTime = r.t; } catch (e) {}" +
         "    }" +
         "    if (!!v.muted !== r.muted) { v.muted = r.muted; }" +
         "  }" +

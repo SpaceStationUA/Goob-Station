@@ -70,6 +70,8 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     // Room truth we already acted on.
     private string _shownUrl = "";
     private long _followedStamp = -1;
+    private long _navigatedAtMs;
+    private long _strayCheckedAtMs;
     private string _titleSent = "";
     private bool _endedPublished;
     private long _endedAtMs;
@@ -237,6 +239,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             PirateTvClientState.VideoPos(room, room.Stamp), room.Playing, room.Muted, enforce);
 
         FollowRoomClock();
+        StrayWanderCheck(room);
         RangeCheck();
     }
 
@@ -522,7 +525,75 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _endedPublished = false;
         _appliedPlaying = false;
         _appliedSeekStamp = -1;
+        _navigatedAtMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         try { _web.Url = s.Url; } catch { /* headless dev */ }
+    }
+
+    /// <summary>
+    ///     If a stray click navigated the page away from the room's video
+    ///     (another video, the YT home logo, a channel page), bring the TV
+    ///     back. Runs at most once a second and only after a short grace
+    ///     period, so our own navigations and late SPA redirects don't fight.
+    /// </summary>
+    private void StrayWanderCheck(PirateTvClientState.Entry room)
+    {
+        if (room.Url.Length == 0 || _shownUrl.Length == 0)
+            return;
+
+        var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        if (now - _navigatedAtMs < 4000 || now - _strayCheckedAtMs < 1000)
+            return;
+        _strayCheckedAtMs = now;
+
+        string current;
+        try { current = _web.Url; }
+        catch { return; }
+
+        if (current.Length == 0 || current == "about:blank")
+            return;
+
+        // Same video? (compare the v= id, ignoring hl/utm/whatever else)
+        if (SameVideo(current, room.Url))
+            return;
+
+        try { _web.Url = room.Url; } catch { /* headless dev */ }
+        _navigatedAtMs = now;
+    }
+
+    /// <summary>True when both URLs point at the same YouTube video id.</summary>
+    private static bool SameVideo(string a, string b)
+    {
+        if (string.Equals(a, b, StringComparison.OrdinalIgnoreCase))
+            return true;
+        try
+        {
+            var ua = new Uri(a);
+            var ub = new Uri(b);
+            if (!string.Equals(ua.Host, ub.Host, StringComparison.OrdinalIgnoreCase))
+                return false;
+            var va = QueryValue(ua.Query, "v");
+            var vb = QueryValue(ub.Query, "v");
+            return va != null && vb != null && string.Equals(va, vb, StringComparison.Ordinal);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static string? QueryValue(string query, string key)
+    {
+        if (query.Length < 2)
+            return null;
+        foreach (var pair in query[1..].Split('&'))
+        {
+            var eq = pair.IndexOf('=');
+            if (eq < 0)
+                continue;
+            if (string.Equals(pair[..eq], key, StringComparison.OrdinalIgnoreCase))
+                return pair[(eq + 1)..];
+        }
+        return null;
     }
 
     // ===== remote (owner) paths =====
