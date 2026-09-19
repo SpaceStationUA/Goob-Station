@@ -92,6 +92,9 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private bool _appliedPlaying;
     private bool _appliedMuted;
 
+    /// <summary>Rate-limit for drift seeks so corrections can't thrash.</summary>
+    private long _lastSeekAtMs;
+
     private bool _disposed;
 
     public WebTvWindow()
@@ -410,9 +413,10 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         Robust.Shared.Log.Logger.InfoS("webui.tv.dbg",
             $"[TVDBG] RECV tv={TvNet()} roomPos={s.Pos:0.0} playing={s.Playing} stamp={s.Stamp} target={target:0.0} ourPos={_ourPos:0.0} dur={_ourDur:0.0} ad={_ourInAd}");
 
-        // Keep the page's play/pause and mute in step immediately (the tick
-        // enforcer also nudges them, but this makes button presses instant).
-        if (s.Playing != _appliedPlaying)
+        // C# owns transport now (the JS listeners were removed because they
+        // stalled the player). Re-assert play/pause whenever the page's own
+        // state diverges from the room, not only on a room change.
+        if (_ourDur > 0 && !_ourInAd && _ourPlaying != s.Playing)
         {
             _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"" + (s.Playing ? "play" : "pause") + "\"}");
             _appliedPlaying = s.Playing;
@@ -424,23 +428,27 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             _appliedMuted = s.Muted;
         }
 
-        // The room clock is authoritative: mirror the position every frame.
-        // Two guards only, both about not breaking the player itself:
-        //  * never while an ad is on (the player is not on our video);
-        //  * never while the real video has no duration yet, nor while both
-        //    the page and the room are at the very start (a fresh load would
-        //    restart its buffer forever).
-        // 2s of slack absorbs normal buffering; one idempotent seek per frame
-        // is cheap and self-corrects any local scrub or ad drift.
+        // Mirror the room position. Guards, all about not breaking the player:
+        //  * never while an ad is on, or before the real video has a duration;
+        //  * never while both page and room sit at the very start (a fresh
+        //    load would restart its buffer forever).
+        // Deadband 1.5s (so a real desync mid-play is caught, while normal
+        // buffering jitter is not), and one seek per 1.5s so repeated
+        // corrections can't thrash the player.
         if (_ourInAd || _ourDur <= 0)
             return;
         if (_ourPos <= 1 && target <= 1)
             return;
-        if (Math.Abs(_ourPos - target) > 2)
+        if (Math.Abs(_ourPos - target) > 1.5)
         {
-            Robust.Shared.Log.Logger.InfoS("webui.tv.dbg",
-                $"[TVDBG] SEEK tv={TvNet()} from={_ourPos:0.0} to={target:0.0} roomPos={s.Pos:0.0} playing={s.Playing} dur={_ourDur:0.0}");
-            SeekTo(target);
+            var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            if (now - _lastSeekAtMs > 1500)
+            {
+                _lastSeekAtMs = now;
+                Robust.Shared.Log.Logger.InfoS("webui.tv.dbg",
+                    $"[TVDBG] SEEK tv={TvNet()} from={_ourPos:0.0} to={target:0.0} playing={s.Playing} dur={_ourDur:0.0}");
+                SeekTo(target);
+            }
         }
     }
 

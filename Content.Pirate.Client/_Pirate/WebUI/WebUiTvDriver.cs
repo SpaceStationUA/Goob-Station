@@ -48,6 +48,10 @@ public sealed class WebUiTvDriver
             var pos = roomPos.ToString("0.##", CultureInfo.InvariantCulture);
             var playing = roomPlaying ? "true" : "false";
             var muted = roomMuted ? "true" : "false";
+            // Only report and pin *mute* from JS; play/pause/position are
+            // driven from C# once the reports are reliable. The old JS
+            // play/pause/seeking listeners fought the player and stalled it
+            // (video froze while reporting playing=true).
             _web.ExecuteJavaScript(enforce
                 ? PinScript(pos, playing, muted) + ReportScript
                 : ReportScript);
@@ -97,11 +101,10 @@ public sealed class WebUiTvDriver
         """;
 
     /// <summary>
-    ///     Pins play/pause/mute/position to the room. Installs one-shot
-    ///     listeners (pause/play/seeking/ratechange/volumechange) that revert
-    ///     local deviations, and stores the room state for the per-tick snap.
-    ///     Ads are never fought; the player's own UI (fullscreen, skip-ad,
-    ///     settings) is left alone.
+    ///     Stores the room state for the C# loop and keeps mute in step. No
+    ///     play/pause/seek listeners here: they fought YouTube's player
+    ///     (repeated pause/play and micro-seeks) and could stall it outright.
+    ///     Only records whether an ad is showing so C# backs off.
     /// </summary>
     private static string PinScript(string pos, string playing, string muted) => $$"""
         (function(){
@@ -109,28 +112,14 @@ public sealed class WebUiTvDriver
             var v = document.querySelector('video');
             if (!v) { return; }
             window.__tuiRoom = { t: {{pos}}, playing: {{playing}}, muted: {{muted}} };
-            if (!window.__tuiPinned) {
-              window.__tuiPinned = true;
-              var room = function(){ return window.__tuiRoom; };
-              var inAd = function(){
+            if (!window.__tuiInAd) {
+              window.__tuiInAd = function(){
                 var p = document.querySelector('.html5-video-player');
                 return !!(p && p.classList && p.classList.contains('ad-showing'));
               };
-              window.__tuiInAd = inAd;
-              v.addEventListener('pause', function(){
-                var q = room(); if (q && q.playing && !inAd()) { try { v.play(); } catch (e) {} }
-              });
-              v.addEventListener('play', function(){
-                var q = room(); if (q && !q.playing && !inAd()) { try { v.pause(); } catch (e) {} }
-              });
-              v.addEventListener('seeking', function(){
-                var q = room(); if (!q || inAd()) { return; }
-                if (Math.abs((v.currentTime || 0) - q.t) > 3) { try { v.currentTime = q.t; } catch (e) {} }
-              });
-              v.addEventListener('ratechange', function(){ try { v.playbackRate = 1; } catch (e) {} });
-              v.addEventListener('volumechange', function(){
-                var q = room(); if (q && !!v.muted !== q.muted) { try { v.muted = q.muted; } catch (e) {} }
-              });
+            }
+            if (window.__tuiRoom.muted !== undefined && !!v.muted !== window.__tuiRoom.muted) {
+              try { v.muted = window.__tuiRoom.muted; } catch (e) {}
             }
           } catch (e) {}
         })();
@@ -146,8 +135,8 @@ public sealed class WebUiTvDriver
             var v = document.querySelector('video');
             if (!v) { return; }
             var cur = {
-              t: v.currentTime || 0,
-              dur: v.duration || 0,
+              t: Math.round((v.currentTime || 0) * 2) / 2,
+              dur: Math.round((v.duration || 0) * 2) / 2,
               playing: !v.paused,
               muted: !!v.muted,
               ended: !!v.ended,

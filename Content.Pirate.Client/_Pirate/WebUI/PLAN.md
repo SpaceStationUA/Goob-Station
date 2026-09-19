@@ -852,3 +852,15 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
   literals (the old "..."+"..." building is too easy to get subtly wrong).
 - Diagnostic rule: if `ourPos` stays -1000, the bridge is dead — look at
   the report path first, not the sync math.
+
+### TV sync v9 (2026-09-19): bridge alive; stop stalling the player
+- v8 fixed the bridge: logs now show real `ourPos`/`dur` on every window.
+- Remaining from the same log: `ourPos` was FROZEN (17.4 constant while
+  dur=169.4) — the JS play/pause/seeking listeners were fighting YouTube's
+  player and stalling it, and the hash report fired every frame (full JSON
+  with continuous `t`), churning the SPA (spam of youtubei/log_event).
+- Fix: JS no longer drives transport at all (only reports + pins mute +
+  exposes __tuiInAd). C# owns play/pause (re-asserted whenever the page's
+  reported playing diverges from the room, not only on room change) and
+  position (deadband 1.5s, seek rate-limited to 1/1.5s). Report quantizes
+  `t`/`dur` to 0.5s so the hash changes ~2/s instead of ~60/s.
