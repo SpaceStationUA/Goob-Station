@@ -909,3 +909,28 @@ End state (all verified in playtest, sync confirmed ideal):
 - Removed the temporary PirateTvDebugCommand/tvseek/tvdbg and ApplySeek.
 Next (not started): the arcade polish pass, and the mac-launcher upstream
 ask (Robust.Client.WebView macOS package) from the earlier plan.
+
+### Arcade game vendoring (2026-09-19)
+- We do NOT hand-copy third-party games and we do NOT build them. Instead:
+  `Scripts/arcade-games.manifest` pins each game's *exact* source (repo
+  commit, or the official JS13kGames submission zip) and
+  `Scripts/sh/vendor-arcade-games.sh` fetches it verbatim into
+  `Resources/_Pirate/WebUI/Arcade/<Dest>/`, writing a PROVENANCE.txt
+  (id, license, source, ref, date) beside each game.
+- Policy: published bundles only — no npm/zig/closure toolchains in the
+  repo. Repo `dist/` output or the js13k submission zip (already built,
+  single-file, offline) is the source of truth.
+- Games added: stunts (Thirteen Terrible Stunts), yurts (Tiny Yurts),
+  13steps, donotmake13, finalseconds, fri3 (WASM), sector13. Registered in
+  PirateArcadeGames.List.
+- Licensing: all MIT except stunts = CC BY-NC 4.0 (NonCommercial) —
+  included with attribution + its PROVENANCE note. Per-game LICENSE text
+  travels with each folder.
+- Sanitization: stunts shipped a Plausible analytics beacon
+  (p.jlopes.dev); the script strips it and records the exception in
+  PROVENANCE (offline CEF can't reach it anyway).
+- Smoke-tested all 7 in headless Chrome: load clean; the WebGL ones
+  (DoNotMake13, Fri3) only error when WebGL is absent (fine; CEF has GL).
+  TinyYurts's only 404 is the browser's own favicon request.
+- The right panel's game list is now in a ScrollContainer so 13+ titles
+  don't push the seat buttons off-screen.

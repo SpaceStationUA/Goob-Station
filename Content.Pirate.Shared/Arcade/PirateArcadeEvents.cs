@@ -70,5 +70,12 @@ public static class PirateArcadeGames
         ("catculus", "Catculus", "_Pirate/WebUI/Arcade/Catculus/index.html"),
         ("kuroneko", "Kuro Neko Market", "_Pirate/WebUI/Arcade/KuroNekoMarket/index.html"),
         ("edgenotfound", "Edge Not Found", "_Pirate/WebUI/Arcade/EdgeNotFound/index.html"),
+        ("stunts", "Thirteen Terrible Stunts", "_Pirate/WebUI/Arcade/ThirteenTerribleStunts/index.html"),
+        ("yurts", "Tiny Yurts", "_Pirate/WebUI/Arcade/TinyYurts/index.html"),
+        ("13steps", "13 Steps to Escape", "_Pirate/WebUI/Arcade/ThirteenSteps/index.html"),
+        ("donotmake13", "Do Not Make 13", "_Pirate/WebUI/Arcade/DoNotMake13/index.html"),
+        ("finalseconds", "Those Final Seconds", "_Pirate/WebUI/Arcade/ThoseFinalSeconds/index.html"),
+        ("fri3", "FRI3", "_Pirate/WebUI/Arcade/Fri3/index.html"),
+        ("sector13", "Sector 13", "_Pirate/WebUI/Arcade/Sector13/index.html"),
     };
 }

@@ -23,3 +23,8 @@ runTestsIntegration
     Runs the integration tests, makes sure various C# systems work as intended
 runTestsYAML
     Runs the YAML linter and finds issues with the YAML files that you probably wouldn't otherwise
+
+vendor-arcade-games.sh
+    Downloads the pinned third-party WebArcade games (Scripts/arcade-games.manifest)
+    into Resources/_Pirate/WebUI/Arcade/, with LICENSE.txt + PROVENANCE.txt.
+    Fetches published bundles only; never builds. Pass game ids to refresh just those.

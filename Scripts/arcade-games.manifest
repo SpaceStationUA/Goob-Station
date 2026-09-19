@@ -1,0 +1,31 @@
+# Pirate WebArcade — vendored game sources (pinned).
+#
+# These games are third-party works we redistribute; we do NOT modify their
+# code. Each row pins exactly where the bytes came from so the import is
+# reproducible and attributable.
+#
+# Format (tab-separated, '#' comments and blank lines ignored):
+#   id  license  kind  repo  ref  subpath  bundle  dest
+#
+#   id       short stable id (also the PirateArcadeGames id)
+#   license  SPDX-ish license label (documentation only)
+#   kind     "repo" -> bundle = dist/ folder inside the repo archive
+#            "zip"  -> bundle = a standalone zip download (e.g. js13k entry)
+#   repo     owner/name, ALWAYS set (used to fetch LICENSE text)
+#   ref      git commit sha for repo/kind; a date/note for zip (documentation)
+#   subpath  for kind=repo, the folder inside the archive to copy
+#   bundle   for kind=zip, the url to download; "-" for kind=repo
+#   dest     folder under Resources/_Pirate/WebUI/Arcade/
+#
+# To refresh: run Scripts/sh/vendor-arcade-games.sh (optionally: <id> ...).
+# The script writes PROVENANCE.txt + LICENSE.txt into each dest; commit both.
+
+# --- games added 2026-09 (TV-era arcade expansion) ---
+# NOTE: stunts is CC BY-NC 4.0 (NonCommercial) — included with attribution.
+stunts	CC-BY-NC-4.0	repo	lopis/thirteen-terrible-stunts	5ee4f39c4c8d38c3c7d5a0c9f74d71de1697f12e	dist	-	ThirteenTerribleStunts
+yurts	MIT	repo	burntcustard/tiny-yurts	682fdf012260e7b815f38bbd119cdd9ccc0aae30	dist	-	TinyYurts
+13steps	MIT	zip	jonathan-vallet/js13k-2024	95cc8b7f3d049f1cdf13236786533f2af3ced7e5	-	https://js13kgames.com/games/13-steps-to-escape.zip	ThirteenSteps
+donotmake13	MIT	zip	sirxemic/js13k-2024	3a97665e166a64f72618130dc4e4778b1c7b3604	-	https://js13kgames.com/games/do-not-make-13.zip	DoNotMake13
+finalseconds	MIT	zip	jani-nykanen/those-final-seconds	222396ade1082fedd76b5d8bd586179b052a167b	-	https://js13kgames.com/games/those-final-seconds.zip	ThoseFinalSeconds
+fri3	MIT	zip	eliasku/fri3	e951ceffd9c7eacfbd3a15e1b96b0f6317dca902	-	https://js13kgames.com/games/fri3.zip	Fri3
+sector13	MIT	zip	BenjaminWFox/Sector-13-Js13k-2024	76bc259a237c17b0f4da7866a68460de9c4bd44b	-	https://js13kgames.com/games/sector-13.zip	Sector13

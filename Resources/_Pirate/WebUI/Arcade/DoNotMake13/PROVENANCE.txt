@@ -1,0 +1,13 @@
+DoNotMake13 — vendored third-party WebArcade game
+Fetched by Scripts/sh/vendor-arcade-games.sh.
+
+id:      donotmake13
+license: MIT
+repo:    sirxemic/js13k-2024
+ref:     3a97665e166a64f72618130dc4e4778b1c7b3604
+kind:    zip (https://js13kgames.com/games/do-not-make-13.zip)
+fetched: 2026-09-19T20:39:22Z
+
+This is a third-party work from the JS13kGames 2024 (or 2023) competition.
+See the repository/source above for the original license text and copyright
+holder. We do not claim authorship and we do not modify the code.

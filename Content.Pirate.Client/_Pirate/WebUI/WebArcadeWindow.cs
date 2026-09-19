@@ -114,7 +114,15 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         });
         _status.ClipText = true;
         right.AddChild(_status);
-        right.AddChild(_gameList);
+        // The title list grows with every shipped game; keep it scrollable so
+        // it never pushes the seat buttons off-screen.
+        var gameScroll = new ScrollContainer
+        {
+            VerticalExpand = true,
+            HorizontalExpand = true,
+        };
+        gameScroll.AddChild(_gameList);
+        right.AddChild(gameScroll);
         right.AddChild(_standUp);
         right.AddChild(_playSeat);
 
