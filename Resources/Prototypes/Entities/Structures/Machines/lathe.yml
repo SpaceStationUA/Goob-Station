@@ -510,6 +510,8 @@
     # Pirate Packs
     - SecurityEquipmentStaticPirate # Pirate: K9 durathread vest.
     - SecurityAmmoStaticPirate
+    - SecurityPeacekeeperAmmoStaticPirate
+    - SecurityPeacekeeperWeaponsStaticPirate
     - PirateStraightjacketLatheRecipePackStatic # Pirate - tweak recipes | Add straint-jacket to med and sec fabs.
     - ModesuitModuleSecStatic # Pirate: Wega modular suit port.
     dynamicPacks:
