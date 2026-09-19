@@ -179,17 +179,6 @@
     containers:
       flashlight: !type:ContainerSlot
       ballistic-ammo: !type:Container
-  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
-    slots:
-      flashlight:
-        name: weapon-upgrade-slot-name-flashlight
-        priority: 0 # DOWNSTREAM-TPirates: gun flashlights - lowest eject priority
-        ejectOnBreak: true
-        occludesLight: false
-        whitelist:
-          components:
-          - GunUpgradeFlashlight
-  - type: ItemUpgradeable # DOWNSTREAM-TPirates: gun flashlights
   - type: BallisticAmmoProvider
     whitelist:
       tags:
@@ -201,6 +190,17 @@
     autoRefillRate: 4s
     affectedByEmp: true
   - type: AmmoCounter
+  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 0 # DOWNSTREAM-TPirates: gun flashlights - lowest eject priority
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ItemUpgradeable # DOWNSTREAM-TPirates: gun flashlights
 
 - type: entity
   name: Cobra
@@ -290,12 +290,20 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
-  - type: ItemUpgradeable # DOWNSTREAM-TPirates: gun flashlights
-  - type: ItemSlots # DOWNSTREAM-TPirates: gun flashlights
+  # mk58 upgrade start
+  - type: ItemUpgradeable
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+      flashlight: !type:ContainerSlot
+  - type: ItemSlots
     slots:
       flashlight:
         name: weapon-upgrade-slot-name-flashlight
-        priority: 2 # DOWNSTREAM-TPirates: gun flashlights - between chamber and magazine
+        priority: 2
+        insertDelay: 0.4
+        ejectDelay: 0.2
         ejectOnBreak: true
         occludesLight: false
         whitelist:
@@ -306,7 +314,7 @@
         startingItem: MagazinePistol
         insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 3 # DOWNSTREAM-TPirates: gun flashlights - flashlight sits between chamber and magazine
+        priority: 3
         whitelist:
           tags:
             - MagazinePistol
@@ -318,11 +326,7 @@
         whitelist:
           tags:
             - CartridgePistol
-  - type: ContainerContainer # DOWNSTREAM-TPirates: gun flashlights
-    containers:
-      flashlight: !type:ContainerSlot
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
+  # mk58 upgrade end
   - type: StealTarget
     stealGroup: OfficerHandgun
 
