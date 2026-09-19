@@ -19,3 +19,9 @@
   id: AccessJob
   name: signal-port-name-access-job
   description: signal-port-description-access-job
+
+# Pirate TV: the master's channel broadcast (link to PirateTvReceive).
+- type: sourcePort
+  id: PirateTvBroadcast
+  name: signal-port-name-pirate-tv-broadcast
+  description: signal-port-description-pirate-tv-broadcast

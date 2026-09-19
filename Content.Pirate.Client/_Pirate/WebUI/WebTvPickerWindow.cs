@@ -2,24 +2,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System;
+using Content.Pirate.Shared.TV;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.WebView;
-using Robust.Shared.Maths;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Timing;
-using Content.Pirate.Shared.TV;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Pirate.Client._Pirate.WebUI;
 
 /// <summary>
-///     The TV's browser: someone browses (YouTube/Twitch only — the fence
-///     is the policy) and presses "Поставити на ТБ". If the room currently
-///     watches something, a confirm step appears first; confirming swaps
-///     the shared channel and every open TV window follows.
+///     The TV's picker: a YouTube-only browser used to find a video. The
+///     host fence (<see cref="WebTvChannel.AllowHosts"/>) keeps it inside
+///     YouTube; clicking a video here lets you confirm and it becomes the
+///     TV's channel or a queue entry. Opens from the TV window.
 /// </summary>
 public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
 {
@@ -28,7 +28,7 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
 
     private readonly Label _here = new()
     {
-        Text = "бровзер: щоб обрати відео — відкрий YouTube або Twitch",
+        Text = "шукай відео на YouTube, тоді натисни «Обрати»",
         FontColorOverride = Color.LightGray,
     };
 
@@ -60,12 +60,12 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
     private BoxContainer? _pickerQueueBox;
     private bool _disposed;
 
-    /// <summary>The TV entity this browser drives; far away ⇒ auto-close.</summary>
+    /// <summary>The TV entity this picker drives; far away ⇒ auto-close.</summary>
     public EntityUid? TvUid;
 
     public WebTvPickerWindow()
     {
-        Title = "Pirate TV — Браузер";
+        Title = "Pirate TV — Обрати відео";
         SetSize = new Vector2i(1120, 660);
 
         _web = new WebViewControl
@@ -85,8 +85,8 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
             VerticalExpand = true,
-            MinWidth = 265,
-            MaxWidth = 275,
+            MinWidth = 360,
+            MaxWidth = 380,
             Margin = new Thickness(8),
         };
         right.AddChild(new Label
@@ -110,12 +110,12 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         _confirmPanel.AddChild(confirmBox);
         right.AddChild(_confirmPanel);
 
-        var s = WebTvWindow.Backend.Snapshot();
+        var s = Snapshot();
         _currentStatusLabel = new Label
         {
             Text = s.Kind == WebTvChannel.WebTvKind.None
                 ? "Зараз на ТБ: (нічого не грає)"
-                : "Зараз на ТБ: " + s.Label + " — " + s.Url,
+                : "Зараз на ТБ: " + s.Label,
             FontColorOverride = Color.Gray,
             ClipText = true,
         };
@@ -132,9 +132,6 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         };
         right.AddChild(_pickerQueueTitle);
         right.AddChild(_pickerQueueBox);
-
-        // Live mirror: lock-gates the buttons and refreshes the queue.
-        WebTvWindow.Backend.Subscribe(OnPickerBroadcast);
 
         var box = new BoxContainer
         {
@@ -154,8 +151,8 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         panel.AddChild(box);
         Contents.AddChild(panel);
 
-        // Browser starts on YouTube's front page (whitelist keeps it inside).
-        try { _web.Url = "https://www.youtube.com/?hl=uk"; } catch { /* headless dev */ }
+        // Start on YouTube's search page (whitelist keeps it inside).
+        try { _web.Url = "https://www.youtube.com/results?search_query=music&hl=uk"; } catch { /* headless dev */ }
 
         _watch.OnPressed += OnWatchPressed;
         _queueAdd.OnPressed += OnQueueAddPressed;
@@ -166,41 +163,44 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         // drain the browser here so no audio keeps spilling in background.
         OnClose += () => { try { _web.AlwaysActive = false; } catch { } };
     }
+
     public void OpenCenteredPicker()
     {
         OpenCentered();
         _confirmPanel.Visible = false;
-
-        // Paint the current room (queue + now-playing + lock) right away,
-        // not only after the next broadcast.
-        OnPickerBroadcast(WebTvWindow.Backend.Snapshot());
+        RefreshRoom();
     }
+
+    private PirateTvClientState.Entry Snapshot()
+    {
+        if (TvUid == null || !TvUid.Value.IsValid())
+            return new PirateTvClientState.Entry();
+        return PirateTvClientState.Get(PirateTvClientState.Net(TvUid.Value));
+    }
+
+    private NetEntity TvNet()
+        => TvUid != null && TvUid.Value.IsValid() ? PirateTvClientState.Net(TvUid.Value) : NetEntity.Invalid;
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-        _ipc.Pump();
 
-        // Walked away? The browser closes with the room (mirrors the TV).
-        if (TvUid != null && TvUid.Value.IsValid())
+        if (!PirateTvClientState.Connected)
         {
-            try
-            {
-                var ent = Robust.Shared.IoC.IoCManager.Resolve<Robust.Shared.GameObjects.IEntityManager>();
-                var player = Robust.Shared.IoC.IoCManager
-                    .Resolve<Robust.Client.Player.IPlayerManager>().LocalEntity;
-                if (player != null &&
-                    ent.TryGetComponent(player.Value, out Robust.Shared.GameObjects.TransformComponent? pt) &&
-                    ent.TryGetComponent(TvUid.Value, out Robust.Shared.GameObjects.TransformComponent? tt) &&
-                    pt.MapID == tt.MapID)
-                {
-                    var dv = pt.MapPosition.Position - tt.MapPosition.Position;
-                    if (dv.Length() > 10.0)
-                        Close();
-                }
-            }
-            catch { }
+            Close();
+            return;
         }
+
+        if (TvUid == null || !TvUid.Value.IsValid())
+        {
+            Close();
+            return;
+        }
+
+        PirateTvClientState.Request(TvNet());
+        _ipc.Pump();
+        RefreshRoom();
+        RangeCheck();
 
         // Track what the user is on right now (fence keeps hosts legal).
         try
@@ -215,6 +215,29 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         catch { /* headless dev engines */ }
     }
 
+    private void RangeCheck()
+    {
+        if (TvUid == null || !TvUid.Value.IsValid())
+            return;
+        try
+        {
+            var ent = IoCManager.Resolve<Robust.Shared.GameObjects.IEntityManager>();
+            var player = IoCManager.Resolve<Robust.Client.Player.IPlayerManager>().LocalEntity;
+            if (player == null)
+                return;
+            if (!ent.TryGetComponent(player.Value, out Robust.Shared.GameObjects.TransformComponent? pt) ||
+                !ent.TryGetComponent(TvUid.Value, out Robust.Shared.GameObjects.TransformComponent? tt) ||
+                pt.MapID != tt.MapID)
+            {
+                return;
+            }
+            var dv = pt.MapPosition.Position - tt.MapPosition.Position;
+            if (dv.Length() > 10.0)
+                Close();
+        }
+        catch { }
+    }
+
     private void ReevaluateHere(string url)
     {
         _confirmPanel.Visible = false;
@@ -227,8 +250,8 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
 
         if (ok)
         {
-            var locked = WebTvWindow.Backend.Snapshot().Locked;
-            _here.Text = $"{label}: ✓ готово до перегляду" + (locked ? " (ТБ заблоковано)" : "");
+            var locked = Snapshot().Locked;
+            _here.Text = $"{label}: ✓ готово до перегляду" + (locked ? " (ТБ замкнено)" : "");
             _here.FontColorOverride = locked ? Color.Red : Color.LightGreen;
             _watch.Disabled = locked;
             _queueAdd.Disabled = locked;
@@ -238,19 +261,17 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         }
         else
         {
+            _watch.Disabled = true;
             _queueAdd.Disabled = true;
+            _pendingPlaybackUrl = "";
         }
     }
 
     // ===== pick / confirm / apply =====
 
-    private void OnWatchPressed(BaseButton.ButtonEventArgs _)
-    {
-        PickPending();
-    }
-
-    private void OnConfirmYes(BaseButton.ButtonEventArgs _) => PerformConfirmYes();
-    private void OnConfirmNo(BaseButton.ButtonEventArgs _) => PerformConfirmNo();
+    private void OnWatchPressed(BaseButton.ButtonEventArgs _) => PickPending();
+    private void OnConfirmYes(BaseButton.ButtonEventArgs _) { Apply(); _confirmPanel.Visible = false; }
+    private void OnConfirmNo(BaseButton.ButtonEventArgs _) => _confirmPanel.Visible = false;
     private void OnQueueAddPressed(BaseButton.ButtonEventArgs _) => PerformQueueAdd();
 
     private void PickPending()
@@ -258,10 +279,9 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         if (_pendingPlaybackUrl.Length == 0)
             return;
 
-        var s = WebTvWindow.Backend.Snapshot();
+        var s = Snapshot();
         if (WebTvChannel.NeedsConfirm(s, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()))
         {
-            // Someone is watching; replacement must be explicit.
             _confirmText.Text = "Зараз на ТБ грає: " + s.Label;
             _confirmPanel.Visible = true;
         }
@@ -271,30 +291,19 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         }
     }
 
-    private void PerformConfirmYes()
-    {
-        Apply();
-        _confirmPanel.Visible = false;
-    }
-    private void PerformConfirmNo()
-    {
-        // Keep browsing.
-        _confirmPanel.Visible = false;
-    }
+    // ===== queue list + live lock gate (mirrors the TV window) =====
 
-    // ===== queue list + live lock gate (mirrors WebTvWindow) =====
-
-    private void OnPickerBroadcast(WebTvBackend.ChannelState s)
+    private void RefreshRoom()
     {
-        if (_disposed)
-            return;
-
+        var s = Snapshot();
         var locked = s.Locked;
-        if (_watch != null && _queueAdd != null && _pendingPlaybackUrl.Length > 0)
+
+        if (_pendingPlaybackUrl.Length > 0)
         {
             _watch.Disabled = locked;
             _queueAdd.Disabled = locked;
         }
+
         if (_currentStatusLabel != null)
         {
             _currentStatusLabel.Text = s.Kind == WebTvChannel.WebTvKind.None
@@ -302,54 +311,66 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
                 : "Зараз на ТБ: " + s.Label;
         }
 
-        if (_pickerQueueTitle == null || _pickerQueueBox == null)
+        if (_pickerQueueBox == null)
             return;
-        _pickerQueueTitle.Text = "Черга (" + s.Queue.Count + ")" + (locked ? " [заблоковано]" : "");
+
+        _pickerQueueTitle!.Text = "Черга (" + s.Queue.Count + ")" + (locked ? " [замкнено]" : "");
         _pickerQueueBox.RemoveAllChildren();
         var idx = 0;
+        var tv = TvNet();
         foreach (var item in s.Queue)
         {
             var i = idx++;
             var title = item.Title.Length > 0 ? item.Title : item.Label;
-            _pickerQueueBox.AddChild(WebTvWindow.BuildQueueRow(i, title, i == s.QueueNow, locked));
+            _pickerQueueBox.AddChild(WebTvWindow.BuildQueueRow(i, title, i == s.QueueNow, locked,
+                ev => SendQueue(ev, tv)));
         }
     }
 
-    /// <summary>Add the currently ready video to the room's playlist.</summary>
-    private void PerformQueueAdd()    {
+    private static void SendQueue(EntityEventArgs ev, NetEntity tv)
+    {
+        switch (ev)
+        {
+            case PirateTvQueueNavEvent n: n.Tv = tv; PirateTvClientState.Send(n); break;
+            case PirateTvQueueMoveEvent m: m.Tv = tv; PirateTvClientState.Send(m); break;
+            case PirateTvQueueRemoveEvent r: r.Tv = tv; PirateTvClientState.Send(r); break;
+        }
+    }
+
+    /// <summary>Add the currently ready video to the TV's playlist.</summary>
+    private void PerformQueueAdd()
+    {
         if (_pendingPlaybackUrl.Length == 0)
             return;
 
-        Robust.Shared.IoC.IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>()
-            .SendSystemNetworkMessage(new PirateTvQueueAddEvent
-            {
-                Url = _pendingPlaybackUrl,
-                Kind = (int)_pendingKind,
-                Label = _pendingLabel,
-            });
+        PirateTvClientState.Send(new PirateTvQueueAddEvent
+        {
+            Tv = TvNet(),
+            Url = _pendingPlaybackUrl,
+            Kind = (int)_pendingKind,
+            Label = _pendingLabel,
+        });
 
         _here.Text = "➕ Додано в чергу";
         _here.FontColorOverride = Color.Orange;
     }
 
-    /// <summary>Moves the room clock to the new channel: the server owns
-    /// the state (TV-2) and its broadcast lands on every open TV window —
-    /// in this client and everyone else's.</summary>
+    /// <summary>Moves this TV's (or its group's) clock to the new channel.</summary>
     private void Apply()
     {
         if (_pendingPlaybackUrl.Length == 0)
             return;
 
-        Robust.Shared.IoC.IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>()
-            .SendSystemNetworkMessage(new PirateTvPickEvent
-            {
-                Url = _pendingPlaybackUrl,
-                Kind = (int)_pendingKind,
-                Label = _pendingLabel,
-            });
+        PirateTvClientState.Send(new PirateTvPickEvent
+        {
+            Tv = TvNet(),
+            Url = _pendingPlaybackUrl,
+            Kind = (int)_pendingKind,
+            Label = _pendingLabel,
+        });
 
         if (_currentStatusLabel != null)
-            _currentStatusLabel.Text = "Зараз на ТБ: " + _pendingLabel + " — " + _pendingPlaybackUrl;
+            _currentStatusLabel.Text = "Зараз на ТБ: " + _pendingLabel;
         _here.Text = "✔ Поставлено на ТБ";
         _here.FontColorOverride = Color.Orange;
     }

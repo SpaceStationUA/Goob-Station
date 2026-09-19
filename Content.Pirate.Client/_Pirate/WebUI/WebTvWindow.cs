@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using Content.Pirate.Shared.TV;
 using Robust.Client.Graphics;
@@ -11,22 +10,21 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.WebView;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Pirate.Client._Pirate.WebUI;
 
 /// <summary>
-///     Pirate TV viewer: shows whatever channel the room picked
-///     (YouTube embed or Twitch page) inside its own browser area with a
-///     native remote (pause/play/±10s/mute). Each viewer keeps their own
-///     session of the site; the room's shared clock lives in
-///     <see cref="WebTvBackend"/> and every window follows it.
+///     Pirate TV viewer: shows the channel of its television (or, if the
+///     TV is a mirror, the channel of the master it follows) with a native
+///     remote (pause/play/±10s/mute). Every control goes to the server;
+///     the authoritative broadcast lands back here and on all other
+///     viewers of the same TV/group.
 /// </summary>
 public sealed class WebTvWindow : DefaultWindow, IDisposable
 {
-    public static readonly WebTvBackend Backend = new();
-
     private readonly WebViewControl _web;
     private readonly WebUiTuiIpc _ipc;
     private readonly WebUiTvDriver _driver;
@@ -35,6 +33,12 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     {
         Text = "канал: ...",
         FontColorOverride = Color.LightGray,
+    };
+    private readonly Label _sourceChip = new()
+    {
+        Text = "",
+        FontColorOverride = Color.Gray,
+        ClipText = true,
     };
 
     private readonly Button _pause = new() { Text = "⏸ Пауза" };
@@ -45,6 +49,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private readonly Button _fwd60 = new() { Text = "+60с" };
     private readonly Button _mute = new() { Text = "🔇 Звук" };
     private readonly Button _next = new() { Text = "⏭ Далі" };
+    private readonly Button _pick = new() { Text = "🔍 Обрати відео" };
 
     /// <summary>The TV entity this window watches; far away ⇒ auto-close.</summary>
     public EntityUid? TvUid;
@@ -56,7 +61,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private readonly BoxContainer _queueBox = new() { Orientation = BoxContainer.LayoutOrientation.Vertical };
     private readonly Button _panelToggle = new() { Text = "«", MinWidth = 28 };
 
-
     // Our own video's last-reported truth (injection hook).
     private double _ourPos = -1000;
     private double _ourDur;
@@ -66,6 +70,9 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     // Room truth we already acted on.
     private string _shownUrl = "";
     private long _followedStamp = -1;
+    private string _titleSent = "";
+    private bool _endedPublished;
+    private long _endedAtMs;
 
     private bool _disposed;
 
@@ -93,8 +100,8 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
             VerticalExpand = true,
-            MinWidth = 265,
-            MaxWidth = 275,
+            MinWidth = 360,
+            MaxWidth = 380,
             Margin = new Thickness(8),
         };
         right.AddChild(new Label
@@ -108,6 +115,9 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             FontColorOverride = Color.Gray,
             ClipText = true,
         });
+        _sourceChip.ClipText = true;
+        right.AddChild(_sourceChip);
+        right.AddChild(_pick);
         var pair = new GridContainer { Columns = 2, Margin = new Thickness(4) };
         pair.AddChild(_back60);
         pair.AddChild(_fwd60);
@@ -160,32 +170,55 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _back10.OnPressed += _ => Owner_Send("seek", -10);
         _back60.OnPressed += _ => Owner_Send("seek", -60);
         _fwd10.OnPressed += _ => Owner_Send("seek", 10);
+        _fwd60.OnPressed += _ => Owner_Send("seek", 60);
         _mute.OnPressed += _ => Owner_Send("mute", _ourMuted ? 0 : 1);
         _next.OnPressed += OnNextPressed;
         _panelToggle.OnPressed += OnPanelToggle;
-        _fwd60.OnPressed += _ => Owner_Send("seek", 60);
+        _pick.OnPressed += OnPickPressed;
 
-        // Same drain as the picker: AlwaysActive browsers survive window
-        // closes, so drop the browser here to stop background audio.
+        // AlwaysActive browsers survive window closes; drop the browser here
+        // to stop background audio.
         OnClose += () => { try { _web.AlwaysActive = false; } catch { } };
-
-        Backend.Subscribe(OnBackendBroadcast);
     }
 
-    /// <summary>Opens centered and shows whatever the room currently watches.</summary>
+    /// <summary>Opens centered and shows whatever its TV currently plays.</summary>
     public void OpenCenteredTv()
     {
         OpenCentered();
-        var s = Backend.Snapshot();
-        if (s.Kind != WebTvChannel.WebTvKind.None && s.Url.Length > 0)
-            NavigateTo(s);
-        else
-            _status.Text = "канал: (нічого не грає — відкрий Браузер)";
+        RequestState();
+    }
+
+    private PirateTvClientState.Entry Snapshot()
+    {
+        if (TvUid == null || !TvUid.Value.IsValid())
+            return new PirateTvClientState.Entry();
+        return PirateTvClientState.Get(PirateTvClientState.Net(TvUid.Value));
+    }
+
+    private void RequestState()
+    {
+        if (TvUid == null || !TvUid.Value.IsValid())
+            return;
+        PirateTvClientState.Request(PirateTvClientState.Net(TvUid.Value));
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+
+        if (!PirateTvClientState.Connected)
+        {
+            Close();
+            return;
+        }
+
+        if (TvUid == null || !TvUid.Value.IsValid())
+        {
+            Close();
+            return;
+        }
+
+        RequestState();
         _ipc.Pump();
         _driver.Tick(args.DeltaSeconds);
         FollowRoomClock();
@@ -199,13 +232,12 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             return;
         try
         {
-            var ent = Robust.Shared.IoC.IoCManager.Resolve<Robust.Shared.GameObjects.IEntityManager>();
-            var player = Robust.Shared.IoC.IoCManager
-                .Resolve<Robust.Client.Player.IPlayerManager>().LocalEntity;
+            var ent = IoCManager.Resolve<IEntityManager>();
+            var player = IoCManager.Resolve<Robust.Client.Player.IPlayerManager>().LocalEntity;
             if (player == null)
                 return;
-            if (!ent.TryGetComponent(player.Value, out Robust.Shared.GameObjects.TransformComponent? pt) ||
-                !ent.TryGetComponent(TvUid.Value, out Robust.Shared.GameObjects.TransformComponent? tt))
+            if (!ent.TryGetComponent(player.Value, out TransformComponent? pt) ||
+                !ent.TryGetComponent(TvUid.Value, out TransformComponent? tt))
             {
                 return;
             }
@@ -245,29 +277,29 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
                        (_ourDur > 30 && _ourPos >= _ourDur - 0.5 && _ourPos > 5);
         if (finished && !_endedPublished)
         {
-            // Playlist auto-advance: the video finished, tell the room.
+            // Playlist auto-advance: tell the room. The server dedupes
+            // simultaneous reports coming from every mirrored viewer.
             _endedPublished = true;
-            var net = Robust.Shared.IoC.IoCManager
-                .Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>();
-            net.SendSystemNetworkMessage(new PirateTvCommandEvent { Op = "ended", Arg = 0 });
+            _endedAtMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            PirateTvClientState.Send(new PirateTvCommandEvent { Tv = TvNet(), Op = "ended" });
         }
-        else if (!finished && _endedPublished)
+        else if (!finished && _endedPublished &&
+                 DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - _endedAtMs > 3000)
         {
             _endedPublished = false;
         }
 
-        // The page knows its own title; stamp the room entry with it once.
+        // The page knows its own title; stamp the entry with it once.
         var title = ExtractString(json, "title");
         if (title != null && title.Length > 0 && title != _titleSent)
         {
-            var s = Backend.Snapshot();
+            var s = Snapshot();
             if (s.Kind != WebTvChannel.WebTvKind.None && s.Url.Length > 0)
             {
                 _titleSent = title;
-                var net = Robust.Shared.IoC.IoCManager
-                    .Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>();
-                net.SendSystemNetworkMessage(new PirateTvCommandEvent
+                PirateTvClientState.Send(new PirateTvCommandEvent
                 {
+                    Tv = TvNet(),
                     Op = "set_title",
                     Title = title.Length > 100 ? title[..100] : title,
                 });
@@ -279,54 +311,30 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _status.Text = $"{StateLabel()}  {mm:00}:{ss:00}  " + (_ourPlaying ? "▶" : "⏸") + (_ourMuted ? " 🔇" : "");
     }
 
-    private string _titleSent = "";
-
-    private bool _endedPublished;
-
     private string StateLabel()
     {
-        var s = Backend.Snapshot();
+        var s = Snapshot();
         return s.Kind != WebTvChannel.WebTvKind.None && s.Label.Length > 0 ? s.Label : "канал";
     }
+
+    private NetEntity TvNet()
+        => TvUid != null && TvUid.Value.IsValid() ? PirateTvClientState.Net(TvUid.Value) : NetEntity.Invalid;
 
     // ===== room-clock follow (shared target = Pos + wall time while playing) =====
 
     private void FollowRoomClock()
     {
-        var s = Backend.Snapshot();
-        if (s.Kind == WebTvChannel.WebTvKind.None || s.Url.Length == 0)
-            return;
-
-        var target = VideoPos(s.Stamp);
-        if (Math.Abs(_ourPos - target) > 5.0)
-            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
-                                 target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
-        if (_ourPlaying != s.Playing)
-            _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"" + (s.Playing ? "play" : "pause") + "\"}");
-    }
-
-    /// <summary>The room's expected video position at wall-clock `stampMs`.</summary>
-    public static double VideoPos(long stampMs)
-    {
-        var s = Backend.Snapshot();
-        var elapsed = s.Playing ? Math.Max(0, (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - stampMs) / 1000.0) : 0;
-        return Math.Max(0, s.Pos + elapsed);
-    }
-
-    // ===== broadcasts: URL switch + control state =====
-
-    private void OnBackendBroadcast(WebTvBackend.ChannelState s)
-    {
-        if (_disposed)
-            return;
-
-        RefreshQueue(s);
-
+        var s = Snapshot();
         if (s.Kind == WebTvChannel.WebTvKind.None || s.Url.Length == 0)
         {
-            _followedStamp = -1;
+            if (_shownUrl.Length > 0)
+                ClearPage();
+            UpdateSourceChip(s);
             return;
         }
+
+        UpdateSourceChip(s);
+        RefreshQueue(s);
 
         if (s.Url != _shownUrl)
         {
@@ -334,104 +342,118 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
             return;
         }
 
-        if (s.Stamp == _followedStamp)
-            return;
-        _followedStamp = s.Stamp;
-
-        // Someone moved the room clock (pause/play/seek): apply immediately.
-        var target = VideoPos(s.Stamp);
-        if (Math.Abs(_ourPos - target) > 2.0)
+        var target = PirateTvClientState.VideoPos(s, s.Stamp);
+        if (Math.Abs(_ourPos - target) > 5.0)
             _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"seekTo\",\"arg\":" +
                                  target.ToString("0.##", CultureInfo.InvariantCulture) + "}");
         if (_ourPlaying != s.Playing)
             _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"" + (s.Playing ? "play" : "pause") + "\"}");
     }
 
-    /// <summary>Queue rows: click jumps the room to that position.</summary>
-    private void RefreshQueue(WebTvBackend.ChannelState s)
+    private void UpdateSourceChip(PirateTvClientState.Entry s)
     {
+        _sourceChip.Text = s.IsMirror ? "джерело: мережа" : "джерело: локально";
+    }
+
+    private void ClearPage()
+    {
+        _shownUrl = "";
+        _followedStamp = -1;
+        _ourPos = -1000;
+        _ourDur = 0;
+        _endedPublished = false;
+        _status.Text = "канал: (нічого не грає)";
+        try { _web.Url = "about:blank"; } catch { /* headless dev */ }
+    }
+
+    /// <summary>Queue rows: click jumps this TV/group to that position.</summary>
+    private void RefreshQueue(PirateTvClientState.Entry s)
+    {
+        _queueTitle.Text = "Черга (" + s.Queue.Count + ")" + (s.Locked ? " [замкнено]" : "");
         _queueBox.RemoveAllChildren();
         var idx = 0;
+        var tv = TvNet();
         foreach (var item in s.Queue)
         {
             var i = idx++;
             _queueBox.AddChild(BuildQueueRow(i, item.Title.Length > 0 ? item.Title : item.Label,
-                i == s.QueueNow, s.Locked));
+                i == s.QueueNow, s.Locked, ev => SendQueue(ev, tv)));
+        }
+
+        if (s.Stamp != _followedStamp)
+            _followedStamp = s.Stamp;
+    }
+
+    private void SendQueue(EntityEventArgs ev, NetEntity tv)
+    {
+        switch (ev)
+        {
+            case PirateTvQueueNavEvent n: n.Tv = tv; PirateTvClientState.Send(n); break;
+            case PirateTvQueueMoveEvent m: m.Tv = tv; PirateTvClientState.Send(m); break;
+            case PirateTvQueueRemoveEvent r: r.Tv = tv; PirateTvClientState.Send(r); break;
         }
     }
 
     /// <summary>
-    ///     One playlist entry: the (widely readable, clipped) row button on
-    ///     top and the small ▲▼✖ row beneath — the panel is only ~200px
-    ///     wide, so both would fight for space on one line. Locked rooms
-    ///     get the whole row disabled; the playing entry turns green.
+    ///     One playlist entry on a single line: the (clipped) title button
+    ///     followed by ▲▼✖. The right panel is wide enough for this now, so
+    ///     there is no second tool row. Locked rooms disable the whole row;
+    ///     the playing entry turns green.
     /// </summary>
-    public static Control BuildQueueRow(int i, string title, bool nowPlaying, bool locked)
+    /// <param name="send">Receives the queue event; the owning window stamps the TV handle.</param>
+    public static Control BuildQueueRow(int i, string title, bool nowPlaying, bool locked, Action<EntityEventArgs> send)
     {
-        Control BuildRow()
-        {
-            var nav = new Button
-            {
-                Text = (nowPlaying ? "▶ " : "  ") + (i + 1) + ". " + title,
-                TextAlign = Label.AlignMode.Left,
-                ClipText = true,
-                HorizontalExpand = true,
-                ToggleMode = false,
-                Disabled = locked,
-            };
-
-            if (nowPlaying)
-                nav.StyleClasses.Add(Content.Client.Stylesheets.StyleClass.Positive);
-
-            // Wrap the action row in an outer click proxy → toggle nav box.
-            nav.OnPressed += _ => QueueSend(new PirateTvQueueNavEvent { Index = i });
-            return nav;
-        }
-
-        var box = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, SeparationOverride = 1 };
-        box.AddChild(BuildRow());
-
-        var tools = new BoxContainer
+        var row = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
             SeparationOverride = 2,
-            Margin = new Thickness(0, 0, 0, 2),
+            HorizontalExpand = true,
         };
-        tools.AddChild(MiniBtn("▲", () => QueueSend(new PirateTvQueueMoveEvent { Index = i, Delta = -1 }), locked));
-        tools.AddChild(MiniBtn("▼", () => QueueSend(new PirateTvQueueMoveEvent { Index = i, Delta = 1 }), locked));
-        tools.AddChild(MiniBtn("✖", () => QueueSend(new PirateTvQueueRemoveEvent { Index = i }), locked));
-        box.AddChild(tools);
-        return box;
+
+        var nav = new Button
+        {
+            Text = (nowPlaying ? "▶ " : "  ") + (i + 1) + ". " + title,
+            TextAlign = Label.AlignMode.Left,
+            ClipText = true,
+            HorizontalExpand = true,
+            ToggleMode = false,
+            Disabled = locked,
+        };
+
+        if (nowPlaying)
+            nav.StyleClasses.Add(Content.Client.Stylesheets.StyleClass.Positive);
+
+        nav.OnPressed += _ => send(new PirateTvQueueNavEvent { Index = i });
+        row.AddChild(nav);
+
+        row.AddChild(MiniBtn("▲", () => send(new PirateTvQueueMoveEvent { Index = i, Delta = -1 }), locked));
+        row.AddChild(MiniBtn("▼", () => send(new PirateTvQueueMoveEvent { Index = i, Delta = 1 }), locked));
+        row.AddChild(MiniBtn("✖", () => send(new PirateTvQueueRemoveEvent { Index = i }), locked));
+
+        return new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            Children = { row },
+        };
     }
 
     public static Button MiniBtn(string label, Action act, bool disabled = false)
     {
-        var b = new Button { Text = label, MinWidth = 30, Disabled = disabled };
+        var b = new Button { Text = label, MinWidth = 30, MaxWidth = 32, Disabled = disabled };
         b.OnPressed += _ => act();
         return b;
     }
 
-    public static void QueueSend(object ev)
-    {
-        var net = Robust.Shared.IoC.IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>();
-        switch (ev)
-        {
-            case PirateTvQueueMoveEvent m:
-                net.SendSystemNetworkMessage(m);
-                break;
-            case PirateTvQueueRemoveEvent r:
-                net.SendSystemNetworkMessage(r);
-                break;
-            case PirateTvQueueNavEvent n:
-                net.SendSystemNetworkMessage(n);
-                break;
-        }
-    }
-
     private void OnNextPressed(BaseButton.ButtonEventArgs _)
+        => PirateTvClientState.Send(new PirateTvCommandEvent { Tv = TvNet(), Op = "manual_next" });
+
+    /// <summary>Opens the YouTube picker bound to the same TV.</summary>
+    private void OnPickPressed(BaseButton.ButtonEventArgs _)
     {
-        var net = Robust.Shared.IoC.IoCManager.Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>();
-        net.SendSystemNetworkMessage(new PirateTvCommandEvent { Op = "manual_next", Arg = 0 });
+        if (TvUid == null || !TvUid.Value.IsValid())
+            return;
+        var picker = new WebTvPickerWindow { TvUid = TvUid.Value };
+        picker.OpenCenteredPicker();
     }
 
     private void OnPanelToggle(BaseButton.ButtonEventArgs _)
@@ -442,7 +464,7 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _panelToggle.Text = _panelBox.Visible ? "»" : "«";
     }
 
-    private void NavigateTo(WebTvBackend.ChannelState s)
+    private void NavigateTo(PirateTvClientState.Entry s)
     {
         _shownUrl = s.Url;
         _followedStamp = -1;
@@ -463,45 +485,34 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _driver.ApplyCommand("{\"k\":\"control\",\"op\":\"" + op + "\",\"arg\":" +
                              arg.ToString("0.##", CultureInfo.InvariantCulture) + "}");
 
-        // TV-2: the room clock is server-side; publish the intent, the
-        // authoritative broadcast lands (and corrects us) in its echo.
-        var net = Robust.Shared.IoC.IoCManager
-            .Resolve<Robust.Shared.GameObjects.IEntityNetworkManager>();
+        var tv = TvNet();
         switch (op)
         {
             case "pause":
-                net.SendSystemNetworkMessage(new PirateTvCommandEvent
+                PirateTvClientState.Send(new PirateTvCommandEvent
                 {
+                    Tv = tv,
                     Op = "pause",
                     Arg = _ourPos < 0 ? 0 : _ourPos,
                 });
                 break;
             case "play":
-                net.SendSystemNetworkMessage(new PirateTvCommandEvent { Op = "play", Arg = 0 });
+                PirateTvClientState.Send(new PirateTvCommandEvent { Tv = tv, Op = "play" });
                 break;
             case "seek":
                 {
                     var basePos = _ourPos < 0 ? 0 : _ourPos;
                     var target = Math.Max(0, basePos + arg);
 
-                    // A forward jump that crosses the end rolls the room to
-                    // the next playlist entry — same outcome as the video
-                    // playing to its natural end.
+                    // A forward jump that crosses the end rolls to the next
+                    // playlist entry — same outcome as playing to the end.
                     if (arg > 0 && _ourDur > 30 && target >= _ourDur - 0.5)
                     {
-                        net.SendSystemNetworkMessage(new PirateTvCommandEvent
-                        {
-                            Op = "manual_next",
-                            Arg = 0,
-                        });
+                        PirateTvClientState.Send(new PirateTvCommandEvent { Tv = tv, Op = "manual_next" });
                         return;
                     }
 
-                    net.SendSystemNetworkMessage(new PirateTvCommandEvent
-                    {
-                        Op = "seekTo",
-                        Arg = target,
-                    });
+                    PirateTvClientState.Send(new PirateTvCommandEvent { Tv = tv, Op = "seekTo", Arg = target });
                     break;
                 }
         }

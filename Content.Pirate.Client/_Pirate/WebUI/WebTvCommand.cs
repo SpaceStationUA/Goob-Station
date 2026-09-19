@@ -1,79 +1,101 @@
 // SPDX-FileCopyrightText: 2026 Pirate Development Team
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System;
+using Content.Pirate.Shared.TV;
 using Content.Shared.Administration;
+using Robust.Client.Player;
 using Robust.Shared.Console;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Pirate.Client._Pirate.WebUI;
 
 /// <summary>
 ///     Dev commands for the Pirate TV.
-///       webuitv        — opens a viewer window watching the room channel.
-///       webuitvpick    — opens the picker browser (YouTube/Twitch fence).
-///       webuitv <url>  — "owner" override: sets a room channel directly.
-///     Multiple windows share the static <see cref="WebTvWindow.Backend"/>,
-///     which demos the sync loop locally (TV-2 replaces it with the server
-///     relay); the flow (pick → confirm → switch) stays identical.
+///       webuitv      — opens a viewer on the nearest TV.
+///       webuitvpick  — opens the YouTube picker for the nearest TV.
 /// </summary>
 [AnyCommand]
 public sealed class WebTvCommand : IConsoleCommand
 {
     public string Command => "webuitv";
 
-    public string Description => "Opens a Pirate TV window watching the room channel.";
+    public string Description => "Opens a Pirate TV window watching the nearest television.";
 
     public string Help =>
-        "Usage: webuitv [url]\n  No url → opens a viewer window on the current room channel.\n" +
-        "  With url (YouTube video / Twitch channel or VOD) → sets it as the room channel directly.\n" +
-        "  'webuitvpick' opens the picker browser instead.";
+        "Usage: webuitv\n  Opens the viewer on the nearest television in the world.\n" +
+        "  'webuitvpick' opens the YouTube picker for it instead.";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var window = new WebTvWindow();
+        if (!TryNearestTv(shell, out var uid))
+            return;
+
+        var window = new WebTvWindow { TvUid = uid };
         window.OpenCenteredTv();
+    }
 
-        if (args.Length == 1)
+    internal static bool TryNearestTv(IConsoleShell shell, out EntityUid uid)
+    {
+        uid = default;
+        try
         {
-            var url = args[0];
-            if (!url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
-                !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+            var ent = IoCManager.Resolve<IEntityManager>();
+            var player = IoCManager.Resolve<IPlayerManager>().LocalEntity;
+            if (player == null)
             {
-                shell.WriteLine("Only http(s) URLs are supported in TV mode.");
-                return;
-            }
-            if (!WebTvChannel.TryBuild(url, out var kind, out var playback, out var label))
-            {
-                shell.WriteLine("Not a YouTube video or Twitch channel/VOD page.");
-                return;
+                shell.WriteLine("Not attached to an entity.");
+                return false;
             }
 
-            var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            WebTvWindow.Backend.Apply(s =>
+            var playerXform = ent.GetComponent<TransformComponent>(player.Value);
+            var playerPos = playerXform.MapPosition;
+            var best = double.MaxValue;
+            var q = ent.EntityQueryEnumerator<PirateTvComponent, TransformComponent>();
+            while (q.MoveNext(out var tvUid, out _, out var xform))
             {
-                s.Url = playback;
-                s.Label = label;
-                s.Kind = kind;
-                s.Playing = true;
-                s.Pos = 0;
-                s.Stamp = now;
-            });
+                if (xform.MapID != playerXform.MapID)
+                    continue;
+                var d = (xform.MapPosition.Position - playerPos.Position).Length();
+                if (d < best)
+                {
+                    best = d;
+                    uid = tvUid;
+                }
+            }
+
+            if (best == double.MaxValue)
+            {
+                shell.WriteLine("No television nearby.");
+                return false;
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            shell.WriteLine("TV lookup failed: " + e.Message);
+            return false;
         }
     }
 }
 
-/// <summary>Opens the TV browser window (YouTube/Twitch fence) for picking a channel.</summary>
+/// <summary>Opens the YouTube picker for the nearest TV.</summary>
 [AnyCommand]
 public sealed class WebTvPickCommand : IConsoleCommand
 {
     public string Command => "webuitvpick";
 
-    public string Description => "Opens the Pirate TV picker browser (YouTube/Twitch).";
+    public string Description => "Opens the Pirate TV YouTube picker for the nearest television.";
 
     public string Help => "Usage: webuitvpick";
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var window = new WebTvPickerWindow();
+        if (!WebTvCommand.TryNearestTv(shell, out var uid))
+            return;
+
+        var window = new WebTvPickerWindow { TvUid = uid };
         window.OpenCenteredPicker();
     }
 }

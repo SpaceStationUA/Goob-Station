@@ -134,8 +134,14 @@ public sealed class WebUiTvDriver
         "              ended: !!v.ended," +
         "              title: (function(){" +
         "                 var m = document.querySelector('meta[property=\"og:title\"]');" +
-        "                 if (m && m.content) { return m.content; }" +
-        "                 return (document.title || '').replace(/\\s*(?:-|—)\\s*YouTube\\s*$/i, '');" +
+        "                 var t = (m && m.content) || '';" +
+        "                 if (!t) {" +
+        "                   t = (document.title || '').replace(/\\s*(?:-|—)\\s*YouTube\\s*$/i, '');" +
+        "                 }" +
+        "                 // Ignore SPA interim titles (e.g. 'title_select') before" +
+        "                 // the player settles; those are element ids, not names." +
+        "                 if (!t || t.indexOf('_') >= 0 || (v.duration || 0) <= 0) { return ''; }" +
+        "                 return t;" +
         "               })()," +
         "              err: (v.error && v.error.code) || null };" +
         "  var ser = JSON.stringify(cur);" +

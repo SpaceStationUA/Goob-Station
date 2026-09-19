@@ -56,6 +56,15 @@
               collection: MetalGlassBreak
               params:
                 volume: -4
+  # Pirate edit start — Pirate TV (webui) + multitool linking
+  - type: PirateTv
+  - type: DeviceLinkSource
+    ports:
+    - PirateTvBroadcast
+  - type: DeviceLinkSink
+    ports:
+    - PirateTvReceive
+  # Pirate edit end
   - type: StationAiWhitelist
 
 - type: entity

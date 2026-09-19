@@ -3,45 +3,46 @@
 
 using Content.Pirate.Shared.TV;
 using Content.Server.Administration.Managers;
+using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Pirate.Server.TV;
 
 /// <summary>
-///     TV-2: the room clock and playlist live here, on the server.
-///     Clients send picks, queue adds/navs, remote controls and the
-///     video-"ended" ping; this system owns the state, mutates it,
-///     broadcasts <see cref="PirateTvStateEvent"/> and pops a world
-///     "who did what" feed at the actor's feet.
-///     When the room is locked, only transport controls (play/pause/
-///     seek/next-on-end) pass; every picker/jumper/lock-toggle is
-///     rejected.
+///     The Pirate TV: per-television channel/queue/clock/lock.
+///     A standalone TV owns its state; TVs linked with the multitool or
+///     network configurator (DeviceLink) form a star — one master whose
+///     broadcast mirrors feed into any number of sink TVs. Mirrors forward
+///     every control back to the master, so the group stays coherent, and
+///     unlinking resets the mirror to off.
+///     When a TV is locked, only transport controls (play/pause/seek/
+///     next-on-end) pass; every picker/jumper/lock-toggle is rejected.
 /// </summary>
 public sealed class PirateTvSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IAdminManager _admin = default!;
+    [Dependency] private readonly SharedDeviceLinkSystem _link = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private string _url = "";
-    private int _kind;
-    private string _label = "";
-    private bool _playing;
-    private double _pos;
-    private long _stamp;
-    private bool _locked;
+    private const string SourcePort = "PirateTvBroadcast";
+    private const string SinkPort = "PirateTvReceive";
 
-    private readonly List<PirateTvQueueItem> _queue = new();
-    private int _now = -1;
+    /// <summary>Collapses duplicate "ended" pings from several mirrored viewers.</summary>
+    private readonly Dictionary<EntityUid, long> _lastEndedMs = new();
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<PirateTvComponent, LinkAttemptEvent>(OnLinkAttempt);
+        SubscribeLocalEvent<PirateTvComponent, NewLinkEvent>(OnNewLink);
+        SubscribeLocalEvent<PirateTvComponent, PortDisconnectedEvent>(OnPortDisconnected);
+        SubscribeLocalEvent<PirateTvComponent, ComponentShutdown>(OnShutdown);
+
+        SubscribeNetworkEvent<PirateTvRequestEvent>(OnRequest);
         SubscribeNetworkEvent<PirateTvPickEvent>(OnPick);
         SubscribeNetworkEvent<PirateTvCommandEvent>(OnCommand);
         SubscribeNetworkEvent<PirateTvQueueAddEvent>(OnQueueAdd);
@@ -49,197 +50,377 @@ public sealed class PirateTvSystem : EntitySystem
         SubscribeNetworkEvent<PirateTvQueueRemoveEvent>(OnQueueRemove);
         SubscribeNetworkEvent<PirateTvQueueMoveEvent>(OnQueueMove);
         SubscribeNetworkEvent<PirateTvLockEvent>(OnLockToggle);
-        _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
-    public override void Shutdown()
+    // ===== DeviceLink: star groups =====
+
+    private void OnLinkAttempt(Entity<PirateTvComponent> ent, ref LinkAttemptEvent args)
     {
-        base.Shutdown();
-        _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+        // Chains are allowed (1→2→3): a source may itself be a mirror, and a
+        // sink may have its own mirrors. The only illegal shape is a cycle.
+        if (args.Sink == ent.Owner)
+        {
+            if (args.SinkPort != SinkPort)
+                return;
+            if (args.SourcePort != SourcePort ||
+                args.Source == ent.Owner ||
+                !TryComp<PirateTvComponent>(args.Source, out _) ||
+                WouldCycle(ent.Owner, args.Source))
+            {
+                args.Cancel();
+            }
+            return;
+        }
+
+        if (args.Source == ent.Owner)
+        {
+            if (args.SourcePort != SourcePort)
+                return;
+            if (!TryComp<PirateTvComponent>(args.Sink, out _) ||
+                args.SinkPort != SinkPort ||
+                WouldCycle(args.Sink, ent.Owner))
+            {
+                args.Cancel();
+            }
+        }
+    }
+
+    /// <summary>
+    ///     True when linking <paramref name="sink"/> under
+    ///     <paramref name="source"/> would create a cycle (the sink is
+    ///     already an ancestor of the source).
+    /// </summary>
+    private bool WouldCycle(EntityUid sink, EntityUid source)
+    {
+        // Walk source's chain up to its root; if we pass through `sink`, the
+        // new link would close the loop.
+        var cursor = source;
+        for (var guard = 0; guard < 64; guard++)
+        {
+            if (cursor == sink)
+                return true;
+            if (!TryComp<PirateTvComponent>(cursor, out var comp) || !comp.Source.IsValid() ||
+                !TryGetEntity(comp.Source, out var parent))
+            {
+                return false;
+            }
+            cursor = parent.Value;
+        }
+        return true;
+    }
+
+    private void OnNewLink(Entity<PirateTvComponent> ent, ref NewLinkEvent args)
+    {
+        if (args.Sink != ent.Owner || args.SinkPort != SinkPort)
+            return;
+
+        if (!TryComp<PirateTvComponent>(args.Source, out var sourceComp))
+            return;
+
+        // Re-linking: drop the old parent's link first, without letting its
+        // disconnect event reset us (we re-copy the new parent's state below).
+        if (ent.Comp.Source.IsValid() &&
+            TryGetEntity(ent.Comp.Source, out var oldUid) &&
+            oldUid.Value != args.Source &&
+            TryComp<DeviceLinkSourceComponent>(oldUid, out var oldSrc))
+        {
+            _reparenting.Add(ent.Owner);
+            try
+            {
+                _link.RemoveSinkFromSource(oldUid.Value, ent.Owner, oldSrc);
+            }
+            finally
+            {
+                _reparenting.Remove(ent.Owner);
+            }
+        }
+
+        ent.Comp.Source = GetNetEntity(args.Source);
+        CopyState(sourceComp, ent.Comp);
+        Mutate(ent.Owner, ent.Comp);
+    }
+
+    private void OnPortDisconnected(Entity<PirateTvComponent> ent, ref PortDisconnectedEvent args)
+    {
+        if (args.Port != SinkPort || !ent.Comp.Source.IsValid())
+            return;
+        if (_reparenting.Contains(ent.Owner))
+            return;
+
+        // Unlink: this TV becomes its own root (off/empty). Its own mirrors
+        // stay attached to it, so a 1→2→3 chain unlinked at 1 becomes 2→3.
+        ent.Comp.Source = NetEntity.Invalid;
+        ResetState(ent.Comp);
+        Mutate(ent.Owner, ent.Comp);
+    }
+
+    /// <summary>TVs currently being re-pointed; their disconnect must not reset them.</summary>
+    private readonly HashSet<EntityUid> _reparenting = new();
+
+    private void OnShutdown(Entity<PirateTvComponent> ent, ref ComponentShutdown args)
+    {
+        // A dying root frees its mirrors (they reset to off); a dying mirror
+        // re-parents its own mirrors onto its parent, keeping the chain alive.
+        var net = GetNetEntity(ent.Owner);
+        var newParent = ent.Comp.Source;
+
+        var q = EntityQueryEnumerator<PirateTvComponent>();
+        while (q.MoveNext(out var uid, out var child))
+        {
+            if (child.Source != net)
+                continue;
+            child.Source = newParent;
+            if (newParent.IsValid() && TryGetEntity(newParent, out var parentUid) &&
+                TryComp(parentUid.Value, out PirateTvComponent? parentComp))
+            {
+                CopyState(parentComp, child);
+            }
+            else
+            {
+                ResetState(child);
+            }
+            PushState(uid, child);
+        }
     }
 
     // ===== client → server =====
 
+    private void OnRequest(PirateTvRequestEvent msg, EntitySessionEventArgs args)
+    {
+        if (!TryResolveTv(msg.Tv, out var uid, out var comp))
+            return;
+        RaiseNetworkEvent(BuildState(uid, comp), args.SenderSession.Channel);
+    }
+
     private void OnPick(PirateTvPickEvent msg, EntitySessionEventArgs args)
     {
-        if (_locked && !IsAdmin(args))
+        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+            return;
+
+        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — канал не міняється");
             return;
         }
 
-        foreach (var item in _queue)
-            if (item.Url == msg.Url)
-            {
-                NavTo(_queue.IndexOf(item));
-                return;
-            }
-
-        var it = new PirateTvQueueItem { Url = msg.Url, Kind = msg.Kind, Label = msg.Label, Title = msg.Title };
-        _queue.Add(it);
-        NavTo(_queue.Count - 1);
+        Pick(masterUid, master, msg.Url, msg.Kind, msg.Label, msg.Title);
         Feed(args, "поставив на ТБ: " + msg.Label);
+    }
+
+    /// <summary>
+    ///     Puts a URL on the TV (reusing an existing queue entry if present).
+    ///     Shared by the network handler and tests; no permission checks.
+    /// </summary>
+    public void Pick(EntityUid masterUid, PirateTvComponent master, string url, int kind, string label, string title)
+    {
+        if (url.Length == 0)
+            return;
+
+        foreach (var item in master.Queue)
+        {
+            if (item.Url != url)
+                continue;
+            NavTo(masterUid, master, master.Queue.IndexOf(item));
+            return;
+        }
+
+        master.Queue.Add(new PirateTvQueueItem { Url = url, Kind = kind, Label = label, Title = title });
+        NavTo(masterUid, master, master.Queue.Count - 1);
     }
 
     private void OnQueueAdd(PirateTvQueueAddEvent msg, EntitySessionEventArgs args)
     {
-        if (_locked && !IsAdmin(args))
+        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+            return;
+
+        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — чергу не змінити");
             return;
         }
 
-        foreach (var item in _queue)
+        if (msg.Url.Length == 0)
+            return;
+
+        foreach (var item in master.Queue)
+        {
             if (item.Url == msg.Url)
                 return;
+        }
 
-        var it = new PirateTvQueueItem { Url = msg.Url, Kind = msg.Kind, Label = msg.Label, Title = msg.Title };
-        _queue.Add(it);
-        if (_url.Length == 0)
+        master.Queue.Add(new PirateTvQueueItem
+        {
+            Url = msg.Url, Kind = msg.Kind, Label = msg.Label, Title = msg.Title,
+        });
+
+        if (master.Url.Length == 0)
         {
             // Empty room: the add becomes "play now".
-            NavTo(_queue.Count - 1);
+            NavTo(masterUid, master, master.Queue.Count - 1);
             return;
         }
 
-        BroadcastState();
-        Feed(args, "додали в чергу: " + msg.Label);
+        Mutate(masterUid, master);
+        Feed(args, "додав у чергу: " + msg.Label);
     }
 
     private void OnQueueNav(PirateTvQueueNavEvent msg, EntitySessionEventArgs args)
     {
-        if (_locked && !IsAdmin(args))
+        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+            return;
+
+        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — черга зафіксована");
             return;
         }
-        if (msg.Index < 0 || msg.Index >= _queue.Count)
+        if (msg.Index < 0 || msg.Index >= master.Queue.Count)
             return;
 
-        NavTo(msg.Index);
+        NavTo(masterUid, master, msg.Index);
         Feed(args, "переключив на елемент " + (msg.Index + 1));
     }
 
     private void OnQueueRemove(PirateTvQueueRemoveEvent msg, EntitySessionEventArgs args)
     {
-        if (_locked && !IsAdmin(args))
+        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+            return;
+
+        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — чергу не змінити");
             return;
         }
-        if (msg.Index < 0 || msg.Index >= _queue.Count)
+        if (msg.Index < 0 || msg.Index >= master.Queue.Count)
             return;
 
-        var it = _queue[msg.Index];
-        var wasNow = msg.Index == _now;
-        _queue.RemoveAt(msg.Index);
+        var it = master.Queue[msg.Index];
+        var wasNow = msg.Index == master.Now;
+        master.Queue.RemoveAt(msg.Index);
 
-        if (_queue.Count == 0)
+        if (master.Queue.Count == 0)
         {
-            _now = -1;
-            _url = "";
-            _label = "";
-            _playing = false;
-            BroadcastState();
+            ResetState(master);
+            Mutate(masterUid, master);
             Feed(args, "очистив чергу");
             return;
         }
 
         if (wasNow)
         {
-            NavTo(Math.Min(msg.Index, _queue.Count - 1), silent: true);
+            NavTo(masterUid, master, Math.Min(msg.Index, master.Queue.Count - 1), silent: true);
             Feed(args, "прибрав " + it.Label + " — грає наступний");
             return;
         }
 
-        if (_now > msg.Index)
-            _now--;
-        BroadcastState();
+        if (master.Now > msg.Index)
+            master.Now--;
+        Mutate(masterUid, master);
         Feed(args, "прибрав " + it.Label);
     }
 
     private void OnQueueMove(PirateTvQueueMoveEvent msg, EntitySessionEventArgs args)
     {
-        if (_locked && !IsAdmin(args))
+        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+            return;
+
+        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — чергу не змінити");
             return;
         }
-        if (msg.Index < 0 || msg.Index >= _queue.Count)
+        if (msg.Index < 0 || msg.Index >= master.Queue.Count)
             return;
 
-        var j = msg.Index + Math.Sign(msg.Delta); // Delta -1 (▲) = move up
-        if (j < 0 || j >= _queue.Count)
+        var j = msg.Index + Math.Sign(msg.Delta);
+        if (j < 0 || j >= master.Queue.Count)
             return;
 
-        var it = _queue[msg.Index];
-        _queue[msg.Index] = _queue[j];
-        _queue[j] = it;
+        (master.Queue[msg.Index], master.Queue[j]) = (master.Queue[j], master.Queue[msg.Index]);
 
-        if (_now == msg.Index)
-            _now = j;
-        else if (_now == j)
-            _now = msg.Index;
+        if (master.Now == msg.Index)
+            master.Now = j;
+        else if (master.Now == j)
+            master.Now = msg.Index;
 
-        BroadcastState();
+        Mutate(masterUid, master);
     }
 
     private void OnLockToggle(PirateTvLockEvent msg, EntitySessionEventArgs args)
     {
-        _locked = msg.Locked;
-        BroadcastState();
-        Feed(args, _locked ? "заблокував ТБ" : "розблокував ТБ");
+        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+            return;
+
+        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        master.Locked = msg.Locked;
+        Mutate(masterUid, master);
+        Feed(args, master.Locked ? "заблокував ТБ" : "розблокував ТБ");
     }
 
     private void OnCommand(PirateTvCommandEvent msg, EntitySessionEventArgs args)
     {
+        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+            return;
+
+        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
         switch (msg.Op)
         {
             case "pause":
                 // The presser's own video position becomes the room anchor.
-                _playing = false;
-                _pos = Math.Max(0, msg.Arg);
+                master.Playing = false;
+                master.Pos = Math.Max(0, msg.Arg);
+                master.Stamp = now;
                 break;
             case "play":
-                _playing = true;
-                _stamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                master.Playing = true;
+                master.Stamp = now;
                 break;
             case "seekTo":
-                _pos = Math.Max(0, msg.Arg);
-                _stamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+                master.Pos = Math.Max(0, msg.Arg);
+                master.Stamp = now;
                 break;
             case "ended":
-                // Auto-advance: the playlist's next entry starts playing.
-                NavTo(_now + 1 < _queue.Count ? _now + 1 : 0, silent: true);
+                // Auto-advance, deduped: every mirrored page reports at once.
+                if (_lastEndedMs.TryGetValue(masterUid, out var last) && now - last < 3000)
+                    return;
+                _lastEndedMs[masterUid] = now;
+                NavTo(masterUid, master, master.Now + 1 < master.Queue.Count ? master.Now + 1 : 0,
+                    silent: true);
                 return;
             case "manual_next":
-                if (_locked && !IsAdmin(args))
+                if (master.Locked && !IsAdmin(args))
                 {
                     Feed(args, "ТБ заблоковано — наступний відео недоступний");
                     return;
                 }
-                NavTo(_now + 1 < _queue.Count ? _now + 1 : 0, silent: true);
+                NavTo(masterUid, master, master.Now + 1 < master.Queue.Count ? master.Now + 1 : 0,
+                    silent: true);
                 Feed(args, "наступний відео");
                 return;
             case "set_title":
                 // The page reported its own video title; stamp the current
                 // playlist entry so every queue row shows the real name.
-                if (msg.Title.Length == 0 || _now < 0 || _now >= _queue.Count)
+                if (msg.Title.Length == 0 || master.Now < 0 || master.Now >= master.Queue.Count)
                     return;
-                var t = msg.Title[..Math.Min(msg.Title.Length, 100)];
-                var cur = _queue[_now];
-                if (cur.Title == t)
+                var title = msg.Title[..Math.Min(msg.Title.Length, 100)];
+                if (master.Queue[master.Now].Title == title)
                     return;
-                cur.Title = t;
-                BroadcastState();
-                return;
+                master.Queue[master.Now].Title = title;
+                break;
             case "mute":
                 return; // local-only control; no room impact
             default:
                 return;
         }
 
-        BroadcastState();
+        Mutate(masterUid, master);
         Feed(args, msg.Op switch
         {
             "pause" => "ставить на паузу",
@@ -251,51 +432,151 @@ public sealed class PirateTvSystem : EntitySystem
 
     // ===== core =====
 
+    private bool TryResolveTv(NetEntity net, out EntityUid uid, out PirateTvComponent comp)
+    {
+        comp = default!;
+        if (!TryGetEntity(net, out var found) ||
+            !TryComp(found.Value, out PirateTvComponent? tv))
+        {
+            uid = default;
+            return false;
+        }
+        uid = found.Value;
+        comp = tv;
+        return true;
+    }
+
+    /// <summary>
+    ///     A mirror forwards every control to the root of its chain (the TV
+    ///     at the top that actually owns the state).
+    /// </summary>
+    private (EntityUid Uid, PirateTvComponent Comp) ResolveMaster(EntityUid uid, PirateTvComponent comp)
+    {
+        var cursorUid = uid;
+        var cursor = comp;
+        for (var guard = 0; guard < 64; guard++)
+        {
+            if (!cursor.Source.IsValid() ||
+                !TryGetEntity(cursor.Source, out var parentUid) ||
+                !TryComp(parentUid.Value, out PirateTvComponent? parent))
+            {
+                break;
+            }
+            cursorUid = parentUid.Value;
+            cursor = parent;
+        }
+        return (cursorUid, cursor);
+    }
+
+    private bool InReach(EntitySessionEventArgs args, EntityUid tv)
+    {
+        var ent = args.SenderSession.AttachedEntity;
+        if (ent == null)
+            return false;
+        var here = _transform.GetMapCoordinates(ent.Value);
+        var there = _transform.GetMapCoordinates(tv);
+        return here.MapId == there.MapId && here.InRange(there, 12f);
+    }
+
     private bool IsAdmin(EntitySessionEventArgs args)
     {
         var ent = args.SenderSession.AttachedEntity;
         return ent != null && _admin.IsAdmin(ent.Value);
     }
 
-    /// <summary>Starts playing the queue[i] entry (wraps to 0 past the end).</summary>
-    private void NavTo(int index, bool silent = false)
+    /// <summary>Starts playing queue[index] (wraps to 0 past the end).</summary>
+    private void NavTo(EntityUid uid, PirateTvComponent comp, int index, bool silent = false)
     {
-        if (_queue.Count == 0)
+        if (comp.Queue.Count == 0)
         {
-            _now = -1;
-            _url = "";
-            BroadcastState();
+            ResetState(comp);
+            Mutate(uid, comp);
             return;
         }
 
-        _now = index < 0 ? _queue.Count - 1 : index % _queue.Count;
-        var cur = _queue[_now];
-        _url = cur.Url;
-        _kind = cur.Kind;
-        _label = cur.Label;
-        _pos = 0;
-        _playing = true;
-        _stamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        BroadcastState();
-        if (!silent)
-            return; // feed already popped by callers
+        comp.Now = index < 0 ? comp.Queue.Count - 1 : index % comp.Queue.Count;
+        var cur = comp.Queue[comp.Now];
+        comp.Url = cur.Url;
+        comp.Kind = cur.Kind;
+        comp.Label = cur.Label;
+        comp.Pos = 0;
+        comp.Playing = true;
+        comp.Stamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        Mutate(uid, comp);
+        _ = silent;
     }
 
-    private void BroadcastState()
+    /// <summary>
+    ///     Pushes a root's state to itself and copies it down the whole
+    ///     chain (1→2→3 means 3 also gets it).
+    /// </summary>
+    private void Mutate(EntityUid uid, PirateTvComponent comp)
     {
-        RaiseNetworkEvent(new PirateTvStateEvent
-        {
-            Url = _url,
-            Kind = _kind,
-            Label = _label,
-            Playing = _playing,
-            Pos = _pos,
-            Stamp = _stamp,
-            Locked = _locked,
-            Now = _now,
-            Items = _queue,
-        });
+        PushState(uid, comp);
+
+        var net = GetNetEntity(uid);
+        CopyToChildren(net, comp, new HashSet<EntityUid> { uid });
     }
+
+    private void CopyToChildren(NetEntity parent, PirateTvComponent source, HashSet<EntityUid> visited)
+    {
+        var q = EntityQueryEnumerator<PirateTvComponent>();
+        while (q.MoveNext(out var childUid, out var child))
+        {
+            if (child.Source != parent || !visited.Add(childUid))
+                continue;
+            CopyState(source, child);
+            PushState(childUid, child);
+            CopyToChildren(GetNetEntity(childUid), child, visited);
+        }
+    }
+
+    private static void CopyState(PirateTvComponent from, PirateTvComponent to)
+    {
+        to.Url = from.Url;
+        to.Kind = from.Kind;
+        to.Label = from.Label;
+        to.Playing = from.Playing;
+        to.Pos = from.Pos;
+        to.Stamp = from.Stamp;
+        to.Locked = from.Locked;
+        to.Now = from.Now;
+        to.Queue = new List<PirateTvQueueItem>(from.Queue);
+    }
+
+    private static void ResetState(PirateTvComponent comp)
+    {
+        comp.Url = "";
+        comp.Kind = 0;
+        comp.Label = "";
+        comp.Playing = false;
+        comp.Pos = 0;
+        comp.Stamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        comp.Locked = false;
+        comp.Now = -1;
+        comp.Queue.Clear();
+    }
+
+    private PirateTvStateEvent BuildState(EntityUid uid, PirateTvComponent comp)
+    {
+        return new PirateTvStateEvent
+        {
+            Tv = GetNetEntity(uid),
+            Source = comp.Source,
+            Url = comp.Url,
+            Kind = comp.Kind,
+            Label = comp.Label,
+            Playing = comp.Playing,
+            Pos = comp.Pos,
+            Stamp = comp.Stamp,
+            Locked = comp.Locked,
+            Now = comp.Now,
+            Items = new List<PirateTvQueueItem>(comp.Queue),
+        };
+    }
+
+    private void PushState(EntityUid uid, PirateTvComponent comp)
+        => RaiseNetworkEvent(BuildState(uid, comp), Filter.Pvs(uid, entityManager: EntityManager));
 
     /// <summary>World popup feed: "who did what" at the actor's feet.</summary>
     private void Feed(EntitySessionEventArgs args, string action)
@@ -304,23 +585,5 @@ public sealed class PirateTvSystem : EntitySystem
         if (ent == null)
             return;
         _popup.PopupEntity(action, ent.Value, Filter.Pvs(ent.Value), false, PopupType.Medium);
-    }
-
-    private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
-    {
-        if (e.NewStatus != SessionStatus.InGame)
-            return;
-        RaiseNetworkEvent(new PirateTvStateEvent
-        {
-            Url = _url,
-            Kind = _kind,
-            Label = _label,
-            Playing = _playing,
-            Pos = _pos,
-            Stamp = _stamp,
-            Locked = _locked,
-            Now = _now,
-            Items = _queue,
-        }, e.Session.Channel);
     }
 }

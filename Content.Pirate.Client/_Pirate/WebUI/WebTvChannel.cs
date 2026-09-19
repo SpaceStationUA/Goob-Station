@@ -6,19 +6,19 @@ using System;
 namespace Content.Pirate.Client._Pirate.WebUI;
 
 /// <summary>
-///     Parsing for what a TV "channel" is — a YouTube video or a Twitch
-///     stream page. Whitelisted picker traffic is exactly these hosts, so
-///     the parse list doubles as the license posture: only officially
+///     Parsing for what a TV "channel" is — currently a YouTube video.
+///     The host whitelist is exactly the fence the picker browser is kept
+///     inside, so this list doubles as the license posture: only officially
 ///     embeddable sources, each client keeps its own session.
 /// </summary>
 public static class WebTvChannel
 {
-    public enum WebTvKind { None, YouTube, Twitch }
+    public enum WebTvKind { None, YouTube }
 
-    /// <summary>Single ground-truth host list (pickers and TVs share it).</summary>
+    /// <summary>Single ground-truth host list (picker and TVs share it).</summary>
     public static readonly string[] AllowHosts =
     {
-        // YouTube: embed page, watch/shorts pages, media + static CDNs, consent.
+        // YouTube: watch/shorts/embed pages, media + static CDNs, consent.
         "youtube.com",
         "*.youtube.com",
         "youtu.be",
@@ -34,20 +34,12 @@ public static class WebTvChannel
         "*.google.com",
         "gstatic.com",
         "*.gstatic.com",
-
-        // Twitch: site, embedded player shell, media/graphic CDNs.
-        "twitch.tv",
-        "*.twitch.tv",
-        "twitchcdn.net",
-        "*.twitchcdn.net",
-        "jtvnw.net",
-        "*.jtvnw.net",
     };
 
     /// <summary>
     ///     Turns a browsed URL into what the TV should actually play.
     ///     Returns false for anything Uri-but-not-a-video (search pages,
-    ///     listings, playlists, clips).
+    ///     channel listings, playlists).
     /// </summary>
     public static bool TryBuild(string browsedUrl, out WebTvKind kind, out string playbackUrl, out string label)
     {
@@ -63,7 +55,6 @@ public static class WebTvChannel
         var host = uri.Host.ToLowerInvariant();
         var path = uri.AbsolutePath;
 
-        // ----- YouTube -----
         if (host is "youtube.com" or "www.youtube.com" or "m.youtube.com" or "music.youtube.com" or "youtu.be")
         {
             var id = host == "youtu.be"
@@ -81,50 +72,6 @@ public static class WebTvChannel
             return true;
         }
 
-        // ----- Twitch -----
-        if (host is "twitch.tv" or "www.twitch.tv" or "m.twitch.tv" or "player.twitch.tv")
-        {
-            var trimmed = path.TrimEnd('/');
-
-            // Embedded player form: ?channel=name / ?video=123456.
-            if (TryQuery(uri, "channel") is { Length: > 0 } chq)
-            {
-                kind = WebTvKind.Twitch;
-                playbackUrl = "https://www.twitch.tv/" + chq;
-                label = "Twitch (live)";
-                return true;
-            }
-            if (TryQuery(uri, "video") is { Length: > 0 } vidq && vidq.Length <= 12)
-            {
-                kind = WebTvKind.Twitch;
-                playbackUrl = "https://www.twitch.tv/videos/" + vidq;
-                label = "Twitch VOD";
-                return true;
-            }
-
-            // Site VOD: /videos/123456.
-            var vIdx = trimmed.IndexOf("/videos/", StringComparison.Ordinal);
-            if (vIdx >= 0 && FirstSegment(trimmed[(vIdx + "/videos/".Length)..]) is { Length: > 4 } vid)
-            {
-                kind = WebTvKind.Twitch;
-                playbackUrl = "https://www.twitch.tv/videos/" + vid;
-                label = "Twitch VOD";
-                return true;
-            }
-
-            // Live channel page: a single non-tab segment (/name).
-            if (trimmed.Length > 1 && !trimmed[1..].Contains('/') &&
-                trimmed[1..] is not ("videos" or "directory" or "downloads" or "p" or "settings" or "about" or "terms" or "privacy"))
-            {
-                kind = WebTvKind.Twitch;
-                playbackUrl = "https://www.twitch.tv" + trimmed;
-                label = "Twitch (live)";
-                return true;
-            }
-
-            return false;
-        }
-
         return false;
     }
 
@@ -132,7 +79,7 @@ public static class WebTvChannel
     ///     True when the shared state holds a recently picked channel that
     ///     is still on screen somewhere (drives the picker's confirm step).
     /// </summary>
-    public static bool NeedsConfirm(WebTvBackend.ChannelState s, long nowMs)
+    public static bool NeedsConfirm(PirateTvClientState.Entry s, long nowMs)
     {
         return s.Kind != WebTvKind.None
                && s.Url.Length > 0

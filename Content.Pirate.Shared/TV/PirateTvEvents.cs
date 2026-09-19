@@ -1,7 +1,6 @@
 // SPDX-FileCopyrightText: 2026 Pirate Development Team
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Pirate.Shared.TV;
@@ -17,14 +16,18 @@ public sealed class PirateTvQueueItem
 }
 
 /// <summary>
-///     Server → clients: the room's shared playback clock + playlist.
+///     Server → clients: one television's shared playback clock + playlist.
 ///     Kind mirrors Content.Pirate.Client WebTvChannel.WebTvKind as an int
-///     (0 None, 1 YouTube, 2 Twitch). Stamp anchors the wall-clock
-///     (time of last change); Now is the playlist entry currently played.
+///     (0 None, 1 YouTube). Stamp anchors the wall clock (time of last
+///     change); Now is the playlist entry currently playing. Source is the
+///     master TV when this TV is a mirror (Invalid otherwise), so the client
+///     can show the input/source chip.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class PirateTvStateEvent : EntityEventArgs
 {
+    public NetEntity Tv;
+    public NetEntity Source;
     public string Url = "";
     public int Kind;
     public string Label = "";
@@ -36,6 +39,13 @@ public sealed class PirateTvStateEvent : EntityEventArgs
     public List<PirateTvQueueItem> Items = new();
 }
 
+/// <summary>Client → server: "send me the state of this TV" (on window open).</summary>
+[Serializable, NetSerializable]
+public sealed class PirateTvRequestEvent : EntityEventArgs
+{
+    public NetEntity Tv;
+}
+
 /// <summary>Client → server: remote control (play/pause/seekTo/ended/set_title/manual_next).
 /// For pause, Arg carries the presser's video position (room anchor).
 /// "ended" advances the playlist automatically even while locked;
@@ -44,46 +54,48 @@ public sealed class PirateTvStateEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class PirateTvCommandEvent : EntityEventArgs
 {
+    public NetEntity Tv;
     public string Op = "";
     public double Arg;
     public string Title = "";
 }
 
-/// <summary>Client → server: someone picked what the room watches. Admin
+/// <summary>Client → server: someone picked what this TV watches. Admin
 /// flag bypasses the room lock (server verifies the sender is admin).</summary>
 [Serializable, NetSerializable]
 public sealed class PirateTvPickEvent : EntityEventArgs
 {
+    public NetEntity Tv;
     public string Url = "";
     public int Kind;
     public string Label = "";
     public string Title = "";
-    public bool Admin;
 }
 
-/// <summary>Client → server: add an entry to the playlist.</summary>
+/// <summary>Client → server: add an entry to the TV's playlist.</summary>
 [Serializable, NetSerializable]
 public sealed class PirateTvQueueAddEvent : EntityEventArgs
 {
+    public NetEntity Tv;
     public string Url = "";
     public int Kind;
     public string Label = "";
     public string Title = "";
-    public bool Admin;
 }
 
 /// <summary>Client → server: jump to a playlist position.</summary>
 [Serializable, NetSerializable]
 public sealed class PirateTvQueueNavEvent : EntityEventArgs
 {
+    public NetEntity Tv;
     public int Index;
-    public bool Admin;
 }
 
 /// <summary>Client → server: remove a playlist entry (index).</summary>
 [Serializable, NetSerializable]
 public sealed class PirateTvQueueRemoveEvent : EntityEventArgs
 {
+    public NetEntity Tv;
     public int Index;
 }
 
@@ -91,13 +103,15 @@ public sealed class PirateTvQueueRemoveEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class PirateTvQueueMoveEvent : EntityEventArgs
 {
+    public NetEntity Tv;
     public int Index;
     public int Delta;
 }
 
-/// <summary>Client → server: lock/unlock the room's control.</summary>
+/// <summary>Client → server: lock/unlock the TV's control.</summary>
 [Serializable, NetSerializable]
 public sealed class PirateTvLockEvent : EntityEventArgs
 {
+    public NetEntity Tv;
     public bool Locked;
 }

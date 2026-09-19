@@ -702,3 +702,31 @@ uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
 5. Verbs: one «Телевізор» (+ lock); picker opened from the window.
 6. YT-only parse/hosts; confirm→queue flow.
 7. Polish: disconnect close, error/buffering + «Далі», Fluent.
+
+### TV session fixes (2026-09-19, post-playtest)
+- **Component name**: YAML must use `- type: PirateTv` (Robust strips the
+  `Component` suffix). Using `PirateTvComponent` gave
+  `UnknownComponentException`. (Cost an hour of debugging; remember this.)
+- **TOPOLOGY CHANGED TO CHAINS.** Originally star-only (a mirror could
+  neither have its own mirrors nor be a source). Playtest showed that
+  blocks relinking after unlink and is less intuitive. Now: any TV may be
+  a source and a sink at once → 1→2→3 chains. Only cycles are refused
+  (`WouldCycle` walks the parent chain). `ResolveMaster` walks to the
+  chain ROOT (controls forwarded there); `Mutate`/`CopyToChildren`
+  propagates root state down ALL descendants. Unlinking a middle TV
+  resets it to off but keeps its own children attached (1→2→3 unlink at 1
+  ⇒ 2→3 with 2 as root). A dying TV re-parents its children onto its own
+  parent instead of orphaning them.
+- **Relink bug**: re-pointing a mirror now suppresses its own
+  `PortDisconnectedEvent` reset via a `_reparenting` guard, then copies
+  the new parent's state. (Previously the disconnect reset landed after
+  the new link, leaving it broken → "can't connect them anymore".)
+- **title_select leak**: the driver's title extractor now returns "" while
+  the player isn't ready (`duration <= 0`) and rejects titles containing
+  `_` (YouTube SPA interim element ids like `title_select`); fallback is
+  the generic label. Was showing a raw id as the queue title.
+- **UI**: right panel widened 265→360 (both TV + picker); queue rows are
+  now a single line (title button + ▲▼✖ side by side) instead of two rows.
+- Integration tests added (compile-only verified; suite not run — too slow):
+  `Content.IntegrationTests/Tests/_Pirate/TV/PirateTvLinkIntegrationTest.cs`
+  (mirror+unlink, chain+cycle refusal).
