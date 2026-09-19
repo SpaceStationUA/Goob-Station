@@ -36,7 +36,7 @@ public sealed partial class GangLeaderComponent : Component
     /// Maximum number of members the leader is allowed to recruit.
     /// </summary>
     [DataField]
-    public int MaxRecruits = 3;
+    public int MaxRecruits = 10; // Pirate: gang recruit cap - was 3
 
     [DataField, AutoNetworkedField]
     public EntityUid? PendingInviteTarget;

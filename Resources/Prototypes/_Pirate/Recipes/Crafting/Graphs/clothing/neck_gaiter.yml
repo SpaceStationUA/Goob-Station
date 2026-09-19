@@ -43,3 +43,17 @@
         doAfter: 3
   - node: neckGaiter
     entity: ClothingMaskNeckGaiterWhite
+
+- type: constructionGraph
+  id: NeckGaiterOlive
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: neckGaiter
+      steps:
+      - material: Cloth
+        amount: 2
+        doAfter: 3
+  - node: neckGaiter
+    entity: ClothingMaskNeckGaiterOlive

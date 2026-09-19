@@ -49,6 +49,7 @@ public static class BanPanelEuiStateMsg
 public sealed record Ban
 {
     public Ban(
+        BanType type, // Pirate: chat ban data
         string? target,
         (IPAddress, int)? ipAddressTuple,
         bool useLastIp,
@@ -61,6 +62,7 @@ public sealed record Ban
         ProtoId<AntagPrototype>[]? bannedAntags,
         bool erase)
     {
+        Type = type; // Pirate: chat ban data
         Target = target;
         IpAddress = ipAddressTuple?.Item1.ToString();
         IpAddressHid = ipAddressTuple?.Item2.ToString() ?? "0";
@@ -75,6 +77,7 @@ public sealed record Ban
         Erase = erase;
     }
 
+    public readonly BanType Type; // Pirate: chat ban data
     public readonly string? Target;
     public readonly string? IpAddress;
     public readonly string? IpAddressHid;
