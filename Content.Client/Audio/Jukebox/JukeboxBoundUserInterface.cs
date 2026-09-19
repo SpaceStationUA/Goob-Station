@@ -4,7 +4,7 @@ using Content.Shared._Pirate.Audio.Jukebox; // Pirate: jukebox records
 using Content.Shared.Audio.Jukebox;
 using Robust.Client.Audio;
 using Robust.Client.UserInterface;
-using Robust.Shared.Audio;
+using Robust.Shared.Audio; // Pirate: jukebox records
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Prototypes;
 
