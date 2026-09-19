@@ -642,3 +642,16 @@ log both. Re-instrument after any page reload (game switch wipes it).
 - Client log DOMINO lesson: post-disconnect IPC spam obscured the real
   cause in the log flow (tons of stack-trace ERROR lines between real
   events); expect truncation-heavy logs — grep selectively.
+
+## Shelf (2026-09-19): spike/uplink dev fixtures parked
+The dev-only wrappers are out of the tree, retrievable at
+`/Users/daniilmiroshnykov/code/station/goob-shelf/webui-spike-2026-09/`
+(paths preserved):
+`WebUiSpikeCommand/Window` + `spike.html`, `WebUiOpenCommand`,
+`WebUiInterfaceWindow`, `WebUiDevCommand`, `WebUiUplinkCommand`,
+`MockUplinkBackend`, `WebUiJsonWriter`, TS/UI workspace (`Ui/`,
+package.json), `Resources/_Pirate/WebUI/Uplink/`, `probetv4.cjs`.
+Kept in-tree (needed by arcade/TV): `WebUiTuiIpc` and
+`WebUiSpikeBridge` (its JsonString helper). When revisiting the
+uplink-web-UI, restore from the shelf; the vite dist must be rebuilt
+(dist_resources is git-ignored by upstream layout anyway).
