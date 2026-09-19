@@ -5730,3 +5730,9 @@ Entries:
       message: Озвучка кодів тепер не закінчується дуже різко.
   id: 547
   time: '2026-09-18T16:37:31.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Tweak
+      message: Оновлено Goobstation upstream та українську локалізацію.
+  id: 548
+  time: '2026-09-19T08:41:34.0000000+00:00'
