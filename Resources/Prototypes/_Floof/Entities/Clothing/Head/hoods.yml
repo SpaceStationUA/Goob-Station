@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase # starcup - no harm in some temp protection if it lets us bypass these errors
+  id: ClothingHeadHatHoodRedHood
+  categories: [ HideSpawnMenu ] # starcup
+  name: red cloak hood # starcup - removed caps, clarified name
+  description: A hood of a red cloak, made to keep the harsh light out of a traveler's eyes. Sometimes it sparkles in the light of the sun.
+  components:
+    - type: Sprite
+      sprite: _Floof/Clothing/Head/Hoods/redhood.rsi # starcup - Floof to _Floof
+    - type: Clothing
+      sprite: _Floof/Clothing/Head/Hoods/redhood.rsi # starcup - Floof to _Floof
+    - type: Tag
+      tags:
+        - WhitelistChameleon
+#    - type: HideLayerClothing
+#      slots:
+#        - Hair

@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Ported from /tg/station at commit 21ce3d66d4ceff1e547f6e2c137231c599efcf2a (icons/obj/pipes_n_cables/meter.dmi). Source icon last changed by FlufflesTheDog (piecopresident@gmail.com).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "pressure_off"
+    },
+    {
+      "name": "pressure0"
+    },
+    {
+      "name": "pressure1_1"
+    },
+    {
+      "name": "pressure1_2"
+    },
+    {
+      "name": "pressure1_3"
+    },
+    {
+      "name": "pressure1_4"
+    },
+    {
+      "name": "pressure1_5"
+    },
+    {
+      "name": "pressure1_6"
+    },
+    {
+      "name": "pressure2_1"
+    },
+    {
+      "name": "pressure2_2"
+    },
+    {
+      "name": "pressure2_3"
+    },
+    {
+      "name": "pressure2_4"
+    },
+    {
+      "name": "pressure2_5"
+    },
+    {
+      "name": "pressure2_6"
+    },
+    {
+      "name": "pressure3_1"
+    },
+    {
+      "name": "pressure3_2"
+    },
+    {
+      "name": "pressure3_3"
+    },
+    {
+      "name": "pressure3_4"
+    },
+    {
+      "name": "pressure3_5"
+    },
+    {
+      "name": "pressure3_6"
+    },
+    {
+      "name": "pressure4"
+    },
+    {
+      "name": "blank"
+    },
+    {
+      "name": "buttons0",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "buttons1"
+    },
+    {
+      "name": "buttons2"
+    },
+    {
+      "name": "buttons3"
+    },
+    {
+      "name": "buttons4",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

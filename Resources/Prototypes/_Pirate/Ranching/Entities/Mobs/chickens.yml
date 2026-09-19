@@ -36,7 +36,7 @@
     rootTask:
       task: RuminantCompound
   - type: Body
-    prototype: AnimalRuminant
+    prototype: AnimalChickenRanch
   - type: Fixtures
     fixtures:
       fix1:
@@ -76,15 +76,17 @@
   - type: Unrevivable
   - type: ExaminableHunger
   - type: Hunger
+    # Dead must be 0: hunger is clamped to Dead, so Dead>0 freezes them in permanent starvation damage.
     thresholds:
-      Overfed: 100
-      Okay: 50
-      Peckish: 35
-      Starving: 20
-      Dead: 15
+      Overfed: 200
+      Okay: 150
+      Peckish: 100
+      Starving: 50
+      Dead: 0
+    baseDecayRate: 0.03
     starvationDamage:
       types:
-        Asphyxiation: 1
+        Asphyxiation: 0.25
 
 - type: entity
   abstract: true

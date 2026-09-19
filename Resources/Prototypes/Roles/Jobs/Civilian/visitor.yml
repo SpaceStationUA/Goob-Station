@@ -5,6 +5,13 @@
   name: job-name-visitor
   description: job-description-visitor
   playTimeTracker: JobVisitor
+  # Pirate: skill chips start
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipTiderDampener
+    - SkillChipEducation
+  # Pirate: skill chips end
   canBeAntag: false
   icon: JobIconVisitor
   setPreference: false

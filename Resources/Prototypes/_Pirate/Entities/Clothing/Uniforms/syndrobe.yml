@@ -1,0 +1,153 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+- type: entity
+  parent: [UnsensoredClothingUniformBase, ClothingUniformFoldableBase, BaseSyndicateContraband]
+  id: ClothingUniformJumpsuitSyndieTactical
+  name: tactical turtleneck
+  description: A snug syndicate-red turtleneck with charcoal-black cargo pants. Good luck arguing allegiance with this on.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/tacticalturtleneck.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/tacticalturtleneck.rsi
+  - type: Armor
+    coverage:
+    - Chest
+    - Groin
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Heat: 0.5
+        Caustic: 0.6
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  parent: [UnsensoredClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseSyndicateContraband]
+  id: ClothingUniformJumpskirtSyndieTactical
+  name: tactical skirtleneck
+  description: A snug syndicate-red skirtleneck with a charcoal-black skirt. Good luck arguing allegiance with this on.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/tacticalskirtleneck.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/tacticalskirtleneck.rsi
+  - type: Armor
+    coverage:
+    - Chest
+    - Groin
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Heat: 0.5
+        Caustic: 0.6
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
+  id: ClothingUniformJumpsuitBloodRedPajamas
+  name: blood-red pajamas
+  description: Do operatives dream of nuclear sheep?
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/bloodredpajamas.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/bloodredpajamas.rsi
+  - type: Armor
+    coverage:
+    - Chest
+    - Groin
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Heat: 0.5
+        Caustic: 0.6
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
+  id: ClothingUniformJumpsuitCamoGreen
+  name: camouflage fatigues
+  description: A green military camouflage uniform.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/camogreen.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/camogreen.rsi
+  - type: Armor
+    coverage:
+    - Chest
+    - Groin
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Heat: 0.5
+        Caustic: 0.6
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
+  id: ClothingUniformJumpsuitSyndieCombat
+  name: combat uniform
+  description: With a suit lined with this many pockets, you are ready to operate.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/combatuniform.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/SynDrobe/combatuniform.rsi
+  - type: Armor
+    coverage:
+    - Chest
+    - Groin
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Heat: 0.5
+        Caustic: 0.6
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  parent: [UnsensoredClothingUniformBase, ClothingUniformFoldableBase, BaseSyndicateContraband]
+  id: ClothingUniformJumpsuitSyndieInsulated
+  name: insulated tactical turtleneck
+  description: A nondescript and slightly suspicious-looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Syndicate/operative.rsi
+  - type: Clothing
+    sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Syndicate/operative.rsi
+  - type: Armor
+    coverage:
+    - Chest
+    - Groin
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Shock: 0.95
+        Heat: 0.75
+        Caustic: 0.75
+  - type: TemperatureProtection
+    heatingCoefficient: 1.1
+    coolingCoefficient: 0.1
+  - type: StaticPrice
+    price: 50

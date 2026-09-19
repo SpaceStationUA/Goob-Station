@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+- type: entity
+  parent: [ClothingHeadBase, BaseFoldable, BaseSyndicateContraband]
+  id: ClothingHeadHatSyndieEngineTechCover
+  name: engine tech utility cover
+  description: A utility cover for an engine technician, there's a tag that reads 'IP-DS-2'.
+  components:
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/SynDrobe/enginetechcover.rsi
+    stripDelay: 2
+  - type: Appearance
+  - type: Foldable
+    canFoldInsideContainer: true
+    foldVerbText: fold-flip-verb
+    unfoldVerbText: fold-flip-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: flipped
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/SynDrobe/enginetechcover.rsi
+    layers:
+    - state: icon
+      map: ["unfoldedLayer"]
+    - state: icon-flipped
+      map: ["foldedLayer"]
+      visible: false
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.75
+        Shock: 0.65
+        Heat: 0.75
+        Caustic: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+
+- type: entity
+  parent: [ClothingHeadBase, BaseSyndicateContraband]
+  id: ClothingHeadHatBeretSyndieBrig
+  name: brig officer's beret
+  description: A stylish and protective beret, produced and manufactured by Interdyne Pharmaceuticals with help from the Gorlex Marauders.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/SynDrobe/brigofficerberet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/SynDrobe/brigofficerberet.rsi
+    stripDelay: 2
+  - type: Armor
+    coverage:
+    - Head
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.75
+        Shock: 0.65
+        Heat: 0.75
+        Caustic: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon

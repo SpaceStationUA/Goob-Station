@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+# Pirate: ported from starcup PR #983 (feat: Fashionable Headwear)
+
+- type: entity
+  parent: ClothingEyesBase # starcup: removed BaseLensSlot parent bc we dont have that
+  id: ClothingEyesGlassesWhiteHalfMask
+  name: white half mask
+  description: Hide your face, the world will never find you.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Glasses/whitehalfmask.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Glasses/whitehalfmask.rsi

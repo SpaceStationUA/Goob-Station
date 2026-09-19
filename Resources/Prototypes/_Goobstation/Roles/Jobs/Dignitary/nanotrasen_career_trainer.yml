@@ -19,6 +19,11 @@
   - NanotrasenRepresentative
   - BlueshieldOfficer
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, BluespaceLifelineImplant ]
 #  - !type:AddComponentSpecial # Intentionally not command. I don't want them to ruin rev rounds.

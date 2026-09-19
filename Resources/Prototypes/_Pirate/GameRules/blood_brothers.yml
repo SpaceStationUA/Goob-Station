@@ -2,6 +2,9 @@
   parent: BaseGameRule
   id: BloodBrothers
   components:
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
   - type: GameRule
     minPlayers: 10
     cancelPresetOnTooFewPlayers: false

@@ -97,11 +97,30 @@
   - type: LoadMapRule
     preloadedGrid: RetortShuttleChaplain
 
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: SpawnHECU
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-hecu-enroute
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    duration: 1
+    maxOccurrences: 1
+  - type: LoadMapRule
+    preloadedGrid: RetortShuttleHECU
+
 #Contractor
 - type: entity
   parent: BaseGameRule
   id: ContractorSpawn
   components:
+  # Pirate: skill chips start - ContractorSpawnMidround and TokenContractorSpawn inherit this.
+  - type: AntagPlayerEffects
+    effects:
+    - !type:InstallOrganChip
+      chip: SkillChipSyndieSoldier
+  # Pirate: skill chips end
   - type: StationEvent
     earliestStart: 15
     reoccurrenceDelay: 45

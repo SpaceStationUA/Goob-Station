@@ -62,6 +62,10 @@
         type: RemoteDevicesBoundUserInterface
       enum.CamWarpUiKey.Key: # Goobstation-Ai-Camera-Jumping
         type: AiCameraWarpBoundUserInterface
+      enum.StoreUiKey.Key: # Pirate: Malf AI upgrades.
+        type: StoreBoundUserInterface
+      enum.MalfAiBorgsUiKey.Key: # Pirate: subverted cyborgs.
+        type: MalfAiBorgsBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:

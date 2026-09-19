@@ -21,6 +21,13 @@
   id: VisitorCaptain
   parent: VisitorHead
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+      - SkillChipLaser
+      - SkillChipLongBlade
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-captain
       description: ghost-role-information-command-description
@@ -32,6 +39,13 @@
   id: VisitorCE
   parent: VisitorHead
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+      - SkillChipDatabase
+      - SkillChipTool
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-ce
       description: ghost-role-information-command-description
@@ -43,6 +57,13 @@
   id: VisitorCMO
   parent: VisitorHead
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCMO
+      - SkillChipPistol
+      - SkillChipEchelonEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-cmo
       description: ghost-role-information-command-description
@@ -54,6 +75,12 @@
   id: VisitorHOP
   parent: VisitorHead
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+      - SkillChipLaser
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-hop
       description: ghost-role-information-command-description
@@ -65,6 +92,12 @@
   id: VisitorHOS
   parent: VisitorHead
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipCombatHOS
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-hos
       description: ghost-role-information-command-description
@@ -76,6 +109,11 @@
   id: VisitorResearchDirector
   parent: VisitorHead
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-rd
       description: ghost-role-information-command-description
@@ -87,6 +125,13 @@
   id: VisitorQM
   parent: VisitorHead
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+      - SkillChipUnarmed
+      - SkillChipMining
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-qm
       description: ghost-role-information-command-description
@@ -112,6 +157,13 @@
   id: VisitorSecurityCadet
   parent: VisitorSecurity
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipSidearms
+      - SkillChipNonLethal
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-cadet
     - type: Loadout
@@ -122,6 +174,13 @@
   id: VisitorSecurityOfficer
   parent: VisitorSecurity
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipSidearms
+      - SkillChipNonLethal
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-security
     - type: Loadout
@@ -132,6 +191,13 @@
   id: VisitorDetective
   parent: VisitorSecurity
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipSidearms
+      - SkillChipBludgeon
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-detective
     - type: Loadout
@@ -142,6 +208,13 @@
   id: VisitorWarden
   parent: VisitorSecurity
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipSidearms
+      - SkillChipShotgun
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-warden
     - type: Loadout
@@ -165,6 +238,11 @@
   id: VisitorCargoTechnician
   parent: VisitorCargonian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-cargotech
     - type: Loadout
@@ -175,6 +253,13 @@
   id: VisitorSalvageSpecialist
   parent: VisitorCargonian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCombatEducation
+      - SkillChipMining
+      - SkillChipCloseQuarters
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-salvagespec
     - type: Loadout
@@ -198,6 +283,13 @@
   id: VisitorAtmosTech
   parent: VisitorEngineering
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDatabase
+      - SkillChipBludgeon
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-atmostech
     - type: Loadout
@@ -208,6 +300,12 @@
   id: VisitorTechnicalAssistant
   parent: VisitorEngineering
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDatabaseBasic
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-technical-assistant
     - type: Loadout
@@ -218,6 +316,13 @@
   id: VisitorEngineer
   parent: VisitorEngineering
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDatabase
+      - SkillChipTool
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-engineer
     - type: Loadout
@@ -241,6 +346,13 @@
   id: VisitorMedicalIntern
   parent: VisitorMedical
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipDoctor
+      - SkillChipEducation
+      - SkillChipSurgeon
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-intern
     - type: Loadout
@@ -251,6 +363,13 @@
   id: VisitorMedicalDoctor
   parent: VisitorMedical
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipDoctor
+      - SkillChipEducation
+      - SkillChipSurgeon
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-doctor
     - type: Loadout
@@ -261,6 +380,13 @@
   id: VisitorParamedic
   parent: VisitorMedical
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipDoctor
+      - SkillChipEducation
+      - SkillChipSurgeon
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-paramedic
     - type: Loadout
@@ -271,6 +397,12 @@
   id: VisitorVirologist
   parent: VisitorMedical
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDoctor
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-medical-virologist-name
     - type: Loadout
@@ -281,6 +413,12 @@
   id: VisitorGeneticist
   parent: VisitorMedical
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDoctor
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-medical-geneticist-name
     - type: Loadout
@@ -291,6 +429,12 @@
   id: VisitorPsychologist
   parent: VisitorMedical
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDoctor
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-psychologist
     - type: Loadout
@@ -301,6 +445,12 @@
   id: VisitorChemist
   parent: VisitorMedical
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipChemist
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-chemist
     - type: Loadout
@@ -311,6 +461,12 @@
   id: VisitorDentist
   parent: VisitorMedical
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipSurgeon
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-medical-dentist-name
     - type: Loadout
@@ -334,6 +490,12 @@
   id: VisitorResearchAssistant
   parent: VisitorScience
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDatabaseBasic
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-research-assistant
     - type: Loadout
@@ -344,6 +506,12 @@
   id: VisitorScientist
   parent: VisitorScience
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipDatabase
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-scientist
     - type: Loadout
@@ -392,6 +560,13 @@
   id: VisitorBartender
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipShotgun
+      - SkillChipService
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-bartender
     - type: Loadout
@@ -402,6 +577,13 @@
   id: VisitorBotanist
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipService
+      - SkillChipStoner
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-botanist
     - type: Loadout
@@ -412,6 +594,12 @@
   id: VisitorBoxer
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipUnarmed
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-boxer
     - type: Loadout
@@ -422,6 +610,13 @@
   id: VisitorChaplain
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipCloseQuarters
+      - SkillChipMagLit
+    # Pirate: skill chips end
     - type: BibleUser
     - type: CurseImmune # Goobstation - Wraith
     - type: CanEnchant
@@ -435,6 +630,13 @@
   id: VisitorChef
   parent: VisitorCivilianChef #Goobstation
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipShortBlade
+      - SkillChipService
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-chef
     - type: Loadout
@@ -446,6 +648,13 @@
   parent: VisitorCivilian
   randomizeName: false
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipNonLethal
+      - SkillChipClown
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-clown
     - type: Loadout
@@ -459,6 +668,13 @@
   id: VisitorJanitor
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipJanitor
+      - SkillChipThrowing
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-janitor
     - type: Loadout
@@ -469,6 +685,11 @@
   id: VisitorLawyer
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-lawyer
     - type: Loadout
@@ -479,6 +700,11 @@
   id: VisitorLawyerCentcom
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-civilian-centcom-lawyer-name
       description: ghost-role-information-civilian-centcom-lawyer-description
@@ -490,6 +716,11 @@
   id: VisitorLibrarian
   parent: VisitorCivilianLibrarian #Goobstation
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipGunsmith
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-librarian
     - type: Loadout
@@ -500,6 +731,11 @@
   id: VisitorMusician
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-musician
     - type: Loadout
@@ -510,6 +746,11 @@
   id: VisitorMusicianFancy
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-musician
     - type: Loadout
@@ -520,6 +761,11 @@
   id: VisitorMusicianRelaxed
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-musician
     - type: Loadout
@@ -530,6 +776,11 @@
   id: VisitorMime
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: MimePowers
     - type: GhostRole
       name: job-name-mime
@@ -541,6 +792,11 @@
   id: VisitorReporter
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-reporter
     - type: Loadout
@@ -551,6 +807,12 @@
   id: VisitorServiceWorker
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipService
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-serviceworker
     - type: Loadout
@@ -561,6 +823,11 @@
   id: VisitorZookeeper
   parent: VisitorCivilian
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: job-name-zookeeper
     - type: Loadout
@@ -591,6 +858,11 @@
   parent: EventHumanoidMindShielded
   randomizeName: false
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
       description: ghost-role-information-lost-challenge-commander-description
@@ -612,6 +884,11 @@
   parent: EventHumanoidMindShielded
   randomizeName: false
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
       description: ghost-role-information-lost-challenge-commander-description
@@ -633,6 +910,11 @@
   parent: EventHumanoidMindShielded
   randomizeName: false
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
       description: ghost-role-information-lost-challenge-commander-description
@@ -654,6 +936,11 @@
   parent: EventHumanoidMindShielded
   randomizeName: false
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
       description: ghost-role-information-lost-challenge-commander-description
@@ -675,6 +962,11 @@
   parent: EventHumanoidMindShielded
   randomizeName: false
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
       description: ghost-role-information-lost-challenge-commander-description
@@ -696,6 +988,11 @@
   parent: EventHumanoidMindShielded
   randomizeName: false
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
       description: ghost-role-information-lost-challenge-commander-description
@@ -717,6 +1014,11 @@
   parent: EventHumanoidMindShielded
   randomizeName: false
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEchelonEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-commander-name
       description: ghost-role-information-lost-challenge-commander-description
@@ -742,6 +1044,11 @@
   id: ChallengeCargoTechnician
   randomizeName: false
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-lost-challenge-cargo-technican-name
       description: ghost-role-information-lost-challenge-cargo-technican-description
@@ -774,6 +1081,11 @@
   id: SyndieSoldierTeamLeader
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipSyndieSoldierTeamLeader
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -794,6 +1106,11 @@
   id: SyndieSoldier
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipSyndieSoldier
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -814,6 +1131,11 @@
   id: SyndieVisitor
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipSyndieVisitor
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -831,6 +1153,11 @@
   id: PirateScooner
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipPirateScooner
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -850,6 +1177,11 @@
   id: PirateCaptainScooner
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipPirateCaptainScooner
+    # Pirate: skill chips end
     - type: NpcFactionMember
       factions:
       - Syndicate
@@ -871,6 +1203,11 @@
   id: VisitorBlackmarketeer
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipBlackmarketeer
+    # Pirate: skill chips end
     - type: GhostRole
       name: ghost-role-information-blackmarketeer-name
       description: ghost-role-information-blackmarketeer-description
@@ -887,6 +1224,11 @@
   id: Cossack
   parent: EventHumanoid
   components:
+    # Pirate: skill chips start
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipCossack
+    # Pirate: skill chips end
     - type: RussianAccent
     - type: ScrambledAccent
     - type: SlurredAccent

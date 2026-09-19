@@ -1,0 +1,112 @@
+- type: entity
+  id: EffectNonDiegeticBase
+  abstract: true
+  name: instant effect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _starcup/Effects/non-diegetic.rsi
+    layers:
+    - map: [ "effect" ]
+      state: exclamation
+      offset: 0,0.3
+      shader: unshaded
+    drawdepth: Overlays
+  - type: TimedDespawn
+    lifetime: 0.8
+  - type: EmitSoundOnSpawn
+    sound:
+      collection: WindChime
+
+- type: entity
+  parent: EffectNonDiegeticBase
+  id: EffectNonDiegeticExclamationMark
+  description: A short animation. Could be used to alert players of something important.
+  suffix: Exclamation
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "effect" ]
+      state: exclamation
+      offset: 0,0.3
+      shader: unshaded
+
+- type: entity
+  parent: EffectNonDiegeticBase
+  id: EffectNonDiegeticQuestionMark
+  description: A short animation. Could be used to point to a clue.
+  suffix: Question
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "effect" ]
+      state: question
+      offset: 0,0.3
+      shader: unshaded
+
+- type: entity
+  parent: EffectNonDiegeticBase
+  id: EffectNonDiegeticCheckmark
+  description: A short animation. Could be used to mark a completed objective.
+  suffix: Check
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "effect" ]
+      state: checkmark
+      offset: 0,0.3
+      shader: unshaded
+
+- type: entity
+  parent: EffectNonDiegeticBase
+  id: EffectNonDiegeticXMark
+  description: A short animation. Could be used to steer players away from the wrong path or conclusion.
+  suffix: X-mark
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "effect" ]
+      state: cross
+      offset: 0,0.3
+      shader: unshaded
+
+- type: entity
+  parent: EffectNonDiegeticBase
+  id: EffectNonDiegeticHourglass
+  description: A short animation. Should be used to tell players to wait, NEVER to hurry them up.
+  suffix: Hourglass
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "effect" ]
+      state: hourglass
+      offset: 0,0.3
+      shader: unshaded
+
+- type: entity
+  parent: EffectNonDiegeticBase
+  id: EffectNonDiegeticSkull
+  description: A short animation. Could be used to mark serious danger or a point of no return.
+  suffix: Skull
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "effect" ]
+      state: skull
+      offset: 0,0.3
+      shader: unshaded
+
+- type: entity
+  parent: EffectNonDiegeticBase
+  id: EffectNonDiegeticRipple
+  description: A short animation. Could be used to draw attention to something.
+  suffix: Ripple
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "effect" ]
+      state: ripple
+      offset: 0,0
+      shader: unshaded
+  - type: TimedDespawn
+    lifetime: 0.9

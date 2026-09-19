@@ -67,6 +67,11 @@
   id: MobHumanSyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
   suffix: Human, NukeOps
   components:
+  # Pirate: skill chips start
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipNukie
+  # Pirate: skill chips end
   - type: NukeOperative
   - type: RandomMetadata
     nameSegments:
@@ -82,6 +87,12 @@
   parent: MobHuman
   id: MobHumanNukeOp
   components:
+  # Pirate: skill chips start - the rule covers rule-spawned nukies, this covers the mob
+  # being spawned directly (admin spawn, maps, any hookup that bypasses the rule).
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipNukie
+  # Pirate: skill chips end
   - type: NukeOperative
   - type: RandomHumanoidAppearance
 

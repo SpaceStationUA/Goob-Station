@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: WindChime
+  files:
+    - /Audio/_starcup/Items/WindChimes/windchime1.ogg
+    - /Audio/_starcup/Items/WindChimes/windchime2.ogg
+    - /Audio/_starcup/Items/WindChimes/windchime3.ogg
+    - /Audio/_starcup/Items/WindChimes/windchime4.ogg

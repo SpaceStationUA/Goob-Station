@@ -16,6 +16,16 @@ public sealed partial class PersonalShieldComponent : Component
     [DataField, AutoNetworkedField]
     public PersonalShieldSettings Shield = new();
 
+    // Pirate: ERT modsuits - start
+    /// <summary>Runs the shield directly on its owner.</summary>
+    [DataField, AutoNetworkedField]
+    public bool SelfDriven;
+
+    /// <summary>Whether a self-driven shield remains active.</summary>
+    [DataField, AutoNetworkedField]
+    public bool Enabled = true;
+    // Pirate: ERT modsuits - end
+
     /// <summary>
     /// Current state of the shield. We put it here so the component is """clean"""
     /// </summary>

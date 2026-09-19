@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+- type: entity
+  parent: [ClothingNeckPinBase, BaseSyndicateContraband]
+  id: ClothingNeckSyndicateNeckpin
+  name: Syndicate neckpin
+  description: A pin specially dedicated to show loyalty to the Syndicate!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/SynDrobe/syndicateneckpin.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/SynDrobe/syndicateneckpin.rsi

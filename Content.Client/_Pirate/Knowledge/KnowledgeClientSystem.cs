@@ -5,6 +5,7 @@ using Content.Shared._Pirate.CCVars;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Popups;
 using Robust.Shared.Configuration;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Client._Pirate.Knowledge;
@@ -15,10 +16,15 @@ namespace Content.Client._Pirate.Knowledge;
 public sealed class KnowledgeClientSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IClientNetManager _network = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     public event Action? KnowledgeChanged;
+    public event Action? JobChipsChanged;
+
+    public IReadOnlyDictionary<string, string[]> JobChips { get; private set; } =
+        new Dictionary<string, string[]>();
 
     private bool _showPopups;
     private TimeSpan _nextPopup;
@@ -31,6 +37,10 @@ public sealed class KnowledgeClientSystem : EntitySystem
         Subs.CVar(_configuration, KnowledgeCVars.SkillPopups, value => _showPopups = value, true);
         SubscribeLocalEvent<KnowledgeComponent, AfterAutoHandleStateEvent>(OnKnowledgeState);
         SubscribeAllEvent<SkillPopupEvent>(OnSkillPopup);
+        SubscribeNetworkEvent<KnowledgeJobChipsResponse>(OnJobChipsResponse);
+
+        if (_network.IsConnected)
+            RaiseNetworkEvent(new KnowledgeJobChipsRequest());
     }
 
     private void OnKnowledgeState(Entity<KnowledgeComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -45,5 +55,11 @@ public sealed class KnowledgeClientSystem : EntitySystem
 
         _nextPopup = _timing.CurTime + PopupCooldown;
         _popup.PopupCursor(args.Popup, PopupType.Small);
+    }
+
+    private void OnJobChipsResponse(KnowledgeJobChipsResponse args)
+    {
+        JobChips = args.JobChips;
+        JobChipsChanged?.Invoke();
     }
 }

@@ -25,6 +25,11 @@
   - Salvage
   - External # goobstation
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+  # Pirate: skill chips end
   - !type:GiveItemOnHolidaySpecial
     holiday: BoxingDay
     prototype: BoxCardboard

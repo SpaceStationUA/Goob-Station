@@ -21,6 +21,13 @@
   - Theatre
   - Maintenance
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipNonLethal
+    - SkillChipClown
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: Clumsy

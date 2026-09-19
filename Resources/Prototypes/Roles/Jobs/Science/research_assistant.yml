@@ -25,6 +25,13 @@
   access:
   - Research
   - Maintenance
+  # Pirate: skill chips
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipDatabaseBasic
+  # Pirate: skill chips end
 
 - type: startingGear
   id: ResearchAssistantGear

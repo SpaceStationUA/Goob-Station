@@ -1,0 +1,21 @@
+# Pirate: ported from "VHS and CRT monitor effect" by pend00 (CC0)
+# https://godotshaders.com/shader/vhs-and-crt-monitor-effect/
+# Used as a translucent artifact overlay on surveillance camera feeds.
+- type: shader
+  id: SurveillanceVHS
+  kind: source
+  path: "/Textures/_Pirate/Shaders/surveillance_vhs.swsl"
+  params:
+    scanlines_opacity: 0.25
+    scanlines_width: 0.25
+    grille_opacity: 0.10
+    resolution: 180,160
+    roll_speed: 3.0
+    roll_size: 15.0
+    roll_variation: 1.8
+    roll_intensity: 0.06
+    noise_opacity: 0.12
+    noise_speed: 2.0
+    static_noise_intensity: 0.02
+    vignette_intensity: 0.4
+    vignette_opacity: 0.5

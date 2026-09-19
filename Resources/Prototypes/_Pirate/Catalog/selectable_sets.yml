@@ -551,3 +551,23 @@
     - GrenadeIncendiary
     - GrenadeShrapnel
     - GrenadeShrapnel
+
+- type: selectableSet
+  id: VoidsuitSelectorChiefEngineerVoidsuit
+  name: selectable-set-chief-engineer-voidsuit-name
+  description: selectable-set-chief-engineer-voidsuit-desc
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
+    state: icon
+  content:
+  - ClothingOuterHardsuitEngineeringWhite
+
+- type: selectableSet
+  id: VoidsuitSelectorChiefEngineerHardsuit
+  name: selectable-set-chief-engineer-modsuit-name
+  description: selectable-set-chief-engineer-modsuit-desc
+  sprite:
+    sprite: _Pirate/Clothing/Modular/Advanced/control.rsi
+    state: icon
+  content:
+  - ClothingModularControllerAdvancedPreassembled

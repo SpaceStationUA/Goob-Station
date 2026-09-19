@@ -9,6 +9,7 @@
       key_slots:
       - EncryptionKeySyndie
       - EncryptionKeyStationMaster
+      - EncryptionKeyCybersun
   # Pirate: bridge radio coverage between the remote post and the station.
   - type: ListeningPostRadio
   # Pirate: lets the wearer eavesdrop on Binary without being able to pose as a silicon on it.
@@ -68,8 +69,10 @@
   parent: ComputerCrewMonitoring
   id: ComputerCrewMonitoringSyndicate
   suffix: Syndicate, Long Range
-  # Pirate: DeltaV's mapper-only MappingCategories component is unavailable here.
   components:
+  - type: Tag
+    tags:
+    - Syndicate
   - type: LongRangeCrewMonitor
 
 - type: entity
@@ -100,7 +103,17 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: Tag
+    tags:
+    - Syndicate
   - type: LongRangeCrewMonitoringServer
+  - type: CrewMonitoringServer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: CrewMonitor
+    autoConnect: false
+  - type: WirelessNetworkConnection
+    range: 500
   - type: Destructible
     thresholds:
     - trigger:

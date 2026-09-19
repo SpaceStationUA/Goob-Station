@@ -21,6 +21,12 @@
   - Service
   - Maintenance
   - Journalism # goob
+  # Pirate: skill chips
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+  # Pirate: skill chips end
 
 - type: startingGear
   id: ReporterGear

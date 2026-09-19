@@ -23,9 +23,6 @@ public record struct KnowledgeAddedEvent(Entity<KnowledgeContainerComponent> Con
 [ByRefEvent]
 public record struct KnowledgeRemovedEvent(Entity<KnowledgeContainerComponent> Container, EntityUid Holder);
 
-/// <summary>
-/// Relayed when XP changes so open character windows can refresh immediately.
-/// </summary>
 [ByRefEvent]
 public record struct KnowledgeExperienceChangedEvent;
 
@@ -34,3 +31,15 @@ public sealed class SkillPopupEvent(string popup) : EntityEventArgs
 {
     public readonly string Popup = popup;
 }
+
+[Serializable, NetSerializable]
+public sealed class KnowledgeJobChipsRequest : EntityEventArgs;
+
+[Serializable, NetSerializable]
+public sealed class KnowledgeJobChipsResponse(Dictionary<string, string[]> jobChips) : EntityEventArgs
+{
+    public readonly Dictionary<string, string[]> JobChips = jobChips;
+}
+
+[ByRefEvent]
+public readonly record struct KnowledgeStoreMovedEvent(EntityUid Source, EntityUid Destination);

@@ -220,6 +220,7 @@
         - DoorBumpOpener
         - IPCDrinkBlacklist # Goobstation - Energycrit: Don't let self antagging IPCs steal power from other battery powered species.
     - type: Hands
+    - type: OfferItem # Pirate - IPCs inherit silicon base, not BaseMobSpecies
     - type: Inventory
       templateId: human
     - type: InventorySlots

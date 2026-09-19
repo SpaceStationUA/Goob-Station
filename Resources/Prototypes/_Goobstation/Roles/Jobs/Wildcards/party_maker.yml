@@ -3,6 +3,12 @@
   name: job-name-party-maker
   description: job-name-party-maker
   playTimeTracker: JobPartyMaker
+  # Pirate: skill chips start
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+  # Pirate: skill chips end
   startingGear: PartyMakerGear
   icon: "JobIconPartyMaker"
   supervisors: job-supervisors-hop

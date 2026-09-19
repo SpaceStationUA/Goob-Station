@@ -15,6 +15,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared._Pirate.Plumbing.Components; // Pirate: chem plumbing
+using Content.Shared._Pirate.Atmos.Components; // Pirate: gas flow meter
 using Content.Shared.RCD.Components;
 using Content.Shared.Tag;
 using Content.Shared.Tiles;
@@ -37,6 +38,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Atmos.Components; // Goob - Check for pipe layer
 using Content.Shared.Doors.Systems;
 using Content.Shared.Doors.Components; // Goob - Check for Door Bolt
+using Content.Goobstation.Common.Effects; // Pirate: RPD mode selector
 
 namespace Content.Shared.RCD.Systems;
 
@@ -59,6 +61,7 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAtmosPipeLayersSystem _pipeLayers = default!; // Pirate: chem plumbing
+    [Dependency] private readonly SparksSystem _sparks = default!; // Pirate: RPD mode selector
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!; // Goobstation - RCD respects door access
 
@@ -148,8 +151,8 @@ public sealed class RCDSystem : EntitySystem
         #region Pirate: chem plumbing
         if (component.IsRpd || component.IsRPLD)
         {
-            var modeLoc = $"rcd-rpd-mode-{component.CurrentMode.ToString().ToLowerInvariant()}";
-            args.PushMarkup(Loc.GetString("rcd-component-examine-rpd-mode", ("mode", Loc.GetString(modeLoc))));
+            args.PushMarkup(Loc.GetString("rcd-component-examine-rpd-mode",
+                ("mode", GetModeName(NormalizeMode(component.CurrentMode)))));
         }
         #endregion
     }
@@ -387,21 +390,41 @@ public sealed class RCDSystem : EntitySystem
         if (!TryComp<RCDComponent>(uid, out var rcd) || (!rcd.IsRpd && !rcd.IsRPLD))
             return;
 
-        rcd.LastSelectedLayer = (AtmosPipeLayer) Math.Clamp((int) ev.Layer, (int) AtmosPipeLayer.Primary, (int) AtmosPipeLayer.Tertiary);
+        SetLastSelectedLayer((uid, rcd), (AtmosPipeLayer) ev.Layer); // Pirate: heat exchange pipes
     }
+
+    #region Pirate: heat exchange pipes
+    public void SetLastSelectedLayer(Entity<RCDComponent> ent, AtmosPipeLayer layer)
+    {
+        ent.Comp.LastSelectedLayer = ClampPipeLayer(layer);
+    }
+    #endregion
+
+    private static readonly RpdMode[] SelectableModes =
+    {
+        RpdMode.Free,
+        RpdMode.Primary,
+        RpdMode.Secondary,
+        RpdMode.Tertiary,
+    };
 
     private void OnGetUtilityVerb(EntityUid uid, RCDComponent component, GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || (!component.IsRpd && !component.IsRPLD))
             return;
 
-        args.Verbs.Add(new UtilityVerb
+        foreach (var mode in SelectableModes)
         {
-            Act = () => SwitchPipeMode(uid, component, args.User),
-            Text = Loc.GetString("rcd-verb-switch-mode"),
-            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-            Impact = LogImpact.Low,
-        });
+            args.Verbs.Add(new UtilityVerb
+            {
+                Act = () => SetPipeMode((uid, component), mode, args.User),
+                Category = VerbCategory.Adjust,
+                Text = GetModeName(mode),
+                Disabled = component.CurrentMode == mode,
+                Icon = ModeVerbIcon,
+                Impact = LogImpact.Low,
+            });
+        }
     }
 
     private void OnGetAlternativeVerb(EntityUid uid, RCDComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -410,33 +433,51 @@ public sealed class RCDSystem : EntitySystem
             !args.Using.HasValue || args.Using.Value != uid)
             return;
 
-        args.Verbs.Add(new AlternativeVerb
+        var nextMode = GetNextPipeMode(component.CurrentMode); // Pirate: RPD mode selector
+        foreach (var mode in SelectableModes)
         {
-            Act = () => SwitchPipeMode(uid, component, args.User),
-            Text = Loc.GetString("rcd-verb-switch-mode"),
-            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-            Impact = LogImpact.Low,
-        });
+            args.Verbs.Add(new AlternativeVerb
+            {
+                Act = () => SetPipeMode((uid, component), mode, args.User),
+                Category = VerbCategory.Adjust,
+                Text = GetModeName(mode),
+                Disabled = component.CurrentMode == mode,
+                Priority = mode == nextMode ? 1 : 0, // Pirate: RPD mode selector
+                Icon = ModeVerbIcon,
+                Impact = LogImpact.Low,
+            });
+        }
     }
 
-    private void SwitchPipeMode(EntityUid uid, RCDComponent component, EntityUid? user = null)
+    #region Pirate: RPD mode selector
+    private static RpdMode GetNextPipeMode(RpdMode mode)
     {
-        if (!component.IsRpd && !component.IsRPLD)
+        var index = Array.IndexOf(SelectableModes, mode);
+        return SelectableModes[(index + 1) % SelectableModes.Length];
+    }
+    #endregion Pirate: RPD mode selector
+
+    private static readonly SpriteSpecifier ModeVerbIcon =
+        new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png"));
+
+    private string GetModeName(RpdMode mode)
+        => Loc.GetString($"rcd-rpd-mode-{mode.ToString().ToLowerInvariant()}");
+
+    public void SetPipeMode(Entity<RCDComponent> ent, RpdMode mode, EntityUid? user = null)
+    {
+        if (!ent.Comp.IsRpd && !ent.Comp.IsRPLD)
             return;
 
-        component.CurrentMode = component.CurrentMode switch
-        {
-            RpdMode.Primary => RpdMode.Secondary,
-            RpdMode.Secondary => RpdMode.Tertiary,
-            RpdMode.Tertiary => RpdMode.Free,
-            RpdMode.Free => RpdMode.Primary,
-            _ => RpdMode.Primary,
-        };
+        if (ent.Comp.CurrentMode == mode)
+            return;
 
-        Dirty(uid, component);
+        ent.Comp.CurrentMode = mode;
+        Dirty(ent);
 
         if (user != null)
-            _audio.PlayPredicted(component.SoundSwitchMode, uid, user.Value);
+            _audio.PlayPredicted(ent.Comp.SoundSwitchMode, ent, user.Value);
+
+        _sparks.DoSparks(Transform(ent).Coordinates, minSparks: 1, maxSparks: 2, playSound: false); // Pirate: RPD mode selector
     }
     #endregion
 
@@ -584,6 +625,30 @@ public sealed class RCDSystem : EntitySystem
 
         _intersectingEntities.Clear();
         _lookup.GetLocalEntitiesIntersecting(gridUid, position, _intersectingEntities, -0.05f, LookupFlags.Uncontained);
+
+        #region Pirate: gas flow meter
+        if (prototype.Prototype != null &&
+            _protoManager.TryIndex<EntityPrototype>(prototype.Prototype, out var flowMeterProto) &&
+            flowMeterProto.TryGetComponent<GasFlowMeterComponent>(out _, EntityManager.ComponentFactory))
+        {
+            var placementLayer = GetPlacementLayer(component, prototype);
+
+            foreach (var ent in _intersectingEntities)
+            {
+                if (!HasComp<GasFlowMeterComponent>(ent) ||
+                    !TryComp<AtmosPipeLayersComponent>(ent, out var entLayers) ||
+                    entLayers.CurrentPipeLayer != placementLayer)
+                {
+                    continue;
+                }
+
+                if (popMsgs)
+                    _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-identical-entity"), uid, user);
+
+                return false;
+            }
+        }
+        #endregion
 
         foreach (var ent in _intersectingEntities)
         {
@@ -818,6 +883,12 @@ public sealed class RCDSystem : EntitySystem
                     _pipeLayers.SetPipeLayer((ent, spawnedLayers), pipeLayer);
                 }
                 #endregion
+
+                #region Pirate: gas flow meter
+                // Pirate: gas flow meter
+                if (HasComp<GasFlowMeterComponent>(ent) && !HasGasFlowMeterSupport(gridUid, position, pipeLayer))
+                    _transform.Unanchor(ent);
+                #endregion
                 // End of funky changes
 
                 /* Funky - handled above
@@ -875,13 +946,11 @@ public sealed class RCDSystem : EntitySystem
         if ((!component.IsRpd && !component.IsRPLD) || !prototype.HasLayers)
             return AtmosPipeLayer.Primary;
 
-        return ClampPipeLayer(component.CurrentMode switch
+        return ClampPipeLayer(NormalizeMode(component.CurrentMode) switch
         {
             RpdMode.Primary => AtmosPipeLayer.Primary,
             RpdMode.Secondary => AtmosPipeLayer.Secondary,
             RpdMode.Tertiary => AtmosPipeLayer.Tertiary,
-            RpdMode.Quaternary => AtmosPipeLayer.Tertiary, // Pirate: chem plumbing
-            RpdMode.Quinary => AtmosPipeLayer.Tertiary,
             RpdMode.Free => component.LastSelectedLayer ?? AtmosPipeLayer.Primary,
             _ => AtmosPipeLayer.Primary,
         });
@@ -892,9 +961,44 @@ public sealed class RCDSystem : EntitySystem
         return (AtmosPipeLayer) Math.Clamp((int) layer, (int) AtmosPipeLayer.Primary, (int) AtmosPipeLayer.Tertiary);
     }
 
+    #region Pirate: gas flow meter
+    private bool HasGasFlowMeterSupport(EntityUid gridUid, Vector2i position, AtmosPipeLayer layer)
+    {
+        var candidates = new HashSet<EntityUid>();
+        _lookup.GetLocalEntitiesIntersecting(gridUid, position, candidates, -0.05f, LookupFlags.Uncontained);
+
+        foreach (var ent in candidates)
+        {
+            if (HasComp<GasFlowMeterAttachableComponent>(ent) &&
+                Transform(ent).Anchored &&
+                TryComp<AtmosPipeLayersComponent>(ent, out var entLayers) &&
+                entLayers.CurrentPipeLayer == layer)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    #endregion
+
     public RpdMode GetCurrentRpdMode(EntityUid uid, RCDComponent? component = null)
     {
-        return Resolve(uid, ref component) ? component.CurrentMode : RpdMode.Free;
+        return Resolve(uid, ref component) ? NormalizeMode(component.CurrentMode) : RpdMode.Free;
+    }
+
+    /// <summary>
+    /// Upstream shipped five pipe layers, so <see cref="RpdMode"/> used to carry Quaternary(3) and
+    /// Quinary(4). This fork only has three layers and those names are gone, but CurrentMode is a
+    /// networked byte that also persists on saved maps, so older state can still hold 3 or 4. Both
+    /// used to mean "the topmost layer", so fold them onto Tertiary instead of letting them fall
+    /// through to the Primary default.
+    /// </summary>
+    public static RpdMode NormalizeMode(RpdMode mode)
+    {
+        return mode is RpdMode.Primary or RpdMode.Secondary or RpdMode.Tertiary or RpdMode.Free
+            ? mode
+            : RpdMode.Tertiary;
     }
     #endregion
 

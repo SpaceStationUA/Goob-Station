@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.Atmos; // Pirate: thermal vision
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Prototypes;
 using Robust.Shared.GameStates;
@@ -79,10 +80,16 @@ namespace Content.Shared.Atmos.EntitySystems
             // But also: dont dirty on a 0.01 kelvin change in temperatures.
             // Either have a temp tolerance, or map temperature -> byte levels
 
-            public GasOverlayData(byte fireState, byte[] opacity)
+            #region Pirate: thermal vision
+            [ViewVariables]
+            public readonly ThermalByte ByteGasTemperature;
+            #endregion Pirate: thermal vision
+
+            public GasOverlayData(byte fireState, byte[] opacity, ThermalByte byteTemp) // Pirate: thermal vision
             {
                 FireState = fireState;
                 Opacity = opacity;
+                ByteGasTemperature = byteTemp; // Pirate: thermal vision
             }
 
             public bool Equals(GasOverlayData other)
@@ -101,6 +108,9 @@ namespace Content.Shared.Atmos.EntitySystems
                             return false;
                     }
                 }
+
+                if (ByteGasTemperature != other.ByteGasTemperature) // Pirate: thermal vision
+                    return false;
 
                 return true;
             }

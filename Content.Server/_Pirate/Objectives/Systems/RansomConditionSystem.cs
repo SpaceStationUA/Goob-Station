@@ -33,6 +33,10 @@ public sealed class RansomConditionSystem : EntitySystem
 
         RemCompDeferred<ExtractingComponent>(ent);
 
+        // nobody got kidnapped if the fulton fizzled out, so no ransom and no announcement
+        if (!args.Delivered)
+            return;
+
         var ransom = _ransom.RansomEntity(ent);
         var msg = Loc.GetString("syndicate-ransom-announcement", ("hostage", ent), ("ransom", ransom));
         var sender = Loc.GetString("syndicate-ransom-announcement-sender");

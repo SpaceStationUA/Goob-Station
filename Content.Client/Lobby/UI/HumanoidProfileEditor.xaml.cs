@@ -2273,6 +2273,7 @@ namespace Content.Client.Lobby.UI
                         ReloadPreview();
 
                         UpdateJobPriorities();
+                        UpdatePirateKnowledgeEditor(); // Pirate: skill preview
                         RefreshLoadouts(); // Pirate: loadout
                         RefreshTraits(); // Pirate: port and modified DV traits UI
                         SetDirty();
@@ -2605,6 +2606,7 @@ namespace Content.Client.Lobby.UI
         private void SetEmployer(string newEmployer)
         {
             Profile = Profile?.WithEmployer(newEmployer);
+            UpdatePirateKnowledgeEditor(); // Pirate: skill preview
             UpdateCharacterRequired();
             IsDirty = true;
             ReloadProfilePreview();

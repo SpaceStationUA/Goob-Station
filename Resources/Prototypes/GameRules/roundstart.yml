@@ -162,6 +162,13 @@
   - type: AntagObjectives # Goobstation
     objectives:
     - NukeopsDetonateObjective
+  # Pirate: skill chips start - the rule is the authoritative hookup for roundstart nukies,
+  # whatever mob prototype the profile rule ends up spawning them as.
+  - type: AntagPlayerEffects
+    effects:
+    - !type:InstallOrganChip
+      chip: SkillChipNukie
+  # Pirate: skill chips end
 
 
 - type: entity
@@ -248,6 +255,11 @@
   parent: BaseGameRule
   id: BaseTraitorRuleNoObjectives
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
+  # Pirate: skill chips end
   - type: TraitorRule
   # TODO: codewords in yml
   # TODO: uplink in yml

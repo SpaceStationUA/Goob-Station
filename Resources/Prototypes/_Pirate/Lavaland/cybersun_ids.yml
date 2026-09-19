@@ -1,0 +1,52 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: SyndicateIDCard
+  id: SyndicateIDCardLavalandSoldier
+  suffix: Lavaland, Soldier
+  components:
+  - type: IdCard
+    jobTitle: job-name-syndicate-soldier
+    jobIcon: JobIconSyndicateSoldier
+
+- type: entity
+  parent: SyndicateIDCard
+  id: SyndicateIDCardLavalandMarshal
+  suffix: Lavaland, Marshal
+  components:
+  - type: IdCard
+    jobTitle: job-name-syndicate-marshal
+    jobIcon: JobIconSyndicateMarshal
+
+- type: entity
+  parent: SyndicateIDCard
+  id: SyndicateIDCardLavalandTeamLeader
+  suffix: Lavaland, Team Leader
+  components:
+  - type: IdCard
+    jobTitle: job-name-syndicate-team-leader
+    jobIcon: JobIconSyndicateTeamLeader
+
+- type: entity
+  parent: SyndiPDA
+  id: SyndiPDALavalandSoldier
+  suffix: Lavaland, Soldier
+  components:
+  - type: Pda
+    id: SyndicateIDCardLavalandSoldier
+
+- type: entity
+  parent: SyndiPDA
+  id: SyndiPDALavalandMarshal
+  suffix: Lavaland, Marshal
+  components:
+  - type: Pda
+    id: SyndicateIDCardLavalandMarshal
+
+- type: entity
+  parent: SyndiPDA
+  id: SyndiPDALavalandTeamLeader
+  suffix: Lavaland, Team Leader
+  components:
+  - type: Pda
+    id: SyndicateIDCardLavalandTeamLeader

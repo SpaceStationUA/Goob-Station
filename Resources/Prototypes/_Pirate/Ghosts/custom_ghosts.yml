@@ -353,8 +353,8 @@
   sprite:
     - _Pirate/Ghosts/hhhhhhhhruo.rsi
   alpha: 1
-  ghostName: sir Benjamin Netanyahu
-  ghostDescription: анроб
+  ghostName: hhhhhhhhruo
+  ghostDescription: лютий хард РПешер
 
 - type: customGhost
   id: Bukhhalter-ghost
@@ -420,19 +420,11 @@
   ghostDescription: meow?
 
 - type: customGhost
-  id: andrey237-ghost
-  ckey: Andrey237
-  sprite:
-    - _Pirate/Ghosts/Andrey237.rsi
-  alpha: 1
-  ghostName: Andrey237
-  ghostDescription: so freaky..
-
-- type: customGhost
   id: polygon-ghost
   ckey: polygon
   sprite:
     - _Pirate/Ghosts/polygon.rsi
   alpha: 1
-  ghostName: Andreas
-  ghostDescription: главний хімік ТП 😎😎😎
+  ghostName: polygon
+
+

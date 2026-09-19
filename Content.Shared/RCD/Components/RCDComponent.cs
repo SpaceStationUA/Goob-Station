@@ -69,7 +69,7 @@ public sealed partial class RCDComponent : Component
     public RpdMode CurrentMode { get; set; } = RpdMode.Free;
 
     [DataField]
-    public SoundSpecifier SoundSwitchMode { get; set; } = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");
+    public SoundSpecifier SoundSwitchMode { get; set; } = new SoundCollectionSpecifier("sparks"); // Pirate: RPD mode selector
     #endregion
 
     /// <summary>
@@ -105,8 +105,7 @@ public enum RpdMode : byte
     Primary = 0,
     Secondary = 1,
     Tertiary = 2,
-    Quaternary = 3,
-    Quinary = 4,
+    // Pirate: RPD layer compatibility
     Free = 5,
 }
 #endregion

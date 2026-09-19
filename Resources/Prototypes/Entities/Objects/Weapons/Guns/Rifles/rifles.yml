@@ -70,7 +70,7 @@
     wideAnimationRotation: 90 # -90 if it takes bayonets (hits with muzzle) 90 if not (hits with butt)
     soundHit:
       collection: MetalThud # Goobstation ^
-  - type: CanTakeAim # PIRATE 
+  - type: CanTakeAim # PIRATE
   # Goobstation edit start
   - type: EmitSoundOnPickup
     sound:
@@ -190,14 +190,14 @@
   description: A military-grade assault rifle that's seen more wars than you can remember. The full-size package and steady recoil of the Lecter help it excel at one thing—pinpoint accuracy. Feeds from .20 Rifle magazines. # Goobstation
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/lecter.rsi
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: Gun
     fireRate: 5 # Goobstation?
     soundGunshot:

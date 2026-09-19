@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: rcd
+  id: GasFlowMeter
+  category: AtmosphericUtility
+  sprite: /Textures/_Pirate/Interface/Radial/RPD/gas_flow_meter.png
+  mode: ConstructObject
+  prototype: GasFlowMeter
+  cost: 1
+  delay: 0
+  rotation: Fixed
+  fx: EffectRCDConstruct0
+  hasLayers: true

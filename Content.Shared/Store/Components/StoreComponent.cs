@@ -14,7 +14,7 @@ namespace Content.Shared.Store.Components;
 /// </summary>
 // goob edit - fuck newstore
 // do not touch unless you want to shoot yourself in the leg
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class StoreComponent : Component
 {
     [DataField]
@@ -32,7 +32,7 @@ public sealed partial class StoreComponent : Component
     /// The string represents the ID of te currency prototype, where the
     /// float is that amount.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
 
     /// <summary>

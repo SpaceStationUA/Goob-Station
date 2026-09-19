@@ -2,6 +2,7 @@
 
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
+using Content.Shared._Pirate.Atmos.Piping; // Pirate: heat exchange pipes
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.NodeContainer;
@@ -85,6 +86,13 @@ namespace Content.Server.NodeContainer.Nodes
         [DataField("rotationsEnabled")]
         public bool RotationsEnabled { get; set; } = true;
 
+        #region Pirate: heat exchange pipes
+        public virtual AtmosPipePortKind PortKindInDirection(PipeDirection direction)
+            => AtmosPipePortKind.Standard;
+
+        protected virtual bool OnPipeDirectionUpdated(Angle rotation) => false;
+        #endregion
+
         /// <summary>
         ///     The <see cref="IPipeNet"/> this pipe is a part of.
         /// </summary>
@@ -119,6 +127,7 @@ namespace Content.Server.NodeContainer.Nodes
 
             var xform = entMan.GetComponent<TransformComponent>(owner);
             CurrentPipeDirection = OriginalPipeDirection.RotatePipeDirection(xform.LocalRotation);
+            OnPipeDirectionUpdated(xform.LocalRotation); // Pirate: heat exchange pipes
         }
 
         bool IRotatableNode.RotateNode(in MoveEvent ev)
@@ -138,7 +147,8 @@ namespace Content.Server.NodeContainer.Nodes
 
             var oldDirection = CurrentPipeDirection;
             CurrentPipeDirection = OriginalPipeDirection.RotatePipeDirection(ev.NewRotation);
-            return oldDirection != CurrentPipeDirection;
+            var derivedStateChanged = OnPipeDirectionUpdated(ev.NewRotation); // Pirate: heat exchange pipes
+            return oldDirection != CurrentPipeDirection || derivedStateChanged; // Pirate: heat exchange pipes
         }
 
         public override void OnAnchorStateChanged(IEntityManager entityManager, bool anchored)
@@ -156,6 +166,7 @@ namespace Content.Server.NodeContainer.Nodes
 
             var xform = entityManager.GetComponent<TransformComponent>(Owner);
             CurrentPipeDirection = OriginalPipeDirection.RotatePipeDirection(xform.LocalRotation);
+            OnPipeDirectionUpdated(xform.LocalRotation); // Pirate: heat exchange pipes
         }
 
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
@@ -211,7 +222,9 @@ namespace Content.Server.NodeContainer.Nodes
             {
                 if (pipe.NodeGroupID == NodeGroupID
                     && pipe.CurrentPipeLayer == CurrentPipeLayer
-                    && pipe.CurrentPipeDirection.HasDirection(pipeDir.GetOpposite()))
+                    && pipe.CurrentPipeDirection.HasDirection(pipeDir.GetOpposite())
+                    // Pirate: heat exchange pipes
+                    && PortKindInDirection(pipeDir) == pipe.PortKindInDirection(pipeDir.GetOpposite()))
                 {
                     yield return pipe;
                 }

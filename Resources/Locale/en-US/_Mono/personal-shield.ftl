@@ -6,3 +6,6 @@ personal-shield-examine-down = The shield is [color=darkgray]down[/color].
 personal-shield-toggle-fractured = Shield respooling. { $seconds } seconds remaining.
 personal-shield-toggle-up = Shield raised.
 personal-shield-toggle-down = Shield lowered.
+
+ent-ActionTogglePersonalShield = Toggle personal shield
+    .desc = Raise or lower your personal shield.

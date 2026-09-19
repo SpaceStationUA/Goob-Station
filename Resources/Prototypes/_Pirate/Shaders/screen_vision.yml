@@ -1,0 +1,39 @@
+# Pirate: ported from starcup PR #911 (CRT screen vision)
+- type: shader
+  id: ScreenVision
+  kind: source
+  path: "/Textures/_Pirate/Shaders/screen_vision.swsl"
+  params:
+    brightness: 1.0
+    contrast: 1.0
+    saturation: 1.0
+    gamma: 1.0
+    curvature: 0.0
+    corner_soften: 0.00
+    vignette: 0.0
+    scanline_strength: 0.95
+    scanline_density: 1.15
+    interlace_strength: 0.20
+    mask_strength: 0.22
+    mask_scale: 1.0
+    chroma_offset_px: 1.6
+    luma_smear_px: 2.2
+    jitter_px: 0
+    wobble_px: 0
+    tape_noise: 0
+    tape_lines: 0
+    roll_speed: 0.10
+    roll_strength: 0.01
+    glow_strength: 0.25
+    glow_threshold: 0.65
+
+# Pirate: low-health glitch for the ScreenVision trait (see ipc_health_glitch.swsl)
+- type: shader
+  id: IPCHealthGlitch
+  kind: source
+  path: "/Textures/_Pirate/Shaders/ipc_health_glitch.swsl"
+  params:
+    strength: 0.0
+    # Pirate: lower burst frequency so mid-health glitches are occasional,
+    # not constant (scale also depends on strength)
+    shake_rate: 0.1

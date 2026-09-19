@@ -2,6 +2,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Events; // Pirate: mappable codeword paper
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Traitor.Components;
@@ -23,7 +24,24 @@ public sealed class TraitorCodePaperSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<TraitorCodePaperComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting, after: [typeof(CodewordSystem)]); // Pirate: mappable codeword paper
     }
+
+    #region Pirate: mappable codeword paper
+    /// <summary>
+    /// Grids that load during <c>LoadMaps</c> (centcomm, Lavaland and its ruins) map-init before
+    /// <see cref="CodewordSystem"/> has created the codeword manager, so any paper mapped onto them
+    /// fills itself in with the "no codewords" fallback. Fill them in again once codewords exist.
+    /// </summary>
+    private void OnRoundStarting(RoundStartingEvent ev)
+    {
+        var query = EntityQueryEnumerator<TraitorCodePaperComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            SetupPaper(uid, component);
+        }
+    }
+    #endregion
 
     private void OnMapInit(EntityUid uid, TraitorCodePaperComponent component, MapInitEvent args)
     {

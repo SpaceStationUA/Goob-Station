@@ -1,0 +1,219 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: construction
+  id: HeatExchangerInlineAlt1
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heStraightAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInline
+  - HeatExchangerInlineAlt1
+  - HeatExchangerInlineAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineAlt2
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heStraightAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInline
+  - HeatExchangerInlineAlt1
+  - HeatExchangerInlineAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineBendAlt1
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heBendAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineBend
+  - HeatExchangerInlineBendAlt1
+  - HeatExchangerInlineBendAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineBendAlt2
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heBendAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineBend
+  - HeatExchangerInlineBendAlt1
+  - HeatExchangerInlineBendAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineManifold
+  graph: PirateHeatExchangePipe
+  targetNode: heManifold
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineManifold
+  - HeatExchangerInlineManifoldAlt1
+  - HeatExchangerInlineManifoldAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineManifoldAlt1
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heManifoldAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineManifold
+  - HeatExchangerInlineManifoldAlt1
+  - HeatExchangerInlineManifoldAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineManifoldAlt2
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heManifoldAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineManifold
+  - HeatExchangerInlineManifoldAlt1
+  - HeatExchangerInlineManifoldAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineFourway
+  graph: PirateHeatExchangePipe
+  targetNode: heFourway
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineFourway
+  - HeatExchangerInlineFourwayAlt1
+  - HeatExchangerInlineFourwayAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineFourwayAlt1
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heFourwayAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineFourway
+  - HeatExchangerInlineFourwayAlt1
+  - HeatExchangerInlineFourwayAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineFourwayAlt2
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heFourwayAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineFourway
+  - HeatExchangerInlineFourwayAlt1
+  - HeatExchangerInlineFourwayAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineJunction
+  graph: PirateHeatExchangePipe
+  targetNode: heJunction
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineJunction
+  - HeatExchangerInlineJunctionAlt1
+  - HeatExchangerInlineJunctionAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineJunctionAlt1
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heJunctionAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineJunction
+  - HeatExchangerInlineJunctionAlt1
+  - HeatExchangerInlineJunctionAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1
+
+- type: construction
+  id: HeatExchangerInlineJunctionAlt2
+  hide: true
+  graph: PirateHeatExchangePipe
+  targetNode: heJunctionAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  alternativePrototypes:
+  - HeatExchangerInlineJunction
+  - HeatExchangerInlineJunctionAlt1
+  - HeatExchangerInlineJunctionAlt2
+  theory:
+    InfrastructureKnowledge: 0
+  practical:
+    MetalworkingKnowledge: 1

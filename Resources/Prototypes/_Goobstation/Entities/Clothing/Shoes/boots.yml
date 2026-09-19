@@ -121,7 +121,7 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: StaticPrice
-    price: 750
+    price: 10 # Pirate: syndrobe - was 750, matches every other pair of shoes
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

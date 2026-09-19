@@ -250,6 +250,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
 
         RemoveActiveViewers(camera, new(component.ActiveViewers), null, component);
         component.Active = false;
+        Dirty(camera, component); // Pirate: synchronize X-ray camera eligibility.
 
         // Send a targetted event to all monitors.
         foreach (var monitor in component.ActiveMonitors)
@@ -279,6 +280,7 @@ public sealed class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
             if (attemptEv.Cancelled)
                 return;
             component.Active = setting;
+            Dirty(camera, component); // Pirate: synchronize X-ray camera eligibility.
         }
         else
         {

@@ -1,0 +1,64 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: ERT modsuits - department-look ERT belts.
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbingFilledERT
+  id: ClothingBeltERTSecurity
+  suffix: ERT, security look
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/security.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/security.rsi
+
+# Unfilled twin of ClothingBeltERTSecurity, for starting gear that supplies its own
+# belt contents (ERTSecurityGearArmedRifle). The filled parent leaves no room for them.
+- type: entity
+  parent: ClothingBeltMilitaryWebbingERT
+  id: ClothingBeltERTSecurityEmpty
+  suffix: ERT, security look, empty
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/security.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/security.rsi
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbingERT
+  id: ClothingBeltERTEngineer
+  suffix: ERT, engineering look
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/ce.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/ce.rsi
+
+- type: entity
+  parent: ClothingBeltSecurityWebbingFilledMedical
+  id: ClothingBeltERTMedical
+  suffix: ERT, medical look
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/medical.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/medical.rsi
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbingERT
+  id: ClothingBeltERTJanitor
+  suffix: ERT, janitorial look
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/janitor.rsi
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbingERT
+  id: ClothingBeltERTChaplain
+  suffix: ERT, chaplain look
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/waistbag_leather.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/waistbag_leather.rsi

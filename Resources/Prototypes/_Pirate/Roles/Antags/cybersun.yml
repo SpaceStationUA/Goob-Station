@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: antag
+  id: Cybersun
+  name: roles-antag-cybersun-name
+  antagonist: true
+  setPreference: false
+  objective: roles-antag-cybersun-objective

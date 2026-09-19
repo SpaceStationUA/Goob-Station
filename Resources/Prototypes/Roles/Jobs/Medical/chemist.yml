@@ -29,6 +29,12 @@
   - Maintenance
   # Shitmed Change
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipChemist
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: SurgerySpeedModifier

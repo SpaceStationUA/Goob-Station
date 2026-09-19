@@ -26,6 +26,11 @@
   - Brig
   - Maintenance
   special: # Goobstation - Everyone knows lawyers are soulless.
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: Condemned

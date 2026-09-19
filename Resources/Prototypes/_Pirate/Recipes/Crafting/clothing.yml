@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: 2026 CyberLanos <cyber.lanos00@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+- type: construction
+  id: NeckGaiter
+  graph: NeckGaiter
+  startNode: start
+  targetNode: neckGaiter
+  category: construction-category-clothing
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false
+
+- type: construction
+  id: NeckGaiterRed
+  graph: NeckGaiterRed
+  startNode: start
+  targetNode: neckGaiter
+  category: construction-category-clothing
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false
+
+- type: construction
+  id: NeckGaiterWhite
+  graph: NeckGaiterWhite
+  startNode: start
+  targetNode: neckGaiter
+  category: construction-category-clothing
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false

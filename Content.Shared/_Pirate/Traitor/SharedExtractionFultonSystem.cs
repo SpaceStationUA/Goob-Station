@@ -82,8 +82,9 @@ public abstract class SharedExtractionFultonSystem : EntitySystem
 /// <summary>
 /// Raised on an entity after it has been fultoned to somewhere.
 /// </summary>
+/// <param name="Delivered">Whether the entity actually reached its beacon, false if the fulton fizzled out.</param>
 [ByRefEvent]
-public record struct FultonedEvent;
+public record struct FultonedEvent(bool Delivered);
 
 [Serializable, NetSerializable]
 public sealed partial class ExtractionFultonDoAfterEvent : SimpleDoAfterEvent

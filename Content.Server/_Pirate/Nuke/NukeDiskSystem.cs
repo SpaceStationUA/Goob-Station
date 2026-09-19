@@ -41,6 +41,10 @@ public sealed class NukeDiskSystem : EntitySystem
         // just incase another system somehow doesn't do it
         RemCompDeferred<ExtractingComponent>(ent);
 
+        // the disk is still sitting wherever it was if the fulton failed, don't hand it to the nukies
+        if (!args.Delivered)
+            return;
+
         ent.Comp.Extracted = true;
         // give it to an arbitrary nukie if a sleeper/whatever steals it
         // everyone wins

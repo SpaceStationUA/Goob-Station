@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-﻿using Robust.Shared.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -57,6 +56,20 @@ public sealed class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
     public readonly string Address;
 
     public RoboticsConsoleDestroyMessage(string address)
+    {
+        Address = address;
+    }
+}
+
+/// <summary>
+/// Pirate: message to impose Malf AI Law 0 on the selected cyborg.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class RoboticsConsoleImposeLawMessage : BoundUserInterfaceMessage
+{
+    public readonly string Address;
+
+    public RoboticsConsoleImposeLawMessage(string address)
     {
         Address = address;
     }
@@ -153,4 +166,7 @@ public static class RoboticsConsoleConstants
     // sent by robotics console to cyborgs on Cyborg Control frequency
     public const string NET_DISABLE_COMMAND = "cyborg-disable";
     public const string NET_DESTROY_COMMAND = "cyborg-destroy";
+
+    // Pirate: Malfunctioning AI instructs a cyborg to add Law 0.
+    public const string NET_IMPOSE_LAW0_COMMAND = "cyborg-law0";
 }

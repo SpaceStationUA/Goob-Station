@@ -35,9 +35,20 @@
   id: BaseCharacterPod
   categories: [ Spawner ]
 
+- type: entity
+  abstract: true
+  parent: BaseCharacterPod
+  id: BaseCharacterPodCybersun
+  components:
+  - type: RadioSpawnAnnouncement
+    channel: Cybersun
+    message: cybersun-pod-wake-announcement
+    senderName: cybersun-announcement-sender
+  - type: TelecomExempt
+
 
 - type: entity
-  parent: BaseCharacterPod
+  parent: BaseCharacterPodCybersun
   id: CharacterPodSyndieSoldier
   suffix: Syndicate Soldier
   components:
@@ -51,13 +62,15 @@
       settings: default
   - type: CharacterPod
     settings: LavalandSyndieSoldier
+    # Match nuke operative starting cash; pods bypass job spawning.
+    startingBalance: 1000
     # The base sits on Lavaland, out of reach of anything the station can do, so its occupants are
     # not valid targets for hitman contracts or bounty hunter kill objectives.
     extraComponents:
     - type: TargetObjectiveImmune
 
 - type: entity
-  parent: BaseCharacterPod
+  parent: BaseCharacterPodCybersun
   id: CharacterPodSyndieSoldierTeamLeader
   suffix: Syndicate Team Leader
   components:
@@ -71,11 +84,12 @@
       settings: default
   - type: CharacterPod
     settings: LavalandSyndieSoldierTeamLeader
+    startingBalance: 1000
     extraComponents:
     - type: TargetObjectiveImmune
 
 - type: entity
-  parent: BaseCharacterPod
+  parent: BaseCharacterPodCybersun
   id: CharacterPodSyndicateMarshal
   suffix: Syndicate Marshal
   components:
@@ -84,11 +98,11 @@
     description: ghost-role-information-syndicate-marshal-description
     rules: ghost-role-information-syndicate-marshal-rules
     mindRoles:
-    - MindRoleSyndicateMarshal
+    - MindRoleGhostRoleCybersun
     raffle:
       settings: default
   - type: CharacterPod
-    settings: SyndicateMarshalPod
-    # Sits on a nonstation map, as unreachable as the Lavaland base soldiers above.
+    settings: LavalandSyndieMarshal
+    startingBalance: 1000
     extraComponents:
     - type: TargetObjectiveImmune

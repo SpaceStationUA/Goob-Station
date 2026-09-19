@@ -14,8 +14,11 @@
 
 - type: rcd
   id: RadiatorInline
-  category: AtmosphericUtility
-  sprite: /Textures/_Goobstation/Interface/Radial/RPD/inlineRadiator.png
+  category: HeatExchange # Pirate: heat exchange pipes
+  #region Pirate: heat exchange pipes
+  sprite: /Textures/_Pirate/Interface/Radial/RPD/he_straight.png
+  hasLayers: true
+  #endregion
   mode: ConstructObject
   prototype: HeatExchangerInline
   cost: 2
@@ -26,8 +29,11 @@
 
 - type: rcd
   id: RadiatorInlineBend
-  category: AtmosphericUtility
-  sprite: /Textures/_Goobstation/Interface/Radial/RPD/inlineRadiatorBend.png
+  category: HeatExchange # Pirate: heat exchange pipes
+  #region Pirate: heat exchange pipes
+  sprite: /Textures/_Pirate/Interface/Radial/RPD/he_bend.png
+  hasLayers: true
+  #endregion
   mode: ConstructObject
   prototype: HeatExchangerInlineBend
   cost: 2

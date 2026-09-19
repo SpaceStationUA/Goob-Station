@@ -185,8 +185,9 @@ namespace Content.Shared.APC
         public readonly float Charge;
         public readonly float MaxLoad;
         public readonly bool Tripped;
+        public readonly bool Siphoned; // Pirate: Malf AI power drain.
 
-        public ApcBoundInterfaceState(bool mainBreaker, int power, ApcExternalPowerState apcExternalPower, float charge, float maxLoad, bool tripped)
+        public ApcBoundInterfaceState(bool mainBreaker, int power, ApcExternalPowerState apcExternalPower, float charge, float maxLoad, bool tripped, bool siphoned)
         {
             MainBreaker = mainBreaker;
             Power = power;
@@ -194,6 +195,7 @@ namespace Content.Shared.APC
             Charge = charge;
             MaxLoad = maxLoad;
             Tripped = tripped;
+            Siphoned = siphoned;
         }
 
         public bool Equals(ApcBoundInterfaceState? other)
@@ -205,7 +207,8 @@ namespace Content.Shared.APC
                    ApcExternalPower == other.ApcExternalPower &&
                    MathHelper.CloseTo(Charge, other.Charge) &&
                    MathHelper.CloseTo(MaxLoad, other.MaxLoad) &&
-                   Tripped == other.Tripped;
+                   Tripped == other.Tripped &&
+                   Siphoned == other.Siphoned;
         }
 
         public override bool Equals(object? obj)
@@ -215,7 +218,7 @@ namespace Content.Shared.APC
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(MainBreaker, Power, (int) ApcExternalPower, Charge, MaxLoad, Tripped);
+            return HashCode.Combine(MainBreaker, Power, (int) ApcExternalPower, Charge, MaxLoad, Tripped, Siphoned);
         }
     }
 
@@ -223,6 +226,10 @@ namespace Content.Shared.APC
     public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
     {
     }
+
+    // Pirate: Malf AI APC siphoning.
+    [Serializable, NetSerializable]
+    public sealed class ApcSiphonCpuMessage : BoundUserInterfaceMessage;
 
     public enum ApcExternalPowerState : byte
     {

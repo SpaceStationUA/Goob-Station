@@ -20,7 +20,6 @@ public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<RoboticsConsoleWindow>();
         _window.SetEntity(Owner);
-
         _window.OnDisablePressed += address =>
         {
             SendMessage(new RoboticsConsoleDisableMessage(address));
@@ -28,6 +27,10 @@ public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
         _window.OnDestroyPressed += address =>
         {
             SendMessage(new RoboticsConsoleDestroyMessage(address));
+        };
+        _window.OnImposeLawPressed += address =>
+        {
+            SendMessage(new RoboticsConsoleImposeLawMessage(address));
         };
     }
 

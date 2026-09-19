@@ -59,6 +59,8 @@ trait-condition-job-not = Ваша посада не повинна бути [co
 ## Department conditions
 trait-condition-department-is = Ви повинні бути у відділі [color={$color}]{$department}[/color].
 trait-condition-department-not = Ви не повинні бути у відділі [color={$color}]{$department}[/color].
+trait-condition-trait-is = Ви повинні мати трейт(и): [color=yellow]{$traits}[/color].
+trait-condition-trait-not = Ви не повинні мати трейт(и): [color=yellow]{$traits}[/color].
 
 ## HasComp borg conditions
 trait-condition-borg-not = Ви не повинні бути [color=yellow]боргом[/color].

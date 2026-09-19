@@ -4,6 +4,14 @@
   name: job-name-shaftminer
   description: job-description-shaftminer
   playTimeTracker: JobShaftMiner
+  # Pirate: skill chips start
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipMining
+    - SkillChipShortBlade
+  # Pirate: skill chips end
   requirements:
   - !type:DepartmentTimeRequirement
     department: Cargo

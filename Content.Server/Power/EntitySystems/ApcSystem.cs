@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Emp;
+using Content.Shared._Pirate.MalfAI; // Pirate: Malf AI APC siphoning.
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
@@ -137,6 +138,9 @@ public sealed class ApcSystem : EntitySystem
         if (!Resolve(uid, ref apc, ref battery))
             return;
 
+        if (HasComp<MalfAiApcSiphonedComponent>(uid)) // Pirate
+            return;
+
         apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
         battery.CanDischarge = apc.MainBreakerEnabled;
 
@@ -215,7 +219,8 @@ public sealed class ApcSystem : EntitySystem
             (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
             charge,
             apc.MaxLoad,
-            apc.TripFlag);
+            apc.TripFlag,
+            HasComp<MalfAiApcSiphonedComponent>(uid)); // Pirate
 
         _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }

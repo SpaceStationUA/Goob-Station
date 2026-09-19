@@ -1,0 +1,53 @@
+# bowtie art should strictly be under Neck, but easier to find the bows if they're all in the same area.
+# likewise, bowtie prototypes arguably belong under Head, but then we'd probably want to rename them.
+# the Head slots are adapted from The Den's small hairbows.
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBowtieRed
+  name: red bowtie
+  description: A cute little red clip-on bow that can be mounted to apparel or clipped into hair.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Head/Accessories/hairbow_small_red.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Head/Accessories/hairbow_small_red.rsi
+    slots:
+    - HEAD
+    - neck
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBowtieBlack
+  name: black bowtie
+  description: A cute little black clip-on bow that can be mounted to apparel or clipped into hair.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Head/Accessories/hairbow_small_black.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Head/Accessories/hairbow_small_black.rsi
+    slots:
+    - HEAD
+    - neck
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieRibbonBlack
+  name: black neck ribbon
+  description: A ribbon for adorning the neck.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Neck/Ties/ribbon_black.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Neck/Ties/ribbon_black.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieRibbonRed
+  name: red neck ribbon
+  description: A ribbon for adorning the neck.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Neck/Ties/ribbon_red.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Neck/Ties/ribbon_red.rsi

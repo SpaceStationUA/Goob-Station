@@ -489,7 +489,7 @@
       type: Add
     - !type:ModifyStatusEffect
       effectProto: DreamsicleEggEffect
-      time: 60
+      time: 15 # was 60 — Quicksilver-tier speed for a full minute was too strong
       type: Add
 
 - type: entity

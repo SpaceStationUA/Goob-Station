@@ -42,12 +42,6 @@ public sealed partial class ToggleHolsterModuleEvent : InstantActionEvent
     public SoundSpecifier InsertSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 }
 
-public sealed partial class ActivateEnergyShieldModuleEvent : InstantActionEvent
-{
-    [DataField]
-    public EntProtoId ShieldProto = "EnergyShieldEffect";
-}
-
 public sealed partial class ActivateDispenserModuleEvent : InstantActionEvent
 {
     [DataField]

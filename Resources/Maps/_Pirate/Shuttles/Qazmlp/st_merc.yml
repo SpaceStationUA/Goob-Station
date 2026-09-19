@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 08/19/2026 21:37:42
-  entityCount: 1836
+  time: 09/05/2026 12:03:00
+  entityCount: 1842
 maps:
 - 1
 grids:
@@ -1293,7 +1293,8 @@ entities:
           -2,-3:
             0: 61408
           -2,-2:
-            0: 52688
+            0: 52432
+            2: 256
           -2,-5:
             0: 65328
           -2,-4:
@@ -1308,7 +1309,7 @@ entities:
             0: 140
           -6,0:
             0: 247
-            2: 256
+            3: 256
             1: 1536
           -6,1:
             0: 4095
@@ -1337,6 +1338,11 @@ entities:
           moles:
             Oxygen: 21.6852
             Nitrogen: 81.57766
+        - volume: 2500
+          temperature: 293.15
+          moles:
+            Oxygen: 21.824806
+            Nitrogen: 82.102844
         - volume: 2500
           temperature: 293.14975
           moles:
@@ -1869,6 +1875,13 @@ entities:
     - type: TileHistory
       chunkHistory: {}
     - type: ExplosionAirtightGrid
+- proto: AcousticGuitarInstrument
+  entities:
+  - uid: 1842
+    components:
+    - type: Transform
+      pos: -22.451263,-1.585227
+      parent: 2
 - proto: AdderBox
   entities:
   - uid: 577
@@ -2132,7 +2145,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -28843.74
+      secondsUntilStateChange: -29378.857
       state: Opening
   - uid: 933
     components:
@@ -2217,7 +2230,7 @@ entities:
       pos: -6.5,3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13000.997
+      secondsUntilStateChange: -13536.113
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2597,62 +2610,6 @@ entities:
     - type: Transform
       pos: -1.5,0.5
       parent: 2
-- proto: BenchSofaCorpCorner
-  entities:
-  - uid: 535
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -14.5,-6.5
-      parent: 2
-  - uid: 1102
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 2.5,4.5
-      parent: 823
-- proto: BenchSofaCorpLeft
-  entities:
-  - uid: 537
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -14.5,-4.5
-      parent: 2
-  - uid: 1104
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 2.5,5.5
-      parent: 823
-- proto: BenchSofaCorpMiddle
-  entities:
-  - uid: 538
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -13.5,-6.5
-      parent: 2
-  - uid: 539
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -14.5,-5.5
-      parent: 2
-- proto: BenchSofaCorpRight
-  entities:
-  - uid: 536
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -12.5,-6.5
-      parent: 2
-  - uid: 1103
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 3.5,4.5
-      parent: 823
 - proto: BigBox
   entities:
   - uid: 630
@@ -2707,6 +2664,22 @@ entities:
     - type: Transform
       pos: -22.410002,-4.671157
       parent: 2
+- proto: BluespaceChemistryVial
+  entities:
+  - uid: 1839
+    components:
+    - type: Transform
+      pos: -12.1464,-14.333054
+      parent: 2
+    - type: CollisionWake
+      enabled: False
+  - uid: 1841
+    components:
+    - type: Transform
+      pos: -12.292234,-14.489412
+      parent: 2
+    - type: CollisionWake
+      enabled: False
 - proto: BoozeDispenser
   entities:
   - uid: 643
@@ -4581,6 +4554,11 @@ entities:
     - type: Transform
       pos: -12.5,-14.5
       parent: 2
+    - type: ItemPlacer
+      placedEntities:
+      - 1839
+    - type: PlaceableSurface
+      isPlaceable: False
 - proto: ChemMaster
   entities:
   - uid: 1304
@@ -5163,6 +5141,13 @@ entities:
     components:
     - type: Transform
       pos: -6.5,-8.5
+      parent: 2
+- proto: CrateFulton
+  entities:
+  - uid: 1276
+    components:
+    - type: Transform
+      pos: -8.5,2.5
       parent: 2
 - proto: CrateFunBlackCaviar
   entities:
@@ -8790,6 +8775,20 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,-11.5
       parent: 2
+- proto: IngotGold
+  entities:
+  - uid: 1840
+    components:
+    - type: Transform
+      pos: -13.430737,2.4947405
+      parent: 2
+- proto: IngotSilver
+  entities:
+  - uid: 1504
+    components:
+    - type: Transform
+      pos: -13.461987,2.5781317
+      parent: 2
 - proto: IVDrip
   entities:
   - uid: 273
@@ -8933,24 +8932,24 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 104
           - 102
-          - 1657
-          - 619
-          - 435
-          - 434
-          - 427
-          - 425
-          - 430
-          - 1189
-          - 433
-          - 432
-          - 428
-          - 429
-          - 431
-          - 426
-          - 101
           - 258
+          - 101
+          - 426
+          - 431
+          - 429
+          - 428
+          - 432
+          - 433
+          - 1189
+          - 430
+          - 425
+          - 427
+          - 434
+          - 435
+          - 619
+          - 1657
+          - 104
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -8961,8 +8960,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.8977377
-          Nitrogen: 7.139109
+          Oxygen: 1.8978093
+          Nitrogen: 7.139378
 - proto: MachineCentrifuge
   entities:
   - uid: 1303
@@ -9532,6 +9531,13 @@ entities:
     - type: Transform
       pos: 4.756502,10.909671
       parent: 823
+- proto: portableChemicalMixer
+  entities:
+  - uid: 1483
+    components:
+    - type: Transform
+      pos: -13.74712,-14.405727
+      parent: 2
 - proto: PortableGeneratorPacman
   entities:
   - uid: 1790
@@ -11900,6 +11906,62 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,-6.5
       parent: 2
+- proto: SofaBlack
+  entities:
+  - uid: 538
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -13.5,-6.5
+      parent: 2
+  - uid: 539
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -14.5,-5.5
+      parent: 2
+- proto: SofaBlackCorner
+  entities:
+  - uid: 535
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -14.5,-6.5
+      parent: 2
+  - uid: 1102
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,4.5
+      parent: 823
+- proto: SofaBlackLeft
+  entities:
+  - uid: 536
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -12.5,-6.5
+      parent: 2
+  - uid: 1103
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,4.5
+      parent: 823
+- proto: SofaBlackRight
+  entities:
+  - uid: 537
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -14.5,-4.5
+      parent: 2
+  - uid: 1104
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,5.5
+      parent: 823
 - proto: SpaceCash100
   entities:
   - uid: 566
@@ -14269,11 +14331,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,2.5
-      parent: 2
-  - uid: 1504
-    components:
-    - type: Transform
-      pos: -8.5,2.5
       parent: 2
 - proto: WindowReinforcedDirectional
   entities:

@@ -34,3 +34,7 @@ roles-antag-mothership-core-name = Ядро ксеноборгів
 roles-antag-mothership-core-objective = Використовуйте своїх ксеноборгів, щоб створити ще більше ксеноборгів.
 roles-antag-xenoborg-name = Ксеноборг
 roles-antag-xenoborg-objective = Допоможіть материнському кораблю створити більше ксеноборгів.
+
+roles-antag-malfunctioning-ai-name = Несправний ШІ
+roles-antag-malfunctioning-ai-objective = Саботуйте станцію як несправний станційний ШІ.
+roles-antag-malfunctioning-ai-briefing = Ви — Несправний ШІ. Збережіть ядро, виконуйте власні цілі та знищте опір.

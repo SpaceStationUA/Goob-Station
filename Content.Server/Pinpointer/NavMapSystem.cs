@@ -301,22 +301,40 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             if (category == NavMapChunkType.Invalid)
                 continue;
 
-            var directions = (int)airtight.AirBlockedDirection;
-            tileData |= directions << (int) category;
+            var directions = (int) airtight.AirBlockedDirection;
+            // Category values are bit offsets; keep only the four direction bits
+            // before shifting to avoid sign/extra-bit contamination.
+            tileData |= (directions & AllDirMask) << (int) category;
         }
 
+        // Pirate: Start - New Monitor: also mask Window bits under airlocks
         // Remove walls that intersect with doors (unless they can both physically fit on the same tile)
         // TODO NAVMAP why can this even happen?
         // Is this for blast-doors or something?
 
-        // Shift airlock bits over to the wall bits
-        var shiftedAirlockBits = (tileData & AirlockMask) >> ((int) NavMapChunkType.Airlock - (int) NavMapChunkType.Wall);
-
-        // And then mask door bits
-        tileData &= ~shiftedAirlockBits;
+        var shiftedAirlockToWall = (tileData & AirlockMask) >> ((int) NavMapChunkType.Airlock - (int) NavMapChunkType.Wall);
+        var shiftedAirlockToWindow = (tileData & AirlockMask) >> ((int) NavMapChunkType.Airlock - (int) NavMapChunkType.Window);
+        tileData &= ~shiftedAirlockToWall;
+        tileData &= ~shiftedAirlockToWindow;
+        // Pirate: End
 
         return (tileData, chunk);
     }
+
+    // # Pirate Start - New Monitor: force-rebuild navmap for Window category
+    /// <summary>
+    /// Ensures a grid has a fully populated <see cref="NavMapComponent"/> (walls, windows, floors).
+    /// Always rebuilds so category layout changes (e.g. windows) apply immediately.
+    /// </summary>
+    public void EnsureNavMap(EntityUid gridUid, MapGridComponent? mapGrid = null)
+    {
+        if (!Resolve(gridUid, ref mapGrid))
+            return;
+
+        var navMap = EnsureComp<NavMapComponent>(gridUid);
+        RefreshGrid(gridUid, navMap, mapGrid);
+    }
+    // # Pirate End
 
     private bool PruneEmpty(Entity<NavMapComponent> entity, NavMapChunk chunk)
     {

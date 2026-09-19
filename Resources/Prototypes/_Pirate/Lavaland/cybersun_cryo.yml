@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: CryogenicSleepUnit
+  id: CryogenicSleepUnitCybersun
+  suffix: Cybersun
+  components:
+  - type: CryostorageRadioAnnouncement
+    channel: Cybersun
+    message: cybersun-cryo-announcement
+    senderName: cybersun-announcement-sender
+  - type: TelecomExempt
+  - type: AccessReader
+    breakOnAccessBreaker: false
+    access: [["SyndicateAgent"]]
+    examinationText: access-reader-examination-functionality-restricted

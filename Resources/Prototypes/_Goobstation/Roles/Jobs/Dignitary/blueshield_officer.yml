@@ -67,6 +67,13 @@
   - Hydroponics
   - Cargo
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipSidearmsAdvanced
+    - SkillChipFieldMedicine
+  # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant, BluespaceLifelineImplant ] # Go big, or go home.
   - !type:AddComponentSpecial

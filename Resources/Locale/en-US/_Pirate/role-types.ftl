@@ -5,3 +5,6 @@ ghost-role-information-rules-cybersun = You are part of [color={role-type-cybers
     You must [bold]work with your team[/bold] and follow reasonable directions from your team leaders.
     You don't remember any of your previous life, or anything you learned as a ghost.
     You may remember general game knowledge, but not details such as the name or appearance of your previous character.
+
+roles-antag-cybersun-name = { role-type-cybersun-name }
+roles-antag-cybersun-objective = Work with your team and follow reasonable directions from your team leaders.

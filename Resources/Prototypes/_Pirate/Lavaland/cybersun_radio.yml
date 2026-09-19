@@ -21,17 +21,33 @@
   parent: SyndicateFootsoldierGear
   equipment:
     ears: ClothingHeadsetAltSyndicateCybersun
+    id: SyndiPDALavalandSoldier
 
 - type: startingGear
   id: LavalandSyndicateFootsoldierTeamLeaderGear
   parent: SyndicateFootsoldierTeamLeaderGear
   equipment:
     ears: ClothingHeadsetAltSyndicateCybersun
+    id: SyndiPDALavalandTeamLeader
+
+- type: startingGear
+  id: LavalandSyndicateMarshalGear
+  parent: LavalandSyndicateFootsoldierGear
+  equipment:
+    outerClothing: ClothingOuterWinterSyndieCapArmored
+    id: SyndiPDALavalandMarshal
+    pocket1: WeaponRevolverPythonAP
+    pocket2: SpeedLoaderMagnumAP
 
 - type: randomHumanoidSettings
   id: LavalandSyndieSoldier
   parent: SyndieSoldier
   components:
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipSyndieSoldier
+    - SkillChipFieldMedicine
+    - SkillChipDatabase
   - type: Loadout
     prototypes: [ LavalandSyndicateFootsoldierGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]
@@ -40,6 +56,24 @@
   id: LavalandSyndieSoldierTeamLeader
   parent: SyndieSoldierTeamLeader
   components:
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipSyndieSoldierTeamLeader
+    - SkillChipFieldMedicine
+    - SkillChipDatabase
   - type: Loadout
     prototypes: [ LavalandSyndicateFootsoldierTeamLeaderGear ]
+    roleLoadout: [ RoleSurvivalSyndicate ]
+
+- type: randomHumanoidSettings
+  id: LavalandSyndieMarshal
+  parent: SyndieSoldier
+  components:
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipSyndieMarshal
+    - SkillChipFieldMedicine
+    - SkillChipDatabase
+  - type: Loadout
+    prototypes: [ LavalandSyndicateMarshalGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]

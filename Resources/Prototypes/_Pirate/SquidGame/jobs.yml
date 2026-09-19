@@ -58,6 +58,10 @@
     #    - Thieving
     #    - Voracious
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipTiderDampener
+    - SkillChipEducation
   - !type:AddComponentSpecial
     components:
     - type: MindShield
@@ -96,6 +100,11 @@
     #    - Foreigner
     #    - ForeignerLight
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipPistol
+    - SkillChipNonLethal
   - !type:AddComponentSpecial
     components:
     - type: MindShield
@@ -137,6 +146,11 @@
     #    - Foreigner
     #    - ForeignerLight
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipPistol
+    - SkillChipNonLethal
   - !type:AddComponentSpecial
     components:
     - type: MindShield
@@ -180,6 +194,11 @@
     #    - Foreigner
     #    - ForeignerLight
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipPistol
+    - SkillChipNonLethal
   - !type:AddComponentSpecial
     components:
     - type: MindShield
@@ -222,6 +241,11 @@
     #    - Foreigner
     #    - ForeignerLight
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipCombatEducation
+    - SkillChipPistol
+    - SkillChipNonLethal
   - !type:AddComponentSpecial
     components:
     - type: MindShield

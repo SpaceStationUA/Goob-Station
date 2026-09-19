@@ -3,14 +3,17 @@
 using System.Numerics;
 using Content.Client.Graphics;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared._Pirate.MalfAI;
+using Content.Shared.CCVar;
+using Content.Shared.Movement.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Shared.Movement.Components; // Shitmed - Starlight Abductors Change
 
 namespace Content.Client.Silicons.StationAi;
 
@@ -25,6 +28,7 @@ public sealed partial class StationAiOverlay : Overlay //goob edit
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -61,6 +65,7 @@ public sealed partial class StationAiOverlay : Overlay //goob edit
         var worldBounds = args.WorldBounds;
 
         var playerEnt = _player.LocalEntity;
+        var aiEnt = playerEnt;
 
         // Shitmed - Starlight Abductors Change Start
         #region Pirate: multiz - calculate camera coverage on the relayed eye's current deck
@@ -103,7 +108,12 @@ public sealed partial class StationAiOverlay : Overlay //goob edit
             {
                 _accumulator = MathF.Max(0f, _accumulator + _updateRate);
                 _visibleTiles.Clear();
-                _entManager.System<StationAiVisionSystem>().GetView((gridUid, broadphase, grid), worldBounds, _visibleTiles);
+                var malfUpgrade = _entManager.TryGetComponent(aiEnt, out MalfAiCameraUpgradeComponent? upgrade)
+                    && upgrade.EnabledEffective;
+                var xrayRange = _cfg.GetCVar(CCVars.MalfAiCameraUpgradeRange);
+                Vector2? xrayOrigin = playerXform == null ? null : xforms.GetWorldPosition(playerXform);
+                _entManager.System<StationAiVisionSystem>().GetView((gridUid, broadphase, grid), worldBounds, _visibleTiles,
+                    xrayCameras: malfUpgrade, xrayRange: xrayRange, xrayOrigin: xrayOrigin);
             }
 
             var gridMatrix = xforms.GetWorldMatrix(gridUid);

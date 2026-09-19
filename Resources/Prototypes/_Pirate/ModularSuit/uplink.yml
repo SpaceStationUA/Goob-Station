@@ -143,8 +143,8 @@
   id: UplinEnergyShieldSuitModuleNukeOps
   name: uplink-syndie-energy-shield-module-name
   description: uplink-syndie-energy-shield-module-desc
-  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: energy_shield }
-  productEntity: EnergyShieldSuitModule
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: energy_shield_syndie }
+  productEntity: EnergyShieldSyndicateSuitModule
   categories:
   - UplinkWearables
   cost:
@@ -159,7 +159,7 @@
   id: UplinkEnergyShieldModuleBundle
   name: uplink-energy-shield-module-bundle-name
   description: uplink-energy-shield-module-bundle-desc
-  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: energy_shield }
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: energy_shield_syndie }
   productEntity: ClothingBackpackDuffelEnergyShieldModuleBundle
   cost:
     Telecrystal: 32

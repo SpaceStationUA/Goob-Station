@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+- type: entity
+  parent: ClothingShoesBootsCombat
+  id: ClothingShoesBootsCombatInsulated
+  name: insulated combat boots
+  description: High speed, low drag combat boots, now with an added layer of insulation.
+  components:
+  - type: TemperatureProtection
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.25

@@ -12,6 +12,9 @@
   id: BloodCult
   parent: BaseGameRule
   components:
+  - type: AntagPlayerEffects
+    packages:
+    - BloodCultSkills
   - type: GameRule
     minPlayers: 20
     chaosScore: 1000

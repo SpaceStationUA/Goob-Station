@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/49d2f1f3c9b5a59e8a8989c9d616e383c02c1cff",
+  "copyright": "Baystation12 contributors; 2021 industrial hardsuit redesign by AzlanOnPC / SomeAngryMiner and Pawn / SUPERBOREDGUY; gloves by InfraRedBaron; PR #30821: https://github.com/Baystation12/Baystation12/pull/30821. Source: https://github.com/Baystation12/Baystation12/tree/2cf874d0176ed5b06bed870177ea80950c7bbd69 (engineering_rig, engineering_rig_sealed). Feroxi, Reptilian, and Vulpkanin adaptations for Lanos Station (2026); existing Feroxi helmet conversion credited to YERO and RedTerror; Vulpkanin helmet profile by YERO.",
   "size": {
     "x": 32,
     "y": 32
@@ -22,6 +22,14 @@
       "directions": 4
     },
     {
+      "name": "equipped-OUTERCLOTHING-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-OUTERCLOTHING-reptilian",
+      "directions": 4
+    },
+    {
       "name": "equipped-OUTERCLOTHING-vox",
       "directions": 4
     },
@@ -30,11 +38,19 @@
       "directions": 4
     },
     {
-      "name": "equipped-OUTERCLOTHING-reptilian",
+      "name": "equipped-OUTERCLOTHING-feroxi",
       "directions": 4
     },
     {
-      "name": "sealed-equipped-OUTERCLOTHING-reptilian",
+      "name": "sealed-equipped-OUTERCLOTHING-feroxi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-OUTERCLOTHING-vulpkanin",
       "directions": 4
     }
   ]

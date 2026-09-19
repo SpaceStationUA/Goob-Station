@@ -91,6 +91,16 @@
   - GlassesJamjar
   - GlassesJensen
   - CheapSunglasses # Goobstation
+  # begin starcup #983: tinted / rimless glasses
+  - RimlessGlasses
+  - RimlessGlassesBlue
+  - RimlessGlassesPink
+  - RimlessGlassesRed
+  - TintedGlasses
+  - TintedGlassesBlue
+  - TintedGlassesPink
+  - TintedGlassesRed
+  # end starcup
 
 - type: loadoutGroup
   id: Animals  # Goobstation
@@ -323,6 +333,7 @@
   - CommonMessenger # Frontier
 
 - type: loadoutGroup
+  # Pirate: starcup made PassengerNeck parent NeckFashionable+Cloaks; our fork uses PiratePassengerNeck instead
   id: PassengerNeck
   name: loadout-group-passenger-neck
   minLimit: 0
@@ -359,6 +370,11 @@
   - BartenderHead
   - BartenderBowler
   - SodaJerkCap # Pirate - DeltaV frozen treats port
+  # begin starcup additions
+  - BrownFlatCapFancy
+  - WhiteFlatCapFancy
+  - BlueFlatCapFancy
+  # end starcup
 
 - type: loadoutGroup
   id: BartenderJumpsuit
@@ -701,6 +717,12 @@
   - MimeHead
   - MimeFrenchBeret
   - MimeCap
+  # begin starcup additions
+  - BlackBeretArtist
+  - RedBeretArtist
+  - BlackEarmuffs
+  - BlackHijab
+  # end starcup additions
 
 - type: loadoutGroup
   id: MimeMask
@@ -709,6 +731,7 @@
   - MimeMask
   - MimeMaskSad
   - MimeMaskScared
+  - KitsuneMask # starcup #983
 
 - type: loadoutGroup
   id: MimeJumpsuit
@@ -885,6 +908,12 @@
   loadouts:
   - CargoTechnicianHead
   - CargoTechnicianHeadMail # Goob/DeltaV - Mail # fixmail
+  # begin starcup
+  - ToqueKhaki
+  - ToqueBlack
+  - ToqueBlackPin
+  - BrownFlatCapFancy
+  # end starcup
 
 - type: loadoutGroup
   id: CargoTechnicianJumpsuit

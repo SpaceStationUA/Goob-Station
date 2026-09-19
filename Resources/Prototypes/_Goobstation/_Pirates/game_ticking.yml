@@ -27,6 +27,12 @@
   parent: BaseGameRule
   id: PiratesSpawn
   components:
+  # Pirate: skill chips start - the scooner ghost roles already carry this chip.
+  - type: AntagPlayerEffects
+    effects:
+    - !type:InstallOrganChip
+      chip: SkillChipPirateScooner
+  # Pirate: skill chips end
   - type: ActivePirateRule
   - type: RuleGrids
   - type: LoadMapRule

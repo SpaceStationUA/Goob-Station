@@ -109,23 +109,6 @@
     - /Audio/_Pirate/Cassette/Lobby/Dropzone.ogg
     - /Audio/_Pirate/Cassette/Hijack/Gatecrashers.ogg
 
-- type: entity
-  parent: RMCCassetteTapeBase
-  id: RMCCassetteTapeBolgarich
-  name: Bolgarich cassette
-  components:
-  - type: Sprite
-    state: cassette_gray
-  - type: Item
-    size: Small
-  - type: CassetteTape
-    songs:
-    - /Audio/_Pirate/Cassette/Lobby/the_fallen_queen.ogg
-    - /Audio/_Pirate/Cassette/Hijack/hiking_in_the_fog.ogg
-    - /Audio/_Pirate/Cassette/Hijack/tango_with_bloodshed.ogg
-    - /Audio/_Pirate/Cassette/Hijack/Destiny_of_Colonists.ogg
-    - /Audio/_Pirate/Cassette/Hijack/GigaXO_we_lose.ogg
-
 # Existing station tracks
 - type: entity
   parent: RMCCassetteTapeBase

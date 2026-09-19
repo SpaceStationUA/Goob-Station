@@ -120,6 +120,25 @@
     sprite: _Pirate/Clothing/Modular/Advanced/control.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Advanced/control.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+      back-reptilian:
+      - state: equipped-BACKPACK-reptilian
+      back-feroxi:
+      - state: equipped-BACKPACK-feroxi
+      back-vulpkanin:
+      - state: equipped-BACKPACK-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      back:
+      - state: sealed-equipped-BACKPACK
+      back-reptilian:
+      - state: sealed-equipped-BACKPACK-reptilian
+      back-feroxi:
+      - state: sealed-equipped-BACKPACK-feroxi
+      back-vulpkanin:
+      - state: sealed-equipped-BACKPACK-vulpkanin
   - type: ContainerFill
     containers:
       suit_core: &core-slot-plasma #<-- &
@@ -159,8 +178,28 @@
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Advanced/helmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.4
+        Radiation: 0.0
+        Caustic: 0.7
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Advanced/helmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+      head-reptilian:
+      - state: equipped-HELMET-reptilian
+      head-vox:
+      - state: equipped-HELMET-vox
+      head-feroxi:
+      - state: equipped-HELMET-feroxi
+      head-vulpkanin:
+      - state: equipped-HELMET-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Advanced/helmet.rsi
@@ -182,6 +221,16 @@
       - state: visor-unshaded-vox
         shader: unshaded
         color: "#cc793d"
+      head-feroxi:
+      - state: sealed-equipped-HELMET-feroxi
+      - state: visor-unshaded-feroxi
+        shader: unshaded
+        color: "#cc793d"
+      head-vulpkanin:
+      - state: sealed-equipped-HELMET-vulpkanin
+      - state: visor-unshaded-vulpkanin
+        shader: unshaded
+        color: "#cc793d"
   - type: PointLight
     color: "#cc793d"
 
@@ -196,6 +245,29 @@
     sprite: _Pirate/Clothing/Modular/Advanced/chestplate.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Advanced/chestplate.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING-reptilian
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-vox
+      outerClothing-feroxi:
+      - state: equipped-OUTERCLOTHING-feroxi
+      outerClothing-vulpkanin:
+      - state: equipped-OUTERCLOTHING-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      outerClothing:
+      - state: sealed-equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: sealed-equipped-OUTERCLOTHING-reptilian
+      outerClothing-vox:
+      - state: sealed-equipped-OUTERCLOTHING-vox
+      outerClothing-feroxi:
+      - state: sealed-equipped-OUTERCLOTHING-feroxi
+      outerClothing-vulpkanin:
+      - state: sealed-equipped-OUTERCLOTHING-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Advanced/chestplate.rsi
@@ -211,6 +283,19 @@
         Caustic: 0.7
   - type: ExplosionResistance
     damageCoefficient: 0.2
+  - type: ClothingGrantComponent
+    component:
+    - type: SupermatterImmune
+    - type: EventHorizonIgnore
+      horizonWhitelist:
+        tags:
+        - Tesla
+    - type: ContainmentFieldIgnore
+  - type: DamageOnShootProtection
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 8
 
 - type: entity
   parent: ClothingModularGauntletsBase
@@ -223,6 +308,25 @@
     sprite: _Pirate/Clothing/Modular/Advanced/gauntlets.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Advanced/gauntlets.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+      gloves-reptilian:
+      - state: equipped-HAND-reptilian
+      gloves-feroxi:
+      - state: equipped-HAND-feroxi
+      gloves-vulpkanin:
+      - state: equipped-HAND-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      gloves:
+      - state: sealed-equipped-HAND
+      gloves-reptilian:
+      - state: sealed-equipped-HAND-reptilian
+      gloves-feroxi:
+      - state: sealed-equipped-HAND-feroxi
+      gloves-vulpkanin:
+      - state: sealed-equipped-HAND-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Advanced/gauntlets.rsi
@@ -240,6 +344,25 @@
     sprite: _Pirate/Clothing/Modular/Advanced/boots.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Advanced/boots.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+      shoes-reptilian:
+      - state: equipped-FEET-reptilian
+      shoes-feroxi:
+      - state: equipped-FEET-feroxi
+      shoes-vulpkanin:
+      - state: equipped-FEET-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      shoes:
+      - state: sealed-equipped-FEET
+      shoes-reptilian:
+      - state: sealed-equipped-FEET-reptilian
+      shoes-feroxi:
+      - state: sealed-equipped-FEET-feroxi
+      shoes-vulpkanin:
+      - state: sealed-equipped-FEET-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Advanced/boots.rsi
@@ -564,6 +687,25 @@
     sprite: _Pirate/Clothing/Modular/Atmospheric/control.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Atmospheric/control.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+      back-reptilian:
+      - state: equipped-BACKPACK-reptilian
+      back-feroxi:
+      - state: equipped-BACKPACK-feroxi
+      back-vulpkanin:
+      - state: equipped-BACKPACK-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      back:
+      - state: sealed-equipped-BACKPACK
+      back-reptilian:
+      - state: sealed-equipped-BACKPACK-reptilian
+      back-feroxi:
+      - state: sealed-equipped-BACKPACK-feroxi
+      back-vulpkanin:
+      - state: sealed-equipped-BACKPACK-vulpkanin
   - type: ContainerFill
     containers:
       suit_core: *core-slot
@@ -608,8 +750,27 @@
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Atmospheric/helmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.8
+        Radiation: 0.15
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Atmospheric/helmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+      head-reptilian:
+      - state: equipped-HELMET-reptilian
+      head-vox:
+      - state: equipped-HELMET-vox
+      head-feroxi:
+      - state: equipped-HELMET-feroxi
+      head-vulpkanin:
+      - state: equipped-HELMET-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Atmospheric/helmet.rsi
@@ -631,6 +792,16 @@
       - state: visor-unshaded-vox
         shader: unshaded
         color: "#79f8e6"
+      head-feroxi:
+      - state: sealed-equipped-HELMET-feroxi
+      - state: visor-unshaded-feroxi
+        shader: unshaded
+        color: "#79f8e6"
+      head-vulpkanin:
+      - state: sealed-equipped-HELMET-vulpkanin
+      - state: visor-unshaded-vulpkanin
+        shader: unshaded
+        color: "#79f8e6"
   - type: PointLight
     color: "#79f8e6"
 
@@ -645,6 +816,29 @@
     sprite: _Pirate/Clothing/Modular/Atmospheric/chestplate.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Atmospheric/chestplate.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING-reptilian
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-vox
+      outerClothing-feroxi:
+      - state: equipped-OUTERCLOTHING-feroxi
+      outerClothing-vulpkanin:
+      - state: equipped-OUTERCLOTHING-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      outerClothing:
+      - state: sealed-equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: sealed-equipped-OUTERCLOTHING-reptilian
+      outerClothing-vox:
+      - state: sealed-equipped-OUTERCLOTHING-vox
+      outerClothing-feroxi:
+      - state: sealed-equipped-OUTERCLOTHING-feroxi
+      outerClothing-vulpkanin:
+      - state: sealed-equipped-OUTERCLOTHING-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Atmospheric/chestplate.rsi
@@ -656,7 +850,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.8
-        Radiation: 0.5
+        Radiation: 0.15
   - type: ExplosionResistance
     damageCoefficient: 0.5
 
@@ -671,6 +865,25 @@
     sprite: _Pirate/Clothing/Modular/Atmospheric/gauntlets.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Atmospheric/gauntlets.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+      gloves-reptilian:
+      - state: equipped-HAND-reptilian
+      gloves-feroxi:
+      - state: equipped-HAND-feroxi
+      gloves-vulpkanin:
+      - state: equipped-HAND-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      gloves:
+      - state: sealed-equipped-HAND
+      gloves-reptilian:
+      - state: sealed-equipped-HAND-reptilian
+      gloves-feroxi:
+      - state: sealed-equipped-HAND-feroxi
+      gloves-vulpkanin:
+      - state: sealed-equipped-HAND-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Atmospheric/gauntlets.rsi
@@ -688,6 +901,29 @@
     sprite: _Pirate/Clothing/Modular/Atmospheric/boots.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Atmospheric/boots.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+      shoes-reptilian:
+      - state: equipped-FEET-reptilian
+      shoes-vox:
+      - state: equipped-FEET-vox
+      shoes-feroxi:
+      - state: equipped-FEET-feroxi
+      shoes-vulpkanin:
+      - state: equipped-FEET-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      shoes:
+      - state: sealed-equipped-FEET
+      shoes-reptilian:
+      - state: sealed-equipped-FEET-reptilian
+      shoes-vox:
+      - state: sealed-equipped-FEET-vox
+      shoes-feroxi:
+      - state: sealed-equipped-FEET-feroxi
+      shoes-vulpkanin:
+      - state: sealed-equipped-FEET-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Atmospheric/boots.rsi
@@ -1592,6 +1828,25 @@
     sprite: _Pirate/Clothing/Modular/Engineering/control.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Engineering/control.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+      back-reptilian:
+      - state: equipped-BACKPACK-reptilian
+      back-feroxi:
+      - state: equipped-BACKPACK-feroxi
+      back-vulpkanin:
+      - state: equipped-BACKPACK-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      back:
+      - state: sealed-equipped-BACKPACK
+      back-reptilian:
+      - state: sealed-equipped-BACKPACK-reptilian
+      back-feroxi:
+      - state: sealed-equipped-BACKPACK-feroxi
+      back-vulpkanin:
+      - state: sealed-equipped-BACKPACK-vulpkanin
   - type: ContainerFill
     containers:
       suit_core: *core-slot
@@ -1609,6 +1864,8 @@
         - type: TemperatureProtection
           heatingCoefficient: 0.1
           coolingCoefficient: 0.1
+        - type: FireProtection
+          reduction: 0.2
       outerClothing:
         - type: PressureProtection
           highPressureMultiplier: 0.04
@@ -1616,9 +1873,11 @@
         - type: TemperatureProtection
           heatingCoefficient: 0.01
           coolingCoefficient: 0.01
+        - type: FireProtection
+          reduction: 0.75
   - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
+    walkModifier: 0.85
+    sprintModifier: 0.85
 
 - type: entity
   parent: ClothingModularHelmetBase
@@ -1629,8 +1888,29 @@
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Engineering/helmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.90
+        Shock: 0.5
+        Caustic: 0.7
+        Radiation: 0.05
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Engineering/helmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+      head-reptilian:
+      - state: equipped-HELMET-reptilian
+      head-vox:
+      - state: equipped-HELMET-vox
+      head-feroxi:
+      - state: equipped-HELMET-feroxi
+      head-vulpkanin:
+      - state: equipped-HELMET-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Engineering/helmet.rsi
@@ -1652,6 +1932,16 @@
       - state: visor-unshaded-vox
         shader: unshaded
         color: "#79f8e6"
+      head-feroxi:
+      - state: sealed-equipped-HELMET-feroxi
+      - state: visor-unshaded-feroxi
+        shader: unshaded
+        color: "#79f8e6"
+      head-vulpkanin:
+      - state: sealed-equipped-HELMET-vulpkanin
+      - state: visor-unshaded-vulpkanin
+        shader: unshaded
+        color: "#79f8e6"
   - type: PointLight
     color: "#79f8e6"
 
@@ -1666,6 +1956,29 @@
     sprite: _Pirate/Clothing/Modular/Engineering/chestplate.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Engineering/chestplate.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING-reptilian
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-vox
+      outerClothing-feroxi:
+      - state: equipped-OUTERCLOTHING-feroxi
+      outerClothing-vulpkanin:
+      - state: equipped-OUTERCLOTHING-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      outerClothing:
+      - state: sealed-equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: sealed-equipped-OUTERCLOTHING-reptilian
+      outerClothing-vox:
+      - state: sealed-equipped-OUTERCLOTHING-vox
+      outerClothing-feroxi:
+      - state: sealed-equipped-OUTERCLOTHING-feroxi
+      outerClothing-vulpkanin:
+      - state: sealed-equipped-OUTERCLOTHING-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Engineering/chestplate.rsi
@@ -1676,11 +1989,17 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Shock: 0.8
+        Heat: 0.90
+        Shock: 0.5
         Caustic: 0.5
-        Radiation: 0.2
+        Radiation: 0.05
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: DamageOnShootProtection
+    slots: OUTERCLOTHING
+    damageProtection:
+      flatReductions:
+        Blunt: 5
 
 - type: entity
   parent: ClothingModularGauntletsBase
@@ -1693,6 +2012,25 @@
     sprite: _Pirate/Clothing/Modular/Engineering/gauntlets.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Engineering/gauntlets.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+      gloves-reptilian:
+      - state: equipped-HAND-reptilian
+      gloves-feroxi:
+      - state: equipped-HAND-feroxi
+      gloves-vulpkanin:
+      - state: equipped-HAND-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      gloves:
+      - state: sealed-equipped-HAND
+      gloves-reptilian:
+      - state: sealed-equipped-HAND-reptilian
+      gloves-feroxi:
+      - state: sealed-equipped-HAND-feroxi
+      gloves-vulpkanin:
+      - state: sealed-equipped-HAND-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Engineering/gauntlets.rsi
@@ -1710,6 +2048,25 @@
     sprite: _Pirate/Clothing/Modular/Engineering/boots.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Modular/Engineering/boots.rsi
+    clothingVisuals:
+      shoes:
+      - state: equipped-FEET
+      shoes-reptilian:
+      - state: equipped-FEET-reptilian
+      shoes-feroxi:
+      - state: equipped-FEET-feroxi
+      shoes-vulpkanin:
+      - state: equipped-FEET-vulpkanin
+  - type: ToggleableVisuals
+    clothingVisuals:
+      shoes:
+      - state: sealed-equipped-FEET
+      shoes-reptilian:
+      - state: sealed-equipped-FEET-reptilian
+      shoes-feroxi:
+      - state: sealed-equipped-FEET-feroxi
+      shoes-vulpkanin:
+      - state: sealed-equipped-FEET-vulpkanin
   - type: ModularSuitPart
     verbIcon:
       sprite: _Pirate/Clothing/Modular/Engineering/boots.rsi

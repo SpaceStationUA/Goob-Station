@@ -120,19 +120,16 @@ public sealed partial class NavMapSystem
                 // Extract the tile data
                 if (!component.Chunks.TryGetValue(chunkOrigin, out var chunk))
                     continue;
-
                 var flag = chunk.TileData[idx];
 
-                // If the current tile is entirely occupied, continue
+                // Floor is required, and walls, windows, and airlocks fully block a tile.
                 if ((FloorMask & flag) == 0)
                     continue;
 
-                if ((WallMask & flag) == WallMask)
+                if ((WallMask & flag) == WallMask ||
+                    (WindowMask & flag) == WindowMask ||
+                    (AirlockMask & flag) == AirlockMask)
                     continue;
-
-                if ((AirlockMask & flag) == AirlockMask)
-                    continue;
-
                 // Otherwise the tile can be added to this region
                 visitedTiles.Add(current);
                 visitedChunks.Add(chunkOrigin);
@@ -174,14 +171,14 @@ public sealed partial class NavMapSystem
         if ((FloorMask & flag) == 0)
             return false;
 
-        var directionMask = 1 << (int)direction;
-        var wallMask = (int)direction << (int)NavMapChunkType.Wall;
-        var airlockMask = (int)direction << (int)NavMapChunkType.Airlock;
+        var directionMask = (int) direction;
+        var wallMask = directionMask << (int) NavMapChunkType.Wall;
+        var windowMask = directionMask << (int) NavMapChunkType.Window;
+        var airlockMask = directionMask << (int) NavMapChunkType.Airlock;
 
-        if ((wallMask & flag) > 0)
-            return false;
-
-        if ((airlockMask & flag) > 0)
+        if ((wallMask & flag) != 0 ||
+            (windowMask & flag) != 0 ||
+            (airlockMask & flag) != 0)
             return false;
 
         return true;

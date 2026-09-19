@@ -4,6 +4,7 @@ using System.Globalization;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Ghost;
+using Content.Server._Pirate.Announcements; // Pirate: cybersun cryo announce
 using Content.Server.Hands.Systems;
 using Content.Server.Inventory;
 using Content.Server.Popups;
@@ -221,6 +222,13 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         Dirty(ent, comp);
         UpdateCryostorageUIState((cryostorageEnt.Value, cryostorageComponent));
         AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageEnt.Value)}");
+
+        #region Pirate: cybersun cryo announce
+        var announceAttempt = new CryostorageAnnounceAttemptEvent(ent.Owner, name);
+        RaiseLocalEvent(cryostorageEnt.Value, ref announceAttempt);
+        if (announceAttempt.Handled)
+            return;
+        #endregion
 
         if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
             return;

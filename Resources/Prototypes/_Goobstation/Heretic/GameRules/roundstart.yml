@@ -4,6 +4,11 @@
   parent: BaseGameRule
   id: Heretic
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: HereticRule
   - type: GameRule
     minPlayers: 15
@@ -35,6 +40,11 @@
   parent: BaseGameRule
   id: CalmHeretic
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: HereticRule
   - type: GameRule
     minPlayers: 15

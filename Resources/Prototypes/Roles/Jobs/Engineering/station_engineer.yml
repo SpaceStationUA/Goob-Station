@@ -29,6 +29,13 @@
   #extendedAccess:
   #- Atmospherics
   special: # Goobstation
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipDatabase
+    - SkillChipTool
+  # Pirate: skill chips end
   - !type:AddComponentSpecial
     components:
     - type: EngineeringStaff

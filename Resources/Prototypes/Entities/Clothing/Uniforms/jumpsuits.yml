@@ -875,7 +875,7 @@
   - type: Clothing
     sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Syndicate/operative.rsi # Goob
   - type: StaticPrice
-    price: 500
+    price: 50 # Pirate: syndrobe - was 500, matches every other jumpsuit
 
 - type: entity
   parent: ClothingUniformBase

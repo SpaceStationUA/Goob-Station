@@ -19,13 +19,16 @@ public sealed partial class TrayScannerComponent : Component
     [DataField] // Pirate: meson vision
     public bool ToggleOnActivate = true; // Pirate: meson vision
 
+    [DataField] // Pirate: meson vision
+    public bool RequireWorn; // Pirate: meson vision
+
     /// <summary>
     ///     Radius in which the scanner will reveal entities. Centered on the <see cref="LastLocation"/>.
     /// </summary>
     [DataField]
     public float Range = 4f;
 
-    // Pirate: meson vision - ported from Moffstation PR #1688 (funky-station/forky-station#102).
+    // Pirate: meson vision
 
     #region Pirate: meson vision
     [DataField]

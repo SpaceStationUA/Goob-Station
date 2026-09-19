@@ -16,3 +16,6 @@ guide-entry-extraction = Викрадення
 guide-entry-ransom = Викуп
 guide-entry-murder = Вбивства
 guide-entry-special-objectives = Спеціальні завдання
+
+## Навички
+guidebook-pirate-brain-chips = Мозкові чипи

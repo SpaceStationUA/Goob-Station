@@ -1,0 +1,52 @@
+- type: entity
+  parent: ClothingNeckColorableCollar
+  id: ClothingNeckColorableCollarBlack
+  name: black choker
+  components:
+  - type: Clothing
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        color: "#373737"
+  - type: Sprite
+    color: "#373737"
+
+- type: entity
+  parent: ClothingNeckColorableCollar
+  id: ClothingNeckColorableCollarPink
+  name: pink choker
+  components:
+  - type: Clothing
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        color: "#fc8cb8"
+  - type: Sprite
+    color: "#fc8cb8"
+
+- type: entity
+  parent: ClothingNeckColorableCollar
+  id: ClothingNeckColorableCollarBlue
+  name: blue choker
+  components:
+  - type: Clothing
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        color: "#352E69"
+  - type: Sprite
+    color: "#352E69"
+
+- type: entity
+  parent: ClothingNeckColorableCollar
+  id: ClothingNeckColorableCollarBloodred
+  name: bloodred choker
+  description: A simple choker. This one is a favorite among fashion-forward Gorlex Marauders.
+  components:
+  - type: Clothing
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+        color: "#EA251A"
+  - type: Sprite
+    color: "#EA251A"

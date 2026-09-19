@@ -631,22 +631,39 @@
   name: radiator
   description: Transfers heat between the pipe and its surroundings.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers # Pirate: heat exchange pipes
   components:
   - type: Rotatable
   - type: Transform
     noRot: false
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    # Pirate: heat exchange pipes
+    drawdepth: ThinPipeAlt1
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: heStraight
       map: [ "enum.SubfloorLayers.FirstLayer" ]
+  #region Pirate: heat exchange pipes
   - type: AtmosPipeLayers
+    numberOfPipeLayers: 3
     spriteRsiPaths: {}
-    numberOfPipeLayers: 1
+    spriteLayersRsiPaths:
+      enum.PipeVisualLayers.Pipe:
+        Primary: Structures/Piping/Atmospherics/pipe.rsi
+        Secondary: Structures/Piping/Atmospherics/pipe_alt1.rsi
+        Tertiary: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      enum.SubfloorLayers.FirstLayer:
+        Primary: Structures/Piping/Atmospherics/heatexchanger.rsi
+        Secondary: _Pirate/Structures/Piping/Atmospherics/heatexchanger_alt1.rsi
+        Tertiary: _Pirate/Structures/Piping/Atmospherics/heatexchanger_alt2.rsi
+    alternativePrototypes:
+      Primary: HeatExchanger
+      Secondary: HeatExchangerAlt1
+      Tertiary: HeatExchangerAlt2
+  #endregion
   - type: SubFloorHide
     visibleLayers:
     - enum.SubfloorLayers.FirstLayer
@@ -688,6 +705,13 @@
         map: [ "enum.PipeVisualLayers.Pipe" ]
       - state: heBend
         map: [ "enum.SubfloorLayers.FirstLayer" ]
+    #region Pirate: heat exchange pipes
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: HeatExchangerBend
+        Secondary: HeatExchangerBendAlt1
+        Tertiary: HeatExchangerBendAlt2
+    #endregion
     - type: NodeContainer
       nodes:
         inlet:

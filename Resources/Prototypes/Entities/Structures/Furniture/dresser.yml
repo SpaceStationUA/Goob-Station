@@ -203,6 +203,25 @@
       weight: 0.001
     - id: ClothingUniformJumpsuitNanotrasen
       weight: 0.001
+# begin starcup
+    - id: ClothingUniformJumpskirtPinstripeDress
+      weight: 0.03
+    - id: ClothingUniformJumpsuitSuitStriped
+      weight: 0.03
+    - id: ClothingUniformJumpskirtDressSundressWhite
+      weight: 0.01
+    - id: ClothingUniformJumpskirtDressStriped
+      weight: 0.03
+    - id: ClothingUniformJumpsuitBarber
+      weight: 0.02
+    - id: ClothingUniformJumpsuitOliveSweater
+      weight: 0.03
+    - id: ClothingUniformJumpsuitFlannelJeans
+      weight: 0.015
+    - id: ClothingUniformJumpsuitFlannelKhakis
+      weight: 0.015
+# end starcup
+
 
 - type: entityTable
   id: DresserSecondLootEntityTable
@@ -294,6 +313,16 @@
       weight: 0.00001
     - id: OrganHumanKidneys
       weight: 0.00001
+# begin starcup
+    - id: ClothingOuterCoatVictorianRed
+      weight: 0.01
+    - id: ClothingOuterCoatVictorian
+      weight: 0.01
+    - id: ClothingHeadHatBowRed
+      weight: 0.005
+    - id: ClothingHeadHatBowBlack
+      weight: 0.005
+# end starcup
 
 - type: entityTable
   id: DresserThirdLootEntityTable
@@ -395,3 +424,23 @@
       weight: 0.0001
     - id: ClothingHeadHatRichard
       weight: 0.0001
+# begin starcup
+    - id: ClothingUniformJumpskirtDressGothic
+      weight: 0.03
+    - id: ClothingUniformJumpskirtDressFire
+      weight: 0.02
+    - id: ClothingUniformJumpskirtSuitBlueBlazer
+      weight: 0.03
+    - id: ClothingUniformJumpsuitSuitBlueBlazer
+      weight: 0.03
+    - id: ClothingUniformJumpskirtQipao
+      weight: 0.015
+    - id: ClothingUniformJumpskirtQipaoSlim
+      weight: 0.015
+    - id: ClothingUniformJumpsuitLightBlueShirt
+      weight: 0.03
+    - id: ClothingUniformJumpsuitFlannelBlackJeans
+      weight: 0.015
+    - id: ClothingUniformJumpsuitFlannelBlackKhakis
+      weight: 0.015
+# end starcup

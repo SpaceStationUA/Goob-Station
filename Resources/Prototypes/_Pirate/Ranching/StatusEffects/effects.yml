@@ -105,8 +105,8 @@
     effects:
     - !type:Jitter
     - !type:MovementSpeedModifier
-      walkSpeedModifier: 4
-      sprintSpeedModifier: 4
+      walkSpeedModifier: 2.5 # was 4 — still fast, not Quicksilver for a minute
+      sprintSpeedModifier: 2.5
 
 - type: entity
   parent: MobStatusEffectBase

@@ -86,6 +86,10 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
     [DataField]
     public EntProtoId? ProductAction;
 
+    // Pirate: replenish charges instead of creating a duplicate action.
+    [DataField]
+    public int? ProductActionCharges;
+
     /// <summary>
     /// The listing ID of the related upgrade listing. Can be used to link a <see cref="ProductAction"/> to an
     /// upgrade or to use standalone as an upgrade
@@ -185,6 +189,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             Description != listing.Description ||
             ProductEntity != listing.ProductEntity ||
             ProductAction != listing.ProductAction ||
+            ProductActionCharges != listing.ProductActionCharges || // Pirate
             RaiseProductEventOnUser != listing.RaiseProductEventOnUser || // Goobstation
             DisableRefund != listing.DisableRefund || // Goobstation
             ResetRestockOnPurchase != listing.ResetRestockOnPurchase || // Goobstation
@@ -237,6 +242,7 @@ public partial class ListingData : IEquatable<ListingData>, ICloneable
             Priority = Priority,
             ProductEntity = ProductEntity,
             ProductAction = ProductAction,
+            ProductActionCharges = ProductActionCharges, // Pirate
             ProductUpgradeId = ProductUpgradeId,
             ProductActionEntity = ProductActionEntity,
             ProductEvent = ProductEvent,

@@ -23,6 +23,13 @@
   - Research
   - Maintenance
   - Robotics
+  # Pirate: skill chips
+  special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipDatabase
+  # Pirate: skill chips end
 
 - type: startingGear
   id: RoboticistGear

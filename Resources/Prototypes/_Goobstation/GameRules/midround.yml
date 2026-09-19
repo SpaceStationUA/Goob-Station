@@ -113,8 +113,13 @@
   parent: BaseGameRule
   id: TunnelClownMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - ChangelingSkills
+  # Pirate: skill chips end
   - type: StationEvent
-    weight: 4
+    weight: 1.5
     duration: null
     earliestStart: 15
     minimumPlayers: 20
@@ -148,8 +153,13 @@
   parent: BaseGameRule
   id: SingulothKnightsMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: StationEvent
-    weight: 2.5
+    weight: 1
     duration: null
     earliestStart: 45
     minimumPlayers: 50
@@ -185,6 +195,11 @@
   parent: BaseGameRule
   id: DarkLordMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: StationEvent
     weight: 2
     duration: null
@@ -224,6 +239,11 @@
   parent: BaseGameRule
   id: ChosenOneMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: GameRule
     chaosScore: 50
   - type: AntagSpawner
@@ -250,8 +270,13 @@
   parent: BaseGameRule
   id: MimeAssassinMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
+  # Pirate: skill chips end
   - type: StationEvent
-    weight: 4
+    weight: 1.2
     duration: null
     earliestStart: 30
     minimumPlayers: 30
@@ -289,8 +314,13 @@
   parent: BaseGameRule
   id: DarkPriestMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - HereticSkills
+  # Pirate: skill chips end
   - type: StationEvent
-    weight: 3
+    weight: 0.05
     duration: null
     earliestStart: 30
     minimumPlayers: 30
@@ -327,6 +357,11 @@
   parent: BaseGameRule
   id: VoxRaidersMidround
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - TraitorSkills
+  # Pirate: skill chips end
   - type: AntagObjectives
     objectives:
     - EscapeThiefShuttleObjective
@@ -340,7 +375,7 @@
     maxDifficulty: 10
   - type: StationEvent
     earliestStart: 35
-    weight: 2.5
+    weight: 0.9
     minimumPlayers: 50
     duration: 1
     chaos:

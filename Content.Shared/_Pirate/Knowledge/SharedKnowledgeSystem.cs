@@ -87,6 +87,8 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         SubscribeLocalEvent<KnowledgeContainerComponent, TransferredToCloneEvent>(OnCloneTransfer);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
+        InitializeOnWear(); // Pirate: skill chips
+
         LoadKnowledgePrototypes();
     }
 
@@ -179,13 +181,21 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
     private void OnPolymorphed(Entity<KnowledgeHolderComponent> ent, ref PolymorphedEvent args)
     {
-        if (ent.Owner == args.OldEntity)
-            TransferKnowledge(ent.Owner, args.NewEntity);
+        if (ent.Owner != args.OldEntity)
+            return;
+
+        TransferKnowledge(ent.Owner, args.NewEntity);
+        // Pirate: skill chips - let chip modifiers follow the store to its new holder.
+        var moved = new KnowledgeStoreMovedEvent(args.OldEntity, args.NewEntity);
+        RaiseLocalEvent(ref moved);
     }
 
     private void OnCloneTransfer(Entity<KnowledgeContainerComponent> ent, ref TransferredToCloneEvent args)
     {
         TransferKnowledge(ent.Owner, args.Cloned);
+        // Pirate: skill chips - a clone's brain carries no chips, so its store must drop them.
+        var moved = new KnowledgeStoreMovedEvent(ent.Owner, args.Cloned);
+        RaiseLocalEvent(ref moved);
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
@@ -310,6 +320,11 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
                 existing.Comp.LearnedLevel = Math.Max(existing.Comp.LearnedLevel, sourceKnowledge.LearnedLevel);
                 existing.Comp.Experience = Math.Max(existing.Comp.Experience, sourceKnowledge.Experience);
                 MergeEmployerBonus((sourceUid, sourceKnowledge), existing);
+                // Pirate: skill chips - the source entity is about to be deleted, so its modifier
+                // ledger has to move across first or a colliding skill silently loses every
+                // named package and non-chip source it owned.
+                MergeModifierSources((sourceUid, sourceKnowledge), existing);
+                RecalculateTemporaryLevel(existing);
                 Dirty(existing);
                 PredictedQueueDel(sourceUid);
                 continue;
@@ -318,6 +333,11 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
             _containers.Insert(sourceUid, destinationContainer);
             destination.Comp.Knowledge[id] = sourceUid;
         }
+
+        // Pirate: skill chips - permanent competence minima live on the store, not on the
+        // knowledge entities, so they need moving separately or ReplayCompetency cannot rebuild
+        // them after a later profile rebuild.
+        MergeCompetency(source, destination);
 
         source.Comp.Knowledge.Clear();
         DirtyField(source, source.Comp, nameof(KnowledgeContainerComponent.Knowledge));
@@ -717,7 +737,10 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         return total;
     }
 
-    public void EnsureProfileValid(ProtoId<KnowledgeProfilePrototype> parentId, ref KnowledgeProfile profile)
+    public void EnsureProfileValid(
+        ProtoId<KnowledgeProfilePrototype> parentId,
+        ref KnowledgeProfile profile,
+        int pointsBonus = 0)
     {
         var parent = _prototypes.Index<KnowledgeProfilePrototype>(parentId);
         profile.Mastery ??= new Dictionary<EntProtoId, int>();
@@ -730,7 +753,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
                 profile.Mastery.Remove(id);
         }
 
-        while (ProfileCost(profile) > parent.PointsLimit && profile.Mastery.Count > 0)
+        while (ProfileCost(profile) > parent.PointsLimit + pointsBonus && profile.Mastery.Count > 0)
         {
             var remove = profile.Mastery
                 .OrderByDescending(pair => SkillCost(pair.Key, pair.Value) ?? 0)
@@ -740,7 +763,11 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         }
     }
 
-    public void ApplyProfile(EntityUid holder, ProtoId<KnowledgeProfilePrototype> parentId, KnowledgeProfile profile)
+    public void ApplyProfile(
+        EntityUid holder,
+        ProtoId<KnowledgeProfilePrototype> parentId,
+        KnowledgeProfile profile,
+        int pointsBonus = 0)
     {
         var store = EnsureKnowledgeContainer(holder);
         ClearKnowledge(store.Owner);
@@ -748,8 +775,11 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         var parent = _prototypes.Index<KnowledgeProfilePrototype>(parentId);
         ApplyProfile(store, parent.Profile);
 
-        EnsureProfileValid(parentId, ref profile);
-        ApplyProfile(store, profile, parent.PointsLimit);
+        EnsureProfileValid(parentId, ref profile, pointsBonus);
+        ApplyProfile(store, profile, parent.PointsLimit + pointsBonus);
+
+        store.Comp.ProfileApplied = true;
+        Dirty(store);
     }
 
     public void ApplyProfile(Entity<KnowledgeContainerComponent> store, KnowledgeProfile profile)

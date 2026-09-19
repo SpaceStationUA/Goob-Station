@@ -57,4 +57,43 @@
   category: Meta
   components:
     - type: SlimeMorphImmunity
+
+- type: trait
+  id: Unchipped
+  name: trait-unchipped-name
+  description: trait-unchipped-desc
+  category: Meta
+  cost: -3
+  components:
+    - type: Unchipped
+
+- type: trait
+  id: Experienced
+  name: trait-experienced-name
+  description: trait-experienced-desc
+  category: Meta
+  cost: 2
+  conflicts:
+    - ExperiencedAlt
+  components:
+    - type: Knowledgeable
+      bonusPoints: 6
+
+- type: trait
+  id: ExperiencedAlt
+  name: trait-experienced-alt-name
+  description: trait-experienced-alt-desc
+  category: Meta
+  cost: 3
+  conflicts:
+    - Experienced
+  conditions:
+    - !type:HasTraitsCondition
+      traits:
+        - Unchipped
+  components:
+    - type: Knowledgeable
+      bonusPoints: 10
+      requiredTraits:
+        - Unchipped
 #endregion

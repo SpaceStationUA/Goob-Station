@@ -3,6 +3,7 @@ using Content.Pirate.Shared.ModularSuit;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.ModularSuit;
 
@@ -315,7 +316,10 @@ public sealed partial class ModularSuitSystem
         return false;
     }
 
-    public bool TryUseCoreCharge(Entity<ModularSuitComponent?> suit, float amount)
+    public bool TryUseCoreCharge(
+        Entity<ModularSuitComponent?> suit,
+        float amount,
+        bool deferDeactivation = false)
     {
         if (!Resolve(suit, ref suit.Comp) || !float.IsFinite(amount))
             return false;
@@ -345,10 +349,33 @@ public sealed partial class ModularSuitSystem
 
         if (core.Charge <= 0 && suit.Comp.Active)
         {
-            SetActive((suit.Owner, suit.Comp), false);
-            UpdateUiState((suit.Owner, suit.Comp));
+            if (deferDeactivation)
+                Timer.Spawn(0, () => DeactivateIfCoreEmpty(suit.Owner));
+            else
+                DeactivateIfCoreEmpty(suit.Owner);
         }
 
         return true;
+    }
+
+    private void DeactivateIfCoreEmpty(EntityUid suitUid)
+    {
+        if (TerminatingOrDeleted(suitUid) ||
+            !TryComp<ModularSuitComponent>(suitUid, out var suit) ||
+            !suit.Active)
+        {
+            return;
+        }
+
+        var coreContainer = Container.GetContainer(suitUid, CoreContainer);
+        if (coreContainer.ContainedEntities.Count == 0 ||
+            !TryComp<ModularSuitCoreComponent>(coreContainer.ContainedEntities[0], out var core) ||
+            core.Charge > 0)
+        {
+            return;
+        }
+
+        SetActive((suitUid, suit), false);
+        UpdateUiState((suitUid, suit));
     }
 }

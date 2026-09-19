@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Ranch chickens need both wheat/rice (special digestion) and normal botany produce.
+# Default ruminant stomach is exclusive and only accepts Ruminant/Wheat/BananaPeel tags.
+
+- type: entity
+  parent: OrganAnimalRuminantStomach
+  id: OrganChickenRanchStomach
+  name: chicken stomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stomach
+    isSpecialDigestibleExclusive: false
+    specialDigestible:
+      tags:
+      - Ruminant
+      - Wheat
+      - BananaPeel
+
+- type: entity
+  parent: OrganChickenRanchStomach
+  id: OrganChickenRanchStomach2
+  name: chicken stomach 2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Organ
+    slotId: stomach2
+
+- type: body
+  id: AnimalChickenRanch
+  name: chicken
+  root: chest
+  slots:
+    chest:
+      part: ChestAnimal
+      connections:
+      - groin
+      organs:
+        lungs: OrganAnimalLungs
+        heart: OrganAnimalHeart
+    groin:
+      part: GroinAnimal
+      connections:
+      - legs
+      organs:
+        stomach: OrganChickenRanchStomach
+        stomach2: OrganChickenRanchStomach2
+        liver: OrganAnimalLiver
+        kidneys: OrganAnimalKidneys
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal

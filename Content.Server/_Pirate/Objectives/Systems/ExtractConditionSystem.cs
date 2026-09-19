@@ -78,6 +78,10 @@ public sealed class ExtractConditionSystem : EntitySystem
 
         RemCompDeferred<ExtractingComponent>(ent);
 
+        // a fulton that never reached its beacon leaves the item right where it was, so it earns nothing
+        if (!args.Delivered)
+            return;
+
         // complete the objective of the person that extracted it
         if (extracting.Mind is {} mindId && FindObjective(mindId, (ent, ent.Comp)) is {} objective)
             _codeCondition.SetCompleted(objective);

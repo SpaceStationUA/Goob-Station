@@ -23,6 +23,13 @@
   - Janitor
   - Maintenance
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+    - SkillChipJanitor
+    - SkillChipThrowing
+  # Pirate: skill chips end
   - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
     prototype: WeaponRevolverInspector

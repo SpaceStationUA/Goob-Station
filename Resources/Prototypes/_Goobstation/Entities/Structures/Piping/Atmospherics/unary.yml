@@ -1,52 +1,42 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+#region Pirate: heat exchange pipes
 - type: entity
-  parent: HeatExchanger
+  parent: PirateHeatExchangePipeBase
   id: HeatExchangerInline
   name: inline radiator
-  description: Transfers heat between the pipe and its surroundings. Doesn't need gas flow.
+  suffix: Straight
   components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: heInlineStraight
-      map: [ "enum.SubfloorLayers.FirstLayer" ]
-  - type: HeatExchanger
-    inlet: pipe
-    outlet: pipe
-  - type: NodeContainer
-    nodes:
-      pipe:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: Longitudinal
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: HeatExchangerInline
+      Secondary: HeatExchangerInlineAlt1
+      Tertiary: HeatExchangerInlineAlt2
   - type: Construction
-    graph: GasBinary
-    node: inlineradiator
+    graph: PirateHeatExchangePipe
+    node: heStraight
 
 - type: entity
   parent: HeatExchangerInline
   id: HeatExchangerInlineBend
+  suffix: Bend
   components:
-    - type: Sprite
-      layers:
-      - sprite: Structures/Piping/Atmospherics/pipe.rsi
-        state: pipeBend
-        map: [ "enum.PipeVisualLayers.Pipe" ]
-      - state: heInlineBend
-        map: [ "enum.SubfloorLayers.FirstLayer" ]
-    - type: HeatExchanger
-      inlet: pipe
-      outlet: pipe
-    - type: NodeContainer
-      nodes:
-        pipe:
-          !type:PipeNode
-          nodeGroupID: Pipe
-          pipeDirection: SWBend
-    - type: Construction
-      graph: GasBinary
-      node: bendinlineradiator
+  - type: Sprite
+    layers:
+    - state: pipeBend
+      map: [ "enum.PipeVisualLayers.Pipe", "enum.SubfloorLayers.FirstLayer" ]
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:HeatExchangePipeNode
+        nodeGroupID: Pipe
+        pipeDirection: SWBend
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: HeatExchangerInlineBend
+      Secondary: HeatExchangerInlineBendAlt1
+      Tertiary: HeatExchangerInlineBendAlt2
+  - type: Construction
+    graph: PirateHeatExchangePipe
+    node: heBend
+#endregion

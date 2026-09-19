@@ -139,9 +139,25 @@ public sealed class PryingSystem : EntitySystem
         return !canev.Cancelled;
     }
 
+    #region Pirate: force pry sound
+    /// <summary>Returns whether the target requires forced prying.</summary>
+    public bool RequiresForceToPry(EntityUid target, EntityUid user)
+    {
+        var ev = new BeforePryEvent(user, PryPowered: false, Force: false, StrongPry: true);
+        RaiseLocalEvent(target, ref ev);
+
+        return ev.Cancelled;
+    }
+    #endregion
+
     private bool StartPry(EntityUid target, EntityUid user, EntityUid? tool, float toolModifier, [NotNullWhen(true)] out DoAfterId? id)
     {
         var instaPry = TryComp(tool, out PryingComponent? prying) && prying.InstaPry; // Goobstation
+
+        #region Pirate: force pry sound
+        if (prying?.ForcePrySound != null && RequiresForceToPry(target, user))
+            _audioSystem.PlayPredicted(prying.ForcePrySound, target, user);
+        #endregion
 
         var modEv = new GetPryTimeModifierEvent(user, instaPry); // Goob edit
 

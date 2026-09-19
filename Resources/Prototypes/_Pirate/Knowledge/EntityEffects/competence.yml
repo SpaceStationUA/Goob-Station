@@ -1,0 +1,107 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entityEffect
+  id: TraitorSkills
+  effects:
+  - !type:GrantSkills
+    skills:
+      MeleeKnowledge: 50
+      ShootingKnowledge: 50
+      WeaponsKnowledge: 50
+      ThrowingKnowledge: 25
+      FirstAidKnowledge: 25
+
+- type: entityEffect
+  id: HereticSkills
+  effects:
+  - !type:GrantSkills
+    skills:
+      KnowledgeWeaponsShortBlade: 50
+      MeleeKnowledge: 50
+      WeaponsKnowledge: 50
+      ThrowingKnowledge: 25
+      FirstAidKnowledge: 25
+      SurgeryKnowledge: 25
+      MagicalLiteracyKnowledge: 88
+
+- type: entityEffect
+  id: ChangelingSkills
+  effects:
+  - !type:GrantSkills
+    skills:
+      MeleeKnowledge: 50
+      WeaponsKnowledge: 50
+      ThrowingKnowledge: 25
+      FirstAidKnowledge: 25
+
+- type: entityEffect
+  id: WizardSkills
+  effects:
+  - !type:GrantSkills
+    skills:
+      MeleeKnowledge: 88
+      ShootingKnowledge: 88
+      KnowledgeWeaponsPolearm: 88
+      KnowledgeWeaponsLongBlade: 88
+      KnowledgeWeaponsShortBlade: 88
+      KnowledgeWeaponsBludgeon: 88
+      WeaponsKnowledge: 88
+      ThrowingKnowledge: 88
+      FirstAidKnowledge: 88
+      LiteracyKnowledge: 88
+      MagicalLiteracyKnowledge: 88
+
+- type: entityEffect
+  id: CosmicCultSkills
+  effects:
+  - !type:GrantSkills
+    skills:
+      KnowledgeWeaponsLongBlade: 60
+      KnowledgeWeaponsTool: 60
+
+- type: entityEffect
+  id: BloodCultSkills
+  effects:
+  - !type:GrantSkills
+    skills:
+      KnowledgeWeaponsShortBlade: 50
+      KnowledgeWeaponsLongBlade: 50
+      MeleeKnowledge: 50
+      WeaponsKnowledge: 50
+      MagicalLiteracyKnowledge: 88
+
+- type: entityEffect
+  id: GangSkills
+  effects:
+  - !type:GrantSkills
+    skills:
+      MeleeKnowledge: 25
+      ShootingKnowledge: 25
+      WeaponsKnowledge: 25
+      ThrowingKnowledge: 25
+      FirstAidKnowledge: 25
+
+- type: entityEffect
+  id: GhoulSkills
+  effects:
+  - !type:GrantTemporarySkills
+    source: GhoulSkills
+    skills:
+      KnowledgeWeaponsPolearm: 50
+      KnowledgeWeaponsLongBlade: 50
+      KnowledgeWeaponsShortBlade: 50
+      MeleeKnowledge: 50
+      WeaponsKnowledge: 50
+      ThrowingKnowledge: 25
+      FirstAidKnowledge: 25
+      SurgeryKnowledge: 25
+      MagicalLiteracyKnowledge: 88
+  - !type:GrantSkills
+    skills:
+      LiteracyKnowledge: 100
+
+- type: entityEffect
+  id: GhoulSkillsRemove
+  effects:
+  - !type:RemoveTemporarySkills
+    source: GhoulSkills

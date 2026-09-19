@@ -12,7 +12,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Goobstation.Shared.Teleportation.Systems;
 
-public partial class SharedRandomTeleportSystem
+public sealed partial class SharedRandomTeleportSystem
 {
     [Dependency] private readonly SharedStationSystem _stationSystem = default!;
 
@@ -21,7 +21,7 @@ public partial class SharedRandomTeleportSystem
     /// </summary>
     public Vector2? RandomTeleportToStation(EntityUid uid, int triesBase = 50, bool teleportPulledEntities = false)
     {
-        if (!CanTeleport(uid))
+        if (!_teleport.CanTeleport(uid))
             return null;
 
         if (!EntityManager.EntityExists(uid))

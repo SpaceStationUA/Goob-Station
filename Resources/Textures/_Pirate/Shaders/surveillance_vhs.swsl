@@ -1,0 +1,114 @@
+// Pirate: ported to swsl from "VHS and CRT monitor effect" by pend00:
+// https://godotshaders.com/shader/vhs-and-crt-monitor-effect/ (CC0)
+//
+// Adaptation notes (Goob-Station downstream):
+// - Robust's UI TextureRect cannot sample the world behind it (sampling the
+//   screen framebuffer while drawing into it is feedback), so this renders the
+//   CRT/VHS artifacts as a semi-transparent artifact layer: scanline gaps,
+//   aperture grille stripes, vignette darkening, rolling tracking bands, banded
+//   VHS noise and static specks, drawn over the surveillance camera feed in
+//   alpha-blend mode. The feed remains visible through the clear parts.
+// - All "intensity" uniforms control artifact opacity/darkness, 0 = off.
+
+uniform highp float scanlines_opacity = 0.35;
+uniform highp float scanlines_width = 0.25;
+uniform highp float grille_opacity = 0.15;
+uniform highp vec2 resolution = vec2(180.0, 160.0);
+
+uniform highp float roll_speed = 8.0;
+uniform highp float roll_size = 15.0;
+uniform highp float roll_variation = 1.8;
+uniform highp float roll_intensity = 0.10;
+
+uniform highp float noise_opacity = 0.25;
+uniform highp float noise_speed = 5.0;
+uniform highp float static_noise_intensity = 0.05;
+
+uniform highp float vignette_intensity = 0.4;
+uniform highp float vignette_opacity = 0.5;
+
+highp vec2 rnd(highp vec2 uv)
+{
+    uv = vec2(
+        dot(uv, vec2(127.1, 311.7)),
+        dot(uv, vec2(269.5, 183.3))
+    );
+    return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
+}
+
+highp float noise(highp vec2 uv)
+{
+    highp vec2 uv_index = floor(uv);
+    highp vec2 uv_fract = fract(uv);
+
+    highp vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+
+    return mix(
+        mix(
+            dot(rnd(uv_index + vec2(0.0, 0.0)), uv_fract - vec2(0.0, 0.0)),
+            dot(rnd(uv_index + vec2(1.0, 0.0)), uv_fract - vec2(1.0, 0.0)), blur.x),
+        mix(
+            dot(rnd(uv_index + vec2(0.0, 1.0)), uv_fract - vec2(0.0, 1.0)),
+            dot(rnd(uv_index + vec2(1.0, 1.0)), uv_fract - vec2(1.0, 1.0)), blur.x),
+        blur.y) * 0.5 + 0.5;
+}
+
+// Adds a vignette shadow to the edges of the image, output = darkness (0-1)
+highp float vignette(highp vec2 uv)
+{
+    uv *= 1.0 - uv.xy;
+    highp float v = pow(uv.x * uv.y * 15.0, vignette_intensity * vignette_opacity);
+    return clamp(1.0 - v, 0.0, 1.0);
+}
+
+void fragment()
+{
+    highp vec2 uv = UV;
+
+    // ---- Rolling tracking bands ----
+    // Lines that sweep vertically over time; they get a small bright smear
+    // plus a grime band, simulating VHS tape tracking.
+    highp float time = TIME;
+    highp float roll_line = smoothstep(0.3, 0.9, sin(uv.y * roll_size - (time * roll_speed)));
+    roll_line *= roll_line * smoothstep(0.3, 0.9, sin(uv.y * roll_size * roll_variation - (time * roll_speed * roll_variation)));
+
+    // ---- Banded VHS noise ----
+    highp float band_noise = smoothstep(0.4, 0.5, noise(uv * vec2(2.0, 200.0) + vec2(10.0, time * noise_speed)));
+    band_noise *= roll_line;
+    band_noise *= clamp(rnd((ceil(uv * resolution) / resolution) + vec2(time * 0.8, 0.0)).x + 0.8, 0.0, 1.0);
+
+    // ---- Static specks over the whole image ----
+    highp float specks = clamp(rnd((ceil(uv * resolution) / resolution) + fract(time)).x, 0.0, 1.0) * static_noise_intensity;
+
+    // ---- Scanlines ----
+    // Dark gaps between horizontal lines, like a real CRT display.
+    highp float scanlines = smoothstep(scanlines_width, scanlines_width + 0.5, abs(sin(uv.y * (resolution.y * 3.14159265))));
+    highp float scanline_dark = scanlines * scanlines_opacity;
+
+    // ---- Aperture grille ----
+    // Vertical color stripes; as a monochrome layer we darken per-stripe,
+    // slightly modulated per channel with offsets to fake the RGB triads.
+    highp float g_r = smoothstep(0.85, 0.95, abs(sin(uv.x * (resolution.x * 3.14159265))));
+    highp float g_g = smoothstep(0.85, 0.95, abs(sin(1.05 + uv.x * (resolution.x * 3.14159265))));
+    highp float g_b = smoothstep(0.85, 0.95, abs(sin(2.1 + uv.x * (resolution.x * 3.14159265))));
+
+    // ---- Vignette ----
+    highp float vig = vignette(uv);
+
+    // ---- Roll band brightening ----
+    highp float roll_glow = roll_line * roll_intensity;
+
+    // ---- Compose the artifact layer ----
+    // Darkness: scanline gaps, vignette, grille dimming.
+    highp float dark = clamp(scanline_dark + vig, 0.0, 1.0);
+    dark = clamp(dark + (1.0 - g_r) * grille_opacity * 0.5, 0.0, 1.0);
+
+    // Bright artifacts: banded noise (white smears) + static specks + roll glow.
+    highp float bright = clamp(band_noise + specks + roll_glow, 0.0, 1.0);
+
+    // Final color: darken where dark (>0), add noise/glow specks where bright.
+    highp float alpha = clamp(max(dark * 0.6, bright), 0.0, 1.0);
+    highp vec3 color = bright * vec3(1.0, 0.95, 1.05); // slightly RGB-tinted
+
+    COLOR = vec4(color, alpha);
+}

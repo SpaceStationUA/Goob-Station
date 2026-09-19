@@ -1,0 +1,315 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+# Pirate: ported from starcup PR #983 (feat: Fashionable Headwear)
+# note: abstract base ClothingHeadHatFuzzyEarmuffs lives in _DEN/Entities/Clothing/Head/winter.yml
+
+- type: entity
+  parent: ClothingHeadHatFuzzyEarmuffs
+  id: ClothingHeadHatFuzzyEarmuffsCream
+  name: fuzzy earmuffs
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#dfd3d3"
+      right:
+      - state: inhand-right
+        color: "#dfd3d3"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#dfd3d3"
+  - type: Sprite
+    color: "#dfd3d3"
+
+- type: entity
+  parent: ClothingHeadHatFuzzyEarmuffs
+  id: ClothingHeadHatFuzzyEarmuffsBlack
+  name: fuzzy earmuffs
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#373737"
+      right:
+      - state: inhand-right
+        color: "#373737"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#373737"
+  - type: Sprite
+    color: "#373737"
+
+- type: entity
+  parent: ClothingHeadHatFuzzyEarmuffs
+  id: ClothingHeadHatFuzzyEarmuffsBrown
+  name: fuzzy earmuffs
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#8e7167"
+      right:
+      - state: inhand-right
+        color: "#8e7167"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#8e7167"
+  - type: Sprite
+    color: "#8e7167"
+
+## Absurd Beanies/Toques
+- type: entity
+  parent: ClothingHeadHatBeanieWhiteAbsurd
+  id: ClothingHeadHatBeaniePinkAbsurd
+  name: pink toque
+  description: A pink toque, a skater's or cargo tech's favorite headwear.
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#fc8cb8"
+  - type: Sprite
+    color: "#fc8cb8"
+
+## Basic Beanies
+- type: entity
+  parent: ClothingHeadHatBeanie
+  id: ClothingHeadHatBeaniePink
+  name: pink beanie
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#fc8cb8"
+  - type: Sprite
+    color: "#fc8cb8"
+
+- type: entity
+  parent: ClothingHeadHatBeanie
+  id: ClothingHeadHatBeanieBlack
+  name: black beanie
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#373737"
+  - type: Sprite
+    color: "#373737"
+
+- type: entity
+  parent: ClothingHeadHatBeanie
+  id: ClothingHeadHatBeanieNavyBlue
+  name: navy blue beanie
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#352E69"
+  - type: Sprite
+    color: "#352E69"
+
+- type: entity
+  parent: ClothingHeadHatBeanie
+  id: ClothingHeadHatBeanieBlue
+  name: blue beanie
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#4E9496"
+  - type: Sprite
+    color: "#4E9496"
+
+## Winter Beanies
+- type: entity
+  parent: ClothingHeadHatBeanieWinter
+  id: ClothingHeadHatBeanieWinterPink
+  name: pink winter beanie
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#fc8cb8"
+  - type: Sprite
+    color: "#fc8cb8"
+
+- type: entity
+  parent: ClothingHeadHatBeanieWinter
+  id: ClothingHeadHatBeanieWinterBlack
+  name: black winter beanie
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#373737"
+  - type: Sprite
+    color: "#373737"
+
+- type: entity
+  parent: ClothingHeadHatBeanieWinter
+  id: ClothingHeadHatBeanieWinterNavyBlue
+  name: navy blue winter beanie
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#352E69"
+  - type: Sprite
+    color: "#352E69"
+
+- type: entity
+  parent: ClothingHeadHatBeanieWinter
+  id: ClothingHeadHatBeanieWinterBlue
+  name: blue winter beanie
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#4E9496"
+  - type: Sprite
+    color: "#4E9496"
+
+## Hijabs
+- type: entity
+  parent: ClothingHeadHatHijabColorable
+  id: ClothingHeadHatHijabBlue
+  name: blue hijab
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#4E9496"
+  - type: Sprite
+    color: "#4E9496"
+
+- type: entity
+  parent: ClothingHeadHatHijabColorable
+  id: ClothingHeadHatHijabCream
+  name: cream hijab
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#dfd3d3"
+  - type: Sprite
+    color: "#dfd3d3"
+
+- type: entity
+  parent: ClothingHeadHatHijabColorable
+  id: ClothingHeadHatHijabPink
+  name: pink hijab
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#fc8cb8"
+  - type: Sprite
+    color: "#fc8cb8"
+
+- type: entity
+  parent: ClothingHeadHatHijabColorable
+  id: ClothingHeadHatHijabNavyBlue
+  name: navy blue hijab
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#352E69"
+  - type: Sprite
+    color: "#352E69"
+
+- type: entity
+  parent: ClothingHeadHatHijabColorable
+  id: ClothingHeadHatHijabBlack
+  name: black hijab
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#373737"
+  - type: Sprite
+    color: "#373737"
+
+## Sun Visor
+- type: entity
+  parent: ClothingHeadHatSunVisor
+  id: ClothingHeadHatSunVisorBlack
+  name: black sun visor
+  components:
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#373737"
+  - type: Sprite
+    color: "#373737"
+
+## Artistic Berets
+- type: entity
+  parent: ClothingHeadHatBeretArtist
+  id: ClothingHeadHatBeretArtistBlack
+  name: black artist beret
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#373737"
+      right:
+      - state: inhand-right
+        color: "#373737"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#373737"
+  - type: Sprite
+    color: "#373737"
+
+- type: entity
+  parent: ClothingHeadHatBeretArtist
+  id: ClothingHeadHatBeretArtistRed
+  name: red artist beret
+  description: A headband with faux-fur cushions on each end, designed to protect the ears.
+  components:
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#8A1E18"
+      right:
+      - state: inhand-right
+        color: "#8A1E18"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#8A1E18"
+  - type: Sprite
+    color: "#8A1E18"

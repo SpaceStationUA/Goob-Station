@@ -13,6 +13,11 @@
   - Maintenance # TODO Remove maint access for all gimmick jobs once access work is completed
   - Theatre
   special:
+  # Pirate: skill chips start
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEducation
+  # Pirate: skill chips end
   - !type:GiveItemOnHolidaySpecial
     holiday: MikuDay
     prototype: BoxPerformer

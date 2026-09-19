@@ -41,6 +41,11 @@
     - InterdyneCommand
     - InterdyneOfficer
   special:
+  - !type:OrganChipsSpecial
+    chips:
+    - SkillChipEchelonEducation
+    - SkillChipPistol
+    - SkillChipSurgeon
   # Keep surgery speed bonus on the Interdyne captain role.
   - !type:AddComponentSpecial
     components:

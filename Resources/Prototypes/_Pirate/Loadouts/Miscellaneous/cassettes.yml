@@ -35,12 +35,6 @@
     - RMCCassetteTapeRedQwesta
 
 - type: loadout
-  id: LoadoutRMCCassetteTapeBolgarich
-  storage:
-    back:
-    - RMCCassetteTapeBolgarich
-
-- type: loadout
   id: LoadoutRMCCassetteTapeQwertyquerty
   storage:
     back:

@@ -99,7 +99,7 @@
     - type: Clothing
       sprite: Clothing/Neck/Scarfs/syndiegreen.rsi
     - type: StaticPrice
-      price: 500
+      price: 20 # Pirate: syndrobe - was 500, matches every other scarf
     - type: ScannableForPoints # goob edit
       points: 1
 
@@ -114,7 +114,7 @@
     - type: Clothing
       sprite: Clothing/Neck/Scarfs/syndiered.rsi
     - type: StaticPrice
-      price: 500
+      price: 20 # Pirate: syndrobe - was 500, matches every other scarf
     - type: ScannableForPoints # goob edit
       points: 1
 

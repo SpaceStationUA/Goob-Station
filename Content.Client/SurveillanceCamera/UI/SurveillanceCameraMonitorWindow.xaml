@@ -40,6 +40,9 @@ SPDX-License-Identifier: MIT
                                       MinSize="770 770"
                                       MouseFilter="Ignore" />
             <TextureRect VerticalExpand="True" HorizontalExpand="True" MinSize="770 770" Name="CameraViewBackground" />
+            <!-- Pirate: translucent VHS/CRT artifact overlay on the camera feed -->
+            <TextureRect VerticalExpand="True" HorizontalExpand="True" MinSize="770 770"
+                         MouseFilter="Ignore" Name="CameraViewVHS" />
         </Control>
     </BoxContainer>
 </controls:FancyWindow><!-- Goobstation -->

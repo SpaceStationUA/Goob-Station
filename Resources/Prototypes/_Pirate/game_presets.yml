@@ -152,3 +152,36 @@
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
   - GlimmerEventScheduler # Pirate
+
+- type: gamePreset
+  id: MalfAi
+  alias:
+  - malfai
+  - malf
+  name: malfai-title
+  description: malfai-description
+  showInVote: false
+  rules:
+  - Traitor
+  - SubGamemodesRule
+  - MalfAi
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretMalfAi
+  alias:
+  - secretmalfai
+  name: secret-title
+  description: secret-description
+  showInVote: false
+  rules:
+  - Traitor
+  - SubGamemodesRule
+  - MalfAi
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation

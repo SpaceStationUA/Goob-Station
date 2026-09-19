@@ -5,6 +5,11 @@
   parent: BaseGameRule
   id: BaseWizardRule
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - WizardSkills
+  # Pirate: skill chips end
   - type: WizardRule
   - type: GameRule
     minPlayers: 30
@@ -115,6 +120,11 @@
   parent: BaseGameRule
   id: ApprenticeRule
   components:
+  # Pirate: skill chips start
+  - type: AntagPlayerEffects
+    packages:
+    - WizardSkills
+  # Pirate: skill chips end
   - type: GameRule
   - type: AntagSelection
     useCharacterNames: true

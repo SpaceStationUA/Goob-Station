@@ -1,0 +1,86 @@
+## HAIRBOWS (all adapted from The Den, but changed enough to make it easier to put them in our codebase)
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBowBlack
+  name: black hair bow
+  description: A black red hair bow with a small removable clip on the back. Can also be clipped at the collar.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Head/Accessories/hairbow_black.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Head/Accessories/hairbow_black.rsi
+    slots:
+    - HEAD
+    - neck
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBowRed
+  name: red hair bow
+  description: A red hair bow with a small removable clip on the back. Can also be clipped at the collar.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Head/Accessories/hairbow_red.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Head/Accessories/hairbow_red.rsi
+    slots:
+    - HEAD
+    - neck
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRibbonLargeBlack
+  name: large black hair ribbon
+  description: A large black ribbon, commonly used to tie back hair or hold up a dress.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Head/Accessories/hairribbon_large_black.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Head/Accessories/hairribbon_large_black.rsi
+    slots:
+    - HEAD
+    - belt
+    equipDelay: 0.2
+    unequipDelay: 0.2
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRibbonLargeRed
+  name: large red hair ribbon
+  description: A large black ribbon, commonly used to tie back hair or hold up a dress.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Head/Accessories/hairribbon_large_red.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Head/Accessories/hairribbon_large_red.rsi
+    slots:
+    - HEAD
+    - belt
+    equipDelay: 0.2
+    unequipDelay: 0.2
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRibbonBlack
+  name: black hair ribbon
+  description: A length of black ribbon acting as a headband.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Head/Accessories/hairribbon_black.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Head/Accessories/hairribbon_black.rsi
+    equipDelay: 0.2
+    unequipDelay: 0.2
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRibbonRed
+  name: red hair ribbon
+  description: A length of red ribbon acting as a headband.
+  components:
+  - type: Sprite
+    sprite: _starcup/Clothing/Head/Accessories/hairribbon_red.rsi
+  - type: Clothing
+    sprite: _starcup/Clothing/Head/Accessories/hairribbon_red.rsi
+    equipDelay: 0.2
+    unequipDelay: 0.2

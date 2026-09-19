@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Einstein-Engines at Resources/Textures/_EinsteinEngines/Clothing/NanoTrasen/Modsuits/leader-responsory.rsi, restructured for the modular suit system; reptilian states derived from the base Responsory reptilian sprites with this suit's role accent applied; reptilian states derived from the base Responsory reptilian sprites with this suit's role accent applied; reptilian states derived from the base Responsory reptilian sprites with this suit's role accent applied",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-sealed"
+    },
+    {
+      "name": "equipped-FEET",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-FEET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-FEET-vox",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-FEET-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-FEET-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "sealed-equipped-FEET-reptilian",
+      "directions": 4
+    }
+  ]
+}
