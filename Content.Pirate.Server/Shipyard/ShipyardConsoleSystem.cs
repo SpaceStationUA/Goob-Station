@@ -42,6 +42,22 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
             return;
         }
 
+        var categoryAllowed = false;
+        foreach (var category in vessel.Categories)
+        {
+            if (!ent.Comp.Categories.Contains(category))
+                continue;
+
+            categoryAllowed = true;
+            break;
+        }
+
+        if (!categoryAllowed)
+        {
+            Deny(ent, user, "shipyard-console-purchase-failed");
+            return;
+        }
+
         EntityUid destination;
         Entity<StationBankAccountComponent>? bankAccount = null;
         if (ent.Comp.UseStationFunds)
