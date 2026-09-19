@@ -20,9 +20,9 @@
     - state: overlay_null
   # Pirate: persistent text (diaries) - a stamp would make the diary unwritable forever
   - type: NoStamping
-  # Multiple "pages": huge capacity, the paper UI scrolls
+  # Multiple "pages": the paper UI scrolls
   - type: Paper
-    contentSize: 50000
+    contentSize: 20000
 
 - type: entity
   id: DiaryLoadout

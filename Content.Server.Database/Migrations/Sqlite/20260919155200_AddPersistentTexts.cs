@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Content.Server.Database.Migrations.Postgres
+namespace Content.Server.Database.Migrations.Sqlite
 {
     /// <inheritdoc />
     public partial class AddPersistentTexts : Migration
@@ -16,14 +15,16 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "pirate_persistent_texts",
                 columns: table => new
                 {
-                    pirate_persistent_texts_id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    owner_kind = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
-                    owner_id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    profile_id = table.Column<int>(type: "integer", nullable: true),
-                    storage_key = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
-                    saved_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    content = table.Column<string>(type: "text", nullable: false)
+                    pirate_persistent_texts_id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    owner_kind = table.Column<string>(type: "TEXT", maxLength: 32, nullable: false),
+                    owner_id = table.Column<string>(type: "TEXT", maxLength: 128, nullable: true),
+                    profile_id = table.Column<int>(type: "INTEGER", nullable: true),
+                    storage_key = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
+                    saved_at = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    content = table.Column<string>(type: "TEXT", nullable: false),
+                    owner_character_name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    owner_user_id = table.Column<Guid>(type: "TEXT", maxLength: 36, nullable: true)
                 },
                 constraints: table =>
                 {
