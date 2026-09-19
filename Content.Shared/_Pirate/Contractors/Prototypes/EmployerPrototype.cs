@@ -26,10 +26,4 @@ public sealed partial class EmployerPrototype : IPrototype
 
     [DataField]
     public List<JobRequirement> Requirements = new();
-
-    /// <summary>
-    /// Temporary mastery increases, applied after the character's saved knowledge profile.
-    /// </summary>
-    [DataField]
-    public Dictionary<EntProtoId, int> KnowledgeBonuses = new();
 }
