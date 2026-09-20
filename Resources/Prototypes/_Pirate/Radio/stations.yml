@@ -84,3 +84,74 @@
   label: New Age Radio Jazz
   genre: jazz (flac)
   url: https://stream.newageradio.gr/listen/jazz/radio.flac
+
+# ---- Server-relayed stations (transcoded from MP3/AAC) ----
+#
+# These streams are MP3/AAC, which stock CEF cannot decode. The server
+# fetches them, transcodes to Opus/WebM and relays the bytes over the game
+# connection; requires pirate.radio_ffmpeg_path to be set on the server.
+# Each URL was byte-verified (MPEG sync / ADTS sync) with a live GET on
+# 2026-09-20. Note: ffmpeg follows redirects, so 302 hops (laut.fm) work.
+
+- type: radioStation
+  id: gotanno
+  label: Gotanno FM 89.2
+  genre: indie pop / jpop
+  transcode: true
+  url: https://radio.gotanno.love/
+
+- type: radioStation
+  id: yumi-co
+  label: Yumi Co. Radio
+  genre: anime groove / city pop
+  transcode: true
+  url: https://yumicoradio.net/stream
+
+- type: radioStation
+  id: roks-hard-heavy
+  label: Radio ROKS Hard'n'Heavy
+  genre: hard rock
+  transcode: true
+  url: http://online.radioroks.ua/RadioROKS_HardnHeavy_HD
+
+- type: radioStation
+  id: brokenbeats
+  label: Brokenbeats
+  genre: drum and bass / downtempo
+  transcode: true
+  url: https://stream.brokenbeats.net/tune
+
+- type: radioStation
+  id: melodia-fm
+  label: Melodia FM
+  genre: pop
+  transcode: true
+  url: https://online.melodiafm.ua/MelodiaFM
+
+- type: radioStation
+  id: jazz-fm-1046
+  label: Jazz FM 104.6
+  genre: jazz
+  transcode: true
+  url: http://online.radiojazz.ua/RadioJazz
+
+- type: radioStation
+  id: bayraktar
+  label: Radio Bayraktar
+  genre: ua
+  transcode: true
+  url: https://online.radiobayraktar.ua/RadioBayraktar
+
+- type: radioStation
+  id: blues-rock
+  label: Blues & Rock Radio
+  genre: blues / blues rock
+  transcode: true
+  url: http://stream.laut.fm/bluesrock
+
+- type: radioStation
+  id: kiss-fm
+  label: Kiss FM
+  genre: edm / hot ac
+  transcode: true
+  url: https://online.kissfm.ua/KissFM_HD

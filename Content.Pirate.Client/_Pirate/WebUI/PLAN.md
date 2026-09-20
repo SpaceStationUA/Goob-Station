@@ -1092,3 +1092,7 @@ CEF, usable by the RadioHost job and anyone with the program installed.
   A 2s interval re-anchors a drifted relay session to the live edge.
 - ffmpeg must have libopus (standard on ubuntu/debian apt builds).
 - file: URLs in pinned stations test offline with -re realtime mode.
+- Test set added: nine hand-verified MP3/AAC stations (mp3 sync/ADTS byte
+  checks on 2026-09-20) pinned with transcode: true - Gotanno FM, Yumi Co.,
+  Radio ROKS Hard'n'Heavy, Brokenbeats, Melodia FM, Jazz FM 104.6,
+  Radio Bayraktar, laut.fm Blues&Rock (302 hop, ffmpeg follows), Kiss FM.
