@@ -14,23 +14,28 @@ using Robust.Shared.Network;
 namespace Content.Pirate.Client.Radio;
 
 /// <summary>
-///     PID radio client half. Owns the persistent playback webview: the PDA
-///     program fragment only hosts the control, so closing the program (or
+///     PID radio client half. Owns the persistent playback webviews: the PDA
+///     program fragments only host the controls, so closing a program (or
 ///     the whole PDA UI) does not dispose the CEF browser and the audio
-///     keeps playing. Playback is stopped when the PDA carrying the radio
-///     program is no longer on the local player.
+///     keeps playing. One playback slot per radio program entity, so two
+///     PDAs can play simultaneously. Playback is stopped when the PDA
+///     carrying the program is no longer on the local player.
 /// </summary>
 public sealed class PirateRadioClientSystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
 
-    private WebViewControl? _view;
-    private WebUiTuiIpc? _ipc;
-    private WebRadioDriver? _driver;
-    private NetEntity _marker = NetEntity.Invalid;
-    private bool _requestedCatalog;
-    private bool _uncarriedStopSent;
+    private sealed class Playback
+    {
+        public required WebViewControl View;
+        public required WebUiTuiIpc Ipc;
+        public required WebRadioDriver Driver;
+        public bool RequestedCatalog;
+        public bool UncarriedStopSent;
+    }
+
+    private readonly Dictionary<NetEntity, Playback> _playbacks = new();
 
     public override void Initialize()
     {
@@ -46,60 +51,64 @@ public sealed class PirateRadioClientSystem : EntitySystem
         => PirateRadioClientState.OnState(msg);
 
     /// <summary>
-    ///     Returns the persistent playback control, creating it on first use
-    ///     (or rebuilding it if the radio program entity changed). The
-    ///     fragment adds this to its own tree; a later fragment disposal must
-    ///     detach (not dispose) it.
+    ///     Returns the persistent playback control for this program entity,
+    ///     creating it on first use. The fragment adds this to its own tree; a
+    ///     later fragment disposal must detach (not dispose) it.
     /// </summary>
     public WebViewControl? EnsurePlayback(NetEntity marker)
     {
-        if (_view != null && _view.Disposed)
-            Teardown();
-        if (_view != null && _marker != marker)
-            Teardown(); // a different program instance took over
-        if (_view != null)
-            return _view;
+        if (_playbacks.TryGetValue(marker, out var existing))
+        {
+            if (!existing.View.Disposed)
+                return existing.View;
+            _playbacks.Remove(marker); // keep-alive contract broken; rebuild
+        }
 
         try
         {
-            _view = new WebViewControl
+            var view = new WebViewControl
             {
                 AlwaysActive = true,
                 HorizontalExpand = true,
                 VerticalExpand = true,
             };
-            _ipc = new WebUiTuiIpc(OnAction)
+            var ipc = new WebUiTuiIpc((a, d) => OnAction(marker, a, d))
             {
                 // Streams load via media elements, not navigation; no hosts
                 // need allow-listing.
                 AllowHttpHosts = new List<string>(),
             };
-            _view.AddBeforeBrowseHandler(_ipc.HandleBeforeBrowse);
-            _driver = new WebRadioDriver(_ipc);
-            _driver.Attach(_view);
-            _view.Url = "res://webres/_Pirate/WebUI/Radio/index.html";
-            _marker = marker;
-            _requestedCatalog = false;
+            view.AddBeforeBrowseHandler(ipc.HandleBeforeBrowse);
+            var driver = new WebRadioDriver(ipc);
+            driver.Attach(view);
+            view.Url = "res://webres/_Pirate/WebUI/Radio/index.html";
+            _playbacks[marker] = new Playback
+            {
+                View = view,
+                Ipc = ipc,
+                Driver = driver,
+            };
         }
         catch
         {
-            Teardown(); // headless/dev
+            Teardown(marker); // headless/dev
         }
 
-        return _view;
+        return _playbacks.TryGetValue(marker, out var p) ? p.View : null;
     }
 
-    public WebViewControl? View => _view;
+    public WebViewControl? View(NetEntity marker)
+        => _playbacks.TryGetValue(marker, out var p) && !p.View.Disposed ? p.View : null;
 
-    private void OnAction(string action, string? data)
+    private void OnAction(NetEntity marker, string action, string? data)
     {
         switch (action)
         {
             case "play":
-                PirateRadioClientState.Send("play", _marker, ExtractStationId(data));
+                PirateRadioClientState.Send("play", marker, ExtractStationId(data));
                 break;
             case "stop":
-                PirateRadioClientState.Send("stop", _marker);
+                PirateRadioClientState.Send("stop", marker);
                 break;
             case "volume":
                 // Volume is page-local; kept for future persistence.
@@ -154,61 +163,73 @@ public sealed class PirateRadioClientSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        if (_view == null || _driver == null || _ipc == null || _marker == NetEntity.Invalid)
+        if (_playbacks.Count == 0)
             return;
 
-        if (_view.Disposed)
+        List<NetEntity>? dead = null;
+        foreach (var (marker, p) in _playbacks)
         {
-            Teardown();
-            return;
-        }
-
-        // Program uninstalled / PDA destroyed: kill the playback.
-        if (!Exists(GetEntity(_marker)))
-        {
-            Teardown();
-            return;
-        }
-
-        // Radio plays only while the PDA carrying the program is on us.
-        if (!Carried())
-        {
-            var st = PirateRadioClientState.Get(_marker);
-            if (st.Playing && !_uncarriedStopSent)
+            if (p.View.Disposed)
             {
-                _uncarriedStopSent = true;
-                PirateRadioClientState.Send("stop", _marker);
+                dead ??= new List<NetEntity>();
+                dead.Add(marker);
+                continue;
             }
+
+            // Program uninstalled / PDA destroyed: kill the playback.
+            if (!Exists(GetEntity(marker)))
+            {
+                dead ??= new List<NetEntity>();
+                dead.Add(marker);
+                continue;
+            }
+
+            // Radio plays only while the PDA carrying the program is on us.
+            if (!Carried(marker))
+            {
+                var st = PirateRadioClientState.Get(marker);
+                if (st.Playing && !p.UncarriedStopSent)
+                {
+                    p.UncarriedStopSent = true;
+                    PirateRadioClientState.Send("stop", marker);
+                }
+            }
+            else
+            {
+                p.UncarriedStopSent = false;
+            }
+
+            p.Ipc.Pump();
+
+            if (!p.RequestedCatalog)
+            {
+                p.RequestedCatalog = true;
+                PirateRadioClientState.RequestCatalog(marker);
+            }
+
+            var catalog = PirateRadioClientState.Catalog(marker);
+            if (catalog != null)
+                p.Driver.SetCatalog(ToTuples(catalog));
+
+            var state = PirateRadioClientState.Get(marker);
+            p.Driver.SetState(state.StationId, state.Playing);
         }
-        else
+
+        if (dead != null)
         {
-            _uncarriedStopSent = false;
+            foreach (var marker in dead)
+                Teardown(marker);
         }
-
-        _ipc.Pump();
-
-        if (!_requestedCatalog)
-        {
-            _requestedCatalog = true;
-            PirateRadioClientState.RequestCatalog(_marker);
-        }
-
-        var catalog = PirateRadioClientState.Catalog(_marker);
-        if (catalog != null)
-            _driver.SetCatalog(ToTuples(catalog));
-
-        var state = PirateRadioClientState.Get(_marker);
-        _driver.SetState(state.StationId, state.Playing);
     }
 
     /// <summary>Is the program's loader chain anchored at the local player?</summary>
-    private bool Carried()
+    private bool Carried(NetEntity marker)
     {
         var player = _players.LocalEntity;
         if (player == null)
             return true; // main menu / detached: don't fight the state
 
-        var cur = GetEntity(_marker);
+        var cur = GetEntity(marker);
         for (var depth = 0; depth < 8 && cur.IsValid(); depth++)
         {
             if (cur == player)
@@ -220,15 +241,21 @@ public sealed class PirateRadioClientSystem : EntitySystem
         return false;
     }
 
-    private void Teardown()
+    private void Teardown(NetEntity marker)
     {
-        try { _view?.Dispose(); } catch { /* already gone */ }
-        _view = null;
-        _ipc = null;
-        _driver = null;
-        _marker = NetEntity.Invalid;
-        _requestedCatalog = false;
-        _uncarriedStopSent = false;
+        if (!_playbacks.Remove(marker, out var p))
+            return;
+
+        // Hard-stop the page audio before disposing: disposing the control
+        // does not reliably stop the CEF browser, which kept playing.
+        try
+        {
+            p.View.ExecuteJavaScript("window.__radioHardStop && window.__radioHardStop();");
+        }
+        catch { /* view may be gone */ }
+        if (marker.IsValid())
+            PirateRadioClientState.Send("stop", marker);
+        try { p.View.Dispose(); } catch { /* already gone */ }
     }
 
     private static List<(string, string, string, string, bool)> ToTuples(

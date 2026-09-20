@@ -3,6 +3,7 @@
 
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Pirate.Shared.Radio;
 using Content.Shared._Pirate.CCVars;
@@ -183,6 +184,12 @@ public sealed class PirateRadioSystem : EntitySystem
                 var parsed = Parse(json);
                 if (parsed.Count == 0)
                     continue;
+                // The community catalog is full of dead mounts and mp3/aac
+                // streams our CEF cannot decode. Offer only stations whose
+                // URL answers right now and starts with real Ogg data.
+                parsed = await VerifyAsync(parsed);
+                if (parsed.Count == 0)
+                    continue;
                 _cache = parsed;
                 _cacheAt = DateTimeOffset.UtcNow;
                 return;
@@ -195,6 +202,68 @@ public sealed class PirateRadioSystem : EntitySystem
         finally
         {
             _fetching = false;
+        }
+    }
+
+    /// <summary>Keep only stations whose stream answers with Ogg magic bytes.</summary>
+    private async Task<List<PirateRadioStationEntry>> VerifyAsync(List<PirateRadioStationEntry> input)
+    {
+        var results = new List<PirateRadioStationEntry>();
+        var tasks = new List<Task<PirateRadioStationEntry?>>();
+        using var gate = new SemaphoreSlim(8);
+        foreach (var station in input)
+        {
+            tasks.Add(Task.Run(async () =>
+            {
+                await gate.WaitAsync();
+                try
+                {
+                    return await IsPlayable(station.Url) ? station : null;
+                }
+                finally
+                {
+                    gate.Release();
+                }
+            }));
+        }
+        var done = await Task.WhenAll(tasks);
+        foreach (var s in done)
+        {
+            if (s != null)
+                results.Add(s);
+        }
+        return results;
+    }
+
+    private async Task<bool> IsPlayable(string url)
+    {
+        try
+        {
+            using var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(6));
+            using var req = new HttpRequestMessage(HttpMethod.Get, url);
+            req.Headers.UserAgent.ParseAdd(ApiUserAgent);
+            using var resp = await _http.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+            if (!resp.IsSuccessStatusCode)
+                return false;
+            var media = resp.Content.Headers.ContentType?.MediaType ?? "";
+            if (media.Contains("html", StringComparison.OrdinalIgnoreCase))
+                return false;
+            await using var stream = await resp.Content.ReadAsStreamAsync(cts.Token);
+            var header = new byte[4];
+            var read = 0;
+            while (read < header.Length)
+            {
+                var n = await stream.ReadAsync(header.AsMemory(read, header.Length - read), cts.Token);
+                if (n <= 0)
+                    break;
+                read += n;
+            }
+            return read == 4
+                && header[0] == 'O' && header[1] == 'g' && header[2] == 'g' && header[3] == 'S';
+        }
+        catch
+        {
+            return false;
         }
     }
 

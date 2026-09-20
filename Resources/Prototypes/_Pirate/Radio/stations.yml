@@ -3,16 +3,20 @@
 # HARD REQUIREMENTS (do not add a station that breaks these):
 #   * url MUST be https:// (res:// pages are a Secure context; http is
 #     blocked as mixed content).
-#   * the stream MUST be an open codec (Ogg Vorbis / Opus). Stock CEF ships
-#     no MP3/AAC decoders, so an MP3/AAC stream fails with NotSupportedError.
-#   * every URL below was byte-verified (OggS magic + Vorbis/Opus header)
-#     with a live range GET on 2026-09-20.
+#   * the stream MUST be an open codec (Ogg Vorbis / Opus / FLAC-in-Ogg).
+#     Stock CEF ships no MP3/AAC decoders, so an MP3/AAC stream fails with
+#     NotSupportedError.
+#   * every URL below was byte-verified (OggS magic) with a live range GET
+#     on 2026-09-20.
 #
-# SomaFM was removed: they discontinued their Ogg mounts (only AAC/MP3
-# remain as of Aug 2026) and their ToS forbids use in video games.
+# One entry per station: Lassul's .ogg/.opus mounts all carry the same
+# program, so only one is listed. Sources found via radio-browser.info
+# (community directory) and verified by hand.
 #
 # These load offline and are always offered; the server additionally queries
-# radio-browser.info for more Ogg/Opus stations when the network allows.
+# radio-browser.info for more Ogg stations when
+# pirate.radio_remote_catalog is on, and only offers remote ones whose
+# stream still answers with Ogg magic bytes.
 
 - type: radioStation
   id: lassul-radio
@@ -20,26 +24,6 @@
   genre: various / eclectic
   url: https://radio.lassul.us/radio.ogg
   featured: true
-
-- type: radioStation
-  id: lassul-music
-  label: Lassul Music
-  genre: various / eclectic
-  url: https://radio.lassul.us/music.ogg
-  featured: true
-
-- type: radioStation
-  id: lassul-opus
-  label: Lassul Opus Mix
-  genre: various (opus)
-  url: https://radio.lassul.us/radio.opus
-  featured: true
-
-- type: radioStation
-  id: lassul-music-opus
-  label: Lassul Music Opus
-  genre: various (opus)
-  url: https://radio.lassul.us/music.opus
 
 - type: radioStation
   id: nightride
@@ -61,5 +45,42 @@
   genre: darksynth
   url: https://stream.nightride.fm/darksynth.ogg
 
-# Slay Radio removed: its relay is flaky (frequent hard failures -> NotSupportedError).
 # Nightride note: ~1 Mbps streams; expect buffering on slow connections.
+
+- type: radioStation
+  id: plaza-one
+  label: Nightwave Plaza
+  genre: vaporwave
+  url: https://radio.plaza.one/ogg
+  featured: true
+
+- type: radioStation
+  id: listen-moe
+  label: LISTEN.moe J-Pop
+  genre: j-pop / anime
+  url: https://listen.moe/stream
+  featured: true
+
+- type: radioStation
+  id: listen-moe-kpop
+  label: LISTEN.moe K-Pop
+  genre: k-pop
+  url: https://listen.moe/kpop/stream
+
+- type: radioStation
+  id: chinese-music-world
+  label: Chinese Music World
+  genre: chinese / traditional
+  url: https://radio.chinesemusicworld.com/chinesemusic.ogg
+
+- type: radioStation
+  id: lounge-streams-nl
+  label: Live-Streams Lounge
+  genre: lounge / chill
+  url: https://mscp4.live-streams.nl:8142/lounge.ogg
+
+- type: radioStation
+  id: new-age-jazz
+  label: New Age Radio Jazz
+  genre: jazz (flac)
+  url: https://stream.newageradio.gr/listen/jazz/radio.flac

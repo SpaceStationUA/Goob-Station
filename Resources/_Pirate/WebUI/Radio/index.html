@@ -387,6 +387,11 @@
     } catch (e) { /* ignore */ }
   };
 
+  // C# calls this before disposing the playback control (e.g. the PDA was
+  // destroyed): disposing the control alone does not stop the CEF browser,
+  // which would keep the audio going as an orphan.
+  window.__radioHardStop = function () { stop(false); };
+
   report("ready", {});
 })();
 </script>

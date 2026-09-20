@@ -1048,3 +1048,16 @@ CEF, usable by the RadioHost job and anyone with the program installed.
   ("unavailable") for the session.
 - Stream lessons: Slay relay is flaky -> removed; Nightride is ~1 Mbps
   (buffers on slow links); Lassul Icecast is the reliable pinned anchor.
+
+### Radio: multi-PDA playback, verified pins (2026-09-20)
+- Playback slots are per program entity now (dictionary), so two PDAs can
+  play simultaneously. Tearing a slot down hard-stops the page audio first
+  (__radioHardStop) - disposing the control alone orphans the CEF browser,
+  which kept playing with no UI.
+- Remote catalog is now verified server-side: before offering a
+  radio-browser.info station, the server range-GETs it and keeps only
+  streams that answer right now with OggS magic bytes.
+- Pinned list deduped (Lassul ogg/opus mounts all carry the same program ->
+  one entry) and grown with hand-verified stations found via the community
+  directory: Nightwave Plaza (vaporwave), LISTEN.moe (j-pop/k-pop),
+  Chinese Music World, Live-Streams Lounge, New Age Radio Jazz (flac-ogg).
