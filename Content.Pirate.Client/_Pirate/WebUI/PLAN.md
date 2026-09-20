@@ -1018,3 +1018,16 @@ CEF, usable by the RadioHost job and anyone with the program installed.
 2. res:// radio page + driver + mirror; PDA cartridge + UIFragment host,
    Pump driven from a client system.
 3. Curated pinned stations, favorites, optional RadioShow integration.
+
+### Radio: streaming works; remote catalog now opt-in (2026-09-20)
+- Verified end-to-end in game: PDA program -> page -> hidden-iframe
+  tui_bridge -> server state -> CEF <audio> plays Ogg/Opus streams.
+- Lessons: (1) same-document location.hash changes do NOT fire CEF
+  BeforeBrowse - use the tui_bridge iframe for actions from our own
+  res:// pages; (2) SomaFM killed their Ogg mounts and forbids game use;
+  pinned streams must be byte-verified (OggS magic) - dead ones surface as
+  NotSupportedError; (3) audio.crossOrigin would force CORS mode on media
+  that has no ACAO headers; (4) play() must run inside the click gesture.
+- pirate.radio_remote_catalog (server, default off): when off, the picker
+  offers only the curated pinned stations. When on, radio-browser.info
+  Ogg/Opus results are merged (community-submitted, unfiltered).

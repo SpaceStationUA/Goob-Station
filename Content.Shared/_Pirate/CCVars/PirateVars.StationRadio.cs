@@ -12,4 +12,13 @@ public sealed partial class PirateVars
     /// </summary>
     public static readonly CVarDef<float> StationRadioReceiverVolume =
         CVarDef.Create("pirate.station_radio_receiver_volume", 0.5f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+    /// <summary>
+    /// Server: merge unfiltered internet-radio stations discovered through
+    /// radio-browser.info into the PDA radio picker. Off by default — the
+    /// remote catalog is community-submitted and includes anything (e.g.
+    /// political talk streams), so a curated pinned list is the default.
+    /// </summary>
+    public static readonly CVarDef<bool> RadioRemoteCatalog =
+        CVarDef.Create("pirate.radio_remote_catalog", false, CVar.SERVERONLY);
 }

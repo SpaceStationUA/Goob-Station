@@ -5,7 +5,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Content.Pirate.Shared.Radio;
-using Content.Shared.CartridgeLoader;
+using Content.Shared._Pirate.CCVars;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -34,6 +35,7 @@ public sealed class PirateRadioSystem : EntitySystem
 
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private readonly HttpClient _http = new() { Timeout = FetchTimeout };
     private readonly Dictionary<NetEntity, RadioSession> _sessions = new();
@@ -61,7 +63,10 @@ public sealed class PirateRadioSystem : EntitySystem
         if (!Exists(marker))
             return;
 
-        EnsureCache();
+        if (_cfg.GetCVar(PirateVars.RadioRemoteCatalog))
+            EnsureCache();
+        else
+            _cache = null; // cvar turned off: fall back to pinned-only
 
         var stations = Pinned();
         if (_cache != null)
