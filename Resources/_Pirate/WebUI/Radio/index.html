@@ -100,7 +100,10 @@
 
   var audio = new Audio();
   audio.preload = "none";
-  audio.crossOrigin = "anonymous";
+  // NOTE: no crossOrigin attribute. It would switch the media fetch into
+  // CORS mode, and stream servers without Access-Control-Allow-Origin
+  // (most Icecast/SHOUTcast endpoints) would fail to load — request goes
+  // out, playback rejects. Plain no-cors media playback is all we need.
 
   var stations = [];
   var currentId = "";
@@ -148,6 +151,10 @@
 
   function select(id) {
     if (playing && id === currentId) { stop(true); return; }
+    // Play locally right away: this runs inside the click's user-gesture
+    // window, which Chromium's autoplay policy requires. The server report
+    // is a notification, not a round trip (state echoes are deduped).
+    play(id);
     report("play", { id: id });
   }
 
@@ -166,7 +173,7 @@
     var p = audio.play();
     if (p && p.catch) {
       p.catch(function (e) {
-        el("status").textContent = "cannot play";
+        el("status").textContent = "cannot play: " + (e && e.name ? e.name : "unknown");
         playing = false;
         el("eq").classList.add("paused");
         el("play").classList.add("primary");
@@ -231,7 +238,10 @@
     try {
       var s = typeof json === "string" ? JSON.parse(json) : json;
       if (!s.playing) { stop(false); return; }
-      if (s.stationId && s.stationId !== currentId) { play(s.stationId); }
+      // Already playing this station locally: the echo is our own report
+      // coming back — do not restart the stream.
+      if (playing && s.stationId === currentId) { return; }
+      if (s.stationId) { play(s.stationId); }
     } catch (e) { /* ignore */ }
   };
 
