@@ -2515,7 +2515,7 @@ entities:
       pos: -21.5,11.5
       parent: 1
     - type: DeviceList
-      devices:
+      devices: []
     - type: Fixtures
       fixtures: {}
   - uid: 26
@@ -3337,7 +3337,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
   - uid: 142
     components:
     - type: Transform
@@ -3349,7 +3348,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
   - uid: 143
     components:
     - type: Transform
@@ -3443,7 +3441,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
 - proto: BlastDoor
   entities:
   - uid: 176
@@ -10691,7 +10688,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
 - proto: CleanerDispenser
   entities:
   - uid: 1573
@@ -10946,7 +10942,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
     - type: AccessReader
       accessListsOriginal:
       - - Research
@@ -10962,7 +10957,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
 - proto: ComputerShuttle
   entities:
   - uid: 1613
@@ -12254,7 +12248,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
 - proto: Firelock
   entities:
   - uid: 1833
@@ -14738,7 +14731,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
 - proto: OxygenCanister
   entities:
   - uid: 2784
@@ -15389,7 +15381,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
   - uid: 2895
     components:
     - type: Transform
@@ -15401,7 +15392,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
 - proto: Protolathe
   entities:
   - uid: 2896
@@ -15415,7 +15405,6 @@ entities:
       - Arsenal
       - Experimental
       - CivilianServices
-      - Biochemical
 - proto: Rack
   entities:
   - uid: 2897

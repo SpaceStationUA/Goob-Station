@@ -172,7 +172,7 @@ entities:
       pos: 1.5,3.5
       parent: 1
     - type: DeviceList
-      devices:
+      devices: []
     - type: Fixtures
       fixtures: {}
   - uid: 191
@@ -181,7 +181,7 @@ entities:
       pos: 1.5,0.5
       parent: 1
     - type: DeviceList
-      devices:
+      devices: []
     - type: Fixtures
       fixtures: {}
 - proto: AirCanister

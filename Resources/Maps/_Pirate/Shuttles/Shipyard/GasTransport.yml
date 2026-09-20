@@ -160,7 +160,7 @@ entities:
       pos: 1.5,4.5
       parent: 1
     - type: DeviceList
-      devices:
+      devices: []
     - type: Fixtures
       fixtures: {}
   - uid: 3

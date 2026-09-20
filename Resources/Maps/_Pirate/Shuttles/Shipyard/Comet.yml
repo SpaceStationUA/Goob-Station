@@ -598,7 +598,7 @@ entities:
     - type: AccessReader
       access: []
     - type: DeviceList
-      devices:
+      devices: []
     - type: Fixtures
       fixtures: {}
     - type: Emagged
@@ -626,7 +626,7 @@ entities:
       - - Atmospherics
       access: []
     - type: DeviceList
-      devices:
+      devices: []
     - type: Fixtures
       fixtures: {}
     - type: Emagged
@@ -639,7 +639,7 @@ entities:
     - type: AccessReader
       access: []
     - type: DeviceList
-      devices:
+      devices: []
     - type: Fixtures
       fixtures: {}
     - type: Emagged
@@ -652,7 +652,7 @@ entities:
     - type: AccessReader
       access: []
     - type: DeviceList
-      devices:
+      devices: []
     - type: Fixtures
       fixtures: {}
     - type: Emagged
