@@ -8,31 +8,27 @@ using Robust.Client.WebView;
 namespace Content.Pirate.Client.Radio;
 
 /// <summary>
-///     Page-side bridge for the PID radio. The page owns the actual
+///     Page-side bridge for the PDA radio. The page owns the actual
 ///     &lt;audio&gt; element and its own play/pause/volume; C# only pushes the
-///     catalog and the server's selected-station state, and receives
-///     user actions (play/stop/volume) through the TUI hash channel.
+///     catalog and the server's selected-station state.
 /// </summary>
 public sealed class WebRadioDriver
 {
-    private readonly WebUiTuiIpc _ipc;
     private WebViewControl? _web;
     private string _lastCatalog = "";
     private string _lastState = "";
-
-    public event System.Action<string, string?>? Action;
 
     public WebRadioDriver(WebUiTuiIpc ipc)
     {
         _ipc = ipc;
     }
 
+    private readonly WebUiTuiIpc _ipc;
+
     public void Attach(WebViewControl web)
     {
         _web = web;
     }
-
-    public WebUiTuiIpc Ipc => _ipc;
 
     /// <summary>Push the station catalog; only re-sends when it changed.</summary>
     public void SetCatalog(IReadOnlyList<(string Id, string Label, string Genre, string Url, bool Featured)> stations)
@@ -71,11 +67,5 @@ public sealed class WebRadioDriver
         _lastState = json;
         _web?.ExecuteJavaScript("window.__radioSetState && window.__radioSetState(" +
             WebUiSpikeBridge.JsonString(json) + ");");
-    }
-
-    /// <summary>Bridge action handler (runs on the main thread via Pump).</summary>
-    public void HandleAction(string action, string? data)
-    {
-        Action?.Invoke(action, data);
     }
 }

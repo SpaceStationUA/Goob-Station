@@ -31,6 +31,7 @@ public sealed class PirateRadioClientSystem : EntitySystem
         public required WebViewControl View;
         public required WebUiTuiIpc Ipc;
         public required WebRadioDriver Driver;
+        public IReadOnlyList<PirateRadioStationEntry>? LastCatalog;
         public bool RequestedCatalog;
         public bool UncarriedStopSent;
     }
@@ -208,8 +209,13 @@ public sealed class PirateRadioClientSystem : EntitySystem
             }
 
             var catalog = PirateRadioClientState.Catalog(marker);
-            if (catalog != null)
+            if (catalog != null && !ReferenceEquals(catalog, p.LastCatalog))
+            {
+                // Catalog only replaces when a new event arrives; pushing per
+                // frame would rebuild JSON needlessly.
+                p.LastCatalog = catalog;
                 p.Driver.SetCatalog(ToTuples(catalog));
+            }
 
             var state = PirateRadioClientState.Get(marker);
             p.Driver.SetState(state.StationId, state.Playing);

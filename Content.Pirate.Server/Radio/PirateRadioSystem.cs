@@ -35,7 +35,6 @@ public sealed class PirateRadioSystem : EntitySystem
     private static readonly TimeSpan FetchTimeout = TimeSpan.FromSeconds(8);
 
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private readonly HttpClient _http = new() { Timeout = FetchTimeout };
@@ -77,7 +76,6 @@ public sealed class PirateRadioSystem : EntitySystem
         {
             Marker = msg.Marker,
             Stations = stations,
-            FromNetwork = _cache != null,
         }, args.SenderSession.Channel);
     }
 
@@ -99,10 +97,7 @@ public sealed class PirateRadioSystem : EntitySystem
                 if (station == null)
                     return;
                 state.StationId = station.Id;
-                state.Label = station.Label;
-                state.Url = station.Url;
                 state.Playing = true;
-                state.Stamp = Now();
                 break;
             }
             case "stop":
@@ -116,10 +111,7 @@ public sealed class PirateRadioSystem : EntitySystem
         {
             Marker = msg.Marker,
             StationId = state.StationId,
-            Label = state.Label,
-            Url = state.Url,
             Playing = state.Playing,
-            Stamp = state.Stamp,
         }, session.Channel);
     }
 
@@ -322,14 +314,10 @@ public sealed class PirateRadioSystem : EntitySystem
         return list;
     }
 
-    private static long Now() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
     private sealed class RadioSession
     {
         public string StationId = "";
-        public string Label = "";
-        public string Url = "";
         public bool Playing;
-        public long Stamp;
     }
 }

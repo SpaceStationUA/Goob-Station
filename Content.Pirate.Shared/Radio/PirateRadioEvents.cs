@@ -38,7 +38,6 @@ public sealed class PirateRadioCatalogEvent : EntityEventArgs
 {
     public NetEntity Marker;
     public List<PirateRadioStationEntry> Stations = new();
-    public bool FromNetwork;
 }
 
 /// <summary>
@@ -54,16 +53,13 @@ public sealed class PirateRadioCommandEvent : EntityEventArgs
 }
 
 /// <summary>
-///     Server → client: the program's current selection. Stamp anchors the
-///     wall clock so a reconnect mid-song can resume roughly in sync.
+///     Server → client: the program's currently selected station. The page
+///     resolves the station in its catalog; live radio needs no clock.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class PirateRadioStateEvent : EntityEventArgs
 {
     public NetEntity Marker;
     public string StationId = "";
-    public string Label = "";
-    public string Url = "";
     public bool Playing;
-    public long Stamp;
 }

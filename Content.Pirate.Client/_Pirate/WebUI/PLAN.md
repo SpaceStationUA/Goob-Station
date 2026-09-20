@@ -1061,3 +1061,15 @@ CEF, usable by the RadioHost job and anyone with the program installed.
   one entry) and grown with hand-verified stations found via the community
   directory: Nightwave Plaza (vaporwave), LISTEN.moe (j-pop/k-pop),
   Chinese Music World, Live-Streams Lounge, New Age Radio Jazz (flac-ogg).
+
+### Radio compaction pass (2026-09-20)
+- Dropped dead weight: driver Action event/HandleAction/Ipc accessor,
+  client Forget()/View(), state-event Label/Url/Stamp (live radio needs no
+  clock; the page resolves labels from the catalog), catalog FromNetwork
+  flag, unused server INetManager dep.
+- Per-frame waste guard: the catalog is pushed to the page only when a new
+  catalog list actually arrives (reference compare), not every frame.
+- Remote catalog note (left as-is per decision): it is lazy+verified, so
+  after enabling the cvar the FIRST catalog request still returns
+  pinned-only; remote stations appear on later requests once the
+  background fetch+verify (tens of seconds) has filled the cache.

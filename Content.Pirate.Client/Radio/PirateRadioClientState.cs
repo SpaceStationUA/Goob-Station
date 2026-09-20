@@ -21,10 +21,7 @@ public static class PirateRadioClientState
     public sealed class Entry
     {
         public string StationId = "";
-        public string Label = "";
-        public string Url = "";
         public bool Playing;
-        public long Stamp;
     }
 
     private static readonly Dictionary<NetEntity, Entry> _entries = new();
@@ -36,13 +33,6 @@ public static class PirateRadioClientState
 
     public static IReadOnlyList<PirateRadioStationEntry>? Catalog(NetEntity marker)
         => _catalogs.TryGetValue(marker, out var c) ? c : null;
-
-    public static void Forget(NetEntity marker)
-    {
-        _entries.Remove(marker);
-        _catalogs.Remove(marker);
-        _requested.Remove(marker);
-    }
 
     /// <summary>Ask the server for the catalog (throttled to once per marker).</summary>
     public static void RequestCatalog(NetEntity marker)
@@ -75,10 +65,7 @@ public static class PirateRadioClientState
         _entries[msg.Marker] = new Entry
         {
             StationId = msg.StationId,
-            Label = msg.Label,
-            Url = msg.Url,
             Playing = msg.Playing,
-            Stamp = msg.Stamp,
         };
     }
 }
