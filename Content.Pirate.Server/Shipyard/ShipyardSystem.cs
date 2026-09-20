@@ -130,6 +130,13 @@ public sealed class ShipyardSystem : EntitySystem
         _mapDeleterShuttle.SetTerminationCallback(shuttleUid, HandleTermination);
         _mapDeleterShuttle.SetCompletionCallback(shuttleUid, () => _shipyardMaps.Remove(sourceMapId));
 
+        var expectedDestinationMap = Transform(destinationGrid).MapUid;
+        if (expectedDestinationMap is not { } destinationMap)
+        {
+            HandleFailure();
+            return false;
+        }
+
         bool DockShuttle()
         {
             if (!Exists(shuttleUid) || !TryComp<ShuttleComponent>(shuttleUid, out var shuttleComp) ||
@@ -139,6 +146,7 @@ public sealed class ShipyardSystem : EntitySystem
                 return false;
             }
 
+            _mapDeleterShuttle.SetExpectedMap(shuttleUid, destinationMap);
             if (!_shuttle.FTLToDock(shuttleUid, shuttleComp, destinationGrid, priorityTag: DockTag))
             {
                 HandleFtlFailure();

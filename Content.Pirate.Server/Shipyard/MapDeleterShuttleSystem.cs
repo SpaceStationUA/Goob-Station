@@ -25,7 +25,7 @@ public sealed class MapDeleterShuttleSystem : EntitySystem
             return;
 
         var sourceMap = ent.Comp.SourceMap;
-        var success = args.MapUid != sourceMap;
+        var success = args.MapUid == ent.Comp.ExpectedMap;
         var failureCallback = TakeCallback(_failureCallbacks, ent.Owner);
         TakeCallback(_terminationCallbacks, ent.Owner);
         var completionCallback = TakeCallback(_completionCallbacks, ent.Owner);
@@ -92,6 +92,11 @@ public sealed class MapDeleterShuttleSystem : EntitySystem
         var comp = EnsureComp<MapDeleterShuttleComponent>(shuttle);
         comp.Enabled = true;
         comp.SourceMap = sourceMap;
+    }
+
+    public void SetExpectedMap(EntityUid shuttle, EntityUid expectedMap)
+    {
+        EnsureComp<MapDeleterShuttleComponent>(shuttle).ExpectedMap = expectedMap;
     }
 
     public bool DeleteOwnedMap(EntityUid sourceMap)
