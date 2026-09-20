@@ -74,6 +74,14 @@
   url: https://radio.chinesemusicworld.com/chinesemusic.ogg
 
 - type: radioStation
+  id: chifuru
+  label: Chifuru!
+  genre: anime radio / jpop
+  # Direct Ogg — the directory lists the bare IP (cert mismatch → fails);
+  # the nginx 301 on the .fun host renames the mount, so pin the final URL.
+  url: https://chiafuru.fun/stream/nanahira-releases@256
+
+- type: radioStation
   id: lounge-streams-nl
   label: Live-Streams Lounge
   genre: lounge / chill

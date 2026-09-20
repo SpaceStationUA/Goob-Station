@@ -23,12 +23,13 @@ public sealed partial class PirateVars
         CVarDef.Create("pirate.radio_remote_catalog", false, CVar.SERVERONLY);
 
     /// <summary>
-    ///     Server: path to an ffmpeg binary. When set, radio stations that the
-    ///     client's CEF cannot decode (MP3/AAC) are transcoded server-side and
-    ///     relayed through the game connection as WebM/Opus. Empty disables
-    ///     the feature. Audio-only transcodes cost a few percent of one core
-    ///     per station with measurable CPU headroom on typical hosts.
+    ///     Server: path to an ffmpeg binary (or bare "ffmpeg" to resolve via
+    ///     PATH). When set, radio stations that the client's CEF cannot
+    ///     decode (MP3/AAC) are transcoded server-side and relayed through
+    ///     the game connection as WebM/Opus. Empty disables the feature.
+    ///     Audio-only transcodes cost a few percent of one core per station
+    ///     with ample headroom on typical hosts.
     /// </summary>
     public static readonly CVarDef<string> RadioFfmpegPath =
-        CVarDef.Create("pirate.radio_ffmpeg_path", "", CVar.SERVERONLY);
+        CVarDef.Create("pirate.radio_ffmpeg_path", "ffmpeg", CVar.SERVERONLY);
 }
