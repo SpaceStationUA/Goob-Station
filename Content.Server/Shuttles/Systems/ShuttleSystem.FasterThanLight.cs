@@ -425,7 +425,7 @@ public sealed partial class ShuttleSystem
     /// Moves a shuttle from its current position to docked on the target one.
     /// If no docks are free when FTLing it will arrive in proximity
     /// </summary>
-    public void FTLToDock(
+    public bool FTLToDock(
         EntityUid shuttleUid,
         ShuttleComponent component,
         EntityUid target,
@@ -439,15 +439,15 @@ public sealed partial class ShuttleSystem
 
         ShuttleComponent? shuttleComp = component;
         if (!Resolve(shuttleUid, ref shuttleComp))
-            return;
+            return false;
 
         component = shuttleComp;
 
         if (!Resolve(shuttleUid, ref ftlDrive)) // Frontier edit
-            return;
+            return false;
 
         if (!TrySetupFTL(shuttleUid, component, out var hyperspace))
-            return;
+            return false;
 
         startupTime ??= ftlDrive.Data.StartupTime ?? DefaultStartupTime; // Frontier edit
         hyperspaceTime ??= ftlDrive.Data.TravelTime ?? DefaultTravelTime; // Frontier edit
@@ -479,6 +479,7 @@ public sealed partial class ShuttleSystem
             hyperspace.TargetCoordinates = Transform(shuttleUid).Coordinates;
             Log.Error($"Unable to FTL grid {ToPrettyString(shuttleUid)} to target properly?");
         }
+        return true;
     }
 
     private bool TrySetupFTL(EntityUid uid, ShuttleComponent shuttle, [NotNullWhen(true)] out FTLComponent? component)

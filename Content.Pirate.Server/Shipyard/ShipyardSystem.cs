@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -36,7 +37,7 @@ public sealed class ShipyardSystem : EntitySystem
         Subs.CVar(_config, PirateVars.Shipyard, value => Enabled = value, true);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(_ =>
         {
-            foreach (var mapId in _shipyardMaps)
+            foreach (var mapId in new List<MapId>(_shipyardMaps))
             {
                 if (_map.MapExists(mapId))
                     _map.DeleteMap(mapId);
@@ -90,18 +91,60 @@ public sealed class ShipyardSystem : EntitySystem
         var shuttleUid = shuttle.Value.Owner;
         var sourceMapId = Transform(shuttleUid).MapID;
         var sourceMapUid = _map.GetMap(sourceMapId);
+        var failureHandled = false;
+        void HandleFailure()
+        {
+            if (failureHandled)
+                return;
+
+            failureHandled = true;
+            _mapDeleterShuttle.Disable(shuttleUid);
+            _mapDeleterShuttle.DeleteOwnedMap(sourceMapUid);
+            _shipyardMaps.Remove(sourceMapId);
+            onFailure?.Invoke();
+        }
+
+        void HandleFtlFailure()
+        {
+            if (failureHandled)
+                return;
+
+            failureHandled = true;
+            _mapDeleterShuttle.Disable(shuttleUid);
+            _shipyardMaps.Remove(sourceMapId);
+            onFailure?.Invoke();
+            Timer.Spawn(TimeSpan.Zero, () => _mapDeleterShuttle.DeleteOwnedMap(sourceMapUid));
+        }
+
+        void HandleTermination()
+        {
+            if (failureHandled)
+                return;
+
+            failureHandled = true;
+            _shipyardMaps.Remove(sourceMapId);
+            onFailure?.Invoke();
+        }
+
+        _mapDeleterShuttle.SetFailureCallback(shuttleUid, HandleFtlFailure);
+        _mapDeleterShuttle.SetTerminationCallback(shuttleUid, HandleTermination);
+        _mapDeleterShuttle.SetCompletionCallback(shuttleUid, () => _shipyardMaps.Remove(sourceMapId));
+
         bool DockShuttle()
         {
             if (!Exists(shuttleUid) || !TryComp<ShuttleComponent>(shuttleUid, out var shuttleComp) ||
                 !Exists(destinationGrid) || !HasComp<MapGridComponent>(destinationGrid))
             {
-                _mapDeleterShuttle.DeleteOwnedMap(sourceMapUid);
-                _shipyardMaps.Remove(sourceMapId);
-                onFailure?.Invoke();
+                HandleFailure();
                 return false;
             }
 
-            _shuttle.FTLToDock(shuttleUid, shuttleComp, destinationGrid, priorityTag: DockTag);
+            if (!_shuttle.FTLToDock(shuttleUid, shuttleComp, destinationGrid, priorityTag: DockTag))
+            {
+                HandleFtlFailure();
+                return false;
+            }
+
             return true;
         }
 
