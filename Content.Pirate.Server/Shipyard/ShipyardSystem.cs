@@ -78,7 +78,7 @@ public sealed class ShipyardSystem : EntitySystem
     }
 
     public bool TrySendShuttle(EntityUid destinationGrid, ResPath path, int delay,
-        [NotNullWhen(true)] out Entity<ShuttleComponent>? shuttle)
+        [NotNullWhen(true)] out Entity<ShuttleComponent>? shuttle, Action? onFailure = null)
     {
         shuttle = null;
         if (!TryComp<MapGridComponent>(destinationGrid, out _))
@@ -90,25 +90,27 @@ public sealed class ShipyardSystem : EntitySystem
         var shuttleUid = shuttle.Value.Owner;
         var sourceMapId = Transform(shuttleUid).MapID;
         var sourceMapUid = _map.GetMap(sourceMapId);
-        void DockShuttle()
+        bool DockShuttle()
         {
             if (!Exists(shuttleUid) || !TryComp<ShuttleComponent>(shuttleUid, out var shuttleComp) ||
                 !Exists(destinationGrid) || !HasComp<MapGridComponent>(destinationGrid))
             {
                 _mapDeleterShuttle.DeleteOwnedMap(sourceMapUid);
                 _shipyardMaps.Remove(sourceMapId);
-                return;
+                onFailure?.Invoke();
+                return false;
             }
 
             _shuttle.FTLToDock(shuttleUid, shuttleComp, destinationGrid, priorityTag: DockTag);
+            return true;
         }
 
         if (delay <= 0)
-            DockShuttle();
-        else
-            Timer.Spawn(TimeSpan.FromSeconds(delay), DockShuttle);
+            return DockShuttle();
 
+        Timer.Spawn(TimeSpan.FromSeconds(delay), () => DockShuttle());
         return true;
+
     }
 
 }

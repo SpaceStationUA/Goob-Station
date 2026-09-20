@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Pirate.Shared.Shipyard;
 using Content.Pirate.Shared.Shipyard.Prototypes;
@@ -42,8 +43,13 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
 
         foreach (var vessel in proto.EnumeratePrototypes<VesselPrototype>())
         {
-            if (whitelist.IsWhitelistPassOrNull(vessel.Whitelist, console))
-                _vessels.Add(vessel);
+            if (!whitelist.IsWhitelistPassOrNull(vessel.Whitelist, console))
+                continue;
+
+            if (!vessel.Categories.Any(Console.Comp.Categories.Contains))
+                continue;
+
+            _vessels.Add(vessel);
         }
 
         _vessels.Sort((x, y) => string.Compare(Loc.GetString(x.Name), Loc.GetString(y.Name), StringComparison.CurrentCultureIgnoreCase));

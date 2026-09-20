@@ -97,15 +97,30 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
 
             destination = grid;
         }
-
-        if (!_shipyard.TrySendShuttle(destination, vessel.Path, vessel.Delay, out var shuttle))
+        var fundsCharged = false;
+        var fundsRefunded = false;
+        Action? refundFunds = null;
+        if (bankAccount is { } account)
         {
+            _cargo.UpdateBankAccount((account.Owner, account.Comp), -vessel.Price, account.Comp.PrimaryAccount);
+            fundsCharged = true;
+            refundFunds = () =>
+            {
+                if (!fundsCharged || fundsRefunded)
+                    return;
+
+                fundsRefunded = true;
+                _cargo.UpdateBankAccount((account.Owner, account.Comp), vessel.Price, account.Comp.PrimaryAccount);
+            };
+        }
+
+        if (!_shipyard.TrySendShuttle(destination, vessel.Path, vessel.Delay, out var shuttle, refundFunds))
+        {
+            refundFunds?.Invoke();
             Deny(ent, user, "shipyard-console-purchase-failed");
             return;
         }
 
-        if (bankAccount is { } account)
-            _cargo.UpdateBankAccount((account.Owner, account.Comp), -vessel.Price, account.Comp.PrimaryAccount);
 
         if (vessel.Delay > 0)
             _radio.SendRadioMessage(ent, Loc.GetString("shipyard-console-docking", ("vessel", Loc.GetString(vessel.Name)), ("delay", vessel.Delay)), ent.Comp.Channel, ent);
@@ -126,7 +141,9 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
             if (!_ui.IsUiOpen(uid, ShipyardConsoleUiKey.Key))
                 continue;
 
-            if (GetBankAccount(uid) is { } bank && args.Balance.TryGetValue(bank.Comp.PrimaryAccount, out var balance))
+            if (GetBankAccount(uid) is { } bank &&
+                bank.Owner == args.Station &&
+                args.Balance.TryGetValue(bank.Comp.PrimaryAccount, out var balance))
                 UpdateUI((uid, component), balance);
         }
     }
