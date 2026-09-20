@@ -952,3 +952,14 @@ ask (Robust.Client.WebView macOS package) from the earlier plan.
   silently refused and nothing renders — on launcher clients too. Also added
   SetResourceMimeType("wasm","application/wasm") from content since the engine
   MIME table lacks wasm (harmless, helps any future non-fetch wasm game).
+
+### Arcade games batch 2 (2026-09-20)
+- Added 5 more via the same vendor pipeline (pinned js13k submission zips):
+  Knight Dreams (NonCommercial), Dying Dreams (NonCommercial), Ghosted (MIT),
+  Super Castle Game (GPL-3.0), Number Knight (Apache-2.0). Non-commercial ones
+  included with attribution, same policy as Thirteen Terrible Stunts.
+- The 4 other requested games (a-prison-for-dreams, one-last-adventure,
+  a-dream-of-home [Go/WASM], time-to-panic) have NO published bundle in-repo
+  (TypeScript/Go source needing a build) and only itch.io builds — skipped per
+  the "published bundles only" policy. Revisit if we add a build step.
+- Smoke-tested all 5 headless: clean (only favicon 404s).

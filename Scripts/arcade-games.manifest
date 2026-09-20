@@ -32,3 +32,13 @@ finalseconds	MIT	zip	jani-nykanen/those-final-seconds	222396ade1082fedd76b5d8bd5
 # fails silently for launcher clients too. Re-add only if we ship an engine that
 # enables fetch on res://.
 sector13	MIT	zip	BenjaminWFox/Sector-13-Js13k-2024	76bc259a237c17b0f4da7866a68460de9c4bd44b	-	https://js13kgames.com/games/sector-13.zip	Sector13
+
+# --- games added 2026-09 (batch 2) ---
+# NOTE: knight-dreams and dying-dreams use bespoke non-commercial licenses
+# (open-source + attribution required, no commercial use) — included with
+# attribution; see each PROVENANCE. super-castle-game is GPL-3.0.
+knightdreams	NonCommercial	zip	jani-nykanen/knight-dreams	d25009c4a043e7213ab1e8e62fee5c1f62393519	-	https://js13kgames.com/games/knight-dreams.zip	KnightDreams
+dyingdreams	NonCommercial	zip	jani-nykanen/dying-dreams	2b72c423898f577465a25a44465571e6e486563b	-	https://js13kgames.com/games/dying-dreams.zip	DyingDreams
+ghosted	MIT	zip	jani-nykanen/ghosted	846454c3b2f7509515cbcbf8852b09f7b7d98b24	-	https://js13kgames.com/games/ghosted.zip	Ghosted
+supercastle	GPL-3.0	zip	mvasilkov/super2023	617034ee9884cd50df4dc7c8daa910679c6f7dde	-	https://js13kgames.com/games/super-castle-game.zip	SuperCastleGame
+numberknight	Apache-2.0	zip	adrien-gueret/number_knight	21c70a62bfb459ea50503308158cf14c4ecd8573	-	https://js13kgames.com/games/number-knight.zip	NumberKnight

@@ -76,5 +76,10 @@ public static class PirateArcadeGames
         ("donotmake13", "Do Not Make 13", "_Pirate/WebUI/Arcade/DoNotMake13/index.html"),
         ("finalseconds", "Those Final Seconds", "_Pirate/WebUI/Arcade/ThoseFinalSeconds/index.html"),
         ("sector13", "Sector 13", "_Pirate/WebUI/Arcade/Sector13/index.html"),
+        ("knightdreams", "Knight Dreams", "_Pirate/WebUI/Arcade/KnightDreams/index.html"),
+        ("dyingdreams", "Dying Dreams", "_Pirate/WebUI/Arcade/DyingDreams/index.html"),
+        ("ghosted", "Ghosted", "_Pirate/WebUI/Arcade/Ghosted/index.html"),
+        ("supercastle", "Super Castle Game", "_Pirate/WebUI/Arcade/SuperCastleGame/index.html"),
+        ("numberknight", "Number Knight", "_Pirate/WebUI/Arcade/NumberKnight/index.html"),
     };
 }

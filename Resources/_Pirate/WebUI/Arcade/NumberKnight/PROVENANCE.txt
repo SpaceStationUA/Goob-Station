@@ -1,0 +1,13 @@
+NumberKnight — vendored third-party WebArcade game
+Fetched by Scripts/sh/vendor-arcade-games.sh.
+
+id:      numberknight
+license: Apache-2.0
+repo:    adrien-gueret/number_knight
+ref:     21c70a62bfb459ea50503308158cf14c4ecd8573
+kind:    zip (https://js13kgames.com/games/number-knight.zip)
+fetched: 2026-09-20T10:12:18Z
+
+This is a third-party work from the JS13kGames 2024 (or 2023) competition.
+See the repository/source above for the original license text and copyright
+holder. We do not claim authorship and we do not modify the code.
