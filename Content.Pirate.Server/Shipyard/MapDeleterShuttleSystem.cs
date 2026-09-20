@@ -29,7 +29,7 @@ public sealed class MapDeleterShuttleSystem : EntitySystem
         ent.Comp.Enabled = false;
         RemComp<MapDeleterShuttleComponent>(ent);
 
-        if (args.MapUid == pending.SourceMap)
+        if (args.MapUid != pending.ExpectedMap)
         {
             pending.Failure?.Invoke();
             return;
@@ -80,17 +80,19 @@ public sealed class MapDeleterShuttleSystem : EntitySystem
         _pending[shuttle] = pending with { Armed = true };
         return ArmStatus.Armed;
     }
-    public bool RestoreAndArm(EntityUid shuttle, EntityUid sourceMap, Action failure, Action completion,
-        Action termination)
+    public bool RestoreAndArm(EntityUid shuttle, EntityUid sourceMap, EntityUid expectedMap, Action failure,
+        Action completion, Action termination)
     {
         if (!TryComp<MapDeleterShuttleComponent>(shuttle, out var marker) ||
             !marker.Enabled ||
+            !expectedMap.IsValid() ||
+            marker.ExpectedMap != expectedMap ||
             _pending.ContainsKey(shuttle))
         {
             return false;
         }
 
-        _pending[shuttle] = new PendingShuttle(sourceMap, failure, completion, termination, Armed: true);
+        _pending[shuttle] = new PendingShuttle(sourceMap, expectedMap, failure, completion, termination, Armed: true);
         return true;
     }
 
@@ -110,12 +112,15 @@ public sealed class MapDeleterShuttleSystem : EntitySystem
         _pending.Remove(shuttle);
         RemComp<MapDeleterShuttleComponent>(shuttle);
     }
-
-    public void Enable(EntityUid shuttle, EntityUid sourceMap)
+    public void Enable(EntityUid shuttle, EntityUid sourceMap, EntityUid expectedMap)
     {
+        if (!expectedMap.IsValid())
+            return;
+
         var comp = EnsureComp<MapDeleterShuttleComponent>(shuttle);
         comp.Enabled = true;
-        _pending[shuttle] = new PendingShuttle(sourceMap);
+        comp.ExpectedMap = expectedMap;
+        _pending[shuttle] = new PendingShuttle(sourceMap, expectedMap);
     }
 
     public bool DeleteOwnedMap(EntityUid sourceMap)
@@ -144,6 +149,7 @@ public sealed class MapDeleterShuttleSystem : EntitySystem
 
     private readonly record struct PendingShuttle(
         EntityUid SourceMap,
+        EntityUid ExpectedMap,
         Action? Failure = null,
         Action? Completion = null,
         Action? Termination = null,

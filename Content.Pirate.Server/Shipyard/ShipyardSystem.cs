@@ -47,11 +47,18 @@ public sealed class ShipyardSystem : EntitySystem
         });
     }
 
-    public bool TryCreateShuttle(ResPath path, [NotNullWhen(true)] out Entity<ShuttleComponent>? shuttle)
+    public bool TryCreateShuttle(ResPath path, EntityUid expectedMap, [NotNullWhen(true)] out Entity<ShuttleComponent>? shuttle)
     {
         shuttle = null;
-        if (!Enabled)
+        if (!Enabled || !expectedMap.IsValid() || TerminatingOrDeleted(expectedMap))
             return false;
+
+        var expectedTransform = Transform(expectedMap);
+        if (expectedTransform.MapID == MapId.Nullspace ||
+            !_map.MapExists(expectedTransform.MapID) || _map.GetMap(expectedTransform.MapID) != expectedMap)
+        {
+            return false;
+        }
 
         var map = _map.CreateMap(out var mapId);
         _shipyardMaps.Add(mapId);
@@ -73,7 +80,7 @@ public sealed class ShipyardSystem : EntitySystem
         }
 
         _map.SetPaused(map, false);
-        _mapDeleterShuttle.Enable(gridUid, map);
+        _mapDeleterShuttle.Enable(gridUid, map, expectedMap);
         shuttle = (gridUid, comp);
         return true;
     }
@@ -82,10 +89,17 @@ public sealed class ShipyardSystem : EntitySystem
         [NotNullWhen(true)] out Entity<ShuttleComponent>? shuttle, Action? onFailure = null)
     {
         shuttle = null;
-        if (!TryComp<MapGridComponent>(destinationGrid, out _))
+        if (!TryComp<MapGridComponent>(destinationGrid, out _) || TerminatingOrDeleted(destinationGrid))
             return false;
 
-        if (!TryCreateShuttle(path, out shuttle))
+        var destinationTransform = Transform(destinationGrid);
+        if (destinationTransform.MapID == MapId.Nullspace || destinationTransform.MapUid is not { } destinationMap ||
+            !_map.MapExists(destinationTransform.MapID))
+        {
+            return false;
+        }
+
+        if (!TryCreateShuttle(path, destinationMap, out shuttle))
             return false;
 
         var shuttleUid = shuttle.Value.Owner;
@@ -110,6 +124,8 @@ public sealed class ShipyardSystem : EntitySystem
                 return;
 
             failureHandled = true;
+            _mapDeleterShuttle.DeleteOwnedMap(sourceMapUid);
+            _shipyardMaps.Remove(sourceMapId);
             onFailure?.Invoke();
         }
 
@@ -163,8 +179,8 @@ public sealed class ShipyardSystem : EntitySystem
                     Log.Debug($"Shipyard shuttle {ToPrettyString(shuttleUid)} cleanup state was already handled before arming.");
                     return true;
                 case MapDeleterShuttleSystem.ArmStatus.Missing:
-                    if (!_mapDeleterShuttle.RestoreAndArm(shuttleUid, sourceMapUid, HandleTerminalFailure,
-                            HandleCompletion, HandleTermination))
+                    if (!_mapDeleterShuttle.RestoreAndArm(shuttleUid, sourceMapUid, destinationMap,
+                            HandleTerminalFailure, HandleCompletion, HandleTermination))
                     {
                         Log.Error($"Shipyard shuttle {ToPrettyString(shuttleUid)} could not recover missing cleanup state after starting FTL.");
                     }
