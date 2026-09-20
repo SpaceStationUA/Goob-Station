@@ -92,7 +92,8 @@ public sealed class ShipyardSystem : EntitySystem
         var sourceMapId = Transform(shuttleUid).MapID;
         var sourceMapUid = _map.GetMap(sourceMapId);
         var failureHandled = false;
-        void HandleFailure()
+
+        void HandlePreJumpFailure()
         {
             if (failureHandled)
                 return;
@@ -103,17 +104,13 @@ public sealed class ShipyardSystem : EntitySystem
             _shipyardMaps.Remove(sourceMapId);
             onFailure?.Invoke();
         }
-
-        void HandleFtlFailure()
+        void HandleTerminalFailure()
         {
             if (failureHandled)
                 return;
 
             failureHandled = true;
-            _mapDeleterShuttle.Disable(shuttleUid);
-            _shipyardMaps.Remove(sourceMapId);
             onFailure?.Invoke();
-            Timer.Spawn(TimeSpan.Zero, () => _mapDeleterShuttle.DeleteOwnedMap(sourceMapUid));
         }
 
         void HandleTermination()
@@ -122,38 +119,61 @@ public sealed class ShipyardSystem : EntitySystem
                 return;
 
             failureHandled = true;
-            _shipyardMaps.Remove(sourceMapId);
             onFailure?.Invoke();
         }
-
-        _mapDeleterShuttle.SetFailureCallback(shuttleUid, HandleFtlFailure);
-        _mapDeleterShuttle.SetTerminationCallback(shuttleUid, HandleTermination);
-        _mapDeleterShuttle.SetCompletionCallback(shuttleUid, () => _shipyardMaps.Remove(sourceMapId));
-
-        var expectedDestinationMap = Transform(destinationGrid).MapUid;
-        if (expectedDestinationMap is not { } destinationMap)
+        void HandleCompletion()
         {
-            HandleFailure();
-            return false;
+            _shipyardMaps.Remove(sourceMapId);
         }
+
+        _mapDeleterShuttle.SetCallbacks(shuttleUid, HandleTerminalFailure, HandleCompletion, HandleTermination);
 
         bool DockShuttle()
         {
-            if (!Exists(shuttleUid) || !TryComp<ShuttleComponent>(shuttleUid, out var shuttleComp) ||
-                !Exists(destinationGrid) || !HasComp<MapGridComponent>(destinationGrid))
+            if (!_mapDeleterShuttle.IsPending(shuttleUid))
+                return false;
+
+            if (TerminatingOrDeleted(shuttleUid) || TerminatingOrDeleted(destinationGrid) ||
+                !TryComp<ShuttleComponent>(shuttleUid, out var shuttleComp) ||
+                !TryComp<MapGridComponent>(destinationGrid, out _) ||
+                TerminatingOrDeleted(sourceMapUid) ||
+                !TryComp<TransformComponent>(sourceMapUid, out var sourceTransform) ||
+                sourceTransform.MapID == MapId.Nullspace ||
+                !_map.MapExists(sourceTransform.MapID) ||
+                _map.GetMap(sourceTransform.MapID) != sourceMapUid)
             {
-                HandleFailure();
+                if (!_mapDeleterShuttle.IsArmed(shuttleUid))
+                    HandlePreJumpFailure();
                 return false;
             }
 
-            _mapDeleterShuttle.SetExpectedMap(shuttleUid, destinationMap);
             if (!_shuttle.FTLToDock(shuttleUid, shuttleComp, destinationGrid, priorityTag: DockTag))
             {
-                HandleFtlFailure();
+                HandlePreJumpFailure();
                 return false;
             }
 
-            return true;
+            switch (_mapDeleterShuttle.Arm(shuttleUid))
+            {
+                case MapDeleterShuttleSystem.ArmStatus.Armed:
+                    return true;
+                case MapDeleterShuttleSystem.ArmStatus.AlreadyHandled:
+                    // Completion or termination atomically consumed the pending state before Arm;
+                    // its callback already owns cleanup/refund handling.
+                    Log.Debug($"Shipyard shuttle {ToPrettyString(shuttleUid)} cleanup state was already handled before arming.");
+                    return true;
+                case MapDeleterShuttleSystem.ArmStatus.Missing:
+                    if (!_mapDeleterShuttle.RestoreAndArm(shuttleUid, sourceMapUid, HandleTerminalFailure,
+                            HandleCompletion, HandleTermination))
+                    {
+                        Log.Error($"Shipyard shuttle {ToPrettyString(shuttleUid)} could not recover missing cleanup state after starting FTL.");
+                    }
+
+                    // FTLToDock accepted the jump. Never use the pre-jump failure path here.
+                    return true;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         if (delay <= 0)
@@ -161,7 +181,5 @@ public sealed class ShipyardSystem : EntitySystem
 
         Timer.Spawn(TimeSpan.FromSeconds(delay), () => DockShuttle());
         return true;
-
     }
-
 }

@@ -1,16 +1,13 @@
 using Content.Server.Shuttles.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.Shipyard;
 
 public sealed class MapDeleterShuttleSystem : EntitySystem
 {
     [Dependency] private readonly SharedMapSystem _map = default!;
-    private readonly Dictionary<EntityUid, Action?> _failureCallbacks = new();
-    private readonly Dictionary<EntityUid, Action?> _terminationCallbacks = new();
-    private readonly Dictionary<EntityUid, Action?> _completionCallbacks = new();
+    private readonly Dictionary<EntityUid, PendingShuttle> _pending = new();
 
     public override void Initialize()
     {
@@ -21,69 +18,96 @@ public sealed class MapDeleterShuttleSystem : EntitySystem
 
     private void OnFTLCompleted(Entity<MapDeleterShuttleComponent> ent, ref FTLCompletedEvent args)
     {
-        if (!ent.Comp.Enabled)
-            return;
-
-        var sourceMap = ent.Comp.SourceMap;
-        var success = args.MapUid == ent.Comp.ExpectedMap;
-        var failureCallback = TakeCallback(_failureCallbacks, ent.Owner);
-        TakeCallback(_terminationCallbacks, ent.Owner);
-        var completionCallback = TakeCallback(_completionCallbacks, ent.Owner);
-        ent.Comp.Enabled = false;
-        RemComp<MapDeleterShuttleComponent>(ent);
-
-        if (success)
+        if (!ent.Comp.Enabled ||
+            !_pending.TryGetValue(ent.Owner, out var pending) ||
+            !pending.Armed)
         {
-            completionCallback?.Invoke();
-            DeleteOwnedMap(sourceMap);
             return;
         }
 
-        failureCallback?.Invoke();
+        _pending.Remove(ent.Owner);
+        ent.Comp.Enabled = false;
+        RemComp<MapDeleterShuttleComponent>(ent);
+
+        if (args.MapUid == pending.SourceMap)
+        {
+            pending.Failure?.Invoke();
+            return;
+        }
+
+        pending.Completion?.Invoke();
+        DeleteOwnedMap(pending.SourceMap);
     }
 
     private void OnShuttleTerminating(Entity<MapDeleterShuttleComponent> ent, ref EntityTerminatingEvent args)
     {
-        if (!ent.Comp.Enabled)
+        if (!ent.Comp.Enabled || !_pending.Remove(ent.Owner, out var pending))
             return;
 
-        TakeCallback(_failureCallbacks, ent.Owner);
-        var terminationCallback = TakeCallback(_terminationCallbacks, ent.Owner);
-        TakeCallback(_completionCallbacks, ent.Owner);
         ent.Comp.Enabled = false;
         RemComp<MapDeleterShuttleComponent>(ent);
-
-        terminationCallback?.Invoke();
+        pending.Termination?.Invoke();
     }
 
-    private static Action? TakeCallback(Dictionary<EntityUid, Action?> callbacks, EntityUid shuttle)
+    public void SetCallbacks(EntityUid shuttle, Action failure, Action completion, Action termination)
     {
-        if (!callbacks.Remove(shuttle, out var callback))
-            return null;
-
-        return callback;
+        if (_pending.TryGetValue(shuttle, out var pending))
+        {
+            _pending[shuttle] = pending with
+            {
+                Failure = failure,
+                Completion = completion,
+                Termination = termination
+            };
+        }
     }
 
-    public void SetFailureCallback(EntityUid shuttle, Action callback)
+    public ArmStatus Arm(EntityUid shuttle)
     {
-        _failureCallbacks[shuttle] = callback;
+        if (!_pending.TryGetValue(shuttle, out var pending))
+        {
+            // Completion and termination remove the marker and pending entry before invoking callbacks.
+            // Therefore an enabled marker without an entry is the recoverable missing state, while
+            // an absent or disabled marker means those callbacks already consumed the state.
+            return TryComp<MapDeleterShuttleComponent>(shuttle, out var missingMarker) && missingMarker.Enabled
+                ? ArmStatus.Missing
+                : ArmStatus.AlreadyHandled;
+        }
+
+        if (!TryComp<MapDeleterShuttleComponent>(shuttle, out var marker) || !marker.Enabled)
+            return ArmStatus.Missing;
+
+        _pending[shuttle] = pending with { Armed = true };
+        return ArmStatus.Armed;
+    }
+    public bool RestoreAndArm(EntityUid shuttle, EntityUid sourceMap, Action failure, Action completion,
+        Action termination)
+    {
+        if (!TryComp<MapDeleterShuttleComponent>(shuttle, out var marker) ||
+            !marker.Enabled ||
+            _pending.ContainsKey(shuttle))
+        {
+            return false;
+        }
+
+        _pending[shuttle] = new PendingShuttle(sourceMap, failure, completion, termination, Armed: true);
+        return true;
     }
 
-    public void SetTerminationCallback(EntityUid shuttle, Action callback)
+
+    public bool IsPending(EntityUid shuttle)
     {
-        _terminationCallbacks[shuttle] = callback;
+        return _pending.ContainsKey(shuttle);
     }
 
-    public void SetCompletionCallback(EntityUid shuttle, Action callback)
+    public bool IsArmed(EntityUid shuttle)
     {
-        _completionCallbacks[shuttle] = callback;
+        return _pending.TryGetValue(shuttle, out var pending) && pending.Armed;
     }
 
     public void Disable(EntityUid shuttle)
     {
-        _failureCallbacks.Remove(shuttle);
-        _terminationCallbacks.Remove(shuttle);
-        _completionCallbacks.Remove(shuttle);
+        _pending.Remove(shuttle);
         RemComp<MapDeleterShuttleComponent>(shuttle);
     }
 
@@ -91,12 +115,7 @@ public sealed class MapDeleterShuttleSystem : EntitySystem
     {
         var comp = EnsureComp<MapDeleterShuttleComponent>(shuttle);
         comp.Enabled = true;
-        comp.SourceMap = sourceMap;
-    }
-
-    public void SetExpectedMap(EntityUid shuttle, EntityUid expectedMap)
-    {
-        EnsureComp<MapDeleterShuttleComponent>(shuttle).ExpectedMap = expectedMap;
+        _pending[shuttle] = new PendingShuttle(sourceMap);
     }
 
     public bool DeleteOwnedMap(EntityUid sourceMap)
@@ -115,4 +134,18 @@ public sealed class MapDeleterShuttleSystem : EntitySystem
         _map.DeleteMap(mapId);
         return true;
     }
+
+    public enum ArmStatus
+    {
+        Armed,
+        AlreadyHandled,
+        Missing
+    }
+
+    private readonly record struct PendingShuttle(
+        EntityUid SourceMap,
+        Action? Failure = null,
+        Action? Completion = null,
+        Action? Termination = null,
+        bool Armed = false);
 }

@@ -5,6 +5,4 @@ namespace Content.Pirate.Server.Shipyard;
 public sealed partial class MapDeleterShuttleComponent : Component
 {
     public bool Enabled;
-    public EntityUid SourceMap;
-    public EntityUid ExpectedMap;
 }

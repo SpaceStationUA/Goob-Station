@@ -801,7 +801,10 @@ public sealed partial class ShuttleSystem
         _mapSystem.SetPaused(mapId, false);
         Smimsh(uid, xform: xform);
 
-        var ftlEvent = new FTLCompletedEvent(uid, _mapSystem.GetMap(mapId));
+        if (xform.MapUid is not { } landedMapUid)
+            return;
+
+        var ftlEvent = new FTLCompletedEvent(uid, landedMapUid);
         RaiseLocalEvent(uid, ref ftlEvent, true);
     }
 
