@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 Starlight Contributors
-# Pirate: unsupported Starlight Shipyard prototypes were removed where no exact local schema exists; grid roots, Shuttle/containment, atmosphere networks, and usable interiors are retained.
-# Pirate: Alt3/Alt4 branches were removed; CargoShuttle, hull, containment, gas transport structure, and the local generator remain.
+# Pirate: unsupported Starlight Alt3/Alt4 vent and scrubber schemas are not faked with incompatible local layers; their obsolete alarms, canister, and sensor links are removed below.
+# Pirate: Alt3/Alt4 atmosphere branches were removed; CargoShuttle, hull, containment, gas transport structure, and the local generator remain.
 # SPDX-License-Identifier: MIT
 # Ported from ss14Starlight/space-station-14 Shipyard [PORT] (#4245).
 meta:
@@ -10,7 +10,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 07/22/2026 19:45:53
-  entityCount: 204
+  entityCount: 201
 maps: []
 grids:
 - 1
@@ -152,43 +152,6 @@ entities:
     - type: ImplicitRoof
     - type: NavMap
     - type: ExplosionAirtightGrid
-- proto: AirAlarm
-  entities:
-  - uid: 2
-    components:
-    - type: Transform
-      pos: 1.5,4.5
-      parent: 1
-    - type: DeviceList
-      devices: []
-    - type: Fixtures
-      fixtures: {}
-  - uid: 3
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 1.5,-2.5
-      parent: 1
-    - type: DeviceList
-      devices:
-      - 7
-    - type: Fixtures
-      fixtures: {}
-- proto: AirCanister
-  entities:
-  - uid: 4
-    components:
-    - type: Transform
-      anchored: True
-      pos: 2.5,4.5
-      parent: 1
-    - type: AccessReader
-      accessListsOriginal:
-      - - Atmospherics
-      - - Engineering
-      - - Research
-    - type: Physics
-      bodyType: Static
 - proto: AirlockGlassShuttle
   entities:
   - uid: 5
@@ -203,17 +166,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,-0.5
       parent: 1
-- proto: AirSensor
-  entities:
-  - uid: 7
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 3.5,-6.5
-      parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 3
 - proto: APCBasic
   entities:
   - uid: 8
