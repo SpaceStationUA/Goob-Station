@@ -115,8 +115,11 @@ public sealed class PersistentTextSystem : EntitySystem
                 // (if any) is restored below regardless.
                 if (persistence.SupportCharacterName)
                 {
-                    // Use the character name from the spawn profile, not the account nick.
-                    var characterName = ev.Profile.Name;
+                    // Pirate: bind by CHARACTER - use the spawned mob's actual in-world name,
+                    // not the mind (minds are recreated on exit/re-enter) and not the raw
+                    // profile name (renames before spawn complete would break the write check,
+                    // which compares against the actor's current name).
+                    var characterName = Name(ev.Mob);
 
                     if (snapshot?.OwnerUserId != null &&
                         snapshot.OwnerUserId.Value != ev.Player.UserId.UserId)

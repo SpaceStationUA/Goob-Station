@@ -24,6 +24,7 @@ using Content.Shared.Roles;
 // Starlight-end
 
 #region Pirate: paperwork tags
+using Robust.Shared.Network;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Content.Shared._Pirate.Paper;
@@ -308,14 +309,26 @@ public sealed class PaperSystem : EntitySystem
         if (!string.Equals(component.OwnerKind, PersistentTextOwnerKinds.Profile, StringComparison.Ordinal))
             return true;
 
-        if (!_mind.TryGetMind(actor, out _, out var mind))
+        // Pirate: persistent text (diaries) - the check is by CHARACTER, not by the mind.
+        // Exiting and re-entering a character wipes and recreates the mind, which used to
+        // lock the diary even for its rightful owner. The character is identified by its
+        // in-world name plus the account behind it (session first, mind only as a fallback
+        // so client-side prediction evaluates the same way).
+        if (!string.Equals(Name(actor), component.OwnerCharacterName, StringComparison.Ordinal))
             return false;
+
+        if (component.OwnerUserId == null)
+            return true;
+
+        NetUserId? userId = null;
+        if (TryComp<ActorComponent>(actor, out var actorComp))
+            userId = actorComp.PlayerSession.UserId;
+        else if (_mind.TryGetMind(actor, out _, out var mind))
+            userId = mind.UserId;
 
         // Bound by character name and userId: another player's character
         // with the same name can never take over the diary.
-        return mind.UserId != null &&
-               mind.CharacterName == component.OwnerCharacterName &&
-               component.OwnerUserId == mind.UserId.Value;
+        return userId != null && component.OwnerUserId == userId.Value;
     }
 
     /// <summary>
@@ -329,13 +342,23 @@ public sealed class PaperSystem : EntitySystem
         if (!string.Equals(component.OwnerKind, PersistentTextOwnerKinds.Profile, StringComparison.Ordinal))
             return;
 
-        if (!_mind.TryGetMind(actor, out _, out var mind) ||
-            mind.UserId == null ||
-            string.IsNullOrWhiteSpace(mind.CharacterName))
+        // Pirate: bind to the CHARACTER (in-world name + account), not the mind —
+        // the mind is replaced whenever a player exits and re-enters their character.
+        var characterName = Name(actor);
+        if (string.IsNullOrWhiteSpace(characterName))
             return;
 
-        component.OwnerCharacterName = mind.CharacterName;
-        component.OwnerUserId = mind.UserId.Value;
+        NetUserId? userId = null;
+        if (TryComp<ActorComponent>(actor, out var actorComp))
+            userId = actorComp.PlayerSession.UserId;
+        else if (_mind.TryGetMind(actor, out _, out var mind))
+            userId = mind.UserId;
+
+        if (userId == null)
+            return;
+
+        component.OwnerCharacterName = characterName;
+        component.OwnerUserId = userId.Value;
         UpdatePersistentTextName(uid, component);
     }
 
