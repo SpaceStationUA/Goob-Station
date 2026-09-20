@@ -80,6 +80,17 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         Title = "Ігровий автомат";
         SetSize = new Vector2i(560, 760);
 
+        // CEF refuses to instantiate a WebAssembly module unless the resource
+        // is served as application/wasm (the engine's MIME table has no wasm
+        // entry), so WASM games (FRI3) silently fail to load. Register it
+        // once, before the control exists.
+        try
+        {
+            IoCManager.Resolve<Robust.Client.WebView.IWebViewManager>()
+                .SetResourceMimeType("wasm", "application/wasm");
+        }
+        catch { /* headless dev */ }
+
         _web = new WebViewControl
         {
             AlwaysActive = true,
@@ -392,38 +403,115 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
 
     private Robust.Client.Input.IInputManager? _keyups;
 
-    /// <summary>Robust key -> (DOM key, DOM code); games often match
-    /// KeyboardEvent.code ("KeyW"), so the bridge must carry both.</summary>
-    private static readonly System.Collections.Generic.Dictionary<Robust.Client.Input.Keyboard.Key, (string Key, string Code)> KeyNames =
-        new()
+    /// <summary>Robust key -> (DOM key, DOM code, legacy keyCode). Covers the
+    /// whole alphanumeric block plus the control/navigation keys games use, so
+    /// a game needing a new letter doesn't need a bridge change. Built once;
+    /// the page keeps a matching code->keyCode table.</summary>
+    private static readonly System.Collections.Generic.Dictionary<
+        Robust.Client.Input.Keyboard.Key, (string Key, string Code, int KeyCode)> KeyNames = BuildKeyNames();
+
+    private static System.Collections.Generic.Dictionary<
+        Robust.Client.Input.Keyboard.Key, (string Key, string Code, int KeyCode)> BuildKeyNames()
+    {
+        var K = typeof(Robust.Client.Input.Keyboard.Key);
+        var map = new System.Collections.Generic.Dictionary<
+            Robust.Client.Input.Keyboard.Key, (string Key, string Code, int KeyCode)>();
+
+        // Letters A..Z: enum name == DOM code suffix, lowercase DOM key.
+        for (var c = 'A'; c <= 'Z'; c++)
         {
-            [Robust.Client.Input.Keyboard.Key.W] = ("w", "KeyW"),
-            [Robust.Client.Input.Keyboard.Key.A] = ("a", "KeyA"),
-            [Robust.Client.Input.Keyboard.Key.S] = ("s", "KeyS"),
-            [Robust.Client.Input.Keyboard.Key.D] = ("d", "KeyD"),
-            [Robust.Client.Input.Keyboard.Key.J] = ("j", "KeyJ"),
-            [Robust.Client.Input.Keyboard.Key.K] = ("k", "KeyK"),
-            [Robust.Client.Input.Keyboard.Key.Escape] = ("Escape", "Escape"),
-            [Robust.Client.Input.Keyboard.Key.Space] = (" ", "Space"),
-            [Robust.Client.Input.Keyboard.Key.Return] = ("Enter", "Enter"),
-            [Robust.Client.Input.Keyboard.Key.BackSpace] = ("Backspace", "Backspace"),
-            [Robust.Client.Input.Keyboard.Key.Up] = ("ArrowUp", "ArrowUp"),
-            [Robust.Client.Input.Keyboard.Key.Down] = ("ArrowDown", "ArrowDown"),
-            [Robust.Client.Input.Keyboard.Key.Left] = ("ArrowLeft", "ArrowLeft"),
-            [Robust.Client.Input.Keyboard.Key.Right] = ("ArrowRight", "ArrowRight"),
-            [Robust.Client.Input.Keyboard.Key.Shift] = ("Shift", "ShiftLeft"),
-            [Robust.Client.Input.Keyboard.Key.Control] = ("Control", "ControlLeft"),
-        };
+            if (!System.Enum.TryParse<Robust.Client.Input.Keyboard.Key>(c.ToString(), out var k))
+                continue;
+            map[k] = (c.ToString().ToLowerInvariant(), "Key" + c, c);
+        }
+
+        // Digits 0..9: enum name is Num0..Num9, DOM code Digit0..Digit9.
+        for (var d = 0; d <= 9; d++)
+        {
+            if (!System.Enum.TryParse<Robust.Client.Input.Keyboard.Key>("Num" + d, out var k))
+                continue;
+            map[k] = (d.ToString(), "Digit" + d, '0' + d);
+        }
+
+        void Add(string enumName, string key, string code, int keyCode)
+        {
+            if (System.Enum.TryParse<Robust.Client.Input.Keyboard.Key>(enumName, out var k))
+                map[k] = (key, code, keyCode);
+        }
+
+        Add("Escape", "Escape", "Escape", 27);
+        Add("Space", " ", "Space", 32);
+        Add("Return", "Enter", "Enter", 13);
+        Add("NumpadEnter", "Enter", "NumpadEnter", 13);
+        Add("BackSpace", "Backspace", "Backspace", 8);
+        Add("Tab", "Tab", "Tab", 9);
+        Add("Up", "ArrowUp", "ArrowUp", 38);
+        Add("Down", "ArrowDown", "ArrowDown", 40);
+        Add("Left", "ArrowLeft", "ArrowLeft", 37);
+        Add("Right", "ArrowRight", "ArrowRight", 39);
+        Add("Shift", "Shift", "ShiftLeft", 16);
+        Add("Control", "Control", "ControlLeft", 17);
+        Add("Alt", "Alt", "AltLeft", 18);
+        Add("Menu", "ContextMenu", "ContextMenu", 93);
+        Add("PageUp", "PageUp", "PageUp", 33);
+        Add("PageDown", "PageDown", "PageDown", 34);
+        Add("Home", "Home", "Home", 36);
+        Add("End", "End", "End", 35);
+        Add("Insert", "Insert", "Insert", 45);
+        Add("Delete", "Delete", "Delete", 46);
+        Add("CapsLock", "CapsLock", "CapsLock", 20);
+        Add("Comma", ",", "Comma", 188);
+        Add("Period", ".", "Period", 190);
+        Add("Slash", "/", "Slash", 191);
+        Add("SemiColon", ";", "Semicolon", 186);
+        Add("Apostrophe", "'", "Quote", 222);
+        Add("LBracket", "[", "BracketLeft", 219);
+        Add("RBracket", "]", "BracketRight", 221);
+        Add("BackSlash", "\\", "Backslash", 220);
+        Add("Tilde", "`", "Backquote", 192);
+        Add("Equal", "=", "Equal", 187);
+        Add("Minus", "-", "Minus", 189);
+
+        for (var i = 1; i <= 12; i++)
+            Add("F" + i, "F" + i, "F" + i, 111 + i);
+
+        return map;
+    }
+
+    // Keys we have told the page are currently held (Down/Repeat seen, real
+    // Up not yet). An Up with no matching Down is spurious (focus/repeat
+    // boundary glitch) and must not end a hold.
+    private readonly System.Collections.Generic.HashSet<Robust.Client.Input.Keyboard.Key> _heldKeys = new();
 
     private void OnFirstChanceKey(Robust.Client.Input.KeyEventArgs args, Robust.Client.Input.KeyEventType type)
     {
-        if (type != Robust.Client.Input.KeyEventType.Up)
-            return;
+        // Map once; unmapped keys are not forwarded.
         if (!KeyNames.TryGetValue(args.Key, out var kc))
             return;
+
+        if (type == Robust.Client.Input.KeyEventType.Up)
+        {
+            // Ignore a release for a key we never saw pressed: synthesizing it
+            // would stop held movement mid-hold.
+            if (!_heldKeys.Remove(args.Key))
+                return;
+            DispatchKey("keyup", kc, false);
+            return;
+        }
+
+        // Down or Repeat: forward both. Held-state games ignore repeats;
+        // tap/repeat games (which only listen for keydown) need them.
+        _heldKeys.Add(args.Key);
+        DispatchKey("keydown", kc, args.IsRepeat);
+    }
+
+    private void DispatchKey(string domType, (string Key, string Code, int KeyCode) kc, bool repeat)
+    {
         try
         {
-            _web.ExecuteJavaScript("window.__tuiKeyUp && window.__tuiKeyUp('" + kc.Key + "','" + kc.Code + "');") ;
+            _web.ExecuteJavaScript(
+                "window.__tuiKey && window.__tuiKey('" + domType + "','" +
+                kc.Key + "','" + kc.Code + "'," + (repeat ? "true" : "false") + "," + kc.KeyCode + ");");
         }
         catch { /* headless dev */ }
     }
@@ -440,6 +528,7 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
             if (!_web.HasKeyboardFocus())
                 _web.GrabKeyboardFocus();
             _web.ExecuteJavaScript("window.__tuiDrop && window.__tuiDrop();");
+            _heldKeys.Clear();
         }
         catch { /* headless dev */ }
     }
@@ -552,55 +641,46 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         "'use strict';" +
         "if (window.__tuiArcade) { return; }" +
         "window.__tuiArcade = true;" +
-        // Self-heal: if the page loses focus mid-press (UI click, camera
-        // move), the page never sees keyup => "stuck" key. Watchdog
-        // releases anything still held as soon as focus is gone.
+        // Keys the page currently believes are held (for the blur watchdog).
         "window.__tuiKeys = {};" +
-        "window.__tuiDowns = {};" +
-        // Window-level capture filter: CEF-mac delivers key events WITHOUT
-        // `repeat` flags and letter keys arrive as "Unidentified" (mac
-        // nativeKeyCode mapping is broken upstream). Swallow every
-        // duplicate keydown (the game tracks 'held' from a single press)
-        // and rewrite Unidentified keys by keyCode into real ones.
-        "window.__tuiKeyUp = function(k, c) {" +
-        "  try { document.dispatchEvent(new KeyboardEvent('keyup', {key: k, code: c, bubbles: true})); } catch (e) {}" +
-        "  delete window.__tuiDowns[k]; delete window.__tuiKeys[k];" +
-        "  delete window.__tuiDowns['unidentified']; delete window.__tuiKeys['unidentified'];" +
-        // Latch: CEF's event queue flushes stale OS-repeat keydowns AFTER
-        // the release lands; latch swallows them so the game doesn't
-        // re-add the key as held right after a clean release. (Lowercase:
-        // the keydown filter compares against lowercased e.key.)
-        "  var kl = k.toLowerCase();" +
-        "  window.__tuiLatch[kl] = Date.now() + 300;" +
-        "  window.__tuiLatch['unidentified'] = Date.now() + 300;" +
+        // C# feeds us the engine's real key stream (mac CEF drops keyups and
+        // mislabels keys). We replay it as genuine DOM events so pages see
+        // exactly what a normal browser would: keydown, keydown+repeat, keyup.
+        // This is why we no longer swallow repeats — tap/repeat-driven games
+        // (movement via onkeydown) need them, and held-state games ignore them.
+        "window.__tuiKey = function(domType, k, c, repeat, keyCode) {" +
+        "  try {" +
+        "    var ev = new KeyboardEvent(domType, {key: k, code: c, repeat: !!repeat, bubbles: true, cancelable: true});" +
+        // keyCode/which are read-only on KeyboardEvent; define them so games
+        // that still read e.keyCode (older js13k entries) work.
+        "    if (keyCode !== undefined && keyCode !== null) {" +
+        "      try { Object.defineProperty(ev, 'keyCode', {get: function(){ return keyCode; }});" +
+        "            Object.defineProperty(ev, 'which', {get: function(){ return keyCode; }}); } catch (e2) {}" +
+        "    }" +
+        "    document.dispatchEvent(ev);" +
+        "  } catch (e) {}" +
+        "  var kl = (k || '').toLowerCase();" +
+        "  if (domType === 'keyup') { delete window.__tuiKeys[kl]; }" +
+        "  else { window.__tuiKeys[kl] = 1; }" +
         "};" +
-        "var __kmap = {87:['w','KeyW'], 65:['a','KeyA'], 83:['s','KeyS'], 68:['d','KeyD'], 74:['j','KeyJ'], 75:['k','KeyK'], 38:['ArrowUp','ArrowUp'], 40:['ArrowDown','ArrowDown'], 37:['ArrowLeft','ArrowLeft'], 39:['ArrowRight','ArrowRight'], 27:['Escape','Escape'], 32:[' ','Space'], 13:['Enter','Enter'], 8:['Backspace','Backspace'], 16:['Shift','ShiftLeft'], 17:['Control','ControlLeft']};" +
-        "window.__tuiLatch = {};" +
-        "window.addEventListener('keydown', function(e) {" +
-        "  var k = (e.key || '').toLowerCase();" +
-        "  if (window.__tuiDowns[k] === 1) { e.stopImmediatePropagation(); return; }" +
-        "  if (window.__tuiLatch[k] && Date.now() < window.__tuiLatch[k]) { e.stopImmediatePropagation(); return; }" +
-        "  window.__tuiDowns[k] = 1;" +
-        "  if ((e.key === 'Unidentified' || e.key === undefined) && e.keyCode && __kmap[e.keyCode]) {" +
-        "    var m = __kmap[e.keyCode];" +
-        "    e.preventDefault(); e.stopImmediatePropagation();" +
-        "    window.dispatchEvent(new KeyboardEvent('keydown', {key: m[0], code: m[1], keyCode: e.keyCode, which: e.keyCode, bubbles: true}));" +
-        "  }" +
-        "}, true);" +
-        "document.addEventListener('keydown', function(e) {" +
-        "  var k = (e.key || '').toLowerCase();" +
-        "  if (window.__tuiKeys[k]) window.__tuiKeys[k] = 1;" +
-        "}, true);" +
-        "document.addEventListener('keyup', function(e) {" +
-        "  var k = (e.key || '').toLowerCase();" +
-        "  delete window.__tuiDowns[k]; delete window.__tuiKeys[k];" +
-        "}, true);" +
+        // CEF also delivers its own native key events (some keydowns, few/no
+        // keyups), which would double up with our faithful replay. Swallow
+        // every *trusted* (browser-generated) key event so the page sees only
+        // our complete, consistent stream. Our own synthetic events are
+        // untrusted and pass through untouched.
+        "var __suppress = function(e) {" +
+        "  if (e.isTrusted) { e.stopImmediatePropagation(); e.preventDefault(); }" +
+        "};" +
+        "window.addEventListener('keydown', __suppress, true);" +
+        "window.addEventListener('keyup', __suppress, true);" +
+        "window.addEventListener('keypress', __suppress, true);" +
+        // Self-heal: if the page loses focus mid-press, the engine may never
+        // deliver the keyup, leaving a key "stuck" held. Release everything.
         "window.__tuiDrop = function() {" +
         "  for (var k in window.__tuiKeys) {" +
-        "    try { document.dispatchEvent(new KeyboardEvent('keyup', {key: k.length==1 ? k.toUpperCase() : k})); } catch (e) {}" +
+        "    try { document.dispatchEvent(new KeyboardEvent('keyup', {key: k.length==1 ? k.toUpperCase() : k, bubbles: true})); } catch (e) {}" +
         "  }" +
         "  window.__tuiKeys = {};" +
-        "  window.__tuiDowns = {};" +
         "};" +
         "document.addEventListener('blur', window.__tuiDrop);" +
         "window.__tuiSendUi = function(action, obj) {" +

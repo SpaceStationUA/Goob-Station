@@ -934,3 +934,21 @@ ask (Robust.Client.WebView macOS package) from the earlier plan.
   TinyYurts's only 404 is the browser's own favicon request.
 - The right panel's game list is now in a ScrollContainer so 13+ titles
   don't push the seat buttons off-screen.
+
+### Arcade keyboard bridge v2 + FRI3 removal (2026-09-20)
+- Faithful replay: C# now forwards the engine's real Down/Repeat/Up stream into
+  the page as genuine DOM events (window.__tuiKey), instead of only
+  synthesizing keyups. Repeats are no longer swallowed and the 300ms latch is
+  gone. A release is only forwarded for a key we saw go down (no spurious Up
+  can end a hold). CEF's own native key events are suppressed (e.isTrusted
+  filter) so the page sees one consistent stream. This fixed held movement
+  ("moves a bit, freezes, then works").
+- Key coverage is now generated (A-Z, 0-9, arrows, control/nav/punctuation,
+  F1-F12) with keyCode/which synthesized too, so games needing E/R/etc. work
+  without per-key edits.
+- FRI3 removed: it fetches main.wasm over res://, but the stock engine
+  registers the res scheme WITHOUT FetchEnabled/CorsEnabled
+  (RobustCefApp.OnRegisterCustomSchemes -> Secure|Standard), so fetch() is
+  silently refused and nothing renders — on launcher clients too. Also added
+  SetResourceMimeType("wasm","application/wasm") from content since the engine
+  MIME table lacks wasm (harmless, helps any future non-fetch wasm game).

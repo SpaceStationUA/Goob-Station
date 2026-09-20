@@ -27,5 +27,8 @@ yurts	MIT	repo	burntcustard/tiny-yurts	682fdf012260e7b815f38bbd119cdd9ccc0aae30	
 13steps	MIT	zip	jonathan-vallet/js13k-2024	95cc8b7f3d049f1cdf13236786533f2af3ced7e5	-	https://js13kgames.com/games/13-steps-to-escape.zip	ThirteenSteps
 donotmake13	MIT	zip	sirxemic/js13k-2024	3a97665e166a64f72618130dc4e4778b1c7b3604	-	https://js13kgames.com/games/do-not-make-13.zip	DoNotMake13
 finalseconds	MIT	zip	jani-nykanen/those-final-seconds	222396ade1082fedd76b5d8bd586179b052a167b	-	https://js13kgames.com/games/those-final-seconds.zip	ThoseFinalSeconds
-fri3	MIT	zip	eliasku/fri3	e951ceffd9c7eacfbd3a15e1b96b0f6317dca902	-	https://js13kgames.com/games/fri3.zip	Fri3
+# fri3 (FRI3) removed: it loads its WASM via fetch() against res://, which the
+# stock engine's scheme registration doesn't allow (needs FetchEnabled), so it
+# fails silently for launcher clients too. Re-add only if we ship an engine that
+# enables fetch on res://.
 sector13	MIT	zip	BenjaminWFox/Sector-13-Js13k-2024	76bc259a237c17b0f4da7866a68460de9c4bd44b	-	https://js13kgames.com/games/sector-13.zip	Sector13

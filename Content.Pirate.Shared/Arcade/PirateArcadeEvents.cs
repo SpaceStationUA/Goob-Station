@@ -75,7 +75,6 @@ public static class PirateArcadeGames
         ("13steps", "13 Steps to Escape", "_Pirate/WebUI/Arcade/ThirteenSteps/index.html"),
         ("donotmake13", "Do Not Make 13", "_Pirate/WebUI/Arcade/DoNotMake13/index.html"),
         ("finalseconds", "Those Final Seconds", "_Pirate/WebUI/Arcade/ThoseFinalSeconds/index.html"),
-        ("fri3", "FRI3", "_Pirate/WebUI/Arcade/Fri3/index.html"),
         ("sector13", "Sector 13", "_Pirate/WebUI/Arcade/Sector13/index.html"),
     };
 }
