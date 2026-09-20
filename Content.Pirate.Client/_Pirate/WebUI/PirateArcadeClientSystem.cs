@@ -3,7 +3,9 @@
 
 using System;
 using Content.Pirate.Shared.Arcade;
+using Robust.Shared.IoC;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Client._Pirate.WebUI;
 
@@ -15,9 +17,12 @@ namespace Content.Pirate.Client._Pirate.WebUI;
 /// </summary>
 public sealed class PirateArcadeClientSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+        PirateArcadeGames.Initialize(_prototypes);
         SubscribeNetworkEvent<PirateArcadeStateEvent>(OnState);
         SubscribeNetworkEvent<PirateArcadeFrameEvent>(OnFrame);
     }

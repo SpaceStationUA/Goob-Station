@@ -11,6 +11,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Server.Arcade;
 
@@ -28,6 +29,7 @@ public sealed class PirateArcadeSystem : EntitySystem
 
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private sealed class Session
     {
@@ -43,6 +45,7 @@ public sealed class PirateArcadeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        PirateArcadeGames.Initialize(_prototypes);
         SubscribeNetworkEvent<PirateArcadeSeatEvent>(OnSeat);
         SubscribeNetworkEvent<PirateArcadeWatchEvent>(OnWatch);
         SubscribeNetworkEvent<PirateArcadeFrameEvent>(OnFrame);
@@ -128,7 +131,7 @@ public sealed class PirateArcadeSystem : EntitySystem
         var cab = EntityManager.GetEntity(msg.Cab);
         // Only ids with a shipped folder are honored; anything else is
         // ignored so a hacked client can't point windows at arbitrary paths.
-        if (!PirateArcadeGames.List.Any(g => g.Id == msg.Game))
+        if (!PirateArcadeGames.Exists(msg.Game))
             return;
 
         _sessions.TryGetValue(cab, out var ses);

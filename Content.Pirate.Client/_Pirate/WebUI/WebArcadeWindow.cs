@@ -305,31 +305,22 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
 
     // ===== game switcher =====
 
+    private static string DefaultGameId()
+        => PirateArcadeGames.DefaultGame()?.ID ?? "";
+
     private string GamePath()
     {
-        var def = PirateArcadeGames.List[0].Path;
-        foreach (var (i, _, p) in PirateArcadeGames.List)
-            if (i == _game)
-                return p;
-        return def;
+        var proto = PirateArcadeGames.Get(_game);
+        if (proto != null)
+            return proto.Path;
+        return PirateArcadeGames.DefaultGame()?.Path ?? "";
     }
 
-    private string GameLabel(string id)
-    {
-        var def = PirateArcadeGames.List[0].Label;
-        foreach (var (i, l, _) in PirateArcadeGames.List)
-            if (i == id)
-                return l;
-        return def;
-    }
+    private static string GameLabel(string id)
+        => PirateArcadeGames.Get(id)?.Label ?? id;
 
-    private static string? IdOf(string labelOrId)
-    {
-        foreach (var (i, _, _) in PirateArcadeGames.List)
-            if (i == labelOrId)
-                return i;
-        return null;
-    }
+    private static string? IdOf(string id)
+        => PirateArcadeGames.Exists(id) ? id : null;
 
     private void ApplyGame(string id)
     {
@@ -359,12 +350,11 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
             Text = "Гру на автоматі:",
             FontColorOverride = Color.Gray,
         });
-        foreach (var (id, label, _) in PirateArcadeGames.List)
+        foreach (var proto in PirateArcadeGames.All)
         {
-            var cur = label;
-            var gameId = id;
-            var b = new Button { Text = cur, HorizontalExpand = true };
-            if (id == currentId)
+            var gameId = proto.ID;
+            var b = new Button { Text = proto.Label, HorizontalExpand = true };
+            if (proto.ID == currentId)
                 b.AddStyleClass("StyleClass.Positive");
             b.OnPressed += _ =>
             {

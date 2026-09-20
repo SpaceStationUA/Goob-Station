@@ -44,7 +44,7 @@ public sealed class PirateArcadeStateEvent : EntityEventArgs
     public bool Taken;
     public string PlayerName = "";
     /// <summary>Which game id the cabinet is loaded with (see
-    /// <see cref="PirateArcadeGames.Ids"/>).</summary>
+    /// <see cref="PirateArcadeGamePrototype"/>).</summary>
     public string Game = "";
 }
 
@@ -56,30 +56,4 @@ public sealed class PirateArcadeGameEvent : EntityEventArgs
 {
     public NetEntity Cab;
     public string Game = "";
-}
-
-/// <summary>The games shipped under res://webres/_Pirate/WebUI/Arcade/. Keep in
-/// sync with the folders there; ids double as safe names server-side.</summary>
-public static class PirateArcadeGames
-{
-    public static readonly (string Id, string Label, string Path)[] List =
-    {
-        ("packabunchas", "Packabunchas", "_Pirate/WebUI/Arcade/Packabunchas/index.html"),
-        ("witchcat", "Witchcat", "_Pirate/WebUI/Arcade/Witchcat/index.html"),
-        ("shuttledeck", "Shuttledeck", "_Pirate/WebUI/Arcade/Shuttledeck/index.html"),
-        ("catculus", "Catculus", "_Pirate/WebUI/Arcade/Catculus/index.html"),
-        ("kuroneko", "Kuro Neko Market", "_Pirate/WebUI/Arcade/KuroNekoMarket/index.html"),
-        ("edgenotfound", "Edge Not Found", "_Pirate/WebUI/Arcade/EdgeNotFound/index.html"),
-        ("stunts", "Thirteen Terrible Stunts", "_Pirate/WebUI/Arcade/ThirteenTerribleStunts/index.html"),
-        ("yurts", "Tiny Yurts", "_Pirate/WebUI/Arcade/TinyYurts/index.html"),
-        ("13steps", "13 Steps to Escape", "_Pirate/WebUI/Arcade/ThirteenSteps/index.html"),
-        ("donotmake13", "Do Not Make 13", "_Pirate/WebUI/Arcade/DoNotMake13/index.html"),
-        ("finalseconds", "Those Final Seconds", "_Pirate/WebUI/Arcade/ThoseFinalSeconds/index.html"),
-        ("sector13", "Sector 13", "_Pirate/WebUI/Arcade/Sector13/index.html"),
-        ("knightdreams", "Knight Dreams", "_Pirate/WebUI/Arcade/KnightDreams/index.html"),
-        ("dyingdreams", "Dying Dreams", "_Pirate/WebUI/Arcade/DyingDreams/index.html"),
-        ("ghosted", "Ghosted", "_Pirate/WebUI/Arcade/Ghosted/index.html"),
-        ("supercastle", "Super Castle Game", "_Pirate/WebUI/Arcade/SuperCastleGame/index.html"),
-        ("numberknight", "Number Knight", "_Pirate/WebUI/Arcade/NumberKnight/index.html"),
-    };
 }

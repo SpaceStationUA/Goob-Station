@@ -963,3 +963,16 @@ ask (Robust.Client.WebView macOS package) from the earlier plan.
   (TypeScript/Go source needing a build) and only itch.io builds — skipped per
   the "published bundles only" policy. Revisit if we add a build step.
 - Smoke-tested all 5 headless: clean (only favicon 404s).
+
+### Arcade games are now data prototypes (2026-09-20)
+- Games are no longer hardcoded in PirateArcadeGames.List. New prototype
+  kind `arcadeGame` (PirateArcadeGamePrototype: label, path, default) in
+  Resources/Prototypes/_Pirate/Arcade/games.yml. Adding a game = drop the
+  bundle under Resources/_Pirate/WebUI/Arcade/<Dir>/ + one YAML entry.
+- PirateArcadeGames is now a thin accessor over IPrototypeManager
+  (All/Exists/Get/DefaultGame); bound from both the client and server
+  systems. Client picker and server id-validation share it.
+- Sandbox gotcha: Enum.TryParse pulls in ReadOnlySpan<char>..ctor which the
+  Robust type checker forbids in content assemblies -> client aborted with
+  "Assembly Content.Pirate.Client failed type checks". The key map is now an
+  explicit Keyboard.Key table (no reflection).
