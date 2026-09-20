@@ -31,7 +31,7 @@ public sealed class WebRadioDriver
     }
 
     /// <summary>Push the station catalog; only re-sends when it changed.</summary>
-    public void SetCatalog(IReadOnlyList<(string Id, string Label, string Genre, string Url, bool Featured)> stations)
+    public void SetCatalog(IReadOnlyList<(string Id, string Label, string Genre, string Url, bool Featured, bool Relay)> stations)
     {
         var sb = new System.Text.StringBuilder();
         sb.Append("{\"stations\":[");
@@ -45,6 +45,7 @@ public sealed class WebRadioDriver
               .Append(",\"genre\":").Append(WebUiSpikeBridge.JsonString(s.Genre))
               .Append(",\"url\":").Append(WebUiSpikeBridge.JsonString(s.Url))
               .Append(",\"featured\":").Append(s.Featured ? "true" : "false")
+              .Append(",\"relay\":").Append(s.Relay ? "true" : "false")
               .Append('}');
         }
         sb.Append("]}");
@@ -58,14 +59,25 @@ public sealed class WebRadioDriver
     }
 
     /// <summary>Push the current played station; only re-sends when changed.</summary>
-    public void SetState(string stationId, bool playing)
+    public void SetState(string stationId, bool playing, bool relay = false)
     {
         var json = "{\"stationId\":" + WebUiSpikeBridge.JsonString(stationId) +
-            ",\"playing\":" + (playing ? "true" : "false") + "}";
+            ",\"playing\":" + (playing ? "true" : "false") +
+            ",\"relay\":" + (relay ? "true" : "false") + "}";
         if (json == _lastState)
             return;
         _lastState = json;
         _web?.ExecuteJavaScript("window.__radioSetState && window.__radioSetState(" +
             WebUiSpikeBridge.JsonString(json) + ");");
+    }
+
+    /// <summary>
+    ///     Push a transcoded stream chunk to the page's MediaSource. Chunks
+    ///     arrive in order; no dedupe, MSE append is order-sensitive.
+    /// </summary>
+    public void SetRelayChunk(string base64)
+    {
+        _web?.ExecuteJavaScript("window.__radioRelayChunk && window.__radioRelayChunk(" +
+            WebUiSpikeBridge.JsonString(base64) + ");");
     }
 }

@@ -17,6 +17,13 @@ public sealed class PirateRadioStationEntry
     public string Genre = "";
     public string Url = "";
     public bool Featured;
+
+    /// <summary>
+    ///     The stream is not decodable by the client's CEF (MP3/AAC). The
+    ///     server relays it transcoded to Opus/WebM instead of the page
+    ///     fetching the URL directly.
+    /// </summary>
+    public bool Relay;
 }
 
 /// <summary>
@@ -62,4 +69,28 @@ public sealed class PirateRadioStateEvent : EntityEventArgs
     public NetEntity Marker;
     public string StationId = "";
     public bool Playing;
+
+    /// <summary>The selected station is server-transcoded (relay mode).</summary>
+    public bool Relay;
+}
+
+/// <summary>
+///     Client → server: the relay page has built its MediaSource and is
+///     ready for the transcoded stream chunks.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PirateRadioRelayReadyEvent : EntityEventArgs
+{
+    public NetEntity Marker;
+}
+
+/// <summary>
+///     Server → client: a chunk of the transcoded stream (WebM/Opus bytes)
+///     for the page's MediaSource. Send order matters.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PirateRadioRelayChunkEvent : EntityEventArgs
+{
+    public NetEntity Marker;
+    public byte[] Data = Array.Empty<byte>();
 }

@@ -1073,3 +1073,22 @@ CEF, usable by the RadioHost job and anyone with the program installed.
   after enabling the cvar the FIRST catalog request still returns
   pinned-only; remote stations appear on later requests once the
   background fetch+verify (tens of seconds) has filled the cache.
+
+### Radio: server-side ffmpeg transcode relay (2026-09-20)
+- Stock CEF has no MP3/AAC decoders and the community directory is ~45k
+  mp3/aac stations vs ~600 Ogg. Fix without touching the engine: the
+  server fetches the stream, transcodes to WebM/Opus with ffmpeg and
+  pushes the bytes through the game connection; the page plays them with
+  a MediaSource (SourceBuffer 'audio/webm; codecs="opus"').
+- Cvar pirate.radio_ffmpeg_path (server, empty = disabled). Stations:
+  pinned prototypes get `transcode: true`; remote radio-browser entries
+  keep their non-Ogg candidates now flagged `Relay` instead of dropped
+  (OggS still means direct playback; MPEG sync bytes mean relay).
+- No blocking anywhere: one ffmpeg process per playing session, stdout
+  read loop on a threadpool task; flush/errors are all handled on Update.
+  Backlog cap 256KB for a page that never reports ready.
+- Optimistic play() pattern survives: for relay stations the MediaSource
+  is built inside the click, so play() stays pending until first chunk.
+  A 2s interval re-anchors a drifted relay session to the live edge.
+- ffmpeg must have libopus (standard on ubuntu/debian apt builds).
+- file: URLs in pinned stations test offline with -re realtime mode.

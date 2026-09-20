@@ -10,6 +10,7 @@ using Robust.Client.WebView;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.IoC;
 
 namespace Content.Pirate.Client.Radio;
 
@@ -43,6 +44,7 @@ public sealed class PirateRadioClientSystem : EntitySystem
         base.Initialize();
         SubscribeNetworkEvent<PirateRadioCatalogEvent>(OnCatalog);
         SubscribeNetworkEvent<PirateRadioStateEvent>(OnState);
+        SubscribeNetworkEvent<PirateRadioRelayChunkEvent>(OnRelayChunk);
     }
 
     private void OnCatalog(PirateRadioCatalogEvent msg, EntitySessionEventArgs _)
@@ -50,6 +52,13 @@ public sealed class PirateRadioClientSystem : EntitySystem
 
     private void OnState(PirateRadioStateEvent msg, EntitySessionEventArgs _)
         => PirateRadioClientState.OnState(msg);
+
+    private void OnRelayChunk(PirateRadioRelayChunkEvent msg, EntitySessionEventArgs _)
+    {
+        var payload = Convert.ToBase64String(msg.Data);
+        if (_playbacks.TryGetValue(msg.Marker, out var p) && !p.View.Disposed)
+            p.Driver.SetRelayChunk(payload);
+    }
 
     /// <summary>
     ///     Returns the persistent playback control for this program entity,
@@ -110,6 +119,12 @@ public sealed class PirateRadioClientSystem : EntitySystem
                 break;
             case "stop":
                 PirateRadioClientState.Send("stop", marker);
+                break;
+            case "relayready":
+                // The page's MediaSource is open: the server may start
+                // pushing transcoded chunks.
+                IoCManager.Resolve<IEntityNetworkManager>()
+                    .SendSystemNetworkMessage(new PirateRadioRelayReadyEvent { Marker = marker });
                 break;
             case "volume":
                 // Volume is page-local; kept for future persistence.
@@ -218,7 +233,7 @@ public sealed class PirateRadioClientSystem : EntitySystem
             }
 
             var state = PirateRadioClientState.Get(marker);
-            p.Driver.SetState(state.StationId, state.Playing);
+            p.Driver.SetState(state.StationId, state.Playing, state.Relay);
         }
 
         if (dead != null)
@@ -264,12 +279,12 @@ public sealed class PirateRadioClientSystem : EntitySystem
         try { p.View.Dispose(); } catch { /* already gone */ }
     }
 
-    private static List<(string, string, string, string, bool)> ToTuples(
+    private static List<(string, string, string, string, bool, bool)> ToTuples(
         IReadOnlyList<PirateRadioStationEntry> catalog)
     {
-        var list = new List<(string, string, string, string, bool)>(catalog.Count);
+        var list = new List<(string, string, string, string, bool, bool)>(catalog.Count);
         foreach (var s in catalog)
-            list.Add((s.Id, s.Label, s.Genre, s.Url, s.Featured));
+            list.Add((s.Id, s.Label, s.Genre, s.Url, s.Featured, s.Relay));
         return list;
     }
 }

@@ -287,13 +287,23 @@
     if (!s) return;
     currentId = id;
     playing = true;
+    relayMode = !!s.relay;
     el("station").textContent = s.label;
-    el("genre").textContent = s.genre || "";
+    el("genre").textContent = (s.genre || "") + (relayMode ? " \u00b7 server relay" : "");
     el("status").textContent = "tuning...";
     el("eq").classList.remove("paused");
     el("play").classList.remove("primary");
-    audio.src = s.url;
-    audio.load();
+    if (relayMode) {
+      // The client CEF cannot decode this stream; the server transcodes it
+      // and pushes WebM/Opus chunks over the game connection (see
+      // __radioRelayChunk). Prepare the MediaSource first: the optimistic
+      // play() below then stays pending until the first chunk arrives,
+      // which keeps the click's user-gesture alive for the autoplay policy.
+      startRelay();
+    } else {
+      audio.src = s.url;
+      audio.load();
+    }
     var p = audio.play();
     if (p && p.catch) {
       p.catch(function (e) {
@@ -306,12 +316,80 @@
     render();
   }
 
+  // ---- server relay (transcoded WebM/Opus over the game connection) ----
+
+  var relayMode = false;
+  var relayMs = null;       // MediaSource
+  var relayBuffer = null;   // SourceBuffer
+  var relayChunks = [];     // pending Uint8Arrays for appendBuffer
+  var relayUrl = "";
+
+  function startRelay() {
+    teardownRelay();
+    relayMode = true;
+    relayMs = new MediaSource();
+    relayUrl = URL.createObjectURL(relayMs);
+    relayMs.addEventListener("sourceopen", function () {
+      if (!relayMode) return;
+      try {
+        relayBuffer = relayMs.addSourceBuffer('audio/webm; codecs="opus"');
+      } catch (e) { relayBuffer = null; }
+      if (!relayBuffer) {
+        el("status").textContent = "relay unsupported";
+        return;
+      }
+      relayBuffer.addEventListener("updateend", feedRelay);
+      try { relayMs.duration = Infinity; } catch (e) { /* live: ok to fail */ }
+      // C# may now start pushing transcoded chunks.
+      report("relayready", {});
+      feedRelay();
+    });
+    audio.src = relayUrl;
+    audio.load();
+  }
+
+  function feedRelay() {
+    if (!relayBuffer || relayBuffer.updating || relayChunks.length === 0)
+      return;
+    try {
+      relayBuffer.appendBuffer(relayChunks.shift());
+    } catch (e) {
+      // Usually quota (too far behind): drop queued chunks and re-anchor to
+      // the live edge rather than dying in a buffer loop.
+      relayChunks.length = 0;
+    }
+  }
+
+  // Keep a relay session glued to the live edge: if playback drifts behind
+  // the buffered range (bg pauses, reconnect), re-anchor and resume.
+  setInterval(function () {
+    if (!playing || !relayMode || !relayBuffer || relayBuffer.buffered.length === 0)
+      return;
+    var start = relayBuffer.buffered.start(0);
+    if (audio.paused && audio.currentTime < start - 0.5) {
+      audio.currentTime = start;
+      var p = audio.play();
+      if (p && p.catch) { p.catch(function () { /* gesture needed */ }); }
+    }
+  }, 2000);
+
+  function teardownRelay() {
+    relayMode = false;
+    relayChunks.length = 0;
+    if (relayBuffer) { try { relayBuffer.abort(); } catch (e) { } }
+    if (relayUrl) { try { URL.revokeObjectURL(relayUrl); } catch (e) { } }
+    relayBuffer = null;
+    relayMs = null;
+    relayUrl = "";
+  }
+
   function stop(reportStop) {
     playing = false;
     currentId = "";
     audio.pause();
     audio.removeAttribute("src");
     audio.load();
+    teardownRelay();
     el("station").textContent = "Pirate Radio";
     el("genre").textContent = "pick a station";
     el("status").textContent = "idle";
@@ -391,6 +469,20 @@
   // destroyed): disposing the control alone does not stop the CEF browser,
   // which would keep the audio going as an orphan.
   window.__radioHardStop = function () { stop(false); };
+
+  // ---- relay chunk intake (server → page, base64) ----
+  window.__radioRelayChunk = function (b64) {
+    if (!relayMode) return;
+    try {
+      var bin = atob(b64);
+      var u8 = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) { u8[i] = bin.charCodeAt(i); }
+      relayChunks.push(u8);
+      // Bound the queue: if MSE falls hopelessly behind, jump to live tail.
+      while (relayChunks.length > 64) { relayChunks.shift(); }
+      feedRelay();
+    } catch (e) { /* ignore malformed chunk */ }
+  };
 
   report("ready", {});
 })();

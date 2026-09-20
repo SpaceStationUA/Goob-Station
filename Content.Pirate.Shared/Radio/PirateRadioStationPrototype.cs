@@ -30,4 +30,13 @@ public sealed partial class PirateRadioStationPrototype : IPrototype
     /// <summary>Shown first / marked as a favourite in the picker.</summary>
     [DataField]
     public bool Featured { get; private set; }
+
+    /// <summary>
+    ///     The stream is MP3/AAC (not decodable by stock CEF). The server
+    ///     fetches it and relays it transcoded to WebM/Opus through the game
+    ///     connection, instead of the client pulling the URL directly.
+    ///     Requires the server cvar <c>pirate.radio_ffmpeg_path</c>.
+    /// </summary>
+    [DataField]
+    public bool Transcode { get; private set; }
 }

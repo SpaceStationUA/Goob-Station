@@ -22,6 +22,9 @@ public static class PirateRadioClientState
     {
         public string StationId = "";
         public bool Playing;
+
+        /// <summary>The station is server-transcoded (relay chunks, MSE).</summary>
+        public bool Relay;
     }
 
     private static readonly Dictionary<NetEntity, Entry> _entries = new();
@@ -62,10 +65,12 @@ public static class PirateRadioClientState
 
     public static void OnState(PirateRadioStateEvent msg)
     {
+        // A new relay session resets what the page may have buffered.
         _entries[msg.Marker] = new Entry
         {
             StationId = msg.StationId,
             Playing = msg.Playing,
+            Relay = msg.Relay,
         };
     }
 }

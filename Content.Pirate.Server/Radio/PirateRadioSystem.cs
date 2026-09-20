@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Pirate Development Team
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
@@ -49,12 +50,68 @@ public sealed class PirateRadioSystem : EntitySystem
         base.Initialize();
         SubscribeNetworkEvent<PirateRadioCatalogRequestEvent>(OnCatalogRequest);
         SubscribeNetworkEvent<PirateRadioCommandEvent>(OnCommand);
+        SubscribeNetworkEvent<PirateRadioRelayReadyEvent>(OnRelayReady);
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
+        foreach (var marker in new List<NetEntity>(_pumps.Keys))
+            KillPump(marker, notify: false);
         _http.Dispose();
+    }
+
+    /// <summary>Drain pump buffers onto the network; watchdog for stalls.</summary>
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (_pumps.Count == 0)
+            return;
+
+        List<NetEntity>? dead = null;
+        foreach (var (marker, pump) in _pumps)
+        {
+            // Stalled pump (dead upstream, dead ffmpeg): kill it and tell
+            // the page the session is over.
+            if (DateTimeOffset.UtcNow - pump.LastData > RelayStallTimeout)
+            {
+                Log.Warning($"Radio relay stalled for {marker}, killing pump.");
+                dead ??= new List<NetEntity>();
+                dead.Add(marker);
+                continue;
+            }
+
+            if (pump.Proc.HasExited && pump.PendingBytes == 0)
+            {
+                // Stream ended naturally (and fully flushed): end the session.
+                dead ??= new List<NetEntity>();
+                dead.Add(marker);
+                continue;
+            }
+
+            if (!pump.Ready)
+            {
+                // The page never reported ready (pda closed mid-start): keep
+                // a bounded backlog so a later join still works.
+                TrimRelayBacklog(pump);
+                continue;
+            }
+
+            var chunk = TakeRelayChunk(pump);
+            if (chunk != null)
+                RaiseNetworkEvent(new PirateRadioRelayChunkEvent
+                {
+                    Marker = marker,
+                    Data = chunk,
+                }, pump.Channel);
+        }
+
+        if (dead != null)
+        {
+            foreach (var marker in dead)
+                KillPump(marker, notify: true);
+        }
     }
 
     private void OnCatalogRequest(PirateRadioCatalogRequestEvent msg, EntitySessionEventArgs args)
@@ -98,10 +155,17 @@ public sealed class PirateRadioSystem : EntitySystem
                     return;
                 state.StationId = station.Id;
                 state.Playing = true;
+                state.Relay = station.Relay;
+                if (station.Relay)
+                {
+                    StartRelay(msg.Marker, station, session.Channel);
+                }
                 break;
             }
             case "stop":
                 state.Playing = false;
+                state.Relay = false;
+                KillPump(msg.Marker, notify: false);
                 break;
             default:
                 return;
@@ -112,7 +176,179 @@ public sealed class PirateRadioSystem : EntitySystem
             Marker = msg.Marker,
             StationId = state.StationId,
             Playing = state.Playing,
+            Relay = state.Relay,
         }, session.Channel);
+    }
+
+    private void OnRelayReady(PirateRadioRelayReadyEvent msg, EntitySessionEventArgs args)
+    {
+        if (!_pumps.TryGetValue(msg.Marker, out var pump))
+            return;
+
+        // The re-opened program fragment re-registers as the relay listener.
+        pump.Channel = args.SenderSession.Channel;
+        pump.Ready = true;
+        pump.Kick = true; // flush the init segment regardless of size
+    }
+
+    private void StartRelay(NetEntity marker, PirateRadioStationEntry station, INetChannel channel)
+    {
+        var ffmpeg = _cfg.GetCVar(PirateVars.RadioFfmpegPath);
+        if (string.IsNullOrWhiteSpace(ffmpeg))
+        {
+            // Transcoding disabled: the page will fail to decode this stream
+            // on its own, which the picker treats as an unavailable station.
+            return;
+        }
+
+        if (_pumps.TryGetValue(marker, out var existing))
+        {
+            if (existing.Url == station.Url && !existing.Proc.HasExited)
+                return; // same station already pumping; keep it
+            KillPump(marker, notify: false);
+        }
+
+        // file: inputs (testing) play at realtime; live http/https throttles
+        // themselves. Quoting is safe: we exec without a shell.
+        var inputArgs = station.Url.StartsWith("file:", StringComparison.OrdinalIgnoreCase)
+            ? "-re "
+            : "";
+
+        var psi = new ProcessStartInfo
+        {
+            FileName = ffmpeg,
+            Arguments = "-hide_banner -loglevel error " + inputArgs +
+                "-i \"" + station.Url + "\" -map 0:a -c:a libopus -b:a 48k -f webm pipe:1",
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+
+        Process proc;
+        try
+        {
+            proc = Process.Start(psi)!;
+        }
+        catch (Exception e)
+        {
+            Log.Warning($"Radio relay failed to start ffmpeg: {e.Message}");
+            return;
+        }
+
+        _pumps[marker] = new RelayPump
+        {
+            Proc = proc,
+            Channel = channel,
+            Url = station.Url,
+        };
+        var pump = _pumps[marker];
+        _ = Task.Run(() => PumpStdout(pump, proc));
+        Log.Debug($"Radio relay started for {marker}: {station.Url}");
+    }
+
+    private async Task PumpStdout(RelayPump pump, Process proc)
+    {
+        var buffer = new byte[8192];
+        try
+        {
+            var stdout = proc.StandardOutput.BaseStream;
+            while (true)
+            {
+                var n = await stdout.ReadAsync(buffer, pump.Cts.Token);
+                if (n <= 0)
+                    break;
+                var chunk = new byte[n];
+                Buffer.BlockCopy(buffer, 0, chunk, 0, n);
+                lock (pump.Lock)
+                {
+                    pump.Pending.Add(chunk);
+                    pump.PendingBytes += n;
+                }
+                pump.LastData = DateTimeOffset.UtcNow;
+            }
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception e)
+        {
+            Log.Warning($"Radio pump read ended: {e.Message}");
+        }
+    }
+
+    private const int RelayBacklogCap = 256 * 1024;
+
+    private void TrimRelayBacklog(RelayPump pump)
+    {
+        lock (pump.Lock)
+        {
+            while (pump.PendingBytes > RelayBacklogCap && pump.Pending.Count > 0)
+            {
+                var first = pump.Pending[0];
+                pump.Pending.RemoveAt(0);
+                pump.PendingBytes -= first.Length;
+            }
+        }
+    }
+
+    /// <summary>Join the next uploadable chunk (merged up to the target).</summary>
+    private byte[]? TakeRelayChunk(RelayPump pump)
+    {
+        lock (pump.Lock)
+        {
+            if (pump.Pending.Count == 0)
+                return null;
+            if (!pump.Kick && pump.PendingBytes < RelayChunkTarget)
+                return null;
+
+            var parts = new List<byte[]>();
+            var size = 0;
+            while (pump.Pending.Count > 0 && size < RelayChunkTarget)
+            {
+                var next = pump.Pending[0];
+                if (size + next.Length > RelayChunkTarget && size > 0)
+                    break;
+                pump.Pending.RemoveAt(0);
+                parts.Add(next);
+                size += next.Length;
+            }
+            pump.PendingBytes -= size;
+            pump.Kick = false;
+
+            var merged = new byte[size];
+            var offset = 0;
+            foreach (var p in parts)
+            {
+                Buffer.BlockCopy(p, 0, merged, offset, p.Length);
+                offset += p.Length;
+            }
+            return merged;
+        }
+    }
+
+    private void KillPump(NetEntity marker, bool notify)
+    {
+        if (!_pumps.Remove(marker, out var pump))
+            return;
+
+        try { pump.Cts.Cancel(); } catch { /* already dead */ }
+        try { pump.Proc.Kill(entireProcessTree: true); } catch { /* already dead */ }
+
+        if (notify)
+        {
+            try
+            {
+                RaiseNetworkEvent(new PirateRadioStateEvent
+                {
+                    Marker = marker,
+                    Playing = false,
+                }, pump.Channel);
+            }
+            catch
+            {
+                /* channel already gone */
+            }
+        }
     }
 
     /// <summary>Curated stations from prototypes, in declaration order.</summary>
@@ -128,6 +364,7 @@ public sealed class PirateRadioSystem : EntitySystem
                 Genre = proto.Genre,
                 Url = proto.Url,
                 Featured = proto.Featured,
+                Relay = proto.Transcode,
             });
         }
         return list;
@@ -314,10 +551,36 @@ public sealed class PirateRadioSystem : EntitySystem
         return list;
     }
 
+private sealed class RadioSession
+{
+    public string StationId = "";
+    public string Label = "";
+    public bool Playing;
+    public bool Relay;
+}
 
-    private sealed class RadioSession
-    {
-        public string StationId = "";
-        public bool Playing;
-    }
+private sealed class RelayPump
+{
+    public readonly object Lock = new();
+    public readonly List<byte[]> Pending = new();
+    public int PendingBytes;
+    public readonly CancellationTokenSource Cts = new();
+    public Process Proc = null!;
+    public INetChannel Channel = null!;
+    public string Url = "";
+    public bool Ready;
+    public bool Kick;
+    public DateTimeOffset LastData = DateTimeOffset.UtcNow;
+}
+
+private const int RelayChunkTarget = 16000;
+private static readonly TimeSpan RelayStallTimeout = TimeSpan.FromSeconds(20);
+
+// Media elements on a secure res:// origin cannot reach an http:// relay
+// endpoint, and the client CEF has no MP3/AAC decoders at all. For such
+// stations the server fetches the upstream stream, transcodes to WebM/Opus
+// with ffmpeg and pushes the bytes through the game connection; the page
+// plays them with a MediaSource. One ffmpeg process per active session.
+private readonly Dictionary<NetEntity, RelayPump> _pumps = new();
+
 }
