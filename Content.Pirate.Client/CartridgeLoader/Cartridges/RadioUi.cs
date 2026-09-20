@@ -111,14 +111,44 @@ public sealed partial class RadioUi : UIFragment
     {
         if (string.IsNullOrEmpty(data))
             return "";
-        try
+
+        // Deliberately no System.Text.Json: the sandbox allowlist only
+        // permits the Serialization attributes, not JsonDocument/Serializer.
+        // The payload is a tiny {"id":"..."} object.
+        const string key = "\"id\"";
+        var at = data.IndexOf(key, System.StringComparison.Ordinal);
+        if (at < 0)
+            return "";
+        var colon = data.IndexOf(':', at + key.Length);
+        if (colon < 0)
+            return "";
+        var i = colon + 1;
+        while (i < data.Length && (data[i] == ' ' || data[i] == '\t'))
+            i++;
+        if (i >= data.Length || data[i] != '"')
+            return "";
+        i++;
+        var sb = new System.Text.StringBuilder();
+        while (i < data.Length && data[i] != '"')
         {
-            using var doc = System.Text.Json.JsonDocument.Parse(data);
-            if (doc.RootElement.TryGetProperty("id", out var id))
-                return id.GetString() ?? "";
+            if (data[i] == '\\' && i + 1 < data.Length)
+            {
+                i++;
+                sb.Append(data[i] switch
+                {
+                    'n' => '\n',
+                    't' => '\t',
+                    'r' => '\r',
+                    _ => data[i],
+                });
+            }
+            else
+            {
+                sb.Append(data[i]);
+            }
+            i++;
         }
-        catch { }
-        return "";
+        return sb.ToString();
     }
 
     /// <summary>Called by the BUI when the program is closed.</summary>
