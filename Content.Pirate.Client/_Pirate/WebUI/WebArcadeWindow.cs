@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Content.Pirate.Shared.Arcade;
+using K = Robust.Client.Input.Keyboard.Key;
 
 namespace Content.Pirate.Client._Pirate.WebUI;
 
@@ -405,77 +406,74 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
 
     /// <summary>Robust key -> (DOM key, DOM code, legacy keyCode). Covers the
     /// whole alphanumeric block plus the control/navigation keys games use, so
-    /// a game needing a new letter doesn't need a bridge change. Built once;
-    /// the page keeps a matching code->keyCode table.</summary>
+    /// a game needing a new letter doesn't need a bridge change. Explicit
+    /// table (no reflection: Enum.TryParse trips the sandbox via
+    /// ReadOnlySpan&lt;char&gt;).</summary>
     private static readonly System.Collections.Generic.Dictionary<
         Robust.Client.Input.Keyboard.Key, (string Key, string Code, int KeyCode)> KeyNames = BuildKeyNames();
 
     private static System.Collections.Generic.Dictionary<
         Robust.Client.Input.Keyboard.Key, (string Key, string Code, int KeyCode)> BuildKeyNames()
     {
-        var K = typeof(Robust.Client.Input.Keyboard.Key);
-        var map = new System.Collections.Generic.Dictionary<
-            Robust.Client.Input.Keyboard.Key, (string Key, string Code, int KeyCode)>();
+        var m = new System.Collections.Generic.Dictionary<            Robust.Client.Input.Keyboard.Key, (string Key, string Code, int KeyCode)>();
 
-        // Letters A..Z: enum name == DOM code suffix, lowercase DOM key.
-        for (var c = 'A'; c <= 'Z'; c++)
-        {
-            if (!System.Enum.TryParse<Robust.Client.Input.Keyboard.Key>(c.ToString(), out var k))
-                continue;
-            map[k] = (c.ToString().ToLowerInvariant(), "Key" + c, c);
-        }
+        m[K.A] = ("a", "KeyA", 65); m[K.B] = ("b", "KeyB", 66); m[K.C] = ("c", "KeyC", 67);
+        m[K.D] = ("d", "KeyD", 68); m[K.E] = ("e", "KeyE", 69); m[K.F] = ("f", "KeyF", 70);
+        m[K.G] = ("g", "KeyG", 71); m[K.H] = ("h", "KeyH", 72); m[K.I] = ("i", "KeyI", 73);
+        m[K.J] = ("j", "KeyJ", 74); m[K.K] = ("k", "KeyK", 75); m[K.L] = ("l", "KeyL", 76);
+        m[K.M] = ("m", "KeyM", 77); m[K.N] = ("n", "KeyN", 78); m[K.O] = ("o", "KeyO", 79);
+        m[K.P] = ("p", "KeyP", 80); m[K.Q] = ("q", "KeyQ", 81); m[K.R] = ("r", "KeyR", 82);
+        m[K.S] = ("s", "KeyS", 83); m[K.T] = ("t", "KeyT", 84); m[K.U] = ("u", "KeyU", 85);
+        m[K.V] = ("v", "KeyV", 86); m[K.W] = ("w", "KeyW", 87); m[K.X] = ("x", "KeyX", 88);
+        m[K.Y] = ("y", "KeyY", 89); m[K.Z] = ("z", "KeyZ", 90);
 
-        // Digits 0..9: enum name is Num0..Num9, DOM code Digit0..Digit9.
-        for (var d = 0; d <= 9; d++)
-        {
-            if (!System.Enum.TryParse<Robust.Client.Input.Keyboard.Key>("Num" + d, out var k))
-                continue;
-            map[k] = (d.ToString(), "Digit" + d, '0' + d);
-        }
+        m[K.Num0] = ("0", "Digit0", 48); m[K.Num1] = ("1", "Digit1", 49);
+        m[K.Num2] = ("2", "Digit2", 50); m[K.Num3] = ("3", "Digit3", 51);
+        m[K.Num4] = ("4", "Digit4", 52); m[K.Num5] = ("5", "Digit5", 53);
+        m[K.Num6] = ("6", "Digit6", 54); m[K.Num7] = ("7", "Digit7", 55);
+        m[K.Num8] = ("8", "Digit8", 56); m[K.Num9] = ("9", "Digit9", 57);
 
-        void Add(string enumName, string key, string code, int keyCode)
-        {
-            if (System.Enum.TryParse<Robust.Client.Input.Keyboard.Key>(enumName, out var k))
-                map[k] = (key, code, keyCode);
-        }
+        m[K.Escape] = ("Escape", "Escape", 27);
+        m[K.Space] = (" ", "Space", 32);
+        m[K.Return] = ("Enter", "Enter", 13);
+        m[K.NumpadEnter] = ("Enter", "NumpadEnter", 13);
+        m[K.BackSpace] = ("Backspace", "Backspace", 8);
+        m[K.Tab] = ("Tab", "Tab", 9);
+        m[K.Up] = ("ArrowUp", "ArrowUp", 38);
+        m[K.Down] = ("ArrowDown", "ArrowDown", 40);
+        m[K.Left] = ("ArrowLeft", "ArrowLeft", 37);
+        m[K.Right] = ("ArrowRight", "ArrowRight", 39);
+        m[K.Shift] = ("Shift", "ShiftLeft", 16);
+        m[K.Control] = ("Control", "ControlLeft", 17);
+        m[K.Alt] = ("Alt", "AltLeft", 18);
+        m[K.Menu] = ("ContextMenu", "ContextMenu", 93);
+        m[K.PageUp] = ("PageUp", "PageUp", 33);
+        m[K.PageDown] = ("PageDown", "PageDown", 34);
+        m[K.Home] = ("Home", "Home", 36);
+        m[K.End] = ("End", "End", 35);
+        m[K.Insert] = ("Insert", "Insert", 45);
+        m[K.Delete] = ("Delete", "Delete", 46);
+        m[K.CapsLock] = ("CapsLock", "CapsLock", 20);
+        m[K.Comma] = (",", "Comma", 188);
+        m[K.Period] = (".", "Period", 190);
+        m[K.Slash] = ("/", "Slash", 191);
+        m[K.SemiColon] = (";", "Semicolon", 186);
+        m[K.Apostrophe] = ("'", "Quote", 222);
+        m[K.LBracket] = ("[", "BracketLeft", 219);
+        m[K.RBracket] = ("]", "BracketRight", 221);
+        m[K.BackSlash] = ("\\", "Backslash", 220);
+        m[K.Tilde] = ("`", "Backquote", 192);
+        m[K.Equal] = ("=", "Equal", 187);
+        m[K.Minus] = ("-", "Minus", 189);
 
-        Add("Escape", "Escape", "Escape", 27);
-        Add("Space", " ", "Space", 32);
-        Add("Return", "Enter", "Enter", 13);
-        Add("NumpadEnter", "Enter", "NumpadEnter", 13);
-        Add("BackSpace", "Backspace", "Backspace", 8);
-        Add("Tab", "Tab", "Tab", 9);
-        Add("Up", "ArrowUp", "ArrowUp", 38);
-        Add("Down", "ArrowDown", "ArrowDown", 40);
-        Add("Left", "ArrowLeft", "ArrowLeft", 37);
-        Add("Right", "ArrowRight", "ArrowRight", 39);
-        Add("Shift", "Shift", "ShiftLeft", 16);
-        Add("Control", "Control", "ControlLeft", 17);
-        Add("Alt", "Alt", "AltLeft", 18);
-        Add("Menu", "ContextMenu", "ContextMenu", 93);
-        Add("PageUp", "PageUp", "PageUp", 33);
-        Add("PageDown", "PageDown", "PageDown", 34);
-        Add("Home", "Home", "Home", 36);
-        Add("End", "End", "End", 35);
-        Add("Insert", "Insert", "Insert", 45);
-        Add("Delete", "Delete", "Delete", 46);
-        Add("CapsLock", "CapsLock", "CapsLock", 20);
-        Add("Comma", ",", "Comma", 188);
-        Add("Period", ".", "Period", 190);
-        Add("Slash", "/", "Slash", 191);
-        Add("SemiColon", ";", "Semicolon", 186);
-        Add("Apostrophe", "'", "Quote", 222);
-        Add("LBracket", "[", "BracketLeft", 219);
-        Add("RBracket", "]", "BracketRight", 221);
-        Add("BackSlash", "\\", "Backslash", 220);
-        Add("Tilde", "`", "Backquote", 192);
-        Add("Equal", "=", "Equal", 187);
-        Add("Minus", "-", "Minus", 189);
+        m[K.F1] = ("F1", "F1", 112); m[K.F2] = ("F2", "F2", 113);
+        m[K.F3] = ("F3", "F3", 114); m[K.F4] = ("F4", "F4", 115);
+        m[K.F5] = ("F5", "F5", 116); m[K.F6] = ("F6", "F6", 117);
+        m[K.F7] = ("F7", "F7", 118); m[K.F8] = ("F8", "F8", 119);
+        m[K.F9] = ("F9", "F9", 120); m[K.F10] = ("F10", "F10", 121);
+        m[K.F11] = ("F11", "F11", 122); m[K.F12] = ("F12", "F12", 123);
 
-        for (var i = 1; i <= 12; i++)
-            Add("F" + i, "F" + i, "F" + i, 111 + i);
-
-        return map;
+        return m;
     }
 
     // Keys we have told the page are currently held (Down/Repeat seen, real
