@@ -47,8 +47,10 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
         var comp = RetrieveCartridgeComponent(activeUI);
         var control = ui?.GetUIFragmentRoot();
 
-        //Prevent the same UI fragment from getting disposed and attached multiple times
-        if (_activeUiFragment?.GetType() == control?.GetType())
+        //Prevent the same, still-alive UI fragment from getting disposed and
+        //attached multiple times. A disposed control means the program was
+        //closed and opened again: rebuild and re-attach it.
+        if (_activeUiFragment == control && _activeUiFragment is { Disposed: false })
             return;
 
         if (_activeUiFragment is not null)
@@ -140,7 +142,17 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
     private UIFragment? RetrieveCartridgeUI(EntityUid? cartridgeUid)
     {
         var component = EntMan.GetComponentOrNull<UIFragmentComponent>(cartridgeUid);
-        component?.Ui?.Setup(this, cartridgeUid);
-        return component?.Ui;
+        if (component?.Ui is not { } ui)
+            return null;
+
+        // Re-run Setup only when needed: first attach, a different fragment
+        // instance, or the previously shown control was disposed (the
+        // program was closed and reopened). Setup re-creates fragment
+        // controls, so blindly re-running it on every state push would
+        // discard live fragment state.
+        var control = ui.GetUIFragmentRoot();
+        if (_activeCartridgeUI != ui || control is not { Disposed: false })
+            ui.Setup(this, cartridgeUid);
+        return ui;
     }
 }

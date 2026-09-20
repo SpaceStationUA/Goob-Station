@@ -1031,3 +1031,20 @@ CEF, usable by the RadioHost job and anyone with the program installed.
 - pirate.radio_remote_catalog (server, default off): when off, the picker
   offers only the curated pinned stations. When on, radio-browser.info
   Ogg/Opus results are merged (community-submitted, unfiltered).
+
+### Radio: persistent playback, genres + stars (2026-09-20)
+- The CEF playback control is owned by PirateRadioClientSystem and only
+  HOSTED by the program fragment. Closing the program/PDA detaches but does
+  not dispose it, so audio continues; reopening re-hosts the live page
+  (stars/tab state survive too). CartridgeLoaderBoundUserInterface now
+  re-runs fragment Setup only when the fragment changed or the attached
+  control was disposed (same instance + disposed = reopen), and skips
+  re-attach only for the same alive control.
+- Playback stops when the PDA carrying the program is no longer on the
+  local player (container walk from the program entity to the player).
+- Picker has Stations/Genres tabs: genres aggregate the comma tags of
+  remote stations (plus pinned genre lines), stars are session-only and
+  float starred stations to the top. Streams that error are greyed out
+  ("unavailable") for the session.
+- Stream lessons: Slay relay is flaky -> removed; Nightride is ~1 Mbps
+  (buffers on slow links); Lassul Icecast is the reliable pinned anchor.

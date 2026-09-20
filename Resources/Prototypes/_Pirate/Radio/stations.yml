@@ -36,6 +36,12 @@
   featured: true
 
 - type: radioStation
+  id: lassul-music-opus
+  label: Lassul Music Opus
+  genre: various (opus)
+  url: https://radio.lassul.us/music.opus
+
+- type: radioStation
   id: nightride
   label: Nightride FM
   genre: darksynth / retrowave
@@ -55,8 +61,5 @@
   genre: darksynth
   url: https://stream.nightride.fm/darksynth.ogg
 
-- type: radioStation
-  id: slay-radio
-  label: Slay Radio
-  genre: commodore 64 remixes
-  url: https://relay.slay-radio.org/stream.ogg
+# Slay Radio removed: its relay is flaky (frequent hard failures -> NotSupportedError).
+# Nightride note: ~1 Mbps streams; expect buffering on slow connections.

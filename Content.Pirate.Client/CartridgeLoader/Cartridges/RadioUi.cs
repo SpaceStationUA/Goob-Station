@@ -1,9 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Pirate Development Team
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using System;
 using Content.Client.UserInterface.Fragments;
-using Content.Pirate.Client._Pirate.WebUI;
 using Content.Pirate.Client.Radio;
 using Content.Shared.CartridgeLoader;
 using Robust.Client.UserInterface;
@@ -15,66 +13,42 @@ using Robust.Shared.IoC;
 namespace Content.Pirate.Client.CartridgeLoader.Cartridges;
 
 /// <summary>
-///     PID internet-radio program. Hosts a CEF page that plays curated
-///     Ogg/Opus streams; the page owns playback, the server owns the
-///     selected station.
+///     PID internet-radio program. The actual CEF playback control is owned
+///     by <see cref="PirateRadioClientSystem"/> and survives program close;
+///     this fragment merely hosts it while open.
 /// </summary>
 public sealed partial class RadioUi : UIFragment
 {
-    private PanelContainer? _root;
-    private WebRadioDriver? _driver;
     private PirateRadioClientSystem? _system;
+    private RadioHostPanel? _root;
     private NetEntity _marker = NetEntity.Invalid;
 
     public override Control GetUIFragmentRoot() => _root!;
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        // The cartridge-loader BUI re-calls Setup on every PDA state push
-        // (before its "same fragment type" guard), so re-entering here would
-        // spawn a new CEF instance and leak drivers. Set up only once.
-        if (_root != null)
+        // The loader BUI re-runs Setup on state pushes; a live root means we
+        // are already set up (the BUI's attach guard skips those anyway).
+        if (_root is { Disposed: false })
             return;
 
-        _root = new PanelContainer { HorizontalExpand = true, VerticalExpand = true };
+        _marker = fragmentOwner is { } owner && owner.IsValid()
+            ? IoCManager.Resolve<IEntityManager>().GetNetEntity(owner)
+            : NetEntity.Invalid;
 
-        try
+        _system = EntitySystem.Get<PirateRadioClientSystem>();
+        var view = _system.EnsurePlayback(_marker);
+
+        _root = new RadioHostPanel
         {
-            _marker = fragmentOwner is { } owner && owner.IsValid()
-                ? IoCManager.Resolve<IEntityManager>().GetNetEntity(owner)
-                : NetEntity.Invalid;
-
-            _system = EntitySystem.Get<PirateRadioClientSystem>();
-
-            var web = new WebViewControl
-            {
-                AlwaysActive = true,
-                HorizontalExpand = true,
-                VerticalExpand = true,
-            };
-
-            var ipc = new WebUiTuiIpc(OnIpcAction)
-            {
-                // Streams are loaded by media elements (not navigation), so
-                // no http hosts need allow-listing here.
-                AllowHttpHosts = new System.Collections.Generic.List<string>(),
-            };
-            web.AddBeforeBrowseHandler(ipc.HandleBeforeBrowse);
-
-            _driver = new WebRadioDriver(ipc);
-            _driver.Attach(web);
-            _driver.Action += OnAction;
-
-            _root.AddChild(web);
-            _system.Register(_driver, _marker, () => _root is { Disposed: false });
-
-            web.Url = "res://webres/_Pirate/WebUI/Radio/index.html";
-        }
-        catch
-        {
-            // Headless/dev: show a placeholder instead of crashing.
+            HorizontalExpand = true,
+            VerticalExpand = true,
+            KeepAlive = view,
+        };
+        if (view != null)
+            _root.AddChild(view);
+        else
             _root.AddChild(new Label { Text = "Radio unavailable (headless)." });
-        }
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
@@ -82,89 +56,20 @@ public sealed partial class RadioUi : UIFragment
         // State arrives via raw network events, not the BUI; nothing to do.
     }
 
-    private void OnIpcAction(string action, string? data)
+    /// <summary>
+    ///     Host panel that detaches the persistent webview when disposed, so
+    ///     closing the program does not destroy the CEF browser (the audio
+    ///     would stop; the control could also never be re-hosted).
+    /// </summary>
+    private sealed class RadioHostPanel : PanelContainer
     {
-        if (_driver == null)
-            return;
-        _driver.HandleAction(action, data);
-    }
+        public Control? KeepAlive;
 
-    private void OnAction(string action, string? data)
-    {
-        if (_driver == null || _marker == NetEntity.Invalid)
-            return;
-
-        switch (action)
+        protected override void Dispose(bool disposing)
         {
-            case "ready":
-                if (_system != null)
-                    return; // system requests the catalog each frame
-                PirateRadioClientState.RequestCatalog(_marker);
-                break;
-            case "play":
-                PirateRadioClientState.Send("play", _marker, ExtractStationId(data));
-                break;
-            case "stop":
-                PirateRadioClientState.Send("stop", _marker);
-                break;
-            case "volume":
-                // Volume is page-local; kept for future persistence.
-                break;
-        }
-    }
-
-    private static string ExtractStationId(string? data)
-    {
-        if (string.IsNullOrEmpty(data))
-            return "";
-
-        // Deliberately no System.Text.Json: the sandbox allowlist only
-        // permits the Serialization attributes, not JsonDocument/Serializer.
-        // The payload is a tiny {"id":"..."} object.
-        const string key = "\"id\"";
-        var at = data.IndexOf(key, System.StringComparison.Ordinal);
-        if (at < 0)
-            return "";
-        var colon = data.IndexOf(':', at + key.Length);
-        if (colon < 0)
-            return "";
-        var i = colon + 1;
-        while (i < data.Length && (data[i] == ' ' || data[i] == '\t'))
-            i++;
-        if (i >= data.Length || data[i] != '"')
-            return "";
-        i++;
-        var sb = new System.Text.StringBuilder();
-        while (i < data.Length && data[i] != '"')
-        {
-            if (data[i] == '\\' && i + 1 < data.Length)
-            {
-                i++;
-                sb.Append(data[i] switch
-                {
-                    'n' => '\n',
-                    't' => '\t',
-                    'r' => '\r',
-                    _ => data[i],
-                });
-            }
-            else
-            {
-                sb.Append(data[i]);
-            }
-            i++;
-        }
-        return sb.ToString();
-    }
-
-    /// <summary>Called by the BUI when the program is closed.</summary>
-    public void Detach()
-    {
-        if (_driver != null)
-        {
-            _driver.Action -= OnAction;
-            _system?.Unregister(_driver);
-            _driver = null;
+            if (KeepAlive != null && KeepAlive.Parent == this)
+                RemoveChild(KeepAlive);
+            base.Dispose(disposing);
         }
     }
 }

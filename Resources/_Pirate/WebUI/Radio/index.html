@@ -13,7 +13,6 @@
     --accent2: #ffcf4d;
     --text: #e8dcc4;
     --dim: #9a8a6c;
-    --good: #5fbf6a;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -59,6 +58,14 @@
   button.primary { background: var(--accent); color: #000; font-weight: 600; }
   #vol { flex: 1; accent-color: var(--accent); }
 
+  #tabs { display: flex; border-bottom: 1px solid #000; }
+  #tabs .tab {
+    flex: 1; text-align: center; padding: 7px 0;
+    font-size: 12px; color: var(--dim); cursor: pointer;
+    background: var(--panel);
+  }
+  #tabs .tab.active { background: var(--panel2); color: var(--accent2); font-weight: 600; }
+
   #list { flex: 1; overflow-y: auto; padding: 6px; }
   .station {
     padding: 7px 10px; border-radius: 4px; cursor: pointer;
@@ -67,10 +74,21 @@
   .station:hover { background: var(--panel2); }
   .station.active { background: var(--accent); color: #000; }
   .station.active .g { color: #4a3600; }
+  .station.dead { opacity: .35; cursor: default; }
   .station .name { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
   .station .g { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 42%; }
-  .star { color: var(--accent2); }
+  .star { color: var(--accent2); cursor: pointer; padding: 0 2px; font-size: 14px; flex: none; }
+  .star.off { color: var(--dim); }
   .station.active .star { color: #000; }
+  .genre {
+    padding: 8px 10px; border-radius: 4px; cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .genre:hover { background: var(--panel2); }
+  .genre .gname { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+  .genre .cnt { font-size: 11px; color: var(--dim); }
+  #back { padding: 6px 10px; font-size: 12px; color: var(--dim); cursor: pointer; flex: none; }
+  #back:hover { color: var(--accent2); }
   #list::-webkit-scrollbar { width: 8px; }
   #list::-webkit-scrollbar-thumb { background: #3a2c1c; border-radius: 4px; }
 </style>
@@ -91,6 +109,10 @@
     <input id="vol" type="range" min="0" max="100" value="70">
     <span id="volpct" style="font-size:11px;color:var(--dim);width:30px;text-align:right">70%</span>
   </div>
+  <div id="tabs">
+    <div class="tab active" data-tab="stations">Stations</div>
+    <div class="tab" data-tab="genres">Genres</div>
+  </div>
   <div id="list"></div>
 </div>
 
@@ -102,12 +124,16 @@
   audio.preload = "none";
   // NOTE: no crossOrigin attribute. It would switch the media fetch into
   // CORS mode, and stream servers without Access-Control-Allow-Origin
-  // (most Icecast/SHOUTcast endpoints) would fail to load — request goes
-  // out, playback rejects. Plain no-cors media playback is all we need.
+  // (most Icecast endpoints) would fail to load - request goes out,
+  // playback rejects. Plain no-cors media playback is all we need.
 
   var stations = [];
+  var starred = {};   // id -> true (session only)
+  var broken = {};    // id -> true (failed to play this session)
   var currentId = "";
   var playing = false;
+  var tab = "stations";
+  var genre = null;   // selected genre key in the Genres tab
 
   function report(action, data) {
     // Hidden-iframe navigation bridge (same as the arcade): a same-document
@@ -128,28 +154,123 @@
 
   function el(id) { return document.getElementById(id); }
 
-  function render() {
-    var list = el("list");
-    list.innerHTML = "";
-    stations.forEach(function (s) {
-      var row = document.createElement("div");
-      row.className = "station" + (s.id === currentId ? " active" : "");
-      var star = s.featured ? '<span class="star">&#9733;</span>' : "";
-      row.innerHTML = star +
-        '<span class="name">' + escapeHtml(s.label) + '</span>' +
-        '<span class="g">' + escapeHtml(s.genre || "") + '</span>';
-      row.addEventListener("click", function () { select(s.id); });
-      list.appendChild(row);
-    });
-  }
-
   function escapeHtml(t) {
     return String(t).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
 
+  // Remote entries carry comma-separated tag lists; pinned ones a short
+  // genre line. Split on commas; group case-insensitively, display as-is.
+  function genresOf(s) {
+    var out = [];
+    String(s.genre || "").split(",").forEach(function (g) {
+      g = g.trim();
+      if (g.length > 0 && out.map(function (x) { return x.toLowerCase(); }).indexOf(g.toLowerCase()) < 0)
+        out.push(g);
+    });
+    return out;
+  }
+
+  function stationRow(s, opts) {
+    opts = opts || {};
+    var row = document.createElement("div");
+    row.className = "station" +
+      (s.id === currentId && playing ? " active" : "") +
+      (broken[s.id] ? " dead" : "");
+    row.title = escapeHtml(s.label);
+
+    var star = document.createElement("span");
+    star.className = "star" + (starred[s.id] ? "" : " off");
+    star.textContent = starred[s.id] ? "\u2605" : "\u2606";
+    star.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (starred[s.id]) { delete starred[s.id]; } else { starred[s.id] = true; }
+      render();
+    });
+    row.appendChild(star);
+
+    var name = document.createElement("span");
+    name.className = "name";
+    name.textContent = s.label;
+    row.appendChild(name);
+
+    if (!opts.noGenre) {
+      var g = document.createElement("span");
+      g.className = "g";
+      g.textContent = s.genre || "";
+      row.appendChild(g);
+    }
+
+    if (broken[s.id]) {
+      var dead = document.createElement("span");
+      dead.className = "g";
+      dead.textContent = "unavailable";
+      row.appendChild(dead);
+    } else {
+      row.addEventListener("click", function () { select(s.id); });
+    }
+    return row;
+  }
+
+  function render() {
+    var list = el("list");
+    list.innerHTML = "";
+    var playingGenre = false;
+
+    if (tab === "genres") {
+      if (genre == null) {
+        var groups = {};
+        stations.forEach(function (s) {
+          if (broken[s.id]) return;
+          genresOf(s).forEach(function (g) {
+            var k = g.toLowerCase();
+            if (!groups[k]) groups[k] = { name: g, count: 0 };
+            groups[k].count++;
+          });
+        });
+        var gs = Object.keys(groups).map(function (k) { return groups[k]; });
+        gs.sort(function (a, b) { return b.count - a.count || a.name.localeCompare(b.name); });
+        gs.forEach(function (g) {
+          var row = document.createElement("div");
+          row.className = "genre";
+          var n = document.createElement("span");
+          n.className = "gname";
+          n.textContent = g.name;
+          var c = document.createElement("span");
+          c.className = "cnt";
+          c.textContent = g.count + "";
+          row.appendChild(n);
+          row.appendChild(c);
+          row.addEventListener("click", function () { genre = g.name.toLowerCase(); render(); });
+          list.appendChild(row);
+        });
+      } else {
+        playingGenre = true;
+        var back = document.createElement("div");
+        back.id = "back";
+        back.textContent = "\u2190 all genres";
+        back.addEventListener("click", function () { genre = null; render(); });
+        list.appendChild(back);
+        var inGenre = stations.filter(function (s) {
+          return !broken[s.id] && genresOf(s).map(function (x) { return x.toLowerCase(); }).indexOf(genre) >= 0;
+        });
+        inGenre.sort(function (a, b) {
+          return (starred[b.id] ? 1 : 0) - (starred[a.id] ? 1 : 0);
+        });
+        inGenre.forEach(function (s) { list.appendChild(stationRow(s, {})); });
+      }
+    } else {
+      var ordered = stations.slice().sort(function (a, b) {
+        return (starred[b.id] ? 1 : 0) - (starred[a.id] ? 1 : 0) ||
+               (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+      });
+      ordered.forEach(function (s) { list.appendChild(stationRow(s, {})); });
+    }
+  }
+
   function select(id) {
+    if (broken[id]) return;
     if (playing && id === currentId) { stop(true); return; }
     // Play locally right away: this runs inside the click's user-gesture
     // window, which Chromium's autoplay policy requires. The server report
@@ -159,7 +280,10 @@
   }
 
   function play(id) {
-    var s = stations.find(function (x) { return x.id === id; });
+    var s = null;
+    for (var i = 0; i < stations.length; i++) {
+      if (stations[i].id === id) { s = stations[i]; break; }
+    }
     if (!s) return;
     currentId = id;
     playing = true;
@@ -201,14 +325,21 @@
   audio.addEventListener("waiting", function () { el("status").textContent = "buffering"; });
   audio.addEventListener("error", function () {
     if (!playing) return;
+    // Remember the failure for this session and grey the station out, so a
+    // dead stream does not keep looking playable in the picker.
+    broken[currentId] = true;
     el("status").textContent = "stream error";
     el("eq").classList.add("paused");
+    render();
   });
 
   el("play").addEventListener("click", function () {
     if (playing) { stop(true); }
-    else if (currentId) { select(currentId); }
-    else if (stations.length > 0) { select(stations[0].id); }
+    else if (currentId && !broken[currentId]) { select(currentId); }
+    else {
+      var next = stations.filter(function (s) { return !broken[s.id]; });
+      if (next.length > 0) { select(next[0].id); }
+    }
   });
   el("stop").addEventListener("click", function () { stop(true); });
   el("vol").addEventListener("input", function () {
@@ -219,6 +350,17 @@
   });
 
   audio.volume = Number(el("vol").value) / 100;
+
+  Array.prototype.forEach.call(document.querySelectorAll("#tabs .tab"), function (t) {
+    t.addEventListener("click", function () {
+      tab = t.getAttribute("data-tab");
+      genre = null;
+      Array.prototype.forEach.call(document.querySelectorAll("#tabs .tab"), function (x) {
+        x.classList.toggle("active", x === t);
+      });
+      render();
+    });
+  });
 
   // ---- bridge from C# ----
   window.__radioSetCatalog = function (json) {
@@ -239,9 +381,9 @@
       var s = typeof json === "string" ? JSON.parse(json) : json;
       if (!s.playing) { stop(false); return; }
       // Already playing this station locally: the echo is our own report
-      // coming back — do not restart the stream.
+      // coming back - do not restart the stream.
       if (playing && s.stationId === currentId) { return; }
-      if (s.stationId) { play(s.stationId); }
+      if (s.stationId && !broken[s.stationId]) { play(s.stationId); }
     } catch (e) { /* ignore */ }
   };
 
