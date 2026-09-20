@@ -107,8 +107,19 @@
   var playing = false;
 
   function report(action, data) {
+    // Hidden-iframe navigation bridge (same as the arcade): a same-document
+    // location.hash change does NOT trigger CEF's BeforeBrowse, so clicks
+    // would silently never reach the game. The iframe navigation does, and
+    // the C# side cancels it before any load happens.
     try {
-      location.hash = "tuireport=" + action + "|" + JSON.stringify(data || {});
+      var tx = "r" + Date.now() + "_" + (window.__radioN = (window.__radioN || 0) + 1);
+      var f = document.createElement("iframe");
+      f.style.display = "none";
+      f.src = "res://webres/_Pirate/WebUI/TV/tui_bridge/" + encodeURIComponent(tx) +
+        "?action=" + encodeURIComponent(action) +
+        (data ? ("&data=" + encodeURIComponent(JSON.stringify(data))) : "");
+      document.documentElement.appendChild(f);
+      setTimeout(function () { f.remove(); }, 2500);
     } catch (e) { /* ignore */ }
   }
 
@@ -136,7 +147,7 @@
   }
 
   function select(id) {
-    if (playing && id === currentId) { stop(); return; }
+    if (playing && id === currentId) { stop(true); return; }
     report("play", { id: id });
   }
 
@@ -164,7 +175,7 @@
     render();
   }
 
-  function stop() {
+  function stop(reportStop) {
     playing = false;
     currentId = "";
     audio.pause();
@@ -176,6 +187,7 @@
     el("eq").classList.add("paused");
     el("play").classList.add("primary");
     render();
+    if (reportStop) { report("stop", {}); }
   }
 
   audio.addEventListener("playing", function () { el("status").textContent = "on air"; });
@@ -187,9 +199,11 @@
   });
 
   el("play").addEventListener("click", function () {
-    if (playing) { stop(); } else if (currentId) { play(currentId); }
+    if (playing) { stop(true); }
+    else if (currentId) { select(currentId); }
+    else if (stations.length > 0) { select(stations[0].id); }
   });
-  el("stop").addEventListener("click", stop);
+  el("stop").addEventListener("click", function () { stop(true); });
   el("vol").addEventListener("input", function () {
     var v = Number(el("vol").value);
     audio.volume = v / 100;
@@ -216,7 +230,7 @@
   window.__radioSetState = function (json) {
     try {
       var s = typeof json === "string" ? JSON.parse(json) : json;
-      if (!s.playing) { stop(); return; }
+      if (!s.playing) { stop(false); return; }
       if (s.stationId && s.stationId !== currentId) { play(s.stationId); }
     } catch (e) { /* ignore */ }
   };

@@ -30,6 +30,12 @@ public sealed partial class RadioUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
+        // The cartridge-loader BUI re-calls Setup on every PDA state push
+        // (before its "same fragment type" guard), so re-entering here would
+        // spawn a new CEF instance and leak drivers. Set up only once.
+        if (_root != null)
+            return;
+
         _root = new PanelContainer { HorizontalExpand = true, VerticalExpand = true };
 
         try
