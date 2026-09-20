@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pirate Radio</title>
+<style>
+  :root {
+    --bg: #14100b;
+    --panel: #1f1810;
+    --panel2: #2a2015;
+    --accent: #d4a017;
+    --accent2: #ffcf4d;
+    --text: #e8dcc4;
+    --dim: #9a8a6c;
+    --good: #5fbf6a;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", system-ui, sans-serif;
+    overflow: hidden;
+    user-select: none;
+  }
+  #app { display: flex; flex-direction: column; height: 100%; }
+
+  #now {
+    padding: 10px 12px;
+    background: linear-gradient(180deg, var(--panel2), var(--panel));
+    border-bottom: 1px solid #000;
+    display: flex; align-items: center; gap: 10px;
+  }
+  #eq { width: 26px; height: 22px; display: flex; align-items: flex-end; gap: 3px; }
+  #eq i {
+    display: block; width: 4px; background: var(--accent2);
+    height: 4px; border-radius: 1px;
+    animation: bounce 900ms ease-in-out infinite;
+  }
+  #eq i:nth-child(2) { animation-delay: 150ms; }
+  #eq i:nth-child(3) { animation-delay: 320ms; }
+  #eq i:nth-child(4) { animation-delay: 470ms; }
+  #eq.paused i { animation-play-state: paused; height: 4px !important; opacity: .4; }
+  @keyframes bounce { 0%,100% { height: 4px; } 50% { height: 20px; } }
+
+  #meta { flex: 1; min-width: 0; }
+  #station { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #genre { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #status { font-size: 11px; color: var(--dim); }
+
+  #controls { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid #000; }
+  button {
+    background: var(--panel2); color: var(--text);
+    border: 1px solid #000; border-radius: 4px;
+    padding: 6px 12px; font-size: 13px; cursor: pointer;
+  }
+  button:hover { background: #3a2c1c; }
+  button:active { background: var(--accent); color: #000; }
+  button.primary { background: var(--accent); color: #000; font-weight: 600; }
+  #vol { flex: 1; accent-color: var(--accent); }
+
+  #list { flex: 1; overflow-y: auto; padding: 6px; }
+  .station {
+    padding: 7px 10px; border-radius: 4px; cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .station:hover { background: var(--panel2); }
+  .station.active { background: var(--accent); color: #000; }
+  .station.active .g { color: #4a3600; }
+  .station .name { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+  .station .g { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 42%; }
+  .star { color: var(--accent2); }
+  .station.active .star { color: #000; }
+  #list::-webkit-scrollbar { width: 8px; }
+  #list::-webkit-scrollbar-thumb { background: #3a2c1c; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="now">
+    <div id="eq" class="paused"><i></i><i></i><i></i><i></i></div>
+    <div id="meta">
+      <div id="station">Pirate Radio</div>
+      <div id="genre">pick a station</div>
+    </div>
+    <div id="status">idle</div>
+  </div>
+  <div id="controls">
+    <button id="play" class="primary">&#9654; Play</button>
+    <button id="stop">&#9632; Stop</button>
+    <input id="vol" type="range" min="0" max="100" value="70">
+    <span id="volpct" style="font-size:11px;color:var(--dim);width:30px;text-align:right">70%</span>
+  </div>
+  <div id="list"></div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var audio = new Audio();
+  audio.preload = "none";
+  audio.crossOrigin = "anonymous";
+
+  var stations = [];
+  var currentId = "";
+  var playing = false;
+
+  function report(action, data) {
+    try {
+      location.hash = "tuireport=" + action + "|" + JSON.stringify(data || {});
+    } catch (e) { /* ignore */ }
+  }
+
+  function el(id) { return document.getElementById(id); }
+
+  function render() {
+    var list = el("list");
+    list.innerHTML = "";
+    stations.forEach(function (s) {
+      var row = document.createElement("div");
+      row.className = "station" + (s.id === currentId ? " active" : "");
+      var star = s.featured ? '<span class="star">&#9733;</span>' : "";
+      row.innerHTML = star +
+        '<span class="name">' + escapeHtml(s.label) + '</span>' +
+        '<span class="g">' + escapeHtml(s.genre || "") + '</span>';
+      row.addEventListener("click", function () { select(s.id); });
+      list.appendChild(row);
+    });
+  }
+
+  function escapeHtml(t) {
+    return String(t).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function select(id) {
+    if (playing && id === currentId) { stop(); return; }
+    report("play", { id: id });
+  }
+
+  function play(id) {
+    var s = stations.find(function (x) { return x.id === id; });
+    if (!s) return;
+    currentId = id;
+    playing = true;
+    el("station").textContent = s.label;
+    el("genre").textContent = s.genre || "";
+    el("status").textContent = "tuning...";
+    el("eq").classList.remove("paused");
+    el("play").classList.remove("primary");
+    audio.src = s.url;
+    audio.load();
+    var p = audio.play();
+    if (p && p.catch) {
+      p.catch(function (e) {
+        el("status").textContent = "cannot play";
+        playing = false;
+        el("eq").classList.add("paused");
+        el("play").classList.add("primary");
+      });
+    }
+    render();
+  }
+
+  function stop() {
+    playing = false;
+    currentId = "";
+    audio.pause();
+    audio.removeAttribute("src");
+    audio.load();
+    el("station").textContent = "Pirate Radio";
+    el("genre").textContent = "pick a station";
+    el("status").textContent = "idle";
+    el("eq").classList.add("paused");
+    el("play").classList.add("primary");
+    render();
+  }
+
+  audio.addEventListener("playing", function () { el("status").textContent = "on air"; });
+  audio.addEventListener("waiting", function () { el("status").textContent = "buffering"; });
+  audio.addEventListener("error", function () {
+    if (!playing) return;
+    el("status").textContent = "stream error";
+    el("eq").classList.add("paused");
+  });
+
+  el("play").addEventListener("click", function () {
+    if (playing) { stop(); } else if (currentId) { play(currentId); }
+  });
+  el("stop").addEventListener("click", stop);
+  el("vol").addEventListener("input", function () {
+    var v = Number(el("vol").value);
+    audio.volume = v / 100;
+    el("volpct").textContent = v + "%";
+    report("volume", { v: v });
+  });
+
+  audio.volume = Number(el("vol").value) / 100;
+
+  // ---- bridge from C# ----
+  window.__radioSetCatalog = function (json) {
+    try {
+      var data = typeof json === "string" ? JSON.parse(json) : json;
+      stations = data.stations || data;
+      if (data.volume != null) {
+        el("vol").value = data.volume;
+        audio.volume = data.volume / 100;
+        el("volpct").textContent = data.volume + "%";
+      }
+      render();
+    } catch (e) { /* ignore */ }
+  };
+
+  window.__radioSetState = function (json) {
+    try {
+      var s = typeof json === "string" ? JSON.parse(json) : json;
+      if (!s.playing) { stop(); return; }
+      if (s.stationId && s.stationId !== currentId) { play(s.stationId); }
+    } catch (e) { /* ignore */ }
+  };
+
+  report("ready", {});
+})();
+</script>
+</body>
+</html>

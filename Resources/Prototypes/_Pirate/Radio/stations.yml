@@ -1,0 +1,62 @@
+# Curated internet-radio stations for the Pirate PDA radio app.
+#
+# HARD REQUIREMENTS (do not add a station that breaks these):
+#   * url MUST be https:// (res:// pages are a Secure context; http is
+#     blocked as mixed content).
+#   * the stream MUST be an open codec (Ogg Vorbis / Opus). Stock CEF ships
+#     no MP3/AAC/H.264 decoders, so an MP3 stream fails silently.
+#   * prefer stations that are reliably up; broken ones just give dead air.
+#
+# These load offline and are always offered; the server additionally queries
+# radio-browser.info for more Ogg/Opus stations when the network allows.
+
+- type: radioStation
+  id: soma-groove-salad
+  label: SomaFM Groove Salad
+  genre: ambient / downtempo
+  url: https://ice4.somafm.com/groovesalad-128.ogg
+  featured: true
+
+- type: radioStation
+  id: soma-drone-zone
+  label: SomaFM Drone Zone
+  genre: ambient
+  url: https://ice4.somafm.com/dronezone-128.ogg
+  featured: true
+
+- type: radioStation
+  id: soma-secret-agent
+  label: SomaFM Secret Agent
+  genre: lounge / spy
+  url: https://ice4.somafm.com/secretagent-128.ogg
+  featured: true
+
+- type: radioStation
+  id: soma-indie-pop
+  label: SomaFM Indie Pop Rocks
+  genre: indie pop
+  url: https://ice4.somafm.com/indiepop-128.ogg
+
+- type: radioStation
+  id: soma-boot-liquor
+  label: SomaFM Boot Liquor
+  genre: americana
+  url: https://ice4.somafm.com/bootliquor-128.ogg
+
+- type: radioStation
+  id: soma-def-con-radio
+  label: SomaFM DEF CON Radio
+  genre: electronic
+  url: https://ice4.somafm.com/defcon-128.ogg
+
+- type: radioStation
+  id: soma-u80s
+  label: SomaFM Underground 80s
+  genre: synth / 80s
+  url: https://ice4.somafm.com/u80s-128.ogg
+
+- type: radioStation
+  id: soma-fluid
+  label: SomaFM Fluid
+  genre: instrumental hip hop
+  url: https://ice4.somafm.com/fluid-128.ogg

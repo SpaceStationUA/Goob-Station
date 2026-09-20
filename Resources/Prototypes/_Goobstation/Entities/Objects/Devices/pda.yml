@@ -339,6 +339,15 @@
   components:
   - type: Pda
     id: RadioHostIDCard
+  - type: CartridgeLoader
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - NanoChatCartridge
+      - WalletCartridge
+      - RadioCartridge
 
 - type: entity
   parent: CentcomPDA

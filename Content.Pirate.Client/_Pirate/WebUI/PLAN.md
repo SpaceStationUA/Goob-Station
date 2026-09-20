@@ -976,3 +976,45 @@ ask (Robust.Client.WebView macOS package) from the earlier plan.
   Robust type checker forbids in content assemblies -> client aborted with
   "Assembly Content.Pirate.Client failed type checks". The key map is now an
   explicit Keyboard.Key table (no reflection).
+
+## Internet Radio (PDA app) — design (2026-09-20)
+
+Goal: a PDA program that plays curated/aggregated internet radio through
+CEF, usable by the RadioHost job and anyone with the program installed.
+
+### Ground rules forced by the engine (all previously verified)
+- Stock CEF has no proprietary codecs (no MP3/AAC/H.264/HLS). Catalog is
+  filtered to **Ogg/Opus** streams only. Rationale: a stream that can't
+  decode fails silently, which is worse than a shorter list.
+- `res://` is a custom Secure scheme without FetchEnabled/CorsEnabled, so an
+  in-page `fetch()` of a JSON API hits CORS. **The server fetches the
+  catalog** (plain HttpClient, like DiscordWebhook); the page only plays
+  media and renders. `<audio src>` is not CORS-gated, so playback is fine.
+- Secure origin => mixed content blocks `http://` streams. Only accept
+  `https://` stream URLs.
+- CEF audio bypasses the game AudioSystem; mute/volume are page-side
+  (`audio.muted` / `.volume`), as the TV driver already does.
+
+### Catalog: radio-browser.info
+- Free, no key, community DB; exposes codec/bitrate/tags/clickcount so we
+  can filter server-side to Ogg/Opus + reachable stations.
+- URL: https://<mirror>/json/stations/search?codec=OGG&hidebroken=true&...
+- Mirrors: de1/de2/fi1/at1/nl1.api.radio-browser.info; try several.
+- Server caches the result with a TTL; a curated **pinned list** ships as a
+  fallback so the feature works with no network at all.
+
+### Placement: PDA cartridge (new; PDA<->WebView is new work)
+- The cartridge/UIFragment hosting is well-established, and the CEF
+  WebViewControl + WebUiTuiIpc bridge is too, but nothing yet returns a
+  WebViewControl from a UIFragment. UIFragment has no FrameUpdate, so a
+  client system must drive _ipc.Pump() on the main thread.
+- Transport options: CartridgeUiMessage/BUI (like Notekeeper) vs raw system
+  network events (like TV). Plan: use raw network events for stream state
+  (consistent with TV), wrapped by a small RadioProgram UI fragment.
+
+### Phases
+0. CEF probe: prove an Ogg/Opus https stream plays in our real build.
+1. Server catalog system (HttpClient + cache + pinned fallback).
+2. res:// radio page + driver + mirror; PDA cartridge + UIFragment host,
+   Pump driven from a client system.
+3. Curated pinned stations, favorites, optional RadioShow integration.

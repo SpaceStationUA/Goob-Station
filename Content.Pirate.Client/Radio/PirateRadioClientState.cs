@@ -1,0 +1,84 @@
+// SPDX-FileCopyrightText: 2026 Pirate Development Team
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using System;
+using System.Collections.Generic;
+using Content.Pirate.Shared.Radio;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Network;
+
+namespace Content.Pirate.Client.Radio;
+
+/// <summary>
+///     Program-facing façade for the PID radio. State is keyed by the
+///     installed program entity (its NetEntity) so two PDAs don't collide.
+///     The server is authoritative for the selected station; the page owns
+///     actual playback, so this mirror is advisory.
+/// </summary>
+public static class PirateRadioClientState
+{
+    public sealed class Entry
+    {
+        public string StationId = "";
+        public string Label = "";
+        public string Url = "";
+        public bool Playing;
+        public long Stamp;
+    }
+
+    private static readonly Dictionary<NetEntity, Entry> _entries = new();
+    private static readonly Dictionary<NetEntity, List<PirateRadioStationEntry>> _catalogs = new();
+    private static readonly Dictionary<NetEntity, bool> _requested = new();
+
+    public static Entry Get(NetEntity marker)
+        => _entries.TryGetValue(marker, out var e) ? e : new Entry();
+
+    public static IReadOnlyList<PirateRadioStationEntry>? Catalog(NetEntity marker)
+        => _catalogs.TryGetValue(marker, out var c) ? c : null;
+
+    public static void Forget(NetEntity marker)
+    {
+        _entries.Remove(marker);
+        _catalogs.Remove(marker);
+        _requested.Remove(marker);
+    }
+
+    /// <summary>Ask the server for the catalog (throttled to once per marker).</summary>
+    public static void RequestCatalog(NetEntity marker)
+    {
+        if (_catalogs.ContainsKey(marker) || _requested.ContainsKey(marker))
+            return;
+        _requested[marker] = true;
+        IoCManager.Resolve<IEntityNetworkManager>()
+            .SendSystemNetworkMessage(new PirateRadioCatalogRequestEvent { Marker = marker });
+    }
+
+    public static void Send(string op, NetEntity marker, string stationId = "")
+    {
+        IoCManager.Resolve<IEntityNetworkManager>()
+            .SendSystemNetworkMessage(new PirateRadioCommandEvent
+            {
+                Marker = marker,
+                Op = op,
+                StationId = stationId,
+            });
+    }
+
+    public static void OnCatalog(PirateRadioCatalogEvent msg)
+    {
+        _catalogs[msg.Marker] = msg.Stations;
+    }
+
+    public static void OnState(PirateRadioStateEvent msg)
+    {
+        _entries[msg.Marker] = new Entry
+        {
+            StationId = msg.StationId,
+            Label = msg.Label,
+            Url = msg.Url,
+            Playing = msg.Playing,
+            Stamp = msg.Stamp,
+        };
+    }
+}
