@@ -78,7 +78,6 @@ public sealed class PaperSystem : EntitySystem
         SubscribeLocalEvent<PaperComponent, PaperMacroMenuUsedMessage>(OnMacroMenuUsedMessage); // Pirate: paperwork tags
         SubscribeLocalEvent<PaperComponent, PaperSignatureRequestMessage>(OnSignatureRequest); // Starlight-edit
 
-        SubscribeLocalEvent<NoStampingComponent, BeforeStampEvent>(OnBeforeStamp); // Pirate: persistent text (diaries)
 
         SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
 
@@ -289,12 +288,6 @@ public sealed class PaperSystem : EntitySystem
     }
 
     #region Pirate: persistent text (diaries)
-
-    private void OnBeforeStamp(Entity<NoStampingComponent> entity, ref BeforeStampEvent args)
-    {
-        // A stamp would make the paper uneditable; diaries must stay writable.
-        args.Cancelled = true;
-    }
 
     /// <summary>
     /// Checks whether the actor may write into the persistent text entity.
@@ -591,7 +584,7 @@ public sealed class PaperSystem : EntitySystem
     /// <summary>
     ///     Accepts the name and state to be stamped onto the paper, returns true if successful.
     /// </summary>
-    public bool TryStamp(Entity<PaperComponent> entity, StampDisplayInfo stampInfo, string spriteStampState, EntityUid? user = null) // Pirate: persistent text (diaries) - user param
+    public bool TryStamp(Entity<PaperComponent> entity, StampDisplayInfo stampInfo, string spriteStampState)
     {
         // Pirate: persistent text (diaries) - no stamping on protected paper (e.g. diaries)
         if (HasComp<NoStampingComponent>(entity))

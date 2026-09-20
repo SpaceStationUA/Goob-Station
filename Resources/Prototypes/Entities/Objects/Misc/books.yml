@@ -7,6 +7,8 @@
   suffix: random visual, persistent
   description: Each book is unique! What is hidden in this one? Text written in this one persists between rounds.
   components:
+  # A stamp would lock the book and make it unwritable forever
+  - type: NoStamping
   - type: PersistentText
     ownerKind: profile
     storageKey: randombook

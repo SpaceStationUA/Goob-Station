@@ -96,6 +96,10 @@ public sealed class PersistentTextSystem : EntitySystem
         {
             try
             {
+                // Pirate: remember the content read before awaiting so a write that happens
+                // while the snapshot is being fetched is not clobbered by the restore below.
+                var contentBefore = paper.Content;
+
                 var state = await ResolvePersistenceStateAsync(ev.Player.UserId, selectedSlot, persistence);
                 if (state == null || Deleted(uid))
                     continue;
@@ -135,6 +139,14 @@ public sealed class PersistentTextSystem : EntitySystem
 
                 if (snapshot == null || string.IsNullOrEmpty(snapshot.Content))
                     continue;
+
+                // Pirate: the player may have written while the snapshot was loading;
+                // never overwrite their edit with the stale snapshot.
+                if (!string.Equals(paper.Content, contentBefore, StringComparison.Ordinal))
+                {
+                    Log.Debug($"Skipped persistent text restore for {ToPrettyString(uid)}: content changed while loading.");
+                    continue;
+                }
 
                 _paper.SetContent((uid, paper), snapshot.Content);
             }

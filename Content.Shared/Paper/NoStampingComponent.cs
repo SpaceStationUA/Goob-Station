@@ -16,10 +16,3 @@ namespace Content.Shared.Paper;
 public sealed partial class NoStampingComponent : Component
 {
 }
-
-/// <summary>
-/// Raised on the stamp to check whether the target accepts stamps.
-/// Cancel it to prevent stamping.
-/// </summary>
-[ByRefEvent]
-public record struct BeforeStampEvent(EntityUid Target, EntityUid User, bool Cancelled = false);
