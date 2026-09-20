@@ -77,7 +77,7 @@ public sealed class PirateArcadeSystem : EntitySystem
         var cab = EntityManager.GetEntity(msg.Cab);
         if (!_sessions.TryGetValue(cab, out var ses))
         {
-            ses = _sessions[cab] = new Session { Cab = cab };
+            ses = _sessions[cab] = NewSession(cab);
         }
 
         bool changed = false;
@@ -135,7 +135,7 @@ public sealed class PirateArcadeSystem : EntitySystem
             return;
 
         _sessions.TryGetValue(cab, out var ses);
-        ses ??= _sessions[cab] = new Session { Cab = cab };
+        ses ??= _sessions[cab] = NewSession(cab);
 
         // Free cabinet (any opener picks the title) or the seated player.
         if (ses.Seated != null && ses.Seated != ust.UserId)
@@ -150,7 +150,7 @@ public sealed class PirateArcadeSystem : EntitySystem
     private void TrySeat(EntityUid cab, ICommonSession user)
     {
         if (!_sessions.TryGetValue(cab, out var ses))
-            ses = _sessions[cab] = new Session { Cab = cab };
+            ses = _sessions[cab] = NewSession(cab);
 
         if (ses.Seated != null && ses.Seated != user.UserId)
         {
@@ -186,6 +186,11 @@ public sealed class PirateArcadeSystem : EntitySystem
         if (ent != null)
             _popup.PopupEntity("встав з автомата", ent.Value, Filter.Pvs(ent.Value), false, PopupType.Medium);
     }
+
+    /// <summary>A fresh cabinet starts on the default shipped game so the
+    /// client's picker can highlight it right away.</summary>
+    private static Session NewSession(EntityUid cab)
+        => new() { Cab = cab, Game = PirateArcadeGames.DefaultGame()?.ID ?? "" };
 
     private void Broadcast(Session ses)
     {

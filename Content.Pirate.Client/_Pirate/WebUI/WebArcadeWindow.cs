@@ -110,8 +110,8 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
             VerticalExpand = true,
-            MinWidth = 150,
-            MaxWidth = 158,
+            MinWidth = 208,
+            MaxWidth = 224,
             Margin = new Thickness(8),
         };
         right.AddChild(new Label
@@ -195,6 +195,12 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
     public void OpenCenteredArcade()
     {
         OpenCentered();
+
+        // Optimistically show the default game so the picker highlights one
+        // immediately; the server's state broadcast corrects it if different.
+        if (_game == "")
+            _game = DefaultGameId();
+        RebuildGameList(_game);
         _status.Text = $"автомат: {GameLabel(_game)}";
 
         try
@@ -353,9 +359,18 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
         foreach (var proto in PirateArcadeGames.All)
         {
             var gameId = proto.ID;
-            var b = new Button { Text = proto.Label, HorizontalExpand = true };
-            if (proto.ID == currentId)
+            var isCurrent = proto.ID == currentId;
+            var b = new Button
+            {
+                Text = isCurrent ? "▶ " + proto.Label : proto.Label,
+                HorizontalExpand = true,
+                ClipText = true,
+                ToolTip = proto.Label,
+            };
+            if (isCurrent)
+            {
                 b.AddStyleClass("StyleClass.Positive");
+            }
             b.OnPressed += _ =>
             {
                 SendGame(gameId);
