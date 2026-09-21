@@ -122,8 +122,9 @@ public static class PirateWebThemeResolver
 
     public static List<string> AllowedThemes(IEntityManager entMan, IPrototypeManager protos, EntityUid marker)
     {
-        var current = ThemeOf(entMan, protos, marker);
-        var cls = protos.TryIndex<PirateWebThemePrototype>(current, out var p) ? p.Class : "nt";
+        // The gate follows the DEVICE'S prototype, not the live override:
+        // a syndi-line PDA switched to NT must be able to switch back.
+        var cls = BaseClass(entMan, protos, marker);
         var list = new List<string>();
         foreach (var proto in protos.EnumeratePrototypes<PirateWebThemePrototype>())
         {
@@ -131,5 +132,19 @@ public static class PirateWebThemeResolver
                 list.Add(proto.ID);
         }
         return list;
+    }
+
+    /// <summary>The prototype's own theme (before any live override).
+    /// The composition flattened into the resolved prototype, so a direct
+    /// prototype lookup is enough.</summary>
+    private static string BaseClass(IEntityManager entMan, IPrototypeManager protos, EntityUid uid)
+    {
+        var proto = entMan.GetComponent<MetaDataComponent>(uid).EntityPrototype;
+        if (proto != null &&
+            proto.TryGetComponent("PirateWebUiTheme", out PirateWebUiThemeComponent? baseComp))
+        {
+            return protos.TryIndex<PirateWebThemePrototype>(baseComp.WebThemeId, out var p) ? p.Class : "nt";
+        }
+        return "nt";
     }
 }

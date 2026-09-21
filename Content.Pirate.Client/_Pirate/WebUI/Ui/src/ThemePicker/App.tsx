@@ -21,19 +21,6 @@ interface ThemeState {
 export default function App() {
   const [state, setState] = createSignal<ThemeState | null>(null);
   const [busy, setBusy] = createSignal(false);
-  const [probe, setProbe] = createSignal("probe: init");
-  window.setInterval(() => setProbe(perf()), 500);
-
-  function perf(): string {
-    try {
-      return [
-        "hasThemeSetState=" + (String(typeof (window as any).__themeSetState)),
-        "state=" + (state() ? JSON.stringify(state()) : "null"),
-      ].join("\n");
-    } catch (e) {
-      return "probe err " + String(e);
-    }
-  }
 
   window.__themeSetState = (json: string | ThemeState) => {
     try {
@@ -41,16 +28,16 @@ export default function App() {
     } catch { /* ignore */ }
   };
 
-  // Pull-based state: poll postAction("list") until the engine answers
-  // with {current, allowed}; the reply path (postAction -> Respond) is the
-  // proven connection, engine->page pushes are best-effort only.
-  const syncTimer = window.setInterval(async () => {
+  // State arrives via the ready handshake's fresh push now that the
+  // fragment hosting shape delivers engine->page reliably.
+  const pull = async () => {
     try {
       const res = await postAction<ThemeState>("list", {});
       if (res.ok && res.data && res.data.current)
         onState(res.data);
-    } catch { /* retry next tick */ }
-  }, 700);
+    } catch { /* page pull still safe */ }
+  };
+  void pull();
   window.addEventListener("tui-push", (ev) => {
     const detail = (ev as CustomEvent).detail ?? {};
     void postAction("dbg", "tui-push name=" + (detail.name ?? "?"));
@@ -60,7 +47,6 @@ export default function App() {
 
   function onState(s: ThemeState): void {
     setState(s);
-    window.clearInterval(syncTimer);
     // Re-skin the picker itself to the device's current theme.
     applyThemeId(s.current);
     setBusy(false);
@@ -68,7 +54,7 @@ export default function App() {
   }
 
   // Page is up: engine re-pull state (mirrors the radio page's handshake).
-  void postAction("dbg", "picker mounted");
+
   postAction("ready", {});
 
   return (
@@ -94,9 +80,6 @@ export default function App() {
           </div>
           <Show when={!state()}>
             <p class="hint">waiting for device state…</p>
-            <p class="probe" style={{ "font-family": "monospace", "font-size": "10px", "white-space": "pre-wrap" }}>
-              {probe()}
-            </p>
           </Show>
         </div>
       </GameWindow>

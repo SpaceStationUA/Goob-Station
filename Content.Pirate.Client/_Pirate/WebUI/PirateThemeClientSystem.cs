@@ -133,11 +133,38 @@ public sealed class PirateThemeClientSystem : EntitySystem
                 RequestState(pda);
                 break;
             case "set":
-                if (data is { Length: > 0 })
+                if (ExtractTheme(data) is { Length: > 0 } id)
                     IoCManager.Resolve<IEntityNetworkManager>().SendSystemNetworkMessage(
-                        new PirateThemeSetEvent { Pda = pda, ThemeId = data });
+                        new PirateThemeSetEvent { Pda = pda, ThemeId = id });
                 break;
         }
+    }
+
+    /// <summary>Data payload of the {"theme":"<id>"} bridge call.</summary>
+    private static string? ExtractTheme(string? data)
+    {
+        if (string.IsNullOrEmpty(data))
+            return null;
+        const string key = "\"theme\"";
+        var at = data.IndexOf(key, StringComparison.Ordinal);
+        if (at < 0)
+            return null;
+        var colon = data.IndexOf(':', at + key.Length);
+        var i = colon + 1;
+        while (i < data.Length && (data[i] == ' ' || data[i] == '\t'))
+            i++;
+        if (i >= data.Length || data[i] != '"')
+            return "";
+        i++;
+        var outBase = new System.Text.StringBuilder();
+        while (i < data.Length && data[i] != '"')
+        {
+            if (data[i] == '\\' && i + 1 < data.Length)
+                i++;
+            outBase.Append(data[i]);
+            i++;
+        }
+        return outBase.ToString();
     }
 
     /// <summary>Called when the PDA's BUI closes: kill the page contexts.</summary>

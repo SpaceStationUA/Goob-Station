@@ -149,11 +149,8 @@ public sealed class WebThemeWindow : DefaultWindow
         // in this window); the page's own "list" pulls are authoritative.
         if (_pageReady)
         {
-            // Visible exec probe: if engine->page works at all, this turns
-            // the picker's background red even if the state call fails.
-            _web.ExecuteJavaScript("document.body.style.background = 'red'; " +
-                "window.__themeSetState && window.__themeSetState(" +
-                WebUiSpikeBridge.JsonString(_lastStateJson) + ");");
+            _web.ExecuteJavaScript("window.__themeSetState && window.__themeSetState(" +
+            WebUiSpikeBridge.JsonString(_lastStateJson) + ");");
             _ipc.Push("theme-state", _lastStateJson);
         }
     }
