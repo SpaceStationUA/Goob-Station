@@ -36,6 +36,10 @@ export type RelayChunk = string;
 
 /** Player actions (page -> engine). The engine parses `{"id":"..."}`
  * with a minimal tokenizer (PirateRadioClientSystem.ExtractStationId). */
+export function dbg(msg: string): Promise<unknown> {
+  return postAction("dbg", String(msg));
+}
+
 export function playerAction(kind: "play" | "stop" | "relayready" | "volume" | "ready", stationId?: string, volume?: number): Promise<unknown> {
   if (kind === "play")
       return postAction(kind, { id: stationId ?? "" });

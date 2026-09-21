@@ -1187,3 +1187,13 @@ direct window globals (__radioSetCatalog / __radioSetState /
 __radioRelayChunk); the page installs both intakes. Client logs every
 bridge action as [DEBG] webui.radio - if "radio action 'ready'" does not
 appear in the client log, the iframe action sender itself is broken.
+Phase C round 1 shipped:
+- Ui/src/lib/tokens.css: semantic CSS variables, two themes (nt: cool
+  grays + steel blue; syndi: coal black/crimson + chamfer feel via kit).
+- Ui/src/lib/theme.tsx: ThemeProvider (default nt; #theme= hash engages
+  Syndicate for dev; future ui-theme push hook prepared).
+- Ui/src/lib/kit.tsx + kit.css: GameWindow (titlebar + close + themed
+  watermark), Button (accent/danger), Panel, ProgressBar (danger
+  pulse), Icon wrapper; icons via solid-icons/io (IoPlay/IoStop/IoClose).
+- Radio page restyled on the kit + tokens (same functionality).
+- Bundle ~40k total. Tailwind/Kobalte still not vendored (per plan).

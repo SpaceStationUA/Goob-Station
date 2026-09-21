@@ -1,9 +1,12 @@
 import { createSignal, createMemo, onMount, For, Show } from "solid-js";
 import { createPlayer } from "./player";
 import {
-  onRadioCatalog, onRadioState, onRelayChunk, playerAction,
+  onRadioCatalog, onRadioState, onRelayChunk, playerAction, dbg,
   type RadioCatalog, type RadioState, type StationEntry,
 } from "../lib/protocol";
+import { ThemeProvider, themeName } from "../lib/theme";
+import { GameWindow, Button, Icon } from "../lib/kit";
+import { IoPlay, IoStop, IoClose } from "solid-icons/io";
 import "./radio.css";
 
 // Remote entries carry comma-separated tag lists; pinned ones a short
@@ -33,18 +36,18 @@ export default function App() {
   }
 
   // ---- bridge: catalog/state/chunk + relay-ready action ----
-  // Two intake channels; the engine mirrors pushes on both (tui-push events
-  // and direct window calls). Whichever wins first, wins.
+  // Dual-channel intakes (tui-push events and the direct window globals);
+  // whichever arrives first wins.
   onRadioCatalog((c: RadioCatalog) => setStations(c.stations));
   onRadioState((s: RadioState) => onState(s));
   onRelayChunk((b64) => player.feedChunk(b64));
 
   function onState(s: RadioState): void {
+    dbg("echo state aid=" + s.stationId + " playing=" + s.playing + " relay=" + s.relay + (player.playing() ? " (local-playing=" + player.currentId() + ")" : ""));
     if (!s.playing) {
       // A stale-echo guard: the ready handshake re-pushes the driver's
-      // cached state, which can momentarily be an empty (playing=false)
-      // entry while the local playback is already running; do not stop
-      // real audio for it.
+      // cached state, which can momentarily be empty/false while local
+      // playback already runs; do not stop real audio for it.
       if (player.playing() && !s.stationId) return;
       player.stop();
       return;
@@ -70,15 +73,18 @@ export default function App() {
       onState(typeof json === "string" ? JSON.parse(json) : json);
     } catch { /* ignore */ }
   };
-  window.__radioRelayChunk =   // Same contract as the hand page: C# calls this before disposing the
+  window.__radioRelayChunk = (b64: string) => { player.feedChunk(b64); };
+  // Same contract as the hand page: C# calls this before disposing the
   // playback control (e.g. the PDA was destroyed) or the CEF browser would
   // keep the audio going as an orphan.
   window.__radioHardStop = () => { player.stop(); };
+
   player.setRelayReady(() => { playerAction("relayready"); });
+  player.setDiag((m) => { dbg(m); });
 
   // The page has its listeners up; ask the engine to re-send anything that
-  // was pushed during the load window (catalog/state arrive once and are
-  // deduped server-side, so a dropped push would otherwise never be seen).
+  // was pushed during the load window (catalog arrives once and is deduped
+  // server-side, so a dropped push would otherwise never be seen).
   onMount(() => {
     playerAction("ready");
   });
@@ -98,8 +104,6 @@ export default function App() {
     // is a notification, not a round trip (state echoes are deduped).
     const st = stations().find((x) => x.id === id);
     if (!st) return;
-    // The echo from the server state push would restart the stream;
-    // the player dedupes via the currentId check in onRadioState.
     player.play(st);
     playerAction("play", id);
   }
@@ -164,65 +168,73 @@ export default function App() {
   );
 
   return (
-    <div class="app">
-      <div class="now">
-        <div class={"eq" + (player.playing() ? "" : " paused")}><i /><i /><i /><i /></div>
-        <div class="meta">
-          <div class="station-label">{player.meta().label}</div>
-          <div class="genre-line">{player.meta().genre}</div>
-        </div>
-        <div class="status-line">{player.status()}</div>
-      </div>
+    <ThemeProvider>
+      <GameWindow title="Pirate Radio">
+        <div class="app">
+          <div class="now">
+            <div class={"eq" + (player.playing() ? "" : " paused")}><i /><i /><i /><i /></div>
+            <div class="meta">
+              <div class="station-label">{player.meta().label}</div>
+              <div class="genre-line">{player.meta().genre}</div>
+            </div>
+            <div class="status-line">{player.status()}</div>
+          </div>
 
-      <div class="controls">
-        <button class={!player.playing() ? "primary" : ""} onClick={onPlayButton}>
-          {player.playing() ? "\u23f8 Pause" : "\u25b6 Play"}
-        </button>
-        <button onClick={doStop}>{'\u25a0'} Stop</button>
-        <input class="vol" type="range" min={0} max={100}
-          value={vol()}
-          onInput={(e) => {
-            const v = Number(e.currentTarget.value);
-            setVol(v);
-            player.setVolume(v);
-            playerAction("volume", undefined, v);
-          }} />
-        <span class="volpct">{vol()}%</span>
-      </div>
+          <div class="controls">
+            <Button variant={player.playing() ? undefined : "accent"} onClick={onPlayButton}>
+              <Icon p={player.playing() ? <IoStop /> : <IoPlay />} />
+              {player.playing() ? "Stop" : "Play"}
+            </Button>
 
-      <div class="tabs">
-        <button class={"tab" + (tab() === "stations" ? " active" : "")} onClick={() => { setTab("stations"); setGenre(null); }}>Stations</button>
-        <button class={"tab" + (tab() === "genres" ? " active" : "")} onClick={() => { setTab("genres"); setGenre(null); }}>Genres</button>
-      </div>
+            <Button onClick={doStop}>
+              <Icon p={<IoClose />} /> Stop
+            </Button>
+            <input class="vol" type="range" min={0} max={100}
+              value={vol()}
+              onInput={(e) => {
+                const v = Number(e.currentTarget.value);
+                setVol(v);
+                player.setVolume(v);
+                playerAction("volume", undefined, v);
+              }} />
+            <span class="volpct">{vol()}%</span>
+          </div>
 
-      <div class="list">
-        <Show when={tab() === "genres"} fallback={
-          <For each={sorted()}>{(s) =>
-            <StationRow s={s} active={s.id === player.currentId() && player.playing()}
-              dead={broken().has(s.id)} starred={starred().has(s.id)}
-              onSelect={select} onStar={toggleStar} />
-          }</For>
-        }>
-          <Show when={genre() == null} fallback={
-            <>
-              <div class="back" onClick={() => setGenre(null)}>{"\u2190 all genres"}</div>
-              <For each={inGenre()}>{(s) =>
+          <div class="tabs">
+            <button class={"tab" + (tab() === "stations" ? " active" : "")} onClick={() => { setTab("stations"); setGenre(null); }}>Stations</button>
+            <button class={"tab" + (tab() === "genres" ? " active" : "")} onClick={() => { setTab("genres"); setGenre(null); }}>Genres</button>
+          </div>
+
+          <div class="list">
+            <Show when={tab() === "genres"} fallback={
+              <For each={sorted()}>{(s) =>
                 <StationRow s={s} active={s.id === player.currentId() && player.playing()}
-                  dead={broken().has(s.id)}
+                  dead={broken().has(s.id)} starred={starred().has(s.id)}
                   onSelect={select} onStar={toggleStar} />
               }</For>
-            </>
-          }>
-            <For each={genreGroups()}>{(g) =>
-              <div class="genre-row" onClick={() => setGenre(g.name.toLowerCase())}>
-                <span class="gname">{g.name}</span>
-                <span class="cnt">{g.count}</span>
-              </div>
-            }</For>
-          </Show>
-        </Show>
-      </div>
-    </div>
+            }>
+              <Show when={genre() == null} fallback={
+                <>
+                  <div class="back" onClick={() => setGenre(null)}>{"\u2190 all genres"}</div>
+                  <For each={inGenre()}>{(s) =>
+                    <StationRow s={s} active={s.id === player.currentId() && player.playing()}
+                      dead={broken().has(s.id)} starred={starred().has(s.id)}
+                      onSelect={select} onStar={toggleStar} />
+                  }</For>
+                </>
+              }>
+                <For each={genreGroups()}>{(g) =>
+                  <div class="genre-row" onClick={() => setGenre(g.name.toLowerCase())}>
+                    <span class="gname">{g.name}</span>
+                    <span class="cnt">{g.count}</span>
+                  </div>
+                }</For>
+              </Show>
+            </Show>
+          </div>
+        </div>
+      </GameWindow>
+    </ThemeProvider>
   );
 }
 
@@ -254,4 +266,3 @@ function StationRow(props: {
     </div>
   );
 }
-

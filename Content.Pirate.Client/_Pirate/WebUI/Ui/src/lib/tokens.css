@@ -1,0 +1,54 @@
+/* Design tokens: semantic CSS variables per theme.
+ * Components reference ONLY these names - raw colors live nowhere else.
+ *
+ *   bg/bgSoft  surfaces, panel/panel2 raised surfaces, line boundaries
+ *   text/dim   content hierarchy, accent/accent2 brand color, danger
+ *   fail       "danger" state color for ProgressBar etc.
+ *   radius     corner geometry (Syndicate skews via clip-path in kit.css)
+ *
+ * Themes:
+ *   nt       NanoTrasen - industrial functionalism: cool grays, steel blue,
+ *            square corners, deliberate borders.
+ *   syndi    Syndicate - aggressive militarism: coal black + crimson,
+ *            chamfered edges, hot orange second accent.
+ */
+
+:root, .theme-nt {
+  --bg: #14171c;
+  --bg-soft: #10131a;
+  --panel: #1c202a;
+  --panel2: #252b38;
+  --line: #0a0c10;
+  --text: #e6e9ee;
+  --dim: #8b93a1;
+  --accent: #4a8fd9;
+  --accent2: #8ec1ef;
+  --danger: #d9534f;
+  --radius: 2px;
+}
+
+.theme-syndi {
+  --bg: #120c0d;
+  --bg-soft: #0b0809;
+  --panel: #1a1113;
+  --panel2: #2a1719;
+  --line: #050303;
+  --text: #e8ded4;
+  --dim: #a08b7e;
+  --accent: #d6433b;
+  --accent2: #ff9a3c;
+  --danger: #d6433b;
+  --radius: 0px;
+}
+
+/* Watermark SVGs: single-file, theme-colored via mask so they recolor
+ * without new assets. Painted giant + faint behind the content. */
+.theme-nt .watermark {
+  /* NanoTrasen: orbital ring + stylized atom */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%234a8fd9' stroke-width='3'%3E%3Ccircle cx='50' cy='50' r='38'/%3E%3Cellipse cx='50' cy='50' rx='44' ry='18'/%3E%3Cellipse cx='50' cy='50' rx='18' ry='44' transform='rotate(28 50 50)'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%234a8fd9' fill-opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.theme-syndi .watermark {
+  /* Syndicate: angular sigil (chamfered blade/star) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23d6433b' stroke-width='4'%3E%3Cpath d='M50 4 L88 28 L88 72 L50 96 L12 76 L12 24 Z'/%3E%3Cpath d='M50 22 L70 62 L30 62 Z'/%3E%3Cpath d='M30 74 H70'/%3E%3C/g%3E%3C/svg%3E");
+}
