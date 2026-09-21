@@ -28,6 +28,11 @@ export default function App() {
     } catch { /* ignore */ }
   };
 
+  // NV: poll for active sync (1s) - state pushes into this webview may be
+  // deferred; the active pull always succeeds via the action replay.
+  const syncTimer = window.setInterval(() => {
+    void postAction("sync", "typeof=" + String(typeof (window as any).__themeSetState));
+  }, 1000);
   window.addEventListener("tui-push", (ev) => {
     const detail = (ev as CustomEvent).detail ?? {};
     void postAction("dbg", "tui-push name=" + (detail.name ?? "?"));
@@ -37,6 +42,7 @@ export default function App() {
 
   function onState(s: ThemeState): void {
     setState(s);
+    window.clearInterval(syncTimer);
     // Re-skin the picker itself to the device's current theme.
     applyThemeId(s.current);
     setBusy(false);

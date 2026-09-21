@@ -44,6 +44,9 @@ public sealed class WebThemeWindow : DefaultWindow
         {
             HorizontalExpand = true,
             VerticalExpand = true,
+            // Engine-side pushes (state calls, push events) require the
+            // browser to be active; radio and arcade windows set this too.
+            AlwaysActive = true,
         };
         _ipc = new WebUiTuiIpc(ThroughBridge)
         {
@@ -64,6 +67,15 @@ public sealed class WebThemeWindow : DefaultWindow
         {
             case "dbg":
                 Logger.DebugS("webui.theme", $"picker page: {data}");
+                break;
+            case "sync":
+                // Active pull: re-execute the freshest snapshot; works even
+                // if event pushes into this webview are being swallowed.
+                if (_lastStateJson != "" && _pageReady)
+                {
+                    _web.ExecuteJavaScript("window.__themeSetState && window.__themeSetState(" +
+                        WebUiSpikeBridge.JsonString(_lastStateJson) + ");");
+                }
                 break;
             case "ready":
                 // The page has listeners up; pull the server's fresh state.
