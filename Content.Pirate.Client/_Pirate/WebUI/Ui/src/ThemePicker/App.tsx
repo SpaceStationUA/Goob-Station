@@ -21,6 +21,19 @@ interface ThemeState {
 export default function App() {
   const [state, setState] = createSignal<ThemeState | null>(null);
   const [busy, setBusy] = createSignal(false);
+  const [probe, setProbe] = createSignal("probe: init");
+  window.setInterval(() => setProbe(perf()), 500);
+
+  function perf(): string {
+    try {
+      return [
+        "hasThemeSetState=" + (String(typeof (window as any).__themeSetState)),
+        "state=" + (state() ? JSON.stringify(state()) : "null"),
+      ].join("\n");
+    } catch (e) {
+      return "probe err " + String(e);
+    }
+  }
 
   window.__themeSetState = (json: string | ThemeState) => {
     try {
@@ -75,7 +88,10 @@ export default function App() {
             }</For>
           </div>
           <Show when={!state()}>
-            <p class="hint">loading modules…</p>
+            <p class="hint">waiting for device state…</p>
+            <p class="probe" style={{ "font-family": "monospace", "font-size": "10px", "white-space": "pre-wrap" }}>
+              {probe()}
+            </p>
           </Show>
         </div>
       </GameWindow>
