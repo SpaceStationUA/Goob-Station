@@ -40,7 +40,15 @@ export default function App() {
   onRelayChunk((b64) => player.feedChunk(b64));
 
   function onState(s: RadioState): void {
-    if (!s.playing) { player.stop(); return; }
+    if (!s.playing) {
+      // A stale-echo guard: the ready handshake re-pushes the driver's
+      // cached state, which can momentarily be an empty (playing=false)
+      // entry while the local playback is already running; do not stop
+      // real audio for it.
+      if (player.playing() && !s.stationId) return;
+      player.stop();
+      return;
+    }
     // Already playing this station locally: the echo is our own report
     // coming back - do not restart the stream.
     if (player.playing() && s.stationId === player.currentId()) return;

@@ -74,14 +74,15 @@ public sealed class WebRadioDriver
     }
 
     /// <summary>
-    ///     Drop the last-sent cache so the next Update re-pushes the current
-    ///     catalog/state. Used after the page reports it is ready: pushes
-    ///     fired during the load window never reached its listeners.
+    ///     Drop the last-sent catalog cache so the next Update re-pushes it.
+    ///     Used after the page reports it is ready: pushes fired during the
+    ///     load window never reached its listeners. Catalog only - the page
+    ///     knows its own playback state and re-pushing the possibly stale
+    ///     entry would fight the local player (caused bogus stops/aborts).
     /// </summary>
     public void ResetCaches()
     {
         _lastCatalog = "";
-        _lastState = "";
     }
 
     /// <summary>

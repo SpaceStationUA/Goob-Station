@@ -15,7 +15,11 @@ html, body {
   overflow: hidden;
   user-select: none;
 }
-.app { display: flex; flex-direction: column; height: 100%; }
+/* Solid mounts into #root; the old page was its own flex column. */
+#root {
+  display: flex; flex-direction: column; height: 100%;
+}
+.app { display: flex; flex-direction: column; height: 100%; flex: 1; }
 
 .now {
   padding: 10px 12px;
