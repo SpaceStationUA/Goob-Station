@@ -41,11 +41,16 @@ export default function App() {
     } catch { /* ignore */ }
   };
 
-  // NV: poll for active sync (1s) - state pushes into this webview may be
-  // deferred; the active pull always succeeds via the action replay.
-  const syncTimer = window.setInterval(() => {
-    void postAction("sync", "typeof=" + String(typeof (window as any).__themeSetState));
-  }, 1000);
+  // Pull-based state: poll postAction("list") until the engine answers
+  // with {current, allowed}; the reply path (postAction -> Respond) is the
+  // proven connection, engine->page pushes are best-effort only.
+  const syncTimer = window.setInterval(async () => {
+    try {
+      const res = await postAction<ThemeState>("list", {});
+      if (res.ok && res.data && res.data.current)
+        onState(res.data);
+    } catch { /* retry next tick */ }
+  }, 700);
   window.addEventListener("tui-push", (ev) => {
     const detail = (ev as CustomEvent).detail ?? {};
     void postAction("dbg", "tui-push name=" + (detail.name ?? "?"));

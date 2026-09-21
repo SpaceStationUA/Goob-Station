@@ -1246,3 +1246,11 @@ Phase D round 2: THE COMMON SETTINGS WINDOW
   of the proto default), and pokes the radio system to freshen open
   radio pages. Any future CEF app on the device picks the theme the
   same way (theme is a device fact, not an app field).
+Phase D round 3: the picker embeds IN the settings tab (arcade/window
+exec mystery parked, documented):
+- PdaMenu settings panel gains ThemeHost PanelContainer under the
+  theme button; the button toggles the CEF page embed radio-style.
+- Hosting follows the arcade pattern (nav hook + AlwaysActive, pull
+  replies only), wired through a static provider bridge in
+  Content.Pirate.UIKit (Content.Client cannot reference the pirate
+  client system directly).

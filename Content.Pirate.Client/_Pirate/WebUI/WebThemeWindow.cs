@@ -51,6 +51,10 @@ public sealed class WebThemeWindow : DefaultWindow
         _ipc = new WebUiTuiIpc(ThroughBridge)
         {
             AllowHttpHosts = new List<string>(),
+            // The picker only uses the ACTION path (page pull); server
+            // pushes also flow when the webview context is reachable, but
+            // the state pull is the supported lane.
+            SyncDispatch = (action, _) => action == "list" && _pageReady ? _lastStateJson : null,
         };
         _web.AddBeforeBrowseHandler(_ipc.HandleBeforeBrowse);
         // NOTE: no _ipc.Attach and no Url here - the arcade window's working
@@ -141,9 +145,14 @@ public sealed class WebThemeWindow : DefaultWindow
             parts.Add(WebUiSpikeBridge.JsonString(t));
         _lastStateJson = "{\"current\":\"" + WebUiSpikeBridge.JsonString(current) +
             "\",\"allowed\":[" + string.Join(",", parts) + "]}";
+        // Passive pushes kept as best-effort (they never landed reliably
+        // in this window); the page's own "list" pulls are authoritative.
         if (_pageReady)
         {
-            _web.ExecuteJavaScript("window.__themeSetState && window.__themeSetState(" +
+            // Visible exec probe: if engine->page works at all, this turns
+            // the picker's background red even if the state call fails.
+            _web.ExecuteJavaScript("document.body.style.background = 'red'; " +
+                "window.__themeSetState && window.__themeSetState(" +
                 WebUiSpikeBridge.JsonString(_lastStateJson) + ");");
             _ipc.Push("theme-state", _lastStateJson);
         }

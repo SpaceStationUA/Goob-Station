@@ -84,11 +84,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                        Visible="False"
                                        Text="{Loc 'pda-bound-user-interface-lock-uplink-title'}"
                                        Description="{Loc 'pda-bound-user-interface-lock-uplink-description'}"/>
-                <!-- Pirate: WebUI theme picker (device-level, all CEF apps) -->
+                <!-- Pirate: WebUI theme picker (device-level, all CEF apps).
+                     The CEF page embeds right here (radio-style hosting). -->
                 <pda:PdaSettingsButton Name="ThemeButton"
                                        Access="Public"
                                        Text="PDA theme"
                                        Description="Switch the look of this PDA's windows"/>
+                <PanelContainer Name="ThemeHost" Visible="False" MinSize="0 190" HorizontalExpand="True" Margin="0 0 0 4"/>
 
                 <!-- Pirate: contract hub -->
                 <pda:PdaSettingsButton Name="ContractsButton"

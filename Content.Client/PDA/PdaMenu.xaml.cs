@@ -43,6 +43,9 @@ namespace Content.Client.PDA
         public event Action<EntityUid>? OnProgramItemPressed;
         public event Action<EntityUid>? OnUninstallButtonPressed;
         public event Action<EntityUid>? OnInstallButtonPressed;
+
+        // Pirate: the theme picker embeds a CEF page into the settings tab.
+        public PanelContainer? ThemeHostPanel => ThemeHost;
         public PdaMenu()
         {
             IoCManager.InjectDependencies(this);
