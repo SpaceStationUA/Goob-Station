@@ -1230,3 +1230,19 @@ Phase D round 1:
   selecting posts {"theme":"<id>"} like any other app action.
 - The future home is a real PDA Settings cartridge (none exists in
   tree yet); the command + allowed-list contract is ready to reuse.
+Phase D round 2: THE COMMON SETTINGS WINDOW
+- PDA Settings tab -> new "PDA theme" button (PdaMenu/PdaBoundUserInt);
+  clicking sends PdaShowThemeMessage; PirateWebUiSystem (new, server)
+  answers PirateThemeStateEvent (current + allowed, computed from the
+  resolver shared with the radio system).
+- New client window WebThemeWindow + PirateThemeClientSystem (arcade
+  pattern: client-side DefaultWindow + webview + bridge; network only
+  through the shared theme events).
+- New Solid interface ThemePicker: GameWindow shell, re-skins itself to
+  the device's current theme, cards per allowed id; uses the real
+  reply path for state (postAction("ready") + server pushes).
+- Turning the dial: server validates the set (AllowedThemes gate),
+  applies PirateWebUiThemeComponent on the entity (per-device override
+  of the proto default), and pokes the radio system to freshen open
+  radio pages. Any future CEF app on the device picks the theme the
+  same way (theme is a device fact, not an app field).

@@ -76,6 +76,7 @@ namespace Content.Client.PDA
             };
 
             _menu.ContractsButton.OnPressed += _ => SendMessage(new PdaShowContractsMessage()); // Pirate: traitor contracts.
+            _menu.ThemeButton.OnPressed += _ => SendMessage(new Content.Pirate.Shared.WebUi.PdaShowThemeMessage()); // Pirate: WebUI theme picker.
 
             _menu.OnProgramItemPressed += ActivateCartridge;
             _menu.OnInstallButtonPressed += InstallCartridge;

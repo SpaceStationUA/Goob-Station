@@ -27,7 +27,7 @@ if [ "${1:-}" = "dev" ]; then
     TUI_IFACE="$iface" exec npx vite --clearScreen false
 fi
 
-for iface in Radio Uplink; do
+for iface in Radio ThemePicker Uplink; do
     if [ -f "src/$iface/index.html" ]; then
         out="$res/$iface"
         [ "${BUILDWEBUI_FINAL:-}" = "1" ] || out="$ui/dist_resources"

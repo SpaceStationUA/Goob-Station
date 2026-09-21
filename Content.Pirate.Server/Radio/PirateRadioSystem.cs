@@ -129,14 +129,10 @@ public sealed class PirateRadioSystem : EntitySystem
         else
             _cache = null; // cvar turned off: fall back to pinned-only
 
-        var stations = Pinned();
-        if (_cache != null)
-            stations.AddRange(_cache);
-
         RaiseNetworkEvent(new PirateRadioCatalogEvent
         {
             Marker = msg.Marker,
-            Stations = stations,
+            Stations = StationsFor(),
             Theme = ThemeOf(marker),
             Themes = AllowedThemes(marker),
         }, args.SenderSession.Channel);
@@ -144,57 +140,43 @@ public sealed class PirateRadioSystem : EntitySystem
 
     
     private string ThemeOf(EntityUid marker)
-    {
-        // The marker is the radio cartridge (inside the PDA's loader);
-        // the theme component lives on the PDA, so walk up.
-        var protoId = "?";
-        for (var ent = (EntityUid?)marker; ent != null; ent = ent == marker ? _entMan.GetComponent<TransformComponent>(ent.Value).ParentUid : null)
-        {
-            if (TryComp<PirateWebUiThemeComponent>(ent, out var theme))
-            {
-                Logger.DebugS("webui.radio",
-                    $"theme of {(ent == marker ? "marker" : "parent")} {_entMan.GetNetEntity(ent.Value)} ({_entMan.GetComponent<MetaDataComponent>(ent.Value).EntityPrototype?.ID ?? "?"}) = {theme.WebThemeId}");
-                return theme.WebThemeId;
-            }
-            if (ent != marker && _entMan.TryGetComponent<TransformComponent>(ent.Value, out var t) && !t.ParentUid.IsValid())
-                break;
-            if (ent != marker)
-                break; // walk exactly one hop beyond the marker
-        }
-        Logger.DebugS("webui.radio", $"theme of marker {_entMan.GetNetEntity(marker)} ({protoId}) = PirateNtWeb (default)");
-        return "PirateNtWeb";
-    }
+        => WebUi.PirateWebThemeResolver.ThemeOf(_entMan, _prototypes, marker);
 
-    /// <summary>This PDA's switchable theme ids: all class-nt themes plus
-    /// the syndi family when the device is syndi-line (PDA Settings will
-    /// extend this later; an emag effect can just grant the component).</summary>
     private List<string> AllowedThemes(EntityUid marker)
+        => WebUi.PirateWebThemeResolver.AllowedThemes(_entMan, _prototypes, marker);
+
+    /// <summary>Re-push fresh catalogs (theme included) for every session
+    /// whose marker sits under this PDA. Called after a theme switch.</summary>
+    public void RepushCatalogsForPda(EntityUid pda, INetChannel channel)
     {
-        var list = new List<string>();
-        var unlock = false;
-        for (var ent = (EntityUid?)marker; ent != null; ent = ent == marker ? _entMan.GetComponent<TransformComponent>(ent.Value).ParentUid : null)
+        List<NetEntity> dead = new();
+        foreach (var (marker, session) in _sessions)
         {
-            if (TryComp<PirateWebUiThemeComponent>(ent, out var th))
+            if (!Exists(GetEntity(marker)))
+                continue;
+            var parent = _entMan.TryGetComponent<TransformComponent>(GetEntity(marker), out var t) ? t.ParentUid : EntityUid.Invalid;
+            if (!parent.IsValid() || parent != pda)
+                continue;
+
+            RaiseNetworkEvent(new PirateRadioCatalogEvent
             {
-                var cls = WebThemeClass(th.WebThemeId);
-                if (cls == "syndi")
-                    unlock = true;
-                break;
-            }
-            if (ent != marker)
-                break; // one hop beyond the marker (cartridge -> PDA)
+                Marker = marker,
+                Stations = StationsFor(),
+                Theme = ThemeOf(GetEntity(marker)),
+                Themes = AllowedThemes(GetEntity(marker)),
+            }, channel);
         }
-        foreach (var proto in _prototypes.EnumeratePrototypes<PirateWebThemePrototype>())
-        {
-            var c = proto.Class;
-            if (c == "nt" || (unlock && c == "syndi"))
-                list.Add(proto.ID);
-        }
-        return list;
     }
 
-    private string? WebThemeClass(string id)
-        => _prototypes.TryIndex<PirateWebThemePrototype>(id, out var p) ? p.Class : null;
+    /// <summary>The full station list (pins + remote cache per cvar).</summary>
+    private List<PirateRadioStationEntry> StationsFor()
+    {
+        var stations = Pinned();
+        if (_cache != null)
+            stations.AddRange(_cache);
+        return stations;
+    }
+
     private void OnCommand(PirateRadioCommandEvent msg, EntitySessionEventArgs args)
     {
         var marker = GetEntity(msg.Marker);
