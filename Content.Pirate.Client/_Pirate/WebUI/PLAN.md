@@ -1179,3 +1179,11 @@ play incl. relay) still pending - needs a run of
 Phase D confirmation: radio stays the kit's test case; theme chosen per
 owning PDA faction (station PDAs -> nt defaults, villain PDAs ->
 syndicate).
+Phase B issue 2: page loads but no stations (dev, tested case: PDA opened
+minutes after connect). Diagnosis path: ready-action re-push did not fix
+it, so the CustomEvent push channel itself is suspect. Now dual-channel:
+driver mirrors every push to BOTH tui-push events and the hand page's
+direct window globals (__radioSetCatalog / __radioSetState /
+__radioRelayChunk); the page installs both intakes. Client logs every
+bridge action as [DEBG] webui.radio - if "radio action 'ready'" does not
+appear in the client log, the iframe action sender itself is broken.

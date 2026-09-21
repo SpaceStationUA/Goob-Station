@@ -16,6 +16,7 @@ namespace Content.Pirate.Client.Radio;
 public sealed class WebRadioDriver
 {
     private readonly WebUiTuiIpc _ipc;
+    private WebViewControl? _web;
     private string _lastCatalog = "";
     private string _lastState = "";
 
@@ -26,7 +27,7 @@ public sealed class WebRadioDriver
 
     public void Attach(WebViewControl web)
     {
-        // The driver pushes through _ipc; kept for symmetric lifecycle use.
+        _web = web;
     }
 
     /// <summary>Push the station catalog; only re-sends when it changed.</summary>
@@ -49,6 +50,11 @@ public sealed class WebRadioDriver
         if (json == _lastCatalog)
             return;
         _lastCatalog = json;
+
+        // Belt and braces: the tui-push CustomEvent channel is new; the
+        // direct window call is the hand page's battle-tested path.
+        _web?.ExecuteJavaScript("window.__radioSetCatalog && window.__radioSetCatalog(" +
+            WebUiSpikeBridge.JsonString(json) + ");");
         _ipc.Push("radio-catalog", json);
     }
 
@@ -61,6 +67,9 @@ public sealed class WebRadioDriver
         if (json == _lastState)
             return;
         _lastState = json;
+
+        _web?.ExecuteJavaScript("window.__radioSetState && window.__radioSetState(" +
+            WebUiSpikeBridge.JsonString(json) + ");");
         _ipc.Push("radio-state", json);
     }
 
@@ -81,6 +90,8 @@ public sealed class WebRadioDriver
     /// </summary>
     public void SetRelayChunk(string base64)
     {
+        _web?.ExecuteJavaScript("window.__radioRelayChunk && window.__radioRelayChunk(" +
+            WebUiSpikeBridge.JsonString(base64) + ");");
         _ipc.Push("radio-relay-chunk", WebUiSpikeBridge.JsonString(base64));
     }
 }

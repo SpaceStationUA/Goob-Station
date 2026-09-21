@@ -11,6 +11,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 
 namespace Content.Pirate.Client.Radio;
 
@@ -112,6 +113,8 @@ public sealed class PirateRadioClientSystem : EntitySystem
 
     private void OnAction(NetEntity marker, string action, string? data)
     {
+        Logger.DebugS("webui.radio", $"radio action '{action}' from {marker}");
+
         switch (action)
         {
             case "play":

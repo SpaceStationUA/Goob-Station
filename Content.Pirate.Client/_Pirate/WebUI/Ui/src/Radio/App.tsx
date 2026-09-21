@@ -33,16 +33,39 @@ export default function App() {
   }
 
   // ---- bridge: catalog/state/chunk + relay-ready action ----
+  // Two intake channels; the engine mirrors pushes on both (tui-push events
+  // and direct window calls). Whichever wins first, wins.
   onRadioCatalog((c: RadioCatalog) => setStations(c.stations));
-  onRadioState((s: RadioState) => {
+  onRadioState((s: RadioState) => onState(s));
+  onRelayChunk((b64) => player.feedChunk(b64));
+
+  function onState(s: RadioState): void {
     if (!s.playing) { player.stop(); return; }
     // Already playing this station locally: the echo is our own report
     // coming back - do not restart the stream.
     if (player.playing() && s.stationId === player.currentId()) return;
     const st = stations().find((x) => x.id === s.stationId);
     if (st && !broken().has(st.id)) player.play(st);
-  });
-  onRelayChunk((b64) => player.feedChunk(b64));
+  }
+
+  function onCatalog(c: RadioCatalog): void {
+    setStations(c.stations);
+  }
+
+  window.__radioSetCatalog = (json: string | RadioCatalog) => {
+    try {
+      onCatalog(typeof json === "string" ? JSON.parse(json) : json);
+    } catch { /* ignore */ }
+  };
+  window.__radioSetState = (json: string | RadioState) => {
+    try {
+      onState(typeof json === "string" ? JSON.parse(json) : json);
+    } catch { /* ignore */ }
+  };
+  window.__radioRelayChunk =   // Same contract as the hand page: C# calls this before disposing the
+  // playback control (e.g. the PDA was destroyed) or the CEF browser would
+  // keep the audio going as an orphan.
+  window.__radioHardStop = () => { player.stop(); };
   player.setRelayReady(() => { playerAction("relayready"); });
 
   // The page has its listeners up; ask the engine to re-send anything that
