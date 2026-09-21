@@ -1171,3 +1171,11 @@ Phase D candidate change: the radio page ITSELF is the kit's test case -
 a page renders with theme derived from the owning PDA's faction
 (nt-theme station PDAs, syndicate-theme villain PDAs). Driver/webview
 stays as in phase B.
+Phase B done probe (f1867e93b67): Solid radio page built and promoted to
+Resources; driver pushes catalog/state/chunks through the shared IPC;
+both content builds green. Runtime verification (dev connect + station
+play incl. relay) still pending - needs a run of
+"Scripts/sh/runclient-webui.sh 127.0.0.1:1212" against runQuickServer.
+Phase D confirmation: radio stays the kit's test case; theme chosen per
+owning PDA faction (station PDAs -> nt defaults, villain PDAs ->
+syndicate).
