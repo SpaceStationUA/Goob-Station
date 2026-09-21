@@ -62,6 +62,9 @@ public sealed class WebThemeWindow : DefaultWindow
         Logger.DebugS("webui.theme", $"window {_pda} action '{action}'");
         switch (action)
         {
+            case "dbg":
+                Logger.DebugS("webui.theme", $"picker page: {data}");
+                break;
             case "ready":
                 // The page has listeners up; pull the server's fresh state.
                 _pageReady = true;
