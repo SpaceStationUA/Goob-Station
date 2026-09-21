@@ -1139,3 +1139,31 @@ Migration plan for the radio pilot:
    webview (RVideo-ownership does not change).
 4. Validate: dev-connect flow (runclient-webui.sh + dev server HMR),
    then resource build path.
+
+### TS/Solid adoption plan (phases)
+Phase A - foundation:
+1. Port the shelf Ui/ toolchain into this repo (Ui/ under
+   Content.Pirate.Client/_Pirate/WebUI), TUI_IFACE per-interface builds,
+   wire BuildWebUI / PirateStripWebView gating.
+2. WebUiTuiIpc reply-dispatch upgrade (`__tuiDispatch(tx, payloadJson)`)
+   - request->reply semantics; push channel as-is.
+3. Typed shared contract: TS types for each action/reply/push shared with
+   the C# events (single source of truth drift-guarded by a build check).
+4. Bridge client (bridge.ts/backend.ts) vendored in Ui/src/lib.
+
+Phase B - pilot migration: radio page -> Solid components on the new
+bridge; driver/webview/C# events unchanged; delete the old page once
+green on dev + res build.
+
+Phase C - kit extraction: tokens.ts/UI kit atoms (Button, Panel, Progress,
+GameWindow shell) + theme plumbing (nt/syndicate) extracted FROM the
+migrated radio page, not invented upfront. No Kobalte, no Tailwind until
+a real need appears; icons via solid-icons/phosphor.
+
+Phase D - test case: rebuild a second small existing page on the kit as
+the validation pass (candidates: Geisha TV / a new small UI like a pause
+or info overlay), verifying: resource build pipeline, session handling,
+memory hygiene (onCleanup), decoder constraints, dev HMR loop.
+Rules carried over: no System.Text.Json/Enum.TryParse in client
+assemblies, iframe tui_bridge transport only, mac keyup synth, push
+ordering (page buffers), C#-owned webviews for playback pages.
