@@ -65,6 +65,17 @@ public sealed class WebRadioDriver
     }
 
     /// <summary>
+    ///     Drop the last-sent cache so the next Update re-pushes the current
+    ///     catalog/state. Used after the page reports it is ready: pushes
+    ///     fired during the load window never reached its listeners.
+    /// </summary>
+    public void ResetCaches()
+    {
+        _lastCatalog = "";
+        _lastState = "";
+    }
+
+    /// <summary>
     ///     Push a transcoded stream chunk to the page's MediaSource. Chunks
     ///     arrive in order; no dedupe, MSE append is order-sensitive.
     /// </summary>

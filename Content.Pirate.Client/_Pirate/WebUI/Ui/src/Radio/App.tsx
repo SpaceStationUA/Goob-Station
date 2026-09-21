@@ -1,4 +1,4 @@
-import { createSignal, createMemo, For, Show } from "solid-js";
+import { createSignal, createMemo, onMount, For, Show } from "solid-js";
 import { createPlayer } from "./player";
 import {
   onRadioCatalog, onRadioState, onRelayChunk, playerAction,
@@ -44,6 +44,13 @@ export default function App() {
   });
   onRelayChunk((b64) => player.feedChunk(b64));
   player.setRelayReady(() => { playerAction("relayready"); });
+
+  // The page has its listeners up; ask the engine to re-send anything that
+  // was pushed during the load window (catalog/state arrive once and are
+  // deduped server-side, so a dropped push would otherwise never be seen).
+  onMount(() => {
+    playerAction("ready");
+  });
 
   // The player sets the status; the catalog side remembers the failure and
   // greys the station out for the session.

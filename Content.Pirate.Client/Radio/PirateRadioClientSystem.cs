@@ -126,6 +126,17 @@ public sealed class PirateRadioClientSystem : EntitySystem
                 IoCManager.Resolve<IEntityNetworkManager>()
                     .SendSystemNetworkMessage(new PirateRadioRelayReadyEvent { Marker = marker });
                 break;
+            case "ready":
+                // The page has finished loading and installed its push
+                // listeners. Pushes that happened during the load window were
+                // dropped, so force the dedupe caches to re-send on the next
+                // Update tick.
+                if (_playbacks.TryGetValue(marker, out var ready))
+                {
+                    ready.LastCatalog = null;
+                    ready.Driver.ResetCaches();
+                }
+                break;
             case "volume":
                 // Volume is page-local; kept for future persistence.
                 break;
