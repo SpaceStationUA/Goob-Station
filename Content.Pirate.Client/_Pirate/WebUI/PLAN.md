@@ -1167,3 +1167,7 @@ memory hygiene (onCleanup), decoder constraints, dev HMR loop.
 Rules carried over: no System.Text.Json/Enum.TryParse in client
 assemblies, iframe tui_bridge transport only, mac keyup synth, push
 ordering (page buffers), C#-owned webviews for playback pages.
+Phase D candidate change: the radio page ITSELF is the kit's test case -
+a page renders with theme derived from the owning PDA's faction
+(nt-theme station PDAs, syndicate-theme villain PDAs). Driver/webview
+stays as in phase B.
