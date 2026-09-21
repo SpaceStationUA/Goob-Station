@@ -12,6 +12,7 @@ using Content.Shared._Pirate.CCVars;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Server.Radio;
@@ -38,6 +39,7 @@ public sealed class PirateRadioSystem : EntitySystem
     private static readonly TimeSpan FetchTimeout = TimeSpan.FromSeconds(8);
 
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private readonly HttpClient _http = new() { Timeout = FetchTimeout };
@@ -143,7 +145,10 @@ public sealed class PirateRadioSystem : EntitySystem
     private string ThemeOf(EntityUid marker)
     {
         var theme = CompOrNull<PirateWebUiThemeComponent>(marker);
-        return theme?.WebThemeId ?? "PirateNtWeb";
+        var id = theme?.WebThemeId ?? "PirateNtWeb";
+        Logger.DebugS("webui.radio",
+            $"theme of {marker} ({_entMan.GetComponent<MetaDataComponent>(marker).EntityPrototype?.ID ?? "?"}) = {id}");
+        return id;
     }
 
     private void OnCommand(PirateRadioCommandEvent msg, EntitySessionEventArgs args)

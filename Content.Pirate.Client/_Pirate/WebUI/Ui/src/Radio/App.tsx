@@ -60,6 +60,7 @@ export default function App() {
   }
 
   function onCatalog(c: RadioCatalog): void {
+    dbg("catalog theme=" + (c.theme ?? "(missing)") + " n=" + c.stations.length);
     if (c.theme) applyThemeId(c.theme);
     setStations(c.stations);
   }

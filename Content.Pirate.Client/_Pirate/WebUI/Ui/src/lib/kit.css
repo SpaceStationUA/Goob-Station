@@ -23,6 +23,9 @@
 .pk-content {
   position: relative;
   overflow: hidden;
+  /* bound the content column so .list gets a real box to scroll in */
+  flex: 1 1 0; min-height: 0;
+  display: flex; flex-direction: column;
 }
 .watermark {
   position: absolute; inset: 0;
