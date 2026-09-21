@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.WebView;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 
@@ -58,6 +59,7 @@ public sealed class WebThemeWindow : DefaultWindow
 
     private void ThroughBridge(string action, string? data)
     {
+        Logger.DebugS("webui.theme", $"window {_pda} action '{action}'");
         switch (action)
         {
             case "ready":
@@ -110,6 +112,8 @@ public sealed class WebThemeWindow : DefaultWindow
     /// <summary>Push the freshest snapshot into the page.</summary>
     public void ApplyState(string current, List<string> allowed)
     {
+        Logger.DebugS("webui.theme",
+            $"window {_pda} state push (ready={_pageReady}, cur={current})");
         var parts = new List<string>(allowed.Count);
         foreach (var t in allowed)
             parts.Add(WebUiSpikeBridge.JsonString(t));
