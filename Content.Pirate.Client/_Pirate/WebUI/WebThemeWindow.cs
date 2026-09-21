@@ -116,7 +116,11 @@ public sealed class WebThemeWindow : DefaultWindow
         _lastStateJson = "{\"current\":\"" + WebUiSpikeBridge.JsonString(current) +
             "\",\"allowed\":[" + string.Join(",", parts) + "]}";
         if (_pageReady)
+        {
+            _web.ExecuteJavaScript("window.__themeState && window.__themeState(" +
+                WebUiSpikeBridge.JsonString(_lastStateJson) + ");");
             _ipc.Push("theme-state", _lastStateJson);
+        }
     }
 }
 

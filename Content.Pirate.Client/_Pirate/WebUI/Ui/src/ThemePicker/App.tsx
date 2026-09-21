@@ -22,15 +22,25 @@ export default function App() {
   const [state, setState] = createSignal<ThemeState | null>(null);
   const [busy, setBusy] = createSignal(false);
 
+  window.__themeSetState = (json: string | ThemeState) => {
+    try {
+      onState(typeof json === "string" ? JSON.parse(json) : json);
+    } catch { /* ignore */ }
+  };
+
   window.addEventListener("tui-push", (ev) => {
     const detail = (ev as CustomEvent).detail ?? {};
     if ((detail.name ?? "") !== "theme-state") return;
-    const s = detail.payload as ThemeState;
+    onState(detail.payload as ThemeState);
+  });
+
+  function onState(s: ThemeState): void {
     setState(s);
     // Re-skin the picker itself to the device's current theme.
     applyThemeId(s.current);
     setBusy(false);
-  });
+    void postAction("dbg", "theme-state n=" + s.allowed.length + " cur=" + s.current);
+  }
 
   // Page is up: engine re-pull state (mirrors the radio page's handshake).
   postAction("ready", {});
