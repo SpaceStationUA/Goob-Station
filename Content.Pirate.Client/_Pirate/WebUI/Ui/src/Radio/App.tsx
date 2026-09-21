@@ -1,22 +1,219 @@
-import { onRadioCatalog, onRadioState, playerAction, type RadioCatalog, type RadioState } from "../lib/protocol";
-import { createSignal } from "solid-js";
+import { createSignal, createMemo, For, Show } from "solid-js";
+import { createPlayer } from "./player";
+import {
+  onRadioCatalog, onRadioState, onRelayChunk, playerAction,
+  type RadioCatalog, type RadioState, type StationEntry,
+} from "../lib/protocol";
+import "./radio.css";
+
+// Remote entries carry comma-separated tag lists; pinned ones a short
+// genre line. Split on commas; group case-insensitively, display as-is.
+function genresOf(s: StationEntry): string[] {
+  const out: string[] = [];
+  String(s.genre || "").split(",").forEach((g) => {
+    const t = g.trim();
+    if (t.length > 0 && !out.some((x) => x.toLowerCase() === t.toLowerCase()))
+      out.push(t);
+  });
+  return out;
+}
 
 export default function App() {
-  const [catalog, setCatalog] = createSignal<RadioCatalog | null>(null);
-  const [state, setState] = createSignal<RadioState | null>(null);
+  const player = createPlayer();
 
-  onRadioCatalog((c) => setCatalog(c));
-  onRadioState((s) => setState(s));
+  const [stations, setStations] = createSignal<StationEntry[]>([], { equals: false });
+  const [tab, setTab] = createSignal<"stations" | "genres">("stations");
+  const [genre, setGenre] = createSignal<string | null>(null);
+  const [starred, setStarred] = createSignal<Set<string>>(new Set());
+  const [broken, setBroken] = createSignal<Set<string>>(new Set());
+  const [vol, setVol] = createSignal(70);
+
+  function markBroken(id: string): void {
+    setBroken((prev) => new Set(prev).add(id));
+  }
+
+  // ---- bridge: catalog/state/chunk + relay-ready action ----
+  onRadioCatalog((c: RadioCatalog) => setStations(c.stations));
+  onRadioState((s: RadioState) => {
+    if (!s.playing) { player.stop(); return; }
+    // Already playing this station locally: the echo is our own report
+    // coming back - do not restart the stream.
+    if (player.playing() && s.stationId === player.currentId()) return;
+    const st = stations().find((x) => x.id === s.stationId);
+    if (st && !broken().has(st.id)) player.play(st);
+  });
+  onRelayChunk((b64) => player.feedChunk(b64));
+  player.setRelayReady(() => { playerAction("relayready"); });
+
+  // The player sets the status; the catalog side remembers the failure and
+  // greys the station out for the session.
+  player.audio.addEventListener("error", () => {
+    if (player.playing() && player.currentId()) markBroken(player.currentId());
+  });
+
+  // ---- actions ----
+  function select(id: string): void {
+    if (broken().has(id)) return;
+    if (player.playing() && id === player.currentId()) { doStop(); return; }
+    // Play locally right away: this runs inside the click's user-gesture
+    // window, which Chromium's autoplay policy requires. The server report
+    // is a notification, not a round trip (state echoes are deduped).
+    const st = stations().find((x) => x.id === id);
+    if (!st) return;
+    // The echo from the server state push would restart the stream;
+    // the player dedupes via the currentId check in onRadioState.
+    player.play(st);
+    playerAction("play", id);
+  }
+
+  function doStop(): void {
+    player.stop();
+    playerAction("stop");
+  }
+
+  function toggleStar(id: string): void {
+    setStarred((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  const defaultOn = () => {
+    if (broken().has(player.currentId())) return;
+    const next = stations().filter((s) => !broken().has(s.id));
+    if (next.length > 0) select(next[0].id);
+  };
+
+  function onPlayButton(): void {
+    if (player.playing()) { doStop(); return; }
+    const cur = player.currentId();
+    if (cur && !broken().has(cur)) { select(cur); return; }
+    defaultOn();
+  }
+
+  // ---- render ----
+  const sorted = createMemo(() =>
+    stations().slice().sort((a, b) =>
+      ((starred().has(b.id) ? 1 : 0) - (starred().has(a.id) ? 1 : 0)) ||
+      ((b.featured ? 1 : 0) - (a.featured ? 1 : 0)),
+    ),
+  );
+
+  const genreGroups = createMemo(() => {
+    const groups = new Map<string, { name: string; count: number }>();
+    stations().forEach((s) => {
+      if (broken().has(s.id)) return;
+      genresOf(s).forEach((g) => {
+        const k = g.toLowerCase();
+        const cur = groups.get(k);
+        if (cur) cur.count++;
+        else groups.set(k, { name: g, count: 1 });
+      });
+    });
+    return [...groups.values()].sort((a, b) =>
+      b.count - a.count || a.name.localeCompare(b.name));
+  });
+
+  const inGenre = createMemo(() =>
+    stations().filter((s) =>
+      !broken().has(s.id) &&
+      genresOf(s).some((x) => x.toLowerCase() === genre()),
+    ).sort((a, b) =>
+      ((starred().has(b.id) ? 1 : 0) - (starred().has(a.id) ? 1 : 0)),
+    ),
+  );
 
   return (
-    <div class="radio-phase-b-placeholder">
-      <h1>Pirate Radio</h1>
-      <p>Phase B will port the real page. This stub validates the bridge + build pipeline.</p>
-      <p>
-        catalog: {catalog() ? catalog()!.stations.length : "-"} stations · state:{" "}
-        {state() ? `${state()!.stationId} (${state()!.playing})` : "-"}
-      </p>
-      <button onClick={() => playerAction("play", "test")}>test play action</button>
+    <div class="app">
+      <div class="now">
+        <div class={"eq" + (player.playing() ? "" : " paused")}><i /><i /><i /><i /></div>
+        <div class="meta">
+          <div class="station-label">{player.meta().label}</div>
+          <div class="genre-line">{player.meta().genre}</div>
+        </div>
+        <div class="status-line">{player.status()}</div>
+      </div>
+
+      <div class="controls">
+        <button class={!player.playing() ? "primary" : ""} onClick={onPlayButton}>
+          {player.playing() ? "\u23f8 Pause" : "\u25b6 Play"}
+        </button>
+        <button onClick={doStop}>{'\u25a0'} Stop</button>
+        <input class="vol" type="range" min={0} max={100}
+          value={vol()}
+          onInput={(e) => {
+            const v = Number(e.currentTarget.value);
+            setVol(v);
+            player.setVolume(v);
+            playerAction("volume", undefined, v);
+          }} />
+        <span class="volpct">{vol()}%</span>
+      </div>
+
+      <div class="tabs">
+        <button class={"tab" + (tab() === "stations" ? " active" : "")} onClick={() => { setTab("stations"); setGenre(null); }}>Stations</button>
+        <button class={"tab" + (tab() === "genres" ? " active" : "")} onClick={() => { setTab("genres"); setGenre(null); }}>Genres</button>
+      </div>
+
+      <div class="list">
+        <Show when={tab() === "genres"} fallback={
+          <For each={sorted()}>{(s) =>
+            <StationRow s={s} active={s.id === player.currentId() && player.playing()}
+              dead={broken().has(s.id)} starred={starred().has(s.id)}
+              onSelect={select} onStar={toggleStar} />
+          }</For>
+        }>
+          <Show when={genre() == null} fallback={
+            <>
+              <div class="back" onClick={() => setGenre(null)}>{"\u2190 all genres"}</div>
+              <For each={inGenre()}>{(s) =>
+                <StationRow s={s} active={s.id === player.currentId() && player.playing()}
+                  dead={broken().has(s.id)}
+                  onSelect={select} onStar={toggleStar} />
+              }</For>
+            </>
+          }>
+            <For each={genreGroups()}>{(g) =>
+              <div class="genre-row" onClick={() => setGenre(g.name.toLowerCase())}>
+                <span class="gname">{g.name}</span>
+                <span class="cnt">{g.count}</span>
+              </div>
+            }</For>
+          </Show>
+        </Show>
+      </div>
     </div>
   );
 }
+
+function StationRow(props: {
+  s: StationEntry;
+  active: boolean;
+  dead: boolean;
+  starred?: boolean;
+  onSelect: (id: string) => void;
+  onStar: (id: string) => void;
+}) {
+  const cls = () =>
+    "station-row" + (props.active ? " active" : "") + (props.dead ? " dead" : "");
+  return (
+    <div
+      class={cls()}
+      title={props.s.label}
+      onClick={() => !props.dead && props.onSelect(props.s.id)}
+    >
+      <span
+        class={"star" + (props.starred ? "" : " off")}
+        onClick={(e) => { e.stopPropagation(); props.onStar(props.s.id); }}
+      >
+        {props.starred ? "\u2605" : "\u2606"}
+      </span>
+      <span class="name">{props.s.label}</span>
+      <span class="g">{props.s.genre || ""}</span>
+      <Show when={props.dead}><span class="g">unavailable</span></Show>
+    </div>
+  );
+}
+

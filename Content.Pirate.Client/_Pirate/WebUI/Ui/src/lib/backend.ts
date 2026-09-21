@@ -20,6 +20,6 @@ export async function act<T = unknown>(
   refresh = true,
 ): Promise<BridgeResult<T>> {
   const result = await postAction<T>(action, data);
-  if (result.ok && refresh) setState((s) => ({ ...s, ...result.data }));
+  if (result.ok && refresh) setState((s) => Object.assign({}, s, result.data as Partial<T>));
   return result;
 }

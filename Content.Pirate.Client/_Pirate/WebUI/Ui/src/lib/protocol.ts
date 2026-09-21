@@ -31,32 +31,34 @@ export interface RadioState {
   relay: boolean; // true -> server is transcoding; expect relay-chunk push
 }
 
-export type RelayChunk = {
-  // base64-encoded webm/opus chunk from the ffmpeg relay pump
-  chunkB64: string;
-};
+/** Relay chunk push: base64-encoded webm/opus, order-sensitive. */
+export type RelayChunk = string;
 
-export type PlayerAction =
-  | { type: "play" } // play/pause/stop source id? (see send code)
-  | { type: "report_proc" } // hearing loop thread report
-  | { type: "send_stdout" };
-
-/** Player button-bar actions (page -> engine). */
-export function playerAction(kind: "play" | "stop" | "relayready" | "volume", stationId?: string, volume?: number): Promise<unknown> {
-  // The engine parses the raw fields tolerantly; see
-  // PirateRadioClientSystem.ExtractStationId.
-  return postAction(kind, stationId ?? (volume !== undefined ? `v=${volume}` : undefined));
+/** Player actions (page -> engine). The engine parses `{"id":"..."}`
+ * with a minimal tokenizer (PirateRadioClientSystem.ExtractStationId). */
+export function playerAction(kind: "play" | "stop" | "relayready" | "volume" | "ready", stationId?: string, volume?: number): Promise<unknown> {
+  if (kind === "play")
+      return postAction(kind, { id: stationId ?? "" });
+  if (kind === "volume")
+      return postAction(kind, { v: volume ?? 0 });
+  return postAction(kind, {});
 }
 
-/** Register handlers for the catalog/state pushes. */
+/** Register handlers for the catalog/state/relay pushes. */
 export function onRadioCatalog(handler: (c: RadioCatalog) => void): void {
-  onPush("radio-catalog", (payload) => handler(payload as RadioCatalog));
+  onPush((name, payload) => {
+    if (name === "radio-catalog") handler(payload as RadioCatalog);
+  });
 }
 
 export function onRadioState(handler: (s: RadioState) => void): void {
-  onPush("radio-state", (payload) => handler(payload as RadioState));
+  onPush((name, payload) => {
+    if (name === "radio-state") handler(payload as RadioState);
+  });
 }
 
-export function onRelayChunk(handler: (chunk: RelayChunk) => void): void {
-  onPush("radio-relay-chunk", (payload) => handler(payload as RelayChunk));
+export function onRelayChunk(handler: (b64: RelayChunk) => void): void {
+  onPush((name, payload) => {
+    if (name === "radio-relay-chunk") handler(payload as RelayChunk);
+  });
 }
