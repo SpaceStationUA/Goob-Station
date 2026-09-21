@@ -86,6 +86,15 @@ public sealed class PirateWebUiSystem : EntitySystem
         Dirty(pda.Value, theme);
         Logger.DebugS("webui.theme", $"theme set {msg.ThemeId} on {msg.Pda}");
 
+        // The picker refreshes instantly (no state event was re-raised on
+        // apply, which is why switched cards never showed the new current).
+        RaiseNetworkEvent(new PirateThemeStateEvent
+        {
+            Pda = msg.Pda,
+            Current = msg.ThemeId,
+            Allowed = PirateWebThemeResolver.AllowedThemes(_entMan, _prototypes, pda.Value),
+        }, args.SenderSession.Channel);
+
         EntitySystem.Get<PirateRadioSystem>().RepushCatalogsForPda(pda.Value, args.SenderSession.Channel);
     }
 }

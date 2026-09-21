@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Content.Pirate.Client._Pirate.WebUI;
 using Content.Pirate.Shared.WebUi;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface;
 using Robust.Client.WebView;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -61,7 +62,7 @@ public sealed class PirateThemeClientSystem : EntitySystem
     }
 
     /// <summary>PdaMenu theme button: attach (once) and toggle the host page.</summary>
-    public void ToggleThemeHost(Container parent, EntityUid pda)
+    public void ToggleThemeHost(Control parent, EntityUid pda)
     {
         var net = _entMan.GetNetEntity(pda);
         if (!_hosts.TryGetValue(net, out var host) || host.Web.Disposed)
@@ -90,6 +91,7 @@ public sealed class PirateThemeClientSystem : EntitySystem
         var h = _hosts[net];
         h.Visible = !h.Visible;
         h.Web.Visible = h.Visible;
+        parent.Visible = h.Visible; // the XAML host panel starts hidden
     }
 
     [Dependency] private readonly IEntityManager _entMan = default!;

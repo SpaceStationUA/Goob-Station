@@ -28,6 +28,7 @@ namespace Content.Client.PDA
         public const int ProgramListView = 1;
         public const int SettingsView = 2;
         public const int ProgramContentView = 3;
+        public const int ThemeView = 4; // Pirate: CEF theme picker view.
 
 
         private string _pdaOwner = Loc.GetString("comp-pda-ui-unknown");
@@ -44,7 +45,10 @@ namespace Content.Client.PDA
         public event Action<EntityUid>? OnUninstallButtonPressed;
         public event Action<EntityUid>? OnInstallButtonPressed;
 
-        // Pirate: the theme picker embeds a CEF page into the settings tab.
+        // Pirate: the theme picker opens as its own full view; the CEF page
+        // host lives in the ThemeHost panel inside it.
+        public int ThemeSourceView { get; private set; } = HomeView;
+        public event Action<Control>? OnThemeToggleRequested;
         public PanelContainer? ThemeHostPanel => ThemeHost;
         public PdaMenu()
         {
@@ -63,6 +67,17 @@ namespace Content.Client.PDA
 
 
             HomeButton.OnPressed += _ => ToHomeScreen();
+
+            // Pirate: theme picker as a full view. The CEF page stays
+            // alive across opens (first click attaches it); Back returns to
+            // whichever tab the picker was opened from.
+            ThemeButton.OnPressed += _ =>
+            {
+                ThemeSourceView = _currentView == ThemeView ? ThemeSourceView : _currentView;
+                ChangeView(ThemeView);
+                OnThemeToggleRequested?.Invoke(ThemeHostPanel!);
+            };
+            ThemeCloseButton.OnPressed += _ => ChangeView(ThemeSourceView);
 
             ProgramListButton.OnPressed += _ =>
             {

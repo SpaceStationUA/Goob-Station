@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 
@@ -14,8 +15,8 @@ namespace Content.Pirate.UIKit;
 /// </summary>
 public static class PdaThemeHost
 {
-    public static Action<Container, EntityUid>? Provider;
+    public static Action<Control, EntityUid>? Provider;
     public static Action? CloseAll;
 
-    public static void Toggle(Container parent, EntityUid pda) => Provider?.Invoke(parent, pda);
+    public static void Toggle(Control parent, EntityUid pda) => Provider?.Invoke(parent, pda);
 }
