@@ -3,3 +3,4 @@ steal-target-groups-rcd = універсальний засіб конструю
 steal-target-groups-research-computer-circuitboard = плата дослідницького комп'ютера
 steal-target-groups-cargo-request-computer-circuitboard = плата консолі замовлень вантажного відділу
 steal-target-groups-criminal-records-computer-circuitboard = плата консолі кримінальних записів
+steal-target-groups-shipyard-computer-circuitboard = плата комп'ютера верфі

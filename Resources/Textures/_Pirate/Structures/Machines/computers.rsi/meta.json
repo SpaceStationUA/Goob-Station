@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "created by Parazat (DS 984407438230945852)",
+  "copyright": "created by Parazat (DS 984407438230945852); shipyard state made by Potato1234_x, edited by CrazyPhantom779 (Github) removing blank frame",
   "size": {
     "x": 32,
     "y": 32
@@ -29,6 +29,11 @@
     },
     {
       "name": "computer_l_r-broken",
+      "directions": 4
+    },
+    {
+      "name": "shipyard",
+      "copyright": "Made by Potato1234_x, edited by CrazyPhantom779 (Github) removing blank frame",
       "directions": 4
     }
   ]

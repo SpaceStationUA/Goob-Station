@@ -1,0 +1,27 @@
+- type: vesselCategory
+  id: Civilian
+  name: vessel-category-civilian
+
+- type: vesselCategory
+  id: Cargo
+  name: vessel-category-cargo
+
+- type: vesselCategory
+  id: Command
+  name: vessel-category-command
+
+- type: vesselCategory
+  id: Small
+  name: vessel-category-small
+
+- type: vesselCategory
+  id: Medium
+  name: vessel-category-medium
+
+- type: vesselCategory
+  id: Large
+  name: vessel-category-large
+
+- type: vesselCategory
+  id: Humongous
+  name: vessel-category-humongous
