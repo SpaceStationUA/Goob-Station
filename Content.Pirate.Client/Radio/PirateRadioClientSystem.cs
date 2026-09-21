@@ -89,7 +89,7 @@ public sealed class PirateRadioClientSystem : EntitySystem
                 AllowHttpHosts = new List<string>(),
             };
             view.AddBeforeBrowseHandler(ipc.HandleBeforeBrowse);
-            var driver = new WebRadioDriver(ipc);
+            var driver = new WebRadioDriver();
             driver.Attach(view);
             view.Url = "res://webres/_Pirate/WebUI/Radio/index.html";
             _playbacks[marker] = new Playback

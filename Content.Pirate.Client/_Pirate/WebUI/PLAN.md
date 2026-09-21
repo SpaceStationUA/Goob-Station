@@ -1110,3 +1110,32 @@ CEF, usable by the RadioHost job and anyone with the program installed.
 - Mapper quirks fixed this session: their ss14monitor restart command still
   points at Content.Server (left as-is, their script); current boot is a
   manual tmux session with run2.log.
+
+### Compaction 2 (2026-09-21)
+- RadioSession.Label unused since the state event slimmed - removed.
+- WebRadioDriver no longer holds the ipc reference (actions route through
+  the playback system); constructor is empty now.
+
+### Next: TS/Solid migration (radio page as pilot)
+Inventory of the shelved spike (goob-shelf/webui-spike-2026-09):
+- Vite + Solid + TS, per-interface build: TUI_IFACE=<name> builds src/<name>
+  out to dist_resources (copied to Resources/_Pirate/WebUI/<name>).
+- src/lib/bridge.ts: the tui_bridge transport generalized into a
+  promise-based client (request -> reply via window.__tuiDispatch,
+  reply-offload via window.__tuiPush); works on both res:// and the Vite
+  dev origin. Radio's transport history (hash nav dead, iframe nav alive,
+  ExecuteJavaScript push-in) is already encoded there.
+- Uplink demo page lives and builds; node_modules vendored in the shelf.
+
+Migration plan for the radio pilot:
+1. Engine/C# side first: extend WebUiTuiIpc with reply dispatch
+   (__tuiDispatch(tx, payloadJson)) on the internal callback for actions
+   that carry a reply, push channel unchanged.
+2. Bring the Ui/ toolchain into this repo (drop-in copy of the shelf
+   package) with a build script (TUI_IFACE=Radio) and wire BuildWebUI /
+   PirateStripWebView to skip/exclude it until needed.
+3. Port radio page parts: catalog list/genres/stars -> Solid components;
+   keep direct <audio> as today; relay playback keeps MSE + the C#-owned
+   webview (RVideo-ownership does not change).
+4. Validate: dev-connect flow (runclient-webui.sh + dev server HMR),
+   then resource build path.

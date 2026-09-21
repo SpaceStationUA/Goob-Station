@@ -18,12 +18,9 @@ public sealed class WebRadioDriver
     private string _lastCatalog = "";
     private string _lastState = "";
 
-    public WebRadioDriver(WebUiTuiIpc ipc)
+    public WebRadioDriver()
     {
-        _ipc = ipc;
     }
-
-    private readonly WebUiTuiIpc _ipc;
 
     public void Attach(WebViewControl web)
     {
