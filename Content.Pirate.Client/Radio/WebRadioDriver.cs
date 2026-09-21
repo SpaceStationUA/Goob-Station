@@ -31,7 +31,7 @@ public sealed class WebRadioDriver
     }
 
     /// <summary>Push the station catalog; only re-sends when it changed.</summary>
-    public void SetCatalog(IReadOnlyList<(string Id, string Label, string Genre, string Url, bool Featured, bool Relay)> stations)
+    public void SetCatalog(IReadOnlyList<(string Id, string Label, string Genre, string Url, bool Featured, bool Relay)> stations, string theme)
     {
         List<string> parts = new(stations.Count);
         for (var i = 0; i < stations.Count; i++)
@@ -46,7 +46,8 @@ public sealed class WebRadioDriver
                 ",\"relay\":" + (s.Relay ? "true" : "false") + "}");
         }
 
-        var json = "{\"stations\":[" + string.Join(",", parts) + "]}";
+        var json = "{\"theme\":" + WebUiSpikeBridge.JsonString(theme) +
+            ",\"stations\":[" + string.Join(",", parts) + "]}";
         if (json == _lastCatalog)
             return;
         _lastCatalog = json;

@@ -1197,3 +1197,21 @@ Phase C round 1 shipped:
   pulse), Icon wrapper; icons via solid-icons/io (IoPlay/IoStop/IoClose).
 - Radio page restyled on the kit + tokens (same functionality).
 - Bundle ~40k total. Tailwind/Kobalte still not vendored (per plan).
+Phase C round 2 (theme plumbing + watermark fix):
+- pirateWebTheme protos (PirateNtWeb/PirateSyndiWeb) in
+  Resources/Prototypes/_Pirate/webui.yml; PirateWebUiThemeComponent
+  (default PirateNtWeb) marks entity prototypes - SyndiPDA stamped with
+  PirateSyndiWeb, Nukie variant inherits via parent.
+- Server reads the component from the PDA entity and ships the theme id
+  inside PirateRadioCatalogEvent.Theme; driver catalog payload gains
+  "theme"; client keeps per-marker theme state.
+- Page: applyThemeId on catalog + ui-theme push; ThemeProvider now
+  re-syncs the root class reactively.
+- Watermark scroll fixed: .app (content column) is a flex column and
+  .list remains the only scroller.
+
+Still open for PDA Settings theme switch (Phase D+): a change action
+that swaps PirateWebUiThemeComponent.WebThemeId on the entity and
+triggers SetCatalog re-push for each program (reference compare must
+re-check - theme is encoded in the catalog payload string so a change
+of theme alone re-pushes).

@@ -29,6 +29,7 @@ public static class PirateRadioClientState
 
     private static readonly Dictionary<NetEntity, Entry> _entries = new();
     private static readonly Dictionary<NetEntity, List<PirateRadioStationEntry>> _catalogs = new();
+    private static readonly Dictionary<NetEntity, string> _themes = new();
     private static readonly Dictionary<NetEntity, bool> _requested = new();
 
     public static Entry Get(NetEntity marker)
@@ -61,7 +62,18 @@ public static class PirateRadioClientState
     public static void OnCatalog(PirateRadioCatalogEvent msg)
     {
         _catalogs[msg.Marker] = msg.Stations;
+        _themes[msg.Marker] = string.IsNullOrEmpty(msg.Theme) ? "PirateNtWeb" : msg.Theme;
+        _themeChanged = true;
     }
+
+    private static bool _themeChanged;
+
+    /// <summary>Frontier theme id for this playback (PirateNtWeb default).</summary>
+    public static string Theme(NetEntity marker)
+        => _themes.TryGetValue(marker, out var t) ? t : "PirateNtWeb";
+
+    /// <summary>Whether the theme is known for this marker (before reset: never).</summary>
+    public static bool ThemeKnown(NetEntity marker) => _themes.ContainsKey(marker);
 
     public static void OnState(PirateRadioStateEvent msg)
     {

@@ -44,6 +44,8 @@ public sealed class PirateRadioCatalogRequestEvent : EntityEventArgs
 public sealed class PirateRadioCatalogEvent : EntityEventArgs
 {
     public NetEntity Marker;
+    /// <summary>Originating theme id for the page's CSS (PirateWebTheme).</summary>
+    public string Theme = "";
     public List<PirateRadioStationEntry> Stations = new();
 }
 

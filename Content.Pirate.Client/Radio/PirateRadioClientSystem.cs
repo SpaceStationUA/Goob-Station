@@ -113,7 +113,9 @@ public sealed class PirateRadioClientSystem : EntitySystem
 
     private void OnAction(NetEntity marker, string action, string? data)
     {
-        Logger.DebugS("webui.radio", $"radio action '{action}' from {marker}");
+        Logger.DebugS("webui.radio",
+            $"radio action '{action}' from {marker}" +
+            (string.IsNullOrEmpty(data) ? "" : " data=" + (data.Length > 240 ? data[..240] + "..." : data)));
 
         switch (action)
         {
@@ -243,7 +245,7 @@ public sealed class PirateRadioClientSystem : EntitySystem
                 // Catalog only replaces when a new event arrives; pushing per
                 // frame would rebuild JSON needlessly.
                 p.LastCatalog = catalog;
-                p.Driver.SetCatalog(ToTuples(catalog));
+                p.Driver.SetCatalog(ToTuples(catalog), PirateRadioClientState.Theme(marker));
             }
 
             var state = PirateRadioClientState.Get(marker);

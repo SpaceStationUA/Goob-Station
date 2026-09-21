@@ -6,10 +6,12 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Shared._Pirate.WebUi;
 using Content.Pirate.Shared.Radio;
 using Content.Shared._Pirate.CCVars;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Server.Radio;
@@ -133,7 +135,15 @@ public sealed class PirateRadioSystem : EntitySystem
         {
             Marker = msg.Marker,
             Stations = stations,
+            Theme = ThemeOf(marker),
         }, args.SenderSession.Channel);
+    }
+
+    
+    private string ThemeOf(EntityUid marker)
+    {
+        var theme = CompOrNull<PirateWebUiThemeComponent>(marker);
+        return theme?.WebThemeId ?? "PirateNtWeb";
     }
 
     private void OnCommand(PirateRadioCommandEvent msg, EntitySessionEventArgs args)

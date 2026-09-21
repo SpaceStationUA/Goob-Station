@@ -4,7 +4,7 @@ import {
   onRadioCatalog, onRadioState, onRelayChunk, playerAction, dbg,
   type RadioCatalog, type RadioState, type StationEntry,
 } from "../lib/protocol";
-import { ThemeProvider, themeName } from "../lib/theme";
+import { ThemeProvider, applyThemeId } from "../lib/theme";
 import { GameWindow, Button, Icon } from "../lib/kit";
 import { IoPlay, IoStop, IoClose } from "solid-icons/io";
 import "./radio.css";
@@ -60,6 +60,7 @@ export default function App() {
   }
 
   function onCatalog(c: RadioCatalog): void {
+    if (c.theme) applyThemeId(c.theme);
     setStations(c.stations);
   }
 

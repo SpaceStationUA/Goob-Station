@@ -21,6 +21,9 @@ export interface StationEntry {
 }
 
 export interface RadioCatalog {
+  /// PirateWebTheme id (entity's PirateWebUiThemeComponent); pages map
+  /// ids to CSS theme classes with setThemeClass (see lib/theme.tsx).
+  theme?: string;
   stations: StationEntry[];
 }
 

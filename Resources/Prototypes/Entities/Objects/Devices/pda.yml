@@ -1163,6 +1163,8 @@
        pda-syndi
   - type: PdaBorderColor
     borderColor: "#891417"
+  - type: PirateWebUiTheme
+    webThemeId: PirateSyndiWeb
   - type: Icon
     state: pda-syndi
   - type: CartridgeLoader
