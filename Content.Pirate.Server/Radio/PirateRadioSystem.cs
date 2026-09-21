@@ -144,11 +144,24 @@ public sealed class PirateRadioSystem : EntitySystem
     
     private string ThemeOf(EntityUid marker)
     {
-        var theme = CompOrNull<PirateWebUiThemeComponent>(marker);
-        var id = theme?.WebThemeId ?? "PirateNtWeb";
-        Logger.DebugS("webui.radio",
-            $"theme of {marker} ({_entMan.GetComponent<MetaDataComponent>(marker).EntityPrototype?.ID ?? "?"}) = {id}");
-        return id;
+        // The marker is the radio cartridge (inside the PDA's loader);
+        // the theme component lives on the PDA, so walk up.
+        var protoId = "?";
+        for (var ent = (EntityUid?)marker; ent != null; ent = ent == marker ? _entMan.GetComponent<TransformComponent>(ent.Value).ParentUid : null)
+        {
+            if (TryComp<PirateWebUiThemeComponent>(ent, out var theme))
+            {
+                Logger.DebugS("webui.radio",
+                    $"theme of {(ent == marker ? "marker" : "parent")} {_entMan.GetNetEntity(ent.Value)} ({_entMan.GetComponent<MetaDataComponent>(ent.Value).EntityPrototype?.ID ?? "?"}) = {theme.WebThemeId}");
+                return theme.WebThemeId;
+            }
+            if (ent != marker && _entMan.TryGetComponent<TransformComponent>(ent.Value, out var t) && !t.ParentUid.IsValid())
+                break;
+            if (ent != marker)
+                break; // walk exactly one hop beyond the marker
+        }
+        Logger.DebugS("webui.radio", $"theme of marker {_entMan.GetNetEntity(marker)} ({protoId}) = PirateNtWeb (default)");
+        return "PirateNtWeb";
     }
 
     private void OnCommand(PirateRadioCommandEvent msg, EntitySessionEventArgs args)
