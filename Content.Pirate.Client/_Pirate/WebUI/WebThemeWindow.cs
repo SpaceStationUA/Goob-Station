@@ -53,9 +53,9 @@ public sealed class WebThemeWindow : DefaultWindow
             AllowHttpHosts = new List<string>(),
         };
         _web.AddBeforeBrowseHandler(_ipc.HandleBeforeBrowse);
-        _ipc.Attach(_web);
-        _web.Url = ResPrefix + ThemeResPath;
-        Contents.AddChild(_web);
+        // NOTE: no _ipc.Attach and no Url here - the arcade window's working
+        // recipe: only the nav hook during construction; the page is loaded
+        // deferred (Load()) after the window is shown.
 
         OnClose += () => { _onAction("closed", null); };
     }
@@ -90,6 +90,13 @@ public sealed class WebThemeWindow : DefaultWindow
                     _onAction("set", theme);
                 break;
         }
+    }
+
+    /// <summary>Load the page after the window is shown (arcade recipe).</summary>
+    public void Load()
+    {
+        Contents.AddChild(_web);
+        _web.Url = ResPrefix + ThemeResPath;
     }
 
     private static string? ExtractTheme(string? data)

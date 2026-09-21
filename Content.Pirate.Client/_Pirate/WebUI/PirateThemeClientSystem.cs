@@ -55,6 +55,7 @@ public sealed class PirateThemeClientSystem : EntitySystem
         var window = new WebThemeWindow(net, (action, data) => HandleAction(net, action, data));
         _windows[net] = window;
         window.OpenCentered();
+        window.Load(); // page loads after the window is shown (arcade recipe)
         RequestState(net);
     }
 
