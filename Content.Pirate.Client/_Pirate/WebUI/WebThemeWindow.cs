@@ -125,6 +125,5 @@ public sealed class WebThemeWindow : DefaultWindow
                 WebUiSpikeBridge.JsonString(_lastStateJson) + ");");
             _ipc.Push("theme-state", _lastStateJson);
         }
+    }
 }
-
-// WebUiSpikeBridge referenced for JsonString (kept near the stacks of other drivers).
