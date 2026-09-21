@@ -12,7 +12,7 @@ namespace Content.Shared._Pirate.WebUi;
 ///     as new corporation skins appear.
 /// </summary>
 [Prototype]
-public sealed class PirateWebThemePrototype : IPrototype
+public sealed partial class PirateWebThemePrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;
     [DataField(required: true)] public string Class = "";
