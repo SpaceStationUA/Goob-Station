@@ -34,6 +34,7 @@ public sealed class WebThemeWindow : DefaultWindow
     public WebThemeWindow(NetEntity pda, Action<string, string?> onAction)
     {
         SetSize = new Vector2i(400, 280);
+        TitleLabel.Text = "PDA theme";
 
         _pda = pda;
         _onAction = onAction;

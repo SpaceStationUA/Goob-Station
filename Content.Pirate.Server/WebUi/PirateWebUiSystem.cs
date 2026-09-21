@@ -33,11 +33,13 @@ public sealed class PirateWebUiSystem : EntitySystem
         SubscribeNetworkEvent<PirateThemeListRequestEvent>(OnListRequest);
         SubscribeNetworkEvent<PirateThemeSetEvent>(OnSet);
         SubscribeLocalEvent<PdaComponent, PdaShowThemeMessage>(OnShowTheme);
+
     }
 
     /// <summary>Settings tab button: reply with the picker's initial state.</summary>
     private void OnShowTheme(EntityUid uid, PdaComponent pda, PdaShowThemeMessage msg)
     {
+        Logger.DebugS("webui.theme", $"settings button on {GetNetEntity(uid)}");
         if (!_entMan.TryGetComponent<ActorComponent>(msg.Actor, out var actor))
             return;
         var channel = actor.PlayerSession.Channel;
@@ -52,8 +54,12 @@ public sealed class PirateWebUiSystem : EntitySystem
     private void OnListRequest(PirateThemeListRequestEvent msg, EntitySessionEventArgs args)
     {
         if (!TryGetEntity(msg.Pda, out var pda) || !Exists(pda.Value))
+        {
+            Logger.DebugS("webui.theme", $"list request for {msg.Pda}: target missing");
             return;
+        }
 
+        Logger.DebugS("webui.theme", $"list request {msg.Pda} -> current/allowed push");
         RaiseNetworkEvent(new PirateThemeStateEvent
         {
             Pda = msg.Pda,

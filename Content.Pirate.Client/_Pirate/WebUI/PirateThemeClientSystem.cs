@@ -66,6 +66,7 @@ public sealed class PirateThemeClientSystem : EntitySystem
 
     private void OnState(PirateThemeStateEvent msg)
     {
+        Robust.Shared.Log.Logger.DebugS("webui.theme", $"client state push for {msg.Pda} cur={msg.Current} allowed={string.Join(',', msg.Allowed)}");
         if (!_windows.TryGetValue(msg.Pda, out var window) || window.Disposed)
         {
             // The server pushed state without a window: the user just
