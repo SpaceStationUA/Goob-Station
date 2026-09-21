@@ -30,6 +30,7 @@ export default function App() {
 
   window.addEventListener("tui-push", (ev) => {
     const detail = (ev as CustomEvent).detail ?? {};
+    void postAction("dbg", "tui-push name=" + (detail.name ?? "?"));
     if ((detail.name ?? "") !== "theme-state") return;
     onState(detail.payload as ThemeState);
   });
@@ -43,6 +44,7 @@ export default function App() {
   }
 
   // Page is up: engine re-pull state (mirrors the radio page's handshake).
+  void postAction("dbg", "picker mounted");
   postAction("ready", {});
 
   return (
