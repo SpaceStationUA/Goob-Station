@@ -30,6 +30,8 @@ export default function App() {
   const [starred, setStarred] = createSignal<Set<string>>(new Set());
   const [broken, setBroken] = createSignal<Set<string>>(new Set());
   const [vol, setVol] = createSignal(70);
+  const [themeIds, setThemeIds] = createSignal<string[]>([]);
+  const [appliedId, setAppliedId] = createSignal<string>("");
 
   function markBroken(id: string): void {
     setBroken((prev) => new Set(prev).add(id));
@@ -43,7 +45,6 @@ export default function App() {
   onRelayChunk((b64) => player.feedChunk(b64));
 
   function onState(s: RadioState): void {
-    dbg("echo state aid=" + s.stationId + " playing=" + s.playing + " relay=" + s.relay + (player.playing() ? " (local-playing=" + player.currentId() + ")" : ""));
     if (!s.playing) {
       // A stale-echo guard: the ready handshake re-pushes the driver's
       // cached state, which can momentarily be empty/false while local
@@ -60,8 +61,8 @@ export default function App() {
   }
 
   function onCatalog(c: RadioCatalog): void {
-    dbg("catalog theme=" + (c.theme ?? "(missing)") + " n=" + c.stations.length);
-    if (c.theme) applyThemeId(c.theme);
+    if (c.theme) { setAppliedId(c.theme); applyThemeId(c.theme); }
+    setThemeIds(c.themes ?? []);
     setStations(c.stations);
   }
 
@@ -171,7 +172,21 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <GameWindow title="Pirate Radio">
+      <GameWindow title="Pirate Radio" titlebar={
+        <Show when={themeIds().length > 1}>
+          <span class="theme-switch">
+            <For each={themeIds()}>{(t) =>
+              <button
+                class={"theme-chip" + (appliedId() === t ? " active" : "")}
+                title={t}
+                onClick={() => { playerAction("theme", undefined, undefined, t); }}
+              >
+                {t === "PirateSyndiWeb" ? "\u25cf" : "\u25cb"}
+              </button>
+            }</For>
+          </span>
+        </Show>
+      }>
         <div class="app">
           <div class="now">
             <div class={"eq" + (player.playing() ? "" : " paused")}><i /><i /><i /><i /></div>

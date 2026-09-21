@@ -22,8 +22,10 @@ export interface StationEntry {
 
 export interface RadioCatalog {
   /// PirateWebTheme id (entity's PirateWebUiThemeComponent); pages map
-  /// ids to CSS theme classes with setThemeClass (see lib/theme.tsx).
+  /// ids to CSS theme classes with applyThemeId (see lib/theme.tsx).
   theme?: string;
+  /** ids the device may switch to (server-gated list). */
+  themes?: string[];
   stations: StationEntry[];
 }
 
@@ -43,11 +45,13 @@ export function dbg(msg: string): Promise<unknown> {
   return postAction("dbg", String(msg));
 }
 
-export function playerAction(kind: "play" | "stop" | "relayready" | "volume" | "ready", stationId?: string, volume?: number): Promise<unknown> {
+export function playerAction(kind: "play" | "stop" | "relayready" | "volume" | "ready" | "theme", stationId?: string, volume?: number, themeId?: string): Promise<unknown> {
   if (kind === "play")
       return postAction(kind, { id: stationId ?? "" });
   if (kind === "volume")
       return postAction(kind, { v: volume ?? 0 });
+  if (kind === "theme")
+      return postAction(kind, { theme: themeId ?? "" });
   return postAction(kind, {});
 }
 

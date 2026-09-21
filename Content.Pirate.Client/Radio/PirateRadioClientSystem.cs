@@ -142,10 +142,40 @@ public sealed class PirateRadioClientSystem : EntitySystem
                     ready.Driver.ResetCaches();
                 }
                 break;
+            case "theme":
+                PirateRadioClientState.SendTheme(marker, ExtractTheme(data));
+                break;
             case "volume":
                 // Volume is page-local; kept for future persistence.
                 break;
         }
+    }
+
+    /// <summary>Data payload {"theme":"..."} (shared event style).</summary>
+    private static string ExtractTheme(string? data)
+    {
+        if (string.IsNullOrEmpty(data))
+            return "";
+        const string key = "\"theme\"";
+        var at = data.IndexOf(key, StringComparison.Ordinal);
+        if (at < 0)
+            return "";
+        var colon = data.IndexOf(':', at + key.Length);
+        if (colon < 0)
+            return "";
+        var i = colon + 1;
+        while (i < data.Length && (data[i] == ' ' || data[i] == '\t'))
+            i++;
+        if (i >= data.Length || data[i] != '"')
+            return "";
+        i++;
+        var sb = new System.Text.StringBuilder();
+        while (i < data.Length && data[i] != '"')
+        {
+            sb.Append(data[i]);
+            i++;
+        }
+        return sb.ToString();
     }
 
     private static string ExtractStationId(string? data)
@@ -245,7 +275,8 @@ public sealed class PirateRadioClientSystem : EntitySystem
                 // Catalog only replaces when a new event arrives; pushing per
                 // frame would rebuild JSON needlessly.
                 p.LastCatalog = catalog;
-                p.Driver.SetCatalog(ToTuples(catalog), PirateRadioClientState.Theme(marker));
+                p.Driver.SetCatalog(ToTuples(catalog), PirateRadioClientState.Theme(marker),
+                PirateRadioClientState.ThemeList(marker));
             }
 
             var state = PirateRadioClientState.Get(marker);

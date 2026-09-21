@@ -138,6 +138,7 @@ public sealed class PirateRadioSystem : EntitySystem
             Marker = msg.Marker,
             Stations = stations,
             Theme = ThemeOf(marker),
+            Themes = AllowedThemes(marker),
         }, args.SenderSession.Channel);
     }
 
@@ -164,6 +165,36 @@ public sealed class PirateRadioSystem : EntitySystem
         return "PirateNtWeb";
     }
 
+    /// <summary>This PDA's switchable theme ids: all class-nt themes plus
+    /// the syndi family when the device is syndi-line (PDA Settings will
+    /// extend this later; an emag effect can just grant the component).</summary>
+    private List<string> AllowedThemes(EntityUid marker)
+    {
+        var list = new List<string>();
+        var unlock = false;
+        for (var ent = (EntityUid?)marker; ent != null; ent = ent == marker ? _entMan.GetComponent<TransformComponent>(ent.Value).ParentUid : null)
+        {
+            if (TryComp<PirateWebUiThemeComponent>(ent, out var th))
+            {
+                var cls = WebThemeClass(th.WebThemeId);
+                if (cls == "syndi")
+                    unlock = true;
+                break;
+            }
+            if (ent != marker)
+                break; // one hop beyond the marker (cartridge -> PDA)
+        }
+        foreach (var proto in _prototypes.EnumeratePrototypes<PirateWebThemePrototype>())
+        {
+            var c = proto.Class;
+            if (c == "nt" || (unlock && c == "syndi"))
+                list.Add(proto.ID);
+        }
+        return list;
+    }
+
+    private string? WebThemeClass(string id)
+        => _prototypes.TryIndex<PirateWebThemePrototype>(id, out var p) ? p.Class : null;
     private void OnCommand(PirateRadioCommandEvent msg, EntitySessionEventArgs args)
     {
         var marker = GetEntity(msg.Marker);
@@ -195,6 +226,40 @@ public sealed class PirateRadioSystem : EntitySystem
                 state.Relay = false;
                 KillPump(msg.Marker, notify: false);
                 break;
+            case "theme":
+            {
+                // Both PDA Settings and per-app switches land here. The
+                // component override lives on the PDA (the cartridge's
+                // parent); the catalog's theme field flows to every app
+                // through the normal re-push path.
+                if (string.IsNullOrEmpty(msg.Theme))
+                    return;
+                if (!AllowedThemes(marker).Contains(msg.Theme))
+                {
+                    Logger.DebugS("webui.radio", $"theme switch to {msg.Theme} rejected (not allowed for this device)");
+                    return;
+                }
+                var pda = _entMan.GetComponent<TransformComponent>(marker).ParentUid;
+                if (!pda.IsValid())
+                    return;
+                var themeEnt = CompOrNull<PirateWebUiThemeComponent>(pda);
+                if (themeEnt == null)
+                    themeEnt = EnsureComp<PirateWebUiThemeComponent>(pda);
+                themeEnt.WebThemeId = msg.Theme;
+                Dirty(pda, themeEnt);
+                Logger.DebugS("webui.radio", $"theme switch on {marker} -> {msg.Theme}");
+                var stations = Pinned();
+                if (_cache != null)
+                    stations.AddRange(_cache);
+                RaiseNetworkEvent(new PirateRadioCatalogEvent
+                {
+                    Marker = msg.Marker,
+                    Stations = stations,
+                    Theme = msg.Theme,
+                    Themes = AllowedThemes(marker),
+                }, session.Channel);
+                break;
+            }
             default:
                 return;
         }

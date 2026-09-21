@@ -102,7 +102,6 @@ export function createPlayer() {
   // ---- play/stop ----
 
   function play(s: StationEntry) {
-    diag("play " + s.id + (s.relay ? " relay" : " direct") + " " + caller());
     setCurrentId(s.id);
     setPlaying(true);
     setRelayMode(s.relay);
@@ -132,14 +131,8 @@ export function createPlayer() {
 
   let diag = (what: string) => { /* replaced by App via setDiag */ };
 
-  function caller(): string {
-    const st = new Error().stack ?? "";
-    return st.split("\n").slice(1, 5).join(" | ");
-  }
-
   function setDiag(fn: (what: string) => void): void { diag = fn; }
   function stop(): void {
-    diag("stop() " + caller());
     setPlaying(false);
     setCurrentId("");
     audio.pause();
@@ -150,12 +143,12 @@ export function createPlayer() {
     setStatus("idle");
   }
 
-  audio.addEventListener("playing", () => { setStatus("on air"); diag("playing " + currentId()); });
+  audio.addEventListener("playing", () => setStatus("on air"));
   audio.addEventListener("waiting", () => setStatus("buffering"));
   audio.addEventListener("error", () => {
     if (!playing()) return;
     setStatus("stream error");
-    diag("media-error " + currentId() + " " + caller());
+    diag("media-error " + currentId());
   });
   // The page marks the station broken via the returned onError callback
   // (the player doesn't know the catalog).

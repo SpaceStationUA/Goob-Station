@@ -1215,3 +1215,18 @@ that swaps PirateWebUiThemeComponent.WebThemeId on the entity and
 triggers SetCatalog re-push for each program (reference compare must
 re-check - theme is encoded in the catalog payload string so a change
 of theme alone re-pushes).
+Phase D round 1:
+- Page dbg spam stripped (player/echo/catalog logs gone; only
+  play-reject / media-error remain via setDiag so live debugging of a
+  misbehaving stream stays possible).
+- Theme switch plumbing (shared): catalog event carries Themes list;
+  "theme" radio command op swaps the PDA's PirateWebUiThemeComponent
+  (overrides the prototype default) and re-pushes the catalog so every
+  app follows. Server gates: only class-nt themes for NT devices;
+  syndi-class themes only for syndi-line PDAs (PirateSyndiWeb) - an
+  emag-type effect can later flag SyndicateUnlocked on the component
+  to widen the gate.
+- UI: the radio's titlebar shows theme chips (only >1 allowed id);
+  selecting posts {"theme":"<id>"} like any other app action.
+- The future home is a real PDA Settings cartridge (none exists in
+  tree yet); the command + allowed-list contract is ready to reuse.

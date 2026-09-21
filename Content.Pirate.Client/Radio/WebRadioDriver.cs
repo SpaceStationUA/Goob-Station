@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Collections.Generic;
+using System.Linq;
 using Content.Pirate.Client._Pirate.WebUI;
 using Robust.Client.WebView;
 
@@ -31,7 +32,7 @@ public sealed class WebRadioDriver
     }
 
     /// <summary>Push the station catalog; only re-sends when it changed.</summary>
-    public void SetCatalog(IReadOnlyList<(string Id, string Label, string Genre, string Url, bool Featured, bool Relay)> stations, string theme)
+    public void SetCatalog(IReadOnlyList<(string Id, string Label, string Genre, string Url, bool Featured, bool Relay)> stations, string theme, IReadOnlyList<string> themes)
     {
         List<string> parts = new(stations.Count);
         for (var i = 0; i < stations.Count; i++)
@@ -46,7 +47,9 @@ public sealed class WebRadioDriver
                 ",\"relay\":" + (s.Relay ? "true" : "false") + "}");
         }
 
+        var themesArr = string.Join(",", themes.Select(t => WebUiSpikeBridge.JsonString(t)));
         var json = "{\"theme\":" + WebUiSpikeBridge.JsonString(theme) +
+            ",\"themes\":[" + themesArr + "] " +
             ",\"stations\":[" + string.Join(",", parts) + "]}";
         if (json == _lastCatalog)
             return;

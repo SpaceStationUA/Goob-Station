@@ -53,12 +53,14 @@ export function ProgressBar(props: { value: number; max: number; danger?: number
 export function GameWindow(props: {
   title: string;
   onClose?: () => void;
+  titlebar?: JSX.Element; // extra widgets right-aligned before close
   children: JSX.Element;
 }): JSX.Element {
   return (
     <div class="pk-window">
       <div class="pk-titlebar">
         <span class="pk-title">{props.title}</span>
+        {props.titlebar}
         <div class="pk-titlebar-spacer" />
         <Show when={props.onClose}>
           <button class="pk-btn pk-close" onClick={() => props.onClose?.()}>✕</button>
