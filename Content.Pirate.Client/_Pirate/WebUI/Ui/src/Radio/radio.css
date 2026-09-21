@@ -1,5 +1,16 @@
 /* Radio page styles - built on the theme tokens; no raw colors. */
 
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--bg); color: var(--text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+/* Solid mounts into #root; the old page was its own flex column. */
+#root { display: flex; flex-direction: column; height: 100%; }
+
 /* Content column: the ONLY scroller must be .list (the watermark inside
    GameWindow is pinned to the window shell, so it must not move). */
 .app { display: flex; flex-direction: column; height: 100%; flex: 1; min-height: 0; }
