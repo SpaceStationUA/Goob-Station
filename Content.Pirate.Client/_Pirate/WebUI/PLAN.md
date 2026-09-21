@@ -1096,3 +1096,17 @@ CEF, usable by the RadioHost job and anyone with the program installed.
   checks on 2026-09-20) pinned with transcode: true - Gotanno FM, Yumi Co.,
   Radio ROKS Hard'n'Heavy, Brokenbeats, Melodia FM, Jazz FM 104.6,
   Radio Bayraktar, laut.fm Blues&Rock (302 hop, ffmpeg follows), Kiss FM.
+
+- Live test passed on the weak mapper box (2026-09-21): radio + MP3 relay
+  works in production-like conditions with no netgraph stutter. Relay is
+  validated; remaining work is content curation + the TS/UI framework
+  migration discussed for the radio page.
+- Mapper-box deploy notes: run `dotnet run --project Content.Pirate.Server`
+  (Content.Server lacks the goob/pirate asm graph and leaves stale
+  assemblies), `git submodule update --recursive` after pulling, and NEVER
+  build while the server runs - the box has 1.9 GiB and OOM-kills the game
+  process otherwise (dmesg September entries). `dotnet build-server
+  shutdown` after builds; the 20-min ACZ packaging runs in-process.
+- Mapper quirks fixed this session: their ss14monitor restart command still
+  points at Content.Server (left as-is, their script); current boot is a
+  manual tmux session with run2.log.
