@@ -132,6 +132,7 @@ namespace Content.IntegrationTests.Tests
             // if upstreaming take ours here and edit manually.
             //"Amber", kill
             "Atlas",
+            "AspidTP",        // Pirate
             "Bagel",
             "Barratry",
             "Box",            // Not in pool
@@ -184,6 +185,7 @@ namespace Content.IntegrationTests.Tests
             // order this list alphabetically, mark dev maps
               //"Amber", kill
               "Atlas",
+              "AspidTP",        // Pirate
               "Bagel",
              //  "Barratry", kill memory concerns
             //"Box",            // Not in pool
