@@ -51,13 +51,16 @@ export function ProgressBar(props: { value: number; max: number; danger?: number
 
 /** Window shell: themed watermark + title bar + optional close. */
 export function GameWindow(props: {
-  title: string;
+  // Title is optional: the PDA nav bar already shows the program name,
+  // so pages hosted there skip the in-page header entirely.
+  title?: string;
   onClose?: () => void;
   titlebar?: JSX.Element; // extra widgets right-aligned before close
   children: JSX.Element;
 }): JSX.Element {
   return (
     <div class="pk-window">
+      <Show when={props.title || props.titlebar}>
       <div class="pk-titlebar">
         <span class="pk-title">{props.title}</span>
         {props.titlebar}
@@ -66,6 +69,7 @@ export function GameWindow(props: {
           <button class="pk-btn pk-close" onClick={() => props.onClose?.()}>✕</button>
         </Show>
       </div>
+      </Show>
       <div class="pk-content">
         <div class="watermark" />
         {props.children}

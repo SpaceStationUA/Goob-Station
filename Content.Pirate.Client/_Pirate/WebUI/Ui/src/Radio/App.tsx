@@ -188,7 +188,7 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <GameWindow title="Pirate Radio">
+      <GameWindow>
         <div class="app">
           <div class="now">
             <div class={"eq" + (player.playing() ? "" : " paused")}><i /><i /><i /><i /></div>

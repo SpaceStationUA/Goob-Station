@@ -64,7 +64,7 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <GameWindow title="PDA theme">
+      <GameWindow>
         <div class="picker">
           <p class="hint">Applies to this PDA's windows (radio and future apps).</p>
           <div class="list">
