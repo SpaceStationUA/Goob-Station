@@ -1309,3 +1309,39 @@ Gotchas that cost us rounds - HALF MEASURES DO NOT PAY:
 Status: radio is feature-complete; theme layer complete. Backlog next:
 kit extraction (init.css, atoms review), second CEF page on the kit,
 Radioshow/TUI bridge or whatever direction is picked next.
+
+### UI-scale saga (closed) - hard-won lessons about CEF sizing
+
+Symptom: radio/picker sized right at the scale they launched with,
+then broken (bigger/smaller/blank) after scale changes; blank state
+stayed even after F5/reload/full reopen; user scale changes felt
+random. Content-side could not fix the raster (engine blits the CEF
+bitmap raw; the texture/paint path lives in Robust.Client.WebView -
+out of bounds for us).
+
+Field evidence (CDP via web.remote_debug_port=9222):
+- stuck pages reported IDENTICAL viewport to working ones
+  ([898,795,2,"visible"]) -> the browser was healthy and the page
+  state sane; only the engine-side raster froze.
+- clicks still worked in blank pages -> CEF input path and paint
+  path are independent; input cannot be used as a liveness probe.
+
+Content-side answers that shipped (no engine changes):
+1. Watch display.uiScale; on change rebuild affected webviews
+   (fresh browser = fresh mapping). Radio re-attaches via the new
+   IRadioWebviewHost contract; host.KeepAlive stays in sync.
+2. Browsers must START ATTACHED (arcade recipe). Constructing with
+   AlwaysActive=true starts the browser detached, where
+   Owner.UIScale collapses to 1 (no root) and becomes the browser's
+   baked device scale factor. Construct AlwaysActive off (EnteredTree
+   starts the browser with the real root scale), pin AlwaysActive
+   AFTER attach for keep-alive semantics.
+3. Post-rebuild 1px margin pulse (PirateWebViewNudger) forces
+   Control.Resized, re-arming the compositor texture.
+4. ready-handshake watchdog: private rebuild that stays silent >2.5s
+   gets one more rebuild (2 attempts per knob turn), so any residual
+   blank self-heals.
+
+Rule for the next CEF app: a page host means (a) create view,
+(b) attach, (c) THEN AlwaysActive=true and any Url reload; and hosts
+must respond to display.uiScale. Never start a browser detached.
