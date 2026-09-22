@@ -1254,3 +1254,58 @@ exec mystery parked, documented):
   replies only), wired through a static provider bridge in
   Content.Pirate.UIKit (Content.Client cannot reference the pirate
   client system directly).
+
+### Theme foundation - final shape + lessons (phase D closed)
+
+Architecture (what exists now):
+- `pirateWebTheme` prototypes (Resources/Prototypes/_Pirate/webui.yml)
+  map theme ids to CSS token classes; pages map ids to theme-<class>.
+- `PirateWebUiThemeComponent` (Content.Shared/_Pirate/WebUi) stamps entity
+  prototypes (SyndiPDA line = PirateSyndiWeb; everything else = NT by
+  ABSENCE of the component, not by component on every entity).
+- Resolution: PirateWebThemeResolver (Content.Pirate.Server/WebUi) keys
+  off the marker's walk (cartridge -> PDA) for the live value, and off
+  the ENTITY PROTOTYPE (flattened composition) for the GATE - a syndi
+  device switched to NT keeps its family themes switchable.
+- Switch request path: picker page postAction("set", {theme}) -> embed
+  handler strips {"theme":...} -> PirateThemeSetEvent -> server validates
+  against AllowedThemes, applies the component per-device, then pushes
+  FRESH PirateThemeStateEvent (picker feedback) AND repushes radio
+  catalogs so open pages re-skin live. State events dedupe by payload
+  string; the theme id is part of that payload, so a pure theme change
+  alone re-pushes.
+
+Gotchas that cost us rounds - HALF MEASURES DO NOT PAY:
+1. CSS RESET CONTRACT. Every Solid page must have the html/body/#root
+   reset (height:100%; #root flex column). A page without it renders a
+   "lonely titlebar" collapse that looks exactly like "state never
+   arrived" and costs blind debug rounds. Token kits should emit this
+   automatically (candidate: kit imports init.css).
+2. ALWAYS-ACTIVE WEBVIEWS. WebViewControl.ExecuteJavaScript is inert
+   unless the browser is open; AlwaysActive = true is required for
+   pages that must receive engine pushes. Radio/arcade set it; our
+   first window didn't and lost days to it.
+3. WINDOW VS FRAGMENT HOSTING. In a plain DefaultWindow the engine->
+   page exec stayed dead (page->engine nav-hook traffic was fine) even
+   with AlwaysActive + arcade-style deferred load. Fragment hosting
+   (control inside the PDA/BUI tree - radio, settings embed) works
+   every time. New CEF screens should prefer in-UI hosting like the
+   PDA's views, or reuse a proven window pattern VERBATIM before
+   innovating. The standalone WebThemeWindow remains parked as an
+   archaeological record.
+4. LOAD WINDOW RACES. Anything pushed while the page mounts is lost:
+   the page must send a 'ready' action and the engine must re-push
+   (radio does it for the catalog; the theme picker pulls + gets fresh
+   pushes). Dedupe caches (lastCatalog/_lastState) make misses permanent
+   otherwise. NEVER rely on a push that fired 'around' page load.
+5. DUAL-CHANNEL INTAKE is the working pattern: page installs both the
+   tui-push CustomEvent listener and a direct window global
+   (__radioSetCatalog etc.); engine mirrors onto both. Cheap, robust,
+   self-heals whichever lane works in the hosting shape.
+6. SERVER-AUTHORITATIVE VALIDATION: the gate list travels with the
+   state but the server recomputes AllowedThemes on every set; never
+   trust the page's list.
+
+Status: radio is feature-complete; theme layer complete. Backlog next:
+kit extraction (init.css, atoms review), second CEF page on the kit,
+Radioshow/TUI bridge or whatever direction is picked next.
