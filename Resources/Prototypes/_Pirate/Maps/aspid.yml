@@ -4,7 +4,7 @@
   mapPath: /Maps/_Pirate/aspid.yml
   mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
   mapPreview: PirateMapPreviewAspidTP
-  minPlayers: 1 # Тест, повернути 25
+  minPlayers: 25
   maxPlayers: 55
   stations:
     Aspid:
