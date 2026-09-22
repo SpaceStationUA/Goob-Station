@@ -34,6 +34,9 @@ public sealed class PirateThemeClientSystem : EntitySystem
         public List<string> Allowed = new();
         public bool Visible;
         public Control? Parent;
+        public DateTimeOffset ReadyDue;
+        public bool ReadySeen;
+        public int Retries;
     }
 
     private readonly Dictionary<NetEntity, Host> _hosts = new();
@@ -64,10 +67,20 @@ public sealed class PirateThemeClientSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
+        var watchdogDue = false;
+        foreach (var host in _hosts.Values)
+        {
+            if (host.ReadyDue != DateTimeOffset.MinValue && DateTimeOffset.UtcNow > host.ReadyDue && !host.ReadySeen)
+                watchdogDue = true;
+        }
         if (_scaleDirty)
         {
             _scaleDirty = false;
             RebuildForScale();
+        }
+        else if (watchdogDue)
+        {
+            RebuildForScale(fromWatchdog: true);
         }
         foreach (var (pda, host) in _hosts)
         {
@@ -82,11 +95,13 @@ public sealed class PirateThemeClientSystem : EntitySystem
     /// <summary>UI scale changed: dispose + recreate every picker webview
     /// (fresh browser = fresh bitmap scale mapping); the host parent panel
     /// keeps its identical anchor.</summary>
-    private void RebuildForScale()
+    private void RebuildForScale(bool fromWatchdog = false)
     {
         List<NetEntity> keys = new(_hosts.Keys);
         foreach (var pda in keys)
         {
+            if (fromWatchdog && _hosts.TryGetValue(pda, out var skipHost) && (skipHost.ReadySeen || skipHost.Retries > 2))
+                continue;
             var host = _hosts[pda];
             var parent = host.Parent;
             var visible = host.Visible;
@@ -108,10 +123,12 @@ public sealed class PirateThemeClientSystem : EntitySystem
             host.Web.AddBeforeBrowseHandler(host.Ipc.HandleBeforeBrowse);
             host.Web.Url = url;
             parent?.AddChild(host.Web);
-            host.Visible = visible;
-            host.Web.Visible = visible;
             if (visible)
                 RequestState(pda);
+            host.Visible = visible;
+            host.Web.Visible = visible;
+            host.ReadySeen = false;
+            host.ReadyDue = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(2.5);
         }
     }
 
@@ -188,6 +205,11 @@ public sealed class PirateThemeClientSystem : EntitySystem
         switch (action)
         {
             case "ready":
+                if (_hosts.TryGetValue(pda, out var readyHost))
+                {
+                    readyHost.ReadySeen = true;
+                    readyHost.ReadyDue = DateTimeOffset.MinValue;
+                }
                 RequestState(pda);
                 break;
             case "set":

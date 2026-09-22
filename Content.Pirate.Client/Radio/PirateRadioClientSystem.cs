@@ -42,6 +42,9 @@ public sealed class PirateRadioClientSystem : EntitySystem
         public bool RequestedCatalog;
         public bool UncarriedStopSent;
         public Content.Pirate.Client.CartridgeLoader.Cartridges.RadioUi.IRadioWebviewHost? HostPanel;
+        public DateTimeOffset ReadyDue;
+        public bool ReadySeen;
+        public int Retries;
     }
 
     private readonly Dictionary<NetEntity, Playback> _playbacks = new();
@@ -87,10 +90,14 @@ public sealed class PirateRadioClientSystem : EntitySystem
         p.HostPanel = host;
     }
 
-    private void RebuildForScale()
+    private void RebuildForScale(bool fromWatchdog = false)
     {
-        foreach (var (marker, p) in _playbacks)
+        foreach (var (marker, p) in _playbacks.ToList())
         {
+            if (fromWatchdog && p.ReadySeen)
+                continue;
+            if (fromWatchdog && p.Retries >= 2)
+                continue; // Failsafe: give up after two attempts each round
             var host = p.HostPanel;
             var keep = host?.KeepAlive;
             Control? parent = null;
@@ -109,6 +116,11 @@ public sealed class PirateRadioClientSystem : EntitySystem
                 host.KeepAlive = fresh;
                 parent!.AddChild(fresh);
             }
+            // Watchdog: CEF occasionally finishes the fresh browser in a
+            // state where it never paints (blank until another rebuild).
+            // If the page does not report ready in time, retry once.
+            p.ReadySeen = false;
+            p.ReadyDue = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(2.5);
         }
     }
 
@@ -219,6 +231,11 @@ public sealed class PirateRadioClientSystem : EntitySystem
                     .SendSystemNetworkMessage(new PirateRadioRelayReadyEvent { Marker = marker });
                 break;
             case "ready":
+                if (_playbacks.TryGetValue(marker, out var readyP))
+                {
+                    readyP.ReadySeen = true;
+                    readyP.ReadyDue = DateTimeOffset.MinValue;
+                }
                 // The page has finished loading and installed its push
                 // listeners. Pushes that happened during the load window were
                 // dropped, so force the dedupe caches to re-send on the next
@@ -311,6 +328,22 @@ public sealed class PirateRadioClientSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
+
+        List<NetEntity>? watchdog = null;
+        foreach (var (marker, p) in _playbacks)
+        {
+            if (p.ReadyDue != DateTimeOffset.MinValue && DateTimeOffset.UtcNow > p.ReadyDue && !p.ReadySeen)
+                watchdog ??= new List<NetEntity>();
+        }
+        if (watchdog != null)
+        {
+            foreach (var (marker, p) in _playbacks.ToList())
+            {
+                if (!p.ReadySeen && p.ReadyDue != DateTimeOffset.MinValue && DateTimeOffset.UtcNow > p.ReadyDue)
+                    p.Retries++;
+            }
+            RebuildForScale(fromWatchdog: true);
+        }
 
         if (_scaleDirty)
         {
