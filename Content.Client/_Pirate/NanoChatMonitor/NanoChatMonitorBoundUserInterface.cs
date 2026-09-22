@@ -29,6 +29,8 @@ public sealed class NanoChatMonitorBoundUserInterface : BoundUserInterface
             SendMessage(new NanoChatMonitorPrintPhotoMessage(id));
         _window.OnPrintLog += key =>
             SendMessage(new NanoChatMonitorPrintLogMessage(key));
+        _window.OnDeleteLog += key =>
+            SendMessage(new NanoChatMonitorDeleteLogMessage(key));
 
         if (State is NanoChatMonitorUiState state)
             _window.UpdateState(state);

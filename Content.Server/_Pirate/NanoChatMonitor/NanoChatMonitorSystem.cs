@@ -6,16 +6,19 @@ using System.Linq;
 using System.Text;
 using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
-using Content.Server.Station.Systems;
+using Content.Server._Pirate.NanoChat;
 using Content.Server._Pirate.Photo;
 using Content.Shared._DV.CartridgeLoader.Cartridges;
 using Content.Shared._Pirate.NanoChat;
 using Content.Shared._Pirate.NanoChatMonitor;
 using Content.Shared._Pirate.Photo;
 using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Paper;
+using Content.Shared.Power;
+using Content.Shared.Radio;
+using Content.Shared.Radio.Components;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -25,18 +28,22 @@ using Robust.Shared.Timing;
 namespace Content.Server._Pirate.NanoChatMonitor;
 
 /// <summary>
-///     Capture and storage are server side; the client receives only requested pages and attachments.
+///     Capture and storage are server-side; the client receives only requested pages and attachments.
 /// </summary>
+/// <remarks>
+///     A viewer sees logs from every powered machine connected to its own; ordinary servers store
+///     Syndicate identities as redacted data.
+/// </remarks>
 public sealed class NanoChatMonitorSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly NanoChatNetworkSystem _network = default!;
+    [Dependency] private readonly SharedNanoChatLogHostSystem _logHost = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly PhotoSystem _photo = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     private static readonly EntProtoId PaperPrototype = "Paper";
@@ -50,11 +57,31 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
     private const int TruncationReserve = 256;
 
+    /// <summary>
+    ///     Reusable list for federated server lookups.
+    /// </summary>
+    private readonly List<EntityUid> _servers = new();
+
+    private readonly Dictionary<EntityUid, Dictionary<ulong, MergedConversation>> _mergeCache = new();
+
+    private void InvalidateMergeCache()
+    {
+        _mergeCache.Clear();
+    }
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<NanoChatMessageDeliveredEvent>(OnMessageDelivered);
+
+        SubscribeLocalEvent<NanoChatMonitorComponent, PowerChangedEvent>(OnMonitorPowerChanged);
+        SubscribeLocalEvent<NanoChatNetworkChangedEvent>(OnNetworkChanged);
+
+        SubscribeLocalEvent<NanoChatMonitorComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
+
+        SubscribeLocalEvent<NanoChatMonitorComponent, ComponentShutdown>(OnMonitorRemoved);
+        SubscribeLocalEvent<NanoChatMonitorComponent, EntParentChangedMessage>(OnMonitorMoved);
 
         Subs.BuiEvents<NanoChatMonitorComponent>(NanoChatMonitorUiKey.Key, subs =>
         {
@@ -63,6 +90,7 @@ public sealed class NanoChatMonitorSystem : EntitySystem
             subs.Event<NanoChatMonitorRequestAttachmentMessage>(OnRequestAttachment);
             subs.Event<NanoChatMonitorPrintPhotoMessage>(OnPrintPhoto);
             subs.Event<NanoChatMonitorPrintLogMessage>(OnPrintLog);
+            subs.Event<NanoChatMonitorDeleteLogMessage>(OnDeleteLog);
         });
     }
 
@@ -70,58 +98,79 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
     private void OnMessageDelivered(ref NanoChatMessageDeliveredEvent args)
     {
-        var query = EntityQueryEnumerator<NanoChatMonitorComponent>();
-        while (query.MoveNext(out var uid, out var monitor))
+        var topology = _network.BuildTopology();
+        var recording = new List<EntityUid>();
+        _network.GetRecordingServers(topology, args.SenderDevice ?? args.SenderCard, args.RecipientCards, recording);
+
+        if (recording.Count == 0)
+            return;
+
+        var senderSyndicate = _network.IsSyndicateCard(args.SenderCard) ||
+                              _network.IsSyndicateDevice(args.SenderDevice);
+
+        var recipientSyndicate = args.RecipientCards.Any(card => _network.IsSyndicateCard(card));
+
+        foreach (var uid in recording)
         {
-            if (!IsPowered(uid))
+            if (!TryComp<NanoChatMonitorComponent>(uid, out var monitor))
                 continue;
 
-            if (!ShouldRecord((uid, monitor), ref args))
-                continue;
+            var redact = !IsRelay(uid);
 
-            Record((uid, monitor), ref args);
-        }
-    }
-
-    private bool ShouldRecord(Entity<NanoChatMonitorComponent> monitor, ref NanoChatMessageDeliveredEvent args)
-    {
-        if (monitor.Comp.Global)
-            return true;
-
-        if (_station.GetOwningStation(monitor) is not { } station)
-            return false;
-
-        if (args.SenderCard is { } senderCard && _station.GetOwningStation(senderCard) == station)
-            return true;
-
-        foreach (var recipient in args.RecipientCards)
-        {
-            if (_station.GetOwningStation(recipient) == station)
-                return true;
+            Record((uid, monitor), ref args, senderSyndicate && redact, recipientSyndicate && redact);
         }
 
-        return false;
+        InvalidateMergeCache();
+        RefreshOpenViewers();
     }
 
-    private void Record(Entity<NanoChatMonitorComponent> monitor, ref NanoChatMessageDeliveredEvent args)
+    private void Record(
+        Entity<NanoChatMonitorComponent> monitor,
+        ref NanoChatMessageDeliveredEvent args,
+        bool redactSender,
+        bool redactRecipient)
     {
+        // Everything a redacted participant would give away is blanked here,
+        // at record time, keeping only its length. The real value is never written down, so the only
+        // thing left to withhold on the way out is the number, which is kept as the conversation key.
         var (senderName, senderJob) = ResolveIdentity(args.SenderCard, args.SenderNumber, args.SenderNameOverride);
+        var senderLocation = ResolveLocation(args.SenderDevice ?? args.SenderCard);
+        var content = args.Message.Content;
+
+        if (redactSender)
+        {
+            senderName = NanoChatMonitorConstants.Mask(senderName)!;
+            senderJob = NanoChatMonitorConstants.Mask(senderJob);
+            senderLocation = NanoChatMonitorConstants.Mask(senderLocation)!;
+
+            content = NanoChatMonitorConstants.Mask(content)!;
+        }
+
         var (recipientName, recipientJob) = ResolveIdentity(
             args.RecipientCards.Count > 0 ? args.RecipientCards[0] : null,
             args.RecipientNumber,
             null);
 
+        if (redactRecipient)
+        {
+            recipientName = NanoChatMonitorConstants.Mask(recipientName)!;
+            recipientJob = NanoChatMonitorConstants.Mask(recipientJob);
+        }
+
         var entry = new NanoChatMonitorStoredEntry
         {
+            DeliveryId = args.DeliveryId,
             Timestamp = args.Message.Timestamp,
             SenderNumber = args.SenderNumber,
             SenderName = senderName,
             SenderJob = senderJob,
+            SenderRedacted = redactSender,
             RecipientNumber = args.RecipientNumber,
             RecipientName = recipientName,
             RecipientJob = recipientJob,
-            Content = args.Message.Content,
-            Location = ResolveLocation(args.SenderDevice ?? args.SenderCard),
+            RecipientRedacted = redactRecipient,
+            Content = content,
+            Location = senderLocation,
         };
 
         if (args.Message.Photo is { } photo)
@@ -138,33 +187,46 @@ public sealed class NanoChatMonitorSystem : EntitySystem
                 NumberA = Math.Min(args.SenderNumber, args.RecipientNumber),
                 NumberB = Math.Max(args.SenderNumber, args.RecipientNumber),
             };
+
             monitor.Comp.Conversations[key] = conversation;
         }
 
         conversation.Entries.Add(entry);
 
-        SetParticipantIdentity(conversation, args.SenderNumber, senderName, senderJob);
-        SetParticipantIdentity(conversation, args.RecipientNumber, recipientName, recipientJob);
-
-        UpdateUi(monitor);
+        SetParticipantIdentity(conversation, args.SenderNumber, senderName, senderJob, redactSender);
+        SetParticipantIdentity(conversation, args.RecipientNumber, recipientName, recipientJob, redactRecipient);
     }
 
     private static void SetParticipantIdentity(
         NanoChatMonitorConversation conversation,
         uint number,
         string name,
-        string? job)
+        string? job,
+        bool redacted)
     {
         if (number == conversation.NumberA)
         {
-            conversation.NameA = name;
-            conversation.JobA = job;
+            // Redaction only ever latches on, so a card that spent part of
+            // the round in a Syndicate PDA cannot be named by moving it back out of one. Names arrive
+            // already masked when redacted, so the latch is what stops a later plain one overwriting it.
+            conversation.RedactedA |= redacted;
+
+            if (redacted || !conversation.RedactedA)
+            {
+                conversation.NameA = name;
+                conversation.JobA = job;
+            }
         }
 
         if (number == conversation.NumberB)
         {
-            conversation.NameB = name;
-            conversation.JobB = job;
+            conversation.RedactedB |= redacted;
+
+            if (redacted || !conversation.RedactedB)
+            {
+                conversation.NameB = name;
+                conversation.JobB = job;
+            }
         }
     }
 
@@ -271,6 +333,251 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
     #endregion
 
+    #region Federation
+
+    /// <summary>
+    ///     One conversation as a reader sees it: every networked machine's copy folded together, with
+    ///     duplicate recordings of the same delivery collapsed back into one message.
+    /// </summary>
+    private sealed class MergedConversation
+    {
+        public ulong ClientKey;
+        public uint NumberA;
+        public uint NumberB;
+        public bool RedactedA;
+        public bool RedactedB;
+        public string NameA = string.Empty;
+        public string? JobA;
+        public string NameB = string.Empty;
+        public string? JobB;
+
+        public readonly List<(NanoChatMonitorStoredEntry Entry, NanoChatMonitorComponent Source)> Entries = new();
+
+        public readonly HashSet<ulong> Seen = new();
+
+        public TimeSpan IdentityAsOf = TimeSpan.MinValue;
+    }
+
+    /// <summary>
+    ///     Folds connected machines' histories into conversations, collapsing duplicate deliveries.
+    /// </summary>
+    private Dictionary<ulong, MergedConversation> BuildMerged(Entity<NanoChatMonitorComponent> viewer)
+    {
+        if (_mergeCache.TryGetValue(viewer.Owner, out var cached))
+            return cached;
+
+        _network.GetFederatedServers(viewer, _servers);
+
+        var alone = _servers.Count <= 1;
+
+        var merged = new Dictionary<ulong, MergedConversation>();
+
+        foreach (var uid in _servers)
+        {
+            if (!TryComp<NanoChatMonitorComponent>(uid, out var source))
+                continue;
+
+            foreach (var (key, conversation) in source.Conversations)
+            {
+                if (conversation.Entries.Count == 0)
+                    continue;
+
+                if (!merged.TryGetValue(key, out var target))
+                {
+                    merged[key] = target = new MergedConversation
+                    {
+                        ClientKey = ResolveClientKey(viewer.Comp, key),
+                        NumberA = conversation.NumberA,
+                        NumberB = conversation.NumberB,
+                        RedactedA = conversation.RedactedA,
+                        RedactedB = conversation.RedactedB,
+                    };
+                }
+
+                foreach (var entry in conversation.Entries)
+                {
+                    if (!alone && entry.DeliveryId != 0 && !target.Seen.Add(entry.DeliveryId))
+                        continue;
+
+                    target.Entries.Add((entry, source));
+                }
+
+                var last = conversation.Entries[^1].Timestamp;
+                if (last < target.IdentityAsOf)
+                    continue;
+
+                target.IdentityAsOf = last;
+                target.NameA = conversation.NameA;
+                target.JobA = conversation.JobA;
+                target.NameB = conversation.NameB;
+                target.JobB = conversation.JobB;
+            }
+        }
+
+        if (!alone)
+        {
+            foreach (var conversation in merged.Values)
+            {
+                conversation.Entries.Sort(static (a, b) => a.Entry.Timestamp.CompareTo(b.Entry.Timestamp));
+            }
+        }
+
+        _mergeCache[viewer.Owner] = merged;
+        return merged;
+    }
+
+    /// <summary>
+    ///     Hands out this machine's opaque handle for a conversation, minting one on first sight. A real
+    ///     conversation key is the two participants' numbers packed together, so it can never go on the
+    ///     wire: it would give a redacted number straight back to the reader.
+    /// </summary>
+    private static ulong ResolveClientKey(NanoChatMonitorComponent monitor, ulong conversationKey)
+    {
+        if (monitor.ClientKeys.TryGetValue(conversationKey, out var existing))
+            return existing;
+
+        var handle = monitor.NextClientKey++;
+        monitor.ClientKeys[conversationKey] = handle;
+        monitor.ConversationKeys[handle] = conversationKey;
+
+        return handle;
+    }
+
+    public ulong GetClientKey(Entity<NanoChatMonitorComponent> ent, ulong conversationKey)
+    {
+        return ResolveClientKey(ent.Comp, conversationKey);
+    }
+
+
+    public bool KeepsLog(EntityUid uid)
+    {
+        return _logHost.HostsLog(uid);
+    }
+
+    private void OnKeysChanged(EntityUid uid, NanoChatMonitorComponent monitor, EncryptionChannelsChangedEvent args)
+    {
+        if (KeepsLog(uid))
+            return;
+
+        ClearLog(monitor);
+        _ui.CloseUi(uid, NanoChatMonitorUiKey.Key);
+        InvalidateMergeCache();
+        RefreshOpenViewers();
+    }
+
+    private void OnDeleteLog(Entity<NanoChatMonitorComponent> ent, ref NanoChatMonitorDeleteLogMessage args)
+    {
+        if (CanRespond(ent, args.Actor))
+            DeleteConversation(ent, args.ConversationKey, args.Actor);
+    }
+
+    public bool DeleteConversation(Entity<NanoChatMonitorComponent> ent, ulong clientKey, EntityUid actor)
+    {
+        if (!ent.Comp.ConversationKeys.TryGetValue(clientKey, out var conversationKey))
+            return false;
+
+        _network.GetFederatedServers(ent, _servers);
+
+        var erased = 0;
+        foreach (var uid in _servers)
+        {
+            if (!TryComp<NanoChatMonitorComponent>(uid, out var monitor))
+                continue;
+
+            if (!monitor.Conversations.Remove(conversationKey, out var conversation))
+                continue;
+
+            erased += conversation.Entries.Count;
+
+            if (monitor.ClientKeys.Remove(conversationKey, out var handle))
+                monitor.ConversationKeys.Remove(handle);
+
+            PruneAttachments(monitor);
+        }
+
+        _adminLogger.Add(LogType.Action,
+            LogImpact.High,
+            $"{ToPrettyString(actor):actor} erased a NanoChat conversation of {erased} recorded message(s) from {_servers.Count} server(s) at {ToPrettyString(ent):tool}");
+
+        InvalidateMergeCache();
+        RefreshOpenViewers();
+        return true;
+    }
+
+    private static void ClearLog(NanoChatMonitorComponent monitor)
+    {
+        monitor.Conversations.Clear();
+        monitor.Attachments.Clear();
+        monitor.ClientKeys.Clear();
+        monitor.ConversationKeys.Clear();
+    }
+
+    private static void PruneAttachments(NanoChatMonitorComponent monitor)
+    {
+        if (monitor.Attachments.Count == 0)
+            return;
+
+        var used = new HashSet<string>();
+        foreach (var conversation in monitor.Conversations.Values)
+        {
+            foreach (var entry in conversation.Entries)
+            {
+                if (entry.AttachmentId is { } id)
+                    used.Add(id);
+            }
+        }
+
+        foreach (var id in monitor.Attachments.Keys.ToList())
+        {
+            if (!used.Contains(id))
+                monitor.Attachments.Remove(id);
+        }
+    }
+
+
+    private bool IsRelay(EntityUid uid)
+    {
+        return HasComp<SyndicateNanoChatRelayComponent>(uid);
+    }
+
+    /// <summary>
+    ///     Pushes fresh state to every open viewer. Federation means a machine's own history is not the
+    ///     only thing that changes what it shows.
+    /// </summary>
+    private void RefreshOpenViewers()
+    {
+        var query = EntityQueryEnumerator<NanoChatMonitorComponent>();
+        while (query.MoveNext(out var uid, out var monitor))
+        {
+            if (_ui.IsUiOpen(uid, NanoChatMonitorUiKey.Key))
+                UpdateUi((uid, monitor));
+        }
+    }
+
+    private void OnMonitorRemoved(Entity<NanoChatMonitorComponent> ent, ref ComponentShutdown args)
+    {
+        InvalidateMergeCache();
+    }
+
+    private void OnMonitorMoved(Entity<NanoChatMonitorComponent> ent, ref EntParentChangedMessage args)
+    {
+        InvalidateMergeCache();
+    }
+
+    private void OnMonitorPowerChanged(Entity<NanoChatMonitorComponent> ent, ref PowerChangedEvent args)
+    {
+        InvalidateMergeCache();
+        RefreshOpenViewers();
+    }
+
+    private void OnNetworkChanged(ref NanoChatNetworkChangedEvent args)
+    {
+        InvalidateMergeCache();
+        RefreshOpenViewers();
+    }
+
+    #endregion
+
     #region Interface
 
     private void OnUiOpened(Entity<NanoChatMonitorComponent> ent, ref BoundUIOpenedEvent args)
@@ -322,14 +629,14 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
     public bool TryPrintPhoto(Entity<NanoChatMonitorComponent> ent, string attachmentId, EntityUid actor)
     {
-        if (!TryStartPrint(ent))
-            return false;
-
-        if (!ent.Comp.Attachments.TryGetValue(attachmentId, out var attachment) ||
+        if (!TryFindAttachment(ent, attachmentId, out var attachment) ||
             attachment.ImageData is not { Length: > 0 } imageData)
         {
             return false;
         }
+
+        if (!TryStartPrint(ent))
+            return false;
 
         var card = Spawn(PhotoCardPrototype, Transform(ent).Coordinates);
 
@@ -364,16 +671,14 @@ public sealed class NanoChatMonitorSystem : EntitySystem
         return true;
     }
 
-    public bool TryPrintLog(Entity<NanoChatMonitorComponent> ent, ulong conversationKey, EntityUid actor)
+    public bool TryPrintLog(Entity<NanoChatMonitorComponent> ent, ulong clientKey, EntityUid actor)
     {
-        if (!TryStartPrint(ent))
+        // Printed from the same federated view the reader is looking at.
+        if (!TryGetMerged(ent, clientKey, out var conversation) || conversation.Entries.Count == 0)
             return false;
 
-        if (!ent.Comp.Conversations.TryGetValue(conversationKey, out var conversation) ||
-            conversation.Entries.Count == 0)
-        {
+        if (!TryStartPrint(ent))
             return false;
-        }
 
         var sheets = BuildLogSheets(ent.Comp, conversation);
         var coordinates = Transform(ent).Coordinates;
@@ -387,11 +692,12 @@ public sealed class NanoChatMonitorSystem : EntitySystem
         FinishPrint(ent,
             actor,
             $"printed {conversation.Entries.Count} intercepted NanoChat messages between " +
-            $"#{conversation.NumberA:D4} and #{conversation.NumberB:D4} across {sheets.Count} sheet(s)");
+            $"#{DisplayNumber(conversation.NumberA, conversation.RedactedA)} and " +
+            $"#{DisplayNumber(conversation.NumberB, conversation.RedactedB)} across {sheets.Count} sheet(s)");
         return true;
     }
 
-    private List<string> BuildLogSheets(NanoChatMonitorComponent monitor, NanoChatMonitorConversation conversation)
+    private List<string> BuildLogSheets(NanoChatMonitorComponent monitor, MergedConversation conversation)
     {
         var sheetSize = PaperContentSize();
         var maxLength = sheetSize * Math.Max(1, monitor.MaxLogSheets);
@@ -399,12 +705,12 @@ public sealed class NanoChatMonitorSystem : EntitySystem
         var header = string.Join('\n',
             Loc.GetString("nanochat-monitor-print-log-title"),
             Loc.GetString("nanochat-monitor-print-log-participants",
-                ("first", $"{conversation.NameA} (#{conversation.NumberA:D4})"),
-                ("second", $"{conversation.NameB} (#{conversation.NumberB:D4})")),
+                ("first", $"{conversation.NameA} (#{DisplayNumber(conversation.NumberA, conversation.RedactedA)})"),
+                ("second", $"{conversation.NameB} (#{DisplayNumber(conversation.NumberB, conversation.RedactedB)})")),
             Loc.GetString("nanochat-monitor-print-log-count", ("count", conversation.Entries.Count)));
 
         var blocks = new List<string>(conversation.Entries.Count);
-        foreach (var entry in conversation.Entries)
+        foreach (var (entry, _) in conversation.Entries)
         {
             blocks.Add(FormatLogLine(entry));
         }
@@ -453,8 +759,9 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
         return Loc.GetString("nanochat-monitor-print-log-line",
             ("time", entry.Timestamp.ToString(@"hh\:mm\:ss")),
+            // Paper is not a way around the redaction either.
             ("sender", entry.SenderName),
-            ("number", $"{entry.SenderNumber:D4}"),
+            ("number", DisplayNumber(entry.SenderNumber, entry.SenderRedacted)),
             ("location", entry.Location),
             ("message", body));
     }
@@ -502,14 +809,14 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
     public bool TryGetPage(
         Entity<NanoChatMonitorComponent> ent,
-        ulong conversationKey,
+        ulong clientKey,
         int startIndex,
         bool latest,
         [NotNullWhen(true)] out NanoChatMonitorPageMessage? page)
     {
         page = null;
 
-        if (!ent.Comp.Conversations.TryGetValue(conversationKey, out var conversation))
+        if (!TryGetMerged(ent, clientKey, out var conversation))
             return false;
 
         var total = conversation.Entries.Count;
@@ -523,10 +830,11 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
         for (var i = start; i < start + count; i++)
         {
-            entries.Add(BuildLogEntry(ent.Comp, conversation.Entries[i]));
+            var (entry, source) = conversation.Entries[i];
+            entries.Add(BuildLogEntry(source, conversation, entry));
         }
 
-        page = new NanoChatMonitorPageMessage(conversationKey, start, total, entries);
+        page = new NanoChatMonitorPageMessage(clientKey, start, total, entries);
         return true;
     }
 
@@ -537,7 +845,7 @@ public sealed class NanoChatMonitorSystem : EntitySystem
     {
         message = null;
 
-        if (!ent.Comp.Attachments.TryGetValue(attachmentId, out var attachment))
+        if (!TryFindAttachment(ent, attachmentId, out var attachment))
             return false;
 
         message = new NanoChatMonitorAttachmentMessage(
@@ -550,8 +858,51 @@ public sealed class NanoChatMonitorSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///     Finds an attachment on any machine the viewer is networked to. Ids are content hashes, so
+    ///     whichever copy turns up first is the same image.
+    /// </summary>
+    private bool TryFindAttachment(
+        Entity<NanoChatMonitorComponent> ent,
+        string attachmentId,
+        [NotNullWhen(true)] out NanoChatMonitorAttachment? attachment)
+    {
+        attachment = null;
+
+        _network.GetFederatedServers(ent, _servers);
+
+        foreach (var uid in _servers)
+        {
+            if (TryComp<NanoChatMonitorComponent>(uid, out var monitor) &&
+                monitor.Attachments.TryGetValue(attachmentId, out attachment))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    ///     Resolves a viewer's handle back to a conversation in the current federated view. A handle for
+    ///     history that has since gone off the network simply stops resolving.
+    /// </summary>
+    private bool TryGetMerged(
+        Entity<NanoChatMonitorComponent> ent,
+        ulong clientKey,
+        [NotNullWhen(true)] out MergedConversation? conversation)
+    {
+        conversation = null;
+
+        if (!ent.Comp.ConversationKeys.TryGetValue(clientKey, out var conversationKey))
+            return false;
+
+        return BuildMerged(ent).TryGetValue(conversationKey, out conversation);
+    }
+
     private static NanoChatMonitorLogEntry BuildLogEntry(
         NanoChatMonitorComponent monitor,
+        MergedConversation conversation,
         NanoChatMonitorStoredEntry entry)
     {
         byte[]? preview = null;
@@ -564,10 +915,12 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
         return new NanoChatMonitorLogEntry(
             entry.Timestamp,
-            entry.SenderNumber,
+            // The side, not the number, since two redacted ends look alike.
+            entry.SenderNumber == conversation.NumberA,
+            DisplayNumber(entry.SenderNumber, entry.SenderRedacted),
             entry.SenderName,
             entry.SenderJob,
-            entry.RecipientNumber,
+            DisplayNumber(entry.RecipientNumber, entry.RecipientRedacted),
             entry.RecipientName,
             entry.RecipientJob,
             entry.Content,
@@ -577,26 +930,41 @@ public sealed class NanoChatMonitorSystem : EntitySystem
             preview);
     }
 
+    /// <summary>
+    ///     The one value still withheld here rather than at record time: the number is kept as the
+    ///     conversation key, so it is the only thing left to replace on the way out.
+    /// </summary>
+    private static string DisplayNumber(uint number, bool redacted)
+    {
+        return redacted ? NanoChatMonitorConstants.Redacted : $"{number:D4}";
+    }
+
     private void UpdateUi(Entity<NanoChatMonitorComponent> ent)
     {
         if (!_ui.IsUiOpen(ent.Owner, NanoChatMonitorUiKey.Key))
             return;
 
-        var conversations = new List<NanoChatMonitorConversationSummary>(ent.Comp.Conversations.Count);
+        _ui.SetUiState(ent.Owner, NanoChatMonitorUiKey.Key, new NanoChatMonitorUiState(BuildConversationSummaries(ent)));
+    }
 
-        foreach (var (key, conversation) in ent.Comp.Conversations)
+    public List<NanoChatMonitorConversationSummary> BuildConversationSummaries(Entity<NanoChatMonitorComponent> ent)
+    {
+        var merged = BuildMerged(ent);
+        var conversations = new List<NanoChatMonitorConversationSummary>(merged.Count);
+
+        foreach (var conversation in merged.Values)
         {
             if (conversation.Entries.Count == 0)
                 continue;
 
-            var last = conversation.Entries[^1];
+            var last = conversation.Entries[^1].Entry;
 
             conversations.Add(new NanoChatMonitorConversationSummary(
-                key,
-                conversation.NumberA,
+                conversation.ClientKey,
+                DisplayNumber(conversation.NumberA, conversation.RedactedA),
                 conversation.NameA,
                 conversation.JobA,
-                conversation.NumberB,
+                DisplayNumber(conversation.NumberB, conversation.RedactedB),
                 conversation.NameB,
                 conversation.JobB,
                 conversation.Entries.Count,
@@ -604,13 +972,14 @@ public sealed class NanoChatMonitorSystem : EntitySystem
         }
 
         conversations.Sort(static (a, b) => b.LastTimestamp.CompareTo(a.LastTimestamp));
-
-        _ui.SetUiState(ent.Owner, NanoChatMonitorUiKey.Key, new NanoChatMonitorUiState(conversations, ent.Comp.Global));
+        return conversations;
     }
 
     public bool CanView(Entity<NanoChatMonitorComponent> ent, EntityUid actor)
     {
-        return IsPowered(ent) && _accessReader.IsAllowed(actor, ent);
+        // Deliberately no ID check; anyone who can reach the rack can read
+        // it. Power and an actual log are still required.
+        return IsPowered(ent) && KeepsLog(ent);
     }
 
     private bool CanRespond(Entity<NanoChatMonitorComponent> ent, EntityUid actor)

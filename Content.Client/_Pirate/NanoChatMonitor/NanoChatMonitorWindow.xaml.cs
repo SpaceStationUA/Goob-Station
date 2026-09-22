@@ -33,6 +33,11 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
 
     public event Action<ulong>? OnPrintLog;
 
+    /// <summary>
+    ///     Requests network-wide deletion of the selected conversation.
+    /// </summary>
+    public event Action<ulong>? OnDeleteLog;
+
     private readonly ClientGameTicker _gameTicker;
 
     private readonly List<NanoChatMonitorConversationSummary> _conversations = new();
@@ -41,7 +46,6 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
     private readonly Dictionary<int, NanoChatMonitorLogEntry> _loaded = new();
 
     private ulong? _selectedKey;
-    private uint _leftNumber;
     private int _loadedStart;
     private int _loadedEnd;
     private int _totalCount;
@@ -73,14 +77,36 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
             if (_selectedKey is { } key)
                 OnPrintLog?.Invoke(key);
         };
+
+        // Erasing is irreversible and takes the peer servers with it, so it costs two presses.
+        DeleteLogButton.OnPressed += _ =>
+        {
+            if (_selectedKey is not { } key)
+                return;
+
+            if (!_deleteArmed)
+            {
+                SetDeleteArmed(true);
+                return;
+            }
+
+            SetDeleteArmed(false);
+            OnDeleteLog?.Invoke(key);
+        };
+    }
+
+    private bool _deleteArmed;
+
+    private void SetDeleteArmed(bool armed)
+    {
+        _deleteArmed = armed;
+        DeleteLogButton.Text = Loc.GetString(armed
+            ? "nanochat-monitor-delete-log-confirm"
+            : "nanochat-monitor-delete-log");
     }
 
     public void UpdateState(NanoChatMonitorUiState state)
     {
-        ScopeLabel.Text = Loc.GetString(state.Global
-            ? "nanochat-monitor-scope-global"
-            : "nanochat-monitor-scope-local");
-
         _conversations.Clear();
         _conversations.AddRange(state.Conversations);
 
@@ -90,8 +116,14 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
             return;
 
         var summary = _conversations.Find(c => c.Key == selected);
+
+        // The open conversation can vanish under the reader, either because
+        // someone erased it or because the peer server carrying it dropped off the network.
         if (summary.Key != selected)
+        {
+            ClearSelection();
             return;
+        }
 
         var previousTotal = _totalCount;
         _totalCount = summary.MessageCount;
@@ -136,9 +168,30 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
             : "nanochat-monitor-no-matches");
     }
 
+    private void ClearSelection()
+    {
+        _selectedKey = null;
+        _totalCount = 0;
+        _loaded.Clear();
+        _loadedStart = 0;
+        _loadedEnd = 0;
+
+        foreach (var entry in _conversationEntries)
+        {
+            entry.SetSelected(false);
+        }
+
+        MessageList.RemoveAllChildren();
+        _rows.Clear();
+
+        HeaderLabel.Text = Loc.GetString("nanochat-monitor-select-conversation");
+        UpdateCountLabel();
+    }
+
     private void SelectConversation(ulong key)
     {
         _selectedKey = key;
+        SetDeleteArmed(false);
 
         foreach (var entry in _conversationEntries)
         {
@@ -148,15 +201,18 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
         var summary = _conversations.Find(c => c.Key == key);
 
         HeaderLabel.Text = Loc.GetString("nanochat-monitor-conversation-header",
-            ("first", $"{summary.NameA} (#{summary.NumberA:D4})"),
-            ("second", $"{summary.NameB} (#{summary.NumberB:D4})"));
+            ("first", $"{summary.NameA} (#{summary.NumberA})"),
+            ("second", $"{summary.NameB} (#{summary.NumberB})"));
 
-        _leftNumber = summary.NumberA;
         _totalCount = summary.MessageCount;
 
         _loaded.Clear();
         _loadedStart = 0;
         _loadedEnd = 0;
+
+        // Drop the stale conversation while the new page is loading.
+        MessageList.RemoveAllChildren();
+        _rows.Clear();
 
         UpdateCountLabel();
         RequestLatest();
@@ -235,7 +291,9 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
         _rows.Clear();
 
         TimeSpan? previousTime = null;
-        uint? previousSender = null;
+        // Runs are tracked by which side spoke, since two redacted
+        // participants share one displayed number.
+        bool? previousSender = null;
 
         for (var i = _loadedStart; i < _loadedEnd; i++)
         {
@@ -252,7 +310,8 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
             }
 
             var row = new NanoChatMonitorMessageRow();
-            row.Update(entry, entry.SenderNumber != _leftNumber, previousSender != entry.SenderNumber);
+            // The first participant always takes the left hand side, so a conversation never flips.
+            row.Update(entry, !entry.SenderIsA, previousSender != entry.SenderIsA);
             row.OnPrintPhoto += id => OnPrintPhoto?.Invoke(id);
             MessageList.AddChild(row);
             _rows.Add(row);
@@ -261,7 +320,7 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
                 LoadAttachment(row, attachmentId);
 
             previousTime = stationTime;
-            previousSender = entry.SenderNumber;
+            previousSender = entry.SenderIsA;
         }
 
         UpdateCountLabel();
@@ -327,6 +386,7 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
             : Loc.GetString("nanochat-monitor-message-count", ("count", _totalCount));
 
         PrintLogButton.Visible = _selectedKey != null && _totalCount > 0;
+        DeleteLogButton.Visible = PrintLogButton.Visible;
     }
 
     private void AddTimeSeparator(TimeSpan stationTime)

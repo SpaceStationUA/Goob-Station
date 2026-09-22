@@ -56,7 +56,7 @@ public sealed partial class NanoChatMonitorMessageRow : BoxContainer
         {
             SenderLabel.Text = Loc.GetString("nanochat-monitor-entry-sender",
                 ("name", entry.SenderName),
-                ("number", $"{entry.SenderNumber:D4}"),
+                ("number", entry.SenderNumber), // formatted server side.
                 ("job", entry.SenderJob ?? Loc.GetString("nanochat-monitor-no-job")));
             SenderLabel.HorizontalAlignment = onRight ? HAlignment.Right : HAlignment.Left;
         }

@@ -31,6 +31,7 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem // Pirate: na
             return;
 
         var deliveredEv = new NanoChatMessageDeliveredEvent(
+            ++_nextDeliveryId, // Pirate: nanochat network
             null,
             null,
             senderNumber,

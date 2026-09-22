@@ -1162,6 +1162,9 @@
       - NanoTaskCartridge
       - NanoChatCartridge # DeltaV
       - WalletCartridge # Pirate banking
+  # Pirate: nanochat network - routes NanoChat through the Syndicate relay instead of telecomms, and
+  # keeps this PDA out of ordinary directories and logs. Inherited by every derived Syndicate PDA.
+  - type: SyndicateNanoChatPda
 
 - type: entity
   parent: [ SyndiPDA, BaseSyndicateContraband ]

@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Worldwide, unredacted NanoChat relay for designated Syndicate PDAs.
+- type: entity
+  parent: TelecomServer
+  id: SyndicateNanoChatRelay
+  name: subspace relay node
+  suffix: Syndicate NanoChat relay
+  description: A telecommunication server wired the wrong way round. It carries somebody else's phone calls everywhere at once, listens to everyone else's, and answers to nobody in particular.
+  components:
+  - type: SyndicateNanoChatRelay
+  - type: NanoChatLogHost
+    requiresKey: false
+  - type: Machine
+    board: SyndicateNanoChatRelayCircuitboard
+
+# Reconstruction board only. Deliberately absent from lathes, research and cargo.
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: SyndicateNanoChatRelayCircuitboard
+  name: subspace relay node machine board
+  description: A machine printed circuit board for a subspace relay node.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: SyndicateNanoChatRelay
+    stackRequirements:
+      Steel: 1
+      Cable: 2

@@ -15,10 +15,6 @@ public sealed partial class NanoChatMonitorConversationEntry : ContainerButton
     private static readonly Color SelectedEntryColor = Color.FromHex("#4d5478d9");
     private static readonly Color ActiveIndicatorColor = Color.FromHex("#7ea2ff");
 
-    private const int NameMaxChars = 16;
-
-    private const int LineMaxChars = 36;
-
     public ulong ConversationKey { get; private set; }
 
     public NanoChatMonitorConversationEntry()
@@ -38,13 +34,16 @@ public sealed partial class NanoChatMonitorConversationEntry : ContainerButton
         builder.Append(' ');
         builder.Append(summary.JobB);
         builder.Append(' ');
-        builder.Append($"{summary.NumberA:D4}");
-        builder.Append(' ');
-        builder.Append($"{summary.NumberB:D4}");
-        builder.Append(' ');
+        // Numbers arrive pre-formatted, so a redacted one is not searchable
+        // by anything but the redaction marker itself. The unpadded form is added so "42" still finds
+        // #0042.
         builder.Append(summary.NumberA);
         builder.Append(' ');
+        builder.Append(summary.NumberA.TrimStart('0'));
+        builder.Append(' ');
         builder.Append(summary.NumberB);
+        builder.Append(' ');
+        builder.Append(summary.NumberB.TrimStart('0'));
 
         return builder.ToString().ToLowerInvariant();
     }
@@ -75,32 +74,17 @@ public sealed partial class NanoChatMonitorConversationEntry : ContainerButton
         indicator.BorderColor = color;
     }
 
-    private static void Describe(RichTextLabel label, string name, string? job, uint number)
+    /// <remarks>
+    ///     Job titles wrap rather than truncate, and numbers are already formatted so a redacted
+    ///     participant cannot be reconstructed here.
+    /// </remarks>
+    private static void Describe(RichTextLabel label, string name, string? job, string number4)
     {
-        var number4 = $"{number:D4}";
-
-        var full = string.IsNullOrWhiteSpace(job)
+        label.Text = string.IsNullOrWhiteSpace(job)
             ? Loc.GetString("nanochat-monitor-conversation-participant", ("name", name), ("number", number4))
             : Loc.GetString("nanochat-monitor-conversation-participant-job",
                 ("name", name),
                 ("number", number4),
                 ("job", job));
-
-        var shortened = string.IsNullOrWhiteSpace(job)
-            ? Loc.GetString("nanochat-monitor-conversation-participant",
-                ("name", Truncate(name, NameMaxChars)),
-                ("number", number4))
-            : Loc.GetString("nanochat-monitor-conversation-participant-job",
-                ("name", Truncate(name, NameMaxChars)),
-                ("number", number4),
-                ("job", job));
-
-        label.Text = Truncate(shortened, LineMaxChars);
-        label.ToolTip = full;
-    }
-
-    private static string Truncate(string text, int maxChars)
-    {
-        return text.Length <= maxChars ? text : text[..(maxChars - 1)] + "…";
     }
 }

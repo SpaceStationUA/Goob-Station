@@ -4,13 +4,6 @@
                       SetSize="880 640"
                       MinSize="760 520">
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <controls:StripeBack>
-            <Label Name="ScopeLabel"
-                   Text="{Loc 'nanochat-monitor-scope-local'}"
-                   Align="Center"
-                   StyleClasses="LabelKeyText" />
-        </controls:StripeBack>
-
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="4">
             <BoxContainer Orientation="Vertical" SetWidth="280" VerticalExpand="True">
                 <LineEdit Name="SearchBar"
@@ -44,6 +37,11 @@
                             Text="{Loc 'nanochat-monitor-print-log'}"
                             Visible="False"
                             StyleClasses="OpenBoth" />
+                    <Control SetWidth="4" />
+                    <Button Name="DeleteLogButton"
+                            Text="{Loc 'nanochat-monitor-delete-log'}"
+                            Visible="False"
+                            StyleClasses="Caution" />
                 </BoxContainer>
 
                 <ScrollContainer Name="MessageScroll"
