@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Pirate.Client._Pirate.WebUI;
@@ -10,6 +11,9 @@ using Robust.Client.Player;
 using Robust.Client.WebView;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -37,13 +41,20 @@ public sealed class PirateRadioClientSystem : EntitySystem
         public IReadOnlyList<PirateRadioStationEntry>? LastCatalog;
         public bool RequestedCatalog;
         public bool UncarriedStopSent;
+        public Content.Pirate.Client.CartridgeLoader.Cartridges.RadioUi.IRadioWebviewHost? HostPanel;
     }
 
     private readonly Dictionary<NetEntity, Playback> _playbacks = new();
 
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    private float _watchScale;
+    private bool _scaleDirty;
+
     public override void Initialize()
     {
         base.Initialize();
+        PirateWebViewScaleWatcher.Watch(OnUiScaleChanged);
+        _watchScale = PirateWebViewScaleWatcher.Current;
         SubscribeNetworkEvent<PirateRadioCatalogEvent>(OnCatalog);
         SubscribeNetworkEvent<PirateRadioStateEvent>(OnState);
         SubscribeNetworkEvent<PirateRadioRelayChunkEvent>(OnRelayChunk);
@@ -55,6 +66,51 @@ public sealed class PirateRadioClientSystem : EntitySystem
 
     private void OnState(PirateRadioStateEvent msg, EntitySessionEventArgs _)
         => PirateRadioClientState.OnState(msg);
+
+    private void OnUiScaleChanged(float value)
+    {
+        // Debounce: UI-scale slider events fire rapidly; rebuild once per
+        // frame at the settled value (the FrameUpdate runs the actual swap).
+        if (Math.Abs(value - _watchScale) < 0.01f)
+            return;
+        _watchScale = value;
+        _scaleDirty = true;
+    }
+
+    /// <summary>The fragment's host panel (rebuilds re-attach a fresh
+    /// webview into it, keeping program-close semantics in sync).</summary>
+    public void RegisterHostPanel(NetEntity marker,
+        Content.Pirate.Client.CartridgeLoader.Cartridges.RadioUi.IRadioWebviewHost host, WebViewControl? view)
+    {
+        if (!_playbacks.TryGetValue(marker, out var p) || view == null || p.View != view)
+            return;
+        p.HostPanel = host;
+    }
+
+    private void RebuildForScale()
+    {
+        foreach (var (marker, p) in _playbacks)
+        {
+            var host = p.HostPanel;
+            var keep = host?.KeepAlive;
+            Control? parent = null;
+            var hostValid = keep != null && !keep.Disposed && keep.Parent != null;
+            if (hostValid)
+            {
+                parent = keep!.Parent;
+                parent!.RemoveChild(p.View);
+            }
+            Teardown(marker);
+            var fresh = EnsurePlayback(marker);
+            if (fresh == null || host == null)
+                continue;
+            if (hostValid && fresh.Parent == null)
+            {
+                host.KeepAlive = fresh;
+                parent!.AddChild(fresh);
+            }
+        }
+    }
 
     private void OnNow(PirateRadioNowPlayingEvent msg, EntitySessionEventArgs _)
     {
@@ -255,6 +311,12 @@ public sealed class PirateRadioClientSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
+
+        if (_scaleDirty)
+        {
+            _scaleDirty = false;
+            RebuildForScale();
+        }
 
         if (_playbacks.Count == 0)
             return;

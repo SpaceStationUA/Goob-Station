@@ -49,7 +49,12 @@ public sealed partial class RadioUi : UIFragment
             KeepAlive = view,
         };
         if (view != null)
+        {
             _root.AddChild(view);
+            // Scale changes rebuild the webview; the fragment object survives
+            // (KeepAlive swaps must land in the panel the radio system owns).
+            _system.RegisterHostPanel(_marker, _root, view);
+        }
         else
             _root.AddChild(new Label { Text = "Radio unavailable (headless)." });
     }
@@ -64,8 +69,21 @@ public sealed partial class RadioUi : UIFragment
     ///     closing the program does not destroy the CEF browser (the audio
     ///     would stop; the control could also never be re-hosted).
     /// </summary>
-    private sealed class RadioHostPanel : PanelContainer
+    /// <summary>What the radio system sees of the hosting panel (scale
+    /// rebuilds re-attach a fresh webview under a fresh KeepAlive).</summary>
+    public interface IRadioWebviewHost
     {
+        Control? KeepAlive { get; set; }
+    }
+
+    private sealed class RadioHostPanel : PanelContainer, IRadioWebviewHost
+    {
+        Control? IRadioWebviewHost.KeepAlive
+        {
+            get => KeepAlive;
+            set => KeepAlive = value;
+        }
+
         public Control? KeepAlive;
 
         protected override void Dispose(bool disposing)

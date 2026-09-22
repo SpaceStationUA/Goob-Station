@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Pirate Development Team
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System;
 using System.Collections.Generic;
 using Content.Pirate.Client._Pirate.WebUI;
 using Content.Pirate.Shared.WebUi;
@@ -32,15 +33,27 @@ public sealed class PirateThemeClientSystem : EntitySystem
         public string Current = "";
         public List<string> Allowed = new();
         public bool Visible;
+        public Control? Parent;
     }
 
     private readonly Dictionary<NetEntity, Host> _hosts = new();
     private readonly Dictionary<NetEntity, (string Current, List<string> Allowed)> _lastState = new();
     private readonly List<NetEntity> _dead = new();
 
+    private float _watchScale;
+    private bool _scaleDirty;
+
     public override void Initialize()
     {
         base.Initialize();
+        PirateWebViewScaleWatcher.Watch(v =>
+        {
+            if (Math.Abs(v - _watchScale) < 0.01f)
+                return;
+            _watchScale = v;
+            _scaleDirty = true;
+        });
+        _watchScale = PirateWebViewScaleWatcher.Current;
         SubscribeNetworkEvent<PirateThemeStateEvent>(OnState);
         // Bridge for Content.Client (it cannot reference this assembly):
         // the PDA settings tab asks through the static provider.
@@ -51,6 +64,11 @@ public sealed class PirateThemeClientSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
+        if (_scaleDirty)
+        {
+            _scaleDirty = false;
+            RebuildForScale();
+        }
         foreach (var (pda, host) in _hosts)
         {
             try { host.Ipc.Pump(); }
@@ -59,6 +77,42 @@ public sealed class PirateThemeClientSystem : EntitySystem
         foreach (var pda in _dead)
             _hosts.Remove(pda);
         _dead.Clear();
+    }
+
+    /// <summary>UI scale changed: dispose + recreate every picker webview
+    /// (fresh browser = fresh bitmap scale mapping); the host parent panel
+    /// keeps its identical anchor.</summary>
+    private void RebuildForScale()
+    {
+        List<NetEntity> keys = new(_hosts.Keys);
+        foreach (var pda in keys)
+        {
+            var host = _hosts[pda];
+            var parent = host.Parent;
+            var visible = host.Visible;
+            var url = WebThemeWindow.ResPrefix + "_Pirate/WebUI/ThemePicker/index.html";
+            try { host.Web.Dispose(); } catch { /* ignore */ }
+            host.Web = new WebViewControl
+            {
+                HorizontalExpand = true,
+                VerticalExpand = true,
+                AlwaysActive = true,
+            };
+            host.Ipc = new WebUiTuiIpc((action, data) => HandleAction(pda, action, data))
+            {
+                AllowHttpHosts = new List<string>(),
+                SyncDispatch = (action, _) => action == "list"
+                    ? "{\"status\":\"ok\",\"data\":" + (host.Snapshot.Length > 0 ? host.Snapshot : "null") + "}"
+                    : null,
+            };
+            host.Web.AddBeforeBrowseHandler(host.Ipc.HandleBeforeBrowse);
+            host.Web.Url = url;
+            parent?.AddChild(host.Web);
+            host.Visible = visible;
+            host.Web.Visible = visible;
+            if (visible)
+                RequestState(pda);
+        }
     }
 
     /// <summary>PdaMenu theme button: attach (once) and toggle the host page.</summary>
@@ -88,6 +142,7 @@ public sealed class PirateThemeClientSystem : EntitySystem
             host.Web.Url = WebThemeWindow.ResPrefix + "_Pirate/WebUI/ThemePicker/index.html";
             parent.AddChild(host.Web);
             _hosts[net] = host;
+            host.Parent = parent;
             RequestState(net);
         }
 
