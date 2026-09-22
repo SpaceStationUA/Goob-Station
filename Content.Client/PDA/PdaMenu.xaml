@@ -106,16 +106,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         </BoxContainer>
         <!-- Pirate: device WebUI theme picker, its own view (returns to the
              originating tab via the back button). -->
-        <PanelContainer Name="ThemePickerView" Visible="False" Margin="4">
-            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                    <pda:PdaSettingsButton Name="ThemeCloseButton"
-                                           Access="Public"
-                                           Text="\u2715 Back"
-                                           Description=""/>
-                </BoxContainer>
-                <PanelContainer Name="ThemeHost" HorizontalExpand="True" VerticalExpand="True" Margin="0 4 0 0"/>
-            </BoxContainer>
+        <PanelContainer Name="ThemePickerView" Visible="False" Margin="4" HorizontalExpand="True" VerticalExpand="True">
+            <PanelContainer Name="ThemeHost" HorizontalExpand="True" VerticalExpand="True"/>
         </PanelContainer>
     </BoxContainer>
     <BoxContainer Name="ContentFooter" HorizontalExpand="True" SetHeight="28" Margin="1 0 2 1">
