@@ -181,6 +181,22 @@
     keysExtractionMethod: Prying
     keySlots: 10
   - type: TelecomServer
+  #region Pirate: nanochat monitor
+  # Local NanoChat log viewer. Records traffic involving this server's own station while powered.
+  - type: NanoChatMonitor
+  - type: AccessReader
+    access: [ [ "ChiefEngineer" ] ]
+  - type: ActivatableUIRequiresAccess
+    popupMessage: nanochat-monitor-access-denied
+  - type: ActivatableUIRequiresPower
+  - type: ActivatableUI
+    key: enum.NanoChatMonitorUiKey.Key
+    verbText: nanochat-monitor-verb
+  - type: UserInterface
+    interfaces:
+      enum.NanoChatMonitorUiKey.Key:
+        type: NanoChatMonitorBoundUserInterface
+  #endregion
   - type: ContainerContainer
     containers:
       key_slots: !type:Container

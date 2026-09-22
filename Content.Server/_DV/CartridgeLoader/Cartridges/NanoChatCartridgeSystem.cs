@@ -391,6 +391,18 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
         {
             DeliverMessageToRecipient(card, recipient, message);
         }
+
+        #region Pirate: nanochat monitor
+        var deliveredEv = new NanoChatMessageDeliveredEvent(
+            card.Owner,
+            card.Comp.PdaUid ?? card.Owner,
+            (uint) card.Comp.Number,
+            null,
+            msg.RecipientNumber.Value,
+            recipients.Select(recipient => recipient.Owner).ToList(),
+            message);
+        RaiseLocalEvent(ref deliveredEv);
+        #endregion
     }
 
     #region Pirate: pda fix

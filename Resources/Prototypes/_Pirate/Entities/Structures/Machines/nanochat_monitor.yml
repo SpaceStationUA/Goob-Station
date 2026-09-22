@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerGlobalMonitor
+  name: telecommunication interception server
+  suffix: Global NanoChat interception
+  description: A telecommunication server wired the wrong way round. It listens to NanoChat traffic everywhere, and answers to nobody in particular.
+  components:
+  - type: NanoChatMonitor
+    global: true
+  - type: AccessReader
+    access: [ [ "SyndicateAgent" ] ]
+  - type: ActivatableUIRequiresAccess
+    popupMessage: nanochat-monitor-access-denied
+  - type: Machine
+    board: TelecomServerGlobalMonitorCircuitboard
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: TelecomServerGlobalMonitorCircuitboard
+  name: telecommunication interception server machine board
+  description: A machine printed circuit board for a telecommunication interception server.
+  components:
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: TelecomServerGlobalMonitor
+    stackRequirements:
+      Steel: 1
+      Cable: 2
