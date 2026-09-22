@@ -7,6 +7,7 @@ import {
 import { ThemeProvider, applyThemeId } from "../lib/theme";
 import { GameWindow, Button, Icon } from "../lib/kit";
 import { IoPlay, IoStop, IoClose } from "solid-icons/io";
+import { postAction } from "../lib/bridge";
 import "./radio.css";
 
 // Remote entries carry comma-separated tag lists; pinned ones a short
@@ -58,10 +59,28 @@ export default function App() {
     if (st && !broken().has(st.id)) player.play(st);
   }
 
+  let lastSyncRaw = "";
   function onCatalog(c: RadioCatalog): void {
     if (c.theme) applyThemeId(c.theme);
     setStations(c.stations);
   }
+
+  // Poll-based state sync on the proven action path: pushes to a hidden
+  // page can be swallowed, but the page pulls its own truth every couple
+  // of seconds and on becoming visible the timers resume immediately.
+  const syncTick = async (): Promise<void> => {
+    try {
+      const res = await postAction<RadioCatalog>("sync", {});
+      if (!res || !res.ok) return;
+      const raw = JSON.stringify(res.data);
+      if (raw && raw !== lastSyncRaw) {
+        lastSyncRaw = raw;
+        onCatalog(res.data);
+      }
+    } catch { /* next tick */ }
+  };
+  window.setInterval(() => { void syncTick(); }, 2000);
+  void syncTick();
 
   window.__radioSetCatalog = (json: string | RadioCatalog) => {
     try {

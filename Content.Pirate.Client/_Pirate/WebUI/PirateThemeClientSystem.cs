@@ -78,8 +78,11 @@ public sealed class PirateThemeClientSystem : EntitySystem
             {
                 AllowHttpHosts = new List<string>(),
                 // Pull-based state: page postAction("list") is answered from
-                // the cached snapshot on the (proven) action reply path.
-                SyncDispatch = (action, _) => action == "list" ? host.Snapshot : null,
+                // the cached snapshot on the (proven) action reply path
+                // (full ok envelope: the bridge unwraps status/data).
+                SyncDispatch = (action, _) => action == "list"
+                    ? "{\"status\":\"ok\",\"data\":" + (host.Snapshot.Length > 0 ? host.Snapshot : "null") + "}"
+                    : null,
             };
             host.Web.AddBeforeBrowseHandler(host.Ipc.HandleBeforeBrowse);
             host.Web.Url = WebThemeWindow.ResPrefix + "_Pirate/WebUI/ThemePicker/index.html";

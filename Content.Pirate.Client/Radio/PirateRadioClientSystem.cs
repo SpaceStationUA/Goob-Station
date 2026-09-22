@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Pirate.Client._Pirate.WebUI;
 using Content.Pirate.Shared.Radio;
 using Robust.Client.Player;
@@ -92,6 +93,13 @@ public sealed class PirateRadioClientSystem : EntitySystem
             view.AddBeforeBrowseHandler(ipc.HandleBeforeBrowse);
             var driver = new WebRadioDriver(ipc);
             driver.Attach(view);
+            // Pull lane: the page polls "sync" on the proven nav-hook path;
+            // pushes to a hidden webview can be swallowed, so the poll is
+            // what keeps theme/station state eventually consistent.
+            ipc.SyncDispatch = (action, _) =>
+                action == "sync"
+                    ? "{\"status\":\"ok\",\"data\":" + BuildSyncJson(marker) + "}"
+                    : null;
             view.Url = "res://webres/_Pirate/WebUI/Radio/index.html";
             _playbacks[marker] = new Playback
             {
@@ -138,6 +146,8 @@ public sealed class PirateRadioClientSystem : EntitySystem
             case "stop":
                 PirateRadioClientState.Send("stop", marker);
                 break;
+            case "sync":
+                break; // answered via SyncDispatch; visibility opens the poll
             case "relayready":
                 // The page's MediaSource is open: the server may start
                 // pushing transcoded chunks.
@@ -337,6 +347,33 @@ public sealed class PirateRadioClientSystem : EntitySystem
         if (marker.IsValid())
             PirateRadioClientState.Send("stop", marker);
         try { p.View.Dispose(); } catch { /* already gone */ }
+    }
+
+    /// <summary>Current page snapshot for the sync pull: theme + stations
+    /// + playback state, in the same shapes the push lanes use.</summary>
+    private static string BuildSyncJson(NetEntity marker)
+    {
+        var catalog = PirateRadioClientState.Catalog(marker);
+        List<string> parts = new(catalog?.Count ?? 0);
+        if (catalog != null)
+        {
+            foreach (var s in catalog)
+                parts.Add(
+                    "{\"id\":" + WebUiSpikeBridge.JsonString(s.Id) +
+                    ",\"label\":" + WebUiSpikeBridge.JsonString(s.Label) +
+                    ",\"genre\":" + WebUiSpikeBridge.JsonString(s.Genre) +
+                    ",\"url\":" + WebUiSpikeBridge.JsonString(s.Url) +
+                    ",\"featured\":" + (s.Featured ? "true" : "false") +
+                    ",\"relay\":" + (s.Relay ? "true" : "false") + "}");
+        }
+        var st = PirateRadioClientState.Get(marker);
+        return "{\"theme\":" + WebUiSpikeBridge.JsonString(PirateRadioClientState.Theme(marker)) +
+            ",\"themes\":[" + string.Join(",", PirateRadioClientState.ThemeList(marker)
+                .Select(t => WebUiSpikeBridge.JsonString(t))) + "]" +
+            ",\"stations\":[" + string.Join(",", parts) + "]" +
+            ",\"state\":{\"stationId\":" + WebUiSpikeBridge.JsonString(st.StationId) +
+            ",\"playing\":" + (st.Playing ? "true" : "false") +
+            ",\"relay\":" + (st.Relay ? "true" : "false") + "}}";
     }
 
     private static List<(string, string, string, string, bool, bool)> ToTuples(

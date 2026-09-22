@@ -1,4 +1,4 @@
-import { createSignal, For, Show } from "solid-js";
+import { createSignal, For, Show, onCleanup } from "solid-js";
 import { postAction } from "../lib/bridge";
 import { applyThemeId, ThemeProvider } from "../lib/theme";
 import { GameWindow, Icon } from "../lib/kit";
@@ -28,15 +28,20 @@ export default function App() {
     } catch { /* ignore */ }
   };
 
-  // State arrives via the ready handshake's fresh push now that the
-  // fragment hosting shape delivers engine->page reliably.
+  // Pull-based state: pushes to a hidden page can be swallowed, so the
+  // page keeps polling "list" until state lands and pulls again whenever
+  // the state goes away (fresh mounts race the first server reply).
   const pull = async () => {
     try {
       const res = await postAction<ThemeState>("list", {});
-      if (res.ok && res.data && res.data.current)
-        onState(res.data);
-    } catch { /* page pull still safe */ }
+      if (res.ok && res.data && (res.data as ThemeState).current)
+        onState(res.data as ThemeState);
+    } catch { /* retry next tick */ }
   };
+  const syncTimer = window.setInterval(() => {
+    try { if (!state()) void pull(); } catch { /* page teardown */ }
+  }, 800);
+  onCleanup(() => window.clearInterval(syncTimer));
   void pull();
   window.addEventListener("tui-push", (ev) => {
     const detail = (ev as CustomEvent).detail ?? {};
