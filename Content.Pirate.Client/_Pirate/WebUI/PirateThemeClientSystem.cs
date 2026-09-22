@@ -43,6 +43,7 @@ public sealed class PirateThemeClientSystem : EntitySystem
     private readonly Dictionary<NetEntity, (string Current, List<string> Allowed)> _lastState = new();
     private readonly List<NetEntity> _dead = new();
 
+    private readonly PirateWebViewNudger _nudger = new();
     private float _watchScale;
     private bool _scaleDirty;
 
@@ -67,6 +68,7 @@ public sealed class PirateThemeClientSystem : EntitySystem
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
+        _nudger.Tick();
         var watchdogDue = false;
         foreach (var host in _hosts.Values)
         {
@@ -129,6 +131,7 @@ public sealed class PirateThemeClientSystem : EntitySystem
             host.Web.Visible = visible;
             host.ReadySeen = false;
             host.ReadyDue = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(2.5);
+            _nudger.Queue(host.Web);
         }
     }
 

@@ -50,6 +50,7 @@ public sealed class PirateRadioClientSystem : EntitySystem
     private readonly Dictionary<NetEntity, Playback> _playbacks = new();
 
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    private readonly PirateWebViewNudger _nudger = new();
     private float _watchScale;
     private bool _scaleDirty;
 
@@ -116,6 +117,10 @@ public sealed class PirateRadioClientSystem : EntitySystem
                 host.KeepAlive = fresh;
                 parent!.AddChild(fresh);
             }
+            // Attach done: force the engine to re-allocate the compositor
+            // texture (margins pulse resizes the control by 1px, firing its
+            // Resized path) - without this some rebuilds paint blank.
+            _nudger.Queue(fresh);
             // Watchdog: CEF occasionally finishes the fresh browser in a
             // state where it never paints (blank until another rebuild).
             // If the page does not report ready in time, retry once.
@@ -345,6 +350,7 @@ public sealed class PirateRadioClientSystem : EntitySystem
             RebuildForScale(fromWatchdog: true);
         }
 
+        _nudger.Tick();
         if (_scaleDirty)
         {
             _scaleDirty = false;
