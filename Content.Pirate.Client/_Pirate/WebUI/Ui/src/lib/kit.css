@@ -29,10 +29,13 @@
 }
 .watermark {
   position: absolute; inset: 0;
-  background-repeat: no-repeat;
-  background-position: center -40px;
-  background-size: 480px auto;
-  opacity: .07;
+  opacity: 0.14;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 58%;
+  mask-size: 58%;
   pointer-events: none;
   z-index: 0;
 }
