@@ -51,6 +51,9 @@ public sealed partial class RadioUi : UIFragment
         if (view != null)
         {
             _root.AddChild(view);
+            // Attached now: the browser above started with the real root
+            // UIScale; flag keep-alive AFTER attach (see EnsurePlayback).
+            view.AlwaysActive = true;
             // Scale changes rebuild the webview; the fragment object survives
             // (KeepAlive swaps must land in the panel the radio system owns).
             _system.RegisterHostPanel(_marker, _root, view);

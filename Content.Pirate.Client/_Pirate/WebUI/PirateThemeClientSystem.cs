@@ -113,7 +113,6 @@ public sealed class PirateThemeClientSystem : EntitySystem
             {
                 HorizontalExpand = true,
                 VerticalExpand = true,
-                AlwaysActive = true,
             };
             host.Ipc = new WebUiTuiIpc((action, data) => HandleAction(pda, action, data))
             {
@@ -125,6 +124,7 @@ public sealed class PirateThemeClientSystem : EntitySystem
             host.Web.AddBeforeBrowseHandler(host.Ipc.HandleBeforeBrowse);
             host.Web.Url = url;
             parent?.AddChild(host.Web);
+            host.Web.AlwaysActive = true;
             if (visible)
                 RequestState(pda);
             host.Visible = visible;
@@ -146,7 +146,6 @@ public sealed class PirateThemeClientSystem : EntitySystem
             {
                 HorizontalExpand = true,
                 VerticalExpand = true,
-                AlwaysActive = true,
             };
             host.Ipc = new WebUiTuiIpc((action, data) => HandleAction(net, action, data))
             {
@@ -161,6 +160,9 @@ public sealed class PirateThemeClientSystem : EntitySystem
             host.Web.AddBeforeBrowseHandler(host.Ipc.HandleBeforeBrowse);
             host.Web.Url = WebThemeWindow.ResPrefix + "_Pirate/WebUI/ThemePicker/index.html";
             parent.AddChild(host.Web);
+            // Browser started at attach with the real root UIScale; pin
+            // AlwaysActive afterwards for the page's lifetime.
+            host.Web.AlwaysActive = true;
             _hosts[net] = host;
             host.Parent = parent;
             RequestState(net);

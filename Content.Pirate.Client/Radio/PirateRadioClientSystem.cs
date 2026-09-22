@@ -159,9 +159,13 @@ public sealed class PirateRadioClientSystem : EntitySystem
 
         try
         {
+            // IMPORTANT: the browser must NOT start while detached (no
+            // root -> UIScale 1 -> engine bakes that as the browser's
+            // device scale factor, and later scale changes mismatch).
+            // EnteredTree (attach) starts it; the fragment then flips
+            // AlwaysActive so the keep-alive detaches don't kill it.
             var view = new WebViewControl
             {
-                AlwaysActive = true,
                 HorizontalExpand = true,
                 VerticalExpand = true,
             };
