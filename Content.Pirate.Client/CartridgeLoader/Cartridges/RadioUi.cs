@@ -38,6 +38,9 @@ public sealed partial class RadioUi : UIFragment
 
         _system = EntitySystem.Get<PirateRadioClientSystem>();
         var view = _system.EnsurePlayback(_marker);
+        // Pushes done while the fragment was elsewhere (theme picker) may
+        // not have reached the detached page; re-sync fully.
+        _system.OnFragmentAttached(_marker);
 
         _root = new RadioHostPanel
         {

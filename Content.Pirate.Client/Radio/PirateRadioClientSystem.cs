@@ -111,6 +111,19 @@ public sealed class PirateRadioClientSystem : EntitySystem
     public WebViewControl? View(NetEntity marker)
         => _playbacks.TryGetValue(marker, out var p) && !p.View.Disposed ? p.View : null;
 
+    /// <summary>The program fragment is being (re)attached to the UI. Pushes
+    /// delivered while the view was hidden may have never reached the page
+    /// (theme switched in the picker is the live case), so clear the dedupe
+    /// caches and re-ask the server for the catalog; the next pump resends
+    /// everything the page missed.</summary>
+    public void OnFragmentAttached(NetEntity marker)
+    {
+        if (!_playbacks.TryGetValue(marker, out var p) || p.View.Disposed)
+            return;
+        p.RequestedCatalog = false;
+        p.Driver.ResetDedupe();
+    }
+
     private void OnAction(NetEntity marker, string action, string? data)
     {
         Logger.DebugS("webui.radio",

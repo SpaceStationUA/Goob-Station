@@ -150,6 +150,7 @@ public sealed class PirateRadioSystem : EntitySystem
     public void RepushCatalogsForPda(EntityUid pda, INetChannel channel)
     {
         List<NetEntity> dead = new();
+        var pushed = 0;
         foreach (var (marker, session) in _sessions)
         {
             if (!Exists(GetEntity(marker)))
@@ -165,7 +166,9 @@ public sealed class PirateRadioSystem : EntitySystem
                 Theme = ThemeOf(GetEntity(marker)),
                 Themes = AllowedThemes(GetEntity(marker)),
             }, channel);
+            pushed++;
         }
+        Logger.DebugS("webui.radio", $"repushed {pushed} radio catalog(s) for pda {pda}");
     }
 
     /// <summary>The full station list (pins + remote cache per cvar).</summary>

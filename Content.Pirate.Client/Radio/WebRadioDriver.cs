@@ -26,6 +26,17 @@ public sealed class WebRadioDriver
         _ipc = ipc;
     }
 
+    /// <summary>Clear the dedupe caches so the next catalog/state push is
+    /// delivered for sure. Needed when a push may have been consumed while
+    /// the webview was hidden (e.g. theme switched in the picker while the
+    /// radio fragment was detached): the page never saw that payload, so
+    /// equality against the cache would swallow every retry forever.</summary>
+    public void ResetDedupe()
+    {
+        _lastCatalog = "";
+        _lastState = "";
+    }
+
     public void Attach(WebViewControl web)
     {
         _web = web;
