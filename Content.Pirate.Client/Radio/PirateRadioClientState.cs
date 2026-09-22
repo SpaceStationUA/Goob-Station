@@ -92,6 +92,17 @@ public static class PirateRadioClientState
     public static IReadOnlyList<string> ThemeList(NetEntity marker)
         => _themeLists.TryGetValue(marker, out var l) ? l : (IReadOnlyList<string>)Array.Empty<string>();
 
+    private static readonly Dictionary<NetEntity, string> _titles = new();
+
+    /// <summary>Now-playing title for this playback ("" while unknown).</summary>
+    public static string Title(NetEntity marker)
+        => _titles.TryGetValue(marker, out var t) ? t : "";
+
+    public static void OnNow(PirateRadioNowPlayingEvent msg)
+    {
+        _titles[msg.Marker] = msg.Title;
+    }
+
     public static void OnState(PirateRadioStateEvent msg)
     {
         // A new relay session resets what the page may have buffered.

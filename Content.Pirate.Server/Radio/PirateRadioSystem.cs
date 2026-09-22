@@ -69,6 +69,7 @@ public sealed class PirateRadioSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+        PollNowPlaying();
 
         if (_pumps.Count == 0)
             return;
@@ -189,6 +190,7 @@ public sealed class PirateRadioSystem : EntitySystem
         var session = args.SenderSession;
         if (!_sessions.TryGetValue(msg.Marker, out var state))
             state = _sessions[msg.Marker] = new RadioSession();
+        state.Channel = session.Channel;
 
         switch (msg.Op)
         {
@@ -429,6 +431,99 @@ public sealed class PirateRadioSystem : EntitySystem
         }
     }
 
+    private TimeSpan _pollAt = TimeSpan.Zero;
+    private static readonly TimeSpan PollInterval = TimeSpan.FromSeconds(20);
+
+    /// <summary>Now-playing titles: probe each playing station's Icecast
+    /// status-json endpoint (origin + /status-json.xsl) on a slow timer and
+    /// tell the page when the title changed. Most Icecast deployments serve
+    /// it; sites without it just stay untitled.</summary>
+    private void PollNowPlaying()
+    {
+        if (_time.CurTime - _pollAt < PollInterval)
+            return;
+        _pollAt = _time.CurTime;
+
+        foreach (var (marker, state) in _sessions)
+        {
+            if (!state.Playing || state.Channel == null || !state.Channel.IsConnected)
+                continue;
+            var station = Find(state.StationId);
+            if (station == null)
+                continue;
+            _ = PollTitleAsync(marker, state, station);
+        }
+    }
+
+    private async Task PollTitleAsync(NetEntity marker, RadioSession state, PirateRadioStationEntry station)
+    {
+        var title = await ProbeTitle(station);
+        if (title == null || title == state.Title)
+            return;
+        state.Title = title;
+        if (state.Channel != null && state.Channel.IsConnected)
+        {
+            RaiseNetworkEvent(new PirateRadioNowPlayingEvent
+            {
+                Marker = marker,
+                StationId = state.StationId,
+                Title = title,
+            }, state.Channel);
+            Logger.DebugS("webui.radio", $"now playing on {marker}: {title}");
+        }
+    }
+
+    /// <summary>GET origin/status-json.xsl and find a source record for the
+    /// station's mount (or any titled one); null when the server is not
+    /// Icecast (or the probe failed).</summary>
+    private async Task<string?> ProbeTitle(PirateRadioStationEntry station)
+    {
+        try
+        {
+            var sep = station.Url.IndexOf('/', "https://".Length);
+            var origin = sep > 0 ? station.Url[..sep] : station.Url;
+            var mount = sep > 0 ? station.Url[sep..] : "";
+            using var req = new HttpRequestMessage(HttpMethod.Get, origin + "/status-json.xsl");
+            req.Headers.UserAgent.ParseAdd(ApiUserAgent);
+            using var resp = await _http.SendAsync(req);
+            if (!resp.IsSuccessStatusCode)
+                return null;
+            var json = await resp.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.TryGetProperty("icestats", out var stats)
+                && stats.TryGetProperty("source", out var sources))
+            {
+                if (sources.ValueKind == JsonValueKind.Array)
+                {
+                    string? fallback = null;
+                    foreach (var src in sources.EnumerateArray())
+                    {
+                        if (!src.TryGetProperty("title", out var t)
+                            || t.ValueKind != JsonValueKind.String)
+                            continue;
+                        var value = t.GetString() ?? "";
+                        if (string.IsNullOrWhiteSpace(value))
+                            continue;
+                        if (src.TryGetProperty("server_name", out var sn)
+                            && sn.ValueKind == JsonValueKind.String
+                            && (sn.GetString() ?? "").EndsWith(mount, StringComparison.OrdinalIgnoreCase))
+                            return value;
+                        fallback ??= value;
+                    }
+                    if (fallback != null && fallback.Length > 0)
+                        return fallback;
+                }
+            }
+            return "";
+        }
+        catch
+        {
+            return null; // keep whatever title the page is showing
+        }
+    }
+
+    [Dependency] private readonly Robust.Shared.Timing.IGameTiming _time = default!;
+
     /// <summary>Curated stations from prototypes, in declaration order.</summary>
     private List<PirateRadioStationEntry> Pinned()
     {
@@ -635,6 +730,8 @@ private sealed class RadioSession
     public string Label = "";
     public bool Playing;
     public bool Relay;
+    public string Title = "";
+    public INetChannel? Channel;
 }
 
 private sealed class RelayPump

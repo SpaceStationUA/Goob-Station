@@ -9,6 +9,7 @@ import "./picker.css";
  * stays terse. Keep in sync with Resources/Prototypes/_Pirate/webui.yml. */
 const LABELS: Record<string, string> = {
   PirateNtWeb: "NanoTrasen blue",
+  PirateNtAmber: "NT solar (amber)",
   PirateSyndiWeb: "Syndicate red",
 };
 

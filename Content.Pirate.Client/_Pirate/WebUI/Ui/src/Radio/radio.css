@@ -16,7 +16,7 @@ html, body {
 .app { display: flex; flex-direction: column; height: 100%; flex: 1; min-height: 0; }
 
 .station-label { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.genre-line { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.genre-line, .song-line { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .status-line { font-size: 11px; color: var(--dim); }
 
 .now {

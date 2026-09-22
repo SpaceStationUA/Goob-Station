@@ -7,3 +7,6 @@
 - type: pirateWebTheme
   id: PirateSyndiWeb
   class: syndi
+- type: pirateWebTheme
+  id: PirateNtAmber
+  class: nt

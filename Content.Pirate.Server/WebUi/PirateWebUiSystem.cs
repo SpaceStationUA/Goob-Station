@@ -5,6 +5,7 @@ using Content.Pirate.Shared.WebUi;
 using Content.Shared._Pirate.WebUi;
 using Content.Pirate.Server.Radio;
 using Content.Shared.PDA;
+using Content.Shared.Emag.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -33,7 +34,19 @@ public sealed class PirateWebUiSystem : EntitySystem
         SubscribeNetworkEvent<PirateThemeListRequestEvent>(OnListRequest);
         SubscribeNetworkEvent<PirateThemeSetEvent>(OnSet);
         SubscribeLocalEvent<PdaComponent, PdaShowThemeMessage>(OnShowTheme);
+        // Emagging a PDA unlocks the Syndicate theme family on it.
+        SubscribeLocalEvent<PdaComponent, GotEmaggedEvent>(OnPdaEmagged);
 
+    }
+
+    private void OnPdaEmagged(Entity<PdaComponent> ent, ref GotEmaggedEvent args)
+    {
+        var unlock = EnsureComp<PirateWebUiUnlockedComponent>(ent.Owner);
+        if (!unlock.WebThemeIds.Contains("PirateSyndiWeb"))
+            unlock.WebThemeIds.Add("PirateSyndiWeb");
+        Dirty(ent.Owner, unlock);
+        args.Handled = true;
+        Logger.DebugS("webui.theme", $"pda {GetNetEntity(ent.Owner)} emagged: syndi themes unlocked");
     }
 
     /// <summary>Settings tab button: reply with the picker's initial state.</summary>
@@ -125,10 +138,29 @@ public static class PirateWebThemeResolver
         // The gate follows the DEVICE'S prototype, not the live override:
         // a syndi-line PDA switched to NT must be able to switch back.
         var cls = BaseClass(entMan, protos, marker);
+        // Emag (or any other unlock grant) widens the family list by ids.
+        var unlocked = entMan.TryGetComponent<PirateWebUiUnlockedComponent>(marker, out var u)
+            ? u.WebThemeIds
+            : null;
+        // One syndi unlock whitelists the whole syndicate family.
+        var unlockedFamily = "";
+        if (unlocked != null)
+        {
+            foreach (var id in unlocked)
+            {
+                if (!protos.TryIndex<PirateWebThemePrototype>(id, out var up))
+                    continue;
+                unlockedFamily = up.Class;
+                break;
+            }
+        }
         var list = new List<string>();
         foreach (var proto in protos.EnumeratePrototypes<PirateWebThemePrototype>())
         {
-            if (proto.Class == "nt" || (cls == "syndi" && proto.Class == "syndi"))
+            if (proto.Class == "nt"
+                || proto.Class == cls
+                || (unlocked != null && unlocked.Contains(proto.ID))
+                || (proto.Class == unlockedFamily && proto.Class != "nt"))
                 list.Add(proto.ID);
         }
         return list;

@@ -1,8 +1,8 @@
 import { createSignal, createMemo, onMount, For, Show } from "solid-js";
 import { createPlayer } from "./player";
 import {
-  onRadioCatalog, onRadioState, onRelayChunk, playerAction, dbg,
-  type RadioCatalog, type RadioState, type StationEntry,
+  onRadioCatalog, onRadioState, onRadioNow, onRelayChunk, playerAction, dbg,
+  type RadioCatalog, type RadioState, type StationEntry, type NowPlaying,
 } from "../lib/protocol";
 import { ThemeProvider, applyThemeId } from "../lib/theme";
 import { GameWindow, Button, Icon } from "../lib/kit";
@@ -29,6 +29,9 @@ export default function App() {
   const [tab, setTab] = createSignal<"stations" | "genres">("stations");
   const [genre, setGenre] = createSignal<string | null>(null);
   const [starred, setStarred] = createSignal<Set<string>>(new Set());
+  // Favorites persist per browser profile (CEF user data), keyed off the
+  // page origin; cheap and engineless - they are a UI-level preference.
+  const FavKey = "pirate.radio.favorites";
   const [broken, setBroken] = createSignal<Set<string>>(new Set());
   const [vol, setVol] = createSignal(70);
 
@@ -41,7 +44,27 @@ export default function App() {
   // whichever arrives first wins.
   onRadioCatalog((c: RadioCatalog) => setStations(c.stations));
   onRadioState((s: RadioState) => onState(s));
+  onRadioNow((n: NowPlaying) => onNow(n));
   onRelayChunk((b64) => player.feedChunk(b64));
+
+  const [nowTitle, setNowTitle] = createSignal("");
+
+  function onNow(n: NowPlaying): void {
+    // A different track or a fresh play: reset the title until the probe
+    // reports again. Empty title = still untitled (probe supports the
+    // popular Icecast status-json form; not every mount has one).
+    if (player.currentId() && n.stationId && n.stationId !== player.currentId()) {
+      setNowTitle("");
+      return;
+    }
+    setNowTitle(n.title ?? "");
+  }
+  window.__radioSetNow = (json: string | NowPlaying) => {
+    try {
+      const n = typeof json === "string" ? JSON.parse(json) : json;
+      onNow(n);
+    } catch { /* ignore */ }
+  };
 
   function onState(s: RadioState): void {
     if (!s.playing) {
@@ -132,11 +155,24 @@ export default function App() {
     playerAction("stop");
   }
 
+  onMount(() => {
+    try {
+      const raw = localStorage.getItem(FavKey);
+      if (raw) {
+        const arr = JSON.parse(raw) as unknown;
+        if (Array.isArray(arr)) {
+          setStarred(new Set(arr.filter((x): x is string => typeof x === "string")));
+        }
+      }
+    } catch { /* fresh profile */ }
+  });
+
   function toggleStar(id: string): void {
     setStarred((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
+      try { localStorage.setItem(FavKey, JSON.stringify([...next])); } catch { /* storage off */ }
       return next;
     });
   }
@@ -195,6 +231,9 @@ export default function App() {
             <div class="meta">
               <div class="station-label">{player.meta().label}</div>
               <div class="genre-line">{player.meta().genre}</div>
+              <Show when={nowTitle()}>
+                <div class="song-line">{nowTitle()}</div>
+              </Show>
             </div>
             <div class="status-line">{player.status()}</div>
           </div>

@@ -62,9 +62,21 @@ export function onRadioCatalog(handler: (c: RadioCatalog) => void): void {
   });
 }
 
+/** Now-playing title probe (server-side Icecast status-json). */
+export interface NowPlaying {
+  stationId?: string;
+  title?: string;
+}
+
 export function onRadioState(handler: (s: RadioState) => void): void {
   onPush((name, payload) => {
     if (name === "radio-state") handler(payload as RadioState);
+  });
+}
+
+export function onRadioNow(handler: (n: NowPlaying) => void): void {
+  onPush((name, payload) => {
+    if (name === "radio-now") handler(payload as NowPlaying);
   });
 }
 

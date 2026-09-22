@@ -47,6 +47,7 @@ public sealed class PirateRadioClientSystem : EntitySystem
         SubscribeNetworkEvent<PirateRadioCatalogEvent>(OnCatalog);
         SubscribeNetworkEvent<PirateRadioStateEvent>(OnState);
         SubscribeNetworkEvent<PirateRadioRelayChunkEvent>(OnRelayChunk);
+        SubscribeNetworkEvent<PirateRadioNowPlayingEvent>(OnNow);
     }
 
     private void OnCatalog(PirateRadioCatalogEvent msg, EntitySessionEventArgs _)
@@ -54,6 +55,13 @@ public sealed class PirateRadioClientSystem : EntitySystem
 
     private void OnState(PirateRadioStateEvent msg, EntitySessionEventArgs _)
         => PirateRadioClientState.OnState(msg);
+
+    private void OnNow(PirateRadioNowPlayingEvent msg, EntitySessionEventArgs _)
+    {
+        PirateRadioClientState.OnNow(msg);
+        if (_playbacks.TryGetValue(msg.Marker, out var p) && !p.View.Disposed)
+            p.Driver.SetNow(msg.StationId, msg.Title);
+    }
 
     private void OnRelayChunk(PirateRadioRelayChunkEvent msg, EntitySessionEventArgs _)
     {
@@ -373,7 +381,9 @@ public sealed class PirateRadioClientSystem : EntitySystem
             ",\"stations\":[" + string.Join(",", parts) + "]" +
             ",\"state\":{\"stationId\":" + WebUiSpikeBridge.JsonString(st.StationId) +
             ",\"playing\":" + (st.Playing ? "true" : "false") +
-            ",\"relay\":" + (st.Relay ? "true" : "false") + "}}";
+            ",\"relay\":" + (st.Relay ? "true" : "false") + "}" +
+            ",\"now\":{\"stationId\":" + WebUiSpikeBridge.JsonString(st.StationId) +
+            ",\"title\":" + WebUiSpikeBridge.JsonString(PirateRadioClientState.Title(marker)) + "}}";
     }
 
     private static List<(string, string, string, string, bool, bool)> ToTuples(

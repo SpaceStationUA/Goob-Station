@@ -5,14 +5,18 @@
 import { createContext, createEffect, onCleanup, createSignal, useContext, type Accessor, type ParentProps } from "solid-js";
 import "./tokens.css";
 
-type ThemeName = "nt" | "syndi";
 
-/** Theme-id -> CSS class map: the set of known page theme classes must
- * match tokens.css entries; server ids map to their PirateWebTheme. */
+
+type ThemeName = string;
 const THEME_FROM_ID: Record<string, ThemeName> = {
   PirateNtWeb: "nt",
   PirateSyndiWeb: "syndi",
 };
+
+
+function deriveTheme(id: string): string {
+  return id.replace(/^Pirate/, "").replace(/Web$/, "").toLowerCase() || "nt";
+}
 
 interface ThemeCtxValue { theme: () => ThemeName; }
 const ThemeCtx = createContext<ThemeCtxValue>();
@@ -51,7 +55,7 @@ const [theme, setTheme] = createSignal<ThemeName>(bootstrapTheme());
  * fall back to nt. */
 export function applyThemeId(id: string | undefined): void {
   if (!id) return;
-  setTheme(THEME_FROM_ID[id] ?? "nt");
+  setTheme((THEME_FROM_ID[id] ?? deriveTheme(id)) as ThemeName);
 }
 export const themeName = theme;
 

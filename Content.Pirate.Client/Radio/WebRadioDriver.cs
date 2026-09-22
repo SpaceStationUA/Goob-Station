@@ -35,7 +35,23 @@ public sealed class WebRadioDriver
     {
         _lastCatalog = "";
         _lastState = "";
+        _lastNow = "";
     }
+
+    /// <summary>Push the now-playing title; only re-sends when changed.</summary>
+    public void SetNow(string stationId, string title)
+    {
+        var json = "{\"stationId\":" + WebUiSpikeBridge.JsonString(stationId) +
+            ",\"title\":" + WebUiSpikeBridge.JsonString(title) + "}";
+        if (json == _lastNow)
+            return;
+        _lastNow = json;
+        _web?.ExecuteJavaScript("window.__radioSetNow && window.__radioSetNow(" +
+            WebUiSpikeBridge.JsonString(json) + ");");
+        _ipc.Push("radio-now", json);
+    }
+
+    private string _lastNow = "";
 
     public void Attach(WebViewControl web)
     {

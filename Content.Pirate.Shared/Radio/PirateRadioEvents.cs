@@ -81,6 +81,18 @@ public sealed class PirateRadioStateEvent : EntityEventArgs
 }
 
 /// <summary>
+///     Server → client: the stream's now-playing title (Icecast
+///     status-json probe). Absent fields mean "no title / not playing".
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PirateRadioNowPlayingEvent : EntityEventArgs
+{
+    public NetEntity Marker = default!;
+    public string StationId = "";
+    public string Title = "";
+}
+
+/// <summary>
 ///     Client → server: the relay page has built its MediaSource and is
 ///     ready for the transcoded stream chunks.
 /// </summary>
