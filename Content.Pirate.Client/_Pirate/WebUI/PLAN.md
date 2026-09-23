@@ -1345,3 +1345,96 @@ Content-side answers that shipped (no engine changes):
 Rule for the next CEF app: a page host means (a) create view,
 (b) attach, (c) THEN AlwaysActive=true and any Url reload; and hosts
 must respond to display.uiScale. Never start a browser detached.
+
+### Evidence board (station records console) - scaffolding round
+
+Target: ComputerStationRecords (warden/detective). A board tab lets both
+pin sticky notes, characters (later, photos too) on a grid and link them
+with red string, per-case. Server-authoritative shared board.
+
+Architecture (mirrors the proven stacks):
+- Shared: PirateEvidenceBoardEvents (Request/SState) over pirate events,
+  pipe-encoded small payloads (no JSON parsing engine-side, snapshot JSON
+  hand-built server-side like WebUiSpikeBridge.JsonString/es).
+- Server: PirateEvidenceBoardSystem + PirateEvidenceBoardComponent
+  ([DataField] persistence w/ the station map; version field for format
+  evolution). Grid: 24x14 cells, notes clamp 0..19/0..10; caps 12 cases,
+  24 cards/case. Broadcast state after every mutation (both roles watch).
+- Client: PirateEvidenceBoardClientSystem per-console host (theme recipe:
+  WebViewControl -> AddBeforeBrowseHandler/Url/AddChild -> AlwaysActive;
+  scale watcher + nudger + ready watchdog). Page pulls via SyncDispatch
+  action "sync", pushes via tui-push/board-state + __evidenceSetState.
+- Content.Client: console window got a board button (search icon) +
+  EvidenceBoardView panel; kids hidden while board open; toggles through
+  Content.Pirate.UIKit.EvidenceBoardHost static bridge.
+- Page app: Ui/src/EvidenceBoard (grid canvas 40px cells, sticky notes,
+  drag/snap-on-release, string-mode link clicking, case tabs, note text).
+- Prototype: ComputerStationRecords carries - type: PirateEvidenceBoard.
+
+Roadmap (not yet built): pin-from-records character cards (text MVP,
+spawn-time portrait phase-2 via render-target to base64), evidence
+intake verb (paper/log probe/fingerprint/blood docs), case printing.
+
+### Evidence board (phase 1 done, user-confirmed)
+
+Working end-to-end on ComputerStationRecords (warden+detective shared):
+- board tab (search->information icon button, top bar hidden while open,
+  "Back to records" header button, host re-anchors on window reopen)
+- notes: add/inline-edit (settext)/drag-snap/delete
+- char cards: pin from the open record (Pin to evidence board) with
+  name/job/age/species/gender (+truncated prints/DNA), server auto-place
+- strings (red lines, click to cut), cases (create/switch/delete)
+- lessons: bridge payloads arrive JSON-quoted -> strip in
+  StripJsonQuotes before forwarding; never reset link-mode UI flags in
+  applyState (2s sync poll would kill the gesture); record fields
+  serialize with \u001f separators (| not used inside payloads).
+
+Next candidates (in order): evidence-paper intake ("file into board"),
+connection labels, case rename UI, portraits (render-target -> base64
+"photo of character at shift start"), camera photo cards, case printout.
+
+### Evidence board phase 2 (user-confirmed)
+
+- paper intake: verb on paper + on console ("file held paper"); access-
+  gated like the console; classes covered by PaperComponent (reports,
+  printouts) + ForensicPad + PhotoCard.
+- photo cards: PhotoCard PNG via data URI; RenderSanePreview rebuilds
+  from ImageData when the stored preview is the system's 8x8 fallback
+  PNG (PreviewSize=8 gotcha!), cap 128KB -> text-only.
+- intake strip: [color]/[bold]/italic bracket markup stripped.
+- bigger board: server dims (32x18) ship in the snapshot; 52px cells
+  (+30% notes); page zoom 60-160% (buttons + ctrl+wheel).
+- scroll memory: sync poll skips identical snapshots (no DOM rebuild ->
+  scroll preserved).
+- link labels ("string label..." input -> link op 3rd field); case
+  rename via tab double-click.
+- PORTRAITS: pinchar sends the (station,id) record key; server reads
+  the crew's CriminalRecord (spawn-time HumanoidCharacterProfile +
+  job, auto-written at record creation). PortraitPreviewData>400B ->
+  attach directly; else quest the PINNER only (channel-targeted) with
+  the profile snapshot; PirateBoardPortraitSystem (Content.Client)
+  renders via LoadProfileEntity dummy + ContentSpriteSystem.Export +
+  user-data PNG read (4 retries), uploads "portrait" op with byte[]
+  Image field; server datas-uri's <=128KB, paints card, broadcasts.
+  Anti-metagame: puppet built from the profile snapshot only, deleted
+  after export; never the live mob. Design note (user endorses): the
+  criminal-console photo-print first, then file at records console,
+  is a feature, not friction.
+
+### Evidence board phase 3: case printout (feature-complete, user-confirmed)
+
+- "print case" header button -> server OpPrintCase via the generic op
+  forwarding (no new client plumbing needed).
+- Paper built from the current case: bold header + case line, numbered
+  [bold] entries (char: name - job, species (italic), prints/DNA with
+  "none recorded" placeholders; chip: title + excerpt; photo: caption),
+  connections listing (a - label - b).
+- Lessons: paper markup only renders the UserFormattableTags set perf
+  [bold] reliably after save - [head] ATE all following content in the
+  saved render (only the first bold survived). Stick to bold/italic/
+  color. Escape-by-[[ failed too; source-scrub card text at intake
+  (StripMarkup) and make print lines bracket-free (CleanPrintLine
+  turns [ -> (), + 200/400 char caps).
+- Paper spawned at the pinner's feet, MetaDataSystem.SetEntityName
+  "Evidence report: {case}", TryPickupAnyHand; blank/full/space
+  popups for failure modes.
