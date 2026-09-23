@@ -42,6 +42,14 @@
 - type: randomHumanoidSettings
   id: LavalandSyndieSoldier
   parent: SyndieSoldier
+  speciesBlacklist:
+  - Monkey
+  - Kobold
+  - Abductor
+  - Yowie
+  - IPC
+  - Diona
+  - Plasmaman
   components:
   - type: OrganChipsOnSpawn
     chips:
@@ -55,6 +63,14 @@
 - type: randomHumanoidSettings
   id: LavalandSyndieSoldierTeamLeader
   parent: SyndieSoldierTeamLeader
+  speciesBlacklist:
+  - Monkey
+  - Kobold
+  - Abductor
+  - Yowie
+  - IPC
+  - Diona
+  - Plasmaman
   components:
   - type: OrganChipsOnSpawn
     chips:
@@ -68,6 +84,14 @@
 - type: randomHumanoidSettings
   id: LavalandSyndieMarshal
   parent: SyndieSoldier
+  speciesBlacklist:
+  - Monkey
+  - Kobold
+  - Abductor
+  - Yowie
+  - IPC
+  - Diona
+  - Plasmaman
   components:
   - type: OrganChipsOnSpawn
     chips:
