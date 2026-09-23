@@ -291,7 +291,7 @@ public sealed partial class AudioMuffleSystem : SharedAudioMuffleSystem
         var distance = float.MaxValue;
         foreach (var (uid, vision) in nearest)
         {
-            if (!vision.Enabled)
+            if (!vision.Enabled || HasComp<Content.Shared._Pirate.SurveillanceCamera.SyndicateOnlyVisionComponent>(uid))
                 continue;
 
             var dist = (coords.Position - _xform.GetMapCoordinates(uid).Position).Length();

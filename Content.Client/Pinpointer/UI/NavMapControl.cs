@@ -531,6 +531,9 @@ public partial class NavMapControl : MapGridControl
             if (blip.Blinks && !lit || blip.Texture == null)
                 continue;
 
+            if (!blip.Coordinates.IsValid(EntManager)) // Pirate: syndicate remote monitoring - remote camera blips may outlive or precede their client entity
+                continue; // Pirate: syndicate remote monitoring
+
             var mapPos = _transformSystem.ToMapCoordinates(blip.Coordinates);
             if (mapPos.MapId == MapId.Nullspace ||
                 ZFilterTrackedBlipsToDisplayedMap && mapPos.MapId != _xform.MapID)

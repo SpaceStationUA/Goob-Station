@@ -1172,6 +1172,8 @@
   name: syndicate operative PDA
   description: Death to NT!
   components:
+  - type: BuiltInPdaCamera # Pirate: syndicate remote monitoring
+    cameraPrototype: BuiltInSyndicatePdaCamera # Pirate: syndicate remote monitoring
   - type: Pda
     id: SyndiOperativeIDCard
   - type: Appearance
@@ -1239,6 +1241,8 @@
   suffix: Leader
   description: Red for firepower.
   components:
+  - type: BuiltInPdaCamera # Pirate: syndicate remote monitoring
+    cameraPrototype: BuiltInErtPdaCamera # Pirate: syndicate remote monitoring
   - type: Pda
     id: ERTLeaderIDCard
   - type: Appearance
