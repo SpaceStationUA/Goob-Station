@@ -2,3 +2,8 @@
   id: UniformRat
   equipment:
     jumpsuit: ClothingUniformRat
+
+- type: loadout
+  id: ImperatorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitImperator
