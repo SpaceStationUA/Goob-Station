@@ -1,9 +1,4 @@
 # Pirate: evidence board
-general-station-record-console-toggle-board = Дошка доказів
-general-station-record-console-board-back = Назад до записів
-general-station-record-console-pin-board = Закріпити на дошці доказів
-
-# Pirate: evidence board
 pirate-evidence-board-file-verb = Подати на дошку доказів
 pirate-evidence-board-filed = Подано {$name} на дошку доказів
 pirate-evidence-board-blank = Аркуш порожній
