@@ -357,6 +357,15 @@
   ghostDescription: лютий хард РПешер
 
 - type: customGhost
+  id: hamstermaster-ghost
+  ckey: hamstermaster
+  sprite:
+    - _Pirate/Ghosts/hamster_master.rsi
+  alpha: 1
+  ghostName: ну тіпа хамяк
+  ghostDescription: ВІДДАЙ САЛО
+
+- type: customGhost
   id: Bukhhalter-ghost
   ckey: Bukhhalter
   sprite:
