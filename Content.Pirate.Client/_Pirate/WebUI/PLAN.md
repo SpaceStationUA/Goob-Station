@@ -1448,3 +1448,9 @@ connection labels, case rename UI, portraits (render-target -> base64
 - FTL keys: pirate-evidence-board-l10n-* in records-board.ftl.
 - Gotcha: Host type in the webui systems is the private sealed class
   "Host", not WebUiBoardHost (compiler caught it).
+
+### Board status: done, awaiting live feedback
+- Looked at Shadows of Doubt devblog 4 (corkboard): incrimination-flow
+  simulation OUT of scope (multiplayer RP artifact, no auto-solver);
+  candidate polish if players ask: link weight -> string color/thickness,
+  animated directional strings, hover tooltips.
