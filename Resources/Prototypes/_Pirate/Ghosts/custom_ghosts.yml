@@ -363,7 +363,7 @@
     - _Pirate/Ghosts/hamster_master.rsi
   alpha: 1
   ghostName: ну тіпа хамяк
-  ghostDescription: тест (тут буде реклама сала)
+  ghostDescription: ВІДДАЙ САЛО
 
 - type: customGhost
   id: Bukhhalter-ghost
