@@ -29,6 +29,7 @@ using Content.Server.DoAfter;
 using Content.Server.Fax;
 using Content.Server.Popups;
 using Content.Server._Pirate.Photo;
+using Content.Server._Pirate.NanoChat; // Pirate: nanochat network
 using Content.Shared.GameTicking;
 using Content.Shared.DoAfter;
 using Content.Shared.Fax.Components;
@@ -52,6 +53,11 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly FaxSystem _fax = default!;
     [Dependency] private readonly SharedGameTicker _gameTicker = default!;
+    #endregion
+    #region Pirate: nanochat network
+    [Dependency] private readonly NanoChatNetworkSystem _nanoChatNetwork = default!;
+
+    private ulong _nextDeliveryId;
     #endregion
 
     // Messages in notifications get cut off after this point
@@ -86,9 +92,20 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
         SubscribeLocalEvent<FaxMachineComponent, GetVerbsEvent<AlternativeVerb>>(OnFaxGetAlternativeVerbs); // Pirate: nano chat photo scan sound
         SubscribeLocalEvent<FaxMachineComponent, PdaPhotoPrintToFaxDoAfterEvent>(OnFaxPhotoPrintToFaxDoAfter); // Pirate: nano chat photo scan sound
 
+        #region Pirate: nanochat network
+        SubscribeLocalEvent<NanoChatNetworkChangedEvent>(OnNetworkChanged);
+        #endregion
+
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
         Subs.CVar(_cfgManager, CCVars.MaxIdJobLength, value => _maxIdJobLength = value, true);
     }
+
+    #region Pirate: nanochat network
+    private void OnNetworkChanged(ref NanoChatNetworkChangedEvent args)
+    {
+        UpdateUIForAllCards();
+    }
+    #endregion
 
     private void UpdateClosed(Entity<NanoChatCartridgeComponent> ent)
     {
@@ -391,6 +408,19 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
         {
             DeliverMessageToRecipient(card, recipient, message);
         }
+
+        #region Pirate: nanochat monitor
+        var deliveredEv = new NanoChatMessageDeliveredEvent(
+            ++_nextDeliveryId, // Pirate: nanochat network
+            card.Owner,
+            card.Comp.PdaUid ?? card.Owner,
+            (uint) card.Comp.Number,
+            null,
+            msg.RecipientNumber.Value,
+            recipients.Select(recipient => recipient.Owner).ToList(),
+            message);
+        RaiseLocalEvent(ref deliveredEv);
+        #endregion
     }
 
     #region Pirate: pda fix
@@ -447,6 +477,13 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
         if (foundRecipients.Count == 0)
             return (true, foundRecipients);
 
+        #region Pirate: nanochat network
+        var topology = _nanoChatNetwork.BuildTopology();
+        var relayActive = _nanoChatNetwork.IsRelayActive();
+        var senderDevice = GetNanoChatDevice(sender);
+        var senderSyndicate = _nanoChatNetwork.IsSyndicateDevice(senderDevice);
+        #endregion
+
         // Now check if any of these cards can receive
         var deliverableRecipients = new List<Entity<NanoChatCardComponent>>();
         foreach (var recipient in foundRecipients)
@@ -458,21 +495,20 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
                 if (receiverCart.Card != recipient.Owner)
                     continue;
 
-                // Check if devices are on same station/map
-                var recipientStation = _station.GetOwningStation(receiverUid);
-                var senderStation = _station.GetOwningStation(sender);
+                #region Pirate: nanochat network
+                var receiverDevice = GetNanoChatDevice((receiverUid, receiverCart));
 
-                // Both entities must be on a station
-                if (recipientStation == null || senderStation == null)
+                if (!_nanoChatNetwork.CanDeliver(
+                        topology,
+                        senderDevice,
+                        senderSyndicate,
+                        receiverDevice,
+                        _nanoChatNetwork.IsSyndicateDevice(receiverDevice),
+                        relayActive))
+                {
                     continue;
-
-                // Must be on same map/station unless long range allowed
-                if (!channel.LongRange && recipientStation != senderStation)
-                    continue;
-
-                // Needs telecomms
-                if (!HasActiveServer(senderStation.Value) || !HasActiveServer(recipientStation.Value))
-                    continue;
+                }
+                #endregion
 
                 // Check if recipient can receive
                 var receiveAttemptEv = new RadioReceiveAttemptEvent(channel, sender, receiverUid);
@@ -489,23 +525,15 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
         return (deliverableRecipients.Count == 0, deliverableRecipients);
     }
 
-    /// <summary>
-    ///     Checks if there are any active telecomms servers on the given station
-    /// </summary>
-    private bool HasActiveServer(EntityUid station)
+    #region Pirate: nanochat network
+    private EntityUid GetNanoChatDevice(Entity<NanoChatCartridgeComponent> cartridge)
     {
-        // I have no idea why this isn't public in the RadioSystem
-        var query =
-            EntityQueryEnumerator<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent>();
+        if (TryComp<CartridgeComponent>(cartridge, out var comp) && comp.LoaderUid is { } loader)
+            return loader;
 
-        while (query.MoveNext(out var uid, out _, out _, out var power))
-        {
-            if (_station.GetOwningStation(uid) == station && power.Powered)
-                return true;
-        }
-
-        return false;
+        return cartridge.Owner;
     }
+    #endregion
 
     /// <summary>
     ///     Delivers a message to the recipient and handles associated notifications.
@@ -605,12 +633,15 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
     /// </summary>
     private void UpdateUIForAllCards()
     {
+        var topology = _nanoChatNetwork.BuildTopology(); // Pirate: nanochat network
+        var relayActive = _nanoChatNetwork.IsRelayActive(); // Pirate: nanochat network
+
         // Find any PDA containing this card and update its UI
         var query = EntityQueryEnumerator<NanoChatCartridgeComponent, CartridgeComponent>();
         while (query.MoveNext(out var uid, out var comp, out var cartridge))
         {
             if (cartridge.LoaderUid is { } loader)
-                UpdateUI((uid, comp), loader);
+                UpdateUI((uid, comp), loader, topology, relayActive); // Pirate: nanochat network
         }
     }
 
@@ -657,29 +688,14 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
         UpdateUI(ent, args.Loader);
     }
 
-    private void UpdateUI(Entity<NanoChatCartridgeComponent> ent, EntityUid loader)
+    private void UpdateUI(Entity<NanoChatCartridgeComponent> ent, EntityUid loader, // Pirate: nanochat network
+        NanoChatNetworkTopology? topology = null, bool relayActive = false) // Pirate: nanochat network
     {
-        List<NanoChatRecipient>? contacts;
-        if (_station.GetOwningStation(loader) is { } station)
-        {
-            ent.Comp.Station = station;
+        #region Pirate: nanochat network
+        ent.Comp.Station = _station.GetOwningStation(loader);
 
-            contacts = [];
-
-            var query = AllEntityQuery<NanoChatCardComponent, IdCardComponent>();
-            while (query.MoveNext(out var entityId, out var nanoChatCard, out var idCardComponent))
-            {
-                if (nanoChatCard.ListNumber && nanoChatCard.Number is uint nanoChatNumber && idCardComponent.FullName is string fullName && _station.GetOwningStation(entityId) == station)
-                {
-                    contacts.Add(new NanoChatRecipient(nanoChatNumber, fullName, idCardComponent.LocalizedJobTitle)); // Pirate: pda fix
-                }
-            }
-            contacts.Sort((contactA, contactB) => string.CompareOrdinal(contactA.Name, contactB.Name));
-        }
-        else
-        {
-            contacts = null;
-        }
+        var contacts = topology is null ? BuildContacts(loader) : BuildContacts(loader, topology, relayActive);
+        #endregion
 
         var recipients = new Dictionary<uint, NanoChatRecipient>();
         var messages = new Dictionary<uint, List<NanoChatMessage>>();
@@ -713,6 +729,55 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
             listNumber);
         _cartridge.UpdateCartridgeUiState(loader, state);
     }
+
+    #region Pirate: nanochat network
+    public List<NanoChatRecipient>? BuildContacts(EntityUid loader)
+        => BuildContacts(loader, _nanoChatNetwork.BuildTopology(), _nanoChatNetwork.IsRelayActive());
+
+    private List<NanoChatRecipient>? BuildContacts(EntityUid loader, NanoChatNetworkTopology topology, bool relayActive)
+    {
+        var syndicate = _nanoChatNetwork.IsSyndicateDevice(loader);
+
+        if (syndicate
+                ? !relayActive
+                : !_nanoChatNetwork.HasOrdinaryCoverage(topology, loader))
+        {
+            return null;
+        }
+
+        var contacts = new List<NanoChatRecipient>();
+
+        var query = AllEntityQuery<NanoChatCardComponent, IdCardComponent>();
+        while (query.MoveNext(out var entityId, out var nanoChatCard, out var idCardComponent))
+        {
+            if (nanoChatCard.Number is not uint nanoChatNumber || idCardComponent.FullName is not string fullName)
+                continue;
+
+            var device = nanoChatCard.PdaUid ?? entityId;
+
+            if (_nanoChatNetwork.IsSyndicateDevice(device))
+            {
+                if (!syndicate)
+                    continue;
+            }
+            else if (syndicate)
+            {
+                if (!_nanoChatNetwork.HasOrdinaryCoverage(topology, device))
+                    continue;
+            }
+            else if (!nanoChatCard.ListNumber || !_nanoChatNetwork.CanOrdinaryReach(topology, loader, device))
+            {
+                continue;
+            }
+
+            contacts.Add(new NanoChatRecipient(nanoChatNumber, fullName, idCardComponent.LocalizedJobTitle));
+        }
+
+        contacts.Sort((contactA, contactB) => string.CompareOrdinal(contactA.Name, contactB.Name));
+        return contacts;
+    }
+    #endregion
+
     #region Pirate: camera (nanochat gallery)
     private static Dictionary<string, NanoChatPhotoData> BuildUiPhotos(Dictionary<string, NanoChatPhotoData> photos)
     {

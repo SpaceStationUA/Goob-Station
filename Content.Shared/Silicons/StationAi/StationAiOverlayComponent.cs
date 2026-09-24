@@ -15,4 +15,12 @@ public sealed partial class StationAiOverlayComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool AllowCrossGrid;
+
+    /// <summary>Whether AI-only machines are visible and usable outside normal camera coverage.</summary> // Pirate: syndicate remote monitoring
+    [DataField, AutoNetworkedField] // Pirate: syndicate remote monitoring
+    public bool AllowUnseenMachineAccess = true; // Pirate: syndicate remote monitoring
+
+    /// <summary>Include Syndicate PDA camera coverage in this observation view.</summary> // Pirate: syndicate remote monitoring
+    [DataField, AutoNetworkedField] // Pirate: syndicate remote monitoring
+    public bool IncludeSyndicateCameras; // Pirate: syndicate remote monitoring
 }

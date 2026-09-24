@@ -26,10 +26,9 @@
       - RadioSpeaker
   - type: ActiveListener
     range: 10
-  - type: ClothingGrantComponent
-    component:
-    - type: StationAiVision
-      range: 4
+  - type: StationAiVision # Pirate: syndicate remote monitoring - bodycams provide vision wherever the camera item is
+    range: 4 # Pirate: syndicate remote monitoring
+  - type: CameraActiveVision # Pirate: syndicate remote monitoring - EMP-disabled bodycams stop providing vision
   - type: Sprite
     sprite: _Pirate/Clothing/Neck/Misc/bodycam.rsi # Pirate bodycam resprite
   - type: Clothing

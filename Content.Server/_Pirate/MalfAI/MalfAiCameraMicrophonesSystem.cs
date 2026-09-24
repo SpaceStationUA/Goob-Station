@@ -8,6 +8,7 @@ using Content.Server.SurveillanceCamera;
 using Content.Shared.StationAi;
 using Content.Shared.SurveillanceCamera.Components;
 using Content.Shared._Pirate.MalfAI;
+using Content.Shared._Pirate.SurveillanceCamera;
 using Content.Shared.GameTicking;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Power.EntitySystems;
@@ -75,7 +76,7 @@ public sealed class MalfAiCameraMicrophonesSystem : EntitySystem
 
             while (cameraQuery.MoveNext(out var cameraUid, out var vision, out var camera, out var cameraXform))
             {
-                if (!camera.Active || !vision.Enabled ||
+                if (!camera.Active || !vision.Enabled || HasComp<SyndicateOnlyVisionComponent>(cameraUid) ||
                     (vision.NeedsPower && !_power.IsPowered(cameraUid)) ||
                     (vision.NeedsAnchoring && !cameraXform.Anchored))
                     continue;
