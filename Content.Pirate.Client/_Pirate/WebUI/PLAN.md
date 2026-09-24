@@ -1454,3 +1454,11 @@ connection labels, case rename UI, portraits (render-target -> base64
   simulation OUT of scope (multiplayer RP artifact, no auto-solver);
   candidate polish if players ask: link weight -> string color/thickness,
   animated directional strings, hover tooltips.
+
+### Uplink demo retired
+- The first CEF experiment page (mock uplink backend) removed: no
+  content uses it and the real patterns (shared board/broadcast, op
+  forwarding) live on in the evidence board. Src page deleted, iface
+  dropped from buildwebui.sh list, vite default iface set to Radio.
+- Historical references in this log stay (they document the contract
+  evolution). Shared lib (bridge.ts) untouched.

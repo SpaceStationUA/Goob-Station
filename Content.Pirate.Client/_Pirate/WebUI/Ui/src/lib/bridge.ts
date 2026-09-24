@@ -58,7 +58,7 @@ function spawnIframe(url: string): void {
 
 function tuiUrl(tx: string, action: string, data?: string): string {
   const baseDir = location.pathname.replace(/(\/index\.html)$|\/$/, "");
-  // e.g. res://_Pirate/WebUI/Uplink -> res://_Pirate/WebUI/Uplink/tui_bridge/<tx>
+  // e.g. res://_Pirate/WebUI/Radio -> res://_Pirate/WebUI/Radio/tui_bridge/<tx>
   return (
     location.protocol +
     "//" +
