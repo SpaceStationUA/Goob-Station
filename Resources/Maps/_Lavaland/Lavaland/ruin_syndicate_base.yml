@@ -34147,7 +34147,7 @@ entities:
     - type: Physics
       angularDamping: 0
       linearDamping: 0
-- proto: EnergyShieldSuitModule
+- proto: EnergyShieldSyndicateSuitModule
   entities:
   - uid: 27
     components:

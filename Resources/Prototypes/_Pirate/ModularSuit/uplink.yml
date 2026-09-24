@@ -140,7 +140,7 @@
       - NukeOpsUplink
 
 - type: listing
-  id: UplinEnergyShieldSuitModuleNukeOps
+  id: UplinkEnergyShieldSuitModuleNukeOps
   name: uplink-syndie-energy-shield-module-name
   description: uplink-syndie-energy-shield-module-desc
   icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: energy_shield_syndie }
@@ -154,6 +154,23 @@
     whitelist:
       tags:
       - NukeOpsUplink
+
+- type: listing
+  id: UplinkEnergyShieldSuitModule
+  name: uplink-syndie-energy-shield-module-name
+  description: uplink-syndie-energy-shield-module-desc
+  icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: energy_shield_syndie }
+  productEntity: EnergyShieldSyndicateSuitModule
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 8
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+      - ContractorUplink
 
 - type: listing
   id: UplinkEnergyShieldModuleBundle
