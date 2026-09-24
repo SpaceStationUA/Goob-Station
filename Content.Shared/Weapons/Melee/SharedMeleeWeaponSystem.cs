@@ -973,16 +973,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 .Where(x => !_tag.HasTag(x.HitEntity, "WideSwingIgnore")) // Goobstation
                 .ToList();
 
-            if (res.Count != 0)
+#region Pirate: malf AI sentient mob damage
+            foreach (var r in res)
             {
-                // If there's exact distance overlap, we simply have to deal with all overlapping objects to avoid selecting randomly.
-                var resChecked = res.Where(x => x.Distance.Equals(res[0].Distance));
-                foreach (var r in resChecked)
-                {
-                    if (Interaction.InRangeUnobstructed(ignore, r.HitEntity, range + 0.1f, overlapCheck: false))
-                        resSet.Add(r.HitEntity);
-                }
+                if (!HasComp<DamageableComponent>(r.HitEntity))
+                    continue;
+
+                if (Interaction.InRangeUnobstructed(ignore, r.HitEntity, range + 0.1f, overlapCheck: false))
+                    resSet.Add(r.HitEntity);
             }
+#endregion
         }
 
         return resSet;
