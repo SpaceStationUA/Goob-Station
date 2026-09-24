@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 09/12/2026 10:02:28
-  entityCount: 10900
+  entityCount: 10901 # Pirate: slime morph
 maps: []
 grids:
 - 1
@@ -29229,6 +29229,8 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 10901 # Pirate: slime morph
+          - 9765 # Pirate: slime morph
           - 1745
           - 1757
           - 1756
@@ -58490,6 +58492,26 @@ entities:
     - type: Transform
       pos: -8.465594,-2.4442272
       parent: 1
+#region Pirate: slime morph
+- proto: LavalandJaunter
+  entities:
+  - uid: 9765
+    components:
+    - type: Transform
+      parent: 1743
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1743
+  - uid: 10901
+    components:
+    - type: Transform
+      parent: 1743
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1743
+#endregion Pirate: slime morph
 - proto: LightReplacer
   entities:
   - uid: 370
