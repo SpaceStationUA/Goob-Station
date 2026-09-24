@@ -44,6 +44,7 @@ public sealed class NanoChatMonitorSystem : EntitySystem
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly PhotoSystem _photo = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     private static readonly EntProtoId PaperPrototype = "Paper";
@@ -312,13 +313,18 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
         var xform = Transform(uid);
 
+        var location = unknown;
         if (TryGetPlaceName(xform.GridUid, out var gridName))
-            return gridName;
+            location = gridName;
+        else if (TryGetPlaceName(xform.MapUid, out var mapName))
+            location = mapName;
 
-        if (TryGetPlaceName(xform.MapUid, out var mapName))
-            return mapName;
+        var mapCoordinates = _transform.GetMapCoordinates(uid, xform);
+        var position = xform.GridUid is { } grid
+            ? _transform.ToCoordinates(grid, mapCoordinates).Position
+            : mapCoordinates.Position;
 
-        return unknown;
+        return $"{location} ({(int) MathF.Floor(position.X)}, {(int) MathF.Floor(position.Y)})";
     }
 
     private bool TryGetPlaceName(EntityUid? uid, [NotNullWhen(true)] out string? name)
