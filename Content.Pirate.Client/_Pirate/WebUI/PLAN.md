@@ -1438,3 +1438,13 @@ connection labels, case rename UI, portraits (render-target -> base64
 - Paper spawned at the pinner's feet, MetaDataSystem.SetEntityName
   "Evidence report: {case}", TryPickupAnyHand; blank/full/space
   popups for failure modes.
+
+### Evidence board: page chrome localization
+- Page had hardcoded EN chrome (placeholders, buttons, char-card
+  fallbacks). Pattern: client pushes Loc tokens on "ready" via
+  __evidenceSetLocale(map) — JSON object built with
+  WebUiSpikeBridge.JsonString values; page keeps EN fallbacks and
+  merges over them (module-level Solid signal, reactive header).
+- FTL keys: pirate-evidence-board-l10n-* in records-board.ftl.
+- Gotcha: Host type in the webui systems is the private sealed class
+  "Host", not WebUiBoardHost (compiler caught it).

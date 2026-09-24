@@ -11,6 +11,7 @@ using Robust.Client.WebView;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -246,6 +247,7 @@ public sealed class PirateEvidenceBoardClientSystem : EntitySystem
                     readyHost.ReadySeen = true;
                     readyHost.ReadyDue = DateTimeOffset.MinValue;
                     readyHost.Retries = 0;
+                    PushLocale(readyHost);
                     SyncRequest(console);
                 }
                 return;
@@ -268,6 +270,46 @@ public sealed class PirateEvidenceBoardClientSystem : EntitySystem
                         });
                 }
                 return;
+        }
+    }
+
+    private void PushLocale(Host host)
+    {
+        // Page chrome strings are pushed from Loc on ready (EN fallbacks
+        // live in the page itself, so a missing key is not fatal).
+        try
+        {
+            var sb = new System.Text.StringBuilder("{");
+            var first = true;
+            void Tok(string key, string ftl)
+            {
+                if (!first) sb.Append(',');
+                first = false;
+                sb.Append('"').Append(key).Append("\":")
+                    .Append(WebUiSpikeBridge.JsonString(Loc.GetString(ftl)));
+            }
+            Tok("unknown", "pirate-evidence-board-l10n-unknown");
+            Tok("unknownJob", "pirate-evidence-board-l10n-unknown-job");
+            Tok("unknownSpecies", "pirate-evidence-board-l10n-unknown-species");
+            Tok("idCard", "pirate-evidence-board-l10n-id-card");
+            Tok("photo", "pirate-evidence-board-l10n-photo");
+            Tok("stringMode", "pirate-evidence-board-l10n-string-mode");
+            Tok("stringPick1", "pirate-evidence-board-l10n-string-pick-1");
+            Tok("stringPick2", "pirate-evidence-board-l10n-string-pick-2");
+            Tok("delCase", "pirate-evidence-board-l10n-del-case");
+            Tok("addCase", "pirate-evidence-board-l10n-add-case");
+            Tok("addNote", "pirate-evidence-board-l10n-add-note");
+            Tok("printCase", "pirate-evidence-board-l10n-print-case");
+            Tok("newCasePh", "pirate-evidence-board-l10n-new-case-ph");
+            Tok("stringLabelPh", "pirate-evidence-board-l10n-string-label-ph");
+            Tok("notePh", "pirate-evidence-board-l10n-note-ph");
+            sb.Append('}');
+            host.Web.ExecuteJavaScript(
+                "window.__evidenceSetLocale && window.__evidenceSetLocale(" + sb + ");");
+        }
+        catch
+        {
+            // disposed browser — the page stays on EN fallbacks
         }
     }
 

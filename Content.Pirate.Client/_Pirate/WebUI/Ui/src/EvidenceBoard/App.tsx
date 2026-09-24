@@ -57,6 +57,28 @@ function themeClass(id: string | undefined): string {
   return `theme-${slug}`;
 }
 
+/// Chrome strings. Host pushes localized tokens on ready via
+/// __evidenceSetLocale; these are the EN fallbacks.
+const L_EN: Record<string, string> = {
+  unknown: "unknown",
+  unknownJob: "unknown job",
+  unknownSpecies: "unknown species",
+  idCard: "ID card data",
+  photo: "photo",
+  stringMode: "string mode",
+  stringPick1: "string: pick 1st pin",
+  stringPick2: "string: pick 2nd pin",
+  delCase: "✕ case",
+  addCase: "+ case",
+  addNote: "+ note",
+  printCase: "print case",
+  newCasePh: "new case…",
+  stringLabelPh: "string label…",
+  notePh: "sticky note…",
+};
+const [loc, setLoc] = createSignal<Record<string, string>>({ ...L_EN });
+const T = (k: keyof typeof L_EN & string): string => loc()[k] ?? L_EN[k];
+
 /// Card body dispatch — each kind renders its own shape (the old
 /// "char body as universal fallback" bug showed filler under chips).
 function CardBody(props: { card: Card; onEdit?: () => void }) {
@@ -79,7 +101,7 @@ function PlainBody(props: { card: Card; onEdit?: () => void }) {
             <img class="photo-img" src={props.card.img} alt="photo" />
           </Show>
         </div>
-        <div class="photo-caption">{(props.card.text.split("\n").slice(1).join("\n") || "").trim() || "photo"}</div>
+        <div class="photo-caption">{(props.card.text.split("\n").slice(1).join("\n") || "").trim() || T("photo")}</div>
       </Show>
     </div>
   );
@@ -102,12 +124,12 @@ function CharBody(props: { card: Card }) {
         </div>
       </Show>
       <Show when={(f()[5] ?? "").trim() || (f()[6] ?? "").trim()} fallback={<span />}>
-        <span class="char-dna">ID card data</span>
+        <span class="char-dna">{T("idCard")}</span>
       </Show>
-      <div class="char-name">{f()[0] || "unknown"}</div>
-      <div>{f()[1] || "unknown job"}</div>
+      <div class="char-name">{f()[0] || T("unknown")}</div>
+      <div>{f()[1] || T("unknownJob")}</div>
       <div>age {f()[2] || "—"}</div>
-      <div>{f()[3] || "unknown species"} · {f()[4] || ""}</div>
+      <div>{f()[3] || T("unknownSpecies")} · {f()[4] || ""}</div>
       <div class="char-hashes">prints: {toss(f()[5])}</div>
       <div class="char-hashes">dna: {toss(f()[6])}</div>
     </div>
@@ -145,6 +167,9 @@ export default function App() {
     setZoom(Math.min(1.6, Math.max(0.6, Math.round((zoom() + delta) * 10) / 10)));
 
   onMount(() => {
+    window.__evidenceSetLocale = (map: Record<string, string>) => {
+      if (map && typeof map === "object") setLoc((prev) => ({ ...prev, ...map }));
+    };
     window.__evidenceSetState = (json: string) => {
       try {
         applyState(JSON.parse(json));
@@ -318,39 +343,39 @@ export default function App() {
         </For>
         <Show when={live()}>
           <button class="hd-btn danger" onClick={() => postAction("delcase", String(board.current))}>
-            ✕ case
+            {T("delCase")}
           </button>
         </Show>
         <input
-          placeholder="new case…"
+          placeholder={T("newCasePh")}
           value={caseName()}
           onInput={(e) => setCaseName(e.currentTarget.value)}
           onKeyDown={(e) => e.key === "Enter" && newCase()}
         />
         <button class="hd-btn" onClick={newCase}>
-          + case
+          {T("addCase")}
         </button>
         <div style={{ flex: "1" }} />
         <button class={"hd-btn" + (linkMode() ? " linkmode" : "")} onClick={() => setLinkMode(!linkMode())}>
-          {linkMode() ? (linkA() === null ? "string: pick 1st pin" : "string: pick 2nd pin") : "string mode"}
+          {linkMode() ? (linkA() === null ? T("stringPick1") : T("stringPick2")) : T("stringMode")}
         </button>
         <input
-          placeholder="string label…"
+          placeholder={T("stringLabelPh")}
           style={{ width: "110px", "font-size": "11px" }}
           value={linkLabel()}
           onInput={(e) => setLinkLabel(e.currentTarget.value)}
         />
         <input
-          placeholder="sticky note…"
+          placeholder={T("notePh")}
           value={noteText()}
           onInput={(e) => setNoteText(e.currentTarget.value)}
           onKeyDown={(e) => e.key === "Enter" && addNote()}
         />
         <button class="hd-btn" onClick={addNote}>
-          + note
+          {T("addNote")}
         </button>
         <button class="hd-btn" onClick={() => postAction("printcase", String(current()?.id))}>
-          print case
+          {T("printCase")}
         </button>
         <button class="hd-btn" onClick={() => zoomStep(-0.2)}>
           −
