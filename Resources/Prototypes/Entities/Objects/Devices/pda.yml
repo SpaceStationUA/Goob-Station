@@ -1163,7 +1163,7 @@
       - NanoChatCartridge # DeltaV
       - WalletCartridge # Pirate banking
   # Pirate: nanochat network - routes NanoChat through the Syndicate relay instead of telecomms, and
-  # keeps this PDA out of ordinary directories and logs. Inherited by every derived Syndicate PDA.
+  # keeps this PDA out of ordinary directories and logs. PiratePDA opts out. # Pirate: nanochat network
   - type: SyndicateNanoChatPda
 
 - type: entity
@@ -1567,6 +1567,7 @@
   name: pirate PDA
   description: Yargh!
   components:
+  - type: OrdinaryNanoChatPda # Pirate: nanochat network
   - type: Pda
     id: PirateIDCard
   - type: Appearance
@@ -1583,6 +1584,7 @@
   name: syndicate corpsman PDA
   description: For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
   components:
+  - type: SyndicateNanoChatPda # Pirate: nanochat network
   - type: Pda
     id: NukieAgentIDCard # Goobstation
   - type: Appearance

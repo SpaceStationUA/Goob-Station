@@ -25,7 +25,7 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
 
     private const float ScrollEdgeSlack = 24f;
 
-    public event Action<ulong, int, bool>? OnRequestPage;
+    public event Action<ulong, int, bool, ulong>? OnRequestPage;
 
     public event Action<string>? OnRequestAttachment;
 
@@ -49,6 +49,8 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
     private int _loadedStart;
     private int _loadedEnd;
     private int _totalCount;
+    private ulong _revision;
+    private ulong _lastRequestId;
 
     private bool _awaitingPage;
 
@@ -59,6 +61,7 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
     private bool _stickToBottom;
 
     private readonly Dictionary<string, NanoChatMonitorAttachmentMessage> _attachments = new();
+    private readonly Dictionary<string, Texture?> _attachmentTextures = new();
 
     private readonly HashSet<string> _requestedAttachments = new();
 
@@ -126,8 +129,23 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
         }
 
         var previousTotal = _totalCount;
+        var previousRevision = _revision;
         _totalCount = summary.MessageCount;
+        _revision = summary.Revision;
         UpdateCountLabel();
+
+        if (_revision != previousRevision || _totalCount < previousTotal)
+        {
+            _loaded.Clear();
+            _loadedStart = 0;
+            _loadedEnd = 0;
+            _prependAnchorHeight = null;
+            _stickToBottom = false;
+            MessageList.RemoveAllChildren();
+            _rows.Clear();
+            RequestLatest();
+            return;
+        }
 
         if (_totalCount == previousTotal || _loadedEnd < previousTotal)
             return;
@@ -172,6 +190,8 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
     {
         _selectedKey = null;
         _totalCount = 0;
+        _revision = 0;
+        _lastRequestId++;
         _loaded.Clear();
         _loadedStart = 0;
         _loadedEnd = 0;
@@ -205,6 +225,7 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
             ("second", $"{summary.NameB} (#{summary.NumberB})"));
 
         _totalCount = summary.MessageCount;
+        _revision = summary.Revision;
 
         _loaded.Clear();
         _loadedStart = 0;
@@ -228,7 +249,7 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
             return;
 
         _awaitingPage = true;
-        OnRequestPage?.Invoke(key, 0, true);
+        OnRequestPage?.Invoke(key, 0, true, ++_lastRequestId);
     }
 
     private void RequestPage(int start)
@@ -237,15 +258,25 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
             return;
 
         _awaitingPage = true;
-        OnRequestPage?.Invoke(key, start, false);
+        OnRequestPage?.Invoke(key, start, false, ++_lastRequestId);
     }
 
     public void HandlePage(NanoChatMonitorPageMessage message)
     {
+        if (_selectedKey != message.ConversationKey || message.RequestId != _lastRequestId)
+            return;
+
         _awaitingPage = false;
 
-        if (_selectedKey != message.ConversationKey)
-            return;
+        if (_revision != message.Revision)
+        {
+            _revision = message.Revision;
+            _loaded.Clear();
+            _loadedStart = 0;
+            _loadedEnd = 0;
+            _prependAnchorHeight = null;
+            _stickToBottom = false;
+        }
 
         _totalCount = message.TotalCount;
 
@@ -332,7 +363,7 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
     {
         if (_attachments.TryGetValue(attachmentId, out var cached))
         {
-            row.SetPhoto(cached);
+            row.SetPhoto(cached, _attachmentTextures[attachmentId]);
             return;
         }
 
@@ -438,10 +469,12 @@ public sealed partial class NanoChatMonitorWindow : FancyWindow
     public void HandleAttachment(NanoChatMonitorAttachmentMessage message)
     {
         _attachments[message.AttachmentId] = message;
+        if (!_attachmentTextures.ContainsKey(message.AttachmentId))
+            _attachmentTextures[message.AttachmentId] = NanoChatMonitorMessageRow.LoadTexture(message.ImageData, message.AttachmentId);
 
         foreach (var row in _rows)
         {
-            row.SetPhoto(message);
+            row.SetPhoto(message, _attachmentTextures[message.AttachmentId]);
         }
     }
 

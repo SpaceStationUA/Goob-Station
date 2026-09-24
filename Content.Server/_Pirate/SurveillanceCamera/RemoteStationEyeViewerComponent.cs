@@ -12,4 +12,7 @@ public sealed partial class RemoteStationEyeViewerComponent : Component
     public EntityUid? PreviousEyeTarget;
     public int PreviousVisibilityMask;
     public bool PreviousDrawFov;
+    public bool HadInteractionBlock;
+    public bool PreviousBlockInteraction;
+    public bool PreviousBlockUse;
 }

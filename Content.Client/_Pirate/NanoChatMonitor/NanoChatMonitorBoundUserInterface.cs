@@ -21,8 +21,8 @@ public sealed class NanoChatMonitorBoundUserInterface : BoundUserInterface
         _window = this.CreateWindow<NanoChatMonitorWindow>();
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
-        _window.OnRequestPage += (key, start, latest) =>
-            SendMessage(new NanoChatMonitorRequestPageMessage(key, start, latest));
+        _window.OnRequestPage += (key, start, latest, requestId) =>
+            SendMessage(new NanoChatMonitorRequestPageMessage(key, start, latest, requestId));
         _window.OnRequestAttachment += id =>
             SendMessage(new NanoChatMonitorRequestAttachmentMessage(id));
         _window.OnPrintPhoto += id =>

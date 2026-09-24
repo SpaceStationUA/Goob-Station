@@ -80,12 +80,10 @@ public sealed partial class NanoChatMonitorMessageRow : BoxContainer
         UpdateSide(onRight);
     }
 
-    public void SetPhoto(NanoChatMonitorAttachmentMessage attachment)
+    public void SetPhoto(NanoChatMonitorAttachmentMessage attachment, Texture? texture)
     {
         if (AttachmentId != attachment.AttachmentId)
             return;
-
-        var texture = LoadTexture(attachment.ImageData, attachment.AttachmentId);
 
         Photo.Texture = texture;
         Photo.Visible = texture != null;
@@ -131,7 +129,7 @@ public sealed partial class NanoChatMonitorMessageRow : BoxContainer
         _renderedOnRight = onRight;
     }
 
-    private static Texture? LoadTexture(byte[]? data, string id)
+    public static Texture? LoadTexture(byte[]? data, string id)
     {
         if (data is not { Length: > 0 })
             return null;

@@ -633,12 +633,15 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
     /// </summary>
     private void UpdateUIForAllCards()
     {
+        var topology = _nanoChatNetwork.BuildTopology(); // Pirate: nanochat network
+        var relayActive = _nanoChatNetwork.IsRelayActive(); // Pirate: nanochat network
+
         // Find any PDA containing this card and update its UI
         var query = EntityQueryEnumerator<NanoChatCartridgeComponent, CartridgeComponent>();
         while (query.MoveNext(out var uid, out var comp, out var cartridge))
         {
             if (cartridge.LoaderUid is { } loader)
-                UpdateUI((uid, comp), loader);
+                UpdateUI((uid, comp), loader, topology, relayActive); // Pirate: nanochat network
         }
     }
 
@@ -685,12 +688,13 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
         UpdateUI(ent, args.Loader);
     }
 
-    private void UpdateUI(Entity<NanoChatCartridgeComponent> ent, EntityUid loader)
+    private void UpdateUI(Entity<NanoChatCartridgeComponent> ent, EntityUid loader, // Pirate: nanochat network
+        NanoChatNetworkTopology? topology = null, bool relayActive = false) // Pirate: nanochat network
     {
         #region Pirate: nanochat network
         ent.Comp.Station = _station.GetOwningStation(loader);
 
-        var contacts = BuildContacts(loader);
+        var contacts = topology is null ? BuildContacts(loader) : BuildContacts(loader, topology, relayActive);
         #endregion
 
         var recipients = new Dictionary<uint, NanoChatRecipient>();
@@ -728,12 +732,14 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
 
     #region Pirate: nanochat network
     public List<NanoChatRecipient>? BuildContacts(EntityUid loader)
+        => BuildContacts(loader, _nanoChatNetwork.BuildTopology(), _nanoChatNetwork.IsRelayActive());
+
+    private List<NanoChatRecipient>? BuildContacts(EntityUid loader, NanoChatNetworkTopology topology, bool relayActive)
     {
-        var topology = _nanoChatNetwork.BuildTopology();
         var syndicate = _nanoChatNetwork.IsSyndicateDevice(loader);
 
         if (syndicate
-                ? !_nanoChatNetwork.IsRelayActive()
+                ? !relayActive
                 : !_nanoChatNetwork.HasOrdinaryCoverage(topology, loader))
         {
             return null;

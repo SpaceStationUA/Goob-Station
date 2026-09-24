@@ -241,14 +241,14 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (TryComp(ent, out RelayInputMoverComponent? relay))
         {
             viewer = relay.RelayEntity;
-            if (ent.Comp.AllowCrossGrid && ent.Comp.AllowUnseenMachineAccess) // Pirate: syndicate remote monitoring
+            if (ent.Comp.AllowCrossGrid) // Pirate: syndicate remote monitoring
                 target = relay.RelayEntity;
         }
 
         var targetXform = Transform(target);
 
         // No cross-grid
-        if (targetXform.GridUid != Transform(viewer).GridUid && (!ent.Comp.AllowCrossGrid || !ent.Comp.AllowUnseenMachineAccess)) // Pirate: syndicate remote monitoring
+        if (targetXform.GridUid != Transform(viewer).GridUid && !ent.Comp.AllowCrossGrid) // Pirate: syndicate remote monitoring
         {
             return;
         }

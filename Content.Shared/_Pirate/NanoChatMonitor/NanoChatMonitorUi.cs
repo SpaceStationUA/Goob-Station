@@ -48,7 +48,8 @@ public readonly record struct NanoChatMonitorConversationSummary(
     string NameB,
     string? JobB,
     int MessageCount,
-    TimeSpan LastTimestamp);
+    TimeSpan LastTimestamp,
+    ulong Revision);
 
 /// <param name="SenderIsA">
 ///     Which side of the conversation sent this. Carried explicitly because
@@ -90,11 +91,14 @@ public sealed class NanoChatMonitorRequestPageMessage : BoundUserInterfaceMessag
 
     public readonly bool Latest;
 
-    public NanoChatMonitorRequestPageMessage(ulong conversationKey, int startIndex, bool latest)
+    public readonly ulong RequestId;
+
+    public NanoChatMonitorRequestPageMessage(ulong conversationKey, int startIndex, bool latest, ulong requestId)
     {
         ConversationKey = conversationKey;
         StartIndex = startIndex;
         Latest = latest;
+        RequestId = requestId;
     }
 }
 
@@ -105,17 +109,23 @@ public sealed class NanoChatMonitorPageMessage : BoundUserInterfaceMessage
     public readonly int StartIndex;
     public readonly int TotalCount;
     public readonly List<NanoChatMonitorLogEntry> Entries;
+    public readonly ulong Revision;
+    public readonly ulong RequestId;
 
     public NanoChatMonitorPageMessage(
         ulong conversationKey,
         int startIndex,
         int totalCount,
-        List<NanoChatMonitorLogEntry> entries)
+        List<NanoChatMonitorLogEntry> entries,
+        ulong revision,
+        ulong requestId = 0)
     {
         ConversationKey = conversationKey;
         StartIndex = startIndex;
         TotalCount = totalCount;
         Entries = entries;
+        Revision = revision;
+        RequestId = requestId;
     }
 }
 

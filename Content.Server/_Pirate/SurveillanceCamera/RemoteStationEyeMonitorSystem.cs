@@ -10,6 +10,7 @@ using Content.Shared._Pirate.SurveillanceCamera;
 using Content.Shared._Shitmed.Antags.Abductor;
 using Content.Shared.Eye;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pinpointer;
@@ -153,6 +154,13 @@ public sealed class RemoteStationEyeMonitorSystem : EntitySystem
         state.PreviousEyeTarget = actorEye.Target;
         state.PreviousVisibilityMask = actorEye.VisibilityMask;
         state.PreviousDrawFov = actorEye.DrawFov;
+        state.HadInteractionBlock = TryComp<BlockMovementComponent>(viewer, out var block);
+        state.PreviousBlockInteraction = block?.BlockInteraction ?? false;
+        state.PreviousBlockUse = block?.BlockUse ?? false;
+        block ??= EnsureComp<BlockMovementComponent>(viewer);
+        block.BlockInteraction = true;
+        block.BlockUse = true;
+        Dirty(viewer, block);
         Comp<RemoteStationEyeMonitorComponent>(monitor).ViewerEyes[viewer] = eye;
 
         _eyes.SetVisibilityMask(viewer, actorEye.VisibilityMask | (int) VisibilityFlags.Abductor, actorEye);
@@ -240,12 +248,27 @@ public sealed class RemoteStationEyeMonitorSystem : EntitySystem
 
         if (TryComp<RelayInputMoverComponent>(viewer, out var relay) && relay.RelayEntity == state.Eye)
             RemComp<RelayInputMoverComponent>(viewer);
-        if (TryComp<EyeComponent>(viewer, out var actorEye) && actorEye.Target == state.Eye)
+        if (TryComp<EyeComponent>(viewer, out var actorEye))
         {
-            EntityUid? previousTarget = state.PreviousEyeTarget is { } target && Exists(target) ? target : null;
-            _eyes.SetTarget(viewer, previousTarget, actorEye);
+            if (actorEye.Target == state.Eye)
+            {
+                EntityUid? previousTarget = state.PreviousEyeTarget is { } target && Exists(target) ? target : null;
+                _eyes.SetTarget(viewer, previousTarget, actorEye);
+            }
+
             _eyes.SetDrawFov(viewer, state.PreviousDrawFov);
             _eyes.SetVisibilityMask(viewer, state.PreviousVisibilityMask, actorEye);
+        }
+
+        if (state.HadInteractionBlock && TryComp<BlockMovementComponent>(viewer, out var block))
+        {
+            block.BlockInteraction = state.PreviousBlockInteraction;
+            block.BlockUse = state.PreviousBlockUse;
+            Dirty(viewer, block);
+        }
+        else if (!state.HadInteractionBlock)
+        {
+            RemComp<BlockMovementComponent>(viewer);
         }
 
         RemComp<StationAiOverlayComponent>(viewer);

@@ -175,8 +175,15 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
         if (args.Message.Photo is { } photo)
         {
-            entry.AttachmentId = StoreAttachment(monitor.Comp, photo);
-            entry.AttachmentName = photo.FileName;
+            if (redactSender)
+            {
+                entry.AttachmentName = NanoChatMonitorConstants.Mask(photo.FileName);
+            }
+            else
+            {
+                entry.AttachmentId = StoreAttachment(monitor.Comp, photo);
+                entry.AttachmentName = photo.FileName;
+            }
         }
 
         var key = GetConversationKey(args.SenderNumber, args.RecipientNumber);
@@ -346,6 +353,7 @@ public sealed class NanoChatMonitorSystem : EntitySystem
         public uint NumberB;
         public bool RedactedA;
         public bool RedactedB;
+        public ulong Revision;
         public string NameA = string.Empty;
         public string? JobA;
         public string NameB = string.Empty;
@@ -394,6 +402,9 @@ public sealed class NanoChatMonitorSystem : EntitySystem
                     };
                 }
 
+                target.RedactedA |= conversation.RedactedA;
+                target.RedactedB |= conversation.RedactedB;
+
                 foreach (var entry in conversation.Entries)
                 {
                     if (!alone && entry.DeliveryId != 0 && !target.Seen.Add(entry.DeliveryId))
@@ -414,16 +425,53 @@ public sealed class NanoChatMonitorSystem : EntitySystem
             }
         }
 
-        if (!alone)
+        foreach (var conversation in merged.Values)
         {
-            foreach (var conversation in merged.Values)
+            if (conversation.RedactedA)
             {
-                conversation.Entries.Sort(static (a, b) => a.Entry.Timestamp.CompareTo(b.Entry.Timestamp));
+                conversation.NameA = NanoChatMonitorConstants.Mask(conversation.NameA)!;
+                conversation.JobA = NanoChatMonitorConstants.Mask(conversation.JobA);
             }
+
+            if (conversation.RedactedB)
+            {
+                conversation.NameB = NanoChatMonitorConstants.Mask(conversation.NameB)!;
+                conversation.JobB = NanoChatMonitorConstants.Mask(conversation.JobB);
+            }
+
+            if (!alone)
+                conversation.Entries.Sort(static (a, b) => a.Entry.Timestamp.CompareTo(b.Entry.Timestamp));
+
+            conversation.Revision = ComputeRevision(conversation);
         }
 
         _mergeCache[viewer.Owner] = merged;
         return merged;
+    }
+
+    private static ulong ComputeRevision(MergedConversation conversation)
+    {
+        unchecked
+        {
+            const ulong prime = 1099511628211;
+            var hash = 14695981039346656037UL;
+
+            hash = (hash ^ (ulong) conversation.Entries.Count) * prime;
+            hash = (hash ^ (conversation.RedactedA ? 1UL : 0UL)) * prime;
+            hash = (hash ^ (conversation.RedactedB ? 1UL : 0UL)) * prime;
+
+            foreach (var (entry, _) in conversation.Entries)
+            {
+                hash = (hash ^ entry.DeliveryId) * prime;
+                hash = (hash ^ (ulong) entry.Timestamp.Ticks) * prime;
+                hash = (hash ^ (uint) entry.Content.GetHashCode()) * prime;
+                hash = (hash ^ (entry.SenderRedacted ? 1UL : 0UL)) * prime;
+                hash = (hash ^ (entry.RecipientRedacted ? 1UL : 0UL)) * prime;
+                hash = (hash ^ (uint) (entry.AttachmentId?.GetHashCode() ?? 0)) * prime;
+            }
+
+            return hash;
+        }
     }
 
     /// <summary>
@@ -596,7 +644,7 @@ public sealed class NanoChatMonitorSystem : EntitySystem
         if (!CanRespond(ent, args.Actor))
             return;
 
-        if (!TryGetPage(ent, args.ConversationKey, args.StartIndex, args.Latest, out var page))
+        if (!TryGetPage(ent, args.ConversationKey, args.StartIndex, args.Latest, out var page, args.RequestId))
             return;
 
         _ui.ServerSendUiMessage(ent.Owner, NanoChatMonitorUiKey.Key, page, args.Actor);
@@ -812,7 +860,8 @@ public sealed class NanoChatMonitorSystem : EntitySystem
         ulong clientKey,
         int startIndex,
         bool latest,
-        [NotNullWhen(true)] out NanoChatMonitorPageMessage? page)
+        [NotNullWhen(true)] out NanoChatMonitorPageMessage? page,
+        ulong requestId = 0)
     {
         page = null;
 
@@ -834,7 +883,7 @@ public sealed class NanoChatMonitorSystem : EntitySystem
             entries.Add(BuildLogEntry(source, conversation, entry));
         }
 
-        page = new NanoChatMonitorPageMessage(clientKey, start, total, entries);
+        page = new NanoChatMonitorPageMessage(clientKey, start, total, entries, conversation.Revision, requestId);
         return true;
     }
 
@@ -968,7 +1017,8 @@ public sealed class NanoChatMonitorSystem : EntitySystem
                 conversation.NameB,
                 conversation.JobB,
                 conversation.Entries.Count,
-                last.Timestamp));
+                last.Timestamp,
+                conversation.Revision));
         }
 
         conversations.Sort(static (a, b) => b.LastTimestamp.CompareTo(a.LastTimestamp));

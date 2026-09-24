@@ -122,7 +122,8 @@ public sealed class NanoChatNetworkSystem : EntitySystem
 
     public bool IsSyndicateDevice(EntityUid? uid)
     {
-        return uid is { } device && !Deleted(device) && HasComp<SyndicateNanoChatPdaComponent>(device);
+        return uid is { } device && !Deleted(device) &&
+               HasComp<SyndicateNanoChatPdaComponent>(device) && !HasComp<OrdinaryNanoChatPdaComponent>(device);
     }
 
     public bool IsSyndicateCard(EntityUid? card)
