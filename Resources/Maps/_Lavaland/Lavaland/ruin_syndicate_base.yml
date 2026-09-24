@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 09/12/2026 10:02:28
-  entityCount: 10901 # Pirate: slime morph
+  entityCount: 10901
 maps: []
 grids:
 - 1
@@ -23101,7 +23101,7 @@ entities:
   - uid: 9214
     components:
     - type: Transform
-      pos: 4.222626,-10.880394
+      pos: -9.053325,24.877367
       parent: 1
 - proto: CannabisSeeds
   entities:
@@ -29229,8 +29229,8 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 10901 # Pirate: slime morph
-          - 9765 # Pirate: slime morph
+          - 10901
+          - 9765
           - 1745
           - 1757
           - 1756
@@ -58492,7 +58492,6 @@ entities:
     - type: Transform
       pos: -8.465594,-2.4442272
       parent: 1
-#region Pirate: slime morph
 - proto: LavalandJaunter
   entities:
   - uid: 9765
@@ -58511,7 +58510,6 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 1743
-#endregion Pirate: slime morph
 - proto: LightReplacer
   entities:
   - uid: 370
@@ -61078,14 +61076,14 @@ entities:
   - uid: 9669
     components:
     - type: Transform
-      pos: 4.595714,-10.990052
+      pos: -9.313741,24.575073
       parent: 1
 - proto: PhotoCamera
   entities:
   - uid: 457
     components:
     - type: Transform
-      pos: 4.7574472,-11.075809
+      pos: -9.417908,24.898214
       parent: 1
 - proto: PianoInstrument
   entities:
