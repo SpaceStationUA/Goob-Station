@@ -52,6 +52,7 @@ public sealed class RemoteStationEyeMonitorSystem : EntitySystem
         SubscribeLocalEvent<RemoteStationEyeMonitorComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
         SubscribeLocalEvent<RemoteStationEyeMonitorComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<RemoteStationEyeMonitorComponent, ComponentShutdown>(OnMonitorShutdown);
+        SubscribeLocalEvent<RemoteStationEyeViewerComponent, ComponentShutdown>(OnViewerShutdown);
         SubscribeLocalEvent<RemoteStationEyeExitEvent>(OnExit);
         Subs.BuiEvents<RemoteStationEyeMonitorComponent>(AbductorCameraConsoleUIKey.Key,
             subs => subs.Event<AbductorBeaconChosenBuiMsg>(OnBeaconChosen));
@@ -232,6 +233,15 @@ public sealed class RemoteStationEyeMonitorSystem : EntitySystem
     private void OnMonitorShutdown(Entity<RemoteStationEyeMonitorComponent> ent, ref ComponentShutdown args)
         => StopAllViewers(ent);
 
+    private void OnViewerShutdown(Entity<RemoteStationEyeViewerComponent> ent, ref ComponentShutdown args)
+    {
+        if (TryComp<RemoteStationEyeMonitorComponent>(ent.Comp.Monitor, out var monitor))
+            monitor.ViewerEyes.Remove(ent.Owner);
+
+        if (Exists(ent.Comp.Eye))
+            QueueDel(ent.Comp.Eye);
+    }
+
     private void StopAllViewers(Entity<RemoteStationEyeMonitorComponent> ent)
     {
         foreach (var viewer in ent.Comp.ViewerEyes.Keys.ToArray())
@@ -275,8 +285,6 @@ public sealed class RemoteStationEyeMonitorSystem : EntitySystem
         _zEye.RemoveActions(viewer);
         _actions.RemoveAction(viewer, state.ExitAction);
         RemComp<RemoteStationEyeViewerComponent>(viewer);
-        if (Exists(state.Eye))
-            QueueDel(state.Eye);
     }
 
     private bool IsPowered(EntityUid uid)

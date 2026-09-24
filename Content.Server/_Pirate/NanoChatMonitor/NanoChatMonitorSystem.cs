@@ -64,6 +64,11 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
     private readonly Dictionary<EntityUid, Dictionary<ulong, MergedConversation>> _mergeCache = new();
 
+    // Keep revisions across merge-cache invalidations so append-only updates preserve loaded pages.
+    private readonly Dictionary<EntityUid, Dictionary<ulong, RevisionSnapshot>> _revisions = new();
+
+    private readonly record struct RevisionSnapshot(int Count, ulong Hash, ulong Revision);
+
     private void InvalidateMergeCache()
     {
         _mergeCache.Clear();
@@ -379,6 +384,8 @@ public sealed class NanoChatMonitorSystem : EntitySystem
         var alone = _servers.Count <= 1;
 
         var merged = new Dictionary<ulong, MergedConversation>();
+        if (!_revisions.TryGetValue(viewer.Owner, out var revisions))
+            _revisions[viewer.Owner] = revisions = new Dictionary<ulong, RevisionSnapshot>();
 
         foreach (var uid in _servers)
         {
@@ -442,32 +449,52 @@ public sealed class NanoChatMonitorSystem : EntitySystem
             if (!alone)
                 conversation.Entries.Sort(static (a, b) => a.Entry.Timestamp.CompareTo(b.Entry.Timestamp));
 
-            conversation.Revision = ComputeRevision(conversation);
+            var key = GetConversationKey(conversation.NumberA, conversation.NumberB);
+            var hash = ComputeRevision(conversation, conversation.Entries.Count);
+            if (revisions.TryGetValue(key, out var previous))
+            {
+                var appendedOnly = conversation.Entries.Count >= previous.Count &&
+                                   ComputeRevision(conversation, previous.Count) == previous.Hash;
+                conversation.Revision = appendedOnly ? previous.Revision : previous.Revision + 1;
+            }
+            else
+            {
+                conversation.Revision = 1;
+            }
+
+            revisions[key] = new RevisionSnapshot(conversation.Entries.Count, hash, conversation.Revision);
         }
 
         _mergeCache[viewer.Owner] = merged;
         return merged;
     }
 
-    private static ulong ComputeRevision(MergedConversation conversation)
+    private static ulong ComputeRevision(MergedConversation conversation, int count)
     {
         unchecked
         {
             const ulong prime = 1099511628211;
             var hash = 14695981039346656037UL;
 
-            hash = (hash ^ (ulong) conversation.Entries.Count) * prime;
+            hash = (hash ^ (ulong) count) * prime;
             hash = (hash ^ (conversation.RedactedA ? 1UL : 0UL)) * prime;
             hash = (hash ^ (conversation.RedactedB ? 1UL : 0UL)) * prime;
 
-            foreach (var (entry, _) in conversation.Entries)
+            for (var i = 0; i < count; i++)
             {
+                var entry = conversation.Entries[i].Entry;
                 hash = (hash ^ entry.DeliveryId) * prime;
                 hash = (hash ^ (ulong) entry.Timestamp.Ticks) * prime;
                 hash = (hash ^ (uint) entry.Content.GetHashCode()) * prime;
+                hash = (hash ^ (uint) entry.SenderName.GetHashCode()) * prime;
+                hash = (hash ^ (uint) (entry.SenderJob?.GetHashCode() ?? 0)) * prime;
+                hash = (hash ^ (uint) entry.RecipientName.GetHashCode()) * prime;
+                hash = (hash ^ (uint) (entry.RecipientJob?.GetHashCode() ?? 0)) * prime;
+                hash = (hash ^ (uint) entry.Location.GetHashCode()) * prime;
                 hash = (hash ^ (entry.SenderRedacted ? 1UL : 0UL)) * prime;
                 hash = (hash ^ (entry.RecipientRedacted ? 1UL : 0UL)) * prime;
                 hash = (hash ^ (uint) (entry.AttachmentId?.GetHashCode() ?? 0)) * prime;
+                hash = (hash ^ (uint) (entry.AttachmentName?.GetHashCode() ?? 0)) * prime;
             }
 
             return hash;
@@ -504,11 +531,12 @@ public sealed class NanoChatMonitorSystem : EntitySystem
 
     private void OnKeysChanged(EntityUid uid, NanoChatMonitorComponent monitor, EncryptionChannelsChangedEvent args)
     {
-        if (KeepsLog(uid))
-            return;
+        if (!KeepsLog(uid))
+        {
+            ClearLog(monitor);
+            _ui.CloseUi(uid, NanoChatMonitorUiKey.Key);
+        }
 
-        ClearLog(monitor);
-        _ui.CloseUi(uid, NanoChatMonitorUiKey.Key);
         InvalidateMergeCache();
         RefreshOpenViewers();
     }
@@ -605,6 +633,7 @@ public sealed class NanoChatMonitorSystem : EntitySystem
     private void OnMonitorRemoved(Entity<NanoChatMonitorComponent> ent, ref ComponentShutdown args)
     {
         InvalidateMergeCache();
+        _revisions.Remove(ent.Owner);
     }
 
     private void OnMonitorMoved(Entity<NanoChatMonitorComponent> ent, ref EntParentChangedMessage args)
