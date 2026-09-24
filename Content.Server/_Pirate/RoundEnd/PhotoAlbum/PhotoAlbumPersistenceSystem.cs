@@ -126,11 +126,19 @@ public sealed class PhotoAlbumPersistenceSystem : EntitySystem
         if (snapshots.Count == 0)
             return;
 
-        _persistTask = PersistSnapshotsAsync(snapshots);
+        // Keep DB continuations off the game thread so restart can wait for the final save.
+        _persistTask = Task.Run(() => PersistSnapshotsAsync(snapshots));
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
     {
+        WaitForPendingPersistence();
+
+        var snapshots = CollectAlbumSnapshots();
+        if (snapshots.Count == 0)
+            return;
+
+        _persistTask = Task.Run(() => PersistSnapshotsAsync(snapshots));
         WaitForPendingPersistence();
     }
 
