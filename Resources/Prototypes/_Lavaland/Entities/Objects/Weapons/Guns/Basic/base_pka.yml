@@ -3,6 +3,8 @@
   abstract: true
   parent: BaseItem
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Mining # Pirate: weapon skills
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
   - type: Item

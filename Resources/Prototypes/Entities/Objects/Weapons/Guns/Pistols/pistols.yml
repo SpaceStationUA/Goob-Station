@@ -157,6 +157,8 @@
   id: WeaponPistolEchis
   description: A cyborg-mounted weapon system based on the Viper platform. Creates ammunition on the fly from an internal fabricator, which slowly self-charges. # Goobstation
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Pistol # Pirate: weapon skills
   - type: Gun
     fireRate: 5
     selectedMode: SemiAuto

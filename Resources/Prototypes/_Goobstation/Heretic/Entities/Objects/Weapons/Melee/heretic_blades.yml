@@ -7,6 +7,8 @@
   name: eldritch blade
   description: A sickly green crescent blade, decorated with an ornamental eye. You feel like you're being watched...
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: UnholyItem
   - type: HereticBlade
   - type: Sharp

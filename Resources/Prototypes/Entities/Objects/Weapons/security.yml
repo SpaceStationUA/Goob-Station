@@ -6,6 +6,8 @@
   id: Stunbaton
   description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: NonLethal # Pirate: weapon skills
   - type: Tag # goob edit
     tags:
     - Stunbaton
@@ -113,6 +115,8 @@
   id: Truncheon
   description: A rigid, steel-studded baton, meant to harm.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: Objects/Weapons/Melee/truncheon.rsi
     state: icon

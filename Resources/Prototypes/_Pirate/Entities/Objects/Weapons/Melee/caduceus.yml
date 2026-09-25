@@ -7,6 +7,8 @@
   name: Золотий флакон
   description: Золотий флакон з золотою цепочкою. В середині міститься слиз, що виглядає як чорний метал. Цікава іграшка.
   components:
+  - type: WeaponClass
+    class: Bludgeon
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/Caduceus/icons.rsi
     layers:

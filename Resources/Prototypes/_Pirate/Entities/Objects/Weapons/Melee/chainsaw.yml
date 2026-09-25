@@ -4,6 +4,8 @@
   id: MagicChainsaw
   description: ААА ЗАРАЗ Я БУДУ ВАС ВСІХ РІЗАТИ!
   components:
+  - type: WeaponClass
+    class: Tool
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/magic_chainsaw.rsi
     state: icon

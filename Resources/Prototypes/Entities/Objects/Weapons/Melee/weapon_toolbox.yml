@@ -7,6 +7,8 @@
   description: A tider's weapon.
   categories: [ DoNotMap ]
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
     state: icon

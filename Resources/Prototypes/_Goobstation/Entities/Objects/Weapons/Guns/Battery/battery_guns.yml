@@ -5,6 +5,8 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Laser # Pirate: weapon skills
   - type: Sprite
   - type: Item
     size: Huge
@@ -182,6 +184,8 @@
   id: WeaponEnergyRevolver
   description: In the face of death, everyone is equal. The right arm of the Blueshield corps, the Equalizer is a modular energy revolver platform designed for lethal and non-lethal target neutralization. Takes energy speedloaders.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Laser # Pirate: weapon skills
   - type: Item
     heldPrefix: lethal
   - type: Sprite
@@ -326,6 +330,8 @@
   id: WeaponEnergyRifle
   description: A versatile plasma assault rifle, iterated off of the now defunct energy gun. Loads from energy rifle magazines.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Laser # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/energy_rifle.rsi
     layers:

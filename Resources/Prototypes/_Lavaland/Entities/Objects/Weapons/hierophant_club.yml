@@ -6,6 +6,8 @@
   name: hierophant club
   description: Get item'ed lol
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: _Lavaland/Objects/Weapons/hierophant_club.rsi
     state: icon

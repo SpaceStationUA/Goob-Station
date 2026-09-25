@@ -3,6 +3,8 @@
   parent: ArmBlade
   id: MagicArmBlade
   components:
+  - type: WeaponClass
+    class: Sword
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/magic_armblade.rsi
     state: icon
