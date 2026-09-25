@@ -176,8 +176,7 @@ namespace Content.IntegrationTests.Tests
             "Snowball",
             "TestTeg",        // Dev map
             "Train",           // Not in pool
-			"Shoukou",       // Pirate
-			"ZNebula"       // Pirate
+			"Shoukou"       // Pirate
             // Goob end
         };
         // Goobstation edit start, yeah i know, but this is easier and less load than loading protoman or something.
@@ -232,7 +231,6 @@ namespace Content.IntegrationTests.Tests
               "Serpentcrest",
              // "Snowball", // fuck off not in pool
 			  "Shoukou", //Pirate
-			  "ZNebula"       // Pirate
         };
         // Goobstation edit end
 
