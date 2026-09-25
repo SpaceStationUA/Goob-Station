@@ -1467,3 +1467,14 @@ connection labels, case rename UI, portraits (render-target -> base64
 - FileHeldPaper checked PaperComponent only -> pad/photo in hand got
   "hold the evidence paper". Now dispatches paper/pad/photo by
   component; new generic hold-evidence popup key (en+uk).
+
+### Board security pass (review findings #1 + #2)
+- OnRequest ops were reachable from ANY client without reach/access
+  checks (verbs gated themselves; raw network didn't). Now every
+  non-sync action requires the sender to stand at an ACCESSIBLE
+  console (FindNearbyConsole must resolve to the very console).
+- BroadcastState was a global RaiseNetworkEvent (full snapshot incl.
+  128KB base64 photos to every connected player + board text leaked
+  to anyone). Rewritten as targeted fan-out to sessions within 5
+  tiles; remote pages still live off their targeted 2s sync poll
+  (locality staleness <= 2s, only for viewers standing elsewhere).

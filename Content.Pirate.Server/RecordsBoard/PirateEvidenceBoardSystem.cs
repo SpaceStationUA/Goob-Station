@@ -14,6 +14,7 @@ using Robust.Server.GameObjects;
 using Content.Server._Pirate.Photo;
 using Content.Shared.Interaction;
 using Content.Shared.Hands.EntitySystems;
+using Robust.Server.Player;
 using Content.Shared.Station;
 using Content.Shared.StationRecords;
 using Content.Shared.CriminalRecords;
@@ -132,6 +133,7 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
     [Dependency] private readonly SharedStationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     public const float FileRange = 2.5f;
 
@@ -336,6 +338,17 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
 
         var board = new Entity<PirateEvidenceBoardComponent>(console.Value, comp);
         EnsureInitialized(board);
+
+        // Mutating ops: the sender must be standing at an ACCESSIBLE
+        // console (the same gate the intake verbs use). Reach/access are
+        // verb-side only; raw network traffic is not trusted.
+        if (msg.Action != "sync")
+        {
+            var player = args.SenderSession.AttachedEntity;
+            if (player == null || !Exists(player.Value) ||
+                FindNearbyConsole(player.Value) is not { } nearby || nearby.Owner != console.Value)
+                return;
+        }
 
         switch (msg.Action)
         {
@@ -987,13 +1000,25 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
 
     private void BroadcastState(Entity<PirateEvidenceBoardComponent> board, NetEntity netConsole)
     {
-        // Broadcast (the board is shared between warden + detective): open
-        // pages pull/apply it; everyone else ignores.
-        RaiseNetworkEvent(new EvidenceBoardStateEvent
+        // Targeted fan-out (was a global RaiseNetworkEvent): only sessions
+        // near the console get the full snapshot. Every acting user is at
+        // the machine anyway; pages elsewhere live off their own targeted
+        // 2s sync poll. Cuts both the photo-payload torrent and board text
+        // riding through connections of clients that never see the board.
+        const float range = 5f;
+        var origin = _xform.GetWorldPosition(board.Owner);
+        foreach (var session in _player.Sessions)
         {
-            Console = netConsole,
-            Snapshot = BuildSnapshot(board),
-        });
+            if (session.AttachedEntity is not { } ent || !Exists(ent))
+                continue;
+            if ((_xform.GetWorldPosition(ent) - origin).Length() > range)
+                continue;
+            RaiseNetworkEvent(new EvidenceBoardStateEvent
+            {
+                Console = netConsole,
+                Snapshot = BuildSnapshot(board),
+            }, session.Channel);
+        }
     }
 
     private void PushStateTo(Entity<PirateEvidenceBoardComponent> board, NetEntity netConsole, INetChannel channel)
