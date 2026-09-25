@@ -392,14 +392,6 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconFurryFemboy
-  icon:
-    sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
-    state: furry
-  jobName: job-alternative-name-furry-femboy
-
-- type: jobIcon
-  parent: JobIcon
   id: JobIconElectrician
   icon:
     sprite: /Textures/_Pirate/Interface/Misc/job_icons.rsi
