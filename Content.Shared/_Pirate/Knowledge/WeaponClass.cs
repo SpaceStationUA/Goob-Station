@@ -94,7 +94,8 @@ public sealed class WeaponClassSystem : EntitySystem
 
     private void OnGetMeleeDamage(Entity<WeaponClassComponent> ent, ref GetMeleeDamageEvent args)
     {
-        if (!_knowledge.SkillsEnabled)
+        // GetDamage also raises this on the attacker, whose Unarmed class must not stack on top of the weapon's.
+        if (!_knowledge.SkillsEnabled || args.Weapon != ent.Owner)
             return;
 
         var prototype = _prototypes.Index(ent.Comp.Class);

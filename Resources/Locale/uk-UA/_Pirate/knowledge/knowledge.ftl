@@ -54,6 +54,22 @@ knowledge-weapon-class-heavy = важкої зброї
 knowledge-weapon-class-laser = лазерної зброї
 knowledge-weapon-class-mining = шахтарської зброї
 
+knowledge-weapon-examine-verb-text = Навички
+knowledge-weapon-examine-verb-message = Показати, як ваші навички впливають на цю зброю.
+knowledge-weapon-examine-level = Ваш рівень: [color=yellow]{$mastery}[/color] ({$level}/100).
+knowledge-weapon-examine-melee = - Шкода в ближньому бою: {$current} (у майстра: {$max}).
+knowledge-weapon-examine-spread = - Розкид пострілів: {$current} (у майстра: {$max}).
+knowledge-weapon-examine-shooting = - Навичка «{$skill}»: розкид {$current} (у майстра: {$max}).
+knowledge-weapon-examine-block = - Навичка «{$skill}»: блокування шкоди {$current} (у майстра: {$max}).
+knowledge-weapon-examine-parry = - Парирування: потрібен рівень {$required} — {$met ->
+    [yes] [color=#5fbf5f]доступно[/color]
+   *[no] [color=#e05555]бракує навички[/color]
+    }.
+knowledge-weapon-examine-reflect = - Відбиття пострілів: потрібен рівень {$required} — {$met ->
+    [yes] [color=#5fbf5f]доступно[/color]
+   *[no] [color=#e05555]бракує навички[/color]
+    }.
+
 ent-MeleeKnowledge = Рукопашна підготовка
     .desc = Уміння ефективно битися голіруч або кігтями.
 ent-KnowledgeWeaponsBludgeon = Ударна зброя
