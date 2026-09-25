@@ -1,12 +1,15 @@
 alternative-job-notify = Хоча вашу роль тепер називають '{$newJobName}', це не означає, що ви перестали бути {$parentJobName}. Ваша роль та обов'язки залишаються незмінними.
 # Карго
 job-alternative-name-mailman = Поштар
+job-alternative-name-logistician = Логіст
 
 # Civilian
 job-alternative-name-Dungeon-Master = Майстер Підземелля
 job-alternative-name-flora-engineer = Флора-інженер
 job-alternative-name-prankster = Пранкер
+job-alternative-name-jester = Блазень
 job-alternative-name-waiter = Офіціант
+job-alternative-name-steward = Стюард
 job-alternative-name-maid = Покоївка
 job-alternative-name-correspondent = Кореспондент
 
@@ -88,6 +91,9 @@ job-alternative-name-command-officer = Офіцер командування
 job-alternative-name-station-director = Директор станції
 job-alternative-name-sherif = Шериф
 job-alternative-name-secretary = Секретар
+job-alternative-name-adjutant = Ад'ютант
+job-alternative-name-admin-personal = Адміністратор Персоналу
+job-alternative-name-Officer-HOP = Офіцер Відділу Кадрів
 
 # Engineering
 job-alternative-name-teg-specialist = Спеціаліст з ТЕГ-двигунів
