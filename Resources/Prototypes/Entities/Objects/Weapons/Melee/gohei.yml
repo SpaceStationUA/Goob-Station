@@ -6,6 +6,8 @@
   id: Gohei
   description: A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by the station's weeaboos.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: Objects/Weapons/Melee/gohei.rsi
     state: gohei

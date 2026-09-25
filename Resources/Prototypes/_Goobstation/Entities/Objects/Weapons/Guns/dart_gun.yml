@@ -6,6 +6,8 @@
   id: DartGun
   description: 'The label reads: "Interdyne Pharmaceutics is not responsible for any geneva convention violations caused by improper use."'
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: NonLethal # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Cannons/dart_gun.rsi
     state: icon

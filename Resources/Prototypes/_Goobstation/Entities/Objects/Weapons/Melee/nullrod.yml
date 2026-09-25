@@ -30,6 +30,8 @@
   id: Nullrod
   description: The old classic. Does nothing special, really.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: MeleeWeapon
     heavyStaminaCost: 2.5
     attackRate: 1
@@ -54,6 +56,8 @@
   id: HolyClaymore
   description: A weapon fit for a crusade! A sword capable of stealing life from evil-doers.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: Item
     size: Large
   - type: Nullrod
@@ -130,6 +134,8 @@
   parent: BaseNullrod
   id: Rosary
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: _ShitChap/Objects/Weapons/Nullrod/rosary.rsi
     state: icon
@@ -179,6 +185,8 @@
   description: A holy, fiery gift from the gods. You won't drop this one.
   suffix: Unremoveable
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Unarmed # Pirate: weapon skills
   - type: Item
     size: Ginormous
     sprite: _ShitChap/Objects/Weapons/Nullrod/godhand.rsi
@@ -229,6 +237,8 @@
   name: arrythmic knife
   description: They say fear is the true mind killer, but stabbing them in the head works too. Slows you down and speeds you up randomly.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Knife # Pirate: weapon skills
   - type: Nullrod
     DamageOnUntrainedUse:
       types:
@@ -272,6 +282,8 @@
   name: monk's staff
   description: A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, now used to harass the clown. #this should be able to parry eventually.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Polearm # Pirate: weapon skills
   - type: Nullrod
     DamageOnUntrainedUse:
       types:
@@ -305,6 +317,8 @@
   id: AtheistFedora
   description: The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Knife # Pirate: weapon skills
   - type: Nullrod # Note - These are damages, not damage types. Specify blunt or something not brute.
     DamageOnUntrainedUse:
       types:
@@ -356,6 +370,8 @@
   id: Bulwark
   description: An absolutely enormous two handed shield, very difficult to use if not planted in place.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Shield # Pirate: weapon skills
   - type: Nullrod # Note - These are damages, not damage types. Specify blunt or something not brute.
     DamageOnUntrainedUse:
       types:
@@ -422,6 +438,8 @@
   id: HonkmotherMaw
   description: a-HEAD of you lies a path most hilarious.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Item
     size: Huge
     sprite: _ShitChap/Objects/Weapons/Nullrod/honkmother.rsi
@@ -464,6 +482,8 @@
   description: The tide beckons.
   suffix: Unremoveable
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Unarmed # Pirate: weapon skills
   - type: PointLight
     radius: 4
     energy: 1
@@ -567,6 +587,8 @@
   description: And because it's fuckin' FUN! AHAHA! AHAHAHA! AHAH-AAAAAAAA-MEN!
   suffix: Unremoveable
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   - type: Wieldable
     wieldSound: !type:SoundPathSpecifier
       path: /Audio/Weapons/chainsawwield.ogg
@@ -624,6 +646,8 @@
   id: WeaponPistolCasul
   description: The first of two huge pistols, capable of firing regenerating silver bullets. Incapable of firing without its sister gun.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Pistol # Pirate: weapon skills
   - type: Nullrod
     DamageOnUntrainedUse:
       types:
@@ -703,6 +727,8 @@
   id: BlessingOfTheReaper
   description: A special undroppable armblade nullrod, it's blessed by the dark gods.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Melee/blessing_reaper.rsi
     state: icon
@@ -725,6 +751,8 @@
   name: ancient spear
   description: An ancient spear made of brass, I mean gold, I mean bronze. It looks highly mechanical.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Polearm # Pirate: weapon skills
   - type: Nullrod
     DamageOnUntrainedUse:
       types:
@@ -812,6 +840,8 @@
   id: DragonsTail
   description: A dragon's tail impaled on a stick. Still holds that deep fiery power within.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Polearm # Pirate: weapon skills
   - type: Item
     size: Large
     sprite: _ShitChap/Objects/Weapons/Nullrod/dragontail.rsi
@@ -847,6 +877,8 @@
   name: chain sword
   description: The perfect weapon for purging the station of all heresy! Activated through prayer.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: Nullrod
     DamageOnUntrainedUse:
       types:

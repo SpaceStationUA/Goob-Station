@@ -88,6 +88,8 @@
   id: WeaponShotgunBulldog
   description: A fully automatic, bullpup shotgun for when you have three seconds to turn eight people into pasta sauce. Kicks like a mule on steroids. Feeds from 12 Gauge drum magazines. # Goobstation
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Shotgun # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Shotguns/bulldog.rsi #GoobStation resprite
     layers:

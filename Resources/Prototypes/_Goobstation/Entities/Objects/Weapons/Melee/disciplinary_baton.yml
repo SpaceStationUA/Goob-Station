@@ -4,6 +4,8 @@
   name: disciplinary baton
   description: A compact and slightly harmful personal defense weapon, designed to discipline shoddy workers. Sturdy enough to knock the feet out from under attackers.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: NonLethal # Pirate: weapon skills
   - type: ItemToggleMeleeWeapon
     activatedSoundOnHit:
       path: /Audio/_Goobstation/Weapons/Baton/woodhit.ogg

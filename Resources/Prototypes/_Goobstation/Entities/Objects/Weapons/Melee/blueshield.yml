@@ -6,6 +6,8 @@
   id: BlueshieldMace
   description: Crush all those who oppose your leaders. Functions as a stun baton in its powered state.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Tag
     tags:
     - Stunbaton

@@ -6,6 +6,8 @@
   id: FireAxe
   description: Truly, the weapon of a madman. Who would think to fight fire with an axe?
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   - type: Tag
     tags:
     - FireAxe

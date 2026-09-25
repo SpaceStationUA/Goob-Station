@@ -4,6 +4,8 @@
   id: BloodyKnuckleDuster
   description: You get a certain rush wearing these gloves while tearing flesh off with each swing. These are very bloody.
   components:
+  - type: WeaponClass
+    class: Unarmed
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/bloody_knuckle_dusters.rsi
     state: icon

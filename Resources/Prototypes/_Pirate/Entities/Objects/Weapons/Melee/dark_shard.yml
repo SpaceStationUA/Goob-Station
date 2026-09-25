@@ -2,6 +2,8 @@
   parent: BaseItem
   id: DarkShard
   components:
+  - type: WeaponClass
+    class: Knife
   - type: Sharp
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/dark_shard.rsi

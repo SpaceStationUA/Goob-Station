@@ -6,6 +6,8 @@
   id: WeaponWoodenWand
   description: Handcrafted wooden wand with a anomaly core.
   components:
+    - type: WeaponClass # Pirate: weapon skills
+      class: Bludgeon # Pirate: weapon skills
     - type: Sprite
       sprite: _Goobstation/Objects/Weapons/Melee/wooden_wand.rsi
       state: icon

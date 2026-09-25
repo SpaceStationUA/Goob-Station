@@ -55,6 +55,8 @@
   name: kinetic claws
   description: Unleash your inner edgelord with this one-handed claw small enough to fit in your backpack.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Mining # Pirate: weapon skills
   - type: Appearance
   - type: Sprite
     sprite: _Lavaland/Objects/Weapons/Secondary/kinetic_claws.rsi
@@ -103,6 +105,8 @@
   name: kinetic machete
   description: A smaller, one-handed variant of the crusher which allows you to attack from afar and block incoming attacks.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Mining # Pirate: weapon skills
   - type: Sprite
     sprite: _Lavaland/Objects/Weapons/Secondary/kinetic_machete.rsi
     state: icon

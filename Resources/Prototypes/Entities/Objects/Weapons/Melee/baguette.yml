@@ -5,6 +5,8 @@
   id: WeaponBaguette
   suffix: Weapon
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: MeleeWeapon
     attackRate: 1.4
     wideAnimationRotation: -120

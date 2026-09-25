@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -41,6 +42,12 @@ public sealed partial class CaduceusComponent : Component
     /// </summary>
     public string? BaseName;
     public string? BaseDescription;
+
+    /// <summary>
+    ///     Weapon class from the prototype, captured at map init and restored while inert.
+    ///     Transient server state; the class itself is networked by <see cref="WeaponClassComponent"/>.
+    /// </summary>
+    public ProtoId<WeaponClassPrototype>? BaseWeaponClass;
 
     /// <summary>Entity currently holding this weapon in a hand, if any.</summary>
     [DataField, AutoNetworkedField]
@@ -124,6 +131,10 @@ public sealed partial class CaduceusFormEntry
     /// <summary>Melee attack rate (attacks per second).</summary>
     [DataField]
     public float AttackRate = 1f;
+
+    /// <summary>Skill class this form uses. Null keeps the prototype's class.</summary>
+    [DataField]
+    public ProtoId<WeaponClassPrototype>? WeaponClass;
 
     /// <summary>Melee attack range.</summary>
     [DataField]

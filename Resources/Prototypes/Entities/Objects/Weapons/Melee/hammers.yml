@@ -6,6 +6,8 @@
   id: Sledgehammer
   description: The perfect tool for wanton carnage.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: Objects/Weapons/Melee/sledgehammer.rsi
     state: icon
@@ -34,6 +36,8 @@
   name: Mjollnir
   description: A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Wieldable
     useDelayOnWield: false # GoobStation Edit
   - type: MeleeRequiresWield # Goobstation
@@ -87,6 +91,8 @@
   name: Singularity Hammer
   description: The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Wieldable
     useDelayOnWield: false
   - type: MeleeRequiresWield
