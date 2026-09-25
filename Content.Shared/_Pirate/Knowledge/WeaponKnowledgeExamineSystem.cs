@@ -160,17 +160,12 @@ public sealed class WeaponKnowledgeExamineSystem : EntitySystem
         if (totals.Count == 0)
             return;
 
-        msg.PushNewline();
-        msg.AddMarkupOrThrow(Loc.GetString("knowledge-weapon-examine-total-header"));
-
         foreach (var total in totals)
         {
             msg.PushNewline();
-            msg.AddMarkupOrThrow(Loc.GetString("knowledge-weapon-examine-effect",
+            msg.AddMarkupOrThrow(Loc.GetString("knowledge-weapon-examine-total",
                 ("effect", Loc.GetString(total.LocId)),
-                ("current", FormatMultiplier(total.Current, ProgressLevel(total))),
-                ("min", FormatMultiplier(total.Unskilled, 0)),
-                ("max", FormatMultiplier(total.Master, 100))));
+                ("current", FormatMultiplier(total.Current, ProgressLevel(total)))));
         }
     }
 

@@ -27,7 +27,7 @@ knowledge-weapon-examine-requirement = {"    "}- {$effect}: from level {$require
     [yes] [color=#5fbf5f]available[/color]
    *[no] [color=#e05555]not skilled enough[/color]
     }
-knowledge-weapon-examine-total-header = Combined effect:
+knowledge-weapon-examine-total = Combined effect ({$effect}): {$current}
 knowledge-weapon-examine-effect-melee = melee damage
 knowledge-weapon-examine-effect-spread = shot spread
 knowledge-weapon-examine-effect-block = damage blocked

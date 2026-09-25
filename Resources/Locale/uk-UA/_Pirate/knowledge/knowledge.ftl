@@ -63,7 +63,7 @@ knowledge-weapon-examine-requirement = {"    "}- {$effect}: з рівня {$requ
     [yes] [color=#5fbf5f]доступно[/color]
    *[no] [color=#e05555]бракує навички[/color]
     }
-knowledge-weapon-examine-total-header = Загальний ефект:
+knowledge-weapon-examine-total = Загальний ефект ({$effect}): {$current}
 knowledge-weapon-examine-effect-melee = шкода в ближньому бою
 knowledge-weapon-examine-effect-spread = розкид пострілів
 knowledge-weapon-examine-effect-block = заблокована шкода

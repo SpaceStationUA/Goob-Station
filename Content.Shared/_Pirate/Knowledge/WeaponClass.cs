@@ -51,10 +51,13 @@ public sealed partial class WeaponClassPrototype : IPrototype
     };
 }
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class WeaponClassComponent : Component
 {
-    [DataField(required: true)]
+    /// <summary>
+    /// Networked so weapons that change shape at runtime (e.g. the Caduceus) keep client prediction in sync.
+    /// </summary>
+    [DataField(required: true), AutoNetworkedField]
     public ProtoId<WeaponClassPrototype> Class;
 
     [DataField]

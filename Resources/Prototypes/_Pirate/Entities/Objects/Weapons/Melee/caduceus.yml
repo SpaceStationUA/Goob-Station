@@ -29,6 +29,7 @@
     currentForm: Inactive
     forms:
       Hatchet:
+        weaponClass: Knife
         damage:
           types:
             Slash: 20
@@ -42,6 +43,7 @@
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
       Stiletto:
+        weaponClass: Knife
         damage:
           types:
             Piercing: 24
@@ -55,6 +57,7 @@
         animation: WeaponArcThrust
         wideAnimation: WeaponArcThrust
       BastardSword:
+        weaponClass: Sword
         damage:
           types:
             Slash: 44
@@ -68,6 +71,7 @@
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
       Rapier:
+        weaponClass: Sword
         damage:
           types:
             Piercing: 36
@@ -84,6 +88,7 @@
         animation: WeaponArcThrust
         wideAnimation: WeaponArcThrust
       Hammer:
+        weaponClass: Bludgeon
         damage:
           types:
             Blunt: 60
@@ -97,6 +102,7 @@
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
       Greatsword:
+        weaponClass: Sword
         damage:
           types:
             Slash: 70
@@ -110,6 +116,7 @@
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
       Lance:
+        weaponClass: Polearm
         damage:
           types:
             Piercing: 66
@@ -126,6 +133,7 @@
         animation: WeaponArcThrust
         wideAnimation: WeaponArcThrust
       Whip:
+        weaponClass: Bludgeon
         damage:
           types:
             Slash: 40
@@ -139,6 +147,7 @@
         animation: WeaponArcSlash
         wideAnimation: WeaponArcSlash
       Scythe:
+        weaponClass: Polearm
         damage:
           types:
             Slash: 50
