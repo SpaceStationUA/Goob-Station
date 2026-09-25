@@ -1175,6 +1175,9 @@
       - NanoChatCartridge # DeltaV
       - WalletCartridge # Pirate banking
       - RadioCartridge # Pirate internet radio
+  # Pirate: nanochat network - routes NanoChat through the Syndicate relay instead of telecomms, and
+  # keeps this PDA out of ordinary directories and logs. PiratePDA opts out. # Pirate: nanochat network
+  - type: SyndicateNanoChatPda
 
 - type: entity
   parent: [ SyndiPDA, BaseSyndicateContraband ]
@@ -1182,6 +1185,8 @@
   name: syndicate operative PDA
   description: Death to NT!
   components:
+  - type: BuiltInPdaCamera # Pirate: syndicate remote monitoring
+    cameraPrototype: BuiltInSyndicatePdaCamera # Pirate: syndicate remote monitoring
   - type: Pda
     id: SyndiOperativeIDCard
   - type: Appearance
@@ -1250,6 +1255,8 @@
   suffix: Leader
   description: Red for firepower.
   components:
+  - type: BuiltInPdaCamera # Pirate: syndicate remote monitoring
+    cameraPrototype: BuiltInErtPdaCamera # Pirate: syndicate remote monitoring
   - type: Pda
     id: ERTLeaderIDCard
   - type: Appearance
@@ -1577,6 +1584,7 @@
   name: pirate PDA
   description: Yargh!
   components:
+  - type: OrdinaryNanoChatPda # Pirate: nanochat network
   - type: Pda
     id: PirateIDCard
   - type: Appearance
@@ -1593,6 +1601,7 @@
   name: syndicate corpsman PDA
   description: For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
   components:
+  - type: SyndicateNanoChatPda # Pirate: nanochat network
   - type: Pda
     id: NukieAgentIDCard # Goobstation
   - type: Appearance

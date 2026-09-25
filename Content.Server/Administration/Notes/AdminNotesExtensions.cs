@@ -47,6 +47,26 @@ public static class AdminNotesExtensions
                 unbannedTime = roleBan.UnbanTime;
                 unbannedByName = roleBan.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
                 break;
+            #region Pirate: chat ban notes
+            case BanNoteRecord { Type: BanType.OOC } chatBan:
+                type = NoteType.OOCBan;
+                severity = chatBan.Severity;
+                unbannedTime = chatBan.UnbanTime;
+                unbannedByName = chatBan.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
+                break;
+            case BanNoteRecord { Type: BanType.LOOC } chatBan:
+                type = NoteType.LOOCBan;
+                severity = chatBan.Severity;
+                unbannedTime = chatBan.UnbanTime;
+                unbannedByName = chatBan.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
+                break;
+            case BanNoteRecord { Type: BanType.Deadchat } chatBan:
+                type = NoteType.DeadchatBan;
+                severity = chatBan.Severity;
+                unbannedTime = chatBan.UnbanTime;
+                unbannedByName = chatBan.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
+                break;
+            #endregion Pirate: chat ban notes
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), note.GetType(), "Unknown note type");
         }

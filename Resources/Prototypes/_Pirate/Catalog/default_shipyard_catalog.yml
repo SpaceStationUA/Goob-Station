@@ -1,0 +1,115 @@
+# SPDX-FileCopyrightText: 2026 Starlight Contributors
+# SPDX-License-Identifier: MIT
+# Ported from ss14Starlight/space-station-14 Shipyard [PORT] (#4245).
+
+- type: vessel
+  id: PTS
+  name: shipyard-vessel-pts-name
+  description: shipyard-vessel-pts-description
+  price: 14840
+  categories: [Civilian, Small]
+  path: /Maps/_Pirate/Shuttles/Shipyard/pts.yml
+
+- type: vessel
+  id: Barge
+  name: shipyard-vessel-barge-name
+  description: shipyard-vessel-barge-description
+  price: 54950
+  categories: [Civilian, Medium]
+  path: /Maps/_Pirate/Shuttles/Shipyard/barge.yml
+
+- type: vessel
+  id: Prospector
+  name: shipyard-vessel-prospector-name
+  description: shipyard-vessel-prospector-description
+  price: 21945
+  categories: [Civilian, Small]
+  path: /Maps/_Pirate/Shuttles/Shipyard/prospector.yml
+
+- type: vessel
+  id: Ingeniator
+  name: shipyard-vessel-ingeniator-name
+  description: shipyard-vessel-ingeniator-description
+  price: 59500
+  categories: [Civilian, Large]
+  path: /Maps/_Pirate/Shuttles/Shipyard/Mini_Ingeniator.yml
+
+- type: vessel
+  id: Comet
+  name: shipyard-vessel-comet-name
+  description: shipyard-vessel-comet-description
+  price: 68950
+  categories: [Cargo, Large]
+  path: /Maps/_Pirate/Shuttles/Shipyard/Comet.yml
+
+- type: vessel
+  id: Munchies
+  name: shipyard-vessel-munchies-name
+  description: shipyard-vessel-munchies-description
+  price: 26775
+  categories: [Civilian, Medium]
+  path: /Maps/_Pirate/Shuttles/Shipyard/Munchies.yml
+
+- type: vessel
+  id: CargoGas
+  name: shipyard-vessel-cargogas-name
+  description: shipyard-vessel-cargogas-description
+  price: 15050
+  categories: [Cargo, Small]
+  path: /Maps/_Pirate/Shuttles/Shipyard/GasTransport.yml
+
+- type: vessel
+  id: Pioneer
+  name: shipyard-vessel-pioneer-name
+  description: shipyard-vessel-pioneer-description
+  price: 27440
+  categories: [Cargo, Medium]
+  path: /Maps/_Pirate/Shuttles/Shipyard/pioneer.yml
+
+- type: vessel
+  id: Breaker
+  name: shipyard-vessel-breaker-name
+  description: shipyard-vessel-breaker-description
+  price: 22995
+  categories: [Cargo, Medium]
+  path: /Maps/_Pirate/Shuttles/Shipyard/breaker.yml
+
+- type: vessel
+  id: Honeybee
+  name: shipyard-vessel-honeybee-name
+  description: shipyard-vessel-honeybee-description
+  price: 21000
+  categories: [Civilian, Small]
+  path: /Maps/_Pirate/Shuttles/Shipyard/Honeybee.yml
+
+- type: vessel
+  id: Reach
+  name: shipyard-vessel-reach-name
+  description: shipyard-vessel-reach-description
+  price: 490350
+  categories: [Command, Humongous]
+  path: /Maps/_Pirate/Shuttles/Shipyard/ReachButShipyard.yml
+
+- type: vessel
+  id: Apotherkerin
+  name: shipyard-vessel-apotherkerin-name
+  description: shipyard-vessel-apotherkerin-description
+  price: 28000
+  categories: [Civilian, Small]
+  path: /Maps/_Pirate/Shuttles/Shipyard/JSS_MED_Apotherkerin.yml
+
+- type: vessel
+  id: Bumblebee
+  name: shipyard-vessel-bumblebee-name
+  description: shipyard-vessel-bumblebee-description
+  price: 42000
+  categories: [Civilian, Medium]
+  path: /Maps/_Pirate/Shuttles/Shipyard/Bumblebee.yml
+
+- type: vessel
+  id: SpaceTruck
+  name: shipyard-vessel-spacetruck-name
+  description: shipyard-vessel-spacetruck-description
+  price: 10500
+  categories: [Civilian, Small]
+  path: /Maps/_Pirate/Shuttles/Shipyard/SpaceTruck.yml

@@ -66,6 +66,11 @@ public sealed partial class NoteEdit : FancyWindow
             NoteType = note.NoteType;
             TypeOption.AddItem(Loc.GetString("admin-note-editor-type-server-ban"), (int) NoteType.ServerBan);
             TypeOption.AddItem(Loc.GetString("admin-note-editor-type-role-ban"), (int) NoteType.RoleBan);
+            #region Pirate: chat ban notes
+            TypeOption.AddItem(Loc.GetString("admin-note-editor-type-ooc-ban"), (int) NoteType.OOCBan);
+            TypeOption.AddItem(Loc.GetString("admin-note-editor-type-looc-ban"), (int) NoteType.LOOCBan);
+            TypeOption.AddItem(Loc.GetString("admin-note-editor-type-deadchat-ban"), (int) NoteType.DeadchatBan);
+            #endregion Pirate: chat ban notes
             TypeOption.SelectId((int)NoteType);
             TypeOption.Disabled = true;
 
@@ -73,7 +78,7 @@ public sealed partial class NoteEdit : FancyWindow
 
             NoteSeverity = note.NoteSeverity ?? Shared.Database.NoteSeverity.Minor;
             SeverityOption.SelectId((int)NoteSeverity);
-            SeverityOption.Disabled = note.NoteType is not (NoteType.Note or NoteType.ServerBan or NoteType.RoleBan);
+            SeverityOption.Disabled = note.NoteType is not (NoteType.Note or NoteType.ServerBan or NoteType.RoleBan or NoteType.OOCBan or NoteType.LOOCBan or NoteType.DeadchatBan); // Pirate: chat ban notes
 
             IsSecret = note.Secret;
             SecretCheckBox.Pressed = note.Secret;

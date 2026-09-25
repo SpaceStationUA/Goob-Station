@@ -1,9 +1,9 @@
-obradinn-activate-fail-case = немає справи
-obradinn-activate-fail-map = не та мапа
-obradinn-activate-fail-no-distance = неможливо визначити відстань
-obradinn-activate-fail-distance = ви за {$distance} плиток від місця події
-obradinn-activate-success = годинник зупиняється
-obradinn-interact-fail-target = неприпустима ціль
-obradinn-interact-fail-witness = свідків не записано
-obradinn-interact-success = годинник починає цокати
+obradinn-activate-fail-case = Наразі не вибрано жодної справи
+obradinn-activate-fail-map = Ви перебуваєте не на правильній мапі
+obradinn-activate-fail-no-distance = Неможливо визначити відстань до місця події
+obradinn-activate-fail-distance = Ви за {$distance} плиток від місця події. Підійдіть ближче, щоб активувати годинник
+obradinn-activate-success = Годинник перестає цокати...
+obradinn-interact-fail-target = Це неприпустима ціль для годинника
+obradinn-interact-fail-witness = Для цієї справи не записано жодного свідка
+obradinn-interact-success = Годинник починає цокати...
 obradinn-hologram-name = Невідомо

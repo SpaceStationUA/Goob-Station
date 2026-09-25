@@ -10,8 +10,8 @@ using Content.Server.NPC.Pathfinding;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.Whitelist;
 using Content.Shared.Humanoid;
+using Content.Shared.Whitelist;
 
 namespace Content.Goobstation.Server.Xenobiology.HTN;
 

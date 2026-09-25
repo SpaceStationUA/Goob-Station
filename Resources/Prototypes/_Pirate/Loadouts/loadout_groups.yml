@@ -428,6 +428,7 @@
   - WardrobeMNKGymBra
   - WardrobeMNKUnderGarment
   - WardrobeMNKOfficeSkirt
+  - ImperatorJumpsuit # Pirate
   subgroups:
   - PiratePassengerPortedUniform
   - PiratePassengerFreshUniform
@@ -1014,6 +1015,15 @@
   - InstructorBelt
   subgroups:
   - SecurityBelt
+
+# Окуляри
+- type: loadoutGroup
+  id: SecurityEyes
+  name: loadout-group-security-eyes
+  loadouts:
+  - LoadoutEyesGlassesSecurity
+  - LoadoutEyesEyepatchHudSecurity
+  - LoadoutEyesEyepatchHudTintedSecurity
 
 # Зброя
 - type: loadoutGroup

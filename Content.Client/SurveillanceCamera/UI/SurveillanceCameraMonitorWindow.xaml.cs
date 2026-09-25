@@ -197,6 +197,13 @@ public sealed partial class SurveillanceCameraMonitorWindow : FancyWindow // Goo
     // Add a particular camera
     private void AddTrackedEntityToNavMap(NetEntity ent, NetCoordinates coordinates, bool selected, bool mobile)
     {
+        if (!_entManager.TryGetEntity(coordinates.NetEntity, out var resolved) || // Pirate: syndicate remote monitoring
+            !_entManager.HasComponent<TransformComponent>(resolved.Value)) // Pirate: syndicate remote monitoring - wait for remote camera entity state
+        { // Pirate: syndicate remote monitoring
+            QueuePendingBlip(ent, coordinates, selected, mobile); // Pirate: syndicate remote monitoring
+            return; // Pirate: syndicate remote monitoring
+        } // Pirate: syndicate remote monitoring
+
         var coords = _entManager.GetCoordinates(coordinates);
         var texture = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_square.png"));
         var color = selected ? Color.Green : Color.Red;
@@ -225,6 +232,7 @@ public sealed partial class SurveillanceCameraMonitorWindow : FancyWindow // Goo
         _reverseCameras.Clear();
         _resolveCameraName.Clear();
         NavMap.TrackedEntities.Clear();
+        ClearPendingBlips(); // Pirate: syndicate remote monitoring
         foreach (var (camera, (name, (ent, coordinates))) in cameras)
         {
             _reverseCameras[ent] = camera;

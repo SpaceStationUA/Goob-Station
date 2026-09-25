@@ -254,12 +254,12 @@
     parent: true
     components:
     - type: Stealth
-      maxVisibility: 0.1
+      maxVisibility: 0.25 # Pirate: ninja cloak nerf
       hadOutline: true
       thermalsImmune: true # Goobstation
     - type: StealthOnMove
       invisibilityPenalty: 3
-      maxInvisibilityPenalty: 1.6
+      maxInvisibilityPenalty: 1.75 # Pirate: ninja cloak nerf
       passiveVisibilityRate: -1 # cloak very fast
       movementVisibilityRate: 0.15 # only some cloak if moving
   - type: PowerCellDraw

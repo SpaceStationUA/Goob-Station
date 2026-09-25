@@ -1,16 +1,12 @@
 using Content.Shared._DV.CartridgeLoader.Cartridges;
 
 using Content.Shared._DV.NanoChat;
+using Content.Shared._Pirate.NanoChat; // Pirate: nanochat monitor
 
 namespace Content.Server._DV.CartridgeLoader.Cartridges;
 
-public sealed partial class NanoChatCartridgeSystem : EntitySystem // Allll larp
+public sealed partial class NanoChatCartridgeSystem : EntitySystem // Pirate: nanochat monitor
 {
-
-    /// <summary>
-    /// Delivers a message from an anonymous (numberless) sender directly to a recipient's card,
-    /// Use this when there is no real sender card.
-    /// </summary>
     public void DeliverAnonymousMessage(
         Entity<NanoChatCardComponent> recipient,
         uint senderNumber,
@@ -29,5 +25,21 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem // Allll larp
         var msgEv = new NanoChatMessageReceivedEvent(recipient);
         RaiseLocalEvent(ref msgEv);
         UpdateUIForCard(recipient);
+
+        #region Pirate: nanochat monitor
+        if (recipient.Comp.Number is not { } recipientNumber)
+            return;
+
+        var deliveredEv = new NanoChatMessageDeliveredEvent(
+            ++_nextDeliveryId, // Pirate: nanochat network
+            null,
+            null,
+            senderNumber,
+            senderName,
+            recipientNumber,
+            [recipient.Owner],
+            message);
+        RaiseLocalEvent(ref deliveredEv);
+        #endregion
     }
 }

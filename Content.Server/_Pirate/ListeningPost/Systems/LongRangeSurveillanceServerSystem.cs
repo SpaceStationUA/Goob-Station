@@ -1,15 +1,22 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server._Pirate.ListeningPost.Components;
+using Content.Server._Pirate.SurveillanceCamera;
 using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Server.Station.Systems;
 using Content.Server.SurveillanceCamera;
 using Content.Shared._Pirate.ListeningPost;
+using Content.Shared._Pirate.SurveillanceCamera;
+using Content.Shared.Clothing.Components;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.StationAi;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Shared.Map;
+using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
+using Robust.Shared.Player;
 
 namespace Content.Server._Pirate.ListeningPost.Systems;
 
@@ -21,6 +28,8 @@ public sealed class LongRangeSurveillanceServerSystem : EntitySystem
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SurveillanceCameraMonitorSystem _monitors = default!;
+    [Dependency] private readonly TransformSystem _transforms = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
 
     private float _updateAccumulator;
 
@@ -56,7 +65,8 @@ public sealed class LongRangeSurveillanceServerSystem : EntitySystem
             var (station, grid) = target;
 
             var cameras = CollectStationCameras(station);
-            FeedLocalConsoles(serverXform.MapID, grid, cameras);
+            var mobileCameras = CollectMobileCameras();
+            FeedLocalConsoles(serverXform.MapID, grid, cameras, mobileCameras);
         }
     }
 
@@ -83,7 +93,8 @@ public sealed class LongRangeSurveillanceServerSystem : EntitySystem
     private void FeedLocalConsoles(
         MapId map,
         EntityUid targetGrid,
-        Dictionary<string, (string, (NetEntity, NetCoordinates))> cameras)
+        Dictionary<string, (string, (NetEntity, NetCoordinates))> cameras,
+        Dictionary<string, (string, (NetEntity, NetCoordinates))> mobileCameras)
     {
         var consoles = EntityQueryEnumerator<LongRangeSurveillanceMonitorComponent, SurveillanceCameraMonitorComponent, TransformComponent>();
         while (consoles.MoveNext(out var console, out var longRange, out var monitor, out var consoleXform))
@@ -105,27 +116,84 @@ public sealed class LongRangeSurveillanceServerSystem : EntitySystem
                 monitor.KnownCameras.Add(address, data);
             }
 
-            if (monitor.ActiveCameraAddress.Length > 0 && !cameras.ContainsKey(monitor.ActiveCameraAddress))
+            foreach (var (address, oldData) in monitor.KnownMobileCameras)
+            {
+                if (mobileCameras.ContainsKey(address) ||
+                    !TryGetEntity(oldData.Item2.Item1, out var oldCamera))
+                    continue;
+
+                foreach (var viewer in monitor.Viewers)
+                    if (TryComp<ActorComponent>(viewer, out var actor))
+                        _pvsOverride.RemoveSessionOverride(oldCamera.Value, actor.PlayerSession);
+            }
+
+            foreach (var (address, data) in mobileCameras)
+            {
+                if (monitor.KnownMobileCameras.ContainsKey(address))
+                    continue;
+
+                foreach (var viewer in monitor.Viewers)
+                    if (TryComp<ActorComponent>(viewer, out var actor))
+                        _pvsOverride.AddSessionOverride(GetEntity(data.Item2.Item1), actor.PlayerSession);
+            }
+
+            monitor.KnownMobileCameras.Clear();
+            foreach (var (address, data) in mobileCameras)
+                monitor.KnownMobileCameras.Add(address, data);
+
+            if (monitor.ActiveCameraAddress.Length > 0 &&
+                !cameras.ContainsKey(monitor.ActiveCameraAddress) &&
+                !mobileCameras.ContainsKey(monitor.ActiveCameraAddress))
                 _monitors.DisconnectCamera(console, true, monitor);
             else
                 _monitors.UpdateUserInterface(console, monitor);
         }
     }
 
+    private Dictionary<string, (string, (NetEntity, NetCoordinates))> CollectMobileCameras()
+    {
+        var cameras = new Dictionary<string, (string, (NetEntity, NetCoordinates))>();
+        var query = EntityQueryEnumerator<SurveillanceCameraComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var camera, out var xform))
+        {
+            if (!camera.Active || !camera.Mobile || xform.GridUid == null || !IsSyndicateMobileCamera(uid))
+                continue;
+
+            var address = $"syndicate-mobile:{GetNetEntity(uid)}";
+            var name = camera.UseEntityNameAsCameraId ? MetaData(uid).EntityName : camera.CameraId;
+            var coordinates = _transforms.ToCoordinates(uid, _transforms.ToMapCoordinates(xform.Coordinates));
+            cameras[address] = (name, (GetNetEntity(uid), GetNetCoordinates(coordinates)));
+        }
+
+        return cameras;
+    }
+
+    private bool IsSyndicateMobileCamera(EntityUid camera)
+        => HasComp<SyndicatePdaCameraComponent>(camera) ||
+           (HasComp<CameraActiveVisionComponent>(camera) && HasComp<StationAiVisionComponent>(camera)) ||
+           (HasComp<ClothingComponent>(camera) && HasComp<SurveillanceCameraMicrophoneComponent>(camera));
+
     private void OnSwitchCamera(
         Entity<LongRangeSurveillanceMonitorComponent> ent,
         ref SurveillanceCameraMonitorSwitchMessage args)
+        => TrySwitchCamera(ent, args.Address);
+
+    public bool TrySwitchCamera(EntityUid console, string address)
     {
-        if (!TryComp<SurveillanceCameraMonitorComponent>(ent, out var monitor))
-            return;
+        if (!HasComp<LongRangeSurveillanceMonitorComponent>(console) ||
+            !TryComp<SurveillanceCameraMonitorComponent>(console, out var monitor))
+            return false;
 
-        if (!monitor.KnownCameras.TryGetValue(args.Address, out var data))
-            return;
+        var mobile = monitor.KnownMobileCameras.TryGetValue(address, out var data);
+        if (!mobile && !monitor.KnownCameras.TryGetValue(address, out data))
+            return false;
 
-        var camera = GetEntity(data.Item2.Item1);
-        if (!HasComp<SurveillanceCameraComponent>(camera))
-            return;
+        if (!TryGetEntity(data.Item2.Item1, out var camera) ||
+            !TryComp<SurveillanceCameraComponent>(camera, out var component) || !component.Active ||
+            (mobile && (!component.Mobile || !IsSyndicateMobileCamera(camera.Value))))
+            return false;
 
-        _monitors.ConnectDirectly(ent, camera, args.Address, monitor);
+        _monitors.ConnectDirectly(console, camera.Value, address, monitor);
+        return true;
     }
 }

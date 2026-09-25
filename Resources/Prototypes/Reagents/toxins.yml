@@ -724,6 +724,7 @@
       effects:
       - !type:SpeciesChange
         newSpecies: BananaMen
+        transferAppearance: true #Goobstation
         conditions:
         - !type:ReagentCondition
           reagent: Honk

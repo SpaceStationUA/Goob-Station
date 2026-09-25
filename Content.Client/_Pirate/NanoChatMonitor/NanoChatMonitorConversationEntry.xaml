@@ -1,0 +1,62 @@
+<ContainerButton xmlns="https://spacestation14.io"
+                 xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                 HorizontalExpand="True"
+                 ToggleMode="True"
+                 Margin="0 0 0 2">
+    <ContainerButton.StyleBoxOverride>
+        <graphics:StyleBoxFlat BackgroundColor="#00000000"
+                               BorderColor="#00000000"
+                               BorderThickness="0"
+                               ContentMarginLeftOverride="0"
+                               ContentMarginRightOverride="0"
+                               ContentMarginTopOverride="0"
+                               ContentMarginBottomOverride="0" />
+    </ContainerButton.StyleBoxOverride>
+
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#2a2f4099"
+                                   BorderColor="#00000000"
+                                   BorderThickness="0"
+                                   ContentMarginLeftOverride="6"
+                                   ContentMarginRightOverride="0"
+                                   ContentMarginTopOverride="4"
+                                   ContentMarginBottomOverride="4" />
+        </PanelContainer.PanelOverride>
+
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalAlignment="Center">
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="False"
+                          VerticalAlignment="Center"
+                          Margin="2 0 0 0">
+                <RichTextLabel Name="FirstParticipantLabel"
+                               StyleClasses="LabelHeading"
+                               HorizontalExpand="True"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="0 -2 0 0" />
+                <RichTextLabel Name="SecondParticipantLabel"
+                               StyleClasses="LabelHeading"
+                               HorizontalExpand="True"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="0 -1 0 0" />
+
+                <Label Name="TimeLabel" StyleClasses="LabelSubText" Margin="0 0 0 0" />
+            </BoxContainer>
+
+            <PanelContainer Name="SelectionIndicator"
+                            MinSize="3 0"
+                            MaxSize="3 999"
+                            VerticalExpand="True"
+                            Margin="4 0 0 0">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#00000000"
+                                           BorderColor="#00000000"
+                                           BorderThickness="0" />
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+        </BoxContainer>
+    </PanelContainer>
+</ContainerButton>

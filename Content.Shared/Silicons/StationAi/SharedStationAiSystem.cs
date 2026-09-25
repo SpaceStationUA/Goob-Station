@@ -241,14 +241,14 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (TryComp(ent, out RelayInputMoverComponent? relay))
         {
             viewer = relay.RelayEntity;
-            if (ent.Comp.AllowCrossGrid)
+            if (ent.Comp.AllowCrossGrid) // Pirate: syndicate remote monitoring
                 target = relay.RelayEntity;
         }
 
         var targetXform = Transform(target);
 
         // No cross-grid
-        if (targetXform.GridUid != Transform(viewer).GridUid && !ent.Comp.AllowCrossGrid)
+        if (targetXform.GridUid != Transform(viewer).GridUid && !ent.Comp.AllowCrossGrid) // Pirate: syndicate remote monitoring
         {
             return;
         }
@@ -256,7 +256,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         // Shitmed Change End
 
         // goobstation - AI machine vision
-        if (TryComp<StationAiWhitelistComponent>(target, out var whitelist)
+        if (ent.Comp.AllowUnseenMachineAccess && TryComp<StationAiWhitelistComponent>(target, out var whitelist) // Pirate: syndicate remote monitoring
             && whitelist.Enabled
             && (targetXform.Anchored || HasComp<WallMountComponent>(target))
             && PowerReceiver.IsPowered(target))
@@ -278,7 +278,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         var xray = TryComp<MalfAiCameraUpgradeComponent>(ent.Owner, out var upgrade) && upgrade.EnabledEffective;
         args.InRange = _vision.IsAccessible((targetXform.GridUid.Value, broadphase, grid), targetTile,
             xrayCameras: xray, xrayRange: _malfConfig.GetCVar(CCVars.MalfAiCameraUpgradeRange),
-            xrayOrigin: _xforms.GetWorldPosition(viewer));
+            xrayOrigin: _xforms.GetWorldPosition(viewer),
+            includeSyndicateCameras: ent.Comp.IncludeSyndicateCameras); // Pirate: syndicate remote monitoring
     }
 
 

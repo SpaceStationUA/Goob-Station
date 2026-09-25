@@ -180,6 +180,7 @@
 
 - type: roleLoadout
   id: JobChaplain
+  canCustomizeName: true
   groups:
   - GroupTankHarness
   - ChaplainHead
@@ -523,6 +524,7 @@
   id: JobHeadOfSecurity
   groups:
   - HeadofSecurityHead
+  - SecurityEyes # Pirate: tinted sec eyepatch
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - SecurityBackpack

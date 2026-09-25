@@ -6,6 +6,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Components;
 using Content.Shared.StationAi;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared._Pirate.AudioMuffle;
 using Content.Shared._Pirate.CCVars;
 using Robust.Client.Audio;
@@ -285,13 +286,17 @@ public sealed partial class AudioMuffleSystem : SharedAudioMuffleSystem
 
     public EntityUid? FindNearestAiVisionEntity(EntityUid player)
     {
+        var includeSyndicateCameras = _player.LocalEntity is { } viewer &&
+                                      TryComp<StationAiOverlayComponent>(viewer, out var overlay) &&
+                                      overlay.IncludeSyndicateCameras;
         var coords = _xform.GetMapCoordinates(player);
         var nearest = _lookup.GetEntitiesInRange<StationAiVisionComponent>(coords, AudioRange);
         EntityUid? result = null;
         var distance = float.MaxValue;
         foreach (var (uid, vision) in nearest)
         {
-            if (!vision.Enabled)
+            if (!vision.Enabled ||
+                !includeSyndicateCameras && HasComp<Content.Shared._Pirate.SurveillanceCamera.SyndicateOnlyVisionComponent>(uid))
                 continue;
 
             var dist = (coords.Position - _xform.GetMapCoordinates(uid).Position).Length();
