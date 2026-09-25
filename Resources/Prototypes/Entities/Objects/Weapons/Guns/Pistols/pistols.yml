@@ -326,6 +326,12 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: ItemMapper
+    mapLayers:
+      flashlight:
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
   # mk58 upgrade end
   - type: StealTarget
     stealGroup: OfficerHandgun
