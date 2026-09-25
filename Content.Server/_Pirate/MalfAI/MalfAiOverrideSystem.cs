@@ -12,13 +12,22 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Weapons.Melee;
+using Content.Server.Destructible;
+using Content.Server.Destructible.Thresholds;
+using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Triggers;
+using Robust.Shared.Audio;
+using Content.Shared.Physics;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.CombatMode;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using TransformComponent = Robust.Shared.GameObjects.TransformComponent;
@@ -41,6 +50,10 @@ public sealed class MalfAiOverrideSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly Content.Server.Silicons.StationAi.StationAiSystem _stationAi = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+
+    /// <summary>Uniform damage pool given to every machine the AI possesses.</summary>
+    private static readonly FixedPoint2 PossessedMachineHealth = FixedPoint2.New(100);
 
     public override void Initialize()
     {
@@ -98,7 +111,22 @@ public sealed class MalfAiOverrideSystem : EntitySystem
         // Input-driven mobs require a controller body; unanchoring leaves machines Dynamic.
         _physics.TrySetBodyType(targetMachine.Value, BodyType.KinematicController);
 
-        // Step 2: Make it hostile by adding NPC faction.
+        // Remove the tabletop projectile filter and give mobile machines a hittable solid fixture.
+        RemComp<RequireProjectileTargetComponent>(targetMachine.Value);
+        if (TryComp<FixturesComponent>(targetMachine.Value, out var fixtures))
+        {
+            foreach (var (fixtureId, fixture) in fixtures.Fixtures)
+            {
+                if (!fixture.Hard)
+                    continue;
+
+                var layer = fixture.CollisionLayer | (int) (CollisionGroup.BulletImpassable | CollisionGroup.MidImpassable);
+                _physics.SetCollisionLayer(targetMachine.Value, fixtureId, fixture, layer, fixtures);
+            }
+        }
+
+        NormalizeDurability(targetMachine.Value);
+
         var factionComp = EnsureComp<NpcFactionMemberComponent>(targetMachine.Value);
         _npcFaction.AddFaction(targetMachine.Value, "SimpleHostile");
 
@@ -135,6 +163,32 @@ public sealed class MalfAiOverrideSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("malfai-override-success"), popupTarget, ai);
         args.Handled = true;
+    }
+
+    /// <summary>Gives a possessed machine a uniform health pool with no prototype-specific modifiers or death effects.</summary>
+    private void NormalizeDurability(EntityUid machine)
+    {
+        var damageable = EnsureComp<DamageableComponent>(machine);
+
+        // Without a modifier set, the threshold is a literal damage pool.
+        _damageable.ChangeDamageContainer(machine, "StructuralInorganic", damageable);
+        _damageable.SetDamageModifierSetId(machine, null, damageable);
+        _damageable.SetAllDamage(machine, damageable, FixedPoint2.Zero);
+
+        var destructible = EnsureComp<DestructibleComponent>(machine);
+        destructible.IsBroken = false;
+        destructible.Thresholds = new List<DamageThreshold>
+        {
+            new()
+            {
+                Trigger = new DamageTrigger { Damage = PossessedMachineHealth },
+                Behaviors = new List<IThresholdBehavior>
+                {
+                    new DoActsBehavior { Acts = ThresholdActs.Destruction },
+                    new PlaySoundBehavior { Sound = new SoundCollectionSpecifier("MetalBreak") },
+                },
+            },
+        };
     }
 
     /// <summary>
