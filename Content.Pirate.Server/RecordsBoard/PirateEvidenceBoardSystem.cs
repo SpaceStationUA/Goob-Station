@@ -273,13 +273,29 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
 
     private void FileHeldPaper(Entity<PirateEvidenceBoardComponent> console, EntityUid user)
     {
-        if (_hands.GetActiveItem(user) is not { } item ||
-            !TryComp<PaperComponent>(item, out var paper))
+        if (_hands.GetActiveItem(user) is not { } item)
         {
-            Popup(user, Loc.GetString("pirate-evidence-board-hold-paper"));
+            Popup(user, Loc.GetString("pirate-evidence-board-hold-evidence"));
             return;
         }
-        FilePaper((item, paper), console, user);
+        // Dispatch by kind — the console verb must accept everything the
+        // per-item verbs accept (paper worked; pad/photo puked "hold paper").
+        if (TryComp<PaperComponent>(item, out var paper))
+        {
+            FilePaper((item, paper), console, user);
+            return;
+        }
+        if (TryComp<ForensicPadComponent>(item, out var padComp))
+        {
+            FilePad((item, padComp), console, user);
+            return;
+        }
+        if (TryComp<PhotoCardComponent>(item, out var photoComp))
+        {
+            FilePhoto((item, photoComp), console, user);
+            return;
+        }
+        Popup(user, Loc.GetString("pirate-evidence-board-hold-evidence"));
     }
 
     private void OnPaperVerbs(Entity<PaperComponent> ent, ref GetVerbsEvent<InteractionVerb> args)

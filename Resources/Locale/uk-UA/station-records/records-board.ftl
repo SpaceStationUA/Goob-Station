@@ -5,6 +5,7 @@ pirate-evidence-board-blank = Аркуш порожній
 pirate-evidence-board-nospace = На дошці немає вільного місця
 pirate-evidence-board-file-held = Подати аркуш з рук на дошку доказів
 pirate-evidence-board-hold-paper = Тримайте доказову папірку в активній руці
+pirate-evidence-board-hold-evidence = Тримайте доказ (папір, набір відбитків чи фото) в активній руці
 pirate-evidence-report-name = Звіт доказів: {$case}
 pirate-evidence-board-printed = Звіт доказів роздруковано
 

@@ -1462,3 +1462,8 @@ connection labels, case rename UI, portraits (render-target -> base64
   dropped from buildwebui.sh list, vite default iface set to Radio.
 - Historical references in this log stay (they document the contract
   evolution). Shared lib (bridge.ts) untouched.
+
+### Board bugfix: console intake verb took paper only
+- FileHeldPaper checked PaperComponent only -> pad/photo in hand got
+  "hold the evidence paper". Now dispatches paper/pad/photo by
+  component; new generic hold-evidence popup key (en+uk).
