@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float badTripPower; // 0..1
+
+// The nausea squash: slow breathing scale-warp, feels like the walls close in
+const highp float SquashFreq = 1.1;
+const highp float SquashStrength = 0.08;
+
+// Occasional glitch flicks: brief horizontal tears
+const highp float GlitchFps = 3.0;
+
+highp float rand(highp vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void fragment() {
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+    highp vec2 centered = coord - vec2(0.5);
+
+    // Pulping slow squash: alternating axes breathing out of phase
+    highp float t = TIME * SquashFreq * 6.2831853;
+    centered.x *= 1.0 + SquashStrength * badTripPower * sin(t);
+    centered.y *= 1.0 + SquashStrength * badTripPower * sin(t - 1.6);
+
+    highp vec2 uv = centered + vec2(0.5);
+
+    // Glitch flicks: occasional rows tear horizontally for a step
+    highp float frame = floor(TIME * GlitchFps);
+    highp float rowRng = rand(vec2(floor(uv.y * 24.0), frame));
+    if (rowRng > 0.96 - badTripPower * 0.08) {
+        uv.x += (rand(vec2(frame, frame)) - 0.5) * 0.15 * badTripPower;
+    }
+
+    COLOR = zTextureSpec(SCREEN_TEXTURE, uv);
+}
