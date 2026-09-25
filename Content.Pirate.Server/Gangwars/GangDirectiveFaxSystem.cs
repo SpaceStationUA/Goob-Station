@@ -1,4 +1,3 @@
-using Content.Server._Pirate.ZLevels.Spawning;
 using Content.Server.Fax;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Components;
@@ -6,6 +5,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Fax.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Paper;
+using Content.Shared.Station.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Server.Gangwars;
@@ -15,7 +15,6 @@ public sealed class GangDirectiveFaxSystem : GameRuleSystem<GangDirectiveFaxComp
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly FaxSystem _fax = default!;
     [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly CEZLevelFloorGridsSystem _zFloors = default!;
 
     protected override void Started(EntityUid uid, GangDirectiveFaxComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -51,8 +50,9 @@ public sealed class GangDirectiveFaxSystem : GameRuleSystem<GangDirectiveFaxComp
         foreach (var station in _station.GetStationsSet())
         {
             // Crewed stations only, not CentCom or other station-like maps.
-            if (HasComp<StationJobsComponent>(station))
-                grids.UnionWith(_zFloors.GetStationFloorGrids(station));
+            if (HasComp<StationJobsComponent>(station) &&
+                TryComp<StationDataComponent>(station, out var stationData))
+                grids.UnionWith(stationData.Grids);
         }
 
         var query = EntityQueryEnumerator<FaxMachineComponent, TransformComponent>();

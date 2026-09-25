@@ -171,6 +171,7 @@ public sealed class MalfAiOverrideSystem : EntitySystem
         var damageable = EnsureComp<DamageableComponent>(machine);
 
         // Without a modifier set, the threshold is a literal damage pool.
+        _damageable.ChangeDamageContainer(machine, "StructuralInorganic", damageable);
         _damageable.SetDamageModifierSetId(machine, null, damageable);
         _damageable.SetAllDamage(machine, damageable, FixedPoint2.Zero);
 

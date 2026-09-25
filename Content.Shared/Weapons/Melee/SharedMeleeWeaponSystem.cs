@@ -974,8 +974,18 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 .ToList();
 
 #region Pirate: malf AI sentient mob damage
+            var opaqueHit = _physics.IntersectRay(mapId,
+                    new CollisionRay(position, castAngle.ToWorldVec(), (int) CollisionGroup.Opaque),
+                    range,
+                    ignore,
+                    false)
+                .FirstOrDefault(x => !_tag.HasTag(x.HitEntity, "WideSwingIgnore"));
+
             foreach (var r in res)
             {
+                if (opaqueHit.HitEntity.IsValid() && r.Distance > opaqueHit.Distance)
+                    break;
+
                 if (!HasComp<DamageableComponent>(r.HitEntity))
                     continue;
 
