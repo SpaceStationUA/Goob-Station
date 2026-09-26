@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 08/16/2026 06:44:18
-  entityCount: 9265
+  entityCount: 9267 # Pirate: account for two upstream heat exchangers with colliding UIDs.
 maps:
 - 1
 grids:
@@ -41494,12 +41494,12 @@ entities:
       parent: 2
 - proto: HeatExchangerInlineJunction
   entities:
-  - uid: 1707
+  - uid: 9266 # Pirate: avoid colliding with RandomSpawner 1707.
     components:
     - type: Transform
       pos: -72.5,-0.5
       parent: 2
-  - uid: 1708
+  - uid: 9267 # Pirate: avoid colliding with CableApcExtension 1708.
     components:
     - type: Transform
       pos: -71.5,-0.5
