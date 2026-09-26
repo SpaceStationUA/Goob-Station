@@ -168,6 +168,8 @@
   parent: BaseItem
   description: A burst-fire C-20r submachine gun for use by cyborgs. Creates .35 caliber ammo on the fly from an internal ammo fabricator, which slowly self-charges.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: SMG # Pirate: weapon skills
   - type: Gun
     minAngle: 2
     maxAngle: 16

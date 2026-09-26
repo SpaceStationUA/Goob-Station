@@ -1,0 +1,10 @@
+ent-WeaponLauncherPeacekeeper = миротворець
+    .desc = Багатофункціональний однозарядний гранатомет із відкидним механізмом.
+ent-BoxPeacekeeperFlash = коробка світлошумових набоїв «Миротворця»
+ent-BoxPeacekeeperStinger = коробка жалких набоїв «Миротворця»
+ent-BoxPeacekeeperGas = коробка газових набоїв «Миротворця»
+ent-BoxPeacekeeperBaton = коробка кийкових набоїв «Миротворця»
+ent-GrenadeGaslauncher = газова граната
+ent-GrenadeStingerlauncher = жалка граната
+ent-HammerBreachingNT = пробивний молот
+    .desc = Міцний важкий молот для пробивання стін і дверей.

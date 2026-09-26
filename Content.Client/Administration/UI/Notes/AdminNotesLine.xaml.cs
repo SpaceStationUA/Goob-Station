@@ -117,6 +117,9 @@ public sealed partial class AdminNotesLine : BoxContainer
         switch (Note.NoteType)
         {
             case NoteType.ServerBan:
+            case NoteType.OOCBan: // Pirate: chat ban notes
+            case NoteType.LOOCBan: // Pirate: chat ban notes
+            case NoteType.DeadchatBan: // Pirate: chat ban notes
                 NoteLabel.SetMessage(FormatBanMessage());
                 break;
             case NoteType.RoleBan:
@@ -139,7 +142,16 @@ public sealed partial class AdminNotesLine : BoxContainer
 
     private string FormatBanMessage()
     {
-        var banMessage = new StringBuilder($"{Loc.GetString("admin-notes-banned-from")} {Loc.GetString("admin-notes-the-server")} ");
+        #region Pirate: chat ban notes
+        var target = Note.NoteType switch
+        {
+            NoteType.OOCBan => Loc.GetString("chat-ban-channel-ooc"),
+            NoteType.LOOCBan => Loc.GetString("chat-ban-channel-looc"),
+            NoteType.DeadchatBan => Loc.GetString("chat-ban-channel-deadchat"),
+            _ => Loc.GetString("admin-notes-the-server"),
+        };
+        var banMessage = new StringBuilder($"{Loc.GetString("admin-notes-banned-from")} {target} ");
+        #endregion Pirate: chat ban notes
         return FormatBanMessageCommon(banMessage);
     }
 

@@ -109641,7 +109641,7 @@ entities:
       parent: 2
     - type: Paper
       content: >-
-        "Малюнок мухи нижче"                         
+        "Малюнок мухи нижче"
 
 
 
@@ -129356,7 +129356,7 @@ entities:
 
         I'll always be...
 
-        ...Tung Tung... 
+        ...Tung Tung...
 
         Sa-here...
 
@@ -129621,16 +129621,6 @@ entities:
     components:
     - type: Transform
       pos: 30.5,47.5
-      parent: 2
-    - type: Fixtures
-      fixtures: {}
-- proto: PosterContrabandGoobRedFOSS
-  entities:
-  - uid: 15806
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -31.5,23.5
       parent: 2
     - type: Fixtures
       fixtures: {}

@@ -1,0 +1,16 @@
+<!--
+SPDX-FileCopyrightText: 2026 SpaceStationUA
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<chat:ChatBanListControl
+    xmlns="https://spacestation14.io"
+    xmlns:chat="clr-namespace:Content.Client._Pirate.Administration.UI.BanList.ChatBans">
+    <PanelContainer StyleClasses="BackgroundDark">
+        <ScrollContainer>
+            <BoxContainer Name="ChatBans" Access="Public" Orientation="Vertical">
+                <chat:ChatBanListHeader/>
+            </BoxContainer>
+        </ScrollContainer>
+    </PanelContainer>
+</chat:ChatBanListControl>

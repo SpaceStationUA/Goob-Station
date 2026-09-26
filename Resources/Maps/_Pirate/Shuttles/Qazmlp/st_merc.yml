@@ -4,8 +4,8 @@ meta:
   engineVersion: 270.1.0
   forkId: ""
   forkVersion: ""
-  time: 09/05/2026 12:03:00
-  entityCount: 1842
+  time: 09/19/2026 09:33:34
+  entityCount: 1852
 maps:
 - 1
 grids:
@@ -1238,7 +1238,9 @@ entities:
           -4,0:
             0: 2039
           -5,0:
-            0: 4095
+            1: 1795
+            0: 2296
+            2: 4
           -4,1:
             0: 30583
           -5,1:
@@ -1269,7 +1271,7 @@ entities:
             0: 65224
           -4,-3:
             0: 24513
-            1: 32768
+            3: 32768
           -5,-3:
             0: 60943
           -5,-2:
@@ -1294,7 +1296,7 @@ entities:
             0: 61408
           -2,-2:
             0: 52432
-            2: 256
+            4: 256
           -2,-5:
             0: 65328
           -2,-4:
@@ -1309,8 +1311,8 @@ entities:
             0: 140
           -6,0:
             0: 247
-            3: 256
-            1: 1536
+            5: 256
+            3: 1536
           -6,1:
             0: 4095
           -7,-3:
@@ -1333,6 +1335,16 @@ entities:
           moles:
             Oxygen: 21.824879
             Nitrogen: 82.10312
+        - volume: 2500
+          temperature: 293.15
+          moles:
+            Oxygen: 21.813705
+            Nitrogen: 82.06108
+        - volume: 2500
+          temperature: 293.15
+          moles:
+            Oxygen: 21.823984
+            Nitrogen: 82.09976
         - volume: 2500
           temperature: 293.15
           moles:
@@ -2145,7 +2157,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -29378.857
+      secondsUntilStateChange: -30129.309
       state: Opening
   - uid: 933
     components:
@@ -2230,7 +2242,7 @@ entities:
       pos: -6.5,3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13536.113
+      secondsUntilStateChange: -14286.564
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2788,6 +2800,56 @@ entities:
     - type: Transform
       pos: -12.9428425,-5.660927
       parent: 2
+  - uid: 1845
+    components:
+    - type: Transform
+      pos: -13.445038,0.71212864
+      parent: 2
+    - type: Storage
+      storedItems:
+        1846:
+          position: 0,0
+          _rotation: South
+        1847:
+          position: 1,0
+          _rotation: East
+        1848:
+          position: 1,1
+          _rotation: East
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 1846
+          - 1847
+          - 1848
+  - uid: 1849
+    components:
+    - type: Transform
+      pos: -13.570038,0.47237873
+      parent: 2
+    - type: Storage
+      storedItems:
+        1850:
+          position: 0,0
+          _rotation: South
+        1851:
+          position: 1,0
+          _rotation: East
+        1852:
+          position: 1,1
+          _rotation: East
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 1850
+          - 1851
+          - 1852
 - proto: ButtonFrameGrey
   entities:
   - uid: 513
@@ -4774,6 +4836,20 @@ entities:
     - type: Transform
       pos: -22.397533,-5.5286818
       parent: 2
+- proto: ClothingEyesEyepatchOlive
+  entities:
+  - uid: 1847
+    components:
+    - type: Transform
+      parent: 1845
+    - type: Physics
+      canCollide: False
+  - uid: 1851
+    components:
+    - type: Transform
+      parent: 1849
+    - type: Physics
+      canCollide: False
 - proto: ClothingEyesGlassesMedChemFlash
   entities:
   - uid: 530
@@ -4853,6 +4929,20 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 424
+- proto: ClothingHeadHatSolidHeadband
+  entities:
+  - uid: 1848
+    components:
+    - type: Transform
+      parent: 1845
+    - type: Physics
+      canCollide: False
+  - uid: 1852
+    components:
+    - type: Transform
+      parent: 1849
+    - type: Physics
+      canCollide: False
 - proto: ClothingHeadHelmetBasic
   entities:
   - uid: 1190
@@ -4890,6 +4980,24 @@ entities:
     - type: Transform
       pos: -22.694408,-5.59639
       parent: 2
+- proto: ClothingMaskNeckGaiterOlive
+  entities:
+  - uid: 627
+    components:
+    - type: Transform
+      parent: 424
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 424
+  - uid: 1843
+    components:
+    - type: Transform
+      parent: 424
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 424
 - proto: ClothingNeckOldClothWrap
   entities:
   - uid: 1189
@@ -5093,6 +5201,20 @@ entities:
     - type: Transform
       pos: 0.5,15.5
       parent: 823
+- proto: CQCManual
+  entities:
+  - uid: 1846
+    components:
+    - type: Transform
+      parent: 1845
+    - type: Physics
+      canCollide: False
+  - uid: 1850
+    components:
+    - type: Transform
+      parent: 1849
+    - type: Physics
+      canCollide: False
 - proto: CrateEngineeringCableBulk
   entities:
   - uid: 497
@@ -8535,19 +8657,19 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
+          Oxygen: 1.8968438
+          Nitrogen: 7.1357465
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
+          - 571
           - 574
-          - 570
           - 572
           - 573
-          - 571
+          - 570
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -8567,8 +8689,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
+          Oxygen: 1.8968438
+          Nitrogen: 7.1357465
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -8595,16 +8717,16 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
+          Oxygen: 1.8968438
+          Nitrogen: 7.1357465
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 581
           - 1044
+          - 581
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -8624,19 +8746,19 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.8968438
-          Nitrogen: 7.1357465
+          Oxygen: 1.8977377
+          Nitrogen: 7.139109
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 1134
           - 1137
-          - 1135
-          - 1136
           - 1133
+          - 1136
+          - 1135
+          - 1134
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -8656,16 +8778,16 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
+          Oxygen: 1.8968438
+          Nitrogen: 7.1357465
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 357
           - 585
+          - 357
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -8685,18 +8807,18 @@ entities:
         immutable: False
         temperature: 293.14697
         moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
+          Oxygen: 1.8968438
+          Nitrogen: 7.1357465
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 651
           - 652
-          - 653
           - 654
+          - 653
+          - 651
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -8932,24 +9054,26 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 102
+          - 627
+          - 1843
           - 258
-          - 101
-          - 426
-          - 431
-          - 429
-          - 428
-          - 432
-          - 433
-          - 1189
-          - 430
-          - 425
-          - 427
-          - 434
-          - 435
-          - 619
-          - 1657
           - 104
+          - 1657
+          - 619
+          - 435
+          - 434
+          - 427
+          - 425
+          - 430
+          - 1189
+          - 433
+          - 432
+          - 428
+          - 429
+          - 431
+          - 426
+          - 101
+          - 102
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -9673,13 +9797,6 @@ entities:
     - type: Transform
       pos: -16.5,-1.5
       parent: 2
-- proto: PottedPlant4
-  entities:
-  - uid: 627
-    components:
-    - type: Transform
-      pos: -13.5,0.5
-      parent: 2
 - proto: PottedPlantRandomPlastic
   entities:
   - uid: 735
@@ -10092,6 +10209,11 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -21.5,0.5
+      parent: 2
+  - uid: 1844
+    components:
+    - type: Transform
+      pos: -13.5,0.5
       parent: 2
 - proto: RadioJammer
   entities:

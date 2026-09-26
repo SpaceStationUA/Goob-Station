@@ -8,7 +8,7 @@ ghost-role-information-skibidi-toilet-name = Скібіді Туалет
 ghost-role-information-skibidi-toilet-description = Убийте людей за допомогою вашого скібіді огайо різз.
 ghost-role-information-skibidi-toilet-rules = Ви [color=red][bold]Антагоніст[/bold][/color] із завданням вбити якомога більше огайців.
 ghost-role-information-Hecu-name = Оперативник HECU
-ghost-role-information-Hecu-description = Центральному Командуванню потрібно щось зробити.
+ghost-role-information-Hecu-description = Виконуйте всі накази, отримані від [color=yellow][bold]Центрального Командування[/bold][/color]. В іншому разі співпрацюйте зі службою безпеки для розв'язання проблем станції.
 ghost-role-information-Hecu-rules = Ви зобов'язані виконувати накази, віддані вашим начальством, ви фактично є їхнім [color=#6495ed][bold]Фамільяром[/bold][/color].
 ghost-role-information-lootbug-name = Жук-скарбничка
 ghost-role-information-lootbug-description = Намагайтеся не стати жертвою грабіжників.

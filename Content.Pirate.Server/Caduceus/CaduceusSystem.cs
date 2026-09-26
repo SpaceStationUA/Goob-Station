@@ -6,6 +6,7 @@ using Content.Pirate.Server.Index;
 using Content.Pirate.Shared.Caduceus;
 using Content.Pirate.Shared.Index;
 using Content.Server.Actions;
+using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Damage;
@@ -106,6 +107,8 @@ public sealed class CaduceusSystem : EntitySystem
         var meta = MetaData(ent);
         ent.Comp.BaseName = meta.EntityName;
         ent.Comp.BaseDescription = meta.EntityDescription;
+        if (TryComp<WeaponClassComponent>(ent, out var weaponClass))
+            ent.Comp.BaseWeaponClass = weaponClass.Class;
 
         _actionContainer.EnsureAction(ent, ref ent.Comp.ToggleActionEntity, ent.Comp.ToggleAction);
         ApplyForm(ent);
@@ -556,6 +559,21 @@ public sealed class CaduceusSystem : EntitySystem
                 melee.WideAnimation = wideAnimation.Value;
 
             Dirty(ent, melee);
+        }
+
+        if (TryComp<WeaponClassComponent>(ent, out var weaponClass))
+        {
+            var formClass = effective != CaduceusForm.Inactive
+                            && ent.Comp.Forms.TryGetValue(effective, out var formEntry)
+                            && formEntry.WeaponClass is { } overrideClass
+                ? overrideClass
+                : ent.Comp.BaseWeaponClass ?? weaponClass.Class;
+
+            if (weaponClass.Class != formClass)
+            {
+                weaponClass.Class = formClass;
+                Dirty(ent, weaponClass);
+            }
         }
 
         _appearance.SetData(ent, CaduceusVisuals.Form, effective);

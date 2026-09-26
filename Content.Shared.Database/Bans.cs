@@ -14,6 +14,14 @@ public enum BanType : byte
     /// A ban from playing one or more roles.
     /// </summary>
     Role,
+
+    #region Pirate: chat ban data
+    OOC,
+
+    LOOC,
+
+    Deadchat,
+    #endregion Pirate: chat ban data
 }
 
 /// <summary>

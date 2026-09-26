@@ -40,3 +40,16 @@
   practical:
     TailoringKnowledge: 1
   useQuality: false
+
+- type: construction
+  id: NeckGaiterOlive
+  graph: NeckGaiterOlive
+  startNode: start
+  targetNode: neckGaiter
+  category: construction-category-clothing
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false

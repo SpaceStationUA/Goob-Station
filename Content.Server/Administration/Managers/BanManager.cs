@@ -91,6 +91,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         cancel.ThrowIfCancellationRequested();
         _cachedBanExemptions[player] = flags;
         _cachedRoleBans[player] = userRoleBans;
+        await CacheChatBans(player, cancel); // Pirate: chat ban management
 
         SendRoleBans(player);
     }
@@ -98,10 +99,12 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     private void ClearPlayerData(ICommonSession player)
     {
         _cachedBanExemptions.Remove(player);
+        ClearChatBans(player); // Pirate: chat ban management
     }
 
     public void Restart()
     {
+        RestartChatBans(); // Pirate: chat ban management
         // Clear out players that have disconnected.
         var toRemove = new ValueList<ICommonSession>();
         foreach (var player in _cachedRoleBans.Keys)

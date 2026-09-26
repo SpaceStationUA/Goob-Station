@@ -11,6 +11,7 @@
     minPlayers: 0
     chaosScore: 1000
   - type: GangwarRule
+  - type: GangDirectiveFax # Pirate: gang directive
   - type: AntagObjectives
     objectives:
     - GangLeaderRecruitObjective

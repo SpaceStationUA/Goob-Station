@@ -1,0 +1,7 @@
+<PanelContainer xmlns="https://spacestation14.io"
+                HorizontalExpand="True">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <Button Name="Purchase" Text="{Loc 'shipyard-console-purchase'}" StyleClasses="LabelSubText" />
+        <Label Name="VesselName" HorizontalExpand="True" />
+    </BoxContainer>
+</PanelContainer>

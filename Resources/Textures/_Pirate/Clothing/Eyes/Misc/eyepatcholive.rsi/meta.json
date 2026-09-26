@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Recolour of Clothing/Eyes/Misc/eyepatch.rsi onto the olive palette of Clothing/Hands/Gloves/mercbattle.rsi. Original taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da; equipped-EYES-moth modified from equipped-EYES by HTMLSystem. Palette from Jackal298's sprite, based on tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e and paradise station https://github.com/ParadiseSS13/Paradise/blob/master/icons/obj/clothing/gloves.dmi.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-EYES",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-moth",
+      "directions": 4
+    }
+  ]
+}

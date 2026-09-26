@@ -377,6 +377,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         else
             sendType = InGameOOCChatType.Dead;
 
+        if (RejectChatBannedMessage(player, sendType)) // Pirate: chat ban enforcement
+            return; // Pirate: chat ban enforcement
+
         // If crit player LOOC is disabled, don't send the message at all.
         if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
             return;

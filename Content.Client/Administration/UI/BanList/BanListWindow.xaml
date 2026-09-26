@@ -1,5 +1,6 @@
 <!--
 SPDX-License-Identifier: MIT
+Pirate: chat ban list
 -->
 
 <controls:BanListWindow
@@ -7,9 +8,12 @@ SPDX-License-Identifier: MIT
     xmlns:controls="clr-namespace:Content.Client.Administration.UI.BanList"
     xmlns:bans="clr-namespace:Content.Client.Administration.UI.BanList.Bans"
     xmlns:roleBans="clr-namespace:Content.Client.Administration.UI.BanList.RoleBans"
+    xmlns:chatBans="clr-namespace:Content.Client._Pirate.Administration.UI.BanList.ChatBans"
     SetSize="1400 400">
     <TabContainer Name="TabContainer">
         <bans:BanListControl Name="BanList" Access="Public"/>
         <roleBans:RoleBanListControl Name="RoleBanList" Access="Public"/>
+        <!-- Pirate: chat ban list -->
+        <chatBans:ChatBanListControl Name="ChatBanList" Access="Public"/>
     </TabContainer>
 </controls:BanListWindow>

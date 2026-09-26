@@ -335,7 +335,11 @@ public partial class NavMapControl : MapGridControl
             {
                 if (!blip.Selectable)
                     continue;
+                if (!blip.Coordinates.IsValid(EntManager)) // Pirate: syndicate remote monitoring - stale camera blips cannot be selected
+                    continue; // Pirate: syndicate remote monitoring
                 var mapPosition = _transformSystem.ToMapCoordinates(blip.Coordinates);
+                if (mapPosition.MapId == MapId.Nullspace) // Pirate: syndicate remote monitoring
+                    continue; // Pirate: syndicate remote monitoring
                 if (ZFilterTrackedBlipsToDisplayedMap && mapPosition.MapId != _xform.MapID)
                     continue;
                 var distance = (mapPosition.Position - worldPosition).Length();
@@ -530,6 +534,9 @@ public partial class NavMapControl : MapGridControl
         {
             if (blip.Blinks && !lit || blip.Texture == null)
                 continue;
+
+            if (!blip.Coordinates.IsValid(EntManager)) // Pirate: syndicate remote monitoring - remote camera blips may outlive or precede their client entity
+                continue; // Pirate: syndicate remote monitoring
 
             var mapPos = _transformSystem.ToMapCoordinates(blip.Coordinates);
             if (mapPos.MapId == MapId.Nullspace ||

@@ -5,6 +5,8 @@
   description: A self-reloading launcher that fires sticky grenades. They embed into whatever they hit and explode after 3 seconds.
   suffix: Regenerating
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Heavy # Pirate: weapon skills
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
     layers:

@@ -246,6 +246,8 @@ internal sealed partial class ChatManager : IChatManager
         switch (type)
         {
             case OOCChatType.OOC:
+                if (RejectChatBannedMessage(player, BanType.OOC)) // Pirate: chat ban enforcement
+                    return; // Pirate: chat ban enforcement
                 SendOOC(player, message);
                 break;
             case OOCChatType.Admin:

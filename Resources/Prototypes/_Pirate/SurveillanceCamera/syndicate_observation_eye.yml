@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: AbductorHumanObservationConsoleEye
+  id: SyndicateRemoteSurveillanceEye
+  name: surveillance eye
+  description: The syndicate monitor's movable observer.
+  save: false
+  components:
+  - type: Sprite
+    sprite: _Pirate/Mobs/Silicon/syndicate_observation_eye.rsi
+    layers:
+    - state: eye
+      shader: unshaded

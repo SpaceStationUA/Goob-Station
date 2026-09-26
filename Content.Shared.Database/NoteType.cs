@@ -37,4 +37,12 @@ public enum NoteType
     ///     A role ban, converted to a shared note
     /// </summary>
     RoleBan = 4,
+
+    #region Pirate: chat ban data
+    OOCBan = 5,
+
+    LOOCBan = 6,
+
+    DeadchatBan = 7,
+    #endregion Pirate: chat ban data
 }

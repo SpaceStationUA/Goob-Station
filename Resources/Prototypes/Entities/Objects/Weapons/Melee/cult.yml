@@ -6,6 +6,8 @@
   id: RitualDagger
   description: A strange dagger used by sinister groups for rituals and sacrifices.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Knife # Pirate: weapon skills
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_dagger.rsi
@@ -35,6 +37,8 @@
   id: EldritchBlade
   description: A sword humming with unholy energy.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/cult_blade.rsi
@@ -61,6 +65,8 @@
   id: UnholyHalberd
   description: A poleaxe that seems to be linked to its wielder.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Polearm # Pirate: weapon skills
   - type: Tag
     tags:
     - FireAxe

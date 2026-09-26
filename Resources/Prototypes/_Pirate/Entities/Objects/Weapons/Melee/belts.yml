@@ -4,6 +4,8 @@
   name: дисциплінарний пояс
   description: Дуже важкий пояс. "Дивись, що ти накоїв! Кадет, від пола п'ять разів віджатися! ЗАРАЗ!""
   components:
+  - type: WeaponClass
+    class: Bludgeon
   - type: Sprite
     sprite: _Pirate/Clothing/Belt/instructordisciplinary.rsi
     state: icon

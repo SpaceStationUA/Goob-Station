@@ -29,7 +29,7 @@
 - type: entity
   id: ActionGangLeaderMemberOffer
   name: Recruit
-  description: Offer someone a place in your gang. You can only recruit three members.
+  description: Offer someone a place in your gang. You can only recruit ten members. # Pirate: gang recruit cap - was three
   components:
   - type: Action
     useDelay: 5

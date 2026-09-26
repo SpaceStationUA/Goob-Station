@@ -18,6 +18,14 @@
 
 - type: entity
   parent: BasePirateMapPreview
+  id: PirateMapPreviewAspidTP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: aspid_tp
+
+- type: entity
+  parent: BasePirateMapPreview
   id: PirateMapPreviewBagel
   categories: [ HideSpawnMenu ]
   components:

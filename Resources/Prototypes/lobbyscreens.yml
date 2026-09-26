@@ -134,12 +134,6 @@
   artist: mr.fisher
 
 - type: lobbyBackground
-  id: JustAnotherShift
-  background: /Textures/LobbyScreens/JustAnotherShift.webp
-  name: Just Another Shift
-  artist: frflyffufox
-
-- type: lobbyBackground
   id: aCalmEvac
   background: /Textures/LobbyScreens/aCalmEvac.webp
   name: A Calm Evac

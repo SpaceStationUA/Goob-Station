@@ -1,7 +1,9 @@
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.RandomMetadata;
 using Content.Server.RoundEnd;
 using Content.Pirate.Server.CharacterPods;
+using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
@@ -48,6 +50,7 @@ namespace Content.Pirate.Server.Mercenary
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+        [Dependency] private readonly RadioSystem _radio = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private EntityUid? _mercBaseGrid;
@@ -57,11 +60,26 @@ namespace Content.Pirate.Server.Mercenary
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
+            SubscribeLocalEvent<MercArrivalAnnouncerComponent, TransformSpeakerNameEvent>(OnAnnouncerSpeakerName);
         }
 
         private void OnRoundRestartCleanup(RoundRestartCleanupEvent args)
         {
             _mercBaseGrid = null;
+        }
+
+        private void OnAnnouncerSpeakerName(Entity<MercArrivalAnnouncerComponent> ent, ref TransformSpeakerNameEvent args)
+        {
+            args.VoiceName = Loc.GetString(ent.Comp.SenderName);
+        }
+
+        private void AnnounceArrival(EntityUid grid)
+        {
+            if (!TryComp<MercArrivalAnnouncerComponent>(grid, out var announcer))
+                return;
+
+            // Send from the grid to hide the merc's identity and job.
+            _radio.SendRadioMessage(grid, Loc.GetString(announcer.Message), announcer.Channel, grid);
         }
 
         public void MakeAnMerc(EntityUid entity)
@@ -108,6 +126,8 @@ namespace Content.Pirate.Server.Mercenary
             var cd = _entManager.EnsureComponent<ShuttleDestinationCoordinatesComponent>(disk);
             cd.Destination = mercMapUid.Value;
             _entManager.Dirty(disk, cd);
+
+            AnnounceArrival(shuttle);
         }
 
         private EntityUid SpawnMercBody(EntityUid source, ICommonSession session, EntityCoordinates coordinates,
@@ -161,6 +181,7 @@ namespace Content.Pirate.Server.Mercenary
             }
 
             _metaDataSystem.SetEntityName(shuttle.Value, _random.Pick(ShuttleNames));
+            EnsureComp<MercArrivalAnnouncerComponent>(shuttle.Value);
 
             _mercBaseGrid = shuttle.Value;
             grid = shuttle.Value;

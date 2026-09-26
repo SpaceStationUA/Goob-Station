@@ -71,6 +71,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly SharedRevolutionarySystem _revolutionarySystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
+    private static readonly TimeSpan NoCommandWinDelay = TimeSpan.FromMinutes(15);
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
@@ -80,6 +81,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     {
         base.Initialize();
         SubscribeLocalEvent<CommandStaffComponent, MobStateChangedEvent>(OnCommandMobStateChanged);
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
 
         SubscribeLocalEvent<HeadRevolutionaryComponent, AfterRevolutionaryConvertedEvent>(OnPostConvert); // Einstein Engines - Revolutionary Manifesto
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnTryCallEvac); // goob edit
@@ -95,49 +97,83 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         component.CommandCheck = _timing.CurTime + component.TimerWait;
     }
 
+    private void OnRunLevelChanged(GameRunLevelChangedEvent args)
+    {
+        if (args.New != GameRunLevel.InRound)
+            return;
+
+        var query = EntityQueryEnumerator<RevolutionaryRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var component, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, gameRule) || component.CommandCheckInitialized)
+                continue;
+
+            var commandLost = CheckCommandLose();
+            component.CommandCheckInitialized = true;
+            component.StartedWithoutCommandStaff = commandLost && !HasCommandStaff();
+            if (component.StartedWithoutCommandStaff)
+                component.NoCommandWinTime = _timing.CurTime + NoCommandWinDelay;
+        }
+    }
+
     protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
+        if (!component.CommandCheckInitialized || component.CommandCheck > _timing.CurTime)
+            return;
 
-        if (component.CommandCheck <= _timing.CurTime)
+        component.CommandCheck = _timing.CurTime + component.TimerWait;
+
+        var commandLost = CheckCommandLose();
+
+        var delayedNoCommandWin = component.StartedWithoutCommandStaff
+                                  && component.NoCommandWinTime is { } winTime
+                                  && _timing.CurTime >= winTime;
+        if (delayedNoCommandWin || (!component.StartedWithoutCommandStaff && commandLost))
         {
-            component.CommandCheck = _timing.CurTime + component.TimerWait;
-
-            // goob edit
-            if (CheckCommandLose())
-            {
-                if (!component.HasRevAnnouncementPlayed)
-                {
-                    _chatSystem.DispatchGlobalAnnouncement(
-                        Loc.GetString("revolutionaries-win-announcement"),
-                        Loc.GetString("revolutionaries-win-sender"),
-                        colorOverride: Color.Gold);
-
-                    component.HasRevAnnouncementPlayed = true;
-                }
-
-                foreach (var ms in EntityQuery<MindShieldComponent, MobStateComponent>())
-                {
-                    var entity = ms.Item1.Owner;
-
-                    // assign eotrs
-                    if (HasComp<RevolutionEnemyComponent>(entity))
-                        continue;
-                    var revenemy = EnsureComp<RevolutionEnemyComponent>(entity);
-                    _antag.SendBriefing(entity, Loc.GetString("rev-eotr-gain"), Color.Red, revenemy.RevStartSound);
-                }
-            }
-
-            if (CheckRevsLose() && !component.HasAnnouncementPlayed)
+            if (!component.HasRevAnnouncementPlayed)
             {
                 _chatSystem.DispatchGlobalAnnouncement(
-                    Loc.GetString("revolutionaries-lose-announcement"),
-                    Loc.GetString("revolutionaries-sender-cc"),
+                    Loc.GetString("revolutionaries-win-announcement"),
+                    Loc.GetString("revolutionaries-win-sender"),
                     colorOverride: Color.Gold);
 
-                component.HasAnnouncementPlayed = true;
+                component.HasRevAnnouncementPlayed = true;
+            }
+
+            foreach (var ms in EntityQuery<MindShieldComponent, MobStateComponent>())
+            {
+                var entity = ms.Item1.Owner;
+
+                // assign eotrs
+                if (HasComp<RevolutionEnemyComponent>(entity))
+                    continue;
+                var revenemy = EnsureComp<RevolutionEnemyComponent>(entity);
+                _antag.SendBriefing(entity, Loc.GetString("rev-eotr-gain"), Color.Red, revenemy.RevStartSound);
             }
         }
+
+        if (CheckRevsLose() && !component.HasAnnouncementPlayed)
+        {
+            _chatSystem.DispatchGlobalAnnouncement(
+                Loc.GetString("revolutionaries-lose-announcement"),
+                Loc.GetString("revolutionaries-sender-cc"),
+                colorOverride: Color.Gold);
+
+            component.HasAnnouncementPlayed = true;
+        }
+    }
+
+    private bool HasCommandStaff()
+    {
+        var commandStaff = AllEntityQuery<CommandStaffComponent>();
+        while (commandStaff.MoveNext(out _, out var component))
+        {
+            if (component.Enabled)
+                return true;
+        }
+
+        return false;
     }
 
     protected override void AppendRoundEndText(EntityUid uid,

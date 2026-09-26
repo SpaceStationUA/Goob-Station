@@ -3,13 +3,15 @@
 using System.Numerics;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationAi;
+using Content.Shared._Pirate.SurveillanceCamera; // Pirate: syndicate remote monitoring
+using Content.Shared.SurveillanceCamera.Components; // Pirate: syndicate remote monitoring
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Threading;
 
 namespace Content.Shared.Silicons.StationAi;
 
-public sealed class StationAiVisionSystem : EntitySystem
+public sealed partial class StationAiVisionSystem : EntitySystem // Pirate: syndicate remote monitoring
 {
     /*
      * This class handles 2 things:
@@ -67,7 +69,7 @@ public sealed class StationAiVisionSystem : EntitySystem
     /// <summary>
     /// Returns whether a tile is accessible based on vision.
     /// </summary>
-    public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false, bool xrayCameras = false, float xrayRange = 0f, Vector2? xrayOrigin = null)
+    public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false, bool xrayCameras = false, float xrayRange = 0f, Vector2? xrayOrigin = null, bool includeSyndicateCameras = false) // Pirate: syndicate remote monitoring
     {
         _viewportTiles.Clear();
         _opaque.Clear();
@@ -82,6 +84,7 @@ public sealed class StationAiVisionSystem : EntitySystem
         _seedJob.Grid = (grid.Owner, grid.Comp2);
         _seedJob.ExpandedBounds = expandedBounds;
         _parallel.ProcessNow(_seedJob);
+        AddCameraSeedsInContainers(grid, expandedBounds); // Pirate: syndicate remote monitoring
         _job.XrayCameras = xrayCameras;
         _job.XrayRange = xrayRange;
         _job.XrayOrigin = xrayOrigin;
@@ -91,6 +94,13 @@ public sealed class StationAiVisionSystem : EntitySystem
         {
             if (!seed.Comp.Enabled)
                 continue;
+
+            if (!includeSyndicateCameras && HasComp<SyndicateOnlyVisionComponent>(seed)) // Pirate: syndicate remote monitoring
+                continue; // Pirate: syndicate remote monitoring
+
+            if (HasComp<CameraActiveVisionComponent>(seed) &&
+                (!TryComp<SurveillanceCameraComponent>(seed, out var sourceCamera) || !sourceCamera.Active)) // Pirate: syndicate remote monitoring
+                continue; // Pirate: syndicate remote monitoring
 
             if (seed.Comp.NeedsPower && !_power.IsPowered(seed.Owner))
                 continue;
@@ -169,7 +179,7 @@ public sealed class StationAiVisionSystem : EntitySystem
     /// Gets a byond-equivalent for tiles in the specified worldAABB.
     /// </summary>
     /// <param name="expansionSize">How much to expand the bounds before to find vision intersecting it. Makes this the largest vision size + 1 tile.</param>
-    public void GetView(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f, bool xrayCameras = false, float xrayRange = 0f, Vector2? xrayOrigin = null)
+    public void GetView(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f, bool xrayCameras = false, float xrayRange = 0f, Vector2? xrayOrigin = null, bool includeSyndicateCameras = false) // Pirate: syndicate remote monitoring
     {
         _viewportTiles.Clear();
         _opaque.Clear();
@@ -185,6 +195,7 @@ public sealed class StationAiVisionSystem : EntitySystem
         var enlargedLocalAabb = invMatrix.TransformBox(worldBounds.Enlarged(expansionSize));
         _seedJob.ExpandedBounds = enlargedLocalAabb;
         _parallel.ProcessNow(_seedJob);
+        AddCameraSeedsInContainers(grid, enlargedLocalAabb); // Pirate: syndicate remote monitoring
         _job.XrayCameras = xrayCameras;
         _job.XrayRange = xrayRange;
         _job.XrayOrigin = xrayOrigin;
@@ -195,6 +206,13 @@ public sealed class StationAiVisionSystem : EntitySystem
         {
             if (!seed.Comp.Enabled)
                 continue;
+
+            if (!includeSyndicateCameras && HasComp<SyndicateOnlyVisionComponent>(seed)) // Pirate: syndicate remote monitoring
+                continue; // Pirate: syndicate remote monitoring
+
+            if (HasComp<CameraActiveVisionComponent>(seed) &&
+                (!TryComp<SurveillanceCameraComponent>(seed, out var sourceCamera) || !sourceCamera.Active)) // Pirate: syndicate remote monitoring
+                continue; // Pirate: syndicate remote monitoring
 
             if (seed.Comp.NeedsPower && !_power.IsPowered(seed.Owner))
                 continue;

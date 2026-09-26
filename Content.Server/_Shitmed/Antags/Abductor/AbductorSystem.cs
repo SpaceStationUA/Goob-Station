@@ -96,7 +96,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 _eye.SetDrawFov(args.Actor, false);
                 _eye.SetRotation(args.Actor, Angle.Zero, eyeComp);
                 if (!HasComp<StationAiOverlayComponent>(args.Actor))
-                    AddComp(args.Actor, new StationAiOverlayComponent { AllowCrossGrid = true });
+                    AddComp(args.Actor, new StationAiOverlayComponent { AllowCrossGrid = true, AllowUnseenMachineAccess = false }); // Pirate: syndicate remote monitoring
                 if (!TryComp(eye, out RemoteEyeSourceContainerComponent? remoteEyeSourceContainerComponent))
                 {
                     remoteEyeSourceContainerComponent = new RemoteEyeSourceContainerComponent { Actor = args.Actor };

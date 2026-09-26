@@ -1,0 +1,7 @@
+#I am a lizard, and I must scream.
+- type: soundCollection
+  id: ReptilianScream
+  files:
+  - /Audio/Voice/Reptilian/reptilian_scream.ogg
+
+# ReptilianScreech is provided by _Pirate/SoundCollections/reptilian.yml to keep prototype IDs unique.

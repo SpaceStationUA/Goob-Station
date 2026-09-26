@@ -74,7 +74,10 @@ public sealed partial class BanPanel : DefaultWindow
     {
         None,
         Server,
-        Role
+        Role,
+        OOC, // Pirate: chat ban panel
+        LOOC, // Pirate: chat ban panel
+        Deadchat, // Pirate: chat ban panel
     }
 
     public BanPanel()
@@ -152,6 +155,11 @@ public sealed partial class BanPanel : DefaultWindow
         TypeOption.AddItem(Loc.GetString("ban-panel-select"), (int) Types.None);
         TypeOption.AddItem(Loc.GetString("ban-panel-server"), (int) Types.Server);
         TypeOption.AddItem(Loc.GetString("ban-panel-role"), (int) Types.Role);
+        #region Pirate: chat ban panel
+        TypeOption.AddItem(Loc.GetString("chat-ban-ooc"), (int) Types.OOC);
+        TypeOption.AddItem(Loc.GetString("chat-ban-looc"), (int) Types.LOOC);
+        TypeOption.AddItem(Loc.GetString("chat-ban-deadchat"), (int) Types.Deadchat);
+        #endregion Pirate: chat ban panel
 
         ReasonTextEdit.Placeholder = new Rope.Leaf(Loc.GetString("ban-panel-reason"));
 
@@ -495,6 +503,27 @@ public sealed partial class BanPanel : DefaultWindow
     {
         TypeOption.ModulateSelfOverride = null;
         Tabs.SetTabVisible((int) TabNumbers.Roles, TypeOption.SelectedId == (int) Types.Role);
+        #region Pirate: chat ban panel
+        var isChatBan = TypeOption.SelectedId is (int) Types.OOC or (int) Types.LOOC or (int) Types.Deadchat;
+        PlayerCheckbox.Disabled = isChatBan;
+        IpCheckbox.Disabled = isChatBan;
+        HwidCheckbox.Disabled = isChatBan;
+        LastConnCheckbox.Disabled = isChatBan;
+        EraseCheckbox.Disabled = isChatBan;
+        if (isChatBan)
+        {
+            PlayerCheckbox.Pressed = true;
+            PlayerNameLine.Editable = true;
+            IpCheckbox.Pressed = false;
+            HwidCheckbox.Pressed = false;
+            LastConnCheckbox.Pressed = false;
+            EraseCheckbox.Pressed = false;
+            IpAddress = null;
+            Hwid = null;
+            ErrorLevel &= ~(ErrorLevelEnum.IpAddress | ErrorLevelEnum.Hwid);
+            UpdateSubmitEnabled();
+        }
+        #endregion Pirate: chat ban panel
             NoteSeverity? newSeverity = null;
             switch (TypeOption.SelectedId)
             {
@@ -520,6 +549,12 @@ public sealed partial class BanPanel : DefaultWindow
                             .Warning("Role ban severity could not be parsed from config!");
                     }
                     break;
+                case (int) Types.OOC: // Pirate: chat ban panel
+                case (int) Types.LOOC: // Pirate: chat ban panel
+                case (int) Types.Deadchat: // Pirate: chat ban panel
+                    if (Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), true, out NoteSeverity chatSeverity)) // Pirate: chat ban panel
+                        newSeverity = chatSeverity; // Pirate: chat ban panel
+                    break; // Pirate: chat ban panel
             }
 
             if (newSeverity != null)
@@ -636,7 +671,20 @@ public sealed partial class BanPanel : DefaultWindow
         var severity = (NoteSeverity) SeverityOption.SelectedId;
         var erase = EraseCheckbox.Pressed;
 
+        #region Pirate: chat ban panel
+        var banType = TypeOption.SelectedId switch
+        {
+            (int) Types.Server => BanType.Server,
+            (int) Types.Role => BanType.Role,
+            (int) Types.OOC => BanType.OOC,
+            (int) Types.LOOC => BanType.LOOC,
+            (int) Types.Deadchat => BanType.Deadchat,
+            _ => throw new ArgumentOutOfRangeException(nameof(TypeOption.SelectedId)),
+        };
+        #endregion Pirate: chat ban panel
+
         var ban = new Ban(
+            banType, // Pirate: chat ban panel
             player,
             IpAddress,
             useLastIp,

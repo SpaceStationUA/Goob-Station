@@ -6,6 +6,8 @@
   id: Welder
   description: "Melts anything as long as it's fueled, don't forget your eye protection!"
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   # Goobstation edit start
   - type: EmitSoundOnPickup
     sound:

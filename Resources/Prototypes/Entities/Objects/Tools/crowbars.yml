@@ -7,6 +7,8 @@
   name: crowbar
   description: A multipurpose tool used for many tasks, such as prying doors or bludgeoning interdimensional invaders.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   # Goobstation edit start
   - type: EmitSoundOnPickup
     sound:

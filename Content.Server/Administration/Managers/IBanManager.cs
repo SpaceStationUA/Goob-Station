@@ -3,6 +3,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis; // Pirate: chat ban management
+using Content.Server.Database; // Pirate: chat ban management
 using Content.Shared.Database;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
@@ -114,6 +116,20 @@ public interface IBanManager
     /// </summary>
     /// <param name="pSession">Player's session</param>
     public void SendRoleBans(ICommonSession pSession);
+
+    #region Pirate: chat ban management
+    public Task CreateChatBan(CreateChatBanInfo banInfo);
+
+    public bool TryGetActiveChatBan(ICommonSession player, BanType type, [NotNullWhen(true)] out BanDef? ban);
+
+    public bool AreChatBansLoaded(ICommonSession player);
+
+    public Task<string> PardonChatBan(int banId, NetUserId? unbanningAdmin, DateTimeOffset unbanTime);
+
+    public Task RefreshChatBans(NetUserId userId);
+
+    public Task<List<BanDef>> GetChatBans(NetUserId userId, bool includeUnbanned = true);
+    #endregion Pirate: chat ban management
 }
 
 /// <summary>
@@ -399,3 +415,19 @@ public sealed class CreateRoleBanInfo : CreateBanInfo
         return this;
     }
 }
+
+#region Pirate: chat ban management
+[Access(typeof(BanManager), Other = AccessPermissions.Execute)]
+public sealed class CreateChatBanInfo : CreateBanInfo
+{
+    public BanType Type { get; }
+
+    public CreateChatBanInfo(BanType type, string reason) : base(reason)
+    {
+        if (type is not (BanType.OOC or BanType.LOOC or BanType.Deadchat))
+            throw new ArgumentOutOfRangeException(nameof(type), type, "Expected a chat ban type");
+
+        Type = type;
+    }
+}
+#endregion Pirate: chat ban management

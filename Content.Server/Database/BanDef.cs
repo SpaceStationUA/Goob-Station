@@ -95,6 +95,19 @@ namespace Content.Server.Database
                         throw new ArgumentException("Role bans cannot have exempt flags", nameof(exemptFlags));
                     break;
 
+                #region Pirate: chat ban management
+                case BanType.OOC:
+                case BanType.LOOC:
+                case BanType.Deadchat:
+                    if (roles != null)
+                        throw new ArgumentException("Chat bans cannot specify roles", nameof(roles));
+                    if (exemptFlags != 0)
+                        throw new ArgumentException("Chat bans cannot have exempt flags", nameof(exemptFlags));
+                    if (addresses.Length != 0 || hwIds.Length != 0 || userIds.Length == 0)
+                        throw new ArgumentException("Chat bans must target at least one account and cannot target an address or HWID");
+                    break;
+                #endregion Pirate: chat ban management
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type));
             }

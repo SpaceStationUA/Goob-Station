@@ -30,7 +30,6 @@ public sealed partial class ReactiveComponent : Component
     /// </summary>
     [DataField]
     public float? ScaleOverride;
-
     /// <summary>
     ///     Goobstation - should reagent quantity be clamped to one for entity-effect scaling?
     /// </summary>

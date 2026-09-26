@@ -41,6 +41,8 @@
     CartridgeSaline: 2
     CartridgeBicaridine: 2
     CartridgeDermaline: 2 # Goobstation - end
+    BreachingCharge: 8
+    HammerBreachingNT: 1 # Pirate: breaching hammer
   # security officers need to follow a diet regimen!
   contrabandInventory:
     WeaponMeleeNeedle: 2

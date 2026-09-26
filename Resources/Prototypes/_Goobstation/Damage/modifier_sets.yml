@@ -9,7 +9,7 @@
     Piercing: 0.9
 
 - type: damageModifierSet
-  id: Xenoborg
+  id: Xenoborg 
   coefficients:
     Ion: 0.75
     Heat: 0.8

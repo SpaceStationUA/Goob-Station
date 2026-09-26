@@ -92,7 +92,7 @@
     tags:
     - FelinidEmotes
     - HarpyEmotes
-    - ReptilianEmotes # Pirate: reptilian emotes
+    - ReptilianEmotes # Omu
   blacklist:
     components:
     - BorgChassis

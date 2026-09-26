@@ -25,6 +25,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
     [Dependency] private readonly EuiManager _euis = default!;
     [Dependency] private readonly IEntitySystemManager _systems = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IBanManager _bans = default!; // Pirate: chat ban notes
 
     public const string SawmillId = "admin.notes";
 
@@ -104,6 +105,9 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
                 break;
             case NoteType.ServerBan:
             case NoteType.RoleBan:
+            case NoteType.OOCBan: // Pirate: chat ban notes
+            case NoteType.LOOCBan: // Pirate: chat ban notes
+            case NoteType.DeadchatBan: // Pirate: chat ban notes
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
         }
@@ -140,6 +144,9 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
                 break;
             case NoteType.ServerBan: // Add bans using the ban panel, not note edit
             case NoteType.RoleBan:
+            case NoteType.OOCBan: // Pirate: chat ban notes
+            case NoteType.LOOCBan: // Pirate: chat ban notes
+            case NoteType.DeadchatBan: // Pirate: chat ban notes
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
         }
@@ -174,7 +181,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             NoteType.Note => (await _db.GetAdminNote(id))?.ToShared(),
             NoteType.Watchlist => (await _db.GetAdminWatchlist(id))?.ToShared(),
             NoteType.Message => (await _db.GetAdminMessage(id))?.ToShared(),
-            NoteType.ServerBan or NoteType.RoleBan => (await _db.GetBanAsNoteAsync(id))?.ToShared(),
+            NoteType.ServerBan or NoteType.RoleBan or NoteType.OOCBan or NoteType.LOOCBan or NoteType.DeadchatBan => (await _db.GetBanAsNoteAsync(id))?.ToShared(), // Pirate: chat ban notes
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type")
         };
     }
@@ -201,7 +208,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             case NoteType.Message:
                 await _db.DeleteAdminMessage(noteId, deletedBy.UserId, deletedAt);
                 break;
-            case NoteType.ServerBan or NoteType.RoleBan:
+            case NoteType.ServerBan or NoteType.RoleBan or NoteType.OOCBan or NoteType.LOOCBan or NoteType.DeadchatBan: // Pirate: chat ban notes
                 await _db.HideBanFromNotes(noteId, deletedBy.UserId, deletedAt);
                 break;
             default:
@@ -278,10 +285,13 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             case NoteType.Message:
                 await _db.EditAdminMessage(noteId, message, editedBy.UserId, editedAt, expiryTime);
                 break;
-            case NoteType.ServerBan or NoteType.RoleBan:
+            case NoteType.ServerBan or NoteType.RoleBan or NoteType.OOCBan or NoteType.LOOCBan or NoteType.DeadchatBan: // Pirate: chat ban notes
                 if (severity is null)
                     throw new ArgumentException("Severity cannot be null for a ban", nameof(severity));
                 await _db.EditBan(noteId, message, severity.Value, expiryTime, editedBy.UserId, editedAt);
+                if (type is NoteType.OOCBan or NoteType.LOOCBan or NoteType.DeadchatBan) // Pirate: chat ban notes
+                    foreach (var player in note.Players) // Pirate: chat ban notes
+                        await _bans.RefreshChatBans(player); // Pirate: chat ban notes
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");

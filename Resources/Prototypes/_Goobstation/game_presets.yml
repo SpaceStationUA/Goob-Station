@@ -141,10 +141,10 @@
   minPlayers: 5
   rules:
     - CalmDynamic
-    - GlimmerEventScheduler # Pirate
     - SubGamemodesRule
     - RareIonStormScheduler
     - SpaceTrafficControlFriendlyEventScheduler
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: TheGuide
@@ -157,10 +157,10 @@
   minPlayers: 25
   rules:
     - CombatDynamic
-    - GlimmerEventScheduler # Pirate
     - SubGamemodesRule
     - IonStormScheduler
     - SpaceTrafficControlEventScheduler
+    - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
   id: SecretPlusLow
@@ -173,6 +173,7 @@
   showInVote: true
   rules:
     - SecretPlusLow
+    - MeteorSwarmMildScheduler
     - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
@@ -186,6 +187,7 @@
   showInVote: true
   rules:
     - SecretPlusMid
+    - MeteorSwarmScheduler
     - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
@@ -200,6 +202,7 @@
   showInVote: false # 1984
   rules:
     - SecretPlusAdmeme
+    - MeteorSwarmScheduler
     - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
@@ -214,6 +217,7 @@
   minPlayers: 100 # Pirate
   rules:
     - SecretPlusRampingMid
+    - MeteorSwarmScheduler
     - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
@@ -258,3 +262,4 @@
   maxPlayers: 40
   rules:
     - SecretPlusLowpop
+    - MeteorSwarmMildScheduler

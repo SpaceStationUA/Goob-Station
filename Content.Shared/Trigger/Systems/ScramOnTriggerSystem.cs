@@ -1,3 +1,4 @@
+using Content.Shared._Pirate.Trigger; // Pirate: scram grid teleport
 using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: scram implant station scope
 using Content.Shared.Maps;
 using Content.Shared.Movement.Pulling.Components;
@@ -27,9 +28,17 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     {
         EntityCoordinates? targetCoords = null;
 
+        #region Pirate: scram grid teleport - teleport to the default station map with the scoped grid selection as fallback
         // Pirate: only commit the server-side trigger when there is somewhere to teleport.
-        if (_net.IsServer && (targetCoords = SelectRandomTileInRange(target, ent.Comp.TeleportRadius)) == null)
-            return;
+        if (_net.IsServer)
+        {
+            var destination = new ScramDefaultMapDestinationEvent(target);
+            RaiseLocalEvent(ent.Owner, ref destination);
+            targetCoords = destination.Coordinates ?? SelectRandomTileInRange(target, ent.Comp.TeleportRadius);
+            if (targetCoords == null)
+                return;
+        }
+        #endregion
 
         // We need stop the user from being pulled so they don't just get "attached" with whoever is pulling them.
         // This can for example happen when the user is cuffed and being pulled.

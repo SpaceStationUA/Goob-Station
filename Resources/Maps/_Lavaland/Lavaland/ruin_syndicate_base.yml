@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 09/12/2026 10:02:28
-  entityCount: 10900
+  entityCount: 10901
 maps: []
 grids:
 - 1
@@ -23101,7 +23101,7 @@ entities:
   - uid: 9214
     components:
     - type: Transform
-      pos: 4.222626,-10.880394
+      pos: -9.053325,24.877367
       parent: 1
 - proto: CannabisSeeds
   entities:
@@ -29229,6 +29229,8 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 10901
+          - 9765
           - 1745
           - 1757
           - 1756
@@ -34147,7 +34149,7 @@ entities:
     - type: Physics
       angularDamping: 0
       linearDamping: 0
-- proto: EnergyShieldSuitModule
+- proto: EnergyShieldSyndicateSuitModule
   entities:
   - uid: 27
     components:
@@ -58490,6 +58492,24 @@ entities:
     - type: Transform
       pos: -8.465594,-2.4442272
       parent: 1
+- proto: LavalandJaunter
+  entities:
+  - uid: 9765
+    components:
+    - type: Transform
+      parent: 1743
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1743
+  - uid: 10901
+    components:
+    - type: Transform
+      parent: 1743
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+      storage: 1743
 - proto: LightReplacer
   entities:
   - uid: 370
@@ -61056,14 +61076,14 @@ entities:
   - uid: 9669
     components:
     - type: Transform
-      pos: 4.595714,-10.990052
+      pos: -9.313741,24.575073
       parent: 1
 - proto: PhotoCamera
   entities:
   - uid: 457
     components:
     - type: Transform
-      pos: 4.7574472,-11.075809
+      pos: -9.417908,24.898214
       parent: 1
 - proto: PianoInstrument
   entities:
@@ -68430,6 +68450,31 @@ entities:
     - type: Transform
       pos: -2.5,3.5
       parent: 1
+- proto: SyndicateNanoChatRelay
+  entities:
+  - uid: 1192
+    components:
+    - type: Transform
+      pos: -2.5,5.5
+      parent: 1
+    - type: ContainerContainer
+      containers:
+        key_slots: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 1193
+          - 2072
+          - 2600
+          - 2626
+        machine_board: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
+        machine_parts: !type:Container
+          showEnts: False
+          occludes: True
+          ents: []
 - proto: SyndicatePersonalAI
   entities:
   - uid: 3455
@@ -69681,31 +69726,6 @@ entities:
     - type: Transform
       pos: -19.5,-8.5
       parent: 1
-- proto: TelecomServerFilled
-  entities:
-  - uid: 1192
-    components:
-    - type: Transform
-      pos: -2.5,5.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1193
-          - 2072
-          - 2600
-          - 2626
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
 - proto: TelecomTransmitter
   entities:
   - uid: 8317

@@ -51,10 +51,10 @@ public sealed partial class SyndicateDropDispatcherComponent : Component
     public int MaxDropHistory = 10;
 
     [DataField]
-    public TimeSpan MinPodCooldown = TimeSpan.FromMinutes(5);
+    public TimeSpan MinPodCooldown = TimeSpan.FromMinutes(1);
 
     [DataField]
-    public TimeSpan MaxPodCooldown = TimeSpan.FromMinutes(20);
+    public TimeSpan MaxPodCooldown = TimeSpan.FromMinutes(15);
 
     [DataField]
     public LocId InterceptAnnouncement = "syndicate-drop-console-intercept-announcement";

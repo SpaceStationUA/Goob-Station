@@ -17,6 +17,20 @@
   - MagazineCaselessRifleStandard
   - MagazineBoxCaselessRifleStandard
 
+- type: latheRecipePack
+  id: SecurityPeacekeeperAmmoStaticPirate
+  recipes:
+  - BoxPeacekeeperGas
+  - BoxPeacekeeperStinger
+  - BoxPeacekeeperFlash
+  - BoxPeacekeeperBaton
+
+- type: latheRecipePack
+  id: SecurityPeacekeeperWeaponsStaticPirate
+  recipes:
+  - WeaponLauncherPeacekeeper
+
+
 ## Dynamic
 - type: latheRecipePack
   id: SecurityHardsuitsPirate

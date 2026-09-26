@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.UI.BanList.Bans;
 using Content.Client.Administration.UI.BanList.RoleBans;
+using Content.Client._Pirate.Administration.UI.BanList.ChatBans; // Pirate: chat ban list
 using Content.Client.Eui;
 using Content.Shared.Administration.BanList;
 using Content.Shared.Eui;
@@ -29,12 +30,18 @@ public sealed class BanListEui : BaseEui
 
         RoleBanControl = BanWindow.RoleBanList;
         RoleBanControl.LineIdsClicked += OnLineIdsClicked;
+        #region Pirate: chat ban list
+        ChatBanControl = BanWindow.ChatBanList;
+        ChatBanControl.LineIdsClicked += OnLineIdsClicked;
+        ChatBanControl.UnbanClicked += OnChatUnbanClicked;
+        #endregion Pirate: chat ban list
     }
 
     private BanListWindow BanWindow { get; }
 
     private BanListControl BanControl { get; }
     private RoleBanListControl RoleBanControl { get; }
+    private ChatBanListControl ChatBanControl { get; } // Pirate: chat ban list
 
     private void OnClosed()
     {
@@ -64,6 +71,8 @@ public sealed class BanListEui : BaseEui
         s.Bans.Sort((a, b) => a.BanTime.CompareTo(b.BanTime));
         BanControl.SetBans(s.Bans);
         RoleBanControl.SetRoleBans(s.RoleBans);
+        s.ChatBans.Sort((a, b) => a.BanTime.CompareTo(b.BanTime)); // Pirate: chat ban list
+        ChatBanControl.SetChatBans(s.ChatBans); // Pirate: chat ban list
     }
 
     public override void Opened()
@@ -117,4 +126,12 @@ public sealed class BanListEui : BaseEui
         var box = UIBox2.FromDimensions(_ui.MousePositionScaled.Position, new Vector2(1, 1));
         _popup.Open(box);
     }
+
+    #region Pirate: chat ban list
+    private void OnChatUnbanClicked(ChatBanListLine line)
+    {
+        if (line.Ban.Id is { } id)
+            SendMessage(new PardonChatBanRequest(id));
+    }
+    #endregion Pirate: chat ban list
 }

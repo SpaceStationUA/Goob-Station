@@ -4,6 +4,8 @@
   parent: BaseItem
   description: Blood-forged claws that siphon vitae on hit. They will dissipate after a 15 swings, or if dispelled.
   components:
+  - type: WeaponClass
+    class: Unarmed
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/vampire_claws.rsi
     state: vamp_claws_item

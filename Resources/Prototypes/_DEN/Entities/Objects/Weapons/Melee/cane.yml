@@ -15,6 +15,8 @@
   name: gnomon
   description: "An amaranth cane crowned with an eidolite crystal. If flipped in the hand, the needle-sharp mnemolith tip serves as a thrusting weapon. A refined accessory, practical for mantes with limited mobility. Deadly when wielded against psionic and otherworldly threats."
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Item
     sprite: _DEN/Objects/Weapons/Melee/Mantis/mantiscane.rsi
     size: Normal

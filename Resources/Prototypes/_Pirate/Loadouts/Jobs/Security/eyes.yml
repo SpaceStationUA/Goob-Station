@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Окуляри - спільні для СБ
+- type: loadout
+  id: LoadoutEyesGlassesSecurity
+  equipment:
+    eyes: ClothingEyesGlassesSecurity
+
+- type: loadout
+  id: LoadoutEyesEyepatchHudSecurity
+  equipment:
+    eyes: ClothingEyesEyepatchHudSecurity
+
+- type: loadout
+  id: LoadoutEyesEyepatchHudTintedSecurity
+  equipment:
+    eyes: ClothingEyesEyepatchHudTintedSecurity

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.Audio.Jukebox; // Pirate: jukebox records
 using Content.Shared.Audio.Jukebox;
 using Robust.Client.Audio;
 using Robust.Client.UserInterface;
+using Robust.Shared.Audio; // Pirate: jukebox records
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Prototypes;
 
@@ -45,6 +47,19 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
         _menu.OnSongSelected += SelectSong;
 
+        // Pirate: jukebox records
+        _menu.OnRecordSelected += record =>
+        {
+            SendMessage(new JukeboxSelectRecordMessage(record));
+        };
+
+        _menu.OnEjectPressed += () =>
+        {
+            if (EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox) && jukebox.SelectedRecord is { } record)
+                SendMessage(new JukeboxEjectRecordMessage(EntMan.GetNetEntity(record)));
+        };
+        // End Pirate: jukebox records
+
         // Pirate: Shuffle & Repeat
         _menu.OnModeChanged += playbackMode =>
         {
@@ -67,6 +82,18 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
         _menu.SetAudioStream(jukebox.AudioStream);
 
+        // Pirate: jukebox records - a selected record takes the place of the selected prototype,
+        // and is what the eject button acts on.
+        _menu.SetEjectEnabled(jukebox.SelectedRecord != null);
+
+        if (jukebox.SelectedRecord != null &&
+            EntMan.System<SharedJukeboxRecordSystem>().TryGetSelectedTrack((Owner, jukebox), out var recordPath, out var recordName))
+        {
+            _menu.SetSelectedSong(recordName, (float) GetTrackLength(recordPath).TotalSeconds);
+            return;
+        }
+        // End Pirate: jukebox records
+
         if (_protoManager.Resolve(jukebox.SelectedSongId, out var songProto))
         {
             var length = EntMan.System<AudioSystem>().GetAudioLength(songProto.Path.Path.ToString());
@@ -80,8 +107,38 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
     public void PopulateMusic()
     {
-        _menu?.Populate(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
+        _menu?.Populate(_protoManager.EnumeratePrototypes<JukeboxPrototype>(), GetRecordTracks()); // Pirate: jukebox records
     }
+
+    #region Pirate: jukebox records
+
+    private List<(NetEntity Record, string Name)> GetRecordTracks()
+    {
+        var records = EntMan.System<SharedJukeboxRecordSystem>();
+        var tracks = new List<(NetEntity, string)>();
+
+        foreach (var record in records.GetRecords(Owner))
+        {
+            tracks.Add((EntMan.GetNetEntity(record.Owner), records.GetTrackName(record)));
+        }
+
+        return tracks;
+    }
+
+    // Uploaded tracks may not be available on this client yet.
+    private TimeSpan GetTrackLength(string path)
+    {
+        try
+        {
+            return EntMan.System<AudioSystem>().GetAudioLength(new ResolvedPathSpecifier(path));
+        }
+        catch (Exception)
+        {
+            return TimeSpan.Zero;
+        }
+    }
+
+    #endregion Pirate: jukebox records
 
     public void SelectSong(ProtoId<JukeboxPrototype> songid)
     {

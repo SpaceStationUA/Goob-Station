@@ -247,13 +247,13 @@
         conditions:
         - !type:ReagentCondition
           reagent: Healium
-          max: 24
+          max: 23.99 # Pirate: healium nerf
         ignoreResistances: true
         damage:
           groups:
-            Burn: -2
-            Toxin: -5
-            Brute: -2
+            Burn: -0.5 # Pirate: healium nerf
+            Toxin: -1 # Pirate: healium nerf
+            Brute: -0.5 # Pirate: healium nerf
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -262,9 +262,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -20
-            Toxin: -50
-            Brute: -20
+            Burn: -1 # Pirate: healium nerf
+            Toxin: -2 # Pirate: healium nerf
+            Brute: -1 # Pirate: healium nerf
       - !type:PopupMessage
         conditions:
         - !type:ReagentCondition
@@ -277,7 +277,7 @@
         visualType: Medium
         messages: [ "effect-sleepy" ]
         probability: 0.01
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect # Pirate: healium nerf
         conditions:
         - !type:ReagentCondition
           reagent: Healium
@@ -285,12 +285,11 @@
         - !type:BloodReagentThresholdCondition
           reagent: NitrosylPlasmide
           max: 0.01
-        key: ForcedSleep
-        component: ForcedSleeping
+        effectProto: StatusEffectForcedSleeping # Pirate: healium nerf
         time: 1
-        type: Add
+        type: Update # Pirate: healium nerf
       - !type:Drunk
-        boozePower: 45
+        boozePower: 0.5 # Pirate: healium nerf
         conditions:
         - !type:ReagentCondition
           reagent: Healium
@@ -300,18 +299,22 @@
         - !type:MetabolizerTypeCondition # Fuck you
           type: [Hydrakin]
     Gas:
+      #region Pirate: healium nerf
+      # High-dose healing is 2x base, capped at 120 total per 30-unit breath.
+      # Keep 23.99/24 adjacent: bounds are inclusive and reagent precision is 0.01.
+      #endregion Pirate: healium nerf
       effects:
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
           reagent: Healium
-          max: 24
+          max: 23.99 # Pirate: healium nerf
         ignoreResistances: true
         damage:
           groups:
-            Burn: -2
-            Toxin: -5
-            Brute: -2
+            Burn: -0.5 # Pirate: healium nerf
+            Toxin: -1 # Pirate: healium nerf
+            Brute: -0.5 # Pirate: healium nerf
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -320,9 +323,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -20
-            Toxin: -50
-            Brute: -20
+            Burn: -1 # Pirate: healium nerf
+            Toxin: -2 # Pirate: healium nerf
+            Brute: -1 # Pirate: healium nerf
       - !type:PopupMessage
         conditions:
         - !type:ReagentCondition
@@ -335,7 +338,7 @@
         visualType: Medium
         messages: [ "effect-sleepy" ]
         probability: 0.01
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect # Pirate: healium nerf
         conditions:
         - !type:ReagentCondition
           reagent: Healium
@@ -343,12 +346,11 @@
         - !type:BloodReagentThresholdCondition
           reagent: NitrosylPlasmide
           max: 0.01
-        key: ForcedSleep
-        component: ForcedSleeping
+        effectProto: StatusEffectForcedSleeping # Pirate: healium nerf
         time: 1
-        type: Add
+        type: Update # Pirate: healium nerf
       - !type:Drunk
-        boozePower: 45
+        boozePower: 0.5 # Pirate: healium nerf
         conditions:
         - !type:ReagentCondition
           reagent: Healium

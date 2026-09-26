@@ -75,9 +75,24 @@ public sealed class BanPanelEui : BaseEui
             return;
         }
 
-        var isRoleBan = ban.BannedJobs?.Length > 0 || ban.BannedAntags?.Length > 0;
+        var isRoleBan = ban.Type == BanType.Role; // Pirate: chat ban panel
+        var isChatBan = BanManager.IsChatBanType(ban.Type); // Pirate: chat ban panel
 
-        CreateBanInfo banInfo = isRoleBan ? new CreateRoleBanInfo(ban.Reason) : new CreateServerBanInfo(ban.Reason);
+        if (isChatBan && ban.Target == null) // Pirate: chat ban panel
+        { // Pirate: chat ban panel
+            _chat.DispatchServerMessage(Player, Loc.GetString("ban-panel-no-data")); // Pirate: chat ban panel
+            return; // Pirate: chat ban panel
+        } // Pirate: chat ban panel
+
+        #region Pirate: chat ban panel
+        CreateBanInfo banInfo = ban.Type switch
+        {
+            BanType.Server => new CreateServerBanInfo(ban.Reason),
+            BanType.Role => new CreateRoleBanInfo(ban.Reason),
+            BanType.OOC or BanType.LOOC or BanType.Deadchat => new CreateChatBanInfo(ban.Type, ban.Reason),
+            _ => throw new ArgumentOutOfRangeException(nameof(ban.Type), ban.Type, "Unknown ban type"),
+        };
+        #endregion Pirate: chat ban panel
 
         banInfo.WithBanningAdmin(Player.UserId);
         banInfo.WithSeverity(ban.Severity);
@@ -85,7 +100,7 @@ public sealed class BanPanelEui : BaseEui
             banInfo.WithMinutes(ban.BanDurationMinutes);
 
         (IPAddress, int)? addressRange = null;
-        if (ban.IpAddress is not null)
+        if (!isChatBan && ban.IpAddress is not null) // Pirate: chat ban panel
         {
             if (!IPAddress.TryParse(ban.IpAddress, out var ipAddress) || !uint.TryParse(ban.IpAddressHid, out var hidInt) || hidInt > Ipv6_CIDR || hidInt > Ipv4_CIDR && ipAddress.AddressFamily == AddressFamily.InterNetwork)
             {
@@ -100,9 +115,9 @@ public sealed class BanPanelEui : BaseEui
         }
 
         var targetUid = ban.Target is not null ? PlayerId : null;
-        addressRange = ban.UseLastIp && LastAddress is not null ? (LastAddress, LastAddress.AddressFamily == AddressFamily.InterNetworkV6 ? Ipv6_CIDR : Ipv4_CIDR) : addressRange;
-        var targetHWid = ban.UseLastHwid ? LastHwid : ban.Hwid;
-        if (ban.Target != null && ban.Target != PlayerName || Guid.TryParse(ban.Target, out var parsed) && parsed != PlayerId)
+        addressRange = !isChatBan && ban.UseLastIp && LastAddress is not null ? (LastAddress, LastAddress.AddressFamily == AddressFamily.InterNetworkV6 ? Ipv6_CIDR : Ipv4_CIDR) : addressRange; // Pirate: chat ban panel
+        var targetHWid = isChatBan ? null : ban.UseLastHwid ? LastHwid : ban.Hwid; // Pirate: chat ban panel
+        if (ban.Target != null && (ban.Target != PlayerName || Guid.TryParse(ban.Target, out var parsed) && parsed != PlayerId)) // Pirate: chat ban panel
         {
             var located = await _playerLocator.LookupIdByNameOrIdAsync(ban.Target);
             if (located == null)
@@ -112,7 +127,7 @@ public sealed class BanPanelEui : BaseEui
             }
             targetUid = located.UserId;
             var targetAddress = located.LastAddress;
-            if (ban.UseLastIp && targetAddress != null)
+            if (!isChatBan && ban.UseLastIp && targetAddress != null) // Pirate: chat ban panel
             {
                 if (targetAddress.IsIPv4MappedToIPv6)
                     targetAddress = targetAddress.MapToIPv4();
@@ -121,16 +136,37 @@ public sealed class BanPanelEui : BaseEui
                 var hid = targetAddress.AddressFamily == AddressFamily.InterNetworkV6 ? Ipv6_CIDR : Ipv4_CIDR;
                 addressRange = (targetAddress, hid);
             }
-            targetHWid = ban.UseLastHwid ? located.LastHWId : ban.Hwid;
+            targetHWid = isChatBan ? null : ban.UseLastHwid ? located.LastHWId : ban.Hwid; // Pirate: chat ban panel
         }
 
-        if (addressRange != null)
+        #region Pirate: chat ban panel
+        if (isChatBan && targetUid == null)
+        {
+            var located = await _playerLocator.LookupIdByNameOrIdAsync(ban.Target!);
+            if (located == null)
+            {
+                _chat.DispatchServerMessage(Player, Loc.GetString("cmd-ban-player"));
+                return;
+            }
+
+            targetUid = located.UserId;
+        }
+
+        if (!_admins.HasAdminFlag(Player, AdminFlags.Ban))
+        {
+            _sawmill.Warning($"{Player.Name} ({Player.UserId}) lost the ban flag while creating a ban");
+            return;
+        }
+        #endregion Pirate: chat ban panel
+
+        if (!isChatBan && addressRange != null) // Pirate: chat ban panel
             banInfo.AddAddressRange(addressRange.Value);
 
         if (targetUid != null)
             banInfo.AddUser(targetUid.Value, ban.Target!);
 
-        banInfo.AddHWId(targetHWid);
+        if (!isChatBan) // Pirate: chat ban panel
+            banInfo.AddHWId(targetHWid); // Pirate: chat ban panel
 
         if (isRoleBan)
         {
@@ -147,6 +183,10 @@ public sealed class BanPanelEui : BaseEui
 
             _banManager.CreateRoleBan(roleBanInfo);
         }
+        else if (isChatBan) // Pirate: chat ban panel
+        { // Pirate: chat ban panel
+            await _banManager.CreateChatBan((CreateChatBanInfo) banInfo); // Pirate: chat ban panel
+        } // Pirate: chat ban panel
         else
         {
             if (ban.Erase && targetUid is not null)

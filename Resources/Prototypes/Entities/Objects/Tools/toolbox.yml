@@ -5,6 +5,8 @@
   parent: BaseStorageItem
   abstract: true
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   - type: Sprite
     layers:
       - map: [ base ]

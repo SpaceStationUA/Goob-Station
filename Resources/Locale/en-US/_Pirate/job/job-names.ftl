@@ -9,3 +9,4 @@ job-name-syndicate-researcher = Syndicate Researcher
 job-name-syndicate-engineer = Syndicate Engine Technician
 job-name-syndicate-miner = Syndicate Mining Officer
 job-name-syndicate-prisoner = Syndicate Prisoner
+job-name-cybersun-team-leader = Cybersun Team Leader

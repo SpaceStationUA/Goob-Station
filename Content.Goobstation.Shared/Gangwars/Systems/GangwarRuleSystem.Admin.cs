@@ -187,13 +187,19 @@ public sealed partial class GangwarRuleSystem
 
     public bool KickMember(EntityUid member)
     {
-        if (!HasComp<GangMemberComponent>(member))
+        if (!TryComp<GangMemberComponent>(member, out var memberComp)) // Pirate: gang recruit cap - need the gang colour after removal
             return false;
 
-        if (HasComp<GangLeaderComponent>(member))
+        var wasLeader = HasComp<GangLeaderComponent>(member); // Pirate: gang recruit cap
+        if (wasLeader) // Pirate: gang recruit cap
             RemCompDeferred<GangLeaderComponent>(member);
 
         RemCompDeferred<GangMemberComponent>(member);
+
+        #region Pirate: gang recruit cap - kicking a recruit gives their leader the invite back
+        if (!wasLeader && memberComp.Gang is { } gangColor && TryGetGangLeader(gangColor, out var gangLeader))
+            RefundRecruitSlot(gangLeader);
+        #endregion
 
         if (_mind.TryGetMind(member, out var mindId, out var mind))
         {
@@ -204,6 +210,23 @@ public sealed partial class GangwarRuleSystem
 
         return true;
     }
+
+    #region Pirate: gang recruit cap
+    /// <summary>
+    /// Returns one recruitment slot to a leader, restoring the recruit action if it was taken away at the cap.
+    /// </summary>
+    private void RefundRecruitSlot(Entity<GangLeaderComponent> leader)
+    {
+        if (leader.Comp.MembersRecruited <= 0)
+            return;
+
+        leader.Comp.MembersRecruited--;
+        Dirty(leader);
+
+        if (leader.Comp.MembersRecruited < leader.Comp.MaxRecruits)
+            _actions.AddAction(leader.Owner, ref leader.Comp.MemberOfferActionEnt, leader.Comp.MemberOfferAction);
+    }
+    #endregion
 
     private void RemoveGangObjectives(EntityUid mindId, MindComponent mind)
     {

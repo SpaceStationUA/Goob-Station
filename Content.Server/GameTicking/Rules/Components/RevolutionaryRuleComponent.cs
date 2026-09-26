@@ -35,6 +35,17 @@ public sealed partial class RevolutionaryRuleComponent : Component
     [DataField] public bool HasRevAnnouncementPlayed = false;
     // gobo edit end
 
+    /// <summary>
+    /// The time at which a round that started without command staff can win.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan? NoCommandWinTime;
+
+    [DataField]
+    public bool CommandCheckInitialized;
+
+    [DataField]
+    public bool StartedWithoutCommandStaff;
     // Pirate - HRev uplink configuration.
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int StartingBalance = 55;

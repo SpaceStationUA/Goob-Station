@@ -1,0 +1,24 @@
+<!--
+SPDX-FileCopyrightText: 2026 SpaceStationUA
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:chat="clr-namespace:Content.Client._Pirate.Administration.UI.BanList.ChatBans"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="4">
+    <Button Name="IdsHidden" Text="{Loc ban-list-view}" SizeFlagsStretchRatio="1" HorizontalExpand="True"/>
+    <cc:VSeparator/>
+    <Label Name="Channel" SizeFlagsStretchRatio="1.5" HorizontalExpand="True"/>
+    <cc:VSeparator/>
+    <Label Name="Reason" Access="Public" SizeFlagsStretchRatio="4.5" HorizontalExpand="True" VerticalExpand="True"/>
+    <cc:VSeparator/>
+    <Label Name="BanTime" Access="Public" SizeFlagsStretchRatio="2" HorizontalExpand="True" ClipText="True"/>
+    <cc:VSeparator/>
+    <Label Name="Expires" Access="Public" SizeFlagsStretchRatio="3" HorizontalExpand="True" ClipText="True"/>
+    <cc:VSeparator/>
+    <Label Name="BanningAdmin" Access="Public" SizeFlagsStretchRatio="2" HorizontalExpand="True" ClipText="True"/>
+    <cc:VSeparator/>
+    <Button Name="UnbanButton" Text="{Loc chat-ban-list-unban}" SizeFlagsStretchRatio="1.5" HorizontalExpand="True"/>
+</BoxContainer>
