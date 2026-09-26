@@ -65,3 +65,44 @@
     - id: ParamedHypo
     - id: MagazineUniversalMagnum
       amount: 2
+
+# IPC squad kits: black bags with the same fills, the IPC combat medical kit (welder, cable, cell, mesons) in place
+# of the organic one. StorageFill lists replace rather than merge, so they are restated in full.
+- type: entity
+  parent: ClothingBackpackHECUBlack
+  id: ClothingBackpackHECUFilledIPC
+  suffix: Filled, IPC
+  components:
+  - type: StorageFill
+    contents:
+    # largest first: the satchel grid's side pockets are only two tiles wide
+    - id: MedkitCombatPurpleFilled
+    - id: BoxSurvivalSlotsEngineering
+    - id: Stunbaton
+    - id: WeaponPistolMk58
+    - id: MagazinePistol
+      amount: 2
+    - id: BreachingCharge
+      amount: 2
+    - id: MindShieldImplanter
+    - id: Flash
+    - id: Zipties
+      amount: 2
+
+- type: entity
+  parent: ClothingBackpackHECUBlack
+  id: ClothingBackpackHECUMedicFilledIPC
+  suffix: Filled, Medic, IPC
+  components:
+  - type: StorageFill
+    contents:
+    # largest first: the satchel grid's side pockets are only two tiles wide
+    - id: MedicalBeamGunBattery
+    - id: MedkitCombatPurpleFilled
+    - id: BoxSurvivalSlotsEngineering
+    - id: JugOxandrolone
+    - id: JugSalicylicAcid
+    - id: CentCommHypo
+    - id: ParamedHypo
+    - id: MagazineUniversalMagnum
+      amount: 2

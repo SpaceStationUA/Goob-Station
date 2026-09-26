@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # M16 family. Built on the Lecter: same .20 rifle ammo and handling, with burst-fire trigger groups.
-# All three share the 20-round M16 magazine and accept any .20 rifle magazine.
+# All three load the 30-round extended M16 magazine and accept any .20 rifle magazine.
 
 - type: entity
   name: M16A4 rifle
@@ -35,7 +35,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineRifleM16
+        startingItem: MagazineRifleM16Extended
         insertSound: /Audio/Weapons/Guns/MagIn/sfrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
         priority: 2

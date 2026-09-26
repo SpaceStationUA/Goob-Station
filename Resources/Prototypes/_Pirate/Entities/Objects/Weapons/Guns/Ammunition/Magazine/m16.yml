@@ -26,3 +26,24 @@
   components:
   - type: BallisticAmmoProvider
     proto: null
+
+# Extended M16 magazine for HECU's standard-issue rifles. Default mag of the M16 family.
+- type: entity
+  parent: MagazineRifleM16
+  id: MagazineRifleM16Extended
+  name: "extended M16 magazine (.20 rifle)"
+  description: 30-round extended magazine for M16 pattern rifles. Fits any rifle that takes .20 rifle magazines.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifle
+    capacity: 30
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazine/Rifle/m16_mag_extended.rsi
+
+- type: entity
+  parent: MagazineRifleM16Extended
+  id: MagazineRifleM16ExtendedEmpty
+  suffix: empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null

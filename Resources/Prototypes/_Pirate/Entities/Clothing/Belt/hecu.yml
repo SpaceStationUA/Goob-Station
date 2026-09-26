@@ -30,7 +30,7 @@
   components:
   - type: StorageFill
     contents:
-    - id: MagazineRifleM16
+    - id: MagazineRifleM16Extended
       amount: 4
     - id: MagazineBoxRifleBig
       amount: 2
@@ -47,3 +47,24 @@
     sprite: _Pirate/Clothing/Belt/HECU/warbelt.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Belt/HECU/warbelt.rsi
+
+# Black filled belts for the IPC squad: same contents, black warbelt sprite.
+- type: entity
+  parent: ClothingBeltHECUFilled
+  id: ClothingBeltHECUBlackFilled
+  name: black HECU warbelt
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi
+
+- type: entity
+  parent: ClothingBeltHECUMedicalFilled
+  id: ClothingBeltHECUMedicalBlackFilled
+  name: black HECU corpsman warbelt
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi

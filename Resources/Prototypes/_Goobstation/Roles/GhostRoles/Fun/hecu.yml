@@ -25,19 +25,7 @@
 
 - type: startingGear
   id: HECUOperativeGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitHECUUrbanCamo # Pirate: HECU rework
-    back: ClothingBackpackHECUFilled # Pirate: HECU rework
-    mask: ClothingMaskGasHECU # Pirate: HECU rework
-    eyes: ClothingEyesGlassesMedSec
-    ears: ClothingHeadsetAltCentCom
-    gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterArmorHECU # Pirate: HECU rework
-    shoes: ClothingShoesBootsCombatFilled
-    head: ClothingHeadHelmetHECUPoweredNVG # Pirate: HECU rework
-    id: HecuPDA
-    belt: ClothingBeltHECUFilled # Pirate: HECU rework
-    pocket1: FlashlightSeclite # Pirate: HECU rework
-    pocket2: PowerCellHigh # Pirate: HECU rework
+  # Pirate: HECU IPC squad - shares gear with the human squad through its base role.
+  parent: HECUSquadGearHuman # Pirate: HECU IPC squad
   inhand:
   - WeaponRifleM16 # Pirate: HECU rework

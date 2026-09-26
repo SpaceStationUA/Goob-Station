@@ -269,8 +269,11 @@ public sealed class SpecialForcesSystem : EntitySystem
             _ => EtrShuttlePath
         };
 
-        if (ev == SpecialForcesType.HECU)
-            return SpawnHecuShuttle();
+        if (ev == SpecialForcesType.HecuHuman)
+            return SpawnHecuShuttle(HecuHumanReplacements);
+
+        if (ev == SpecialForcesType.HecuIpc)
+            return SpawnHecuShuttle(HecuIpcReplacements);
 
         // Kokomo ERT/CBURN files are full maps (category: Map), not single-grid saves.
         // Load them as maps and pick the first grid as the shuttle grid.
@@ -304,9 +307,9 @@ public sealed class SpecialForcesSystem : EntitySystem
     }
 
     /// <summary>
-    /// Loads the ERT map before initialization and replaces its role spawners with HECU equivalents.
+    /// Loads the ERT map before initialization and replaces its role spawners with the given HECU group's equivalents.
     /// </summary>
-    private EntityUid? SpawnHecuShuttle()
+    private EntityUid? SpawnHecuShuttle(Dictionary<string, string> replacements)
     {
         if (!_mapLoader.TryLoadMap(new ResPath(EtrShuttlePath), out var map, out var grids))
             return null;
@@ -318,7 +321,7 @@ public sealed class SpecialForcesSystem : EntitySystem
         {
             if (xform.MapUid == map.Value.Owner &&
                 meta.EntityPrototype?.ID is { } id &&
-                HecuReplacements.TryGetValue(id, out var replacement))
+                replacements.TryGetValue(id, out var replacement))
             {
                 swaps.Add((uid, replacement, xform.Coordinates));
             }
@@ -369,7 +372,8 @@ public sealed class SpecialForcesSystem : EntitySystem
                 }
 
                 break;
-            case SpecialForcesType.HECU:
+            case SpecialForcesType.HecuHuman:
+            case SpecialForcesType.HecuIpc:
                 foreach (var station in stations)
                 {
                     _chatSystem.DispatchStationAnnouncement(station,
@@ -427,11 +431,21 @@ public sealed class SpecialForcesSystem : EntitySystem
     [ValidatePrototypeId<EntityPrototype>] private const string HecuLeader = "RandomHumanoidHECULeaderSpawner";
     [ValidatePrototypeId<EntityPrototype>] private const string HecuMedic = "RandomHumanoidHECUMedicSpawner";
     [ValidatePrototypeId<EntityPrototype>] private const string Hecu = "RandomHumanoidHECUSpawner";
-    private static readonly Dictionary<string, string> HecuReplacements = new()
+    [ValidatePrototypeId<EntityPrototype>] private const string HecuLeaderIpc = "RandomHumanoidHECULeaderIPCSpawner";
+    [ValidatePrototypeId<EntityPrototype>] private const string HecuMedicIpc = "RandomHumanoidHECUMedicIPCSpawner";
+    [ValidatePrototypeId<EntityPrototype>] private const string HecuIpc = "RandomHumanoidHECUIPCSpawner";
+
+    private static readonly Dictionary<string, string> HecuHumanReplacements = new()
     {
         { "RandomHumanoidSpawnerERTLeaderEVA", HecuLeader },
         { "RandomHumanoidSpawnerERTMedicalEVA", HecuMedic },
         { "RandomHumanoidSpawnerERTSecurityEVA", Hecu },
+    };
+    private static readonly Dictionary<string, string> HecuIpcReplacements = new()
+    {
+        { "RandomHumanoidSpawnerERTLeaderEVA", HecuLeaderIpc },
+        { "RandomHumanoidSpawnerERTMedicalEVA", HecuMedicIpc },
+        { "RandomHumanoidSpawnerERTSecurityEVA", HecuIpc },
     };
     private readonly SoundSpecifier _hecuAnnounce = new SoundPathSpecifier("/Audio/Announcements/attention.ogg");
 
