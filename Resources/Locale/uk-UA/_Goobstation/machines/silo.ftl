@@ -7,7 +7,10 @@
 
 lathe-menu-connected-to-silo-message = Під'єднано до силосу.
 lathe-menu-mining-points-no-connection-warning = [bold][color=red]УВАГА:[/color][/bold] Цей пристрій не приєднаний до силосної башти для руди. Вивантажуючи руду, ви НЕ отримаєте очки руди.
-lathe-menu-mining-points-silo-not-on-same-grid = [bold][color=red]УВАГА:[/color][/bold] Цей пристрій знаходиться не на тій же карті, що і його силосна башта. Вивантажуючи руду, ви НЕ отримаєте очки руди.
+lathe-menu-mining-points-silo-not-on-same-grid = [bold][color=red]УВАГА:[/color][/bold] Цей пристрій не на тій самій сітці, що й силос. Якщо вивантажити руду, ви НЕ отримаєте очок видобутку.
+lathe-menu-mining-points-silo-not-on-same-map = [bold][color=red]УВАГА:[/color][/bold] Цей пристрій не на тій самій карті, що й силос. Якщо вивантажити руду, ви НЕ отримаєте очок видобутку.
+lathe-menu-mining-points-silo-out-of-range = [bold][color=red]УВАГА:[/color][/bold] Під'єднаний силос поза межами досяжності! Якщо вивантажити руду, ви НЕ отримаєте очок видобутку.
+lathe-menu-mining-points-silo-invalid = [bold][color=red]УВАГА:[/color][/bold] Під'єднаний силос недійсний! Якщо вивантажити руду, ви НЕ отримаєте очок видобутку.
 signal-port-name-material-silo = Силос матеріалів
 signal-port-description-material-silo = Блюспейс-сховище для матеріалів станції
 signal-port-name-material-silo-utilizer = Утилізатор силосу

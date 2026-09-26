@@ -463,6 +463,10 @@
     - FilterGas
     # <Goobstation>
     - FilterInline
+    - RadiatorInline
+    - RadiatorInlineBend
+    - PipeManifold
+    - PipePressureRegulator
     # </Goobstation>
     #region Pirate: heat exchange pipes
     - Radiator

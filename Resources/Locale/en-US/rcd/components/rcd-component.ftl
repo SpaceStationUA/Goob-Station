@@ -55,9 +55,10 @@ rcd-component-electrical = Electrical
 rcd-component-lighting = Lighting
 rcd-component-piping = Piping
 rcd-component-atmosphericutility = Atmospheric Utility
-# Pirate: heat exchange pipes
+# Pirate: heat exchange pipes and plumbing categories
 rcd-component-heat-exchange = Heat Exchange
 rcd-component-pumps = Pumps & Valves
+rcd-component-pumpsvalves = Pumps & Valves
 rcd-component-vents = Vents
 
 

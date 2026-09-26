@@ -51,3 +51,6 @@ construction-graph-tag-ash = попіл
 construction-graph-tag-ice-bucket = відерце для льоду
 construction-graph-tag-water-bottle = пляшка з водою
 construction-graph-tag-plushie-carp = плюшевий короп
+construction-graph-tag-stunbaton = електрошокова палиця
+construction-graph-tag-disabler = дизейблер
+construction-graph-tag-combat-knife = бойовий ніж
