@@ -202,7 +202,7 @@ public partial class ListingData : IEquatable<ListingData>
     /// <summary>
     /// The event that is broadcast when the listing is purchased.
     /// </summary>
-    [DataField, NonSerialized] // Trauma
+    [DataField(serverOnly: true), NonSerialized] // Pirate: MalfAI purchase events exist on the server only.
     public object? ProductEvent;
 
     [DataField]
