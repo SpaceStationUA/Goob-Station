@@ -3,7 +3,7 @@
   mapName: ZNebula
   mapPath: /Maps/_Pirate/ZNebula/ZNebula1.yml
   mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
-  mapPreview: PirateMapPreviewZNebula
+  mapPreview: PirateMapPreviewNebula
   minPlayers: 25
   stations:
     ZNebula:

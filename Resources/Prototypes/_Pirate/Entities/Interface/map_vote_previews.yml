@@ -210,8 +210,8 @@
 
 - type: entity
   parent: BasePirateMapPreview
-  id: PirateMapPreviewZNebula
+  id: PirateMapPreviewNebula
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: znebula
+    state: nebula
