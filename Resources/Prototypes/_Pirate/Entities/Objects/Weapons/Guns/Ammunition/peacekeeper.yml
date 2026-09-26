@@ -1,7 +1,7 @@
 # Pirate port of Starlight Peacekeeper grenade shells and launcher rounds.
 - type: entity
   id: BasePeacekeeperBox
-  name: grenade cartridge
+  name: "гранатний набій"
   parent: [BaseItem, BaseSecurityContraband]
   abstract: true
   components:
@@ -36,8 +36,8 @@
 - type: entity
   parent: BasePeacekeeperBox
   id: BoxPeacekeeperFlash
-  name: peacekeeper flash ammo box
-  description: A box of flash grenades for the Peacekeeper, good for catching up to a running fiend or dispersing crowds.
+  name: "коробка світлошумових набоїв «Миротворця»"
+  description: "Коробка світлошумових гранат для «Миротворця», щоб наздоганяти втікачів або розганяти натовпи."
   components:
   - type: BallisticAmmoProvider
     proto: GrenadeFlash
@@ -53,8 +53,8 @@
 - type: entity
   parent: BasePeacekeeperBox
   id: BoxPeacekeeperStinger
-  name: peacekeeper stinger ammo box
-  description: A box of stinger grenades for the Peacekeeper, useful for dispersing crowds.
+  name: "коробка жалких набоїв «Миротворця»"
+  description: "Коробка жалких гранат для «Миротворця», корисних для розгону натовпу."
   components:
   - type: BallisticAmmoProvider
     proto: GrenadeStingerlauncher
@@ -70,8 +70,8 @@
 - type: entity
   parent: BasePeacekeeperBox
   id: BoxPeacekeeperGas
-  name: peacekeeper tear gas ammo box
-  description: A box of tear gas grenades for the Peacekeeper.
+  name: "коробка газових набоїв «Миротворця»"
+  description: "Коробка газових гранат для «Миротворця»."
   components:
   - type: BallisticAmmoProvider
     proto: GrenadeGaslauncher
@@ -87,8 +87,8 @@
 - type: entity
   parent: BasePeacekeeperBox
   id: BoxPeacekeeperBaton
-  name: peacekeeper baton ammo box
-  description: A box of less-lethal baton grenades for the Peacekeeper.
+  name: "коробка кийкових набоїв «Миротворця»"
+  description: "Коробка нелетальних кийкових гранат для «Миротворця»."
   components:
   - type: BallisticAmmoProvider
     proto: GrenadeBaton
@@ -103,8 +103,8 @@
 
 - type: entity
   id: GrenadeGaslauncher
-  name: gas grenade
-  description: Able to choke a room or several of your friends.
+  name: "газова граната"
+  description: "Здатна задушити кімнату або кількох ваших друзів."
   parent: [BaseGrenade, BaseSecurityContraband]
   components:
   - type: CartridgeAmmo
@@ -125,8 +125,8 @@
 
 - type: entity
   id: GrenadeStingerlauncher
-  name: stinger grenade
-  description: An unruly crowd's favourite.
+  name: "жалка граната"
+  description: "Улюбленець некерованого натовпу."
   parent: [BaseGrenade, BaseSecurityContraband]
   components:
   - type: CartridgeAmmo
@@ -147,7 +147,7 @@
 
 - type: entity
   id: BulletGrenadeStinger
-  name: armed stinger grenade
+  name: "озброєна жалка граната"
   parent: BaseBulletTrigger
   categories: [HideSpawnMenu]
   components:
@@ -161,7 +161,7 @@
 
 - type: entity
   id: BulletGrenadeGas
-  name: armed gas grenade
+  name: "озброєна газова граната"
   parent: BaseBulletTrigger
   categories: [HideSpawnMenu]
   components:
@@ -238,7 +238,7 @@
   parent: BaseBullet
   id: PelletClusterLesserRubber
   categories: [HideSpawnMenu]
-  name: pellet (ball, rubber)
+  name: "гумова кулька"
   components:
   - type: Projectile
     deleteOnCollide: false

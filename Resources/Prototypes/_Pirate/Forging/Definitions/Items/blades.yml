@@ -22,7 +22,7 @@
 - type: forgedItem
   parent: BaseKnife
   id: KnifeBlade
-  name: knife blade
+  name: "лезо ножа"
   finished: ForgedKnife
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/knifeblade.rsi
   work: 50 # knife is small
@@ -30,7 +30,7 @@
 - type: forgedItem
   parent: BaseKnife
   id: CleaverBlade
-  name: cleaver blade
+  name: "лезо тесака"
   finished: ForgedCleaver
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/cleaver.rsi
   # TODO: faster with a very large hammer to flatten it out
@@ -38,7 +38,7 @@
 - type: forgedItem
   parent: BaseKnife
   id: CombatKnifeBlade
-  name: combat knife blade
+  name: "лезо бойового ножа"
   finished: ForgedCombatKnife
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/combatknife.rsi
   work: 125 # need the serrated edge...
@@ -53,7 +53,7 @@
 - type: forgedItem
   parent: BaseKnife
   id: KukriBlade
-  name: kukri blade
+  name: "лезо кукрі"
   finished: ForgedKukriKnife
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/kukri.rsi
   work: 125 # same as combat knife
@@ -77,7 +77,7 @@
 - type: forgedItem
   parent: BaseSword
   id: SwordBlade
-  name: blade
+  name: "клинок"
   finished: ForgedSword
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/sword_blade.rsi
   work: 150
@@ -86,7 +86,7 @@
 - type: forgedItem
   parent: BaseSword
   id: LongswordBlade
-  name: long blade
+  name: "довгий клинок"
   finished: ForgedLongsword
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/longsword_blade.rsi
   work: 200
@@ -95,7 +95,7 @@
 - type: forgedItem
   parent: BaseSword
   id: ThinBlade
-  name: thin blade
+  name: "тонкий клинок"
   finished: ForgedKatana
   sprite: _Pirate/Objects/Specific/Forging/Unfinished/thin_blade.rsi
   work: 220 # while they were out partying, i mastered the blade

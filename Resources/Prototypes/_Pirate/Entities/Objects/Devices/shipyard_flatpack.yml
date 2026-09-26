@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseFlatpack
   id: ComputerShipyardFlatpack
-  name: shipyard console flatpack
-  description: A flatpack used for constructing a shipyard console.
+  name: "флетпак консолі верфі"
+  description: "Флетпак для спорудження консолі верфі."
   components:
   - type: Flatpack
     entity: ComputerShipyard

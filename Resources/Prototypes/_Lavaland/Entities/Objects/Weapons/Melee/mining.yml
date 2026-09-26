@@ -1,8 +1,8 @@
 - type: entity
-  name: wooden pickaxe
+  name: "дерев'яне кайло"
   parent: Pickaxe
   id: PickaxeWood
-  description: A couple strong sticks stuck together. Decent at breaking rocks.
+  description: "Кілька міцних палиць, з'єднаних докупи. Непогано розбиває каміння."
   components:
   - type: Sprite
     sprite: _Lavaland/Objects/Weapons/Melee/wood_pickaxe.rsi
@@ -28,10 +28,10 @@
     node: pickaxe
 
 - type: entity
-  name: ashwooden pickaxe
+  name: "ясеневе кайло"
   parent: Pickaxe
   id: PickaxeAshwood
-  description: A couple strong sticks stuck together. Decent at breaking rocks, and also people.
+  description: "Кілька міцних палиць, з'єднаних докупи. Непогано розбиває каміння, а також людей."
   components:
   - type: Sprite
     sprite: _Lavaland/Objects/Weapons/Melee/ashwood_pickaxe.rsi
@@ -57,10 +57,10 @@
     node: pickaxe
 
 - type: entity
-  name: diamond pickaxe
+  name: "діамантове кайло"
   parent: [ Pickaxe, BaseSalvageContraband ]
   id: PickaxeDiamond
-  description: Covered with diamond to reduce weight, notched to perfection for jamming it into rocks.
+  description: "Вкрите діамантами для зменшення ваги й бездоганно зазубрене, щоб встромляти його в каміння."
   components:
   - type: Sprite
     sprite: _Lavaland/Objects/Weapons/Melee/diamond_pickaxe.rsi
@@ -83,10 +83,10 @@
       Wood: 125
 
 - type: entity
-  name: super mining drill
+  name: "надпотужний шахтарський бур"
   parent: [ MiningDrill, BaseSalvageContraband ]
   id: MiningDrillSuper
-  description: An even more efficient mining drill with faster mining speed and range.
+  description: "Ще ефективніший шахтарський бур із вищою швидкістю та дальністю буріння."
   components:
   - type: Sprite
     sprite: _Lavaland/Objects/Tools/handdrill_super.rsi

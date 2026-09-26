@@ -21,8 +21,8 @@
 - type: entity
   parent: BaseItem
   id: PartCapacitor
-  name: capacitor
-  description: A capacitor for electronic devices.
+  name: "конденсатор"
+  description: "Конденсатор для електронних пристроїв."
   components:
   - type: Tag
     tags:
@@ -47,8 +47,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: RevTurretElectronics
-  name: revolutionary turret circuit board
-  description: Used to build turrets programmed to fire at targets without revolutionary identification.
+  name: "плата революційної турелі"
+  description: "Використовується для побудови турелей, запрограмованих стріляти в цілі без революційної ідентифікації."
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -60,8 +60,8 @@
 - type: entity
   parent: [ BaseRevPart, BaseRevMajorContraband ]
   id: RevGunParts
-  name: gun parts
-  description: A small pile of gun parts, ready for revolutionary machinery.
+  name: "деталі зброї"
+  description: "Невелика купа деталей зброї, готових для революційних машин."
   components:
   - type: Sprite
     state: gunparts
@@ -71,8 +71,8 @@
 - type: entity
   parent: [ BaseRevPart, BaseRevMajorContraband ]
   id: RevEngineParts
-  name: engine parts
-  description: A pile of engine parts, ready for revolutionary machinery.
+  name: "деталі двигуна"
+  description: "Купа деталей двигуна, готових для революційних машин."
   components:
   - type: Sprite
     state: engineparts
@@ -82,8 +82,8 @@
 - type: entity
   parent: BaseRevPart
   id: RevBallBearings
-  name: ball bearings
-  description: A small handful of metal balls.
+  name: "кульки підшипника"
+  description: "Невелика жменя металевих кульок."
   components:
   - type: Sprite
     state: ballbearings
@@ -93,8 +93,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: RevArmorPlate
-  name: armor plate
-  description: A plate for bullet-resistant revolutionary equipment.
+  name: "бронепластина"
+  description: "Пластина для кулестійкого революційного спорядження."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Revs/components.rsi
@@ -106,8 +106,8 @@
 - type: entity
   parent: [ BaseItem, BaseRevMajorContraband ]
   id: RevRocketFrame
-  name: rocket frame
-  description: A frame for a revolutionary rocket.
+  name: "каркас ракети"
+  description: "Каркас революційної ракети."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Rockets/unfinished.rsi
@@ -119,8 +119,8 @@
 - type: entity
   parent: [ EncryptionKey, BaseRevMajorContraband ]
   id: EncryptionKeyRev
-  name: revolutionary encryption key
-  description: An encryption key used by underground revolutionary groups.
+  name: "революційний ключ шифрування"
+  description: "Ключ шифрування, яким користуються підпільні революційні групи."
   components:
   - type: EncryptionKey
     channels:
@@ -138,7 +138,7 @@
 - type: entity
   parent: [ AgentIDCard, BaseRevMajorContraband ]
   id: RevIDCard
-  name: revolutionary access card
+  name: "революційна картка доступу"
   components:
   - type: Access
     tags:

@@ -7,8 +7,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingNeckGangTophatBase
-  name: gang tophat
-  description: A stylish tophat. use a spray can to bare your gangs colors.
+  name: "циліндр банди"
+  description: "Стильний циліндр. Використовуйте балончик, щоб нанести на нього кольори своєї банди."
   abstract: true
   components:
   - type: GangClothing
@@ -92,9 +92,9 @@
 - type: entity
   parent: ClothingShoesDameDane
   id: ClothingShoesGangDameDane
-  name: gang yakuza shoes
+  name: "черевики якудза банди"
   suffix: Gang
-  description: At last... your gang's colors are finally showing.
+  description: "Нарешті... кольори твоєї банди видно всім."
   components:
   - type: GangClothing
 
@@ -102,9 +102,9 @@
 - type: entity
   parent: ClothingOuterDameDane
   id: ClothingOuterGangDameDane
-  name: gang yakuza coat
+  name: "пальто якудза банди"
   suffix: Gang
-  description: Friday... done in your gang's style.
+  description: "П’ятниця... у стилі твоєї банди."
   components:
   - type: GangClothing
 
@@ -112,8 +112,8 @@
 - type: entity
   parent: ClothingUniformJumpsuitDameDane
   id: ClothingUniformGangDameDane
-  name: gang yakuza outfit
+  name: "вбрання якудза банди"
   suffix: Gang
-  description: Baka mitai... dressed in your gang's colors.
+  description: "Бака мітай... вбраний у кольори своєї банди."
   components:
   - type: GangClothing

@@ -1,9 +1,9 @@
 # Pirate port of Starlight's Breaching Hammer.
 - type: entity
-  name: Breaching Hammer
+  name: "пробивний молот"
   parent: [BaseItem, BaseSecurityContraband]
   id: HammerBreachingNT
-  description: A robust heavy hammer made for breaching through walls and doors. Its reinforced head and sturdy handle make it ideal for demolition tasks.
+  description: "Міцний важкий молот для пробивання стін і дверей. Його посилена головка та надійне руків’я роблять його ідеальним для демонтажних робіт."
   components:
   - type: WeaponClass
     class: Bludgeon

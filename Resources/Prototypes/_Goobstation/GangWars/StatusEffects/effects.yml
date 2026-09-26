@@ -1,7 +1,7 @@
 - type: entity
   parent: StatusEffectSlowdown
   id: GangDuffelBagTrappedStatusEffect
-  name: gang duffel bag trapped slowdown
+  name: "сповільнення від замінованої сумки банди"
   components:
   - type: MovementModStatusEffect
     walkSpeedModifier: 0.5

@@ -1,7 +1,7 @@
 - type: entity
   id: ActionJumpVulpkanin
-  name: Jump
-  description: Leap at a target and knock them down.
+  name: "Стрибок"
+  description: "Стрибніть до цілі й збийте її з ніг."
   components:
   - type: Action
     priority: 0

@@ -3,8 +3,8 @@
 - type: entity
   parent: SeismicCharge
   id: BreachingCharge
-  name: breaching charge
-  description: A breaching explosive for security officers to break through walls.
+  name: "пробивний заряд"
+  description: "Вибухівка для силовиків, призначена для пробивання стін."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Bombs/breaching.rsi

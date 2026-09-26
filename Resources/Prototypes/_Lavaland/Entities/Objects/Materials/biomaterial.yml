@@ -1,7 +1,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialFlowersAsh
-  name: ash flowers
+  name: "попелясті квіти"
   suffix: Full
   components:
   - type: Material
@@ -61,7 +61,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialFlowersPale
-  name: pale flowers
+  name: "бліді квіти"
   suffix: Full
   components:
   - type: Material

@@ -2,8 +2,8 @@
 - type: entity
   parent: [ClothingHeadBase, BaseFoldable, BaseSyndicateContraband]
   id: ClothingHeadHatSyndieEngineTechCover
-  name: engine tech utility cover
-  description: A utility cover for an engine technician, there's a tag that reads 'IP-DS-2'.
+  name: "утилітарна кепка техніка двигунів"
+  description: "Утилітарна кепка для техніка двигунів; на ній є мітка з написом «IP-DS-2»."
   components:
   - type: Clothing
     sprite: _Pirate/Clothing/Head/SynDrobe/enginetechcover.rsi
@@ -40,8 +40,8 @@
 - type: entity
   parent: [ClothingHeadBase, BaseSyndicateContraband]
   id: ClothingHeadHatBeretSyndieBrig
-  name: brig officer's beret
-  description: A stylish and protective beret, produced and manufactured by Interdyne Pharmaceuticals with help from the Gorlex Marauders.
+  name: "берет офіцера бригади"
+  description: "Стильний і захисний берет виробництва «Інтердайн Фармасьютикалс» за сприяння «Горлексських мародерів»."
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Head/SynDrobe/brigofficerberet.rsi

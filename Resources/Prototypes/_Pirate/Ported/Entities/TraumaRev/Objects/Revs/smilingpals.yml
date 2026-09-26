@@ -4,7 +4,7 @@
   abstract: true
   parent: BaseItem
   id: BaseGrinningPal
-  description: I love you, my grinning pal.
+  description: "Я люблю тебе, мій усміхнений друже."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Revs/smilingpals.rsi
@@ -12,7 +12,7 @@
 - type: entity
   parent: BaseGrinningPal
   id: SmilingBanana
-  name: grinning banana guy
+  name: "усміхнений банановий хлопець"
   components:
   - type: Sprite
     state: smilingbanana
@@ -20,7 +20,7 @@
 - type: entity
   parent: BaseGrinningPal
   id: SmilingBean
-  name: grinning small guy
+  name: "усміхнений маленький хлопець"
   components:
   - type: Sprite
     state: smilingbean
@@ -28,7 +28,7 @@
 - type: entity
   parent: BaseGrinningPal
   id: SmilingBoss
-  name: grinning old guy
+  name: "усміхнений старий хлопець"
   components:
   - type: Sprite
     state: smilingboss
@@ -36,8 +36,8 @@
 - type: entity
   parent: BaseGrinningPal
   id: SmilingFrog
-  name: grinning green guy
-  description: His eye burn with a blazing hatred.
+  name: "усміхнений зелений хлопець"
+  description: "Його око палає лютою ненавистю."
   components:
   - type: Sprite
     state: smilingfrog
@@ -45,7 +45,7 @@
 - type: entity
   parent: BaseGrinningPal
   id: SmilingRedGuy
-  name: grinning red guy
+  name: "усміхнений червоний хлопець"
   components:
   - type: Sprite
     state: smilingredguy
@@ -53,7 +53,7 @@
 - type: entity
   parent: BaseGrinningPal
   id: SmilingTylenol
-  name: grinning tylenol
+  name: "усміхнений тайленол"
   components:
   - type: Sprite
     state: smilingtylenol

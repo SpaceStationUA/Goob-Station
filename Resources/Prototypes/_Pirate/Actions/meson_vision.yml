@@ -4,8 +4,8 @@
 - type: entity
   id: ActionToggleTrayScanner
   parent: BaseAction
-  name: Toggle T-Ray Scanner
-  description: Turn the T-ray scanning functionality on or off.
+  name: "Перемкнути Т-променевий сканер"
+  description: "Увімкнути або вимкнути Т-променеве сканування."
   components:
   - type: Action
     icon:

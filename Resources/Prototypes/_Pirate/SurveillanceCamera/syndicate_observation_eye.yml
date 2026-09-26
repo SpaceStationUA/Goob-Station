@@ -3,8 +3,8 @@
 - type: entity
   parent: AbductorHumanObservationConsoleEye
   id: SyndicateRemoteSurveillanceEye
-  name: surveillance eye
-  description: The syndicate monitor's movable observer.
+  name: "око спостереження"
+  description: "Рухомий спостерігач монітора Синдикату."
   save: false
   components:
   - type: Sprite

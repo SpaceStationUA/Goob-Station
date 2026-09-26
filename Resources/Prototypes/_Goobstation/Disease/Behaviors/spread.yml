@@ -1,8 +1,8 @@
 - type: entity
   id: DiseaseBehaviorCough
   parent: DiseaseBehaviorBase
-  name: Cough
-  description: Makes you cough. Infective.
+  name: "Кашель"
+  description: "Змушує вас кашляти. Заразний."
   components:
   - type: DiseaseEffect
     complexity: 6
@@ -23,8 +23,8 @@
 - type: entity
   id: DiseaseBehaviorHonk
   parent: DiseaseBehaviorBase
-  name: HONK!
-  description: HONK! VERY infective.
+  name: "ХОНК!"
+  description: "ХОНК! Дуже заразно."
   components:
   - type: DiseaseEffect
     complexity: 14
@@ -45,8 +45,8 @@
 - type: entity
   id: DiseaseBehaviorPneumonia
   parent: DiseaseBehaviorBase
-  name: Pneumonia
-  description: Makes you cough. Painful to cough.
+  name: "Пневмонія"
+  description: "Спричиняє болісний кашель."
   components:
   - type: DiseaseEffect
     complexity: 20
@@ -76,8 +76,8 @@
 - type: entity
   id: DiseaseBehaviorSneeze
   parent: DiseaseBehaviorBase
-  name: Sneeze
-  description: Makes you sneeze. VERY infective.
+  name: "Чхання"
+  description: "Викликає чхання. Дуже заразно."
   components:
   - type: DiseaseEffect
     complexity: 20 #very infective
@@ -98,8 +98,8 @@
 - type: entity
   id: DiseaseBehaviorSkinLesion
   parent: DiseaseBehaviorBase
-  name: Skin lesion
-  description: Deals slash damage. Infective.
+  name: "Ураження шкіри"
+  description: "Завдає ріжучої шкоди. Заразно."
   components:
   - type: DiseaseEffect
     complexity: 20
@@ -128,8 +128,8 @@
 - type: entity
   id: DiseaseBehaviorAbscesses
   parent: DiseaseBehaviorBase
-  name: Abscesses
-  description: In the final stages deals heavy slash damage. Infective.
+  name: "Абсцеси"
+  description: "На останніх стадіях завдає значної ріжучої шкоди. Заразно."
   components:
   - type: DiseaseEffect
     complexity: 40

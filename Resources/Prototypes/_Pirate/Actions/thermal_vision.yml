@@ -3,8 +3,8 @@
 - type: entity
   id: ActionToggleThermalSight
   parent: BaseAction
-  name: Toggle Thermal Vision
-  description: Turn the thermal vision functionality on or off.
+  name: "Перемкнути тепловізор"
+  description: "Увімкнути або вимкнути функцію тепловізора."
   components:
   - type: Action
     icon:

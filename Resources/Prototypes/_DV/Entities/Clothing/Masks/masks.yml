@@ -6,7 +6,7 @@
 - type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskOniBase
-  description: A mask depicting a ferocious creature from ancient Terran myth.
+  description: "Маска із зображенням лютої істоти з давніх терранських міфів."
   abstract: true
   components:
   - type: IngestionBlocker
@@ -19,7 +19,7 @@
 - type: entity
   parent: ClothingMaskOniBase
   id: ClothingMaskOniRed
-  name: red demon mask # starcup - oni are just people
+  name: "червона маска демона" # starcup - oni are just people
   components:
   - type: Sprite
     sprite: _DV/Clothing/Mask/mask_oni_red.rsi # starcup - moved to DV namespace

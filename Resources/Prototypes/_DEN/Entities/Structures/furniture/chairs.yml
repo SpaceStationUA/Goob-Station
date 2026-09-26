@@ -4,8 +4,8 @@
   abstract: true
   parent: ChairBase
   id: BaseChairBeachLounge
-  name: lounge chair
-  description: For sitting back, relaxing, and soaking in the solar lamp radiation.
+  name: "пляжний шезлонг"
+  description: "Для відпочинку, розслаблення та поглинання випромінювання сонячної лампи."
   components:
   - type: Sprite
     sprite: _DEN/Structures/Furniture/lounge_chair.rsi

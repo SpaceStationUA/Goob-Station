@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingHeadsetAltSyndicate
   id: ClothingHeadsetAltSyndicateCybersun
-  name: Cybersun over-ear headset
-  description: A blood-red Syndicate headset fitted with a Cybersun corporate encryption key.
+  name: "накладні навушники Кіберсану"
+  description: "Криваво-червоні навушники Синдикату, оснащені корпоративним криптографічним ключем Кіберсану."
   components:
   - type: ContainerFill
     containers:

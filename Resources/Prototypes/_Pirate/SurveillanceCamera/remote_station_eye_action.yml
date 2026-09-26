@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseMentalAction
   id: ActionRemoteStationEyeExit
-  name: Exit observation
-  description: Return to the observation console.
+  name: "Завершити спостереження"
+  description: "Поверніться до консолі спостереження."
   components:
   - type: Action
     checkCanInteract: false

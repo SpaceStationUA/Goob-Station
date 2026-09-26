@@ -4,9 +4,9 @@
 - type: entity
   parent: TelecomServer
   id: SyndicateNanoChatRelay
-  name: subspace relay node
+  name: "вузол підпросторової ретрансляції"
   suffix: Syndicate NanoChat relay
-  description: A telecommunication server wired the wrong way round. It carries somebody else's phone calls everywhere at once, listens to everyone else's, and answers to nobody in particular.
+  description: "Телекомунікаційний сервер із хитрим підключенням. Передає чужі дзвінки всюди водночас, прослуховує розмови й нікому не підпорядковується."
   components:
   - type: SyndicateNanoChatRelay
   - type: NanoChatLogHost
@@ -18,8 +18,8 @@
 - type: entity
   parent: BaseMachineCircuitboard
   id: SyndicateNanoChatRelayCircuitboard
-  name: subspace relay node machine board
-  description: A machine printed circuit board for a subspace relay node.
+  name: "плата вузла підпросторової ретрансляції"
+  description: "Друкована плата вузла підпросторової ретрансляції."
   components:
   - type: Sprite
     state: engineering

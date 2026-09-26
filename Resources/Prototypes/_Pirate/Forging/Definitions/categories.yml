@@ -2,42 +2,42 @@
 
 - type: forgingCategory
   id: Armor
-  name: armor
+  name: "обладунки"
   icon:
     sprite: _Pirate/Objects/Specific/Forging/Unfinished/armor_plate.rsi
     state: icon
 
 - type: forgingCategory
   id: Blades
-  name: blades
+  name: "клинки"
   icon:
     sprite: _Pirate/Objects/Specific/Forging/Unfinished/sword_blade.rsi
     state: icon
 
 - type: forgingCategory
   id: Bludgeons
-  name: bludgeons
+  name: "ударна зброя"
   icon:
     sprite: _Pirate/Objects/Specific/Forging/Unfinished/warhammer_head.rsi
     state: icon
 
 - type: forgingCategory
   id: Polearms
-  name: polearms
+  name: "древкова зброя"
   icon:
     sprite: _Pirate/Objects/Specific/Forging/Unfinished/halberd_head.rsi
     state: icon
 
 - type: forgingCategory
   id: Projectiles
-  name: projectiles
+  name: "снаряди"
   icon:
     sprite: _Pirate/Objects/Specific/Forging/Unfinished/arrowheads.rsi
     state: icon
 
 - type: forgingCategory
   id: Tools
-  name: tools
+  name: "інструменти"
   icon:
     sprite: _Pirate/Objects/Specific/Forging/Unfinished/crowbar.rsi
     state: icon

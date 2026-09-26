@@ -1,7 +1,7 @@
 - type: entity
   parent: MobOreCrab
   id: MobSupermatterCrab
-  description: An ore crab made from Supermatter.
+  description: "Рудний краб із суперматерії."
   suffix: Supermatter
   components:
   - type: SupermatterImmune

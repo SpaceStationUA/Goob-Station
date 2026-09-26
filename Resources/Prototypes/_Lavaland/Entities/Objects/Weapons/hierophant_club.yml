@@ -3,8 +3,8 @@
 - type: entity
   id: LavalandHierophantClub
   parent: BaseItem
-  name: hierophant club
-  description: Get item'ed lol
+  name: "кийок ієрофанта"
+  description: "Отримай по голові, лол"
   components:
   - type: WeaponClass # Pirate: weapon skills
     class: Bludgeon # Pirate: weapon skills
@@ -44,8 +44,8 @@
 
 - type: entity
   id: LavalandHierophantMarker
-  name: mysterious marker
-  description: What even is this?
+  name: "загадковий маркер"
+  description: "Що це взагалі таке?"
   placement:
     mode: AlignTileAny
   components:

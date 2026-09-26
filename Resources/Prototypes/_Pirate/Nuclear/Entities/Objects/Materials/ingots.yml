@@ -1,7 +1,7 @@
 - type: entity
   parent: IngotBase
   id: IngotPlutonium
-  name: plutonium bar
+  name: "плутонієвий зливок"
   suffix: Full
   components:
   - type: Material
@@ -42,7 +42,7 @@
 - type: entity
   parent: IngotPlutonium
   id: IngotPlutonium1
-  name: plutonium bar
+  name: "плутонієвий зливок"
   suffix: Single
   components:
   - type: Sprite

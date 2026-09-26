@@ -4,8 +4,8 @@
   abstract: true
   parent: HeatExchanger
   id: PirateHeatExchangePipeBase
-  name: inline radiator
-  description: Transfers heat between the pipe and its surroundings. Doesn't need gas flow. Only connects to other heat exchange pipes.
+  name: "вбудований радіатор"
+  description: "Передає тепло між трубою та навколишнім середовищем. Не потребує потоку газу. З’єднується лише з іншими трубами теплообміну."
   placement:
     mode: AlignAtmosPipeLayers
   components:
@@ -138,9 +138,9 @@
 - type: entity
   parent: PirateHeatExchangePipeBase
   id: HeatExchangerInlineJunction
-  name: heat exchange junction
+  name: "з’єднання теплообмінних труб"
   suffix: Junction
-  description: Ties a heat exchange pipe run into ordinary pipework. Insulated, so it radiates no heat of its own.
+  description: "З’єднує ділянку теплообмінної труби зі звичайним трубопроводом. Ізольоване, тому не випромінює власного тепла."
   components:
   - type: HeatExchanger
     inlet: pipe

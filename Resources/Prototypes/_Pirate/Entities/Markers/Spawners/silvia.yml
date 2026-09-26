@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  name: Silvia Spawner
+  name: "спавнер Сільвії"
   id: SpawnMobCMOPetSilvia
   parent: MarkerBase
   suffix: Medical Pet

@@ -3,8 +3,8 @@
 - type: entity
   parent: BaseItem
   id: GasFlowMeter
-  name: gas flow meter
-  description: A compact gauge that displays the pressure and temperature of the pipe beneath it.
+  name: "витратомір газу"
+  description: "Компактний вимірювач, що показує тиск і температуру труби під ним."
   placement:
     mode: AlignAtmosPipeLayers
   components:

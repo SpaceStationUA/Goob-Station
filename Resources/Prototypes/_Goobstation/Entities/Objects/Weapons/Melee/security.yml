@@ -1,8 +1,8 @@
 - type: entity
-  name: polymer baton
+  name: "полімерний кийок"
   parent: [BaseItem, BaseSecurityContraband]
   id: PolymerBaton
-  description: A lightweight, durable baton made from advanced polymers. Delivers less-than-lethal force for compliance and control.
+  description: "Легкий, міцний кийок, виготовлений із передових полімерів. Застосовує менш смертельну силу для примусу та контролю."
   components:
   - type: WeaponClass # Pirate: weapon skills
     class: Bludgeon # Pirate: weapon skills
@@ -40,8 +40,8 @@
 - type: entity
   id: SpearTelescopic
   parent: [BaseItem, BaseSecurityContraband]
-  name: telescopic spear
-  description: A compact, throwable spear with a retractable shaft. Designed for both melee and ranged use.
+  name: "телескопічний спис"
+  description: "Компактний спис для метання з висувним древком. Призначений як для ближнього, так і для дальнього бою."
   components:
   - type: WeaponClass # Pirate: weapon skills
     class: Polearm # Pirate: weapon skills
@@ -138,8 +138,8 @@
 - type: entity
   id: Betty
   parent: [BaseItem, BaseSecurityContraband]
-  name: Betty
-  description: An old intricate souvenir made from tough hyper-woven durathread repurposed for riot combat.
+  name: "Бетті"
+  description: "Старий вигадливий сувенір, виготовлений з міцної гіпер-плетеної дюратканини, перепрофільований для боротьби з заворушеннями."
   components:
     - type: WeaponClass # Pirate: weapon skills
       class: Bludgeon # Pirate: weapon skills
@@ -226,8 +226,8 @@
 - type: entity
   parent: [BaseItem, BaseSecurityContraband, ClothingBeltBase]
   id: PoliceBaton
-  name: police baton
-  description: A wooden truncheon for beating criminal scum.
+  name: "поліцейський кийок"
+  description: "Дубинка з дерева для побиття кримінального непотребу."
   components:
   - type: WeaponClass # Pirate: weapon skills
     class: Bludgeon # Pirate: weapon skills

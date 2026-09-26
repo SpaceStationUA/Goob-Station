@@ -2,8 +2,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBowBlack
-  name: black hair bow
-  description: A black red hair bow with a small removable clip on the back. Can also be clipped at the collar.
+  name: "чорний бант для волосся"
+  description: "Чорно-червоний бант для волосся з маленькою знімною заколкою ззаду. Його також можна прикріпити до коміра."
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairbow_black.rsi
@@ -16,8 +16,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBowRed
-  name: red hair bow
-  description: A red hair bow with a small removable clip on the back. Can also be clipped at the collar.
+  name: "червоний бант для волосся"
+  description: "Червоний бант для волосся з маленькою знімною заколкою ззаду. Його також можна прикріпити до коміра."
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairbow_red.rsi
@@ -30,8 +30,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatRibbonLargeBlack
-  name: large black hair ribbon
-  description: A large black ribbon, commonly used to tie back hair or hold up a dress.
+  name: "велика чорна стрічка для волосся"
+  description: "Велика чорна стрічка, яку зазвичай використовують, щоб зав’язати волосся або підтримати сукню."
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairribbon_large_black.rsi
@@ -46,8 +46,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatRibbonLargeRed
-  name: large red hair ribbon
-  description: A large black ribbon, commonly used to tie back hair or hold up a dress.
+  name: "велика червона стрічка для волосся"
+  description: "Велика чорна стрічка, яку зазвичай використовують, щоб зав’язати волосся або підтримати сукню."
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairribbon_large_red.rsi
@@ -62,8 +62,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatRibbonBlack
-  name: black hair ribbon
-  description: A length of black ribbon acting as a headband.
+  name: "чорна стрічка для волосся"
+  description: "Смужка чорної стрічки, що використовується як обруч для волосся."
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairribbon_black.rsi
@@ -75,8 +75,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatRibbonRed
-  name: red hair ribbon
-  description: A length of red ribbon acting as a headband.
+  name: "червона стрічка для волосся"
+  description: "Смужка червоної стрічки, що використовується як обруч для волосся."
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairribbon_red.rsi

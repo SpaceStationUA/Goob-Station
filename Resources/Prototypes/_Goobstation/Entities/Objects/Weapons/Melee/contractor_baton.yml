@@ -3,8 +3,8 @@
 - type: entity
   id: ContractorBaton
   parent: [BaseSyndicateContraband, TelescopicBaton]
-  name: contractor baton
-  description: A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets.
+  name: "кийок підрядника"
+  description: "Компактний, спеціалізований кийок, що видається підрядникам Синдикату. Завдає легких електричних ударів цілям."
   components:
   - type: WeaponClass # Pirate: weapon skills
     class: NonLethal # Pirate: weapon skills

@@ -14,7 +14,7 @@
 - type: entity
   parent: BaseBullet
   id: BulletTurret
-  name: bullet (.22 short)
+  name: "куля (.22 short)"
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -25,7 +25,7 @@
 - type: entity
   parent: BaseBullet
   id: PelletShotgunBreaching
-  name: pellet (.50)
+  name: "дробина (.50)"
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -48,8 +48,8 @@
 - type: entity
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunBreaching
-  name: shell (12 gauge breaching)
-  description: Breaching ammunition designed to deal maximum damage to structures.
+  name: "набій (12 калібр, пробивний)"
+  description: "Пробивний боєприпас, призначений для завдання максимальної шкоди конструкціям."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
@@ -63,8 +63,8 @@
 
 - type: entity
   id: MolotovFire
-  name: fire
-  description: It is burning.
+  name: "вогонь"
+  description: "Він горить."
   placement:
     mode: SnapgridCenter
   components:
@@ -116,8 +116,8 @@
 
 - type: entity
   id: FlameThrowerBullet
-  name: flame
-  description: Do not stand close to this.
+  name: "полум'я"
+  description: "Не стійте поруч із ним."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Bullets/flamethrower.rsi
@@ -193,8 +193,8 @@
 - type: entity
   parent: [ BaseMech, BaseRevMajorContraband, CombatMech ]
   id: T45PowerArmor
-  name: T-45 P.O.W.A.R armor
-  description: Precise Orbital Worn Armor for Revolutionaries.
+  name: "силова броня T-45 P.O.W.A.R"
+  description: "Точна орбітальна носима броня для революціонерів."
   components:
   - type: Sprite
     drawdepth: Mobs

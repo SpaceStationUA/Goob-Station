@@ -1,8 +1,8 @@
 - type: entity
   id: DiseaseBehaviorVomit
   parent: DiseaseBehaviorBase
-  name: Vomiting
-  description: Makes you periodically vomit.
+  name: "Блювання"
+  description: "Змушує вас періодично блювати."
   components:
   - type: DiseaseEffect
     complexity: 8 # can make you constantly hungry
@@ -26,8 +26,8 @@
 - type: entity
   id: DiseaseBehaviorFeelUnwell
   parent: DiseaseBehaviorBase
-  name: Feeling unwell
-  description: Makes you feel unwell.
+  name: "Нездужання"
+  description: "Викликає нездужання."
   components:
   - type: DiseaseEffect
     complexity: 4 # just an annoyance
@@ -42,8 +42,8 @@
 - type: entity
   id: DiseaseBehaviorHeadache
   parent: DiseaseBehaviorBase
-  name: Headache
-  description: Gives you headaches, which may make working more difficult.
+  name: "Головний біль"
+  description: "Викликає головний біль, що може ускладнити роботу."
   components:
   - type: DiseaseEffect
     complexity: 8 # very annoying
@@ -60,8 +60,8 @@
 - type: entity
   id: DiseaseBehaviorGravitosisA
   parent: DiseaseBehaviorBase
-  name: Gravitosis A
-  description: Rare and exotic disease symptom that causes objects to swirl around you.
+  name: "Гравітозис А"
+  description: "Рідкісний і екзотичний симптом хвороби, який змушує предмети закручуватися навколо вас."
   components:
   - type: DiseaseEffect
     complexity: 14 # doesn't do that much but very annoying
@@ -76,8 +76,8 @@
 - type: entity
   id: DiseaseBehaviorGravitosisB
   parent: DiseaseBehaviorBase
-  name: Gravitosis B
-  description: Rare and exotic disease symptom that causes objects to go towards you.
+  name: "Гравітозис Б"
+  description: "Рідкісний і екзотичний симптом хвороби, який змушує предмети рухатися до вас."
   components:
   - type: DiseaseEffect
     complexity: 14 # doesn't do that much but very annoying
@@ -92,8 +92,8 @@
 - type: entity
   id: DiseaseBehaviorGravitosisC
   parent: DiseaseBehaviorBase
-  name: Gravitosis C
-  description: Rare and exotic disease symptom that causes objects to go away from you.
+  name: "Гравітозис С"
+  description: "Рідкісний і екзотичний симптом хвороби, який змушує предмети віддалятися від вас."
   components:
   - type: DiseaseEffect
     complexity: 14 # doesn't do that much but very annoying
@@ -108,8 +108,8 @@
 - type: entity
   id: DiseaseBehaviorOwO
   parent: DiseaseBehaviorBase
-  name: OwOify
-  description: Rare and exotic disease symptom that causes you to vocalize like a cat.
+  name: "ОвО-фікація"
+  description: "Рідкісний та екзотичний симптом хвороби, який змушує вас мовити як кіт."
   components:
   - type: DiseaseEffect
     complexity: 14 # doesn't do that much but very annoying
@@ -120,8 +120,8 @@
 - type: entity
   id: DiseaseBehaviorBlindness
   parent: DiseaseBehaviorBase
-  name: Blindness
-  description: Rare disease symptom that causes complete blindness.
+  name: "Сліпота"
+  description: "Рідкісний симптом, що спричиняє повну сліпоту."
   components:
   - type: DiseaseEffect
     complexity: 12
@@ -134,8 +134,8 @@
 - type: entity
   id: DiseaseBehaviorPainNumbness
   parent: DiseaseBehaviorBase
-  name: Analgesia
-  description: Rare disease symptom that causes you to become insensitive to pain.
+  name: "Знеболення"
+  description: "Рідкісний симптом, що позбавляє чутливості до болю."
   components:
   - type: DiseaseEffect
     complexity: 12
@@ -149,8 +149,8 @@
 - type: entity
   id: DiseaseBehaviorDeaf
   parent: DiseaseBehaviorBase
-  name: Deafness
-  description: Rare disease symptom that causes complete deafness.
+  name: "Глухота"
+  description: "Рідкісний симптом, що спричиняє повну глухоту."
   components:
   - type: DiseaseEffect
     complexity: 14 # VERY annoying
@@ -163,8 +163,8 @@
 - type: entity
   id: DiseaseBehaviorAnxiety
   parent: DiseaseBehaviorBase
-  name: Anxiety
-  description: Causes anxiety and fear of hugs.
+  name: "Тривога"
+  description: "Викликає тривожність і страх обіймів."
   components:
   - type: DiseaseEffect
     complexity: 2
@@ -175,8 +175,8 @@
 - type: entity
   id: DiseaseBehaviorDrowsiness
   parent: DiseaseBehaviorBase
-  name: Drowsiness
-  description: Causes a strong desire to sleep.
+  name: "Сонливість"
+  description: "Викликає сильне бажання спати."
   components:
   - type: DiseaseEffect
     complexity: 10
@@ -195,8 +195,8 @@
 - type: entity
   id: DiseaseBehaviorEuphoria
   parent: DiseaseBehaviorBase
-  name: Euphoria
-  description: Symptom that causes happiness!
+  name: "Ейфорія"
+  description: "Симптом, що викликає радість!"
   components:
   - type: DiseaseEffect
     complexity: 5
@@ -215,8 +215,8 @@
 - type: entity
   id: DiseaseBehaviorApathy
   parent: DiseaseBehaviorBase
-  name: Apathy
-  description: Symptom that makes the world progressively lose its range of colors.
+  name: "Апатія"
+  description: "Симптом, через який світ поступово втрачає кольори."
   components:
   - type: DiseaseEffect
     complexity: 5
@@ -229,8 +229,8 @@
 - type: entity
   id: DiseaseBehaviorBS
   parent: DiseaseBehaviorBase
-  name: Bluespace Instability
-  description: Extremely rare symptom that causes you to teleport erratically.
+  name: "Блюспейсова нестабільність"
+  description: "Надзвичайно рідкісний симптом, що викликає хаотичну телепортацію."
   components:
   - type: DiseaseEffect
     complexity: 40 #there is a chance of ending up in a wall or in space

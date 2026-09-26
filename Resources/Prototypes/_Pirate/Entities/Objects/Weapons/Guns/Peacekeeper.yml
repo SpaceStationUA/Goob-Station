@@ -2,8 +2,8 @@
 - type: entity
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponLauncherPeacekeeper
-  name: peacekeeper
-  description: A multi purpose single-shot grenade launcher with a break-open action.
+  name: "миротворець"
+  description: "Багатофункціональний однозарядний гранатомет із відкидним механізмом."
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Launchers/peacekeeper.rsi

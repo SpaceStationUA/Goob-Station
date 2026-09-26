@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakRedHood
-  name: red cloak # starcup - removed caps
-  description: A cloak made for travel and comfort. Slightly smells of cherry pie?
+  name: "червоний плащ" # starcup - removed caps
+  description: "Плащ для подорожей і комфорту. Трохи пахне вишневим пирогом?"
   components:
   - type: Sprite
     sprite: _Floof/Clothing/Neck/Cloaks/redhood.rsi # starcup - Floof to _Floof

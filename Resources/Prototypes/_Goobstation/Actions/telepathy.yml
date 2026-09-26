@@ -1,7 +1,7 @@
 - type: entity
   id: ActionTelepathy
-  name: Telepathy
-  description: Telepathically transmits a message to the target.
+  name: "Телепатія"
+  description: "Телепатично надішліть повідомлення цілі."
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
