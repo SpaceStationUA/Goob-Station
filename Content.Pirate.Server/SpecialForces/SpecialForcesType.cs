@@ -4,5 +4,6 @@ public enum SpecialForcesType
 {
     ERT = 0,
     DeathSquad = 1,
-    CBURN = 2
+    CBURN = 2,
+    HECU = 3
 }

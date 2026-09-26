@@ -18,7 +18,7 @@ public sealed class CallSpecialForcesCommand : IConsoleCommand
     [Dependency] private readonly IEntityManager _entityManager = default!;
     public string Command => "callspecforces";
 
-    public string Description => "виклик ert/cburn/deathsquad";
+    public string Description => "виклик ert/cburn/deathsquad/hecu";
 
     public string Help => "callspecforces";
 

@@ -307,6 +307,11 @@
   id: HecuSoldier
   parent: EventHumanMindShielded
   components:
+  # Pirate: HECU rework start
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipERT
+  # Pirate: HECU rework end
   - type: AutoImplant
     implants: [ FreedomImplant ]
   - type: GhostRole
@@ -319,9 +324,8 @@
     prototypes: [HECUOperativeGear]
   - type: RandomMetadata
     nameSegments:
-    - NamesMilitaryFirstLeader
-    - NamesMilitaryLast
-    nameFormat: name-format-standard
+    - NamesMilitaryLast # Pirate: HECU rework - officer ranks only fit the leader
+    nameFormat: name-format-ert-rifle # Pirate: HECU rework
 
 # G-Man
 

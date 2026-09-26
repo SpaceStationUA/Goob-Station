@@ -5,3 +5,6 @@ spec-forces-system-CBURN-annonce = Ми отримали повідомленн�
 spec-forces-system-ERT = ({$who}) викликав ГШР о ({$time})!
 spec-forces-system-CBURN = ({$who}) викликав РХБЗ о ({$time})!
 spec-forces-system-DeathSquad = ({$who}) викликав Загін Смерті о ({$time})!
+spec-forces-system-HECU-title = Спецпідрозділи Нанотрейзен
+spec-forces-system-HECU-annonce = Загроза для служби безпеки станції визнана надмірною. До станції прямує загін HECU. Після прибуття члени HECU стоять вище за Голову служби безпеки; решта служби безпеки має підтримувати їх у бою та евакуації вцілілого екіпажу.
+spec-forces-system-HECU = ({$who}) викликав загін HECU о ({$time})!

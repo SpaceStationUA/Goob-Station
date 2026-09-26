@@ -5,12 +5,12 @@
   name: job-name-hecu
   description: job-description-hecu
   playTimeTracker: JobHecuOperative
-  # Pirate: skill chips start
+  # Pirate: HECU rework start
   special:
   - !type:OrganChipsSpecial
     chips:
     - SkillChipERT
-  # Pirate: skill chips end
+  # Pirate: HECU rework end
   setPreference: false
   startingGear: HECUOperativeGear
   icon: "JobIconNanotrasen"
@@ -26,18 +26,18 @@
 - type: startingGear
   id: HECUOperativeGear
   equipment:
-    jumpsuit: ClothingUniformHecu
-    back: ClothingBackpackMercFilledHECU
-    mask: ClothingMaskGasExplorer
+    jumpsuit: ClothingUniformJumpsuitHECUUrbanCamo # Pirate: HECU rework
+    back: ClothingBackpackHECUFilled # Pirate: HECU rework
+    mask: ClothingMaskGasHECU # Pirate: HECU rework
     eyes: ClothingEyesGlassesMedSec
     ears: ClothingHeadsetAltCentCom
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterVestWeb
+    outerClothing: ClothingOuterArmorHECU # Pirate: HECU rework
     shoes: ClothingShoesBootsCombatFilled
-    head: ClothingHeadHelmetMerc
+    head: ClothingHeadHelmetHECUPoweredNVG # Pirate: HECU rework
     id: HecuPDA
-    belt: ClothingBeltMercWebbing
-    pocket1: MagazinePistolSubMachineGun
-    pocket2: MagazinePistolSubMachineGun
+    belt: ClothingBeltHECUFilled # Pirate: HECU rework
+    pocket1: FlashlightSeclite # Pirate: HECU rework
+    pocket2: PowerCellHigh # Pirate: HECU rework
   inhand:
-  - WeaponSubMachineGunDrozd
+  - WeaponRifleM16 # Pirate: HECU rework

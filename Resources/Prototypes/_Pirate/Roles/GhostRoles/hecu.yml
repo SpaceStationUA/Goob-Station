@@ -1,0 +1,108 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# HECU squad roles on top of the Goob HECU operative (HECUOperativeGear / HecuSoldier).
+
+# HECU squad leader: the operative's kit (HECUOperativeGear) with the powered combat vest and the AR-25T, plus
+# the ERT leader's red phone and pinpointer in the vest's pockets - the HECU backpack has no room left.
+# Not a child of HECUOperativeGear: startingGear inhand lists always merge with the parent's, so the leader
+# would spawn holding the M16A4 as well. Keep the slots below in sync with HECUOperativeGear.
+- type: startingGear
+  id: HECULeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHECUUrbanCamo
+    back: ClothingBackpackHECUFilled
+    mask: ClothingMaskGasHECU
+    eyes: ClothingEyesGlassesMedSec
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorHECUPowered
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHelmetHECUPoweredNVG
+    id: HecuPDA
+    belt: ClothingBeltHECUFilled
+    pocket1: FlashlightSeclite
+    pocket2: PowerCellHigh
+  inhand:
+  - WeaponRifleM16Modern
+  storage:
+    outerClothing:
+    - PhoneInstrument
+    - PinpointerNuclear
+
+- type: entity
+  parent: RandomHumanoidHECUSpawner
+  id: RandomHumanoidHECULeaderSpawner
+  name: HECU Squad Leader
+  components:
+  - type: RandomHumanoidSpawner
+    settings: HecuLeader
+
+- type: randomHumanoidSettings
+  parent: HecuSoldier
+  id: HecuLeader
+  components:
+  - type: GhostRole
+    name: ghost-role-information-Hecu-leader-name
+    description: ghost-role-information-Hecu-leader-description
+    rules: ghost-role-information-Hecu-rules
+    raffle:
+      settings: short
+  - type: Loadout
+    prototypes: [HECULeaderGear]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-leader
+
+# HECU corpsman: the HECU operative's kit crossed with the ERT medic's. No primary weapon - just the mk32 sidearm.
+
+- type: startingGear
+  id: HECUMedicGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHECUUrbanCamo
+    back: ClothingBackpackHECUMedicFilled
+    mask: ClothingMaskGasHECU
+    eyes: ClothingEyesGlassesMedSec
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesNitrile
+    outerClothing: ClothingOuterArmorHECUMedic
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHelmetHECUPoweredMedic
+    id: HecuPDA
+    belt: ClothingBeltHECUMedicalFilled
+    pocket1: WeaponPistolUniversal
+    pocket2: FlashlightSeclite
+    suitstorage: MindShieldImplanter
+  storage:
+    belt:
+    - CartridgeAtropine
+    - CartridgeAtropine
+
+- type: entity
+  parent: RandomHumanoidHECUSpawner
+  id: RandomHumanoidHECUMedicSpawner
+  name: HECU Corpsman
+  components:
+  - type: RandomHumanoidSpawner
+    settings: HecuMedic
+
+- type: randomHumanoidSettings
+  parent: HecuSoldier
+  id: HecuMedic
+  components:
+  - type: GhostRole
+    name: ghost-role-information-Hecu-medic-name
+    description: ghost-role-information-Hecu-medic-description
+    rules: ghost-role-information-Hecu-rules
+    raffle:
+      settings: short
+  - type: Loadout
+    prototypes: [HECUMedicGear]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-corpsman
+  # the ERT medic's chip pair; every other HECU role inherits SkillChipERT alone from HecuSoldier
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipERT
+    - SkillChipCMO

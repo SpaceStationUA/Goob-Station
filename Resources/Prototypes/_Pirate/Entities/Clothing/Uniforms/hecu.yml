@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Urban camouflage BDU with a rolled-sleeve "_d" worn state.
+
+- type: entity
+  parent: [ClothingUniformJumpsuitMercenary, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitHECUUrbanCamo
+  name: urban camouflage BDU
+  description: A baggy military camouflage uniform with an ERDL pattern. The range of whites and greys proves useful in urban environments.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/HECU/urban_camo.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/HECU/urban_camo.rsi
