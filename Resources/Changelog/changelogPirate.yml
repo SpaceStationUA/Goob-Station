@@ -5915,3 +5915,9 @@ Entries:
         на броні
   id: 559
   time: '2026-09-26T10:43:19.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Tweak
+      message: Оновлено Goobstation upstream та українську локалізацію.
+  id: 560
+  time: '2026-09-26T11:05:06.0000000+00:00'
