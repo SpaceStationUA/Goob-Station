@@ -27,10 +27,12 @@ public sealed partial class TraitorRuleSystem
         if (!_uplink.AddUplink(traitor,
                 startingBalance,
                 uplinkPreference,
-                out _,
+                out var uplinkTarget, // Pirate: retain the actual pen/PDA target; null selects the implant.
                 out var setupEvent,
                 giveDiscounts: true))
             return false;
+
+        _reputation.AddContracts(traitor, uplinkTarget); // Pirate: bind contracts to the uplink we just created.
 
         if (setupEvent != null)
         {

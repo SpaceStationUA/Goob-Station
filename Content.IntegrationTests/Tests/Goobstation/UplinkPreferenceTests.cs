@@ -1,12 +1,20 @@
+using System.Linq;
 using Content.Goobstation.Common.Traitor;
 using Content.Goobstation.Server.Traitor.PenSpin;
 using Content.Goobstation.Shared.Traitor.PenSpin;
 using Content.IntegrationTests.Pair;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Mind;
+using Content.Server.Preferences.Managers;
 using Content.Server.Traitor.Uplink;
+using Content.Shared._Pirate.Reputation;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
 using Content.Shared.PDA;
+using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.GameObjects;
@@ -185,6 +193,73 @@ public sealed class UplinkPreferenceTests
                     Assert.That(setupEvent, Is.Null, $"Implant preference {pref.ID} should have no setup event");
                 }
             });
+        }
+    }
+
+    // Pirate: creating a preferred uplink must not attach its contracts to an unrelated PDA.
+    [TestCase("UplinkPen")]
+    [TestCase("UplinkPda")]
+    [TestCase("UplinkImplant")]
+    public async Task TestTraitorContractsUsePreferredUplink(string preference)
+    {
+        var server = _pair.Server;
+        var entMan = server.EntMan;
+        var prefs = server.ResolveDependency<IServerPreferencesManager>();
+        var user = _pair.Player!.UserId;
+        var original = prefs.GetPreferences(user);
+        var slot = original.SelectedCharacterIndex;
+        var profile = (HumanoidCharacterProfile) original.SelectedCharacter;
+        var loadout = new RoleLoadout("AntagTraitor");
+        loadout.SelectedLoadouts["TraitorUplink"] =
+            [new Loadout { Prototype = server.ProtoMan.Index<UplinkPreferencePrototype>(preference).Loadout! }];
+
+        await SpawnPenInHand();
+        EntityUid target = default;
+        EntityUid mind = default;
+
+        try
+        {
+            await server.WaitPost(() => prefs.SetProfile(user, slot, profile.WithLoadout(loadout)).Wait());
+            await server.WaitAssertion(() =>
+            {
+                var uplinks = server.System<GoobCommonUplinkSystem>();
+                var pda = uplinks.FindUplinkTarget(_player, ["Pda"])!.Value;
+                var pen = uplinks.FindUplinkTarget(_player, ["Pen"])!.Value;
+                Assert.That(server.System<TraitorRuleSystem>().MakeTraitor(_player,
+                    new TraitorRuleComponent { GiveBriefing = false }), Is.True);
+
+                mind = server.System<MindSystem>().GetMind(_player)!.Value;
+                target = preference switch
+                {
+                    "UplinkPen" => pen,
+                    "UplinkPda" => pda,
+                    _ => entMan.GetComponent<ImplantedComponent>(_player).ImplantContainer.ContainedEntities
+                        .Single(entity => entMan.HasComponent<StoreComponent>(entity)),
+                };
+
+                Assert.That(entMan.GetComponent<StoreContractsComponent>(target).Mind, Is.EqualTo(mind),
+                    "The contract hub must belong to the selected uplink's traitor.");
+                Assert.That(entMan.GetComponent<ContractsComponent>(mind).Stores, Is.EquivalentTo(new[] { target }),
+                    "An unrelated PDA must not capture the preferred uplink's contracts or rewards.");
+                if (target != pda)
+                    Assert.That(entMan.GetComponent<StoreContractsComponent>(pda).Mind, Is.Null);
+
+                server.System<ReputationSystem>().ToggleUI(_player, target);
+                Assert.That(server.System<SharedUserInterfaceSystem>()
+                    .TryGetUiState<ContractsState>(target, ContractsUiKey.Key, out _), Is.True,
+                    "Opening the selected uplink must supply its contract hub state.");
+            });
+
+            await _pair.RunTicksSync(5);
+            var clientTarget = _pair.ToClientUid(target);
+            var clientMind = _pair.ToClientUid(mind);
+            await _pair.Client.WaitAssertion(() =>
+                Assert.That(_pair.Client.EntMan.GetComponent<StoreContractsComponent>(clientTarget).Mind,
+                    Is.EqualTo(clientMind), "The client needs the contract owner to expose the pen's contract button."));
+        }
+        finally
+        {
+            await server.WaitPost(() => prefs.SetProfile(user, slot, profile).Wait());
         }
     }
 
