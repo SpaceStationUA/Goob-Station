@@ -4,8 +4,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatFeatheredCap
-  name: "капелюх із пером"
-  description: "Зелений капелюх із гладким білим пером, вставленим в обідок. Він так і кличе пустити стрілу."
+  name: feathered cap
+  description: A green cap, with a smooth, white feather placed within the rim. It makes you want to shoot a bow.
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/featheredcap.rsi
@@ -19,8 +19,8 @@
 - type: entity # NonDen - Aurora Station
   parent: ClothingHeadBase
   id: ClothingHeadHatFlatcapBartenderNanotrasen
-  name: "ошатна синя кепка" # starcup - renamed bartender's nanotrasen flatcap
-  description: "Легка кепка, яку, за чутками, полюбляють бармени НаноТрейзен." # starcup
+  name: fancy blue flatcap # starcup - renamed bartender's nanotrasen flatcap
+  description: A lightweight cap purportedly favored by NanoTrasen bartenders. # starcup
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/flatcap_nt.rsi # starcup - moved namespace
@@ -30,8 +30,8 @@
 - type: entity # NonDen - Aurora Station
   parent: ClothingHeadBase
   id: ClothingHeadHatFlatcapBartenderIdris
-  name: "ошатна біла кепка" # starcup - renamed bartender's idris incorporated flatcap
-  description: "Легка кепка, яку, за чутками, полюбляють бармени з-поза меж сектора." # starcup
+  name: fancy white flatcap # starcup - renamed bartender's idris incorporated flatcap
+  description: A lightweight cap purportedly favored by off-sector bartenders. # starcup
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/flatcap_idris.rsi # starcup - moved namespace
@@ -41,8 +41,8 @@
 - type: entity # NonDen - Aurora Station
   parent: ClothingHeadBase
   id: ClothingHeadHatFlatcapBartenderOrion
-  name: "ошатна коричнева кепка" # starcup - renamed bartender's orion express flatcap
-  description: "Легка кепка, яку, за чутками, полюбляють бармени з-поза меж сектора." # starcup
+  name: fancy brown flatcap # starcup - renamed bartender's orion express flatcap
+  description: A lightweight cap purportedly favored by off-sector bartenders. # starcup
   components:
   - type: Sprite
     sprite: _DEN/Clothing/Head/Hats/flatcap_orion.rsi # starcup - moved namespace

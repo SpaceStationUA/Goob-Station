@@ -1,8 +1,8 @@
 - type: entity
   id: PunchingBag
   parent: BaseStructure
-  name: "боксерська груша"
-  description: "Важка груша для тренування ударів."
+  name: боксерська груша
+  description: Важка груша для тренування ударів.
   components:
   - type: Sprite
     sprite: _Pirate/Structures/Furniture/punchingbag.rsi

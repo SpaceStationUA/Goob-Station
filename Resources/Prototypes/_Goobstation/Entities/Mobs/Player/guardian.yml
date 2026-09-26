@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseMentalAction
   id: ActionSelfToggleGuardian
-  name: "Відкликати себе"
-  description: "Відкликає вас назад у тіло вашого господаря"
+  name: Recall Self
+  description: Recalls yourself back into your host's body
   components:
   - type: Action
     icon: Interface/Actions/manifest.png
@@ -15,7 +15,7 @@
 - type: entity
   parent: ActionTelepathy
   id: ActionTelepathyGuardian
-  name: "Телепатія вартового"
+  name: Guardian's Telepathy
   description:
   components:
   - type: TelepathyAction

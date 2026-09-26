@@ -1,9 +1,9 @@
 - type: entity
   id: OrganAvaliStomach
   parent: OrganAnimalStomach
-  name: "шлунок авалі"
+  name: avali stomach
   suffix: Avali
-  description: "При уважнішому огляді видно, що він насправді складається з двох шлунків."
+  description: On closer inspection, actually consists of two stomachs.
   components:
   - type: Stomach
     specialDigestible:
@@ -35,9 +35,9 @@
 - type: entity
   id: OrganAvaliHeart
   parent: OrganHumanHeart
-  name: "серце авалі"
+  name: avali heart
   suffix: Avali
-  description: "Серце авалі."
+  description: The heart of an Avali.
   components:
   - type: Metabolizer
     maxPoisonsProcessable: 2
@@ -53,9 +53,9 @@
 - type: entity
   id: OrganAvaliLiver
   parent: OrganHumanLiver
-  name: "печінка авалі"
+  name: avali liver
   suffix: Avali
-  description: "Печінка авалі."
+  description: The liver of an Avali.
   components:
   - type: Metabolizer
     maxPoisonsProcessable: 1
@@ -69,9 +69,9 @@
 - type: entity
   id: OrganAvaliKidneys
   parent: OrganHumanKidneys
-  name: "нирки авалі"
+  name: avali kidneys
   suffix: Avali
-  description: "Нирки авалі."
+  description: The kidneys of an Avali.
   components:
   - type: Metabolizer
     maxPoisonsProcessable: 5
@@ -86,9 +86,9 @@
 - type: entity
   id: OrganAvaliLungs
   parent: OrganHumanLungs
-  name: "легені авалі"
+  name: avali lungs
   suffix: Avali
-  description: "Легені авалі."
+  description: The lungs of an Avali.
   components:
   - type: Metabolizer
     removeEmpty: true
@@ -108,16 +108,16 @@
 - type: entity
   id: OrganAvaliEyes
   parent: OrganHumanEyes
-  name: "очі авалі"
+  name: avali eyes
   suffix: Avali
-  description: "Очі авалі."
+  description: The eyes of an Avali.
 
 - type: entity
   id: OrganAvaliBrain
   parent: OrganHumanBrain
-  name: "мозок авалі"
+  name: avali brain
   suffix: Avali
-  description: "Тут авалі думають злі думки."
+  description: Where Avali think evil thoughts.
   components:
   - type: Sprite
     sprite: _Pirate/Mobs/Species/Avali/organs.rsi

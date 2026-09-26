@@ -2,7 +2,7 @@
 
 - type: entity
   id: OptionsVisualizerTest
-  name: "тест візуалізації налаштувань" #Goobstation - clean up spawn menu
+  name: Options Visualizer Test #Goobstation - clean up spawn menu
   suffix: DEBUG
   components:
   - type: Sprite

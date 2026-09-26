@@ -2,8 +2,8 @@
 - type: entity
   parent: BaseAction
   id: ActionSECBorgSelfDestruct
-  name: "Самознищення шасі"
-  description: "Підірвіть шасі, викинувши мозок за межі вибуху. Повернутися після цього не можна."
+  name: Self-Destruct Chassis
+  description: Detonate your chassis, ejecting your brain clear of the blast. There is no coming back from this.
   categories: [ HideSpawnMenu ]
   components:
   - type: Action

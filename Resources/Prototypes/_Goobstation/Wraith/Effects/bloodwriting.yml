@@ -3,7 +3,7 @@
 # Numbers
 - type: entity
   id: BloodWriting0
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 0
   components:
   - type: Sprite
@@ -13,7 +13,7 @@
 
 - type: entity
   id: BloodWriting1
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 1
   components:
   - type: Sprite
@@ -23,7 +23,7 @@
 
 - type: entity
   id: BloodWriting2
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 2
   components:
   - type: Sprite
@@ -33,7 +33,7 @@
 
 - type: entity
   id: BloodWriting3
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 3
   components:
   - type: Sprite
@@ -43,7 +43,7 @@
 
 - type: entity
   id: BloodWriting4
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 4
   components:
   - type: Sprite
@@ -53,7 +53,7 @@
 
 - type: entity
   id: BloodWriting5
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 5
   components:
   - type: Sprite
@@ -63,7 +63,7 @@
 
 - type: entity
   id: BloodWriting6
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 6
   components:
   - type: Sprite
@@ -73,7 +73,7 @@
 
 - type: entity
   id: BloodWriting7
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 7
   components:
   - type: Sprite
@@ -83,7 +83,7 @@
 
 - type: entity
   id: BloodWriting8
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 8
   components:
   - type: Sprite
@@ -93,7 +93,7 @@
 
 - type: entity
   id: BloodWriting9
-  name: "кривавий напис"
+  name: bloody writing
   suffix: 9
   components:
   - type: Sprite
@@ -104,7 +104,7 @@
 # Letters
 - type: entity
   id: BloodWritingA
-  name: "кривавий напис"
+  name: bloody writing
   suffix: A
   components:
   - type: Sprite
@@ -114,7 +114,7 @@
 
 - type: entity
   id: BloodWritingB
-  name: "кривавий напис"
+  name: bloody writing
   suffix: B
   components:
   - type: Sprite
@@ -124,7 +124,7 @@
 
 - type: entity
   id: BloodWritingC
-  name: "кривавий напис"
+  name: bloody writing
   suffix: C
   components:
   - type: Sprite
@@ -134,7 +134,7 @@
 
 - type: entity
   id: BloodWritingD
-  name: "кривавий напис"
+  name: bloody writing
   suffix: D
   components:
   - type: Sprite
@@ -144,7 +144,7 @@
 
 - type: entity
   id: BloodWritingE
-  name: "кривавий напис"
+  name: bloody writing
   suffix: E
   components:
   - type: Sprite
@@ -154,7 +154,7 @@
 
 - type: entity
   id: BloodWritingF
-  name: "кривавий напис"
+  name: bloody writing
   suffix: F
   components:
   - type: Sprite
@@ -164,7 +164,7 @@
 
 - type: entity
   id: BloodWritingG
-  name: "кривавий напис"
+  name: bloody writing
   suffix: G
   components:
   - type: Sprite
@@ -174,7 +174,7 @@
 
 - type: entity
   id: BloodWritingH
-  name: "кривавий напис"
+  name: bloody writing
   suffix: H
   components:
   - type: Sprite
@@ -184,7 +184,7 @@
 
 - type: entity
   id: BloodWritingI
-  name: "кривавий напис"
+  name: bloody writing
   suffix: I
   components:
   - type: Sprite
@@ -194,7 +194,7 @@
 
 - type: entity
   id: BloodWritingJ
-  name: "кривавий напис"
+  name: bloody writing
   suffix: J
   components:
   - type: Sprite
@@ -204,7 +204,7 @@
 
 - type: entity
   id: BloodWritingK
-  name: "кривавий напис"
+  name: bloody writing
   suffix: K
   components:
   - type: Sprite
@@ -214,7 +214,7 @@
 
 - type: entity
   id: BloodWritingL
-  name: "кривавий напис"
+  name: bloody writing
   suffix: L
   components:
   - type: Sprite
@@ -224,7 +224,7 @@
 
 - type: entity
   id: BloodWritingM
-  name: "кривавий напис"
+  name: bloody writing
   suffix: M
   components:
   - type: Sprite
@@ -234,7 +234,7 @@
 
 - type: entity
   id: BloodWritingN
-  name: "кривавий напис"
+  name: bloody writing
   suffix: N
   components:
   - type: Sprite
@@ -244,7 +244,7 @@
 
 - type: entity
   id: BloodWritingO
-  name: "кривавий напис"
+  name: bloody writing
   suffix: O
   components:
   - type: Sprite
@@ -254,7 +254,7 @@
 
 - type: entity
   id: BloodWritingP
-  name: "кривавий напис"
+  name: bloody writing
   suffix: P
   components:
   - type: Sprite
@@ -264,7 +264,7 @@
 
 - type: entity
   id: BloodWritingQ
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Q
   components:
   - type: Sprite
@@ -274,7 +274,7 @@
 
 - type: entity
   id: BloodWritingR
-  name: "кривавий напис"
+  name: bloody writing
   suffix: R
   components:
   - type: Sprite
@@ -284,7 +284,7 @@
 
 - type: entity
   id: BloodWritingS
-  name: "кривавий напис"
+  name: bloody writing
   suffix: S
   components:
   - type: Sprite
@@ -294,7 +294,7 @@
 
 - type: entity
   id: BloodWritingT
-  name: "кривавий напис"
+  name: bloody writing
   suffix: T
   components:
   - type: Sprite
@@ -304,7 +304,7 @@
 
 - type: entity
   id: BloodWritingU
-  name: "кривавий напис"
+  name: bloody writing
   suffix: U
   components:
   - type: Sprite
@@ -314,7 +314,7 @@
 
 - type: entity
   id: BloodWritingV
-  name: "кривавий напис"
+  name: bloody writing
   suffix: V
   components:
   - type: Sprite
@@ -324,7 +324,7 @@
 
 - type: entity
   id: BloodWritingW
-  name: "кривавий напис"
+  name: bloody writing
   suffix: W
   components:
   - type: Sprite
@@ -334,7 +334,7 @@
 
 - type: entity
   id: BloodWritingX
-  name: "кривавий напис"
+  name: bloody writing
   suffix: X
   components:
   - type: Sprite
@@ -344,7 +344,7 @@
 
 - type: entity
   id: BloodWritingY
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Y
   components:
   - type: Sprite
@@ -354,7 +354,7 @@
 
 - type: entity
   id: BloodWritingZ
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Z
   components:
   - type: Sprite
@@ -365,7 +365,7 @@
 # Symbols & Drawings
 - type: entity
   id: BloodWritingAmpersand
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Ampersand
   components:
   - type: Sprite
@@ -375,7 +375,7 @@
 
 - type: entity
   id: BloodWritingArrowEast
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Arrow, East
   components:
   - type: Sprite
@@ -385,7 +385,7 @@
 
 - type: entity
   id: BloodWritingArrowNorth
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Arrow, North
   components:
   - type: Sprite
@@ -395,7 +395,7 @@
 
 - type: entity
   id: BloodWritingArrowSouth
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Arrow, South
   components:
   - type: Sprite
@@ -405,7 +405,7 @@
 
 - type: entity
   id: BloodWritingArrowWest
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Arrow, West
   components:
   - type: Sprite
@@ -415,7 +415,7 @@
 
 - type: entity
   id: BloodWritingBee
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Bee
   components:
   - type: Sprite
@@ -425,7 +425,7 @@
 
 - type: entity
   id: BloodWritingCircle
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Circle
   components:
   - type: Sprite
@@ -435,7 +435,7 @@
 
 - type: entity
   id: BloodWritingColon
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Colon
   components:
   - type: Sprite
@@ -445,7 +445,7 @@
 
 - type: entity
   id: BloodWritingComma
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Comma
   components:
   - type: Sprite
@@ -455,7 +455,7 @@
 
 - type: entity
   id: BloodWritingDivided
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Divode
   components:
   - type: Sprite
@@ -465,7 +465,7 @@
 
 - type: entity
   id: BloodWritingDollar
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Dollar
   components:
   - type: Sprite
@@ -475,7 +475,7 @@
 
 - type: entity
   id: BloodWritingEquals
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Equals
   components:
   - type: Sprite
@@ -485,7 +485,7 @@
 
 - type: entity
   id: BloodWritingEuro
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Euro
   components:
   - type: Sprite
@@ -495,7 +495,7 @@
 
 - type: entity
   id: BloodWritingExclamationPoint
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Exclamation Point
   components:
   - type: Sprite
@@ -505,7 +505,7 @@
 
 - type: entity
   id: BloodWritingFrown
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Frown
   components:
   - type: Sprite
@@ -515,7 +515,7 @@
 
 - type: entity
   id: BloodWritingGreaterThan
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Greater Than
   components:
   - type: Sprite
@@ -525,7 +525,7 @@
 
 - type: entity
   id: BloodWritingHeart
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Heart
   components:
   - type: Sprite
@@ -535,7 +535,7 @@
 
 - type: entity
   id: BloodWritingLeftBracket
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Left Bracket
   components:
   - type: Sprite
@@ -545,7 +545,7 @@
 
 - type: entity
   id: BloodWritingLeftParenthesis
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Left Parenthesis
   components:
   - type: Sprite
@@ -555,7 +555,7 @@
 
 - type: entity
   id: BloodWritingLessThan
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Less Than
   components:
   - type: Sprite
@@ -565,7 +565,7 @@
 
 - type: entity
   id: BloodWritingMinus
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Minus
   components:
   - type: Sprite
@@ -575,7 +575,7 @@
 
 - type: entity
   id: BloodWritingNeutralFace
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Netural Face
   components:
   - type: Sprite
@@ -585,7 +585,7 @@
 
 - type: entity
   id: BloodWritingPentagram
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Pentagram
   components:
   - type: Sprite
@@ -595,7 +595,7 @@
 
 - type: entity
   id: BloodWritingPercent
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Percent
   components:
   - type: Sprite
@@ -605,7 +605,7 @@
 
 - type: entity
   id: BloodWritingPeriod
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Period
   components:
   - type: Sprite
@@ -615,7 +615,7 @@
 
 - type: entity
   id: BloodWritingPlus
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Plus
   components:
   - type: Sprite
@@ -625,7 +625,7 @@
 
 - type: entity
   id: BloodWritingQuestionMark
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Question Mark
   components:
   - type: Sprite
@@ -635,7 +635,7 @@
 
 - type: entity
   id: BloodWritingRightBracket
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Right Bracket
   components:
   - type: Sprite
@@ -645,7 +645,7 @@
 
 - type: entity
   id: BloodWritingRightParenthesis
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Right Parenthesis
   components:
   - type: Sprite
@@ -655,7 +655,7 @@
 
 - type: entity
   id: BloodWritingSemicolon
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Semicolon
   components:
   - type: Sprite
@@ -665,7 +665,7 @@
 
 - type: entity
   id: BloodWritingSkull
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Skull
   components:
   - type: Sprite
@@ -675,7 +675,7 @@
 
 - type: entity
   id: BloodWritingSmile
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Smile
   components:
   - type: Sprite
@@ -685,7 +685,7 @@
 
 - type: entity
   id: BloodWritingSquare
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Square
   components:
   - type: Sprite
@@ -695,7 +695,7 @@
 
 - type: entity
   id: BloodWritingStar
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Star
   components:
   - type: Sprite
@@ -705,7 +705,7 @@
 
 - type: entity
   id: BloodWritingTimes
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Times
   components:
   - type: Sprite
@@ -715,7 +715,7 @@
 
 - type: entity
   id: BloodWritingTriangle
-  name: "кривавий напис"
+  name: bloody writing
   suffix: Triangle
   components:
   - type: Sprite

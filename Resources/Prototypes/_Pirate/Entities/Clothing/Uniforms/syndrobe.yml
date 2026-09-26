@@ -2,8 +2,8 @@
 - type: entity
   parent: [UnsensoredClothingUniformBase, ClothingUniformFoldableBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitSyndieTactical
-  name: "тактичний гольф"
-  description: "Обтислий гольф кольору Синдикату з чорними штанами-карго. Успіхів у суперечках щодо лояльності в цьому вбранні."
+  name: tactical turtleneck
+  description: A snug syndicate-red turtleneck with charcoal-black cargo pants. Good luck arguing allegiance with this on.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Uniforms/SynDrobe/tacticalturtleneck.rsi
@@ -27,8 +27,8 @@
 - type: entity
   parent: [UnsensoredClothingUniformSkirtBase, ClothingUniformFoldableBase, BaseSyndicateContraband]
   id: ClothingUniformJumpskirtSyndieTactical
-  name: "тактичний гольф-спідниця"
-  description: "Обтислий гольф кольору Синдикату з чорною спідницею. Успіхів у суперечках щодо лояльності в цьому вбранні."
+  name: tactical skirtleneck
+  description: A snug syndicate-red skirtleneck with a charcoal-black skirt. Good luck arguing allegiance with this on.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Uniforms/SynDrobe/tacticalskirtleneck.rsi
@@ -52,8 +52,8 @@
 - type: entity
   parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitBloodRedPajamas
-  name: "криваво-червона піжама"
-  description: "Чи сняться оперативникам ядерні вівці?"
+  name: blood-red pajamas
+  description: Do operatives dream of nuclear sheep?
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Uniforms/SynDrobe/bloodredpajamas.rsi
@@ -75,8 +75,8 @@
 - type: entity
   parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitCamoGreen
-  name: "камуфляжна форма"
-  description: "Зелена військова камуфляжна форма."
+  name: camouflage fatigues
+  description: A green military camouflage uniform.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Uniforms/SynDrobe/camogreen.rsi
@@ -100,8 +100,8 @@
 - type: entity
   parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitSyndieCombat
-  name: "бойова форма"
-  description: "З такою кількістю кишень у костюмі ти готовий до роботи."
+  name: combat uniform
+  description: With a suit lined with this many pockets, you are ready to operate.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Uniforms/SynDrobe/combatuniform.rsi
@@ -125,8 +125,8 @@
 - type: entity
   parent: [UnsensoredClothingUniformBase, ClothingUniformFoldableBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitSyndieInsulated
-  name: "утеплений тактичний гольф"
-  description: "Непримітний і трохи підозрілий гольф із цифровими камуфляжними штанами-карго. Усередині є спеціальна ізоляція для тепла й захисту."
+  name: insulated tactical turtleneck
+  description: A nondescript and slightly suspicious-looking turtleneck with digital camouflage cargo pants. The interior has been padded with special insulation for both warmth and protection.
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/Syndicate/operative.rsi

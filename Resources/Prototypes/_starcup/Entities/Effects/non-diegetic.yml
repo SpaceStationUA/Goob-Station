@@ -1,7 +1,7 @@
 - type: entity
   id: EffectNonDiegeticBase
   abstract: true
-  name: "миттєвий ефект"
+  name: instant effect
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -21,7 +21,7 @@
 - type: entity
   parent: EffectNonDiegeticBase
   id: EffectNonDiegeticExclamationMark
-  description: "Коротка анімація. Може використовуватися, щоб попередити гравців про щось важливе."
+  description: A short animation. Could be used to alert players of something important.
   suffix: Exclamation
   components:
   - type: Sprite
@@ -34,7 +34,7 @@
 - type: entity
   parent: EffectNonDiegeticBase
   id: EffectNonDiegeticQuestionMark
-  description: "Коротка анімація. Може використовуватися, щоб вказати на підказку."
+  description: A short animation. Could be used to point to a clue.
   suffix: Question
   components:
   - type: Sprite
@@ -47,7 +47,7 @@
 - type: entity
   parent: EffectNonDiegeticBase
   id: EffectNonDiegeticCheckmark
-  description: "Коротка анімація. Може використовуватися, щоб позначити виконану ціль."
+  description: A short animation. Could be used to mark a completed objective.
   suffix: Check
   components:
   - type: Sprite
@@ -60,7 +60,7 @@
 - type: entity
   parent: EffectNonDiegeticBase
   id: EffectNonDiegeticXMark
-  description: "Коротка анімація. Може використовуватися, щоб відвести гравців від хибного шляху чи висновку."
+  description: A short animation. Could be used to steer players away from the wrong path or conclusion.
   suffix: X-mark
   components:
   - type: Sprite
@@ -73,7 +73,7 @@
 - type: entity
   parent: EffectNonDiegeticBase
   id: EffectNonDiegeticHourglass
-  description: "Коротка анімація. Може використовуватися, щоб повідомити гравцям чекати, а НЕ квапити їх."
+  description: A short animation. Should be used to tell players to wait, NEVER to hurry them up.
   suffix: Hourglass
   components:
   - type: Sprite
@@ -86,7 +86,7 @@
 - type: entity
   parent: EffectNonDiegeticBase
   id: EffectNonDiegeticSkull
-  description: "Коротка анімація. Може використовуватися, щоб позначити серйозну небезпеку або точку неповернення."
+  description: A short animation. Could be used to mark serious danger or a point of no return.
   suffix: Skull
   components:
   - type: Sprite
@@ -99,7 +99,7 @@
 - type: entity
   parent: EffectNonDiegeticBase
   id: EffectNonDiegeticRipple
-  description: "Коротка анімація. Може використовуватися, щоб привернути увагу."
+  description: A short animation. Could be used to draw attention to something.
   suffix: Ripple
   components:
   - type: Sprite

@@ -1,9 +1,9 @@
 - type: entity
-  name: "M63"
+  name: M63
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband, SolAllianceInfo]
   id: WeaponShotgunSol
   suffix: SAN
-  description: "Компактний штурмовий дробовик виробництва Zavodskiy Interstellar для збройних сил Соларіанського Альянсу. M63 найчастіше використовується сухопутних силами, що воюють у ближньому бою, хоча також широко використовується як оборонна зброя екіпажами флоту."
+  description: Компактний штурмовий дробовик виробництва Zavodskiy Interstellar для збройних сил Соларіанського Альянсу. M63 найчастіше використовується сухопутних силами, що воюють у ближньому бою, хоча також широко використовується як оборонна зброя екіпажами флоту.
   components:
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Shotguns/sol_shotgun/35x32.rsi

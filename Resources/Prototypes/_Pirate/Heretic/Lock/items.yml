@@ -3,8 +3,8 @@
 - type: entity
   parent: [BaseItem, BaseMagicalContraband]
   id: LabyrinthHandbook
-  name: "довідник Лабіринту"
-  description: "Книга законів і правил Замкненого Лабіринту, написана на невідомій речовині. Її сторінки звиваються й напружуються, ніби прагнуть вирватися назовні."
+  name: labyrinth handbook
+  description: A book containing the laws and regulations of the Locked Labyrinth, penned on an unknown substance. Its pages squirm and strain, looking to lash out and escape.
   components:
   - type: UnholyItem
   - type: Sprite

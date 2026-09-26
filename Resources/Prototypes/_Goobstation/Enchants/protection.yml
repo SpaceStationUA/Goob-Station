@@ -17,7 +17,7 @@
 - type: entity
   parent: BaseProtEnchant
   id: EnchantProtection
-  name: "Захист"
+  name: Protection
   categories: [ HideSpawnMenu ]
   components:
   - type: Enchant
@@ -32,7 +32,7 @@
 - type: entity
   parent: BaseProtEnchant
   id: EnchantProtBlast
-  name: "Захист від вибухів"
+  name: Blast Protection
   categories: [ HideSpawnMenu ]
   components:
   - type: Enchant
@@ -44,7 +44,7 @@
 - type: entity
   parent: BaseProtEnchant
   id: EnchantProtFire
-  name: "Захист від вогню"
+  name: Fire Protection
   categories: [ HideSpawnMenu ]
   components:
   - type: Enchant

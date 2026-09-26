@@ -5,7 +5,7 @@
 - type: entity
   parent: OrganHumanEyes
   id: OrganAsakimEyes
-  name: "очі Асакима"
+  name: asakim eyes
   components:
   - type: Organ
     onAdd:

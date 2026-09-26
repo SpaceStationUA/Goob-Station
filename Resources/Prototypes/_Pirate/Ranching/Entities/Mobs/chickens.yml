@@ -4,8 +4,8 @@
   abstract: true
   parent: [SimpleMobBase, StripableInventoryBase]
   id: BaseMobChickRanch
-  name: "курка"
-  description: "Нащадок динозаврів, пристосований до розведення незвичайних порід"
+  name: chicken
+  description: Comes before an egg, and IS a dinosaur!
   components:
   - type: UnhappyWhenCrowded
     tag: Chicken
@@ -181,7 +181,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickWhite
-  name: "біле курча"
+  name: white chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -194,7 +194,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobWhiteHen
-  name: "біла курка"
+  name: white hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-white.rsi
@@ -203,7 +203,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobWhiteRooster
-  name: "білий півень"
+  name: white rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-white.rsi
@@ -216,7 +216,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickBrown
-  name: "коричневе курча"
+  name: brown chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -231,7 +231,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobBrownHen
-  name: "коричнева курка"
+  name: brown hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-brown.rsi
@@ -239,7 +239,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobBrownRooster
-  name: "коричневий півень"
+  name: brown rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-brown.rsi
@@ -253,7 +253,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickVoid
-  name: "курча Порожнечі"
+  name: void chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -268,7 +268,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobVoidHen
-  name: "курка Порожнечі"
+  name: void hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-purple.rsi
@@ -276,7 +276,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobVoidRooster
-  name: "півень Порожнечі"
+  name: void rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-purple.rsi
@@ -286,7 +286,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickIxworth
-  name: "іксвортське курча"
+  name: ixworth chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -301,7 +301,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobIxworthHen
-  name: "іксвортська курка"
+  name: ixworth hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-pet.rsi
@@ -309,7 +309,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobIxworthRooster
-  name: "іксвортський півень"
+  name: ixworth rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-pet.rsi
@@ -319,7 +319,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickSilkie
-  name: "шовкове курча"
+  name: silkie chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -334,7 +334,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobSilkieHen
-  name: "шовкова курка"
+  name: silkie hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-silkie.rsi
@@ -345,7 +345,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobSilkieRooster
-  name: "шовковий півень"
+  name: silkie rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-silkie.rsi
@@ -358,7 +358,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickBlackSilkie
-  name: "чорне шовкове курча"
+  name: black silkie chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -373,7 +373,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobBlackSilkieHen
-  name: "чорна шовкова курка"
+  name: black silkie hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-silkie_black.rsi
@@ -387,7 +387,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobBlackSilkieRooster
-  name: "чорний шовковий півень"
+  name: black silkie rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-silkie_black.rsi
@@ -400,7 +400,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickWhiteSilkie
-  name: "біле шовкове курча"
+  name: white silkie chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -415,7 +415,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobWhiteSilkieHen
-  name: "біла шовкова курка"
+  name: white silkie hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-silkie_white.rsi
@@ -426,7 +426,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobWhiteSilkieRooster
-  name: "білий шовковий півень"
+  name: white silkie rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-silkie_white.rsi
@@ -439,7 +439,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickSelkie
-  name: "курча-селкі"
+  name: selkie chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -451,7 +451,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobSelkieHen
-  name: "курка-селкі"
+  name: selkie hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-sea.rsi
@@ -459,7 +459,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobSelkieRooster
-  name: "півень-селкі"
+  name: selkie rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-sea.rsi
@@ -480,7 +480,7 @@
 - type: entity
   parent: [BaseChickenCold, BaseMobChickRanch]
   id: MobChickSnow
-  name: "снігове курча"
+  name: snow chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -492,7 +492,7 @@
 - type: entity
   parent: [BaseChickenCold, BaseMobHenRanch]
   id: MobSnowHen
-  name: "снігова курка"
+  name: snow hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-snow.rsi
@@ -500,7 +500,7 @@
 - type: entity
   parent: [BaseChickenCold, BaseMobRoosterRanch]
   id: MobSnowRooster
-  name: "сніговий півень"
+  name: snow rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-snow.rsi
@@ -513,7 +513,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickDream
-  name: "сонне курча"
+  name: dream chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -528,7 +528,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobDreamRooster
-  name: "сонний півень"
+  name: dream rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-dream.rsi
@@ -539,7 +539,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobDreamHen
-  name: "сонна курка"
+  name: dream hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-dream.rsi
@@ -552,7 +552,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickPoultrygeist
-  name: "курча-полтергайст"
+  name: poultrygeist chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -567,7 +567,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobPoultrygeistHen
-  name: "курка-полтергайст"
+  name: poultrygeist hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-ghost.rsi
@@ -578,7 +578,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobPoultrygeistRooster
-  name: "півень-полтергайст"
+  name: poultrygeist rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-ghost.rsi
@@ -614,7 +614,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickSpicy
-  name: "гостре курча"
+  name: spicy chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -631,7 +631,7 @@
 - type: entity
   parent: [BaseChickenSpicy, BaseMobHenRanch]
   id: MobSpicyHen
-  name: "гостра курка"
+  name: spicy hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-spicy.rsi
@@ -642,7 +642,7 @@
 - type: entity
   parent: [BaseChickenSpicy, BaseMobRoosterRanch]
   id: MobSpicyRooster
-  name: "гострий півень"
+  name: spicy rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-spicy.rsi
@@ -658,7 +658,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickPigeon
-  name: "поштове голубине курча"
+  name: carrier pigeon chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -673,7 +673,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobPigeonHen
-  name: "поштова голубина курка"
+  name: carrier pigeon hen
   components:
   - type: SpawnLootOnDeath
     table:
@@ -687,7 +687,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobPigeonRooster
-  name: "поштовий голубиний півень"
+  name: carrier pigeon rooster
   components:
   - type: SpawnLootOnDeath
     table:
@@ -703,7 +703,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickCandy
-  name: "курча із солодкої вати"
+  name: cotten candy chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -718,7 +718,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobCandyHen
-  name: "курка із солодкої вати"
+  name: cotten candy hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-candy.rsi
@@ -734,7 +734,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobCandyRooster
-  name: "півень із солодкої вати"
+  name: cotten candy rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-candy.rsi
@@ -755,7 +755,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickGolden
-  name: "золоте курча"
+  name: golden chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -770,7 +770,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobGoldenHen
-  name: "золота курка"
+  name: golden hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-golden.rsi
@@ -781,7 +781,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobGoldenRooster
-  name: "золотий півень"
+  name: golden rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-golden.rsi
@@ -831,7 +831,7 @@
 - type: entity
   parent: [BaseChickenClown, BaseMobChickRanch]
   id: MobChickClown
-  name: "курча-клоун"
+  name: clown chick
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-honk.rsi
@@ -850,7 +850,7 @@
 - type: entity
   parent: [BaseChickenClown, BaseMobHenRanch]
   id: MobClownHen
-  name: "курка-клоун"
+  name: henk
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-honk.rsi
@@ -867,7 +867,7 @@
 - type: entity
   parent: [BaseChickenClown, BaseMobRoosterRanch]
   id: MobClownRooster
-  name: "півень-клоун"
+  name: henkster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-honk.rsi
@@ -886,7 +886,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickCluwne
-  name: "хУоНкХоНкКоКо"
+  name: huOnkHoNkHoeNKs
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-cluwne.rsi
@@ -901,7 +901,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobCluwneHen
-  name: "хУоНкХоНкКоКо"
+  name: huOnkHoNkHoeNKs
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-cluwne.rsi
@@ -912,7 +912,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobCluwneRooster
-  name: "хУоНкХоНкКоКо"
+  name: huOnkHoNkHoeNKs
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-cluwne.rsi
@@ -925,7 +925,7 @@
 - type: entity
   abstract: true
   id: GlassChickenBase
-  description: "Має дуже крихкий вигляд..."
+  description: Looks very fragile...
   components:
   - type: DealDamageOnPulled
   - type: ChickenChest
@@ -961,7 +961,7 @@
 - type: entity
   parent: [GlassChickenBase, BaseMobChickRanch]
   id: MobChickGlass
-  name: "скляне курча"
+  name: glass chick
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-glass.rsi
@@ -976,7 +976,7 @@
 - type: entity
   parent: [GlassChickenBase, BaseMobHenRanch]
   id: MobGlassHen
-  name: "скляна курка"
+  name: glass hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-glass.rsi
@@ -987,7 +987,7 @@
 - type: entity
   parent: [GlassChickenBase, BaseMobRoosterRanch]
   id: MobGlassRooster
-  name: "скляний півень"
+  name: glass rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-glass.rsi
@@ -1000,7 +1000,7 @@
 - type: entity
   id: BaseChickenRaptor
   abstract: true
-  description: "Має голодний вигляд..."
+  description: It looks hungry...
   components:
   - type: Tameable
   - type: MovementSpeedModifier
@@ -1035,7 +1035,7 @@
 - type: entity
   parent: [BaseChickenRaptor, BaseMobChickRanch]
   id: MobChickRaptor
-  name: "курча-раптор"
+  name: raptor chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1047,7 +1047,7 @@
 - type: entity
   parent: [BaseChickenRaptor, BaseMobHenRanch]
   id: MobRaptorHen
-  name: "курка-раптор"
+  name: raptor hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-raptor.rsi
@@ -1055,7 +1055,7 @@
 - type: entity
   parent: [BaseChickenRaptor, BaseMobRoosterRanch]
   id: MobRaptorRooster
-  name: "півень-раптор" # the truecell roosters
+  name: tiercel # the truecell roosters
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-raptor.rsi
@@ -1068,7 +1068,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickOnagadori
-  name: "курча онагадорі"
+  name: onagadori chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1083,7 +1083,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobOnagadoriHen
-  name: "курка онагадорі"
+  name: onagadori hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-onagadori.rsi
@@ -1094,7 +1094,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobOnagadoriRooster
-  name: "півень онагадорі"
+  name: onagadori rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-onagadori.rsi
@@ -1136,7 +1136,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickWizard
-  name: "чарівне курча"
+  name: wiz chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1159,7 +1159,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobWizardHen
-  name: "куровідьма"
+  name: witchen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-wizard.rsi
@@ -1180,7 +1180,7 @@
 - type: entity
   parent: [BaseChickenWizard, BaseMobRoosterRanch]
   id: MobWizardRooster
-  name: "півень-чарівник"
+  name: wizter
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-wizard.rsi
@@ -1199,7 +1199,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickSynth
-  name: "синтетичне курча"
+  name: synth chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1214,7 +1214,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobSynthHen
-  name: "синтетична курка"
+  name: synth hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-plant.rsi
@@ -1225,7 +1225,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobSynthRooster
-  name: "синтетичний півень"
+  name: synth rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-plant.rsi
@@ -1238,7 +1238,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickMime
-  name: "курча-мім"
+  name: mime chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1253,7 +1253,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobMimeHen
-  name: "курка-мім"
+  name: mime hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-mime.rsi
@@ -1264,7 +1264,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobMimeRooster
-  name: "півень-мім"
+  name: mime rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-mime.rsi
@@ -1277,7 +1277,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickBalloon
-  name: "курча-кулька"
+  name: balloon chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1292,7 +1292,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobBalloonHen
-  name: "курка-кулька"
+  name: balloon hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-balloon.rsi
@@ -1303,7 +1303,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobBalloonRooster
-  name: "півень-кулька"
+  name: balloon rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-balloon.rsi
@@ -1342,7 +1342,7 @@
 - type: entity
   parent: [BaseChickenRobot, BaseMobChickRanch]
   id: MobChickRobot
-  name: "роботизоване курча"
+  name: robot chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1357,7 +1357,7 @@
 - type: entity
   parent: [BaseChickenRobot, BaseMobHenRanch]
   id: MobRobotHen
-  name: "роботизована курка"
+  name: robot hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-robot.rsi
@@ -1368,7 +1368,7 @@
 - type: entity
   parent: [BaseChickenRobot, BaseMobRoosterRanch]
   id: MobRobotRooster
-  name: "роботизований півень"
+  name: robot rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-robot.rsi
@@ -1381,7 +1381,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickKnight
-  name: "курча-зброєносець"
+  name: esquire chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1396,7 +1396,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobKnightHen
-  name: "курка-щитниця"
+  name: Shieldmaidhen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-knight.rsi
@@ -1407,7 +1407,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobKnightRooster
-  name: "півень-фальшіон"
+  name: Fowlcions
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-knight.rsi
@@ -1468,7 +1468,7 @@
 - type: entity
   parent: [BaseChickenStone, BaseMobChickRanch]
   id: MobChickStone
-  name: "кам'яне курча"
+  name: stone chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1483,7 +1483,7 @@
 - type: entity
   parent: [BaseChickenStone, BaseMobHenRanch]
   id: MobStoneHen
-  name: "кам'яна курка"
+  name: stone hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-stone.rsi
@@ -1495,7 +1495,7 @@
 - type: entity
   parent: [BaseChickenStone, BaseMobRoosterRanch]
   id: MobStoneRooster
-  name: "кам'яний півень"
+  name: stone rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-stone.rsi
@@ -1512,7 +1512,7 @@
 - type: entity
   parent: BaseMobChickRanch
   id: MobChickCockatrice
-  name: "курча-кокатрис"
+  name: cockatrice chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1527,7 +1527,7 @@
 - type: entity
   parent: BaseMobHenRanch
   id: MobCockatriceHen
-  name: "курка-кокатрис"
+  name: cockatrice hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-cockatrice.rsi
@@ -1538,7 +1538,7 @@
 - type: entity
   parent: BaseMobRoosterRanch
   id: MobCockatriceRooster
-  name: "півень-кокатрис"
+  name: cockatrice rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-cockatrice.rsi
@@ -1597,7 +1597,7 @@
 - type: entity
   parent: [BaseChickenSicle, BaseMobChickRanch]
   id: MobChickSicle
-  name: "курча-ескімо"
+  name: sickle chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1609,7 +1609,7 @@
 - type: entity
   parent: [BaseChickenSicle, BaseMobHenRanch]
   id: MobSicleHen
-  name: "курка-ескімо"
+  name: sickle hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-dreamsickle.rsi
@@ -1617,7 +1617,7 @@
 - type: entity
   parent: [BaseChickenSicle, BaseMobRoosterRanch]
   id: MobSicleRooster
-  name: "півень-ескімо"
+  name: sickle rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-dreamsickle.rsi
@@ -1650,7 +1650,7 @@
 - type: entity
   parent: [BaseChickenZappy, BaseMobChickRanch]
   id: MobChickZappy
-  name: "іскристе курча"
+  name: zappy chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1662,7 +1662,7 @@
 - type: entity
   parent: [BaseChickenZappy, BaseMobHenRanch]
   id: MobZappyHen
-  name: "іскриста курка"
+  name: zappy hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-zappy.rsi
@@ -1670,7 +1670,7 @@
 - type: entity
   parent: [BaseChickenZappy, BaseMobRoosterRanch]
   id: MobZappyRooster
-  name: "іскристий півень"
+  name: zappy rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-zappy.rsi
@@ -1721,7 +1721,7 @@
 - type: entity
   parent: [BaseChickenPhoenix, BaseMobChickRanch]
   id: MobChickPhoenix
-  name: "курча-фенікс"
+  name: phoenix chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1733,7 +1733,7 @@
 - type: entity
   parent: [BaseChickenPhoenix, BaseMobHenRanch]
   id: MobPhoenixHen
-  name: "курка-фенікс"
+  name: phoenix hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-phoenix.rsi
@@ -1741,7 +1741,7 @@
 - type: entity
   parent: [BaseChickenPhoenix, BaseMobRoosterRanch]
   id: MobPhoenixRooster
-  name: "півень-фенікс"
+  name: phoenix rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-phoenix.rsi
@@ -1778,7 +1778,7 @@
 - type: entity
   parent: [BaseChickenDragon, BaseMobChickRanch]
   id: MobChickDragon
-  name: "драконяче курча"
+  name: dragon chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1799,7 +1799,7 @@
 - type: entity
   parent: [BaseChickenDragon, BaseMobHenRanch]
   id: MobDragonHen
-  name: "драконяча курка"
+  name: dragon hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-dragon.rsi
@@ -1815,7 +1815,7 @@
 - type: entity
   parent: [BaseChickenDragon, BaseMobRoosterRanch]
   id: MobDragonRooster
-  name: "драконячий півень"
+  name: dragon rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-dragon.rsi
@@ -1863,7 +1863,7 @@
 - type: entity
   parent: [BaseChickenCoral, BaseMobChickRanch]
   id: MobChickCoral
-  name: "коралове курча"
+  name: coral chick
   components:
   - type: SpawnEntityOnAgeUp
     entToSpawn:
@@ -1884,7 +1884,7 @@
 - type: entity
   parent: [BaseChickenCoral, BaseMobHenRanch]
   id: MobCoralHen
-  name: "коралова курка"
+  name: coral hen
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-coral.rsi
@@ -1900,7 +1900,7 @@
 - type: entity
   parent: [BaseChickenCoral, BaseMobRoosterRanch]
   id: MobCoralRooster
-  name: "кораловий півень"
+  name: coral rooster
   components:
   - type: Sprite
     sprite: _Pirate/Ranching/Mobs/Ranch/chicken-coral.rsi

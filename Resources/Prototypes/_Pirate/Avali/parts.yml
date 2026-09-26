@@ -5,7 +5,7 @@
   id: PartAvali
   parent: PartHuman
   abstract: true
-  name: "частина тіла авалі"
+  name: avali body part
   components:
   - type: Sprite
     sprite: _Pirate/Mobs/Species/Avali/parts.rsi
@@ -35,7 +35,7 @@
 
 - type: entity
   id: ChestAvali
-  name: "груди авалі"
+  name: avali chest
   parent: [PartAvali, BaseChest]
   components:
   - type: Sprite
@@ -52,7 +52,7 @@
 
 - type: entity
   id: GroinAvali
-  name: "пах авалі"
+  name: avali groin
   parent: [PartAvali, BaseGroin]
   components:
   # Pirate: source art has no groin state, so detached groins use torso art.
@@ -63,7 +63,7 @@
 
 - type: entity
   id: HeadAvali
-  name: "голова авалі"
+  name: avali head
   parent: [PartAvali, BaseHead]
   components:
   - type: Sprite
@@ -82,7 +82,7 @@
 
 - type: entity
   id: LeftArmAvali
-  name: "ліва рука авалі"
+  name: left avali arm
   parent: [PartAvali, BaseLeftArm]
   components:
   - type: Sprite
@@ -92,7 +92,7 @@
 
 - type: entity
   id: RightArmAvali
-  name: "права рука авалі"
+  name: right avali arm
   parent: [PartAvali, BaseRightArm]
   components:
   - type: Sprite
@@ -102,7 +102,7 @@
 
 - type: entity
   id: LeftHandAvali
-  name: "ліва кисть авалі"
+  name: left avali hand
   parent: [PartAvali, BaseLeftHand]
   components:
   - type: Sprite
@@ -112,7 +112,7 @@
 
 - type: entity
   id: RightHandAvali
-  name: "права кисть авалі"
+  name: right avali hand
   parent: [PartAvali, BaseRightHand]
   components:
   - type: Sprite
@@ -122,7 +122,7 @@
 
 - type: entity
   id: LeftLegAvali
-  name: "ліва нога авалі"
+  name: left avali leg
   parent: [PartAvali, BaseLeftLeg]
   components:
   - type: Sprite
@@ -132,7 +132,7 @@
 
 - type: entity
   id: RightLegAvali
-  name: "права нога авалі"
+  name: right avali leg
   parent: [PartAvali, BaseRightLeg]
   components:
   - type: Sprite
@@ -142,7 +142,7 @@
 
 - type: entity
   id: LeftFootAvali
-  name: "ліва ступня авалі"
+  name: left avali foot
   parent: [PartAvali, BaseLeftFoot]
   components:
   - type: Sprite
@@ -152,7 +152,7 @@
 
 - type: entity
   id: RightFootAvali
-  name: "права ступня авалі"
+  name: right avali foot
   parent: [PartAvali, BaseRightFoot]
   components:
   - type: Sprite

@@ -15,8 +15,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorUnionObjective
-  name: "Силоміць захопити контроль над відділом"
-  description: "Візьміть відділ під безпосередній контроль і проголосіть незалежність від Нанотрейзен."
+  name: Forcefully seize control of a department
+  description: Assume direct control over a department and declare independence from Nanotrasen.
   components:
   - type: Objective
     icon:
@@ -26,8 +26,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorGameshowObjective
-  name: "Провести смертельне ігрове шоу"
-  description: "Змусьте екіпаж узяти участь в ігровому шоу з неймовірно високими ставками."
+  name: Run a life-or-death game show
+  description: Force the crew to take part in a game show with incredible stakes.
   components:
   - type: Objective
     icon:
@@ -37,8 +37,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorTechnologyObjective
-  name: "Захопити всі технології станції"
-  description: "Покажіть екіпажу переваги простішого життя. Адже лише ви гідні технологічних див."
+  name: Seize all station technology
+  description: Show the crew the merits of a simpler life. Because only you deserve the wonders of technology.
   components:
   - type: Objective
     icon:
@@ -48,8 +48,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorArmsObjective
-  name: "Роззброїти Службу безпеки й озброїтися самим"
-  description: "Заберіть зброю у Служби безпеки та роздайте її собі. Їм не можна довіряти зброю."
+  name: Disarm Security and arm yourselves instead
+  description: Take the guns from Security and give them to yourselves. They cannot be trusted with them.
   components:
   - type: Objective
     icon:
@@ -59,8 +59,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorThiefObjective
-  name: "Здійснити найбільше пограбування всіх часів"
-  description: "Увійдіть в історію завдяки тому, що викрадете з цієї станції."
+  name: Pull off the greatest heist of all time
+  description: Get your names written in the history books for what you take from this station.
   components:
   - type: Objective
     icon:
@@ -70,8 +70,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorMafiaObjective
-  name: "Заснувати злочинну родину"
-  description: "Очоліть злочинний світ цієї станції та здобудьте репутацію угруповання, якого всі остерігаються."
+  name: Form a crime family
+  description: Become the leaders of crime on this station and cement your reputation as a group not to be messed with.
   components:
   - type: Objective
     icon:
@@ -81,8 +81,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorArrestObjective
-  name: "Обманом змусити Службу безпеки заарештувати невинних"
-  description: "Продемонструйте їхню некомпетентність, показавши, як легко їх ошукати."
+  name: Trick Security into arresting innocent people
+  description:  Demonstrate their incompetence by showing just how easy they are to fool.
   components:
   - type: Objective
     icon:
@@ -92,8 +92,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorCameraObjective
-  name: "Зруйнувати систему тотального нагляду"
-  description: "Поверніть працівникам Нанотрейзен право на приватність."
+  name: Dismantle the surveillance state
+  description: Bring back the right to privacy for Nanotrasen employees.
   components:
   - type: Objective
     icon:
@@ -103,8 +103,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorDismantleObjective
-  name: "Демонтувати всі бар'єри"
-  description: "Жодна перешкода не має стояти на вашому шляху."
+  name: Dismantle all barriers
+  description: No barriers shall stand in your way.
   components:
   - type: Objective
     icon:
@@ -114,8 +114,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorInfightingObjective
-  name: "Посварити командування між собою"
-  description: "Розладнайте роботу командування станції, спричинивши внутрішню ворожнечу, і скористайтеся хаосом."
+  name: Turn Command against each other
+  description: Distrupt the command of the station by creating in-fighting, use the chaos to your advantage.
   components:
   - type: Objective
     icon:
@@ -125,8 +125,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorRemoveObjective
-  name: "Ліквідувати відділ"
-  description: "На цій станції забагато відділів. Зменште їхню кількість будь-якими засобами."
+  name: Remove a department
+  description: This station has too many departments. Lower that number by any means necessary.
   components:
   - type: Objective
     icon:
@@ -136,8 +136,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorHostageObjective
-  name: "Взяти командування в заручники"
-  description: "Візьміть командування в заручники й вимагайте за них непомірний викуп."
+  name: Hold Command Hostage
+  description: Take Command hostage and ransom them off for an exorbitant sum.
   components:
   - type: Objective
     icon:
@@ -147,8 +147,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorSwapObjective
-  name: "Поміняти місцями два відділи"
-  description: "Повністю поміняйте місцями два відділи разом із персоналом та обладнанням."
+  name: Swap two departments
+  description: Completely swap the locations of two departments, including staff and equipment.
   components:
   - type: Objective
     icon:
@@ -158,8 +158,8 @@
 - type: entity
   parent: BaseConspiratorObjective
   id: ConspiratorProductivityObjective
-  name: "Саботувати продуктивність"
-  description: "Грошовий потік має зупинитися. Екіпаж не повинен працювати. Ви маєте їх зупинити."
+  name: Sabotage productivity
+  description: The money must not flow. The crew must not work. You must stop them.
   components:
   - type: Objective
     icon:
@@ -169,8 +169,8 @@
 - type: entity
   parent: [BaseConspiratorObjective, BaseLivingObjective]
   id: ConspiratorEvacObjective
-  name: "Втекти до Центкому живим і вільним на евакуаційному шатлі"
-  description: "Увесь екіпаж має вибратися живим і вільним."
+  name: Escape to CentComm alive and unrestrained via the escape shuttle.
+  description: The whole crew must make it out alive and free.
   components:
   - type: Objective
     icon:

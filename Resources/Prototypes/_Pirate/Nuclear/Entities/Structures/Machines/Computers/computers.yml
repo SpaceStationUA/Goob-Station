@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseComputerAiAccess
   id: NuclearReactorMonitor
-  name: "монітор ядерного реактора"
-  description: "Пристрій, що відстежує стан під'єднаного ядерного реактора."
+  name: nuclear reactor monitor
+  description: A device that monitors the state of a connected nuclear reactor.
   components:
   - type: ApcPowerReceiver
     powerLoad: 500
@@ -53,8 +53,8 @@
 - type: entity
   parent: BaseComputerAiAccess
   id: GasTurbineMonitor
-  name: "монітор газової турбіни"
-  description: "Пристрій, що відстежує стан під'єднаної газової турбіни."
+  name: gas turbine monitor
+  description: A device that monitors the state of a connected gas turbine.
   components:
   - type: ApcPowerReceiver
     powerLoad: 500

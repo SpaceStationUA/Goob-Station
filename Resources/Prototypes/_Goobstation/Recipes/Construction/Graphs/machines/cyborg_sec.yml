@@ -4,8 +4,8 @@
 - type: entity
   parent: CyborgEndoskeleton
   id: CyborgEndoskeletonSEC
-  name: "ендоскелет охоронного кіборга"
-  description: "Міцний посилений каркас для охоронного кіборга."
+  name: S.E.C. cyborg endoskeleton
+  description: A heavily reinforced frame that security cyborgs are built on.
   components:
   - type: Construction
     graph: CyborgSEC

@@ -1,8 +1,8 @@
 # Gang member action: toggle territory overlay
 - type: entity
   id: ActionGangMemberToggleOverlay
-  name: "Перемкнути бачення"
-  description: "Перемкнути бачення території."
+  name: Toggle Vision
+  description: Toggle your territory vision.
   components:
   - type: Action
     raiseOnUser: true
@@ -15,8 +15,8 @@
 # Gang Leader action: summon / relocate personal gang locker
 - type: entity
   id: ActionGangLeaderSummonLocker
-  name: "Викликати шафку"
-  description: "Викликає шафку банди. Якщо її вже розміщено, переміщує її."
+  name: Summon Locker
+  description: Summon your gang locker. If already placed, Relocate it instead.
   components:
   - type: Action
     raiseOnUser: true
@@ -28,8 +28,8 @@
 
 - type: entity
   id: ActionGangLeaderMemberOffer
-  name: "Вербувати"
-  description: "Запропонуйте комусь місце у своїй банді. Ви можете завербувати лише десятьох членів." # Pirate: gang recruit cap - was three
+  name: Recruit
+  description: Offer someone a place in your gang. You can only recruit ten members. # Pirate: gang recruit cap - was three
   components:
   - type: Action
     useDelay: 5

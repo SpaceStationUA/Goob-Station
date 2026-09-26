@@ -5,8 +5,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckBowtieRed
-  name: "червона краватка-метелик"
-  description: "Маленька мила краватка-метелик із застібкою, яку можна прикріпити до одягу або волосся."
+  name: red bowtie
+  description: A cute little red clip-on bow that can be mounted to apparel or clipped into hair.
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairbow_small_red.rsi
@@ -19,8 +19,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckBowtieBlack
-  name: "чорна краватка-метелик"
-  description: "Маленька мила краватка-метелик із застібкою, яку можна прикріпити до одягу або волосся."
+  name: black bowtie
+  description: A cute little black clip-on bow that can be mounted to apparel or clipped into hair.
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairbow_small_black.rsi
@@ -33,8 +33,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckTieRibbonBlack
-  name: "чорна стрічка на шию"
-  description: "Стрічка для прикрашання шиї."
+  name: black neck ribbon
+  description: A ribbon for adorning the neck.
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Neck/Ties/ribbon_black.rsi
@@ -44,8 +44,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckTieRibbonRed
-  name: "червона стрічка на шию"
-  description: "Стрічка для прикрашання шиї."
+  name: red neck ribbon
+  description: A ribbon for adorning the neck.
   components:
   - type: Sprite
     sprite: _starcup/Clothing/Neck/Ties/ribbon_red.rsi

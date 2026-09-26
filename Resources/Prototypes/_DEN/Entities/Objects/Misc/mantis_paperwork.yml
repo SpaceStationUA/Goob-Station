@@ -11,8 +11,8 @@
 - type: entity
   parent: [PenEmbeddable, BaseAntiPsionicWeapon, BaseMantisContraband] # Contraband so the mystagogue doesn't steal it
   id: PenMantis # The most mechanically complex pen in the world, all just for style
-  name: "стилус псіо-екстрасенса"
-  description: "Письмовий інструмент, витесаний зі шпичака мнемоліту. Не вколіть себе ним випадково."
+  name: mantis stylus
+  description: "A writing tool chiseled from a spike of mnemolith. Do not accidentally poke yourself with it."
   components:
   - type: Sprite
     sprite: _DEN/Objects/Misc/bureaucracy.rsi

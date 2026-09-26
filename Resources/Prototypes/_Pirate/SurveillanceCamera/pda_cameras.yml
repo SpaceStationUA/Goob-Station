@@ -1,6 +1,6 @@
 - type: entity
   id: BuiltInSyndicatePdaCamera
-  name: "камера КПК Синдикату"
+  name: Syndicate PDA camera
   components:
   - type: SurveillanceCamera
     networkSet: true
@@ -16,7 +16,7 @@
 
 - type: entity
   id: BuiltInErtPdaCamera
-  name: "камера КПК загону швидкого реагування"
+  name: ERT PDA camera
   components:
   - type: DeviceNetwork
     deviceNetId: Wired

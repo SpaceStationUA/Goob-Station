@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetDarthVader
-  name: "Шолом Дарта Вейдера"
-  description: "Брутальний і холодний шолом."
+  name: Шолом Дарта Вейдера
+  description: Брутальний й холодний шолом.
   suffix: StarWars
   components:
   - type: Sprite
@@ -35,8 +35,8 @@
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitShturm
-  name: "Шолом штурмовика"
-  description: "Монолітний білий шолом звичайного штурмовика"
+  name: Шолом штурмовика
+  description: Монолітний білий костюм звичайного штурмовика
   suffix: StarWars
   components:
   - type: Sprite

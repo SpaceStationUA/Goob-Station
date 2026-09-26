@@ -4,8 +4,8 @@
 - type: entity
   parent: ClothingEyesBase # starcup: removed BaseLensSlot parent bc we dont have that
   id: ClothingEyesGlassesWhiteHalfMask
-  name: "біла напівмаска"
-  description: "Сховай обличчя — світ ніколи тебе не знайде."
+  name: white half mask
+  description: Hide your face, the world will never find you.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Eyes/Glasses/whitehalfmask.rsi

@@ -3,8 +3,8 @@
 - type: entity
   abstract: true
   id: BaseCharacterPodStructure
-  name: "кріогенна камера"
-  description: "Герметична камера гіперсну. Запітнілий індикатор повідомляє, що пасажир досі всередині."
+  name: cryogenic sleeper
+  description: A sealed hypersleep chamber. The frosted-over readout says the occupant is still under.
   placement:
     mode: SnapgridCenter
   components:

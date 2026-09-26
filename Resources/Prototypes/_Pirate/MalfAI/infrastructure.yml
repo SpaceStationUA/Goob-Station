@@ -29,7 +29,7 @@
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleMalfAi
-  name: "роль несправного ШІ"
+  name: Malfunctioning AI Role
   components:
   - type: MindRole
     antagPrototype: MalfunctioningAI
@@ -96,8 +96,8 @@
 - type: entity
   id: RoboticsFactoryGrid
   parent: Recycler
-  name: "сітка робототехнічної фабрики"
-  description: "Переробний комплекс, переобладнаний на робототехнічну фабрику."
+  name: robotics factory grid
+  description: A recycling facility converted into a robotics factory.
   components:
   - type: RoboticsFactoryGrid
   - type: ApcPowerReceiver

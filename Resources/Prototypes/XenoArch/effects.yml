@@ -143,8 +143,8 @@
 
 - type: entity
   id: BaseXenoArtifactEffect
-  name: "ефект"
-  description: "Невідомо"
+  name: effect
+  description: Unknown
   categories: [ HideSpawnMenu ]
   abstract: true
   components:
@@ -155,8 +155,8 @@
 - type: entity
   id: BaseOneTimeXenoArtifactEffect
   parent: BaseXenoArtifactEffect
-  name: "одноразовий ефект"
-  description: "Невідомо"
+  name: one-time-effect
+  description: Unknown
   categories: [ HideSpawnMenu ]
   abstract: true
   components:
@@ -172,7 +172,7 @@
   id: XenoArtifactEffectUniversalIntercom
   parent: BaseOneTimeXenoArtifactEffect
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
-  description: "Надає здатність пристрою дальнього зв'язку"
+  description: Obtains ability of long-distance communication device
   components:
   - type: XAEApplyComponents
     components:
@@ -202,7 +202,7 @@
   id: XenoArtifactBecomeRandomInstrument
   parent: BaseOneTimeXenoArtifactEffect
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
-  description: "Надає здатність музичного інструменту"
+  description: Obtains ability of musical instrument
   components:
   - type: XAEApplyComponents
     components:
@@ -216,7 +216,7 @@
   id: XenoArtifactStorage
   parent: BaseOneTimeXenoArtifactEffect
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
-  description: "Надає здатність прихованого сховища"
+  description: Obtains ability of hidden storage
   components:
   - type: XAEApplyComponents
     components:
@@ -231,7 +231,7 @@
   id: XenoArtifactPhasing
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Стає фазовим"
+  description: Becomes phased
   components:
   - type: XAERemoveCollision
 
@@ -239,7 +239,7 @@
   id: XenoArtifactWandering
   parent: BaseOneTimeXenoArtifactEffect
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
-  description: "Починає хаотично рухатись"
+  description: Starts to move sporadically
   components:
   - type: XAEApplyComponents
     components:
@@ -253,7 +253,7 @@
   id: XenoArtifactSolutionStorage
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Надає здатність контейнера для хімічних розчинів"
+  description: Obtains ability of container for chemical solutions
   components:
   - type: XAEApplyComponents
     components:
@@ -285,7 +285,7 @@
   id: XenoArtifactSpeedUp
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Збільшує швидкість руху власника"
+  description: Improves holder movement speed
   components:
   - type: XAEApplyComponents
     components:
@@ -297,7 +297,7 @@
   id: XenoArtifactDrill
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Надає здатність дриля"
+  description: Obtains ability of drill
   components:
   - type: XAEApplyComponents
     components:
@@ -314,7 +314,7 @@
   id: XenoArtifactGenerateEnergy
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect # todo - increment power, but only once per node
-  description: "Виробляє енергію"
+  description: Produces power
   components:
   - type: XAEApplyComponents
     components:
@@ -331,7 +331,7 @@
   id: XenoArtifactGun
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Надає здатність вогнепальної зброї"
+  description: Obtains ability of firearm
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -363,7 +363,7 @@
   id: XenoArtifactGhost
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Стає розумним"
+  description: Becomes sentient
   components:
   - type: XAEApplyComponents
     components:
@@ -384,7 +384,7 @@
   id: XenoArtifactOmnitool
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Надає здатність омнітула"
+  description: Obtains ability of omnitool
   components:
   - type: XAEApplyComponents
     components:
@@ -432,7 +432,7 @@
   id: XenoArtifactEffectBadFeeling
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Транслює підсвідоме повідомлення"
+  description: Broadcasts sublime message
   components:
   - type: XAETelepathic
     messages:
@@ -463,7 +463,7 @@
   id: XenoArtifactEffectGoodFeeling
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Транслює підсвідоме повідомлення"
+  description: Broadcasts sublime message
   components:
   - type: XAETelepathic
     messages:
@@ -493,7 +493,7 @@
   id: XenoArtifactEffectJunkSpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює сміття, що підлягає переробці"
+  description: Create recyclable junk
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -516,7 +516,7 @@
   id: XenoArtifactEffectLightFlicker
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Незначні електромагнітні перешкоди"
+  description: Minor electromagnetic interference
   components:
   - type: XAELightFlicker
 
@@ -524,7 +524,7 @@
   id: XenoArtifactPotassiumWave
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Виробляє калій"
+  description: Produces potassium
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -552,7 +552,7 @@
   id: XenoArtifactFloraSpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Виробляє флору"
+  description: Produces flora
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -568,7 +568,7 @@
   id: XenoArtifactChemicalPuddle
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює калюжу хімічної суміші" # todo: make description say what exact chemical is produced, maybe add mixes into possible chemicals
+  description: Produces puddle of chemical mixture # todo: make description say what exact chemical is produced, maybe add mixes into possible chemicals
   components:
   - type: XAECreatePuddle
     chemAmount:
@@ -605,7 +605,7 @@
   id: XenoArtifactThrowThingsAround
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Незначна імплозія"
+  description: Minor implosion
   components:
   - type: XAEThrowThingsAround
 
@@ -613,7 +613,7 @@
   id: XenoArtifactColdWave
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Охолоджує навколишній газ"
+  description: Cools down surrounding gas
   components:
   - type: XAETemperature
     targetTemp: 50
@@ -622,7 +622,7 @@
   id: XenoArtifactHeatWave
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Сильно нагріває навколишній газ"
+  description: Heats up surrounding gas greatly
   components:
   - type: XAETemperature
     targetTemp: 500
@@ -631,7 +631,7 @@
   id: XenoArtifactFoamMild
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Виробляє хімічну піну" # todo: separate in 1 for each chemical for description? actually sounds like a very good idea
+  description: Produces chemical foam # todo: separate in 1 for each chemical for description? actually sounds like a very good idea
   components:
   - type: XAEFoam
     replaceDescription: true
@@ -652,7 +652,7 @@
   id: XenoArtifactRandomInstrumentSpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює музичний інструмент"
+  description: Creates musical instrument
   components:
   - type: XenoArtifactNode
     maxDurability: 2
@@ -673,7 +673,7 @@
   id: XenoArtifactMonkeySpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює примата"
+  description: Creates primate
   components:
   - type: XenoArtifactNode
     maxDurability: 3
@@ -697,7 +697,7 @@
   id: XenoArtifactRadioactive
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Стає злегка радіоактивним"
+  description: Becomes mildly radioactive
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -710,7 +710,7 @@
   id: XenoArtifactChargeBattery
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Заряджає батареї"
+  description: Charges up batteries
   components:
   - type: XAEChargeBattery
   - type: XAETelepathic
@@ -721,7 +721,7 @@
   id: XenoArtifactKnock
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Слабкі електромагнітні перешкоди"
+  description: Mild electromagnetic interference
   components:
   - type: XAEKnock
   - type: XAELightFlicker
@@ -730,7 +730,7 @@
   id: XenoArtifactMagnet
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Створює невеликий гравітаційний колодязь"
+  description: Create small gravity well
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -745,7 +745,7 @@
   id: XenoArtifactMagnetNegative
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Створює невеликий гравітаційний колодязь"
+  description: Create small gravity well
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -760,7 +760,7 @@
   id: XenoArtifactStealth
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Створює світлові перешкоди"
+  description: Create light interference
   components:
   - type: XAEApplyComponents
     components:
@@ -774,7 +774,7 @@
   id: XenoArtifactRareMaterialSpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect # todo: splice into different well-named effects, amounts should reflect how rare material is
-  description: "Створює рідкісні матеріали"
+  description: Create rare materials
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -805,7 +805,7 @@
   id: XenoArtifactRareMaterialSpawnSilver
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює рідкісні матеріали"
+  description: Create rare materials
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -829,7 +829,7 @@
   id: XenoArtifactRareMaterialSpawnPlasma
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює плазму"
+  description: Create plasma
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -853,7 +853,7 @@
   id: XenoArtifactRareMaterialSpawnGold
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює золото"
+  description: Create gold
   components:
   - type: XenoArtifactNode
     maxDurability: 3
@@ -877,7 +877,7 @@
   id: XenoArtifactRareMaterialSpawnUranium
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює уран"
+  description: Create uranium
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -901,7 +901,7 @@
   id: XenoArtifactAngryCarpSpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює ворожу рибу"
+  description: Create hostile fish
   components:
   - type: XenoArtifactNode
     maxDurability: 3
@@ -929,7 +929,7 @@
   id: XenoArtifactFaunaSpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює дружню фауну"
+  description: Create friendly fauna
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -976,7 +976,7 @@
 - type: entity
   id: XenoArtifactHostileFaunaSpawn
   parent: BaseXenoArtifactEffect
-  description: "Створити ворожу фауну"
+  description: Create hostile fauna
   components:
   - type: XenoArtifactNode
     maxDurability: 4
@@ -1004,7 +1004,7 @@
   id: XenoArtifactCashSpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює гроші"
+  description: Create money
   components:
   - type: XenoArtifactNode
     maxDurability: 2
@@ -1034,7 +1034,7 @@
   id: XenoArtifactShatterWindows
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Розбиває вікна"
+  description: Break windows
   components:
   - type: XenoArtifactNode
     maxDurability: 3
@@ -1054,7 +1054,7 @@
   id: XenoArtifactFoamGood
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює хвилю корисної піни"
+  description: Creates wave of helpful foam
   components:
   - type: XenoArtifactNode
     maxDurability: 7
@@ -1076,7 +1076,7 @@
   id: XenoArtifactFoamDangerous
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює хвилю шкідливої піни"
+  description: Creates wave of harmful foam
   components:
   - type: XAEFoam
     minFoamAmount: 20
@@ -1099,7 +1099,7 @@
   id: XenoArtifactPuddleRare
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює калюжу корисних хімікатів"
+  description: Creates puddle of helpful chemicals
   components:
   - type: XAECreatePuddle
     chemAmount:
@@ -1130,7 +1130,7 @@
   id: XenoArtifactAnomalySpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Створює аномалію"
+  description: Creates anomaly
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1146,7 +1146,7 @@
   id: XenoArtifactIgnite
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Пірокінез"
+  description: Pyrokinesis
   components:
   - type: XAEIgnite
     range: 7
@@ -1158,7 +1158,7 @@
   id: XenoArtifactTeleport
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Телепортація"
+  description: Teleportation
   components:
   - type: XAERandomTeleportInvoker
 
@@ -1166,7 +1166,7 @@
   id: XenoArtifactEmp
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Небезпечні електромагнітні перешкоди"
+  description: Dangerous electromagnetic interference
   components:
   - type: XenoArtifactNode
     maxDurability: 5
@@ -1179,7 +1179,7 @@
   id: XenoArtifactPolyMonkey
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Тимчасово перетворює плоть на хутро"
+  description: Temporarily reshape flesh to fur
   components:
   - type: XAEPolymorph
 
@@ -1187,7 +1187,7 @@
   id: XenoArtifactPolyLizard
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Тимчасово перетворює плоть на луску"
+  description: Temporarily reshape flesh to scale
   components:
   - type: XAEPolymorph
     polymorphPrototypeName: ArtifactLizard
@@ -1196,7 +1196,7 @@
   id: XenoArtifactPolyLuminous
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Тимчасово перетворює плоть на світло"
+  description: Temporarily reshape flesh to light
   components:
   - type: XAEPolymorph
     polymorphPrototypeName: ArtifactLuminous
@@ -1205,7 +1205,7 @@
   id: XenoArtifactRadioactiveStrong
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Стає високорадіоактивним"
+  description: Becomes highly radioactive
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1218,7 +1218,7 @@
   id: XenoArtifactMaterialSpawnGlass
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює скло"
+  description: Create glass
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1234,7 +1234,7 @@
   id: XenoArtifactMaterialSpawnSteel
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює сталь"
+  description: Create steel
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1250,7 +1250,7 @@
   id: XenoArtifactMaterialSpawnPlastic
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює пластик"
+  description: Create plastic
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1266,7 +1266,7 @@
   id: XenoArtifactPortal
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює короткоживучий блюспейс-портал"
+  description: Create short-living bluespace portal
   components:
   - type: XAEPortal
 
@@ -1274,7 +1274,7 @@
   id: XenoArtifactArtifactSpawn
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Створює артефакт"
+  description: Create artifact
   components:
   - type: XenoArtifactNode
     maxDurability: 2
@@ -1295,7 +1295,7 @@
   id: XenoArtifactShuffle
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Міняє місцями розумних істот" #not ALL beings, but oh well...
+  description: Switch places of sentient beings #not ALL beings, but oh well...
   components:
   - type: XAEShuffle
   - type: XAETelepathic
@@ -1307,7 +1307,7 @@
   id: XenoArtifactHealAll
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Чудодійне зцілення"
+  description: Miraclous healing
   components:
   - type: XAEDamageInArea
     damageChance: 1
@@ -1324,7 +1324,7 @@
   id: XenoArtifactTesla
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Масове знищення"
+  description: Mass destruction
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1340,7 +1340,7 @@
   id: XenoArtifactSingularity
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Неминуча загибель"
+  description: Imminent doom
   components:
   - type: XAEApplyComponents
     applyIfAlreadyHave: true
@@ -1356,7 +1356,7 @@
   id: XenoArtifactExplosionScary
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Маломасштабна високошвидкісна ядерна реакція"
+  description: Small scale high-speed nuclear reaction
   components:
   - type: XAETriggerExplosives
   - type: Explosive
@@ -1372,7 +1372,7 @@
   id: XenoArtifactBoom
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseOneTimeXenoArtifactEffect
-  description: "Вибух"
+  description: Explosion
   components:
   - type: XAETriggerExplosives
   - type: Explosive
@@ -1387,7 +1387,7 @@
   id: XenoArtifactEffectCreationGasPlasma
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Випускає плазму"
+  description: Expels plasma
   components:
   - type: XAECreateGas
     gases:
@@ -1397,7 +1397,7 @@
   id: XenoArtifactEffectCreationGasTritium
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Випускає тритій"
+  description: Expels tritium
   components:
   - type: XAECreateGas
     gases:
@@ -1407,7 +1407,7 @@
   id: XenoArtifactEffectCreationGasAmmonia
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Випускає аміак"
+  description: Expels ammonia
   components:
   - type: XAECreateGas
     gases:
@@ -1417,7 +1417,7 @@
   id: XenoArtifactEffectCreationGasFrezon
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Випускає фрезон"
+  description: Expels frezon
   components:
   - type: XAECreateGas
     gases:
@@ -1427,7 +1427,7 @@
   id: XenoArtifactEffectCreationGasNitrousOxide
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Випускає закис азоту"
+  description: Expels nitrous oxide
   components:
   - type: XAECreateGas
     gases:
@@ -1437,7 +1437,7 @@
   id: XenoArtifactEffectCreationGasCarbonDioxide
   categories: [ HideSpawnMenu ] #goob - clean up spawn menu
   parent: BaseXenoArtifactEffect
-  description: "Випускає вуглекислий газ"
+  description: Expels carbon dioxide
   components:
   - type: XAECreateGas
     gases:

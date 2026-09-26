@@ -1,7 +1,7 @@
 - type: entity
   parent: [ BoxCardboard, BaseSyndicateContraband ]
   id: ObservationKitSyndie
-  name: "набір спостереження"
+  name: observation kit
   suffix: Filled
   components:
   - type: EntityTableContainerFill
@@ -16,7 +16,7 @@
 - type: entity
   parent: [ BoxCardboard, BaseSyndicateContraband ]
   id: BombCollarKit
-  name: "набір вибухового нашийника"
+  name: bomb collar kit
   suffix: Filled
   components:
   - type: EntityTableContainerFill

@@ -1,8 +1,8 @@
 - type: entity
   id: DiseaseBehaviorCancer
   parent: DiseaseBehaviorBase
-  name: "Рак"
-  description: "Завдає генетичної шкоди з часом."
+  name: Cancer
+  description: Deals genetic damage over time.
   components:
   - type: DiseaseEffect
     complexity: 40
@@ -16,8 +16,8 @@
 - type: entity
   id: DiseaseBehaviorPoison
   parent: DiseaseBehaviorBase
-  name: "Отруєння"
-  description: "Завдає отруйної шкоди з часом."
+  name: Poison
+  description: Deals poison damage over time.
   components:
   - type: DiseaseEffect
     complexity: 20
@@ -31,8 +31,8 @@
 - type: entity
   id: DiseaseBehaviorBlunt
   parent: DiseaseBehaviorBase
-  name: "Деградація тканин"
-  description: "Завдає тупої шкоди з часом."
+  name: Tissue degradation
+  description: Deals blunt damage over time.
   components:
   - type: DiseaseEffect
     complexity: 15
@@ -46,8 +46,8 @@
 - type: entity
   id: DiseaseBehaviorNecrosis
   parent: DiseaseBehaviorBase
-  name: "Некроз"
-  description: "На останніх стадіях з часом завдає значної отруйної шкоди та спричиняє крововтрату."
+  name: Necrosis
+  description: In the final stages, it deals heavy poison and blood loss damage over time.
   components:
   - type: DiseaseEffect
     complexity: 40
@@ -65,8 +65,8 @@
 - type: entity
   id: DiseaseBehaviorPulmonaryEdema
   parent: DiseaseBehaviorBase
-  name: "Набряк легень"
-  description: "З часом завдає шкоди від задухи."
+  name: Pulmonary edema
+  description: Deals asphyxiation damage over time.
   components:
   - type: DiseaseEffect
     complexity: 14
@@ -83,8 +83,8 @@
 - type: entity
   id: DiseaseBehaviorInternalBleeding
   parent: DiseaseBehaviorBase
-  name: "Внутрішня кровотеча"
-  description: "На останніх стадіях з часом завдає колючої шкоди й зменшує кількість крові в організмі."
+  name: Internal bleeding
+  description: In the final stages, deals piercing damage over time and reduces the amount of blood in the body.
   components:
   - type: DiseaseEffect
     complexity: 14
@@ -103,8 +103,8 @@
 - type: entity
   id: DiseaseBehaviorAnemia
   parent: DiseaseBehaviorBase
-  name: "Анемія"
-  description: "На останніх стадіях з часом завдає значної шкоди від задухи."
+  name: Anemia
+  description: In the final stages, deals heavy asphyxiation damage over time.
   components:
   - type: DiseaseEffect
     complexity: 40
@@ -123,8 +123,8 @@
 - type: entity
   id: DiseaseBehaviorOrganFailure
   parent: DiseaseBehaviorBase
-  name: "Відмова органів"
-  description: "На останній стадії може спричинити миттєву смерть"
+  name: Organ failure
+  description: In the final stage, there is a chance of instant death
   components:
   - type: DiseaseEffect
     complexity: 40
@@ -143,8 +143,8 @@
 - type: entity
   id: DiseaseBehaviorGunemia
   parent: DiseaseBehaviorBase
-  name: "Гунемія"
-  description: "Змушує вас кашляти кулями. Механізм невідомий."
+  name: Gunemia
+  description: Makes you cough bullets. Mechanism unknown.
   components:
   - type: DiseaseEffect
     complexity: 30

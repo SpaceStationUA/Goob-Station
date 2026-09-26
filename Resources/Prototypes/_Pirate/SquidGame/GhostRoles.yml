@@ -60,7 +60,7 @@
 
 - type: entity
   id: RandomSquidGameHumanSpawnerCircle
-  name: "Охоронець (Коло)"
+  name: Охоронець (Коло)
   suffix: SquidGame
   components:
     - type: Sprite
@@ -134,7 +134,7 @@
 
 - type: entity
   id: RandomSquidGameHumanSpawnerTriangle
-  name: "Охоронець (Трикутник)"
+  name: Охоронець (Трикутник)
   suffix: SquidGame
   components:
     - type: Sprite
@@ -210,7 +210,7 @@
 
 - type: entity
   id: RandomSquidGameHumanSpawnerSquare
-  name: "Охоронець (Квадрат)"
+  name: Охоронець (Квадрат)
   suffix: SquidGame
   components:
     - type: Sprite
@@ -284,7 +284,7 @@
 
 - type: entity
   id: RandomSquidGameHumanSpawnerUwU
-  name: "Охоронець (UwU)"
+  name: Охоронець (UwU)
   suffix: SquidGame
   components:
     - type: Sprite
