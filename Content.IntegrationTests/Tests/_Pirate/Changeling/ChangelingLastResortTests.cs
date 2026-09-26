@@ -65,7 +65,7 @@ public sealed class ChangelingLastResortTests
 
             var store = entMan.EnsureComponent<StoreComponent>(ling);
             store.Balance["EvolutionPoint"] = 7;
-            store.Listings.Single(listing => listing.ID == "EvolutionMenuUtilityEyesight").PurchaseAmount = 1;
+            store.FullListingsCatalog.Single(listing => listing.ID == "EvolutionMenuUtilityEyesight").PurchaseAmount = 1;
 
             purchasedAction = actionContainer.AddAction(mindId, "ActionToggleArmblade")!.Value;
             Assert.That(entMan.GetComponent<ActionComponent>(purchasedAction).AttachedEntity, Is.EqualTo(ling));
@@ -80,10 +80,10 @@ public sealed class ChangelingLastResortTests
                 Is.EqualTo("MobHeadcrab"));
 
             var headslugStore = entMan.GetComponent<StoreComponent>(headslug.Value);
-            Assert.That(headslugStore.Listings
+            Assert.That(headslugStore.FullListingsCatalog
                 .Single(listing => listing.ID == "EvolutionMenuUtilityEyesight").PurchaseAmount, Is.EqualTo(1));
             headslugStore.Balance["EvolutionPoint"] = 5;
-            headslugStore.Listings
+            headslugStore.FullListingsCatalog
                 .Single(listing => listing.ID == "EvolutionMenuUtilityEyesight").PurchaseAmount = 2;
 
             entMan.EnsureComponent<AbsorbableComponent>(corpse);
@@ -127,7 +127,7 @@ public sealed class ChangelingLastResortTests
                 Assert.That(identity.TotalEvolutionPoints, Is.EqualTo(23f).Within(0.01f));
                 Assert.That(chemicals.ResourceData!.CurrentAmount, Is.EqualTo(37f).Within(0.01f));
                 Assert.That(store.Balance["EvolutionPoint"].Float(), Is.EqualTo(5f));
-                Assert.That(store.Listings.Single(listing => listing.ID == "EvolutionMenuUtilityEyesight").PurchaseAmount,
+                Assert.That(store.FullListingsCatalog.Single(listing => listing.ID == "EvolutionMenuUtilityEyesight").PurchaseAmount,
                     Is.EqualTo(2));
                 Assert.That(action.AttachedEntity, Is.EqualTo(uid));
                 Assert.That(actions.GetActions(uid).Any(entity => entity.Owner == purchasedAction), Is.True);
