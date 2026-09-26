@@ -333,7 +333,7 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
         if (comp.StrainedMusclesActive)
         {
             var stamina = EnsureComp<StaminaComponent>(uid);
-            _stamina.TakeStaminaDamage(uid, 7.5f, visual: false, immediate: false);
+            _stamina.TakeStaminaDamage(uid, 7.5f, visual: false, immediate: false, ignoreResist: true);
             if (stamina.StaminaDamage >= stamina.CritThreshold || _gravity.IsWeightless(uid))
                 ToggleStrainedMuscles(uid, comp);
         }
@@ -708,7 +708,7 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
         Dictionary<string, ListingState>? listings = null;
         if (component is StoreComponent store)
         {
-            listings = store.Listings.ToDictionary(
+            listings = store.FullListingsCatalog.ToDictionary( // Pirate: store now caches modifier-backed listings.
                 listing => listing.ID,
                 listing => new ListingState(listing.PurchaseAmount, listing.RestockTime, listing.ProductActionEntity));
         }
@@ -753,7 +753,7 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
 
     private static void RestoreListings(StoreComponent store, Dictionary<string, ListingState> states)
     {
-        foreach (var listing in store.Listings)
+        foreach (var listing in store.FullListingsCatalog) // Pirate: restore state on the current catalog.
         {
             if (!states.TryGetValue(listing.ID, out var state))
                 continue;

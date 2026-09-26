@@ -133,3 +133,6 @@
 
   - node: captain
     entity: ClothingModularControllerMagnatePreassembled
+
+  - node: brigmed
+    entity: ClothingModsuitBrigMed

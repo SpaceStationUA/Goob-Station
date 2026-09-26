@@ -361,6 +361,49 @@ public sealed partial class RadioSystem : EntitySystem
     }
     // Einstein Engines - Language end
 
+    // Goobstation - Voice chat
+    public void GetVoiceReceivers(EntityUid radioSource, RadioChannelPrototype channel, List<EntityUid> receivers)
+    {
+        var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
+        RaiseLocalEvent(ref sendAttemptEv);
+        RaiseLocalEvent(radioSource, ref sendAttemptEv);
+        if (sendAttemptEv.Cancelled)
+            return;
+
+        var sourceCoverage = _zLevels.GetGridCoverage(radioSource); // Pirate: multiz voice radio follows text radio coverage.
+        var sourceMapId = sourceCoverage.FallbackMapId;
+        var hasActiveServer = HasActiveServer(sourceCoverage, channel.ID, channel.MapWide);
+        var sourceServerExempt = _exemptQuery.HasComp(radioSource);
+
+        var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
+        while (radioQuery.MoveNext(out var receiver, out var radio, out var transform))
+        {
+            if (!radio.ReceiveAllChannels)
+            {
+                if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) &&
+                                                             !intercom.SupportedChannels.Contains(channel.ID)))
+                    continue;
+            }
+
+            var receiverInMapWideCoverage = channel.MapWide && transform.MapID == sourceMapId;
+            if (!channel.LongRange && !receiverInMapWideCoverage &&
+                !_zLevels.IsInCoverage(sourceCoverage, receiver, transform) && !radio.GlobalReceive &&
+                !(HasActiveTransmitter(transform.MapID) && HasActiveTransmitter(sourceMapId)))
+                continue;
+
+            if (!channel.LongRange && !sourceServerExempt && !hasActiveServer)
+                continue;
+
+            var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
+            RaiseLocalEvent(ref attemptEv);
+            RaiseLocalEvent(receiver, ref attemptEv);
+            if (attemptEv.Cancelled)
+                continue;
+
+            receivers.Add(receiver);
+        }
+    }
+
     /// <inheritdoc cref="TelecomServerComponent"/>
     private bool HasActiveServer(CEZGridCoverage coverage, string channelId, bool mapWide) // Pirate: map-wide radio - extends Pirate: multiz
     {

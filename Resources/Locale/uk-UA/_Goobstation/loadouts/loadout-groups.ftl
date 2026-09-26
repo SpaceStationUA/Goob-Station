@@ -60,6 +60,7 @@ loadout-group-technical-assistant-envirogloves = Еко-рукавиці тех�
 loadout-group-atmos-envirohelm = Еко-шолом атмосферного техніка
 loadout-group-atmos-envirosuit = Еко-костюм атмосферного техніка
 loadout-group-atmos-envirogloves = Еко-рукавиці атмосферного техніка
+loadout-group-atmospheric-technician-belt = Пояс атмосферного техніка
 
 # Головний інженер
 loadout-group-chief-engineer-envirohelm = Еко-шолом головного інженера

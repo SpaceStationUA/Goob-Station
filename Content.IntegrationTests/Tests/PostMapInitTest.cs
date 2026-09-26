@@ -173,6 +173,7 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "SalternTP",
             "Serpentcrest",
+			"Shoukou",
             "Snowball",
             "TestTeg",        // Dev map
             "Train",           // Not in pool
@@ -229,6 +230,7 @@ namespace Content.IntegrationTests.Tests
               //"Saltern",
               "SalternTP", // Pirate
               "Serpentcrest",
+			  "Shoukou",
              // "Snowball", // fuck off not in pool
 			  "Shoukou", //Pirate
         };
