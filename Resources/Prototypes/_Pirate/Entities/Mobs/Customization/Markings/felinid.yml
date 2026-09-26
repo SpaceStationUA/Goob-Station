@@ -1,0 +1,1706 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate - everything here is a Felinid-only copy of a marking that humans (or
+# reptilians, for the tail/torso part) already have but felinids did not.
+# Markings the felinid could already pick (human hair, facial hair, collars,
+# undergarments, the upstream felinid ears/tails, ...) are deliberately absent.
+
+#region Human ears (HeadTop)
+
+- type: marking
+  id: FelinidHumanLongEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_ears_standard
+
+- type: marking
+  id: FelinidLongEarsWide
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_ears_wide
+
+- type: marking
+  id: FelinidLongEarsSmall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_ears_small
+
+- type: marking
+  id: FelinidLongEarsUpwards
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_ears_upwards
+
+- type: marking
+  id: FelinidLongEarsTall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_ears_tall
+
+- type: marking
+  id: FelinidLongEarsThin
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/ears.rsi
+    state: long_ears_thin
+
+#endregion
+
+#region Pointy ears (HeadSide)
+
+- type: marking
+  id: FelinidPointyEarsStandard
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _EinsteinEngines/Mobs/Customization/pointy_ears.rsi
+    state: pointy_ears_standard
+
+- type: marking
+  id: FelinidPointyEarsWide
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _EinsteinEngines/Mobs/Customization/pointy_ears.rsi
+    state: pointy_ears_wide
+
+- type: marking
+  id: FelinidPointyEarsSmall
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _EinsteinEngines/Mobs/Customization/pointy_ears.rsi
+    state: pointy_ears_small
+
+- type: marking
+  id: FelinidPointyEarsUpwards
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _EinsteinEngines/Mobs/Customization/pointy_ears.rsi
+    state: pointy_ears_upwards
+
+- type: marking
+  id: FelinidPointyEarsTall
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _EinsteinEngines/Mobs/Customization/pointy_ears.rsi
+    state: pointy_ears_tall
+
+- type: marking
+  id: FelinidPointyEarsSlanted
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _EinsteinEngines/Mobs/Customization/pointy_ears.rsi
+    state: pointy_ears_slanted
+
+- type: marking
+  id: FelinidPointyEarsThin
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _EinsteinEngines/Mobs/Customization/pointy_ears.rsi
+    state: pointy_ears_thin
+
+- type: marking
+  id: FelinidPointyEarsLarge
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _EinsteinEngines/Mobs/Customization/pointy_ears.rsi
+    state: pointy_ears_large
+
+#endregion
+
+#region Human noses (Snout)
+
+- type: marking
+  id: FelinidHumanNoseSchnozz
+  bodyPart: Snout
+  markingCategory: Snout
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: schnozz
+
+- type: marking
+  id: FelinidHumanNoseNubby
+  bodyPart: Snout
+  markingCategory: Snout
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: nubby
+
+- type: marking
+  id: FelinidHumanNoseDroop
+  bodyPart: Snout
+  markingCategory: Snout
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: droop
+
+- type: marking
+  id: FelinidHumanNoseBlob
+  bodyPart: Snout
+  markingCategory: Snout
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: blob
+
+- type: marking
+  id: FelinidHumanNoseUppie
+  bodyPart: Snout
+  markingCategory: Snout
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/human_noses.rsi
+    state: uppie
+
+- type: marking
+  id: FelinidHeadSeptum
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/snout.rsi
+    state: septum
+
+#endregion
+
+#region Scars (Chest / Head)
+
+- type: marking
+  id: FelinidScarTopSurgeryShort
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_top_surgery_short
+
+- type: marking
+  id: FelinidScarTopSurgeryLong
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sexRestriction: [Male]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_top_surgery_long
+
+- type: marking
+  id: FelinidScarChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_chest
+
+- type: marking
+  id: FelinidScarChestBullets
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_chest_bullets
+
+- type: marking
+  id: FelinidScarStomachBullets
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_stomach_bullets
+
+- type: marking
+  id: FelinidBodyScarr
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: _Goobstation/Mobs/Customization/scars.rsi
+    state: bodyscar_r
+
+- type: marking
+  id: FelinidScarNeck
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_neck
+
+- type: marking
+  id: FelinidScarFace1
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_face_1
+
+- type: marking
+  id: FelinidScarFace2
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_face_2
+
+#endregion
+
+#region Human tattoos (Chest)
+
+- type: marking
+  id: FelinidTattooNanotrasenChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_nanotrasen_chest
+
+- type: marking
+  id: FelinidBuffChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: buff
+
+#endregion
+
+#region Gauze (Head)
+
+- type: marking
+  id: FelinidGauzeHead
+  bodyPart: Head
+  markingCategory: Overlay
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_head
+
+#endregion
+
+#region Hair gradients
+
+- type: marking
+  id: FelinidHairGradientRGB2Col
+  bodyPart: Hair
+  markingCategory: HairSpecial
+  canBeDisplaced: false
+  shader: GradientRGB2Col
+  speciesRestriction: [Felinid]
+  coloring:
+    layers:
+      col1:
+        type: !type:MarkingColoring
+          colorIndex: 0
+          markingId: FelinidHairGradientRGB2Col
+          markingCategory: HairSpecial
+      col2:
+        type: !type:MarkingColoring
+          colorIndex: 1
+          markingId: FelinidHairGradientRGB2Col
+          markingCategory: HairSpecial
+      params:
+        type: !type:ShaderParamsMarkingColoring
+          params:
+            blur: 0.01, 0.5
+            proportion: 0, 1
+          colorIndex: 2
+          markingId: FelinidHairGradientRGB2Col
+          markingCategory: HairSpecial
+        fallbackColor: "#26cc0000"
+
+- type: marking
+  id: FelinidFacialHairGradientRGB2Col
+  bodyPart: FacialHair
+  markingCategory: FacialHairSpecial
+  canBeDisplaced: false
+  shader: GradientRGB2Col
+  speciesRestriction: [Felinid]
+  coloring:
+    layers:
+      col1:
+        type: !type:MarkingColoring
+          colorIndex: 0
+          markingId: FelinidFacialHairGradientRGB2Col
+          markingCategory: FacialHairSpecial
+      col2:
+        type: !type:MarkingColoring
+          colorIndex: 1
+          markingId: FelinidFacialHairGradientRGB2Col
+          markingCategory: FacialHairSpecial
+      params:
+        type: !type:ShaderParamsMarkingColoring
+          params:
+            blur: 0.01, 0.5
+            proportion: 0, 1
+          colorIndex: 2
+          markingId: FelinidFacialHairGradientRGB2Col
+          markingCategory: FacialHairSpecial
+        fallbackColor: "#26cc0000"
+
+- type: marking
+  id: FelinidHairGradientRGB3Col
+  bodyPart: Hair
+  markingCategory: HairSpecial
+  canBeDisplaced: false
+  shader: GradientRGB3Col
+  speciesRestriction: [Felinid]
+  coloring:
+    layers:
+      col1:
+        type: !type:MarkingColoring
+          colorIndex: 0
+          markingId: FelinidHairGradientRGB3Col
+          markingCategory: HairSpecial
+      col2:
+        type: !type:MarkingColoring
+          colorIndex: 1
+          markingId: FelinidHairGradientRGB3Col
+          markingCategory: HairSpecial
+      col3:
+        type: !type:MarkingColoring
+          colorIndex: 2
+          markingId: FelinidHairGradientRGB3Col
+          markingCategory: HairSpecial
+      params:
+        type: !type:ShaderParamsMarkingColoring
+          params:
+            blur: 0.01, 0.5
+            proportion1: 0, 1
+            proportion2: 0, 1
+          colorIndex: 3
+          markingId: FelinidHairGradientRGB3Col
+          markingCategory: HairSpecial
+        fallbackColor: "#26bfd900"
+
+- type: marking
+  id: FelinidFacialHairGradientRGB3Col
+  bodyPart: FacialHair
+  markingCategory: FacialHairSpecial
+  canBeDisplaced: false
+  shader: GradientRGB3Col
+  speciesRestriction: [Felinid]
+  coloring:
+    layers:
+      col1:
+        type: !type:MarkingColoring
+          colorIndex: 0
+          markingId: FelinidFacialHairGradientRGB3Col
+          markingCategory: FacialHairSpecial
+      col2:
+        type: !type:MarkingColoring
+          colorIndex: 1
+          markingId: FelinidFacialHairGradientRGB3Col
+          markingCategory: FacialHairSpecial
+      col3:
+        type: !type:MarkingColoring
+          colorIndex: 2
+          markingId: FelinidFacialHairGradientRGB3Col
+          markingCategory: FacialHairSpecial
+      params:
+        type: !type:ShaderParamsMarkingColoring
+          params:
+            blur: 0.01, 0.5
+            proportion1: 0, 1
+            proportion2: 0, 1
+          colorIndex: 3
+          markingId: FelinidFacialHairGradientRGB3Col
+          markingCategory: FacialHairSpecial
+        fallbackColor: "#26bfd900"
+
+- type: marking
+  id: FelinidHairGradientHSV
+  bodyPart: Hair
+  markingCategory: HairSpecial
+  canBeDisplaced: false
+  shader: GradientHSV
+  speciesRestriction: [Felinid]
+  coloring:
+    layers:
+      col1:
+        type: !type:MarkingColoring
+          colorIndex: 0
+          markingId: FelinidHairGradientHSV
+          markingCategory: HairSpecial
+      col2:
+        type: !type:MarkingColoring
+          colorIndex: 1
+          markingId: FelinidHairGradientHSV
+          markingCategory: HairSpecial
+      params:
+        type: !type:ShaderParamsMarkingColoring
+          params:
+            blur: 0.01, 0.5
+            proportion: 0, 1
+          colorIndex: 2
+          markingId: FelinidHairGradientHSV
+          markingCategory: HairSpecial
+        fallbackColor: "#33cc0000"
+
+- type: marking
+  id: FelinidFacialHairGradientHSV
+  bodyPart: FacialHair
+  markingCategory: FacialHairSpecial
+  canBeDisplaced: false
+  shader: GradientHSV
+  speciesRestriction: [Felinid]
+  coloring:
+    layers:
+      col1:
+        type: !type:MarkingColoring
+          colorIndex: 0
+          markingId: FelinidFacialHairGradientHSV
+          markingCategory: FacialHairSpecial
+      col2:
+        type: !type:MarkingColoring
+          colorIndex: 1
+          markingId: FelinidFacialHairGradientHSV
+          markingCategory: FacialHairSpecial
+      params:
+        type: !type:ShaderParamsMarkingColoring
+          params:
+            blur: 0.01, 0.5
+            proportion: 0, 1
+          colorIndex: 2
+          markingId: FelinidFacialHairGradientHSV
+          markingCategory: FacialHairSpecial
+        fallbackColor: "#33cc0000"
+
+#endregion
+
+#region Human body markings (chest)
+
+- type: marking
+  id: FelinidChestBackstabbed
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: backstabbed
+
+- type: marking
+  id: FelinidChestCutHere
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: cuthere
+
+- type: marking
+  id: FelinidChestHeavyTattoos
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: heavy2
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: heavy3
+
+- type: marking
+  id: FelinidChestNecklace
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: necklace
+
+- type: marking
+  id: FelinidChestStar
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: star
+
+- type: marking
+  id: FelinidChestTwistingLeft
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: twistingleft
+
+- type: marking
+  id: FelinidChestTwistingRight
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: twistingright
+
+- type: marking
+  id: FelinidHumanoidAbs
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: muscular
+
+- type: marking
+  id: FelinidProstheticShoulderL
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: prostheticshoulderleft
+
+- type: marking
+  id: FelinidProstheticShoulderR
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: prostheticshoulderright
+
+- type: marking
+  id: FelinidTattooAnchor
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#3894C5"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: anchor
+
+- type: marking
+  id: FelinidTattooCode1
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: code1
+
+- type: marking
+  id: FelinidTattooCode2
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: code2
+
+- type: marking
+  id: FelinidTattooCode3
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: code3
+
+- type: marking
+  id: FelinidTattooDragon
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: dragontattoo1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: dragontattoo2
+
+- type: marking
+  id: FelinidTorsoIncision
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: incision
+
+- type: marking
+  id: FelinidTattooVinesHumanoid
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#379d0e"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: vines
+
+- type: marking
+  id: FelinidVitiligoChestF
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: vitiligo
+
+- type: marking
+  id: FelinidVitiligoChestSpots
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/chest.rsi
+    state: vitiligospots
+
+#endregion
+
+#region Human body markings (head)
+
+- type: marking
+  id: FelinidEyebrowsBig
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: eyebrowsthick
+
+- type: marking
+  id: FelinidEyebrowsBigger
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: eyebrowsultra
+
+- type: marking
+  id: FelinidEyebrowsUnibrow
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: eyebrowsunibrow
+
+- type: marking
+  id: FelinidHeadHeavyTattoos
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: heavy2
+
+- type: marking
+  id: FelinidHeadTwisting
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: twisting
+
+- type: marking
+  id: FelinidHeadTwistingFlipped
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: twistingflipped
+
+- type: marking
+  id: FelinidHumanoidEyebags
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: eyebags
+
+- type: marking
+  id: FelinidSmileScars
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: smile
+
+- type: marking
+  id: FelinidVitiligoHeadJaw
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: vitiligojaw
+
+- type: marking
+  id: FelinidVitiligoHeadL
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: vitiligoleft
+
+- type: marking
+  id: FelinidVitiligoHeadR
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: vitiligoright
+
+#endregion
+
+#region Human body markings (arms)
+
+- type: marking
+  id: FelinidArmDollJointsTattooRight
+  bodyPart: RArm
+  markingCategory: RightArm
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: doll
+
+- type: marking
+  id: FelinidArmHeavyTattoosRight
+  bodyPart: RArm
+  markingCategory: RightArm
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: heavy2
+
+- type: marking
+  id: FelinidArmProstheticRight
+  bodyPart: RArm
+  markingCategory: RightArm
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: prosthetic
+
+- type: marking
+  id: FelinidArmTwistingRight
+  bodyPart: RArm
+  markingCategory: RightArm
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: twisting
+
+- type: marking
+  id: FelinidTattooCode4
+  bodyPart: RArm
+  markingCategory: RightArm
+  speciesRestriction: [Felinid]
+  followSkinColor: false
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: code4
+
+- type: marking
+  id: FelinidTattooCode5
+  bodyPart: RArm
+  markingCategory: RightArm
+  speciesRestriction: [Felinid]
+  followSkinColor: false
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffffff"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: code5
+
+- type: marking
+  id: FelinidTattooHeartR
+  bodyPart: RArm
+  markingCategory: RightArm
+  speciesRestriction: [Felinid]
+  followSkinColor: false
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ff254c"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: heart
+
+- type: marking
+  id: FelinidVitiligoArmR
+  bodyPart: RArm
+  markingCategory: RightArm
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rarm.rsi
+    state: vitiligo
+
+- type: marking
+  id: FelinidArmDollJointsTattooLeft
+  bodyPart: LArm
+  markingCategory: LeftArm
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/larm.rsi
+    state: doll
+
+- type: marking
+  id: FelinidArmHeavyTattoosLeft
+  bodyPart: LArm
+  markingCategory: LeftArm
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/larm.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/larm.rsi
+    state: heavy2
+
+- type: marking
+  id: FelinidArmProstheticLeft
+  bodyPart: LArm
+  markingCategory: LeftArm
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/larm.rsi
+    state: prosthetic
+
+- type: marking
+  id: FelinidArmTwistingLeft
+  bodyPart: LArm
+  markingCategory: LeftArm
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/larm.rsi
+    state: twisting
+
+- type: marking
+  id: FelinidTattooHeartL
+  bodyPart: LArm
+  markingCategory: LeftArm
+  speciesRestriction: [Felinid]
+  followSkinColor: false
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ff254c"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/larm.rsi
+    state: heart
+
+- type: marking
+  id: FelinidVitiligoArmL
+  bodyPart: LArm
+  markingCategory: LeftArm
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/larm.rsi
+    state: vitiligo
+
+#endregion
+
+#region Human body markings (legs and feet)
+
+- type: marking
+  id: FelinidLegDollJointsTattooRight
+  bodyPart: RLeg
+  markingCategory: RightLeg
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rleg.rsi
+    state: doll
+
+- type: marking
+  id: FelinidLegHeavyTattoosRight
+  bodyPart: RLeg
+  markingCategory: RightLeg
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rleg.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rleg.rsi
+    state: heavy2
+
+- type: marking
+  id: FelinidLegTwistingRight
+  bodyPart: RLeg
+  markingCategory: RightLeg
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rleg.rsi
+    state: twisting
+
+- type: marking
+  id: FelinidVitiligoLegR
+  bodyPart: RLeg
+  markingCategory: RightLeg
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rleg.rsi
+    state: vitiligo
+
+- type: marking
+  id: FelinidLegDollJointsTattooLeft
+  bodyPart: LLeg
+  markingCategory: LeftLeg
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lleg.rsi
+    state: doll
+
+- type: marking
+  id: FelinidLegHeavyTattoosLeft
+  bodyPart: LLeg
+  markingCategory: LeftLeg
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lleg.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lleg.rsi
+    state: heavy2
+
+- type: marking
+  id: FelinidLegTwistingLeft
+  bodyPart: LLeg
+  markingCategory: LeftLeg
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lleg.rsi
+    state: twisting
+
+- type: marking
+  id: FelinidVitiligoLegL
+  bodyPart: LLeg
+  markingCategory: LeftLeg
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lleg.rsi
+    state: vitiligo
+
+- type: marking
+  id: FelinidFootDollJointsTattooLeft
+  bodyPart: LFoot
+  markingCategory: LeftFoot
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lfoot.rsi
+    state: doll
+
+- type: marking
+  id: FelinidFootHeavyTattoosLeft
+  bodyPart: LFoot
+  markingCategory: LeftFoot
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lfoot.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lfoot.rsi
+    state: heavy2
+
+- type: marking
+  id: FelinidFootDollJointsTattooRight
+  bodyPart: RFoot
+  markingCategory: RightFoot
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rfoot.rsi
+    state: doll
+
+- type: marking
+  id: FelinidFootHeavyTattoosRight
+  bodyPart: RFoot
+  markingCategory: RightFoot
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rfoot.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rfoot.rsi
+    state: heavy2
+
+#endregion
+
+#region Human body markings (hands)
+
+- type: marking
+  id: FelinidHandBraceletLeft
+  bodyPart: LHand
+  markingCategory: LeftHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lhand.rsi
+    state: bracelet
+
+- type: marking
+  id: FelinidHandDollJointsTattooLeft
+  bodyPart: LHand
+  markingCategory: LeftHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lhand.rsi
+    state: doll
+
+- type: marking
+  id: FelinidHandHeavyTattoosLeft
+  bodyPart: LHand
+  markingCategory: LeftHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lhand.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lhand.rsi
+    state: heavy2
+
+- type: marking
+  id: FelinidHandProstheticLeft
+  bodyPart: LHand
+  markingCategory: LeftHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lhand.rsi
+    state: prosthetic
+
+- type: marking
+  id: FelinidHandRingsLeft
+  bodyPart: LHand
+  markingCategory: LeftHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lhand.rsi
+    state: rings1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lhand.rsi
+    state: rings2
+
+- type: marking
+  id: FelinidHandTwistingLeft
+  bodyPart: LHand
+  markingCategory: LeftHand
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lhand.rsi
+    state: twisting
+
+- type: marking
+  id: FelinidVitiligoHandL
+  bodyPart: LHand
+  markingCategory: LeftHand
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/lhand.rsi
+    state: vitiligo
+
+- type: marking
+  id: FelinidHandBraceletRight
+  bodyPart: RHand
+  markingCategory: RightHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rhand.rsi
+    state: bracelet
+
+- type: marking
+  id: FelinidHandDollJointsTattooRight
+  bodyPart: RHand
+  markingCategory: RightHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rhand.rsi
+    state: doll
+
+- type: marking
+  id: FelinidHandHeavyTattoosRight
+  bodyPart: RHand
+  markingCategory: RightHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rhand.rsi
+    state: heavy1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rhand.rsi
+    state: heavy2
+
+- type: marking
+  id: FelinidHandProstheticRight
+  bodyPart: RHand
+  markingCategory: RightHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#E4E4E4"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rhand.rsi
+    state: prosthetic
+
+- type: marking
+  id: FelinidHandRingsRight
+  bodyPart: RHand
+  markingCategory: RightHand
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rhand.rsi
+    state: rings1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rhand.rsi
+    state: rings2
+
+- type: marking
+  id: FelinidHandTwistingRight
+  bodyPart: RHand
+  markingCategory: RightHand
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rhand.rsi
+    state: twisting
+
+- type: marking
+  id: FelinidVitiligoHandR
+  bodyPart: RHand
+  markingCategory: RightHand
+  speciesRestriction: [Felinid]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#FFE5D6"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/rhand.rsi
+    state: vitiligo
+
+#endregion
+
+#region Human body markings (hair and facial hair)
+
+- type: marking
+  id: FelinidFloralBeard
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/facialhair.rsi
+    state: messyfloral1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/facialhair.rsi
+    state: messyfloral2
+
+- type: marking
+  id: FelinidHumanHairSpikyPonytailLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: spikyponytaillong
+
+- type: marking
+  id: FelinidMessyPonytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: messyponytail
+
+- type: marking
+  id: FelinidNiqab
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: niqab
+
+#endregion
+
+#region Human body markings (head side)
+
+- type: marking
+  id: FelinidHeadEarrings
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/headtop.rsi
+    state: earrings1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/headtop.rsi
+    state: earrings2
+
+- type: marking
+  id: FelinidHeadEarringsDrop
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/headtop.rsi
+    state: earringsdrop1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/headtop.rsi
+    state: earringsdrop2
+
+- type: marking
+  id: FelinidHeadEarringsWeights
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Felinid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/headtop.rsi
+    state: earringsweights1
+  - sprite: _Impstation/Mobs/Customization/Humanoid/headtop.rsi
+    state: earringsweights2
+
+#endregion
+
+#region Reptilian (lizard / unathi) tails
+
+- type: marking
+  id: FelinidLizardTailSmooth
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_smooth_primary
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_smooth_secondary
+
+- type: marking
+  id: FelinidLizardTailLarge
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_large
+
+- type: marking
+  id: FelinidLizardTailSpikes
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_spikes
+
+- type: marking
+  id: FelinidLizardTailLTiger
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_ltiger
+
+- type: marking
+  id: FelinidLizardTailDTiger
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_dtiger
+
+- type: marking
+  id: FelinidLizardTailAquatic
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_aquatic
+
+#endregion
+
+#region Reptilian (lizard / unathi) torso
+
+- type: marking
+  id: FelinidLizardChestTiger
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: body_tiger
+
+- type: marking
+  id: FelinidLizardChestUnderbelly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: body_underbelly
+
+- type: marking
+  id: FelinidLizardChestBackspikes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: body_backspikes
+
+- type: marking
+  id: FelinidLizardChestFin
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Felinid]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: body_fin
+
+#endregion
