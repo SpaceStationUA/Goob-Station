@@ -297,7 +297,7 @@ marking-FelinidHeadEarringsWeights-earringsweights2 = Ліва сережка
 
 marking-FelinidLizardTailSmooth = Хвіст Ящірки (Гладкий)
 marking-FelinidLizardTailSmooth-tail_smooth_primary = Хвіст ящірки
-marking-FelinidLizardTailSmooth-tail_smooth_secondary = Під тоном
+marking-FelinidLizardTailSmooth-tail_smooth_secondary = Нижній тон
 marking-FelinidLizardTailLarge = Хвіст Ящірки (Великий)
 marking-FelinidLizardTailLarge-tail_large = Хвіст ящірки (великий)
 marking-FelinidLizardTailSpikes = Хвіст Ящірки (Колючий)
@@ -312,9 +312,9 @@ marking-FelinidLizardTailAquatic-tail_aquatic = Хвіст Ящера (Водн�
 # Тулуб ящірки (унаті)
 
 marking-FelinidLizardChestTiger = Тулуб Ящірки (Тигр)
-marking-FelinidLizardChestTiger-body_tiger = Скриня ящірки (тигра)
+marking-FelinidLizardChestTiger-body_tiger = Тулуб ящірки (тигр)
 marking-FelinidLizardChestUnderbelly = Тулуб Ящірки (Підчерев'я)
-marking-FelinidLizardChestUnderbelly-body_underbelly = Грудна клітка ящірки (підчерев'я)
+marking-FelinidLizardChestUnderbelly-body_underbelly = Тулуб ящірки (підчерев'я)
 marking-FelinidLizardChestBackspikes = Шипи на спині Ящірки (Чотири)
 marking-FelinidLizardChestBackspikes-body_backspikes = Шипи на спині ящірки (чотири)
 marking-FelinidLizardChestFin = Плавник Ящера
