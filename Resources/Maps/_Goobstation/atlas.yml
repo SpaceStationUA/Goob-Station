@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 08/16/2026 06:44:18
-  entityCount: 9267 # Pirate: account for two upstream heat exchangers with colliding UIDs.
+  entityCount: 9268 # Pirate: include upstream heat exchangers and the CMO spawn with unique UIDs.
 maps:
 - 1
 grids:
@@ -50024,6 +50024,13 @@ entities:
     components:
     - type: Transform
       pos: -0.5,-6.5
+      parent: 2
+- proto: SpawnPointChiefMedicalOfficer # Pirate: Atlas offers the CMO job; spawn in the CMO office.
+  entities:
+  - uid: 9268
+    components:
+    - type: Transform
+      pos: 5.5,-6.5
       parent: 2
 - proto: SpawnPointChiefEngineer
   entities:
