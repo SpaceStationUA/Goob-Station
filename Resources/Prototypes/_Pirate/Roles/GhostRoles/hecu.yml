@@ -167,7 +167,7 @@
     nameSegments:
     - NamesMilitaryLast
     nameFormat: name-format-ert-corpsman
-  # the ERT medic's chip pair; every other HECU role inherits SkillChipERT alone from HecuSoldier
+  # Human HECU roles inherit SkillChipERT from HecuSoldier; the medic also gets SkillChipCMO.
   - type: OrganChipsOnSpawn
     chips:
     - SkillChipERT
@@ -185,10 +185,21 @@
     settings: HecuSoldierIPC
 
 - type: randomHumanoidSettings
-  parent: HecuSoldier
+  parent: EventHumanMindShielded
   id: HecuSoldierIPC
   speciesWhitelist: IPC
   components:
+  # Positronic brains have chip containers, so IPCs receive the same ERT skill chip as human operatives.
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipERT
+  - type: HumanoidAppearanceOverride
+    hairStyles: HecuHairStyles
+    removeFacialHair: true
+    heightCm: 175, 190
+    width: 0.95, 1.04
+  - type: AutoImplant
+    implants: [ FreedomImplant ]
   - type: GhostRole
     name: ghost-role-information-Hecu-ipc-name
     description: ghost-role-information-Hecu-description
@@ -197,6 +208,10 @@
       settings: short
   - type: Loadout
     prototypes: [HECUOperativeGearIPC]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-rifle
   - type: ContainerFill
     containers:
       key_slots:
@@ -213,7 +228,7 @@
     settings: HecuLeaderIPC
 
 - type: randomHumanoidSettings
-  parent: HecuLeader
+  parent: HecuSoldierIPC
   id: HecuLeaderIPC
   speciesWhitelist: IPC
   components:
@@ -225,6 +240,10 @@
       settings: short
   - type: Loadout
     prototypes: [HECULeaderGearIPC]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-leader
   - type: ContainerFill
     containers:
       key_slots:
@@ -241,7 +260,7 @@
     settings: HecuMedicIPC
 
 - type: randomHumanoidSettings
-  parent: HecuMedic
+  parent: HecuSoldierIPC
   id: HecuMedicIPC
   speciesWhitelist: IPC
   components:
@@ -253,6 +272,14 @@
       settings: short
   - type: Loadout
     prototypes: [HECUMedicGearIPC]
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipERT
+    - SkillChipCMO
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-corpsman
   - type: ContainerFill
     containers:
       key_slots:

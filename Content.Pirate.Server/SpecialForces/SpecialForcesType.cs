@@ -43,6 +43,16 @@ public static class SpecialForcesTypeNames
             return true;
         }
 
-        return Enum.TryParse(input, true, out type) && Enum.IsDefined(type);
+        foreach (var value in Enum.GetValues<SpecialForcesType>())
+        {
+            if (!string.Equals(value.ToString(), input, StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            type = value;
+            return true;
+        }
+
+        type = default;
+        return false;
     }
 }
