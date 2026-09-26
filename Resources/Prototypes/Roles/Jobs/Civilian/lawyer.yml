@@ -8,11 +8,11 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 2.5h
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-    # Pirate contractor end
+      - NanoTrasen
+    # Pirate Employment end
   startingGear: LawyerGear
   icon: "JobIconLawyer"
   supervisors: job-supervisors-hop

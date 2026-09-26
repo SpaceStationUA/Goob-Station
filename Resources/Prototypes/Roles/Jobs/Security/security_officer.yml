@@ -20,13 +20,11 @@
       - Narcolepsy
       - Muted
       - WheelchairBound # Pirate end
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-      - ZavodskiyInterstellar
-      - PMCG
-    # Pirate contractor end
+      - NanoTrasen
+    # Pirate Employment end
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   ransomModifier: 2 # Pirate: security staff are worth less than heads

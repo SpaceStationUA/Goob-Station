@@ -12,13 +12,11 @@
     #   department: Engineering # Pirate
     #   time: 18000 #5 hrs # Pirate
     #   inverted: true # stop playing intern if you're good at engineering! # Pirate
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZavodskiyInterstellar
-      - HephaestusIndustries
-    # Pirate contractor end
+    # Pirate Employment end
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
   supervisors: job-supervisors-engineering

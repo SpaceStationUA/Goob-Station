@@ -9,12 +9,11 @@
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 2.5h
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - OrionExpress
-      - HephaestusIndustries
-    # Pirate contractor end
+      - NanoTrasen
+    # Pirate Employment end
   icon: "JobIconShaftMiner"
   startingGear: SalvageSpecialistGear
   guides: # goobstation

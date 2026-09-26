@@ -39,17 +39,11 @@
       #any MRP using our code might eventually want to use it
     # - !type:SaturationRequirement # MisandryBox - no neon hair on captain
     #   hairColorSaturation: 0.30
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - IdrisIncorporated
-      - OrionExpress
-      - ZengHuPharmaceuticals
-      - HephaestusIndustries
-      - ZavodskiyInterstellar
-      - PMCG
-    # Pirate contractor end
+    # Pirate Employment end
   guides: # goobstation
   - Command
   - Succession

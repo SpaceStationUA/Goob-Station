@@ -12,12 +12,11 @@
   - !type:DepartmentTimeRequirement
     department: Security
     time: 18000 # 5 hrs
-  # Pirate contractor start
+  # Pirate Employment start
   - !type:CharacterEmployerRequirement
     employers:
-    - IdrisIncorporated
-    - PMCG
-  # Pirate contractor end
+    - NanoTrasen
+  # Pirate Employment end
   startingGear: BrigmedicGear
   icon: "JobIconBrigmedic"
   supervisors: job-supervisors-hos

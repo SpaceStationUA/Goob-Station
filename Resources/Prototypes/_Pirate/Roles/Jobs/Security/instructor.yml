@@ -15,9 +15,7 @@
       time: 1h
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-      - ZavodskiyInterstellar
-      - PMCG
+      - NanoTrasen
   startingGear: SecurityInstructorGear
   icon: "JobIconSecurityInstructor"
   supervisors: job-supervisors-hos

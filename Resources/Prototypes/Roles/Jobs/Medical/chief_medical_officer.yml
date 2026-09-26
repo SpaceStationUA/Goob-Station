@@ -27,13 +27,11 @@
     #  inverted: true
     #  species:
     #  - Felinid
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZengHuPharmaceuticals
-      - PMCG
-    # Pirate contractor end
+    # Pirate Employment end
   weight: 10
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"

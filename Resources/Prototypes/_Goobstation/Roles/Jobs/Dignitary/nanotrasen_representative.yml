@@ -25,11 +25,11 @@
     #  inverted: true
     #  species:
     #  - Felinid
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-    # Pirate contractor end
+    # Pirate Employment end
   weight: 20
   startingGear: NanotrasenRepresentativeGear
   icon: "JobIconNanotrasenRepresentative"

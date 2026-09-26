@@ -7,13 +7,11 @@
     - !type:DepartmentTimeRequirement
       department: Science
       time: 14400 #4 hrs
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZengHuPharmaceuticals
-      - ZavodskiyInterstellar
-    # Pirate contractor end
+    # Pirate Employment end
   startingGear: RoboticistGear
   icon: "JobIconRoboticist"
   supervisors: job-supervisors-rd
