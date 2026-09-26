@@ -241,8 +241,8 @@ public sealed class UplinkPreferenceTests
                     "The contract hub must belong to the selected uplink's traitor.");
                 Assert.That(entMan.GetComponent<ContractsComponent>(mind).Stores, Is.EquivalentTo(new[] { target }),
                     "An unrelated PDA must not capture the preferred uplink's contracts or rewards.");
-                if (target != pda)
-                    Assert.That(entMan.GetComponent<StoreContractsComponent>(pda).Mind, Is.Null);
+                if (target != pda && entMan.TryGetComponent<StoreContractsComponent>(pda, out var pdaContracts))
+                    Assert.That(pdaContracts.Mind, Is.Null);
 
                 server.System<ReputationSystem>().ToggleUI(_player, target);
                 Assert.That(server.System<SharedUserInterfaceSystem>()
