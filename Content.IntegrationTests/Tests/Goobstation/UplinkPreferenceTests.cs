@@ -226,7 +226,7 @@ public sealed class UplinkPreferenceTests
                 var pda = uplinks.FindUplinkTarget(_player, ["Pda"])!.Value;
                 var pen = uplinks.FindUplinkTarget(_player, ["Pen"])!.Value;
                 Assert.That(server.System<TraitorRuleSystem>().MakeTraitor(_player,
-                    new TraitorRuleComponent { GiveBriefing = false }), Is.True);
+                    new TraitorRuleComponent()), Is.True);
 
                 mind = server.System<MindSystem>().GetMind(_player)!.Value;
                 target = preference switch
