@@ -5,3 +5,8 @@
     - /Audio/_Pirate/Voice/Reptilian/humanoid_lizard_scream_2.ogg
     - /Audio/_Pirate/Voice/Reptilian/humanoid_lizard_scream_3.ogg
     - /Audio/_Pirate/Voice/Reptilian/humanoid_lizard_scream_4.ogg
+
+- type: soundCollection
+  id: Bleh
+  files:
+    - /Audio/_Pirate/Voice/Reptilian/bleh.ogg

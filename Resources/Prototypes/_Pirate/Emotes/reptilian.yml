@@ -25,3 +25,17 @@
   # No chatTriggers: "screech"/"screeches"/"screeching"/"screeched" are already claimed by the
   # base Scream emote (Voice/speech_emotes.yml), and EmotePrototype.ChatTriggers must be unique
   # across all emotes. Still selectable from the emote menu.
+
+# Pirate: lizard-only raspberry/hiss, sound (Bleh collection) and icon live in _Pirate
+- type: emote
+  id: Bleh
+  name: chat-emote-name-bleh
+  category: Vocal
+  icon: _Pirate/Interface/Emotes/bleh.png
+  chatMessages: ["chat-emote-msg-bleh"]
+  whitelist:
+    tags:
+    - ReptilianEmotes
+  chatTriggers:
+    - bleh
+    - blehs
