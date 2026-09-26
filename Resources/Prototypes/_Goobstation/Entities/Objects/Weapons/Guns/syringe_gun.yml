@@ -5,6 +5,8 @@
   id: BaseSyringeGun
   abstract: true
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: NonLethal # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Cannons/syringe_gun.rsi
     state: icon
@@ -58,6 +60,8 @@
   id: RapidSyringeGun
   description: A finely-tuned syringe gun featuring a faster fire rate and more room for ammo, made for the most experienced medical officers.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: NonLethal # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Cannons/rapid_syringe_gun.rsi
   - type: Clothing

@@ -189,6 +189,8 @@
   id: WeaponSniperHristov
   description: A portable anti-materiel rifle for when you need to make someone regret their life choices from a safe distance. Comes with an integrated long-range scope. Feeds from .60 Anti-Materiel magazines.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sniper # Pirate: weapon skills
   - type: Item
     size: Huge
     shape:

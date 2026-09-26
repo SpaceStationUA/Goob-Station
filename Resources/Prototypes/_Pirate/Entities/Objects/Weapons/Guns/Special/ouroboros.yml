@@ -4,6 +4,8 @@
   id: WeaponSpecialOuroboros
   description: You can feel a murderous hunger buzzing from deep within the weapon's frame. Its contained creatures demands food for its services.
   components:
+  - type: WeaponClass
+    class: Rifle
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Special/ouroboros.rsi
     layers:

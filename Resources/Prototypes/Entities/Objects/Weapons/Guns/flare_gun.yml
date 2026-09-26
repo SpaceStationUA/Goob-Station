@@ -6,6 +6,8 @@
   id: WeaponFlareGun
   description: A compact, single-shot pistol that fires shotgun shells. Comes with a safety feature that prevents the user from fitting lethal shells inside.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Pistol # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Shotguns/flaregun.rsi #GoobStation resprite
     layers:

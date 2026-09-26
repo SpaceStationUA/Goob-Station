@@ -6,6 +6,8 @@
   parent: BaseItem
   id: ReverbScythe
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Polearm # Pirate: weapon skills
   - type: Sharp
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Melee/breverb.rsi

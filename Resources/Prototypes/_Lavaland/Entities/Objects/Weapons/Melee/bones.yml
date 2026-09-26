@@ -4,6 +4,8 @@
   id: WeaponBoneAxe
   description: An axe made of bones. A primitive hunters favorite... probably.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: Sprite
     sprite: _Lavaland/Objects/Weapons/Melee/bone_axe.rsi
     state: icon

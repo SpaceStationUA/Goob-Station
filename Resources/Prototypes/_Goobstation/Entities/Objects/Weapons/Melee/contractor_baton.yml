@@ -6,6 +6,8 @@
   name: contractor baton
   description: A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: NonLethal # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Melee/contractor_baton.rsi
     layers:

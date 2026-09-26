@@ -7,6 +7,8 @@
   id: CaneBladeNanotrasen
   description: A sharp blade with a cane shaped hilt, a Nanotrasen logo is engraved on the blade.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/cane_blade.rsi

@@ -17,3 +17,19 @@ knowledge-editor-reset = Reset
 knowledge-editor-reset-tooltip = Reset all selected skills
 knowledge-editor-apply = Apply
 knowledge-editor-apply-tooltip = Apply selected skills
+
+knowledge-weapon-examine-verb-text = Skills
+knowledge-weapon-examine-verb-message = Show which skills affect this weapon.
+knowledge-weapon-examine-header = Skills affecting this weapon:
+knowledge-weapon-examine-skill = {$index}. [bold]{$skill}[/bold] - [color={$color}]{$mastery}[/color] ({$level}/100)
+knowledge-weapon-examine-effect = {"    "}- {$effect}: {$current} ({$min} - {$max})
+knowledge-weapon-examine-requirement = {"    "}- {$effect}: from level {$required} - {$met ->
+    [yes] [color=#5fbf5f]available[/color]
+   *[no] [color=#e05555]not skilled enough[/color]
+    }
+knowledge-weapon-examine-total = Combined effect ({$effect}): {$current}
+knowledge-weapon-examine-effect-melee = melee damage
+knowledge-weapon-examine-effect-spread = shot spread
+knowledge-weapon-examine-effect-block = damage blocked
+knowledge-weapon-examine-effect-parry = parry
+knowledge-weapon-examine-effect-reflect = reflect shots

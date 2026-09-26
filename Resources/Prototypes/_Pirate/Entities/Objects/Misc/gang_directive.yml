@@ -1,0 +1,17 @@
+# Printed by GangDirectiveFax when Gangwars starts.
+- type: entity
+  parent: Paper
+  id: PaperCentcomGangDirective
+  name: Central Command directive
+  description: An official Central Command document on organized crime aboard the station. The signature is illegible.
+  categories: [ DoNotMap ]
+  components:
+  - type: Paper
+    content: gang-directive-paper-content
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: "#2F4F4F"
+      stampedName: gang-directive-signature
+    - stampedColor: "#006600"
+      stampedName: stamp-component-stamped-name-centcom
+      stampLargeIcon: large_stamp-centcom

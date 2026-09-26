@@ -8,6 +8,8 @@
   description: A energy sword cobbled together from random parts. Burns through power like no other.
   parent: [BaseItem, BaseMajorContraband]
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Energy # Pirate: weapon skills
   - type: Sprite
     sprite: _Funkystation/Objects/Weapons/Melee/improvised_esword.rsi
     layers:

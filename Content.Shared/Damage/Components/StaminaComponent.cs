@@ -109,8 +109,8 @@ public sealed partial class StaminaComponent : Component
     /// <summary>
     /// Thresholds that determine an entity's slowdown as a function of stamina damage, in percentages.
     /// </summary>
-    [DataField]
-    public Dictionary<FixedPoint2, float> StunModifierThresholds = new() { { 0, 1f }, { 0.65, 0.75f }, { 0.85, 0.5f } }; // Pirate edit - was { { 0, 1f } }
+    [DataField] // Goob edit. TODO: Reduce sprint's dependence on stamina. // Pirate: stamina slowdown revert
+    public Dictionary<FixedPoint2, float> StunModifierThresholds = new() { {0, 1f } }; // Goob edit, 0.7 -> 1, 0.5 -> 1 // Pirate: stamina slowdown revert
 
 
     #region Animation Data

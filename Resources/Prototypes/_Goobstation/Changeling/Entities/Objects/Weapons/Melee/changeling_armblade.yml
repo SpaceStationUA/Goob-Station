@@ -5,6 +5,8 @@
   id: ArmBladeChangeling
   suffix: Unremoveable
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: Sharp
   - type: Sprite
     sprite: _Goobstation/Changeling/arm_blade.rsi
@@ -41,6 +43,8 @@
   parent: ArmBladeChangeling
   id: FakeArmBladeChangeling
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills
   - type: ChangelingFakeWeapon
   - type: MeleeWeapon
     damage:

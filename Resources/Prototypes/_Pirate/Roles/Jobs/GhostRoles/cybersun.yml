@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# This job is never assigned; GhostRoleRequiredJobs uses it to gate Cybersun pod roles.
+# Add a player with `jobwhitelistadd <player> CybersunTeamLeader`; server-whitelisted players get it on connect.
+- type: job
+  id: CybersunTeamLeader
+  name: job-name-cybersun-team-leader
+  playTimeTracker: JobCybersunTeamLeader
+  setPreference: false
+  canBeAntag: false
+  whitelisted: true
+  icon: JobIconSyndicate

@@ -323,7 +323,7 @@
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectOmnilaser # Pirate
   - type: StaminaDamageOnCollide
-    damage: 10 # Pirate edit - was 20
+    damage: 13.33 # Pirate edit - was 20
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
@@ -1243,7 +1243,7 @@
   - type: Ammo
     muzzleFlash: MuzzleFlashEffectOmnilaser # Pirate
   - type: StaminaDamageOnCollide
-    damage: 6 # Pirate edit - was 12
+    damage: 8 # Pirate edit - was 12
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
