@@ -10,7 +10,7 @@
       stationProto: StandardNanotrasenStation
       components:
       - type: StationNameSetup
-        mapNameTemplate: '{0} ZNebula Station {1}'
+        mapNameTemplate: '{0} Nebula Station {1}'
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: 'NB'
