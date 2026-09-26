@@ -18,14 +18,17 @@ using Robust.Shared.Random;
 // Starlight-start
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 // Starlight-end
 
 #region Pirate: paperwork tags
+using Robust.Shared.Network;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Content.Shared._Pirate.Paper;
+using Content.Shared._Pirate.PersistentText;
 using Content.Shared.Access.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Station;
@@ -47,6 +50,7 @@ public sealed class PaperSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IdentitySystem _identitySystem = default!; // Starlight-edit
+    [Dependency] private readonly SharedMindSystem _mind = default!; // Pirate: persistent text (diaries)
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
@@ -73,6 +77,7 @@ public sealed class PaperSystem : EntitySystem
         SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
         SubscribeLocalEvent<PaperComponent, PaperMacroMenuUsedMessage>(OnMacroMenuUsedMessage); // Pirate: paperwork tags
         SubscribeLocalEvent<PaperComponent, PaperSignatureRequestMessage>(OnSignatureRequest); // Starlight-edit
+
 
         SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
 
@@ -244,6 +249,19 @@ public sealed class PaperSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
+        // Pirate: persistent text (diaries) - only the bound owner may write;
+        // unbound items bind to the first writer (e.g. spawned outside a loadout).
+        if (TryComp<PersistentTextComponent>(entity, out var persistentText))
+        {
+            if (!CanWrite(entity.Owner, persistentText, args.Actor))
+            {
+                _popupSystem.PopupClient(Loc.GetString("persistent-text-cant-write"), entity.Owner, args.Actor);
+                return;
+            }
+
+            BindPersistentTextOwner(entity.Owner, persistentText, args.Actor);
+        }
+
         var processedText = ExpandPaperMacros(entity, args.Actor, args.Text); // Pirate: paperwork tags
 
         if (processedText.Length <= entity.Comp.ContentSize) // Pirate: paperwork tags
@@ -268,6 +286,106 @@ public sealed class PaperSystem : EntitySystem
         entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
     }
+
+    #region Pirate: persistent text (diaries)
+
+    /// <summary>
+    /// Checks whether the actor may write into the persistent text entity.
+    /// Unbound entities can be written by anyone, but bind to the first writer;
+    /// afterwards only the bound character may write.
+    /// </summary>
+    public bool CanWrite(EntityUid uid, PersistentTextComponent component, EntityUid actor)
+    {
+        if (component.OwnerCharacterName == null)
+            return true;
+
+        if (!string.Equals(component.OwnerKind, PersistentTextOwnerKinds.Profile, StringComparison.Ordinal))
+            return true;
+
+        // Pirate: persistent text (diaries) - the check is by CHARACTER, not by the mind.
+        // Exiting and re-entering a character wipes and recreates the mind, which used to
+        // lock the diary even for its rightful owner. The character is identified by its
+        // in-world name plus the account behind it (session first, mind only as a fallback
+        // so client-side prediction evaluates the same way).
+        if (!string.Equals(Name(actor), component.OwnerCharacterName, StringComparison.Ordinal))
+            return false;
+
+        if (component.OwnerUserId == null)
+            return true;
+
+        NetUserId? userId = null;
+        if (TryComp<ActorComponent>(actor, out var actorComp))
+            userId = actorComp.PlayerSession.UserId;
+        else if (_mind.TryGetMind(actor, out _, out var mind))
+            userId = mind.UserId;
+
+        // Bound by character name and userId: another player's character
+        // with the same name can never take over the diary.
+        return userId != null && component.OwnerUserId == userId.Value;
+    }
+
+    /// <summary>
+    /// Binds the persistent text entity to the first writer's character and renames it after them.
+    /// </summary>
+    private void BindPersistentTextOwner(EntityUid uid, PersistentTextComponent component, EntityUid actor)
+    {
+        if (!component.SupportCharacterName || component.OwnerCharacterName != null)
+            return;
+
+        if (!string.Equals(component.OwnerKind, PersistentTextOwnerKinds.Profile, StringComparison.Ordinal))
+            return;
+
+        // Pirate: bind to the CHARACTER (in-world name + account), not the mind —
+        // the mind is replaced whenever a player exits and re-enters their character.
+        var characterName = Name(actor);
+        if (string.IsNullOrWhiteSpace(characterName))
+            return;
+
+        NetUserId? userId = null;
+        if (TryComp<ActorComponent>(actor, out var actorComp))
+            userId = actorComp.PlayerSession.UserId;
+        else if (_mind.TryGetMind(actor, out _, out var mind))
+            userId = mind.UserId;
+
+        if (userId == null)
+            return;
+
+        component.OwnerCharacterName = characterName;
+        component.OwnerUserId = userId.Value;
+        UpdatePersistentTextName(uid, component);
+    }
+
+    /// <summary>
+    /// Appends the bound character name to the entity name once the diary is bound
+    /// ("<base name> <character>"), keeping any loadout-customized base name.
+    /// Only renames when AppendOwnerName is set (diaries rename, regular books keep their name).
+    /// </summary>
+    public void UpdatePersistentTextName(EntityUid uid, PersistentTextComponent? component = null, MetaDataComponent? meta = null)
+    {
+        if (!Resolve(uid, ref component, ref meta, false))
+            return;
+
+        if (string.IsNullOrWhiteSpace(component.OwnerCharacterName) ||
+            !component.AppendOwnerName)
+            return;
+
+        var suffix = " " + component.OwnerCharacterName;
+
+        // Remember the base name (prototype or loadout-customized) so suffixes never stack.
+        var baseName = component.BaseEntityName;
+        if (string.IsNullOrWhiteSpace(baseName))
+        {
+            var current = meta.EntityName;
+            baseName = current.EndsWith(suffix, StringComparison.Ordinal)
+                ? current[..^suffix.Length].TrimEnd()
+                : current;
+        }
+
+        component.BaseEntityName = baseName;
+        _metaSystem.SetEntityName(uid, baseName + suffix, meta);
+    }
+
+    #endregion
 
     #region Pirate: paperwork tags
     private void OnMacroMenuUsedMessage(Entity<PaperComponent> entity, ref PaperMacroMenuUsedMessage args)
@@ -468,6 +586,10 @@ public sealed class PaperSystem : EntitySystem
     /// </summary>
     public bool TryStamp(Entity<PaperComponent> entity, StampDisplayInfo stampInfo, string spriteStampState)
     {
+        // Pirate: persistent text (diaries) - no stamping on protected paper (e.g. diaries)
+        if (HasComp<NoStampingComponent>(entity))
+            return false;
+
         if (!entity.Comp.StampedBy.Contains(stampInfo))
         {
             entity.Comp.StampedBy.Add(stampInfo);

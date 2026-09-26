@@ -1,5 +1,20 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+# Pirate: persistent text (diaries)
+- type: entity
+  id: BookRandomPersistent
+  parent: BookRandom
+  suffix: random visual, persistent
+  description: Each book is unique! What is hidden in this one? Text written in this one persists between rounds.
+  components:
+  # A stamp would lock the book and make it unwritable forever
+  - type: NoStamping
+  - type: PersistentText
+    ownerKind: profile
+    storageKey: randombook
+    supportCharacterName: true
+    appendOwnerName: false
+
 - type: entity
   name: book
   parent: BaseItem
