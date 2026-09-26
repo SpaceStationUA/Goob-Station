@@ -20,7 +20,7 @@ public sealed class UplinkBoundUserInterface(EntityUid owner, Enum uiKey) : Boun
     private string _search = string.Empty;
 
     [ViewVariables]
-    private HashSet<ListingData> _listings = new();
+    private HashSet<ListingDataWithCostModifiers> _listings = new(); // Pirate: store state now carries modified prices.
 
     protected override void Open()
     {
@@ -37,7 +37,7 @@ public sealed class UplinkBoundUserInterface(EntityUid owner, Enum uiKey) : Boun
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
-            SendMessage(new StoreBuyListingMessage(listing));
+            SendMessage(new StoreBuyListingMessage(listing.ID));
         };
 
         _menu.OnCategoryButtonPressed += (_, category) =>
@@ -85,7 +85,7 @@ public sealed class UplinkBoundUserInterface(EntityUid owner, Enum uiKey) : Boun
         if (_menu == null)
             return;
 
-        var filteredListings = new HashSet<ListingData>(_listings);
+        var filteredListings = new HashSet<ListingDataWithCostModifiers>(_listings);
         if (!string.IsNullOrEmpty(_search))
         {
             filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search) &&

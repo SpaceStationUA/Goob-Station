@@ -370,8 +370,9 @@ public sealed partial class RadioSystem : EntitySystem
         if (sendAttemptEv.Cancelled)
             return;
 
-        var sourceMapId = Transform(radioSource).MapID;
-        var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
+        var sourceCoverage = _zLevels.GetGridCoverage(radioSource); // Pirate: multiz voice radio follows text radio coverage.
+        var sourceMapId = sourceCoverage.FallbackMapId;
+        var hasActiveServer = HasActiveServer(sourceCoverage, channel.ID, channel.MapWide);
         var sourceServerExempt = _exemptQuery.HasComp(radioSource);
 
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
@@ -384,8 +385,10 @@ public sealed partial class RadioSystem : EntitySystem
                     continue;
             }
 
-            if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive
-                && !(HasActiveTransmitter(transform.MapID) && HasActiveTransmitter(sourceMapId)))
+            var receiverInMapWideCoverage = channel.MapWide && transform.MapID == sourceMapId;
+            if (!channel.LongRange && !receiverInMapWideCoverage &&
+                !_zLevels.IsInCoverage(sourceCoverage, receiver, transform) && !radio.GlobalReceive &&
+                !(HasActiveTransmitter(transform.MapID) && HasActiveTransmitter(sourceMapId)))
                 continue;
 
             if (!channel.LongRange && !sourceServerExempt && !hasActiveServer)
