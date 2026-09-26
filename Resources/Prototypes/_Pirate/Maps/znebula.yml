@@ -1,0 +1,81 @@
+- type: gameMap
+  id: ZNebula
+  mapName: ZNebula
+  mapPath: /Maps/_Pirate/ZNebula/ZNebula1.yml
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
+  mapPreview: PirateMapPreviewNebula
+  minPlayers: 25
+  stations:
+    ZNebula:
+      stationProto: StandardNanotrasenStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: '{0} Nebula Station {1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: 'NB'
+      - type: CEStationZLevels
+        defaultSpawnDepth: 1
+        mapsBelow:
+        - /Maps/_Pirate/ZNebula/ZNebula0.yml
+      - type: StationEmergencyShuttle
+        emergencyShuttlePath: /Maps/_Pirate/Shuttles/emergency_box.yml
+      - type: StationJobs
+        availableJobs:
+          #service
+          Captain: [ 1, 1 ]
+          NanotrasenRepresentative: [ 1, 1 ]
+          NanotrasenCareerTrainer: [ 1, 1 ]
+          BlueshieldOfficer: [1, 1]
+          HeadOfPersonnel: [ 1, 1 ]
+          AdministrativeAssistant: [ 1, 1 ]
+          Bartender: [ 1, 2 ]
+          Botanist: [ 3, 3 ]
+          Chef: [ 2, 2 ]
+          Janitor: [ 2, 2 ]
+          Chaplain: [ 1, 2 ]
+          Librarian: [ 1, 1 ]
+          Reporter: [ 1, 1 ]
+          ServiceWorker: [ 2, 2 ]
+          RadioHost: [ 1, 1 ]
+          #engineering
+          ChiefEngineer: [ 1, 1 ]
+          AtmosphericTechnician: [ 3, 3 ]
+          StationEngineer: [ 5, 5 ]
+          TechnicalAssistant: [ 3, 3 ]
+          #medical
+          ChiefMedicalOfficer: [ 1, 1 ]
+          Chemist: [ 2, 2 ]
+          MedicalDoctor: [ 5, 5 ]
+          Paramedic: [ 2, 2 ]
+          MedicalIntern: [ 3, 3 ]
+          Psychologist: [ 1, 1 ]
+          Virologist: [ 2, 2 ]
+          #science
+          ResearchDirector: [ 1, 1 ]
+          Scientist: [ 5, 5 ]
+          ForensicMantis: [ 1, 1 ]
+          ResearchAssistant: [ 3, 3 ]
+          Roboticist: [ 2, 2 ]
+          #security
+          HeadOfSecurity: [ 1, 1 ]
+          Warden: [ 1, 1 ]
+          SecurityInstructor: [ 1, 1 ]
+          SecurityOfficer: [ 8, 8 ]
+          Detective: [ 1, 1 ]
+          SecurityCadet: [ 2, 3 ]
+          Lawyer: [ 2, 2 ]
+          Brigmedic: [ 2, 2 ]
+          #supply
+          Quartermaster: [ 1, 1 ]
+          SalvageSpecialist: [ 3, 3 ]
+          CargoTechnician: [ 4, 5 ]
+          ShaftMiner:  [ 3, 3 ]
+          #civilian
+          Passenger: [ -1, -1 ]
+          Clown: [ 1, 1 ]
+          Mime: [ 1, 1 ]
+          Musician: [ 1, 1 ]
+          #silicon
+          StationAi: [ 1, 1 ]
+          Borg: [ 3, 3 ]

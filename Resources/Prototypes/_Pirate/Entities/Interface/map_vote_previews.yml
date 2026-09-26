@@ -208,3 +208,10 @@
   - type: Sprite
     state: shoukou
 
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewNebula
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: nebula

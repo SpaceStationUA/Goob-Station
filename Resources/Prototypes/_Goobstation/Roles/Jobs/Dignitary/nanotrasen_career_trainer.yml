@@ -11,7 +11,7 @@
   supervisors: job-supervisors-ntr-centcom
   canBeAntag: false
   whitelisted: true # 1984
-  setPreference: false # 1984 x2
+  setPreference: true # Pirate Changes
   accessGroups:
   - AllAccess
   access:
