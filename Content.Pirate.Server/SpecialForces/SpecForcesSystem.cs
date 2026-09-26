@@ -5,6 +5,7 @@ using System.Threading;
 using Content.Server.Actions;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
+using Content.Server.Humanoid.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Ghost.Roles.Components;
 using Robust.Shared.EntitySerialization;
@@ -116,6 +117,7 @@ public sealed class SpecialForcesSystem : EntitySystem
 
             // For ERT and CBURN, the loaded Kokomo maps contain their own role spawners,
             // so we do not spawn additional entities here. DeathSquad still uses manual spawning.
+            // HECU reuses the ERT map, swapping its role spawners for HECU ones before they fire.
             if (ev == SpecialForcesType.DeathSquad)
                 SpawnGhostRole(ev, shuttle.Value);
 
@@ -267,6 +269,12 @@ public sealed class SpecialForcesSystem : EntitySystem
             _ => EtrShuttlePath
         };
 
+        if (ev == SpecialForcesType.HecuHuman)
+            return SpawnHecuShuttle(HecuHumanReplacements);
+
+        if (ev == SpecialForcesType.HecuIpc)
+            return SpawnHecuShuttle(HecuIpcReplacements);
+
         // Kokomo ERT/CBURN files are full maps (category: Map), not single-grid saves.
         // Load them as maps and pick the first grid as the shuttle grid.
         if (ev == SpecialForcesType.ERT || ev == SpecialForcesType.CBURN)
@@ -298,6 +306,39 @@ public sealed class SpecialForcesSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Loads the ERT map before initialization and replaces its role spawners with the given HECU group's equivalents.
+    /// </summary>
+    private EntityUid? SpawnHecuShuttle(Dictionary<string, string> replacements)
+    {
+        if (!_mapLoader.TryLoadMap(new ResPath(EtrShuttlePath), out var map, out var grids))
+            return null;
+
+        // Everything on the uninitialized map is paused, so the paused-skipping enumerator would find nothing.
+        var swaps = new List<(EntityUid Uid, string Replacement, EntityCoordinates Coordinates)>();
+        var query = EntityManager.AllEntityQueryEnumerator<RandomHumanoidSpawnerComponent, MetaDataComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var meta, out var xform))
+        {
+            if (xform.MapUid == map.Value.Owner &&
+                meta.EntityPrototype?.ID is { } id &&
+                replacements.TryGetValue(id, out var replacement))
+            {
+                swaps.Add((uid, replacement, xform.Coordinates));
+            }
+        }
+
+        foreach (var (uid, replacement, coordinates) in swaps)
+        {
+            Del(uid);
+            Spawn(replacement, coordinates);
+        }
+
+        _mapSystem.InitializeMap(map.Value.Comp.MapId);
+
+        var gridEnt = grids.FirstOrDefault();
+        return gridEnt == default ? null : gridEnt.Owner;
+    }
+
     private void PlaySound(SpecialForcesType ev)
     {
         var stations = _stationSystem.GetStations();
@@ -327,6 +368,19 @@ public sealed class SpecialForcesSystem : EntitySystem
                         Loc.GetString("spec-forces-system-CBURN-annonce"),
                         Loc.GetString("spec-forces-system-CBURN-title"),
                         true
+                    );
+                }
+
+                break;
+            case SpecialForcesType.HecuHuman:
+            case SpecialForcesType.HecuIpc:
+                foreach (var station in stations)
+                {
+                    _chatSystem.DispatchStationAnnouncement(station,
+                        Loc.GetString("spec-forces-system-HECU-annonce"),
+                        Loc.GetString("spec-forces-system-HECU-title"),
+                        false,
+                        _hecuAnnounce
                     );
                 }
 
@@ -373,6 +427,27 @@ public sealed class SpecialForcesSystem : EntitySystem
     private const string DeadsquadShuttlePath = "Maps/Shuttles/dart.yml";
     [ValidatePrototypeId<EntityPrototype>] private const string DeadsquadLeader = "RandomHumanoidSpawnerDeathSquad";
     [ValidatePrototypeId<EntityPrototype>] private const string Deadsquad = "RandomHumanoidSpawnerDeathSquad";
+
+    [ValidatePrototypeId<EntityPrototype>] private const string HecuLeader = "RandomHumanoidHECULeaderSpawner";
+    [ValidatePrototypeId<EntityPrototype>] private const string HecuMedic = "RandomHumanoidHECUMedicSpawner";
+    [ValidatePrototypeId<EntityPrototype>] private const string Hecu = "RandomHumanoidHECUSpawner";
+    [ValidatePrototypeId<EntityPrototype>] private const string HecuLeaderIpc = "RandomHumanoidHECULeaderIPCSpawner";
+    [ValidatePrototypeId<EntityPrototype>] private const string HecuMedicIpc = "RandomHumanoidHECUMedicIPCSpawner";
+    [ValidatePrototypeId<EntityPrototype>] private const string HecuIpc = "RandomHumanoidHECUIPCSpawner";
+
+    private static readonly Dictionary<string, string> HecuHumanReplacements = new()
+    {
+        { "RandomHumanoidSpawnerERTLeaderEVA", HecuLeader },
+        { "RandomHumanoidSpawnerERTMedicalEVA", HecuMedic },
+        { "RandomHumanoidSpawnerERTSecurityEVA", Hecu },
+    };
+    private static readonly Dictionary<string, string> HecuIpcReplacements = new()
+    {
+        { "RandomHumanoidSpawnerERTLeaderEVA", HecuLeaderIpc },
+        { "RandomHumanoidSpawnerERTMedicalEVA", HecuMedicIpc },
+        { "RandomHumanoidSpawnerERTSecurityEVA", HecuIpc },
+    };
+    private readonly SoundSpecifier _hecuAnnounce = new SoundPathSpecifier("/Audio/Announcements/attention.ogg");
 
     private readonly SoundSpecifier _ertAnnounce = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 

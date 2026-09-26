@@ -1,0 +1,150 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# HECU combat gear. Armour is tuned against the mercenary helmet worn by the HECU ghost role.
+
+# Basic combat helmet - same protection as the mercenary helmet it stands in for.
+- type: entity
+  parent: ClothingHeadHelmetMerc
+  id: ClothingHeadHelmetHECU
+  name: combat helmet
+  description: Helmet designed to take heavy beating and probably keep the user alive in the process.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/combat_helmet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/combat_helmet.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHECU
+  id: ClothingHeadHelmetHECUMedic
+  name: corpsman combat helmet
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/combat_helmet_medic.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/combat_helmet_medic.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHECU
+  id: ClothingHeadHelmetHECUBlack
+  name: black combat helmet
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/combat_helmet_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/combat_helmet_black.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHECU
+  id: ClothingHeadHelmetHECUMedicBlack
+  name: black corpsman combat helmet
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/combat_helmet_medic_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/combat_helmet_medic_black.rsi
+
+# Powered combat helmet (PCV Mk. II) - the premium set, one step above the mercenary helmet.
+- type: entity
+  parent: [ClothingHeadHelmetArmoredBase, BaseMajorContraband]
+  id: ClothingHeadHelmetHECUPowered
+  name: powered combat helmet
+  description: A deprecated combat helmet developed during the early 21th century in Sol-3, with protections rated level III-A. Contains attachment points for AN/PVS night vision goggles.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet.rsi
+  - type: Armor
+    coverage:
+    - Head
+    traumaDeductions:
+      Dismemberment: 0.25
+      OrganDamage: 0.25
+      BoneDamage: 0.25
+      VeinsDamage: 0
+      NerveDamage: 0
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.7
+        Caustic: 0.8
+        Radiation: 0.8
+  - type: StaticPrice
+    price: 150
+
+- type: entity
+  parent: ClothingHeadHelmetHECUPowered
+  id: ClothingHeadHelmetHECUPoweredMedic
+  name: corpsman powered combat helmet
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_medic.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_medic.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHECUPowered
+  id: ClothingHeadHelmetHECUPoweredBlack
+  name: black powered combat helmet
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_black.rsi
+
+- type: entity
+  parent: ClothingHeadHelmetHECUPowered
+  id: ClothingHeadHelmetHECUPoweredMedicBlack
+  name: black corpsman powered combat helmet
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_medic_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_medic_black.rsi
+
+# Powered combat helmet with the AN/PVS goggles mounted; toggling night vision flips them down over the eyes.
+- type: entity
+  parent: ClothingHeadHelmetHECUPowered
+  id: ClothingHeadHelmetHECUPoweredNVG
+  name: powered combat helmet with NVG
+  description: A deprecated combat helmet developed during the early 21th century in Sol-3, with protections rated level III-A. This one has a pair of AN/PVS night vision goggles mounted on it.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_nvg.rsi
+    layers:
+    - state: icon
+      map: [ "enum.NightVisionClothingVisuals.Enabled" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_nvg.rsi
+  - type: MonolithNightVision # Gen 2 dual tube, same as the night vision goggles
+    relayOverlay: true
+    goggleEffect: true
+    action: MonolithToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 2
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF26"
+    amplification: 10
+  - type: NightVisionClothingVisuals
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.NightVisionClothingVisuals.Enabled:
+        enum.NightVisionClothingVisuals.Enabled:
+          True: { state: icon-on }
+          False: { state: icon }
+  - type: StaticPrice
+    price: 400
+
+- type: entity
+  parent: ClothingHeadHelmetHECUPoweredNVG
+  id: ClothingHeadHelmetHECUPoweredNVGBlack
+  name: black powered combat helmet with NVG
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_nvg_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Helmets/HECU/powered_helmet_nvg_black.rsi

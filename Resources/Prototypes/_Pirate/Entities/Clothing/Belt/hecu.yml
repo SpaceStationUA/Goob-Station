@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# HECU warbelt. Same storage as the mercenary webbing.
+
+- type: entity
+  parent: ClothingBeltMercWebbing
+  id: ClothingBeltHECU
+  name: HECU warbelt
+  description: A military assault belt with enough pouches for a full combat load.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt.rsi
+
+- type: entity
+  parent: ClothingBeltHECU
+  id: ClothingBeltHECUBlack
+  name: black HECU warbelt
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi
+
+# HECU ghost role kit: the M16's ammunition.
+- type: entity
+  parent: ClothingBeltHECU
+  id: ClothingBeltHECUFilled
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: MagazineRifleM16Extended
+      amount: 4
+    - id: MagazineBoxRifleBig
+      amount: 2
+
+# HECU corpsman kit: the ERT medical belt (storage, contraband, surgical fill) in warbelt colours.
+- type: entity
+  parent: ClothingBeltERTMedical
+  id: ClothingBeltHECUMedicalFilled
+  name: HECU corpsman warbelt
+  description: A HECU warbelt re-rigged with surgical pouches for the squad corpsman.
+  suffix: Filled
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt.rsi
+
+# Black filled belts for the IPC squad: same contents, black warbelt sprite.
+- type: entity
+  parent: ClothingBeltHECUFilled
+  id: ClothingBeltHECUBlackFilled
+  name: black HECU warbelt
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi
+
+- type: entity
+  parent: ClothingBeltHECUMedicalFilled
+  id: ClothingBeltHECUMedicalBlackFilled
+  name: black HECU corpsman warbelt
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/HECU/warbelt_black.rsi

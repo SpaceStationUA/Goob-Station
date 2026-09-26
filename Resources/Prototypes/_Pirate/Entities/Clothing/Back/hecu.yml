@@ -1,0 +1,108 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# HECU backpack. Mercenary bag with the satchel's pocketed grid.
+
+- type: entity
+  parent: ClothingBackpackMerc
+  id: ClothingBackpackHECU
+  name: HECU backpack
+  description: A rugged military rucksack, strapped tight for rapid deployment.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Back/Backpacks/HECU/backpack.rsi
+  - type: Storage
+    grid:
+    - 0,0,1,3
+    - 3,0,6,3
+    - 8,0,9,3
+
+- type: entity
+  parent: ClothingBackpackHECU
+  id: ClothingBackpackHECUBlack
+  name: black HECU backpack
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Back/Backpacks/HECU/backpack_black.rsi
+
+# HECU ghost role kit. Rifle ammo rides on the warbelt (ClothingBeltHECUFilled); the seclite and power cell go in
+# the pockets because this grid is one tile short for them.
+- type: entity
+  parent: ClothingBackpackHECU
+  id: ClothingBackpackHECUFilled
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    # largest first: the satchel grid's side pockets are only two tiles wide
+    - id: MedkitCombatFilled
+    - id: BoxSurvivalSlotsEngineering
+    - id: Stunbaton
+    - id: WeaponPistolMk58
+    - id: MagazinePistol
+      amount: 2
+    - id: BreachingCharge
+      amount: 2
+    - id: MindShieldImplanter
+    - id: Flash
+    - id: Zipties
+      amount: 2
+
+# HECU corpsman kit: HECU essentials plus the ERT medic's hypos, jugs and medical beam gun. The grid is exactly
+# full; the atropine rides on the belt and the mindshield implanter in suit storage (HECUMedicGear).
+- type: entity
+  parent: ClothingBackpackHECU
+  id: ClothingBackpackHECUMedicFilled
+  suffix: Filled, Medic
+  components:
+  - type: StorageFill
+    contents:
+    # largest first: the satchel grid's side pockets are only two tiles wide
+    - id: MedicalBeamGunBattery
+    - id: MedkitCombatFilled
+    - id: BoxSurvivalSlotsEngineering
+    - id: JugOxandrolone
+    - id: JugSalicylicAcid
+    - id: CentCommHypo
+    - id: ParamedHypo
+    - id: MagazineUniversalMagnum
+      amount: 2
+
+# IPC squad kits: black bags with the same fills, the IPC combat medical kit (welder, cable, cell, mesons) in place
+# of the organic one. StorageFill lists replace rather than merge, so they are restated in full.
+- type: entity
+  parent: ClothingBackpackHECUBlack
+  id: ClothingBackpackHECUFilledIPC
+  suffix: Filled, IPC
+  components:
+  - type: StorageFill
+    contents:
+    # largest first: the satchel grid's side pockets are only two tiles wide
+    - id: MedkitCombatPurpleFilled
+    - id: BoxSurvivalSlotsEngineering
+    - id: Stunbaton
+    - id: WeaponPistolMk58
+    - id: MagazinePistol
+      amount: 2
+    - id: BreachingCharge
+      amount: 2
+    - id: MindShieldImplanter
+    - id: Flash
+    - id: Zipties
+      amount: 2
+
+- type: entity
+  parent: ClothingBackpackHECUBlack
+  id: ClothingBackpackHECUMedicFilledIPC
+  suffix: Filled, Medic, IPC
+  components:
+  - type: StorageFill
+    contents:
+    # largest first: the satchel grid's side pockets are only two tiles wide
+    - id: MedicalBeamGunBattery
+    - id: MedkitCombatPurpleFilled
+    - id: BoxSurvivalSlotsEngineering
+    - id: JugOxandrolone
+    - id: JugSalicylicAcid
+    - id: CentCommHypo
+    - id: ParamedHypo
+    - id: MagazineUniversalMagnum
+      amount: 2

@@ -307,6 +307,16 @@
   id: HecuSoldier
   parent: EventHumanMindShielded
   components:
+  # Pirate: HECU rework start
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipERT
+  - type: HumanoidAppearanceOverride # Pirate: HECU appearance whitelist - keeps the squad visually consistent
+    hairStyles: HecuHairStyles # Pirate: HECU appearance whitelist
+    removeFacialHair: true # Pirate: HECU appearance whitelist
+    heightCm: 175, 190 # Pirate: HECU appearance whitelist
+    width: 0.95, 1.04 # Pirate: HECU appearance whitelist
+  # Pirate: HECU rework end
   - type: AutoImplant
     implants: [ FreedomImplant ]
   - type: GhostRole
@@ -319,9 +329,8 @@
     prototypes: [HECUOperativeGear]
   - type: RandomMetadata
     nameSegments:
-    - NamesMilitaryFirstLeader
-    - NamesMilitaryLast
-    nameFormat: name-format-standard
+    - NamesMilitaryLast # Pirate: HECU rework - officer ranks only fit the leader
+    nameFormat: name-format-ert-rifle # Pirate: HECU rework
 
 # G-Man
 

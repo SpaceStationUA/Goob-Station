@@ -333,6 +333,7 @@
       - SecurityAmmoStatic
       - SecurityAmmoStaticGoob
       - ERTAmmoStaticGoob
+      - M16AmmoStaticPirate # Pirate: M16 magazine recipes
       - SecurityHypoStatic
       - SecurityEquipmentStaticGoob
     - type: MaterialStorage
