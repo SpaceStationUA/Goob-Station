@@ -158,7 +158,10 @@
   name: knowledge-path-side-s6-shattered-ritual-name
   description: knowledge-path-side-s6-shattered-ritual-desc
   icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: ghoul_shattered }
-  productHereticKnowledge: ShatteredRitual
+  raiseProductEventOnMind: true # Pirate: migrate Shattered ritual to the upstream purchase event.
+  productEvent: !type:EventHereticAddKnowledge
+    knowledge:
+    - ShatteredRitual
   cost:
     KnowledgePoint: 1
   categories:

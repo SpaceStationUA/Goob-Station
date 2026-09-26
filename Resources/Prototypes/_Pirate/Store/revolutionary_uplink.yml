@@ -14,5 +14,3 @@
     - RevCoin
     balance:
       RevCoin: 0
-    sales:
-      enabled: false
