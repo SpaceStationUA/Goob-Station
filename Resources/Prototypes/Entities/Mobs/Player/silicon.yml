@@ -83,6 +83,7 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#5ed7aa"
+  - type: VoiceBroadcastConsole # Pirate: AI comms support voice broadcasts without runtime component injection.
   - type: ShowJobIcons
   - type: DamagedSiliconAccent
     startPowerCorruptionAtCharIdx: 4
