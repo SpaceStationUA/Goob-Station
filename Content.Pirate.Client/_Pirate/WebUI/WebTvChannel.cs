@@ -1,0 +1,129 @@
+// SPDX-FileCopyrightText: 2026 Pirate Development Team
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using System;
+
+namespace Content.Pirate.Client._Pirate.WebUI;
+
+/// <summary>
+///     Parsing for what a TV "channel" is — currently a YouTube video.
+///     The host whitelist is exactly the fence the picker browser is kept
+///     inside, so this list doubles as the license posture: only officially
+///     embeddable sources, each client keeps its own session.
+/// </summary>
+public static class WebTvChannel
+{
+    public enum WebTvKind { None, YouTube }
+
+    /// <summary>Single ground-truth host list (picker and TVs share it).</summary>
+    public static readonly string[] AllowHosts =
+    {
+        // YouTube: watch/shorts/embed pages, media + static CDNs, consent.
+        "youtube.com",
+        "*.youtube.com",
+        "youtu.be",
+        "youtube-nocookie.com",
+        "*.youtube-nocookie.com",
+        "googlevideo.com",
+        "*.googlevideo.com",
+        "ytimg.com",
+        "*.ytimg.com",
+        "ggpht.com",
+        "*.ggpht.com",
+        "google.com",
+        "*.google.com",
+        "gstatic.com",
+        "*.gstatic.com",
+    };
+
+    /// <summary>
+    ///     Turns a browsed URL into what the TV should actually play.
+    ///     Returns false for anything Uri-but-not-a-video (search pages,
+    ///     channel listings, playlists).
+    /// </summary>
+    public static bool TryBuild(string browsedUrl, out WebTvKind kind, out string playbackUrl, out string label)
+    {
+        kind = WebTvKind.None;
+        playbackUrl = "";
+        label = "";
+
+        // Plain ctor (no UriKind — it is not in the sandbox whitelist).
+        var uri = new Uri(browsedUrl);
+        if (uri.Scheme != "http" && uri.Scheme != "https")
+            return false;
+
+        var host = uri.Host.ToLowerInvariant();
+        var path = uri.AbsolutePath;
+
+        if (host is "youtube.com" or "www.youtube.com" or "m.youtube.com" or "music.youtube.com" or "youtu.be")
+        {
+            var id = host == "youtu.be"
+                ? FirstSegment(path)
+                : TryQuery(uri, "v") ?? PrefixId(path, "/embed/") ?? PrefixId(path, "/shorts/") ?? PrefixId(path, "/live/");
+
+            if (string.IsNullOrWhiteSpace(id) || id.Length is < 5 or > 20)
+                return false;
+
+            kind = WebTvKind.YouTube;
+            // Top-level /embed pages answer with YT error 153 in this CEF;
+            // the plain watch page's HTML5 player plays directly.
+            playbackUrl = "https://www.youtube.com/watch?v=" + id + "&hl=uk";
+            label = "YouTube";
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    ///     True when the shared state holds a recently picked channel that
+    ///     is still on screen somewhere (drives the picker's confirm step).
+    /// </summary>
+    public static bool NeedsConfirm(PirateTvClientState.Entry s, long nowMs)
+    {
+        return s.Kind != WebTvKind.None
+               && s.Url.Length > 0
+               && nowMs - s.Stamp < 15 * 60 * 1000;
+    }
+
+    // ===== tiny URL helpers =====
+
+    private static string? TryQuery(Uri uri, string key)
+    {
+        var q = uri.Query;
+        if (q.Length < 2)
+            return null;
+        foreach (var pair in q[1..].Split('&'))
+        {
+            var eq = pair.IndexOf('=');
+            var k = eq < 0 ? pair : pair[..eq];
+            if (string.Equals(k, key, StringComparison.OrdinalIgnoreCase) && eq >= 0)
+                return Uri.UnescapeDataString(pair[(eq + 1)..]);
+        }
+        return null;
+    }
+
+    private static string? PrefixId(string path, string prefix)
+    {
+        var idx = path.IndexOf(prefix, StringComparison.Ordinal);
+        if (idx < 0)
+            return null;
+        var rest = path[(idx + prefix.Length)..];
+        return FirstSegment(rest) is { Length: >= 5 } id ? id : null;
+    }
+
+    /// <summary>Returns the segment up to the next '/' (or the end).</summary>
+    private static string? FirstSegment(string tail)
+    {
+        if (tail.StartsWith('/'))
+            tail = tail[1..];
+        var end = tail.IndexOf('/');
+        var seg = end < 0 ? tail : tail[..end];
+        if (seg.Length == 0)
+            return null;
+        foreach (var ch in seg)
+            if (!char.IsLetterOrDigit(ch) && ch != '-' && ch != '_')
+                return null;
+        return seg;
+    }
+}

@@ -28,6 +28,7 @@ namespace Content.Client.PDA
         public const int ProgramListView = 1;
         public const int SettingsView = 2;
         public const int ProgramContentView = 3;
+        public const int ThemeView = 4; // Pirate: CEF theme picker view.
 
 
         private string _pdaOwner = Loc.GetString("comp-pda-ui-unknown");
@@ -43,6 +44,14 @@ namespace Content.Client.PDA
         public event Action<EntityUid>? OnProgramItemPressed;
         public event Action<EntityUid>? OnUninstallButtonPressed;
         public event Action<EntityUid>? OnInstallButtonPressed;
+
+        // Pirate: the theme picker opens as its own full view (radio view
+        // shape: nav-bar title + ProgramCloseButton return to the source
+        // tab); the CEF page host lives in the ThemeHost panel inside it.
+        public int ThemeSourceView { get; private set; } = HomeView;
+        public bool IsThemeView => _currentView == ThemeView;
+        public event Action<Control>? OnThemeToggleRequested;
+        public PanelContainer ThemeHostPanel => ThemeHost;
         public PdaMenu()
         {
             IoCManager.InjectDependencies(this);
@@ -60,6 +69,14 @@ namespace Content.Client.PDA
 
 
             HomeButton.OnPressed += _ => ToHomeScreen();
+
+            // Pirate: theme picker as its own view (nav-bar header pattern).
+            ThemeButton.OnPressed += _ =>
+            {
+                ThemeSourceView = _currentView == ThemeView ? ThemeSourceView : _currentView;
+                OnThemeToggleRequested?.Invoke(ThemeHostPanel!);
+                ToThemeView("PDA theme");
+            };
 
             ProgramListButton.OnPressed += _ =>
             {
@@ -94,6 +111,14 @@ namespace Content.Client.PDA
 
             ProgramCloseButton.OnPressed += _ =>
             {
+                // Pirate: over a theme view this returns to the source tab
+                // instead of going home (radio close pattern, no cart close).
+                if (IsThemeView)
+                {
+                    HideProgramHeader();
+                    ChangeView(ThemeSourceView);
+                    return;
+                }
                 HideProgramHeader();
                 ToHomeScreen();
             };
@@ -293,6 +318,25 @@ namespace Content.Client.PDA
             ProgramCloseButton.Visible = false;
             ProgramListButton.Visible = true;
             SettingsButton.Visible = true;
+        }
+
+        /// <summary>
+        /// Pirate: opens the CEF theme picker as a full view (radio shape:
+        /// ProgramTitle + ProgramCloseButton own the top bar).
+        /// </summary>
+        public void ToThemeView(string title)
+        {
+            HomeButton.IsCurrent = false;
+            ProgramListButton.IsCurrent = false;
+            SettingsButton.IsCurrent = false;
+            ProgramTitle.IsCurrent = true;
+            ProgramTitle.Visible = true;
+            ProgramCloseButton.Visible = true;
+            ProgramListButton.Visible = false;
+            SettingsButton.Visible = false;
+
+            ProgramTitle.LabelText = title;
+            ChangeView(ThemeView);
         }
 
         /// <summary>

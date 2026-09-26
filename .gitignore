@@ -312,3 +312,6 @@ Resources/MapImages
 
 config.json
 .github/workflows/update-prs.yaml
+
+# Solid/Vite WebUI build artifacts (Scripts/sh/buildwebui.sh staging output)
+Content.Pirate.Client/_Pirate/WebUI/Ui/dist_resources/

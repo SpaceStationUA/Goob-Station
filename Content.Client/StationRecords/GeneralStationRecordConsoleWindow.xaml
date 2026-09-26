@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                Title="{Loc 'general-station-record-console-window-title'}"
                MinSize="750 500">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Margin="5 5 5 10" HorizontalExpand="true" VerticalAlignment="Center">
+        <BoxContainer Name="TopBar" Margin="5 5 5 10" HorizontalExpand="true" VerticalAlignment="Center">
             <OptionButton Name="StationRecordsFilterType" MinWidth="200" Margin="0 0 10 0"/>
             <!-- Pirate: records photos (start) -->
             <LineEdit Name="StationRecordsFiltersValue"
@@ -31,24 +31,44 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                              Stretch="KeepAspectCentered"
                              MinSize="18 18" />
             </Button>
+            <Button Name="EvidenceBoardButton"
+                    MaxSize="32 32"
+                    StyleClasses="OpenBoth"
+                    Margin="0 0 10 0"
+                    ToolTip="{Loc 'general-station-record-console-toggle-board'}">
+                <TextureRect StyleClasses="ButtonSquare"
+                             TexturePath="/Textures/Interface/VerbIcons/information.svg.192dpi.png"
+                             Stretch="KeepAspectCentered"
+                             MinSize="18 18" />
+            </Button>
             <!-- Pirate: records photos (end) -->
         </BoxContainer>
-        <BoxContainer VerticalExpand="True">
-            <!-- Record listing -->
-            <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
+        <BoxContainer Name="MainBody" VerticalExpand="True">
+            <!-- Pirate: records photos (start) -->
+            <BoxContainer Name="ListingBlock" Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
                 <Label Name="RecordListingStatus" Visible="False" />
                 <ScrollContainer VerticalExpand="True">
                     <ItemList Name="RecordListing" />
                 </ScrollContainer>
             </BoxContainer>
             <!-- Pirate: records photos (start) -->
-            <BoxContainer Orientation="Vertical" Margin="5" HorizontalExpand="True">
+            <BoxContainer Name="DetailBlock" Orientation="Vertical" Margin="5" HorizontalExpand="True">
             <!-- Pirate: records photos (end) -->
+                <Button Name="PinBoardButton" Text="{Loc 'general-station-record-console-pin-board'}"
+                        Visible="False" HorizontalAlignment="Left" MaxWidth="200" Margin="0 0 0 4" />
                 <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'general-station-record-console-select-record-info'}"/>
                 <!-- Pirate: records photos (start) -->
                 <Control Name="RecordContainer" Visible="False" HorizontalExpand="True"/>
                 <!-- Pirate: records photos (end) -->
             </BoxContainer>
+            <!-- Pirate: evidence board (start) -->
+            <PanelContainer Name="EvidenceBoardView" Visible="False" HorizontalExpand="True" VerticalExpand="True" Margin="0 5 5 5">
+                <BoxContainer Name="BoardHostBox" Orientation="Vertical">
+                    <Button Name="BoardBackButton" Text="{Loc 'general-station-record-console-board-back'}"
+                            HorizontalAlignment="Left" MaxWidth="160" Margin="0 0 0 4" />
+                </BoxContainer>
+            </PanelContainer>
+            <!-- Pirate: evidence board (end) -->
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

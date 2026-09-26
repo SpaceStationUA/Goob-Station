@@ -98,6 +98,7 @@
       - NewsReaderCartridge
       - NanoChatCartridge # DeltaV
       - WalletCartridge # Pirate banking
+      - RadioCartridge # Pirate internet radio
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -182,6 +183,7 @@
     - NanoChatCartridge # DeltaV
     - CrimeAssistCartridge # Pirate
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BasePDA
@@ -198,6 +200,7 @@
       - MedTekCartridge
       - NanoChatCartridge # DeltaV
       - WalletCartridge # Pirate banking
+      - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BasePDA
@@ -516,6 +519,7 @@
     - AstroNavCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BasePDA
@@ -543,6 +547,7 @@
     - StockTradingCartridge # Pirate port - Delta-V stocks trading
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BasePDA
@@ -572,6 +577,7 @@
       - AstroNavCartridge
       - NanoChatCartridge # DeltaV
       - WalletCartridge # Pirate banking
+      - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BasePDA
@@ -885,6 +891,7 @@
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
     - GlimmerMonitorCartridge # Pirate end
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BasePDA
@@ -933,6 +940,7 @@
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1009,6 +1017,7 @@
       - NanoChatCartridge # DeltaV
       - GlimmerMonitorCartridge # Pirate
       - WalletCartridge # Pirate banking
+      - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: CentcomPDA
@@ -1039,6 +1048,7 @@
       - NanoChatCartridge # DeltaV
       - GlimmerMonitorCartridge # Pirate
       - WalletCartridge # Pirate banking
+      - RadioCartridge # Pirate internet radio
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1153,6 +1163,8 @@
        pda-syndi
   - type: PdaBorderColor
     borderColor: "#891417"
+  - type: PirateWebUiTheme
+    webThemeId: PirateSyndiWeb
   - type: Icon
     state: pda-syndi
   - type: CartridgeLoader
@@ -1162,6 +1174,7 @@
       - NanoTaskCartridge
       - NanoChatCartridge # DeltaV
       - WalletCartridge # Pirate banking
+      - RadioCartridge # Pirate internet radio
   # Pirate: nanochat network - routes NanoChat through the Syndicate relay instead of telecomms, and
   # keeps this PDA out of ordinary directories and logs. PiratePDA opts out. # Pirate: nanochat network
   - type: SyndicateNanoChatPda
@@ -1205,6 +1218,7 @@
       - NotekeeperCartridge
       - NanoTaskCartridge
       - MedTekCartridge
+      - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: [ SyndiOperativePDA, BaseSyndicateContraband ]
@@ -1271,6 +1285,7 @@
       - NanoChatCartridge # DeltaV
       - GlimmerMonitorCartridge # Pirate
       - WalletCartridge # Pirate banking
+      - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1405,6 +1420,7 @@
     - LogProbeCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1436,6 +1452,7 @@
     - NanoChatCartridge # DeltaV
     - CrimeAssistCartridge # Pirate
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: ClownPDA
@@ -1603,6 +1620,7 @@
       - NanoTaskCartridge
       - MedTekCartridge
       - NanoChatCartridge # DeltaV
+      - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: [BasePDA, SelectableLock]

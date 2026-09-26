@@ -190,6 +190,7 @@
     - AstroNavCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: NavyCaptainPDA
@@ -265,6 +266,7 @@
     - NanoTaskCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BaseMedicalPDA
@@ -339,6 +341,15 @@
   components:
   - type: Pda
     id: RadioHostIDCard
+  - type: CartridgeLoader
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - NanoChatCartridge
+      - WalletCartridge
+      - RadioCartridge
 
 - type: entity
   parent: CentcomPDA

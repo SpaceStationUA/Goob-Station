@@ -7,7 +7,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.UIKit.UserInterface.Lobby;
 
-[Virtual]
 public sealed class AlternativeJobSelector : OptionButton
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

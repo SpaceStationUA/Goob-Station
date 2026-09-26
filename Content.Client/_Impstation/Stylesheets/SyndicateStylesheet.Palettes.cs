@@ -2,7 +2,7 @@ using Content.Client.Stylesheets.Palette;
 
 namespace Content.Client._Impstation.Stylesheets;
 
-public sealed partial class SyndicateStylesheet
+public partial class SyndicateStylesheet
 {
     public override ColorPalette PrimaryPalette => Palettes.Maroon;
     public override ColorPalette SecondaryPalette => ColorPalette.FromHexBase("#303030");

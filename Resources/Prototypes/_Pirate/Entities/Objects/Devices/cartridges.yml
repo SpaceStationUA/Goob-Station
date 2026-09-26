@@ -82,3 +82,23 @@
     icon:
       sprite: Objects/Weapons/Bombs/c4.rsi
       state: icon
+
+- type: entity
+  parent: BaseItem
+  id: RadioCartridge
+  name: картридж интернет-радио
+  description: Картридж для прослушивания интернет-радиостанций.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-m
+  - type: Icon
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-m
+  - type: UIFragment
+    ui: !type:RadioUi
+  - type: Cartridge
+    programName: radio-program-name
+    icon:
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-m

@@ -438,6 +438,7 @@
   description: This can be used to check station records.
   components:
   - type: GeneralStationRecordConsole
+  - type: PirateEvidenceBoard # Pirate: evidence board tab
   - type: UserInterface
     interfaces:
         enum.GeneralStationRecordConsoleKey.Key:

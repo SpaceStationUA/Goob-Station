@@ -93,6 +93,9 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         };
 
         AddRecordButton.OnPressed += _ => CreateRecordFromSearch();
+        EvidenceBoardButton.OnPressed += _ => ToggleBoard(); // Pirate: evidence board
+        BoardBackButton.OnPressed += _ => ToggleBoard(); // Pirate: evidence board
+        PinBoardButton.OnPressed += _ => PinRecordToBoard(); // Pirate: evidence board
         DeleteRecordButton.OnPressed += _ =>
         {
             if (_selectedKey == null)
@@ -137,6 +140,8 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         }
 
         _selectedKey = state.SelectedKey; // Pirate: records photos
+        _record = state.Record; // Pirate: evidence board
+        PinBoardButton.Visible = _record != null; // Pirate: evidence board
         if (previousSelectedKey != _selectedKey) // Pirate: records photos
             ResetDeleteConfirmation(); // Pirate: records photos
 
@@ -215,6 +220,55 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     {
         return Loc.GetString($"general-station-record-{type.ToString().ToLower()}-filter");
     }
+
+    #region Pirate: evidence board
+    private GeneralStationRecord? _record; // Pirate: evidence board
+
+    private void ToggleBoard()
+    {
+        var opening = !EvidenceBoardView.Visible;
+        EvidenceBoardView.Visible = opening;
+        TopBar.Visible = !opening; // board gets the full window height
+        ListingBlock.Visible = !opening;
+        DetailBlock.Visible = !opening;
+        if (opening)
+        {
+            // Content.Client cannot reference the pirate client assembly;
+            // the provider bridge (same shape as PdaThemeHost) attaches.
+            Content.Pirate.UIKit.EvidenceBoardHost.Toggle(BoardHostBox, _console);
+        }
+    }
+
+    private void PinRecordToBoard()
+    {
+        var record = _record;
+        if (record == null)
+            return;
+        const string us = "\u001F";
+        var fields = new[]
+        {
+            record.Name ?? "",
+            record.JobTitle ?? "",
+            record.Age.ToString(),
+            record.Species ?? "",
+            record.Gender.ToString(),
+            record.Fingerprint ?? "",
+            record.DNA ?? "",
+        };
+        // -1/-1 = server picks the free patch.
+        var payload = $"-1|-1|{string.Join(us, fields)}";
+        IoCManager.Resolve<IEntityNetworkManager>().SendSystemNetworkMessage(
+            new Content.Pirate.Shared.WebUi.EvidenceBoardRequestEvent
+            {
+                Console = IoCManager.Resolve<IEntityManager>().GetNetEntity(_console),
+                Action = "pinchar",
+                Data = payload,
+                RecordKey = _selectedKey ?? 0, // portrait lookup key
+            });
+        if (!EvidenceBoardView.Visible)
+            ToggleBoard(); // show where the pin landed
+    }
+    #endregion
 
     #region Pirate: records photos
     private void UpdateRecordActionButtons()

@@ -2,7 +2,6 @@
 
 namespace Content.Shared.Crayon;
 
-[Virtual]
 public abstract class SharedCrayonSystem : EntitySystem
 {
     #region Pirate: light paint glyph color

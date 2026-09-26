@@ -4,4 +4,8 @@ defaultWindowTitle: Space Station 14
 windowIconSet: /Textures/Logo/icon
 splashLogo: /Textures/Logo/splashlogo.png
 
+# Optional engine modules loaded by the client.
+modules:
+  - Robust.Client.WebView
+
 # PJB PLEASE
