@@ -47,8 +47,8 @@ marking-VulpTailFade-vulp = Хвіст
 marking-VulpTailFade-vulp-fade = Градієнт
 marking-VulpTailFade = Стандартний (Градієнт)
 
-marking-VulpTailFanAnimated-FanAnimated = Хвіст
-marking-VulpTailFanAnimated-FanAnimated-tip = Кінчик
+marking-VulpTailFanAnimated-fan_wag = Хвіст
+marking-VulpTailFanAnimated-fan_wag-tip = Кінчик
 marking-VulpTailFanAnimated = Вентилятор
 
 ### Вуха
