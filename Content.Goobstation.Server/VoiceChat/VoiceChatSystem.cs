@@ -210,7 +210,7 @@ public sealed partial class VoiceChatSystem : EntitySystem
     private void HandleFrame(VoiceWebFrame frame, TimeSpan now)
     {
         if (!_player.TryGetSessionById(frame.User, out var session) ||
-            session.Status != SessionStatus.InGame)
+            session.Status != SessionStatus.InGame || !_voice.CanUseVoice(session))
         {
             return;
         }
@@ -336,7 +336,7 @@ public sealed partial class VoiceChatSystem : EntitySystem
     {
         if (!_mixers.TryGetValue(channel, out var mixer))
         {
-            mixer = new VoiceRadioMixer(channel, _net, AllocateStreamId);
+            mixer = new VoiceRadioMixer(channel, _net, AllocateStreamId, _voice.CanUseVoice);
             _mixers[channel] = mixer;
         }
 
@@ -434,6 +434,7 @@ public sealed partial class VoiceChatSystem : EntitySystem
         foreach (var session in _sessions)
         {
             if (session.Status == SessionStatus.InGame &&
+                _voice.CanUseVoice(session) &&
                 _voice.Receives(session.UserId) &&
                 IsInLobby(session))
             {
@@ -577,6 +578,7 @@ public sealed partial class VoiceChatSystem : EntitySystem
         {
             if (session.Status != SessionStatus.InGame ||
                 session.AttachedEntity is not { } listener ||
+                !_voice.CanUseVoice(session) ||
                 !_voice.Receives(session.UserId))
             {
                 continue;

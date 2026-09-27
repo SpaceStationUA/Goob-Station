@@ -26,6 +26,9 @@ public sealed class JobWhitelistManager : IPostInjectInit
     [Dependency] private readonly ILogManager _logManager = default!;
 
     private readonly Dictionary<NetUserId, HashSet<string>> _whitelists = new();
+
+    // Pirate: voice eligibility follows loaded job whitelist changes without a database lookup per frame.
+    public event Action<NetUserId>? WhitelistChanged;
     private ISawmill _sawmill = default!;
 
     public void Initialize()
@@ -60,6 +63,7 @@ public sealed class JobWhitelistManager : IPostInjectInit
     private void FinishLoad(ICommonSession session)
     {
         SendJobWhitelist(session);
+        WhitelistChanged?.Invoke(session.UserId);
     }
 
     private void ClientDisconnected(ICommonSession session)
@@ -70,7 +74,10 @@ public sealed class JobWhitelistManager : IPostInjectInit
     public async void AddWhitelist(NetUserId player, ProtoId<JobPrototype> job)
     {
         if (_whitelists.TryGetValue(player, out var whitelists))
+        {
             whitelists.Add(job);
+            WhitelistChanged?.Invoke(player);
+        }
 
         await _db.AddJobWhitelist(player, job);
 
@@ -109,9 +116,16 @@ public sealed class JobWhitelistManager : IPostInjectInit
         return whitelists.Contains(job);
     }
 
+    // Pirate: voice access must deny while player data is loading without logging an expected miss.
+    public bool HasLoadedWhitelist(NetUserId player, ProtoId<JobPrototype> job)
+    {
+        return _whitelists.TryGetValue(player, out var whitelists) && whitelists.Contains(job);
+    }
+
     public async void RemoveWhitelist(NetUserId player, ProtoId<JobPrototype> job)
     {
         _whitelists.GetValueOrDefault(player)?.Remove(job);
+        WhitelistChanged?.Invoke(player);
         await _db.RemoveJobWhitelist(player, job);
 
         if (_player.TryGetSessionById(new NetUserId(player), out var session))

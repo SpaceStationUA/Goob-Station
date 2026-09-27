@@ -6,10 +6,19 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Content.Pirate.Common.CCVar; // Pirate: voice access controls.
+using Content.Server.Administration.Managers;
+using Content.Server.Administration;
+using Content.Server.Players.JobWhitelist;
+using Content.Shared.Roles;
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Shared.VoiceChat;
+using Robust.Shared.Prototypes;
 using Robust.Server.Player;
+using Robust.Shared.Asynchronous;
+using Robust.Shared.Player;
 using Robust.Server.ServerStatus;
+using Robust.Shared.Enums;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -25,15 +34,20 @@ public sealed class VoiceChatManager
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IStatusHost _statusHost = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IAdminManager _admins = default!;
+    [Dependency] private readonly JobWhitelistManager _jobWhitelist = default!;
+    [Dependency] private readonly ITaskManager _tasks = default!;
 
     private const string PagePath = "/voice";
     private const string CodeAlphabet = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
     private const int CodeLength = 8;
     private const string ConfigPlaceholder = "/*VOICE_CONFIG*/";
+    private static readonly ProtoId<JobPrototype> VoiceWhitelistJob = "Captain"; // Pirate: use the existing Captain role whitelist.
 
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
     private readonly ConcurrentDictionary<string, NetUserId> _tokens = new();
+    private readonly ConcurrentDictionary<NetUserId, byte> _eligible = new(); // Pirate: safe for the WebSocket thread.
     private readonly Dictionary<NetUserId, string> _userTokens = new();
     private readonly HashSet<NetUserId> _hearSelf = new();
     private readonly HashSet<NetUserId> _notReceiving = new();
@@ -60,11 +74,15 @@ public sealed class VoiceChatManager
         _net.RegisterNetMessage<MsgVoiceLinkRequest>(OnLinkRequest);
         _net.RegisterNetMessage<MsgVoiceSettings>(OnSettings);
         _net.RegisterNetMessage<MsgVoiceStatus>();
+        _net.RegisterNetMessage<MsgVoiceAccess>();
         _net.RegisterNetMessage<MsgVoiceSpeakerInfo>();
         _net.RegisterNetMessage<MsgVoiceSelf>();
         _net.RegisterNetMessage<MsgVoicePushToTalk>(message => PushToTalkReceived?.Invoke(message.MsgChannel.UserId, message.Pressed, message.Radio));
         _net.RegisterNetMessage<MsgVoiceMicMute>(message => MicMuteReceived?.Invoke(message.MsgChannel.UserId, message.Muted));
         _net.Disconnect += OnDisconnect;
+        _player.PlayerStatusChanged += OnPlayerStatusChanged;
+        _jobWhitelist.WhitelistChanged += OnWhitelistChanged;
+        _admins.OnPermsChanged += OnAdminPermsChanged;
 
         LoadWebFiles();
         _statusHost.AddHandler(HandleHttpRequestAsync);
@@ -73,12 +91,21 @@ public sealed class VoiceChatManager
         _cfg.OnValueChanged(GoobCVars.VoiceChatTrustedProxies, _ => ApplyLimits());
         _cfg.OnValueChanged(GoobCVars.VoiceChatMaxConnectionsPerIp, _ => ApplyLimits());
         _cfg.OnValueChanged(GoobCVars.VoiceChatWebSocketBind, _ => RestartServer());
+        _cfg.OnValueChanged(PirateCVars.VoiceChatForAll, OnAccessCVarChanged);
+        _cfg.OnValueChanged(PirateCVars.VoiceChatAdmins, OnAccessCVarChanged);
+        _cfg.OnValueChanged(PirateCVars.VoiceChatWhitelisted, OnAccessCVarChanged);
         _cfg.OnValueChanged(GoobCVars.VoiceChatEnabled, OnEnabledChanged, true);
     }
 
     public void Shutdown()
     {
         _cfg.UnsubValueChanged(GoobCVars.VoiceChatEnabled, OnEnabledChanged);
+        _cfg.UnsubValueChanged(PirateCVars.VoiceChatForAll, OnAccessCVarChanged);
+        _cfg.UnsubValueChanged(PirateCVars.VoiceChatAdmins, OnAccessCVarChanged);
+        _cfg.UnsubValueChanged(PirateCVars.VoiceChatWhitelisted, OnAccessCVarChanged);
+        _jobWhitelist.WhitelistChanged -= OnWhitelistChanged;
+        _admins.OnPermsChanged -= OnAdminPermsChanged;
+        _player.PlayerStatusChanged -= OnPlayerStatusChanged;
         _net.Disconnect -= OnDisconnect;
         StopServer();
     }
@@ -95,6 +122,70 @@ public sealed class VoiceChatManager
     public bool IsWebConnected(NetUserId user)
     {
         return _server?.IsConnected(user) ?? false;
+    }
+
+    // Pirate: refreshed on policy, whitelist, and admin changes; safe on the WebSocket thread.
+    public bool CanUseVoice(ICommonSession session) => CanUseVoice(session.UserId);
+    public bool CanUseVoice(NetUserId user) => _eligible.ContainsKey(user);
+
+    private bool HasVoicePermission(ICommonSession session)
+    {
+        return _enabled &&
+               (_cfg.GetCVar(PirateCVars.VoiceChatForAll) ||
+                _cfg.GetCVar(PirateCVars.VoiceChatAdmins) && _admins.IsAdmin(session) ||
+                _cfg.GetCVar(PirateCVars.VoiceChatWhitelisted) &&
+                _jobWhitelist.HasLoadedWhitelist(session.UserId, VoiceWhitelistJob));
+    }
+
+    private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs args)
+    {
+        if (args.NewStatus == SessionStatus.Connected)
+            RefreshAccess(args.Session);
+    }
+
+    private void OnWhitelistChanged(NetUserId user)
+    {
+        _tasks.RunOnMainThread(() =>
+        {
+            if (_player.TryGetSessionById(user, out var session))
+                RefreshAccess(session);
+        });
+    }
+
+    private void OnAdminPermsChanged(AdminPermsChangedEventArgs args)
+    {
+        RefreshAccess(args.Player);
+    }
+
+    private void OnAccessCVarChanged(bool enabled)
+    {
+        RefreshAllAccess();
+    }
+
+    private void RefreshAllAccess()
+    {
+        foreach (var session in _player.Sessions)
+            RefreshAccess(session);
+    }
+
+    private void RefreshAccess(ICommonSession session)
+    {
+        var allowed = HasVoicePermission(session);
+        if (allowed)
+            _eligible.TryAdd(session.UserId, 0);
+        else
+            RevokeAccess(session.UserId);
+
+        _net.ServerSendMessage(new MsgVoiceAccess { Allowed = allowed }, session.Channel);
+    }
+
+    private void RevokeAccess(NetUserId user)
+    {
+        _eligible.TryRemove(user, out _);
+        if (_userTokens.Remove(user, out var token))
+            _tokens.TryRemove(token, out _);
+
+        _server?.Disconnect(user);
     }
 
     public bool HearsSelf(NetUserId user)
@@ -158,6 +249,8 @@ public sealed class VoiceChatManager
             StartServer();
         else
             StopServer();
+
+        RefreshAllAccess();
     }
 
     private void RestartServer()
@@ -223,7 +316,10 @@ public sealed class VoiceChatManager
 
     private NetUserId? ValidateToken(string token)
     {
-        return _tokens.TryGetValue(NormalizeCode(token), out var user) ? user : null;
+        if (_tokens.TryGetValue(NormalizeCode(token), out var user) && _eligible.ContainsKey(user))
+            return user;
+
+        return null;
     }
 
     private static string NormalizeCode(string code)
@@ -259,7 +355,11 @@ public sealed class VoiceChatManager
 
     private void OnLinkRequest(MsgVoiceLinkRequest message)
     {
-        if (!_enabled || _server == null)
+        if (!_player.TryGetSessionById(message.MsgChannel.UserId, out var session))
+            return;
+
+        RefreshAccess(session);
+        if (!CanUseVoice(session) || _server == null)
             return;
 
         var user = message.MsgChannel.UserId;
@@ -309,6 +409,7 @@ public sealed class VoiceChatManager
     {
         if (_userTokens.Remove(args.Channel.UserId, out var code))
             _tokens.TryRemove(code, out _);
+        _eligible.TryRemove(args.Channel.UserId, out _);
 
         _server?.Disconnect(args.Channel.UserId);
 
