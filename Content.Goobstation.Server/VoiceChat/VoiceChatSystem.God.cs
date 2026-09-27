@@ -116,7 +116,7 @@ public sealed partial class VoiceChatSystem
         if (!_adminManager.HasAdminFlag(session, AdminFlags.Admin) || !CollectGodRecipients(session, god))
         {
             StopGodVoice(session);
-            return false;
+            return true; // Pirate: consume the private frame; never fall through to ordinary routing.
         }
 
         var speaker = GetSpeaker(frame.User);

@@ -68,8 +68,17 @@ public sealed class VoiceJoinPromptUIController : UIController, IOnStateEntered<
 
     private void OnAccessChanged(bool allowed)
     {
-        if (!allowed)
-            UIManager.GetUIController<VoiceChatGuideUIController>().Close();
+        if (allowed)
+        {
+            if (_cfg.GetCVar(GoobCVars.VoiceChatJoinPrompt))
+                SchedulePrompt();
+
+            return;
+        }
+
+        UIManager.GetUIController<VoiceChatGuideUIController>().Close();
+        _prompted = false;
+        _promptAt = null;
     }
 
     private void OnConnected(object? sender, NetChannelArgs args)

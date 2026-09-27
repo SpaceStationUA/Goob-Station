@@ -293,7 +293,7 @@ public sealed partial class VoiceChatSystem : EntitySystem
         foreach (var transmission in route.Radio)
         {
             if (transmission.Targets.Count > 0)
-                GetMixer(transmission.Channel).Push(speaker.Id, speaker.CopyPcm(), ToLevelByte(levels.Overall), transmission.Targets, now);
+                GetMixer(transmission.Channel).Push(session.UserId, speaker.Id, speaker.CopyPcm(), ToLevelByte(levels.Overall), transmission.Targets, now);
         }
 
         if (route.Groups.Count == 0 || speaker.Outgoing(frame.Payload, _format) is not { } payload)

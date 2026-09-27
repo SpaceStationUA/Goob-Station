@@ -35,7 +35,7 @@ public sealed class VoiceRadioMixer(string channel, IServerNetManager net, Func<
 
     public bool Idle => _nextFrame == null && _variants.Count == 0;
 
-    public void Push(ushort speaker, short[] pcm, byte level, Dictionary<INetChannel, VoiceMixTarget> recipients, TimeSpan now)
+    public void Push(NetUserId user, ushort speaker, short[] pcm, byte level, Dictionary<INetChannel, VoiceMixTarget> recipients, TimeSpan now)
     {
         if (!_contributors.TryGetValue(speaker, out var contributor))
         {
@@ -43,6 +43,7 @@ public sealed class VoiceRadioMixer(string channel, IServerNetManager net, Func<
             _contributors[speaker] = contributor;
         }
 
+        contributor.User = user;
         contributor.Frames.Enqueue((pcm, level));
         while (contributor.Frames.Count > MaxQueuedFrames)
         {
@@ -96,6 +97,13 @@ public sealed class VoiceRadioMixer(string channel, IServerNetManager net, Func<
         _expired.Clear();
         foreach (var (speaker, contributor) in _contributors)
         {
+            // Pirate: discard queued speech immediately when the speaker loses voice access.
+            if (!canListen(contributor.User))
+            {
+                _expired.Add(speaker);
+                continue;
+            }
+
             if (!contributor.Primed && contributor.Frames.Count >= PrimeFrames)
                 contributor.Primed = true;
 
@@ -277,6 +285,7 @@ public sealed class VoiceRadioMixer(string channel, IServerNetManager net, Func<
 
     private sealed class Contributor
     {
+        public NetUserId User;
         public readonly Queue<(short[] Pcm, byte Level)> Frames = new();
         public Dictionary<INetChannel, VoiceMixTarget> Recipients = new();
         public TimeSpan LastPush;
