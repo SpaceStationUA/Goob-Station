@@ -58,7 +58,7 @@
   parentJobId: Clown
 
 - type: alternativeJob
-  id: AlternativeJobPrankster
+  id: AlternativeJobJester
   jobName: job-alternative-name-jester
   jobDescription: job-description-clown
   parentJobId: Clown
@@ -205,7 +205,7 @@
   parentJobId: AdministrativeAssistant
 
 - type: alternativeJob
-  id: AlternativeJobSecretary
+  id: AlternativeJobAdjutant
   jobName: job-alternative-name-adjutant
   jobDescription: job-description-admin-assistant
   parentJobId: AdministrativeAssistant
