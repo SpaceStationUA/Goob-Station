@@ -69,7 +69,7 @@
   jobDescription: job-description-service-worker
   parentJobId: ServiceWorker
 
-  - type: alternativeJob
+- type: alternativeJob
   id: AlternativeJobSteward
   jobName: job-alternative-name-steward
   jobDescription: job-description-service-worker
