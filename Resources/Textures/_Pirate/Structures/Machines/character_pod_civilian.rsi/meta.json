@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from NovaSector at commit 9d5bb13a76866960c76cb78217e7436e65239268, icons/obj/machines/sleeper.dmi, state sleeper_s",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pod",
+      "directions": 4
+    }
+  ]
+}
