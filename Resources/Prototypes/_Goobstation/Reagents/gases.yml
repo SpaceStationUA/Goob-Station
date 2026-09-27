@@ -251,9 +251,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -0.5 # Pirate: healium nerf
-            Toxin: -1 # Pirate: healium nerf
-            Brute: -0.5 # Pirate: healium nerf
+            Burn: -1.5 # Pirate: healium nerf
+            Toxin: -3 # Pirate: healium nerf
+            Brute: -1.5 # Pirate: healium nerf
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -262,9 +262,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -1 # Pirate: healium nerf
-            Toxin: -2 # Pirate: healium nerf
-            Brute: -1 # Pirate: healium nerf
+            Burn: -2 # Pirate: healium nerf
+            Toxin: -4 # Pirate: healium nerf
+            Brute: -2 # Pirate: healium nerf
       - !type:PopupMessage
         conditions:
         - !type:ReagentCondition
@@ -300,7 +300,7 @@
           type: [Hydrakin]
     Gas:
       #region Pirate: healium nerf
-      # High-dose healing is 2x base, capped at 120 total per 30-unit breath.
+      # Pirate: healium nerf - Stronger gas healing is capped at 240 per breath.
       # Keep 23.99/24 adjacent: bounds are inclusive and reagent precision is 0.01.
       #endregion Pirate: healium nerf
       effects:
@@ -312,9 +312,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -0.5 # Pirate: healium nerf
-            Toxin: -1 # Pirate: healium nerf
-            Brute: -0.5 # Pirate: healium nerf
+            Burn: -1.5 # Pirate: healium nerf
+            Toxin: -3 # Pirate: healium nerf
+            Brute: -1.5 # Pirate: healium nerf
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -323,9 +323,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -1 # Pirate: healium nerf
-            Toxin: -2 # Pirate: healium nerf
-            Brute: -1 # Pirate: healium nerf
+            Burn: -2 # Pirate: healium nerf
+            Toxin: -4 # Pirate: healium nerf
+            Brute: -2 # Pirate: healium nerf
       - !type:PopupMessage
         conditions:
         - !type:ReagentCondition

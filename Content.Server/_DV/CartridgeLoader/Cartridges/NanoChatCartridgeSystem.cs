@@ -762,7 +762,7 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
             }
             else if (syndicate)
             {
-                if (!_nanoChatNetwork.HasOrdinaryCoverage(topology, device))
+                if (_nanoChatNetwork.IsAdminDevice(device) || !_nanoChatNetwork.HasOrdinaryCoverage(topology, device)) // Pirate: admin NanoChat isolation and camera reset
                     continue;
             }
             else if (!nanoChatCard.ListNumber || !_nanoChatNetwork.CanOrdinaryReach(topology, loader, device))
