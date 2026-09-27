@@ -1017,6 +1017,7 @@
   suffix: Admin
   description: If you are not an admin please return this PDA to the nearest admin.
   components:
+  - type: AdminNanoChatPda # Pirate: admin NanoChat isolation and camera reset
   - type: Pda
     id: UniversalIDCard
   - type: HealthAnalyzer
