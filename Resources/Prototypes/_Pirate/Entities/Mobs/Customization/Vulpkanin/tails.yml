@@ -383,3 +383,27 @@
       state: vulp_wag
     - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/vulp.rsi
       state: vulp_wag-fade
+
+# Fan
+- type: marking
+  id: VulpTailFanAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Vulpkanin ]
+  layering:
+    fan_wag_BACK: TailBehind
+    fan_wag-tip_BACK: TailBehind
+    fan_wag: TailOversuit
+    fan_wag-tip: TailOversuit
+  colorLinks:
+    fan_wag_BACK: fan_wag
+    fan_wag-tip_BACK: fan_wag-tip
+  sprites:
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fan.rsi
+      state: fan_wag_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fan.rsi
+      state: fan_wag-tip_BACK
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fan.rsi
+      state: fan_wag
+    - sprite: _Pirate/Mobs/Customization/Vulpkanin/Tail/fan.rsi
+      state: fan_wag-tip

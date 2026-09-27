@@ -69,8 +69,6 @@
       - id: PlushieRainbowLizard
         orGroup: GiftPool
       # PIRATE PLUSHIES START VVVV
-      - id: PlushieVulpSusie
-        orGroup: GiftPool
       - id: PlushieEntony
         orGroup: GiftPool
       - id: PlushieIpcCat

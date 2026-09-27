@@ -321,15 +321,6 @@
   ghostDescription: "Він дивится тобі прямо у очі, чи хоче він тебе з'їсти?"
 
 - type: customGhost
-  id: Vareniko-ghost
-  ckey: Vareniko
-  sprite:
-    - _Pirate/Ghosts/Vareniko.rsi
-  alpha: 1
-  ghostName: Vareniko
-  ghostDescription: Уєєє... Ненавиджу генокрадів і єретиків... а ще різників... а ще...
-
-- type: customGhost
   id: BlackTank-ghost
   ckey: BlackTank
   sprite:

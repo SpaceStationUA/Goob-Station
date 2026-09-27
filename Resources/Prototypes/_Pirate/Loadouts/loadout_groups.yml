@@ -25,7 +25,6 @@
   id: PiratePlushies
   name: loadout-group-trinkets
   loadouts:
-  - PlushieVulpSusie
   - PlushieEntony
   - PlushieIpcCat
   - PlushieTK

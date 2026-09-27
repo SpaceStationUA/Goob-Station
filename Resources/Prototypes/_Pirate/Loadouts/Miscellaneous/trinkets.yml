@@ -118,13 +118,6 @@
   groupBy: "plushies"
 
 - type: loadout
-  id: PlushieVulpSusie
-  storage:
-    back:
-    - PlushieVulpSusie
-  groupBy: "plushies"
-
-- type: loadout
   id: PlushieTayler
   storage:
     back:

@@ -47,6 +47,10 @@ marking-VulpTailFade-vulp = Хвіст
 marking-VulpTailFade-vulp-fade = Градієнт
 marking-VulpTailFade = Стандартний (Градієнт)
 
+marking-VulpTailFanAnimated-FanAnimated = Хвіст
+marking-VulpTailFanAnimated-FanAnimated-tip = Кінчик
+marking-VulpTailFanAnimated = Вентилятор
+
 ### Вуха
 marking-VulpEarFennecBig-fennec = Вуха
 marking-VulpEarFennecBig-fennec-inner = Внутрішня частина
