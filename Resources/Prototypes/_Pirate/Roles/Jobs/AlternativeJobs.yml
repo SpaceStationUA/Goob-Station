@@ -301,8 +301,8 @@
   parentJobId: ChiefEngineer
 
 - type: alternativeJob
-  id: AlternativeJobNuclearPhysicist
-  jobName: job-alternative-name-nuclear-physicist
+  id: AlternativeJobNuclearCEMil
+  jobName: job-alternative-name-CE-Mil
   jobDescription: job-description-ce
   parentJobId: ChiefEngineer
 
