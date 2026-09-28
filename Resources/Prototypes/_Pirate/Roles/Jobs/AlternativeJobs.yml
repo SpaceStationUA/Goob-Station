@@ -11,6 +11,18 @@
   jobName: job-alternative-name-logistician
   jobDescription: job-description-qm
   parentJobId: Quartermaster
+
+- type: alternativeJob
+  id: AlternativeJobDirectorQM
+  jobName: job-alternative-name-DirectorQM
+  jobDescription: job-description-qm
+  parentJobId: Quartermaster
+
+- type: alternativeJob
+  id: AlternativeJobMilQM
+  jobName: job-alternative-name-MilQM
+  jobDescription: job-description-qm
+  parentJobId: Quartermaster
 #endregion
 
 #region Cent Com
@@ -42,6 +54,18 @@
   id: AlternativeJobBaker
   jobName: job-alternative-name-baker
   jobDescription: job-description-baker
+  parentJobId: Chef
+
+- type: alternativeJob
+  id: AlternativeJobPizzaiolo
+  jobName: job-alternative-name-pizzaiolo
+  jobDescription: job-description-pizzaiolo
+  parentJobId: Chef
+
+- type: alternativeJob
+  id: AlternativeJobConfectioner
+  jobName: job-alternative-name-confectioner
+  jobDescription: job-description-chef
   parentJobId: Chef
 
 - type: alternativeJob
@@ -199,6 +223,18 @@
   parentJobId: HeadOfSecurity
 
 - type: alternativeJob
+  id: AlternativeJobDirectorHOS
+  jobName: job-alternative-name-director-hos
+  jobDescription: job-description-hos
+  parentJobId: HeadOfSecurity
+
+- type: alternativeJob
+  id: AlternativeJobCommanderHOS
+  jobName: job-alternative-name-commander
+  jobDescription: job-description-hos
+  parentJobId: HeadOfSecurity
+
+- type: alternativeJob
   id: AlternativeJobSecretary
   jobName: job-alternative-name-secretary
   jobDescription: job-description-admin-assistant
@@ -219,6 +255,12 @@
 - type: alternativeJob
   id: AlternativeJobOfficerHOP
   jobName: job-alternative-name-Officer-HOP
+  jobDescription: job-description-hop
+  parentJobId: HeadOfPersonnel
+
+- type: alternativeJob
+  id: AlternativeJobDirectorHOP
+  jobName: job-alternative-name-Director-HOP
   jobDescription: job-description-hop
   parentJobId: HeadOfPersonnel
 
@@ -252,6 +294,17 @@
   jobIconProtoId: JobIconNuclearPhysicist
   parentJobId: StationEngineer
 
+- type: alternativeJob
+  id: AlternativeJobCEDir
+  jobName: job-alternative-name-CE-Director
+  jobDescription: job-description-ce
+  parentJobId: ChiefEngineer
+
+- type: alternativeJob
+  id: AlternativeJobNuclearPhysicist
+  jobName: job-alternative-name-nuclear-physicist
+  jobDescription: job-description-ce
+  parentJobId: ChiefEngineer
 
 #endregion
 
@@ -284,10 +337,52 @@
   parentJobId: Chemist
 
 - type: alternativeJob
+  id: AlternativeJobBioChem
+  jobName: job-alternative-name-biochem
+  jobDescription: job-description-chemist
+  parentJobId: Chemist
+
+- type: alternativeJob
+  id: AlternativeJobToxChem
+  jobName: job-alternative-name-toxchem
+  jobDescription: job-description-chemist
+  parentJobId: Chemist
+
+- type: alternativeJob
   id: AlternativeJobSMO # SMO - Senior Medical Officer
   jobName: job-alternative-name-smo
   jobDescription: job-description-cmo
   parentJobId: ChiefMedicalOfficer
+
+- type: alternativeJob
+  id: AlternativeJobDirectorMed
+  jobName: job-alternative-name-director-med
+  jobDescription: job-description-cmo
+  parentJobId: ChiefMedicalOfficer
+
+- type: alternativeJob
+  id: AlternativeJobOrdIntern
+  jobName: job-alternative-name-ord-intern
+  jobDescription: job-description-intern
+  parentJobId: MedicalIntern
+
+- type: alternativeJob
+  id: AlternativeJobPrtIntern
+  jobName: job-alternative-name-pract-intern
+  jobDescription: job-description-intern
+  parentJobId: MedicalIntern
+
+- type: alternativeJob
+  id: AlternativeJobEpViro
+  jobName: job-alternative-name-ep-viro
+  jobDescription: job-description-virologist
+  parentJobId: Virologist
+
+- type: alternativeJob
+  id: AlternativeJobImViro
+  jobName: job-alternative-name-im-viro
+  jobDescription: job-description-virologist
+  parentJobId: Virologist
 
 #endregion
 
@@ -330,6 +425,12 @@
   jobName: job-alternative-name-laborant
   jobDescription: job-description-research-assistant
   parentJobId: ResearchAssistant
+
+- type: alternativeJob
+  id: AlternativeJobRDDir
+  jobName: job-alternative-name-RD-Dir
+  jobDescription: job-description-rd
+  parentJobId: ResearchDirector
 #endregion
 
 #region Security
@@ -344,6 +445,12 @@
   id: AlternativeJobLawenforcer
   jobName: job-alternative-name-lawenforcer
   jobDescription: job-description-lawenforcer
+  parentJobId: SecurityOfficer
+
+- type: alternativeJob
+  id: AlternativeJobPatrol
+  jobName: job-alternative-name-patrol
+  jobDescription: job-description-security-officer
   parentJobId: SecurityOfficer
 
 - type: alternativeJob
@@ -363,6 +470,13 @@
   jobName: job-alternative-name-corpsman
   jobDescription: job-description-brigmedic
   parentJobId: Brigmedic
+
+- type: alternativeJob
+  id: AlternativeJobRecruit
+  jobName: job-alternative-name-recruit
+  jobDescription: job-description-cadet
+  parentJobId: SecurityCadet
+
 #endregion
 
 #region Other
