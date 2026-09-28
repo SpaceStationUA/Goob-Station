@@ -150,6 +150,7 @@ job-alternative-name-corpsman = Санітар
 job-alternative-name-lawenforcer = Правоохоронець
 job-description-lawenforcer = Охоронець закону і порядку. Затримуйте злочинців, захищайте станцію, але пам’ятайте: надмірна жорстокість — теж злочин.
 job-alternative-name-patrol = Патрульний
+job-alternative-name-cadet-second = Курсант
 job-alternative-name-recruit = Рекрут
 
 # Кінець lawenforcer

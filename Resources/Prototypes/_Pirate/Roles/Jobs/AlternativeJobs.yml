@@ -477,6 +477,12 @@
   jobDescription: job-description-cadet
   parentJobId: SecurityCadet
 
+- type: alternativeJob
+  id: AlternativeJobSecondCadet
+  jobName: job-alternative-name-cadet-second
+  jobDescription: job-description-cadet
+  parentJobId: SecurityCadet
+
 #endregion
 
 #region Other
