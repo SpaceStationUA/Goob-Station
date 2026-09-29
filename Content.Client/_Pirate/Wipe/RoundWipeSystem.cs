@@ -2,7 +2,6 @@
 
 using Content.Goobstation.Common.CCVar;
 using Content.Shared.GameTicking;
-using Content.Goobstation.Common.CCVar;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -13,7 +12,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Content.Client.Lobby;
-using Robust.Client.UserInterface.Controls;
 using Content.Client.MainMenu;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
@@ -67,7 +65,6 @@ public sealed class RoundWipeSystem : EntitySystem
     private static bool _needAttach;
     private static bool _attachSeen;
     private static TimeSpan _attachRealTime;
-    private static TimeSpan _lastDetach;
 
     public override void Initialize()
     {
@@ -148,7 +145,7 @@ public sealed class RoundWipeSystem : EntitySystem
         _panel = new RoundWipeUiPanel(art, _mode, _seed) { Progress = 0f };
         _ui.RootControl.AddChild(_panel);
         AnchorsForce();
-        Log.Info($"[WIPE] cover started mask={_mode} art={_artPath} root={_ui.RootControl.Size}");
+        Log.Debug($"[WIPE] cover started mask={_mode} art={_artPath} root={_ui.RootControl.Size}");
     }
 
     private void RaisePanel()
@@ -180,7 +177,7 @@ public sealed class RoundWipeSystem : EntitySystem
         {
             _panel.Orphan();
             _panel = null;
-            Log.Info($"[WIPE] panel removed reason={reason}");
+            Log.Debug($"[WIPE] panel removed reason={reason}");
         }
         _release = false;
         _releaseElapsed = TimeSpan.Zero;
@@ -199,14 +196,13 @@ public sealed class RoundWipeSystem : EntitySystem
 
     private void OnDetached(LocalPlayerDetachedEvent args)
     {
-        _lastDetach = _timing.RealTime;
         _armed = true;
         StopPanel("detach");
     }
 
     private void OnAttached(LocalPlayerAttachedEvent args)
     {
-        Log.Info($"[WIPE] attach armed={_armed} panel={_panel != null}");
+        Log.Debug($"[WIPE] attach armed={_armed} panel={_panel != null}");
 
         // dev: isolated shader test - force a cover that releases right after the hold
         if (_panel == null && _testMode && _enabled)
