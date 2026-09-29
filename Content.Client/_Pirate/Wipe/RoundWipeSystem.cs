@@ -152,10 +152,34 @@ public sealed class RoundWipeSystem : EntitySystem
     {
         if (_panel == null)
             return;
+
+        // The panel lives in a static so the cover can outlive a system re-init,
+        // but a Control cannot outlive the UI tree it was parented to: a
+        // reconnect (or an integration-test pair) tears down RootControl and
+        // leaves _panel parented to a dead window. AddChild throws
+        // "This component is still parented" in that case, which crashed the
+        // client on join. Drop the stale panel instead; TryStartCover builds a
+        // fresh one when the next cover starts.
+        if (_panel.Disposed)
+        {
+            _panel = null;
+            return;
+        }
+
         if (_panel.Parent != _ui.RootControl)
         {
             _panel.Orphan();
-            _ui.RootControl.AddChild(_panel);
+
+            // Orphan() has to actually deparent before we can re-add; if the old
+            // parent is gone the panel is unusable, so discard it rather than
+            // throwing out of Update/OnStateChange.
+            if (_panel.Parent == null)
+                _ui.RootControl.AddChild(_panel);
+            else
+            {
+                _panel = null;
+                return;
+            }
         }
         else
         {
