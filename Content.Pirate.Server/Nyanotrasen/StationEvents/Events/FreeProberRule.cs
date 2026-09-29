@@ -1,3 +1,4 @@
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Psionics.Glimmer;
 using Content.Server.Station.Systems;
@@ -61,7 +62,7 @@ internal sealed class FreeProberRule : StationEventSystem<FreeProberRuleComponen
                 if (CompOrNull<MapGridComponent>(gridUid) is not {} grid)
                     continue;
 
-                var tileIndices = grid.TileIndicesFor(coordinates);
+                var tileIndices = NodeHelpers.MapSys.TileIndicesFor(grid.Owner, grid, coordinates);
 
                 for (var i = 0; i < SpawnDirections; i++)
                 {
@@ -72,7 +73,7 @@ internal sealed class FreeProberRule : StationEventSystem<FreeProberRuleComponen
                     if (!_anchorable.TileFree(grid, offsetIndices))
                         continue;
 
-                    Spawn(ProberPrototype, grid.GridTileToLocal(offsetIndices));
+                    Spawn(ProberPrototype, NodeHelpers.MapSys.GridTileToLocal(grid.Owner, grid, offsetIndices));
                     return;
                 }
             }

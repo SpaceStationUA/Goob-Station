@@ -1,0 +1,13 @@
+Ghosted — vendored third-party WebArcade game
+Fetched by Scripts/sh/vendor-arcade-games.sh.
+
+id:      ghosted
+license: MIT
+repo:    jani-nykanen/ghosted
+ref:     846454c3b2f7509515cbcbf8852b09f7b7d98b24
+kind:    zip (https://js13kgames.com/games/ghosted.zip)
+fetched: 2026-09-20T10:12:17Z
+
+This is a third-party work from the JS13kGames 2024 (or 2023) competition.
+See the repository/source above for the original license text and copyright
+holder. We do not claim authorship and we do not modify the code.

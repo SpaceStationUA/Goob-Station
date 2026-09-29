@@ -179,7 +179,12 @@ namespace Content.YAMLLinter
         private static async Task<(Assembly[] clientAssemblies, Assembly[] serverAssemblies)>
             GetClientServerAssemblies()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            // Pass our own context rather than letting the pool synthesise an
+            // NUnit one: there is no test run here, and the NUnit path tries to
+            // drop a gravestone file in TestContext.WorkDirectory.
+            await using var pair = await PoolManager.GetServerClient(
+                null,
+                new ConsoleTestContext("Content.YAMLLinter", Console.Out));
 
             var result = (GetAssemblies(pair.Client), GetAssemblies(pair.Server));
 
