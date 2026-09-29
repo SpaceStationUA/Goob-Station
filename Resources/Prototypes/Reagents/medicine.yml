@@ -809,6 +809,10 @@
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStimRush
+        type: Add
+        time: 2
       - !type:Emote
         conditions:
         - !type:MetabolizerTypeCondition
@@ -1284,6 +1288,10 @@
     Medicine:
       effects:
       - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStimRush
+        type: Add
+        time: 2
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
@@ -1856,6 +1864,14 @@
           min: 30
         type: Add
         time: 8
+      - !type:ModifyStatusEffect # overdosing psicodine: the fear suddenly starts coming back strange and heavy
+        conditions:
+        - !type:ReagentCondition
+          reagent: Psicodine
+          min: 30
+        effectProto: StatusEffectBadTrip
+        type: Add
+        time: 6
       - !type:GenericStatusEffect
         key: Jitter
         time: 2.0
