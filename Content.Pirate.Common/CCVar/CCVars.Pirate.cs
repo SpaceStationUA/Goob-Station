@@ -2,9 +2,8 @@
 
 using Robust.Shared.Configuration;
 
-namespace Content.Goobstation.Common.CCVar;
+namespace Content.Pirate.Common.CCVar;
 
-[CVarDefs]
 public sealed partial class PirateCVars
 {
     /// <summary>

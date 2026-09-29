@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-using Content.Goobstation.Common.CCVar;
+using Content.Pirate.Common.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Player;

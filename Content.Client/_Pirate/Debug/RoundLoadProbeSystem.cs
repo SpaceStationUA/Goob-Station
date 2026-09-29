@@ -23,7 +23,7 @@ public sealed class RoundLoadProbeSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private static readonly CVarDef<bool> ProbeCvar =
-        Content.Goobstation.Common.CCVar.PirateCVars.PirateRoundProbe;
+        Content.Pirate.Common.CCVar.PirateCVars.PirateRoundProbe;
 
     private static readonly TimeSpan StableThreshold = TimeSpan.FromMilliseconds(50);
     private const int StableFramesRequired = 10;
