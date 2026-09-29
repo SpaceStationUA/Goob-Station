@@ -7,6 +7,7 @@ using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Pirate.Server.TV;
@@ -31,8 +32,26 @@ public sealed class PirateTvSystem : EntitySystem
     private const string SourcePort = "PirateTvBroadcast";
     private const string SinkPort = "PirateTvReceive";
 
+    /// <summary>Playback positions are wall-clock seconds; anything past this
+    /// is not a real seek (a 12h video does not exist here).</summary>
+    private const double MaxSeekSeconds = 6 * 60 * 60;
+
+    // Bounds on client-supplied data. The queue is broadcast in full to every
+    // mirror and to every player in PVS on each mutation, so an unbounded queue
+    // or a 100 KB label turns one control message into a broadcast amplifier.
+    private const int MaxQueue = 64;
+    private const int MaxUrl = 512;
+    private const int MaxLabel = 64;
+    private const int MaxTitle = 100;
+
+    private const long RequestThrottleMs = 500;
+    private const int RequestTableCap = 1024;
+
     /// <summary>Collapses duplicate "ended" pings from several mirrored viewers.</summary>
     private readonly Dictionary<EntityUid, long> _lastEndedMs = new();
+
+    /// <summary>Per-(session, TV) last-request stamp for OnRequest throttling.</summary>
+    private readonly Dictionary<(NetUserId, EntityUid), long> _lastRequestMs = new();
 
     public override void Initialize()
     {
@@ -159,6 +178,10 @@ public sealed class PirateTvSystem : EntitySystem
 
     private void OnShutdown(Entity<PirateTvComponent> ent, ref ComponentShutdown args)
     {
+        // The dedup table is keyed by EntityUid; a recycled uid would otherwise
+        // inherit a stale timestamp and swallow a legitimate first "ended".
+        _lastEndedMs.Remove(ent.Owner);
+
         // A dying root frees its mirrors (they reset to off); a dying mirror
         // re-parents its own mirrors onto its parent, keeping the chain alive.
         var net = GetNetEntity(ent.Owner);
@@ -169,6 +192,25 @@ public sealed class PirateTvSystem : EntitySystem
         {
             if (child.Source != net)
                 continue;
+
+            // Re-point FIRST, and inside the _reparenting guard. Component
+            // shutdown runs before the DeviceLink graph is torn down, and that
+            // teardown raises PortDisconnectedEvent on each child -- which would
+            // otherwise reset it to off right after we copied the grandparent's
+            // state in, silently undoing the whole re-parent.
+            if (TryComp<DeviceLinkSourceComponent>(ent.Owner, out var dyingSrc))
+            {
+                _reparenting.Add(uid);
+                try
+                {
+                    _link.RemoveSinkFromSource(ent.Owner, uid, dyingSrc);
+                }
+                finally
+                {
+                    _reparenting.Remove(uid);
+                }
+            }
+
             child.Source = newParent;
             if (newParent.IsValid() && TryGetEntity(newParent, out var parentUid) &&
                 TryComp(parentUid.Value, out PirateTvComponent? parentComp))
@@ -187,17 +229,37 @@ public sealed class PirateTvSystem : EntitySystem
 
     private void OnRequest(PirateTvRequestEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryResolveTv(msg.Tv, out var uid, out var comp))
+        if (!TryResolveTv(msg.Tv, out var uid, out var comp) || !InReach(args, uid))
+            return;
+        if (!AllowRequest(args, uid))
             return;
         RaiseNetworkEvent(BuildState(uid, comp), args.SenderSession.Channel);
     }
 
+    /// <summary>Per-(session, TV) throttle for the state-request path. The
+    /// client polls on open, but that is not something the server has to
+    /// honour: a client could otherwise spam it and make the server build and
+    /// serialise a full state event (queue included) as fast as it can.</summary>
+    private bool AllowRequest(EntitySessionEventArgs args, EntityUid tv)
+    {
+        var key = (args.SenderSession.UserId, tv);
+        var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        if (_lastRequestMs.TryGetValue(key, out var last) && now - last < RequestThrottleMs)
+            return false;
+        _lastRequestMs[key] = now;
+
+        // Cheap bound so the table cannot grow without limit.
+        if (_lastRequestMs.Count > RequestTableCap)
+            _lastRequestMs.Clear();
+        return true;
+    }
+
     private void OnPick(PirateTvPickEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+        if (!TryResolveTv(msg.Tv, out var uid, out var tvComp) || !InReach(args, uid))
             return;
 
-        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        var (masterUid, master) = ResolveMaster(uid, tvComp);
         if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — канал не міняється");
@@ -205,7 +267,7 @@ public sealed class PirateTvSystem : EntitySystem
         }
 
         Pick(masterUid, master, msg.Url, msg.Kind, msg.Label, msg.Title);
-        Feed(args, "поставив на ТБ: " + msg.Label);
+        Feed(args, "поставив на ТБ: " + Clamp(msg.Label, MaxLabel));
     }
 
     /// <summary>
@@ -214,6 +276,7 @@ public sealed class PirateTvSystem : EntitySystem
     /// </summary>
     public void Pick(EntityUid masterUid, PirateTvComponent master, string url, int kind, string label, string title)
     {
+        url = Clamp(url, MaxUrl);
         if (url.Length == 0)
             return;
 
@@ -225,34 +288,59 @@ public sealed class PirateTvSystem : EntitySystem
             return;
         }
 
-        master.Queue.Add(new PirateTvQueueItem { Url = url, Kind = kind, Label = label, Title = title });
+        if (master.Queue.Count >= MaxQueue)
+        {
+            // Drop the oldest instead of refusing: the room keeps playing and
+            // the queue stays bounded.
+            master.Queue.RemoveAt(0);
+            if (master.Now > 0)
+                master.Now--;
+        }
+
+        master.Queue.Add(new PirateTvQueueItem
+        {
+            Url = url,
+            Kind = kind,
+            Label = Clamp(label, MaxLabel),
+            Title = Clamp(title, MaxTitle),
+        });
         NavTo(masterUid, master, master.Queue.Count - 1);
     }
 
     private void OnQueueAdd(PirateTvQueueAddEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+        if (!TryResolveTv(msg.Tv, out var uid, out var tvComp) || !InReach(args, uid))
             return;
 
-        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        var (masterUid, master) = ResolveMaster(uid, tvComp);
         if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — чергу не змінити");
             return;
         }
 
-        if (msg.Url.Length == 0)
+        var url = Clamp(msg.Url, MaxUrl);
+        if (url.Length == 0)
             return;
 
         foreach (var item in master.Queue)
         {
-            if (item.Url == msg.Url)
+            if (item.Url == url)
                 return;
+        }
+
+        if (master.Queue.Count >= MaxQueue)
+        {
+            Feed(args, "черга переповнена");
+            return;
         }
 
         master.Queue.Add(new PirateTvQueueItem
         {
-            Url = msg.Url, Kind = msg.Kind, Label = msg.Label, Title = msg.Title,
+            Url = url,
+            Kind = msg.Kind,
+            Label = Clamp(msg.Label, MaxLabel),
+            Title = Clamp(msg.Title, MaxTitle),
         });
 
         if (master.Url.Length == 0)
@@ -263,15 +351,15 @@ public sealed class PirateTvSystem : EntitySystem
         }
 
         Mutate(masterUid, master);
-        Feed(args, "додав у чергу: " + msg.Label);
+        Feed(args, "додав у чергу: " + Clamp(msg.Label, MaxLabel));
     }
 
     private void OnQueueNav(PirateTvQueueNavEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+        if (!TryResolveTv(msg.Tv, out var uid, out var tvComp) || !InReach(args, uid))
             return;
 
-        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        var (masterUid, master) = ResolveMaster(uid, tvComp);
         if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — черга зафіксована");
@@ -286,10 +374,10 @@ public sealed class PirateTvSystem : EntitySystem
 
     private void OnQueueRemove(PirateTvQueueRemoveEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+        if (!TryResolveTv(msg.Tv, out var uid, out var tvComp) || !InReach(args, uid))
             return;
 
-        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        var (masterUid, master) = ResolveMaster(uid, tvComp);
         if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — чергу не змінити");
@@ -313,22 +401,22 @@ public sealed class PirateTvSystem : EntitySystem
         if (wasNow)
         {
             NavTo(masterUid, master, Math.Min(msg.Index, master.Queue.Count - 1), silent: true);
-            Feed(args, "прибрав " + it.Label + " — грає наступний");
+            Feed(args, "прибрав " + Clamp(it.Label, MaxLabel) + " — грає наступний");
             return;
         }
 
         if (master.Now > msg.Index)
             master.Now--;
         Mutate(masterUid, master);
-        Feed(args, "прибрав " + it.Label);
+        Feed(args, "прибрав " + Clamp(it.Label, MaxLabel));
     }
 
     private void OnQueueMove(PirateTvQueueMoveEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+        if (!TryResolveTv(msg.Tv, out var uid, out var tvComp) || !InReach(args, uid))
             return;
 
-        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        var (masterUid, master) = ResolveMaster(uid, tvComp);
         if (master.Locked && !IsAdmin(args))
         {
             Feed(args, "ТБ заблоковано — чергу не змінити");
@@ -353,10 +441,17 @@ public sealed class PirateTvSystem : EntitySystem
 
     private void OnLockToggle(PirateTvLockEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+        if (!TryResolveTv(msg.Tv, out var uid, out var tvComp) || !InReach(args, uid))
             return;
 
-        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        var (masterUid, master) = ResolveMaster(uid, tvComp);
+        if (master.Locked == msg.Locked)
+            return;
+
+        // The lock is a shared-room control, not a permission: anyone standing
+        // at the TV may set it or clear it. What matters is that clearing it is
+        // a deliberate act (ResetState keeps it set), so it cannot be undone by
+        // side effect.
         master.Locked = msg.Locked;
         Mutate(masterUid, master);
         Feed(args, master.Locked ? "заблокував ТБ" : "розблокував ТБ");
@@ -364,10 +459,10 @@ public sealed class PirateTvSystem : EntitySystem
 
     private void OnCommand(PirateTvCommandEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryResolveTv(msg.Tv, out var uid, out _) || !InReach(args, uid))
+        if (!TryResolveTv(msg.Tv, out var uid, out var tvComp) || !InReach(args, uid))
             return;
 
-        var (masterUid, master) = ResolveMaster(uid, Comp<PirateTvComponent>(uid));
+        var (masterUid, master) = ResolveMaster(uid, tvComp);
         var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
         switch (msg.Op)
@@ -378,7 +473,7 @@ public sealed class PirateTvSystem : EntitySystem
                 // wherever the room actually is, then resuming, cannot rewind.
                 if (!master.Playing)
                     break; // already paused — idempotent
-                master.Pos = Math.Max(0, CurrentPos(master, now));
+                master.Pos = CurrentPos(master, now);
                 master.Playing = false;
                 master.Stamp = now;
                 break;
@@ -390,7 +485,13 @@ public sealed class PirateTvSystem : EntitySystem
                 master.Stamp = now;
                 break;
             case "seekTo":
-                master.Pos = Math.Max(0, msg.Arg);
+                // Arg is an unvalidated double off the wire. Math.Max(0, NaN)
+                // is NaN, and a NaN Pos poisons the room clock permanently (it
+                // copies to every mirror and every client, and only NavTo /
+                // ResetState recover it), so reject anything not a real number.
+                if (!double.IsFinite(msg.Arg) || msg.Arg < 0 || msg.Arg > MaxSeekSeconds)
+                    return;
+                master.Pos = msg.Arg;
                 master.Stamp = now;
                 master.Playing = true; // seeking implies we mean to play
                 break;
@@ -417,12 +518,14 @@ public sealed class PirateTvSystem : EntitySystem
                 // playlist entry so every queue row shows the real name.
                 if (msg.Title.Length == 0 || master.Now < 0 || master.Now >= master.Queue.Count)
                     return;
-                var title = msg.Title[..Math.Min(msg.Title.Length, 100)];
+                var title = Clamp(msg.Title, MaxTitle);
                 if (master.Queue[master.Now].Title == title)
                     return;
                 master.Queue[master.Now].Title = title;
                 break;
             case "mute":
+                if (!double.IsFinite(msg.Arg))
+                    return;
                 master.Muted = msg.Arg > 0.5;
                 break;
             default:
@@ -502,8 +605,17 @@ public sealed class PirateTvSystem : EntitySystem
     {
         if (!comp.Playing)
             return comp.Pos;
-        return comp.Pos + Math.Max(0, nowMs - comp.Stamp) / 1000.0;
+        // Belt and braces: Pos is only ever written from validated input now,
+        // but a NaN here would spread to every mirror and client.
+        if (!double.IsFinite(comp.Pos))
+            return 0;
+        var pos = comp.Pos + Math.Max(0, nowMs - comp.Stamp) / 1000.0;
+        return double.IsFinite(pos) ? pos : 0;
     }
+
+    /// <summary>Clamp a client-supplied string to a sane length.</summary>
+    private static string Clamp(string s, int max)
+        => s.Length <= max ? s : s[..max];
 
     /// <summary>Starts playing queue[index] (wraps to 0 past the end).</summary>
     private void NavTo(EntityUid uid, PirateTvComponent comp, int index, bool silent = false)
@@ -575,7 +687,9 @@ public sealed class PirateTvSystem : EntitySystem
         comp.Muted = false;
         comp.Pos = 0;
         comp.Stamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        comp.Locked = false;
+        // Locked is deliberately NOT cleared: the lock is a room control that
+        // must survive an empty queue / unlink / parent death, otherwise it
+        // silently evaporates and stops meaning anything.
         comp.Now = -1;
         comp.Queue.Clear();
     }

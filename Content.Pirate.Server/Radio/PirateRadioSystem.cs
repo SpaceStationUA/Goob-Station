@@ -7,12 +7,14 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared._Pirate.WebUi;
+using Content.Pirate.Server.WebUi;
 using Content.Pirate.Shared.Radio;
 using Content.Shared._Pirate.CCVars;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Server.Radio;
@@ -37,6 +39,17 @@ public sealed class PirateRadioSystem : EntitySystem
     private const int MaxRemote = 40;
     private static readonly TimeSpan CacheTtl = TimeSpan.FromHours(6);
     private static readonly TimeSpan FetchTimeout = TimeSpan.FromSeconds(8);
+
+    /// <summary>Cap on concurrent ffmpeg relays. Each is an OS process; without
+    /// a ceiling a client that names many distinct markers spawns one per id.</summary>
+    private const int MaxPumps = 8;
+
+    private const int MaxStationUrl = 512;
+    private const int MaxStationLabel = 64;
+
+    /// <summary>Characters that would let a catalog URL break out of the ffmpeg
+    /// argument it is passed as.</summary>
+    private static readonly char[] UrlUnsafeChars = ['"', '\'', ' ', '\t', '\r', '\n'];
 
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
@@ -70,6 +83,7 @@ public sealed class PirateRadioSystem : EntitySystem
     {
         base.Update(frameTime);
         PollNowPlaying();
+        PruneDeadMarkers();
 
         if (_pumps.Count == 0)
             return;
@@ -77,11 +91,23 @@ public sealed class PirateRadioSystem : EntitySystem
         List<NetEntity>? dead = null;
         foreach (var (marker, pump) in _pumps)
         {
+            // The listener went away mid-stream. Kill it here: raising a net
+            // event to a dead channel does not throw, the engine logs an
+            // Error for it -- and RTCVars.FailureLogLevel treats that as a
+            // failing test. The stall watchdog would not save us either,
+            // because a healthy stream keeps LastData fresh forever.
+            if (pump.Channel is not { IsConnected: true })
+            {
+                dead ??= new List<NetEntity>();
+                dead.Add(marker);
+                continue;
+            }
+
             // Stalled pump (dead upstream, dead ffmpeg): kill it and tell
             // the page the session is over.
             if (DateTimeOffset.UtcNow - pump.LastData > RelayStallTimeout)
             {
-                Log.Warning($"Radio relay stalled for {marker}, killing pump.");
+                Logger.DebugS("webui.radio", $"radio relay stalled for {marker}, killing pump");
                 dead ??= new List<NetEntity>();
                 dead.Add(marker);
                 continue;
@@ -119,10 +145,47 @@ public sealed class PirateRadioSystem : EntitySystem
         }
     }
 
+    /// <summary>Forget markers that are no longer live. Both dictionaries are
+    /// keyed by a NetEntity the client named, so without this they grow by one
+    /// entry per id ever used: a PDA deleted (or a session gone) must not leave
+    /// an ffmpeg process transcoding into a buffer nobody drains for the rest
+    /// of the round. Pumps whose channel disconnected are reaped by Update.</summary>
+    private void PruneDeadMarkers()
+    {
+        if (_sessions.Count == 0 && _pumps.Count == 0)
+            return;
+
+        List<NetEntity>? gone = null;
+        foreach (var (marker, session) in _sessions)
+        {
+            if (Exists(GetEntity(marker)) && session.Channel is { IsConnected: true })
+                continue;
+            _sessions.Remove(marker);
+            (gone ??= new List<NetEntity>()).Add(marker);
+        }
+
+        // A pump with no live session entry (or a live entity but a dead
+        // channel) still has to go.
+        foreach (var marker in new List<NetEntity>(_pumps.Keys))
+        {
+            var alive = _sessions.ContainsKey(marker)
+                && Exists(GetEntity(marker))
+                && _pumps[marker].Channel is { IsConnected: true };
+            if (!alive)
+                (gone ??= new List<NetEntity>()).Add(marker);
+        }
+
+        if (gone == null)
+            return;
+
+        foreach (var marker in gone)
+            KillPump(marker, notify: false);
+    }
+
     private void OnCatalogRequest(PirateRadioCatalogRequestEvent msg, EntitySessionEventArgs args)
     {
         var marker = GetEntity(msg.Marker);
-        if (!Exists(marker))
+        if (!Exists(marker) || !Authorized(args, msg.Marker, marker))
             return;
 
         if (_cfg.GetCVar(PirateVars.RadioRemoteCatalog))
@@ -137,6 +200,22 @@ public sealed class PirateRadioSystem : EntitySystem
             Theme = ThemeOf(marker),
             Themes = AllowedThemes(marker),
         }, args.SenderSession.Channel);
+    }
+
+    /// <summary>
+    ///     The marker in every radio message is a client-chosen NetEntity, so
+    ///     nothing about it is trusted: it could name any entity on the server.
+    ///     Require that the sender actually holds the PDA the app lives in
+    ///     before serving it a catalog, acting on it, or claiming its relay.
+    /// </summary>
+    private bool Authorized(EntitySessionEventArgs args, NetEntity markerNet, EntityUid marker)
+    {
+        if (PirateWebUiOwnership.SenderOwns(_entMan, args, marker))
+            return true;
+
+        Logger.DebugS("webui.radio",
+            $"rejected {args.SenderSession.UserId} for marker {markerNet}: not the sender's PDA");
+        return false;
     }
 
     
@@ -184,7 +263,7 @@ public sealed class PirateRadioSystem : EntitySystem
     private void OnCommand(PirateRadioCommandEvent msg, EntitySessionEventArgs args)
     {
         var marker = GetEntity(msg.Marker);
-        if (!Exists(marker))
+        if (!Exists(marker) || !Authorized(args, msg.Marker, marker))
             return;
 
         var session = args.SenderSession;
@@ -265,8 +344,17 @@ public sealed class PirateRadioSystem : EntitySystem
         if (!_pumps.TryGetValue(msg.Marker, out var pump))
             return;
 
-        // The re-opened program fragment re-registers as the relay listener.
-        pump.Channel = args.SenderSession.Channel;
+        // Only the session that started this pump may claim it. Otherwise any
+        // client that guesses a live marker's NetEntity silently steals the
+        // transcoded stream (the original just stops getting bytes, with no
+        // "stream ended" because the pump is very much alive).
+        if (!ReferenceEquals(pump.Channel, args.SenderSession.Channel))
+        {
+            Logger.DebugS("webui.radio",
+                $"relay-ready for {msg.Marker} rejected: sender does not own the pump");
+            return;
+        }
+
         pump.Ready = true;
         pump.Kick = true; // flush the init segment regardless of size
     }
@@ -281,6 +369,14 @@ public sealed class PirateRadioSystem : EntitySystem
             return;
         }
 
+        // Each pump is a real OS process plus a reader task. Bound the total so
+        // a client cannot walk synthetic marker ids and spawn one per id.
+        if (!_pumps.ContainsKey(marker) && _pumps.Count >= MaxPumps)
+        {
+            Logger.DebugS("webui.radio", $"relay refused for {marker}: {MaxPumps} pumps already running");
+            return;
+        }
+
         if (_pumps.TryGetValue(marker, out var existing))
         {
             if (existing.Url == station.Url && !existing.Proc.HasExited)
@@ -288,21 +384,35 @@ public sealed class PirateRadioSystem : EntitySystem
             KillPump(marker, notify: false);
         }
 
-        // file: inputs (testing) play at realtime; live http/https throttles
-        // themselves. Quoting is safe: we exec without a shell.
-        var inputArgs = station.Url.StartsWith("file:", StringComparison.OrdinalIgnoreCase)
-            ? "-re "
-            : "";
-
+        // ArgumentList, not a concatenated Arguments string: the URL can come
+        // from the community catalog, and ProcessStartInfo.Arguments is
+        // re-parsed by the runtime, so a quote inside it would terminate the
+        // quoted section and turn the rest of the URL into ffmpeg flags.
         var psi = new ProcessStartInfo
         {
             FileName = ffmpeg,
-            Arguments = "-hide_banner -loglevel error " + inputArgs +
-                "-i \"" + station.Url + "\" -map 0:a -c:a libopus -b:a 48k -f webm pipe:1",
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
         };
+        psi.ArgumentList.Add("-hide_banner");
+        psi.ArgumentList.Add("-loglevel");
+        psi.ArgumentList.Add("error");
+        // file: inputs (testing) play at realtime; live http/https throttles
+        // themselves.
+        if (station.Url.StartsWith("file:", StringComparison.OrdinalIgnoreCase))
+            psi.ArgumentList.Add("-re");
+        psi.ArgumentList.Add("-i");
+        psi.ArgumentList.Add(station.Url);
+        psi.ArgumentList.Add("-map");
+        psi.ArgumentList.Add("0:a");
+        psi.ArgumentList.Add("-c:a");
+        psi.ArgumentList.Add("libopus");
+        psi.ArgumentList.Add("-b:a");
+        psi.ArgumentList.Add("48k");
+        psi.ArgumentList.Add("-f");
+        psi.ArgumentList.Add("webm");
+        psi.ArgumentList.Add("pipe:1");
 
         Process proc;
         try
@@ -414,20 +524,16 @@ public sealed class PirateRadioSystem : EntitySystem
         try { pump.Cts.Cancel(); } catch { /* already dead */ }
         try { pump.Proc.Kill(entireProcessTree: true); } catch { /* already dead */ }
 
-        if (notify)
+        // A dead channel is not an error here; the engine's send path logs an
+        // Error (and thus fails unrelated tests) rather than throwing, so the
+        // notify has to be guarded rather than caught.
+        if (notify && pump.Channel is { IsConnected: true })
         {
-            try
+            RaiseNetworkEvent(new PirateRadioStateEvent
             {
-                RaiseNetworkEvent(new PirateRadioStateEvent
-                {
-                    Marker = marker,
-                    Playing = false,
-                }, pump.Channel);
-            }
-            catch
-            {
-                /* channel already gone */
-            }
+                Marker = marker,
+                Playing = false,
+            }, pump.Channel);
         }
     }
 
@@ -695,6 +801,11 @@ public sealed class PirateRadioSystem : EntitySystem
             var doc = JsonDocument.Parse(json);
             foreach (var s in doc.RootElement.EnumerateArray())
             {
+                // The response is third-party: bound how much of it we keep
+                // before anything is allocated for each entry.
+                if (list.Count >= MaxRemote)
+                    break;
+
                 var url = s.TryGetProperty("url_resolved", out var u) ? u.GetString()
                     : s.TryGetProperty("url", out var u2) ? u2.GetString() : null;
                 var name = s.TryGetProperty("name", out var n) ? n.GetString() : null;
@@ -703,26 +814,43 @@ public sealed class PirateRadioSystem : EntitySystem
                     continue;
                 if (!url.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                     continue;
+                // StartsWith is not enough: the URL is handed to ffmpeg, and a
+                // quote or whitespace in it would break out of the argument it
+                // belongs to.
+                if (url.AsSpan().IndexOfAny(UrlUnsafeChars) >= 0)
+                    continue;
+                if (url.Length > MaxStationUrl)
+                    continue;
 
                 var genre = "";
                 if (s.TryGetProperty("tags", out var tags) && tags.ValueKind == JsonValueKind.String)
                     genre = tags.GetString() ?? "";
 
+                var label = name.Trim();
+                if (label.Length > MaxStationLabel)
+                    label = label[..MaxStationLabel];
+
                 list.Add(new PirateRadioStationEntry
                 {
-                    Id = "rb:" + (uuid ?? name),
-                    Label = name.Trim(),
-                    Genre = genre,
+                    // Without a stationuuid the id would derive from an
+                    // attacker-controlled name and two stations could collide
+                    // in Find(). Fall back to the URL, which is unique.
+                    Id = "rb:" + (string.IsNullOrWhiteSpace(uuid) ? url : uuid),
+                    Label = label,
+                    Genre = Clamp(genre, MaxStationLabel),
                     Url = url,
                 });
             }
         }
         catch (Exception e)
         {
-            Log.Warning($"Radio catalog parse failed: {e.Message}");
+            Logger.DebugS("webui.radio", $"radio catalog parse failed: {e.Message}");
         }
         return list;
     }
+
+    private static string Clamp(string s, int max)
+        => s.Length <= max ? s : s[..max];
 
 private sealed class RadioSession
 {

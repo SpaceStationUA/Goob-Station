@@ -123,6 +123,23 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
     /// <summary>Photo previews larger than this ship text-only (snapshot budget).</summary>
     public const int MaxImageBytes = 128_000;
 
+    /// <summary>Wire bounds. Action/Data are plain strings off the net.</summary>
+    private const int MaxActionLength = 32;
+    private const int MaxDataLength = 8192;
+
+    /// <summary>Per-session cooldown between mutations, in ms. "sync" is
+    /// exempt because the page polls it.</summary>
+    private const long OpThrottleMs = 250;
+    private const long PrintCooldownMs = 3000;
+    private const int OpTableCap = 1024;
+
+    /// <summary>How many station records one session may pull a profile from
+    /// before the budget runs out, so RecordKey cannot be walked.</summary>
+    private const int RecordLookupBudget = 32;
+
+    private readonly Dictionary<(NetUserId, string), long> _lastOpMs = new();
+    private readonly Dictionary<INetChannel, int> _recordLookups = new();
+
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -336,23 +353,35 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
             !TryComp(console.Value, out PirateEvidenceBoardComponent? comp))
             return;
 
-        var board = new Entity<PirateEvidenceBoardComponent>(console.Value, comp);
-        EnsureInitialized(board);
+        // Every op needs the sender standing at this ACCESSIBLE console (the
+        // same gate the intake verbs use) -- reads included. "sync" used to be
+        // exempt, which let any client ask any board for its full snapshot from
+        // anywhere: names, jobs, DNA, fingerprints, filed forensics. Those
+        // consoles are access-restricted for a reason.
+        var player = args.SenderSession.AttachedEntity;
+        if (player == null || !Exists(player.Value) ||
+            FindNearbyConsole(player.Value) is not { } nearby || nearby.Owner != console.Value)
+            return;
 
-        // Mutating ops: the sender must be standing at an ACCESSIBLE
-        // console (the same gate the intake verbs use). Reach/access are
-        // verb-side only; raw network traffic is not trusted.
-        if (msg.Action != "sync")
+        // Action and Data are unvalidated strings off the wire; cap them before
+        // they reach a switch, a parser or a log line.
+        if (msg.Action.Length > MaxActionLength || msg.Data.Length > MaxDataLength)
         {
-            var player = args.SenderSession.AttachedEntity;
-            if (player == null || !Exists(player.Value) ||
-                FindNearbyConsole(player.Value) is not { } nearby || nearby.Owner != console.Value)
-                return;
+            Logger.DebugS("webui.board", $"oversized request from {args.SenderSession.UserId} rejected");
+            return;
         }
+
+        // The client polls this, so a modest floor is not a UX problem.
+        if (!AllowOp(args, msg.Action))
+            return;
+
+        var board = new Entity<PirateEvidenceBoardComponent>(console.Value, comp);
 
         switch (msg.Action)
         {
             case "sync":
+                // Read-only: must not create the initial case as a side effect
+                // of being polled.
                 RaiseNetworkEvent(new EvidenceBoardStateEvent
                 {
                     Console = msg.Console,
@@ -407,10 +436,52 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
         BroadcastState(board, msg.Console);
     }
 
+    /// <summary>Per-(session, action) rate limit. Every op re-broadcasts a
+    /// full snapshot to everyone in range, so without this a client standing
+    /// at the console drives N× snapshot serialisation per second (and, for
+    /// printcase, a Paper entity per message).</summary>
+    private bool AllowOp(EntitySessionEventArgs args, string action)
+    {
+        if (action == "sync")
+            return true;
+
+        // printcase spawns a Paper entity per message, so it gets a real
+        // cooldown. Everything else is bounded-but-snappy: the page only sends
+        // move on drag-end and settext on blur, so a short floor never lands on
+        // a legitimate interaction, while it still caps how fast a client can
+        // drive snapshot rebuilds.
+        var cooldown = action == "printcase" ? PrintCooldownMs : OpThrottleMs;
+        var key = (args.SenderSession.UserId, action);
+        var now = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        if (_lastOpMs.TryGetValue(key, out var last) && now - last < cooldown)
+            return false;
+        _lastOpMs[key] = now;
+
+        if (_lastOpMs.Count > OpTableCap)
+            _lastOpMs.Clear();
+        return true;
+    }
+
+    /// <summary>Per-session budget for pulling crew records by client-supplied
+    /// key. The table is bounded by the channel table cap, which is fine: the
+    /// budget exists to stop enumeration, not to be exact forever.</summary>
+    private bool AllowRecordLookup(INetChannel channel)
+    {
+        _recordLookups.TryGetValue(channel, out var used);
+        if (used >= RecordLookupBudget)
+            return false;
+
+        if (_recordLookups.Count > OpTableCap)
+            _recordLookups.Clear();
+
+        _recordLookups[channel] = used + 1;
+        return true;
+    }
+
     // ---- ops (validate + mutate; page keeps positions clamped server-side) ----
 
     private void OpAddNote(Entity<PirateEvidenceBoardComponent> board, string data)
-    {
+{
         // "cx|cy|text" (cx/cy are top-left cells, page already clamped).
         var parts = data.Split('|', 3);
         if (parts.Length < 3)
@@ -487,7 +558,11 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
     /// and paint the card (capped by the usual snapshot budget).</summary>
     private void OpPortrait(Entity<PirateEvidenceBoardComponent> board, EvidenceBoardRequestEvent msg)
     {
-        if (msg.Image is not { Length: > 32 })
+        // Bounded on BOTH ends. This was a minimum-only check, and
+        // RenderSanePreview passes anything over 400 bytes through verbatim, so
+        // MaxImageBytes never applied here: the bytes are persisted to a
+        // [DataField] and then re-broadcast inside every snapshot.
+        if (msg.Image is not { Length: > 32 and <= MaxImageBytes })
             return;
         if (!int.TryParse(msg.Data, out var cardId))
             return;
@@ -500,7 +575,26 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
         var preview = RenderSanePreview(msg.Image, null);
         if (preview == null || preview.Length == 0)
             return;
+        if (!IsPng(preview))
+        {
+            Logger.DebugS("webui.board", $"portrait for card {cardId} rejected: not a PNG");
+            return;
+        }
         PaintPortrait(board, cardId, "data:image/png;base64," + Convert.ToBase64String(preview));
+    }
+
+    private static readonly byte[] PngMagic = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
+
+    private static bool IsPng(byte[] data)
+    {
+        if (data.Length < PngMagic.Length)
+            return false;
+        for (var i = 0; i < PngMagic.Length; i++)
+        {
+            if (data[i] != PngMagic[i])
+                return false;
+        }
+        return true;
     }
 
     /// <summary>True if a portrait got attached or a client was queued.</summary>
@@ -518,6 +612,16 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
             if (station == null)
                 return;
             var key = new StationRecordKey(msg.RecordKey, station.Value);
+
+            // RecordKey is a raw client uint, so it is an enumeration handle:
+            // without a per-session budget a client at the console can walk
+            // keys and pull the full spawn-time profile (appearance, IC
+            // description, OOC notes) of every crew member on the station.
+            if (!AllowRecordLookup(questTo))
+            {
+                Logger.DebugS("webui.board", "record lookup budget exhausted; rejecting pin");
+                return;
+            }
 
             if (!_stationRecords.TryGetRecord(key, out CriminalRecord? cr) || cr == null)
                 return;

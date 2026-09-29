@@ -110,4 +110,85 @@ public sealed class PirateTvLinkIntegrationTest
 
         await pair.CleanReturnAsync();
     }
+
+    /// <summary>
+    ///     Closing the loop back to the root is refused: the chain stays
+    ///     acyclic and the root stays a root.
+    /// </summary>
+    [Test]
+    public async Task CycleBackToTheRootIsRefused()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var link = server.System<SharedDeviceLinkSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var coords = MapCoordinates.Nullspace;
+            var a = entMan.SpawnEntity("ComputerTelevision", coords);
+            var b = entMan.SpawnEntity("ComputerTelevision", coords);
+            var c = entMan.SpawnEntity("ComputerTelevision", coords);
+
+            link.SaveLinks(null, a, b, [("PirateTvBroadcast", "PirateTvReceive")]);
+            link.SaveLinks(null, b, c, [("PirateTvBroadcast", "PirateTvReceive")]);
+
+            // 3 -> 1 would make a loop. Must be refused.
+            link.SaveLinks(null, c, a, [("PirateTvBroadcast", "PirateTvReceive")]);
+
+            var aComp = entMan.GetComponent<PirateTvComponent>(a);
+            Assert.That(aComp.IsMirror, Is.False, "Cycle link turned the root into a mirror.");
+            Assert.That(entMan.GetComponent<PirateTvComponent>(b).Source,
+                Is.EqualTo(entMan.GetNetEntity(a)), "Refused cycle disturbed the existing chain.");
+            Assert.That(entMan.GetComponent<PirateTvComponent>(c).Source,
+                Is.EqualTo(entMan.GetNetEntity(b)), "Refused cycle disturbed the existing chain.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    ///     Deleting the middle of a 1→2→3 chain re-parents the tail onto the
+    ///     root instead of dropping it. The component shutdown runs before the
+    ///     DeviceLink teardown, so the re-parent has to happen first and under
+    ///     the re-parenting guard -- otherwise the teardown resets the tail to
+    ///     off immediately afterwards.
+    /// </summary>
+    [Test]
+    public async Task DeletingTheMiddleOfAChainReparentsTheTail()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var link = server.System<SharedDeviceLinkSystem>();
+        var tv = server.System<PirateTvSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var coords = MapCoordinates.Nullspace;
+            var a = entMan.SpawnEntity("ComputerTelevision", coords);
+            var b = entMan.SpawnEntity("ComputerTelevision", coords);
+            var c = entMan.SpawnEntity("ComputerTelevision", coords);
+
+            link.SaveLinks(null, a, b, [("PirateTvBroadcast", "PirateTvReceive")]);
+            link.SaveLinks(null, b, c, [("PirateTvBroadcast", "PirateTvReceive")]);
+
+            tv.Pick(a, entMan.GetComponent<PirateTvComponent>(a),
+                "https://www.youtube.com/watch?v=abcdefghijk", 1, "YouTube", "Test");
+
+            var cComp = entMan.GetComponent<PirateTvComponent>(c);
+            Assert.That(cComp.Queue.Count, Is.EqualTo(1), "Precondition: tail received the state.");
+
+            entMan.DeleteEntity(b);
+
+            Assert.That(cComp.Source, Is.EqualTo(entMan.GetNetEntity(a)),
+                "Tail was not re-parented onto the root when the middle died.");
+            Assert.That(cComp.Queue.Count, Is.EqualTo(1),
+                "Tail lost its queue when the middle died.");
+            Assert.That(cComp.Url, Is.EqualTo(entMan.GetComponent<PirateTvComponent>(a).Url),
+                "Tail is not showing the root's channel after re-parenting.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
 }

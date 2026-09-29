@@ -72,6 +72,14 @@ public sealed class PirateWebUiSystem : EntitySystem
             return;
         }
 
+        // msg.Pda is a client-chosen NetEntity: without this a player could
+        // enumerate every PDA on the server and read off each one's theme.
+        if (!PirateWebUiOwnership.SenderOwns(_entMan, args, pda.Value))
+        {
+            Logger.DebugS("webui.theme", $"list request {msg.Pda} rejected: not the sender's PDA");
+            return;
+        }
+
         Logger.DebugS("webui.theme", $"list request {msg.Pda} -> current/allowed push");
         RaiseNetworkEvent(new PirateThemeStateEvent
         {
@@ -88,6 +96,16 @@ public sealed class PirateWebUiSystem : EntitySystem
             return;
         if (string.IsNullOrEmpty(msg.ThemeId))
             return;
+
+        // The allowed-list check alone is not authorization: it bounds which
+        // theme, not who may set it. Without the ownership check any client
+        // could re-theme another player's PDA.
+        if (!PirateWebUiOwnership.SenderOwns(_entMan, args, pda.Value))
+        {
+            Logger.DebugS("webui.theme", $"theme set {msg.ThemeId} on {msg.Pda} rejected: not the sender's PDA");
+            return;
+        }
+
         if (!PirateWebThemeResolver.AllowedThemes(_entMan, _prototypes, pda.Value).Contains(msg.ThemeId))
         {
             Logger.DebugS("webui.theme", $"theme set {msg.ThemeId} rejected for {msg.Pda}");
