@@ -7,13 +7,6 @@ namespace Content.Pirate.Common.CCVar;
 public sealed partial class PirateCVars
 {
     /// <summary>
-    ///     RoundLoadProbeSystem: logs round-join timeline (attach + frame stability).
-    ///     Client-only; used to tune the wipe overlay parameters.
-    /// </summary>
-    public static readonly CVarDef<bool> PirateRoundProbe =
-        CVarDef.Create("pirate.roundprobe", false, CVar.CLIENT);
-
-    /// <summary>
     ///     Whether the round-start wipe (splash art dissolving into the live game) is enabled.
     /// </summary>
     public static readonly CVarDef<bool> PirateRoundWipe =
