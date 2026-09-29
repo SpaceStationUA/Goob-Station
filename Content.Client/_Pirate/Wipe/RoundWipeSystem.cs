@@ -47,7 +47,7 @@ public sealed class RoundWipeSystem : EntitySystem
 
     // Connection state lives across system re-initialization (content modules
     // re-init on every connect), otherwise a second system instance would spawn a
-    // duplicate panel.
+    // duplicate cover.
     private static bool _enabled;
     private static string _artPath = "";
 
@@ -55,7 +55,13 @@ public sealed class RoundWipeSystem : EntitySystem
     /// only start while armed, so mid-round re-attaches do nothing.</summary>
     private static bool _armed = true;
 
-    private static RoundWipeUiPanel? _panel;
+    // _panel is deliberately NOT static. A Control is owned by the UI tree it was
+    // parented to, and RootControl is created per client and torn down with it;
+    // a static Control outlives that and hands a dead widget to the next
+    // client -- which crashed on join ("This component is still parented", then
+    // "No parent to change position in"). Only the cover's timing is static; the
+    // widget is rebuilt on demand against the current RootControl.
+    private RoundWipeUiPanel? _panel;
     private static TimeSpan _coverRealTime;
     private static TimeSpan _releaseElapsed;
     private static bool _release;
@@ -153,40 +159,36 @@ public sealed class RoundWipeSystem : EntitySystem
         if (_panel == null)
             return;
 
-        // Any use of the panel requires it to be alive AND parented to the
-        // current RootControl. AddChild throws "This component is still
-        // parented" and SetPositionLast throws "No parent to change position
-        // in" otherwise, and this method runs from Update and OnStateChange,
-        // so a stale panel must never reach either call.
-        if (_panel.Disposed || _ui.RootControl == null)
+        // The cover is up but the panel is not (or no longer) a live child of the
+        // current RootControl: the UI tree was rebuilt under us. AddChild throws
+        // "This component is still parented" and SetPositionLast throws "No
+        // parent to change position in" in that state, and this runs from both
+        // Update and OnStateChange, so rebuild the widget against the current
+        // tree instead of resurrecting the dead one.
+        var root = _ui.RootControl;
+
+        if (_panel.Disposed || root == null || _panel.Parent != root)
         {
+            _panel.Orphan();
             _panel = null;
+
+            // A cover can only be re-shown if it still has art and was not
+            // already finished; otherwise there is nothing to draw.
+            if (root == null || _release || !TryGetArt(out var art))
+                return;
+
+            _panel = new RoundWipeUiPanel(art, _mode, _seed) { Progress = CoverProgress() };
+            root.AddChild(_panel);
+            AnchorsForce();
             return;
         }
 
-        if (_panel.Parent != _ui.RootControl)
-        {
-            _panel.Orphan();
-
-            // Orphan() has to actually deparent before we can re-add; if the
-            // old parent is already gone the panel is unusable, so discard it
-            // rather than throwing.
-            if (_panel.Parent != null)
-            {
-                _panel = null;
-                return;
-            }
-
-            _ui.RootControl.AddChild(_panel);
-        }
-        else
-        {
-            _panel.SetPositionLast();
-        }
+        // The HUD rebuilds its controls and would otherwise draw over the cover.
+        _panel.SetPositionLast();
         AnchorsForce();
     }
 
-    private static void AnchorsForce()
+    private void AnchorsForce()
     {
         if (_panel == null)
             return;
@@ -246,6 +248,10 @@ public sealed class RoundWipeSystem : EntitySystem
         return _resourceCache.TryGetResource<TextureResource>(_artPath, out var res) && (art = res.Texture) != null;
     }
 
+    /// <summary>Dissolve progress for the current cover, 0 while it holds opaque.</summary>
+    private float CoverProgress() =>
+        _release ? MathF.Min(1f, (float) (_releaseElapsed / ReleaseTime)) : 0f;
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -281,7 +287,7 @@ public sealed class RoundWipeSystem : EntitySystem
 
         if (_panel != null)
         {
-            _panel.Progress = _release ? MathF.Min(1f, (float) (_releaseElapsed / ReleaseTime)) : 0f;
+            _panel.Progress = CoverProgress();
             if (_panel.Progress >= 1f)
                 StopPanel("done");
         }
