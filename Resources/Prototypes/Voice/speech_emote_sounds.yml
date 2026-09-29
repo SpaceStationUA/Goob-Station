@@ -191,6 +191,8 @@
       path: /Audio/_Omu/Voice/Reptilian/Reptilian_lizard_rattle.ogg
     ReptilianScreech: #Omu
       collection: ReptilianScreech
+    Bleh: # Pirate
+      collection: Bleh
 
 
 - type: emoteSounds
@@ -242,6 +244,8 @@
       path: /Audio/_Omu/Voice/Reptilian/Reptilian_lizard_rattle.ogg
     ReptilianScreech: #Omu
       collection: ReptilianScreech
+    Bleh: # Pirate
+      collection: Bleh
 
 - type: emoteSounds
   id: MaleSlime

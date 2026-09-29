@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# HECU combat glasses for the IPC squad: mercenary glasses with medical, security and diagnostic HUDs and
+# welding-grade eye protection.
+
+- type: entity
+  parent: [ClothingEyesGlassesMercenary, ShowSecurityIcons, ShowMedicalIcons]
+  id: ClothingEyesGlassesHECUCombat
+  name: HECU combat glasses
+  description: Ballistic combat glasses with medical, security and diagnostic overlays, and lenses dark enough to weld through.
+  components:
+  - type: ShowHealthBars # medical and diagnostic: organic crew and synthetic bodies
+    damageContainers:
+    - Biological
+    - Inorganic
+    - Silicon
+    - SiliconRadiation
+  - type: ShowAccessReaderSettings
+  - type: EyeProtection # welding goggles strength (the mercenary glasses only give 5s)
+    protectionTime: 10

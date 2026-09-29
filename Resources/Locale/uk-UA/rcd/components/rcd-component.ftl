@@ -47,6 +47,7 @@ rcd-component-atmosphericutility = Атмосферні утиліти
 # Pirate: heat exchange pipes
 rcd-component-heat-exchange = Теплообмін
 rcd-component-pumps = Насоси та клапани
+rcd-component-pumpsvalves = Насоси та клапани
 rcd-component-vents = Вентиляційні отвори
 rcd-component-deconstruct-target-no-access = У вас немає доступу, щоб деконструювати це!
 rcd-component-deconstruct-target-is-bolted = Болти механізму перешкоджають деконструкції!

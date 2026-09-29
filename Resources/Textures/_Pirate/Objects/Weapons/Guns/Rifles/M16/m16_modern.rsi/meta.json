@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Skyrat-SS13/Skyrat-tg @ cd5d07e4d5f",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-SUITSTORAGE",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-nomag",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-nomag",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-left-nomag",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-right-nomag",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BACKPACK-nomag",
+      "directions": 4
+    },
+    {
+      "name": "equipped-SUITSTORAGE-nomag",
+      "directions": 4
+    }
+  ]
+}

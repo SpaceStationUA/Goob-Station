@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineRifleM16Empty
+  result: MagazineRifleM16Empty
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineRifleM16
+  result: MagazineRifleM16
+  materials:
+    Steel: 380
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineRifleM16ExtendedEmpty
+  result: MagazineRifleM16ExtendedEmpty
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineRifleM16Extended
+  result: MagazineRifleM16Extended
+  materials:
+    Steel: 570
+
+- type: latheRecipePack
+  id: M16AmmoStaticPirate
+  recipes:
+  - MagazineRifleM16Empty
+  - MagazineRifleM16
+  - MagazineRifleM16ExtendedEmpty
+  - MagazineRifleM16Extended

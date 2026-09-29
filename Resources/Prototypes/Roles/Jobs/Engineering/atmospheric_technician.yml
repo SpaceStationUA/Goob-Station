@@ -45,7 +45,7 @@
   equipment:
     eyes: ClothingEyesGlassesMeson
     id: AtmosPDA
-    belt: ClothingBeltUtilityEngineering
+#    belt: ClothingBeltUtilityEngineering # Goobstation - Belt Change
     ears: ClothingHeadsetEngineering
   #storage:
     #back:

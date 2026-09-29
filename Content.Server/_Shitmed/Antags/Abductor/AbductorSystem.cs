@@ -110,7 +110,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
             AddActions(args);
 
-            _mover.SetRelay(args.Actor, eye);
+            _mover.SetRelay(args.Actor, eye); // Pirate: admin NanoChat isolation and camera reset
+            _mover.ResetCamera(args.Actor); // Pirate: admin NanoChat isolation and camera reset
         }
     }
 
@@ -135,6 +136,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 _eye.SetTarget(actor, null, eyeComp);
             }
             RemoveActions(actor);
+            _mover.ResetCamera(actor); // Pirate: admin NanoChat isolation and camera reset
             QueueDel(relay);
         }
     }

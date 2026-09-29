@@ -24,10 +24,9 @@ public sealed partial class UplinkMarketListing : Control
     private readonly bool _hasBalance;
     private readonly string _price;
     private readonly string _discount;
-    private readonly string? _extra;
     private readonly EntityUid _owner;
 
-    public UplinkMarketListing(ListingData data, string price, string discount, bool hasBalance, EntityUid owner, Texture? texture = null, string? extra = null)
+    public UplinkMarketListing(ListingData data, string price, string discount, bool hasBalance, EntityUid owner, Texture? texture = null)
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
@@ -39,7 +38,6 @@ public sealed partial class UplinkMarketListing : Control
         _hasBalance = hasBalance;
         _price = price;
         _discount = discount;
-        _extra = extra;
         _owner = owner;
 
         StoreItemName.Text = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(_data, _prototype);
@@ -85,11 +83,6 @@ public sealed partial class UplinkMarketListing : Control
         {
             DiscountSubText.Text = _discount;
             StoreItemBuyButton.Text = _price;
-        }
-
-        if (_extra != null)
-        {
-            DiscountSubText.Text = _extra;
         }
     }
 

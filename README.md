@@ -60,6 +60,10 @@ Exceptions to this are simple tools like Rider's single-line completion feature.
 
 [More detailed instructions on building the project.](https://docs.goobstation.com/en/general-development/setup.html)
 
+### Pirate voice chat access
+
+`voice.enabled = true` enables the voice service. The server-only `voicechat.admins`, `voicechat.whitelisted`, and `voicechat.forall` CVars then grant access to active admins, players on the Captain job whitelist, and all players, respectively. Their defaults are `true`, `false`, and `false`. These policies are additive; changing them during a round immediately updates access, and revoking access invalidates the player's link code and disconnects their microphone.
+
 ## License
 
 All code in this codebase is released under the AGPL-3.0-or-later license. Each file includes REUSE Specification headers or separate .license files that specify a dual license option. This dual licensing is provided to simplify the process for projects that are not using AGPL, allowing them to adopt the relevant portions of the code under an alternative license. You can review the complete texts of these licenses in the LICENSES/ directory.

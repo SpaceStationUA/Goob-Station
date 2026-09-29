@@ -29,6 +29,9 @@ public sealed class GhostRoleChipIntegrationTest
             ["SkillChipSyndieMarshal", "SkillChipFieldMedicine", "SkillChipDatabase"]),
         ("VisitorSecurityOfficer",
             ["SkillChipCombatEducation", "SkillChipSidearms", "SkillChipNonLethal"]),
+        ("HecuSoldierIPC", ["SkillChipERT"]),
+        ("HecuLeaderIPC", ["SkillChipERT"]),
+        ("HecuMedicIPC", ["SkillChipERT", "SkillChipCMO"]),
     ];
 
     [Test]
@@ -70,6 +73,16 @@ public sealed class GhostRoleChipIntegrationTest
                     $"{settings} spawned through RandomHumanoidSystem did not end up with its " +
                     "chips. A chip that cannot find a brain is refused and deleted, so check that " +
                     "OrganChipsOnSpawnSystem still runs after SharedBodySystem builds the body.");
+
+                if (settings is "HecuSoldierIPC" or "HecuLeaderIPC" or "HecuMedicIPC")
+                {
+                    var knowledge = server.System<SharedKnowledgeSystem>();
+                    var store = knowledge.GetContainer(mob);
+                    Assert.That(store, Is.Not.Null, $"{settings} has no knowledge container.");
+                    var rifle = knowledge.GetKnowledge(store!.Value, "KnowledgeWeaponsRifle");
+                    Assert.That(rifle?.Comp.TemporaryLevel, Is.EqualTo(50),
+                        $"{settings} did not receive the ERT chip's rifle skill bonus.");
+                }
 
                 entMan.DeleteEntity(mob);
             }

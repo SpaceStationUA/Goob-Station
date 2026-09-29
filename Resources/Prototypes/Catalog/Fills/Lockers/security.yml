@@ -143,7 +143,7 @@
       # Goob end
     - id: MedkitRadiationFilled # Pirate
     - id: MedkitToxinFilled # Pirate
-    - id: ClothingOuterHardsuitBrigmedic
+    - id: UndeterminedVoidsuitBrigMed
     - id: ClothingUniformJumpskirtOfLife
       prob: 0.1
 

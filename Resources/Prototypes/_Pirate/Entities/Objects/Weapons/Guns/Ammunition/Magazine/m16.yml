@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# M16 magazine. A 20-round .20 rifle magazine that fits every rifle
+# taking MagazineRifle.
+
+- type: entity
+  parent: BaseMagazineRifle
+  id: MagazineRifleM16
+  name: "M16 magazine (.20 rifle)"
+  description: 20-round single-feed magazine for M16 pattern rifles. Fits any rifle that takes .20 rifle magazines.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifle
+    capacity: 20
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazine/Rifle/m16_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: MagazineRifleM16
+  id: MagazineRifleM16Empty
+  suffix: empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+# Extended M16 magazine for HECU's standard-issue rifles. Default mag of the M16 family.
+- type: entity
+  parent: MagazineRifleM16
+  id: MagazineRifleM16Extended
+  name: "extended M16 magazine (.20 rifle)"
+  description: 30-round extended magazine for M16 pattern rifles. Fits any rifle that takes .20 rifle magazines.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifle
+    capacity: 30
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazine/Rifle/m16_mag_extended.rsi
+
+- type: entity
+  parent: MagazineRifleM16Extended
+  id: MagazineRifleM16ExtendedEmpty
+  suffix: empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
