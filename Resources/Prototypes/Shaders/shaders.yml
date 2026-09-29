@@ -65,6 +65,48 @@
   kind: source
   path: "/Textures/Shaders/drunk.swsl"
 
+# stimulant rush effect: meth/e stimulants screen vibration
+- type: shader
+  id: StimRush
+  kind: source
+  path: "/Textures/Shaders/stimrush.swsl"
+
+# opiate nod effect: heavy blurring vision, slow nods, double vision
+- type: shader
+  id: OpiateNod
+  kind: source
+  path: "/Textures/Shaders/opiatenod.swsl"
+
+# trippy hallucination effect: chromatic aberration + kaleidoscope screen edge
+- type: shader
+  id: Trippy
+  kind: source
+  path: "/Textures/Shaders/trippy.swsl"
+
+# vision failing: blurred, tunnel vision closes in
+- type: shader
+  id: VisionFade
+  kind: source
+  path: "/Textures/Shaders/visionfade.swsl"
+
+# gradual desaturation: the world drains of color
+- type: shader
+  id: Desaturate
+  kind: source
+  path: "/Textures/Shaders/desaturate.swsl"
+
+# dreamy: slow soft waves, gentle blur
+- type: shader
+  id: Dreamy
+  kind: source
+  path: "/Textures/Shaders/dreamy.swsl"
+
+# bad trip: nausea squash and glitch flicks - psychological harm ahead
+- type: shader
+  id: BadTrip
+  kind: source
+  path: "/Textures/Shaders/badtrip.swsl"
+
 - type: shader
   id: Drowsiness
   kind: source
