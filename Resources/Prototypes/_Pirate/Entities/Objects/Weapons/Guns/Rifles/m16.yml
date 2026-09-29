@@ -1,0 +1,102 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# M16 family. Built on the Lecter: same .20 rifle ammo and handling, with burst-fire trigger groups.
+# All three load the 30-round extended M16 magazine and accept any .20 rifle magazine.
+
+- type: entity
+  name: M16A4 rifle
+  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  id: WeaponRifleM16
+  description: The fourth iteration of the M16 series of infantry rifles, firing the extremely old (yet strangely still in use) .20 rifle cartridge. This seems to be a reproduction, as the model was phased out in the early 2030's to accommodate more modern designs.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16_icon_48x.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16.rsi
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16.rsi
+  - type: Gun
+    fireRate: 5
+    shotsPerBurst: 3
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - Burst
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Gunshots/m16_fire.ogg
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifleM16Extended
+        insertSound: /Audio/Weapons/Guns/MagIn/sfrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: MagazineHeldVisuals
+  - type: Appearance
+
+# Tighter groups and a slightly quicker burst.
+- type: entity
+  name: AR-25T
+  parent: WeaponRifleM16
+  id: WeaponRifleM16Modern
+  description: An M16 pattern infantry rifle, this one is a modern sporting/self defense model filled to the brim with aftermarket parts. Come and take it.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16_modern_icon_48x.rsi
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16_modern.rsi
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16_modern.rsi
+  - type: Gun
+    minAngle: 18
+    maxAngle: 28
+    burstFireRate: 9
+  - type: StaticPrice
+    price: 650
+
+# Four-round bursts cycled as fast as the action allows, with no care for accuracy.
+- type: entity
+  name: AR-24 'Patriot'
+  parent: WeaponRifleM16
+  id: WeaponRifleM16Patriot
+  description: An M16 pattern infantry rifle with a short barrel and modified cycling mechanism that allows it to fire it significantly faster, with no care for accuracy or effectiveness. There's only room for one snake and one boss.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16_modern2_icon_48x.rsi
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16_modern2.rsi
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16_modern2.rsi
+  - type: Gun
+    minAngle: 25
+    maxAngle: 38
+    shotsPerBurst: 4
+    burstFireRate: 12
+  - type: StaticPrice
+    price: 650

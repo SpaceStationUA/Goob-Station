@@ -4,6 +4,8 @@
   name: standard offset cane
   description: A standard offset cane, essential for getting around when your legs aren't up to the task. May or may not grant you the wisdom of the elderly.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: Objects/Weapons/Melee/offset_canes/standard.rsi
     state: icon

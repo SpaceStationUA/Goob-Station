@@ -46,3 +46,4 @@ research-technology-bluespace-munitions = Боєприпаси Блюспейс�
 research-technology-cloning = Біологічна реконструкція
 research-technology-xeno-compatibility = Ксено-сумісність
 research-technology-service-energy-chem = Органічний електросинтез
+research-technology-security-cyborg = Технологія охоронних кіборгів

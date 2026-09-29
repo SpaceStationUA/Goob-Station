@@ -94,6 +94,17 @@ while IFS=$'\t' read -r id license kind repo ref subpath bundle dest; do
 
     [[ -f "${dest_dir}/index.html" ]] || die "${dest} has no index.html after fetch"
 
+    # Normalize line endings in text files. The repo's CRLF CI check rejects any
+    # tracked text file that carries CRLF, and a few upstream games ship it.
+    # Binary files (images, audio) are detected with `grep -I` and left alone.
+    crlf_fixed=()
+    while IFS= read -r -d '' f; do
+        if grep -Iq . "${f}" && grep -q $'\r' "${f}"; then
+            sed -i.bak 's/\r$//' "${f}" && rm -f "${f}.bak"
+            crlf_fixed+=("${f#"${dest_dir}/"}")
+        fi
+    done < <(find "${dest_dir}" -type f -print0)
+
     # Per-game sanitization: strip third-party network scripts that make no
     # sense (and can't work) inside the offline, in-game CEF page. Recorded in
     # PROVENANCE so the exception is explicit.
@@ -117,9 +128,14 @@ while IFS=$'\t' read -r id license kind repo ref subpath bundle dest; do
     else
         kind_line="${kind_line} (${bundle})"
     fi
+    exc_notes=()
+    [[ -n "${sanitize_note}" ]] && exc_notes+=("${sanitize_note}")
+    if [[ ${#crlf_fixed[@]} -gt 0 ]]; then
+        exc_notes+=("normalized CRLF line endings to LF in: ${crlf_fixed[*]}")
+    fi
     exc_line=""
-    if [[ -n "${sanitize_note}" ]]; then
-        exc_line="Exception: ${sanitize_note}."
+    if [[ ${#exc_notes[@]} -gt 0 ]]; then
+        exc_line="Exception: $(IFS='; '; echo "${exc_notes[*]}")."
     fi
 
     cat > "${dest_dir}/PROVENANCE.txt" <<EOF

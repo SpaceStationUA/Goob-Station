@@ -4,6 +4,8 @@
   id: WeaponShotgunBulldogLegallyDistinct # """legally distinct"""
   description: A completely original NanoTrasen design, legally distinct from any other weapons that might be on the market. Feeds from 12 Gauge drum magazines.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Shotgun # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Shotguns/bulldog.rsi
     layers:

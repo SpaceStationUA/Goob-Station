@@ -18,7 +18,7 @@ public sealed class CallSpecialForcesCommand : IConsoleCommand
     [Dependency] private readonly IEntityManager _entityManager = default!;
     public string Command => "callspecforces";
 
-    public string Description => "виклик ert/cburn/deathsquad";
+    public string Description => "виклик ert/cburn/deathsquad/HECU-human/HECU-ipc";
 
     public string Help => "callspecforces";
 
@@ -30,7 +30,7 @@ public sealed class CallSpecialForcesCommand : IConsoleCommand
             return;
         }
 
-        if (!Enum.TryParse<SpecialForcesType>(args[0], true, out var specType))
+        if (!SpecialForcesTypeNames.TryParse(args[0], out var specType))
         {
             shell.WriteLine(GetString("shell-invalid-entity-id"));
             return;
@@ -44,14 +44,14 @@ public sealed class CallSpecialForcesCommand : IConsoleCommand
 
         _adminLogger.Add(LogType.AdminMessage,
             LogImpact.Extreme,
-            $"Адмін {(shell.Player != null ? shell.Player.Name : "Адміністратор")} викликав спец загін {specType}");
+            $"Адмін {(shell.Player != null ? shell.Player.Name : "Адміністратор")} викликав спец загін {specType.ToCommandName()}");
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         return args.Length switch
         {
-            1 => CompletionResult.FromHintOptions(Enum.GetNames<SpecialForcesType>(),
+            1 => CompletionResult.FromHintOptions(SpecialForcesTypeNames.AllCommandNames(),
                 "Тип команди"),
             _ => CompletionResult.Empty
         };

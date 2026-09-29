@@ -126,6 +126,11 @@ public sealed class NanoChatNetworkSystem : EntitySystem
                HasComp<SyndicateNanoChatPdaComponent>(device) && !HasComp<OrdinaryNanoChatPdaComponent>(device);
     }
 
+    public bool IsAdminDevice(EntityUid? uid)
+    {
+        return uid is { } device && !Deleted(device) && HasComp<AdminNanoChatPdaComponent>(device);
+    }
+
     public bool IsSyndicateCard(EntityUid? card)
     {
         if (card is not { } uid || Deleted(uid))
@@ -145,6 +150,10 @@ public sealed class NanoChatNetworkSystem : EntitySystem
         bool recipientSyndicate,
         bool relayActive)
     {
+        if ((senderSyndicate && IsAdminDevice(recipient)) ||
+            (recipientSyndicate && IsAdminDevice(sender)))
+            return false;
+
         if (senderSyndicate || recipientSyndicate)
         {
             if (!relayActive)

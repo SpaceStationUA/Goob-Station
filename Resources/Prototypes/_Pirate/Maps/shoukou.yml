@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #made by kraftorset, with love <3
 - type: gameMap
-  id: Shoukou
+  id: PirateShoukou # Pirate: distinct from the upstream DV Shoukou map.
   mapName: 'Shōkō'
   mapPath: /Maps/_Pirate/shoukou.yml 
   mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png

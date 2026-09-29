@@ -7,6 +7,8 @@
   description: A grotesque claw made out of bone and flesh that instantly grabs anyone it hits.
   suffix: Unremoveable
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Unarmed # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Changeling/claw.rsi
     state: icon

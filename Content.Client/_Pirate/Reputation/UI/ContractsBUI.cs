@@ -14,6 +14,9 @@ public sealed class ContractsBUI : BoundUserInterface
 
     protected override void Open()
     {
+        if (IsOpened)
+            return;
+
         base.Open();
 
         _window = this.CreateWindow<ContractsWindow>();

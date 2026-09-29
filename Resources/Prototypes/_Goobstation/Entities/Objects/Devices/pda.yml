@@ -85,6 +85,8 @@
   name: HECU PDA
   description: Smells of gunpowder.
   components:
+  - type: BuiltInPdaCamera # Pirate: HECU ert rework
+    cameraPrototype: BuiltInErtPdaCamera # Pirate: HECU ert rework
   - type: Appearance
     appearanceDataInit:
       enum.PdaVisuals.PdaType:

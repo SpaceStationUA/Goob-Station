@@ -5,6 +5,8 @@
   description: "Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim."
   suffix: Bladed Plasma
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Knife # Pirate: weapon skills
   - type: Construction
     graph: BladedPlasmaFlatcapGrey
     node: icon
@@ -22,6 +24,8 @@
   description: "\"Stupid clown! You made me look bad!\" It has glass shards hidden in the brim."
   suffix: Bladed Plasma
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Knife # Pirate: weapon skills
   - type: Construction
     graph: BladedPlasmaFlatcapBrown
     node: icon
@@ -39,6 +43,8 @@
   description: "Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim."
   suffix: Bladed Reinforced
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Knife # Pirate: weapon skills
   - type: Construction
     graph: BladedReinforcedFlatcapGrey
     node: icon
@@ -56,6 +62,8 @@
   description: "\"Stupid clown! You made me look bad!\" It has glass shards hidden in the brim."
   suffix: Bladed Reinforced
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Knife # Pirate: weapon skills
   - type: Construction
     graph: BladedReinforcedFlatcapBrown
     node: icon
@@ -73,6 +81,8 @@
   description: "Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim."
   suffix: Bladed Uranium
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Knife # Pirate: weapon skills
   - type: Construction
     graph: BladedUraniumFlatcapGrey
     node: icon
@@ -91,6 +101,8 @@
   description: "\"Stupid clown! You made me look bad!\" It has glass shards hidden in the brim."
   suffix: Bladed Uranium
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Knife # Pirate: weapon skills
   - type: Construction
     graph: BladedUraniumFlatcapBrown
     node: icon

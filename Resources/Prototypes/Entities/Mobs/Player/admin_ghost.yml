@@ -85,6 +85,7 @@
     delay: 10
     initialDelay: 0
     global: true
+  - type: VoiceBroadcastConsole # Pirate: admin comms retain voice broadcast support.
   - type: RadarConsole
     followEntity: true
   - type: CargoOrderConsole

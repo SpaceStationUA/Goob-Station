@@ -82,6 +82,9 @@
     - MindRoleGhostRoleCybersun
     raffle:
       settings: default
+  - type: GhostRoleRequiredJobs # Require the Cybersun team-leader whitelist for this ghost role.
+    jobs:
+    - CybersunTeamLeader
   - type: CharacterPod
     settings: LavalandSyndieSoldierTeamLeader
     startingBalance: 1000

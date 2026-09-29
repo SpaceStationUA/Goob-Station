@@ -33,6 +33,8 @@
   parent: WeaponCudgelBase
   id: WeaponCudgelWood
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: _Lavaland/Objects/Weapons/Melee/cudgel.rsi
     state: icon
@@ -64,6 +66,8 @@
   parent: WeaponCudgelBase
   id: WeaponCudgelAshwood
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: _Lavaland/Objects/Weapons/Melee/ashwood_cudgel.rsi
     state: icon

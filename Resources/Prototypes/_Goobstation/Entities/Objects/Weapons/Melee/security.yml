@@ -4,6 +4,8 @@
   id: PolymerBaton
   description: A lightweight, durable baton made from advanced polymers. Delivers less-than-lethal force for compliance and control.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Melee/polybaton.rsi
     state: icon
@@ -41,6 +43,8 @@
   name: telescopic spear
   description: A compact, throwable spear with a retractable shaft. Designed for both melee and ranged use.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Polearm # Pirate: weapon skills
   - type: Item
     size: Normal
     storedRotation: 45
@@ -137,6 +141,8 @@
   name: Betty
   description: An old intricate souvenir made from tough hyper-woven durathread repurposed for riot combat.
   components:
+    - type: WeaponClass # Pirate: weapon skills
+      class: Bludgeon # Pirate: weapon skills
     - type: Sprite
       sprite: _Goobstation/Objects/Weapons/Melee/betty.rsi
       state: icon
@@ -223,6 +229,8 @@
   name: police baton
   description: A wooden truncheon for beating criminal scum.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Melee/baton.rsi
     state: icon

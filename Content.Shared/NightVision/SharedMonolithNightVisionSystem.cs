@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.NightVision; // Pirate: HECU rework
 using Content.Shared.Actions;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -109,6 +110,9 @@ public abstract partial class SharedMonolithNightVisionSystem : EntitySystem
 
         ent.Comp.Enabled = enabled;
         Dirty(ent);
+
+        var toggledEv = new MonolithNightVisionToggledEvent(enabled); // Pirate: HECU rework
+        RaiseLocalEvent(ent, ref toggledEv); // Pirate: HECU rework
 
         if (_net.IsClient && _timing.IsFirstTimePredicted)
         {

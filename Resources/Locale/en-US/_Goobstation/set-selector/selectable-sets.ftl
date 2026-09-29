@@ -245,3 +245,9 @@ selectable-set-research-director-voidsuit-desc =
 selectable-set-research-director-modsuit-name = RD's research MODsuit
 selectable-set-research-director-modsuit-desc =
     A preassembled research MODsuit with reagent and T-ray scanners, radiation shielding, a welding module, and expanded storage.
+
+# Pirate: Brigmedic locker selector.
+selectable-set-brigmedic-voidsuit-name = brigmedic hardsuit
+selectable-set-brigmedic-voidsuit-desc = Brigmedic's protective hardsuit for treating patients in hazardous environments.
+selectable-set-brigmedic-modsuit-name = brigmedic MODsuit
+selectable-set-brigmedic-modsuit-desc = Brigmedic's powered trauma MODsuit with a high-capacity battery.
