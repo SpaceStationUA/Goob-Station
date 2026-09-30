@@ -1,3 +1,4 @@
+using Content.Server.NodeContainer.Nodes;
 using Content.Server._DV.StationEvents.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -72,7 +73,7 @@ internal sealed class NoosphericFryRule : StationEventSystem<NoosphericFryRuleCo
                 if (!TryComp<MapGridComponent>(gridUid, out var grid))
                     continue;
 
-                var tileIndices = grid.TileIndicesFor(coordinates);
+                var tileIndices = NodeHelpers.MapSys.TileIndicesFor(grid.Owner, grid, coordinates);
 
                 if (_anchorableSystem.TileFree(grid, tileIndices, physics.CollisionLayer, physics.CollisionMask))
                     _transformSystem.AnchorEntity(reactive, xform);

@@ -22,6 +22,15 @@
           West: { state: television, sprite: Structures/Machines/computers.rsi }
           East, West: { state: television, sprite: Structures/Machines/computers.rsi }
   # Pirate edit end
+  # Pirate edit start — Pirate TV (webui) + multitool linking
+  - type: PirateTv
+  - type: DeviceLinkSource
+    ports:
+    - PirateTvBroadcast
+  - type: DeviceLinkSink
+    ports:
+    - PirateTvReceive
+  # Pirate edit end
   - type: Computer
     board: ComputerTelevisionCircuitboard
   - type: PointLight
