@@ -1,0 +1,242 @@
+/**
+ * DOM-level checks for the galaxy chart.
+ *
+ * `npm run check` covers geometry, data and the source contract. None of it can
+ * see the view layer, and that is where the worst bug lived: every marker was
+ * frozen at the pixel position it got for the initial 1200x700 default, because
+ * Solid runs a <For>/<Show> child body inside untrack() and the transform had
+ * been read into a local there. Every geometry check passed, the chart looked
+ * correct at exactly one window size, and resizing or browser-zooming made the
+ * stars drift out of their countries. `getScreenCTM()` compounded it, since that
+ * matrix includes the document zoom.
+ *
+ * So these assertions drive a real browser and compare what the page DREW
+ * against what it should have drawn. That catches the whole family: frozen
+ * geometry, mis-scaled pointer mapping, and highlight lag.
+ *
+ * Browser zoom is emulated the way Cmd+/- actually behaves — by changing the
+ * size of the CSS viewport. Setting deviceScaleFactor does NOT do this; it only
+ * changes DPR, which is why an earlier attempt at reproducing the zoom report
+ * saw three identical results.
+ *
+ * Needs `npm i -D playwright-core` and a browser. Skips cleanly without them.
+ */
+process.env.TUI_IFACE = "GalaxyMap";
+
+let chromium;
+try {
+  ({ chromium } = await import("playwright-core"));
+} catch {
+  console.log("\ncheck:dom skipped — playwright-core not installed (npm i -D playwright-core)\n");
+  process.exit(0);
+}
+
+const { createServer } = await import("vite");
+
+const PORT = 5199;
+
+const vite = await createServer({
+  // Bind explicitly. Vite's default host resolves `localhost`, which on a
+  // dual-stack machine is ::1 while Playwright dials 127.0.0.1.
+  server: { host: "127.0.0.1", port: PORT, strictPort: true },
+  logLevel: "error",
+});
+await vite.listen();
+const BASE = vite.resolvedUrls?.local?.[0] ?? `http://127.0.0.1:${PORT}`;
+console.log(`check:dom — serving ${BASE}`);
+
+let failures = 0;
+function check(name, ok, detail = "") {
+  console.log(`  ${ok ? "ok  " : "FAIL"}  ${name}${detail ? ` — ${detail}` : ""}`);
+  if (!ok) failures++;
+}
+
+/**
+ * Resolve a browser, degrading to a skip rather than an error.
+ *
+ * Playwright's bundled Chromium is keyed to the driver version, so a machine
+ * whose browser cache came from a different release has a download the driver
+ * will not accept. Falling back to the system Chrome covers that, and skipping
+ * covers a machine with neither — a check that cannot run should say so, not
+ * take the whole suite down.
+ */
+async function launchBrowser() {
+  const env = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE;
+  const attempts = [env ? { executablePath: env } : {}, { channel: "chrome" }, { channel: "msedge" }];
+  for (const opts of attempts) {
+    try {
+      return await chromium.launch({ headless: true, ...opts });
+    } catch {
+      /* try the next one */
+    }
+  }
+  console.log(
+    "\ncheck:dom skipped — no usable browser. Run `npx playwright install chromium`,\n" +
+      "or set PLAYWRIGHT_CHROMIUM_EXECUTABLE to a Chrome/Chromium binary.\n",
+  );
+  process.exit(0);
+}
+
+/** Sizes a browser zoom of each percentage produces, in CSS pixels. */
+const ZOOMS = [
+  { label: "100%", w: 1600, h: 1000 },
+  { label: "125%", w: 1280, h: 800 },
+  { label: "80%", w: 2000, h: 1250 },
+];
+
+const browser = await launchBrowser();
+
+try {
+  for (const zoom of ZOOMS) {
+    const ctx = await browser.newContext({ viewport: { width: zoom.w, height: zoom.h } });
+    const page = await ctx.newPage();
+    const errors = [];
+    page.on("pageerror", e => errors.push(e.message));
+    await page.goto(BASE, { waitUntil: "load" });
+    await page.waitForSelector("svg.chart");
+    await page.waitForTimeout(250);
+
+    console.log(`\nzoom ${zoom.label} (${zoom.w}x${zoom.h} css px):`);
+
+    // --- markers track the live transform, not a stale one ------------------
+    // Capitals are the only circles drawn at r=10, and their stroke is the owner
+    // territory's colour, which gives us both a handle on each marker and the
+    // identity of the nation it belongs to.
+    const marks = await page.evaluate(() => {
+      const svg = document.querySelector("svg.chart");
+      const w = +svg.getAttribute("width");
+      const h = +svg.getAttribute("height");
+      const pad = 56;
+      const scale = Math.min((w - pad * 2) / 132, (h - pad * 2) / 74);
+      const toPx = (lx, ly) => ({ x: lx * scale + w / 2, y: ly * scale + h / 2 });
+
+      const rings = [...svg.querySelectorAll("circle")]
+        .filter(c => c.getAttribute("r") === "10")
+        .map(c => ({
+          x: +c.getAttribute("cx"),
+          y: +c.getAttribute("cy"),
+          owner: c.getAttribute("stroke"),
+        }));
+
+      // Expected on-screen position of every capital, from the model data the
+      // page was given. Sol is a capital at (-2, 11) LY.
+      const sol = toPx(-2, 11);
+      let solErr = Infinity;
+      for (const r of rings) solErr = Math.min(solErr, Math.hypot(r.x - sol.x, r.y - sol.y));
+
+      // For each ring, which flat fill paths contain its centre?
+      const flats = [...svg.querySelectorAll('path[fill-rule="evenodd"]')].filter(
+        p => !(p.getAttribute("fill") ?? "").startsWith("url("),
+      );
+      const contained = rings.map(r => {
+        const hits = flats.filter(p => {
+          try {
+            return p.isPointInFill(new DOMPoint(r.x, r.y));
+          } catch {
+            return false;
+          }
+        });
+        return { owner: r.owner, insideOwnTerritory: hits.some(p => p.getAttribute("fill") === r.owner) };
+      });
+
+      return { scale, solErr, rings: rings.length, contained };
+    });
+
+    check(
+      "star markers track the live transform",
+      marks.solErr < 2,
+      `Sol off by ${marks.solErr.toFixed(1)}px across ${marks.rings} capitals`,
+    );
+
+    const strays = marks.contained.filter(c => !c.insideOwnTerritory);
+    check(
+      "every capital is drawn inside its own territory",
+      strays.length === 0,
+      strays.length ? `${strays.length} outside: ${strays.map(s => s.owner).join(", ")}` : `${marks.contained.length} checked`,
+    );
+
+    // --- the highlight follows the pointer ----------------------------------
+    const seen = new Set();
+    for (const [fx, fy] of [
+      [0.5, 0.5],
+      [0.3, 0.4],
+      [0.7, 0.6],
+      [0.4, 0.7],
+    ]) {
+      await page.mouse.move(zoom.w * fx, zoom.h * fy);
+      await page.waitForTimeout(40);
+      const at = await page.evaluate(() => {
+        const h = document.querySelector(".cell-hover");
+        if (!h || h.classList.contains("off")) return null;
+        const b = h.getBoundingClientRect();
+        return `${(b.x + b.width / 2).toFixed(1)},${(b.y + b.height / 2).toFixed(1)}`;
+      });
+      if (at) seen.add(at);
+    }
+    check("hover highlight moves with the pointer", seen.size >= 3, `${seen.size} distinct cells`);
+
+    await page.mouse.move(zoom.w * 0.45, zoom.h * 0.55);
+    await page.waitForTimeout(60);
+    const under = await page.evaluate(() => {
+      const h = document.querySelector(".cell-hover");
+      const b = h.getBoundingClientRect();
+      return { cx: b.x + b.width / 2, cy: b.y + b.height / 2 };
+    });
+    const hexR = 2 * marks.scale;
+    const off = Math.hypot(under.cx - zoom.w * 0.45, under.cy - zoom.h * 0.55);
+    check(
+      "hover highlight is the cell under the cursor",
+      off < hexR,
+      `off by ${off.toFixed(1)}px, hex radius ${hexR.toFixed(1)}px`,
+    );
+
+    // --- brushes: nation, unclaim, contest ---------------------------------
+    await page.mouse.click(zoom.w * 0.45, zoom.h * 0.55);
+    await page.waitForTimeout(120);
+    const panel = await page.evaluate(() => document.querySelector(".panel")?.textContent ?? null);
+    check("clicking a cell selects its territory", panel !== null, panel?.slice(0, 32));
+
+    const armed = await page.evaluate(async () => {
+      const swatches = [...document.querySelectorAll(".toolbar .swatch")];
+      swatches[0].dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await new Promise(r => setTimeout(r, 80));
+      return document.querySelector(".armed-note")?.textContent ?? "";
+    });
+    check("a nation brush arms and says what it will do", /PAINTING/.test(armed), armed.slice(0, 34));
+
+    const svgBox = await page.evaluate(() => {
+      const s = document.querySelector("svg.chart");
+      const r = s.getBoundingClientRect();
+      return { x: r.x, y: r.y, w: r.width, h: r.height };
+    });
+    await page.mouse.click(svgBox.x + svgBox.w * 0.45, svgBox.y + svgBox.h * 0.55);
+    await page.waitForTimeout(150);
+    const undo = await page.evaluate(() =>
+      [...document.querySelectorAll(".toolbar button")].some(b => b.textContent.includes("UNDO")),
+    );
+    check("painting a cell records an undo step", undo);
+
+    const contest = await page.evaluate(async () => {
+      const swatches = [...document.querySelectorAll(".toolbar .swatch")];
+      swatches[swatches.length - 1].dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await new Promise(r => setTimeout(r, 80));
+      return document.querySelector(".armed-note")?.textContent ?? "";
+    });
+    check("contest brush arms", /CONTESTED/.test(contest), contest.slice(0, 34));
+
+    const overlay = await page.evaluate(() => {
+      const layer = document.querySelector(".contested-layer path");
+      return (layer?.getAttribute("d") ?? "").length;
+    });
+    check("contested ground is drawn on the chart", overlay > 0, `${overlay} chars of path`);
+
+    check("no page errors", errors.length === 0, errors.join(" | "));
+    await ctx.close();
+  }
+} finally {
+  await browser.close();
+  await vite.close();
+}
+
+console.log(`\n${failures === 0 ? "all dom checks passed" : `${failures} DOM CHECK(S) FAILED`}\n`);
+process.exit(failures === 0 ? 0 : 1);

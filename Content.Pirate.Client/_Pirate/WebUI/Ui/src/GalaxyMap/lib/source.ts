@@ -1,6 +1,14 @@
 import { cellsInExtent, key } from "./hex";
 import { assignCells, type AssignResult } from "./geometry";
-import type { GalaxyModel, Ownership, Route, StarSystem, Territory, TerritoryClaim } from "./model";
+import type {
+  Contested,
+  GalaxyModel,
+  Ownership,
+  Route,
+  StarSystem,
+  Territory,
+  TerritoryClaim,
+} from "./model";
 
 /**
  * Where the page gets its data.
@@ -23,6 +31,13 @@ export interface GalaxySource {
    * the cell was already the requested territory.
    */
   paint?(cellQ: number, cellR: number, territory: string): Promise<boolean>;
+  /**
+   * Flag or unflag a cell as disputed. Separate from `paint` on purpose:
+   * marking a border as contested says nothing about who owns it, and folding
+   * the two together would mean painting over a cell to say "both of us want
+   * this", which throws away the owner.
+   */
+  setContested?(cellQ: number, cellR: number, on: boolean): Promise<boolean>;
 }
 
 /** Map extents and grid resolution, shared by the bake and the runtime. */
@@ -83,6 +98,10 @@ export function buildModel(
     systems,
     routes,
     ownership,
+    // Baked-in disputes come straight from the assignment pass. They are data,
+    // not a log line: the depth rule settled these cells, but "settled" and
+    // "agreed" are different things and the chart should be able to say so.
+    contested: new Set(contested.map(c => key(c.cell.q, c.cell.r))),
     revision: 0,
   };
 }
@@ -103,7 +122,15 @@ export function buildModel(
 export class FixtureSource implements GalaxySource {
   private listeners: ((m: GalaxyModel) => void)[] = [];
   private overlay = new Map<string, string>();
-  private undoStack: { cell: string; prev: string | undefined }[] = [];
+  /**
+   * Sparse deltas on the contested set, mirroring `overlay`.
+   *
+   * `null` means "clear the flag", `undefined` means "not touched by this
+   * session". The distinction matters: a cell that the bake marked disputed and
+   * an admin then un-marked must not spring back to disputed on the next edit.
+   */
+  private contestedOverlay = new Map<string, boolean>();
+  private undoStack: { cell: string; owner?: string; contested?: boolean }[] = [];
   private current: GalaxyModel | null = null;
 
   constructor(
@@ -115,19 +142,25 @@ export class FixtureSource implements GalaxySource {
   ) {}
 
   /**
-   * Build a fresh model from the pristine baseline plus the overlay.
+   * Build a fresh model from the pristine baseline plus the overlays.
    *
-   * Both the model and its ownership map are new objects every time. That is
-   * not incidental: the view is Solid, so handing it the same object it already
-   * holds — even after mutating that object's contents — changes nothing on
-   * screen. Painting appeared to do nothing at all for exactly this reason.
+   * The model, its ownership map and its contested set are all new objects every
+   * time. That is not incidental: the view is Solid, so handing it the same
+   * object it already holds — even after mutating that object's contents —
+   * changes nothing on screen. Painting appeared to do nothing at all for
+   * exactly this reason.
    */
   private snapshot(): GalaxyModel {
     const base = buildModel(this.spec, this.territories, this.claims, this.systems, this.routes);
-    if (this.overlay.size === 0) return base;
+    if (this.overlay.size === 0 && this.contestedOverlay.size === 0) return base;
     const ownership: Ownership = new Map(base.ownership);
     for (const [cell, id] of this.overlay) ownership.set(cell, id);
-    return { ...base, ownership, revision: base.revision + 1 };
+    const contested: Contested = new Set(base.contested);
+    for (const [cell, on] of this.contestedOverlay) {
+      if (on) contested.add(cell);
+      else contested.delete(cell);
+    }
+    return { ...base, ownership, contested, revision: base.revision + 1 };
   }
 
   async load(): Promise<GalaxyModel> {
@@ -156,18 +189,36 @@ export class FixtureSource implements GalaxySource {
     if (!model.ownership.has(k)) return false;
     const current = this.overlay.get(k) ?? model.ownership.get(k);
     if (current === territory) return false;
-    this.undoStack.push({ cell: k, prev: this.overlay.get(k) });
+    this.undoStack.push({ cell: k, owner: territory });
     this.overlay.set(k, territory);
     this.emit();
     return true;
   }
 
-  /** Dev affordance: step back through local paint operations. */
+  async setContested(q: number, r: number, on: boolean): Promise<boolean> {
+    const model = await this.load();
+    const k = key(q, r);
+    if (!model.ownership.has(k)) return false;
+    const current = this.contestedOverlay.get(k) ?? model.contested.has(k);
+    if (current === on) return false;
+    this.undoStack.push({ cell: k, contested: on });
+    this.contestedOverlay.set(k, on);
+    this.emit();
+    return true;
+  }
+
+  /**
+   * Dev affordance: step back through local edits.
+   *
+   * One entry records whichever field the edit touched, so stepping back over a
+   * contest flag leaves the owner alone and vice versa. An absent field means
+   * "revert to the baked baseline".
+   */
   async undo(): Promise<void> {
     const last = this.undoStack.pop();
     if (!last) return;
-    if (last.prev === undefined) this.overlay.delete(last.cell);
-    else this.overlay.set(last.cell, last.prev);
+    if (last.owner !== undefined) this.overlay.delete(last.cell);
+    if (last.contested !== undefined) this.contestedOverlay.delete(last.cell);
     this.emit();
   }
 }

@@ -9,7 +9,7 @@
  *   npm run render [outfile]
  */
 import { writeFileSync } from "node:fs";
-import { cellsInExtent, hexCorners, hexToPixel, type Vec2 } from "../src/GalaxyMap/lib/hex";
+import { cellsInExtent, hexCorners, hexToPixel, key, type Vec2 } from "../src/GalaxyMap/lib/hex";
 import { assignCells, cellOutline, cellsByTerritory } from "../src/GalaxyMap/lib/geometry";
 import { loopsToPxPath, makeTransform } from "../src/GalaxyMap/lib/transform";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "../src/GalaxyMap/lib/devmap";
@@ -28,7 +28,7 @@ const PAD = 56;
 const t = makeTransform(spec.extentLy, W, H, PAD);
 
 const cells = cellsInExtent(spec.extentLy.w, spec.extentLy.h, spec.hexSizeLy);
-const { ownership } = assignCells(CLAIMS, cells, spec.hexSizeLy, spec.unclaimedId);
+const { ownership, contested } = assignCells(CLAIMS, cells, spec.hexSizeLy, spec.unclaimedId);
 const model: GalaxyModel = {
   extentLy: spec.extentLy,
   hexSizeLy: spec.hexSizeLy,
@@ -36,6 +36,7 @@ const model: GalaxyModel = {
   systems: SYSTEMS,
   routes: ROUTES,
   ownership,
+  contested: new Set(contested.map(c => key(c.cell.q, c.cell.r))),
   revision: 0,
 };
 
@@ -151,6 +152,29 @@ for (const r of ROUTES) {
 }
 
 const terrColor = new Map(TERRITORIES.map(x => [x.id, x.color]));
+
+/* Contested ground, matching Chart.tsx: one amber cross-hatch plus a light
+   per-cell stroke, drawn over the fills and under everything else. The offline
+   renderer has no painting, so this only ever shows the cells the bake flagged. */
+if (model.contested.size > 0) {
+  const parts: string[] = [];
+  for (const k of model.contested) {
+    const [q, r] = k.split(",");
+    const pts = hexCorners(hexToPixel({ q: +q, r: +r }, spec.hexSizeLy), spec.hexSizeLy).map(t.toPx);
+    parts.push("M" + pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join("L") + "Z");
+  }
+  const d = parts.join(" ");
+  push(
+    `<defs><pattern id="pat-contested" width="8" height="8" patternUnits="userSpaceOnUse">` +
+      `<rect width="8" height="8" fill="#ffb454" fill-opacity="0.1"/>` +
+      `<path d="M0,8 L8,0" stroke="#ffb454" stroke-width="1.6" stroke-opacity="0.85"/>` +
+      `<path d="M-2,2 L2,-2 M6,10 L10,6" stroke="#ffb454" stroke-width="1.6" stroke-opacity="0.85"/>` +
+      `</pattern></defs>`,
+  );
+  push(`<path d="${d}" fill="url(#pat-contested)" fill-rule="evenodd"/>`);
+  push(`<path d="${d}" fill="none" stroke="#ffb454" stroke-width="1.1" opacity="0.6"/>`);
+}
+
 
 /**
  * Pick the spot for a centred label that keeps it furthest from every system

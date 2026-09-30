@@ -49,11 +49,17 @@ svg.chart.painting {
   pointer-events: none;
 }
 
+/* The hover polygon is permanently in the DOM and carries no geometry when the
+   pointer is off the map, so it is hidden rather than removed — see the note on
+   hoverPts in Chart.tsx. */
 .cell-hover {
   fill: rgba(255, 255, 255, 0.14);
   stroke: rgba(255, 255, 255, 0.6);
   stroke-width: 1;
   pointer-events: none;
+}
+.cell-hover.off {
+  display: none;
 }
 
 /* Territory naming — the big letterspaced tier.
@@ -178,6 +184,30 @@ svg.chart.painting {
 .toolbar .swatch.on {
   outline: 2px solid #fff;
   outline-offset: 1px;
+}
+
+/* The two non-nation brushes. They cannot be a flat colour, because neither
+   one names an owner: "unclaimed" is the absence of a colour and "contested"
+   is a disagreement about which colour applies. */
+.toolbar .swatch-unclaim {
+  background:
+    repeating-linear-gradient(45deg, #2a3140 0 3px, transparent 3px 6px),
+    #141a24;
+}
+.toolbar .swatch-contest {
+  background: repeating-linear-gradient(45deg, #ffb454 0 2px, #3a2a12 2px 5px);
+}
+.toolbar .swatch-unclaim.on,
+.toolbar .swatch-contest.on {
+  outline-color: #ffb454;
+}
+
+/* Contested ground on the chart itself, and its count in the legend. */
+.contested-layer {
+  pointer-events: none;
+}
+.legend-contested {
+  color: #ffb454;
 }
 
 /* Armed state. Painting has to be obvious, because with a swatch held down a

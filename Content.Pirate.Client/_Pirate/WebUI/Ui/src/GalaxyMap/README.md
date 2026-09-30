@@ -27,15 +27,30 @@ TUI_IFACE=GalaxyMap npm run dev     # http://localhost:5173
 ```bash
 npm run typecheck    # tsc
 npm run check:hex    # edge -> neighbour table, verified against geometry
-npm run check        # claims, cells, outlines, borders, systems
+npm run check        # claims, cells, outlines, borders, systems, paint, disputes
+npm run check:dom    # drives a real browser; needs playwright-core, skips without
+npm run check:all    # check + check:dom
 npm run gaps         # how close each pair of claims is, and whether they border
 npm run render       # standalone SVG, for looking at without a browser
 ```
 
-`check` and `check:hex` exist because this geometry fails *silently and
+`check`, `check:hex` and `check:dom` exist because this code fails *silently and
 plausibly*. Several bugs here produced short, well-formed segments and a chart
 that merely looked wrong, so the assertions target the invariant rather than the
-symptom. Three worth knowing about:
+symptom. The three layers matter because they cannot see each other: the geometry
+checks were all green while every star marker sat frozen at the wrong pixel
+position, because that bug lived in the view layer's input and not in the data.
+
+`check:dom` is the one that would have caught that. It loads the page in a real
+browser and compares what the page *drew* against what the current transform says
+it should have drawn, at three viewport sizes — which is also how browser zoom
+behaves, since Cmd± changes the size of the CSS viewport. It also drives the
+pointer to confirm the hover highlight tracks the cursor. Install it with
+`npm i -D playwright-core` and `npx playwright install chromium`; it skips with a
+message rather than failing when no browser is available, so it is safe to leave
+in CI.
+
+Worth knowing about:
 
 - **The edge table is verified, not trusted.** A wrong `EDGE_TO_NEIGHBOUR` entry
   makes boundary extraction pick wrong edges. It showed up as borders
@@ -51,6 +66,35 @@ symptom. Three worth knowing about:
 - **The paint contract is asserted, not assumed.** A source that mutates its
   model in place leaves every geometry check green while the page silently stops
   updating, because the bug lives in the view layer's input and not in the data.
+
+**Solid runs a `<For>`/`<Show>` child body inside `untrack()`.** A reactive read
+hoisted into a local there is evaluated exactly once and never again. Hoisting
+`const P = t().toPx(...)` inside a `<For>` is not a style choice — it silently
+freezes that geometry at whatever the viewport was on first paint. Every star
+stayed nailed to the position it got for the initial 1200x700 default while the
+territory fills, which are read through memos, re-laid-out correctly. The chart
+looked *plausible* at the one window size that happened to match and read as
+"systems are in the wrong place" everywhere else, and browser zoom — which is
+just another way to resize the viewport — moved the fills and not the markers so
+the two drifted apart.
+
+`Show` has a second trap in the same place: it normalises its condition to
+truthiness (`equals: (a, b) => !a === !b`), so `<Show when={obj}>` will not
+re-render for a new object that is still truthy, and its accessor must be read
+*inside* the tracked part of the child. The hover highlight is a permanent
+element with memoised geometry rather than a `Show` for exactly this reason.
+
+The rule the code now follows: anything depending on the transform is built in a
+`createMemo` above the JSX, and the markup only reads plain fields off the
+result. That makes the mistake structurally impossible instead of merely
+discouraged.
+
+**`getScreenCTM()` includes the document's zoom, `clientX` does not.** Inverting
+that matrix and feeding it client coordinates divides the point by the zoom
+factor, so clicks land in the wrong place. `getBoundingClientRect()` is in
+unzoomed CSS pixels — the same space as `clientX` — and the SVG is laid out 1:1
+with those pixels, so the subtraction is exact at any zoom and under any CSS
+transform on an ancestor.
 
 ## Design notes
 
@@ -112,5 +156,10 @@ are transliterations pending review.
 - Ukrainian *system* names reviewed by a native speaker; the territory names are
   converted from the locale file by hand and need the same eye.
 - `BridgeSource` to replace `FixtureSource` in game, plus the holotable host.
+  `setContested` is the shape a server-validated admin call should take.
 - Two-tier typography: the small prefixed `REGION: …` tier is specced, not built.
-- Zoom, pan, and the paint tool's drag-to-paint.
+- Zoom and pan, and the paint tool's drag-to-paint. Drag matters more than zoom
+  here: the chart is a fixed extent that fits its host, so the thing worth adding
+  is painting several cells in one stroke.
+- Contested cells are a flat hatch with no per-claimant identity. A real dispute
+  wants "Biesel claims / Izweski claims" rather than a single flag.

@@ -1,8 +1,8 @@
-import { createEffect, createSignal, For, onCleanup, Show } from "solid-js";
+import { createEffect, createMemo, createSignal, For, onCleanup, Show } from "solid-js";
 import { cellsInExtent, hexCorners, hexToPixel, type Axial } from "./lib/hex";
 import { cellsByTerritory, cellOutline } from "./lib/geometry";
 import { loopToPxPath, loopsToPxPath, makeTransform } from "./lib/transform";
-import { pick, type GalaxyModel, type PatternId, type Territory } from "./lib/model";
+import { pick, type GalaxyModel, type PatternId, type Route, type Territory } from "./lib/model";
 
 /* ------------------------------------------------------------------ *
  * Fill patterns — the single biggest thing separating a political map
@@ -101,7 +101,91 @@ export default function Chart(props: ChartProps) {
 
   const PAD = 56;
   const t = () => makeTransform(props.model.extentLy, size().w, size().h, PAD);
-  const terrById = (): Map<string, Territory> => new Map(props.model.territories.map(x => [x.id, x]));
+  const terrById = createMemo(() => new Map(props.model.territories.map(x => [x.id, x])));
+
+  /* ------------------------------------------------------------------ *
+   * Reactive geometry
+   *
+   * Everything that depends on the transform is built HERE, in a memo, and the
+   * JSX below only reads plain fields off the result.
+   *
+   * The rule exists because of a bug that cost real time. Solid runs the body of
+   * a <For>/<Show> child inside untrack(), so a reactive read hoisted into a
+   * local there is evaluated exactly once and never again. Hoisting
+   * `const P = t().toPx(...)` inside a <For> is therefore not a style
+   * preference — it silently freezes the geometry at whatever the viewport
+   * happened to be on first paint. Every star stayed nailed to the position it
+   * got for the initial 1200x700 default while the territory fills, which are
+   * read through memos, re-laid-out correctly on resize. The chart looked
+   * *plausible* at the one window size that happened to match, and read as
+   * "systems are in the wrong place" everywhere else. Zooming the browser is
+   * just another way to change the viewport, so it moved the fills and not the
+   * markers, and the two drifted apart.
+   *
+   * Precomputing in memos makes that mistake structurally impossible here:
+   * there is no reactive read left in a control-flow body to hoist.
+   * ------------------------------------------------------------------ */
+
+  /** Markers, pre-projected. Stable across a paint; rebuilt on resize. */
+  const systemNodes = createMemo(() =>
+    props.model.systems.map(s => ({
+      id: s.id,
+      system: s,
+      colour: terrById().get(s.territory)?.color ?? "#94a3b8",
+      P: t().toPx({ x: s.xLy, y: s.yLy }),
+    })),
+  );
+
+  /** Route arcs, pre-projected. */
+  const routeNodes = createMemo(() => {
+    const byId = new Map(props.model.systems.map(s => [s.id, s]));
+    const out: { id: string; d: string; kind: Route["kind"] }[] = [];
+    for (const r of props.model.routes) {
+      const a = byId.get(r.from);
+      const b = byId.get(r.to);
+      if (!a || !b) continue;
+      const A = t().toPx({ x: a.xLy, y: a.yLy });
+      const B = t().toPx({ x: b.xLy, y: b.yLy });
+      // Bow each link perpendicular to its own axis, so the bundle reads as a
+      // set of deliberate curves rather than a starburst of straight spokes.
+      const cx = (A.x + B.x) / 2 + (B.y - A.y) * 0.16;
+      const cy = (A.y + B.y) / 2 - (B.x - A.x) * 0.16;
+      out.push({ id: `${r.from}>${r.to}`, d: `M${A.x},${A.y} Q${cx},${cy} ${B.x},${B.y}`, kind: r.kind });
+    }
+    return out;
+  });
+
+  /** One path covering every disputed cell, as a single even-odd subpath soup. */
+  const contestedPath = createMemo(() => {
+    const sizeLy = props.model.hexSizeLy;
+    const parts: string[] = [];
+    for (const k of props.model.contested) {
+      const [q, r] = k.split(",");
+      const pts = hexCorners(hexToPixel({ q: +q, r: +r }, sizeLy), sizeLy).map(t().toPx);
+      parts.push("M" + pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join("L") + "Z");
+    }
+    return parts.join(" ");
+  });
+
+  /**
+   * Hover outline.
+   *
+   * The polygon is always in the DOM rather than behind a <Show>. Solid's <Show>
+   * normalises its condition to truthiness (`equals: (a, b) => !a === !b`) and
+   * runs the child body untracked, so `<Show when={someObject}>{c => <poly
+   * points={work(c())} />}</Show>` evaluates `work` once and then never again —
+   * the highlight locks onto the first cell the pointer ever entered. A memo
+   * plus a permanent element has neither problem.
+   */
+  const hoverPts = createMemo(() => {
+    const c = props.hoverCell;
+    if (!c) return "";
+    const sizeLy = props.model.hexSizeLy;
+    return hexCorners(hexToPixel(c, sizeLy), sizeLy)
+      .map(t().toPx)
+      .map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`)
+      .join(" ");
+  });
 
   /** One path per territory, all its loops concatenated (even-odd fills holes). */
   const fills = (): Map<string, string> => {
@@ -240,13 +324,24 @@ export default function Chart(props: ChartProps) {
     return best;
   }
 
+  /**
+   * Pointer position in the SVG's own user units.
+   *
+   * Deliberately NOT `getScreenCTM()`. That matrix is specified to include the
+   * document's current zoom, so inverting it and feeding the result client
+   * coordinates divides the point by the zoom factor and the click lands in the
+   * wrong place — which is exactly the "the chart is broken when I Cmd+ the
+   * browser" report. `getBoundingClientRect` is in unzoomed CSS pixels, which is
+   * the same space as `clientX`/`clientY`, and the SVG is laid out 1:1 with those
+   * pixels (its viewBox is its pixel size), so the subtraction is exact at any
+   * zoom and under any CSS transform on an ancestor.
+   */
   function local(ev: MouseEvent): { x: number; y: number } | null {
     const svg = svgRef;
     if (!svg) return null;
-    const ctm = svg.getScreenCTM();
-    if (!ctm) return null;
-    const pt = new DOMPoint(ev.clientX, ev.clientY).matrixTransform(ctm.inverse());
-    return { x: pt.x, y: pt.y };
+    const r = svg.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) return null;
+    return { x: ev.clientX - r.left, y: ev.clientY - r.top };
   }
 
   const frame = () => ({
@@ -302,6 +397,24 @@ export default function Chart(props: ChartProps) {
               </pattern>
             )}
           </For>
+
+          {/* Chart content is clipped to the frame. `cellsInExtent` keeps every
+              cell whose CENTRE is inside the extent, so the outermost row of
+              hexes overhangs the frame by half a cell — which put a stray hex
+              outline up under the toolbar, right across the GRID button. */}
+          <clipPath id="frame-clip">
+            <rect {...frame()} />
+          </clipPath>
+
+          {/* One shared pattern for every disputed cell. Contested ground has no
+              owner to take a colour from, so it gets its own: a tight amber
+              cross-hatch that reads at map scale and never competes with a
+              nation's fill. */}
+          <pattern id="pat-contested" width="8" height="8" patternUnits="userSpaceOnUse">
+            <rect width="8" height="8" fill="#ffb454" fill-opacity="0.1" />
+            <path d="M0,8 L8,0" stroke="#ffb454" stroke-width="1.6" stroke-opacity="0.85" />
+            <path d="M-2,2 L2,-2 M6,10 L10,6" stroke="#ffb454" stroke-width="1.6" stroke-opacity="0.85" />
+          </pattern>
         </defs>
 
         {/* Background. Depth first, so nothing reads as flat black. */}
@@ -314,7 +427,7 @@ export default function Chart(props: ChartProps) {
 
         {/* Chart graticule — faint, deliberate, toggleable. */}
         <Show when={props.showCells}>
-          <g class="graticule">
+          <g class="graticule" clip-path="url(#frame-clip)">
             <For each={graticule()}>{d => <path d={d} />}</For>
           </g>
         </Show>
@@ -388,29 +501,33 @@ export default function Chart(props: ChartProps) {
           </For>
         </g>
 
+        {/* Contested ground.
+            Drawn over the fills and under everything else, because it is a
+            property OF the territory rather than a thing beside it: a hatched
+            amber cell should still read as Biesel's land with a dispute on it.
+            Deliberately not a colour change — recolouring would imply the cell
+            belongs to whoever the new colour belongs to. */}
+        <g class="contested-layer" clip-path="url(#frame-clip)">
+          <path d={contestedPath()} fill="url(#pat-contested)" fill-rule="evenodd" />
+          {/* Per-cell stroke, deliberately light: a run of disputed cells should
+              read as one band, not as a row of separately outlined tiles. */}
+          <path d={contestedPath()} fill="none" stroke="#ffb454" stroke-width="1.1" opacity="0.6" />
+        </g>
+
         {/* Routes. FTL is not wired up; drawing the links is free and adds a
             lot of the "real chart" read. */}
         <g>
-          <For each={props.model.routes}>
-            {r => {
-              const a = props.model.systems.find(s => s.id === r.from);
-              const b = props.model.systems.find(s => s.id === r.to);
-              if (!a || !b) return null;
-              const A = t().toPx({ x: a.xLy, y: a.yLy });
-              const B = t().toPx({ x: b.xLy, y: b.yLy });
-              const cx = (A.x + B.x) / 2 + (B.y - A.y) * 0.16;
-              const cy = (A.y + B.y) / 2 - (B.x - A.x) * 0.16;
-              return (
-                <path
-                  d={`M${A.x},${A.y} Q${cx},${cy} ${B.x},${B.y}`}
-                  fill="none"
-                  stroke="#7fd4c8"
-                  stroke-width="1.3"
-                  opacity="0.6"
-                  stroke-dasharray={r.kind === "gate" ? "7 5" : "3 5"}
-                />
-              );
-            }}
+          <For each={routeNodes()}>
+            {r => (
+              <path
+                d={r.d}
+                fill="none"
+                stroke="#7fd4c8"
+                stroke-width="1.3"
+                opacity="0.6"
+                stroke-dasharray={r.kind === "gate" ? "7 5" : "3 5"}
+              />
+            )}
           </For>
         </g>
 
@@ -440,45 +557,55 @@ export default function Chart(props: ChartProps) {
 
         {/* Systems. Four silhouettes, not four sizes. */}
         <g>
-          <For each={props.model.systems}>
-            {s => {
-              const c = terrById().get(s.territory)?.color ?? "#94a3b8";
-              const big = s.importance >= 2;
-              const P = t().toPx({ x: s.xLy, y: s.yLy });
-              return (
-                <>
-                  <Show when={s.importance === 3}>
-                    <circle cx={P.x} cy={P.y} r="10" fill="none" stroke={c} stroke-width="1.6" opacity="0.9" />
-                  </Show>
-                  <Show when={s.kind === "station" || s.kind === "outpost"}>
-                    <rect x={P.x - 3.5} y={P.y - 3.5} width="7" height="7" fill="#cbd8e6" opacity="0.9" />
-                  </Show>
-                  <Show when={s.kind === "star" || s.kind === "planet"}>
-                    <circle cx={P.x} cy={P.y} r={big ? 5 : 3.2} fill={c} stroke="#0a0f18" stroke-width="1" />
-                  </Show>
-                  <text
-                    x={P.x + (s.importance === 3 ? 15 : 9)}
-                    y={P.y - 5}
-                    class="system-label"
-                    classList={{ capital: s.importance === 3 }}
-                  >
-                    {pick(s.name, props.locale)}
-                  </text>
-                </>
-              );
-            }}
+          <For each={systemNodes()}>
+            {n => (
+              <>
+                <Show when={n.system.importance === 3}>
+                  <circle
+                    cx={n.P.x}
+                    cy={n.P.y}
+                    r="10"
+                    fill="none"
+                    stroke={n.colour}
+                    stroke-width="1.6"
+                    opacity="0.9"
+                  />
+                </Show>
+                <Show when={n.system.kind === "station" || n.system.kind === "outpost"}>
+                  <rect
+                    x={n.P.x - 3.5}
+                    y={n.P.y - 3.5}
+                    width="7"
+                    height="7"
+                    fill="#cbd8e6"
+                    opacity="0.9"
+                  />
+                </Show>
+                <Show when={n.system.kind === "star" || n.system.kind === "planet"}>
+                  <circle
+                    cx={n.P.x}
+                    cy={n.P.y}
+                    r={n.system.importance >= 2 ? 5 : 3.2}
+                    fill={n.colour}
+                    stroke="#0a0f18"
+                    stroke-width="1"
+                  />
+                </Show>
+                <text
+                  x={n.P.x + (n.system.importance === 3 ? 15 : 9)}
+                  y={n.P.y - 5}
+                  class="system-label"
+                  classList={{ capital: n.system.importance === 3 }}
+                >
+                  {pick(n.system.name, props.locale)}
+                </text>
+              </>
+            )}
           </For>
         </g>
 
         {/* Hover cell, for the paint tool. */}
-        <Show when={props.hoverCell}>
-          {c => {
-            const pts = hexCorners(hexToPixel(c(), props.model.hexSizeLy), props.model.hexSizeLy).map(
-              t().toPx,
-            );
-            return <polygon points={pts.map(p => `${p.x},${p.y}`).join(" ")} class="cell-hover" />;
-          }}
-        </Show>
+        <polygon class="cell-hover" classList={{ off: !props.hoverCell }} points={hoverPts()} />
 
         <rect {...frame()} class="frame-line" />
       </svg>

@@ -13,6 +13,23 @@ const LOCALES = [
 ] as const;
 
 /**
+ * What a click does while a brush is armed.
+ *
+ * Modelled as data rather than as a bag of booleans in the component because
+ * the game needs the same three cases, and because "unclaim" is not a special
+ * case at all: it is painting the `unclaimed` territory, which already exists in
+ * the model. Treating it as one more swatch means there is no second code path
+ * to get wrong.
+ */
+type Brush =
+  | { kind: "owner"; territory: string }
+  | { kind: "unclaim" }
+  | { kind: "contest"; on: boolean };
+
+const brushId = (b: Brush | undefined) =>
+  b === undefined ? "" : b.kind === "owner" ? `t:${b.territory}` : b.kind;
+
+/**
  * Browser harness entry point.
  *
  * Owns state and chrome only — the chart itself is a pure function of the
@@ -24,7 +41,7 @@ export default function App() {
   const [selected, setSelected] = createSignal<string>();
   const [hoverCell, setHoverCell] = createSignal<Axial>();
   const [showCells, setShowCells] = createSignal(false);
-  const [paintWith, setPaintWith] = createSignal<string>();
+  const [brush, setBrush] = createSignal<Brush>();
   const [locale, setLocale] = createSignal<string>("en");
   const [edits, setEdits] = createSignal(0);
 
@@ -42,10 +59,11 @@ export default function App() {
     setModel(await source.load());
   });
 
-  // Escape leaves paint mode. Without it there is no way out once a swatch is
-  // armed except hunting for the STOP button, which reads as being stuck.
+  // Escape drops the armed brush. Without it there is no way out once a swatch
+  // is picked except hunting for the same swatch again, which reads as being
+  // stuck.
   const onKey = (ev: KeyboardEvent) => {
-    if (ev.key === "Escape") setPaintWith(undefined);
+    if (ev.key === "Escape") setBrush(undefined);
   };
   window.addEventListener("keydown", onKey);
   onCleanup(() => window.removeEventListener("keydown", onKey));
@@ -57,6 +75,11 @@ export default function App() {
     return out;
   });
 
+  /** The id of the territory that represents "nobody's". */
+  const unclaimedId = createMemo(
+    () => (model()?.territories ?? []).find(t => t.unclaimed)?.id ?? "",
+  );
+
   const cellCount = createMemo(() => {
     const sel = selected();
     if (!sel) return 0;
@@ -64,7 +87,42 @@ export default function App() {
   });
 
   const systemsIn = (id: string) => (model()?.systems ?? []).filter(s => s.territory === id);
+
+  /** Brushable nations. Unclaimed is excluded because it has its own brush. */
   const paintable = createMemo(() => (model()?.territories ?? []).filter(t => !t.unclaimed));
+
+  const contestedCount = createMemo(() => model()?.contested.size ?? 0);
+
+  /** Disputed cells belonging to one territory, for the side panel. */
+  const contestedIn = (id: string) => {
+    const cells = new Set(cellsByTerritory(model()?.ownership ?? new Map()).get(id) ?? []);
+    let n = 0;
+    for (const c of model()?.contested ?? []) if (cells.has(c)) n++;
+    return n;
+  };
+
+  /**
+   * Full phrase for the armed-brush note, verb included.
+   *
+   * A bare noun is not enough here. With a brush armed a click means something
+   * completely different to what it meant a moment ago, so the toolbar has to
+   * say what the next click will DO, not just what it will paint.
+   */
+  const brushLabel = createMemo(() => {
+    const b = brush();
+    if (!b) return "";
+    if (b.kind === "contest") {
+      return b.on ? "MARKING CONTESTED" : "CLEARING CONTESTED";
+    }
+    if (b.kind === "unclaim") return "PAINTING UNCLAIMED SPACE";
+    const name = terrById().get(b.territory);
+    return `PAINTING ${name ? pick(name.name, loc()) : b.territory}`;
+  });
+
+  /** Clicking the armed brush again puts it down. */
+  function arm(b: Brush) {
+    setBrush(prev => (brushId(prev) === brushId(b) ? undefined : b));
+  }
 
   /* --------------------------- interaction --------------------------- */
   /* The chart hands back light-year coordinates; all pixel maths is its job. */
@@ -79,9 +137,10 @@ export default function App() {
     const m = model();
     if (!m) return;
     const cell = pixelToHex(ly, m.hexSizeLy);
-    const brush = paintWith();
-    if (brush && source) {
-      await source.paint(cell.q, cell.r, brush);
+    const b = brush();
+    if (b && source) {
+      if (b.kind === "contest") await source.setContested?.(cell.q, cell.r, b.on);
+      else await source.paint(cell.q, cell.r, b.kind === "unclaim" ? unclaimedId() : b.territory);
       return;
     }
     const owner = m.ownership.get(key(cell.q, cell.r));
@@ -108,7 +167,7 @@ export default function App() {
             showCells={showCells()}
             selected={selected()}
             hoverCell={hoverCell()}
-            painting={!!paintWith()}
+            painting={!!brush()}
             onHover={onHover}
             onClick={onClick}
             onLeave={() => setHoverCell(undefined)}
@@ -133,32 +192,35 @@ export default function App() {
               </For>
             </div>
 
-            <div class="paintpick" classList={{ armed: !!paintWith() }}>
+            <div class="paintpick" classList={{ armed: !!brush() }}>
               <span class="paintlabel">PAINT</span>
               <For each={paintable()}>
                 {t => (
                   <div
                     class="swatch"
-                    classList={{ on: paintWith() === t.id }}
+                    classList={{ on: brushId(brush()) === `t:${t.id}` }}
                     style={{ background: t.color }}
                     title={pick(t.name, loc())}
-                    onClick={() => setPaintWith(prev => (prev === t.id ? undefined : t.id))}
+                    onClick={() => arm({ kind: "owner", territory: t.id })}
                   />
                 )}
               </For>
+              <div
+                class="swatch swatch-unclaim"
+                classList={{ on: brushId(brush()) === "unclaim" }}
+                title="Return the cell to unclaimed space"
+                onClick={() => arm({ kind: "unclaim" })}
+              />
+              <div
+                class="swatch swatch-contest"
+                classList={{ on: brushId(brush()) === "contest" }}
+                title="Mark the cell as contested — two claims, one owner"
+                onClick={() => arm({ kind: "contest", on: true })}
+              />
             </div>
 
-            <Show when={paintWith()}>
-              {id => {
-                const armed = terrById().get(id());
-                return (
-                  <Show when={armed}>
-                    <span class="armed-note">
-                      PAINTING {pick(armed!.name, loc())} — click cells, ESC to stop
-                    </span>
-                  </Show>
-                );
-              }}
+            <Show when={brush()}>
+              <span class="armed-note">{brushLabel()} — click cells, ESC to stop</span>
             </Show>
 
             <Show when={edits() > 0}>
@@ -187,6 +249,10 @@ export default function App() {
                       <span>CAPITALS</span>
                       <span>{systemsIn(id()).filter(s => s.importance === 3).length}</span>
                     </div>
+                    <div class="stat">
+                      <span>CONTESTED</span>
+                      <span>{contestedIn(id())}</span>
+                    </div>
                     <button class="panel-close" onClick={() => setSelected(undefined)}>
                       CLOSE
                     </button>
@@ -199,6 +265,10 @@ export default function App() {
           <div class="legend">
             <b>ORION SPUR</b>
             {m().extentLy.w} × {m().extentLy.h} LY · {totalCells()} cells @ {m().hexSizeLy} LY
+            <Show when={contestedCount() > 0}>
+              {" "}
+              · <span class="legend-contested">{contestedCount()} contested</span>
+            </Show>
             <Show when={edits() > 0}> · {edits()} local edit(s)</Show>
           </div>
         </div>

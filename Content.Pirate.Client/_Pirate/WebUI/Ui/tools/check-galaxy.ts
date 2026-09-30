@@ -327,5 +327,61 @@ console.log("\npaint:");
   check("undo restores the whole map", [...before.ownership].every(([c, o]) => latest!.ownership.get(c) === o));
 }
 
+// --- contested ground -------------------------------------------------------
+/**
+ * Two flavours of dispute, and they must not interfere.
+ *
+ * Baked: cells two claims both cover. The depth rule picks an owner so the map
+ * is definite, but "settled" is not "agreed" and the chart is allowed to say so.
+ * Painted: an admin flagging a row in-round, which must not touch ownership at
+ * all — marking a border as contested says nothing about who holds it.
+ */
+console.log("\ncontested:");
+{
+  const source = new FixtureSource(spec, TERRITORIES, CLAIMS, SYSTEMS, ROUTES);
+  const base = await source.load();
+
+  check("the bake surfaces disputed cells", base.contested.size > 0, `${base.contested.size} cell(s)`);
+  check(
+    "every disputed cell is a real cell",
+    [...base.contested].every(c => base.ownership.has(c)),
+  );
+
+  let latest: GalaxyModel | undefined;
+  let notified = 0;
+  source.onChange(m => {
+    notified++;
+    latest = m;
+  });
+
+  // A cell nobody disputes yet.
+  const quiet = (byTerr.get("biesel") ?? []).find(c => !base.contested.has(c))!;
+  const [cq, cr] = quiet.split(",").map(Number);
+
+  const flagged = await source.setContested(cq, cr, true);
+  check("flagging a dispute reports a change", flagged === true);
+  check("flagging notifies listeners", notified === 1, `${notified} notification(s)`);
+  check("the flag is set on the new model", latest?.contested.has(quiet) === true);
+  check("the model the view already had is untouched", base.contested.has(quiet) === false);
+  check("flagging a dispute does not change the owner", latest?.ownership.get(quiet) === "biesel");
+  check("a fresh set, not a mutation of the old one", latest!.contested !== base.contested);
+
+  const again = await source.setContested(cq, cr, true);
+  check("re-flagging the same cell is a no-op", again === false && notified === 1);
+
+  // Un-flag a cell the bake marked disputed.
+  const wasDisputed = [...base.contested][0];
+  const [dq, dr] = wasDisputed.split(",").map(Number);
+  const cleared = await source.setContested(dq, dr, false);
+  check("clearing a baked dispute works", cleared === true && latest!.contested.has(wasDisputed) === false);
+
+  await source.undo();
+  check("undo puts the baked dispute back", latest?.contested.has(wasDisputed) === true);
+
+  await source.undo();
+  check("undo then removes the painted flag", latest?.contested.has(quiet) === false);
+  check("ownership survived both undos untouched", [...base.ownership].every(([c, o]) => latest!.ownership.get(c) === o));
+}
+
 console.log(`\n${failures === 0 ? "all checks passed" : `${failures} CHECK(S) FAILED`}\n`);
 process.exit(failures === 0 ? 0 : 1);

@@ -82,6 +82,17 @@ export interface Route {
  */
 export type Ownership = Map<string, string>;
 
+/**
+ * Cell keys where sovereignty is disputed.
+ *
+ * Seeded by the bake from cells that two hand-drawn claims both cover — the
+ * depth rule picks a winner so the map has a definite owner, but the fact that
+ * it was a coin toss is real information and belongs on the chart. Admins can
+ * add to the set in-round, which is how a simmering row gets marked before
+ * anyone moves a capital.
+ */
+export type Contested = Set<string>;
+
 export interface GalaxyModel {
   /** Map extent in light-years. The chart frame and the graticule use this. */
   extentLy: { w: number; h: number };
@@ -91,6 +102,7 @@ export interface GalaxyModel {
   systems: StarSystem[];
   routes: Route[];
   ownership: Ownership;
+  contested: Contested;
   /** Bumped whenever ownership changes, so the view can key its caches. */
   revision: number;
 }
