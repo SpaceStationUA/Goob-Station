@@ -18,15 +18,10 @@ public sealed partial class ScalingViewport
     private readonly Dictionary<int, List<UIBox2>> _zScreenRegions = new();
     private readonly HashSet<int> _zRegionalDepths = new();
     private readonly List<UIBox2> _zRegionApertures = new();
-    private readonly Dictionary<int, UIBox2i> _zLastCrops = new();
     private readonly List<ZCropViewport> _zCropViewports = new();
     private long _zCropUseCounter;
     private IClydeViewport? _zActiveCropViewport;
     private Vector2i _zCropFullSize;
-
-    internal ZRegionFrameStats ZRegionStats { get; private set; }
-    internal readonly record struct ZRegionFrameStats(int CroppedLayers, int CropPasses, int FullLayers,
-        int HiddenLayers, double LowerTargetArea, int Allocations, bool WholeStackSkipped);
 
     private sealed class ZCropViewport(IClydeViewport viewport)
     {
@@ -35,27 +30,10 @@ public sealed partial class ScalingViewport
         public bool InUse;
     }
 
-    /// <summary>Profiling: last frame's cull/crop decisions, for pairing with zprof screenshots.</summary>
-    internal string DescribeZRegions()
-    {
-        var s = ZRegionStats;
-        var text = $"skip={s.WholeStackSkipped} crop_passes={s.CropPasses} full={s.FullLayers} " +
-                   $"hidden={s.HiddenLayers} area={s.LowerTargetArea.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)}";
-        foreach (var depth in _zRegionalDepths)
-        {
-            text += $" d{depth}:regions={_zScreenRegions[depth].Count}";
-            if (_zLastCrops.TryGetValue(depth, out var r))
-                text += $" [{r.Left},{r.Top} {r.Width}x{r.Height}]";
-        }
-
-        return text;
-    }
-
     private void PrepareLowerZRenderRegions(IClydeViewport viewport, TransformComponent viewer,
         EntityUid? effectiveGrid, int lowestDepth, bool enabled)
     {
         _zRegionalDepths.Clear();
-        _zLastCrops.Clear();
         if (_zCropFullSize != viewport.Size || !enabled)
         {
             DisposeZCropViewports();
@@ -187,7 +165,6 @@ public sealed partial class ScalingViewport
             // composite if this is its first pass, so no previous-frame pixels can leak in.
             if (viewport.ClearColor != null)
                 handle.RenderInRenderTarget(viewport.RenderTarget, () => { }, viewport.ClearColor);
-            ZRegionStats = ZRegionStats with { HiddenLayers = ZRegionStats.HiddenLayers + 1 };
             return true;
         }
 
@@ -196,7 +173,6 @@ public sealed partial class ScalingViewport
         var padding = MathF.Max(pixelsPerMeter.X, pixelsPerMeter.Y) * 2 + 8;
         if (!ZViewportCrop.TryGetCrop(regions, viewport.Size, padding, out var crop))
             return false;
-        _zLastCrops[depth] = crop;
 
         if (viewport.ClearColor != null)
             handle.RenderInRenderTarget(viewport.RenderTarget, () => { }, viewport.ClearColor);
@@ -231,14 +207,6 @@ public sealed partial class ScalingViewport
                 handle.SetTransform(Matrix3x2.Identity);
                 handle.DrawTextureRect(cropped.RenderTarget.Texture, sourceBox);
             }, null);
-
-            ZRegionStats = ZRegionStats with
-            {
-                CroppedLayers = ZRegionStats.CroppedLayers + 1,
-                CropPasses = ZRegionStats.CropPasses + 1,
-                LowerTargetArea = ZRegionStats.LowerTargetArea +
-                    (double) cropped.Size.X * cropped.Size.Y / ((double) viewport.Size.X * viewport.Size.Y),
-            };
         }
         finally
         {
@@ -279,7 +247,6 @@ public sealed partial class ScalingViewport
         foreach (var entry in _zCropViewports)
             entry.Viewport.Dispose();
         _zCropViewports.Clear();
-        _zLastCrops.Clear();
         _zActiveCropViewport = null;
     }
 
@@ -309,7 +276,6 @@ public sealed partial class ScalingViewport
         var viewport = _clyde.CreateViewport(size, new TextureSampleParameters { Filter = false });
         viewport.AutomaticRender = false;
         _zCropViewports.Add(new ZCropViewport(viewport) { InUse = true, LastUsed = ++_zCropUseCounter });
-        ZRegionStats = ZRegionStats with { Allocations = ZRegionStats.Allocations + 1 };
         return viewport;
     }
 }

@@ -52,8 +52,10 @@ public sealed partial class ScalingViewport
 
     // Cached reference to the engine's PlacementOverlay, found by type name. Pirate: multiz
     private Overlay? _cachedPlacementOverlay; // Pirate: multiz
-    // Only the deepest pass may draw full-screen parallax.
-    private Overlay? _cachedParallaxOverlay;
+    // Only the deepest pass draws space backgrounds; resolve the meteor overlay by name because it lives in another assembly.
+    private const string MeteorParallaxOverlayName = "Content.Goobstation.Client.Parallax.MeteorParallaxOverlay";
+    private Type? _meteorParallaxOverlayType;
+    private readonly List<Overlay> _hiddenBackgroundOverlays = new();
 
     /// <summary>
     /// Resolves the map for a depth offset, preferring linked-grid peers.
@@ -191,7 +193,6 @@ public sealed partial class ScalingViewport
 
     private void RenderZLevels(IClydeViewport viewport, DrawingHandleScreen screenHandle)
     {
-        ZRegionStats = default;
         if (_eye is null)
         {
             viewport.Render();
@@ -270,7 +271,6 @@ public sealed partial class ScalingViewport
             _cfg.GetCVar(CCVars.ZCullHiddenLevels) && CanCullLowerZLevels(playerXform.MapUid.Value, viewport))
         {
             lowestDepth = 0;
-            ZRegionStats = ZRegionStats with { WholeStackSkipped = true };
         }
 
         if (_cfg.GetCVar(CCVars.ZCullApertureCopies))
@@ -295,8 +295,8 @@ public sealed partial class ScalingViewport
         // Hide it on secondary passes to avoid duplicate previews. Pirate: multiz
         _cachedPlacementOverlay ??= _overlayManager.AllOverlays // Pirate: multiz
             .FirstOrDefault(o => o.GetType().FullName == "Robust.Client.Placement.PlacementManager+PlacementOverlay"); // Pirate: multiz
-        _cachedParallaxOverlay ??= _overlayManager.AllOverlays
-            .FirstOrDefault(o => o is Content.Client.Parallax.ParallaxOverlay);
+        _meteorParallaxOverlayType ??= _overlayManager.AllOverlays
+            .FirstOrDefault(o => o.GetType().FullName == MeteorParallaxOverlayName)?.GetType();
 
         var playerEye = _fallbackEye as Robust.Shared.Graphics.Eye;
         var playerEyePosition = playerEye?.Position ?? default;
@@ -377,31 +377,28 @@ public sealed partial class ScalingViewport
                 if (hidePlacement)
                     _overlayManager.RemoveOverlay(_cachedPlacementOverlay!);
 
-                // Higher deck parallax would cover the already composited lower decks.
-                var hideParallax = depth != lowestDepth && _cachedParallaxOverlay != null;
-                if (hideParallax)
-                    _overlayManager.RemoveOverlay(_cachedParallaxOverlay!);
+                // A higher deck's space background would cover the already composited lower decks.
+                _hiddenBackgroundOverlays.Clear();
+                if (depth != lowestDepth)
+                {
+                    HideBackgroundOverlay(typeof(Content.Client.Parallax.ParallaxOverlay));
+                    if (_meteorParallaxOverlayType != null)
+                        HideBackgroundOverlay(_meteorParallaxOverlayType);
+                }
 
                 try
                 {
                     if (!TryRenderLowerZRegion(viewport, screenHandle, eye, depth))
-                    {
-                        if (depth < 0)
-                            ZRegionStats = ZRegionStats with
-                            {
-                                FullLayers = ZRegionStats.FullLayers + 1,
-                                LowerTargetArea = ZRegionStats.LowerTargetArea + 1,
-                            };
                         viewport.Render();
-                    }
 
                     if (_zApertureRequiredTargets.Contains(depth))
                         CaptureZLevelApertureTexture(screenHandle, viewport, depth);
                 }
                 finally
                 {
-                    if (hideParallax)
-                        _overlayManager.AddOverlay(_cachedParallaxOverlay!);
+                    foreach (var overlay in _hiddenBackgroundOverlays)
+                        _overlayManager.AddOverlay(overlay);
+                    _hiddenBackgroundOverlays.Clear();
 
                     if (hidePlacement)
                         _overlayManager.AddOverlay(_cachedPlacementOverlay!);
@@ -424,6 +421,13 @@ public sealed partial class ScalingViewport
             Eye = _fallbackEye;
             viewport.Eye = Eye;
         }
+    }
+
+    // Hides the live instance, so a re-created overlay (reconnect) is never swapped for a stale cached one.
+    private void HideBackgroundOverlay(Type overlayType)
+    {
+        if (_overlayManager.TryGetOverlay(overlayType, out var overlay) && _overlayManager.RemoveOverlay(overlay))
+            _hiddenBackgroundOverlays.Add(overlay);
     }
 
     // Returns the remote eye currently viewed by the local player, if any.

@@ -149,7 +149,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem
         SourceStats = indexedStats with { Compared = true, Mismatch = mismatch };
         _sourceComparison.Clear();
         if (mismatch)
-            _sourceIndexDirty = true; // Recover at the next frame; the profiler retains the mismatch count.
+            _sourceIndexDirty = true; // Recover at the next frame; SourceStats still reports this frame's mismatch.
     }
 
     private void ShutdownSourceIndex()
