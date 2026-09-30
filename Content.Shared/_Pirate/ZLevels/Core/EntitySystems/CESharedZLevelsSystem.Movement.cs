@@ -641,7 +641,7 @@ public abstract partial class CESharedZLevelsSystem
         }
     }
 
-    private void OnGridParentChanged(Entity<MapGridComponent> ent, ref EntParentChangedMessage args)
+    protected virtual void OnGridParentChanged(Entity<MapGridComponent> ent, ref EntParentChangedMessage args)
     {
         RefreshAttachedZPhysics(ent.Owner);
     }
@@ -1462,7 +1462,7 @@ public abstract partial class CESharedZLevelsSystem
         return false;
     }
 
-    protected bool TryResolveGridAtWorldPositionOnMap(EntityUid mapUid, Vector2 worldPos, out EntityUid gridUid, out MapGridComponent gridComp)
+    protected virtual bool TryResolveGridAtWorldPositionOnMap(EntityUid mapUid, Vector2 worldPos, out EntityUid gridUid, out MapGridComponent gridComp)
     {
         var bestNonEmptyGridUid = EntityUid.Invalid;
         MapGridComponent? bestNonEmptyGrid = null;
