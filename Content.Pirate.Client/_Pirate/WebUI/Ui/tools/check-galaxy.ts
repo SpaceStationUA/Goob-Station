@@ -6,7 +6,17 @@
  * that are invisible in a screenshot: NaNs, unclosed loops, orphaned systems
  * and territories that came out empty.
  */
-import { cellsInExtent, hexToPixel, key, neighbour, pixelToHex, type Axial } from "../src/GalaxyMap/lib/hex";
+import {
+  cellsInExtent,
+  hexDistance,
+  hexLine,
+  hexToPixel,
+  key,
+  NEIGHBOURS,
+  neighbour,
+  pixelToHex,
+  type Axial,
+} from "../src/GalaxyMap/lib/hex";
 import { assignCells, borderLoops, cellOutline, cellsByTerritory, loopToPath } from "../src/GalaxyMap/lib/geometry";
 import { DEFAULT_MAP, FixtureSource } from "../src/GalaxyMap/lib/source";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "../src/GalaxyMap/lib/devmap";
@@ -564,6 +574,118 @@ console.log("\nlegibility:");
     x => relativeLuminance(readableOnDark(x.color)) < relativeLuminance(x.color) - 1e-6,
   ).map(x => x.id);
   check("lifting never darkens a colour", noGain.length === 0, noGain.join(", "));
+}
+
+// --- drag to paint ----------------------------------------------------------
+/**
+ * A stroke is one gesture, so it has to be one edit.
+ *
+ * The failure this guards against is quiet: if each cell committed separately,
+ * painting would still work, look right, and pass every check — while leaving one
+ * undo step per cell and rebuilding the model on every mousemove.
+ */
+console.log("\ndrag to paint:");
+{
+  // Hex line interpolation: contiguous, no gaps, correct length.
+  const a = { q: 0, r: 0 };
+  const b = { q: 6, r: -2 };
+  const line = hexLine(a, b);
+  check("hexLine starts at the first cell", line[0].q === a.q && line[0].r === a.r);
+  check(
+    "hexLine ends at the last cell",
+    line[line.length - 1].q === b.q && line[line.length - 1].r === b.r,
+  );
+  check(
+    "hexLine has one cell per step",
+    line.length === hexDistance(a, b) + 1,
+    `${line.length} cells for distance ${hexDistance(a, b)}`,
+  );
+  // Contiguity: every consecutive pair must be actual neighbours. This is the
+  // property that stops a fast drag leaving gaps.
+  const gaps = line.filter((c, i) => i > 0 && hexDistance(line[i - 1], c) !== 1);
+  check("hexLine is contiguous — no gaps in a fast drag", gaps.length === 0, gaps.length + " gaps");
+
+  const same = hexLine(a, a);
+  check("hexLine of one cell is that cell", same.length === 1);
+
+  // Every direction must produce a contiguous line, not just the easy axes.
+  const dirs = NEIGHBOURS;
+  const badDirs = dirs.filter(d => {
+    const l = hexLine({ q: 3, r: -1 }, { q: 3 + d.q * 4, r: -1 + d.r * 4 });
+    return l.some((c, i) => i > 0 && hexDistance(l[i - 1], c) !== 1);
+  });
+  check("hexLine is contiguous in all six directions", badDirs.length === 0, badDirs.length + " bad");
+
+  // A stroke over several cells is ONE edit and ONE undo step.
+  const source = new FixtureSource(spec, TERRITORIES, CLAIMS, SYSTEMS, ROUTES);
+  const base = await source.load();
+  let notified = 0;
+  source.onChange(() => notified++);
+
+  const biesel = (byTerr.get("biesel") ?? []).slice(0, 5);
+  const targets = biesel.map(k => {
+    const [q, r] = k.split(",");
+    return { q: +q, r: +r };
+  });
+  const strokes = await source.stroke?.(targets, "nralakk");
+  check("a stroke reports a change", strokes === true);
+  check("a stroke notifies exactly once", notified === 1, `${notified} notification(s)`);
+
+  let diffs = 0;
+  const after = await source.load();
+  for (const [cell, owner] of after.ownership) if (base.ownership.get(cell) !== owner) diffs++;
+  check("a stroke changes every cell it covered", diffs === targets.length, `${diffs} of ${targets.length}`);
+
+  // Re-dragging over cells already in the target state must be a no-op, or
+  // scrubbing back and forth across a border fills the undo stack with nothing.
+  const editsAfterFirst = source.edits;
+  const again = await source.stroke?.(targets, "nralakk");
+  check(
+    "re-dragging the same cells is a no-op",
+    again === false && source.edits === editsAfterFirst,
+    `edits ${editsAfterFirst} -> ${source.edits}`,
+  );
+
+  await source.undo();
+  check("one undo reverts the whole stroke", source.edits === 0);
+  const reverted = await source.load();
+  check(
+    "the map is byte-identical after one undo",
+    [...base.ownership].every(([c, o]) => reverted.ownership.get(c) === o),
+  );
+
+  // Contested strokes batch the same way and leave ownership alone.
+  const ownerBefore = [...(await source.load()).ownership];
+  const beforeContest = source.edits;
+  const cstroke = await source.contestStroke?.(targets, true);
+  check("a contest stroke reports a change", cstroke === true);
+  check("a contest stroke is one edit", source.edits === beforeContest + 1, `${source.edits} edits`);
+  const flagged = await source.load();
+  check(
+    "a contest stroke flags every cell it covered",
+    targets.every(c => flagged.contested.has(key(c.q, c.r))),
+  );
+  check(
+    "a contest stroke does not move an owner",
+    ownerBefore.every(([c, o]) => flagged.ownership.get(c) === o),
+  );
+  const repeat = await source.contestStroke?.(targets, true);
+  check("re-flagging the same cells is a no-op", repeat === false && source.edits === beforeContest + 1);
+
+  await source.undo();
+  check("one undo reverts the whole contest stroke", source.edits === beforeContest);
+  const cleared = await source.load();
+  check(
+    "the dispute flags are gone after that undo",
+    targets.every(c => !cleared.contested.has(key(c.q, c.r)) || base.contested.has(key(c.q, c.r))),
+  );
+  check(
+    "ownership survived the contest stroke and its undo",
+    ownerBefore.every(([c, o]) => cleared.ownership.get(c) === o),
+  );
+
+  // The fixture is an admin tool host.
+  check("the fixture grants paint", source.permissions?.paint === true);
 }
 
 console.log(`\n${failures === 0 ? "all checks passed" : `${failures} CHECK(S) FAILED`}\n`);

@@ -212,6 +212,18 @@ svg.chart.painting {
   outline-color: #d9c9a8;
 }
 
+/* Drag-to-paint. The cursor has to change when the button is actually down,
+   otherwise a drag looks identical to a click until the preview appears. */
+svg.chart.painting {
+  cursor: cell;
+}
+svg.chart.stroking {
+  cursor: crosshair;
+}
+.stroke-pending {
+  pointer-events: none;
+}
+
 /* Contested ground on the chart itself, and its count in the legend. */
 .contested-layer {
   pointer-events: none;

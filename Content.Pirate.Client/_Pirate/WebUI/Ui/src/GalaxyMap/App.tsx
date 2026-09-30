@@ -1,6 +1,6 @@
 import { createMemo, createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import Chart from "./Chart";
-import { cellsInExtent, key, pixelToHex, type Axial } from "./lib/hex";
+import { cellsInExtent, hexLine, key, pixelToHex, type Axial } from "./lib/hex";
 import { cellsByTerritory } from "./lib/geometry";
 import { pick, type GalaxyModel } from "./lib/model";
 import {
@@ -55,6 +55,56 @@ export default function App() {
   const [edits, setEdits] = createSignal(0);
   /** Bumped when the bridge installs a new string table or locale list. */
   const [stringsVersion, setStringsVersion] = createSignal(0);
+
+  /**
+   * Client-side kill switch for the brushes, layered over whatever the source
+   * says. The DOM check flips this to exercise the read-only player view against
+   * the real component; in game the source's permission is the only input.
+   */
+  const [paintAllowed, setPaintAllowed] = createSignal(true);
+
+  /**
+   * In-progress drag: the cells covered so far, and the cell the pointer was on
+   * last. The latter is what makes the stroke continuous — each move fills the
+   * line from the previous cell, so a fast flick across four cells marks all
+   * four instead of leaving three gaps.
+   */
+  /**
+   * Declared before the memos that read it.
+   *
+   * `canPaint` is a memo, and a memo body runs immediately — so a `let` below
+   * this point is still in its temporal dead zone when the memo first evaluates
+   * and the whole component throws before it renders. TypeScript cannot see
+   * that, which is why the failure was a blank page rather than a build error.
+   */
+  let source: FixtureSource | undefined;
+
+  const [stroking, setStroking] = createSignal(false);
+  const [pendingCells, setPendingCells] = createSignal<ReadonlySet<string>>();
+  const [lastCell, setLastCell] = createSignal<Axial>();
+
+  /**
+   * Painting is an admin tool; a player gets the same chart without the brushes.
+   *
+   * Read from the source rather than a build flag, so the shipped binary is the
+   * same for everyone and only the payload differs.
+   */
+  const canPaint = createMemo(() => paintAllowed() && source?.permissions?.paint !== false);
+
+  /**
+   * What the in-progress stroke will do, for its preview colour.
+   *
+   * A dispute stroke previews in the dispute amber rather than in the owner's
+   * colour: the thing being drawn is the flag, not a change of owner, and
+   * previewing it in the owner's colour would suggest otherwise.
+   */
+  const pendingStyle = createMemo<{ colour: string } | undefined>(() => {
+    const b = brush();
+    if (!b) return undefined;
+    if (b.kind === "contest") return { colour: b.on ? "#ffb454" : "#8a7a52" };
+    if (b.kind === "unclaim") return { colour: terrById().get(unclaimedId())?.color ?? "#8a96a8" };
+    return { colour: terrById().get(b.territory)?.color ?? "#ffd479" };
+  });
   const [locales, setLocalesSignal] = createSignal(currentLocales());
 
   // The browser harness uses the built-in table. In game this is where the
@@ -72,8 +122,11 @@ export default function App() {
   // installed table is unreachable from outside the component and the seam is
   // theoretical.
   (window as unknown as Record<string, unknown>).__galaxyAdoptStrings = adoptStrings;
-
-  let source: FixtureSource | undefined;
+  // Lets the DOM check exercise the read-only player view against the real
+  // component, rather than trusting that the gate works because nothing renders
+  // the brushes anyway.
+  (window as unknown as Record<string, unknown>).__galaxySetPermission = (allowed: boolean) =>
+    setPaintAllowed(allowed);
 
   onMount(async () => {
     source = new FixtureSource(DEFAULT_MAP, TERRITORIES, CLAIMS, SYSTEMS, ROUTES);
@@ -91,7 +144,10 @@ export default function App() {
   // is picked except hunting for the same swatch again, which reads as being
   // stuck.
   const onKey = (ev: KeyboardEvent) => {
-    if (ev.key === "Escape") setBrush(undefined);
+    if (ev.key !== "Escape") return;
+    // Mid-drag, Escape throws the stroke away rather than committing half of it.
+    if (stroking()) cancelStroke();
+    setBrush(undefined);
   };
   window.addEventListener("keydown", onKey);
   onCleanup(() => window.removeEventListener("keydown", onKey));
@@ -174,6 +230,65 @@ export default function App() {
     setHoverCell(pixelToHex(ly, m.hexSizeLy));
   }
 
+  /* --------------------------- drag to paint --------------------------- */
+  /*
+   * A stroke is accumulated locally and committed once on release.
+   *
+   * Committing per cell would rebuild the model on every mousemove, and the
+   * rebuild re-runs the wobble across every territory outline — far too much
+   * work for something that has to keep up with a pointer. It would also leave
+   * one undo step per cell, so a single flick would take twenty undos to put
+   * back. Both problems go away by treating the drag as one gesture.
+   */
+
+  function addToStroke(from: Axial | undefined, to: Axial): ReadonlySet<string> {
+    const next = new Set(pendingCells() ?? []);
+    for (const c of from ? hexLine(from, to) : [to]) next.add(key(c.q, c.r));
+    return next;
+  }
+
+  function onStrokeStart(ly: { x: number; y: number }) {
+    const m = model();
+    if (!m || !canPaint() || !brush()) return;
+    const cell = pixelToHex(ly, m.hexSizeLy);
+    setStroking(true);
+    setLastCell(cell);
+    setPendingCells(addToStroke(undefined, cell));
+  }
+
+  function onStrokeMove(ly: { x: number; y: number }) {
+    const m = model();
+    if (!m || !stroking()) return;
+    const cell = pixelToHex(ly, m.hexSizeLy);
+    const prev = lastCell();
+    if (prev && prev.q === cell.q && prev.r === cell.r) return;
+    setLastCell(cell);
+    setPendingCells(addToStroke(prev, cell));
+  }
+
+  async function onStrokeEnd() {
+    const cells = pendingCells();
+    const b = brush();
+    if (!stroking()) return;
+    setStroking(false);
+    setLastCell(undefined);
+    setPendingCells(undefined);
+    if (!cells || cells.size === 0 || !b || !source) return;
+    const list = [...cells].map(k => {
+      const [q, r] = k.split(",");
+      return { q: +q, r: +r };
+    });
+    if (b.kind === "contest") await source.contestStroke?.(list, b.on);
+    else await source.stroke?.(list, b.kind === "unclaim" ? unclaimedId() : b.territory);
+  }
+
+  /** Abandon the in-progress stroke without committing it. */
+  function cancelStroke() {
+    setStroking(false);
+    setLastCell(undefined);
+    setPendingCells(undefined);
+  }
+
   async function onClick(ly: { x: number; y: number }) {
     const m = model();
     if (!m) return;
@@ -209,8 +324,16 @@ export default function App() {
             selected={selected()}
             hoverCell={hoverCell()}
             painting={!!brush()}
+            canPaint={canPaint()}
+            brushArmed={!!brush()}
+            stroking={stroking()}
+            pendingCells={pendingCells()}
+            pendingColour={pendingStyle()?.colour}
             onHover={onHover}
             onClick={onClick}
+            onStrokeStart={onStrokeStart}
+            onStrokeMove={onStrokeMove}
+            onStrokeEnd={onStrokeEnd}
             onLeave={() => setHoverCell(undefined)}
           />
 
@@ -233,38 +356,46 @@ export default function App() {
               </For>
             </div>
 
-            <div class="paintpick" classList={{ armed: !!brush() }}>
-              <span class="paintlabel">{t("paint", loc())}</span>
-              <For each={paintable()}>
-                {terr => (
-                  <div
-                    class="swatch"
-                    classList={{ on: brushId(brush()) === `t:${terr.id}` }}
-                    style={{ background: terr.color }}
-                    title={pick(terr.name, loc())}
-                    onClick={() => arm({ kind: "owner", territory: terr.id })}
-                  />
-                )}
-              </For>
-              <div
-                class="swatch swatch-unclaim"
-                classList={{ on: brushId(brush()) === "unclaim" }}
-                title={t("tipUnclaim", loc())}
-                onClick={() => arm({ kind: "unclaim" })}
-              />
-              <div
-                class="swatch swatch-contest"
-                classList={{ on: brushId(brush()) === "contest" }}
-                title={t("tipContest", loc())}
-                onClick={() => arm({ kind: "contest", on: true })}
-              />
-              <div
-                class="swatch swatch-uncontest"
-                classList={{ on: brushId(brush()) === "contest:off" }}
-                title={t("tipUncontest", loc())}
-                onClick={() => arm({ kind: "contest", on: false })}
-              />
-            </div>
+            {/* The brushes exist only for an admin. A player gets the same chart
+                with the tools taken out, rather than a toolbar full of things
+                that silently do nothing. */}
+            {/* The brushes exist only for an admin. A player gets the same chart
+                with the tools taken out, rather than a toolbar full of things
+                that silently do nothing. */}
+            <Show when={canPaint()}>
+              <div class="paintpick" classList={{ armed: !!brush() }}>
+                <span class="paintlabel">{t("paint", loc())}</span>
+                <For each={paintable()}>
+                  {terr => (
+                    <div
+                      class="swatch"
+                      classList={{ on: brushId(brush()) === `t:${terr.id}` }}
+                      style={{ background: terr.color }}
+                      title={pick(terr.name, loc())}
+                      onClick={() => arm({ kind: "owner", territory: terr.id })}
+                    />
+                  )}
+                </For>
+                <div
+                  class="swatch swatch-unclaim"
+                  classList={{ on: brushId(brush()) === "unclaim" }}
+                  title={t("tipUnclaim", loc())}
+                  onClick={() => arm({ kind: "unclaim" })}
+                />
+                <div
+                  class="swatch swatch-contest"
+                  classList={{ on: brushId(brush()) === "contest" }}
+                  title={t("tipContest", loc())}
+                  onClick={() => arm({ kind: "contest", on: true })}
+                />
+                <div
+                  class="swatch swatch-uncontest"
+                  classList={{ on: brushId(brush()) === "contest:off" }}
+                  title={t("tipUncontest", loc())}
+                  onClick={() => arm({ kind: "contest", on: false })}
+                />
+              </div>
+            </Show>
 
             <Show when={brush()}>
               <span class="armed-note">
@@ -273,7 +404,11 @@ export default function App() {
               </span>
             </Show>
 
-            <Show when={edits() > 0}>
+            {/* Undo is part of the painting tool, so it goes when painting does.
+                Gating it on the edit count alone left a read-only viewer with a
+                live UNDO button that reverted an admin's work out from under
+                them. */}
+            <Show when={canPaint() && edits() > 0}>
               <button onClick={undo}>
                 {t("undo", loc())} {edits()}
               </button>

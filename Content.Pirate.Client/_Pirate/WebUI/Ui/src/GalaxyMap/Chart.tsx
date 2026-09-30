@@ -77,8 +77,23 @@ export interface ChartProps {
   selected: string | undefined;
   hoverCell: Axial | undefined;
   painting: boolean;
+  /** False for players: the chart is read-only and the brushes are hidden. */
+  canPaint: boolean;
+  brushArmed: boolean;
+  /** A drag is in progress. */
+  stroking: boolean;
+  /** Cells the in-progress drag has covered, as cell keys. */
+  pendingCells: ReadonlySet<string> | undefined;
+  /** Colour to preview the in-progress stroke in. */
+  pendingColour: string | undefined;
   onHover: (ly: { x: number; y: number }) => void;
   onClick: (ly: { x: number; y: number }) => void;
+  /** Pointer went down with a brush armed — begin a stroke. */
+  onStrokeStart: (ly: { x: number; y: number }) => void;
+  /** Pointer moved with the button down — extend the stroke. */
+  onStrokeMove: (ly: { x: number; y: number }) => void;
+  /** Pointer released or left the chart — commit the stroke. */
+  onStrokeEnd: () => void;
   onLeave: () => void;
 }
 
@@ -219,6 +234,28 @@ export default function Chart(props: ChartProps) {
     const sizeLy = props.model.hexSizeLy;
     const parts: string[] = [];
     for (const k of props.model.contested) {
+      const [q, r] = k.split(",");
+      const pts = hexCorners(hexToPixel({ q: +q, r: +r }, sizeLy), sizeLy).map(t().toPx);
+      parts.push("M" + pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join("L") + "Z");
+    }
+    return parts.join(" ");
+  });
+
+  /**
+   * Cells the in-progress drag has covered, as one flat hex path.
+   *
+   * Drawn from raw hex corners with no wobble and no pattern, which is the whole
+   * point: a drag fires mousemove far faster than the model can be rebuilt, and
+   * the rebuild is the expensive part (it re-runs the wobble over every
+   * territory outline). So the stroke previews cheaply and the real render
+   * arrives once on pointerup.
+   */
+  const pendingPath = createMemo(() => {
+    const cells = props.pendingCells;
+    if (!cells || cells.size === 0) return "";
+    const sizeLy = props.model.hexSizeLy;
+    const parts: string[] = [];
+    for (const k of cells) {
       const [q, r] = k.split(",");
       const pts = hexCorners(hexToPixel({ q: +q, r: +r }, sizeLy), sizeLy).map(t().toPx);
       parts.push("M" + pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join("L") + "Z");
@@ -415,19 +452,43 @@ export default function Chart(props: ChartProps) {
       <svg
         ref={svgRef}
         class="chart"
-        classList={{ painting: props.painting }}
+        classList={{ painting: props.painting, stroking: props.stroking }}
         width={size().w}
         height={size().h}
         viewBox={`0 0 ${size().w} ${size().h}`}
         onMouseMove={ev => {
           const p = local(ev);
-          if (p) props.onHover(t().toLy(p));
+          if (!p) return;
+          const ly = t().toLy(p);
+          if (props.stroking) props.onStrokeMove(ly);
+          props.onHover(ly);
+        }}
+        onMouseDown={ev => {
+          // Only the primary button, and only when a brush is armed: a plain
+          // click has to stay a click, and a right-click is a context menu.
+          if (ev.button !== 0 || !props.canPaint || !props.brushArmed) return;
+          const p = local(ev);
+          if (p) props.onStrokeStart(t().toLy(p));
+        }}
+        onMouseUp={ev => {
+          if (!props.stroking) return;
+          ev.preventDefault();
+          props.onStrokeEnd();
         }}
         onClick={ev => {
+          // A drag ends with a click event too. Let the stroke commit handle it,
+          // or the last cell of every stroke is painted twice and a swipe across
+          // a border leaves one cell behind.
+          if (props.stroking) return;
           const p = local(ev);
           if (p) props.onClick(t().toLy(p));
         }}
-        onMouseLeave={props.onLeave}
+        onMouseLeave={() => {
+          props.onLeave();
+          // Dragging off the edge ends the stroke rather than leaving it hanging
+          // until the next click somewhere else.
+          if (props.stroking) props.onStrokeEnd();
+        }}
       >
         <defs>
           <radialGradient id="deep" cx="50%" cy="42%" r="78%">
@@ -559,6 +620,27 @@ export default function Chart(props: ChartProps) {
             )}
           </For>
         </g>
+
+        {/* The in-progress drag.
+            Drawn from raw hexes with no wobble so it can keep up with the
+            pointer; the committed render replaces it on pointerup. */}
+        <Show when={props.stroking}>
+          <g class="stroke-pending">
+            <path
+              d={pendingPath()}
+              fill={props.pendingColour ?? "#ffd479"}
+              fill-rule="evenodd"
+              opacity="0.5"
+            />
+            <path
+              d={pendingPath()}
+              fill="none"
+              stroke={props.pendingColour ?? "#ffd479"}
+              stroke-width="1.4"
+              opacity="0.9"
+            />
+          </g>
+        </Show>
 
         {/* Contested ground.
             Drawn over the fills and under everything else, because it is a

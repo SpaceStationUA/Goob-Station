@@ -99,6 +99,50 @@ export function pixelToHex(p: Vec2, sizeLy: number): Axial {
  * Rows are walked with a one-cell margin either side so that territories
  * bleeding off the edge still produce closed outlines.
  */
+/** Distance between two cells, in steps. */
+export function hexDistance(a: Axial, b: Axial): number {
+  const dq = a.q - b.q;
+  const dr = a.r - b.r;
+  return (Math.abs(dq) + Math.abs(dq + dr) + Math.abs(dr)) / 2;
+}
+
+/**
+ * Every cell on the straight line from `a` to `b`, both ends included.
+ *
+ * Drag-to-paint needs this. Sampling only the cells the pointer happens to be
+ * over during a drag leaves gaps: a fast flick crosses several cells between two
+ * mousemove events, and the stroke comes out dashed instead of solid. Walking
+ * the hex line and filling every cell on it is what makes a drag read as one
+ * continuous mark.
+ *
+ * Lerped in cube space and rounded, because rounding in axial space alone walks
+ * the wrong path on the diagonals.
+ */
+export function hexLine(a: Axial, b: Axial): Axial[] {
+  const n = hexDistance(a, b);
+  if (n === 0) return [a];
+  const ax = a.q;
+  const az = a.r;
+  const ay = -ax - az;
+  const bx = b.q;
+  const bz = b.r;
+  const by = -bx - bz;
+  const out: Axial[] = [];
+  // Nudge off the exact endpoints: at i=0 and i=N the fractional coordinates land
+  // on a lattice point, and cubeRound can then pick a neighbouring cell.
+  for (let i = 0; i <= n; i++) {
+    const t = i / n;
+    out.push(
+      cubeRound(
+        ax + (bx - ax) * t + 1e-6,
+        ay + (by - ay) * t + 2e-6,
+        az + (bz - az) * t - 3e-6,
+      ),
+    );
+  }
+  return out;
+}
+
 export function cellsInExtent(wLy: number, hLy: number, sizeLy: number): Axial[] {
   const out: Axial[] = [];
   // Vertical extent of cell centres, plus margin.

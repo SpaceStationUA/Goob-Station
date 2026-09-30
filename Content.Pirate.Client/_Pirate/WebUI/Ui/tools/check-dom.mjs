@@ -275,6 +275,169 @@ try {
       `${roundTrip.before} -> ${roundTrip.afterMark} -> ${roundTrip.afterClear} [${roundTrip.note}]`,
     );
 
+    // --- drag to paint ------------------------------------------------------
+    const undoCount = () =>
+      page.evaluate(() => {
+        const b = [...document.querySelectorAll(".toolbar button")].find(x =>
+          x.textContent.includes("UNDO"),
+        );
+        return b ? Number(b.textContent.replace(/\D+/g, "")) || 0 : 0;
+      });
+
+    // Put the brush down first, then pick the nation one. Clicking an already
+    // armed swatch disarms it — that is what a toggle is for — so arming
+    // "only if empty" would leave whatever the previous step happened to be
+    // holding, and a drag with the wrong brush is correctly a no-op.
+    const armedNation = await page.evaluate(async () => {
+      window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+      await new Promise(r => setTimeout(r, 80));
+      const sw = [...document.querySelectorAll(".toolbar .swatch")];
+      sw[0].dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await new Promise(r => setTimeout(r, 80));
+      return document.querySelector(".armed-note")?.textContent ?? "";
+    });
+    check("a nation brush is armed before dragging", /PAINTING/i.test(armedNation), armedNation.slice(0, 30));
+
+    // One drag: press, a few moves, release. Then assert the pending preview
+    // covered MORE cells than there were move events — that is the observable
+    // signature of line interpolation, and its absence is what makes a fast
+    // drag come out dashed.
+    const MOVES = 4;
+    const editsBefore = await undoCount();
+    const drag = await page.evaluate(async (moves) => {
+      const wait = (ms = 200) => new Promise(ok => setTimeout(ok, ms));
+      const svg = document.querySelector("svg.chart");
+      const r = svg.getBoundingClientRect();
+      const fire = (type, fx, fy, button) =>
+        svg.dispatchEvent(
+          new MouseEvent(type, {
+            bubbles: true,
+            button: button ?? 0,
+            clientX: r.x + r.width * fx,
+            clientY: r.y + r.height * fy,
+          }),
+        );
+      const pendingCells = () => {
+        const d = document.querySelector(".stroke-pending path")?.getAttribute("d") ?? "";
+        return (d.match(/M/g) ?? []).length;
+      };
+
+      fire("mousedown", 0.30, 0.30, 0);
+      await wait(30);
+      const afterPress = pendingCells();
+      for (let i = 1; i <= moves; i++) {
+        fire("mousemove", 0.30 + 0.03 * i, 0.30 + 0.014 * i);
+        await wait(30);
+      }
+      const beforeRelease = pendingCells();
+      fire("mouseup", 0.30 + 0.03 * moves, 0.30 + 0.014 * moves);
+      await wait(200);
+      return { afterPress, beforeRelease, afterRelease: pendingCells() };
+    }, MOVES);
+
+    check("pressing starts a stroke on the cell under the pointer", drag.afterPress === 1, `${drag.afterPress} cells`);
+    check(
+      "a drag covers more cells than it has move events — no gaps",
+      drag.beforeRelease > MOVES,
+      `${drag.beforeRelease} cells from ${MOVES} moves`,
+    );
+    check("the preview is cleared on release", drag.afterRelease === 0, `${drag.afterRelease} cells`);
+
+    const editsAfter = await undoCount();
+    check(
+      "a whole drag is ONE undo step, not one per cell",
+      editsAfter === editsBefore + 1,
+      `UNDO ${editsBefore} -> ${editsAfter}`,
+    );
+
+    // Escape mid-drag must abandon the stroke rather than commit half of it.
+    const cancelled = await page.evaluate(async () => {
+      const wait = (ms = 220) => new Promise(ok => setTimeout(ok, ms));
+      const svg = document.querySelector("svg.chart");
+      const r = svg.getBoundingClientRect();
+      const undo = () => {
+        const b = [...document.querySelectorAll(".toolbar button")].find(x =>
+          x.textContent.includes("UNDO"),
+        );
+        return b ? Number(b.textContent.replace(/\D+/g, "")) || 0 : 0;
+      };
+      const fire = (type, fx, fy) =>
+        svg.dispatchEvent(
+          new MouseEvent(type, {
+            bubbles: true,
+            button: 0,
+            clientX: r.x + r.width * fx,
+            clientY: r.y + r.height * fy,
+          }),
+        );
+      const before = undo();
+      fire("mousedown", 0.6, 0.3, 0);
+      await wait(30);
+      for (let i = 1; i <= 3; i++) {
+        fire("mousemove", 0.6 - 0.02 * i, 0.3 + 0.01 * i);
+        await wait(30);
+      }
+      window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+      await wait(250);
+      return { before, after: undo(), preview: (document.querySelector(".stroke-pending path")?.getAttribute("d") ?? "").length };
+    });
+    check(
+      "escape abandons an in-progress stroke",
+      cancelled.after === cancelled.before && cancelled.preview === 0,
+      `UNDO ${cancelled.before} -> ${cancelled.after}`,
+    );
+
+    // --- admin vs player ----------------------------------------------------
+    check("an admin still sees the brushes", await page.evaluate(() => !!document.querySelector(".paintpick")));
+
+    // A player gets the same chart with the tools removed. Driven by flipping
+    // the source's permission, because that is the one input the real build
+    // varies: the shipped binary is identical for everyone and only the payload
+    // differs.
+    const player = await page.evaluate(async () => {
+      const wait = (ms = 200) => new Promise(ok => setTimeout(ok, ms));
+      window.__galaxySetPermission?.(false);
+      await wait();
+      const out = {
+        supported: typeof window.__galaxySetPermission === "function",
+        paint: !!document.querySelector(".paintpick"),
+        undo: [...document.querySelectorAll(".toolbar button")].some(b => b.textContent.includes("UNDO")),
+        // The chart itself must survive: a player still reads the map.
+        stars: document.querySelectorAll("circle.system-label, text.system-label").length,
+        labels: document.querySelectorAll(".terr-name").length,
+        grid: !!document.querySelector(".toolbar button"),
+      };
+      return out;
+    });
+    check("the page can be told it is read-only", player.supported);
+    check("a player gets no paint tools", !player.paint);
+    check("a player gets no undo", !player.undo);
+    check("a player still sees the place names", player.stars > 0, `${player.stars} labels`);
+    check("a player still sees the territory names", player.labels > 0, `${player.labels} names`);
+    check("a player keeps the grid toggle", player.grid);
+
+    // And a click on a cell must still select, not silently do nothing.
+    const playerClick = await page.evaluate(async () => {
+      const wait = (ms = 200) => new Promise(ok => setTimeout(ok, ms));
+      const svg = document.querySelector("svg.chart");
+      const r = svg.getBoundingClientRect();
+      svg.dispatchEvent(
+        new MouseEvent("click", {
+          bubbles: true,
+          clientX: r.x + r.width * 0.45,
+          clientY: r.y + r.height * 0.55,
+        }),
+      );
+      await wait();
+      return document.querySelector(".panel")?.textContent?.slice(0, 24) ?? null;
+    });
+    check("a player can still select a territory", playerClick !== null, playerClick ?? "no panel");
+
+    await page.evaluate(async () => {
+      window.__galaxySetPermission?.(true);
+      await new Promise(r => setTimeout(r, 150));
+    });
+
     // The locale toggle must actually translate the chrome and the content.
     const uk = await page.evaluate(async () => {
       const pick = [...document.querySelectorAll(".locpick button")].find(

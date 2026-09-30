@@ -1,4 +1,4 @@
-import { cellsInExtent, key } from "./hex";
+import { cellsInExtent, key, type Axial } from "./hex";
 import { assignCells, type AssignResult } from "./geometry";
 import type {
   Contested,
@@ -18,6 +18,18 @@ import type {
  * fixture and in the game against the bridge, and it is why the two cannot
  * drift apart in their rendering.
  */
+/**
+ * What the viewer is allowed to do.
+ *
+ * Painting is an admin tool, so the page and an ordinary player get the same
+ * read-only chart and only a flagged admin sees the brushes. Keeping this on the
+ * seam rather than a compile-time flag means the shipped build is the same binary
+ * for everyone and the difference is data.
+ */
+export interface GalaxyPermissions {
+  paint: boolean;
+}
+
 export interface GalaxySource {
   /** Resolve once the model is available. */
   load(): Promise<GalaxyModel>;
@@ -38,6 +50,24 @@ export interface GalaxySource {
    * this", which throws away the owner.
    */
   setContested?(cellQ: number, cellR: number, on: boolean): Promise<boolean>;
+  /**
+   * Apply a whole stroke in one edit.
+   *
+   * Exists because a drag is one gesture, not N gestures. Rebuilding per cell
+   * would re-run the wobble over every territory outline on every mousemove and
+   * leave an undo stack with one entry per cell, so a single flick of the mouse
+   * would take twenty undos to put back. One call, one rebuild, one undo step —
+   * which is also what a person means by "undo that".
+   */
+  stroke?(cells: readonly Axial[], territory: string): Promise<boolean>;
+  /** Batch form of `setContested`, for dragging a flag along a border. */
+  contestStroke?(cells: readonly Axial[], on: boolean): Promise<boolean>;
+  /**
+   * What this client may do. In game the chart is read-only for players and only
+   * an admin gets the brushes, so the page asks instead of assuming and hides
+   * the tools it cannot use. Absent means "everything", which is the fixture.
+   */
+  readonly permissions?: GalaxyPermissions;
 }
 
 /** Map extents and grid resolution, shared by the bake and the runtime. */
@@ -130,7 +160,18 @@ export class FixtureSource implements GalaxySource {
    * an admin then un-marked must not spring back to disputed on the next edit.
    */
   private contestedOverlay = new Map<string, boolean>();
-  private undoStack: { cell: string; owner?: string; contested?: boolean }[] = [];
+  /**
+   * One entry per gesture, not per cell.
+   *
+   * `deltas` records only what the gesture actually changed, so stepping back
+   * over a drag reverts the whole stroke in one move and leaves fields the
+   * stroke did not touch — the owner, when the gesture only moved a dispute
+   * flag — exactly as they were.
+   */
+  private undoStack: { deltas: { cell: string; owner?: string; contested?: boolean }[] }[] = [];
+
+  /** True when the fixture lets the viewer edit. It always does. */
+  readonly permissions: GalaxyPermissions = { paint: true };
   private current: GalaxyModel | null = null;
 
   constructor(
@@ -184,41 +225,64 @@ export class FixtureSource implements GalaxySource {
 
   /** Returns whether anything actually changed, so callers can skip a redraw. */
   async paint(q: number, r: number, territory: string): Promise<boolean> {
+    return this.stroke([{ q, r }], territory);
+  }
+
+  async setContested(q: number, r: number, on: boolean): Promise<boolean> {
+    return this.contestStroke([{ q, r }], on);
+  }
+
+  /**
+   * Apply a whole drag in one edit.
+   *
+   * Cells already in the requested state are skipped rather than recorded, so
+   * dragging back and forth over a border does not fill the undo stack with
+   * no-ops, and a stroke that ends up changing nothing leaves no trace at all.
+   */
+  async stroke(cells: readonly Axial[], territory: string): Promise<boolean> {
     const model = await this.load();
-    const k = key(q, r);
-    if (!model.ownership.has(k)) return false;
-    const current = this.overlay.get(k) ?? model.ownership.get(k);
-    if (current === territory) return false;
-    this.undoStack.push({ cell: k, owner: territory });
-    this.overlay.set(k, territory);
+    const deltas: { cell: string; owner?: string }[] = [];
+    for (const c of cells) {
+      const k = key(c.q, c.r);
+      if (!model.ownership.has(k)) continue;
+      if ((this.overlay.get(k) ?? model.ownership.get(k)) === territory) continue;
+      deltas.push({ cell: k, owner: territory });
+    }
+    if (deltas.length === 0) return false;
+    for (const d of deltas) this.overlay.set(d.cell, d.owner!);
+    this.undoStack.push({ deltas });
     this.emit();
     return true;
   }
 
-  async setContested(q: number, r: number, on: boolean): Promise<boolean> {
+  async contestStroke(cells: readonly Axial[], on: boolean): Promise<boolean> {
     const model = await this.load();
-    const k = key(q, r);
-    if (!model.ownership.has(k)) return false;
-    const current = this.contestedOverlay.get(k) ?? model.contested.has(k);
-    if (current === on) return false;
-    this.undoStack.push({ cell: k, contested: on });
-    this.contestedOverlay.set(k, on);
+    const deltas: { cell: string; contested: boolean }[] = [];
+    for (const c of cells) {
+      const k = key(c.q, c.r);
+      if (!model.ownership.has(k)) continue;
+      if ((this.contestedOverlay.get(k) ?? model.contested.has(k)) === on) continue;
+      deltas.push({ cell: k, contested: on });
+    }
+    if (deltas.length === 0) return false;
+    for (const d of deltas) this.contestedOverlay.set(d.cell, d.contested);
+    this.undoStack.push({ deltas });
     this.emit();
     return true;
   }
 
   /**
-   * Dev affordance: step back through local edits.
+   * Dev affordance: step back through local edits, one gesture at a time.
    *
-   * One entry records whichever field the edit touched, so stepping back over a
-   * contest flag leaves the owner alone and vice versa. An absent field means
-   * "revert to the baked baseline".
+   * An absent field means "revert to the baked baseline".
    */
   async undo(): Promise<void> {
     const last = this.undoStack.pop();
     if (!last) return;
-    if (last.owner !== undefined) this.overlay.delete(last.cell);
-    if (last.contested !== undefined) this.contestedOverlay.delete(last.cell);
+    for (const d of last.deltas) {
+      if (d.owner !== undefined) this.overlay.delete(d.cell);
+      if (d.contested !== undefined) this.contestedOverlay.delete(d.cell);
+    }
     this.emit();
   }
 }

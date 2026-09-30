@@ -30,6 +30,14 @@ means two sources of truth that drift. It is cheaper to start, which is why the
 built-in table exists, but the seam is already in place so it does not have to
 stay that way.
 
+## Admin vs player
+
+Same binary, different payload. `GalaxySource.permissions.paint` decides whether
+the brushes and UNDO exist; the chart itself is identical either way, so a player
+still reads every name, every border and every dispute flag. The DOM check flips
+the permission and asserts the tools disappear while the map survives — and that
+a click still selects, so read-only does not degrade into inert.
+
 ## Layout
 
 | Path | What it is |
@@ -109,6 +117,25 @@ The rule the code now follows: anything depending on the transform is built in a
 `createMemo` above the JSX, and the markup only reads plain fields off the
 result. That makes the mistake structurally impossible instead of merely
 discouraged.
+
+**A drag is one gesture, so it has to be one edit.** Sampling only the cells the
+pointer is over between mousemove events leaves a dashed stroke when the mouse
+moves faster than the event rate, so each move fills the `hexLine` from the
+previous cell. And committing per cell would rebuild the model on every
+mousemove — the rebuild re-runs the wobble over every territory outline — while
+leaving one undo step per cell, so a single flick would take twenty undos to put
+back. So a stroke previews as flat unwobbled hexes and commits once on release.
+
+**Painting is a permission, not a build flag.** The chart is read-only for players
+and only an admin gets the brushes, so the page asks the source rather than
+assuming. Undo is part of that tool: gating it on the edit count alone left a
+read-only viewer with a live UNDO button that reverted an admin's work.
+
+**A memo body runs immediately, so it cannot read a `let` declared below it.**
+`canPaint` read `source`, which was declared a few lines further down, and the
+whole component threw on first render — a blank page, with no build error, since
+TypeScript cannot see the ordering. The same trap bit twice in one sitting; the
+second time it was the fix's own new signal.
 
 **`getScreenCTM()` includes the document's zoom, `clientX` does not.** Inverting
 that matrix and feeding it client coordinates divides the point by the zoom
@@ -211,8 +238,7 @@ from prototypes, so a new nation can arrive in a colour nobody looked at.
   from the game's own `.ftl` entries rather than from the built-in table. The
   seam (`installStrings`) is ready and the DOM check exercises it.
 - Two-tier typography: the small prefixed `REGION: …` tier is specced, not built.
-- Zoom and pan, and the paint tool's drag-to-paint. Drag matters more than zoom
-  here: the chart is a fixed extent that fits its host, so the thing worth adding
-  is painting several cells in one stroke.
+- Zoom and pan. Deliberately last: the chart is a fixed extent that fits its
+  host, and drag-to-paint (done) bought far more than zoom would.
 - Contested cells are a flat hatch with no per-claimant identity. A real dispute
   wants "Biesel claims / Izweski claims" rather than a single flag.
