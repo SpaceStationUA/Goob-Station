@@ -1,4 +1,0 @@
-- type: shader
-  id: ZBlurComposite
-  kind: source
-  path: "/Textures/_Pirate/Shaders/zblur_composite.swsl"

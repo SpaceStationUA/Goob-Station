@@ -54,9 +54,6 @@ public sealed class ZProfFrameStatsUIController : UIController
     private double _lowerTargetArea;
     private double _cropAllocations;
     private double _wholeStackSkips;
-    private double _fusedBlurPasses;
-    private double _blurFusionFallbacks;
-    private double _cropSizeTransitions;
     private double _lightConsidered;
     private double _lightPositions;
     private double _lightIndexRebuilds;
@@ -106,7 +103,6 @@ public sealed class ZProfFrameStatsUIController : UIController
             _samples.Clear();
             _regionSamples = 0;
             _cropPasses = _fullLowerPasses = _lowerTargetArea = _cropAllocations = _wholeStackSkips = 0;
-            _fusedBlurPasses = _blurFusionFallbacks = _cropSizeTransitions = 0;
             _lightConsidered = _lightPositions = _lightIndexRebuilds = 0;
             _lightComparisons = _lightMismatches = 0;
             return;
@@ -124,9 +120,6 @@ public sealed class ZProfFrameStatsUIController : UIController
             _lowerTargetArea += stats.LowerTargetArea;
             _cropAllocations += stats.Allocations;
             _wholeStackSkips += stats.WholeStackSkipped ? 1 : 0;
-            _fusedBlurPasses += stats.FusedBlurPasses;
-            _blurFusionFallbacks += stats.BlurFusionFallbacks;
-            _cropSizeTransitions += stats.CropSizeTransitions;
             var lights = _entities.System<CMUZLevelProjectedLightingSystem>().SourceStats;
             _lightConsidered += lights.Considered;
             _lightPositions += lights.Positions;
@@ -236,9 +229,6 @@ public sealed class ZProfFrameStatsUIController : UIController
             $" crop_passes={F(_cropPasses / _regionSamples)} full_lower_passes={F(_fullLowerPasses / _regionSamples)}" +
             $" lower_target_area={F(_lowerTargetArea / _regionSamples)} crop_allocations={(long) _cropAllocations}" +
             $" stack_skip_fraction={F(_wholeStackSkips / _regionSamples)}" +
-            $" fused_blur_passes={F(_fusedBlurPasses / _regionSamples)}" +
-            $" blur_fusion_fallbacks={F(_blurFusionFallbacks / _regionSamples)}" +
-            $" crop_size_transitions={F(_cropSizeTransitions / _regionSamples)}" +
             $" light_considered={F(_lightConsidered / _regionSamples)} light_positions={F(_lightPositions / _regionSamples)}" +
             $" light_index_rebuilds={(long) _lightIndexRebuilds} light_comparisons={_lightComparisons} light_mismatches={_lightMismatches}";
         Emit($"ZPROF_FPS phase={_phaseIndex} cvars={_current} frames={sorted.Length} " +

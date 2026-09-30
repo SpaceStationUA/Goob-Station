@@ -3,7 +3,6 @@
 using System.Numerics;
 using Content.Client._Pirate.ZLevels.Core;
 using Content.Shared._Pirate.ZLevels.Apertures.Components;
-using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Shared.Graphics;
 using Robust.Shared.Map.Components;
@@ -12,22 +11,22 @@ namespace Content.Client.Viewport;
 
 public sealed partial class ScalingViewport
 {
+    // One viewport per crop size bucket (ZViewportCrop quantizes crops to eighths of the view).
+    private const int MaxPooledCropViewports = 8;
+
     private readonly ZVisibilityMask _zVisibilityMask = new();
     private readonly Dictionary<int, List<UIBox2>> _zScreenRegions = new();
     private readonly HashSet<int> _zRegionalDepths = new();
     private readonly List<UIBox2> _zRegionApertures = new();
-    private readonly Dictionary<int, ZCropPlanner> _zCropPlanners = new();
+    private readonly Dictionary<int, UIBox2i> _zLastCrops = new();
     private readonly List<ZCropViewport> _zCropViewports = new();
-    private readonly IClydeViewport?[] _zRentedCrops = new IClydeViewport?[ZCropPlanner.MaxCrops];
-    private readonly int[] _zCropRenderOrder = new int[ZCropPlanner.MaxCrops];
     private long _zCropUseCounter;
     private IClydeViewport? _zActiveCropViewport;
     private Vector2i _zCropFullSize;
 
     internal ZRegionFrameStats ZRegionStats { get; private set; }
     internal readonly record struct ZRegionFrameStats(int CroppedLayers, int CropPasses, int FullLayers,
-        int HiddenLayers, double LowerTargetArea, int Allocations, bool WholeStackSkipped,
-        int FusedBlurPasses, int BlurFusionFallbacks, int CropSizeTransitions, string? BlurFusionBlocker);
+        int HiddenLayers, double LowerTargetArea, int Allocations, bool WholeStackSkipped);
 
     private sealed class ZCropViewport(IClydeViewport viewport)
     {
@@ -41,30 +40,14 @@ public sealed partial class ScalingViewport
     {
         var s = ZRegionStats;
         var text = $"skip={s.WholeStackSkipped} crop_passes={s.CropPasses} full={s.FullLayers} " +
-                   $"hidden={s.HiddenLayers} area={s.LowerTargetArea.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)} " +
-                   $"fused_blur={s.FusedBlurPasses} blur_fallbacks={s.BlurFusionFallbacks} " +
-                   $"crop_size_transitions={s.CropSizeTransitions} blur_blocker={s.BlurFusionBlocker ?? "none"}";
+                   $"hidden={s.HiddenLayers} area={s.LowerTargetArea.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)}";
         foreach (var depth in _zRegionalDepths)
         {
             text += $" d{depth}:regions={_zScreenRegions[depth].Count}";
-            if (!_zCropPlanners.TryGetValue(depth, out var planner))
-                continue;
-
-            foreach (var crop in planner.Crops)
-            {
-                var r = crop.RenderBounds;
+            if (_zLastCrops.TryGetValue(depth, out var r))
                 text += $" [{r.Left},{r.Top} {r.Width}x{r.Height}]";
-            }
         }
 
-        if (s.BlurFusionFallbacks > 0)
-        {
-            foreach (var overlay in _overlayManager.AllOverlays)
-            {
-                if (overlay is CEZLevelBlurOverlay blur)
-                    text += $" all_blur_blockers=[{blur.DescribeFusionBlockers()}]";
-            }
-        }
         return text;
     }
 
@@ -72,6 +55,7 @@ public sealed partial class ScalingViewport
         EntityUid? effectiveGrid, int lowestDepth, bool enabled)
     {
         _zRegionalDepths.Clear();
+        _zLastCrops.Clear();
         if (_zCropFullSize != viewport.Size || !enabled)
         {
             DisposeZCropViewports();
@@ -207,108 +191,60 @@ public sealed partial class ScalingViewport
             return true;
         }
 
+        // Profiling showed each extra crop pass costs more than the pixels it saves.
         var pixelsPerMeter = eye.Scale * viewport.RenderScale * EyeManager.PixelsPerMeter;
         var padding = MathF.Max(pixelsPerMeter.X, pixelsPerMeter.Y) * 2 + 8;
-        if (!_zCropPlanners.TryGetValue(depth, out var planner))
-            _zCropPlanners[depth] = planner = new ZCropPlanner();
-        if (!planner.TryPlan(regions, viewport.Size, padding, _cfg.GetCVar(CCVars.ZRegionMaxCrops)))
+        if (!ZViewportCrop.TryGetCrop(regions, viewport.Size, padding, out var crop))
             return false;
+        _zLastCrops[depth] = crop;
 
         if (viewport.ClearColor != null)
             handle.RenderInRenderTarget(viewport.RenderTarget, () => { }, viewport.ClearColor);
+
+        var cropped = RentZCropViewport(crop.Size);
+        cropped.RenderScale = viewport.RenderScale;
+        cropped.ClearColor = null;
+        cropped.Eye = CreateZCropEye(zEye, viewport.Size, viewport.RenderScale, crop);
+        var localBox = UIBox2.FromDimensions(Vector2.Zero, cropped.Size);
+        var sourceBox = new UIBox2(crop.Left, crop.Top, crop.Right, crop.Bottom);
 
         var modulation = handle.Modulate;
         handle.Modulate = Color.White;
         try
         {
-            // Seed ALL crops before compositing any of them. Overlapping crops must see the
-            // same deeper-deck background, otherwise blur/tint gets applied twice at overlaps.
-            for (var i = 0; i < planner.Crops.Count; i++)
+            // Seed the crop with the already composited deeper decks, so transparent
+            // tiles, z-blur and aperture overlays retain the same background as the full pass.
+            handle.RenderInRenderTarget(cropped.RenderTarget, () =>
             {
-                var crop = planner.Crops[i].RenderBounds;
-                var cropped = RentZCropViewport(crop.Size);
-                _zRentedCrops[i] = cropped;
-                cropped.RenderScale = viewport.RenderScale;
-                cropped.ClearColor = null;
-                var cropEye = CreateZCropEye(zEye, viewport.Size, viewport.RenderScale, crop);
-                cropEye.AllowBlurFusion = _cfg.GetCVar(CCVars.ZFuseCropBlur);
-                cropped.Eye = cropEye;
-                var localBox = UIBox2.FromDimensions(Vector2.Zero, cropped.Size);
-                var sourceBox = new UIBox2(crop.Left, crop.Top, crop.Right, crop.Bottom);
-                handle.RenderInRenderTarget(cropped.RenderTarget, () =>
-                {
-                    handle.UseShader(null);
-                    handle.SetTransform(Matrix3x2.Identity);
-                    handle.DrawTextureRectRegion(viewport.RenderTarget.Texture, localBox, sourceBox);
-                }, Color.Black);
-            }
+                handle.UseShader(null);
+                handle.SetTransform(Matrix3x2.Identity);
+                handle.DrawTextureRectRegion(viewport.RenderTarget.Texture, localBox, sourceBox);
+            }, Color.Black);
 
-            // Rendering order may change; seed order and compositing order must not.
-            // No composite copy intervenes between equal-size renders, so overlays that
-            // request SCREEN_TEXTURE can reuse the engine's shared screen-buffer size.
-            // Reuse a managed array: localloc/stackalloc IL is rejected by the hub sandbox.
-            ZCropRenderOrder.Fill(planner.Crops, _zCropRenderOrder, _cfg.GetCVar(CCVars.ZGroupCropSizes));
-            Vector2i? previousSize = null;
-            for (var pass = 0; pass < planner.Crops.Count; pass++)
-            {
-                var i = _zCropRenderOrder[pass];
-                var cropped = _zRentedCrops[i]!;
-                if (previousSize != null && previousSize != cropped.Size)
-                    ZRegionStats = ZRegionStats with { CropSizeTransitions = ZRegionStats.CropSizeTransitions + 1 };
-                previousSize = cropped.Size;
-                _zActiveCropViewport = cropped;
-                cropped.Render();
-                _zActiveCropViewport = null;
-                var cropEye = (ZEye) cropped.Eye!;
-                ZRegionStats = ZRegionStats with
-                {
-                    CropPasses = ZRegionStats.CropPasses + 1,
-                    LowerTargetArea = ZRegionStats.LowerTargetArea +
-                        (double) cropped.Size.X * cropped.Size.Y / ((double) viewport.Size.X * viewport.Size.Y),
-                    FusedBlurPasses = ZRegionStats.FusedBlurPasses + (cropEye.DeferredBlurShader != null ? 1 : 0),
-                    BlurFusionFallbacks = ZRegionStats.BlurFusionFallbacks + (cropEye.BlurFusionBlocker != null ? 1 : 0),
-                    BlurFusionBlocker = cropEye.BlurFusionBlocker ?? ZRegionStats.BlurFusionBlocker,
-                };
-            }
+            _zActiveCropViewport = cropped;
+            cropped.Render();
+            _zActiveCropViewport = null;
 
-            for (var i = 0; i < planner.Crops.Count; i++)
+            handle.RenderInRenderTarget(viewport.RenderTarget, () =>
             {
-                var cropped = _zRentedCrops[i]!;
-                var plan = planner.Crops[i];
-                var cropEye = (ZEye) cropped.Eye!;
-                var shader = cropEye.DeferredBlurShader;
-                if (shader != null)
-                {
-                    shader.SetParameter("SOURCE_PIXEL_SIZE", new Vector2(1f / cropped.Size.X, 1f / cropped.Size.Y));
-                    shader.SetParameter("BLUR_COLOR", cropEye.DeferredBlurColor);
-                }
-                // Copy the visible cluster, excluding its blur guard border. A crop's clamped
-                // texture edge must not overwrite another opening inside a neighboring crop.
-                var localBox = new UIBox2(plan.OutputBounds.Left - plan.RenderBounds.Left,
-                    plan.OutputBounds.Top - plan.RenderBounds.Top,
-                    plan.OutputBounds.Right - plan.RenderBounds.Left,
-                    plan.OutputBounds.Bottom - plan.RenderBounds.Top);
-                handle.RenderInRenderTarget(viewport.RenderTarget, () =>
-                {
-                    handle.UseShader(shader);
-                    handle.SetTransform(Matrix3x2.Identity);
-                    handle.DrawTextureRectRegion(cropped.RenderTarget.Texture, plan.OutputBounds, localBox);
-                    handle.UseShader(null);
-                }, null);
-            }
-            ZRegionStats = ZRegionStats with { CroppedLayers = ZRegionStats.CroppedLayers + 1 };
+                handle.UseShader(null);
+                handle.SetTransform(Matrix3x2.Identity);
+                handle.DrawTextureRect(cropped.RenderTarget.Texture, sourceBox);
+            }, null);
+
+            ZRegionStats = ZRegionStats with
+            {
+                CroppedLayers = ZRegionStats.CroppedLayers + 1,
+                CropPasses = ZRegionStats.CropPasses + 1,
+                LowerTargetArea = ZRegionStats.LowerTargetArea +
+                    (double) cropped.Size.X * cropped.Size.Y / ((double) viewport.Size.X * viewport.Size.Y),
+            };
         }
         finally
         {
-            handle.UseShader(null);
             handle.Modulate = modulation;
             _zActiveCropViewport = null;
-            foreach (var entry in _zCropViewports)
-            {
-                entry.InUse = false;
-                entry.Viewport.Eye = null;
-            }
-            Array.Clear(_zRentedCrops);
+            ReleaseZCropViewports();
         }
         return true;
     }
@@ -329,14 +265,22 @@ public sealed partial class ScalingViewport
         };
     }
 
+    private void ReleaseZCropViewports()
+    {
+        foreach (var entry in _zCropViewports)
+        {
+            entry.InUse = false;
+            entry.Viewport.Eye = null;
+        }
+    }
+
     private void DisposeZCropViewports()
     {
         foreach (var entry in _zCropViewports)
             entry.Viewport.Dispose();
         _zCropViewports.Clear();
-        _zCropPlanners.Clear();
+        _zLastCrops.Clear();
         _zActiveCropViewport = null;
-        Array.Clear(_zRentedCrops);
     }
 
     private IClydeViewport RentZCropViewport(Vector2i size)
@@ -356,9 +300,8 @@ public sealed partial class ScalingViewport
                 oldest = entry;
         }
 
-        // Eight entries total, shared across all decks; at most four are leased together.
-        // Exact size reuse keeps actual rendered area within the planner's budget.
-        if (_zCropViewports.Count >= ZCropPlanner.MaxCrops * 2 && oldest != null)
+        // Exact size reuse keeps the rendered area equal to the planned crop.
+        if (_zCropViewports.Count >= MaxPooledCropViewports && oldest != null)
         {
             oldest.Viewport.Dispose();
             _zCropViewports.Remove(oldest);

@@ -36,18 +36,6 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool>
         ZCullHiddenRegions = CVarDef.Create("zlevels.cull_hidden_regions", true, CVar.CLIENTONLY);
 
-    /// <summary>Maximum separate crops per lower deck (1-4). One retains the single-crop baseline.</summary>
-    public static readonly CVarDef<int>
-        ZRegionMaxCrops = CVarDef.Create("zlevels.region_max_crops", 4, CVar.CLIENTONLY);
-
-    /// <summary>Fuse cropped-deck blur into compositing when overlay ordering permits it.</summary>
-    public static readonly CVarDef<bool>
-        ZFuseCropBlur = CVarDef.Create("zlevels.fuse_crop_blur", true, CVar.CLIENTONLY);
-
-    /// <summary>Render crops of equal size together; retain original compositing order.</summary>
-    public static readonly CVarDef<bool>
-        ZGroupCropSizes = CVarDef.Create("zlevels.group_crop_sizes", true, CVar.CLIENTONLY);
-
     /// <summary>Only capture lower-deck textures required by on-screen apertures.</summary>
     public static readonly CVarDef<bool>
         ZCullApertureCopies = CVarDef.Create("zlevels.cull_aperture_copies", true, CVar.CLIENTONLY);

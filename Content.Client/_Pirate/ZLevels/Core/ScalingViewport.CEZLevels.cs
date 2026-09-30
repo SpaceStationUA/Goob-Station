@@ -10,7 +10,6 @@ using Content.Shared._Pirate.ZLevels.Apertures.Components;
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared.CCVar;
-using Content.Shared.Maps;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
@@ -26,9 +25,7 @@ namespace Content.Client.Viewport;
 public sealed partial class ScalingViewport
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly ITileDefinitionManager _tile = default!;
     [Dependency] private readonly IOverlayManager _overlayManager = default!; // Pirate: multiz
     [Dependency] private readonly IPlacementManager _placement = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -57,64 +54,6 @@ public sealed partial class ScalingViewport
     private Overlay? _cachedPlacementOverlay; // Pirate: multiz
     // Only the deepest pass may draw full-screen parallax.
     private Overlay? _cachedParallaxOverlay;
-
-    /// <summary>
-    /// We are looking for at least one empty tile on the screen.
-    /// This is used to ensure that it makes sense to draw the z-planes and that they are visible.
-    /// </summary>
-    public bool TryFindEmptyTiles(EntityUid mapUid)
-    {
-        if (_xformQuery is null || !_xformQuery.Value.TryComp(mapUid, out var xform))
-            return true;
-
-        var drawBox = GetDrawBox();
-        var mapId = xform.MapID;
-
-        var corners = new[]
-        {
-            _eyeManager.ScreenToMap(drawBox.BottomLeft).Position,
-            _eyeManager.ScreenToMap(drawBox.BottomRight).Position,
-            _eyeManager.ScreenToMap(drawBox.TopLeft).Position,
-            _eyeManager.ScreenToMap(drawBox.TopRight).Position
-        };
-
-        float minX = float.MaxValue, minY = float.MaxValue;
-        float maxX = float.MinValue, maxY = float.MinValue;
-
-        foreach (var c in corners)
-        {
-            if (c.X < minX)
-                minX = c.X;
-            if (c.Y < minY)
-                minY = c.Y;
-            if (c.X > maxX)
-                maxX = c.X;
-            if (c.Y > maxY)
-                maxY = c.Y;
-        }
-
-        var mapCoordsBottomLeft = new MapCoordinates(new Vector2(minX, minY), mapId);
-        var mapCoordsTopRight = new MapCoordinates(new Vector2(maxX, maxY), mapId);
-
-        if (!_mapManager.TryFindGridAt(mapUid, mapCoordsBottomLeft.Position, out _, out var grid))
-            return true;
-
-        var tileBottomLeft = grid.TileIndicesFor(mapCoordsBottomLeft);
-        var tileTopRight = grid.TileIndicesFor(mapCoordsTopRight);
-
-        for (var x = tileBottomLeft.X - 1; x <= tileTopRight.X + 1; x++)
-        {
-            for (var y = tileBottomLeft.Y - 1; y <= tileTopRight.Y + 1; y++)
-            {
-                var tile = grid.GetTileRef(new Vector2i(x, y));
-                var tileDef = (ContentTileDefinition)_tile[tile.Tile.TypeId];
-                if (tileDef.ZTransparent || tile.Tile.IsEmpty)
-                    return true;
-            }
-        }
-
-        return false;
-    }
 
     /// <summary>
     /// Resolves the map for a depth offset, preferring linked-grid peers.
@@ -794,10 +733,5 @@ public sealed partial class ScalingViewport
         public int LowestDepth = lowest;
         public int Depth = depth;
         public int HighestDepth = high;
-        // Only cropped synthetic eyes may defer blur into their final composite copy.
-        internal bool AllowBlurFusion;
-        internal ShaderInstance? DeferredBlurShader;
-        internal Vector3 DeferredBlurColor;
-        internal string? BlurFusionBlocker;
     }
 }
