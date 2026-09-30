@@ -6,6 +6,7 @@
  * the identical code run in a browser (fixture) and in the game (bridge).
  */
 
+import type { PlanetType } from "./planet";
 export type PatternId =
   | "solid"
   | "hatch"
@@ -62,6 +63,13 @@ export interface StarSystem {
   importance: Importance;
   /** Empty when the system sits in unclaimed space. */
   territory: string;
+  /**
+   * What the generated sprite should be. Data rather than derived, so the lore
+   * editors pick a world's character instead of getting whatever the id hash
+   * happened to produce. Absent means "hash it", which is what the placeholder
+   * map relies on.
+   */
+  planetType?: PlanetType;
 }
 
 /** A travel link. Drawn now as a line; gameplay wiring is a later concern. */

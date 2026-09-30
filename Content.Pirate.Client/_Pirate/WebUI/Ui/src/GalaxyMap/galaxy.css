@@ -269,3 +269,117 @@ svg.chart.stroking {
   display: block;
   margin-bottom: 2px;
 }
+
+/* ---------------------------------------------------------------- *
+ * Planet spike. Disposable comparison harness — not shipping UI.
+ * ---------------------------------------------------------------- */
+
+/* Raster inside SVG. The chart is otherwise pure geometry, so a generated
+   sprite is the one thing here that is not resolution independent, and this
+   is what keeps it from being smoothed into a smudge. */
+.planet-mark {
+  image-rendering: pixelated;
+}
+
+img.pl {
+  image-rendering: pixelated;
+  display: block;
+}
+
+.spikebar {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+.spikebar button {
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  color: #d8b4ff;
+  background: rgba(14, 10, 26, 0.9);
+  border: 1px solid rgba(180, 130, 240, 0.35);
+  padding: 4px 9px;
+  cursor: pointer;
+}
+.spikebar button.on {
+  background: rgba(90, 50, 140, 0.75);
+  color: #fff;
+}
+
+.spike {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 40px;
+  max-height: 46vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(6, 9, 16, 0.95);
+  border: 1px solid rgba(180, 130, 240, 0.28);
+  z-index: 4;
+  backdrop-filter: blur(3px);
+}
+.spike-head {
+  padding: 6px 10px;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: #b48ce8;
+  border-bottom: 1px solid rgba(180, 130, 240, 0.18);
+  display: flex;
+  justify-content: space-between;
+}
+.spike-x {
+  font: inherit;
+  background: none;
+  border: none;
+  color: #b48ce8;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+.spike-scroll {
+  overflow: auto;
+  padding: 8px 10px;
+}
+.spike-group {
+  margin-bottom: 10px;
+}
+.spike-label {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: rgba(200, 180, 240, 0.6);
+  margin-bottom: 4px;
+}
+.spike-cells {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.spike-cell {
+  text-align: center;
+}
+.spike-slot {
+  /* Same ground the chart sits on, so the clash is judged in context
+     rather than against a neutral swatch. */
+  background: radial-gradient(ellipse at 30% 30%, #16233d 0%, #0a1120 70%);
+  border: 1px solid rgba(120, 160, 200, 0.14);
+  padding: 6px;
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spike-cap {
+  font-size: 8px;
+  color: rgba(170, 195, 220, 0.55);
+  margin-top: 3px;
+  max-width: 108px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

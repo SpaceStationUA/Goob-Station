@@ -1,6 +1,7 @@
 import { createEffect, createMemo, createSignal, For, onCleanup, Show } from "solid-js";
 import { cellsInExtent, hexCorners, hexToPixel, type Axial } from "./lib/hex";
 import { cellsByTerritory, cellOutline } from "./lib/geometry";
+import { planetTypeFor, planetUri, seedFromId } from "./lib/planet";
 import { loopToPxPath, loopsToPxPath, makeTransform } from "./lib/transform";
 import { pick, type GalaxyModel, type PatternId, type Route, type Territory } from "./lib/model";
 
@@ -86,6 +87,11 @@ export interface ChartProps {
   pendingCells: ReadonlySet<string> | undefined;
   /** Colour to preview the in-progress stroke in. */
   pendingColour: string | undefined;
+  /**
+   * Spike only: draw star systems as generated planets instead of dots.
+   * Same on/off switch the comparison panel drives, so the two cannot disagree.
+   */
+  planets: boolean;
   onHover: (ly: { x: number; y: number }) => void;
   onClick: (ly: { x: number; y: number }) => void;
   /** Pointer went down with a brush armed — begin a stroke. */
@@ -201,6 +207,47 @@ export default function Chart(props: ChartProps) {
    * ------------------------------------------------------------------ */
 
   /** Markers, pre-projected. Stable across a paint; rebuilt on resize. */
+  /**
+   * Generated sprites, keyed by system.
+   *
+   * Built here rather than inside the `<For>` because rendering a planet calls
+   * `toDataURL`, and doing that inline in an attribute would regenerate every
+   * sprite on every re-render. The cache inside `planetUri` means the second
+   * call is a map hit, but the memo is what keeps the first call from
+   * happening in the wrong order relative to the transform.
+   */
+  const planetSprites = createMemo(() => {
+    if (!props.planets) return new Map<string, { href: string; size: number }>();
+    const dpr = window.devicePixelRatio || 1;
+    const out = new Map<string, { href: string; size: number }>();
+    for (const s of props.model.systems) {
+      // Planets only for capitals and major systems. Fifteen small sprites is
+      // visual noise, and at that size none of them are distinguishable from
+      // each other anyway — the variety is lost and the map is busier. The
+      // handful that do get one gain the most, because they are the ones a
+      // player is actually looking for.
+      if (s.importance < 2) continue;
+      if (s.kind === "station" || s.kind === "outpost") continue;
+      const size = 26;
+      out.set(s.id, {
+        href: planetUri({
+          seed: seedFromId(s.id),
+          type: s.planetType ?? planetTypeFor(s.kind, s.id),
+          px: size,
+          dpr,
+          // No tint. Pulling the palette 45% toward a nation colour was the
+          // single thing that broke this: it desaturated the planet into a muddy
+          // version of the territory it already sits inside, and the owner is
+          // already unambiguous from the fill behind it.
+          tint: undefined,
+          tintAmount: 0,
+        }),
+        size,
+      });
+    }
+    return out;
+  });
+
   const systemNodes = createMemo(() =>
     props.model.systems.map(s => ({
       id: s.id,
@@ -705,7 +752,7 @@ export default function Chart(props: ChartProps) {
                   <circle
                     cx={n.P.x}
                     cy={n.P.y}
-                    r="10"
+                    r={planetSprites().get(n.system.id) ? 17 : 10}
                     fill="none"
                     stroke={n.colour}
                     stroke-width="1.6"
@@ -723,14 +770,30 @@ export default function Chart(props: ChartProps) {
                   />
                 </Show>
                 <Show when={n.system.kind === "star" || n.system.kind === "planet"}>
-                  <circle
-                    cx={n.P.x}
-                    cy={n.P.y}
-                    r={n.system.importance >= 2 ? 5 : 3.2}
-                    fill={n.colour}
-                    stroke="#0a0f18"
-                    stroke-width="1"
-                  />
+                  <Show
+                    when={planetSprites().get(n.system.id)}
+                    fallback={
+                      <circle
+                        cx={n.P.x}
+                        cy={n.P.y}
+                        r={n.system.importance >= 2 ? 5 : 3.2}
+                        fill={n.colour}
+                        stroke="#0a0f18"
+                        stroke-width="1"
+                      />
+                    }
+                  >
+                    {sp => (
+                      <image
+                        class="planet-mark"
+                        href={sp().href}
+                        x={n.P.x - sp().size / 2}
+                        y={n.P.y - sp().size / 2}
+                        width={sp().size}
+                        height={sp().size}
+                      />
+                    )}
+                  </Show>
                 </Show>
                 <text
                   x={n.P.x + (n.system.importance === 3 ? 15 : 9)}

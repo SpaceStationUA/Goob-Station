@@ -11,6 +11,7 @@ import {
   tp,
 } from "./lib/i18n";
 import { DEFAULT_MAP, FixtureSource } from "./lib/source";
+import { Spike } from "./Spike";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "./lib/devmap";
 
 /**
@@ -62,6 +63,9 @@ export default function App() {
    * the real component; in game the source's permission is the only input.
    */
   const [paintAllowed, setPaintAllowed] = createSignal(true);
+
+  /** Spike only: draw systems as generated planets instead of dots. */
+  const [planets, setPlanets] = createSignal(false);
 
   /**
    * In-progress drag: the cells covered so far, and the cell the pointer was on
@@ -329,6 +333,7 @@ export default function App() {
             stroking={stroking()}
             pendingCells={pendingCells()}
             pendingColour={pendingStyle()?.colour}
+            planets={planets()}
             onHover={onHover}
             onClick={onClick}
             onStrokeStart={onStrokeStart}
@@ -356,9 +361,6 @@ export default function App() {
               </For>
             </div>
 
-            {/* The brushes exist only for an admin. A player gets the same chart
-                with the tools taken out, rather than a toolbar full of things
-                that silently do nothing. */}
             {/* The brushes exist only for an admin. A player gets the same chart
                 with the tools taken out, rather than a toolbar full of things
                 that silently do nothing. */}
@@ -454,6 +456,13 @@ export default function App() {
               );
             }}
           </Show>
+
+          <Spike
+            systems={m().systems}
+            ownerColour={id => terrById().get(id)?.color ?? "#94a3b8"}
+            onMap={planets()}
+            setOnMap={setPlanets}
+          />
 
           <div class="legend">
             <b>{t("orionSpur", loc())}</b>

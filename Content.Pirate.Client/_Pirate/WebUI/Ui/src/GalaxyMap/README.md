@@ -38,6 +38,52 @@ still reads every name, every border and every dispute flag. The DOM check flips
 the permission and asserts the tools disappear while the map survives — and that
 a click still selects, so read-only does not degrade into inert.
 
+## Planet spike
+
+`lib/planet.ts` generates pixel planets in the page. Ported from Deep-Fold's
+MIT-licensed PixelPlanets Godot shaders; the algorithm is small enough that a
+clean TypeScript version was less work than vendoring a port. `Spike.tsx` is the
+disposable harness that compares them — open it from the PLANETS button, and
+PLANETS ON MAP swaps the chart's markers over.
+
+**A planet is a pure function of `(seed, type, size, light, tint)`.** So the model
+carries a seed and a type and nothing else — no PNGs, no art pipeline, and two
+clients holding the same model draw the same worlds. `StarSystem.planetType` is
+optional data so the lore editors pick a world's character; absent means hash the
+id, which is what the placeholder map relies on.
+
+Four things the spike settled, none of which were obvious in advance:
+
+- **Generate at display size, never scale down.** Pixel art does not survive
+  downscaling, so the octave count is tied to the sprite: the finest octave has to
+  land near one pixel, and an octave finer than that is not detail, it is
+  per-pixel noise. The first pass looked like moss for exactly that reason. The
+  sprite cache is keyed on size for the same reason — key it on the seed alone and
+  a zoom silently freezes every planet at the old resolution, which is the same
+  bug that once froze the star markers.
+- **Dither between discrete palette entries, not along a gradient.** Offsetting the
+  height and blending within a continuous ramp produces a band of intermediate
+  colours, so the dithered planet came out visibly *blurrier* than the undithered
+  one. Confining the mix to a thin window at each threshold is what makes it read
+  as pixel art rather than a smudge.
+- **A small sprite cannot afford a dark side.** Below ~24px the night half is most
+  of the disc, so a planet at map scale stops reading as a lit body and starts
+  reading as a hole punched in the territory behind it. The night floor is lifted
+  and the night colour lightened for small sprites only.
+- **Planets only for capitals.** Fifteen small sprites is visual noise and none of
+  them are distinguishable; restricting them to `importance >= 2` is what keeps the
+  map a chart. This contradicted the prediction that the map would get busier and
+  stop being a chart — with a dozen of them on a 963-cell map it does not.
+
+Still open: the type is hashed from the id here, which clusters by chance
+(Persepolis and Burzsia both came out lava). Real data from the lore side fixes
+that. The `tint` path toward a nation colour is implemented and unused — at 45% it
+desaturated each planet into a muddy version of the territory it already sits
+inside, and the owner is unambiguous from the fill behind it.
+
+`PLANET_ALGO_VERSION` is part of the sprite cache key. Change the noise and every
+planet in the game changes, which is the same trap as the bake fingerprint.
+
 ## Layout
 
 | Path | What it is |
