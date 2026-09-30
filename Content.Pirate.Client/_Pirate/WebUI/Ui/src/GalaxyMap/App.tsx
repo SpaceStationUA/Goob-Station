@@ -3,31 +3,40 @@ import Chart from "./Chart";
 import { cellsInExtent, key, pixelToHex, type Axial } from "./lib/hex";
 import { cellsByTerritory } from "./lib/geometry";
 import { pick, type GalaxyModel } from "./lib/model";
+import {
+  currentLocales,
+  installStrings,
+  setLocales,
+  t,
+  tp,
+} from "./lib/i18n";
 import { DEFAULT_MAP, FixtureSource } from "./lib/source";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "./lib/devmap";
-
-/** Locales the page can render. Matches what the bridge will send. */
-const LOCALES = [
-  { id: "en", label: "EN" },
-  { id: "uk", label: "УКР" },
-] as const;
 
 /**
  * What a click does while a brush is armed.
  *
  * Modelled as data rather than as a bag of booleans in the component because
- * the game needs the same three cases, and because "unclaim" is not a special
- * case at all: it is painting the `unclaimed` territory, which already exists in
- * the model. Treating it as one more swatch means there is no second code path
- * to get wrong.
+ * the game needs the same cases, and because "unclaim" is not a special case at
+ * all: it is painting the `unclaimed` territory, which already exists in the
+ * model. Treating it as one more swatch means there is no second code path to
+ * get wrong. Un-contesting is the mirror of contesting and sits beside it for
+ * the same reason — an admin settling a row should not have to reach for a
+ * modifier key to undo the mark they just made.
  */
 type Brush =
   | { kind: "owner"; territory: string }
   | { kind: "unclaim" }
   | { kind: "contest"; on: boolean };
 
-const brushId = (b: Brush | undefined) =>
-  b === undefined ? "" : b.kind === "owner" ? `t:${b.territory}` : b.kind;
+/** Identity for the "is this brush already armed" comparison. */
+const brushId = (b: Brush | undefined): string => {
+  if (b === undefined) return "";
+  if (b.kind === "owner") return `t:${b.territory}`;
+  // `on` is part of the identity: contest and uncontest are separate brushes and
+  // must not read as the same one.
+  return `${b.kind}${b.kind === "contest" ? (b.on ? "" : ":off") : ""}`;
+};
 
 /**
  * Browser harness entry point.
@@ -42,8 +51,27 @@ export default function App() {
   const [hoverCell, setHoverCell] = createSignal<Axial>();
   const [showCells, setShowCells] = createSignal(false);
   const [brush, setBrush] = createSignal<Brush>();
-  const [locale, setLocale] = createSignal<string>("en");
+  const [locale, setLocale] = createSignal<string>("en-US");
   const [edits, setEdits] = createSignal(0);
+  /** Bumped when the bridge installs a new string table or locale list. */
+  const [stringsVersion, setStringsVersion] = createSignal(0);
+  const [locales, setLocalesSignal] = createSignal(currentLocales());
+
+  // The browser harness uses the built-in table. In game this is where the
+  // bridge's push lands instead; both paths go through the same signal so the
+  // UI reacts identically.
+  function adoptStrings(
+    next: Parameters<typeof installStrings>[0],
+    nextLocales?: Parameters<typeof setLocales>[0],
+  ) {
+    installStrings(next);
+    if (nextLocales) setLocales(nextLocales);
+    setStringsVersion(v => v + 1);
+  }
+  // Exposed for the bridge push and for the DOM check. Without this the
+  // installed table is unreachable from outside the component and the seam is
+  // theoretical.
+  (window as unknown as Record<string, unknown>).__galaxyAdoptStrings = adoptStrings;
 
   let source: FixtureSource | undefined;
 
@@ -68,7 +96,18 @@ export default function App() {
   window.addEventListener("keydown", onKey);
   onCleanup(() => window.removeEventListener("keydown", onKey));
 
-  const loc = () => locale();
+  /**
+   * The active locale, and a stand-in for the string table's freshness.
+   *
+   * The table in lib/i18n is module state, which Solid cannot see. Reading this
+   * version bump inside `loc()` makes every `t()` call in the tree re-evaluate
+   * when the bridge pushes new strings, without threading the table through the
+   * component tree as a prop.
+   */
+  const loc = createMemo(() => {
+    stringsVersion();
+    return locale();
+  });
   const terrById = createMemo(() => {
     const out = new Map<string, (typeof TERRITORIES)[number]>();
     for (const t of model()?.territories ?? []) out.set(t.id, t);
@@ -112,11 +151,13 @@ export default function App() {
     const b = brush();
     if (!b) return "";
     if (b.kind === "contest") {
-      return b.on ? "MARKING CONTESTED" : "CLEARING CONTESTED";
+      return b.on ? t("brushContesting", loc()) : t("brushClearingContest", loc());
     }
-    if (b.kind === "unclaim") return "PAINTING UNCLAIMED SPACE";
+    if (b.kind === "unclaim") return t("brushUnclaimed", loc());
     const name = terrById().get(b.territory);
-    return `PAINTING ${name ? pick(name.name, loc()) : b.territory}`;
+    return t("brushPainting", loc(), {
+      name: name ? pick(name.name, loc()) : b.territory,
+    });
   });
 
   /** Clicking the armed brush again puts it down. */
@@ -175,16 +216,16 @@ export default function App() {
 
           <div class="toolbar">
             <button classList={{ on: showCells() }} onClick={() => setShowCells(v => !v)}>
-              GRID
+              {t("grid", loc())}
             </button>
 
             <div class="locpick">
-              <For each={LOCALES}>
+              <For each={locales()}>
                 {l => (
                   <button
                     classList={{ on: locale() === l.id }}
                     onClick={() => setLocale(l.id)}
-                    title={`Show names in ${l.id}`}
+                    title={t("showNamesIn", loc(), { locale: l.label })}
                   >
                     {l.label}
                   </button>
@@ -193,68 +234,85 @@ export default function App() {
             </div>
 
             <div class="paintpick" classList={{ armed: !!brush() }}>
-              <span class="paintlabel">PAINT</span>
+              <span class="paintlabel">{t("paint", loc())}</span>
               <For each={paintable()}>
-                {t => (
+                {terr => (
                   <div
                     class="swatch"
-                    classList={{ on: brushId(brush()) === `t:${t.id}` }}
-                    style={{ background: t.color }}
-                    title={pick(t.name, loc())}
-                    onClick={() => arm({ kind: "owner", territory: t.id })}
+                    classList={{ on: brushId(brush()) === `t:${terr.id}` }}
+                    style={{ background: terr.color }}
+                    title={pick(terr.name, loc())}
+                    onClick={() => arm({ kind: "owner", territory: terr.id })}
                   />
                 )}
               </For>
               <div
                 class="swatch swatch-unclaim"
                 classList={{ on: brushId(brush()) === "unclaim" }}
-                title="Return the cell to unclaimed space"
+                title={t("tipUnclaim", loc())}
                 onClick={() => arm({ kind: "unclaim" })}
               />
               <div
                 class="swatch swatch-contest"
                 classList={{ on: brushId(brush()) === "contest" }}
-                title="Mark the cell as contested — two claims, one owner"
+                title={t("tipContest", loc())}
                 onClick={() => arm({ kind: "contest", on: true })}
+              />
+              <div
+                class="swatch swatch-uncontest"
+                classList={{ on: brushId(brush()) === "contest:off" }}
+                title={t("tipUncontest", loc())}
+                onClick={() => arm({ kind: "contest", on: false })}
               />
             </div>
 
             <Show when={brush()}>
-              <span class="armed-note">{brushLabel()} — click cells, ESC to stop</span>
+              <span class="armed-note">
+                {brushLabel()}
+                {t("brushHint", loc())}
+              </span>
             </Show>
 
             <Show when={edits() > 0}>
-              <button onClick={undo}>UNDO {edits()}</button>
+              <button onClick={undo}>
+                {t("undo", loc())} {edits()}
+              </button>
             </Show>
           </div>
 
           <Show when={selected()}>
             {id => {
-              const t = terrById().get(id());
+              const terr = terrById().get(id());
               return (
-                <Show when={t}>
+                <Show when={terr}>
                   <div class="panel">
-                    <h2 style={{ color: t!.color }}>{pick(t!.name, loc())}</h2>
-                    <div class="sub">{t!.unclaimed ? "UNCLAIMED SPACE" : "SOVEREIGN TERRITORY"}</div>
-                    <div class="blurb">{t!.blurb}</div>
+                    <h2 style={{ color: terr!.color }}>{pick(terr!.name, loc())}</h2>
+                    <div class="sub">
+                      {terr!.unclaimed
+                        ? t("unclaimedSpace", loc())
+                        : t("sovereignTerritory", loc())}
+                    </div>
+                    <Show when={terr!.blurb}>
+                      <div class="blurb">{pick(terr!.blurb, loc())}</div>
+                    </Show>
                     <div class="stat">
-                      <span>CELLS</span>
+                      <span>{t("labelCells", loc())}</span>
                       <span>{cellCount()}</span>
                     </div>
                     <div class="stat">
-                      <span>SYSTEMS</span>
+                      <span>{t("labelSystems", loc())}</span>
                       <span>{systemsIn(id()).length}</span>
                     </div>
                     <div class="stat">
-                      <span>CAPITALS</span>
+                      <span>{t("labelCapitals", loc())}</span>
                       <span>{systemsIn(id()).filter(s => s.importance === 3).length}</span>
                     </div>
                     <div class="stat">
-                      <span>CONTESTED</span>
+                      <span>{t("labelContested", loc())}</span>
                       <span>{contestedIn(id())}</span>
                     </div>
                     <button class="panel-close" onClick={() => setSelected(undefined)}>
-                      CLOSE
+                      {t("close", loc())}
                     </button>
                   </div>
                 </Show>
@@ -263,13 +321,21 @@ export default function App() {
           </Show>
 
           <div class="legend">
-            <b>ORION SPUR</b>
-            {m().extentLy.w} × {m().extentLy.h} LY · {totalCells()} cells @ {m().hexSizeLy} LY
+            <b>{t("orionSpur", loc())}</b>
+            {t("extent", loc(), {
+              w: m().extentLy.w,
+              h: m().extentLy.h,
+              cells: totalCells(),
+              size: m().hexSizeLy,
+            })}
             <Show when={contestedCount() > 0}>
-              {" "}
-              · <span class="legend-contested">{contestedCount()} contested</span>
+              {" · "}
+              <span class="legend-contested">{tp("legendContested", contestedCount(), loc())}</span>
             </Show>
-            <Show when={edits() > 0}> · {edits()} local edit(s)</Show>
+            <Show when={edits() > 0}>
+              {" · "}
+              {tp("legendEdits", edits(), loc())}
+            </Show>
           </div>
         </div>
       )}

@@ -31,10 +31,10 @@ export interface LocalizedText {
   uk?: string;
 }
 
-export function pick(text: LocalizedText, locale: string): string {
-  if (locale === "uk" && text.uk) return text.uk;
-  return text.en;
-}
+// `pick` itself lives in lib/i18n next to the rest of the localisation, so that
+// everything which resolves a string for a locale does it the same way. Re-
+// exported because model data is the other thing that carries names.
+export { pick } from "./i18n";
 
 export interface Territory {
   id: string;
@@ -43,7 +43,7 @@ export interface Territory {
   color: string;
   pattern: PatternId;
   /** Optional short descriptor shown in the side panel. */
-  blurb?: string;
+  blurb?: LocalizedText;
   /** True for the automatic "everything nobody claimed" remainder. */
   unclaimed?: boolean;
 }

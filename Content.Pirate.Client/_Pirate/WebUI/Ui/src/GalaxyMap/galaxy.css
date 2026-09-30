@@ -186,9 +186,10 @@ svg.chart.painting {
   outline-offset: 1px;
 }
 
-/* The two non-nation brushes. They cannot be a flat colour, because neither
-   one names an owner: "unclaimed" is the absence of a colour and "contested"
-   is a disagreement about which colour applies. */
+/* The three non-nation brushes. None can be a flat colour, because none of them
+   names an owner: "unclaimed" is the absence of a colour, and contest/uncontest
+   are two positions on the same question. Uncontest is drawn as the contest
+   swatch with the hatch knocked out, so the pair reads as one control. */
 .toolbar .swatch-unclaim {
   background:
     repeating-linear-gradient(45deg, #2a3140 0 3px, transparent 3px 6px),
@@ -197,9 +198,18 @@ svg.chart.painting {
 .toolbar .swatch-contest {
   background: repeating-linear-gradient(45deg, #ffb454 0 2px, #3a2a12 2px 5px);
 }
+.toolbar .swatch-uncontest {
+  background:
+    repeating-linear-gradient(45deg, #6b5a3a 0 2px, transparent 2px 5px),
+    #241d12;
+}
 .toolbar .swatch-unclaim.on,
-.toolbar .swatch-contest.on {
+.toolbar .swatch-contest.on,
+.toolbar .swatch-uncontest.on {
   outline-color: #ffb454;
+}
+.toolbar .swatch-uncontest.on {
+  outline-color: #d9c9a8;
 }
 
 /* Contested ground on the chart itself, and its count in the legend. */

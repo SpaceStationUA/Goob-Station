@@ -9,6 +9,27 @@ npm install
 TUI_IFACE=GalaxyMap npm run dev     # http://localhost:5173
 ```
 
+## Localisation
+
+Two separate things, and the split matters:
+
+- **Content** — territory names, system names, blurbs — is data. It rides on the
+  model as `LocalizedText { en, uk? }` and comes from the bridge in game.
+- **Chrome** — every label, tooltip and unit the page itself owns — is in
+  `lib/i18n.ts`.
+
+`lib/i18n.ts` is written for the bridge to replace: `installStrings()` swaps the
+table wholesale and `setLocales()` swaps the locale list, so the game can push
+its own strings (resolved from its `.ftl` files) and nothing below changes. The
+built-in table is the browser harness's fallback and the shape the C# side should
+serialise. Locale codes are the game's (`en-US`, `uk-UA`) so nothing needs
+renaming at the boundary.
+
+The alternative — page keeps its own table, game adds parallel `.ftl` entries —
+means two sources of truth that drift. It is cheaper to start, which is why the
+built-in table exists, but the seam is already in place so it does not have to
+stay that way.
+
 ## Layout
 
 | Path | What it is |
@@ -148,6 +169,35 @@ Republic of Biesel". A map label stands alone and needs the nominative, which
 `devmap.ts` converts by hand. System names have no locale entries at all yet and
 are transliterations pending review.
 
+**A locale only takes its own translation, never a neighbour's.** The obvious
+shortcut — "if it is not English, use the Ukrainian" — hands Ukrainian to a
+German client, which is worse than useless because it looks like a working
+translation. `pick()` tests that the locale *is* Ukrainian, and anything
+untranslated falls back to English rather than to a blank label. This was a real
+bug, caught by the check rather than by reading the code.
+
+**Plurals are per-category, not per-language.** Ukrainian has three (one / few /
+many) and the "few" band is last-digit 2-4 *excluding* 12-14, so 2 клітинки and
+22 клітинки but 12 клітинок. English has two. `PluralText` carries one entry per
+category; the check asserts all three render differently, because the usual
+failure is collapsing to one hardcoded word and looking fine at n=1.
+
+**Locale names are endonyms and are never translated.** A player hunting for their
+own language scans for the script they recognise, so "УКР" has to read "УКР"
+even in an English session. Rendering it as "UK" hides the one word they are
+looking for behind a pair of Latin letters. It is the only label in the UI that
+deliberately ignores the active locale.
+
+**A territory name is drawn in its own colour, so a dark colour is an unreadable
+title.** Nothing about that failure is in the code — it depends on the colour —
+so `readableOnDark()` lifts any fill below a lightness floor before it is used
+for text, preserving hue so "this is Biesel's blue" still reads. Gold on gold and
+cyan on cyan had been noticeably harder to read than white on silver, which made
+legibility depend on which nation you happened to be looking at. The check
+asserts the lift clears a luminance floor, preserves hue, and does not make two
+nations collide — worth asserting separately because these colours will come
+from prototypes, so a new nation can arrive in a colour nobody looked at.
+
 ## Still to do
 
 - Real content replaces the invented polygons and star positions in
@@ -157,6 +207,9 @@ are transliterations pending review.
   converted from the locale file by hand and need the same eye.
 - `BridgeSource` to replace `FixtureSource` in game, plus the holotable host.
   `setContested` is the shape a server-validated admin call should take.
+- A `strings` push alongside the model push, so the chart's chrome is translated
+  from the game's own `.ftl` entries rather than from the built-in table. The
+  seam (`installStrings`) is ready and the DOM check exercises it.
 - Two-tier typography: the small prefixed `REGION: …` tier is specced, not built.
 - Zoom and pan, and the paint tool's drag-to-paint. Drag matters more than zoom
   here: the chart is a fixed extent that fits its host, so the thing worth adding

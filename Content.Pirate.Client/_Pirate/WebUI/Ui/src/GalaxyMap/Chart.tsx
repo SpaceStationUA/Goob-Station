@@ -82,6 +82,65 @@ export interface ChartProps {
   onLeave: () => void;
 }
 
+/**
+ * Lift a colour until it is legible on the dark chart.
+ *
+ * Territory names are drawn in the territory's own colour, which keeps the
+ * colour-coding meaningful — but a mid-tone fill swallows its own label. Gold on
+ * gold and cyan on cyan were noticeably harder to read than white on silver,
+ * which made the map's legibility depend on which nation you happened to be
+ * looking at.
+ *
+ * Raising lightness preserves the hue, so "this is Biesel's blue" still reads,
+ * while guaranteeing the label is brighter than the fill it sits on. Saturation
+ * is trimmed as it lightens, because a fully saturated pastel is the classic way
+ * to make text look washed out rather than bright.
+ */
+export function readableOnDark(hex: string, minL = 0.74): string {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return hex;
+  const n = parseInt(m[1], 16);
+  const r = ((n >> 16) & 255) / 255;
+  const g = ((n >> 8) & 255) / 255;
+  const b = (n & 255) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  const d = max - min;
+  const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  let h = 0;
+  if (d !== 0) {
+    if (max === r) h = ((g - b) / d) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h *= 60;
+    if (h < 0) h += 360;
+  }
+  const L = Math.max(l, minL);
+  // Give back saturation as the colour lightens, so it does not go neon.
+  const S = l >= minL ? s : s * Math.max(0.45, 1 - (L - l) * 1.4);
+  const c = (1 - Math.abs(2 * L - 1)) * S;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const mm = L - c / 2;
+  let rgb: [number, number, number];
+  if (h < 60) rgb = [c, x, 0];
+  else if (h < 120) rgb = [x, c, 0];
+  else if (h < 180) rgb = [0, c, x];
+  else if (h < 240) rgb = [0, x, c];
+  else if (h < 300) rgb = [x, 0, c];
+  else rgb = [c, 0, x];
+  return (
+    "#" +
+    rgb
+      .map(v =>
+        Math.round((v + mm) * 255)
+          .toString(16)
+          .padStart(2, "0"),
+      )
+      .join("")
+  );
+}
+
 /** Pure SVG presentation. Owns only its measured size. */
 export default function Chart(props: ChartProps) {
   const [size, setSize] = createSignal({ w: 1200, h: 700 });
@@ -254,7 +313,7 @@ export default function Chart(props: ChartProps) {
           p: centre,
           size: 12,
           faint: true,
-          color: terr.color,
+          color: readableOnDark(terr.color),
         });
         continue;
       }
@@ -267,7 +326,7 @@ export default function Chart(props: ChartProps) {
         p: place(centre, name, size, systems),
         size,
         faint: false,
-        color: terr.color,
+        color: readableOnDark(terr.color),
       });
     }
     return out;

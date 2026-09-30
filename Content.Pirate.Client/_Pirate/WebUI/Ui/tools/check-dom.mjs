@@ -202,7 +202,7 @@ try {
       await new Promise(r => setTimeout(r, 80));
       return document.querySelector(".armed-note")?.textContent ?? "";
     });
-    check("a nation brush arms and says what it will do", /PAINTING/.test(armed), armed.slice(0, 34));
+    check("a nation brush arms and says what it will do", /PAINTING/i.test(armed), armed.slice(0, 34));
 
     const svgBox = await page.evaluate(() => {
       const s = document.querySelector("svg.chart");
@@ -218,11 +218,102 @@ try {
 
     const contest = await page.evaluate(async () => {
       const swatches = [...document.querySelectorAll(".toolbar .swatch")];
-      swatches[swatches.length - 1].dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      swatches[swatches.length - 2].dispatchEvent(new MouseEvent("click", { bubbles: true }));
       await new Promise(r => setTimeout(r, 80));
       return document.querySelector(".armed-note")?.textContent ?? "";
     });
-    check("contest brush arms", /CONTESTED/.test(contest), contest.slice(0, 34));
+    check("contest brush arms", /CONTESTED/i.test(contest), contest.slice(0, 34));
+
+    const uncontest = await page.evaluate(async () => {
+      const swatches = [...document.querySelectorAll(".toolbar .swatch")];
+      swatches[swatches.length - 1].dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await new Promise(r => setTimeout(r, 80));
+      return {
+        note: document.querySelector(".armed-note")?.textContent ?? "",
+        // The two dispute brushes must be distinguishable, or arming one while
+        // the other is held silently re-arms the wrong behaviour.
+        onlyOneArmed: document.querySelectorAll(".toolbar .swatch.on").length,
+      };
+    });
+    check(
+      "uncontest brush arms and is distinct from contest",
+      /CONTESTED/i.test(uncontest.note) && uncontest.onlyOneArmed === 1,
+      `${uncontest.note.slice(0, 30)}, ${uncontest.onlyOneArmed} armed`,
+    );
+
+    // Contesting then un-contesting the same cell must be a round trip.
+    const roundTrip = await page.evaluate(async () => {
+      const layer = () =>
+        (document.querySelector(".contested-layer path")?.getAttribute("d") ?? "").split("M")
+          .length - 1;
+      const swatches = [...document.querySelectorAll(".toolbar .swatch")];
+      const svg = document.querySelector("svg.chart");
+      const r = svg.getBoundingClientRect();
+      const at = { x: r.x + r.width * 0.42, y: r.y + r.height * 0.5 };
+      const click = () =>
+        svg.dispatchEvent(
+          new MouseEvent("click", { bubbles: true, clientX: at.x, clientY: at.y }),
+        );
+      const wait = () => new Promise(ok => setTimeout(ok, 200));
+
+      swatches[swatches.length - 2].dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await wait();
+      const before = layer();
+      click();
+      await wait();
+      const afterMark = layer();
+      swatches[swatches.length - 1].dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await wait();
+      click();
+      await wait();
+      const afterClear = layer();
+      return { before, afterMark, afterClear, note: (document.querySelector(".armed-note")?.textContent ?? "(none)").slice(0, 24) };
+    });
+    check(
+      "contesting a cell adds it and un-contesting removes it",
+      roundTrip.afterMark === roundTrip.before + 1 && roundTrip.afterClear === roundTrip.before,
+      `${roundTrip.before} -> ${roundTrip.afterMark} -> ${roundTrip.afterClear} [${roundTrip.note}]`,
+    );
+
+    // The locale toggle must actually translate the chrome and the content.
+    const uk = await page.evaluate(async () => {
+      const pick = [...document.querySelectorAll(".locpick button")].find(
+        b => b.textContent.trim() === "УКР",
+      );
+      if (!pick) return { found: false };
+      pick.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await new Promise(r => setTimeout(r, 150));
+      return {
+        found: true,
+        grid: document.querySelector(".toolbar button")?.textContent?.trim() ?? "",
+        paint: document.querySelector(".paintlabel")?.textContent?.trim() ?? "",
+        legend: document.querySelector(".legend b")?.textContent?.trim() ?? "",
+        // A territory title, which is content rather than chrome.
+        territory: document.querySelector(".terr-name")?.textContent?.trim() ?? "",
+        legendText: document.querySelector(".legend")?.textContent ?? "",
+      };
+    });
+    check("the locale picker offers Ukrainian", uk.found);
+    check("chrome is translated", uk.grid === "СІТКА" && uk.paint === "ФАРБА", `${uk.grid} / ${uk.paint}`);
+    check("the chart title is translated", uk.legend === "РУКАВ ОРІОНА", uk.legend);
+    check(
+      "content names are translated",
+      /[А-ЯІЇЄҐ]/.test(uk.territory),
+      uk.territory,
+    );
+    check(
+      "counts use Ukrainian units and plurals",
+      /св\.р\./.test(uk.legendText) && !/ LY /.test(uk.legendText),
+      uk.legendText.replace(/\s+/g, " ").slice(0, 64),
+    );
+    // Back to English, so the brushes below start from a known state.
+    await page.evaluate(async () => {
+      const pick = [...document.querySelectorAll(".locpick button")].find(
+        b => b.textContent.trim() === "EN",
+      );
+      pick?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await new Promise(r => setTimeout(r, 120));
+    });
 
     const overlay = await page.evaluate(() => {
       const layer = document.querySelector(".contested-layer path");

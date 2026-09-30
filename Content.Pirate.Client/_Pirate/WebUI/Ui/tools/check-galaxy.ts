@@ -12,6 +12,16 @@ import { DEFAULT_MAP, FixtureSource } from "../src/GalaxyMap/lib/source";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "../src/GalaxyMap/lib/devmap";
 import type { Vec2 } from "../src/GalaxyMap/lib/hex";
 import { pick, type GalaxyModel } from "../src/GalaxyMap/lib/model";
+import { readableOnDark } from "../src/GalaxyMap/Chart";
+import {
+  DEFAULT_STRINGS,
+  installStrings,
+  missingTranslations,
+  pluralCategory,
+  resetStrings,
+  t,
+  tp,
+} from "../src/GalaxyMap/lib/i18n";
 
 let failures = 0;
 const check = (name: string, ok: boolean, detail = "") => {
@@ -381,6 +391,179 @@ console.log("\ncontested:");
   await source.undo();
   check("undo then removes the painted flag", latest?.contested.has(quiet) === false);
   check("ownership survived both undos untouched", [...base.ownership].every(([c, o]) => latest!.ownership.get(c) === o));
+}
+
+// --- localisation -----------------------------------------------------------
+/**
+ * A missing translation is invisible in an English build and obvious to the
+ * person whose language it is, which is the worst way for it to be found. So the
+ * completeness of the table is asserted rather than eyeballed.
+ *
+ * The plural assertions are the fussiest part and the part most likely to be
+ * "simplified" away later: Ukrainian has three categories and its "few" band is
+ * last-digit 2-4 EXCLUDING 12-14, so 2 and 22 take the few form while 12 and 14
+ * do not.
+ */
+console.log("\nlocalisation:");
+{
+  for (const loc of ["en-US", "uk-UA"]) {
+    const missing = missingTranslations(loc);
+    check(`every UI string has a ${loc} translation`, missing.length === 0, missing.join(", "));
+  }
+
+  // Content, not chrome.
+  const noUkName = TERRITORIES.filter(x => !pick(x.name, "uk-UA")).map(x => x.id);
+  check("every territory has a Ukrainian name", noUkName.length === 0, noUkName.join(", "));
+
+  const noUkBlurb = TERRITORIES.filter(x => !x.blurb || !pick(x.blurb, "uk-UA")).map(x => x.id);
+  check("every territory has a Ukrainian blurb", noUkBlurb.length === 0, noUkBlurb.join(", "));
+
+  const noUkSys = SYSTEMS.filter(s => !pick(s.name, "uk-UA")).map(s => s.id);
+  check("every system has a Ukrainian name", noUkSys.length === 0, noUkSys.join(", "));
+
+  // A locale nobody translated must degrade to English, never to a blank label.
+  check("an unknown locale falls back to English", pick({ en: "Sol", uk: "Соль" }, "de-DE") === "Sol");
+  check(
+    "uk-UA and bare uk both resolve",
+    pick({ en: "Sol", uk: "Соль" }, "uk-UA") === "Соль" && pick({ en: "Sol", uk: "Соль" }, "uk") === "Соль",
+  );
+
+  const cases: [number, string, string][] = [
+    [1, "uk-UA", "one"],
+    [2, "uk-UA", "few"],
+    [4, "uk-UA", "few"],
+    [5, "uk-UA", "many"],
+    [11, "uk-UA", "many"],
+    [12, "uk-UA", "many"],
+    [14, "uk-UA", "many"],
+    [21, "uk-UA", "one"],
+    [22, "uk-UA", "few"],
+    [25, "uk-UA", "many"],
+    [0, "uk-UA", "many"],
+    [1, "en-US", "one"],
+    [2, "en-US", "many"],
+    [0, "en-US", "many"],
+  ];
+  const wrongCat = cases
+    .filter(([n, loc, want]) => pluralCategory(n, loc) !== want)
+    .map(([n, loc, want]) => `${n}@${loc}=${pluralCategory(n, loc)} want ${want}`);
+  check("plural categories follow CLDR", wrongCat.length === 0, wrongCat.join(", "));
+
+  const one = tp("pluralCell", 1, "uk-UA");
+  const few = tp("pluralCell", 2, "uk-UA");
+  const many = tp("pluralCell", 5, "uk-UA");
+  check(
+    "Ukrainian renders a distinct form per category",
+    new Set([one, few, many]).size === 3,
+    `${one} / ${few} / ${many}`,
+  );
+  check(
+    "counts are substituted, not left as placeholders",
+    ![one, few, many].some(s => s.includes("{$n}")),
+  );
+
+  // The install-override path the bridge will use.
+  installStrings({ grid: { en: "LATTICE", uk: "ҐРАТКА" } });
+  check("a pushed string overrides the built-in", t("grid", "uk-UA") === "ҐРАТКА");
+  check("unpushed strings survive an override", t("paint", "uk-UA") === DEFAULT_STRINGS.paint.uk);
+  resetStrings();
+  check("reset restores the built-ins", t("grid", "en-US") === "GRID");
+}
+
+// --- legibility -------------------------------------------------------------
+/** HSL saturation, 0..1. */
+function saturationOf(hex: string): number {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return 0;
+  const n = parseInt(m[1], 16);
+  const r = ((n >> 16) & 255) / 255;
+  const g = ((n >> 8) & 255) / 255;
+  const b = (n & 255) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  return max === min ? 0 : (max - min) / (1 - Math.abs(2 * l - 1));
+}
+
+/** WCAG relative luminance, 0..1. */
+function relativeLuminance(hex: string): number {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return 0;
+  const n = parseInt(m[1], 16);
+  const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => {
+    const c = v / 255;
+    return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+}
+
+/** Hue in degrees, or null for a grey. */
+function hueOf(hex: string): number | null {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return null;
+  const n = parseInt(m[1], 16);
+  const r = ((n >> 16) & 255) / 255;
+  const g = ((n >> 8) & 255) / 255;
+  const b = (n & 255) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  if (max - min < 1e-6) return null;
+  let h: number;
+  if (max === r) h = ((g - b) / (max - min)) % 6;
+  else if (max === g) h = (b - r) / (max - min) + 2;
+  else h = (r - g) / (max - min) + 4;
+  h *= 60;
+  return h < 0 ? h + 360 : h;
+}
+
+/**
+ * A territory name is drawn in its own colour, so a colour that is too dark
+ * produces a title nobody can read. Whether a given colour is too dark depends on
+ * the colour and not on the code, so no other check would notice. The chart
+ * lifts such a colour before drawing; this asserts the lift was enough.
+ *
+ * Worth asserting separately because these colours will come from prototypes
+ * rather than from this file, so a new nation can arrive in a colour nobody
+ * looked at.
+ */
+console.log("\nlegibility:");
+{
+  const dark = TERRITORIES.filter(x => relativeLuminance(readableOnDark(x.color)) < 0.3).map(
+    x => `${x.id} ${readableOnDark(x.color)}`,
+  );
+  check("every territory label lifts to a readable luminance", dark.length === 0, dark.join(", "));
+
+  // Hue has to survive, or the colour-coding is decorative at best. Near-greys
+  // are exempt: their "hue" is a rounding artefact that moves wildly under any
+  // change, so asserting on it would be asserting on noise. The threshold sits
+  // in the gap between the greys and the real nation colours — as shipped, the
+  // greys top out at 0.17 saturation and the chromatic ones bottom out at 0.51.
+  const chromatic = TERRITORIES.filter(x => saturationOf(x.color) >= 0.25);
+  const lostHue = chromatic.filter(x => {
+    const a = hueOf(x.color);
+    const b = hueOf(readableOnDark(x.color));
+    if (a === null || b === null) return true;
+    const d = Math.abs(a - b);
+    return Math.min(d, 360 - d) > 2;
+  }).map(x => `${x.id} ${x.color}->${readableOnDark(x.color)}`);
+  check(
+    "lifting preserves hue, so nations stay distinguishable",
+    lostHue.length === 0,
+    lostHue.join(", "),
+  );
+
+  const lifted = TERRITORIES.map(x => readableOnDark(x.color).toLowerCase());
+  check(
+    "no two territories collide once lifted",
+    new Set(lifted).size === lifted.length,
+    `${new Set(lifted).size}/${lifted.length} distinct`,
+  );
+
+  // And the label must actually be brighter than the fill it sits on.
+  const noGain = TERRITORIES.filter(
+    x => relativeLuminance(readableOnDark(x.color)) < relativeLuminance(x.color) - 1e-6,
+  ).map(x => x.id);
+  check("lifting never darkens a colour", noGain.length === 0, noGain.join(", "));
 }
 
 console.log(`\n${failures === 0 ? "all checks passed" : `${failures} CHECK(S) FAILED`}\n`);
