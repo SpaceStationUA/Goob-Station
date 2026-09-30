@@ -11,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Numerics;
+using DefaultInterpolatedStringHandler = System.Runtime.CompilerServices.DefaultInterpolatedStringHandler;
+using InterpolatedStringHandlerArgumentAttribute = System.Runtime.CompilerServices.InterpolatedStringHandlerArgumentAttribute;
+using InterpolatedStringHandlerAttribute = System.Runtime.CompilerServices.InterpolatedStringHandlerAttribute;
 
 namespace Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 
@@ -151,12 +154,52 @@ public abstract partial class CESharedZLevelsSystem
                || zPhys.CurrentStickyGround;
     }
 
+    /// <summary>
+    /// Interpolated-string handler for the z-debug helpers. While z-debug logging is off the compiler
+    /// skips every hole at the call site (ToPrettyString, StairCsv*, ...), so hot-path messages cost nothing.
+    /// </summary>
+    [InterpolatedStringHandler]
+    protected ref struct ZDebugString
+    {
+        private DefaultInterpolatedStringHandler _builder;
+
+        public ZDebugString(int literalLength, int formattedCount, CESharedZLevelsSystem system, out bool shouldAppend)
+        {
+            shouldAppend = system._zDebugEnabled || system._zDebugStairsEnabled;
+            _builder = shouldAppend ? new DefaultInterpolatedStringHandler(literalLength, formattedCount) : default;
+        }
+
+        public void AppendLiteral(string value) => _builder.AppendLiteral(value);
+        public void AppendFormatted<T>(T value) => _builder.AppendFormatted(value);
+        public void AppendFormatted<T>(T value, string? format) => _builder.AppendFormatted(value, format);
+        public void AppendFormatted<T>(T value, int alignment) => _builder.AppendFormatted(value, alignment);
+        public void AppendFormatted<T>(T value, int alignment, string? format) => _builder.AppendFormatted(value, alignment, format);
+        public void AppendFormatted(string? value) => _builder.AppendFormatted(value);
+        public string ToStringAndClear() => _builder.ToStringAndClear();
+    }
+
+    protected void DebugZVerbose(EntityUid ent, [InterpolatedStringHandlerArgument("")] ref ZDebugString message)
+    {
+        if (!ZDebugVerboseEnabled)
+            return;
+
+        DebugZ(ent, message.ToStringAndClear());
+    }
+
     protected void DebugZVerbose(EntityUid ent, string message)
     {
         if (!ZDebugVerboseEnabled)
             return;
 
         DebugZ(ent, message);
+    }
+
+    protected void DebugZ(EntityUid ent, [InterpolatedStringHandlerArgument("")] ref ZDebugString message)
+    {
+        if (!ZDebugEnabled)
+            return;
+
+        DebugZ(ent, message.ToStringAndClear());
     }
 
     protected void DebugZ(EntityUid ent, string message)
@@ -251,6 +294,20 @@ public abstract partial class CESharedZLevelsSystem
         {
             _watchedGridSyncPairs.Remove(pair);
         }
+    }
+
+    protected bool DebugZStairCsv(EntityUid ent, string eventName,
+        [InterpolatedStringHandlerArgument("")] ref ZDebugString payload)
+    {
+        return ZDebugStairsEnabled && DebugZStairCsv(ent, eventName, payload.ToStringAndClear());
+    }
+
+    protected bool DebugZStairCsv(EntityUid ent, string eventName,
+        [InterpolatedStringHandlerArgument("")] ref ZDebugString payload,
+        [InterpolatedStringHandlerArgument("")] ref ZDebugString dedupeKey)
+    {
+        return ZDebugStairsEnabled &&
+               DebugZStairCsv(ent, eventName, payload.ToStringAndClear(), dedupeKey.ToStringAndClear());
     }
 
     protected bool DebugZStairCsv(EntityUid ent, string eventName, string payload, string? dedupeKey = null)

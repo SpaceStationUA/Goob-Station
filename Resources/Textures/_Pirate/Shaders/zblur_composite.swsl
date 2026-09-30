@@ -1,0 +1,24 @@
+// Same nine taps and tint as zblur.swsl, sampled from the crop being copied.
+light_mode unshaded;
+uniform highp vec2 SOURCE_PIXEL_SIZE;
+uniform highp vec3 BLUR_COLOR;
+
+void fragment() {
+    highp vec4 original = texture(TEXTURE, UV);
+    highp vec4 blurred = original;
+    for (int x = -1; x <= 1; x++) {
+        for (int y = -1; y <= 1; y++) {
+            if (x == 0 && y == 0) continue;
+            highp vec2 uv = UV + vec2(x, y) * SOURCE_PIXEL_SIZE * 2.0;
+            // The engine's screen-copy sampler uses mirrored repeat; crop textures clamp.
+            uv = vec2(1.0) - abs(vec2(1.0) - mod(uv, vec2(2.0)));
+            blurred += texture(TEXTURE, uv);
+        }
+    }
+    blurred /= 9.0;
+    blurred.rgb *= mix(vec3(1.0), BLUR_COLOR, 0.3);
+    // Reproduce the old blur pass blending into its source, then let the normal copy
+    // blend this result into the destination. Normally the black-seeded crop is opaque.
+    COLOR = vec4(mix(original.rgb, blurred.rgb, blurred.a),
+                 blurred.a + original.a * (1.0 - blurred.a));
+}

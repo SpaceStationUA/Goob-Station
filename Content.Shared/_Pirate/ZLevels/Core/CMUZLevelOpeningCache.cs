@@ -13,6 +13,7 @@ namespace Content.Shared._Pirate.ZLevels.Core;
 
 /// <summary>
 /// Per-grid chunk cache for sight openings. Sound and shooting use separate predicates.
+/// A <c>visual</c> cache instead tracks tiles the renderer draws the deck below through (ZTransparent too).
 /// </summary>
 public sealed class CMUZLevelOpeningCache
 {
@@ -20,12 +21,14 @@ public sealed class CMUZLevelOpeningCache
 
     private readonly Dictionary<EntityUid, GridOpeningCache> _gridCaches = new();
     private readonly int _chunkSize;
+    private readonly bool _visual;
 
-    public CMUZLevelOpeningCache(int chunkSize = DefaultChunkSize)
+    public CMUZLevelOpeningCache(int chunkSize = DefaultChunkSize, bool visual = false)
     {
         if (chunkSize <= 0)
             throw new ArgumentOutOfRangeException(nameof(chunkSize), chunkSize, "chunkSize must be > 0");
         _chunkSize = chunkSize;
+        _visual = visual;
     }
 
     public int ChunkSize => _chunkSize;
@@ -389,6 +392,33 @@ public sealed class CMUZLevelOpeningCache
         return ((ContentTileDefinition) tileDefinition[tile.TypeId]).ZSightPermeable;
     }
 
+    /// <summary>
+    /// Render predicate: the deck below is drawn through empty, ZTransparent and sight-permeable tiles.
+    /// </summary>
+    public static bool IsVisualOpeningTile(
+        Tile tile,
+        ITileDefinitionManager tileDefinition)
+    {
+        if (tile.IsEmpty)
+            return true;
+
+        var def = (ContentTileDefinition) tileDefinition[tile.TypeId];
+        return def.ZTransparent || def.ZSightPermeable;
+    }
+
+    private bool IsCachedOpeningTile(
+        Entity<MapGridComponent> grid,
+        Vector2i tile,
+        SharedMapSystem map,
+        ITileDefinitionManager tileDefinition)
+    {
+        if (!_visual)
+            return IsOpeningTile(grid, tile, map, tileDefinition);
+
+        return !map.TryGetTileRef(grid.Owner, grid.Comp, tile, out var tileRef) ||
+               IsVisualOpeningTile(tileRef.Tile, tileDefinition);
+    }
+
     /// <summary>Cross-Z shooting predicate.</summary>
     public static bool IsShotOpening(
         Tile tile,
@@ -572,7 +602,7 @@ public sealed class CMUZLevelOpeningCache
             for (var tileY = fallbackTileStartY; tileY <= fallbackTileEndY; tileY++)
             {
                 var openingTile = new Vector2i(tileX, tileY);
-                if (!IsOpeningTile(grid, openingTile, map, tileDefinition))
+                if (!IsCachedOpeningTile(grid, openingTile, map, tileDefinition))
                     continue;
 
                 if (visitor(openingTile))
@@ -653,7 +683,7 @@ public sealed class CMUZLevelOpeningCache
             for (var tileY = fallbackTileStartY; tileY <= fallbackTileEndY; tileY++)
             {
                 var openingTile = new Vector2i(tileX, tileY);
-                if (!IsOpeningTile(grid, openingTile, map, tileDefinition))
+                if (!IsCachedOpeningTile(grid, openingTile, map, tileDefinition))
                     continue;
 
                 TryUseNearestOpeningTile(
@@ -728,7 +758,7 @@ public sealed class CMUZLevelOpeningCache
         {
             for (var y = startY; y < endY; y++)
             {
-                if (IsOpeningTile(grid, new Vector2i(x, y), map, tile))
+                if (IsCachedOpeningTile(grid, new Vector2i(x, y), map, tile))
                 {
                     hasOpening = true;
 

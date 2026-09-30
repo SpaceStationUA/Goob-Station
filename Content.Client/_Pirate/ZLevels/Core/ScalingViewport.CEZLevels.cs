@@ -252,6 +252,7 @@ public sealed partial class ScalingViewport
 
     private void RenderZLevels(IClydeViewport viewport, DrawingHandleScreen screenHandle)
     {
+        ZRegionStats = default;
         if (_eye is null)
         {
             viewport.Render();
@@ -311,6 +312,7 @@ public sealed partial class ScalingViewport
         _zApertureValidTargets.Clear();
         _zApertureMapUids.Clear();
         _zApertureEyes.Clear();
+        _zApertureRequiredTargets.Clear();
 
         var lowestDepth = 0;
         for (var i = 0; i >= -visibleBelow; i--)
@@ -324,7 +326,25 @@ public sealed partial class ScalingViewport
             lowestDepth = i;
         }
 
-        _zApertureCaptureThisFrame = HasZLevelAperturesInRenderedDepths(playerXform.MapUid.Value, effectiveGridUid, lowestDepth, highestDepth);
+        // Look-up and stair previews keep the full path until their compositing has separate coverage tests.
+        if (lowestDepth < 0 && highestDepth == 0 && !zLevelViewer.LookUp && !zLevelViewer.StairPreviewUp &&
+            _cfg.GetCVar(CCVars.ZCullHiddenLevels) && CanCullLowerZLevels(playerXform.MapUid.Value, viewport))
+        {
+            lowestDepth = 0;
+            ZRegionStats = ZRegionStats with { WholeStackSkipped = true };
+        }
+
+        if (_cfg.GetCVar(CCVars.ZCullApertureCopies))
+        {
+            CollectRequiredZLevelApertureTargets(playerXform, effectiveGridUid, lowestDepth, highestDepth);
+        }
+        else if (HasZLevelAperturesInRenderedDepths(playerXform.MapUid.Value, effectiveGridUid, lowestDepth, highestDepth))
+        {
+            for (var depth = lowestDepth; depth < highestDepth; depth++)
+                _zApertureRequiredTargets.Add(depth);
+        }
+
+        _zApertureCaptureThisFrame = _zApertureRequiredTargets.Count > 0;
 
         if (_zApertureCaptureThisFrame)
         {
@@ -346,6 +366,10 @@ public sealed partial class ScalingViewport
         var playerEyeOffset = playerEye?.Offset ?? default;
         var playerEyeRotation = playerEye?.Rotation ?? default;
         var playerEyeScale = playerEye?.Scale ?? default;
+
+        PrepareLowerZRenderRegions(viewport, playerXform, effectiveGridUid, lowestDepth,
+            highestDepth == 0 && !zLevelViewer.LookUp && !zLevelViewer.StairPreviewUp &&
+            _cfg.GetCVar(CCVars.ZCullHiddenRegions));
 
         try
         {
@@ -419,16 +443,30 @@ public sealed partial class ScalingViewport
                 if (hideParallax)
                     _overlayManager.RemoveOverlay(_cachedParallaxOverlay!);
 
-                viewport.Render();
+                try
+                {
+                    if (!TryRenderLowerZRegion(viewport, screenHandle, eye, depth))
+                    {
+                        if (depth < 0)
+                            ZRegionStats = ZRegionStats with
+                            {
+                                FullLayers = ZRegionStats.FullLayers + 1,
+                                LowerTargetArea = ZRegionStats.LowerTargetArea + 1,
+                            };
+                        viewport.Render();
+                    }
 
-                if (_zApertureCaptureThisFrame && depth < highestDepth)
-                    CaptureZLevelApertureTexture(screenHandle, viewport, depth);
+                    if (_zApertureRequiredTargets.Contains(depth))
+                        CaptureZLevelApertureTexture(screenHandle, viewport, depth);
+                }
+                finally
+                {
+                    if (hideParallax)
+                        _overlayManager.AddOverlay(_cachedParallaxOverlay!);
 
-                if (hideParallax)
-                    _overlayManager.AddOverlay(_cachedParallaxOverlay!);
-
-                if (hidePlacement)
-                    _overlayManager.AddOverlay(_cachedPlacementOverlay!);
+                    if (hidePlacement)
+                        _overlayManager.AddOverlay(_cachedPlacementOverlay!);
+                }
                 #endregion Pirate: multiz
             }
         }
@@ -506,6 +544,9 @@ public sealed partial class ScalingViewport
     {
         for (var depth = lowestDepth; depth < lookUp; depth++)
         {
+            if (!_zApertureRequiredTargets.Contains(depth))
+                continue;
+
             if (_zApertureTargets.TryGetValue(depth, out var existing) && existing.Size == size)
                 continue;
 
@@ -536,7 +577,7 @@ public sealed partial class ScalingViewport
     {
         if (_fallbackEye is null ||
             _viewport is null ||
-            !ReferenceEquals(viewport, _viewport))
+            (!ReferenceEquals(viewport, _viewport) && !ReferenceEquals(viewport, _zActiveCropViewport)))
         {
             return;
         }
@@ -695,6 +736,8 @@ public sealed partial class ScalingViewport
         if (!disposing)
             return;
 
+        DisposeZCropViewports();
+
         if (_zApertureOverlay != null)
         {
             _overlayManager.RemoveOverlay(_zApertureOverlay);
@@ -751,5 +794,10 @@ public sealed partial class ScalingViewport
         public int LowestDepth = lowest;
         public int Depth = depth;
         public int HighestDepth = high;
+        // Only cropped synthetic eyes may defer blur into their final composite copy.
+        internal bool AllowBlurFusion;
+        internal ShaderInstance? DeferredBlurShader;
+        internal Vector3 DeferredBlurColor;
+        internal string? BlurFusionBlocker;
     }
 }
