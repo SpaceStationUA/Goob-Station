@@ -19,6 +19,7 @@
 import { For, Show, createMemo, createSignal, onCleanup, onMount } from "solid-js";
 import {
   PLANET_TYPE_LIST,
+  planetSheet,
   planetUri,
   seedFromId,
   type PlanetType,
@@ -72,6 +73,8 @@ function Planet(props: {
   dither?: boolean;
   tint?: string;
   tintAmount?: number;
+  spin?: number;
+  cloudThreshold?: number;
   title?: string;
 }) {
   // Built in a memo rather than inline in the JSX, for the same reason the
@@ -86,6 +89,8 @@ function Planet(props: {
       dither: props.dither,
       tint: props.tint,
       tintAmount: props.tintAmount,
+      spin: props.spin,
+      cloudThreshold: props.cloudThreshold,
     }),
   );
   return (
@@ -96,6 +101,59 @@ function Planet(props: {
       height={props.px}
       alt={props.title ?? props.type}
       title={props.title ?? props.type}
+    />
+  );
+}
+
+/**
+ * A rotating sprite.
+ *
+ * `frames` frames go into one horizontal strip at render time and CSS steps
+ * through them. The alternative — re-rendering per animation frame — means a
+ * canvas and a `toDataURL` per system per frame, which is not something you can
+ * do sixty times a second with eighteen systems on screen.
+ *
+ * `image-rendering: pixelated` plus integer `steps()` is what keeps the frames
+ * crisp; a non-integer step count or a smoothed scale is what turns this back
+ * into mush.
+ */
+function Spinning(props: {
+  seed: number;
+  type: PlanetType;
+  px: number;
+  frames?: number;
+  /** Seconds for one full turn. */
+  period?: number;
+  dpr?: number;
+  cloudThreshold?: number;
+}) {
+  const frames = () => props.frames ?? 12;
+  const sheet = createMemo(() =>
+    planetSheet(
+      {
+        seed: props.seed,
+        type: props.type,
+        px: props.px,
+        dpr: props.dpr ?? 1,
+        cloudThreshold: props.cloudThreshold,
+      },
+      frames(),
+    ),
+  );
+  return (
+    <div
+      class="spin"
+      style={{
+        width: `${props.px}px`,
+        height: `${props.px}px`,
+        "background-image": `url(${sheet().uri})`,
+        "background-size": `${props.px * frames()}px ${props.px}px`,
+        "animation-duration": `${props.period ?? 24}s`,
+        "animation-timing-function": `steps(${frames()})`,
+        // Percentage background-position is measured against (container - image),
+        // which is negative here, so the end offset has to be in real pixels.
+        "--spin-end": `${-props.px * frames()}px`,
+      }}
     />
   );
 }
@@ -118,6 +176,15 @@ export function Spike(props: {
   // test artefact. Open it when you want to compare; the button is top centre.
   const [open, setOpen] = createSignal(false);
   const dpr = useDevicePixelRatio();
+
+  // Test hook. check-dom needs to render a strip and compare frames, and a raw
+  // dynamic import of the module does not survive Vite's URL rewriting — the
+  // same reason the other checks go through window hooks.
+  onMount(() => {
+    const w = window as unknown as Record<string, unknown>;
+    w.__galaxySheet = planetSheet;
+    w.__galaxyStill = planetUri;
+  });
 
   return (
     <>
@@ -175,6 +242,41 @@ export function Spike(props: {
 
             <Group label="star @ 256px">
               <Planet seed={0x501} type="star" px={256} dpr={dpr()} />
+            </Group>
+
+            <Group label="still vs rotating vs clouds, 96px">
+              <Cell label="still, clear">
+                <Planet seed={0x5eed1} type="terran" px={96} dpr={dpr()} cloudThreshold={2} />
+              </Cell>
+              <Cell label="rotating, clear">
+                <Spinning seed={0x5eed1} type="terran" px={96} dpr={dpr()} cloudThreshold={2} />
+              </Cell>
+              <Cell label="still, cloudy">
+                <Planet seed={0x5eed1} type="terran" px={96} dpr={dpr()} />
+              </Cell>
+              <Cell label="rotating, cloudy">
+                <Spinning seed={0x5eed1} type="terran" px={96} dpr={dpr()} />
+              </Cell>
+            </Group>
+
+            <Group label="cloud THRESHOLD — lower = more cloud">
+              <For each={[0.3, 0.44, 0.54, 0.66, 0.8]}>
+                {c => (
+                  <Cell label={String(c)}>
+                    <Spinning seed={0x5eed1} type="terran" px={96} dpr={dpr()} cloudThreshold={c} />
+                  </Cell>
+                )}
+              </For>
+            </Group>
+
+            <Group label="types with clouds, rotating, 72px">
+              <For each={PLANET_TYPE_LIST}>
+                {ty => (
+                  <Cell label={ty}>
+                    <Spinning seed={0x5eed1} type={ty} px={72} dpr={dpr()} />
+                  </Cell>
+                )}
+              </For>
             </Group>
 
             <Group label="types @ 24px">

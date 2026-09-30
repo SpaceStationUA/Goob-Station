@@ -383,3 +383,23 @@ img.pl {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Rotating sprite: a pre-rendered strip stepped through with an integer
+   `steps()`, so the frames stay pixel-crisp. A fractional step count or a
+   smoothed scale is exactly what turns pixel art back into mush. */
+.spin {
+  image-rendering: pixelated;
+  background-repeat: no-repeat;
+  animation-name: planet-spin;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  will-change: background-position;
+}
+@keyframes planet-spin {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: var(--spin-end, 0) 0;
+  }
+}

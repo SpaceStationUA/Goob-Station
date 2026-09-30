@@ -438,6 +438,94 @@ try {
       await new Promise(r => setTimeout(r, 150));
     });
 
+    // --- planet animation ---------------------------------------------------
+    // Two properties have to hold, and the second is the one that cannot be seen
+    // in a still: consecutive frames must differ, and a full turn must land
+    // exactly back on the start.
+    //
+    // The obvious refinement — scaling the shift by cos(latitude), so the poles
+    // hold still and the equator sweeps fastest — is NOT a rigid rotation. A
+    // mid-latitude pixel advances by cos(lat) of a texture period instead of a
+    // whole one, so the sequence drifts and never returns. An earlier version of
+    // this check compared the last frame against the first, which passed with the
+    // bug in place: those two are one step apart in the sequence either way, so
+    // the metric could not see the drift. The direct property is that a full turn
+    // reproduces the start pixel for pixel.
+    const spin = await page.evaluate(async () => {
+      document.querySelector(".spikebar button").click();
+      await new Promise((ok) => setTimeout(ok, 250));
+      const N = 12;
+      const sheet = window.__galaxySheet({ seed: 0x5eed1, type: "terran", px: 48, dpr: 1 }, N);
+
+      const img = new Image();
+      img.src = sheet.uri;
+      await img.decode();
+      const cv = document.createElement("canvas");
+      cv.width = img.width;
+      cv.height = img.height;
+      const cx = cv.getContext("2d");
+      cx.drawImage(img, 0, 0);
+      const d = sheet.framePx;
+      const frame = (n) => cx.getImageData(n * d, 0, d, d).data;
+
+      const decode = async (uri) => {
+        const im = new Image();
+        im.src = uri;
+        await im.decode();
+        const c2 = document.createElement("canvas");
+        c2.width = im.width;
+        c2.height = im.height;
+        c2.getContext("2d").drawImage(im, 0, 0);
+        return c2.getContext("2d").getImageData(0, 0, im.width, im.height).data;
+      };
+      const opts = { seed: 0x5eed1, type: "terran", px: 48, dpr: 1 };
+      const start = await decode(window.__galaxyStill({ ...opts, spin: 0 }));
+      const full = await decode(window.__galaxyStill({ ...opts, spin: 1 }));
+      const half = await decode(window.__galaxyStill({ ...opts, spin: 0.5 }));
+
+      const maxDiff = (a, b) => {
+        let m = 0;
+        for (let i = 0; i < a.length; i += 4) {
+          m = Math.max(m, Math.abs(a[i] - b[i]), Math.abs(a[i + 1] - b[i + 1]), Math.abs(a[i + 2] - b[i + 2]));
+        }
+        return m;
+      };
+      const f0 = frame(0);
+      const f1 = frame(1);
+      let changed = 0;
+      for (let i = 0; i < f0.length; i += 4) {
+        if (Math.abs(f0[i] - f1[i]) > 8) changed++;
+      }
+      return {
+        frames: N,
+        size: [img.width, img.height],
+        step: changed / (d * d),
+        closure: maxDiff(start, full),
+        halfTurn: maxDiff(start, half),
+      };
+    });
+
+    check(
+      "the sheet is a horizontal strip of frames",
+      spin.size[0] === spin.size[1] * spin.frames,
+      `${spin.size[0]}x${spin.size[1]} for ${spin.frames} frames`,
+    );
+    check(
+      "consecutive frames differ, so it actually rotates",
+      spin.step > 0.005,
+      `${(spin.step * 100).toFixed(1)}% of pixels change per frame`,
+    );
+    check(
+      "half a turn is visibly different from the start",
+      spin.halfTurn > 24,
+      `max channel delta ${spin.halfTurn}`,
+    );
+    check(
+      "a full turn lands exactly back on the start, so the loop closes",
+      spin.closure === 0,
+      `max channel delta ${spin.closure} after 360 degrees`,
+    );
+
     // The locale toggle must actually translate the chrome and the content.
     const uk = await page.evaluate(async () => {
       const pick = [...document.querySelectorAll(".locpick button")].find(

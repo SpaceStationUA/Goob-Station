@@ -88,10 +88,59 @@ Four things the spike settled, none of which were obvious in advance:
 - **The capital ring has to clear the sprite.** At 40px a sprite covers a `r=10`
   ring completely, and capitals stop reading as capitals. The ring radius is now
   derived from the sprite size and sits outside the corona.
+- **Rotation is a pre-rendered strip, not a per-frame render.** `planetSheet`
+  renders N frames into one horizontal PNG and CSS steps through them with an
+  integer `steps()`. The alternative is a canvas and a `toDataURL` per system per
+  frame, which at eighteen systems is not something you can do sixty times a
+  second. The strip's end offset has to be in pixels, not a percentage:
+  percentage `background-position` is measured against (container − image), which
+  is negative here.
+- **A full turn must land exactly back on the start.** The obvious refinement —
+  scaling the shift by `cos(latitude)` so the poles hold still — is *not* a rigid
+  rotation: a mid-latitude pixel advances by `cos(lat)` of a texture period rather
+  than a whole one, so the loop drifts. A constant shift is the only one that
+  closes for every latitude at once.
+- **Cloud drift has to be periodic with the loop too.** Scaling the cloud rate
+  (`spin * 0.82`) makes the deck a non-integer fraction of a turn, so the land
+  closes and the clouds do not — a small jump once per loop. Shear as a *sine of
+  the phase* is periodic by construction: the deck runs ahead through the middle
+  of the turn and falls back by the end, and the seam is exactly zero.
+- **`cloudThreshold` is a cut-off on the noise, not a fraction of the disc, and
+  LOWER MEANS MORE CLOUD.** The original shader has the same inverted meaning,
+  which is why it is not called `cloudCover`. The first values were guessed
+  against nothing and came out so heavy the surface was completely buried; they
+  are now calibrated against the actual fbm distribution.
+- **The cloud layer is a cellular-displaced fbm, not an fbm.** Value noise alone
+  warps into fog. `circleNoise` (ported from their `Clouds.gdshader`, which
+  credits a shadertoy author) accumulates into a turbulent field that DISPLACES
+  the fbm coordinate, and that is what gives cloud edges instead of haze. The
+  cell count has to be real: scaling it by the surface period put less than one
+  cell on the whole globe, which produced a single spiral.
+- **Rotation needs land to carry it.** At base period 2 the largest continent
+  covered half the disc, most of every planet was empty ocean, and rotation read
+  as "the one green patch slid off". Period 3 fixes it, and is also what makes
+  slow rotation legible at map size at all.
+- **A gas giant's cloud deck is physically opaque and visually a waste.** At the
+  threshold that makes it literally cloud, the latitude bands vanish and it
+  becomes a featureless cream ball. Half cover keeps the banding showing through
+  the weather, which is the better of the two.
 - **Detail tops out around 128–256px.** The continent shapes are identical at every
   size, because the shape is the planet and frequency is fixed in sphere-UV; only
   the octave count scales. Past ~128 the extra octaves stop being visible and a
   bigger sprite is just a bigger disc. 256 is the useful ceiling for a detail view.
+
+**The map does not animate.** At 16–40px a rotation is invisible and the strip
+would cost N times the pixels for nothing, so the chart keeps drawing single
+stills. The machinery is built and exercised by the spike; it belongs in a system
+detail view or the holotable card, neither of which exists yet. Clouds DO ship on
+the map, because a still cloud pattern is visible at any size.
+
+The loop-closure check in `tools/check-dom.mjs` earns its keep: it caught the
+cloud-drift bug, and its first version was itself vacuous — comparing the last
+frame against the first passes whether or not the rotation closes, because those
+two are one step apart in the sequence either way. It now asserts that `spin: 1`
+is pixel-identical to `spin: 0`, which is the actual property, and it was
+negative-controlled by reintroducing both bugs to confirm it goes red.
 
 Still open: the type is hashed from the id here, which clusters by chance
 (Persepolis and Burzsia both came out lava). Real data from the lore side fixes
