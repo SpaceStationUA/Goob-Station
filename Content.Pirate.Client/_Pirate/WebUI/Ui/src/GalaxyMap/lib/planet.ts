@@ -28,6 +28,7 @@
  */
 
 export type PlanetType =
+  | "star"
   | "terran"
   | "ocean"
   | "desert"
@@ -37,8 +38,12 @@ export type PlanetType =
   | "barren"
   | "asteroid";
 
-/** How the surface is decided: a land cutoff, latitude bands, or neither. */
-type BandKind = "terrain" | "lat" | "solid";
+/**
+ * How the surface is decided: a land cutoff, latitude bands, a lit sphere, or a
+ * self-luminous disc. `star` is a different kind of thing rather than a ninth
+ * planet, which is why it is not in the orbital list below.
+ */
+type BandKind = "terrain" | "lat" | "solid" | "star";
 
 interface TypeSpec {
   kind: BandKind;
@@ -57,6 +62,17 @@ interface TypeSpec {
 }
 
 export const PLANET_TYPES: Record<PlanetType, TypeSpec> = {
+  star: {
+    kind: "star",
+    cutoff: 0,
+    bands: 0,
+    warp: 0,
+    emissive: false,
+    // Warm corona. A star is the one body here that SHOULD bleed past its own
+    // edge; the planets were doing the same thing and it read as a sticker.
+    atmo: "#ffc46a",
+    pal: ["#7a1e05", "#d4550f", "#ffa62b", "#fff3cd"],
+  },
   terran: {
     kind: "terrain",
     cutoff: 0.5,
@@ -137,7 +153,7 @@ export const PLANET_TYPES: Record<PlanetType, TypeSpec> = {
 export const PLANET_TYPE_LIST = Object.keys(PLANET_TYPES) as PlanetType[];
 
 /** Bump when the noise changes, so cached sprites regenerate. */
-export const PLANET_ALGO_VERSION = 1;
+export const PLANET_ALGO_VERSION = 2;
 
 export interface PlanetOpts {
   seed: number;
@@ -348,14 +364,16 @@ export function planetUri(o: PlanetOpts): string {
   // browser resample, which is the one thing that must never happen to pixel art.
   const d = Math.max(3, Math.round(o.px * dpr));
   const half = d / 2;
-  // The sprite is a square with a disc in it, so there is no room for a halo
-  // outside the rim. Rather than pay for a second element per planet, the glow
-  // is baked into the transparent margin — which is what makes a planet sit IN
-  // space instead of on top of the chart. The canvas is oversized by this factor
-  // and scaled back down on the way out.
-  const GLOW = 1.3;
-  const cd = Math.round(d * GLOW);
-  const chalf = cd / 2;
+  // A sprite is `px` on a side. A planet fills it exactly; a star fills a third
+  // of it and lets a corona occupy the rest, because a star bleeding past its own
+  // edge is correct and a planet doing it is not. The disc radius is derived from
+  // that ratio, so the sprite never has to be resampled on the way out — and
+  // resampling is the one thing that must never happen to pixel art.
+  const isStar = spec.kind === "star";
+  const GLOW = isStar ? 1.5 : 1;
+  const rPx = d / 2 / GLOW;
+  const FLARES = 4;
+  const TAU = Math.PI * 2;
 
   const seed = (o.seed | 0) ^ 0x9e37;
   const light = o.light ?? -2.2;
@@ -407,29 +425,32 @@ export function planetUri(o: PlanetOpts): string {
   const night: RGB = small ? [40, 52, 80] : [8, 11, 22];
 
   const cv = document.createElement("canvas");
-  cv.width = cd;
-  cv.height = cd;
+  cv.width = d;
+  cv.height = d;
   const ctx = cv.getContext("2d");
   if (!ctx) return "";
-  const img = ctx.createImageData(cd, cd);
+  const img = ctx.createImageData(d, d);
   const px = img.data;
 
-  for (let y = 0; y < cd; y++) {
-    for (let x = 0; x < cd; x++) {
-      const nx = (x + 0.5 - chalf) / chalf;
-      const ny = (y + 0.5 - chalf) / chalf;
-      const r2 = nx * nx + ny * ny;
-      const i = (y * cd + x) * 4;
+  for (let y = 0; y < d; y++) {
+    for (let x = 0; x < d; x++) {
+      const i = (y * d + x) * 4;
+      const dx = (x + 0.5 - d / 2) / rPx;
+      const dy = (y + 0.5 - d / 2) / rPx;
+      const r2 = dx * dx + dy * dy;
       if (r2 > GLOW * GLOW) continue;
       if (r2 > 1) {
-        // Atmosphere halo, falling off to nothing at the sprite edge.
-        const a = smoothstep((GLOW * GLOW - r2) / (GLOW * GLOW - 1)) * (atmo ? 0.5 : 0.22);
-        px[i] = atmo ? atmo[0] : 150;
-        px[i + 1] = atmo ? atmo[1] : 165;
-        px[i + 2] = atmo ? atmo[2] : 200;
-        px[i + 3] = Math.round(a * 255);
+        // Corona. Star only — for a planet this branch is unreachable, because a
+        // planet's GLOW is 1.
+        const g = 1 - (r2 - 1) / (GLOW * GLOW - 1);
+        px[i] = atmo ? atmo[0] : 255;
+        px[i + 1] = atmo ? atmo[1] : 210;
+        px[i + 2] = atmo ? atmo[2] : 140;
+        px[i + 3] = Math.round(g * g * 0.8 * 255);
         continue;
       }
+      const nx = dx;
+      const ny = dy;
       const nz = Math.sqrt(1 - r2);
 
       // Spherify: the same projection the original uses to wrap the noise
@@ -452,53 +473,75 @@ export function planetUri(o: PlanetOpts): string {
       const ditherV = dither ? BAYER4[(y & 3) * 4 + (x & 3)] + 0.5 : 0.5;
 
       let col: RGB;
-      if (spec.kind === "lat") {
-        // Latitude bands, pushed around by noise so they swirl. Gas giants keep
-        // hard edges: banding is the whole read, and softening it makes them
-        // look like every other planet.
-        const lat = Math.asin(Math.max(-1, Math.min(1, ny))) / Math.PI + 0.5;
-        const warp = fbm(sx * period * 0.5, sy * period * 0.5, period, 3, seed + 77) - 0.5;
-        const b = lat * spec.bands + warp * spec.warp;
-        const th: number[] = [];
-        const nx: number[] = [];
-        for (let i = 1; i < spec.bands; i++) {
-          th.push(i - warp * spec.warp);
-          nx.push(1 + ((i - 1) % 3));
+      let out: RGB;
+      if (isStar) {
+        // Self-luminous, so there is no terminator at all: brightness falls off
+        // from the centre outward. Running a star through the planet lighting
+        // model draws a planet, which is exactly the mistake of shading Sol like
+        // a world with a bright side.
+        const t = 1 - r2;
+        if (t > 0.7) col = mixRgb(pal[3], [255, 255, 255], (t - 0.7) / 0.3);
+        else if (t > 0.4) col = mixRgb(pal[2], pal[3], (t - 0.4) / 0.3);
+        else if (t > 0.14) col = mixRgb(pal[1], pal[2], (t - 0.14) / 0.26);
+        else col = mixRgb(pal[0], pal[1], t / 0.14);
+        // Granulation: bright mottling across the photosphere.
+        const gran = fbm(sx * period * 2, sy * period * 2, period, octaves, seed + 991) - 0.5;
+        col = mixRgb(col, pal[3], Math.max(0, gran) * 0.45);
+        // Flares: narrow spikes at seeded angles, and the thing that makes a
+        // disc read as a star rather than as a glowing coin.
+        const ang = Math.atan2(ny, nx);
+        let fl = 0;
+        for (let k = 0; k < FLARES; k++) {
+          const a0 = hash2(seed, k, 64, 31) * TAU;
+          const da = Math.abs(((ang - a0 + Math.PI * 3) % TAU) - Math.PI);
+          fl = Math.max(
+            fl,
+            Math.pow(Math.max(0, Math.cos(da)), 40) * (0.35 + hash2(seed, k, 64, 77) * 0.5),
+          );
         }
-        col = ditherBands(pal, b, th, nx, 0.05, ditherV);
-      } else if (spec.kind === "solid") {
-        col = ditherBands(pal, h, [0.42, 0.56, 0.7], [1, 2, 3], 0.05, ditherV);
+        out = mixRgb(col, [255, 255, 255], fl * 0.75);
       } else {
-        // Abyss, shelf, lowland, highland, with a hard snow line above the last
-        // threshold so mountains only appear on genuinely high ground instead of
-        // everywhere above the shoreline.
-        const c = spec.cutoff;
-        const span = 1 - c;
-        col = ditherBands(
-          pal,
-          h,
-          [c, c + span * 0.55, c + span * 0.9],
-          [1, 2, 3],
-          0.045,
-          ditherV,
-        );
-        if (spec.emissive && h > c + span * 0.5) {
-          // Lava: the cracks glow, so the night side is not the only bright part.
-          col = mixRgb(col, pal[3], 0.8);
+        if (spec.kind === "lat") {
+          // Latitude bands, pushed around by noise so they swirl. Gas giants keep
+          // hard edges: banding is the whole read, and softening it makes them
+          // look like every other planet.
+          const lat = Math.asin(Math.max(-1, Math.min(1, ny))) / Math.PI + 0.5;
+          const warp = fbm(sx * period * 0.5, sy * period * 0.5, period, 3, seed + 77) - 0.5;
+          const b = lat * spec.bands + warp * spec.warp;
+          const th: number[] = [];
+          const nxs: number[] = [];
+          for (let k = 1; k < spec.bands; k++) {
+            th.push(k - warp * spec.warp);
+            nxs.push(1 + ((k - 1) % 3));
+          }
+          col = ditherBands(pal, b, th, nxs, 0.05, ditherV);
+        } else if (spec.kind === "solid") {
+          col = ditherBands(pal, h, [0.42, 0.56, 0.7], [1, 2, 3], 0.05, ditherV);
+        } else {
+          // Abyss, shelf, lowland, highland, with a hard snow line above the last
+          // threshold so mountains only appear on genuinely high ground instead
+          // of everywhere above the shoreline.
+          const c = spec.cutoff;
+          const span = 1 - c;
+          col = ditherBands(pal, h, [c, c + span * 0.55, c + span * 0.9], [1, 2, 3], 0.045, ditherV);
+          if (spec.emissive && h > c + span * 0.5) {
+            // Lava: the cracks glow, so the night side is not the only bright part.
+            col = mixRgb(col, pal[3], 0.8);
+          }
         }
-      }
 
-      // Light. Below the terminator it falls to a dark blue rather than to
-      // black, which is what keeps the night side from punching a hole in the
-      // map it sits on.
-      const dot = nx * lx + ny * ly + nz * lzz;
-      const shade = dot < 0.14 ? nightFloor + (1 - nightFloor) * smoothstep((dot + 0.5) / 0.64) : 1;
-      let out = mixRgb(night, col, shade);
+        // Light. Below the terminator it falls to a dark blue rather than to
+        // black, which is what keeps the night side from punching a hole in the
+        // map it sits on.
+        const dot = nx * lx + ny * ly + nz * lzz;
+        const shade = dot < 0.14 ? nightFloor + (1 - nightFloor) * smoothstep((dot + 0.5) / 0.64) : 1;
+        out = mixRgb(night, col, shade);
 
-      // Rim light, one pixel wide, hugging the lit limb.
-      if (atmo && r2 > 0.86) {
-        const rim = smoothstep((r2 - 0.86) / 0.14) * Math.max(0, dot);
-        out = mixRgb(out, atmo, rim * 0.55);
+        // Rim light, hugging the lit limb. On the disc, not outside it.
+        if (atmo && r2 > 0.86) {
+          const rim = smoothstep((r2 - 0.86) / 0.14) * Math.max(0, dot);
+          out = mixRgb(out, atmo, rim * 0.55);
+        }
       }
 
       px[i] = out[0];
@@ -508,15 +551,7 @@ export function planetUri(o: PlanetOpts): string {
     }
   }
   ctx.putImageData(img, 0, 0);
-  // Returned scaled back down to the requested disc size, halo and all.
-  const out2 = document.createElement("canvas");
-  out2.width = d;
-  out2.height = d;
-  const octx = out2.getContext("2d");
-  if (!octx) return "";
-  octx.imageSmoothingEnabled = false;
-  octx.drawImage(cv, 0, 0, cd, cd, 0, 0, d, d);
-  const uri = out2.toDataURL("image/png");
+  const uri = cv.toDataURL("image/png");
   cache.set(k, uri);
   return uri;
 }
@@ -528,10 +563,18 @@ export function planetUri(o: PlanetOpts): string {
  * entirely; the four marker silhouettes on the chart exist to distinguish those,
  * and a small grey rock would throw the distinction away.
  */
-/** Types a star system can be. `asteroid` is deliberately not one of them. */
+/**
+ * Types an orbiting world can be. `star` and `asteroid` are deliberately not
+ * among them: a star is not one of these, and an asteroid marks a built station
+ * rather than a world.
+ */
 const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", "lava", "barren"];
 
 export function planetTypeFor(kind: string, id: string): PlanetType {
+  // A star is a star. The first cut hashed every system across the orbital list
+  // and so gave Sol a green terran world, which is not a subtle mistake: it is
+  // the mistake of drawing the capital of a Solarian system as a planet.
+  if (kind === "star") return "star";
   if (kind === "station" || kind === "outpost") return "asteroid";
   // Spread across the orbital types by id. The first cut of this indexed the
   // whole list and fell off the end, so every system in the map was an asteroid

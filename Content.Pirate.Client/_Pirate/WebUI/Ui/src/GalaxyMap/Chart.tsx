@@ -213,36 +213,40 @@ export default function Chart(props: ChartProps) {
    * Built here rather than inside the `<For>` because rendering a planet calls
    * `toDataURL`, and doing that inline in an attribute would regenerate every
    * sprite on every re-render. The cache inside `planetUri` means the second
-   * call is a map hit, but the memo is what keeps the first call from
-   * happening in the wrong order relative to the transform.
+   * call is a map hit, but the memo is what keeps the first call from happening
+   * in the wrong order relative to the transform.
+   *
+   * Every star and every world gets one, sized by importance. The earlier cut
+   * drew capitals only, on the theory that fifteen small sprites would be noise;
+   * turned out the halo was what made them noisy, and without it the full set
+   * reads fine and the size ramp does the hierarchy work the ring used to.
    */
   const planetSprites = createMemo(() => {
-    if (!props.planets) return new Map<string, { href: string; size: number }>();
+    if (!props.planets) return new Map<string, { href: string; size: number; ring: number }>();
     const dpr = window.devicePixelRatio || 1;
-    const out = new Map<string, { href: string; size: number }>();
+    const out = new Map<string, { href: string; size: number; ring: number }>();
     for (const s of props.model.systems) {
-      // Planets only for capitals and major systems. Fifteen small sprites is
-      // visual noise, and at that size none of them are distinguishable from
-      // each other anyway — the variety is lost and the map is busier. The
-      // handful that do get one gain the most, because they are the ones a
-      // player is actually looking for.
-      if (s.importance < 2) continue;
-      if (s.kind === "station" || s.kind === "outpost") continue;
-      const size = 26;
+      // Stations and outposts keep their own silhouettes. A square is a
+      // different shape on purpose, and replacing it with a small grey rock
+      // would throw away the distinction.
+      if (s.kind !== "star" && s.kind !== "planet") continue;
+      const size = s.importance >= 3 ? 40 : s.importance >= 2 ? 30 : s.importance >= 1 ? 21 : 16;
       out.set(s.id, {
         href: planetUri({
           seed: seedFromId(s.id),
           type: s.planetType ?? planetTypeFor(s.kind, s.id),
           px: size,
           dpr,
-          // No tint. Pulling the palette 45% toward a nation colour was the
-          // single thing that broke this: it desaturated the planet into a muddy
-          // version of the territory it already sits inside, and the owner is
-          // already unambiguous from the fill behind it.
+          // No tint. Pulling the palette toward a nation colour desaturated each
+          // planet into a muddy version of the territory it already sits inside,
+          // and the owner is unambiguous from the fill behind it.
           tint: undefined,
           tintAmount: 0,
         }),
         size,
+        // The capital ring goes outside the sprite, clear of the corona. Inside
+        // it, the sprite simply covers it and capitals stop reading as capitals.
+        ring: size / 2 + 7,
       });
     }
     return out;
@@ -746,13 +750,15 @@ export default function Chart(props: ChartProps) {
         {/* Systems. Four silhouettes, not four sizes. */}
         <g>
           <For each={systemNodes()}>
-            {n => (
+            {n => {
+              const sprite = () => planetSprites().get(n.system.id);
+              return (
               <>
                 <Show when={n.system.importance === 3}>
                   <circle
                     cx={n.P.x}
                     cy={n.P.y}
-                    r={planetSprites().get(n.system.id) ? 17 : 10}
+                    r={sprite()?.ring ?? 10}
                     fill="none"
                     stroke={n.colour}
                     stroke-width="1.6"
@@ -771,7 +777,7 @@ export default function Chart(props: ChartProps) {
                 </Show>
                 <Show when={n.system.kind === "star" || n.system.kind === "planet"}>
                   <Show
-                    when={planetSprites().get(n.system.id)}
+                    when={sprite()}
                     fallback={
                       <circle
                         cx={n.P.x}
@@ -804,7 +810,8 @@ export default function Chart(props: ChartProps) {
                   {pick(n.system.name, props.locale)}
                 </text>
               </>
-            )}
+              );
+            }}
           </For>
         </g>
 

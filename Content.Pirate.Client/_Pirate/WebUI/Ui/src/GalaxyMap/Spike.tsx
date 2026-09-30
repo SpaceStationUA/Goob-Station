@@ -25,8 +25,13 @@ import {
 } from "./lib/planet";
 import type { StarSystem } from "./lib/model";
 
-/** Same sizes the map would realistically use, plus a couple above them. */
-const SIZES = [12, 16, 24, 48, 96];
+/**
+ * Sizes the map could plausibly use, plus the detail panel's working size, plus
+ * two above it to see where the sprite stops gaining anything. 256 is the point
+ * of interest: past roughly 128 the extra octaves stop being visible and the
+ * sprite is just a bigger disc.
+ */
+const SIZES = [12, 16, 24, 48, 96, 128, 192, 256];
 const SEEDS = [1, 2, 3, 4, 5, 6];
 
 /**
@@ -156,6 +161,20 @@ export function Spike(props: {
                   </Cell>
                 )}
               </For>
+            </Group>
+
+            <Group label="stars — self-lit, with corona">
+              <For each={SEEDS}>
+                {sd => (
+                  <Cell label={`${sd}`}>
+                    <Planet seed={sd * 7919} type="star" px={40} dpr={dpr()} />
+                  </Cell>
+                )}
+              </For>
+            </Group>
+
+            <Group label="star @ 256px">
+              <Planet seed={0x501} type="star" px={256} dpr={dpr()} />
             </Group>
 
             <Group label="types @ 24px">

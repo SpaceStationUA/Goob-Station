@@ -70,10 +70,28 @@ Four things the spike settled, none of which were obvious in advance:
   of the disc, so a planet at map scale stops reading as a lit body and starts
   reading as a hole punched in the territory behind it. The night floor is lifted
   and the night colour lightened for small sprites only.
-- **Planets only for capitals.** Fifteen small sprites is visual noise and none of
-  them are distinguishable; restricting them to `importance >= 2` is what keeps the
-  map a chart. This contradicted the prediction that the map would get busier and
-  stop being a chart — with a dozen of them on a 963-cell map it does not.
+- **`kind` decides star vs world.** The first cut hashed every system across the
+  orbital list, so Sol came out a green terran planet. Seven systems are
+  `kind: "star"` in the data and the generator was ignoring that field entirely.
+  A star is not a ninth planet type: it is self-luminous, so it skips the
+  terminator entirely and gets brightness falling off from the centre, granulation
+  and seeded flares. Running a star through the planet lighting model draws a
+  planet, which is the whole mistake.
+- **Only a star should bleed past its own edge.** The atmosphere halo was on every
+  sprite and read as a sticker. It is now the star's corona alone, and a planet's
+  sprite is exactly its disc. That also fixed the noise problem below: the halo,
+  not the count, was what made a full set of sprites look busy.
+- **A sprite on every star and every world, sized by importance** — 40/30/21/16px
+  for capital down to minor. The earlier cut drew capitals only, on the theory that
+  a full set would be noise. That was wrong, and the halo was the reason it looked
+  like noise. The size ramp does the hierarchy work the ring was doing.
+- **The capital ring has to clear the sprite.** At 40px a sprite covers a `r=10`
+  ring completely, and capitals stop reading as capitals. The ring radius is now
+  derived from the sprite size and sits outside the corona.
+- **Detail tops out around 128–256px.** The continent shapes are identical at every
+  size, because the shape is the planet and frequency is fixed in sphere-UV; only
+  the octave count scales. Past ~128 the extra octaves stop being visible and a
+  bigger sprite is just a bigger disc. 256 is the useful ceiling for a detail view.
 
 Still open: the type is hashed from the id here, which clusters by chance
 (Persepolis and Burzsia both came out lava). Real data from the lore side fixes
@@ -81,8 +99,10 @@ that. The `tint` path toward a nation colour is implemented and unused — at 45
 desaturated each planet into a muddy version of the territory it already sits
 inside, and the owner is unambiguous from the fill behind it.
 
-`PLANET_ALGO_VERSION` is part of the sprite cache key. Change the noise and every
-planet in the game changes, which is the same trap as the bake fingerprint.
+`PLANET_ALGO_VERSION` is part of the sprite cache key, and bumping it is what
+invalidated the cache when the halo and the star path changed. Change the noise
+and every planet in the game changes, which is the same trap as the bake
+fingerprint.
 
 ## Layout
 
