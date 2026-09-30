@@ -17,10 +17,28 @@ export type PatternId =
   | "checker"
   | "starfield";
 
+/**
+ * A name in every language we ship.
+ *
+ * The page resolves these itself rather than being handed a finished string,
+ * because the client locale is a client-side preference: the bridge pushes the
+ * text and the player's locale, and the page picks. Sending one pre-resolved
+ * name would mean a locale change needs a round trip to the server.
+ */
+export interface LocalizedText {
+  en: string;
+  /** Omit to fall back to English. */
+  uk?: string;
+}
+
+export function pick(text: LocalizedText, locale: string): string {
+  if (locale === "uk" && text.uk) return text.uk;
+  return text.en;
+}
+
 export interface Territory {
   id: string;
-  /** Resolved server-side; already localised by the time it reaches the page. */
-  name: string;
+  name: LocalizedText;
   /** Hex colour, "#rrggbb". */
   color: string;
   pattern: PatternId;
@@ -37,7 +55,7 @@ export type Importance = 0 | 1 | 2 | 3;
 
 export interface StarSystem {
   id: string;
-  name: string;
+  name: LocalizedText;
   xLy: number;
   yLy: number;
   kind: SystemKind;

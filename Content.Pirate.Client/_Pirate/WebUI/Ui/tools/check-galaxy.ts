@@ -8,9 +8,10 @@
  */
 import { cellsInExtent, hexToPixel, key, neighbour, pixelToHex, type Axial } from "../src/GalaxyMap/lib/hex";
 import { assignCells, borderLoops, cellOutline, cellsByTerritory, loopToPath } from "../src/GalaxyMap/lib/geometry";
-import { DEFAULT_MAP } from "../src/GalaxyMap/lib/source";
+import { DEFAULT_MAP, FixtureSource } from "../src/GalaxyMap/lib/source";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "../src/GalaxyMap/lib/devmap";
 import type { Vec2 } from "../src/GalaxyMap/lib/hex";
+import { pick, type GalaxyModel } from "../src/GalaxyMap/lib/model";
 
 let failures = 0;
 const check = (name: string, ok: boolean, detail = "") => {
@@ -61,7 +62,7 @@ console.log("\nterritory sizes:");
 for (const t of TERRITORIES) {
   const n = byTerr.get(t.id)?.length ?? 0;
   const pct = ((n / cells.length) * 100).toFixed(1);
-  console.log(`  ${t.name.padEnd(30)} ${String(n).padStart(5)} cells  ${pct.padStart(5)}%`);
+  console.log(`  ${pick(t.name, "en").padEnd(30)} ${String(n).padStart(5)} cells  ${pct.padStart(5)}%`);
 }
 
 // --- outlines --------------------------------------------------------------
@@ -249,7 +250,7 @@ console.log(`adjacency: ${pairs.size} pairs\n`);
 for (const t of TERRITORIES) {
   if (t.unclaimed) continue;
   const ns = [...(neighboursOf.get(t.id) ?? [])].sort();
-  console.log(`  ${t.name.padEnd(30)} -> ${ns.join(", ") || "(NOTHING)"}`);
+  console.log(`  ${pick(t.name, "en").padEnd(30)} -> ${ns.join(", ") || "(NOTHING)"}`);
 }
 
 // A nation with no neighbours at all is invisible on the chart.
@@ -278,6 +279,53 @@ check("systems sit in the territory they claim", mismatched.length === 0,
 // --- routes ----------------------------------------------------------------
 const badRoutes = ROUTES.filter(r => !SYSTEMS.some(s => s.id === r.from) || !SYSTEMS.some(s => s.id === r.to));
 check("every route endpoint exists", badRoutes.length === 0, badRoutes.map(r => `${r.from}->${r.to}`).join(","));
+
+// --- paint reactivity -------------------------------------------------------
+/**
+ * Painting appeared to do absolutely nothing, and the cause was invisible from
+ * the geometry side: the source mutated its own model in place and the view was
+ * never handed a new reference, so Solid had nothing to react to. The data was
+ * correct the whole time. These assertions pin the contract that broke.
+ */
+console.log("\npaint:");
+{
+  const source = new FixtureSource(spec, TERRITORIES, CLAIMS, SYSTEMS, ROUTES);
+  const before = await source.load();
+
+  let notified = 0;
+  let latest: GalaxyModel | undefined;
+  source.onChange(m => {
+    notified++;
+    latest = m;
+  });
+
+  // Take a real Biesel cell and hand it to Nralakk.
+  const victim = (byTerr.get("biesel") ?? [])[0];
+  const [vq, vr] = victim.split(",").map(Number);
+
+  const changed = await source.paint(vq, vr, "nralakk");
+  check("paint reports that it changed something", changed === true);
+  check("paint notifies listeners", notified === 1, `${notified} notification(s)`);
+  check("paint hands back a NEW model object", !!latest && latest !== before);
+  check("the painted cell really changed owner", latest?.ownership.get(victim) === "nralakk");
+  check("the model the view already had is left alone", before.ownership.get(victim) === "biesel");
+
+  // Exactly one cell may differ, or painting is quietly doing more than asked.
+  let diffs = 0;
+  for (const [cell, owner] of latest!.ownership) {
+    if (before.ownership.get(cell) !== owner) diffs++;
+  }
+  check("exactly one cell changed", diffs === 1, `${diffs} cells differ`);
+
+  // Painting a cell to the territory it already belongs to is a no-op, and must
+  // not burn an undo step.
+  const noop = await source.paint(vq, vr, "nralakk");
+  check("re-painting the same territory is a no-op", noop === false && notified === 1);
+
+  await source.undo();
+  check("undo restores the cell", latest?.ownership.get(victim) === "biesel");
+  check("undo restores the whole map", [...before.ownership].every(([c, o]) => latest!.ownership.get(c) === o));
+}
 
 console.log(`\n${failures === 0 ? "all checks passed" : `${failures} CHECK(S) FAILED`}\n`);
 process.exit(failures === 0 ? 0 : 1);

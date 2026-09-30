@@ -56,19 +56,30 @@ svg.chart.painting {
   pointer-events: none;
 }
 
-/* Territory naming — the big letterspaced tier. */
+/* Territory naming — the big letterspaced tier.
+   Sits under the place names (see Chart.tsx z-order), so it carries a halo
+   rather than competing: enough to read against a hatched fill, not so much
+   that it shouts over Sol. */
 .terr-name {
   text-anchor: middle;
   pointer-events: none;
   paint-order: stroke fill;
-  stroke: rgba(0, 0, 0, 0.8);
-  stroke-width: 3px;
+  stroke: rgba(0, 0, 0, 0.85);
+  stroke-width: 4px;
+  opacity: 0.82;
 }
 .terr-name.dim {
-  opacity: 0.3;
+  opacity: 0.22;
 }
 .terr-name.hot {
   opacity: 1;
+}
+/* Unclaimed space is a hole in the map, not a nation. It gets a small, dim,
+   un-letterspaced watermark — its centroid is the centre of the chart, which is
+   the worst possible place for a headline. */
+.terr-name.faint {
+  opacity: 0.3;
+  stroke-width: 3px;
 }
 
 .system-label {
@@ -167,6 +178,27 @@ svg.chart.painting {
 .toolbar .swatch.on {
   outline: 2px solid #fff;
   outline-offset: 1px;
+}
+
+/* Armed state. Painting has to be obvious, because with a swatch held down a
+   click means something completely different to what it meant a moment ago. */
+.toolbar .paintpick.armed .paintlabel {
+  color: #ffd479;
+}
+.toolbar .armed-note {
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  color: #ffd479;
+  background: rgba(10, 16, 26, 0.85);
+  border: 1px solid rgba(255, 212, 121, 0.4);
+  padding: 4px 9px;
+}
+.toolbar .locpick {
+  display: flex;
+  gap: 2px;
+}
+.toolbar .panel-close {
+  margin-top: 10px;
 }
 
 .legend {

@@ -14,8 +14,9 @@ import { assignCells, cellOutline, cellsByTerritory } from "../src/GalaxyMap/lib
 import { loopsToPxPath, makeTransform } from "../src/GalaxyMap/lib/transform";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "../src/GalaxyMap/lib/devmap";
 import { DEFAULT_MAP } from "../src/GalaxyMap/lib/source";
-import type { GalaxyModel, PatternId } from "../src/GalaxyMap/lib/model";
+import { pick, type GalaxyModel, type PatternId } from "../src/GalaxyMap/lib/model";
 
+const LOCALE = "en";
 const spec = DEFAULT_MAP;
 const W = 1600;
 // Square canvas on purpose: the macOS rasteriser used for quick looks forces a
@@ -150,6 +151,83 @@ for (const r of ROUTES) {
 }
 
 const terrColor = new Map(TERRITORIES.map(x => [x.id, x.color]));
+
+/**
+ * Pick the spot for a centred label that keeps it furthest from every system
+ * marker. Mirrors place() in Chart.tsx — the centroid of a cell set routinely
+ * lands on a capital, and a letterspaced uppercase title is a third of the map
+ * wide, so nudging the anchor clear is nowhere near enough. Scores the label's
+ * whole box, not its anchor point.
+ */
+function place(
+  centre: { x: number; y: number },
+  name: string,
+  size: number,
+): { x: number; y: number } {
+  const halfW = (name.length * size * 0.65) / 2;
+  const halfH = size * 0.7;
+  const obstacles = SYSTEMS.map(s => t.toPx({ x: s.xLy, y: s.yLy }));
+
+  const candidates: { x: number; y: number }[] = [centre];
+  for (let ring = 1; ring <= 4; ring++) {
+    for (let a = 0; a < 12; a++) {
+      const th = (a / 12) * Math.PI * 2 + ring * 0.3;
+      candidates.push({
+        x: centre.x + Math.cos(th) * ring * 17,
+        y: centre.y + Math.sin(th) * ring * 12,
+      });
+    }
+  }
+
+  let best = centre;
+  let bestScore = -Infinity;
+  for (const q of candidates) {
+    let clearance = Infinity;
+    for (const o of obstacles) {
+      const dx = Math.max(0, Math.abs(o.x - q.x) - halfW);
+      const dy = Math.max(0, Math.abs(o.y - q.y) - halfH);
+      clearance = Math.min(clearance, Math.hypot(dx, dy));
+    }
+    const score = Math.min(clearance, 34) - Math.hypot(q.x - centre.x, q.y - centre.y) * 0.3;
+    if (score > bestScore) {
+      bestScore = score;
+      best = q;
+    }
+  }
+  return best;
+}
+
+/* Territory names first, systems over them — same z-order as the page. */
+for (const terr of TERRITORIES) {
+  const list = byTerr.get(terr.id) ?? [];
+  if (list.length < 8) continue;
+  let sx = 0;
+  let sy = 0;
+  for (const k of list) {
+    const [q, r] = k.split(",");
+    const c = hexToPixel({ q: +q, r: +r }, spec.hexSizeLy);
+    sx += c.x;
+    sy += c.y;
+  }
+  const centre = t.toPx({ x: sx / list.length, y: sy / list.length });
+
+  // Unclaimed space is a hole, not a nation, and its centroid is the dead centre
+  // of the chart. Small and dim beats a headline there.
+  if (terr.unclaimed) {
+    push(
+      `<text x="${centre.x.toFixed(1)}" y="${centre.y.toFixed(1)}" font-family="${MONO}" font-size="12" letter-spacing="1" fill="${terr.color}" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="middle" opacity="0.3">${esc(pick(terr.name, LOCALE))}</text>`,
+    );
+    continue;
+  }
+
+  const size = Math.max(11, Math.min(22, Math.sqrt(list.length) * 0.95));
+  const name = pick(terr.name, LOCALE);
+  const P = place(centre, name, size);
+  push(
+    `<text x="${P.x.toFixed(1)}" y="${P.y.toFixed(1)}" font-family="${MONO}" font-size="${size.toFixed(1)}" letter-spacing="${(size * 0.3).toFixed(1)}" fill="${terr.color}" stroke="#000" stroke-width="4" paint-order="stroke" text-anchor="middle" opacity="0.82">${esc(name)}</text>`,
+  );
+}
+
 for (const sys of SYSTEMS) {
   const c = terrColor.get(sys.territory) ?? "#94a3b8";
   const big = sys.importance >= 2;
@@ -164,25 +242,7 @@ for (const sys of SYSTEMS) {
     push(`<circle cx="${P.x.toFixed(1)}" cy="${P.y.toFixed(1)}" r="${r}" fill="${c}" stroke="#0a0f18" stroke-width="1"/>`);
   }
   push(
-    `<text x="${(P.x + (sys.importance === 3 ? 15 : 9)).toFixed(1)}" y="${(P.y - 5).toFixed(1)}" font-family="${MONO}" font-size="${sys.importance === 3 ? 12 : 10}" letter-spacing="${sys.importance === 3 ? 1.4 : 0.6}" fill="#e6eef7" stroke="#000" stroke-width="2.6" paint-order="stroke">${esc(sys.name)}</text>`,
-  );
-}
-
-for (const terr of TERRITORIES) {
-  const list = byTerr.get(terr.id) ?? [];
-  if (list.length < 8) continue;
-  let sx = 0;
-  let sy = 0;
-  for (const k of list) {
-    const [q, r] = k.split(",");
-    const c = hexToPixel({ q: +q, r: +r }, spec.hexSizeLy);
-    sx += c.x;
-    sy += c.y;
-  }
-  const P = t.toPx({ x: sx / list.length, y: sy / list.length });
-  const size = Math.max(12, Math.min(27, Math.sqrt(list.length) * 1.15));
-  push(
-    `<text x="${P.x.toFixed(1)}" y="${P.y.toFixed(1)}" font-family="${MONO}" font-size="${size.toFixed(1)}" letter-spacing="${(size * 0.4).toFixed(1)}" fill="${terr.color}" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="middle" opacity="0.92">${esc(terr.name)}</text>`,
+    `<text x="${(P.x + (sys.importance === 3 ? 15 : 9)).toFixed(1)}" y="${(P.y - 5).toFixed(1)}" font-family="${MONO}" font-size="${sys.importance === 3 ? 12 : 10}" letter-spacing="${sys.importance === 3 ? 1.4 : 0.6}" fill="#e6eef7" stroke="#000" stroke-width="2.6" paint-order="stroke">${esc(pick(sys.name, LOCALE))}</text>`,
   );
 }
 

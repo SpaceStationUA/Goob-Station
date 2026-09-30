@@ -1,6 +1,6 @@
 import { cellsInExtent, key } from "./hex";
 import { assignCells, type AssignResult } from "./geometry";
-import type { GalaxyModel, Route, StarSystem, Territory, TerritoryClaim } from "./model";
+import type { GalaxyModel, Ownership, Route, StarSystem, Territory, TerritoryClaim } from "./model";
 
 /**
  * Where the page gets its data.
@@ -18,8 +18,11 @@ export interface GalaxySource {
   /**
    * Reassign one cell. Present only where painting is permitted; the game
    * validates it server-side, a browser fixture just mutates its own copy.
+   *
+   * Returns whether anything actually changed, so a caller can skip work when
+   * the cell was already the requested territory.
    */
-  paint?(cellQ: number, cellR: number, territory: string): Promise<void>;
+  paint?(cellQ: number, cellR: number, territory: string): Promise<boolean>;
 }
 
 /** Map extents and grid resolution, shared by the bake and the runtime. */
@@ -101,7 +104,7 @@ export class FixtureSource implements GalaxySource {
   private listeners: ((m: GalaxyModel) => void)[] = [];
   private overlay = new Map<string, string>();
   private undoStack: { cell: string; prev: string | undefined }[] = [];
-  private model: GalaxyModel | null = null;
+  private current: GalaxyModel | null = null;
 
   constructor(
     private spec: MapSpec,
@@ -111,10 +114,25 @@ export class FixtureSource implements GalaxySource {
     private routes: Route[] = [],
   ) {}
 
+  /**
+   * Build a fresh model from the pristine baseline plus the overlay.
+   *
+   * Both the model and its ownership map are new objects every time. That is
+   * not incidental: the view is Solid, so handing it the same object it already
+   * holds — even after mutating that object's contents — changes nothing on
+   * screen. Painting appeared to do nothing at all for exactly this reason.
+   */
+  private snapshot(): GalaxyModel {
+    const base = buildModel(this.spec, this.territories, this.claims, this.systems, this.routes);
+    if (this.overlay.size === 0) return base;
+    const ownership: Ownership = new Map(base.ownership);
+    for (const [cell, id] of this.overlay) ownership.set(cell, id);
+    return { ...base, ownership, revision: base.revision + 1 };
+  }
+
   async load(): Promise<GalaxyModel> {
-    if (this.model) return this.model;
-    this.model = buildModel(this.spec, this.territories, this.claims, this.systems, this.routes);
-    return this.model;
+    if (!this.current) this.current = this.snapshot();
+    return this.current;
   }
 
   onChange(cb: (model: GalaxyModel) => void): void {
@@ -122,37 +140,34 @@ export class FixtureSource implements GalaxySource {
   }
 
   private emit(): void {
-    if (!this.model) return;
-    for (const [cell, id] of this.overlay) this.model.ownership.set(cell, id);
-    this.model.revision++;
-    for (const cb of this.listeners) cb(this.model);
+    this.current = this.snapshot();
+    for (const cb of this.listeners) cb(this.current);
   }
 
-  async paint(q: number, r: number, territory: string): Promise<void> {
+  /** Number of local edits not in the baked baseline. */
+  get edits(): number {
+    return this.undoStack.length;
+  }
+
+  /** Returns whether anything actually changed, so callers can skip a redraw. */
+  async paint(q: number, r: number, territory: string): Promise<boolean> {
     const model = await this.load();
     const k = key(q, r);
-    if (!model.ownership.has(k)) return;
+    if (!model.ownership.has(k)) return false;
     const current = this.overlay.get(k) ?? model.ownership.get(k);
-    if (current === territory) return;
+    if (current === territory) return false;
     this.undoStack.push({ cell: k, prev: this.overlay.get(k) });
     this.overlay.set(k, territory);
     this.emit();
+    return true;
   }
 
   /** Dev affordance: step back through local paint operations. */
   async undo(): Promise<void> {
     const last = this.undoStack.pop();
     if (!last) return;
-    const model = await this.load();
     if (last.prev === undefined) this.overlay.delete(last.cell);
     else this.overlay.set(last.cell, last.prev);
-    // Rebuild from the pristine baseline, then re-apply the surviving overlay.
-    this.model = buildModel(this.spec, this.territories, this.claims, this.systems, this.routes);
     this.emit();
-  }
-
-  /** True when an overlay entry is in play, i.e. the map is not at baseline. */
-  get dirty(): boolean {
-    return this.overlay.size > 0;
   }
 }

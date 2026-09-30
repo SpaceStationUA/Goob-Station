@@ -2,7 +2,7 @@ import { createEffect, createSignal, For, onCleanup, Show } from "solid-js";
 import { cellsInExtent, hexCorners, hexToPixel, type Axial } from "./lib/hex";
 import { cellsByTerritory, cellOutline } from "./lib/geometry";
 import { loopToPxPath, loopsToPxPath, makeTransform } from "./lib/transform";
-import type { GalaxyModel, PatternId, Territory } from "./lib/model";
+import { pick, type GalaxyModel, type PatternId, type Territory } from "./lib/model";
 
 /* ------------------------------------------------------------------ *
  * Fill patterns — the single biggest thing separating a political map
@@ -72,6 +72,7 @@ function starfield(w: number, h: number, count: number, seed: number) {
 
 export interface ChartProps {
   model: GalaxyModel;
+  locale: string;
   showCells: boolean;
   selected: string | undefined;
   hoverCell: Axial | undefined;
@@ -123,13 +124,35 @@ export default function Chart(props: ChartProps) {
 
   const stars = () => starfield(size().w, size().h, 460, 90210);
 
-  /** Territory name placed at the centroid of its cells. */
+  /**
+   * Territory names.
+   *
+   * The centroid of a cell set is a poor place for a label: it routinely lands
+   * on a capital, and a letterspaced uppercase title like "REPUBLIC OF BIESEL"
+   * is a third of the map wide, so nudging the anchor point clear is nowhere
+   * near enough. Placement therefore scores candidate spots against the label's
+   * actual box, not its anchor.
+   *
+   * Unclaimed space is handled separately. Its centroid is the centre of the
+   * whole map, which is the single worst pixel on the chart — and it is a hole,
+   * not a nation, so it gets a small dim watermark rather than a title.
+   */
   const labels = () => {
     const byTerr = cellsByTerritory(props.model.ownership);
-    const out: { id: string; name: string; p: { x: number; y: number }; size: number }[] = [];
+    const systems = props.model.systems.map(s => t().toPx({ x: s.xLy, y: s.yLy }));
+    const out: {
+      id: string;
+      name: string;
+      p: { x: number; y: number };
+      size: number;
+      faint: boolean;
+      color: string;
+    }[] = [];
+
     for (const terr of props.model.territories) {
       const cells = byTerr.get(terr.id);
       if (!cells || cells.length < 8) continue;
+
       let sx = 0;
       let sy = 0;
       for (const k of cells) {
@@ -138,16 +161,84 @@ export default function Chart(props: ChartProps) {
         sx += c.x;
         sy += c.y;
       }
+      const centre = t().toPx({ x: sx / cells.length, y: sy / cells.length });
+
+      if (terr.unclaimed) {
+        out.push({
+          id: terr.id,
+          name: pick(terr.name, props.locale),
+          p: centre,
+          size: 12,
+          faint: true,
+          color: terr.color,
+        });
+        continue;
+      }
+
+      const size = Math.max(11, Math.min(22, Math.sqrt(cells.length) * 0.95));
+      const name = pick(terr.name, props.locale);
       out.push({
         id: terr.id,
-        name: terr.name,
-        p: t().toPx({ x: sx / cells.length, y: sy / cells.length }),
-        // Bigger territories earn bigger type, but within a narrow band.
-        size: Math.max(12, Math.min(27, Math.sqrt(cells.length) * 1.15)),
+        name,
+        p: place(centre, name, size, systems),
+        size,
+        faint: false,
+        color: terr.color,
       });
     }
     return out;
   };
+
+  /**
+   * Pick the spot for a centred label that keeps it furthest from every system
+   * marker, without wandering far from the centroid.
+   *
+   * Scoring rather than a spiral-until-clear: "first candidate that fits" tends
+   * to stop at the first marginally-acceptable spot and jam the label against
+   * the edge of a territory. Rewarding clearance and charging for distance
+   * gives a stable, sensible result every time.
+   */
+  function place(
+    centre: { x: number; y: number },
+    name: string,
+    size: number,
+    obstacles: { x: number; y: number }[],
+  ): { x: number; y: number } {
+    // Mono, uppercase, with letter-spacing of ~0.3em: roughly one advance per
+    // character per em, so half the run is half the width.
+    const halfW = (name.length * size * 0.65) / 2;
+    const halfH = size * 0.7;
+
+    const candidates: { x: number; y: number }[] = [centre];
+    for (let ring = 1; ring <= 4; ring++) {
+      for (let a = 0; a < 12; a++) {
+        const th = (a / 12) * Math.PI * 2 + ring * 0.3;
+        candidates.push({
+          x: centre.x + Math.cos(th) * ring * 17,
+          y: centre.y + Math.sin(th) * ring * 12,
+        });
+      }
+    }
+
+    let best = centre;
+    let bestScore = -Infinity;
+    for (const q of candidates) {
+      let clearance = Infinity;
+      for (const o of obstacles) {
+        const dx = Math.max(0, Math.abs(o.x - q.x) - halfW);
+        const dy = Math.max(0, Math.abs(o.y - q.y) - halfH);
+        clearance = Math.min(clearance, Math.hypot(dx, dy));
+      }
+      // Cap the reward so a single very distant marker cannot drag the label
+      // right across the territory; then charge for leaving the centroid.
+      const score = Math.min(clearance, 34) - Math.hypot(q.x - centre.x, q.y - centre.y) * 0.3;
+      if (score > bestScore) {
+        bestScore = score;
+        best = q;
+      }
+    }
+    return best;
+  }
 
   function local(ev: MouseEvent): { x: number; y: number } | null {
     const svg = svgRef;
@@ -323,6 +414,30 @@ export default function Chart(props: ChartProps) {
           </For>
         </g>
 
+        {/* Territory naming, UNDER the systems.
+            Drawn first so place names win. A territory title is large and
+            letterspaced and will happily bury the capital sitting under it;
+            place names are the ones you actually look up. */}
+        <For each={labels()}>
+          {l => (
+            <text
+              x={l.p.x}
+              y={l.p.y}
+              font-size={`${l.size}px`}
+              letter-spacing={l.faint ? "1px" : `${l.size * 0.3}px`}
+              class="terr-name"
+              classList={{
+                hot: props.selected === l.id,
+                dim: !!props.selected && props.selected !== l.id,
+                faint: l.faint,
+              }}
+              fill={l.color}
+            >
+              {l.name}
+            </text>
+          )}
+        </For>
+
         {/* Systems. Four silhouettes, not four sizes. */}
         <g>
           <For each={props.model.systems}>
@@ -347,30 +462,13 @@ export default function Chart(props: ChartProps) {
                     class="system-label"
                     classList={{ capital: s.importance === 3 }}
                   >
-                    {s.name}
+                    {pick(s.name, props.locale)}
                   </text>
                 </>
               );
             }}
           </For>
         </g>
-
-        {/* Territory naming: the big letterspaced tier. */}
-        <For each={labels()}>
-          {l => (
-            <text
-              x={l.p.x}
-              y={l.p.y}
-              font-size={`${l.size}px`}
-              letter-spacing={`${l.size * 0.4}px`}
-              class="terr-name"
-              classList={{ hot: props.selected === l.id, dim: !!props.selected && props.selected !== l.id }}
-              fill={terrById().get(l.id)?.color ?? "#fff"}
-            >
-              {l.name}
-            </text>
-          )}
-        </For>
 
         {/* Hover cell, for the paint tool. */}
         <Show when={props.hoverCell}>

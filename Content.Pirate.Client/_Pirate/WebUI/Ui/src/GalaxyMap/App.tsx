@@ -1,10 +1,16 @@
-import { createMemo, createSignal, For, onMount, Show } from "solid-js";
+import { createMemo, createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import Chart from "./Chart";
 import { cellsInExtent, key, pixelToHex, type Axial } from "./lib/hex";
 import { cellsByTerritory } from "./lib/geometry";
-import type { GalaxyModel } from "./lib/model";
+import { pick, type GalaxyModel } from "./lib/model";
 import { DEFAULT_MAP, FixtureSource } from "./lib/source";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "./lib/devmap";
+
+/** Locales the page can render. Matches what the bridge will send. */
+const LOCALES = [
+  { id: "en", label: "EN" },
+  { id: "uk", label: "УКР" },
+] as const;
 
 /**
  * Browser harness entry point.
@@ -19,15 +25,32 @@ export default function App() {
   const [hoverCell, setHoverCell] = createSignal<Axial>();
   const [showCells, setShowCells] = createSignal(false);
   const [paintWith, setPaintWith] = createSignal<string>();
-  const [painted, setPainted] = createSignal(0);
+  const [locale, setLocale] = createSignal<string>("en");
+  const [edits, setEdits] = createSignal(0);
 
   let source: FixtureSource | undefined;
 
   onMount(async () => {
     source = new FixtureSource(DEFAULT_MAP, TERRITORIES, CLAIMS, SYSTEMS, ROUTES);
+    // The subscription is the whole reason painting works. The source hands back
+    // a NEW model each time; without this the map keeps rendering the one it
+    // was given at startup and every stroke is invisible.
+    source.onChange(m => {
+      setModel(m);
+      setEdits(source?.edits ?? 0);
+    });
     setModel(await source.load());
   });
 
+  // Escape leaves paint mode. Without it there is no way out once a swatch is
+  // armed except hunting for the STOP button, which reads as being stuck.
+  const onKey = (ev: KeyboardEvent) => {
+    if (ev.key === "Escape") setPaintWith(undefined);
+  };
+  window.addEventListener("keydown", onKey);
+  onCleanup(() => window.removeEventListener("keydown", onKey));
+
+  const loc = () => locale();
   const terrById = createMemo(() => {
     const out = new Map<string, (typeof TERRITORIES)[number]>();
     for (const t of model()?.territories ?? []) out.set(t.id, t);
@@ -59,17 +82,15 @@ export default function App() {
     const brush = paintWith();
     if (brush && source) {
       await source.paint(cell.q, cell.r, brush);
-      setPainted(n => n + 1);
       return;
     }
     const owner = m.ownership.get(key(cell.q, cell.r));
+    if (owner === undefined) return;
     setSelected(prev => (prev === owner ? undefined : owner));
   }
 
   async function undo() {
-    if (!source) return;
-    await source.undo();
-    setPainted(n => Math.max(0, n - 1));
+    await source?.undo();
   }
 
   const totalCells = createMemo(() => {
@@ -83,6 +104,7 @@ export default function App() {
         <div class="chart-shell">
           <Chart
             model={m()}
+            locale={loc()}
             showCells={showCells()}
             selected={selected()}
             hoverCell={hoverCell()}
@@ -96,10 +118,22 @@ export default function App() {
             <button classList={{ on: showCells() }} onClick={() => setShowCells(v => !v)}>
               GRID
             </button>
-            <Show when={painted() > 0}>
-              <button onClick={undo}>UNDO {painted()}</button>
-            </Show>
-            <div class="paintpick">
+
+            <div class="locpick">
+              <For each={LOCALES}>
+                {l => (
+                  <button
+                    classList={{ on: locale() === l.id }}
+                    onClick={() => setLocale(l.id)}
+                    title={`Show names in ${l.id}`}
+                  >
+                    {l.label}
+                  </button>
+                )}
+              </For>
+            </div>
+
+            <div class="paintpick" classList={{ armed: !!paintWith() }}>
               <span class="paintlabel">PAINT</span>
               <For each={paintable()}>
                 {t => (
@@ -107,15 +141,29 @@ export default function App() {
                     class="swatch"
                     classList={{ on: paintWith() === t.id }}
                     style={{ background: t.color }}
-                    title={t.name}
+                    title={pick(t.name, loc())}
                     onClick={() => setPaintWith(prev => (prev === t.id ? undefined : t.id))}
                   />
                 )}
               </For>
-              <Show when={paintWith()}>
-                <button onClick={() => setPaintWith(undefined)}>STOP</button>
-              </Show>
             </div>
+
+            <Show when={paintWith()}>
+              {id => {
+                const armed = terrById().get(id());
+                return (
+                  <Show when={armed}>
+                    <span class="armed-note">
+                      PAINTING {pick(armed!.name, loc())} — click cells, ESC to stop
+                    </span>
+                  </Show>
+                );
+              }}
+            </Show>
+
+            <Show when={edits() > 0}>
+              <button onClick={undo}>UNDO {edits()}</button>
+            </Show>
           </div>
 
           <Show when={selected()}>
@@ -124,7 +172,7 @@ export default function App() {
               return (
                 <Show when={t}>
                   <div class="panel">
-                    <h2 style={{ color: t!.color }}>{t!.name}</h2>
+                    <h2 style={{ color: t!.color }}>{pick(t!.name, loc())}</h2>
                     <div class="sub">{t!.unclaimed ? "UNCLAIMED SPACE" : "SOVEREIGN TERRITORY"}</div>
                     <div class="blurb">{t!.blurb}</div>
                     <div class="stat">
@@ -139,6 +187,9 @@ export default function App() {
                       <span>CAPITALS</span>
                       <span>{systemsIn(id()).filter(s => s.importance === 3).length}</span>
                     </div>
+                    <button class="panel-close" onClick={() => setSelected(undefined)}>
+                      CLOSE
+                    </button>
                   </div>
                 </Show>
               );
@@ -148,7 +199,7 @@ export default function App() {
           <div class="legend">
             <b>ORION SPUR</b>
             {m().extentLy.w} × {m().extentLy.h} LY · {totalCells()} cells @ {m().hexSizeLy} LY
-            <Show when={paintWith()}> · PAINT: {terrById().get(paintWith()!)?.name}</Show>
+            <Show when={edits() > 0}> · {edits()} local edit(s)</Show>
           </div>
         </div>
       )}
