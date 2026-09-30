@@ -1,0 +1,187 @@
+/* Reset contract — PLAN.md gotcha #1. A page without this renders a
+   "lonely titlebar" collapse that looks exactly like state never arrived. */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  background: #04060b;
+  color: #c8d3e0;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  overflow: hidden;
+}
+
+.chart-shell {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.chart-host {
+  position: absolute;
+  inset: 0;
+}
+
+svg.chart {
+  display: block;
+  cursor: crosshair;
+}
+svg.chart.painting {
+  cursor: cell;
+}
+
+/* Chart frame furniture — all values in px now, not light-years. */
+.frame-line {
+  fill: none;
+  stroke: rgba(140, 175, 210, 0.28);
+  stroke-width: 1;
+  pointer-events: none;
+}
+
+.graticule {
+  fill: none;
+  stroke: rgba(130, 165, 200, 0.09);
+  stroke-width: 0.7;
+  pointer-events: none;
+}
+
+.cell-hover {
+  fill: rgba(255, 255, 255, 0.14);
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 1;
+  pointer-events: none;
+}
+
+/* Territory naming — the big letterspaced tier. */
+.terr-name {
+  text-anchor: middle;
+  pointer-events: none;
+  paint-order: stroke fill;
+  stroke: rgba(0, 0, 0, 0.8);
+  stroke-width: 3px;
+}
+.terr-name.dim {
+  opacity: 0.3;
+}
+.terr-name.hot {
+  opacity: 1;
+}
+
+.system-label {
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  fill: #e6eef7;
+  paint-order: stroke fill;
+  stroke: rgba(0, 0, 0, 0.85);
+  stroke-width: 2.6px;
+  pointer-events: none;
+}
+.system-label.capital {
+  fill: #fff;
+  font-size: 12px;
+  letter-spacing: 1.4px;
+}
+
+/* Side panel */
+.panel {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 262px;
+  padding: 12px 14px;
+  background: rgba(8, 13, 22, 0.9);
+  border: 1px solid rgba(120, 160, 200, 0.22);
+  font-size: 11px;
+  line-height: 1.55;
+  backdrop-filter: blur(3px);
+}
+.panel h2 {
+  margin: 0 0 2px;
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  font-weight: 600;
+}
+.panel .sub {
+  color: rgba(170, 195, 220, 0.6);
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+}
+.panel .blurb {
+  color: rgba(200, 215, 232, 0.82);
+  margin-bottom: 10px;
+}
+.panel .stat {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(170, 195, 220, 0.72);
+  font-size: 10px;
+  border-top: 1px solid rgba(120, 160, 200, 0.12);
+  padding: 3px 0;
+}
+
+.toolbar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.toolbar button {
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  color: #b8c8da;
+  background: rgba(10, 16, 26, 0.85);
+  border: 1px solid rgba(120, 160, 200, 0.25);
+  padding: 4px 9px;
+  cursor: pointer;
+}
+.toolbar button.on {
+  background: rgba(60, 120, 190, 0.5);
+  color: #eaf2fa;
+  border-color: rgba(140, 190, 240, 0.6);
+}
+.toolbar .paintpick {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-left: 8px;
+}
+.toolbar .paintlabel {
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  color: #6d8299;
+}
+.toolbar .swatch {
+  width: 13px;
+  height: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+}
+.toolbar .swatch.on {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+}
+
+.legend {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  font-size: 10px;
+  color: rgba(160, 185, 210, 0.62);
+  letter-spacing: 0.5px;
+  line-height: 1.7;
+}
+.legend b {
+  color: rgba(215, 230, 245, 0.9);
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  display: block;
+  margin-bottom: 2px;
+}

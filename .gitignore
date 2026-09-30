@@ -315,3 +315,6 @@ config.json
 
 # Solid/Vite WebUI build artifacts (Scripts/sh/buildwebui.sh staging output)
 Content.Pirate.Client/_Pirate/WebUI/Ui/dist_resources/
+
+# GalaxyMap dev render output
+Content.Pirate.Client/_Pirate/WebUI/Ui/galaxy-preview.svg
