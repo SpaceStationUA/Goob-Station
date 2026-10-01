@@ -141,6 +141,28 @@ function circleNoise(u: number, v: number, period: number, seed: number): number
   return smoothstep((m * 0.75) / r);
 }
 
+/**
+ * Crater field: 0 on the plain, rising to 1 at the bottom of a bowl.
+ *
+ * Built from the same cellular noise the cloud layer uses, taken as a product of
+ * two grids and inverted. `circleNoise` is low at a cell centre, so the product
+ * is low only where TWO centres nearly coincide — a sparse set, which is why this
+ * reads as scattered craters rather than as a dimpled ball. One grid alone would
+ * put a bowl in every cell and give a regular honeycomb of them instead.
+ *
+ * The second grid is offset by a non-integer, deliberately: a whole-cell offset
+ * re-aligns the lattices and every bowl lands on top of another, which collapses
+ * the field back to a single frequency.
+ *
+ * `period` must be an integer and must equal the cell count across the sphere,
+ * or the field seams at the wrap.
+ */
+function craterField(x: number, y: number, period: number, seed: number): number {
+  const a = circleNoise(x, y, period, seed);
+  const b = circleNoise(x + 11.37, y + 11.37, period, seed);
+  return 1 - a * b;
+}
+
 /* ----------------------------------------------------------------- colour */
 
 type RGB = [number, number, number];
@@ -246,6 +268,14 @@ interface TypeSpec {
   water?: [string, string];
   /** Base cloud threshold. Gas and ice worlds are soupy; rock is not. */
   cloud: number;
+  /**
+   * Craters, for worlds with nothing but rock to show for it.
+   *
+   * Only for airless surfaces. A crater on a world with an atmosphere is a
+   * contradiction the eye catches immediately, because there is nothing left to
+   * erode it and nothing to fill it.
+   */
+  craters?: boolean;
 }
 
 /**
@@ -351,6 +381,7 @@ export const PLANET_TYPES: Record<PlanetType, TypeSpec> = {
     // lighter.
     land: ["#ffb457", "#e8681f", "#8a3312", "#4a1a0c"],
     cloud: 0,
+    craters: true,
   },
   barren: {
     kind: "terrain",
@@ -362,6 +393,7 @@ export const PLANET_TYPES: Record<PlanetType, TypeSpec> = {
     sea: ["#9a9aa6", "#6e6e7a", "#4a4a54", "#30303a"],
     land: ["#c6c6d0", "#adadb9", "#9494a2", "#7b7b8b"],
     cloud: 0,
+    craters: true,
   },
   asteroid: {
     kind: "solid",
@@ -371,6 +403,7 @@ export const PLANET_TYPES: Record<PlanetType, TypeSpec> = {
     sea: ["#7b7166", "#574f46", "#3a342d", "#241f1b"],
     land: ["#8d8376", "#786f63", "#635b50", "#4e473e"],
     cloud: 0,
+    craters: true,
   },
 };
 
@@ -384,14 +417,29 @@ export const PLANET_TYPE_LIST = Object.keys(PLANET_TYPES) as PlanetType[];
 const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", "lava", "barren"];
 
 /** Bump when the noise changes, so cached sprites regenerate.
- * 4: screen-space banding and multi-field land, replacing the 3D dot product. */
-export const PLANET_ALGO_VERSION = 4;
+ * 4: screen-space banding and multi-field land, replacing the 3D dot product.
+ * 5: craters on the airless worlds. */
+export const PLANET_ALGO_VERSION = 5;
 
 export interface PlanetOpts {
   seed: number;
   type: PlanetType;
   /** Diameter in CSS pixels. The sprite is generated at exactly this size. */
   px: number;
+  /**
+   * Suppress craters whatever the type says.
+   *
+   * This exists so the visual test can prove its crater assertion is measuring
+   * craters. The first version of that check compared an airless world against a
+   * world with weather, and it failed: the rainy world scored HIGHER, because the
+   * metric was counting coastlines and rivers — any dark region next to a light
+   * one — rather than craters. Comparing across types cannot isolate the feature.
+   *
+   * Rendering the same world with this set does isolate it, because the only
+   * difference between the two images is the craters. A flag only tests can set is
+   * much cheaper than an assertion that can pass for the wrong reason.
+   */
+  suppressCraters?: boolean;
   /** Light direction in radians. */
   light?: number;
   /**
@@ -510,6 +558,23 @@ interface Frame {
   land: RGB[] | null;
   /** River colour pair, or null. */
   water: [RGB, RGB] | null;
+  craters: boolean;
+  /**
+   * Craters across the sphere. Integer, because the field has to tile at the
+   * wrap.
+   *
+   * The scaling was badly wrong at first and it showed up as a test that could not
+   * see the feature at all: `round(d / 52)` clamped to a minimum of 2, so a 128px
+   * sprite got two cells across the whole sphere and the product field never rose
+   * above the bowl threshold anywhere. Measured, craters covered 28 pixels of
+   * 16384 — 0.17%. Only sprites above about 150px had any, which is exactly
+   * backwards: those are the ones with room to spare.
+   *
+   * Crater COUNT is close to constant in angular terms, so the frequency should
+   * barely move. What has to change with size is that a 16px rock cannot afford
+   * detail, so the floor is 3 rather than 1.
+   */
+  craterFreq: number;
   atmo: RGB | null;
   /**
    * Light position in disc-UV (0..1 across the sprite), as a vector.
@@ -588,6 +653,8 @@ function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
     water: spec.water
       ? [hexToRgb(spec.water[0]), hexToRgb(spec.water[1])]
       : null,
+    craters: spec.craters === true && !o.suppressCraters,
+    craterFreq: Math.max(3, Math.min(7, Math.round(d / 30))),
     atmo: spec.atmo ? hexToRgb(spec.atmo) : null,
     // A small sprite cannot afford a dark side. Below about 24px the night half
     // is most of the disc, so a planet drawn at map scale stops reading as a lit
@@ -954,20 +1021,75 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
           col = ditherBands(sea, h, [0.42, 0.56, 0.7], [1, 2, 3], 0.05, ditherV);
         }
 
-        if (isLand) {
-          // Land is chosen by a comparison against the light, not banded by it,
-          // so it needs its own terminator — quantised, for the palette reason
-          // above. Land that faded smoothly into the night would put a gradient
-          // back into the middle of every continent.
-          shade = dLit < 0.085 ? 1 : dLit < 0.2 ? 0.8 : dLit < 0.4 ? 0.58 : 0.36;
-          outRgb = mixRgb(night, col, nightFloor + (1 - nightFloor) * shade);
-        } else {
-          // Sea and the fully-clouded types are already banded by distance to
-          // the light — the band index IS the shading, so shading them again
-          // would apply the terminator twice and crush the shadow side.
-          shade = dLit < 0.085 ? 1 : dLit < 0.2 ? 0.8 : dLit < 0.4 ? 0.58 : 0.36;
-          outRgb = col;
+        // ---- pass three: craters ------------------------------------------
+        if (f.craters) {
+          /**
+           * A bowl in three zones — floor, wall, plain — with the wall lit on the
+           * side facing the light.
+           *
+           * The lit wall is the whole trick and it needs a second sample. Reading
+           * the field once more, displaced toward the light, tells you which way
+           * the surface is falling: where the displaced copy is LOWER, moving
+           * toward the light takes you deeper into the bowl, which is the far wall
+           * — the one that catches light. One sample cannot express that at all,
+           * which is why a single-threshold crater is a dark dot and never a
+           * crater.
+           *
+           * Three zones rather than one threshold, and this is the second attempt.
+           * One threshold over the product field gave a scatter of small uniform
+           * dots that read as a rash: too many, too small, and — because the floor
+           * was only mixed halfway to the darkest palette entry — LIGHTER than the
+           * plain in places, so the craters looked like highlights. A crater needs
+           * a floor that is unambiguously in shadow and a rim that is a thin arc,
+           * and separating the zones is what lets each be tuned to its own job.
+           *
+           * Dithered at both boundaries, like every other edge in this file: a
+           * hard line on a curved shape is what makes procedural rock look like
+           * vector art.
+           */
+          const q = f.craterFreq;
+          const cf = craterField(sx * q, sy * q, q, seed + 611);
+          const cfL = craterField(
+            sx * q + (f.lx - 0.5) * 1.7,
+            sy * q + (f.ly - 0.5) * 1.7,
+            q,
+            seed + 611,
+          );
+          const cDark = land ? land[3] : sea[3];
+          const cLit = land ? land[0] : sea[0];
+          // Bowl floor. Deep enough that it is darker than every land tone, or
+          // the crater inverts into a highlight.
+          if (cf > 0.6 || (cf > 0.53 && ditherV > 0.5)) {
+            col = mixRgb(col, cDark, 0.85);
+          } else if (cf > 0.42 || (cf > 0.35 && ditherV > 0.5)) {
+            /**
+             * The lit wall, and the sign here was backwards the first time.
+             *
+             * Displacing the sample toward the light: on the crater's FAR side —
+             * the side the light is on, whose inward-facing wall therefore faces
+             * back toward the source — the displacement walks out of the bowl and
+             * the field RISES. On the near side it walks deeper and the field
+             * FALLS. So the lit wall is `cfL > cf`, not the other way round, and
+             * getting that backwards lights both walls evenly: every crater comes
+             * out as a complete bright ring, which reads as a bubble outline
+             * rather than as a hole in the ground.
+             *
+             * The dLight term is signed so the arc fades out on the terminator
+             * side instead of carrying a lit rim into the night.
+             */
+            if (cfL > cf - (0.5 - dLight) * 0.55) col = mixRgb(col, cLit, 0.55);
+            else col = mixRgb(col, cDark, 0.38);
+          }
         }
+
+        // The terminator, quantised. Shared by every type: land needs it because
+        // it is chosen by comparison rather than banded, and sea does not strictly
+        // need it — but applying it to both is what keeps a cratered world from
+        // having bright craters sitting on its night side.
+        shade = dLit < 0.085 ? 1 : dLit < 0.2 ? 0.8 : dLit < 0.4 ? 0.58 : 0.36;
+        outRgb = isLand
+          ? mixRgb(night, col, nightFloor + (1 - nightFloor) * shade)
+          : col;
 
         // Rim light on the lit limb. Two steps, not a ramp, for the same reason
         // as everything else here. On the disc, not outside it — the sprite is
@@ -1043,21 +1165,26 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
 
 const cache = new Map<string, string>();
 
+/**
+ * Cache key.
+ *
+ * Built from the option object's OWN keys, sorted, rather than from a hand-written
+ * list. The hand-written list was a live bug: `suppressCraters` was added and
+ * forgotten, so a call that asked for a crater-free planet got back the cached
+ * cratered one — and the test that was written to catch exactly that passed,
+ * because it was measuring a stale image of the run before it.
+ *
+ * That failure mode is the worst kind: an option that changes pixels but not the
+ * key is invisible, and it makes a control assertion report that a feature has no
+ * effect when it has plenty. Deriving the key means an option that does not exist
+ * cannot change the output, and one that is added cannot be forgotten.
+ */
 function keyOf(o: PlanetOpts, spin: number, frames: number): string {
-  return [
-    PLANET_ALGO_VERSION,
-    frames,
-    o.seed,
-    o.type,
-    Math.round(o.px),
-    (o.light ?? -2.2).toFixed(3),
-    spin.toFixed(4),
-    o.cloudThreshold ?? "-",
-    o.tint ?? "-",
-    (o.tintAmount ?? 0).toFixed(3),
-    o.dither === false ? 0 : 1,
-    o.dpr ?? 1,
-  ].join("|");
+  const opts = Object.keys(o)
+    .sort()
+    .map((k) => `${k}=${String((o as unknown as Record<string, unknown>)[k])}`)
+    .join(",");
+  return [PLANET_ALGO_VERSION, frames, spin.toFixed(4), opts].join("|");
 }
 
 function renderToDataUri(o: PlanetOpts, frames: number): string {

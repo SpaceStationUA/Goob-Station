@@ -280,6 +280,34 @@ Three more things that were wrong in ways that only showed up on screen:
   sea and is never banded itself, so its four tones are near neighbours and the
   terminator darkening comes from the shared shade term.
 
+### Craters
+
+Added to the airless worlds only — barren, lava, asteroid. A crater on a world
+with an atmosphere is a contradiction the eye catches at a glance: there is
+nothing left to erode it and nothing to fill it.
+
+Three zones rather than one threshold, because a crater needs a floor that is
+unambiguously in shadow and a rim that is a thin arc, and one threshold cannot
+tune both. The lit rim needs a **second sample of the same field, displaced
+toward the light**: where the displaced copy is *higher*, moving toward the light
+walks out of the bowl, which is the far wall — the one whose inward face looks
+back at the source. That comparison was backwards in the first attempt, and the
+symptom was unmistakable once seen: every crater came out as a complete bright
+ring, because both walls were being lit. A ring all the way round is a bubble
+outline, not a hole in the ground.
+
+Two measurement notes, because both were wrong first:
+
+- **The frequency curve was inverted in its effect.** `round(d / 52)` clamped to a
+  minimum of 2, so a 128px sprite got two cells across the entire sphere and the
+  product field never crossed the bowl threshold anywhere — craters covered 28
+  pixels of 16384, and only sprites above ~150px had any. Those are the ones with
+  room to spare.
+- **"How many dark pixels" is not a function of "how many craters."** Counting
+  pixels darker than a smoothed copy of themselves gave a ratio of 1.1 on grey
+  rock and went *below* 1.0 on lava: a crater darkens a dark patch less than it
+  darkens a bright one. The check now differences the two renders directly.
+
 ## Layout
 
 | Path | What it is |
@@ -347,6 +375,19 @@ Worth knowing about:
   star's has radius d/3 with its corona reaching d/2, so the box corner — the
   obvious single probe — is outside both and transparent for every type. It would
   have passed a check asserting the exact opposite of the truth.
+- **An option that changes pixels but not the cache key is invisible.** The sprite
+  cache key was a hand-written list of options, and `suppressCraters` was added
+  without being added to it. A call asking for a crater-free planet got the cached
+  cratered one, and the test written to catch exactly that reported that craters
+  had no effect when they plainly did. The key is now derived from the option
+  object's own sorted keys, so an option that does not exist cannot change the
+  output and one that is added cannot be forgotten.
+- **A cross-type control cannot isolate a feature.** The crater check first
+  compared an airless world against a world with weather. The rainy world scored
+  *higher*, because the metric was counting coastlines and rivers — any dark region
+  beside a light one. The control now differences the same world against itself
+  with the feature suppressed, and a world with no craters to suppress must come
+  back byte-identical. That is an exact control rather than a statistical one.
 - **An assertion that cannot fail is worse than no assertion**, because it is
   reported as coverage. Three in a row here: a ratio check written as
   `natural >= css` passes trivially at dpr 1 (it must be `css * dpr`); a

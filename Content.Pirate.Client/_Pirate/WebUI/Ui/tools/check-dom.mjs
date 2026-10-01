@@ -813,6 +813,84 @@ try {
       };
     });
 
+    /**
+     * Craters.
+     *
+     * The obvious check — count dark blobs on the lit side — does not work, and
+     * two attempts are worth recording. Counting pixels darker than a smoothed
+     * copy of themselves gave barren 208 cratered versus 208 uncratered, because
+     * at the time a 128px sprite drew no craters at all; the frequency curve
+     * clamped to two cells across the whole sphere and the product field never
+     * crossed the bowl threshold. After fixing that, the ratio only reached 1.1,
+     * and on lava it went BELOW 1.0 — a crater darkens a dark patch less than it
+     * darkens a bright one, so "how many dark pixels" is not a function of "how
+     * many craters".
+     *
+     * So this measures the difference between the two renders directly, and the
+     * control is exact rather than statistical: a world with an atmosphere has no
+     * craters to suppress, so suppressing them must change NOTHING, byte for
+     * byte. If the flag were ignored, or the cache key missed it, or the renderer
+     * were nondeterministic, that assertion fails — and it is the assertion that
+     * makes the other two mean anything.
+     */
+    const crat = await page.evaluate(async () => {
+      const px = async (opts) => {
+        const im = new Image();
+        im.src = window.__galaxyStill({ seed: 0x5eed1, px: 128, dpr: 1, ...opts });
+        await im.decode();
+        const c = document.createElement("canvas");
+        c.width = im.width;
+        c.height = im.height;
+        const cx = c.getContext("2d");
+        cx.drawImage(im, 0, 0);
+        return cx.getImageData(0, 0, im.width, im.height).data;
+      };
+      const lum = (d, i) => 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+      const compare = async (type) => {
+        const on = await px({ type });
+        const off = await px({ type, suppressCraters: true });
+        let changed = 0;
+        let darker = 0;
+        let opaque = 0;
+        for (let i = 0; i < on.length; i += 4) {
+          if (on[i + 3] > 0) opaque++;
+          if (on[i] === off[i] && on[i + 1] === off[i + 1] && on[i + 2] === off[i + 2]) continue;
+          changed++;
+          if (lum(on, i) < lum(off, i) - 4) darker++;
+        }
+        return { changed, darker, opaque, total: on.length / 4 };
+      };
+      return {
+        barren: await compare("barren"),
+        lava: await compare("lava"),
+        terran: await compare("terran"),
+      };
+    });
+
+    check(
+      "an airless world draws craters",
+      crat.barren.changed > crat.barren.total * 0.01 && crat.lava.changed > crat.lava.total * 0.01,
+      `barren ${crat.barren.changed}/${crat.barren.total}px, lava ${crat.lava.changed}/${crat.lava.total}px`,
+    );
+    // Barren only, and the exclusion is the point rather than an oversight. A
+    // crater legitimately contains BOTH a shadowed floor and a lit rim, so the
+    // sign of the change is a property of the type's palette and not of craters:
+    // on grey rock the floor dominates and 99% of changed pixels go darker, while
+    // on a lava world the rim is molten rock and is the brightest thing on the
+    // planet, which puts this at 46%. Asserting "darker" for both was asserting a
+    // fact about grey.
+    check(
+      "and on grey rock a crater is a shadow, not a highlight",
+      crat.barren.darker / crat.barren.changed > 0.9,
+      `${Math.round((100 * crat.barren.darker) / crat.barren.changed)}% of changed pixels went darker ` +
+        `(lava ${Math.round((100 * crat.lava.darker) / crat.lava.changed)}%, and that is correct: its rim is molten)`,
+    );
+    check(
+      "a world with an atmosphere is untouched by the flag — the control, without which the two above mean nothing",
+      crat.terran.changed === 0,
+      `${crat.terran.changed} pixels changed on a world with no craters to suppress`,
+    );
+
     check(
       "a world is drawn from a small discrete palette, not a smooth gradient",
       look.worldColours < 400,
