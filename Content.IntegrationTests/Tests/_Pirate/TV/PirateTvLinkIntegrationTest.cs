@@ -192,7 +192,7 @@ public sealed class PirateTvLinkIntegrationTest
                 "Tail is not showing the root's channel after re-parenting.");
             Assert.That(entMan.GetComponent<DeviceLinkSinkComponent>(c).LinkedSources, Is.EquivalentTo(new[] { a }),
                 "Tail's DeviceLink sources do not match its new parent.");
-            Assert.That(entMan.GetComponent<DeviceLinkSourceComponent>(a).LinkedPorts.ContainsKey(c), Is.True,
+            Assert.That(link.GetLinkedSinks(a, "PirateTvBroadcast"), Does.Contain(c),
                 "Root has no reciprocal link to the re-parented tail.");
 
             entMan.DeleteEntity(a);
