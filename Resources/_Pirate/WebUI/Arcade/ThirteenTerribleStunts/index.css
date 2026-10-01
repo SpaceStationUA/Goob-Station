@@ -1,0 +1,60 @@
+:root {
+  --c1: #1F0A00;
+  --c2: #FFFCEA;
+  --c3: #A29782;
+  --c4: #CEC6AD;
+}
+
+#c2d {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  background: var(--c2);
+  border-radius: 5vmin;
+  height: 95vh;
+  aspect-ratio: 320 / 256;
+  max-height: calc(95vw * 256 / 320);
+}
+
+#c2d::before {
+  content: "";
+  position: absolute;
+}
+
+html {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  overscroll-behavior: none;
+  touch-action: none;
+  background: var(--c1);
+}
+
+body {
+  position: relative;
+}
+
+* {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+.vignette {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	box-shadow: 0 0 10vh 0px #1f0a00 inset;
+}
+
+#fps {
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: white;
+  padding: 1vh;
+  font-size: 10px;
+}

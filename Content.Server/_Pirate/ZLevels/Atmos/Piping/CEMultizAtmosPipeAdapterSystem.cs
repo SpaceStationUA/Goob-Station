@@ -52,7 +52,7 @@ public sealed class CEMultizAtmosPipeAdapterSystem : EntitySystem
         }
 
         var nodeQuery = GetEntityQuery<NodeContainerComponent>();
-        var tile = grid.TileIndicesFor(xform.Coordinates);
+        var tile = NodeHelpers.MapSys.TileIndicesFor(grid.Owner, grid, xform.Coordinates);
         QueueAdapterRefloodsInTile(nodeQuery, grid, tile);
 
         if (!TryComp<CEZLinkedGridComponent>(gridUid, out var linked))

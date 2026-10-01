@@ -67,6 +67,12 @@
     <File Path="RobustToolbox/.github/workflows/publish-client.yml" />
     <File Path="RobustToolbox/.github/workflows/test-content.yml" />
   </Folder>
+  <Folder Name="/RobustToolbox/cefglue/">
+    <Project Path="RobustToolbox/cefglue/CefGlue/CefGlue.csproj">
+      <BuildType Solution="DebugOpt|*" Project="Debug" />
+      <BuildType Solution="Tools|*" Project="Debug" />
+    </Project>
+  </Folder>
   <Folder Name="/RobustToolbox/Imports/">
     <File Path="RobustToolbox/Imports/Benchmarks.props" />
     <File Path="RobustToolbox/Imports/Client.props" />
@@ -161,6 +167,7 @@
     </Project>
     <Project Path="RobustToolbox/Robust.Client.IntegrationTests/Robust.Client.IntegrationTests.csproj" />
     <Project Path="RobustToolbox/Robust.Client.Tests/Robust.Client.Tests.csproj" />
+    <Project Path="RobustToolbox/Robust.Client.WebView/Robust.Client.WebView.csproj" />
     <Project Path="RobustToolbox/Robust.Client/Robust.Client.csproj" />
     <Project Path="RobustToolbox/Robust.Packaging.Tests/Robust.Packaging.Tests.csproj" />
     <Project Path="RobustToolbox/Robust.Packaging/Robust.Packaging.csproj" />

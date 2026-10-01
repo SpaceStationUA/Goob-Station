@@ -17,3 +17,7 @@ general-station-record-console-reset-filters = Скинути
 general-station-record-console-delete = Видалити
 general-station-record-job-filter = Посада
 general-station-record-species-filter = Вид
+# Pirate: evidence board
+general-station-record-console-toggle-board = Дошка доказів
+general-station-record-console-board-back = Назад до записів
+general-station-record-console-pin-board = Закріпити на дошці доказів
