@@ -956,6 +956,156 @@ try {
     });
 
     /**
+     * The overlay's rotation, for a world AND for the black hole.
+     *
+     * **Visibility, not presence.** The black hole's strip was animating perfectly —
+     * `background-position` advancing, `playState: running` — on an element sitting at
+     * `opacity: 0`, because it was mounted under `class="blackhole"` while the
+     * stylesheet only reveals a strip under `.world.turning`. Every signal said it
+     * worked. The only thing that showed it did not was reading the computed opacity.
+     * So this asserts the strip is *seen*, which is a different question from whether
+     * it exists or is scheduled.
+     *
+     * **Speed, because "animating" is not the same as "reads as turning".** At 48
+     * seconds a turn over 24 frames each frame held for two seconds: technically
+     * running, visually a slideshow. The threshold is one second of hold, on the
+     * grounds that somebody watching to see whether a thing turns gives it about a
+     * second. That is a taste number, and it is written down as one.
+     */
+    const overlaySpin = await page.evaluate(async () => {
+      const open = async (id) => {
+        const hit = document.querySelector(`.sys-hit[data-sys="${id}"]`);
+        if (!hit) return null;
+        const r = hit.getBoundingClientRect();
+        hit.dispatchEvent(
+          new MouseEvent("click", {
+            bubbles: true,
+            clientX: r.x + r.width / 2,
+            clientY: r.y + r.height / 2,
+          }),
+        );
+        // Long enough for the deferred strip, short enough to prove the still was
+        // there first.
+        await new Promise((r2) => setTimeout(r2, 2200));
+        const el = document.querySelector(".overlay .world-turn");
+        if (!el) return { id, noStrip: true };
+        const cs = getComputedStyle(el);
+        const dur = parseFloat(cs.animationDuration) * 1000;
+        const steps = parseInt(cs.animationTimingFunction.replace(/[^0-9]/g, ""), 10) || 1;
+        const out = {
+          id,
+          opacity: parseFloat(cs.opacity),
+          playState: cs.animationPlayState,
+          durMs: dur,
+          steps,
+          holdMs: Math.round(dur / steps),
+          moving: cs.backgroundPosition !== "0px 0px",
+        };
+        document.querySelector(".overlay-close")?.dispatchEvent(
+          new MouseEvent("click", { bubbles: true }),
+        );
+        await new Promise((r2) => setTimeout(r2, 200));
+        return out;
+      };
+      return { crow: await open("the-crow"), burzsia: await open("burzsia") };
+    });
+
+    for (const [label, m] of [["black hole", overlaySpin.crow], ["world", overlaySpin.burzsia]]) {
+      check(
+        `the ${label}'s rotating strip is visible, not merely present`,
+        m && !m.noStrip && m.opacity > 0.9 && m.playState === "running",
+        m && m.noStrip
+          ? "no strip in the overlay at all"
+          : m
+            ? `opacity ${m.opacity}, playState ${m.playState}`
+            : "no marker to open",
+      );
+      check(
+        `and the ${label} turns fast enough to read as turning`,
+        m && !m.noStrip && m.holdMs > 0 && m.holdMs <= 1000,
+        m && !m.noStrip
+          ? `${m.durMs}ms over ${m.steps} frames = ${m.holdMs}ms a frame`
+          : "no strip",
+      );
+    }
+
+    /**
+     * Consecutive frames of a turning world must actually LOOK different.
+     *
+     * This is the check for a failure mode that is worse than not animating, because
+     * every other signal says it works. A gas giant was animating correctly — position
+     * advancing, `playState: running`, opacity 1 — and two frames 1.6s apart differed
+     * by 89 pixels out of 57888. The cause was structural: a band of constant
+     * *latitude* is invariant under a shift in longitude, so the palette index came
+     * back identical for the same pixel on every frame and the bands, which dominate
+     * the image, simply did not move.
+     *
+     * Measured on the sprite rather than through the DOM, because the DOM can only
+     * report that the animation is scheduled; it cannot report that the result looks
+     * like motion. Decoding the strip and comparing frame 0 with frame 1 is the only
+     * version of this question worth asking.
+     */
+    const framesDiff = await page.evaluate(async () => {
+      const { uri } = window.__galaxySheet({ seed: 1992559903, type: "gas", px: 96, dpr: 1 }, 8);
+      const im = new Image();
+      im.src = uri;
+      await im.decode();
+      const c = document.createElement("canvas");
+      c.width = im.width;
+      c.height = im.height;
+      const cx = c.getContext("2d");
+      cx.drawImage(im, 0, 0);
+      const d = cx.getImageData(0, 0, im.width, im.height).data;
+      const F = im.width / 8;
+      let diff = 0;
+      let n = 0;
+      for (let y = 0; y < im.height; y++) {
+        for (let x = 0; x < F; x++) {
+          const a = (y * im.width + x) * 4;
+          const e = (y * im.width + x + F) * 4;
+          n++;
+          if (d[a] !== d[e] || d[a + 1] !== d[e + 1] || d[a + 2] !== d[e + 2]) diff++;
+        }
+      }
+      return Math.round((100 * diff) / n);
+    });
+
+    check(
+      "a turning world actually looks different frame to frame — animating is not the same as moving",
+      framesDiff > 15,
+      `a gas giant's frame 0 and frame 1 differ in ${framesDiff}% of pixels`,
+    );
+
+    check(
+      "the black hole's strip is deferred, so opening it does not freeze the page",
+      // Read SYNCHRONOUSLY, in the same task as the click. An earlier version of
+      // this waited 60ms, which is already past the `setTimeout(0)` the deferral
+      // uses, so it saw a finished strip and reported the deferral as broken. The
+      // property being tested is "no strip exists at the end of the click's own
+      // task", and only a same-task read can see that.
+      await page.evaluate(() => {
+        const hit = document.querySelector('.sys-hit[data-sys="the-crow"]');
+        const r = hit.getBoundingClientRect();
+        hit.dispatchEvent(
+          new MouseEvent("click", {
+            bubbles: true,
+            clientX: r.x + r.width / 2,
+            clientY: r.y + r.height / 2,
+          }),
+        );
+        const early = {
+          still: !!document.querySelector(".overlay .world-still"),
+          strip: !!document.querySelector(".overlay .world-turn"),
+        };
+        document.querySelector(".overlay-close")?.dispatchEvent(
+          new MouseEvent("click", { bubbles: true }),
+        );
+        return early.still && !early.strip;
+      }),
+      "still on screen, strip not yet generated, within the click's own task",
+    );
+
+    /**
      * Ring systems.
      *
      * Three things have to hold at once and none of them is implied by the other

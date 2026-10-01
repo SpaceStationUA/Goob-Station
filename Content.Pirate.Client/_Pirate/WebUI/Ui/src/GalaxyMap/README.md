@@ -683,6 +683,52 @@ the chart behaves; what can silently break is structural — a missing clip wind
 missing `<animate>`, or an image `size` wide instead of `size * frames` wide, which
 renders frame 0 forever and looks exactly like a still.
 
+### Rotation: three separate things were wrong
+
+The overlay looked frozen. It was not one bug.
+
+**The black hole's strip was invisible.** It was mounted under `class="blackhole"`
+while the stylesheet only reveals a strip under `.world.turning`, so it sat at
+`opacity: 0` and the animation ran on an element nobody could see. Every signal said
+it worked: `background-position` advancing, `playState: running`, the strip present in
+the DOM. Only reading the computed opacity showed otherwise. A rotating element
+nobody can see is the worst failure available to a component whose only reason to
+exist is that it rotates, and the fix is to not keep a second parallel set of class
+names for the same thing. It now uses `WorldSprite`'s contract verbatim.
+
+**The period was so long it read as static.** 48 seconds a turn over 24 frames is
+two seconds a frame. That animates, and it looks like a slideshow. A viewer checking
+whether a thing turns gives it about a second. Planets are now 15s over 28 frames
+(536ms a frame) and the black hole 11s over 26 (423ms).
+
+**And the gas giant was animating without appearing to move at all.** This is the
+interesting one. Two frames 1.6s apart differed by **89 pixels out of 57888**, while
+the black hole's differed by 1833. The cause is structural: a band of constant
+*latitude* is invariant under a shift in *longitude*, so the palette index came back
+identical for the same pixel on every frame. The only longitude dependence was the
+turbulence's contribution to where a band *starts*, which moves a boundary without
+changing which band a pixel is in — and the bands dominate the image, so almost
+nothing changed.
+
+The fix keeps the band structure, which is the thing worth having, and moves the
+*tone within* each band using a field that varies in both axes. The reference gets
+this for free: its palette comes from `disk + light_d` where `disk` is a full 2D
+field, so its tone moves with the weather. Ours was reading the band index and
+nothing else.
+
+The swirl is deliberately low-frequency with a high threshold. The first attempt used
+a high frequency at 0.07 — about 0.4 of a standard deviation — and shifted the tone
+of 60% of the disc, which broke the two properties that make the type read as a gas
+giant at all: the largest single tone went from 30% to 43% of the disc, and the
+bands' vertical anisotropy collapsed from 1.48 to 1.14. At a low frequency and a
+threshold near one deviation it forms a few coherent patches along the bands, which
+is also what a storm on a gas giant is, and the stripes survive underneath. Measured
+after: frame-to-frame difference 19% (was ~0), anisotropy **2.26** (was 1.48).
+
+The check for this decodes the strip and compares frame 0 with frame 1. The DOM can
+only report that an animation is *scheduled*; it cannot report that the result looks
+like motion, and on this bug every DOM-level signal was green.
+
 ## Layout
 
 | Path | What it is |

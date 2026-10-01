@@ -4,6 +4,7 @@ import { cellsByTerritory, cellOutline } from "./lib/geometry";
 import { hasRings, planetSheet, planetTypeFor, planetUri, seedFromId } from "./lib/planet";
 import { ringGeomFor, ringHalf } from "./WorldRing";
 import { blackHoleUri } from "./lib/blackhole";
+import { reducedMotion } from "./BlackHole";
 import { loopToPxPath, loopsToPxPath, makeTransform } from "./lib/transform";
 import { pick, type GalaxyModel, type PatternId, type Route, type Territory } from "./lib/model";
 
@@ -270,9 +271,7 @@ export default function Chart(props: ChartProps) {
    * exactly the kind of thing that setting exists for, and there are twenty of them
    * on screen at once.
    */
-  const turning = () =>
-    typeof window === "undefined" ||
-    !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const turning = () => !reducedMotion();
 
   const planetSprites = createMemo(() => {
     if (!props.planets)
@@ -1053,7 +1052,7 @@ export default function Chart(props: ChartProps) {
                                 attributeName="x"
                                 calcMode="discrete"
                                 values={turningMarks().find((m) => m.id === n.system.id)?.offsets ?? ""}
-                                dur="48s"
+                                dur="26s"
                                 repeatCount="indefinite"
                               />
                             </image>

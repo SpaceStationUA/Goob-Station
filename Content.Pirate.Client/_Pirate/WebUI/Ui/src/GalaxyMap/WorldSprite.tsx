@@ -8,6 +8,7 @@
 
 import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
 import { planetSheet, planetUri, type PlanetType } from "./lib/planet";
+import { reducedMotion } from "./BlackHole";
 import WorldRing from "./WorldRing";
 
 export interface WorldSpriteProps {
@@ -95,7 +96,10 @@ export default function WorldSprite(props: WorldSpriteProps) {
   const [sheet, setSheet] = createSignal<string>();
 
   createEffect(() => {
-    const n = frames();
+    // Rotation is the reason to open this panel, so `prefers-reduced-motion` is the
+    // only thing that turns it off — and it has to be read INSIDE the effect, or a
+    // change to the setting would not be noticed.
+    const n = reducedMotion() ? 1 : frames();
     const target = props.seed;
     // Read first so the effect re-subscribes to a prop change.
     const px = props.px;
@@ -145,7 +149,7 @@ export default function WorldSprite(props: WorldSpriteProps) {
             style={{
               "background-image": `url(${uri})`,
               "background-size": `${props.px * frames()}px ${props.px}px`,
-              "animation-duration": `${props.period ?? 40}s`,
+              "animation-duration": `${props.period ?? 15}s`,
               "animation-timing-function": `steps(${frames()})`,
               "--world-end": `-${props.px * frames()}px`,
             }}

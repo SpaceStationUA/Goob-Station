@@ -1,23 +1,51 @@
 /**
  * A black hole, drawn as one generated sprite.
  *
- * The geometry here is `lib/blackhole.ts`, and this file is only the two hosts that
- * place it. An earlier version drew it as SVG — a dark circle, a stroked ring and
- * two `ringHalf` annuli — and it looked like a diagram of a black hole: a hoop with
- * a circle inside it. The reference's disc is the *preimage* of an ellipse under a
+ * The geometry here is `lib/blackhole.ts`, and this file is only the host that places
+ * it. An earlier version drew it as SVG — a dark circle, a stroked ring and two
+ * `ringHalf` annuli — and it looked like a diagram of a black hole: a hoop with a
+ * circle inside it. The reference's disc is the *preimage* of an ellipse under a
  * non-linear warp, which no combination of paths can express, and it is textured
- * with rotating fbm, which no flat fill can either. So it is baked, like a planet,
- * and this component is a wrapper around the same cache the planets use.
+ * with rotating fbm, which no flat fill can either. So it is baked, like a planet.
  *
- * The void is not drawn as a black shape. It is genuinely the absence of anything,
- * as it is in the reference: what makes a black hole legible is the photon ring at
- * the horizon's edge and the disc wrapped around it. On a chart with a near-black
- * page that is a real risk — a dark disc is a hole in the chart — and the photon
- * ring is what pays for it, so its contrast is asserted in `check-dom.mjs` by
- * measuring the rendered pixels rather than by reading an attribute.
+ * ## It reuses `WorldSprite`'s class contract, and that is not tidiness
+ *
+ * The first version used `class="blackhole"` and gave its strip `class="world-turn"`.
+ * The stylesheet only shows a strip under `.world.turning`, so the animation ran
+ * happily on an element sitting at `opacity: 0` and the black hole never turned at
+ * all. It reported as animating: `background-position` advanced, `playState` was
+ * `running`, and nothing was visible to advance. A rotating element nobody can see is
+ * the most embarrassing failure available to a component whose only reason to exist
+ * is that it rotates, and the fix is to not keep a second, parallel set of class
+ * names for the same thing.
+ *
+ * ## The period is the difference between rotating and being static
+ *
+ * At 48 seconds a turn across 24 frames, each frame holds for two seconds. That
+ * animates — the position advances, the clock runs — and it reads as a slideshow, or
+ * as nothing at all. A viewer asked whether something turns is watching for change
+ * over about a second, so the turn has to fit in a few times that. The planet hosts
+ * use 15s and the black hole 11s, which is the difference between "it moved" and "I
+ * could not tell".
+ *
+ * Strip generation is deferred on a macrotask for the same reason `WorldSprite`
+ * defers: a couple of dozen frames of a 190px body is a synchronous pixel loop, and
+ * running it inside the click that opened the panel freezes the page at the moment
+ * the player asked it a question. The still is drawn at full size first and is
+ * correct on its own — if the strip never arrives, the panel still shows a right
+ * black hole.
  */
 
+import { createEffect, createSignal, onCleanup, Show } from "solid-js";
 import { blackHoleSheet, blackHoleUri } from "./lib/blackhole";
+
+/** `prefers-reduced-motion`. Rotation is the point here, so this is the only off switch. */
+export function reducedMotion(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true
+  );
+}
 
 export interface BlackHoleProps {
   /** Width of the sprite in CSS pixels. The disc is drawn to fill it. */
@@ -32,36 +60,58 @@ export interface BlackHoleProps {
 
 export default function BlackHole(props: BlackHoleProps) {
   const frames = () => Math.max(1, Math.floor(props.frames ?? 0));
-  const still = () => blackHoleUri({ seed: props.seed, px: props.px, dpr: dpr() });
   const dpr = () => (typeof window === "undefined" ? 1 : window.devicePixelRatio || 1);
-  // A rotating disc is the one place on the chart where motion is the point: the
-  // shape is fixed and only the texture turns, which is what sells it as material
-  // in orbit rather than as a decal.
-  const sheet = () =>
-    frames() > 1
-      ? blackHoleSheet({ seed: props.seed, px: props.px, dpr: 1 }, frames()).uri
-      : undefined;
+  // Read first so the effect re-subscribes when any of them change.
+  const seed = () => props.seed;
+  const px = () => props.px;
+  const n = () => (reducedMotion() ? 1 : frames());
+
+  const still = () => blackHoleUri({ seed: seed(), px: px(), dpr: dpr() });
+
+  const [sheet, setSheet] = createSignal<string>();
+
+  createEffect(() => {
+    const want = n();
+    const target = seed();
+    const size = px();
+    if (want <= 1) {
+      setSheet(undefined);
+      return;
+    }
+    setSheet(undefined);
+    // At dpr 1: rotation hides resampling, and 2x is four times the pixels for a
+    // strip that is on screen for a fraction of a second.
+    const timer = window.setTimeout(() => {
+      setSheet(blackHoleSheet({ seed: target, px: size, dpr: 1 }, want).uri);
+    }, 0);
+    onCleanup(() => window.clearTimeout(timer));
+  });
 
   return (
     <div
-      class="blackhole"
-      style={{ width: `${props.px}px`, height: `${props.px}px` }}
+      class="world blackhole"
+      classList={{ turning: sheet() !== undefined }}
+      style={{ width: `${px()}px`, height: `${px()}px` }}
       role={props.title ? "img" : undefined}
       aria-label={props.title}
     >
+      {/* The still is always in the DOM. When the strip arrives it fades in over the
+          top, so there is never a blank frame between the two. */}
       <img class="world-still" src={still()} alt="" />
-      {sheet() && (
-        <div
-          class="world-turn"
-          style={{
-            "background-image": `url(${sheet()})`,
-            "background-size": `${props.px * frames()}px ${props.px}px`,
-            "animation-duration": `${props.period ?? 30}s`,
-            "animation-timing-function": `steps(${frames()})`,
-            "--world-end": `-${props.px * frames()}px`,
-          }}
-        />
-      )}
+      <Show when={sheet()} keyed>
+        {uri => (
+          <div
+            class="world-turn"
+            style={{
+              "background-image": `url(${uri})`,
+              "background-size": `${px() * n()}px ${px()}px`,
+              "animation-duration": `${props.period ?? 11}s`,
+              "animation-timing-function": `steps(${n()})`,
+              "--world-end": `-${px() * n()}px`,
+            }}
+          />
+        )}
+      </Show>
     </div>
   );
 }

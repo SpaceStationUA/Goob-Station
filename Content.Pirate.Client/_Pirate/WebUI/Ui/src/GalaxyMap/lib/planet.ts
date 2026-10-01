@@ -299,8 +299,9 @@ const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", 
  * 8: gas giants banded by one-dimensional latitude noise.
  * 9: ice worlds get a second, independent water field.
  * 10: gas giants lost their redundant cloud deck; the asteroid silhouette
- *     is no longer polar-damped. */
-export const PLANET_ALGO_VERSION = 10;
+ *     is no longer polar-damped.
+ * 11: gas giant tone varies with longitude, so its rotation is visible. */
+export const PLANET_ALGO_VERSION = 11;
 
 export interface PlanetOpts {
   seed: number;
@@ -1010,6 +1011,43 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
           // thing banding must never look like.
           if (frac < 0.09 && ditherV > 0.5) idx = RAMP[(bi + B - 1) % B];
           else if (frac > 0.91 && ditherV < 0.5) idx = RAMP[(bi + 1) % B];
+
+          /**
+           * A tone that moves with longitude, so the rotation is VISIBLE.
+           *
+           * This type was animating correctly and still looked frozen, which is a
+           * worse bug than not animating because every signal said it worked.
+           * Measured on two frames 1.6s apart: the black hole changed 1833 pixels,
+           * this changed 89.
+           *
+           * The reason is structural. A band of constant latitude is invariant under
+           * a shift in longitude, so `bi` — which is `floor(sy * 9 + ...)` — comes
+           * back identical for the same pixel on every frame. The only longitude
+           * dependence was the turbulence's contribution to the boundary *position*,
+           * which shifts where a band starts without changing which band a pixel is
+           * in. The bands dominate the image, so almost nothing moved.
+           *
+           * The fix keeps the band structure (the one-dimensional noise is what
+           * makes the stripes coherent and worth having) and moves the TONE within
+           * each band instead, with a field that varies in both axes. The reference
+           * gets this for free: its palette comes from `disk + light_d`, where `disk`
+           * is a full two-dimensional field, so its tone moves with the weather. Ours
+           * was reading the band index and nothing else.
+           */
+          // Low frequency and a high threshold, both deliberate. The first attempt
+          // used a high frequency and a threshold of 0.07 — about 0.4 of a standard
+          // deviation — so it shifted the tone of some 60% of the disc and buried
+          // the two things that make this type read as a gas giant: the largest
+          // single tone jumped from 30% to 43% of the disc, and the bands' vertical
+          // anisotropy fell from 1.48 to 1.14, which is to say they stopped being
+          // bands. At a low frequency and a threshold near one deviation the swirl
+          // forms a few coherent patches along the bands — which is also what a
+          // storm on a gas giant is — and the stripe structure survives underneath.
+          const swirl =
+            fbm(cu * period * 0.9, cvv * period * 0.5, period, Math.max(2, octaves - 2), seed + 907) -
+            0.5;
+          if (swirl > 0.17) idx = Math.min(3, idx + 1);
+          else if (swirl < -0.17) idx = Math.max(0, idx - 1);
           col = sea[idx];
                 } else if (kind === "solid") {
           /**
