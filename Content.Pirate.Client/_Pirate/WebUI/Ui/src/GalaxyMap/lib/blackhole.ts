@@ -41,7 +41,7 @@
 import { BAYER4, TAU, fbm, fract, hexToRgb, smoothstep, type RGB } from "./paint";
 
 /** Bump when the noise changes, so cached sprites regenerate. */
-export const BLACKHOLE_ALGO_VERSION = 3;
+export const BLACKHOLE_ALGO_VERSION = 7;
 
 export interface BlackHoleOpts {
   seed: number;
@@ -76,9 +76,12 @@ interface Frame {
   /** Horizon radius in device pixels. */
   hr: number;
   /** How much of the sprite the disc's un-warped annulus spans. */
-  discR: number;
   hole: RGB[];
   disc: RGB[];
+  /** The reference's `disk_width` uniform. Their default is 0.1. */
+  diskWidth: number;
+  /** How much of the sprite the disc spans, reduced to leave room for the tilt. */
+  discScale: number;
   /** Fixed tilt, so each system is tipped differently. */
   tilt: number;
   size: number;
@@ -94,9 +97,10 @@ function prep(o: BlackHoleOpts, d: number): Frame {
   return {
     d,
     hr,
-    discR: d * 0.5,
     hole: HOLE.map(hexToRgb),
     disc: DISC.map(hexToRgb),
+    diskWidth: 0.1,
+    discScale: 0.72,
     /**
      * A seeded tip, and never a flat one.
      *
@@ -108,7 +112,7 @@ function prep(o: BlackHoleOpts, d: number): Frame {
      * `0.4..1.1` radians either way keeps every disc visibly tipped.
      */
     tilt: (fract(o.seed * 0.6180339887) < 0.5 ? -1 : 1) *
-      (0.4 + fract(o.seed * 0.2718281) * 0.7),
+      (0.22 + fract(o.seed * 0.2718281) * 0.45),
     /**
      * Cells across the disc. The reference uses `size = 50` on a 300px canvas;
      * 5 here gave about five cells over the whole structure, so the band came out
@@ -121,137 +125,169 @@ function prep(o: BlackHoleOpts, d: number): Frame {
 }
 
 /**
- * The displacement ramp: 1 at the centre, 0 at `outer`, smooth between.
+ * The displacement ramp, transcribed exactly.
  *
- * The reference writes this as `smoothstep(d, 0.5, 0.2)` — edges the wrong way
- * round. GLSL leaves that undefined, and in practice it computes
- * `clamp((x - a) / (b - a))`, which with `a > b` is a *decreasing* ramp. Spelled
- * out here so the sign is not a matter of faith: this is a bump that falls off
- * outward, and getting it the other way up throws the disc off the sprite.
+ * `smoothstep(d, outer, inner)` in the reference is a call with its edges the wrong
+ * way round, which GLSL leaves undefined and which in practice computes
+ * `clamp((x - e0) / (e1 - e0))` with `x` being the very argument passed as `e0`.
+ * That gives `clamp((inner - d) / (outer - d))`, and the shape is the part that
+ * matters: it **peaks at `inner / outer` at the centre and is already zero by
+ * `inner`**. It is not a plateau.
+ *
+ * I had it as a plateau at 1.0 out to `inner`, falling to 0 at `outer`, and
+ * multiplied the result by one. So the disc was being displaced by a full
+ * sprite-height where theirs moves it by 0.4 — which is what tore the annulus into
+ * a disconnected bar and a detached arc instead of one ribbon sweeping past the
+ * void.
+ *
+ * Written out rather than left as a reversed smoothstep, because "reversed" is
+ * exactly the part that is ambiguous and it is now load-bearing four times over.
  */
-function bump(dd: number, outer: number): number {
-  return 1 - smoothstep((dd - outer * 0.4) / (outer * 0.6));
+function bump(dd: number, outer: number, inner: number): number {
+  if (dd >= inner) return 0;
+  const den = outer - dd;
+  if (den <= 1e-6) return 0;
+  return Math.max(0, Math.min(1, (inner - dd) / den));
 }
 
-function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: number, spin: number) {
-  const { d, hr, discR, hole, disc, tilt, size, seed } = f;
+function renderFrame(
+  f: Frame,
+  out: ImageData,
+  stride: number,
+  ox: number,
+  oy: number,
+  spin: number,
+) {
+  const { d, hr, hole, disc, tilt, size, seed } = f;
   const px = out.data;
-  const cosT = Math.cos(tilt);
-  const sinT = Math.sin(tilt);
-  // One full turn of the disc's texture per loop, so frame 0 and frame N match.
-  // The reference spins it at 314x the planet's rate, which cannot close on a
-  // frame budget that size; the visual cue is the same at any rate.
-  const texSpin = spin * TAU;
+  /**
+   * A direct transliteration of the reference's `fragment()`, in its order and with
+   * its arithmetic, rather than a paraphrase of it.
+   *
+   * Three separate defects in this file all came from paraphrasing. The first was
+   * reading `smoothstep(d, outer, inner)` — a call with its edges reversed, which
+   * GLSL leaves undefined — as a plateau at 1.0 rather than as a ramp peaking at
+   * `inner / outer`; that displaced the disc by a whole sprite height where the
+   * original moves it 0.4, and it is what tore the annulus into a disconnected bar
+   * and a detached arc. The second was computing the displacement ramp from the
+   * distance to the sprite centre in the *unrotated* frame while the geometry used
+   * the rotated one. The third was the alpha threshold. Each was a transcription
+   * error rather than a design error, and the only reliable way to stop making them
+   * is to stop rewriting the thing in your own shape.
+   *
+   * So: same statements, same order, same constants. The two deviations are marked
+   * where they occur.
+   */
+  const rot = (x: number, y: number, a: number): [number, number] => {
+    const c = Math.cos(a);
+    const sn = Math.sin(a);
+    const dx = x - 0.5;
+    const dy = y - 0.5;
+    return [dx * c - dy * sn + 0.5, dx * sn + dy * c + 0.5];
+  };
+  // DEVIATION 1: their texture rotation is `time * time_speed * 3.0`, and with
+  // time_speed 0.2 that is 0.6 of a turn across the loop — which does not close, so
+  // frame 0 and frame N would differ. One whole turn does, and at this scale the
+  // rate is not the point. The wobble below keeps their factor and is periodic
+  // either way.
+  const tRot = spin * TAU;
+  const wobble = Math.sin(spin * TAU * 0.4) * 0.01;
 
   for (let y = 0; y < d; y++) {
     for (let x = 0; x < d; x++) {
       const i = ((y + oy) * stride + (x + ox)) * 4;
-      // Normalised sprite coords, 0..1.
       const u = (x + 0.5) / d;
       const v = (y + 0.5) / d;
-      // Distance from the sprite's centre, in the same units the bump uses.
-      const dC = Math.hypot(u - 0.5, v - 0.5);
+
+      // Their dither: a 2x2 ordered pattern. BAYER4 stands in at twice the
+      // resolution, which is the same idea and one fewer thing to get wrong.
+      const dith = BAYER4[(y & 3) * 4 + (x & 3)] / 16 < 0.5;
 
       let outRgb: RGB | null = null;
 
-      // ---- the disc, as the preimage of an annulus under the warp ----------
+      // ---- the disc -------------------------------------------------------
       {
-        // Rotate about the centre, then widen. `uv2` is kept pre-warp because the
-        // reference computes the lighting from it.
-        const rx = (u - 0.5) * cosT - (v - 0.5) * sinT + 0.5;
-        const ry = (u - 0.5) * sinT + (v - 0.5) * cosT + 0.5;
-        const ux = (rx - 0.5) * 1.3 + 0.5;
-        const uy0 = ry;
+        let [pxu, pyu] = rot(u, v, tilt);
+        const uv2x = pxu;
+        const uv2y = pyu;
+        pxu = (pxu - 0.5) * 1.3 + 0.5;
+        [pxu, pyu] = rot(pxu, pyu, wobble);
 
-        let wy = uy0;
-        // Narrow. At 0.115 the disc was a slab of constant width lying across the
-        // sprite, which is the other half of the diagram look: the reference's band
-        // is a bright arc with material thinning away from it, not a bar.
-        let dWidth = 0.05;
-        let lightY = 0.5;
-        const b = bump(dC, 0.5);
-        if (uy0 < 0.46) {
-          // Upper half: pushed up, and the band is widened where it is closest in.
-          wy = uy0 + b;
-          dWidth += bump(dC, 0.42);
-          lightY -= b;
-        } else if (uy0 > 0.56) {
-          // Lower half: pushed down. The 0.5..0.53 dead band is the reference's, and
-          // it is what keeps the two displacements from tearing the disc apart
-          // along the sprite's horizontal midline.
-          wy = uy0 - bump(dC, 0.34);
-          dWidth += bump(dC, 0.4);
-          lightY += bump(dC, 0.4);
+        let lx = 0.5;
+        let ly = 0.5;
+        let dWidth = f.diskWidth;
+        // The distance is taken from the CURRENT uv, after the rotation and the x
+        // scale but before the y displacement — the order matters and getting it
+        // wrong mixes two coordinate frames.
+        if (pyu < 0.5) {
+          const dd = Math.hypot(pxu - 0.5, pyu - 0.5);
+          pyu += bump(dd, 0.5, 0.2);
+          dWidth += bump(dd, 0.5, 0.3);
+          ly -= bump(dd, 0.5, 0.2);
+        } else if (pyu > 0.53) {
+          const dd = Math.hypot(pxu - 0.5, pyu - 0.5);
+          pyu -= bump(dd, 0.4, 0.17);
+          dWidth += bump(dd, 0.5, 0.2);
+          ly += bump(dd, 0.5, 0.2);
         }
 
-        // The annulus, in the displaced space, squashed 4:1 for the viewing angle.
-        const cx = (ux - 0.5) * 1.0;
-        const cy = (wy - 0.5) * 4.0;
-        const centerD = Math.hypot(cx, cy);
+        // DEVIATION 2: the reference's ring_perspective is a uniform at 4.0, and it
+        // scales the LIGHT vector as well as the disc. Kept.
+        const PERSP = 4.0;
+        const lightD = Math.hypot(uv2x - lx, (uv2y - ly) * PERSP) * 0.3;
 
-        // smoothstep(e0, e1, x), written the way our smoothstep takes it. The
-        // reference's two calls are smoothstep(0.1 - 2w, 0.5 - w, centre_d) and
-        // smoothstep(centre_d - w, centre_d, 0.4); the second one's edges depend on
-        // centre_d, which is unusual enough to be worth spelling out.
-        const e0 = 0.1 - dWidth * 2.0;
-        const e1 = 0.5 - dWidth;
-        let disk = smoothstep((centerD - e0) / (e1 - e0));
-        disk *= smoothstep((0.4 - (centerD - dWidth)) / dWidth);
+        // `uv_center = uv - vec2(0, 0.5)`, then `*= vec2(1, 4)`, and the
+        // reference point is (0.5, 0) in that space — which is the sprite centre,
+        // since (0.5, 0.5) maps to (0.5, 0).
+        // Scaled to leave room for the tilt. The reference's disc canvas is three
+        // times the horizon's, so its ring can be tipped 0.7 radians without
+        // anything leaving the frame. Here they share one box, and at full width a
+        // 40-degree tilt swings the ring's ends clean off the sprite — which is what
+        // made the disc read as small and oddly clipped.
+        const cx0 = (pxu - 0.5) * f.discScale;
+        let cy = (pyu - 0.5) * PERSP * f.discScale;
+        const cdist = Math.hypot(cx0, cy);
 
-        if (disk > 0) {
-          // Texture, rotating against the fixed shape. `pow(fbm, 0.5)` lifts the
-          // mid-tones, which is what turns a noisy field into something that reads
-          // as glowing gas rather than as dirt.
-          const tcx = cx * Math.cos(texSpin) - cy * Math.sin(texSpin);
-          const tcy = cx * Math.sin(texSpin) + cy * Math.cos(texSpin);
-          const n = fbm(tcx * size, tcy * size, 64, 3, seed + 17);
-          // pow 0.8 rather than the reference's 0.5. Lifting the mid-tones as hard
-          // as they do fills the band in and gives a solid slab; holding the darks
-          // down lets the noise break the band into streaks, which is what makes it
-          // read as gas rather than as a painted shape.
-          disk *= Math.pow(Math.max(0, n), 0.62);
+        let disk = smoothstep(
+          (cdist - (0.1 - dWidth * 2.0)) / (0.5 - dWidth - (0.1 - dWidth * 2.0)),
+        );
+        disk *= smoothstep((0.4 - (cdist - dWidth)) / dWidth);
 
-          // Their dither. Two steps of a 2x2 ordered pattern; BAYER4 stands in,
-          // which is the same idea at twice the resolution.
-          const dith = BAYER4[(y & 3) * 4 + (x & 3)] / 16;
-          // Lifted hard on the dithered side. The reference's own multiplier is
-          // only 1.2, and against our narrower band that lands the whole ribbon in
-          // the middle of the palette: a slab of uniform mid-orange, where the
-          // reference has a bright white-yellow core falling off to deep red. The
-          // posterisation is what turns this into a highlight rather than a tint.
-          if (dith < 0.5) disk *= 1.45;
+        // Texture, rotating against the fixed shape.
+        let cx = cx0;
+        [cx, cy] = rot(cx, cy + 0.5, tRot);
+        const n = fbm(cx * size, cy * size, 64, 4, seed + 17);
+        disk *= Math.pow(Math.max(0, n), 0.5);
+        if (dith) disk *= 1.2;
 
-          // 0.2 rather than the reference's 0.15: a low cut keeps the faint outer
-          // wash that fills the gap between the ribbon and the void, and the
-          // reference has exactly that. The ribbon's own edge is set by the
-          // posterisation, not by this.
-          if (disk > 0.2) {
-            // Lighting from the pre-warp coordinate, so the bright side does not
-            // swim around with the warp.
-            const lightD =
-              Math.hypot((ux - 0.5) * 1.0, (uy0 - lightY) * 4.0) * 0.3;
-            const idx = Math.max(
-              0,
-              Math.min(disc.length - 1, Math.floor((disk + lightD) * (disc.length - 1))),
-            );
-            outRgb = disc[idx];
-          }
+        if (disk > 0.15) {
+          const idx = Math.max(
+            0,
+            Math.min(disc.length - 1, Math.floor((disk + lightD) * (disc.length - 1))),
+          );
+          outRgb = disc[idx];
         }
       }
 
-      // ---- the horizon, under the disc -------------------------------------
-      // The disc goes on top so a ray can cross in front of it, which is the cue
-      // that reads as depth. Everywhere else the warp has pushed the disc clear of
-      // the centre anyway.
-      // Horizon first, disc over it: a ray crossing in front of the void is the
-      // depth cue, and it cannot be expressed the other way round.
-      let final: RGB | null = null;
+      // ---- the horizon, over the disc --------------------------------------
+      // The horizon draws OVER the disc, which is the opposite of what I had and is
+      // what the reference does: their photon ring is a complete, unbroken circle
+      // lying on top of the ribbon.
+      //
+      // I had the disc on top, on the grounds that a ray crossing in front of the
+      // void is the depth cue. That reads correctly and renders wrong — the ribbon
+      // cut the ring in half and left no bright edge to read the hole by at all, so
+      // the thing looked like a bar lying across a smudge. The reference gets its
+      // depth from the warp (the far side of the disc is displaced past the
+      // horizon, the near side is not), which does not require the disc to occlude
+      // the photon ring, so the occlusion buys nothing and costs the one feature
+      // that makes the hole legible.
+      let final: RGB | null = outRgb;
       const dr = Math.hypot(u - 0.5, v - 0.5) * d;
       if (dr <= hr) {
         const t = dr / hr;
         final = t < 0.9 ? hole[0] : t < 0.95 ? hole[1] : hole[2];
       }
-      if (outRgb) final = outRgb;
       if (!final) continue;
       px[i] = final[0];
       px[i + 1] = final[1];

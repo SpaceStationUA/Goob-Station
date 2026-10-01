@@ -794,19 +794,47 @@ threshold is 200ms a frame, deliberately tightened from the 1000ms it started at
 1000ms is what the 28-frame strip produced, and a threshold that accepts the thing
 you are complaining about is not a threshold.
 
-### The black hole is a ribbon, not a hoop
+### The black hole: transliterate, do not paraphrase
 
-Comparing side by side with the reference at full size made three things obvious.
-Theirs is a thin, hard-edged ribbon that tapers to a point at each end, with a hot
-white-yellow core falling off to deep red, over a wider dim halo. Ours was a slab of
-uniform mid-orange with soft edges and a rounded end.
+Comparing side by side with the reference made it obvious that ours was wrong —
+theirs is a ribbon that tapers to a point at each end, ours was a slab of uniform
+mid-orange with rounded ends. What took four rounds was establishing *why*, and
+every round it was a transcription error rather than a design error:
 
-The band was too wide (0.115 of the outer radius, now 0.05), and the reference's
-fbm lift — `pow(n, 0.5)` — fills the band in solid. Against a narrow band that lands
-the whole ribbon in the middle of the palette. `pow(n, 0.62)` with a 1.45 dither
-multiplier, and a palette that actually reaches white, is what makes it a highlight
-rather than a tint. The alpha cut went from 0.15 to 0.2 to keep the faint outer wash
-that fills the gap between ribbon and void, which the reference has too.
+1. **`smoothstep(d, outer, inner)` does not peak at 1.** The reference calls it with
+   its edges reversed, which GLSL leaves undefined and which computes
+   `clamp((inner - d) / (outer - d))` — so it peaks at `inner / outer` and is
+   **already zero by `inner`**. It is not a plateau. Ours was a plateau at 1.0 out
+   to `inner`, falling to 0 at `outer`, so the disc was displaced by a whole sprite
+   height where theirs moves it 0.4. That is what tore the annulus into a
+   disconnected bar and a detached arc.
+2. **The displacement ramp must be measured in the same frame as the geometry.**
+   Ours computed it from the distance to the sprite centre *before* the rotation
+   while the geometry used the rotated coordinate. Two frames, one image.
+3. **The band's base width is 0.1 and the warp adds up to 0.6 near the centre**, so
+   it varies by an order of magnitude across the disc. Ours used a thin constant
+   band on the reasoning that a narrow band looks like a ribbon — it does, but a
+   ribbon of constant width with rounded ends reads as a cigar. The taper *is* the
+   variation.
+
+The fix for all three was to stop paraphrasing. `renderFrame` is now a line-by-line
+transliteration of the reference's `fragment()`: same statements, same order, same
+constants, with the two deviations marked in place. Rewriting a 40-line shader in
+your own shape is a good way to make the same mistake three times.
+
+Two more, which are structural rather than arithmetic:
+
+- **The horizon draws over the disc.** Ours had the disc on top, on the reasoning
+  that a ray crossing in front of the void is the depth cue. It reads correctly and
+  renders wrong: the ribbon cut the photon ring in half and left no bright edge to
+  read the hole by. The reference gets its depth from the warp — far side displaced
+  past the horizon, near side not — which does not need the disc to occlude
+  anything, so the occlusion bought nothing and cost the one feature that made the
+  hole legible.
+- **The disc needs its own canvas to be tipped.** The reference's disc canvas is
+  three times the horizon's, so a 0.7 rad tilt has room. Ours shares one box, and at
+  full width a 40° tilt swings the ring's ends clean off the sprite. Hence
+  `discScale` 0.72 and a gentler tilt.
 
 ### A ring needs an interior
 
@@ -816,6 +844,41 @@ slices in three tones is the cheapest thing that says "layered", and the middle 
 is darkest because that is how a ring reads (a shadowed gap between two lit faces)
 and because it separates the ring from a planet of any colour. Both the overlay and
 the chart markers use the same helper, so they cannot drift apart.
+
+The tone ramp had it backwards first: outer and middle both dark, inner light. That
+is a dark wire hoop traced over the planet — a line drawing, not an object. A ring is
+mostly light with a groove in it: lit outer face, dark gap, brightest inner face.
+
+### `above` is the upper arc, and the near half is the lower one
+
+`ringHalf(g, above)` offsets its sweep by `Math.PI` when `above`, which is the
+**upper** arc. The near half — the one drawn in front of the planet — is the lower
+one, because in an SVG's y-down frame a point nearer the viewer sits lower.
+
+`WorldRing` passed `side() === "front"` where it wanted `"back"`. So the half drawn
+in front of the planet crossed its **upper** third and the near half sat behind,
+which reads as a hoop drawn over the top of the disc rather than one passing round
+it. The chart's own markers were always right, which is why only the overlay ever
+looked wrong and why the two had to be compared side by side to notice.
+
+### One radius for both axes, and a whole half cannot detect it
+
+`ringHalf` builds its points with a helper that took a single radius and applied it
+to both x and y. For a whole half that is undetectable: at `t = 0` and `t = PI` the
+sine is zero, so `rx * sin(t)` and `ry * sin(t)` are the same number and the mistake
+has nothing to act on. Only the halves carrying a division were malformed — and since
+a division falls in one half or the other, roughly half of every ringed world was
+drawn with a band ballooned past its own bounds.
+
+The endpoint error scales with `rx`, not `ry`: at `rx = 128`, `ry = 28` an arc
+ending at `t = 1.2` came out at `y = 59` where the ellipse's own lowest point is 28.
+SVG does what its spec says and scales the radii up until the arc fits, so the band
+inflated to more than twice its size. That is not a thing anyone looks for in a
+screenshot, because the ring still read as a ring.
+
+The invariant is now checked without a browser: **every point of a ring path lies on
+one of its own two ellipses**, across 288 arcs spanning four geometries and a sweep
+of the band's width. Reverting the fix puts all 288 off.
 
 ## Layout
 
