@@ -1,44 +1,49 @@
 /**
- * A live WebGL renderer for the system overlay.
+ * A live WebGL renderer for the system overlay's black hole.
  *
- * ## Why this exists, when the baked sprite was already correct
+ * ## This is a transcription, not a description
  *
- * `lib/blackhole.ts` and `lib/planet.ts` generate correct stills, and for the map
- * markers that is still the right answer — they are 16-40px, there are twenty of
- * them, and a filmstrip of the whole set costs about 50ms once. But the overlay
- * is a different problem in three ways at once:
+ * The source is vendored next to this file, in `../reference/`:
+ * `BlackHoleRing.gdshader`, `BlackHole.gdshader` and the `BlackHole.tscn` that
+ * carries the uniform values, from Deep-Fold's PixelPlanets (MIT).
  *
- * 1. **Smoothness is a hard ceiling at the frame count.** A filmstrip played with
- *    `steps(n)` cannot be smoother than `n` frames, so the ceiling is `n / period`.
- *    Ours was 48 frames over 6s, which is 8fps, and 8fps reads as a slideshow no
- *    matter how good the individual frames are. Raising `n` does not help: the
- *    cost is linear in frames, so 60fps is not reachable by generating more of
- *    them. It is a different technology, not a bigger budget.
- * 2. **The wait scales the same way.** 48 frames of a 200px body is a synchronous
- *    pixel loop, so the panel sat on a still for 1.5-3.1s. That is the player
- *    being told nothing is happening for three seconds, right after they asked a
- *    question.
- * 3. **The reference is a shader.** Porting the CPU renderer's *output* gets the
- *    pixels approximately right and the shape approximately right, which is the
- *    worst place to be: it looks close enough that the difference reads as sloppiness
- *    rather than as a gap. Running the same expressions per pixel per frame means
- *    the shape is the shape.
+ * That last file is the one that matters and the one I did not read for a very
+ * long time. The shaders declare DEFAULTS, and the scene OVERRIDES most of them:
  *
- * So this is the reference's arithmetic, not a description of it. Every constant
- * below is the reference's, and the comments say which file it came from.
+ *     ring_perspective   declared 4.0    scene sets 14.0
+ *     disk_width         declared 0.1    scene sets 0.065
+ *     size               declared 50.0   scene sets 6.598
+ *     OCTAVES            no default      scene sets 3
+ *     radius             declared 0.5    scene sets 0.247
+ *     light_width        declared 0.05   scene sets 0.028
+ *     rotation           declared 0.0    scene sets 0.766
  *
- * ## One context, one draw call
+ * Reading the declarations instead of the scene is why this looked wrong for so
+ * long. `ring_perspective` alone: at the declared 4.0 the disc is foreshortened
+ * four to one and reads as a fat ellipse; at the scene's 14.0 it is fourteen to
+ * one and reads as the thin sweep it is actually meant to be. Every attempt to
+ * fix the shape by tuning was compensating for a constant that was never right.
  *
- * The overlay shows one world at a time, so a single canvas and a single full-screen
- * quad is the whole renderer. There is no batching to do and no instancing to get
- * wrong, which is the main reason this could be written in one sitting.
+ * ## The palette runs bright to dark, which is the opposite of what looks obvious
  *
- * ## Falling back
+ * `posterized = floor((disk + light_d) * 4)` indexes straight into the colour
+ * array, and the scene's array starts at near-white and ends at dark red. So a
+ * LOW value is bright and a high value is dark. It has to be transcribed in that
+ * order or every colour decision comes out inverted, which is exactly what an
+ * earlier version did.
  *
- * `blackHoleGL` returns `null` if a context cannot be had or the shader will not
- * compile, and `BlackHole.tsx` falls back to the baked strip. That path is worse
- * in every way and it is still correct, which is the point of keeping it: a CEF
- * without WebGL should show a black hole, not a blank panel.
+ * ## Two sprites, and the order is the whole depth cue
+ *
+ * `BlackHole.tscn` has two children: `BlackHole` at index 0 and `Disk` at index 1.
+ * Godot draws later siblings on top, so the disc is drawn OVER the horizon. That
+ * is what puts a near side in front of the singularity, and it is why the photon
+ * ring is broken where the band crosses it rather than being a complete circle.
+ *
+ * They are also different sizes. In the scene, `BlackHole` spans 100x100 and `Disk`
+ * spans 300x300, both centred on the same point -- so the horizon is a THIRD of the
+ * canvas. Its radius is therefore 0.247/3 = 0.0823 of the canvas, and its UV is
+ * the canvas UV scaled by three about the middle. Both facts are in the constants
+ * below, and both were wrong by a factor of 1.5 before the scene was read.
  */
 
 const VERT = `
@@ -49,243 +54,173 @@ void main() {
   gl_Position = vec4(a_pos, 0.0, 1.0);
 }`;
 
-/**
- * The black hole, as `BlackHole.gdshader` writes it.
- *
- * Statement for statement with `renderFrame` in `lib/blackhole.ts`, which is itself
- * a transliteration of the reference's `fragment()`. The two are kept in step on
- * purpose: the CPU version is the fallback and the still that shows while this
- * compiles, so a divergence would mean the panel visibly changing appearance a
- * frame after it opened.
- *
- * Two things differ from the CPU version, both because this one is live:
- *
- * - The texture rotation is `u_time * 0.6` to match the reference's
- *   `time * time_speed * 3.0` at `time_speed = 0.2`. The CPU version had to round
- *   that to a whole turn so its strip would loop; there is no strip here, so the
- *   rate can simply be the reference's.
- * - The noise is a hash-based value noise rather than the CPU `fbm`. They do not
- *   produce the same field and are not meant to — the CPU one has to be
- *   deterministic and cacheable in a data URL, this one only has to be smooth and
- *   periodic enough that the eye reads it as gas.
- */
 const FRAG = `
 precision highp float;
 varying vec2 v_uv;
 
 uniform vec2  u_res;
-uniform float u_time;      // seconds
+uniform float u_time;          // seconds, already multiplied by time_speed
 uniform float u_seed;
-uniform float u_tilt;      // radians
-uniform float u_size;      // noise cells across the disc
-uniform float u_light;     // strength of the lighting term: sets where the core lands
-uniform float u_offset;    // ring centre pushed along y: this is the wrap
-uniform float u_inner;     // ring inner radius
-uniform float u_outer;     // ring outer radius
-uniform float u_thick;     // ramp width at each edge
-uniform float u_discScale;
-uniform float u_gain;      // noise gain; 1 is the reference's
-uniform float u_cut;       // alpha cut: how much of the ellipse survives
-uniform float u_holeR;     // horizon radius, in UV
-uniform float u_ring;      // photon ring widths, inner to outer
-uniform vec3  u_hole0;     // the void
-uniform vec3  u_hole1;     // the dim warm ring
-uniform vec3  u_hole2;     // the photon ring
-uniform vec3  u_d0;
-uniform vec3  u_d1;
-uniform vec3  u_d2;
-uniform vec3  u_d3;
-uniform vec3  u_d4;
-
-const float TAU = 6.2831853;
-
-vec2 rot(vec2 v, float a) {
-  vec2 d = v - 0.5;
-  float c = cos(a), s = sin(a);
-  return vec2(d.x * c - d.y * s, d.x * s + d.y * c) + 0.5;
-}
+uniform float u_rotation;
+uniform float u_timeSpeed;
+uniform float u_diskWidth;
+uniform float u_perspective;
+uniform float u_size;
+uniform float u_pixels;        // disc UV quantisation
+uniform float u_holePixels;
+uniform float u_holeRadius;
+uniform float u_holeLightWidth;
+uniform vec3  u_hole0;         // the void
+uniform vec3  u_hole1;         // white ring
+uniform vec3  u_hole2;         // orange outer ring
+uniform vec3  u_d0;            // cream
+uniform vec3  u_d1;            // yellow
+uniform vec3  u_d2;            // orange
+uniform vec3  u_d3;            // deep orange
+uniform vec3  u_d4;            // red-brown
 
 /**
- * The displacement ramp, transcribed.
+ * smoothstep(distance_to_centre, outer, inner), transcribed.
  *
- * \`smoothstep(d, outer, inner)\` in the reference has its edges the wrong way
- * round, which GLSL leaves undefined and which computes \`clamp((inner - d) /
- * (outer - d))\`: it peaks at \`inner / outer\` at the centre and is already zero
- * by \`inner\`. Written out rather than left as a reversed smoothstep, because
- * "reversed" is the ambiguous part and this is load-bearing four times over.
+ * The reference calls smoothstep with its first argument where an edge belongs, so
+ * this is a call with edge0 > edge1 -- undefined per the GLSL spec, and in practice
+ * clamp((x - edge0) / (edge1 - edge0)) with x = 0.2. That is
+ * clamp((inner - d) / (outer - d)): it peaks at inner/outer at the centre and is
+ * already ZERO by inner. It is not a plateau.
+ *
+ * The full smoothstep CURVE is applied, not the linear ratio. Reading it as linear
+ * was one of three transcription errors that had this rendering as a rounded cigar
+ * rather than a swept band.
  */
 float bump(float d, float outer, float inner) {
   if (d >= inner) return 0.0;
   float den = outer - d;
   if (den <= 1e-6) return 0.0;
-  return clamp((inner - d) / den, 0.0, 1.0);
+  float t = clamp((inner - d) / den, 0.0, 1.0);
+  return t * t * (3.0 - 2.0 * t);
 }
 
-float h21(vec2 p) {
-  vec3 p3 = fract(vec3(p.xyx) * 0.1031 + u_seed * 0.000137);
-  p3 += dot(p3, p3.yzx + 33.33);
-  return fract((p3.x + p3.y) * p3.z);
+/** The reference's hash: sin-based, and tiling at 2*size by size. */
+float rnd(vec2 coord) {
+  vec2 m = vec2(2.0, 1.0) * floor(u_size + 0.5);
+  coord = mod(coord, m);
+  return fract(sin(dot(coord, vec2(12.9898, 78.233))) * 15.5453 * u_seed);
 }
 
-float vnoise(vec2 p) {
-  vec2 i = floor(p), f = fract(p);
-  vec2 u = f * f * (3.0 - 2.0 * f);
-  return mix(
-    mix(h21(i), h21(i + vec2(1.0, 0.0)), u.x),
-    mix(h21(i + vec2(0.0, 1.0)), h21(i + vec2(1.0, 1.0)), u.x),
-    u.y);
+float vnoise(vec2 coord) {
+  vec2 i = floor(coord);
+  vec2 f = fract(coord);
+  float a = rnd(i);
+  float b = rnd(i + vec2(1.0, 0.0));
+  float c = rnd(i + vec2(0.0, 1.0));
+  float d = rnd(i + vec2(1.0, 1.0));
+  vec2 cubic = f * f * (3.0 - 2.0 * f);
+  return mix(a, b, cubic.x) + (c - a) * cubic.y * (1.0 - cubic.x) + (d - b) * cubic.x * cubic.y;
 }
 
-float fbm(vec2 p) {
-  float a = 0.5, s = 0.0;
-  for (int i = 0; i < 5; i++) {
-    s += a * vnoise(p);
-    p = p * 2.03 + vec2(17.3, 9.1);
-    a *= 0.5;
+/** Three octaves, because the scene says three. */
+float fbm(vec2 coord) {
+  float value = 0.0;
+  float scale = 0.5;
+  for (int i = 0; i < 3; i++) {
+    value += vnoise(coord) * scale;
+    coord *= 2.0;
+    scale *= 0.5;
   }
-  return s;
+  return value;
+}
+
+vec2 rotate(vec2 coord, float angle) {
+  coord -= 0.5;
+  coord *= mat2(vec2(cos(angle), -sin(angle)), vec2(sin(angle), cos(angle)));
+  return coord + 0.5;
 }
 
 void main() {
-  vec2 uv = v_uv;
-  vec2 centred = uv - 0.5;
-
-  // The dither. Their \`mod(uv1.x + uv2.y, 2/pixels) <= 1/pixels\`, which is a
-  // 2x2 ordered pattern; a pixel-quantised version of it is the same idea and does
-  // not need a second \`pixels\` uniform to agree with.
-  vec2 q = floor(gl_FragCoord.xy);
-  float dith = mod(q.x + q.y, 2.0) < 1.0 ? 1.0 : 0.0;
-
-  // ---- the disc -----------------------------------------------------------
-  vec2 p = rot(uv, u_tilt);
-  vec2 uv2 = p;
-  p.x = (p.x - 0.5) * 1.3 + 0.5;
-  p = rot(p, sin(u_time * 0.8) * 0.01);
-
-  const float PERSP = 4.0;
-
-  /**
-   * The ring, built rather than sampled.
-   *
-   * The reference DISPLACES the sample coordinate -- p.y by up to 0.4, which is 1.6
-   * in this 4:1 squashed space -- and draws wherever the displaced coordinate lands
-   * inside the annulus. What you see is therefore the PREIMAGE of that annulus under
-   * a translation, and a translation smears: the preimage of a band 0.05 thick under
-   * a displacement of 1.6 comes out on the order of 1.6/0.07 = 20x thicker on
-   * screen.
-   *
-   * That is the whole reason this would not get thin, and it is not a tuning
-   * problem: narrowing the annulus cannot help, because the smear scales with
-   * whatever band it is applied to. It only moves where the fat band sits. It is
-   * also why it read as two filled lenses -- two filled pieces cannot be arranged
-   * into anything that looks like a single ribbon.
-   *
-   * So nothing is displaced. The disc is a ring, with a stated inner and outer
-   * radius, and it gets its front-and-back from its CENTRE being offset from the
-   * singularity rather than from material being pushed around. An off-centre
-   * ellipse reads as a disc whose near side has swung down toward the viewer and
-   * whose far side has swung up and away, and because nothing is sheared the band
-   * is exactly as wide as it was specified to be.
-   *
-   * The offset is in the squashed space, so divide by PERSP to reason in canvas
-   * fractions: 0.17 here is 0.04 of the canvas height.
-   */
-  vec2 c = (p - vec2(0.0, 0.5)) * vec2(1.0, PERSP) * u_discScale;
-
-  // The singularity is at (0.5, 0) in this space, because (0.5, 0.5) in uv maps
-  // there. The ring's centre is that point pushed along y, which is the wrap.
-  float cdist = distance(c, vec2(0.5, u_offset));
-
-  // Lighting from the pre-warp coordinate, so the bright side does not swim with
-  // the geometry.
-  /**
-   * The lighting term, and why it is bigger than the reference's 0.3.
-   *
-   * The palette is five steps and the posterisation is
-   * floor((disk + lightD) * 4), so the top step needs the SUM to reach 1.0. In the
-   * band's ridge disk is about 0.7 -- the band peaks at 1 but the noise lifts it to
-   * roughly 0.7 -- so at the reference's 0.3 factor lightD tops out near 0.18 and
-   * the sum never gets past 0.88. Every pixel landed on steps 2 and 3 and the band
-   * came out a uniform mid-orange with no highlight in it at all.
-   *
-   * The reference gets its white-yellow core because its noise runs higher, not
-   * because its lighting is stronger. Matching the result rather than the constant
-   * means lifting the lighting instead, which is a one-number change and does not
-   * depend on reproducing their fbm.
-   */
-  float lightD = distance(uv2 * vec2(1.0, PERSP), vec2(0.5) * vec2(1.0, PERSP)) * u_light;
-
-  // The band. Both ramps list their edges in ascending order, which GLSL requires
-  // and which the reference's own second smoothstep does not -- its edges depend on
-  // the very value being tested.
-  float hw = u_thick;
-  float disk = smoothstep(u_inner, u_inner + hw, cdist) *
-               (1.0 - smoothstep(u_outer - hw, u_outer, cdist));
-
-  // The texture, rotating against the fixed shape. This is what makes it read as
-  // material in orbit rather than as a shape somebody drew.
-  vec2 tc = rot(c + vec2(0.0, 0.5), u_time * 0.6);
-  // The noise is not decoration here — it is what CARVES the disc.
-  //
-  // The annulus test has no inner cut: it evaluates to about 0.2 at the centre and
-  // 1 at the rim, so on its own it describes a filled flat ellipse, not a ring. The
-  // thin ribbon is what survives the alpha cut below, and five octaves of value noise
-  // multiplied in are what decide where. Boosting the field to make the band look
-  // brighter was exactly backwards: it pushed more of the ellipse over the cut and
-  // filled it in, which is how the first WebGL frame came out as two solid leaves.
-  // So the gain stays at 1 and the cut does the work.
-  float t = fbm(tc * u_size);
-  disk *= pow(clamp(t * u_gain, 0.0, 1.0), 0.5);
-  if (dith > 0.5) disk *= 1.2;
-
-  /**
-   * Three layers, and the ORDER is the read.
-   *
-   *   1. the void          (bottom)
-   *   2. the disc          (over the void)
-   *   3. the photon ring   (over everything)
-   *
-   * Drawing the disc over the void is what makes it a disc with a near side. The
-   * ring's centre is offset below the singularity, so the band's lower arc lies
-   * ACROSS the void while the upper arc lies clear of it: wherever the disc survives
-   * it is doing so in front, and where the cut takes it away the void shows through.
-   * That crossing is the whole depth cue, and it cannot be expressed the other way
-   * round.
-   *
-   * This had the horizon drawn over the disc, on the reasoning that the photon ring
-   * has to be a complete circle. It is complete -- because it sat on top of BOTH
-   * halves -- but that also meant neither half could ever read as being in front of
-   * anything, and the result was two discs sitting behind a hole rather than one
-   * disc wrapping round it. The photon ring is a far thinner thing than the
-   * horizon, so it gets its own layer on top and the void is then free to sit
-   * underneath, where it belongs.
-   */
   vec3 col = vec3(0.0);
   float alpha = 0.0;
-  float dr = length(centred);
 
-  // 1. the void.
-  if (dr <= u_holeR) {
-    col = u_hole0;
-    alpha = 1.0;
+  // ---- the horizon, underneath -------------------------------------------
+  // BlackHole.gdshader. Its sprite is 100x100 and the disc's is 200x200, concentric,
+  // so this sprite's UV is the canvas UV scaled by two about the middle.
+  {
+    vec2 huv = (v_uv - 0.5) * 3.0 + 0.5;
+    vec2 uv = floor(huv * u_holePixels) / u_holePixels;
+    float d = distance(uv, vec2(0.5));
+    vec3 hc = u_hole0;
+    if (d > u_holeRadius - u_holeLightWidth) hc = u_hole1;
+    if (d > u_holeRadius - u_holeLightWidth * 0.5) hc = u_hole2;
+    if (u_holeRadius >= d) { col = hc; alpha = 1.0; }
   }
 
-  // 2. the disc, over the void.
-  if (disk > u_cut) {
-    float idx = clamp(floor((disk + lightD) * 4.0), 0.0, 4.0);
-    col = idx < 0.5 ? u_d0
-        : idx < 1.5 ? u_d1
-        : idx < 2.5 ? u_d2
-        : idx < 3.5 ? u_d3 : u_d4;
-    alpha = 1.0;
-  }
+  // ---- the disc, over the horizon ----------------------------------------
+  // BlackHoleRing.gdshader, in its order, with the scene's constants.
+  {
+    vec2 uv = floor(v_uv * u_pixels) / u_pixels;
 
-  // 3. the photon ring: the outermost sliver of the void's edge, over everything.
-  //    dr has to appear in the condition -- the normalised radius runs past 1 for
-  //    every pixel outside the void, so without it this paints the entire canvas.
-  if (dr <= u_holeR && dr > u_holeR * (1.0 - u_ring)) {
-    col = u_hole2;
-    alpha = 1.0;
+    // dither(UV, uv): the RAW uv as the first argument, the quantised one as the
+    // second. Passing the quantised value for both is a different pattern.
+    float dith = mod(v_uv.x + uv.y, 2.0 / u_pixels) <= 1.0 / u_pixels ? 1.0 : 0.0;
+
+    uv = rotate(uv, u_rotation);
+    vec2 uv2 = uv;
+
+    // Compress x, or the disc looks stretched out.
+    uv.x -= 0.5;
+    uv.x *= 1.3;
+    uv.x += 0.5;
+
+    uv = rotate(uv, sin(u_time * u_timeSpeed * 2.0) * 0.01);
+
+    vec2 l_origin = vec2(0.5);
+    float d_width = u_diskWidth;
+
+    // The warp. The distance is taken from the CURRENT uv -- after the rotation and
+    // the x compression, before the y displacement. Mixing the two frames is a real
+    // bug and was one.
+    if (uv.y < 0.5) {
+      float dd = distance(vec2(0.5), uv);
+      uv.y += bump(dd, 0.5, 0.2);
+      d_width += bump(dd, 0.5, 0.3);
+      l_origin.y -= bump(dd, 0.5, 0.2);
+    } else if (uv.y > 0.53) {
+      float dd = distance(vec2(0.5), uv);
+      uv.y -= bump(dd, 0.4, 0.17);
+      d_width += bump(dd, 0.5, 0.2);
+      l_origin.y += bump(dd, 0.5, 0.2);
+    }
+
+    float light_d =
+      distance(uv2 * vec2(1.0, u_perspective), l_origin * vec2(1.0, u_perspective)) * 0.3;
+
+    vec2 uv_center = uv - vec2(0.0, 0.5);
+    uv_center *= vec2(1.0, u_perspective);
+    float center_d = distance(uv_center, vec2(0.5, 0.0));
+
+    // Two circles of different sizes; only the intersection. This describes a FILLED
+    // ellipse, not a ring -- the thin band is what survives the alpha cut below, and
+    // the fbm decides where that boundary falls.
+    float disk = smoothstep(0.1 - d_width * 2.0, 0.5 - d_width, center_d);
+    disk *= smoothstep(center_d - d_width, center_d, 0.4);
+
+    uv_center = rotate(uv_center + vec2(0.0, 0.5), u_time * u_timeSpeed * 3.0);
+    disk *= pow(fbm(uv_center * u_size), 0.5);
+    if (dith > 0.5) disk *= 1.2;
+
+    float posterized = floor((disk + light_d) * 4.0);
+    posterized = min(posterized, 4.0);
+
+    // The alpha is a STEP, not a ramp: opaque or not, with the palette chosen
+    // independently. Treating it as a ramp is what turns the band into a smear.
+    if (disk >= 0.15) {
+      vec3 dc = u_d0;
+      if (posterized >= 3.5) dc = u_d4;
+      else if (posterized >= 2.5) dc = u_d3;
+      else if (posterized >= 1.5) dc = u_d2;
+      else if (posterized >= 0.5) dc = u_d1;
+      col = dc;
+      alpha = 1.0;
+    }
   }
 
   if (alpha < 0.5) discard;
@@ -308,16 +243,21 @@ export interface BlackHoleGL {
   dispose(): void;
 }
 
-/** The three horizon steps, matching `HOLE` in `lib/blackhole.ts`. */
-const HOLE: [string, string, string] = ["#0b0912", "#e6d6bc", "#fffaf0"];
+/** The horizon's three steps, from the scene's `colors` for BlackHole.gdshader. */
+const HOLE: [string, string, string] = ["#272737", "#ffffeb", "#ed7b39"];
 
-/** The five disc steps, matching `DISC` in `lib/blackhole.ts`. */
+/**
+ * The disc's five steps, from the scene's `colors` for BlackHoleRing.gdshader.
+ *
+ * BRIGHT to dark. `posterized` indexes straight into this, so the order is load
+ * bearing and it is the opposite of the one that looks obvious.
+ */
 const DISC: [string, string, string, string, string] = [
-  "#4a1608",
-  "#8f2f10",
-  "#d06a1e",
-  "#f5b43f",
-  "#fff6cf",
+  "#ffffeb",
+  "#fff540",
+  "#ffb84a",
+  "#ed7b39",
+  "#bd4035",
 ];
 
 function rgb(hex: string): [number, number, number] {
@@ -338,18 +278,18 @@ export interface BlackHoleGLOpts {
 /**
  * A live black hole. Returns `null` if WebGL or the shader is unavailable, and the
  * caller falls back to the baked strip.
+ *
+ * The values below are the scene's, not the declarations'. They are named so it is
+ * obvious where each came from, because getting this wrong is what made this look
+ * wrong for an embarrassingly long time.
  */
 export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   if (typeof document === "undefined") return null;
   const canvas = document.createElement("canvas");
   let gl: WebGLRenderingContext | null = null;
-  // `preserveDrawingBuffer` so the canvas can be read back — `toDataURL`, and
-  // anything that wants to look at what was drawn.
-  //
-  // Without it the buffer is undefined after the frame is composited, so a read
-  // returns whatever happened to be there: usually transparent, occasionally the
-  // previous frame. A renderer that cannot be inspected is a renderer whose bugs
-  // cannot be asserted on, and the cost at 190px is one buffer copy a frame.
+  // preserveDrawingBuffer so the canvas can be read back. Without it the buffer is
+  // undefined after compositing, and a renderer that cannot be inspected is one
+  // whose bugs cannot be asserted on.
   const attrs: WebGLContextAttributes = {
     preserveDrawingBuffer: true,
     alpha: true,
@@ -370,8 +310,8 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
     if (!sh) return null;
     gl!.shaderSource(sh, src);
     gl!.compileShader(sh);
-    // A silent compile failure would show as a blank panel, which is exactly the
-    // case the fallback exists for, so this has to be a hard failure here.
+    // A silent compile failure shows as a blank panel, which is the case the
+    // fallback exists for, so this has to be a hard failure here.
     if (!gl!.getShaderParameter(sh, gl!.COMPILE_STATUS)) {
       console.warn("[GalaxyMap] shader failed to compile", gl!.getShaderInfoLog(sh));
       gl!.deleteShader(sh);
@@ -403,59 +343,23 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
   const u = (name: string) => gl!.getUniformLocation(prog, name);
-  const uTime = u("u_time");
-  const uRes = u("u_res");
-  const uSeed = u("u_seed");
-  const uTilt = u("u_tilt");
-  const uSize = u("u_size");
-  const uLight = u("u_light");
-  const uOffset = u("u_offset");
-  const uInner = u("u_inner");
-  const uOuter = u("u_outer");
-  const uThick = u("u_thick");
-  const uDiscScale = u("u_discScale");
-  const uGain = u("u_gain");
-  const uCut = u("u_cut");
-  const uHoleR = u("u_holeR");
-  const uRing = u("u_ring");
-
-  // Same values as `prep` in lib/blackhole.ts, so the fallback still and this
-  // agree on what a given seed looks like.
   const fract = (x: number) => x - Math.floor(x);
-  const tilt =
-    (fract(opts.seed * 0.6180339887) < 0.5 ? -1 : 1) * (0.22 + fract(opts.seed * 0.2718281) * 0.45);
 
-  gl.uniform1f(uSeed, (opts.seed | 0) ^ 0x51ed);
-  gl.uniform1f(uTilt, tilt);
-  gl.uniform1f(uSize, 18);
-  gl.uniform1f(uDiscScale, 1.0);
-  gl.uniform1f(uGain, 1.0);
-  // Swept via query string, because the shader is live and guessing at these by
-  // rebuild-and-eyeball is what this file spent four rounds doing before.
-  const qs = new URLSearchParams(location.search);
-  const q = (k: string, d: number) => (qs.has(k) ? Number(qs.get(k)) : d);
-  gl.uniform1f(uLight, q("light", 0.55));
-  gl.uniform1f(uOffset, q("offset", 0.26));
-  gl.uniform1f(uInner, q("inner", 0.40));
-  gl.uniform1f(uOuter, q("outer", 0.56));
-  gl.uniform1f(uThick, q("thick", 0.035));
-  gl.uniform1f(uCut, q("cut", 0.25));
-  /**
-   * The horizon's radius, and it is small.
-   *
-   * The hole and the ring do not live in the same space, which is the whole reason
-   * the disc looked wrong for so long. The ring is an ellipse in a space squashed
-   * 4:1 in y; the hole is a circle in uv. A radius of 0.15 in uv is 0.15 across in
-   * x but 0.6 tall in the ring's own space, so the horizon simply swallowed the
-   * entire ring and what was left to look at was the baked still underneath.
-   *
-   * The reference does not have this problem because it does not share one canvas:
-   * the hole is its own sprite at radius 0.167 of THAT, and the disc is a canvas
-   * three times larger, so the hole is 0.056 of the disc's space -- about 11% of
-   * the ring's outer radius. 0.15/3 puts it there.
-   */
-  gl.uniform1f(uHoleR, q("hole", 0.19));
-  gl.uniform1f(uRing, q("pring", 0.05));
+  // Per-system variation, the way the reference's GUI varies its own. The shape
+  // constants stay at the scene's values: those are the look, and varying them is
+  // how the disc ended up a different object from the reference's.
+  gl.uniform1f(u("u_seed"), 1 + fract(opts.seed * 0.6180339887) * 9);
+  gl.uniform1f(u("u_rotation"), 0.766 + (fract(opts.seed * 0.2718281) - 0.5) * 0.5);
+  gl.uniform1f(u("u_timeSpeed"), 0.2);
+  gl.uniform1f(u("u_diskWidth"), 0.065);
+  gl.uniform1f(u("u_perspective"), 14.0);
+  gl.uniform1f(u("u_size"), 6.598);
+  gl.uniform1f(u("u_pixels"), 300);
+  gl.uniform1f(u("u_holePixels"), 100);
+  // The horizon sprite is a third of the disc's, so its radius is a third of the
+  // scene's 0.247 and its light bands with it.
+  gl.uniform1f(u("u_holeRadius"), 0.247 / 3);
+  gl.uniform1f(u("u_holeLightWidth"), 0.028 / 3);
   gl.uniform3fv(u("u_hole0"), rgb(HOLE[0]));
   gl.uniform3fv(u("u_hole1"), rgb(HOLE[1]));
   gl.uniform3fv(u("u_hole2"), rgb(HOLE[2]));
@@ -474,19 +378,19 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
     canvas.style.width = `${opts.px}px`;
     canvas.style.height = `${opts.px}px`;
     gl!.viewport(0, 0, d, d);
-    if (uRes) gl!.uniform2f(uRes, d, d);
+    gl!.uniform2f(u("u_res"), d, d);
   };
   resize();
 
   const period = Math.max(0.5, opts.period ?? 6);
   const t0 = performance.now();
-  // Time is not reported in milliseconds: a shader that asks the host for the
-  // current time every frame is how you end up with a renderer whose smoothness
-  // depends on the host's frame pacing. This is one float per frame.
+  const uTime = u("u_time");
   const frame = (now: number) => {
     if (disposed) return;
     resize();
-    gl!.uniform1f(uTime, ((now - t0) / 1000 / period) * Math.PI * 2);
+    // Live, so there is no strip to close: the texture may turn at the reference's
+    // own 0.6 turns a second indefinitely.
+    gl!.uniform1f(uTime, (now - t0) / 1000);
     gl!.drawArrays(gl!.TRIANGLES, 0, 3);
     if (opts.animate !== false) raf = requestAnimationFrame(frame);
   };
@@ -497,9 +401,6 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
     dispose() {
       disposed = true;
       if (raf) cancelAnimationFrame(raf);
-      // The context is not explicitly lost: these are single-digit counts of
-      // short-lived objects and losing the context eagerly costs more than it
-      // saves. Revisit if the overlay is opened in a loop.
       gl = null;
     },
   };
