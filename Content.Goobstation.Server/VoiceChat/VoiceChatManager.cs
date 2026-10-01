@@ -187,7 +187,6 @@ public sealed class VoiceChatManager
 
         _server?.Disconnect(user);
     }
-
     public bool HearsSelf(NetUserId user)
     {
         return _hearSelf.Contains(user);

@@ -193,11 +193,8 @@ public sealed class PirateTvSystem : EntitySystem
             if (child.Source != net)
                 continue;
 
-            // Re-point FIRST, and inside the _reparenting guard. Component
-            // shutdown runs before the DeviceLink graph is torn down, and that
-            // teardown raises PortDisconnectedEvent on each child -- which would
-            // otherwise reset it to off right after we copied the grandparent's
-            // state in, silently undoing the whole re-parent.
+            // Detach the dying source without resetting playback before the
+            // replacement DeviceLink connection copies the parent's state.
             if (TryComp<DeviceLinkSourceComponent>(ent.Owner, out var dyingSrc))
             {
                 _reparenting.Add(uid);
@@ -211,17 +208,19 @@ public sealed class PirateTvSystem : EntitySystem
                 }
             }
 
-            child.Source = newParent;
+            child.Source = NetEntity.Invalid;
             if (newParent.IsValid() && TryGetEntity(newParent, out var parentUid) &&
-                TryComp(parentUid.Value, out PirateTvComponent? parentComp))
+                TryComp<PirateTvComponent>(parentUid.Value, out _))
             {
-                CopyState(parentComp, child);
+                _link.SaveLinks(null, parentUid.Value, uid, [(SourcePort, SinkPort)]);
             }
-            else
+
+            // A missing or out-of-range parent leaves the TV disconnected.
+            if (!child.Source.IsValid())
             {
                 ResetState(child);
+                PushState(uid, child);
             }
-            PushState(uid, child);
         }
     }
 

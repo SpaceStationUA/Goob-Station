@@ -328,6 +328,7 @@
         whitelist:
           tags:
             - CartridgePistol
+
   - type: ItemMapper
     mapLayers:
       flashlight:

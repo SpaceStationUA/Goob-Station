@@ -11,3 +11,5 @@ role-subtype-contractor = Контрактор
 role-type-sentient-animal-name = Розумна тварина
 role-type-sentient-animal-color = #ffff00
 role-subtype-gemini = Близнюки
+role-subtype-gang-leader = Лідер банди
+role-subtype-gang-member = Член банди
