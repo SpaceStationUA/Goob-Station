@@ -182,6 +182,11 @@ export const SYSTEMS: StarSystem[] = [
   sys("adhomai", L("Adhomai", "Адхомай"), -1, -24, "star", 3, "adhomai"),
   sys("hrozamal", L("Hro'zamal", "Хро'замаль"), 8, -25, "planet", 1, "adhomai", "gas"),
   sys("moghes", L("Moghes", "Моггес"), -45, -27, "star", 2, ""),
+  // A collapsed system, in the gap between the Nralakk and Moghes clusters. It is
+  // unclaimed on purpose: a singularity is a landmark you steer by, and giving it
+  // an owner would make it a possession, which is the one thing a chart like this
+  // should not imply about a black hole.
+  sys("the-crow", L("The Crow", "Ворона"), -38, -33, "blackhole", 2, ""),
   sys("sunreach", L("Sunreach", "Санріч"), -33, -24, "planet", 0, "", "ice"),
   sys("assunzione", L("Assunzione", "Ассунціоне"), 37, -21, "star", 2, "izweski"),
   sys("valley-hale", L("Valley Hale", "Валлі Гейл"), 28, -19, "outpost", 0, "izweski"),

@@ -90,6 +90,7 @@ export interface UiStrings {
 
   /* system overlay */
   kindStar: LocalizedText;
+  kindBlackHole: LocalizedText;
   kindPlanet: LocalizedText;
   kindStation: LocalizedText;
   kindGate: LocalizedText;
@@ -151,6 +152,7 @@ export const DEFAULT_STRINGS: UiStrings = {
   labelContested: { en: "CONTESTED", uk: "СПІРНІ" },
 
   kindStar: { en: "STAR SYSTEM", uk: "ЗОРЯНА СИСТЕМА" },
+  kindBlackHole: { en: "COLLAPSED SYSTEM", uk: "ЗІРКА, ЩО ЗІРКОЛАЛАСЬЯ" },
   kindPlanet: { en: "PLANETARY SYSTEM", uk: "ПЛАНЕТАРНА СИСТЕМА" },
   kindStation: { en: "STATION", uk: "СТАНЦІЯ" },
   kindGate: { en: "GATE", uk: "БРАМА" },

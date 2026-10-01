@@ -49,7 +49,24 @@ export interface Territory {
   unclaimed?: boolean;
 }
 
-export type SystemKind = "star" | "planet" | "station" | "gate" | "outpost";
+/**
+ * What a system is.
+ *
+ * `blackhole` is its own kind rather than a flag on `star`, and the reason is that
+ * almost everything that branches on this union would otherwise be quietly wrong.
+ * A collapsed system is not a star, it has no planets to orbit anything, and the
+ * sprite pipeline would hand it a star. Putting it in the union forces the sprite
+ * gate, the hit radius and the overlay's own description to handle a case that
+ * genuinely differs, instead of carrying a special case through code that was
+ * written assuming a luminous body.
+ */
+export type SystemKind =
+  | "star"
+  | "planet"
+  | "blackhole"
+  | "station"
+  | "gate"
+  | "outpost";
 
 /** 0 = minor, 3 = capital. Drives marker size and ring treatment. */
 export type Importance = 0 | 1 | 2 | 3;

@@ -3,6 +3,7 @@ import { cellsInExtent, hexCorners, hexToPixel, type Axial } from "./lib/hex";
 import { cellsByTerritory, cellOutline } from "./lib/geometry";
 import { hasRings, planetTypeFor, planetUri, seedFromId } from "./lib/planet";
 import { ringGeomFor, ringHalf } from "./WorldRing";
+import { BlackHoleShapes, blackHoleBox } from "./BlackHole";
 import { loopToPxPath, loopsToPxPath, makeTransform } from "./lib/transform";
 import { pick, type GalaxyModel, type PatternId, type Route, type Territory } from "./lib/model";
 
@@ -240,6 +241,10 @@ export default function Chart(props: ChartProps) {
       // Stations and outposts keep their own silhouettes. A square is a
       // different shape on purpose, and replacing it with a small grey rock
       // would throw away the distinction.
+      // A black hole is not here. It has no sprite because it has no surface, and
+      // `BlackHole` draws it as geometry — putting it through `planetUri` would mean
+      // a generated texture for a thing whose entire appearance is the absence of
+      // one.
       if (s.kind !== "star" && s.kind !== "planet") continue;
       const size = s.importance >= 3 ? 40 : s.importance >= 2 ? 30 : s.importance >= 1 ? 21 : 16;
       const type = s.planetType ?? planetTypeFor(s.kind, s.id);
@@ -269,6 +274,16 @@ export default function Chart(props: ChartProps) {
     return out;
   });
 
+  /**
+   * Black hole marker size. Sized like a mid-importance world rather than a star:
+   * it has no disc of its own to give it area, and the accretion disc is drawn
+   * around whatever box this returns.
+   */
+  const bhOf = (id: string, importance: number) => ({
+    px: importance >= 2 ? 26 : 18,
+    seed: seedFromId(id),
+  });
+
   const systemNodes = createMemo(() =>
     props.model.systems.map(s => ({
       id: s.id,
@@ -290,7 +305,7 @@ export default function Chart(props: ChartProps) {
        */
       hit: Math.max(
         12,
-        (props.planets && (s.kind === "star" || s.kind === "planet")
+        (props.planets && (s.kind === "star" || s.kind === "planet" || s.kind === "blackhole")
           ? s.importance >= 3
             ? 20
             : s.importance >= 2
@@ -884,6 +899,36 @@ export default function Chart(props: ChartProps) {
                     opacity="0.9"
                   />
                 </Show>
+                <Show when={n.system.kind === "blackhole"}>
+                  {/* A landmark, so it is drawn whether or not the planet sprites
+                      are on: there is nothing to toggle here.
+
+                      The shapes are emitted straight into the chart's own SVG, from
+                      the same component the overlay uses. An HTML subtree nested
+                      here renders nothing at all and reports no error — the first
+                      version of this mounted a <div> and the marker was simply
+                      absent, which is the worst possible failure for the one object
+                      on the chart that exists to be a fixed point of reference. */}
+                  <For each={[bhOf(n.system.id, n.system.importance)]}>
+                    {bh => {
+                      const box = () => blackHoleBox(bh.px, bh.seed);
+                      return (
+                        <g transform={`translate(${n.P.x} ${n.P.y})`} data-bh={n.system.id}>
+                          <svg
+                            x={-box() / 2}
+                            y={-box() / 2}
+                            width={box()}
+                            height={box()}
+                            viewBox={`${-box() / 2} ${-box() / 2} ${box()} ${box()}`}
+                            overflow="visible"
+                          >
+                            <BlackHoleShapes px={bh.px} seed={bh.seed} />
+                          </svg>
+                        </g>
+                      );
+                    }}
+                  </For>
+                </Show>
                 <Show when={n.system.kind === "star" || n.system.kind === "planet"}>
                   <Show
                     when={sprite()}
@@ -931,7 +976,17 @@ export default function Chart(props: ChartProps) {
                   </Show>
                 </Show>
                 <text
-                  x={n.P.x + (n.system.importance === 3 ? 15 : 9)}
+                  /* A black hole's accretion disc reaches well past the marker's
+                     own radius, so the label has to clear the disc rather than the
+                     sprite box — at the usual 9px it sat on the disc. */
+                  x={
+                    n.P.x +
+                    (n.system.kind === "blackhole"
+                      ? blackHoleBox(bhOf(n.system.id, n.system.importance).px, 1) / 2 + 7
+                      : n.system.importance === 3
+                        ? 15
+                        : 9)
+                  }
                   y={n.P.y - 5}
                   class="system-label"
                   data-sys={n.system.id}

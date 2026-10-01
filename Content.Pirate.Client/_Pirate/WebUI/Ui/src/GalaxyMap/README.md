@@ -532,6 +532,47 @@ the chart is deliberately static (only the overlay animates), and a 16px map rin
 has no room for a visible gap. It is the obvious thing to add if the overlay ever
 wants to show it off.
 
+### A black hole is a kind, and it is geometry
+
+`SystemKind` gained `"blackhole"` rather than a `collapsed?: true` flag on `"star"`.
+Almost everything that branches on that union would otherwise be quietly wrong: a
+collapsed system is not a star, it has no planets, and the sprite pipeline would
+hand it a star. In the union, the sprite gate, the hit radius and the overlay's own
+description each have to handle a case that genuinely differs.
+
+It is **not** a `PlanetType`. A planet is something that can orbit something; a
+singularity has nothing, and putting it in `planet.ts` would mean every consumer of
+the sprite pipeline had to learn that one entry is not a world. It is drawn like the
+ring — `BlackHole.tsx`, reusing `ringHalf` — and reuses that path builder because an
+accretion disc *is* an annulus seen at a shallow angle.
+
+Two things about it are not decoration:
+
+- **The horizon is not `#000`.** The page behind the chart is near black, so a true
+  black disc is not a black hole, it is a hole in the chart — the exact failure the
+  star corona exists to prevent, arrived at from the opposite direction. What makes
+  it legible is the light *around* it: a photon ring at the horizon's edge (measured
+  luminance 229 against the horizon's 7) and the disc outside that.
+- **The disc's near and far halves differ in tone.** The approaching side of an
+  accretion disc is brighter and blueshifted, and that is the strongest cue that
+  the thing is rotating. A symmetric annulus reads as a ring, and a ring reads as a
+  planet with rings.
+
+### HTML does not render inside an SVG `<g>`
+
+The first version of `BlackHole` was a `<div>` with `<div>` children, mounted inside
+the chart's `<g>`. It is correct in the overlay panel and it produced **nothing at
+all** on the chart: every box measured 0x0, no error was raised, and the landmark
+was simply absent — at the one size where it most needed to be seen. A screenshot
+of that area would have shown empty space and read as a placement problem.
+
+So the shapes are exported separately from the placement: `BlackHoleShapes` is the
+only description of what a black hole looks like, and the component plus the `<g>`
+in `Chart.tsx` are a few lines of positioning each. The duplication that remains is
+positioning, which really is a property of the host — an HTML panel and an SVG
+chart cannot be positioned the same way. `check-dom.mjs` asserts the marker's box
+is non-zero, because the failure was silent and a screenshot cannot see it.
+
 ## Layout
 
 | Path | What it is |

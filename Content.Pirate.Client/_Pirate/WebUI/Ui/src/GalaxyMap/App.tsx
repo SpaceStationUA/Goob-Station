@@ -6,6 +6,7 @@ import { pick, type GalaxyModel, type StarSystem } from "./lib/model";
 import { hasRings, planetTypeFor, seedFromId } from "./lib/planet";
 import { readableOnDark } from "./Chart";
 import WorldSprite from "./WorldSprite";
+import BlackHole from "./BlackHole";
 import {
   currentLocales,
   installStrings,
@@ -459,7 +460,9 @@ export default function App() {
                         ? "kindStar"
                         : s().kind === "planet"
                           ? "kindPlanet"
-                          : s().kind === "station"
+                          : s().kind === "blackhole"
+                            ? "kindBlackHole"
+                            : s().kind === "station"
                             ? "kindStation"
                             : s().kind === "gate"
                               ? "kindGate"
@@ -478,15 +481,29 @@ export default function App() {
                             rotation is invisible and the sprite is mostly a
                             coloured dot; at 180px it is the reason to click. */}
                         <div class="overlay-art">
-                          <WorldSprite
-                            seed={seedFromId(s().id)}
-                            type={worldType(s())}
-                            px={200}
-                            frames={24}
-                            period={48}
-                            ring={hasRings(seedFromId(s().id), worldType(s()), s().rings)}
-                            title={pick(s().name, loc())}
-                          />
+                          {/* A singularity has no world to draw. The panel still
+                              opens, and still says what the system is — which is
+                              the point of making it its own kind. */}
+                          <Show
+                            when={s().kind === "blackhole"}
+                            fallback={
+                              <WorldSprite
+                                seed={seedFromId(s().id)}
+                                type={worldType(s())}
+                                px={200}
+                                frames={24}
+                                period={48}
+                                ring={hasRings(seedFromId(s().id), worldType(s()), s().rings)}
+                                title={pick(s().name, loc())}
+                              />
+                            }
+                          >
+                            <BlackHole
+                              px={190}
+                              seed={seedFromId(s().id)}
+                              title={pick(s().name, loc())}
+                            />
+                          </Show>
                         </div>
 
                         <h2 style={{ color: readableOnDark(terr()?.color ?? "#94a3b8") }}>

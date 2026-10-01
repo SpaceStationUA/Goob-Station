@@ -1039,6 +1039,86 @@ try {
       };
     });
 
+    /**
+     * A black hole is a landmark, and a landmark that is not drawn is the worst
+     * failure this chart has.
+     *
+     * The first version was a `<div>` with `<div>` children, mounted inside the
+     * chart's `<g>`. HTML does not render inside SVG, so every box measured 0x0,
+     * no error was raised, and the marker was simply absent — at the one size where
+     * it most needed to be seen. `drawn` below is the check for exactly that, and it
+     * is worth having precisely because the failure was silent: a screenshot of the
+     * area would have shown empty space and looked like a placement problem.
+     *
+     * The two legibility assertions are the reason the horizon is not `#000`. The
+     * page behind the chart is near black, so a true black disc is a hole in the
+     * chart rather than an object in it, and the only thing that makes a black hole
+     * readable is the light around it. Both are measured on the actual attributes
+     * rather than on a screenshot.
+     */
+    const bh = await page.evaluate(async () => {
+      const g = document.querySelector("[data-bh]");
+      if (!g) return null;
+      const r = g.getBoundingClientRect();
+      const horizon = g.querySelector(".bh-horizon");
+      const photon = g.querySelector(".bh-photon");
+      return {
+        drawn: r.width > 8 && r.height > 4,
+        w: Math.round(r.width),
+        h: Math.round(r.height),
+        horizonFill: horizon?.getAttribute("fill") ?? "",
+        photonStroke: photon?.getAttribute("stroke") ?? "",
+        horizonR: Number(horizon?.getAttribute("r") ?? 0),
+        photonR: Number(photon?.getAttribute("r") ?? 0),
+        discPaths: g.querySelectorAll("path").length,
+        // A black hole has no surface, so it must not be given a generated sprite.
+        sprite: g.querySelectorAll("image").length,
+        labelClearance: (() => {
+          const t = document.querySelector('.system-label[data-sys="the-crow"]');
+          if (!t) return null;
+          const tb = t.getBoundingClientRect();
+          return Math.round(tb.x - (r.x + r.width / 2));
+        })(),
+      };
+    });
+
+    check("a black hole is actually drawn on the chart", bh !== null && bh.drawn,
+      bh === null ? "no [data-bh] marker in the DOM" : `box ${bh.w}x${bh.h}px`);
+    check("and it has a horizon, a photon ring and both disc halves",
+      bh !== null && bh.horizonR > 0 && bh.photonR > bh.horizonR && bh.discPaths === 2,
+      bh === null ? "no marker" : `horizon r=${bh.horizonR}, photon r=${bh.photonR}, ${bh.discPaths} disc paths`);
+    check("the horizon is not pure black, or it is a hole in the chart rather than an object",
+      bh !== null && bh.horizonFill.toLowerCase() !== "#000" && bh.horizonFill.toLowerCase() !== "#000000",
+      bh === null ? "no marker" : `fill ${bh.horizonFill}`);
+    // Parsed out here rather than in the page: a regular expression with escaped
+    // brackets inside a serialised evaluate callback is a syntax error waiting to
+    // happen, and the failure mode is the check silently not existing.
+    const lumOf = (css) => {
+      const hex = /^#([0-9a-f]{6})$/i.exec(css ?? "");
+      if (hex) {
+        const n = parseInt(hex[1], 16);
+        return 0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255);
+      }
+      const rgb = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/.exec(css ?? "");
+      return rgb ? 0.299 * +rgb[1] + 0.587 * +rgb[2] + 0.114 * +rgb[3] : null;
+    };
+    check(
+      "and the photon ring is brighter than the horizon it outlines",
+      bh !== null && (lumOf(bh.photonStroke) ?? 0) > (lumOf(bh.horizonFill) ?? 0),
+      bh === null
+        ? "no marker"
+        : `photon ${bh.photonStroke} (lum ${Math.round(lumOf(bh.photonStroke) ?? 0)}) vs ` +
+          `horizon ${bh.horizonFill} (lum ${Math.round(lumOf(bh.horizonFill) ?? 0)})`,
+    );
+    check("a black hole gets no generated sprite — it has no surface",
+      bh !== null && bh.sprite === 0,
+      bh === null ? "no marker" : `${bh.sprite} images inside the marker`);
+    check("and its label clears the accretion disc, not just the marker box",
+      bh !== null && bh.labelClearance !== null && bh.labelClearance > bh.w / 2,
+      bh === null || bh.labelClearance === null
+        ? "no label"
+        : `label ${bh.labelClearance}px from centre, disc reaches ${Math.round(bh.w / 2)}px`);
+
     check(
       "a ringed system draws a far half and a near half",
       ring.far === 1 && ring.near === 1,
