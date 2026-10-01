@@ -65,6 +65,15 @@ export interface PluralText {
 export interface UiStrings {
   /* chrome */
   grid: LocalizedText;
+  /**
+   * Draw star systems as their generated world rather than as a dot.
+   *
+   * The toggle outlived the panel it started in. It was a checkbox in `Spike`,
+   * which was scaffolding and has been deleted, so it needed somewhere real to
+   * live: a system drawn as its own planet reads as a place, and a dot reads as
+   * a pin. That is a chart decision, not a debug one.
+   */
+  planets: LocalizedText;
   paint: LocalizedText;
   undo: LocalizedText;
   close: LocalizedText;
@@ -118,6 +127,7 @@ export interface UiStrings {
 
 export const DEFAULT_STRINGS: UiStrings = {
   grid: { en: "GRID", uk: "СІТКА" },
+  planets: { en: "PLANETS", uk: "ПЛАНЕТИ" },
   paint: { en: "PAINT", uk: "ФАРБА" },
   undo: { en: "UNDO", uk: "СКАСУВАТИ" },
   close: { en: "CLOSE", uk: "ЗАКРИТИ" },

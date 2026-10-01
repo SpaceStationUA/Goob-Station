@@ -38,13 +38,17 @@ still reads every name, every border and every dispute flag. The DOM check flips
 the permission and asserts the tools disappear while the map survives — and that
 a click still selects, so read-only does not degrade into inert.
 
-## Planet spike
+## Generated worlds
 
 `lib/planet.ts` generates pixel planets in the page. Ported from Deep-Fold's
 MIT-licensed PixelPlanets Godot shaders; the algorithm is small enough that a
-clean TypeScript version was less work than vendoring a port. `Spike.tsx` is the
-disposable harness that compares them — open it from the PLANETS button, and
-PLANETS ON MAP swaps the chart's markers over.
+clean TypeScript version was less work than vendoring a port. The toolbar's
+PLANETS button swaps the chart's markers from dots to their own generated world.
+
+The PLANETS toggle began life as a checkbox in `Spike.tsx`, a disposable comparison
+harness that compared every world type side by side. It answered its question and
+was deleted, but the toggle graduated to the toolbar first: a system drawn as a
+place rather than a pin is a chart decision, not a debugging one.
 
 **A planet is a pure function of `(seed, type, size, light, tint)`.** So the model
 carries a seed and a type and nothing else — no PNGs, no art pipeline, and two
@@ -52,7 +56,7 @@ clients holding the same model draw the same worlds. `StarSystem.planetType` is
 optional data so the lore editors pick a world's character; absent means hash the
 id, which is what the placeholder map relies on.
 
-Four things the spike settled, none of which were obvious in advance:
+Four things the comparison harness settled, none of which were obvious in advance:
 
 - **Generate at display size, never scale down.** Pixel art does not survive
   downscaling, so the octave count is tied to the sprite: the finest octave has to
@@ -131,7 +135,7 @@ Four things the spike settled, none of which were obvious in advance:
 
 **The map does not animate.** At 16–40px a rotation is invisible and the strip
 would cost N times the pixels for nothing, so the chart keeps drawing single
-stills. The machinery is built and exercised by the spike; it belongs in a system
+stills. The machinery is built and exercised; it belongs in a system
 detail view or the holotable card, neither of which exists yet. Clouds DO ship on
 the map, because a still cloud pattern is visible at any size.
 
@@ -942,7 +946,7 @@ of the band's width. Reverting the fix puts all 288 off.
 
 | Path | What it is |
 |---|---|
-| `WorldSprite.tsx` | One generated world, still-then-turning. Lives outside the spike because the spike is disposable. |
+| `WorldSprite.tsx` | One generated world, still-then-turning. |
 | `lib/hex.ts` | Pointy-top axial hex grid. Pure math, no policy. |
 | `lib/model.ts` | The data shapes the page renders. No game types. |
 | `lib/geometry.ts` | Claims → cells → smoothed outlines. The interesting file. |

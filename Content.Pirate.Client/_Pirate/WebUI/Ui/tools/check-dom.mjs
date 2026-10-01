@@ -77,6 +77,39 @@ async function launchBrowser() {
   process.exit(0);
 }
 
+/**
+ * Turn the toolbar's PLANETS toggle on or off, and wait for it to take.
+ *
+ * This used to be a side effect of opening `Spike`: its panel carried a PLANETS ON
+ * MAP checkbox that the harness flipped once and never put back. With the panel
+ * deleted the toggle is a real button, and the marker checks need it pressed
+ * explicitly — the chart draws dots by default, so without this every world-marker
+ * check measures zero and passes vacuously or fails for the wrong reason.
+ *
+ * Reads the button's own `on` class rather than tracking a boolean, so calling this
+ * twice with the same argument is a no-op instead of a second toggle.
+ */
+async function setPlanets(pg, on) {
+  // `pg` rather than a captured `page`: the zoom loop makes one page per viewport
+  // and there is no module-level page to close over.
+  await pg.evaluate(async (want) => {
+    const btns = [...document.querySelectorAll(".toolbar > button")];
+    const b = btns.find((x) => /^PLANETS|^ПЛАНЕТИ/.test(x.textContent ?? ""));
+    if (!b) throw new Error("no PLANETS button in the toolbar");
+    if (b.classList.contains("on") !== want) b.click();
+    // The markers are generated after the signal lands, so wait for one to appear
+    // rather than for a fixed delay.
+    const wantMarks = want ? "[data-turning], .planet-mark" : null;
+    if (wantMarks) {
+      const t0 = Date.now();
+      while (Date.now() - t0 < 4000 && !document.querySelector(wantMarks)) {
+        await new Promise((ok) => setTimeout(ok, 40));
+      }
+    }
+  }, on);
+  await pg.waitForTimeout(150);
+}
+
 /** Sizes a browser zoom of each percentage produces, in CSS pixels. */
 const ZOOMS = [
   { label: "100%", w: 1600, h: 1000 },
@@ -452,8 +485,6 @@ try {
     // the metric could not see the drift. The direct property is that a full turn
     // reproduces the start pixel for pixel.
     const spin = await page.evaluate(async () => {
-      document.querySelector(".spikebar button").click();
-      await new Promise((ok) => setTimeout(ok, 250));
       const N = 12;
       const sheet = window.__galaxySheet({ seed: 0x5eed1, type: "terran", px: 48, dpr: 1 }, N);
 
@@ -1359,12 +1390,11 @@ try {
      *
      * The control is a world with no rings, which must contribute no paths at all.
      */
+    // Ring markers only exist when systems are drawn as their worlds, so this
+    // switches that on itself rather than relying on a panel having been opened
+    // earlier. It used to press the spike's ON MAP checkbox, which is gone.
+    await setPlanets(page, true);
     const ring = await page.evaluate(async () => {
-      await new Promise((r) => setTimeout(r, 50));
-      const btn = [...document.querySelectorAll("button")].find((b) =>
-        /ON MAP/.test(b.textContent ?? ""),
-      );
-      if (btn && !/ON$/.test(btn.textContent.trim())) btn.click();
       await new Promise((r) => setTimeout(r, 900));
       const far = [...document.querySelectorAll(".saturn-far")];
       const near = [...document.querySelectorAll(".saturn-near")];
@@ -1662,6 +1692,8 @@ try {
      * `getAttribute` is not, because SMIL overrides the presentation value and never
      * touches the attribute.
      */
+    await setPlanets(page, true);
+
     const turning = await page.evaluate(() => {
       const imgs = [...document.querySelectorAll("[data-turning]")];
       const first = imgs[0];

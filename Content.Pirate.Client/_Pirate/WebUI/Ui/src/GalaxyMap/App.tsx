@@ -15,7 +15,6 @@ import {
   tp,
 } from "./lib/i18n";
 import { DEFAULT_MAP, FixtureSource } from "./lib/source";
-import { Spike } from "./Spike";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "./lib/devmap";
 
 /**
@@ -71,7 +70,7 @@ export default function App() {
    */
   const [paintAllowed, setPaintAllowed] = createSignal(true);
 
-  /** Spike only: draw systems as generated planets instead of dots. */
+  /** Draw systems as their generated world rather than as a dot. */
   const [planets, setPlanets] = createSignal(false);
 
   /**
@@ -378,6 +377,12 @@ export default function App() {
               {t("grid", loc())}
             </button>
 
+            {/* Was a checkbox in `Spike`. A system drawn as its own world reads as a
+                place; a dot reads as a pin. The panel it started in is gone. */}
+            <button classList={{ on: planets() }} onClick={() => setPlanets(v => !v)}>
+              {t("planets", loc())}
+            </button>
+
             <div class="locpick">
               <For each={locales()}>
                 {l => (
@@ -593,13 +598,6 @@ export default function App() {
               );
             }}
           </Show>
-
-          <Spike
-            systems={m().systems}
-            ownerColour={id => terrById().get(id)?.color ?? "#94a3b8"}
-            onMap={planets()}
-            setOnMap={setPlanets}
-          />
 
           <div class="legend">
             <b>{t("orionSpur", loc())}</b>

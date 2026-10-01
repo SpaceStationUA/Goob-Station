@@ -91,7 +91,7 @@ export interface ChartProps {
   /** Colour to preview the in-progress stroke in. */
   pendingColour: string | undefined;
   /**
-   * Spike only: draw star systems as generated planets instead of dots.
+   * Draw star systems as their generated world rather than as a dot.
    * Same on/off switch the comparison panel drives, so the two cannot disagree.
    */
   planets: boolean;
