@@ -420,8 +420,9 @@ const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", 
  * 4: screen-space banding and multi-field land, replacing the 3D dot product.
  * 5: craters on the airless worlds.
  * 6: the asteroid silhouette is a noise field, not a circle.
- * 7: star rays sampled in polar space, replacing four angular lobes. */
-export const PLANET_ALGO_VERSION = 7;
+ * 7: star rays sampled in polar space, replacing four angular lobes.
+ * 8: gas giants banded by one-dimensional latitude noise. */
+export const PLANET_ALGO_VERSION = 8;
 
 export interface PlanetOpts {
   seed: number;
@@ -1039,21 +1040,28 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
 
         if (kind === "lat") {
           /**
-           * Gas giants are not latitude-banded here, and that took a while to
-           * see. The obvious implementation — bands of constant latitude, warped
-           * by noise — is what this file did first, and it is wrong twice over:
-           * the boundaries came out ruler-straight at warp 0.42, and bending
-           * them to warp 1.5 turned them into stacked rectangles with vertical
-           * ends, because a low-frequency fbm makes broad plateaus rather than
-           * swirls.
+           * Gas giants: bands of constant latitude, torn up by weather.
            *
-           * The original draws no bands at all. It samples the same
-           * cellular-displaced cloud field the cloud layer uses and picks the
-           * palette from distance-to-light *plus* cloud depth, so the banding is
-           * a by-product: `circleNoise` shears alternate rows, which biases the
-           * field into horizontal streaks on its own. The streaks then get torn
-           * up by the turbulence, which is exactly what a gas giant looks like,
-           * and no amount of warping a latitude function reproduces it.
+           * This file spent a while convinced that gas giants are not banded at
+           * all. That came from reading the wrong shader — `GasPlanet.gdshader`
+           * really does have no bands, it is a cellular cloud field sampled
+           * directly — and the conclusion was then checked against the wrong
+           * evidence, because the swirls it produced did look plausible. The
+           * layered variant, `GasPlanetLayers.gdshader`, settles it in a comment:
+           * "a band is just one dimensional noise". It samples fbm in v alone,
+           * then multiplies the turbulence by `pow(band, 2.0) * 7.0`.
+           *
+           * So the band term is real and it is doing a specific job: it makes the
+           * weather coherent in latitude. Without it, turbulence displaces the
+           * boundary by the same amount everywhere and the result is a random
+           * mottle; with it, the displacement is strong in some latitudes and
+           * weak in others, and the eye gets long clean stripes with storms
+           * tearing across them. That is the whole difference between a gas giant
+           * and a bowl of soup.
+           *
+           * The ramp is seven bands over four palette entries by a fixed route
+           * rather than a straight one. A straight ramp reads as shading, and
+           * `idx % 4` reads as a repeating pattern; this reads as cloud.
            */
           const cu = fract(sx0 + spin);
           const cvv = sy * 1.6 + smoothstep(Math.abs(sx0 - 0.4) / 1.3) * 0.3;
@@ -1067,22 +1075,40 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
             );
           }
           warpN /= 9;
-          const c =
+          // The weather.
+          const turb =
             0.5 +
             (fbm(cu * period + warpN * 3, cvv * period + warpN * 3, period, octaves, seed + 313) -
               0.5) *
               polar;
-          // Cloud depth pushes the band boundary around, so the banding is
-          // ragged and follows the weather instead of cutting across it.
-          const dl = dLight + (c - 0.5) * 0.34;
-          col = sea[0];
-          if (dl > 0.085) col = sea[1];
-          if (dl > 0.085 && dl < 0.085 + bandW && ditherV > 0.5) col = sea[0];
-          if (dl > 0.2) col = sea[2];
-          if (dl > 0.2 && dl < 0.2 + bandW && ditherV > 0.5) col = sea[1];
-          if (dl > 0.4) col = sea[3];
-          if (dl > 0.4 && dl < 0.4 + bandW && ditherV > 0.5) col = sea[2];
-        } else if (kind === "solid") {
+          // The bands. One-dimensional on purpose — v only, no u — which is what
+          // makes them latitude bands rather than more weather.
+          const bandN = fbm(0, sy * 9, period, 3, seed + 401);
+          //
+          // Nine bands, and the weather's amplitude is 0.8 rather than 1.7. At 1.7
+          // the displacement reached half a band width almost everywhere, so the
+          // bands were scrambled into broad diagonal patches and the whole point
+          // was lost — the coherence was supposed to come from the amplitude
+          // varying with latitude, and it cannot do that if it is large enough to
+          // destroy the bands on its own.
+          //
+          // The ramp stays off both ends. Running cream to dark brown and back
+          // gives four very distinct stripes that read as continents; a gas
+          // giant's zones and belts differ in tone but not that much, and the
+          // darkest entry is a belt, not half the planet.
+          const B = 9;
+          const RAMP = [0, 1, 2, 1, 0, 1, 2, 1, 0];
+          const latF = sy * B + (turb - 0.5) * 0.8 * (0.15 + bandN * 1.2);
+          const bi0 = Math.floor(latF);
+          const frac = latF - bi0;
+          const bi = ((bi0 % B) + B) % B;
+          let idx = RAMP[bi];
+          // Dithered on both sides of every boundary. A hard line is the one
+          // thing banding must never look like.
+          if (frac < 0.09 && ditherV > 0.5) idx = RAMP[(bi + B - 1) % B];
+          else if (frac > 0.91 && ditherV < 0.5) idx = RAMP[(bi + 1) % B];
+          col = sea[idx];
+                } else if (kind === "solid") {
           /**
            * An asteroid is not a disc.
            *
@@ -1225,9 +1251,15 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
         // need it — but applying it to both is what keeps a cratered world from
         // having bright craters sitting on its night side.
         shade = dLit < 0.085 ? 1 : dLit < 0.2 ? 0.8 : dLit < 0.4 ? 0.58 : 0.36;
-        outRgb = isLand
-          ? mixRgb(night, col, nightFloor + (1 - nightFloor) * shade)
-          : col;
+        // Land needs the terminator because it is chosen by comparison rather
+        // than banded, and gas giants need it because their bands are now bands
+        // of LATITUDE — nothing in that branch darkens the far side any more.
+        // Sea and rock are already banded by distance to the light, so shading
+        // them again would apply the terminator twice and crush the shadow side.
+        outRgb =
+          isLand || kind === "lat"
+            ? mixRgb(night, col, nightFloor + (1 - nightFloor) * shade)
+            : col;
 
         // Rim light on the lit limb. Two steps, not a ramp, for the same reason
         // as everything else here. On the disc, not outside it — the sprite is

@@ -381,6 +381,44 @@ which a dithered edge should make vary — cannot tell a dithered core from a ha
 one, because the granulation scatters near-white pixels either way. A check that
 cannot fail is worse than none.
 
+### Gas giants are banded after all
+
+This file spent a while convinced they were not, and the mistake is worth
+recording because it survived a round of screenshots. It came from reading
+`GasPlanet.gdshader` — which genuinely has no bands, being a cellular cloud field
+sampled directly — and then *not checking the conclusion against the other
+shader*, because the swirls it produced looked plausible. `GasPlanetLayers.gdshader`
+settles it in a comment: `// a band is just one dimensional noise`. It samples fbm
+in v alone and then multiplies the turbulence by `pow(band, 2.0) * 7.0`.
+
+So the band term does a specific job: it makes the weather **coherent in latitude**.
+Without it, turbulence displaces the boundary by the same amount everywhere and
+the result is random mottle. With it, the displacement is strong in some latitudes
+and weak in others, and the eye gets long stripes with storms tearing across them.
+That is the whole difference between a gas giant and a bowl of soup.
+
+Two tuning errors, both from making the weather too strong:
+
+- At amplitude 1.7 the displacement reached half a band width almost everywhere,
+  so the bands were scrambled into broad diagonal patches. Coherence cannot come
+  from a displacement large enough to destroy the bands on its own.
+- The ramp ran cream to dark brown and back, which is four very distinct stripes
+  reading as continents. The darkest entry is a belt, not half the planet.
+
+A consequence worth noting: the branch no longer darkens its own far side. The old
+version banded by distance to the light, which doubled as the terminator; latitude
+bands do not, so the terminator had to be put back explicitly for this kind.
+
+The check measures the ratio of vertical to horizontal colour change, because
+bands of constant latitude change fast going up the disc and slowly going across
+it. Two things were needed to make it work. The central 60% only, since the limb
+is where the sphere projection compresses everything. And **dither off** — with the
+ordered dither on, its per-pixel variance is equal in both directions and swamps
+the structure completely: the first run returned 1.04 for a visibly banded gas
+giant and 1.00 for a star, which is what a measurement of noise looks like. A star
+is the control, and it has to come out *below* the threshold, which is a stronger
+control than a second type that merely agrees.
+
 ## Layout
 
 | Path | What it is |

@@ -958,6 +958,86 @@ try {
       `radius ${outline.terran.mean.toFixed(2)} ± ${outline.terran.sd.toFixed(3)}`,
     );
 
+    /**
+     * Gas giant bands run east-west.
+     *
+     * Measured as the ratio of vertical to horizontal colour change. Bands of
+     * constant latitude change fast as you move up the disc and slowly as you move
+     * across it, so the ratio is well above one. A star's structure is the other
+     * way round — concentric, so it changes fastest across — which makes it the
+     * control, and a control that has to come out BELOW the threshold is a much
+     * stronger one than a second type that merely agrees.
+     *
+     * This exists because a wrong conclusion about the gas giant survived a round
+     * of screenshots: bands removed, weather only, and the swirls looked plausible
+     * enough to keep. Measuring the direction of the structure cannot be
+     * satisfied by isotropic mottle.
+     */
+    const aniso = await page.evaluate(async () => {
+      const ratio = async (type) => {
+        const im = new Image();
+        // Dither OFF. This measures the band field, not the band field plus the
+        // ordered dither: with it on, the per-pixel dither contributes the same
+        // variance in both directions and swamps the structure entirely — the
+        // first run of this check returned 1.04 for a visibly banded gas giant
+        // and 1.00 for a star, i.e. both perfectly isotropic, which is what a
+        // measurement of noise looks like.
+        im.src = window.__galaxyStill({ seed: 0x5eed1, type, px: 128, dpr: 1, dither: false });
+        await im.decode();
+        const c = document.createElement("canvas");
+        c.width = im.width;
+        c.height = im.height;
+        const cx = c.getContext("2d");
+        cx.drawImage(im, 0, 0);
+        const d = cx.getImageData(0, 0, im.width, im.height).data;
+        const w = im.width;
+        const h = im.height;
+        const L = (x, y) => {
+          const i = (y * w + x) * 4;
+          if (d[i + 3] === 0) return null;
+          return 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+        };
+        // Central 60% only: the limb is where the sphere projection compresses
+        // everything, and a compression artefact would swamp the measurement.
+        const x0 = Math.round(w * 0.2);
+        const x1 = Math.round(w * 0.8);
+        const y0 = Math.round(h * 0.2);
+        const y1 = Math.round(h * 0.8);
+        let nv = 0;
+        let sv = 0;
+        let nh = 0;
+        let sh = 0;
+        for (let y = y0; y < y1; y++) {
+          for (let x = x0; x < x1; x++) {
+            const a = L(x, y);
+            const b = L(x, y + 1);
+            if (a !== null && b !== null) {
+              sv += Math.abs(a - b);
+              nv++;
+            }
+            const cc = L(x + 1, y);
+            if (a !== null && cc !== null) {
+              sh += Math.abs(a - cc);
+              nh++;
+            }
+          }
+        }
+        return sv / nv / (sh / nh);
+      };
+      return { gas: await ratio("gas"), star: await ratio("star"), terran: await ratio("terran") };
+    });
+
+    check(
+      "gas giant bands run east-west, not around the planet",
+      aniso.gas > 1.3,
+      `vertical/horizontal colour change ${aniso.gas.toFixed(2)}`,
+    );
+    check(
+      "and a star's structure is the other way round — the control, which has to come out below the threshold",
+      aniso.star < 1.15,
+      `star ${aniso.star.toFixed(2)}, gas ${aniso.gas.toFixed(2)}`,
+    );
+
     check(
       "a world is drawn from a small discrete palette, not a smooth gradient",
       look.worldColours < 400,
