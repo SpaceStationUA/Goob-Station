@@ -642,7 +642,8 @@ namespace Content.Shared.Interaction
             #region Pirate: AI multiz interactions
             var viewer = user;
             if (HasComp<Content.Shared.Silicons.StationAi.StationAiOverlayComponent>(user) &&
-                TryComp<RelayInputMoverComponent>(user, out var viewerRelay))
+                TryComp<RelayInputMoverComponent>(user, out var viewerRelay) && // Pirate: AI multiz interactions
+                Exists(viewerRelay.RelayEntity)) // Pirate: AI multiz interactions
             {
                 viewer = viewerRelay.RelayEntity;
             }
