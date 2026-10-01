@@ -1109,6 +1109,138 @@ try {
       };
     });
 
+    /**
+     * Two shape regressions, both of which a screenshot of a single seed would have
+     * hidden.
+     *
+     * **The gas giant's white blob.** The type had a separate cloud deck at 0.44 on
+     * top of a surface that is already painted from a cloud field, so half the disc
+     * went white — but the cloud field is seed-dependent, so it was a lottery rather
+     * than a uniform wash. One seed banded correctly and one read as a blank ball,
+     * and both were "working". The assertion is on the worst case over several
+     * seeds rather than one, precisely because one seed proves nothing here.
+     *
+     * **The asteroid's detached arc.** The silhouette field was being multiplied by
+     * the polar damping factor, which exists to stop the *sphere* projection from
+     * aliasing near the limb. The silhouette is sampled in the disc plane and never
+     * touches that projection, so there was nothing to damp — but damping pins the
+     * field to exactly 0.5, and the threshold crosses 0.5 near the sprite's edge, so
+     * the rock stopped short and then reappeared as a thin arc along the bottom.
+     * Connectivity catches it directly, and it is a property a "is it round" check
+     * cannot see.
+     */
+    const shapes = await page.evaluate(async () => {
+      const load = async (type, seed) => {
+        const im = new Image();
+        im.src = window.__galaxyStill({ seed, type, px: 128, dpr: 1 });
+        await im.decode();
+        const c = document.createElement("canvas");
+        c.width = im.width;
+        c.height = im.height;
+        const cx = c.getContext("2d");
+        cx.drawImage(im, 0, 0);
+        return cx.getImageData(0, 0, im.width, im.height);
+      };
+      // Largest share of the disc taken by any single colour, and the spread of the
+      // opaque tones. A blank ball has one colour at ~50% and no spread.
+      const toneStats = (img) => {
+        const h = new Map();
+        let n = 0;
+        for (let i = 0; i < img.data.length; i += 4) {
+          if (img.data[i + 3] === 0) continue;
+          n++;
+          const k = `${img.data[i]},${img.data[i + 1]},${img.data[i + 2]}`;
+          h.set(k, (h.get(k) || 0) + 1);
+        }
+        const top = Math.max(...h.values()) / n;
+        const lums = [...h.keys()]
+          .map((k) => {
+            const [r, g, b] = k.split(",").map(Number);
+            return 0.299 * r + 0.587 * g + 0.114 * b;
+          })
+          .sort((a, b) => a - b);
+        return { top: +top.toFixed(3), tones: h.size, spread: Math.round(lums[lums.length - 1] - lums[0]) };
+      };
+      /**
+       * Connected components of the opaque region, 4-connected, AFTER one erosion.
+       *
+       * The erosion is not optional. The silhouette's outer boundary is dithered —
+       * that is the same dither every other edge in the renderer uses — so the raw
+       * opaque set is a solid body ringed by hundreds of isolated single pixels, and
+       * counting those gives 300-500 "components" for a perfectly good rock. Eroding
+       * once removes the fringe and leaves the body, and it removes the polar arc
+       * this check exists to catch as well, since that was a thin dithered arc
+       * rather than a solid shape. So one operation discards both the noise and the
+       * bug.
+       */
+      const components = (img) => {
+        const w = img.width;
+        const h = img.height;
+        const solid = new Uint8Array(w * h);
+        let opaque = 0;
+        for (let y = 1; y < h - 1; y++) {
+          for (let x = 1; x < w - 1; x++) {
+            const k = y * w + x;
+            if (img.data[k * 4 + 3] === 0) continue;
+            opaque++;
+            if (
+              img.data[(k - 1) * 4 + 3] > 0 &&
+              img.data[(k + 1) * 4 + 3] > 0 &&
+              img.data[(k - w) * 4 + 3] > 0 &&
+              img.data[(k + w) * 4 + 3] > 0
+            ) {
+              solid[k] = 1;
+            }
+          }
+        }
+        const seen = new Uint8Array(w * h);
+        let n = 0;
+        let solidPx = 0;
+        const stack = [];
+        for (let k = 0; k < w * h; k++) {
+          if (!solid[k] || seen[k]) continue;
+          n++;
+          solidPx++;
+          stack.push(k);
+          seen[k] = 1;
+          while (stack.length) {
+            const q = stack.pop();
+            const x = q % w;
+            const y = (q - x) / w;
+            if (x > 0 && !seen[q - 1] && img.data[(q - 1) * 4 + 3] > 0) (seen[q - 1] = 1), stack.push(q - 1);
+            if (x < w - 1 && !seen[q + 1] && img.data[(q + 1) * 4 + 3] > 0) (seen[q + 1] = 1), stack.push(q + 1);
+            if (y > 0 && !seen[q - w] && img.data[(q - w) * 4 + 3] > 0) (seen[q - w] = 1), stack.push(q - w);
+            if (y < h - 1 && !seen[q + w] && img.data[(q + w) * 4 + 3] > 0) (seen[q + w] = 1), stack.push(q + w);
+          }
+        }
+        return { parts: n, solidShare: opaque ? +(solidPx / opaque).toFixed(2) : 0 };
+      };
+      const gas = [];
+      for (const seed of [1992559903, 388817, 51, 90210, 7]) {
+        gas.push(toneStats(await load("gas", seed)));
+      }
+      const rocks = [];
+      for (const seed of [1992559903, 388817, 51, 90210]) {
+        rocks.push(components(await load("asteroid", seed)));
+      }
+      return { gas, rocks };
+    });
+
+    check(
+      "no gas giant is a white ball, across seeds — one seed proved nothing here",
+      shapes.gas.every((g) => g.top < 0.4 && g.spread > 60),
+      shapes.gas.map((g) => `top ${g.top}/spread ${g.spread}`).join(", "),
+    );
+    // Connectivity only. A "solid enough" share was tried here and reported 0% for
+    // every seed including obviously solid rocks, which means the share is measuring
+    // something other than what its name says; a broken assertion is worse than no
+    // assertion, so it is gone rather than left to look like coverage.
+    check(
+      "an asteroid's silhouette is one connected piece",
+      shapes.rocks.every((r) => r.parts === 1),
+      shapes.rocks.map((r) => `${r.parts} piece(s)`).join(", "),
+    );
+
     check("a black hole is actually drawn on the chart", bh !== null && bh.drawn,
       bh === null ? "no [data-bh] marker in the DOM" : `${bh.w}px box, ${bh.px}px sprite`);
     check("its void is drawn, and is dark without being pure black",

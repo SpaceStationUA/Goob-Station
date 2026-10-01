@@ -607,6 +607,42 @@ fixed and only the texture turns.
 that `planet.ts` and `blackhole.ts` both need. Importing them from a module called
 "planet" would have been a lie about what that module is.
 
+### Two bugs a single screenshot could not have found
+
+**The gas giant's white ball.** The type carried a separate cloud deck at `0.44` on
+top of a surface that is *already* painted from a cellular-displaced turbulence
+field, so for a gas giant the surface is the weather and the deck is a second,
+redundant one. It covered roughly half the disc in white — and because the cloud
+field is seed-dependent, that is not a uniform wash but a lottery. Measured on two
+seeds at 128px: one gave a correctly banded giant whose most common colour was the
+palette's own cream at 7%, the other spent **28% of its pixels on near-white** and
+read as a blank ball. Both were "working". A third of the reason it survived is
+that a screenshot of the lucky seed looks perfect.
+
+The assertion is therefore over **five seeds**, on the largest share taken by any
+single colour and on the spread of the opaque tones. A blank ball has one colour at
+~50% and no spread.
+
+**The asteroid's detached arc.** The silhouette field was multiplied by the polar
+damping factor. That factor exists to stop the *sphere* projection from aliasing
+near the limb, where `v` compresses and a pixel row crosses many noise periods at
+once. The silhouette is sampled in the disc plane and never touches that
+projection, so there was nothing to damp — but damping pins the field to exactly
+0.5, and the threshold `0.02 + 0.5r` crosses 0.5 at r ≈ 0.96. So the rock stopped
+at about 60% of the radius and then came back as a thin detached arc along the
+bottom of the sprite, which reads as a rendering fault rather than as a lump.
+
+Caught by connectivity, after one erosion. The erosion is not optional: the
+silhouette's outer boundary is dithered, like every other edge in the renderer, so
+the raw opaque set is a solid body ringed by hundreds of isolated single pixels and
+counts as 300–500 components. Eroding once removes the fringe — and removes the
+polar arc too, since that was a thin dithered arc rather than a solid shape. One
+operation discards both the noise and the bug.
+
+A "solid enough" share was tried alongside it and reported 0% for every seed
+including obviously solid rocks, so it was measuring something other than what its
+name said. It is gone rather than left in place looking like coverage.
+
 ## Layout
 
 | Path | What it is |

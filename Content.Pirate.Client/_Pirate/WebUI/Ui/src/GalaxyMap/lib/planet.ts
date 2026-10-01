@@ -228,12 +228,18 @@ export const PLANET_TYPES: Record<PlanetType, TypeSpec> = {
     // No land, so `sea` is the whole planet: four steps of cloud deck.
     sea: ["#f8eecd", "#e0b87c", "#bd8a4e", "#8a5c33"],
     land: null,
-    // A gas giant is a cloud deck all the way down, so the layer wants to be
-    // thick - but at the threshold that makes it literally opaque the deck's own
-    // structure vanishes and it becomes a featureless cream ball, which throws
-    // away the one silhouette that made gas giants worth having. Half cover, so
-    // the weather shows through.
-    cloud: 0.44,
+    // NO separate cloud deck, and this was wrong for a while.
+    //
+    // The `lat` branch below already paints the surface from a
+    // cellular-displaced turbulence field, so for this type the SURFACE IS the
+    // weather and a deck on top is a second, redundant one. At 0.44 it covered
+    // roughly half the disc in white, and because the cloud field is
+    // seed-dependent that is not a uniform wash but a lottery: measured on two
+    // seeds of this type at 128px, one gave a correctly banded giant whose top
+    // colour was the palette's own cream, while the other spent 28% of its pixels
+    // on near-white and read as a blank ball. Both were "working".
+    cloud: 0,
+
   },
   lava: {
     kind: "terrain",
@@ -291,8 +297,10 @@ const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", 
  * 6: the asteroid silhouette is a noise field, not a circle.
  * 7: star rays sampled in polar space, replacing four angular lobes.
  * 8: gas giants banded by one-dimensional latitude noise.
- * 9: ice worlds get a second, independent water field. */
-export const PLANET_ALGO_VERSION = 9;
+ * 9: ice worlds get a second, independent water field.
+ * 10: gas giants lost their redundant cloud deck; the asteroid silhouette
+ *     is no longer polar-damped. */
+export const PLANET_ALGO_VERSION = 10;
 
 export interface PlanetOpts {
   seed: number;
@@ -1032,7 +1040,17 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
           // splat or a map of continents rather than as a lump. An asteroid is
           // two or three big lobes and almost nothing else.
           const ru = u + spin + f.rot;
-          const edge = 0.5 + (fbm(ru * 2.2, v * 2.2, 3, 2, seed + 907) - 0.5) * polar;
+          // NO polar damping here, and having it was a visible bug.
+          //
+          // `polar` exists to stop the SPHERE projection from aliasing near the
+          // limb, where v compresses and a pixel row crosses many noise periods at
+          // once. The silhouette is sampled in the disc plane and never touches
+          // that projection, so there is nothing to damp — but damping forces the
+          // field to exactly 0.5, and this threshold crosses 0.5 at r = 0.96. The
+          // rock therefore stopped at about 60% of the radius and then came back
+          // as a thin detached arc along the bottom of the sprite, which read as a
+          // rendering fault rather than as a lump of rock.
+          const edge = 0.5 + (fbm(ru * 2.2, v * 2.2, 3, 2, seed + 907) - 0.5) * 0.6;
           const thr = 0.02 + Math.sqrt(r2) * 0.5;
           shapeA = edge > thr || (edge > thr - 0.05 && ditherV > 0.5) ? 1 : 0;
 
