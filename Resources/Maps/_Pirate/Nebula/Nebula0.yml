@@ -93,7 +93,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: ZNebulaStation [0]
+      name: NebulaStation [0]
     - type: Transform
       parent: 3
     - type: MapGrid
@@ -18498,7 +18498,7 @@ entities:
   - uid: 3
     components:
     - type: MetaData
-      name: ZNebulaStation [0]
+      name: NebulaStation [0]
     - type: Transform
     - type: Map
       mapPaused: True
