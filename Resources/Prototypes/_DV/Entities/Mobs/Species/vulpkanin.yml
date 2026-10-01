@@ -78,8 +78,6 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom"]  # Goobstation
-      - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ] # Goobstation
       - shader: StencilClear
         sprite: _Pirate/Mobs/Species/Vulpkanin/parts.rsi # Pirate - resprite
         state: l_leg
