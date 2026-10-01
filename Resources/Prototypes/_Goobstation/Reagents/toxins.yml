@@ -217,6 +217,10 @@
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
+      - !type:ModifyStatusEffect # nerve agent: pupils constrict, screen slowly tunnels
+        effectProto: StatusEffectVisionFade
+        type: Add
+        time: 2
       - !type:ModifyParalysis
         probability: 0.5
         time: 4
@@ -403,6 +407,14 @@
       metabolismRate: 0.05 # Very slow so people actually can make use of its effect
       effects:
       - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caffeine
+          min: 20
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStimRush
+        type: Add
+        time: 2
         conditions:
         - !type:ReagentCondition
           reagent: Caffeine

@@ -33,7 +33,6 @@ public sealed partial class TraitorRuleSystem
             return false;
 
         _reputation.AddContracts(traitor, uplinkTarget); // Pirate: bind contracts to the uplink we just created.
-
         if (setupEvent != null)
         {
             briefing = setupEvent.Value.BriefingEntry;

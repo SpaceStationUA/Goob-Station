@@ -1,0 +1,12 @@
+# WebUI theme definitions for the CEF apps. An entity's page picks up the
+# theme class (tokens.css) through the PirateWebUiThemeComponent on its
+# prototype (default: PirateNtWeb). New themes = new entries here.
+- type: pirateWebTheme
+  id: PirateNtWeb
+  class: nt
+- type: pirateWebTheme
+  id: PirateSyndiWeb
+  class: syndi
+- type: pirateWebTheme
+  id: PirateNtAmber
+  class: nt

@@ -2,6 +2,8 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.NodeContainer;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -12,9 +14,12 @@ namespace Content.Server.NodeContainer.Nodes
     /// </summary>
     public static class NodeHelpers
     {
+        // Pirate: engine 277 moved grid instance methods onto SharedMapSystem.
+        public static SharedMapSystem MapSys => IoCManager.Resolve<IEntityManager>().System<SharedMapSystem>();
+
         public static IEnumerable<Node> GetNodesInTile(EntityQuery<NodeContainerComponent> nodeQuery, MapGridComponent grid, Vector2i coords)
         {
-            foreach (var entityUid in grid.GetAnchoredEntities(coords))
+            foreach (var entityUid in MapSys.GetAnchoredEntities(grid.Owner, grid, coords))
             {
                 if (!nodeQuery.TryGetComponent(entityUid, out var container))
                     continue;
@@ -52,20 +57,20 @@ namespace Content.Server.NodeContainer.Nodes
         {
             if (includeSameTile)
             {
-                foreach (var uid in grid.GetAnchoredEntities(coords))
+                foreach (var uid in MapSys.GetAnchoredEntities(grid.Owner, grid, coords))
                     yield return (Direction.Invalid, uid);
             }
 
-            foreach (var uid in grid.GetAnchoredEntities(coords + (0, 1)))
+            foreach (var uid in MapSys.GetAnchoredEntities(grid.Owner, grid, coords + (0, 1)))
                 yield return (Direction.North, uid);
 
-            foreach (var uid in grid.GetAnchoredEntities(coords + (0, -1)))
+            foreach (var uid in MapSys.GetAnchoredEntities(grid.Owner, grid, coords + (0, -1)))
                 yield return (Direction.South, uid);
 
-            foreach (var uid in grid.GetAnchoredEntities(coords + (1, 0)))
+            foreach (var uid in MapSys.GetAnchoredEntities(grid.Owner, grid, coords + (1, 0)))
                 yield return (Direction.East, uid);
 
-            foreach (var uid in grid.GetAnchoredEntities(coords + (-1, 0)))
+            foreach (var uid in MapSys.GetAnchoredEntities(grid.Owner, grid, coords + (-1, 0)))
                 yield return (Direction.West, uid);
         }
     }

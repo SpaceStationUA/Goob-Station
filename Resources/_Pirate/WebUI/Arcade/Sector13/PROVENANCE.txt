@@ -1,0 +1,13 @@
+Sector13 — vendored third-party WebArcade game
+Fetched by Scripts/sh/vendor-arcade-games.sh.
+
+id:      sector13
+license: MIT
+repo:    BenjaminWFox/Sector-13-Js13k-2024
+ref:     76bc259a237c17b0f4da7866a68460de9c4bd44b
+kind:    zip (https://js13kgames.com/games/sector-13.zip)
+fetched: 2026-09-19T20:39:26Z
+
+This is a third-party work from the JS13kGames 2024 (or 2023) competition.
+See the repository/source above for the original license text and copyright
+holder. We do not claim authorship and we do not modify the code.

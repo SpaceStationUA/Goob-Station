@@ -32,7 +32,7 @@ public sealed partial class CEMultizAtmosPipeAdapterNode : PipeNode
         }
 
         var mapSystem = entMan.EntitySysManager.GetEntitySystem<SharedMapSystem>();
-        var gridTile = grid.TileIndicesFor(xform.Coordinates);
+        var gridTile = NodeHelpers.MapSys.TileIndicesFor(grid.Owner, grid, xform.Coordinates);
 
         // Convert our tile to world coords so we can reproject onto peers that may have
         // different grid transforms within their maps.

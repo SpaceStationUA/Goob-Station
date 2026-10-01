@@ -13,3 +13,9 @@
   id: Text
   name: signal-port-name-text
   description: signal-port-description-text
+
+# Pirate TV: mirror input (link from PirateTvBroadcast).
+- type: sinkPort
+  id: PirateTvReceive
+  name: signal-port-name-pirate-tv-receive
+  description: signal-port-description-pirate-tv-receive

@@ -1,0 +1,28 @@
+/* Theme picker page - theme tokens only (it re-skins itself live). */
+
+/* Same reset contract as the radio page (html/body/#root box chain). */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--bg); color: var(--text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+#root { display: flex; flex-direction: column; height: 100%; }
+
+.picker { display: flex; flex-direction: column; flex: 1 1 0; min-height: 0; padding: 10px 12px; gap: 8px; } { display: flex; flex-direction: column; flex: 1 1 0; min-height: 0; padding: 10px 12px; gap: 8px; }
+.hint { font-size: 11px; color: var(--dim); margin: 0 0 4px; }
+.list { display: flex; flex-direction: column; gap: 6px; overflow-y: auto; min-height: 0; }
+.theme-card {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 12px; cursor: pointer; text-align: left;
+}
+.theme-card:hover { background: var(--panel2); }
+.theme-card.active { border-color: var(--accent); color: var(--accent2); }
+.theme-card:disabled { opacity: .55; cursor: default; }
+.theme-card .name { flex: 1; font-size: 13px; }
+.theme-card .cur { font-size: 11px; color: var(--accent2); }

@@ -11,6 +11,7 @@ namespace Content.Shared.Construction
     public abstract class SharedConstructionSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedMapSystem MapSystem = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
@@ -25,7 +26,7 @@ namespace Content.Shared.Construction
             if (!_mapManager.TryFindGridAt(coords, out _, out var grid))
                 return null;
 
-            var ignored = grid.GetAnchoredEntities(coords).ToHashSet();
+            var ignored = MapSystem.GetAnchoredEntities(grid.Owner, grid, coords).ToHashSet();
             return e => ignored.Contains(e);
         }
 

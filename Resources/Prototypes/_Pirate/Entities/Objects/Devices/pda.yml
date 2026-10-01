@@ -39,6 +39,7 @@
       - NewsReaderCartridge
       - NanoChatCartridge
       - WalletCartridge # Pirate banking
+      - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: [ BaseMedicalPDA, BaseInterdyneContraband ]
@@ -72,6 +73,7 @@
     - MedTekCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
     
 - type: entity
   parent: [ BaseMedicalPDA, BaseInterdyneContraband ]
@@ -105,6 +107,7 @@
     - MedTekCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
     
 - type: entity
   parent: [ BaseMedicalPDA, BaseInterdyneContraband ]
@@ -136,6 +139,7 @@
     - NewsReaderCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BaseSecurityPDA

@@ -181,7 +181,6 @@ public sealed class VoiceChatManager
 
         AccessChanged?.Invoke(allowed);
     }
-
     private void SetWebConnected(bool connected)
     {
         if (WebConnected == connected)
