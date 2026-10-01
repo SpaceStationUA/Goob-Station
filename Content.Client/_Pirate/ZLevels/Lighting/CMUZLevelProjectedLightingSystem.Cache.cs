@@ -25,7 +25,9 @@ public sealed partial class CMUZLevelProjectedLightingSystem
 
     private void OnLightOpeningTilesChanged(ref TileChangedEvent args)
     {
-        _lightOpeningCache.Clear();
+        var xform = Transform(args.Entity);
+        if (xform.MapUid is { } mapUid)
+            _lightOpeningCache.InvalidateMap(xform.MapID, mapUid);
     }
 
     private void OnLightOpeningCollisionChanged(ref CollisionChangeEvent args)

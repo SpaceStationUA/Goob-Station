@@ -12,12 +12,14 @@ public sealed partial class CEZLevelsSystem
     // skips chunkless holes inside grid bounds, which this resolver still accepts as its final fallback.
     private readonly Dictionary<EntityUid, List<Entity<MapGridComponent, TransformComponent>>> _lookupGrids = new();
     private readonly List<EntityUid> _emptyLookupMaps = new();
+    private readonly HashSet<EntityUid> _lookupAncestors = new();
     private bool _lookupGridsDirty = true;
 
     private void InitializeGridLookup()
     {
         EntityManager.ComponentAdded += OnLookupComponentAdded;
         EntityManager.ComponentRemoved += OnLookupComponentRemoved;
+        SubscribeLocalEvent<EntParentChangedMessage>(OnLookupParentChanged);
         SubscribeLocalEvent<MapGridComponent, EntityPausedEvent>(OnLookupGridPaused);
         SubscribeLocalEvent<MapGridComponent, EntityUnpausedEvent>(OnLookupGridUnpaused);
     }
@@ -38,7 +40,13 @@ public sealed partial class CEZLevelsSystem
     private void OnLookupGridPaused(Entity<MapGridComponent> ent, ref EntityPausedEvent args) => _lookupGridsDirty = true;
     private void OnLookupGridUnpaused(Entity<MapGridComponent> ent, ref EntityUnpausedEvent args) => _lookupGridsDirty = true;
 
-    // A grid's parent is its map, so this also sees every map change.
+    // Moving a grid's ancestor can change its map without changing the grid's direct parent.
+    private void OnLookupParentChanged(ref EntParentChangedMessage args)
+    {
+        if (_lookupAncestors.Contains(args.Entity))
+            _lookupGridsDirty = true;
+    }
+
     protected override void OnGridParentChanged(Entity<MapGridComponent> ent, ref EntParentChangedMessage args)
     {
         // Invalidate before the inherited handler can resolve support for attached bodies.
@@ -50,9 +58,18 @@ public sealed partial class CEZLevelsSystem
     {
         foreach (var list in _lookupGrids.Values)
             list.Clear();
+        _lookupAncestors.Clear();
         var query = EntityQueryEnumerator<MapGridComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var grid, out var xform))
         {
+            var parent = xform.ParentUid;
+            while (parent.IsValid() && TryComp<TransformComponent>(parent, out var parentXform))
+            {
+                if (!_lookupAncestors.Add(parent))
+                    break;
+                parent = parentXform.ParentUid;
+            }
+
             if (xform.MapUid is not { } mapUid)
                 continue;
             if (!_lookupGrids.TryGetValue(mapUid, out var list))
@@ -164,6 +181,7 @@ public sealed partial class CEZLevelsSystem
         EntityManager.ComponentAdded -= OnLookupComponentAdded;
         EntityManager.ComponentRemoved -= OnLookupComponentRemoved;
         _lookupGrids.Clear();
+        _lookupAncestors.Clear();
         base.Shutdown();
     }
 }

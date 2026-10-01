@@ -69,6 +69,19 @@ internal sealed class ZLightOpeningCache
             _entries.Remove(key);
     }
 
+    public void InvalidateMap(MapId mapId, EntityUid mapUid)
+    {
+        _expired.Clear();
+        foreach (var key in _entries.Keys)
+        {
+            if (key.SourceMap == mapId || key.OpeningMap == mapUid)
+                _expired.Add(key);
+        }
+
+        foreach (var key in _expired)
+            _entries.Remove(key);
+    }
+
     public void Clear()
     {
         _entries.Clear();
