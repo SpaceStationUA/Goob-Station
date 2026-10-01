@@ -493,6 +493,45 @@ decide", so a hand-written fixture need not annotate every world.
 
 See the note on parallax below.
 
+### Differential rotation between layers: why the cloud deck shears instead
+
+The reference gives every layer its own time multiplier — land at 0.02, cloud at
+0.005, a ring at 314× the gas giant's. Ours gives the ground and the deck the same
+rate and shears the deck by `CLOUD_SHEAR * sin(spin * TAU)`. That is a deliberate
+substitution, and the arithmetic is worth writing down.
+
+A full turn has to land exactly back on the start, and the strip is stepped through
+with CSS `steps()`, so frame 0 and frame 24 must be the same image. Any layer whose
+rate is not a whole number of turns therefore leaves a seam once per loop. A cloud
+deck genuinely slower than the ground is rate 1/3 — a third of a turn — which does
+not close. The alternatives are all bad:
+
+- **Rate 1/3 and a loop three times longer.** This works: three ground turns and
+  one cloud turn per loop, so both close. Measured cost at 200px, dpr 1: 24 frames
+  is 915ms and 789KB; 72 frames is **2572ms and 1158KB**. A 2.5 second generation
+  for one panel, per system, on a click. The deferral that makes 915ms tolerable
+  does not make 2572ms tolerable.
+- **An integer rate of 2 or more.** Closes, but the deck laps the ground, which is
+  not weather.
+- **A sine of the phase.** Periodic with the loop by construction — the deck runs
+  ahead through the middle of the turn and falls back by the end — so the seam is
+  exactly zero. It also produces the *appearance* of differential motion, because a
+  viewer reads a deck that leads and then trails as faster and slower than the
+  ground. That is what ships.
+
+So the substitution is not a simplification of the reference's idea, it is the only
+version of that idea that both closes and fits in a frame budget. `check-dom.mjs`
+asserts the seam is zero.
+
+**The one place a genuinely different rate is affordable is the ring**, because it
+is SVG rather than baked pixels. A flat annulus rotating about its own centre is a
+no-op, so nothing is lost by not animating it — but a ring carrying a few radial
+divisions would show its rotation, and a rotating division pattern against a
+fixed planet is exactly how ring rotation is observed in reality. Not implemented:
+the chart is deliberately static (only the overlay animates), and a 16px map ring
+has no room for a visible gap. It is the obvious thing to add if the overlay ever
+wants to show it off.
+
 ## Layout
 
 | Path | What it is |
