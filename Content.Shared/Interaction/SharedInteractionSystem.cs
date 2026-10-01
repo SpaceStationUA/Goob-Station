@@ -638,8 +638,17 @@ namespace Content.Shared.Interaction
 
         protected bool ValidateInteractAndFace(EntityUid user, EntityCoordinates coordinates)
         {
+            #region Pirate: AI multiz interactions
+            var viewer = user;
+            if (HasComp<Content.Shared.Silicons.StationAi.StationAiOverlayComponent>(user) &&
+                TryComp<RelayInputMoverComponent>(user, out var viewerRelay))
+            {
+                viewer = viewerRelay.RelayEntity;
+            }
+            #endregion Pirate: AI multiz interactions
+
             // Verify user is on the same map as the entity they clicked on
-            if (_transform.GetMapId(coordinates) != Transform(user).MapID)
+            if (_transform.GetMapId(coordinates) != Transform(viewer).MapID) // Pirate: AI multiz interactions
                 return false;
 
             // Only rotate to face if they're not moving.
