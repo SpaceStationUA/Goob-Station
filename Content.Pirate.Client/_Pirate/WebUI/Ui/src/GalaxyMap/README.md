@@ -419,6 +419,31 @@ giant and 1.00 for a star, which is what a measurement of noise looks like. A st
 is the control, and it has to come out *below* the threshold, which is a stronger
 control than a second type that merely agrees.
 
+### Ice world melt lakes
+
+The reference's ice world is two instances of the **same** surface shader at
+different thresholds, composited: the sheet, and the melt water coming through it.
+One threshold cannot produce that, because one threshold gives every body of water
+the same size and the same edge complexity — which is why this type used to look
+like a world that was half ocean rather than a world with lakes on it. The second
+field is decorrelated by frequency as well as by seed, so the ponds do not all
+gather along the same coastline.
+
+The lakes reuse the **banded** sea colour rather than a flat blue. They are water
+in this lighting model, and a flat fill arrives unlit — bright holes on the night
+side, which is the exact artefact the banding exists to prevent.
+
+The check asserts water **area**, and that was decided by measurement. Counting
+connected bodies was the obvious thing and it is not reliable: across five seeds
+the count went 9/7, 7/8, 17/11, 38/17, 76/6, and on one seed it went *down*,
+because where the main field already has water the ponds merge into it instead of
+adding to the count. Area is unambiguous in every case — 20×, 200×, 1.3×, 2.7×,
+27× — so the threshold is 1.2×, which the weakest seed still clears.
+
+So the fragmentation claim, which is the visually interesting one, is **not**
+asserted. It is real and visible; it just is not a property that holds across
+seeds, and a check that fails on a legitimate seed is worse than no check.
+
 ## Layout
 
 | Path | What it is |

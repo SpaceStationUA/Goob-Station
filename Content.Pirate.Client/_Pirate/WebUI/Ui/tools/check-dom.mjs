@@ -867,6 +867,106 @@ try {
       };
     });
 
+    /**
+     * Ice world melt lakes, and specifically that they FRAGMENT the water.
+     *
+     * This asserts on water AREA, and the choice was made by measurement rather
+     * than by taste. Counting connected bodies was the obvious thing to check and
+     * it is not reliable: across five seeds the body count went 9/7, 7/8, 17/11,
+     * 38/17, 76/6 — and on one seed it went DOWN, because where the main field
+     * already has water the ponds merge into it instead of adding to the count.
+     * Water area is unambiguous in every case: 20x, 200x, 1.3x, 2.7x and 27x, so
+     * the threshold is set at 1.2x, which the weakest seed still clears.
+     *
+     * So the fragmentation claim — which is the visually interesting one — is NOT
+     * asserted. It is real and visible; it is just not a property that holds
+     * across seeds, and a check that fails on a legitimate seed is worse than no
+     * check.
+     *
+     * The water test is a luminance threshold, which only works on the LIT side,
+     * so the region is restricted to the upper left where the light is. The
+     * terminator drags shaded ice down below the water's own luminance, and a
+     * threshold applied to the whole disc would therefore count the night half as
+     * a lake.
+     */
+    const lake = await page.evaluate(async () => {
+      const bodies = async (opts) => {
+        const im = new Image();
+        im.src = window.__galaxyStill({ seed: 0x5eed1, type: "ice", px: 128, dpr: 1, ...opts });
+        await im.decode();
+        const c = document.createElement("canvas");
+        c.width = im.width;
+        c.height = im.height;
+        const cx = c.getContext("2d");
+        cx.drawImage(im, 0, 0);
+        const d = cx.getImageData(0, 0, im.width, im.height).data;
+        const w = im.width;
+        const h = im.height;
+        // Ice tones are all above 190 in luminance; water is below 175. Nothing
+        // sits between, which is what makes a threshold usable at all here.
+        const wet = new Uint8Array(w * h);
+        let wetPx = 0;
+        for (let y = 0; y < Math.round(h * 0.5); y++) {
+          for (let x = 0; x < Math.round(w * 0.6); x++) {
+            const i = (y * w + x) * 4;
+            if (d[i + 3] === 0) continue;
+            const l = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+            if (l < 185) {
+              wet[y * w + x] = 1;
+              wetPx++;
+            }
+          }
+        }
+        // Flood fill, 4-connected.
+        let n = 0;
+        const stack = [];
+        for (let k = 0; k < wet.length; k++) {
+          if (!wet[k]) continue;
+          n++;
+          stack.push(k);
+          wet[k] = 0;
+          while (stack.length) {
+            const p = stack.pop();
+            const x = p % w;
+            const y = (p - x) / w;
+            if (x > 0 && wet[p - 1]) (wet[p - 1] = 0), stack.push(p - 1);
+            if (x < w - 1 && wet[p + 1]) (wet[p + 1] = 0), stack.push(p + 1);
+            if (y > 0 && wet[p - w]) (wet[p - w] = 0), stack.push(p - w);
+            if (y < h - 1 && wet[p + w]) (wet[p + w] = 0), stack.push(p + w);
+          }
+        }
+        return { bodies: n, wetPx };
+      };
+      const px = async (opts) => {
+        const im = new Image();
+        im.src = window.__galaxyStill({ seed: 0x5eed1, type: "terran", px: 128, dpr: 1, ...opts });
+        await im.decode();
+        return im.src;
+      };
+      const on = await bodies({});
+      const off = await bodies({ suppressLakes: true });
+      return {
+        on: on.bodies,
+        off: off.bodies,
+        wetOn: on.wetPx,
+        wetOff: off.wetPx,
+        // The control: a world with no lakes to suppress must be untouched.
+        terranSame: (await px({})) === (await px({ suppressLakes: true })),
+      };
+    });
+
+    check(
+      "an ice world has melt water on its sheet, not just one continent-sized ocean",
+      lake.wetOn > lake.wetOff * 1.2,
+      `wet pixels ${lake.wetOn} with the second field, ${lake.wetOff} without ` +
+        `(${lake.on} vs ${lake.off} separate bodies, reported but not asserted)`,
+    );
+    check(
+      "and a world with no lakes is untouched by the flag — the control",
+      lake.terranSame,
+      lake.terranSame ? "byte-identical" : "terran changed, so the flag is not inert",
+    );
+
     check(
       "an airless world draws craters",
       crat.barren.changed > crat.barren.total * 0.01 && crat.lava.changed > crat.lava.total * 0.01,

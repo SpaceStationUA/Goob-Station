@@ -276,6 +276,15 @@ interface TypeSpec {
    * erode it and nothing to fill it.
    */
   craters?: boolean;
+  /**
+   * A second, independent water field, for ice worlds.
+   *
+   * The reference's ice world is two instances of the SAME surface shader at
+   * different thresholds, composited: the sheet, and the melt water coming
+   * through it. One threshold cannot do that, because one threshold gives every
+   * body of water the same size and the same edge complexity.
+   */
+  lakes?: boolean;
 }
 
 /**
@@ -344,12 +353,16 @@ export const PLANET_TYPES: Record<PlanetType, TypeSpec> = {
   },
   ice: {
     kind: "terrain",
-    cutoff: 0.1,
+    // Was 0.1, which put almost every pixel on the sheet and left the water as one
+    // continent-sized region — a world half ocean, rather than an ice sheet with
+    // water in it. At 0.34 the sheet is broken and the water reads as water.
+    cutoff: 0.34,
     emissive: false,
     atmo: "#bfe4ff",
     sea: ["#7fa8cd", "#5c86ad", "#3f6288", "#2c4562"],
     land: ["#e8f4fc", "#d6e9f6", "#c4dcee", "#b2cfe4"],
     cloud: 0.56,
+    lakes: true,
   },
   gas: {
     kind: "lat",
@@ -421,8 +434,9 @@ const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", 
  * 5: craters on the airless worlds.
  * 6: the asteroid silhouette is a noise field, not a circle.
  * 7: star rays sampled in polar space, replacing four angular lobes.
- * 8: gas giants banded by one-dimensional latitude noise. */
-export const PLANET_ALGO_VERSION = 8;
+ * 8: gas giants banded by one-dimensional latitude noise.
+ * 9: ice worlds get a second, independent water field. */
+export const PLANET_ALGO_VERSION = 9;
 
 export interface PlanetOpts {
   seed: number;
@@ -443,6 +457,8 @@ export interface PlanetOpts {
    * much cheaper than an assertion that can pass for the wrong reason.
    */
   suppressCraters?: boolean;
+  /** Suppress the second water field on an ice world. Same reasoning as above. */
+  suppressLakes?: boolean;
   /** Light direction in radians. */
   light?: number;
   /**
@@ -582,6 +598,7 @@ interface Frame {
   /** River colour pair, or null. */
   water: [RGB, RGB] | null;
   craters: boolean;
+  lakes: boolean;
   /**
    * Craters across the sphere. Integer, because the field has to tile at the
    * wrap.
@@ -683,6 +700,7 @@ function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
       ? [hexToRgb(spec.water[0]), hexToRgb(spec.water[1])]
       : null,
     craters: spec.craters === true && !o.suppressCraters,
+    lakes: spec.lakes === true && !o.suppressLakes,
     craterFreq: Math.max(3, Math.min(7, Math.round(d / 30))),
     atmo: spec.atmo ? hexToRgb(spec.atmo) : null,
     // A small sprite cannot afford a dark side. Below about 24px the night half
@@ -975,6 +993,10 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
         if (dLit > 0.2 && dLit < 0.2 + bandW && ditherV > 0.5) col = sea[1];
         if (dLit > 0.4) col = sea[3];
         if (dLit > 0.4 && dLit < 0.4 + bandW && ditherV > 0.5) col = sea[2];
+        // Kept because the lakes pass below has to put water back, and water is
+        // this banded colour — not a flat blue. Without it, melt ponds would
+        // arrive unlit and sit on the night side as bright holes.
+        const seaCol = col;
 
         // ---- pass two: land, chosen by comparing displaced fields ----------
         /**
@@ -1035,6 +1057,34 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
             }
 
             if (f.emissive && f2 + dLit < h * 0.7) col = land[0];
+          }
+        }
+
+        // ---- pass two-and-a-half: melt lakes --------------------------------
+        if (f.lakes && isLand) {
+          /**
+           * A second water field, independent of the first and at a finer scale.
+           *
+           * This is what the reference's ice world is: the same surface shader
+           * twice at two thresholds, the sheet and the melt coming through it. One
+           * threshold cannot produce it, because one threshold gives every body of
+           * water the same size and the same edge complexity — which is why this
+           * type used to look like a world that was half ocean rather than a world
+           * with lakes on it.
+           *
+           * The threshold sits well below the sheet's, so ponds are common inside
+           * the ice and the big water bodies still come from the main field. The
+           * two are decorrelated by frequency as well as by seed, so the ponds do
+           * not all land along the same coastline.
+           */
+          const h2 =
+            0.5 +
+            (fbm(sx * period * 2.4, sy * period * 2.4, period, Math.max(2, octaves - 1), seed + 733) -
+              0.5) *
+              polar;
+          if (h2 < 0.44 || (h2 < 0.4 && ditherV > 0.5)) {
+            isLand = false;
+            col = seaCol;
           }
         }
 
