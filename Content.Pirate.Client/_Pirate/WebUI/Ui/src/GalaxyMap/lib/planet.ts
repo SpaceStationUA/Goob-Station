@@ -1478,6 +1478,37 @@ export function planetTypeFor(kind: string, id: string): PlanetType {
 }
 
 /** A different seed per system, so two systems never look identical. */
+/**
+ * Whether this world has a ring system.
+ *
+ * Only gas giants, and only about a third of them - a ring is a rarity, and a
+ * chart where every large world has one reads as a chart of Saturns. Derived from
+ * the seed rather than stored, so it is a pure function of the model exactly as
+ * the sprite is: two clients with the same data draw the same rings without
+ * either being told.
+ */
+export function hasRings(seed: number, type: PlanetType, explicit?: boolean): boolean {
+  if (type !== "gas") return false;
+  // An authored answer beats the hash. See `StarSystem.rings` for why a ring is
+  // content: a lore editor has to be able to write one down.
+  if (explicit !== undefined) return explicit;
+  // The period here is 2^20 and not something small, and that is load-bearing.
+  //
+  // `hash2` reduces its first argument modulo `period` before mixing, because the
+  // period is there to make noise tile. Using it for a DECISION therefore
+  // collapses the output space to `period` buckets: at 32 there are thirty-two
+  // possible answers no matter how many seeds are thrown at it, the measured
+  // distribution was 9/16/16/13/9/16/3/3/3/13 across ten buckets, and 43.8% of
+  // seeds came out below a 0.34 threshold instead of 34%. It is not a slightly
+  // biased hash, it is a 32-valued hash wearing a uniform one's clothes — and the
+  // first four ids tried all landed in the wrong bucket, which is what made this
+  // visible at all.
+  //
+  // At 2^20 the measured distribution is flat to 0.2% and 34.0% fall below the
+  // threshold.
+  return hash2(seed | 0, 5, 1 << 20, 91) < 0.34;
+}
+
 export function seedFromId(id: string): number {
   let h = 0x811c9dc5;
   for (let i = 0; i < id.length; i++) {

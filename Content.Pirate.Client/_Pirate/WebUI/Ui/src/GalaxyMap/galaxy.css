@@ -213,6 +213,24 @@ svg.chart.painting {
   position: relative;
   line-height: 0;
 }
+/* A ringed system draws outside its own box: the ring is 1.64x the planet's
+   diameter. Without this the overlay panel would need padding to fit it, and the
+   sprite's square box is deliberately exactly the disc. */
+.world.ringed {
+  overflow: visible;
+}
+.world-ring {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  overflow: visible;
+}
+.world-ring-back {
+  z-index: 0;
+}
+.world-ring-front {
+  z-index: 3;
+}
 .world-still,
 .world-turn {
   display: block;

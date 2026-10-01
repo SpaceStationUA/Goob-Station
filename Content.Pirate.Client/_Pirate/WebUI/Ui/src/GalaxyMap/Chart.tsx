@@ -1,7 +1,8 @@
 import { createEffect, createMemo, createSignal, For, onCleanup, Show } from "solid-js";
 import { cellsInExtent, hexCorners, hexToPixel, type Axial } from "./lib/hex";
 import { cellsByTerritory, cellOutline } from "./lib/geometry";
-import { planetTypeFor, planetUri, seedFromId } from "./lib/planet";
+import { hasRings, planetTypeFor, planetUri, seedFromId } from "./lib/planet";
+import { ringGeomFor, ringHalf } from "./WorldRing";
 import { loopToPxPath, loopsToPxPath, makeTransform } from "./lib/transform";
 import { pick, type GalaxyModel, type PatternId, type Route, type Territory } from "./lib/model";
 
@@ -231,19 +232,22 @@ export default function Chart(props: ChartProps) {
    * reads fine and the size ramp does the hierarchy work the ring used to.
    */
   const planetSprites = createMemo(() => {
-    if (!props.planets) return new Map<string, { href: string; size: number; ring: number }>();
+    if (!props.planets)
+      return new Map<string, { href: string; size: number; ring: number; saturn: boolean }>();
     const dpr = window.devicePixelRatio || 1;
-    const out = new Map<string, { href: string; size: number; ring: number }>();
+    const out = new Map<string, { href: string; size: number; ring: number; saturn: boolean }>();
     for (const s of props.model.systems) {
       // Stations and outposts keep their own silhouettes. A square is a
       // different shape on purpose, and replacing it with a small grey rock
       // would throw away the distinction.
       if (s.kind !== "star" && s.kind !== "planet") continue;
       const size = s.importance >= 3 ? 40 : s.importance >= 2 ? 30 : s.importance >= 1 ? 21 : 16;
+      const type = s.planetType ?? planetTypeFor(s.kind, s.id);
+      const seed = seedFromId(s.id);
       out.set(s.id, {
         href: planetUri({
-          seed: seedFromId(s.id),
-          type: s.planetType ?? planetTypeFor(s.kind, s.id),
+          seed,
+          type,
           px: size,
           dpr,
           // No tint. Pulling the palette toward a nation colour desaturated each
@@ -256,6 +260,10 @@ export default function Chart(props: ChartProps) {
         // The capital ring goes outside the sprite, clear of the corona. Inside
         // it, the sprite simply covers it and capitals stop reading as capitals.
         ring: size / 2 + 7,
+        // Ring system, as two path halves rather than baked pixels. The far half
+        // is emitted before the image and the near half after it, so the sprite
+        // does the occluding for free.
+        saturn: hasRings(seed, type, s.rings),
       });
     }
     return out;
@@ -891,14 +899,34 @@ export default function Chart(props: ChartProps) {
                     }
                   >
                     {sp => (
-                      <image
-                        class="planet-mark"
-                        href={sp().href}
-                        x={n.P.x - sp().size / 2}
-                        y={n.P.y - sp().size / 2}
-                        width={sp().size}
-                        height={sp().size}
-                      />
+                      <>
+                        <Show when={sp().saturn}>
+                          <path
+                            class="saturn-far"
+                            data-saturn={n.system.id}
+                            d={ringHalf(ringGeomFor(sp().size, seedFromId(n.system.id)), true)}
+                            transform={`translate(${n.P.x} ${n.P.y})`}
+                            fill="#6f5c46"
+                          />
+                        </Show>
+                        <image
+                          class="planet-mark"
+                          href={sp().href}
+                          x={n.P.x - sp().size / 2}
+                          y={n.P.y - sp().size / 2}
+                          width={sp().size}
+                          height={sp().size}
+                        />
+                        <Show when={sp().saturn}>
+                          <path
+                            class="saturn-near"
+                            data-saturn={n.system.id}
+                            d={ringHalf(ringGeomFor(sp().size, seedFromId(n.system.id)), false)}
+                            transform={`translate(${n.P.x} ${n.P.y})`}
+                            fill="#cbb28c"
+                          />
+                        </Show>
+                      </>
                     )}
                   </Show>
                 </Show>

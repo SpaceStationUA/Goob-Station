@@ -444,6 +444,55 @@ So the fragmentation claim, which is the visually interesting one, is **not**
 asserted. It is real and visible; it just is not a property that holds across
 seeds, and a check that fails on a legitimate seed is worse than no check.
 
+### Ring systems are geometry, not pixels
+
+The reference bakes rings into the planet texture, on a canvas three times the
+planet's resolution and six times its radius. Wrong here for three reasons, and the
+first two are about the map rather than the overlay:
+
+- **At map size a baked ring is mush.** Markers are 16–40px. Six times the radius
+  is a grey smudge at that size, and 200px of generated pixels per system to
+  produce a smudge is not affordable across twenty-odd systems.
+- **It makes the sprite non-square.** Every sprite is `d` on a side and each marker
+  sizes itself from that, so a ringed world would have to report a different box
+  and every consumer would need to know.
+- **A ring is an ellipse.** It wants to be vector, and both consumers are already
+  SVG — so it is sharp at 16px and at 200px with one path and no pixels.
+
+The far half is emitted **before** the sprite and the near half **after**, and the
+sprite does the occluding for free: it is opaque across its disc and transparent
+outside it, so the far half is hidden exactly where the planet is.
+
+Three bugs here were each invisible until something other than a screenshot looked
+at them:
+
+- **A division that falls outside a half removed that half entirely.** The test for
+  "the gap does not touch this arc" returned *empty* instead of the full arc — the
+  opposite of correct. Since a gap is in one half or the other, this deleted the
+  far side of most rings. It still looked broadly ring-shaped; only counting the
+  path elements gave it away.
+- **`hash2`'s `period` is for making noise tile, not for decisions.** It reduces its
+  first argument modulo `period` before mixing, so `hash2(seed, 5, 32, 91)` has
+  **thirty-two** possible outputs no matter how many seeds you throw at it. The
+  measured distribution was 9/16/16/13/9/16/3/3/3/13 and 43.8% of seeds fell below
+  a 0.34 threshold. That is not a slightly biased hash, it is a 32-valued hash
+  wearing a uniform one's clothes. At 2^20 it is flat to 0.2%.
+- **The ring has to fit its host.** The overlay's panel leaves 34px of headroom
+  either side of a 200px planet, so the ring's outer radius must stay under 1.34x
+  the planet's own; the first ratio put it at 330px and clipped it at both edges.
+  Map markers have no panel, so they get a proportionally larger ring — the two
+  consumers have opposite constraints and one constant cannot serve both.
+
+`StarSystem.rings` is a model field, not a derived value. It works as a hash of the
+id, and did at first, but a ring is lore: someone looking at a named giant has to
+be able to write "this one has rings" and have it stick. Same reason
+`DescriptionKey` exists and is empty everywhere. Undefined means "let the renderer
+decide", so a hand-written fixture need not annotate every world.
+
+### A ring is also where differential rotation is affordable
+
+See the note on parallax below.
+
 ## Layout
 
 | Path | What it is |
@@ -511,6 +560,15 @@ Worth knowing about:
   star's has radius d/3 with its corona reaching d/2, so the box corner — the
   obvious single probe — is outside both and transparent for every type. It would
   have passed a check asserting the exact opposite of the truth.
+- **Solid's `<For>` puts every marker in one `<g>`, so a parent-scoped DOM query
+  finds the first marker on the chart.** The ring-ordering check asked
+  `far.parentElement.querySelector("image")` and got a planet sixty systems away,
+  then reported that the ring was drawn behind its own world. Sibling navigation
+  (`nextElementSibling`) is exact and immune to this.
+- **A hash's tiling parameter is not a free parameter.** `hash2(ix, iy, period,
+  seed)` reduces `ix` modulo `period` so that noise tiles seamlessly. Reach for it
+  as a general-purpose hash and the output space collapses to `period` values. It
+  looked uniform, it was not, and no screenshot would ever have shown it.
 - **An option that changes pixels but not the cache key is invisible.** The sprite
   cache key was a hand-written list of options, and `suppressCraters` was added
   without being added to it. A call asking for a crater-free planet got the cached

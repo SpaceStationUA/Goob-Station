@@ -148,32 +148,44 @@ const sys = (
   kind: StarSystem["kind"],
   importance: StarSystem["importance"],
   territory: string,
-): StarSystem => ({ id, name, xLy, yLy, kind, importance, territory });
+  /**
+   * Explicit world type, for the fixture only.
+   *
+   * Without this every world's type is hashed from its id, and the result clusters
+   * by chance rather than by intent — two neighbouring Eridian systems both came
+   * out lava. The production model carries the same field, so setting it here is
+   * the schema being used rather than worked around, and it is what makes the
+   * chart's variety something a maintainer can read off the list instead of
+   * something they have to run to find out.
+   */
+  planetType?: StarSystem["planetType"],
+  rings?: boolean,
+): StarSystem => ({ id, name, xLy, yLy, kind, importance, territory, planetType, rings });
 
 export const SYSTEMS: StarSystem[] = [
   sys("tau-ceti", L("Tau Ceti", "Тау Цеті"), 17, -5, "star", 3, "biesel"),
-  sys("mictlan", L("Mictlan", "Міктлан"), 22, -11, "planet", 2, "biesel"),
+  sys("mictlan", L("Mictlan", "Міктлан"), 22, -11, "planet", 2, "biesel", "terran"),
   sys("port-antilla", L("Port Antilla", "Порт Антілья"), 12, -10, "station", 1, "biesel"),
   sys("qerrbalak", L("Qerrbalak", "Керрбалак"), -30, 9, "star", 3, "nralakk"),
-  sys("xanu", L("Xanu", "Ксану"), -41, 13, "planet", 2, "nralakk"),
-  sys("himeo", L("Himeo", "Гімео"), -50, 3, "planet", 1, "nralakk"),
-  sys("vysoka", L("Vysoka", "Висока"), -26, -1, "planet", 1, "nralakk"),
+  sys("xanu", L("Xanu", "Ксану"), -41, 13, "planet", 2, "nralakk", "desert"),
+  sys("himeo", L("Himeo", "Гімео"), -50, 3, "planet", 1, "nralakk", "barren"),
+  sys("vysoka", L("Vysoka", "Висока"), -26, -1, "planet", 1, "nralakk", "ice"),
   sys("tattuqig", L("Tattuqig", "Таттуквіг"), -46, -9, "outpost", 0, "nralakk"),
   sys("persepolis", L("Persepolis", "Персеполіс"), 39, 19, "star", 3, "eridian"),
-  sys("gadpathur", L("Gadpathur", "Гадпатур"), 29, 21, "planet", 1, "eridian"),
-  sys("burzsia", L("Burzsia", "Бурзія"), 50, 15, "planet", 2, "eridian"),
-  sys("meropis", L("Meropis", "Меропіс"), 52, 7, "planet", 0, "eridian"),
+  sys("gadpathur", L("Gadpathur", "Гадпатур"), 29, 21, "planet", 1, "eridian", "lava"),
+  sys("burzsia", L("Burzsia", "Бурзія"), 50, 15, "planet", 2, "eridian", "gas", true),
+  sys("meropis", L("Meropis", "Меропіс"), 52, 7, "planet", 0, "eridian", "ocean"),
   sys("sol", L("Sol", "Соль"), -2, 11, "star", 3, "solarian"),
-  sys("earth", L("Earth", "Земля"), 3, 5, "planet", 2, "solarian"),
-  sys("mars", L("Mars", "Марс"), -6, 12, "planet", 1, "solarian"),
+  sys("earth", L("Earth", "Земля"), 3, 5, "planet", 2, "solarian", "terran"),
+  sys("mars", L("Mars", "Марс"), -6, 12, "planet", 1, "solarian", "barren"),
   sys("epsilon-eridani", L("Epsilon Eridani", "Епсилон Ерідани"), 7, 8, "star", 2, "solarian"),
   sys("adhomai", L("Adhomai", "Адхомай"), -1, -24, "star", 3, "adhomai"),
-  sys("hrozamal", L("Hro'zamal", "Хро'замаль"), 8, -25, "planet", 1, "adhomai"),
+  sys("hrozamal", L("Hro'zamal", "Хро'замаль"), 8, -25, "planet", 1, "adhomai", "gas"),
   sys("moghes", L("Moghes", "Моггес"), -45, -27, "star", 2, ""),
-  sys("sunreach", L("Sunreach", "Санріч"), -33, -24, "planet", 0, ""),
+  sys("sunreach", L("Sunreach", "Санріч"), -33, -24, "planet", 0, "", "ice"),
   sys("assunzione", L("Assunzione", "Ассунціоне"), 37, -21, "star", 2, "izweski"),
   sys("valley-hale", L("Valley Hale", "Валлі Гейл"), 28, -19, "outpost", 0, "izweski"),
-  sys("harradon", L("Harradon", "Гаррадон"), 32, -29, "planet", 0, "izweski"),
+  sys("harradon", L("Harradon", "Гаррадон"), 32, -29, "planet", 0, "izweski", "ocean"),
 ];
 
 export const ROUTES: Route[] = [

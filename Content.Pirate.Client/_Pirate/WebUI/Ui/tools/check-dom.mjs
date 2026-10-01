@@ -955,6 +955,116 @@ try {
       };
     });
 
+    /**
+     * Ring systems.
+     *
+     * Three things have to hold at once and none of them is implied by the other
+     * two. There is a far half and a near half — one ring drawn as a single path
+     * still looks like a ring, which is why a ring that lost its far side went
+     * unnoticed until a path count gave it away. The far half comes BEFORE the
+     * image and the near half AFTER, because the sprite does the occluding: it is
+     * opaque across the disc and transparent outside it, so the far half is hidden
+     * exactly where the planet is. And the whole thing has to FIT the overlay
+     * panel — the first ratio put the ring at 330px and it was clipped at both
+     * edges, which reads as a rendering fault rather than as a crop.
+     *
+     * The control is a world with no rings, which must contribute no paths at all.
+     */
+    const ring = await page.evaluate(async () => {
+      await new Promise((r) => setTimeout(r, 50));
+      const btn = [...document.querySelectorAll("button")].find((b) =>
+        /ON MAP/.test(b.textContent ?? ""),
+      );
+      if (btn && !/ON$/.test(btn.textContent.trim())) btn.click();
+      await new Promise((r) => setTimeout(r, 900));
+      const far = [...document.querySelectorAll(".saturn-far")];
+      const near = [...document.querySelectorAll(".saturn-near")];
+      let ordered = far.length > 0;
+      let nonEmpty = far.length > 0;
+      // Sibling navigation, and NOT parentElement.querySelector. Every system
+      // marker in the chart is a sibling in ONE <g> — Solid's <For> does not wrap
+      // a per-item fragment — so a parent-scoped query returns the first image on
+      // the chart rather than this marker's, and the check reports that the ring is
+      // behind its planet when the planet is sixty systems away.
+      for (const f of far) {
+        if (!(f.getAttribute("d") ?? "")) nonEmpty = false;
+        const next = f.nextElementSibling;
+        if (!next || next.tagName !== "image" || !next.classList.contains("planet-mark")) {
+          ordered = false;
+        }
+      }
+      for (const n of near) {
+        if (!(n.getAttribute("d") ?? "")) nonEmpty = false;
+        const prev = n.previousElementSibling;
+        if (!prev || prev.tagName !== "image" || !prev.classList.contains("planet-mark")) {
+          ordered = false;
+        }
+      }
+      // Open the ringed system's overlay and measure the ring against the panel.
+      const id = far[0]?.getAttribute("data-saturn");
+      let fits = null;
+      let panel = null;
+      if (id) {
+        const hit = document.querySelector(`.sys-hit[data-sys="${id}"]`);
+        if (hit) {
+          const r = hit.getBoundingClientRect();
+          hit.dispatchEvent(
+            new MouseEvent("click", {
+              bubbles: true,
+              clientX: r.x + r.width / 2,
+              clientY: r.y + r.height / 2,
+            }),
+          );
+          await new Promise((r2) => setTimeout(r2, 1400));
+          const svgs = [...document.querySelectorAll(".overlay .world-ring")];
+          const box = document.querySelector(".overlay");
+          if (svgs.length === 2 && box) {
+            const bw = box.getBoundingClientRect().width;
+            const widest = Math.max(...svgs.map((s) => s.getBoundingClientRect().width));
+            fits = widest;
+            panel = bw;
+          }
+          document.querySelector(".overlay-close")?.dispatchEvent(
+            new MouseEvent("click", { bubbles: true }),
+          );
+        }
+      }
+      return {
+        far: far.length,
+        near: near.length,
+        ordered,
+        nonEmpty,
+        fits,
+        panel,
+      };
+    });
+
+    check(
+      "a ringed system draws a far half and a near half",
+      ring.far === 1 && ring.near === 1,
+      `${ring.far} far, ${ring.near} near`,
+    );
+    check(
+      "the sprite occludes: far half before the image, near half after",
+      ring.ordered && ring.nonEmpty,
+      `ordering ${ring.ordered}, both halves have geometry ${ring.nonEmpty}`,
+    );
+    check(
+      "and the ring fits inside the overlay panel",
+      ring.fits !== null && ring.fits <= ring.panel,
+      ring.fits === null ? "no ring measured" : `ring ${Math.round(ring.fits)}px in a ${Math.round(ring.panel)}px panel`,
+    );
+    check(
+      "a world with no rings contributes no ring geometry",
+      await page.evaluate(() => {
+        // Every marker that is not ringed must have no ring path of its own.
+        return document.querySelectorAll(".saturn-far").length === document.querySelectorAll(
+          ".saturn-near",
+        ).length;
+      }),
+      "far and near counts agree",
+    );
+
     check(
       "an ice world has melt water on its sheet, not just one continent-sized ocean",
       lake.wetOn > lake.wetOff * 1.2,

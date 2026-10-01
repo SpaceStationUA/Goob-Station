@@ -3,7 +3,7 @@ import Chart from "./Chart";
 import { cellsInExtent, hexLine, key, pixelToHex, type Axial } from "./lib/hex";
 import { cellsByTerritory } from "./lib/geometry";
 import { pick, type GalaxyModel, type StarSystem } from "./lib/model";
-import { planetTypeFor, seedFromId } from "./lib/planet";
+import { hasRings, planetTypeFor, seedFromId } from "./lib/planet";
 import { readableOnDark } from "./Chart";
 import WorldSprite from "./WorldSprite";
 import {
@@ -484,6 +484,7 @@ export default function App() {
                             px={200}
                             frames={24}
                             period={48}
+                            ring={hasRings(seedFromId(s().id), worldType(s()), s().rings)}
                             title={pick(s().name, loc())}
                           />
                         </div>

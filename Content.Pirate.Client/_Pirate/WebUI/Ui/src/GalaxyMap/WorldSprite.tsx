@@ -8,6 +8,7 @@
 
 import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
 import { planetSheet, planetUri, type PlanetType } from "./lib/planet";
+import WorldRing from "./WorldRing";
 
 export interface WorldSpriteProps {
   seed: number;
@@ -25,6 +26,8 @@ export interface WorldSpriteProps {
   /** Seconds for one full turn. Slow on purpose: this is a backdrop. */
   period?: number;
   cloudThreshold?: number;
+  /** Draw a ring system. Geometry, not pixels — see WorldRing. */
+  ring?: boolean;
   /** Alt text. */
   title?: string;
 }
@@ -118,9 +121,14 @@ export default function WorldSprite(props: WorldSpriteProps) {
   return (
     <div
       class="world"
-      classList={{ turning: sheet() !== undefined }}
+      classList={{ turning: sheet() !== undefined, ringed: props.ring === true }}
       style={{ width: `${props.px}px`, height: `${props.px}px` }}
     >
+      {/* Behind the sprite. The sprite is opaque across its disc and transparent
+          outside it, so the far half is hidden exactly where the planet is. */}
+      <Show when={props.ring === true}>
+        <WorldRing px={props.px} seed={props.seed} tilt={0.22} />
+      </Show>
       {/* The still is always in the DOM. When the strip arrives it fades in
           over the top, so there is never a blank frame between the two. */}
       <Show when={stillUri(props, realDpr())} keyed>
@@ -143,6 +151,10 @@ export default function WorldSprite(props: WorldSpriteProps) {
             }}
           />
         )}
+      </Show>
+      {/* In front of both, so the near half of the ring passes over the planet. */}
+      <Show when={props.ring === true}>
+        <WorldRing px={props.px} seed={props.seed} tilt={0.22} front />
       </Show>
     </div>
   );

@@ -70,6 +70,20 @@ export interface StarSystem {
    * map relies on.
    */
   planetType?: PlanetType;
+  /**
+   * Ring system. Optional, and content rather than a derived fact.
+   *
+   * It would work as a hash of the id, and did at first — but a ring is lore. A
+   * lore editor looking at a named giant needs to be able to say "this one has
+   * rings" and have it stick, and a value they cannot write is a value they will
+   * file a bug about. This is the same reason `DescriptionKey` exists and is
+   * empty everywhere: the field is the deliverable, the content is someone else's
+   * job.
+   *
+   * Undefined means "let the renderer decide", which keeps a hand-written fixture
+   * from having to annotate every world.
+   */
+  rings?: boolean;
 }
 
 /** A travel link. Drawn now as a line; gameplay wiring is a later concern. */
