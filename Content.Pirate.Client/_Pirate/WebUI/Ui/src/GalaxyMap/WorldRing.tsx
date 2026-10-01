@@ -162,7 +162,10 @@ export function ringGeomFor(size: number, seed: number, tilt?: number): RingGeom
     // axis of under two pixels, and the band has to fit inside that or the whole
     // ring collapses to a line the sprite's own dither eats.
     ry: rx * (tilt ?? (size >= 60 ? 0.24 : 0.34)),
-    band: rx * (size >= 60 ? 0.15 : 0.24),
+    // Wide enough to have a face. At 0.15 the three slices were a couple of pixels
+    // each at overlay size, which reads as a wire hoop rather than a ring: there is
+    // no interior left to catch light once it is that thin.
+    band: rx * (size >= 60 ? 0.26 : 0.34),
     // One of four quadrants, so a chart with several ringed systems does not
     // show the same gap on all of them.
     gapAngle: [-2.5, -0.9, 0.9, 2.5][(seed >>> 0) % 4] + ((((seed >>> 3) % 100) / 100) - 0.5) * 0.7,
@@ -206,9 +209,14 @@ export default function WorldRing(props: WorldRingProps) {
         a[1] + (b[1] - a[1]) * t,
       )},${Math.round(a[2] + (b[2] - a[2]) * t)})`;
     };
+    // Two lit faces with a shadowed gap between them, in that order outward to
+    // inward: lit outer edge, DARK middle, brightest inner face. The previous ramp
+    // had the middle two slices dark, so the ring read as a dark wire hoop traced
+    // over the planet — a line drawing rather than an object. A ring is mostly
+    // light with a groove in it.
     return side === "front"
-      ? [mixAt(0.72), mixAt(1), mixAt(0.18)][slice]
-      : [mixAt(0.85), mixAt(1), mixAt(0.5)][slice];
+      ? [mixAt(0.3), mixAt(0.92), mixAt(0)][slice]
+      : [mixAt(0.55), mixAt(1), mixAt(0.3)][slice];
   };
 
   return (
