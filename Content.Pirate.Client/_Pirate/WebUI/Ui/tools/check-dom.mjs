@@ -986,19 +986,32 @@ try {
       // a per-item fragment — so a parent-scoped query returns the first image on
       // the chart rather than this marker's, and the check reports that the ring is
       // behind its planet when the planet is sixty systems away.
+      // Walk forward to the sprite rather than demanding it be the IMMEDIATE next
+      // sibling. A turning marker puts the image inside a <g clip-path>, so an
+      // adjacency test fails on correct markup — the ordering that matters is "the
+      // image is between the two halves", not "the two halves touch it".
+      // Descends as well as walks: a turning marker wraps its image in a
+      // <g clip-path>, so a sibling-only test never finds it even though the
+      // document order is exactly right.
+      const isSprite = (n) =>
+        (n.tagName === "image" && n.classList.contains("planet-mark")) ||
+        (n.tagName !== "image" && !!n.querySelector("image.planet-mark"));
+      const imageAfter = (el) => {
+        for (let n = el.nextElementSibling; n; n = n.nextElementSibling) if (isSprite(n)) return n;
+        return null;
+      };
+      const imageBefore = (el) => {
+        for (let n = el.previousElementSibling; n; n = n.previousElementSibling)
+          if (isSprite(n)) return n;
+        return null;
+      };
       for (const f of far) {
         if (!(f.getAttribute("d") ?? "")) nonEmpty = false;
-        const next = f.nextElementSibling;
-        if (!next || next.tagName !== "image" || !next.classList.contains("planet-mark")) {
-          ordered = false;
-        }
+        if (!imageAfter(f)) ordered = false;
       }
       for (const n of near) {
         if (!(n.getAttribute("d") ?? "")) nonEmpty = false;
-        const prev = n.previousElementSibling;
-        if (!prev || prev.tagName !== "image" || !prev.classList.contains("planet-mark")) {
-          ordered = false;
-        }
+        if (!imageBefore(n)) ordered = false;
       }
       // Open the ringed system's overlay and measure the ring against the panel.
       const id = far[0]?.getAttribute("data-saturn");
@@ -1239,6 +1252,76 @@ try {
       "an asteroid's silhouette is one connected piece",
       shapes.rocks.every((r) => r.parts === 1),
       shapes.rocks.map((r) => `${r.parts} piece(s)`).join(", "),
+    );
+
+    /**
+     * Map markers turn.
+     *
+     * The structure is asserted rather than the motion. Waiting long enough to
+     * watch a frame change means either a slow test or a short period, and a short
+     * period is a lie about how the chart behaves; the thing that can silently break
+     * is the wiring — a missing clip window, a missing `<animate>`, an image that is
+     * `size` wide instead of `size * frames` wide, which renders frame 0 forever and
+     * looks like a still. All of that is checkable at once, in milliseconds.
+     *
+     * It is SMIL rather than a CSS sprite sheet because an SVG `<image>` has no
+     * background to step. `calcMode="discrete"` is the SVG-native equivalent of
+     * `steps()` and needs no extra layer.
+     *
+     * The offsets are the tell. A strip that is present but not wired shows the
+     * authored `x` forever, so `animVal` is what a motion check would read — and
+     * `getAttribute` is not, because SMIL overrides the presentation value and never
+     * touches the attribute.
+     */
+    const turning = await page.evaluate(() => {
+      const imgs = [...document.querySelectorAll("[data-turning]")];
+      const first = imgs[0];
+      const an = first?.querySelector("animate");
+      const size = first ? Number(first.getAttribute("height")) : 0;
+      const offsets = (an?.getAttribute("values") ?? "").split(";").filter(Boolean);
+      return {
+        count: imgs.length,
+        frames: offsets.length,
+        calcMode: an?.getAttribute("calcMode") ?? "",
+        width: first ? Number(first.getAttribute("width")) : 0,
+        size,
+        // Every marker needs its own clip window, or two of them share one and the
+        // second disappears behind the first.
+        clips: document.querySelectorAll("clipPath[id^='turn-']").length,
+        clipped: imgs.filter((i) => i.parentElement?.getAttribute("clip-path")).length,
+        offsetsAreSteps: offsets.every((v, k) => k === 0 || Number(v) < Number(offsets[k - 1])),
+      };
+    });
+
+    check(
+      "map markers turn",
+      turning.count > 0 && turning.frames > 1 && turning.calcMode === "discrete",
+      `${turning.count} markers, ${turning.frames} frames, calcMode=${turning.calcMode}`,
+    );
+    check(
+      "and each one is a filmstrip behind its own clip window, stepping by whole frames",
+      turning.clips === turning.count &&
+        turning.clipped === turning.count &&
+        turning.offsetsAreSteps &&
+        Math.abs(turning.width - turning.size * turning.frames) < 1,
+      `${turning.clips} clips for ${turning.count} markers, image ${turning.width}px = ` +
+        `${turning.size}px x ${turning.frames}`,
+    );
+    // Not "the still is underneath": the strip REPLACES the still, which is
+    // correct, because both are produced in the same memo and so a marker is never
+    // briefly missing. What matters is the opposite — that a marker is never left
+    // with no image at all, which is what an empty strip href would do.
+    check(
+      "every world marker has an image, turning or not",
+      await page.evaluate(() => {
+        const marks = document.querySelectorAll("image.planet-mark");
+        if (!marks.length) return false;
+        return [...marks].every((m) => (m.getAttribute("href") ?? "").length > 100);
+      }),
+      await page.evaluate(() => {
+        const marks = [...document.querySelectorAll("image.planet-mark")];
+        return `${marks.length} marks, ${marks.filter((m) => (m.getAttribute("href") ?? "").length <= 100).length} with no image`;
+      }),
     );
 
     check("a black hole is actually drawn on the chart", bh !== null && bh.drawn,

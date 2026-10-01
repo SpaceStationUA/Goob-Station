@@ -643,6 +643,46 @@ A "solid enough" share was tried alongside it and reported 0% for every seed
 including obviously solid rocks, so it was measuring something other than what its
 name said. It is gone rather than left in place looking like coverage.
 
+### Map markers turn
+
+Every world on the chart rotates, the way the reference's preview does. This reverses
+an earlier decision that the map should be static, and it is worth recording what
+made it affordable when it was not before.
+
+The cost is a filmstrip per system, and the earlier reasoning against it was that a
+16px sprite that turns costs twelve times the pixels and shows nothing. That is true
+of the *pixels* and wrong about the *total*: a map marker is 16–40px, so twelve
+frames is twelve times 30×30 = 11k pixels per system, and the whole chart animates
+for about 50ms. It was never expensive. What made it feel expensive was the overlay's
+200px strips, which are a different problem entirely.
+
+Twelve frames at **dpr 1**, and the dpr is the load-bearing part: rotation hides
+resampling, and at this size nobody can see the resolution of a strip that is on
+screen for four seconds. Quartering the pixels is what takes 50ms rather than 200ms.
+
+The mechanism is **SMIL, not CSS**. An SVG `<image>` has no background to step, so
+`background-position` with `steps()` — which is what the overlay uses on an HTML
+`<div>` — is not available. `calcMode="discrete"` is the SVG-native equivalent: the
+image is `size * frames` wide, a per-marker `<clipPath>` is `size` wide, and
+animating the image's `x` through `size`-wide offsets walks the strip one frame at a
+time. No extra layer, no restructuring, and the offsets ascend so the last frame is
+followed by the first, which is the loop closing.
+
+`prefers-reduced-motion` is honoured, and it is the reason this is a function rather
+than a constant: twenty permanently rotating markers is exactly what that setting
+exists for.
+
+Reading the animation back needs `x.animVal.value`, not `getAttribute("x")`. SMIL
+overrides the *presentation* value and never touches the attribute, so the attribute
+reads the authored number forever and a working animation looks dead. That cost a
+round of false negatives before it was spotted.
+
+The checks assert the wiring rather than the motion. Waiting long enough to watch a
+frame change means either a slow test or a period short enough to be a lie about how
+the chart behaves; what can silently break is structural — a missing clip window, a
+missing `<animate>`, or an image `size` wide instead of `size * frames` wide, which
+renders frame 0 forever and looks exactly like a still.
+
 ## Layout
 
 | Path | What it is |

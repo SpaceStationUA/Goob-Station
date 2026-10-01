@@ -1,7 +1,7 @@
 import { createEffect, createMemo, createSignal, For, onCleanup, Show } from "solid-js";
 import { cellsInExtent, hexCorners, hexToPixel, type Axial } from "./lib/hex";
 import { cellsByTerritory, cellOutline } from "./lib/geometry";
-import { hasRings, planetTypeFor, planetUri, seedFromId } from "./lib/planet";
+import { hasRings, planetSheet, planetTypeFor, planetUri, seedFromId } from "./lib/planet";
 import { ringGeomFor, ringHalf } from "./WorldRing";
 import { blackHoleUri } from "./lib/blackhole";
 import { loopToPxPath, loopsToPxPath, makeTransform } from "./lib/transform";
@@ -174,6 +174,22 @@ export function readableOnDark(hex: string, minL = 0.74): string {
 }
 
 /** Pure SVG presentation. Owns only its measured size. */
+/**
+ * One marker's generated art.
+ *
+ * `strip` is a horizontal filmstrip of `MAP_FRAMES` frames, or null when markers
+ * should hold still. It is generated at dpr 1 regardless of the display's ratio —
+ * see `MAP_FRAMES`.
+ */
+interface Sprite {
+  href: string;
+  strip: string | null;
+  size: number;
+  /** Capital ring radius, outside the sprite and clear of the corona. */
+  ring: number;
+  saturn: boolean;
+}
+
 export default function Chart(props: ChartProps) {
   const [size, setSize] = createSignal({ w: 1200, h: 700 });
   let hostRef: HTMLDivElement | undefined;
@@ -232,11 +248,37 @@ export default function Chart(props: ChartProps) {
    * turned out the halo was what made them noisy, and without it the full set
    * reads fine and the size ramp does the hierarchy work the ring used to.
    */
+  /**
+   * Frames across one turn of a map marker.
+   *
+   * Twelve, at dpr 1. A map marker is 16-40px, so the strip is 12 x 30 x 30 pixels
+   * of work per system and the whole chart costs about 50ms to animate — which is
+   * the point of asking for dpr 1: rotation hides resampling, and at this size the
+   * strip is not something anyone can see the resolution of.
+   *
+   * Twelve rather than the overlay's 24 because the payoff halves with every extra
+   * frame and the marker is a third of the size. The overlay is the one place a
+   * viewer is asked to look at a world; a chart is a backdrop.
+   */
+  const MAP_FRAMES = 12;
+
+  /**
+   * Whether markers turn at all.
+   *
+   * `prefers-reduced-motion` is honoured, and it is the whole reason this is a
+   * function rather than a constant: a chart whose every marker rotates forever is
+   * exactly the kind of thing that setting exists for, and there are twenty of them
+   * on screen at once.
+   */
+  const turning = () =>
+    typeof window === "undefined" ||
+    !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
   const planetSprites = createMemo(() => {
     if (!props.planets)
-      return new Map<string, { href: string; size: number; ring: number; saturn: boolean }>();
+      return new Map<string, Sprite>();
     const dpr = window.devicePixelRatio || 1;
-    const out = new Map<string, { href: string; size: number; ring: number; saturn: boolean }>();
+    const out = new Map<string, Sprite>();
     for (const s of props.model.systems) {
       // Stations and outposts keep their own silhouettes. A square is a
       // different shape on purpose, and replacing it with a small grey rock
@@ -250,6 +292,11 @@ export default function Chart(props: ChartProps) {
       const type = s.planetType ?? planetTypeFor(s.kind, s.id);
       const seed = seedFromId(s.id);
       out.set(s.id, {
+        // Falls back to the still if the strip comes back empty. `planetSheet`
+        // returns "" when it cannot get a 2D context, and an <image> with an empty
+        // href draws nothing at all — so without this a failure would delete the
+        // marker rather than degrade it.
+        strip: turning() ? planetSheet({ seed, type, px: size, dpr: 1 }, MAP_FRAMES).uri || null : null,
         href: planetUri({
           seed,
           type,
@@ -285,6 +332,21 @@ export default function Chart(props: ChartProps) {
     dpr: typeof window === "undefined" ? 1 : window.devicePixelRatio || 1,
   });
 
+  /**
+   * Clip windows for the turning markers, and the frame offsets each one steps
+   * through.
+   *
+   * An SVG `<image>` cannot take a CSS background, so a filmstrip has to be slid
+   * behind a window rather than stepped with `background-position`. SMIL's
+   * `calcMode="discrete"` is the SVG-native equivalent of `steps()` and needs no
+   * restructuring: the image is `size * MAP_FRAMES` wide, the clip is `size` wide,
+   * and animating the image's `x` through `size`-wide offsets walks the strip one
+   * frame at a time.
+   *
+   * The offsets ascend, so the strip plays forwards and the last frame is followed
+   * by the first — which is the loop closing, the same property the sprite tests
+   * assert for the overlay.
+   */
   const systemNodes = createMemo(() =>
     props.model.systems.map(s => ({
       id: s.id,
@@ -322,6 +384,19 @@ export default function Chart(props: ChartProps) {
       ),
     })),
   );
+
+  const turningMarks = createMemo(() => {
+    const out: { id: string; x: number; y: number; size: number; offsets: string }[] = [];
+    for (const n of systemNodes()) {
+      const sp = planetSprites().get(n.id);
+      if (!sp?.strip) continue;
+      const offsets: string[] = [];
+      for (let k = 0; k < MAP_FRAMES; k++) offsets.push((n.P.x - k * sp.size).toFixed(2));
+      out.push({ id: n.id, x: n.P.x - sp.size / 2, y: n.P.y - sp.size / 2, size: sp.size, offsets: offsets.join(";") });
+    }
+    return out;
+  });
+
 
   /**
    * Which marker, if any, sits under this point.
@@ -638,6 +713,15 @@ export default function Chart(props: ChartProps) {
         }}
       >
         <defs>
+          {/* One window per turning marker. The ids are per-system so two markers
+              can never share a window when the chart is zoomed or panned. */}
+          <For each={turningMarks()}>
+            {m => (
+              <clipPath id={`turn-${m.id}`}>
+                <rect x={m.x} y={m.y} width={m.size} height={m.size} />
+              </clipPath>
+            )}
+          </For>
           <radialGradient id="deep" cx="50%" cy="42%" r="78%">
             <stop offset="0%" stop-color="#0d1526" />
             <stop offset="55%" stop-color="#070c17" />
@@ -942,14 +1026,39 @@ export default function Chart(props: ChartProps) {
                             fill="#6f5c46"
                           />
                         </Show>
-                        <image
-                          class="planet-mark"
-                          href={sp().href}
-                          x={n.P.x - sp().size / 2}
-                          y={n.P.y - sp().size / 2}
-                          width={sp().size}
-                          height={sp().size}
-                        />
+                        <Show
+                          when={sp().strip}
+                          fallback={
+                            <image
+                              class="planet-mark"
+                              href={sp().href}
+                              x={n.P.x - sp().size / 2}
+                              y={n.P.y - sp().size / 2}
+                              width={sp().size}
+                              height={sp().size}
+                            />
+                          }
+                        >
+                          <g clip-path={`url(#turn-${n.system.id})`}>
+                            <image
+                              class="planet-mark turning"
+                              data-turning={n.system.id}
+                              href={sp().strip!}
+                              x={n.P.x}
+                              y={n.P.y - sp().size / 2}
+                              width={sp().size * MAP_FRAMES}
+                              height={sp().size}
+                            >
+                              <animate
+                                attributeName="x"
+                                calcMode="discrete"
+                                values={turningMarks().find((m) => m.id === n.system.id)?.offsets ?? ""}
+                                dur="48s"
+                                repeatCount="indefinite"
+                              />
+                            </image>
+                          </g>
+                        </Show>
                         <Show when={sp().saturn}>
                           <path
                             class="saturn-near"
