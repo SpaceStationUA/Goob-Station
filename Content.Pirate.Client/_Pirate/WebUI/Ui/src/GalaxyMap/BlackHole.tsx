@@ -80,6 +80,22 @@ export default function BlackHole(props: BlackHoleProps) {
 
   const [sheet, setSheet] = createSignal<string>();
   const [live, setLive] = createSignal<BlackHoleGL | null>(null);
+  /**
+   * Whether the canvas has had a frame.
+   *
+   * This is what the still is keyed off, and it is a separate signal from `live`
+   * because a WebGL canvas is transparent everywhere the shader does not draw. Left
+   * underneath, the baked still shows through those pixels -- and since the two
+   * renders do not agree about where the singularity is, you get TWO black holes: a
+   * large dark ellipse from the still and a small ringed circle from the canvas.
+   * That is not a subtle artefact. It looked like the shader had invented a second
+   * horizon.
+   *
+   * One animation frame of grace so the still is up until the canvas is genuinely
+   * on screen, which also means there is no blank frame if the context is lost
+   * immediately after being created.
+   */
+  const [painted, setPainted] = createSignal(false);
   let host!: HTMLDivElement;
 
   // The live renderer. Appended imperatively because the canvas is created, sized
@@ -95,9 +111,12 @@ export default function BlackHole(props: BlackHoleProps) {
       animate: !still3d,
     });
     if (!inst) return;
+    setPainted(false);
     host?.appendChild(inst.canvas);
     setLive(inst);
+    const grace = requestAnimationFrame(() => setPainted(true));
     onCleanup(() => {
+      cancelAnimationFrame(grace);
       setLive(null);
       inst.dispose();
       inst.canvas.remove();
@@ -133,7 +152,7 @@ export default function BlackHole(props: BlackHoleProps) {
           It is one frame and it costs about 30ms, and it buys three things: no
           blank panel while the shader compiles, no flash if there is no context,
           and a correct picture on its own if the canvas never paints. */}
-      <img class="world-still" src={still()} alt="" />
+      <img class="world-still" src={still()} alt="" hidden={painted()} />
       <Show when={sheet() && !live()} keyed>
         {uri => (
           <div

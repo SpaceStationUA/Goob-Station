@@ -78,6 +78,11 @@ uniform float u_time;      // seconds
 uniform float u_seed;
 uniform float u_tilt;      // radians
 uniform float u_size;      // noise cells across the disc
+uniform float u_light;     // strength of the lighting term: sets where the core lands
+uniform float u_offset;    // ring centre pushed along y: this is the wrap
+uniform float u_inner;     // ring inner radius
+uniform float u_outer;     // ring outer radius
+uniform float u_thick;     // ramp width at each edge
 uniform float u_discScale;
 uniform float u_gain;      // noise gain; 1 is the reference's
 uniform float u_cut;       // alpha cut: how much of the ellipse survives
@@ -157,33 +162,65 @@ void main() {
   p.x = (p.x - 0.5) * 1.3 + 0.5;
   p = rot(p, sin(u_time * 0.8) * 0.01);
 
-  float lx = 0.5, ly = 0.5;
-  float dW = 0.1;
-  // The distance is taken from the CURRENT p, after the rotation and the x scale
-  // but before the y displacement. Mixing frames here is a real bug and was one.
-  if (p.y < 0.5) {
-    float dd = distance(vec2(0.5), p);
-    p.y += bump(dd, 0.5, 0.2);
-    dW += bump(dd, 0.5, 0.3);
-    ly -= bump(dd, 0.5, 0.2);
-  } else if (p.y > 0.53) {
-    float dd = distance(vec2(0.5), p);
-    p.y -= bump(dd, 0.4, 0.17);
-    dW += bump(dd, 0.5, 0.2);
-    ly += bump(dd, 0.5, 0.2);
-  }
-
   const float PERSP = 4.0;
-  float lightD = distance(uv2 * vec2(1.0, PERSP), vec2(lx, ly) * vec2(1.0, PERSP)) * 0.3;
 
-  // uv_center = uv - vec2(0, 0.5), then *= vec2(1, 4), and the reference point is
-  // (0.5, 0) in that space -- which is the sprite centre, since (0.5, 0.5) maps
-  // to (0.5, 0).
+  /**
+   * The ring, built rather than sampled.
+   *
+   * The reference DISPLACES the sample coordinate -- p.y by up to 0.4, which is 1.6
+   * in this 4:1 squashed space -- and draws wherever the displaced coordinate lands
+   * inside the annulus. What you see is therefore the PREIMAGE of that annulus under
+   * a translation, and a translation smears: the preimage of a band 0.05 thick under
+   * a displacement of 1.6 comes out on the order of 1.6/0.07 = 20x thicker on
+   * screen.
+   *
+   * That is the whole reason this would not get thin, and it is not a tuning
+   * problem: narrowing the annulus cannot help, because the smear scales with
+   * whatever band it is applied to. It only moves where the fat band sits. It is
+   * also why it read as two filled lenses -- two filled pieces cannot be arranged
+   * into anything that looks like a single ribbon.
+   *
+   * So nothing is displaced. The disc is a ring, with a stated inner and outer
+   * radius, and it gets its front-and-back from its CENTRE being offset from the
+   * singularity rather than from material being pushed around. An off-centre
+   * ellipse reads as a disc whose near side has swung down toward the viewer and
+   * whose far side has swung up and away, and because nothing is sheared the band
+   * is exactly as wide as it was specified to be.
+   *
+   * The offset is in the squashed space, so divide by PERSP to reason in canvas
+   * fractions: 0.17 here is 0.04 of the canvas height.
+   */
   vec2 c = (p - vec2(0.0, 0.5)) * vec2(1.0, PERSP) * u_discScale;
-  float cdist = distance(c, vec2(0.5, 0.0));
 
-  float disk = smoothstep(0.1 - dW * 2.0, 0.5 - dW, cdist);
-  disk *= smoothstep(cdist - dW, cdist, 0.4);
+  // The singularity is at (0.5, 0) in this space, because (0.5, 0.5) in uv maps
+  // there. The ring's centre is that point pushed along y, which is the wrap.
+  float cdist = distance(c, vec2(0.5, u_offset));
+
+  // Lighting from the pre-warp coordinate, so the bright side does not swim with
+  // the geometry.
+  /**
+   * The lighting term, and why it is bigger than the reference's 0.3.
+   *
+   * The palette is five steps and the posterisation is
+   * floor((disk + lightD) * 4), so the top step needs the SUM to reach 1.0. In the
+   * band's ridge disk is about 0.7 -- the band peaks at 1 but the noise lifts it to
+   * roughly 0.7 -- so at the reference's 0.3 factor lightD tops out near 0.18 and
+   * the sum never gets past 0.88. Every pixel landed on steps 2 and 3 and the band
+   * came out a uniform mid-orange with no highlight in it at all.
+   *
+   * The reference gets its white-yellow core because its noise runs higher, not
+   * because its lighting is stronger. Matching the result rather than the constant
+   * means lifting the lighting instead, which is a one-number change and does not
+   * depend on reproducing their fbm.
+   */
+  float lightD = distance(uv2 * vec2(1.0, PERSP), vec2(0.5) * vec2(1.0, PERSP)) * u_light;
+
+  // The band. Both ramps list their edges in ascending order, which GLSL requires
+  // and which the reference's own second smoothstep does not -- its edges depend on
+  // the very value being tested.
+  float hw = u_thick;
+  float disk = smoothstep(u_inner, u_inner + hw, cdist) *
+               (1.0 - smoothstep(u_outer - hw, u_outer, cdist));
 
   // The texture, rotating against the fixed shape. This is what makes it read as
   // material in orbit rather than as a shape somebody drew.
@@ -201,11 +238,41 @@ void main() {
   disk *= pow(clamp(t * u_gain, 0.0, 1.0), 0.5);
   if (dith > 0.5) disk *= 1.2;
 
+  /**
+   * Three layers, and the ORDER is the read.
+   *
+   *   1. the void          (bottom)
+   *   2. the disc          (over the void)
+   *   3. the photon ring   (over everything)
+   *
+   * Drawing the disc over the void is what makes it a disc with a near side. The
+   * ring's centre is offset below the singularity, so the band's lower arc lies
+   * ACROSS the void while the upper arc lies clear of it: wherever the disc survives
+   * it is doing so in front, and where the cut takes it away the void shows through.
+   * That crossing is the whole depth cue, and it cannot be expressed the other way
+   * round.
+   *
+   * This had the horizon drawn over the disc, on the reasoning that the photon ring
+   * has to be a complete circle. It is complete -- because it sat on top of BOTH
+   * halves -- but that also meant neither half could ever read as being in front of
+   * anything, and the result was two discs sitting behind a hole rather than one
+   * disc wrapping round it. The photon ring is a far thinner thing than the
+   * horizon, so it gets its own layer on top and the void is then free to sit
+   * underneath, where it belongs.
+   */
   vec3 col = vec3(0.0);
   float alpha = 0.0;
+  float dr = length(centred);
+
+  // 1. the void.
+  if (dr <= u_holeR) {
+    col = u_hole0;
+    alpha = 1.0;
+  }
+
+  // 2. the disc, over the void.
   if (disk > u_cut) {
-    float idx = floor((disk + lightD) * 4.0);
-    idx = clamp(idx, 0.0, 4.0);
+    float idx = clamp(floor((disk + lightD) * 4.0), 0.0, 4.0);
     col = idx < 0.5 ? u_d0
         : idx < 1.5 ? u_d1
         : idx < 2.5 ? u_d2
@@ -213,14 +280,11 @@ void main() {
     alpha = 1.0;
   }
 
-  // ---- the horizon, OVER the disc -----------------------------------------
-  // The reference's photon ring is a complete, unbroken circle lying on top of the
-  // ribbon. Compositing the disc over it cuts the ring in half and leaves nothing
-  // to read the hole by.
-  float dr = length(centred);
-  if (dr <= u_holeR) {
-    float t = dr / u_holeR;
-    col = t < 0.9 ? u_hole0 : (t < 1.0 - u_ring ? u_hole1 : u_hole2);
+  // 3. the photon ring: the outermost sliver of the void's edge, over everything.
+  //    dr has to appear in the condition -- the normalised radius runs past 1 for
+  //    every pixel outside the void, so without it this paints the entire canvas.
+  if (dr <= u_holeR && dr > u_holeR * (1.0 - u_ring)) {
+    col = u_hole2;
     alpha = 1.0;
   }
 
@@ -344,6 +408,11 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   const uSeed = u("u_seed");
   const uTilt = u("u_tilt");
   const uSize = u("u_size");
+  const uLight = u("u_light");
+  const uOffset = u("u_offset");
+  const uInner = u("u_inner");
+  const uOuter = u("u_outer");
+  const uThick = u("u_thick");
   const uDiscScale = u("u_discScale");
   const uGain = u("u_gain");
   const uCut = u("u_cut");
@@ -361,9 +430,32 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   gl.uniform1f(uSize, 18);
   gl.uniform1f(uDiscScale, 1.0);
   gl.uniform1f(uGain, 1.0);
-  gl.uniform1f(uCut, 0.4);
-  gl.uniform1f(uHoleR, 0.15);
-  gl.uniform1f(uRing, 0.05);
+  // Swept via query string, because the shader is live and guessing at these by
+  // rebuild-and-eyeball is what this file spent four rounds doing before.
+  const qs = new URLSearchParams(location.search);
+  const q = (k: string, d: number) => (qs.has(k) ? Number(qs.get(k)) : d);
+  gl.uniform1f(uLight, q("light", 0.55));
+  gl.uniform1f(uOffset, q("offset", 0.22));
+  gl.uniform1f(uInner, q("inner", 0.40));
+  gl.uniform1f(uOuter, q("outer", 0.56));
+  gl.uniform1f(uThick, q("thick", 0.035));
+  gl.uniform1f(uCut, q("cut", 0.25));
+  /**
+   * The horizon's radius, and it is small.
+   *
+   * The hole and the ring do not live in the same space, which is the whole reason
+   * the disc looked wrong for so long. The ring is an ellipse in a space squashed
+   * 4:1 in y; the hole is a circle in uv. A radius of 0.15 in uv is 0.15 across in
+   * x but 0.6 tall in the ring's own space, so the horizon simply swallowed the
+   * entire ring and what was left to look at was the baked still underneath.
+   *
+   * The reference does not have this problem because it does not share one canvas:
+   * the hole is its own sprite at radius 0.167 of THAT, and the disc is a canvas
+   * three times larger, so the hole is 0.056 of the disc's space -- about 11% of
+   * the ring's outer radius. 0.15/3 puts it there.
+   */
+  gl.uniform1f(uHoleR, q("hole", 0.10));
+  gl.uniform1f(uRing, q("pring", 0.05));
   gl.uniform3fv(u("u_hole0"), rgb(HOLE[0]));
   gl.uniform3fv(u("u_hole1"), rgb(HOLE[1]));
   gl.uniform3fv(u("u_hole2"), rgb(HOLE[2]));

@@ -247,6 +247,16 @@ svg.chart.painting {
   z-index: 2;
   pointer-events: none;
 }
+/* The `hidden` attribute has to be able to win.
+   `.world-still` sets `display: block`, and an author rule beats the user agent's
+   `[hidden] { display: none }` -- so hiding the still by attribute did nothing at
+   all, and the baked sprite stayed visible under a transparent canvas. Since the
+   two renders disagree about where the singularity is, that showed up as two black
+   holes: a large dark ellipse from the still and a small ringed circle from the
+   shader. Worth stating because it is invisible in review and total in effect. */
+[hidden] {
+  display: none !important;
+}
 .world-gl canvas {
   display: block;
 }
