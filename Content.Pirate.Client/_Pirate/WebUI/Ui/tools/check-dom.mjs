@@ -1585,6 +1585,58 @@ try {
       }),
     );
 
+    /**
+     * A turning marker's strip must line up with the window it is shown through.
+     *
+     * This is the same failure as the sprite that never turned, one level up. The
+     * strip's frames advance by exactly `-size`, so the animation loops perfectly
+     * and `calcMode="discrete"` does its job — every one of those properties held
+     * while each frame sat half a sprite to the left of the clip window, so every
+     * marker showed empty space down one side and half a world down the other.
+     *
+     * Asserting "the offsets are a decreasing arithmetic sequence" would pass on
+     * the broken version, because it was. What has to be pinned is the ALIGNMENT:
+     * the first offset has to be the clip rect's own left edge.
+     */
+    const align = await page.evaluate(() => {
+      const imgs = [...document.querySelectorAll("image.planet-mark.turning")];
+      if (!imgs.length) return null;
+      let worstGap = 0;
+      let worstStepErr = 0;
+      let worstId = "";
+      for (const img of imgs) {
+        const id = img.getAttribute("data-turning");
+        const rect = document.querySelector(`#turn-${id} rect`);
+        const anim = img.querySelector("animate");
+        if (!rect || !anim) continue;
+        const clipX = Number(rect.getAttribute("x"));
+        const size = Number(rect.getAttribute("width"));
+        const vals = (anim.getAttribute("values") ?? "").split(";").map(Number);
+        const gap = Math.abs(vals[0] - clipX);
+        if (gap > worstGap) {
+          worstGap = gap;
+          worstId = id;
+        }
+        // Every step must be exactly -size, or the strip slides within the window.
+        for (let k = 1; k < vals.length; k++) {
+          worstStepErr = Math.max(worstStepErr, Math.abs(vals[k - 1] - vals[k] - size));
+        }
+      }
+      return { count: imgs.length, worstGap, worstStepErr, worstId };
+    });
+    check(
+      "a turning marker's first frame lines up with its clip window",
+      align !== null && align.worstGap < 0.5,
+      align
+        ? `${align.count} markers, worst offset error ${align.worstGap.toFixed(2)}px${align.worstGap >= 0.5 ? ` on ${align.worstId}` : ""}`
+        : "no turning markers",
+    );
+    check(
+      "and each frame advances by exactly one sprite, so the strip cannot slide",
+      align !== null && align.worstStepErr < 0.01,
+      align ? `worst step error ${align.worstStepErr.toFixed(4)}px` : "no turning markers",
+    );
+
     check("a black hole is actually drawn on the chart", bh !== null && bh.drawn,
       bh === null ? "no [data-bh] marker in the DOM" : `${bh.w}px box, ${bh.px}px sprite`);
     check("its void is drawn, and is dark without being pure black",

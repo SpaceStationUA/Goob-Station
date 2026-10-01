@@ -649,6 +649,18 @@ Every world on the chart rotates, the way the reference's preview does. This rev
 an earlier decision that the map should be static, and it is worth recording what
 made it affordable when it was not before.
 
+The strip is shown through a per-marker `clipPath`, and **its first frame has to
+start at the clip rect's own left edge** — which is `P.x - size / 2`, not `P.x`.
+Starting it at `P.x` put the window half a sprite to the left of the strip, so every
+marker showed empty space down one side and half a world down the other: a planet
+visibly cut in two with a seam down it. The step between frames was already exactly
+`-size`, so the animation looped perfectly and `calcMode="discrete"` did its job —
+every property the existing check was asserting held. What had to be pinned is the
+*alignment*, and "the offsets are a decreasing arithmetic sequence" passes on the
+broken version, because it was one. This is the second time on this project that a
+loop closing was mistaken for a loop lining up, and the first time was a sprite that
+never turned at all.
+
 The cost is a filmstrip per system, and the earlier reasoning against it was that a
 16px sprite that turns costs twelve times the pixels and shows nothing. That is true
 of the *pixels* and wrong about the *total*: a map marker is 16–40px, so twelve

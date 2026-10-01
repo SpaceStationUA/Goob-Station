@@ -389,8 +389,22 @@ export default function Chart(props: ChartProps) {
     for (const n of systemNodes()) {
       const sp = planetSprites().get(n.id);
       if (!sp?.strip) continue;
+      // `x` at k = 0 must be the clip window's own left edge, or the strip is
+      // showing the wrong span.
+      //
+      // The clip rect is `size` wide starting at `P.x - size / 2`, and the strip's
+      // first frame occupies image-local [0, size]. So the image has to START at
+      // `P.x - size / 2` too. Starting it at `P.x` put the window half a sprite to
+      // the left of the strip: the left half of every marker showed empty space and
+      // the right half showed the left half of a frame, which reads as a planet cut
+      // in two with a seam down it.
+      //
+      // The step was already right — exactly `-size` — so the loop closed and every
+      // frame was misaligned by the same half. As with the sprite that never
+      // turned, a check that the loop closes cannot see this.
       const offsets: string[] = [];
-      for (let k = 0; k < MAP_FRAMES; k++) offsets.push((n.P.x - k * sp.size).toFixed(2));
+      const x0 = n.P.x - sp.size / 2;
+      for (let k = 0; k < MAP_FRAMES; k++) offsets.push((x0 - k * sp.size).toFixed(2));
       out.push({ id: n.id, x: n.P.x - sp.size / 2, y: n.P.y - sp.size / 2, size: sp.size, offsets: offsets.join(";") });
     }
     return out;
@@ -1047,7 +1061,7 @@ export default function Chart(props: ChartProps) {
                               class="planet-mark turning"
                               data-turning={n.system.id}
                               href={sp().strip!}
-                              x={n.P.x}
+                              x={n.P.x - sp().size / 2}
                               y={n.P.y - sp().size / 2}
                               width={sp().size * MAP_FRAMES}
                               height={sp().size}
