@@ -89,11 +89,24 @@ export function ringHalf(
   const off = above ? Math.PI : 0;
   const arc = (from: number, to: number) => {
     if (to - from < 1e-3) return "";
-    const pt = (r: number, t: number) =>
-      `${(Math.cos(t + off) * r).toFixed(2)} ${(Math.sin(t + off) * r).toFixed(2)}`;
+    // x and y need SEPARATE radii. This took one radius for both, so every
+    // partial arc ended at a point that is not on the ellipse at all — with
+    // rx = 128 and ry = 28, a ring whose division fell in this half got an
+    // endpoint at y = 59 where the ellipse's own lowest point is 28. SVG then
+    // does what the spec says and scales the radii up until the arc fits, which
+    // inflated the band to more than twice its size and pushed it past the ring's
+    // own bounds.
+    //
+    // A whole half hid it: at t = 0 and t = PI, sin is zero, so `rx * sin(t)` and
+    // `ry * sin(t)` are the same number and the mistake has nothing to act on.
+    // Only the gap-cut halves were malformed, and since a division falls in one
+    // half or the other, roughly half of every ringed world on the chart was
+    // drawn with a ballooned near side.
+    const P = (ax: number, ay: number, t: number) =>
+      `${(Math.cos(t + off) * ax).toFixed(2)} ${(Math.sin(t + off) * ay).toFixed(2)}`;
     return (
-      `M ${pt(rx, from)} A ${rx.toFixed(2)} ${ry.toFixed(2)} 0 0 1 ${pt(rx, to)} ` +
-      `L ${pt(rx2, to)} A ${rx2.toFixed(2)} ${ry2.toFixed(2)} 0 0 0 ${pt(rx2, from)} Z`
+      `M ${P(rx, ry, from)} A ${rx.toFixed(2)} ${ry.toFixed(2)} 0 0 1 ${P(rx, ry, to)} ` +
+      `L ${P(rx2, ry2, to)} A ${rx2.toFixed(2)} ${ry2.toFixed(2)} 0 0 0 ${P(rx2, ry2, from)} Z`
     );
   };
 
@@ -149,8 +162,6 @@ export function ringGeomFor(size: number, seed: number, tilt?: number): RingGeom
     // axis of under two pixels, and the band has to fit inside that or the whole
     // ring collapses to a line the sprite's own dither eats.
     ry: rx * (tilt ?? (size >= 60 ? 0.24 : 0.34)),
-    // Narrower than it was, for the same reason the colours moved: a wide band in a
-    // tone close to the planet's own does not read as a separate object at all.
     band: rx * (size >= 60 ? 0.15 : 0.24),
     // One of four quadrants, so a chart with several ringed systems does not
     // show the same gap on all of them.
@@ -220,7 +231,13 @@ export default function WorldRing(props: WorldRingProps) {
           <For each={[0, 1, 2]}>
             {i => (
               <path
-                d={ringHalf(g(), side() === "front", i / 3, (i + 1) / 3)}
+                // `above` is the UPPER arc (off = PI); the near half is the lower
+                // one. This had it the other way round, which put the half drawn in
+                // front of the planet across its upper third and left the near half
+                // behind — the ring read as a hoop drawn over the top of the disc
+                // rather than one passing round it. The chart's own rings were
+                // always right, which is why only the overlay ever looked wrong.
+                d={ringHalf(g(), side() === "back", i / 3, (i + 1) / 3)}
                 fill={ringTone(side(), i, props)}
               />
             )}
