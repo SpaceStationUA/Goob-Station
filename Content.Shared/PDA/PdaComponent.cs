@@ -13,7 +13,7 @@ namespace Content.Shared.PDA
         public const string PdaIdSlotId = "PDA-id";
         public const string PdaPenSlotId = "PDA-pen";
         public const string PdaPaiSlotId = "PDA-pai";
-        public const string PdaPassportSlotId = "PDA-passport"; // Pirate - port EE contractors
+        public const string PdaPassportSlotId = "PDA-passport"; // Pirate - Origin
 
         [DataField("idSlot")]
         public ItemSlot IdSlot = new();
@@ -22,7 +22,7 @@ namespace Content.Shared.PDA
         public ItemSlot PenSlot = new();
         [DataField("paiSlot")]
         public ItemSlot PaiSlot = new();
-        // Pirate - port EE contractors
+        // Pirate - Origin
         [DataField("passportSlot")]
         public ItemSlot PassportSlot = new();
 

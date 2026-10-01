@@ -1,0 +1,11 @@
+- type: employer
+  id: NanoTrasen
+  priority: 0
+  nameKey: employment-employer-name-nanotrasen
+  descriptionKey: employment-employer-description-nanotrasen
+  employeeRelationsKey: employment-employer-relations-nanotrasen
+  roleplayRecommendations:
+  - employment-employer-roleplay-nanotrasen-1
+  - employment-employer-roleplay-nanotrasen-2
+  logoPath: /Textures/_Pirate/Interface/Employers/nanotrasen.png
+  departments: [employment-employer-departments-all]

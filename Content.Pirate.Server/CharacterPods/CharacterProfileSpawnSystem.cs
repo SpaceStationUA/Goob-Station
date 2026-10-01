@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Collections.Generic;
-using Content.Pirate.Server.Contractors.Systems;
+using Content.Pirate.Server.Origin.Systems;
 using Content.Server._Pirate.Character.Info;
 using Content.Server._Pirate.Traits;
 using Content.Server.Humanoid;
@@ -27,7 +27,7 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly OrganChipSystem _chips = default!;
-    [Dependency] private readonly NationalitySystem _nationality = default!;
+    [Dependency] private readonly CitizenshipSystem _citizenship = default!;
     [Dependency] private readonly PirateCharacterInfoSystem _characterInfo = default!;
     [Dependency] private readonly SharedKnowledgeSystem _knowledge = default!;
     [Dependency] private readonly TraitSystem _traits = default!;
@@ -96,7 +96,7 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
         ApplySkills(mob, profile);
         _traits.ApplyProfileTraits(mob, profile, session, null);
         _characterInfo.ApplyCharacterInfo(mob, profile);
-        _nationality.ApplyNationality(mob, profile, session);
+        _citizenship.ApplyCitizenship(mob, profile, session);
     }
 
     public void ApplySkillsForTest(EntityUid mob, HumanoidCharacterProfile profile)

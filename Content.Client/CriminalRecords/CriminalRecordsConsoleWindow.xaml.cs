@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.UserInterface.Controls;
+using Content.Client.StationRecords;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CriminalRecords;
@@ -26,29 +27,19 @@ using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 #region Pirate: records photos
 using Content.Client._Pirate.UserInterface.Controls;
-using Content.Shared.Customization.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared._Pirate.Contractors.Prototypes;
+using Content.Shared._Pirate.Origin;
+using Content.Shared._Pirate.Employment;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Client.Lobby;
 using Content.Client.Sprite;
 using Robust.Client.Graphics;
-using Robust.Client.Utility;
-using Robust.Shared.ContentPack;
-using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 using System.IO;
 using System.Threading.Tasks;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-using Robust.Client.Utility;
-using Robust.Shared.ContentPack;
-using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
 #endregion
 
 namespace Content.Client.CriminalRecords;
@@ -100,17 +91,16 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     public Action? OnUploadPhoto;
     public Action<uint, byte[]>? OnStoreGeneratedPortrait;
     private readonly List<SpeciesPrototype> _species = new();
-    private readonly List<NationalityPrototype> _nationalities = new();
+    private readonly List<CitizenshipPrototype> _citizenships = new();
     private readonly List<EmployerPrototype> _employers = new();
     private HumanoidCharacterProfile? _recordProfile;
     private bool _suppressIdentityEditorEvents;
     private bool _deleteConfirmationPending;
     private uint? _deleteConfirmationKey;
     private bool _speciesUnset;
-    private bool _nationalityUnset;
+    private bool _citizenshipUnset;
     private bool _employerUnset;
     private bool _genderUnset;
-    private static readonly IReadOnlyDictionary<string, TimeSpan> EmptyPlayTimes = new Dictionary<string, TimeSpan>();
     #endregion
 
     private StationRecordFilterType _currentFilterType;
@@ -264,14 +254,14 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             SpeciesButton.SelectId(args.Id);
             UpdateRecordIdentityProfile(_recordProfile.WithSpecies(_species[args.Id].ID), true);
         };
-        NationalityButton.OnItemSelected += args =>
+        CitizenshipButton.OnItemSelected += args =>
         {
             if (_suppressIdentityEditorEvents || _recordProfile == null)
                 return;
 
-            _nationalityUnset = false;
-            NationalityButton.SelectId(args.Id);
-            UpdateRecordIdentityProfile(_recordProfile.WithNationality(_nationalities[args.Id].ID), true);
+            _citizenshipUnset = false;
+            CitizenshipButton.SelectId(args.Id);
+            UpdateRecordIdentityProfile(_recordProfile.WithCitizenship(_citizenships[args.Id].ID), true);
         };
         EmployerButton.OnItemSelected += args =>
         {
@@ -352,7 +342,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         #region Pirate: records photos
         UpdateRecordActionButtons();
         SpeciesButton.Disabled = !editing;
-        NationalityButton.Disabled = !editing;
+        CitizenshipButton.Disabled = !editing;
         EmployerButton.Disabled = !editing;
         GenderButton.Disabled = !editing;
         AgeEdit.Editable = editing;
@@ -481,19 +471,18 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             .WithSpecies(effectiveSpecies)
             .WithAge(stationRecord.Age)
             .WithGender(stationRecord.Gender)
-            .WithNationality(stationRecord.Nationality)
+            .WithCitizenship(stationRecord.Citizenship)
             .WithEmployer(stationRecord.Employer);
     }
 
     private void UpdateRecordIdentityProfile(HumanoidCharacterProfile profile, bool sendUpdate, GeneralStationRecord? rawRecord = null)
     {
-        profile = NormalizeRecordIdentityProfile(profile);
         _recordProfile = profile;
 
         if (rawRecord != null)
         {
             _speciesUnset = IsIdentitySelectorBlank(rawRecord.Species);
-            _nationalityUnset = IsIdentitySelectorBlank(rawRecord.Nationality);
+            _citizenshipUnset = IsIdentitySelectorBlank(rawRecord.Citizenship);
             _employerUnset = IsIdentitySelectorBlank(rawRecord.Employer);
             _genderUnset = IsIdentitySelectorBlank(rawRecord.Species);
         }
@@ -502,7 +491,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         try
         {
             PopulateSpeciesSelector(profile.Species, _speciesUnset);
-            PopulateNationalitySelector(profile, _nationalityUnset);
+            PopulateCitizenshipSelector(profile, _citizenshipUnset);
             PopulateEmployerSelector(profile, _employerUnset);
 
             if (_genderUnset)
@@ -538,28 +527,28 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             ApplyOptionButtonPlaceholder(SpeciesButton, Loc.GetString("generic-not-available-shorthand"));
     }
 
-    private void PopulateNationalitySelector(HumanoidCharacterProfile profile, bool showPlaceholder)
+    private void PopulateCitizenshipSelector(HumanoidCharacterProfile profile, bool showPlaceholder)
     {
-        NationalityButton.Clear();
-        _nationalities.Clear();
-        _nationalities.AddRange(GetAvailableNationalities(profile));
+        CitizenshipButton.Clear();
+        _citizenships.Clear();
+        _citizenships.AddRange(GetAvailableCitizenships());
 
-        for (var i = 0; i < _nationalities.Count; i++)
+        for (var i = 0; i < _citizenships.Count; i++)
         {
-            NationalityButton.AddItem(Loc.GetString(_nationalities[i].NameKey), i);
-            if (_nationalities[i].ID == profile.Nationality)
-                NationalityButton.SelectId(i);
+            CitizenshipButton.AddItem(Loc.GetString(_citizenships[i].NameKey), i);
+            if (_citizenships[i].ID == profile.Citizenship)
+                CitizenshipButton.SelectId(i);
         }
 
-        if (showPlaceholder)
-            ApplyOptionButtonPlaceholder(NationalityButton, Loc.GetString("generic-not-available-shorthand"));
+        if (showPlaceholder || !_citizenships.Any(citizenship => citizenship.ID == profile.Citizenship))
+            ApplyOptionButtonPlaceholder(CitizenshipButton, Loc.GetString("generic-not-available-shorthand"));
     }
 
     private void PopulateEmployerSelector(HumanoidCharacterProfile profile, bool showPlaceholder)
     {
         EmployerButton.Clear();
         _employers.Clear();
-        _employers.AddRange(GetAvailableEmployers(profile));
+        _employers.AddRange(GetAvailableEmployers());
 
         for (var i = 0; i < _employers.Count; i++)
         {
@@ -568,71 +557,22 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
                 EmployerButton.SelectId(i);
         }
 
-        if (showPlaceholder)
+        if (showPlaceholder || !_employers.Any(employer => employer.ID == profile.Employer))
             ApplyOptionButtonPlaceholder(EmployerButton, Loc.GetString("generic-not-available-shorthand"));
     }
 
-    private HumanoidCharacterProfile NormalizeRecordIdentityProfile(HumanoidCharacterProfile profile)
+    private List<CitizenshipPrototype> GetAvailableCitizenships()
     {
-        if (!_proto.TryIndex<SpeciesPrototype>(profile.Species, out var speciesProto) || !speciesProto.RoundStart)
-        {
-            profile = profile.WithSpecies(SharedHumanoidAppearanceSystem.DefaultSpecies);
-            speciesProto = _proto.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);
-        }
-
-        profile = profile.WithAge(Math.Clamp(profile.Age, speciesProto.MinAge, speciesProto.MaxAge));
-
-        var nationalities = GetAvailableNationalities(profile);
-        if (!string.IsNullOrWhiteSpace(profile.Nationality)
-            && !nationalities.Any(nationality => nationality.ID == profile.Nationality))
-        {
-            var nationality = nationalities.FirstOrDefault(item => item.ID == SharedHumanoidAppearanceSystem.DefaultNationality)
-                ?? nationalities.FirstOrDefault();
-            if (nationality != null)
-                profile = profile.WithNationality(nationality.ID);
-        }
-
-        var employers = GetAvailableEmployers(profile);
-        if (!string.IsNullOrWhiteSpace(profile.Employer)
-            && !employers.Any(employer => employer.ID == profile.Employer))
-        {
-            var employer = employers.FirstOrDefault(item => item.ID == SharedHumanoidAppearanceSystem.DefaultEmployer)
-                ?? employers.FirstOrDefault();
-            if (employer != null)
-                profile = profile.WithEmployer(employer.ID);
-        }
-
-        return profile;
-    }
-
-    private List<NationalityPrototype> GetAvailableNationalities(HumanoidCharacterProfile profile)
-    {
-        return _proto.EnumeratePrototypes<NationalityPrototype>()
-            .Where(nationality => RequirementsMet(nationality.Requirements, profile.WithNationality(nationality.ID)))
-            .OrderBy(nationality => Loc.GetString(nationality.NameKey))
+        return _proto.EnumeratePrototypes<CitizenshipPrototype>()
+            .OrderBy(citizenship => Loc.GetString(citizenship.NameKey))
             .ToList();
     }
 
-    private List<EmployerPrototype> GetAvailableEmployers(HumanoidCharacterProfile profile)
+    private List<EmployerPrototype> GetAvailableEmployers()
     {
         return _proto.EnumeratePrototypes<EmployerPrototype>()
-            .Where(employer => RequirementsMet(employer.Requirements, profile.WithEmployer(employer.ID)))
             .OrderBy(employer => Loc.GetString(employer.NameKey))
             .ToList();
-    }
-
-    private bool RequirementsMet(IReadOnlyCollection<JobRequirement>? requirements, HumanoidCharacterProfile profile)
-    {
-        if (requirements == null || requirements.Count == 0)
-            return true;
-
-        foreach (var requirement in requirements)
-        {
-            if (!requirement.Check(_entManager, _proto, profile, EmptyPlayTimes, out _))
-                return false;
-        }
-
-        return true;
     }
 
     private void CommitAgeEdit(string text)
@@ -661,7 +601,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     {
         OnIdentityInfoChanged?.Invoke(
             profile.Species,
-            profile.Nationality,
+            profile.Citizenship,
             profile.Employer,
             profile.Age,
             profile.Gender);

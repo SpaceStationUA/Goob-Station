@@ -1,0 +1,74 @@
+- type: citizenship
+  id: Bieselite
+  nameKey: citizenship_name_bieselite
+  passportPrototype: BieselPassport
+
+- type: citizenship
+  id: Nralakk
+  nameKey: citizenship_name_nralakk
+  requirements:
+    - !type:SpeciesRequirement
+      inverted: true
+      species:
+        - Vox
+        - IPC
+  passportPrototype: NralakkPassport
+
+- type: citizenship
+  id: Solarian
+  nameKey: citizenship_name_solarian
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+        - Human
+  languages:
+    - SolCommon
+  passportPrototype: SolPassport
+
+- type: citizenship
+  id: Eridanian
+  nameKey: citizenship_name_eridanian
+  requirements:
+    #- !type:CharacterEmployerRequirement
+    #  inverted: true
+    #  employers:
+    #  -
+    - !type:SpeciesRequirement
+      inverted: true
+      species:
+        - Vox
+        - IPC
+  languages:
+    - SolCommon
+    - Tradeband
+  passportPrototype: EridanCorpID
+
+- type: citizenship
+  id: Adhomai
+  nameKey: citizenship_name_adhomai
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+        - Tajaran
+        - Resomi
+  passportPrototype: AdhomaiPassport
+
+- type: citizenship
+  id: Izweski
+  nameKey: citizenship_name_izweski
+  requirements:
+    - !type:SpeciesRequirement
+      inverted: true
+      species:
+        - Vox
+        - IPC
+  passportPrototype: IzweskiPassport
+
+- type: citizenship
+  id: GoldenDeep
+  nameKey: citizenship_name_goldendeep
+  requirements:
+    - !type:SpeciesRequirement
+      species:
+        - IPC
+  passportPrototype: GoldenDeepPassport

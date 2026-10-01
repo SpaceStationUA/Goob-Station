@@ -33,7 +33,6 @@ public sealed partial class TraitsTab : BoxContainer
     private int _currentPointsSpent;
 
     private string _currentSearchText = string.Empty;
-    private bool _awaitingLayoutUpdate;
 
     private HumanoidCharacterProfile? _profile;
 
@@ -139,8 +138,9 @@ public sealed partial class TraitsTab : BoxContainer
                     return;
                 }
 
-                if (categoryProto.MaxPoints.HasValue &&
-                    categoryUi.PointsSpent + trait.Cost > categoryProto.MaxPoints.Value)
+                var maxCategoryPoints = categoryProto.MaxPoints ?? categoryProto.MaxTraitPoints;
+                if (maxCategoryPoints is >= 0 &&
+                    categoryUi.PointsSpent + trait.Cost > maxCategoryPoints.Value)
                 {
                     RevertTraitToggle(traitId);
                     return;
@@ -157,28 +157,9 @@ public sealed partial class TraitsTab : BoxContainer
             if (countsTowardsGlobalLimit)
                 _currentTraitCount++;
             _currentPointsSpent += trait.Cost;
-            }
-            else
-            {
-            if (_currentPointsSpent - trait.Cost > _maxGlobalPoints)
-            {
-                RevertTraitToggle(traitId);
-                return;
-            }
-
-            if (trait.Category != null && _prototype.TryIndex<TraitCategoryPrototype>(trait.Category.Value, out var category))
-            {
-                var maxCatPoints = category.MaxPoints ?? category.MaxTraitPoints;
-                if (maxCatPoints.HasValue && _categoryUis.TryGetValue(category.ID, out var categoryUi))
-                {
-                    if (categoryUi.PointsSpent - trait.Cost > maxCatPoints.Value)
-                    {
-                        RevertTraitToggle(traitId);
-                        return;
-                    }
-                }
-            }
-
+        }
+        else
+        {
             _selectedTraits.Remove(traitId);
             if (countsTowardsGlobalLimit)
                 _currentTraitCount--;
@@ -242,12 +223,11 @@ public sealed partial class TraitsTab : BoxContainer
             var parentWidth = parent.Width;
             if (parentWidth > 0)
             {
-                GlobalPointsBar.SetWidth = (int)((parentWidth - 2) * percentage);
-                _awaitingLayoutUpdate = false;
+                GlobalPointsBar.SetWidth = (int)(Math.Max(0, parentWidth - 2) * percentage);
             }
-            else if (!_awaitingLayoutUpdate)
+            else
             {
-                _awaitingLayoutUpdate = true;
+                parent.OnResized -= OnProgressBarParentResized;
                 parent.OnResized += OnProgressBarParentResized;
             }
         }
@@ -268,8 +248,22 @@ public sealed partial class TraitsTab : BoxContainer
 
     private void OnProgressBarParentResized()
     {
-        _awaitingLayoutUpdate = false;
         UpdateGlobalStats();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _prototype.PrototypesReloaded -= OnProtoReload;
+            _cfg.UnsubValueChanged(PirateVars.MaxTraitCount, OnMaxTraitCountChanged);
+            _cfg.UnsubValueChanged(PirateVars.MaxTraitPoints, OnMaxTraitPointsChanged);
+
+            if (GlobalPointsBar.Parent is { } parent)
+                parent.OnResized -= OnProgressBarParentResized;
+        }
+
+        base.Dispose(disposing);
     }
 
     private void UpdateCategoryStats(ProtoId<TraitCategoryPrototype> categoryId)

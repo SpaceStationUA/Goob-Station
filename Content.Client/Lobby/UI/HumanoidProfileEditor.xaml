@@ -69,24 +69,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
                                     <OptionButton Name="SpeciesButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
-                                <!-- start Pirate: port EE contractors -->
-                                <!-- Nationality -->
+                                <!-- start Pirate: citizenship selector -->
                                 <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-nationality-label'}" />
+                                    <Label Text="{Loc 'humanoid-profile-editor-citizenship-label'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <TextureButton Name="NationalityInfoButton" Scale="0.3 0.3" VerticalAlignment="Center"
-                                                   ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
-                                    <OptionButton Name="NationalityButton" HorizontalAlignment="Right" />
+                                    <OptionButton Name="CitizenshipButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
-                                <!-- Employer -->
-                                <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-employer-label'}" />
-                                    <Control HorizontalExpand="True"/>
-                                    <TextureButton Name="EmployerInfoButton" Scale="0.3 0.3" VerticalAlignment="Center"
-                                                   ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
-                                    <OptionButton Name="EmployerButton" HorizontalAlignment="Right" />
-                                </BoxContainer>
-                                <!-- end Pirate: port EE contractors -->
+                                <!-- end Pirate: citizenship selector -->
                                 <!-- Age -->
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
@@ -163,11 +152,27 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     </ScrollContainer>
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical">
-                    <!-- Jobs -->
-                    <OptionButton Name="PreferenceUnavailableButton" />
+                    <!-- start Pirate: employer selector -->
+                    <PanelContainer StyleClasses="ProfileEntryPanel" Margin="0 0 0 4">
+                        <BoxContainer Orientation="Horizontal" Margin="10 8">
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                                <Label Text="{Loc 'humanoid-profile-editor-employer-label'}" StyleClasses="ProfileEmployerLabel" />
+                                <Label Text="{Loc 'humanoid-profile-editor-employer-hint'}" StyleClasses="ProfileEmployerHint" />
+                            </BoxContainer>
+                            <Button Name="EmployerButton" MinWidth="220" HorizontalAlignment="Right" />
+                        </BoxContainer>
+                    </PanelContainer>
+                    <PanelContainer StyleClasses="ProfileEntryPanel" Margin="0 0 0 4">
+                        <BoxContainer Orientation="Horizontal" Margin="10 8">
+                            <Label Text="{Loc 'humanoid-profile-editor-preference-unavailable-label'}" StyleClasses="ProfileUnavailableLabel" />
+                            <Control HorizontalExpand="True" />
+                            <OptionButton Name="PreferenceUnavailableButton" MinWidth="220" />
+                        </BoxContainer>
+                    </PanelContainer>
                     <ScrollContainer VerticalExpand="True">
-                        <BoxContainer Name="JobList" Orientation="Vertical" />
+                        <BoxContainer Name="JobList" Orientation="Vertical" Margin="0 0 4 0" />
                     </ScrollContainer>
+                    <!-- end Pirate: employer selector -->
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" Margin="10">
                     <!-- Antags -->

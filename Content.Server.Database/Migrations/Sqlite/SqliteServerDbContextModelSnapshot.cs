@@ -1409,7 +1409,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
 
-                    b.Property<string>("Nationality")
+                    b.Property<string>("Citizenship")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("nationality");

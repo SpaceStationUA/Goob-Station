@@ -88,7 +88,7 @@ namespace Content.Shared.Roles
 
         // Pirate edit start
         /// <summary>
-        /// Used by Contractors to determine if a given job should have a passport
+        /// Used by Origin to determine if a given job should have a passport
         /// /// This should be disabled for Borgs and Station AI, for example.
         /// </summary>
         [DataField("canHavePassport")]

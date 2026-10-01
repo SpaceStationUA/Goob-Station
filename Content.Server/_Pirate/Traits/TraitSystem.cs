@@ -98,28 +98,21 @@ public sealed class TraitSystem : SharedTraitSystem
                 continue;
             }
 
+            var reasons = new List<string>();
             var conditionsMet = true;
             foreach (var condition in trait.Conditions)
             {
                 if (!condition.Evaluate(context))
                 {
                     conditionsMet = false;
-                    break;
+                    var tooltip = condition.GetTooltip(_prototypeManager, Loc);
+                    if (!string.IsNullOrEmpty(tooltip))
+                        reasons.Add(tooltip);
                 }
             }
 
             if (!conditionsMet)
             {
-                var reasons = new List<string>();
-                foreach (var condition in trait.Conditions)
-                {
-                    if (!condition.Evaluate(context))
-                    {
-                        var tooltip = condition.GetTooltip(_prototypeManager, Loc);
-                        if (!string.IsNullOrEmpty(tooltip))
-                            reasons.Add(tooltip);
-                    }
-                }
                 disabledTraits[traitId] = reasons;
                 continue;
             }

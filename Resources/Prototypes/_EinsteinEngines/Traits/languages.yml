@@ -58,8 +58,8 @@
   category: LanguageTraits
   cost: 1
   conditions: # Pirate
-    - !type:IsNationalityCondition
-      nationalities:
+    - !type:IsCitizenshipCondition
+      citizenships:
         - Solarian
         - Eridanian
       invert: true
@@ -77,8 +77,8 @@
   category: LanguageTraits
   cost: 1
   conditions: # Pirate
-    - !type:IsNationalityCondition
-      nationalities:
+    - !type:IsCitizenshipCondition
+      citizenships:
         - Eridanian
       invert: true
   components:

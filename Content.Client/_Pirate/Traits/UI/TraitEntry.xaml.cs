@@ -54,8 +54,17 @@ public sealed partial class TraitEntry : PanelContainer
         TraitCostLabel.ModulateSelfOverride = Color.FromHex(costColor);
 
         TraitCheckbox.OnToggled += OnCheckboxToggled;
+        TraitInfo.OnResized += UpdateDescriptionWidth;
+        UpdateDescriptionWidth();
 
         UpdateConditionTooltips();
+    }
+
+    private void UpdateDescriptionWidth()
+    {
+        var width = Math.Max(0, TraitInfo.Size.X - TraitDescriptionLabel.Margin.Left - TraitDescriptionLabel.Margin.Right);
+        if (TraitDescriptionLabel.SetWidth != width)
+            TraitDescriptionLabel.SetWidth = width;
     }
 
     private void UpdateConditionTooltips()
@@ -69,15 +78,20 @@ public sealed partial class TraitEntry : PanelContainer
                 tooltips.Add(tooltip);
         }
 
-        if (tooltips.Count > 0)
-        {
-            var tooltipText = Loc.GetString("trait-conditions-tooltip",
-                ("requirements", string.Join("\n", tooltips)));
+        SetConditionTooltip(tooltips);
+    }
 
-            TooltipSupplier = _ => CreateMarkupTooltip(tooltipText);
-        }
-        else
+    private void SetConditionTooltip(IReadOnlyCollection<string> tooltips)
+    {
+        if (tooltips.Count == 0)
+        {
             TooltipSupplier = null;
+            return;
+        }
+
+        var tooltipText = Loc.GetString("trait-conditions-tooltip",
+            ("requirements", string.Join("\n", tooltips)));
+        TooltipSupplier = _ => CreateMarkupTooltip(tooltipText);
     }
 
     /// <summary>
@@ -151,6 +165,7 @@ public sealed partial class TraitEntry : PanelContainer
             AddStyleClass("TraitsEntryUnavailable");
             RemoveStyleClass("TraitsEntryDisabled");
             RemoveStyleClass("TraitsEntryUnaffordable");
+            SetConditionTooltip(_failedConditionTooltips);
         }
         else if (!canAfford)
         {

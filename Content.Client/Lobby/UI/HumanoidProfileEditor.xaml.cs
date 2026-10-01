@@ -14,8 +14,6 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Stylesheets;
 using Content.Client.Sprite;
 using Content.Client.UserInterface.Systems.Guidebook;
-using Content.Shared._Pirate.Contractors.Prototypes; // Pirate - port EE contractors
-using Content.Pirate.UIKit.UserInterface.Lobby; // Pirate - Alternative Jobs
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
@@ -39,6 +37,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Physics.Systems;
@@ -63,8 +62,6 @@ namespace Content.Client.Lobby.UI
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
         private readonly LobbyUIController _controller;
-
-        private bool _suppressSelectors; // Pirate - port EE contractors
 
         private readonly SpriteSystem _sprite;
 
@@ -108,11 +105,6 @@ namespace Content.Client.Lobby.UI
         public EntityUid PreviewDummy;
 
         /// <summary>
-        /// Temporary override of their selected job, used to preview roles.
-        /// </summary>
-        public JobPrototype? JobOverride;
-
-        /// <summary>
         /// The character slot for the current profile.
         /// </summary>
         public int? CharacterSlot;
@@ -123,16 +115,7 @@ namespace Content.Client.Lobby.UI
         public HumanoidCharacterProfile? Profile;
 
         private List<SpeciesPrototype> _species = new();
-        // Pirate edit start - port EE contractors
-        private List<NationalityPrototype> _nationalies = new();
-        private List<EmployerPrototype> _employers = new();
-        // Pirate edit end - port EE contractors
-
         private List<(string, RequirementsSelector)> _jobPriorities = new();
-
-        private Dictionary<string, AlternativeJobSelector> _jobAlternatives = new(); // Pirate - Alternative Jobs
-
-        private readonly Dictionary<string, BoxContainer> _jobCategories;
 
         private Direction _previewRotation = Direction.North;
 
@@ -318,30 +301,7 @@ namespace Content.Client.Lobby.UI
                 UpdateHeightWidthSliders(); // Goobstation: port EE height/width sliders
             };
 
-            // Pirate edit start - port EE contractors
-            #region Contractors
-
-            RefreshNationalities();
-            RefreshEmployers();
-
-            NationalityButton.OnItemSelected += args =>
-            {
-                if (_suppressSelectors)
-                    return;
-                NationalityButton.SelectId(args.Id);
-                SetNationality(_nationalies[args.Id].ID);
-            };
-
-            EmployerButton.OnItemSelected += args =>
-            {
-                if (_suppressSelectors)
-                    return;
-                EmployerButton.SelectId(args.Id);
-                SetEmployer(_employers[args.Id].ID);
-            };
-
-            #endregion Contractors
-            // Pirate edit end - port EE contractors
+            InitializePirateProfileSelectors(); // Pirate
 
             // begin Goobstation: port EE height/width sliders
             #region Height and Width
@@ -533,7 +493,7 @@ namespace Content.Client.Lobby.UI
                 (int) PreferenceUnavailableMode.StayInLobby);
             PreferenceUnavailableButton.AddItem(
                 Loc.GetString("humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button",
-                              ("overflowJob", Loc.GetString(SharedGameTicker.FallbackOverflowJobName))),
+                    ("overflowJob", Loc.GetString(SharedGameTicker.FallbackOverflowJobName))),
                 (int) PreferenceUnavailableMode.SpawnAsOverflow);
 
             PreferenceUnavailableButton.OnItemSelected += args =>
@@ -542,8 +502,6 @@ namespace Content.Client.Lobby.UI
                 Profile = Profile?.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
                 SetDirty();
             };
-
-            _jobCategories = new Dictionary<string, BoxContainer>();
 
             RefreshAntags();
             RefreshJobs();
@@ -699,125 +657,6 @@ namespace Content.Client.Lobby.UI
                 }
             }
         }
-        // Pirate edit start - port EE contractors
-        public void RefreshNationalities()
-        {
-            NationalityButton.Clear();
-            _nationalies.Clear();
-
-            var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
-
-            if (Profile != null && _prototypeManager.TryIndex(Profile.Nationality, out NationalityPrototype? currentNat))
-            {
-                if (!CheckRequirementsValid(currentNat.Requirements, prof))
-                {
-                    Profile = Profile.WithNationality(SharedHumanoidAppearanceSystem.DefaultNationality);
-                    prof = Profile;
-                    SetDirty();
-                }
-            }
-
-            _nationalies.AddRange(_prototypeManager.EnumeratePrototypes<NationalityPrototype>()
-                .Where(o =>
-                {
-                    var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
-                    return CheckRequirementsValid(o.Requirements, prof);
-                }));
-
-            _suppressSelectors = true;
-            try
-            {
-                // Ensure the currently saved nationality is present even if filtered out (avoid UI resetting to default).
-                if (Profile != null && !_nationalies.Any(n => n.ID == Profile.Nationality)
-                    && _prototypeManager.TryIndex(Profile.Nationality, out NationalityPrototype? savedNat))
-                {
-                    _nationalies.Insert(0, savedNat);
-                }
-
-                var selectedIndex = -1;
-                for (var i = 0; i < _nationalies.Count; i++)
-                {
-                    NationalityButton.AddItem(Loc.GetString(_nationalies[i].NameKey), i);
-                    if (selectedIndex < 0 && Profile?.Nationality == _nationalies[i].ID)
-                        selectedIndex = i;
-                }
-                if (selectedIndex >= 0)
-                    NationalityButton.SelectId(selectedIndex);
-            }
-            finally
-            {
-                _suppressSelectors = false;
-            }
-        }
-
-        public void RefreshEmployers()
-        {
-            EmployerButton.Clear();
-            _employers.Clear();
-
-            var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
-
-            if (Profile != null && _prototypeManager.TryIndex(Profile.Employer, out EmployerPrototype? currentEmp))
-            {
-                if (!CheckRequirementsValid(currentEmp.Requirements, prof))
-                {
-                    Profile = Profile.WithEmployer(SharedHumanoidAppearanceSystem.DefaultEmployer);
-                    prof = Profile;
-                    SetDirty();
-                }
-            }
-
-            _employers.AddRange(_prototypeManager.EnumeratePrototypes<EmployerPrototype>()
-                .Where(o =>
-                {
-                    var prof = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
-                    return CheckRequirementsValid(o.Requirements, prof);
-                }));
-
-            _suppressSelectors = true;
-            try
-            {
-                // Preserve saved employer if filtered out.
-                if (Profile != null && !_employers.Any(e => e.ID == Profile.Employer)
-                    && _prototypeManager.TryIndex(Profile.Employer, out EmployerPrototype? savedEmp))
-                {
-                    _employers.Insert(0, savedEmp);
-                }
-
-                var selectedEmployer = -1;
-                for (var i = 0; i < _employers.Count; i++)
-                {
-                    EmployerButton.AddItem(Loc.GetString(_employers[i].NameKey), i);
-                    if (selectedEmployer < 0 && Profile?.Employer == _employers[i].ID)
-                        selectedEmployer = i;
-                }
-                if (selectedEmployer >= 0)
-                    EmployerButton.SelectId(selectedEmployer);
-            }
-            finally
-            {
-                _suppressSelectors = false;
-            }
-        }
-
-        private bool CheckRequirementsValid(IReadOnlyCollection<JobRequirement>? requirements, HumanoidCharacterProfile profile)
-        {
-            if (requirements == null || requirements.Count == 0)
-                return true;
-
-            var session = _playerManager.LocalSession;
-            var playTimes = session != null ? _requirements.GetPlayTimes(session) : new Dictionary<string, TimeSpan>();
-
-            foreach (var requirement in requirements)
-            {
-                if (!requirement.Check(_entManager, _prototypeManager, profile, playTimes, out _))
-                    return false;
-            }
-
-            return true;
-        }
-        // Pirate edit end - port EE contractors
-
         public void RefreshAntags()
         {
             AntagList.RemoveAllChildren();
@@ -900,7 +739,7 @@ namespace Content.Client.Lobby.UI
                             loadout.SetDefault(Profile, _playerManager.LocalSession, _prototypeManager);
                         }
 
-                        OpenLoadout(null, loadout, roleLoadoutProto, Loc.GetString(antag.Name));
+                        OpenLoadout(loadout, roleLoadoutProto, Loc.GetString(antag.Name));
                     };
                 }
 
@@ -2019,7 +1858,7 @@ namespace Content.Client.Lobby.UI
             if (Profile == null || !_prototypeManager.HasIndex(Profile.Species))
                 return;
 
-            PreviewDummy = _controller.LoadProfileEntity(Profile, JobOverride, ShowClothes.Pressed);
+            PreviewDummy = _controller.LoadProfileEntity(Profile, null, ShowClothes.Pressed); // Pirate: job-specific preview override is no longer used.
             SpriteView.SetEntity(PreviewDummy);
             _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, Profile.Name);
 
@@ -2062,7 +1901,6 @@ namespace Content.Client.Lobby.UI
             Profile = profile?.Clone();
             CharacterSlot = slot;
             IsDirty = false;
-            JobOverride = null;
 
             UpdateNameEdit();
             UpdateCharacterInfoEditorText(); // Pirate: Starlight character descriptions.
@@ -2083,12 +1921,8 @@ namespace Content.Client.Lobby.UI
             UpdateWeight(); // Goobstation: port EE height/width sliders
 
             RefreshAntags();
-            RefreshJobs();
-            RefreshLoadouts();
             RefreshSpecies();
-            RefreshNationalities(); // Pirate - port EE contractors
-            RefreshEmployers(); // Pirate - port EE contractors
-            RefreshTraits();
+            RefreshRequirementDependentOptions(); // Pirate
             RefreshFlavorText();
             UpdatePirateKnowledgeEditor(); // Pirate
             ReloadPreview();
@@ -2135,218 +1969,7 @@ namespace Content.Client.Lobby.UI
             }
         }
 
-        /// <summary>
-        /// Refreshes all job selectors.
-        /// </summary>
-        public void RefreshJobs()
-        {
-            JobList.RemoveAllChildren();
-            _jobCategories.Clear();
-            _jobPriorities.Clear();
-            _jobAlternatives.Clear(); // Pirate - Alternative Jobs
-            var firstCategory = true;
-
-            // Get all displayed departments
-            var departments = new List<DepartmentPrototype>();
-            foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
-            {
-                if (department.EditorHidden)
-                    continue;
-
-                departments.Add(department);
-            }
-
-            departments.Sort(DepartmentUIComparer.Instance);
-
-            var items = new[]
-            {
-                ("humanoid-profile-editor-job-priority-never-button", (int) JobPriority.Never),
-                ("humanoid-profile-editor-job-priority-low-button", (int) JobPriority.Low),
-                ("humanoid-profile-editor-job-priority-medium-button", (int) JobPriority.Medium),
-                ("humanoid-profile-editor-job-priority-high-button", (int) JobPriority.High),
-            };
-
-            foreach (var department in departments)
-            {
-                var departmentName = Loc.GetString(department.Name);
-
-                if (!_jobCategories.TryGetValue(department.ID, out var category))
-                {
-                    category = new BoxContainer
-                    {
-                        Orientation = LayoutOrientation.Vertical,
-                        Name = department.ID,
-                        ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
-                            ("departmentName", departmentName))
-                    };
-
-                    if (firstCategory)
-                    {
-                        firstCategory = false;
-                    }
-                    else
-                    {
-                        category.AddChild(new Control
-                        {
-                            MinSize = new Vector2(0, 23),
-                        });
-                    }
-
-                    category.AddChild(new PanelContainer
-                    {
-                        PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#464966") },
-                        Children =
-                        {
-                            new Label
-                            {
-                                Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
-                                    ("departmentName", departmentName)),
-                                Margin = new Thickness(5f, 0, 0, 0)
-                            }
-                        }
-                    });
-
-                    _jobCategories[department.ID] = category;
-                    JobList.AddChild(category);
-                }
-
-                var jobs = department.Roles.Select(jobId => _prototypeManager.Index(jobId))
-                    .Where(job => job.SetPreference)
-                    .ToArray();
-
-                Array.Sort(jobs, JobUIComparer.Instance);
-
-                foreach (var job in jobs)
-                {
-                    var jobContainer = new BoxContainer()
-                    {
-                        Orientation = LayoutOrientation.Horizontal,
-                    };
-
-                    var selector = new RequirementsSelector()
-                    {
-                        Margin = new Thickness(3f, 3f, 3f, 0f),
-                    };
-                    selector.OnOpenGuidebook += OnOpenGuidebook;
-
-                    var icon = new TextureRect
-                    {
-                        TextureScale = new Vector2(2, 2),
-                        VerticalAlignment = VAlignment.Center
-                    };
-                    var jobIcon = _prototypeManager.Index(job.Icon);
-                    icon.Texture = _sprite.Frame0(jobIcon.Icon);
-                    selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
-
-                    if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, out var reason))
-                    {
-                        selector.LockRequirements(reason);
-                    }
-                    else
-                    {
-                        selector.UnlockRequirements();
-                    }
-
-                    selector.OnSelected += selectedPrio =>
-                    {
-                        var selectedJobPrio = (JobPriority) selectedPrio;
-                        Profile = Profile?.WithJobPriority(job.ID, selectedJobPrio);
-
-                        foreach (var (jobId, other) in _jobPriorities)
-                        {
-                            // Sync other selectors with the same job in case of multiple department jobs
-                            if (jobId == job.ID)
-                            {
-                                other.Select(selectedPrio);
-                                continue;
-                            }
-
-                            if (selectedJobPrio != JobPriority.High || (JobPriority) other.Selected != JobPriority.High)
-                                continue;
-
-                            // Lower any other high priorities to medium.
-                            other.Select((int) JobPriority.Medium);
-                            Profile = Profile?.WithJobPriority(jobId, JobPriority.Medium);
-                        }
-
-                        // TODO: Only reload on high change (either to or from).
-                        ReloadPreview();
-
-                        UpdateJobPriorities();
-                        UpdatePirateKnowledgeEditor(); // Pirate: skill preview
-                        RefreshLoadouts(); // Pirate: loadout
-                        RefreshTraits(); // Pirate: port and modified DV traits UI
-                        SetDirty();
-                    };
-
-                    var altJobSelector = new AlternativeJobSelector(job.ID) // Pirate start - Alternative Jobs
-                    {
-                        HorizontalAlignment = HAlignment.Left,
-                        VerticalAlignment = VAlignment.Center,
-                        MinWidth = 120,
-                        Margin = new Thickness(3f, 3f, 3f, 0f),
-                    };
-
-                    altJobSelector.OnAlternativeSelected += alternativeId =>
-                    {
-                        // Add alternative job to profile
-                        Profile = Profile?.WithJobAlternative(new(job.ID, alternativeId));
-                        // SetDirty(); //TODO: Use SetDirty() instead of manual save btn toggling
-                        IsDirty = true;
-                    };
-
-                    _jobAlternatives[job.ID] = altJobSelector; // Pirate end - Alternative Jobs
-
-                    var loadoutWindowBtn = new Button()
-                    {
-                        Text = Loc.GetString("loadout-window"),
-                        HorizontalAlignment = HAlignment.Right,
-                        VerticalAlignment = VAlignment.Center,
-                        Margin = new Thickness(3f, 3f, 0f, 0f),
-                    };
-
-                    var collection = IoCManager.Instance!;
-                    var protoManager = collection.Resolve<IPrototypeManager>();
-
-                    // If no loadout found then disabled button
-                    if (!protoManager.TryIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID), out var roleLoadoutProto))
-                    {
-                        loadoutWindowBtn.Disabled = true;
-                    }
-                    // else
-                    else
-                    {
-                        loadoutWindowBtn.OnPressed += args =>
-                        {
-                            RoleLoadout? loadout = null;
-
-                            // Clone so we don't modify the underlying loadout.
-                            Profile?.Loadouts.TryGetValue(LoadoutSystem.GetJobPrototype(job.ID), out loadout);
-                            loadout = loadout?.Clone();
-
-                            if (loadout == null)
-                            {
-                                loadout = new RoleLoadout(roleLoadoutProto.ID);
-                                loadout.SetDefault(Profile, _playerManager.LocalSession, _prototypeManager);
-                            }
-
-                            OpenLoadout(job, loadout, roleLoadoutProto);
-                        };
-                    }
-
-                    _jobPriorities.Add((job.ID, selector));
-                    jobContainer.AddChild(selector);
-                    jobContainer.AddChild(altJobSelector); // Pirate - Alternative Jobs
-                    // jobContainer.AddChild(loadoutWindowBtn); // Pirate: loadout
-                    category.AddChild(jobContainer);
-                }
-            }
-
-            UpdateJobPriorities();
-            UpdateAlternativeJobs(); // Pirate - Alternative Jobs
-        }
-
-        private void OpenLoadout(JobPrototype? jobProto, RoleLoadout roleLoadout, RoleLoadoutPrototype roleLoadoutProto, string? title = null)
+        private void OpenLoadout(RoleLoadout roleLoadout, RoleLoadoutPrototype roleLoadoutProto, string title)
         {
             _loadoutWindow?.Dispose();
             _loadoutWindow = null;
@@ -2355,12 +1978,11 @@ namespace Content.Client.Lobby.UI
             if (collection == null || _playerManager.LocalSession == null || Profile == null)
                 return;
 
-            JobOverride = jobProto;
             var session = _playerManager.LocalSession;
 
             _loadoutWindow = new LoadoutWindow(Profile, roleLoadout, roleLoadoutProto, _playerManager.LocalSession, collection)
             {
-                Title = Loc.GetString("loadout-window-title-loadout", ("job", $"{jobProto?.LocalizedName}")),
+                Title = Loc.GetString("loadout-window-title-loadout", ("job", title)),
             };
 
             // Refresh the buttons etc.
@@ -2390,19 +2012,6 @@ namespace Content.Client.Lobby.UI
                 ReloadPreview();
             };
 
-            JobOverride = jobProto;
-            ReloadPreview();
-
-            _loadoutWindow.OnClose += () =>
-            {
-                JobOverride = null;
-                ReloadPreview();
-            };
-
-            if (Profile is null)
-                return;
-
-            UpdateJobPriorities();
         }
 
         private void OnPhysicalDescriptionChanged(TextEdit.TextEditEventArgs args)
@@ -2574,14 +2183,9 @@ namespace Content.Client.Lobby.UI
             Profile = Profile?.WithSpecies(newSpecies);
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
             Markings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
-            // In case there's job restrictions for the species
-            RefreshJobs();
-            // In case there's species restrictions for loadouts
-            RefreshLoadouts();
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
-            RefreshNationalities(); // Pirate - port EE contractors
-            RefreshEmployers(); // Pirate - port EE contractors
+            RefreshRequirementDependentOptions(); // Pirate
             ReloadPreview();
             UpdateBarkVoice(); // Goob Station - Barks
             // begin Goobstation: port EE height/width sliders
@@ -2589,44 +2193,8 @@ namespace Content.Client.Lobby.UI
             UpdateHeightWidthSliders();
             UpdateWeight();
             // end Goobstation: port EE height/width sliders
-            RefreshTraits(); // Goobstation: ported from DeltaV - Species trait exclusion
             UpdatePirateKnowledgeEditor(); // Pirate
         }
-
-        // Pirate edit start - port EE contractors
-        private void SetNationality(string newNationality)
-        {
-            Profile = Profile?.WithNationality(newNationality);
-            UpdateCharacterRequired();
-            IsDirty = true;
-            ReloadProfilePreview();
-            ReloadClothes();
-        }
-
-        private void SetEmployer(string newEmployer)
-        {
-            Profile = Profile?.WithEmployer(newEmployer);
-            UpdatePirateKnowledgeEditor(); // Pirate: skill preview
-            UpdateCharacterRequired();
-            IsDirty = true;
-            ReloadProfilePreview();
-            ReloadClothes();
-        }
-
-        private void UpdateCharacterRequired()
-        {
-            // Refresh requirement-gated UI after profile changes that may affect availability.
-            RefreshNationalities();
-            RefreshEmployers();
-            RefreshJobs();
-        }
-
-        private void ReloadClothes()
-        {
-            // Minimal implementation: rebuild the preview entity respecting the ShowClothes toggle.
-            ReloadPreview();
-        }
-        // Pirate edit end - port EE contractors
 
         private void SetName(string newName)
         {
@@ -3162,25 +2730,5 @@ namespace Content.Client.Lobby.UI
             ExportButton.Disabled = false;
         }
 
-        private void UpdateAlternativeJobs() // Pirate start - Alternative Jobs
-        {
-            if (Profile == null)
-                return;
-
-            // Assuming Profile has a Dictionary<string, string> AlternativeJobs property
-            // that maps job IDs to their selected alternative (or the original job ID if no alternative is selected)
-            foreach (var (jobId, selector) in _jobAlternatives)
-            {
-                if (Profile.JobAlternatives.TryGetValue(jobId, out var alternativeId))
-                {
-                    selector.SelectAlternative(alternativeId);
-                }
-                else
-                {
-                    // Default to the original job
-                    selector.SelectAlternative(jobId);
-                }
-            }
-        } // Pirate end - Alternative Jobs
     }
 }

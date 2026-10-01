@@ -7,9 +7,9 @@ using Content.Shared.Access.Systems;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 #region Pirate: records photos
-using Content.Shared._Pirate.Contractors.Prototypes;
+using Content.Shared._Pirate.Origin;
+using Content.Shared._Pirate.Employment;
 using Content.Shared.CriminalRecords;
-using Content.Shared.Customization.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -28,7 +28,6 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     #region Pirate: records photos
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    private static readonly IReadOnlyDictionary<string, TimeSpan> EmptyPlayTimes = new Dictionary<string, TimeSpan>();
     #endregion
 
     public override void Initialize()
@@ -193,15 +192,20 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         var age = Math.Clamp(msg.Age, speciesProto.MinAge, speciesProto.MaxAge);
         var profile = BuildEditedProfile(generalRecord, criminalRecord, speciesProto.ID, age, msg.Gender);
-        var nationality = NormalizeNationality(msg.Nationality, profile);
-        profile = profile.WithNationality(nationality);
-        var employer = NormalizeEmployer(msg.Employer, profile);
-        profile = profile.WithEmployer(employer);
+        var citizenship = !string.IsNullOrWhiteSpace(msg.Citizenship)
+                          && _prototypeManager.HasIndex<CitizenshipPrototype>(msg.Citizenship)
+            ? msg.Citizenship
+            : string.Empty;
+        var employer = !string.IsNullOrWhiteSpace(msg.Employer)
+                       && _prototypeManager.HasIndex<EmployerPrototype>(msg.Employer)
+            ? msg.Employer
+            : string.Empty;
+        profile = profile.WithCitizenship(citizenship).WithEmployer(employer);
 
         generalRecord.Species = speciesProto.ID;
         generalRecord.Age = age;
         generalRecord.Gender = msg.Gender;
-        generalRecord.Nationality = nationality;
+        generalRecord.Citizenship = citizenship;
         generalRecord.Employer = employer;
 
         if (criminalRecord != null)
@@ -254,7 +258,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             JobTitle = Loc.GetString("suit-sensor-component-unknown-job"),
             JobIcon = string.Empty,
             JobPrototype = string.Empty,
-            Nationality = string.Empty,
+            Citizenship = string.Empty,
             Employer = string.Empty,
             Species = string.Empty,
             Gender = Gender.Male,
@@ -282,74 +286,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             .WithSpecies(species)
             .WithAge(age)
             .WithGender(gender)
-            .WithNationality(generalRecord.Nationality)
+            .WithCitizenship(generalRecord.Citizenship)
             .WithEmployer(generalRecord.Employer);
-    }
-
-    private string NormalizeNationality(string requestedNationality, HumanoidCharacterProfile profile)
-    {
-        if (string.IsNullOrWhiteSpace(requestedNationality))
-            return string.Empty;
-
-        if (_prototypeManager.TryIndex<NationalityPrototype>(requestedNationality, out var nationality)
-            && RequirementsMet(nationality.Requirements, profile.WithNationality(requestedNationality)))
-        {
-            return requestedNationality;
-        }
-
-        if (_prototypeManager.TryIndex<NationalityPrototype>(SharedHumanoidAppearanceSystem.DefaultNationality, out var defaultNationality)
-            && RequirementsMet(defaultNationality.Requirements, profile.WithNationality(defaultNationality.ID)))
-        {
-            return defaultNationality.ID;
-        }
-
-        foreach (var prototype in _prototypeManager.EnumeratePrototypes<NationalityPrototype>())
-        {
-            if (RequirementsMet(prototype.Requirements, profile.WithNationality(prototype.ID)))
-                return prototype.ID;
-        }
-
-        return SharedHumanoidAppearanceSystem.DefaultNationality;
-    }
-
-    private string NormalizeEmployer(string requestedEmployer, HumanoidCharacterProfile profile)
-    {
-        if (string.IsNullOrWhiteSpace(requestedEmployer))
-            return string.Empty;
-
-        if (_prototypeManager.TryIndex<EmployerPrototype>(requestedEmployer, out var employer)
-            && RequirementsMet(employer.Requirements, profile.WithEmployer(requestedEmployer)))
-        {
-            return requestedEmployer;
-        }
-
-        if (_prototypeManager.TryIndex<EmployerPrototype>(SharedHumanoidAppearanceSystem.DefaultEmployer, out var defaultEmployer)
-            && RequirementsMet(defaultEmployer.Requirements, profile.WithEmployer(defaultEmployer.ID)))
-        {
-            return defaultEmployer.ID;
-        }
-
-        foreach (var prototype in _prototypeManager.EnumeratePrototypes<EmployerPrototype>())
-        {
-            if (RequirementsMet(prototype.Requirements, profile.WithEmployer(prototype.ID)))
-                return prototype.ID;
-        }
-
-        return SharedHumanoidAppearanceSystem.DefaultEmployer;
-    }
-
-    private bool RequirementsMet(IReadOnlyCollection<JobRequirement>? requirements, HumanoidCharacterProfile profile)
-    {
-        if (requirements == null || requirements.Count == 0)
-            return true;
-
-        foreach (var requirement in requirements)
-        {
-            if (!requirement.Check(EntityManager, _prototypeManager, profile, EmptyPlayTimes, out _))
-                return false;
-        }
-
-        return true;
     }
 
     private bool CanManageRecords(Entity<GeneralStationRecordConsoleComponent> ent) // Pirate: records photos
