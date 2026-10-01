@@ -1058,7 +1058,59 @@ try {
         // all" — which is what it did at 2.2s.
         await new Promise((r2) => setTimeout(r2, 7000));
         const el = document.querySelector(".overlay .world-turn");
-        if (!el) return { id, noStrip: true };
+        const live = document.querySelector(".overlay .world-gl canvas");
+        // The close below has to happen on EVERY path out of this function.
+        //
+        // It used to sit at the end, after the early return for "no strip", so a
+        // system with no strip left its overlay open — and the next system's click
+        // then landed on that overlay instead of the chart, so it never opened and
+        // reported no strip either. One absence produced two, and the second was
+        // pure noise. It stayed hidden because every system had a strip until the
+        // black hole went live, at which point the first absence was real and the
+        // cascade was not.
+        if (!el && !live) {
+          document.querySelector(".overlay-close")?.dispatchEvent(
+            new MouseEvent("click", { bubbles: true }),
+          );
+          await new Promise((r2) => setTimeout(r2, 200));
+          return { id, noStrip: true };
+        }
+        if (!el) {
+          // Live path. Read the canvas back rather than trusting that a canvas
+          // element exists: an element with a context that never drew is the same
+          // failure as a strip with no background image, which is the one this
+          // whole block exists to catch.
+          const c = live;
+          const gl = c.getContext("webgl2") || c.getContext("webgl");
+          // Read BEFORE closing. The overlay is torn down by the close, so asking
+          // afterwards about what was inside it reports nothing for the same
+          // reason asking about a closed overlay's canvas would.
+          const stillUnderneath = !!document.querySelector(".overlay .world-still");
+          let distinct = 0;
+          let prev = null;
+          const N = 12;
+          for (let i = 0; i < N; i++) {
+            const shot = c.toDataURL();
+            if (prev !== null && shot !== prev) distinct++;
+            prev = shot;
+            await new Promise((r2) => requestAnimationFrame(r2));
+          }
+          document.querySelector(".overlay-close")?.dispatchEvent(
+            new MouseEvent("click", { bubbles: true }),
+          );
+          await new Promise((r2) => setTimeout(r2, 200));
+          return {
+            id,
+            live: true,
+            hasCtx: !!gl,
+            canvasW: c.width,
+            canvasH: c.height,
+            distinct,
+            samples: N,
+            stillUnderneath,
+            painted: distinct > 0,
+          };
+        }
         const cs = getComputedStyle(el);
         const dur = parseFloat(cs.animationDuration) * 1000;
         const steps = parseInt(cs.animationTimingFunction.replace(/[^0-9]/g, ""), 10) || 1;
@@ -1109,6 +1161,43 @@ try {
     });
 
     for (const [label, m] of [["black hole", overlaySpin.crow], ["world", overlaySpin.burzsia]]) {
+      /**
+       * Two implementations, one invariant.
+       *
+       * The world still uses a baked filmstrip; the black hole is a live WebGL
+       * canvas. Both have to be VISIBLE and both have to actually change, and the
+       * reason to branch is that "is it changing" is measured in completely
+       * different units — the strip in milliseconds per frame, the canvas in
+       * "how many successive animation frames drew something different".
+       *
+       * The canvas branch is the stronger of the two by a wide margin. The strip
+       * has to be told 200ms a frame is too slow because it really is 8fps and
+       * there is no way to fix that; the canvas is asserted to differ on
+       * essentially every frame, which is the property that was actually missing.
+       */
+      if (m && m.live) {
+        check(
+          `the ${label} is drawn live and has a real context`,
+          m.hasCtx && m.painted,
+          m.hasCtx ? `context ok, ${m.distinct}/${m.samples} frames differed` : "no WebGL context",
+        );
+        check(
+          `the ${label}'s canvas is sized to the world, not to the window`,
+          m.canvasW > 0 && m.canvasW === m.canvasH,
+          `${m.canvasW}x${m.canvasH}`,
+        );
+        check(
+          `the ${label} changes on essentially every frame, not on a slideshow's`,
+          m.distinct >= m.samples - 2,
+          `${m.distinct} of ${m.samples - 1} frame-to-frame steps differed`,
+        );
+        check(
+          `and the baked still is still underneath it, so the panel is never blank`,
+          m.stillUnderneath === true,
+          m.stillUnderneath ? "present" : "MISSING",
+        );
+        continue;
+      }
       check(
         `the ${label}'s rotating strip is visible, not merely present`,
         m && !m.noStrip && m.opacity > 0.9 && m.playState === "running",

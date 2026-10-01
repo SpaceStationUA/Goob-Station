@@ -232,12 +232,23 @@ svg.chart.painting {
   z-index: 3;
 }
 
-/* A black hole is one generated sprite, so it needs no layering of its own: the
-   disc is baked, and the void is the absence of pixels. */
+/* A black hole's disc is the preimage of an ellipse under a non-linear warp, so
+   it cannot be a path. It is a shader when there is a context for one, and the
+   baked sprite otherwise; both sit over the still, which is always there. */
 .blackhole {
   position: relative;
   line-height: 0;
   overflow: visible;
+}
+/* Above the still, so the live canvas replaces it rather than blending with it. */
+.world-gl {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.world-gl canvas {
+  display: block;
 }
 .blackhole .world-turn {
   position: absolute;

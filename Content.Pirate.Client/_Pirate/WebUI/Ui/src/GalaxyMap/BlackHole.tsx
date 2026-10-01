@@ -28,16 +28,26 @@
  * use 15s and the black hole 11s, which is the difference between "it moved" and "I
  * could not tell".
  *
- * Strip generation is deferred on a macrotask for the same reason `WorldSprite`
- * defers: a couple of dozen frames of a 190px body is a synchronous pixel loop, and
- * running it inside the click that opened the panel freezes the page at the moment
- * the player asked it a question. The still is drawn at full size first and is
- * correct on its own — if the strip never arrives, the panel still shows a right
- * black hole.
+ * ## It is live now, and the baked path is the fallback
+ *
+ * Everything above describes a strip, and it was right about the shape and wrong
+ * about what to do about the two other things. A filmstrip played with `steps(n)`
+ * cannot be smoother than `n / period`, and at 48 frames over 6s that is 8fps,
+ * which reads as a slideshow however good the frames are; and 48 frames of a 200px
+ * body is a synchronous pixel loop, so the panel sat on a still for over a second.
+ * Both are properties of the technique, not of the tuning — more frames cost
+ * linearly and cap out well below 60.
+ *
+ * So the overlay renders this live in WebGL (`lib/gl.ts`) and the strip is what it
+ * falls back to when there is no context. The baked still is still drawn underneath
+ * at all times: it is one frame, it costs about 30ms, and it means the panel is
+ * never blank while the shader compiles, never flashes if WebGL turns out to be
+ * missing, and is right on its own if the canvas never paints.
  */
 
 import { createEffect, createSignal, onCleanup, Show } from "solid-js";
 import { blackHoleSheet, blackHoleUri } from "./lib/blackhole";
+import { blackHoleGL, type BlackHoleGL } from "./lib/gl";
 
 /** `prefers-reduced-motion`. Rotation is the point here, so this is the only off switch. */
 export function reducedMotion(): boolean {
@@ -69,6 +79,30 @@ export default function BlackHole(props: BlackHoleProps) {
   const still = () => blackHoleUri({ seed: seed(), px: px(), dpr: dpr() });
 
   const [sheet, setSheet] = createSignal<string>();
+  const [live, setLive] = createSignal<BlackHoleGL | null>(null);
+  let host!: HTMLDivElement;
+
+  // The live renderer. Appended imperatively because the canvas is created, sized
+  // and driven by WebGL rather than by the reconciler.
+  createEffect(() => {
+    const target = seed();
+    const size = px();
+    const still3d = reducedMotion();
+    const inst = blackHoleGL({
+      seed: target,
+      px: size,
+      period: props.period ?? 6,
+      animate: !still3d,
+    });
+    if (!inst) return;
+    host?.appendChild(inst.canvas);
+    setLive(inst);
+    onCleanup(() => {
+      setLive(null);
+      inst.dispose();
+      inst.canvas.remove();
+    });
+  });
 
   createEffect(() => {
     const want = n();
@@ -95,10 +129,12 @@ export default function BlackHole(props: BlackHoleProps) {
       role={props.title ? "img" : undefined}
       aria-label={props.title}
     >
-      {/* The still is always in the DOM. When the strip arrives it fades in over the
-          top, so there is never a blank frame between the two. */}
+      {/* The still is always in the DOM, and stays there under the live canvas.
+          It is one frame and it costs about 30ms, and it buys three things: no
+          blank panel while the shader compiles, no flash if there is no context,
+          and a correct picture on its own if the canvas never paints. */}
       <img class="world-still" src={still()} alt="" />
-      <Show when={sheet()} keyed>
+      <Show when={sheet() && !live()} keyed>
         {uri => (
           <div
             class="world-turn"
@@ -112,6 +148,7 @@ export default function BlackHole(props: BlackHoleProps) {
           />
         )}
       </Show>
+      <div class="world-gl" ref={host} hidden={!live()} />
     </div>
   );
 }

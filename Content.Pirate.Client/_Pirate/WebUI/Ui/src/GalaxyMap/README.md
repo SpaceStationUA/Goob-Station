@@ -643,6 +643,52 @@ A "solid enough" share was tried alongside it and reported 0% for every seed
 including obviously solid rocks, so it was measuring something other than what its
 name said. It is gone rather than left in place looking like coverage.
 
+### The overlay is live, and that was a technology problem not a budget one
+
+The baked filmstrip was correct about the shape and wrong about two other things,
+and both of those turned out to be properties of the technique rather than things
+to tune:
+
+- **Smoothness is capped at `frames / period`.** A strip played with `steps(n)`
+  cannot be smoother than `n` frames, and at 48 frames over 6s that is 8fps. More
+  frames cost linearly and do not raise the ceiling — 60fps is a different
+  technology, not a bigger budget.
+- **The wait scales the same way.** 48 frames of a 200px body is a synchronous
+  pixel loop, so the panel sat on a still for 1.5–3.1s. Measured 41ms to first
+  moving pixels live, against a multi-second wait baked.
+
+So the black hole is now rendered by a WebGL shader (`lib/gl.ts`), which is the
+reference's arithmetic rather than a description of it: same statements, same
+constants, so the shape is the shape and not an approximation of it. Measured 11
+of 11 successive animation frames differ, against 8 of 96 for the strip.
+
+Two things that came out of doing it live:
+
+- **The annulus test has no inner cut.** It evaluates to about 0.2 at the centre and
+  1 at the rim, so on its own it describes a *filled flat ellipse*, not a ring. The
+  thin ribbon is what survives the alpha cut, and the fbm is what decides where.
+  Boosting the noise to make the band look brighter is exactly backwards: it pushes
+  more of the ellipse over the cut and fills it in. The first live frame came out as
+  two solid leaves for that reason.
+- **`discScale` had to go back to 1.** It was 0.72, reduced because the shared sprite
+  clipped a 40° tilt — which is what closed the disc into a lens. At full extent the
+  warp separates the two halves into crossing strands, which is the reference's
+  topology and was the thing four rounds of baking could not reach.
+
+The baked path is now the **fallback**, not the primary: `blackHoleGL` returns
+`null` when there is no context and `BlackHole.tsx` uses the strip. The still is
+drawn underneath at all times — one frame, about 30ms — so the panel is never blank
+while the shader compiles and never flashes if WebGL turns out to be missing.
+
+### A strip cannot be smooth, and a check that cannot fail is worse
+
+The strip's smoothness was asserted as "under 200ms per frame". That threshold is
+an apology: 200ms is 5fps, the strip was 8fps, and the only honest way to state the
+requirement was a number loose enough to pass. The live path is asserted instead as
+**"differs on essentially every animation frame"**, measured by reading the canvas
+back and comparing successive frames — 11 of 11. Freezing `u_time` puts it at 0 of
+11, so it can fail.
+
 ### Map markers turn
 
 Every world on the chart rotates, the way the reference's preview does. This reverses
