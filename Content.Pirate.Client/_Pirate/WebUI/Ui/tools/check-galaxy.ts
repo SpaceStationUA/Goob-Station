@@ -18,6 +18,23 @@ import {
   type Axial,
 } from "../src/GalaxyMap/lib/hex";
 import { assignCells, borderLoops, cellOutline, cellsByTerritory, loopToPath } from "../src/GalaxyMap/lib/geometry";
+import {
+  ALPHA_CUT,
+  DISC,
+  DISC_PIXELS,
+  DISK_WIDTH,
+  HOLE,
+  HOLE_CANVAS_RATIO,
+  HOLE_LIGHT_WIDTH,
+  HOLE_PIXELS,
+  HOLE_RADIUS,
+  NOISE_SIZE,
+  N_COLORS,
+  OCTAVES,
+  PERSPECTIVE,
+  ROTATION,
+  TIME_SPEED,
+} from "../src/GalaxyMap/lib/blackhole-consts";
 import { DEFAULT_MAP, FixtureSource } from "../src/GalaxyMap/lib/source";
 import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "../src/GalaxyMap/lib/devmap";
 import type { Vec2 } from "../src/GalaxyMap/lib/hex";
@@ -772,6 +789,119 @@ console.log("\ndrag to paint:");
   const whole = ringHalf({ ...gGap, gapAngle: undefined }, true);
   check("a division outside a half leaves that half whole", ringHalf(gGap, true).length > 0, "not emptied");
   check("a whole half is a real path", whole.startsWith("M ") && whole.endsWith("Z"), whole.slice(0, 24));
+}
+
+/**
+ * The black hole's constants, against `reference/BlackHole.tscn`.
+ *
+ * These are the numbers the whole render hangs on, and they were wrong for a long
+ * time because the shaders DECLARE defaults that the scene OVERRIDES. Nothing about
+ * editing them looks dangerous, so the scene's values are written out here as
+ * literals and compared. If this fails, the scene changed and the note in
+ * `blackhole-consts.ts` needs rewriting with it.
+ */
+{
+  const fs = await import("node:fs/promises").then((m) => m.default);
+  const scene = await fs.readFile("src/GalaxyMap/reference/BlackHole.tscn", "utf8").catch(() => "");
+
+  const pairs: [string, number | string, number | string][] = [
+    ["ring_perspective", PERSPECTIVE, 14.0],
+    ["disk_width", DISK_WIDTH, 0.065],
+    ["size", NOISE_SIZE, 6.598],
+    ["rotation", ROTATION, 0.766],
+    ["time_speed", TIME_SPEED, 0.2],
+    ["radius", HOLE_RADIUS, 0.247],
+    ["light_width", HOLE_LIGHT_WIDTH, 0.028],
+    ["pixels, disc", DISC_PIXELS, 300],
+    ["pixels, horizon", HOLE_PIXELS, 100],
+    ["OCTAVES", OCTAVES, 3],
+  ];
+  const wrong = pairs.filter(([, got, want]) => got !== want);
+  check(
+    "the black hole's constants are the scene's, not the shaders' declarations",
+    wrong.length === 0,
+    wrong.length === 0
+      ? `${pairs.length} values, all as BlackHole.tscn sets them`
+      : wrong.map(([n, g, w]) => `${n} is ${String(g)}, scene says ${String(w)}`).join("; "),
+  );
+
+  // And the scene file itself, read rather than remembered, so the literals above
+  // cannot quietly become the new normal.
+  if (scene) {
+    const declared = (k: string) =>
+      (scene.match(new RegExp(`${k}\\s*(?:=\\s*)?(-?[0-9.]+)`, "i")) ?? [])[1];
+    // Compared as NUMBERS: the scene writes `14.0` and the constant is 14, and a
+    // string comparison reports that as a difference, which is the kind of false
+    // alarm that teaches people to ignore a check.
+    const names = [
+      "ring_perspective",
+      "disk_width",
+      "size",
+      "rotation",
+      "time_speed",
+      "radius",
+      "light_width",
+    ];
+    const mismatched = pairs.filter(
+      ([n, got]) =>
+        names.includes(n) && Number(declared(n)) !== Number(got),
+    );
+    check(
+      "and they still match what the vendored scene file actually contains",
+      scene.length > 0 && mismatched.length === 0,
+      mismatched.length === 0
+        ? `${names.length} values parsed out of reference/BlackHole.tscn`
+        : mismatched.map(([n, g]) => `${n}=${String(g)}, scene has ${declared(n)}`).join("; "),
+    );
+  } else {
+    check("and the vendored scene file is present to check them against", false, "could not read it");
+  }
+
+  // The two renderers import these, so the duplication cannot drift. Assert the
+  // import is real rather than trusting it, since the failure mode is a local copy
+  // quietly reappearing in one file.
+  const glSrc = await fs.readFile("src/GalaxyMap/lib/gl.ts", "utf8").catch(() => "");
+  const cpuSrc = await fs.readFile("src/GalaxyMap/lib/blackhole.ts", "utf8").catch(() => "");
+  for (const [name, src] of [["gl.ts", glSrc], ["blackhole.ts", cpuSrc]] as const) {
+    const imported = src.includes('from "./blackhole-consts"');
+    const local = /const (HOLE|DISC): \[string/.test(src);
+    check(
+      `${name} takes the black hole's constants from the shared module`,
+      imported && !local,
+      !src
+        ? "unreadable"
+        : local
+          ? "a local copy of the palette is back alongside the import"
+          : imported
+            ? "imported, no local copy"
+            : "no import",
+    );
+  }
+
+  // BRIGHT to DARK, and the order is load bearing.
+  const lum = (hex: string) => {
+    const n = parseInt(hex.slice(1), 16);
+    return 0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255);
+  };
+  const lums = DISC.map(lum);
+  check(
+    "the disc's palette runs bright to dark, which is the opposite of the obvious",
+    lums.every((v, i) => i === 0 || v < lums[i - 1]),
+    lums.map((v) => v.toFixed(0)).join(" > "),
+  );
+  // The chart's page is near black, so a true #000 void is a HOLE in the chart
+  // rather than an object in it. The eye reads a gap as a bug. The reference's
+  // #272737 is luminance 40, which is dark and still not a gap.
+  check(
+    "and the horizon's void is dark without being pure black",
+    HOLE[0] !== "#000000" && lum(HOLE[0]) > 5 && lum(HOLE[0]) < 60,
+    `${HOLE[0]} at luminance ${lum(HOLE[0]).toFixed(0)}`,
+  );
+  check(
+    "and the photon ring's two bands are brighter than the void",
+    lum(HOLE[1]) - lum(HOLE[0]) > 60,
+    `${HOLE[1]} at ${lum(HOLE[1]).toFixed(0)} vs void at ${lum(HOLE[0]).toFixed(0)}`,
+  );
 }
 
 console.log(`\n${failures === 0 ? "all checks passed" : `${failures} CHECK(S) FAILED`}\n`);

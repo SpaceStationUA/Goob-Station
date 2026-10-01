@@ -38,10 +38,24 @@
  * Attribution: the reference is Deep-Fold's PixelPlanets, MIT licensed.
  */
 
-import { BAYER4, TAU, fbm, fract, hexToRgb, smoothstep, type RGB } from "./paint";
+import {
+  ALPHA_CUT,
+  DISC,
+  DISK_WIDTH,
+  HOLE,
+  DISC_PIXELS,
+  HOLE_CANVAS_RATIO,
+  HOLE_LIGHT_WIDTH,
+  HOLE_RADIUS,
+  N_COLORS,
+  NOISE_SIZE,
+  OCTAVES,
+  PERSPECTIVE,
+} from "./blackhole-consts";
+import { TAU, fbm, fract, hexToRgb, smoothstep, type RGB } from "./paint";
 
 /** Bump when the noise changes, so cached sprites regenerate. */
-export const BLACKHOLE_ALGO_VERSION = 7;
+export const BLACKHOLE_ALGO_VERSION = 8;
 
 export interface BlackHoleOpts {
   seed: number;
@@ -50,31 +64,19 @@ export interface BlackHoleOpts {
   dpr?: number;
 }
 
-/**
- * The horizon's three steps, inward to outward: the void, a dim warm ring, and
- * the thin bright photon ring at the edge.
- *
- * The void is not `#000`. The chart's page is near black, so a true black disc is
- * a hole in the chart rather than an object in it — the eye reads a gap as a bug.
- * This was measured, not assumed: the photon ring sits at luminance 229 and the
- * horizon at 7, and it is that contrast, not the shape, that makes a black hole
- * legible at 26px.
- */
-const HOLE: [string, string, string] = ["#0b0912", "#e6d6bc", "#fffaf0"];
-
-/** The disc, dark to hot. Five steps, matching the reference's `n_colors`. */
-const DISC: [string, string, string, string, string] = [
-  "#4a1608",
-  "#8f2f10",
-  "#d06a1e",
-  "#f5b43f",
-  "#fff6cf",
-];
-
 interface Frame {
   d: number;
   /** Horizon radius in device pixels. */
   hr: number;
+  /**
+   * Width of each of the horizon's two light bands, in device pixels.
+   *
+   * The scene's `light_width` is in the horizon sprite's own uv, and the shader
+   * measures in that same space, so it needs no conversion here. In the combined
+   * sprite it has to be divided by three exactly once — the same trap `hr` fell
+   * into, which is why it is spelled out rather than left implicit.
+   */
+  hlw: number;
   /** How much of the sprite the disc's un-warped annulus spans. */
   hole: RGB[];
   disc: RGB[];
@@ -93,14 +95,19 @@ function prep(o: BlackHoleOpts, d: number): Frame {
   // run to the edges, with the horizon at a little under a third of the width. The
   // two are baked into one sprite here, because a chart marker is one box and a
   // second element to position is a second thing to get wrong at 26px.
-  const hr = d * 0.15;
+  // 0.247 is the scene's radius in the HORIZON SPRITE's own uv, and that sprite is
+  // a third of the disc's canvas, so it is 0.247/3 of the canvas. It is not divided
+  // by three anywhere else: the shader's uv is already scaled up from the canvas, so
+  // dividing here as well divided twice and made the horizon three times too small.
+  const hr = d * (HOLE_RADIUS / HOLE_CANVAS_RATIO);
   return {
     d,
     hr,
+    hlw: d * (HOLE_LIGHT_WIDTH / HOLE_CANVAS_RATIO),
     hole: HOLE.map(hexToRgb),
     disc: DISC.map(hexToRgb),
-    diskWidth: 0.1,
-    discScale: 0.72,
+    diskWidth: DISK_WIDTH,
+    discScale: 1.0,
     /**
      * A seeded tip, and never a flat one.
      *
@@ -114,12 +121,12 @@ function prep(o: BlackHoleOpts, d: number): Frame {
     tilt: (fract(o.seed * 0.6180339887) < 0.5 ? -1 : 1) *
       (0.22 + fract(o.seed * 0.2718281) * 0.45),
     /**
-     * Cells across the disc. The reference uses `size = 50` on a 300px canvas;
-     * 5 here gave about five cells over the whole structure, so the band came out
-     * as a smooth cut-out shape with a gradient in it rather than as turbulent
-     * gas. This is the difference between "a bar" and "a disc".
+     * The scene's `size`, which is the noise's tiling period and not its frequency:
+     * 6.598, not the 50 the shader declares. The scene's value is also the reason
+     * `rand` tiles at `2*size` by `size` rather than over a unit square, and it is
+     * what keeps the gas turbulent instead of a smooth cut-out.
      */
-    size: 18,
+    size: NOISE_SIZE,
     seed: (o.seed | 0) ^ 0x51ed,
   };
 }
@@ -147,7 +154,9 @@ function bump(dd: number, outer: number, inner: number): number {
   if (dd >= inner) return 0;
   const den = outer - dd;
   if (den <= 1e-6) return 0;
-  return Math.max(0, Math.min(1, (inner - dd) / den));
+  const t = Math.max(0, Math.min(1, (inner - dd) / den));
+  // The reference's smoothstep CURVE, not the linear ratio.
+  return t * t * (3 - 2 * t);
 }
 
 function renderFrame(
@@ -158,7 +167,7 @@ function renderFrame(
   oy: number,
   spin: number,
 ) {
-  const { d, hr, hole, disc, tilt, size, seed } = f;
+  const { d, hr, hlw, hole, disc, tilt, size, seed } = f;
   const px = out.data;
   /**
    * A direct transliteration of the reference's `fragment()`, in its order and with
@@ -199,14 +208,32 @@ function renderFrame(
       const u = (x + 0.5) / d;
       const v = (y + 0.5) / d;
 
-      // Their dither: a 2x2 ordered pattern. BAYER4 stands in at twice the
-      // resolution, which is the same idea and one fewer thing to get wrong.
-      const dith = BAYER4[(y & 3) * 4 + (x & 3)] / 16 < 0.5;
+      let final: RGB | null = null;
 
-      let outRgb: RGB | null = null;
+      // ---- the horizon, UNDERNEATH ----------------------------------------
+      // BlackHole.gdshader first, because in `BlackHole.tscn` it is node 0 and the
+      // disc is node 1 and Godot draws later siblings on top. The disc is therefore
+      // composited OVER this, which is the depth cue: the band crosses in front of
+      // the singularity and the photon ring is broken where it does.
+      //
+      // The banding is two hard thresholds on the radius, not a falloff — the
+      // reference has no gradient in here at all.
+      const dr = Math.hypot(u - 0.5, v - 0.5) * d;
+      if (dr <= hr) {
+        final = hole[0];
+        if (dr > hr - hlw) final = hole[1];
+        if (dr > hr - hlw * 0.5) final = hole[2];
+      }
 
-      // ---- the disc -------------------------------------------------------
+      // ---- the disc, over the horizon --------------------------------------
       {
+        // The reference's dither, transcribed: `dither(UV, uv)` takes the RAW uv
+        // first and the QUANTISED one second, and tests against `2/pixels`. The
+        // ordering is load-bearing — passing the quantised value for both is a
+        // different pattern — and so is `pixels`, which the scene sets to 300.
+        const qv = Math.floor(v * DISC_PIXELS) / DISC_PIXELS;
+        const dith = fract(u + qv) <= 1 / DISC_PIXELS;
+
         let [pxu, pyu] = rot(u, v, tilt);
         const uv2x = pxu;
         const uv2y = pyu;
@@ -231,14 +258,16 @@ function renderFrame(
           ly += bump(dd, 0.5, 0.2);
         }
 
-        // DEVIATION 2: the reference's ring_perspective is a uniform at 4.0, and it
-        // scales the LIGHT vector as well as the disc. Kept.
-        const PERSP = 4.0;
+        // The SCENE's ring_perspective, 14.0. The shader declares 4.0 and the
+        // scene overrides it, and 4.0 is the reason this read as a fat ellipse for
+        // so long: four to one instead of fourteen to one. It scales the light
+        // vector as well as the disc, which is kept.
+        const PERSP = PERSPECTIVE;
         const lightD = Math.hypot(uv2x - lx, (uv2y - ly) * PERSP) * 0.3;
 
-        // `uv_center = uv - vec2(0, 0.5)`, then `*= vec2(1, 4)`, and the
-        // reference point is (0.5, 0) in that space — which is the sprite centre,
-        // since (0.5, 0.5) maps to (0.5, 0).
+        // `uv_center = uv - vec2(0, 0.5)`, then `*= vec2(1, ring_perspective)`,
+        // and the reference point is (0.5, 0) in that space — which is the sprite
+        // centre, since (0.5, 0.5) maps to (0.5, 0).
         // Scaled to leave room for the tilt. The reference's disc canvas is three
         // times the horizon's, so its ring can be tipped 0.7 radians without
         // anything leaving the frame. Here they share one box, and at full width a
@@ -256,38 +285,22 @@ function renderFrame(
         // Texture, rotating against the fixed shape.
         let cx = cx0;
         [cx, cy] = rot(cx, cy + 0.5, tRot);
-        const n = fbm(cx * size, cy * size, 64, 4, seed + 17);
+        const n = fbm(cx * size, cy * size, 64, OCTAVES, seed + 17);
         disk *= Math.pow(Math.max(0, n), 0.5);
         if (dith) disk *= 1.2;
 
-        if (disk > 0.15) {
+        // A step, not a ramp: the reference's alpha is `step(0.15, disk)`, opaque
+        // or absent, and the palette is chosen independently of it. Treating this as
+        // a ramp is most of what turns the band into a smear.
+        if (disk >= ALPHA_CUT) {
           const idx = Math.max(
             0,
-            Math.min(disc.length - 1, Math.floor((disk + lightD) * (disc.length - 1))),
+            Math.min(N_COLORS - 1, Math.floor((disk + lightD) * (N_COLORS - 1))),
           );
-          outRgb = disc[idx];
+          final = disc[idx];
         }
       }
 
-      // ---- the horizon, over the disc --------------------------------------
-      // The horizon draws OVER the disc, which is the opposite of what I had and is
-      // what the reference does: their photon ring is a complete, unbroken circle
-      // lying on top of the ribbon.
-      //
-      // I had the disc on top, on the grounds that a ray crossing in front of the
-      // void is the depth cue. That reads correctly and renders wrong — the ribbon
-      // cut the ring in half and left no bright edge to read the hole by at all, so
-      // the thing looked like a bar lying across a smudge. The reference gets its
-      // depth from the warp (the far side of the disc is displaced past the
-      // horizon, the near side is not), which does not require the disc to occlude
-      // the photon ring, so the occlusion buys nothing and costs the one feature
-      // that makes the hole legible.
-      let final: RGB | null = outRgb;
-      const dr = Math.hypot(u - 0.5, v - 0.5) * d;
-      if (dr <= hr) {
-        const t = dr / hr;
-        final = t < 0.9 ? hole[0] : t < 0.95 ? hole[1] : hole[2];
-      }
       if (!final) continue;
       px[i] = final[0];
       px[i + 1] = final[1];

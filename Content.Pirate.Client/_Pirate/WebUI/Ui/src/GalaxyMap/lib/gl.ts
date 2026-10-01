@@ -49,6 +49,28 @@
  * while the reference's is a prominent ringed circle.
  */
 
+// The scene's values, shared with the CPU renderer in `blackhole.ts`. They live in
+// one module because there are two renderers and they disagreed for a long time, and
+// a check comparing them would only catch that after it had shipped. See
+// `blackhole-consts.ts` for why the SCENE's numbers are the ones that matter.
+import {
+  ALPHA_CUT,
+  DISC,
+  DISC_PIXELS,
+  DISK_WIDTH,
+  HOLE,
+  HOLE_CANVAS_RATIO,
+  HOLE_LIGHT_WIDTH,
+  HOLE_PIXELS,
+  HOLE_RADIUS,
+  N_COLORS,
+  NOISE_SIZE,
+  OCTAVES,
+  PERSPECTIVE,
+  ROTATION,
+  TIME_SPEED,
+} from "./blackhole-consts";
+
 const VERT = `
 attribute vec2 a_pos;
 varying vec2 v_uv;
@@ -73,6 +95,7 @@ uniform float u_pixels;        // disc UV quantisation
 uniform float u_holePixels;
 uniform float u_holeRadius;
 uniform float u_holeLightWidth;
+uniform float u_holeRatio;
 uniform vec3  u_hole0;         // the void
 uniform vec3  u_hole1;         // white ring
 uniform vec3  u_hole2;         // orange outer ring
@@ -125,7 +148,7 @@ float vnoise(vec2 coord) {
 float fbm(vec2 coord) {
   float value = 0.0;
   float scale = 0.5;
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < ${OCTAVES}; i++) {
     value += vnoise(coord) * scale;
     coord *= 2.0;
     scale *= 0.5;
@@ -147,7 +170,7 @@ void main() {
   // BlackHole.gdshader. Its sprite is 100x100 and the disc's is 200x200, concentric,
   // so this sprite's UV is the canvas UV scaled by two about the middle.
   {
-    vec2 huv = (v_uv - 0.5) * 3.0 + 0.5;
+    vec2 huv = (v_uv - 0.5) * u_holeRatio + 0.5;
     vec2 uv = floor(huv * u_holePixels) / u_holePixels;
     float d = distance(uv, vec2(0.5));
     vec3 hc = u_hole0;
@@ -210,12 +233,12 @@ void main() {
     disk *= pow(fbm(uv_center * u_size), 0.5);
     if (dith > 0.5) disk *= 1.2;
 
-    float posterized = floor((disk + light_d) * 4.0);
-    posterized = min(posterized, 4.0);
+    float posterized = floor((disk + light_d) * ${N_COLORS - 1}.0);
+    posterized = min(posterized, ${N_COLORS - 1}.0);
 
     // The alpha is a STEP, not a ramp: opaque or not, with the palette chosen
     // independently. Treating it as a ramp is what turns the band into a smear.
-    if (disk >= 0.15) {
+    if (disk >= ${ALPHA_CUT}) { // the scene's step(ALPHA_CUT, disk)
       vec3 dc = u_d0;
       if (posterized >= 3.5) dc = u_d4;
       else if (posterized >= 2.5) dc = u_d3;
@@ -245,23 +268,6 @@ export interface BlackHoleGL {
   canvas: HTMLCanvasElement;
   dispose(): void;
 }
-
-/** The horizon's three steps, from the scene's `colors` for BlackHole.gdshader. */
-const HOLE: [string, string, string] = ["#272737", "#ffffeb", "#ed7b39"];
-
-/**
- * The disc's five steps, from the scene's `colors` for BlackHoleRing.gdshader.
- *
- * BRIGHT to dark. `posterized` indexes straight into this, so the order is load
- * bearing and it is the opposite of the one that looks obvious.
- */
-const DISC: [string, string, string, string, string] = [
-  "#ffffeb",
-  "#fff540",
-  "#ffb84a",
-  "#ed7b39",
-  "#bd4035",
-];
 
 function rgb(hex: string): [number, number, number] {
   const n = parseInt(hex.slice(1), 16);
@@ -348,17 +354,22 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   const u = (name: string) => gl!.getUniformLocation(prog, name);
   const fract = (x: number) => x - Math.floor(x);
 
-  // Per-system variation, the way the reference's GUI varies its own. The shape
-  // constants stay at the scene's values: those are the look, and varying them is
-  // how the disc ended up a different object from the reference's.
+  // Per-system variation, the way the reference's own GUI varies its own: the seed
+  // and the rotation, and nothing else. The shape constants are the scene's, because
+  // those ARE the look, and varying them is how the disc ended up a different object
+  // from the reference's.
   gl.uniform1f(u("u_seed"), 1 + fract(opts.seed * 0.6180339887) * 9);
-  gl.uniform1f(u("u_rotation"), 0.766 + (fract(opts.seed * 0.2718281) - 0.5) * 0.5);
-  gl.uniform1f(u("u_timeSpeed"), 0.2);
-  gl.uniform1f(u("u_diskWidth"), 0.065);
-  gl.uniform1f(u("u_perspective"), 14.0);
-  gl.uniform1f(u("u_size"), 6.598);
-  gl.uniform1f(u("u_pixels"), 300);
-  gl.uniform1f(u("u_holePixels"), 100);
+  gl.uniform1f(
+    u("u_rotation"),
+    ROTATION + (fract(opts.seed * 0.2718281) - 0.5) * 0.5,
+  );
+  gl.uniform1f(u("u_timeSpeed"), TIME_SPEED);
+  gl.uniform1f(u("u_diskWidth"), DISK_WIDTH);
+  gl.uniform1f(u("u_perspective"), PERSPECTIVE);
+  gl.uniform1f(u("u_size"), NOISE_SIZE);
+  gl.uniform1f(u("u_pixels"), DISC_PIXELS);
+  gl.uniform1f(u("u_holePixels"), HOLE_PIXELS);
+  gl.uniform1f(u("u_holeRatio"), HOLE_CANVAS_RATIO);
   // The scene's radius, UNCHANGED.
   //
   // It is tempting to divide these by three, because the horizon sprite is a third
@@ -366,8 +377,8 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   // what it was. The shader already converts: it measures the distance in huv, which
   // IS the horizon sprite's own uv, scaled up from the canvas. So the scene's 0.247
   // is already in the right units and dividing it as well divides twice.
-  gl.uniform1f(u("u_holeRadius"), 0.247);
-  gl.uniform1f(u("u_holeLightWidth"), 0.028);
+  gl.uniform1f(u("u_holeRadius"), HOLE_RADIUS);
+  gl.uniform1f(u("u_holeLightWidth"), HOLE_LIGHT_WIDTH);
   gl.uniform3fv(u("u_hole0"), rgb(HOLE[0]));
   gl.uniform3fv(u("u_hole1"), rgb(HOLE[1]));
   gl.uniform3fv(u("u_hole2"), rgb(HOLE[2]));

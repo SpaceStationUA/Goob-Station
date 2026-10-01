@@ -1767,8 +1767,13 @@ try {
 
     check("a black hole is actually drawn on the chart", bh !== null && bh.drawn,
       bh === null ? "no [data-bh] marker in the DOM" : `${bh.w}px box, ${bh.px}px sprite`);
+    // The ceiling is not "as dark as I could make it", it is "does not read as a
+    // hole punched in the page". The reference's void is #272737, luminance 40, and
+    // the check used to demand under 40 because the void used to be an invented
+    // #0b0912 at 7. The reference's colour is the authority; the floor stays at 0
+    // so a genuinely pure black still fails.
     check("its void is drawn, and is dark without being pure black",
-      bh !== null && bh.voidLum > 0 && bh.voidLum < 40,
+      bh !== null && bh.voidLum > 0 && bh.voidLum < 48,
       bh === null ? "no marker" : `darkest opaque pixel at luminance ${bh.voidLum}`);
     check("and the photon ring is bright enough to hold the shape together",
       bh !== null && bh.ringLum - bh.voidLum > 60,
