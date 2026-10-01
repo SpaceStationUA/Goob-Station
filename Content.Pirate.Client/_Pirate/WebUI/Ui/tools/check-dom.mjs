@@ -526,6 +526,234 @@ try {
       `max channel delta ${spin.closure} after 360 degrees`,
     );
 
+    // --- the system overlay ------------------------------------------------
+    // Clicking a star is the whole reason the overlay exists, so the things that
+    // could quietly break it are pinned down here: which system opens, how big the
+    // world is drawn, and that a marker click does not leak into the territory
+    // panel underneath.
+    //
+    // The state arriving from the brushes block has a brush armed, which matters
+    // twice over: an armed brush suppresses the marker hit targets entirely (so
+    // the element these checks look for would not exist), and it takes priority
+    // over a marker click. Both are asserted below rather than worked around.
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(120);
+    check(
+      "escape clears the brush, so markers are clickable again",
+      (await page.evaluate(() => document.querySelector(".armed-note")?.textContent ?? "")) === "",
+    );
+
+    // Which marker, and where. A capital, so the ring and the widest hit radius
+    // are both in play.
+    const star = await page.evaluate(() => {
+      for (const h of document.querySelectorAll(".sys-hit")) {
+        if (document.querySelector(`text.system-label.capital[data-sys="${h.dataset.sys}"]`)) {
+          const r = h.getBoundingClientRect();
+          const own = document.querySelector(`text.system-label[data-sys="${h.dataset.sys}"]`);
+          return {
+            id: h.dataset.sys,
+            name: own.textContent.trim(),
+            x: r.x + r.width / 2,
+            y: r.y + r.height / 2,
+            r: +h.getAttribute("r"),
+          };
+        }
+      }
+      return null;
+    });
+    check("capitals expose a click target", star !== null, star?.name ?? "none found");
+
+    await page.mouse.click(star.x, star.y);
+    await page.waitForTimeout(200);
+    const opened = await page.evaluate(() => ({
+      overlay: document.querySelector(".overlay") !== null,
+      title: document.querySelector(".overlay h2")?.textContent ?? "",
+      territoryPanel: document.querySelector(".panel:not(.overlay)") !== null,
+    }));
+    check("clicking a star opens the overlay for that system", opened.overlay && opened.title === star.name,
+      `${opened.title} (wanted ${star.name})`);
+    check(
+      "the territory panel is not also open — one panel at a time",
+      !opened.territoryPanel,
+    );
+
+    // The point of the overlay. A map marker is 16-40px; anything near that here
+    // would mean the overlay had quietly become the thing it replaced.
+    const art = await page.evaluate(() => {
+      const w = document.querySelector(".overlay .world");
+      const img = document.querySelector(".overlay .world-still");
+      if (!w) return null;
+      const r = w.getBoundingClientRect();
+      return {
+        css: r.width,
+        natural: img ? img.naturalWidth : 0,
+        dpr: window.devicePixelRatio || 1,
+        panel: document.querySelector(".overlay").getBoundingClientRect().width,
+      };
+    });
+    check(
+      "the overlay draws its world far larger than a map marker",
+      art && art.css >= 150,
+      art ? `${art.css}px css, ${art.natural}px generated, panel ${Math.round(art.panel)}px` : "no art",
+    );
+    check(
+      "the world fits inside the panel",
+      art && art.css <= art.panel,
+      art ? `${art.css} vs ${Math.round(art.panel)}` : "",
+    );
+    // Against css * dpr, not against css. `natural >= css` passes trivially at
+    // dpr 1, which is exactly where this suite runs — it would have gone green
+    // against a sprite generated at half the display resolution, which is the
+    // bug it exists to catch.
+    check(
+      "the still is generated at the display ratio, not upscaled",
+      art && art.natural === Math.round(art.css * art.dpr),
+      art ? `${art.natural}px generated for ${art.css} css @ dpr ${art.dpr}` : "",
+    );
+
+    // The close button, before anything else needs a closed panel.
+    await page.click(".overlay-close");
+    await page.waitForTimeout(150);
+    check(
+      "the close button dismisses the overlay",
+      (await page.evaluate(() => document.querySelector(".overlay") === null)),
+    );
+
+    // The deferral. Generating 24 frames costs about half a second, so the panel
+    // shows a finished still first and upgrades. If someone makes the strip
+    // synchronous this goes red, which is the point: the regression is a frozen
+    // page on click, and nothing else would notice it.
+    //
+    // Measured on a system this suite has NOT already opened. That is not a
+    // detail: `planetSheet` caches, so re-opening the star above is a cache hit
+    // and both the still and the strip land in the same frame. The property
+    // being asserted is about a cold generate, so it has to use a cold system —
+    // otherwise the check passes for the wrong reason and would not notice the
+    // strip being made synchronous.
+    const cold = await page.evaluate((used) => {
+      for (const h of document.querySelectorAll(".sys-hit")) {
+        if (h.dataset.sys !== used) return h.dataset.sys;
+      }
+      return null;
+    }, star.id);
+    check("found an unopened system to time", cold !== null, cold ?? "");
+    // The close-button check above already left the panel shut, which is the
+    // state this needs: the overlay toggles, so timing an open panel would time
+    // the close. page.evaluate cannot close over `cold`, so it is passed in.
+    const defer = await page.evaluate(async (sysId) => {
+      const marks = [];
+      const t0 = performance.now();
+      const obs = new MutationObserver(() => {
+        if (document.querySelector(".world-still") && !marks.some(m => m.k === "still"))
+          marks.push({ k: "still", t: performance.now() - t0 });
+        if (document.querySelector(".world.turning") && !marks.some(m => m.k === "strip"))
+          marks.push({ k: "strip", t: performance.now() - t0 });
+      });
+      obs.observe(document.body, { childList: true, subtree: true, attributes: true });
+      const h = document.querySelector('.sys-hit[data-sys="' + sysId + '"]');
+      const r = h.getBoundingClientRect();
+      // A real click on the svg, so the timed path is the one a player takes and
+      // not a synthetic call into the handler.
+      document.querySelector("svg.chart").dispatchEvent(
+        new MouseEvent("click", {
+          bubbles: true,
+          clientX: r.x + r.width / 2,
+          clientY: r.y + r.height / 2,
+        }),
+      );
+      await new Promise(res => setTimeout(res, 3500));
+      obs.disconnect();
+      return marks;
+    }, cold);
+    const still = defer.find(m => m.k === "still");
+    const strip = defer.find(m => m.k === "strip");
+    check(
+      "a world is on screen immediately, before any rotation is generated",
+      still !== undefined,
+      still ? `${Math.round(still.t)}ms` : "no still",
+    );
+    check(
+      "the rotation is deferred rather than blocking the click",
+      still !== undefined && strip !== undefined && strip.t > still.t + 50,
+      still && strip ? `still ${Math.round(still.t)}ms, strip ${Math.round(strip.t)}ms` : "strip never arrived",
+    );
+
+    // Toggle-to-close, on whichever system is actually open. Clicking the
+    // original capital here would be a different test: that one switches systems,
+    // because the overlay moved to `cold` for the timing above.
+    const openId = await page.evaluate((sysId) => {
+      const h = document.querySelector('.sys-hit[data-sys="' + sysId + '"]');
+      const t = document.querySelector(".overlay h2")?.textContent ?? "";
+      if (!h) return null;
+      const r = h.getBoundingClientRect();
+      return { x: r.x + r.width / 2, y: r.y + r.height / 2, name: t };
+    }, cold);
+    check("the overlay is open on the system that was timed", openId !== null, openId?.name ?? "overlay not open on the timed system");
+    if (openId) {
+      await page.mouse.click(openId.x, openId.y);
+      await page.waitForTimeout(150);
+      check(
+        "clicking the open system again closes the overlay",
+        (await page.evaluate(() => document.querySelector(".overlay") === null)),
+      );
+    }
+
+    // Open space must still select the territory underneath. This is the
+    // regression a marker hit target invites: widen the radius far enough and
+    // clicks that used to select a country start opening a planet instead.
+    const openSpace = await page.evaluate(() => {
+      const svg = document.querySelector("svg.chart");
+      const r = svg.getBoundingClientRect();
+      const hits = [...document.querySelectorAll(".sys-hit")].map(h => {
+        const b = h.getBoundingClientRect();
+        return { x: b.x + b.width / 2, y: b.y + b.height / 2, r: +h.getAttribute("r") };
+      });
+      // A grid of candidates; take the first that is clear of every hit radius.
+      for (let fy = 0.2; fy <= 0.8; fy += 0.05) {
+        for (let fx = 0.2; fx <= 0.8; fx += 0.05) {
+          const x = r.x + r.width * fx;
+          const y = r.y + r.height * fy;
+          if (hits.every(h => Math.hypot(h.x - x, h.y - y) > h.r + 12))
+            return { x, y, fx, fy };
+        }
+      }
+      return null;
+    });
+    check("found open space well clear of every marker", openSpace !== null);
+    if (openSpace) {
+      await page.mouse.click(openSpace.x, openSpace.y);
+      await page.waitForTimeout(150);
+      const terr = await page.evaluate(() => ({
+        panel: document.querySelector(".panel:not(.overlay)") !== null,
+        overlay: document.querySelector(".overlay") !== null,
+      }));
+      check(
+        "clicking open space still selects the territory, and opens no overlay",
+        terr.panel && !terr.overlay,
+      );
+    }
+
+    // An armed brush wins over a marker. An admin dragging a stroke across a
+    // capital must not have that capital swallow the click and open a panel
+    // mid-drag.
+    await page.evaluate(() => {
+      document.querySelector(".toolbar .swatch").dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+    await page.waitForTimeout(120);
+    await page.mouse.click(star.x, star.y);
+    await page.waitForTimeout(180);
+    const brushWins = await page.evaluate(() => ({
+      overlay: document.querySelector(".overlay") !== null,
+      undo: [...document.querySelectorAll(".toolbar button")].some(b => b.textContent.includes("UNDO")),
+    }));
+    check(
+      "with a brush armed, a marker click paints instead of opening the overlay",
+      !brushWins.overlay && brushWins.undo,
+      `overlay ${brushWins.overlay}, undo ${brushWins.undo}`,
+    );
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(120);
+
     // The locale toggle must actually translate the chrome and the content.
     const uk = await page.evaluate(async () => {
       const pick = [...document.querySelectorAll(".locpick button")].find(

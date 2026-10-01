@@ -141,6 +141,94 @@ svg.chart.painting {
   padding: 3px 0;
 }
 
+/* ------------------------------------------------------------------ *
+ * System overlay
+ *
+ * Wider than the territory panel, because it has to hold a world big
+ * enough to be worth looking at. That size is the whole reason this
+ * panel exists: a marker is 16-40px on the chart and no amount of
+ * generator work makes that readable.
+ * ------------------------------------------------------------------ */
+.overlay {
+  width: 268px;
+}
+.overlay .overlay-art {
+  display: flex;
+  justify-content: center;
+  /* Room for the corona, which is part of the sprite's box but not of
+     the disc, plus a little air so the glow is not clipped by the
+     panel edge. */
+  padding: 6px 0 10px;
+}
+.overlay .capital-tag {
+  margin: 2px 0 8px;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  color: rgba(190, 210, 230, 0.66);
+}
+.overlay .stat em {
+  font-style: normal;
+  color: rgba(150, 170, 195, 0.5);
+}
+.overlay .stat .mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.4px;
+}
+.overlay-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+}
+
+/* A link that reads as navigation rather than as an action: the
+   sovereign's name opens that territory's panel. */
+.link {
+  font: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.28);
+}
+.link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* The invisible click target on a marker. Visible on hover so a
+   target you cannot see is not a mystery. */
+.sys-hit {
+  cursor: pointer;
+}
+.sys-hit.hot {
+  fill: rgba(150, 200, 255, 0.1);
+  stroke: rgba(150, 200, 255, 0.35);
+  stroke-width: 1;
+}
+
+/* The still and the turning strip occupy the same cell, so the strip
+   can fade in over a finished still instead of replacing it. */
+.world {
+  position: relative;
+  line-height: 0;
+}
+.world-still,
+.world-turn {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.world-turn {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.world.turning .world-turn {
+  opacity: 1;
+}
+
 .toolbar {
   position: absolute;
   top: 14px;
@@ -149,7 +237,13 @@ svg.chart.painting {
   gap: 6px;
   align-items: center;
 }
-.toolbar button {
+/* The chrome buttons: toolbar and panel alike.
+   `.panel-close` used to be styled only as `.toolbar .panel-close`, which never
+   matched it in a panel — so the dismiss button on the territory panel had been
+   rendering as an unstyled browser default. Shared here rather than duplicated,
+   so the two cannot drift. */
+.toolbar button,
+.panel-close {
   font: inherit;
   font-size: 10px;
   letter-spacing: 0.8px;
@@ -158,6 +252,11 @@ svg.chart.painting {
   border: 1px solid rgba(120, 160, 200, 0.25);
   padding: 4px 9px;
   cursor: pointer;
+}
+.toolbar button:hover,
+.panel-close:hover {
+  color: #eaf2fa;
+  border-color: rgba(140, 190, 240, 0.55);
 }
 .toolbar button.on {
   background: rgba(60, 120, 190, 0.5);
@@ -387,7 +486,8 @@ img.pl {
 /* Rotating sprite: a pre-rendered strip stepped through with an integer
    `steps()`, so the frames stay pixel-crisp. A fractional step count or a
    smoothed scale is exactly what turns pixel art back into mush. */
-.spin {
+.spin,
+.world-turn {
   image-rendering: pixelated;
   background-repeat: no-repeat;
   animation-name: planet-spin;
@@ -400,6 +500,13 @@ img.pl {
     background-position: 0 0;
   }
   to {
-    background-position: var(--spin-end, 0) 0;
+    background-position: var(--spin-end, var(--world-end, 0)) 0;
   }
+}
+
+/* A still world. Pixelated for the same reason: a generated sprite scaled by
+   anything other than 1:1 is mush. */
+.world-still {
+  image-rendering: pixelated;
+  display: block;
 }

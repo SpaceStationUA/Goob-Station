@@ -88,6 +88,20 @@ export interface UiStrings {
   labelCapitals: LocalizedText;
   labelContested: LocalizedText;
 
+  /* system overlay */
+  kindStar: LocalizedText;
+  kindPlanet: LocalizedText;
+  kindStation: LocalizedText;
+  kindGate: LocalizedText;
+  kindOutpost: LocalizedText;
+  labelSovereign: LocalizedText;
+  labelPosition: LocalizedText;
+  /** "capital of {$name}" */
+  capitalOf: LocalizedText;
+  /** "no sovereign — unclaimed" */
+  unclaimedOwner: LocalizedText;
+  tipClickSystem: LocalizedText;
+
   /* legend */
   orionSpur: LocalizedText;
   extent: LocalizedText;
@@ -135,6 +149,20 @@ export const DEFAULT_STRINGS: UiStrings = {
   labelSystems: { en: "SYSTEMS", uk: "СИСТЕМИ" },
   labelCapitals: { en: "CAPITALS", uk: "СТОЛИЦІ" },
   labelContested: { en: "CONTESTED", uk: "СПІРНІ" },
+
+  kindStar: { en: "STAR SYSTEM", uk: "ЗОРЯНА СИСТЕМА" },
+  kindPlanet: { en: "PLANETARY SYSTEM", uk: "ПЛАНЕТАРНА СИСТЕМА" },
+  kindStation: { en: "STATION", uk: "СТАНЦІЯ" },
+  kindGate: { en: "GATE", uk: "БРАМА" },
+  kindOutpost: { en: "OUTPOST", uk: "АВПОСТ" },
+  labelSovereign: { en: "SOVEREIGN", uk: "СУВЕРЕН" },
+  labelPosition: { en: "POSITION", uk: "КОORDINАТИ" },
+  capitalOf: { en: "CAPITAL OF {$name}", uk: "СТОЛИЦЯ {$name}" },
+  unclaimedOwner: { en: "none — unclaimed space", uk: "немає — незайняті сходи" },
+  tipClickSystem: {
+    en: "Click a star to read about its system",
+    uk: "Клацніть зорю, щоб дізнатися про її систему",
+  },
 
   orionSpur: { en: "ORION SPUR", uk: "РУКАВ ОРІОНА" },
   extent: {

@@ -517,11 +517,19 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
       if (r2 > 1) {
         // Corona. Star only — for a planet this branch is unreachable, because a
         // planet's glow is 1.
+        //
+        // The falloff is g^4, not g^2. A square falloff looks right at 16px and
+        // wrong at 200px: the corona is a fixed fraction of the sprite box, so at
+        // overlay size it becomes a wide, evenly-lit orange donut with a soft
+        // edge — a fuzzy blob rather than a star. The steeper power keeps the
+        // brightness against the photosphere, which is where a corona actually
+        // is, and lets the outer part fall away fast enough to still read as
+        // light rather than as paint.
         const g = 1 - (r2 - 1) / (glow * glow - 1);
         px[i] = atmo ? atmo[0] : 255;
         px[i + 1] = atmo ? atmo[1] : 210;
         px[i + 2] = atmo ? atmo[2] : 140;
-        px[i + 3] = Math.round(g * g * 0.8 * 255);
+        px[i + 3] = Math.round(g * g * g * g * 0.95 * 255);
         continue;
       }
       const nx = dx;
@@ -551,6 +559,25 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
       // Bayer in 0..1, used to pick a side at each threshold. With dithering off
       // the side is a plain 0.5 cut.
       const ditherV = f.dither ? BAYER4[(y & 3) * 4 + (x & 3)] + 0.5 : 0.5;
+
+      /**
+       * How much noise survives this pixel, 1 at the equator and 0 at the limb.
+       *
+       * The sphere projection squeezes the surface coordinate hard toward the
+       * top and bottom of the disc — v runs 0 at the upper limb to 0.5 at the
+       * centre, and the derivative is steepest at the ends — so a pixel row there
+       * crosses many noise periods at once and the field aliases. Aliased noise
+       * against a hard threshold does not look like fine detail, it looks like a
+       * solid band: the sprite grew a flat white cap with a horizontal top edge
+       * across it, which reads as an image that has been cropped rather than as
+       * a pole.
+       *
+       * Pulling the field back toward its mean as the limb approaches removes
+       * the aliasing and leaves a smooth polar cap. Real ice caps are not
+       * modelled — that would need a latitude term on the palette — and at map
+       * size a calm mid-tone pole is far less wrong than a hard aliased line.
+       */
+      const polar = 1 - smoothstep((Math.abs(ny) - 0.7) / 0.3);
 
       // Light. Below the terminator it falls to a dark blue rather than to black,
       // which is what keeps the night side from punching a hole in the map.
@@ -583,7 +610,7 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
         }
         outRgb = mixRgb(col, [255, 255, 255], fl * 0.75);
       } else {
-        const h = fbm(sx * period, sy * period, period, octaves, seed);
+        const h = 0.5 + (fbm(sx * period, sy * period, period, octaves, seed) - 0.5) * polar;
         if (kind === "lat") {
           // Latitude bands, pushed around by noise so they swirl. Gas giants keep
           // hard edges: banding is the whole read.
@@ -649,13 +676,13 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
         // The fbm coordinate is DISPLACED by the cellular field. That is the
         // whole trick: value noise alone warps into fog, and displacing it by
         // something blobby is what gives cloud its edges.
-        const c = fbm(
+        const c = 0.5 + (fbm(
           cu * period + warpN * 0.9,
           cvv * period + warpN * 0.9,
           period,
           Math.max(2, octaves - 1),
           seed + 313,
-        );
+        ) - 0.5) * polar;
         // `ditherV` is already 0..1 here. An earlier version compared against
         // `ditherV - 0.5`, which inverts the test: below the cover threshold
         // painted and above it did not, so a light cover came out solid white

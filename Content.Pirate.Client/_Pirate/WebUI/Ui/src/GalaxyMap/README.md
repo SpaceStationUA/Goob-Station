@@ -153,10 +153,74 @@ invalidated the cache when the halo and the star path changed. Change the noise
 and every planet in the game changes, which is the same trap as the bake
 fingerprint.
 
+## The system overlay
+
+Clicking a star opens a panel describing that system. It exists because of a
+measurement, not a hunch: the game window for this UI will be about the size of
+the existing webview windows (400x280 for the theme picker, 560x760 for the
+arcade), so a marker on the chart is 16-40px and stays 16-40px no matter how good
+the generator is. A world has to be drawn somewhere it can be seen, and the only
+such place is a panel.
+
+**What the selection actually is.** The chart is a picture of
+`NationalityPrototype` — seven nations, and `Profile.Nationality` is the one
+profile field that is a *place* rather than an attribute. `SpeciesPrototype` and
+`EmployerPrototype` carry sprite sets, skin tones, name datasets and rival lists;
+neither has a coordinate or a homeworld. So the territory is the unit of
+selection and the star is the unit of reading, which is why the overlay opens on
+a marker and describes the system, with the owning nation as a link rather than
+as the thing that was clicked.
+
+- **Draw the world at 200px, not at marker size.** The overlay panel is 268px
+  wide; 200px is the largest round size that leaves the corona room inside it.
+  Anything near 16-40px in here would make the panel pointless.
+- **Rotation is generated at 1x, the still at the display ratio.** Two different
+  ratios, deliberately. A 200px still at 2x costs ~100ms and must be sharp — it
+  is what the panel shows first and what it keeps if the strip never arrives. The
+  24-frame strip at 2x costs ~1.9s, so it is generated at 1x, where it costs
+  ~540ms; rotation hides resampling and 1x pixel art under
+  `image-rendering: pixelated` is still pixel art. An earlier version collapsed
+  both onto one ratio and quietly gave the still half resolution on a 2x screen.
+- **The still comes first, the rotation is deferred.** Measured on a cold system:
+  the still is in the DOM at ~10ms, the strip at ~200ms. Generating the strip
+  inline is a synchronous pixel loop ending in `toDataURL`, so doing it on click
+  freezes the page for half a second at exactly the moment the player is looking.
+  Deferring it to a macrotask costs nothing and makes the first paint complete.
+  `check-dom.mjs` asserts the gap, on a deliberately unopened system — measured on
+  a cached one it is a cache hit and the check would pass for the wrong reason.
+- **Damp the noise toward the poles.** The sphere projection squeezes the surface
+  coordinate hard at the top and bottom of the disc, so a row there crosses many
+  noise periods at once and the field aliases. Against a hard threshold that does
+  not look like fine detail, it looks like a solid band: the sprite grew a flat
+  white cap with a horizontal edge across it, which reads as a cropped image
+  rather than a pole. Pulling the field toward its mean as the limb approaches
+  fixes it. Only visible at overlay size — at 40px it was a slightly pale top.
+- **The star corona falls off as g^4, not g^2.** A square falloff looks right at
+  16px and wrong at 200px, where the corona is a wide evenly-lit donut with a
+  soft edge — a fuzzy blob rather than a star.
+
+### Hit targets
+
+- **The hit radius tracks whatever is actually drawn.** The two states differ by
+  more than 4x: a minor marker is a 3.2px dot with sprites off and a 16px sprite
+  with them on. A radius sized for the sprite would let a plain dot swallow
+  clicks a third of the map away, so the target would change meaning when someone
+  toggles the comparison. Padding is generous either way — a person aims at a
+  place, not at a six-pixel circle.
+- **One click authority.** The per-marker circle is painted *before* the sprite,
+  ring and label that belong to it, so a click on the middle of a star lands on
+  the sprite regardless of z-index. Routing through the nearest-marker test in the
+  root handler makes the outcome independent of paint order. Nearest wins rather
+  than first hit, or a star behind another is unclickable depending on list order.
+- **Painting beats reading.** An armed brush suppresses the hit targets entirely
+  and takes the click, so dragging a stroke across a capital cannot open a panel
+  mid-drag.
+
 ## Layout
 
 | Path | What it is |
 |---|---|
+| `WorldSprite.tsx` | One generated world, still-then-turning. Lives outside the spike because the spike is disposable. |
 | `lib/hex.ts` | Pointy-top axial hex grid. Pure math, no policy. |
 | `lib/model.ts` | The data shapes the page renders. No game types. |
 | `lib/geometry.ts` | Claims → cells → smoothed outlines. The interesting file. |
@@ -207,6 +271,19 @@ Worth knowing about:
 - **Adjacency is read from `ownership`, never from border chains.** A chain that
   wanders at a three-way junction spans two territory pairs, so the chains are
   the wrong place to query anything.
+- **Solid's `<For>` does not wrap a per-item fragment, so all markers are siblings
+  in one `<g>`.** Anything that walks up from a marker to find *its* label or
+  sprite finds the first one in the chart instead — silently, and with the right
+  answer often enough to look fine. Two overlay checks passed only because the
+  capital they happened to compare against was the first marker in the list. Both
+  markers and labels now carry `data-sys` so tests address them by id.
+- **An assertion that cannot fail is worse than no assertion**, because it is
+  reported as coverage. Three in a row here: a ratio check written as
+  `natural >= css` passes trivially at dpr 1 (it must be `css * dpr`); a
+  timing check measured on an already-opened system reads a cache hit; and a
+  deferral check phrased as "a world is on screen" passes even when the strip is
+  generated synchronously 199ms in. All three were negative-controlled by breaking
+  the code they cover.
 - **The paint contract is asserted, not assumed.** A source that mutates its
   model in place leaves every geometry check green while the page silently stops
   updating, because the bug lives in the view layer's input and not in the data.

@@ -2,7 +2,10 @@ import { createMemo, createSignal, For, onCleanup, onMount, Show } from "solid-j
 import Chart from "./Chart";
 import { cellsInExtent, hexLine, key, pixelToHex, type Axial } from "./lib/hex";
 import { cellsByTerritory } from "./lib/geometry";
-import { pick, type GalaxyModel } from "./lib/model";
+import { pick, type GalaxyModel, type StarSystem } from "./lib/model";
+import { planetTypeFor, seedFromId } from "./lib/planet";
+import { readableOnDark } from "./Chart";
+import WorldSprite from "./WorldSprite";
 import {
   currentLocales,
   installStrings,
@@ -49,6 +52,9 @@ const brushId = (b: Brush | undefined): string => {
 export default function App() {
   const [model, setModel] = createSignal<GalaxyModel>();
   const [selected, setSelected] = createSignal<string>();
+  /** A star marker, selected. Distinct from `selected`, which is a territory. */
+  const [focused, setFocused] = createSignal<string>();
+  const [hoverSystem, setHoverSystem] = createSignal<string>();
   const [hoverCell, setHoverCell] = createSignal<Axial>();
   const [showCells, setShowCells] = createSignal(false);
   const [brush, setBrush] = createSignal<Brush>();
@@ -187,6 +193,25 @@ export default function App() {
 
   const systemsIn = (id: string) => (model()?.systems ?? []).filter(s => s.territory === id);
 
+  const sysById = createMemo(() => new Map((model()?.systems ?? []).map(s => [s.id, s])));
+
+  /** The type of world to generate for a system: explicit data, else hashed. */
+  const worldType = (s: StarSystem) => s.planetType ?? planetTypeFor(s.kind, s.id);
+
+  /**
+   * Clicking a star.
+   *
+   * Clicking the same star twice closes it, matching the territory panel's
+   * toggle, so "click it again to dismiss" works the same everywhere on the
+   * chart. Only one of the two panels is ever open: they describe different
+   * things at different scales, and stacking them would put two sets of close
+   * buttons on screen at once.
+   */
+  function onSystemClick(id: string) {
+    setSelected(undefined);
+    setFocused(prev => (prev === id ? undefined : id));
+  }
+
   /** Brushable nations. Unclaimed is excluded because it has its own brush. */
   const paintable = createMemo(() => (model()?.territories ?? []).filter(t => !t.unclaimed));
 
@@ -305,6 +330,8 @@ export default function App() {
     }
     const owner = m.ownership.get(key(cell.q, cell.r));
     if (owner === undefined) return;
+    // Selecting a territory dismisses any open system: one panel at a time.
+    setFocused(undefined);
     setSelected(prev => (prev === owner ? undefined : owner));
   }
 
@@ -336,6 +363,9 @@ export default function App() {
             planets={planets()}
             onHover={onHover}
             onClick={onClick}
+            onSystemClick={onSystemClick}
+            hoverSystem={hoverSystem()}
+            onSystemHover={setHoverSystem}
             onStrokeStart={onStrokeStart}
             onStrokeMove={onStrokeMove}
             onStrokeEnd={onStrokeEnd}
@@ -416,6 +446,93 @@ export default function App() {
               </button>
             </Show>
           </div>
+
+          <Show when={focused()}>
+            {id => {
+              const sys = sysById().get(id());
+              return (
+                <Show when={sys}>
+                  {s => {
+                    const terr = () => terrById().get(s().territory);
+                    const kindKey = () =>
+                      s().kind === "star"
+                        ? "kindStar"
+                        : s().kind === "planet"
+                          ? "kindPlanet"
+                          : s().kind === "station"
+                            ? "kindStation"
+                            : s().kind === "gate"
+                              ? "kindGate"
+                              : "kindOutpost";
+                    return (
+                      <div class="panel overlay">
+                        <button
+                          class="panel-close overlay-close"
+                          onClick={() => setFocused(undefined)}
+                        >
+                          {t("close", loc())}
+                        </button>
+
+                        {/* The one place a generated world is drawn big enough
+                            to be worth generating. At 16-40px on the chart a
+                            rotation is invisible and the sprite is mostly a
+                            coloured dot; at 180px it is the reason to click. */}
+                        <div class="overlay-art">
+                          <WorldSprite
+                            seed={seedFromId(s().id)}
+                            type={worldType(s())}
+                            px={200}
+                            frames={24}
+                            period={48}
+                            title={pick(s().name, loc())}
+                          />
+                        </div>
+
+                        <h2 style={{ color: readableOnDark(terr()?.color ?? "#94a3b8") }}>
+                          {pick(s().name, loc())}
+                        </h2>
+                        <div class="sub">{t(kindKey(), loc())}</div>
+
+                        <Show when={s().importance === 3}>
+                          <div class="capital-tag">
+                            {t("capitalOf", loc(), {
+                              name: terr()
+                                ? pick(terr()!.name, loc())
+                                : t("unclaimedOwner", loc()),
+                            })}
+                          </div>
+                        </Show>
+
+                        <div class="stat">
+                          <span>{t("labelSovereign", loc())}</span>
+                          <span>
+                            <Show
+                              when={terr() && !terr()!.unclaimed}
+                              fallback={<em>{t("unclaimedOwner", loc())}</em>}
+                            >
+                              <button
+                                class="link"
+                                style={{ color: readableOnDark(terr()!.color) }}
+                                onClick={() => setSelected(s().territory)}
+                              >
+                                {pick(terr()!.name, loc())}
+                              </button>
+                            </Show>
+                          </span>
+                        </div>
+                        <div class="stat">
+                          <span>{t("labelPosition", loc())}</span>
+                          <span class="mono">
+                            {s().xLy.toFixed(0)} / {s().yLy.toFixed(0)} LY
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  }}
+                </Show>
+              );
+            }}
+          </Show>
 
           <Show when={selected()}>
             {id => {

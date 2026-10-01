@@ -94,6 +94,15 @@ export interface ChartProps {
   planets: boolean;
   onHover: (ly: { x: number; y: number }) => void;
   onClick: (ly: { x: number; y: number }) => void;
+  /**
+   * A star marker was clicked. Fires only when the pointer was actually over a
+   * marker, so a click on open space still falls through to `onClick` and
+   * selects the territory under it.
+   */
+  onSystemClick?: (id: string) => void;
+  /** Marker under the pointer, for hover feedback. */
+  hoverSystem?: string;
+  onSystemHover?: (id: string | undefined) => void;
   /** Pointer went down with a brush armed — begin a stroke. */
   onStrokeStart: (ly: { x: number; y: number }) => void;
   /** Pointer moved with the button down — extend the stroke. */
@@ -258,8 +267,57 @@ export default function Chart(props: ChartProps) {
       system: s,
       colour: terrById().get(s.territory)?.color ?? "#94a3b8",
       P: t().toPx({ x: s.xLy, y: s.yLy }),
+      /**
+       * Click radius in pixels, tracking whatever is actually drawn.
+       *
+       * Tied to the drawn size rather than fixed, because the two states differ
+       * by more than a factor of four: a minor marker is a 3.2px dot with sprites
+       * off and a 16px sprite with them on. A radius sized for the sprite would
+       * make a plain dot swallow clicks a third of the map away, so the target
+       * would quietly change meaning when someone toggles the comparison.
+       *
+       * The padding is generous regardless, because the alternative failure is
+       * worse than an occasional over-hit: a person aims at a place, not at a
+       * six-pixel circle.
+       */
+      hit: Math.max(
+        12,
+        (props.planets && (s.kind === "star" || s.kind === "planet")
+          ? s.importance >= 3
+            ? 20
+            : s.importance >= 2
+              ? 15
+              : s.importance >= 1
+                ? 10.5
+                : 8
+          : s.kind === "station" || s.kind === "outpost"
+            ? 3.5
+            : s.importance >= 2
+              ? 5
+              : 3.2) + 7,
+      ),
     })),
   );
+
+  /**
+   * Which marker, if any, sits under this point.
+   *
+   * Nearest wins rather than first hit: markers do overlap at map scale, and
+   * "first in array order" would make a star sitting behind another one
+   * unclickable depending only on the order the systems happen to be listed in.
+   */
+  function systemAt(p: { x: number; y: number }): string | undefined {
+    let best: string | undefined;
+    let bestD = Infinity;
+    for (const n of systemNodes()) {
+      const d = Math.hypot(n.P.x - p.x, n.P.y - p.y);
+      if (d <= n.hit && d < bestD) {
+        bestD = d;
+        best = n.id;
+      }
+    }
+    return best;
+  }
 
   /** Route arcs, pre-projected. */
   const routeNodes = createMemo(() => {
@@ -532,7 +590,21 @@ export default function Chart(props: ChartProps) {
           // a border leaves one cell behind.
           if (props.stroking) return;
           const p = local(ev);
-          if (p) props.onClick(t().toLy(p));
+          if (!p) return;
+          // A marker under the pointer beats the territory under it, so a star
+          // is a button rather than an obstacle.
+          //
+          // Painting still beats both. An admin dragging a stroke across a
+          // capital must not have that capital swallow the click and open a
+          // panel mid-drag; the stroke is what they asked for.
+          if (!props.brushArmed && props.onSystemClick) {
+            const id = systemAt(p);
+            if (id) {
+              props.onSystemClick(id);
+              return;
+            }
+          }
+          props.onClick(t().toLy(p));
         }}
         onMouseLeave={() => {
           props.onLeave();
@@ -752,8 +824,37 @@ export default function Chart(props: ChartProps) {
           <For each={systemNodes()}>
             {n => {
               const sprite = () => planetSprites().get(n.system.id);
+              const hot = () => props.hoverSystem === n.system.id;
               return (
               <>
+                {/* An invisible disc the size of the click radius. Carries the
+                    hover and the pointer, so the hit test has a real target and
+                    the cursor agrees with what a click will do — otherwise the
+                    chart invites clicks on a 6px dot and then does nothing. */}
+                <Show when={props.onSystemClick && !props.brushArmed}>
+                  {/* Hover target and cursor only — deliberately NOT the click
+                      authority.
+
+                      Solid's <For> does not wrap a per-item fragment, so every
+                      marker is a sibling in one <g> and this circle is painted
+                      before the sprite, ring and label that belong to it. A click
+                      on the middle of a star therefore lands on the sprite, not on
+                      this circle, no matter what z-index says. Routing clicks
+                      through the nearest-marker test in the root handler instead
+                      makes the outcome independent of paint order, and keeps one
+                      authority for the question rather than two that can disagree. */}
+                  <circle
+                    class="sys-hit"
+                    classList={{ hot: hot() }}
+                    data-sys={n.system.id}
+                    cx={n.P.x}
+                    cy={n.P.y}
+                    r={n.hit}
+                    fill="transparent"
+                    onMouseEnter={() => props.onSystemHover?.(n.system.id)}
+                    onMouseLeave={() => props.onSystemHover?.(undefined)}
+                  />
+                </Show>
                 <Show when={n.system.importance === 3}>
                   <circle
                     cx={n.P.x}
@@ -805,6 +906,7 @@ export default function Chart(props: ChartProps) {
                   x={n.P.x + (n.system.importance === 3 ? 15 : 9)}
                   y={n.P.y - 5}
                   class="system-label"
+                  data-sys={n.system.id}
                   classList={{ capital: n.system.importance === 3 }}
                 >
                   {pick(n.system.name, props.locale)}
