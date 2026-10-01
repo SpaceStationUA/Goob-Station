@@ -1199,7 +1199,6 @@
   name: loadout-group-reporter-outerclothing
   loadouts:
   - NoPro
-  - ReporterPressVest # Pirate
 
 - type: loadoutGroup
   id: ReporterEnvirohelm

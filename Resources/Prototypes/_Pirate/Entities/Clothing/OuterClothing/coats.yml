@@ -103,6 +103,9 @@
     sprite: _Pirate/Clothing/OuterClothing/Coats/security_bomber.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/OuterClothing/Coats/security_bomber.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 1.1
+    coolingCoefficient: 0.3
   - type: Armor
     coverage:
     - Chest
@@ -111,11 +114,10 @@
     - Arm
     modifiers:
       coefficients:
-        Blunt: 0.85
-        Slash: 0.75
-        Piercing: 0.90
-        Heat: 0.85
-        Cold: 0.80
+        Blunt: 0.65
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.8
   - type: ExplosionResistance
     damageCoefficient: 0.60
 
