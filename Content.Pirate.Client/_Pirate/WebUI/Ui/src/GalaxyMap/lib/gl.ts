@@ -435,7 +435,7 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   const qs = new URLSearchParams(location.search);
   const q = (k: string, d: number) => (qs.has(k) ? Number(qs.get(k)) : d);
   gl.uniform1f(uLight, q("light", 0.55));
-  gl.uniform1f(uOffset, q("offset", 0.22));
+  gl.uniform1f(uOffset, q("offset", 0.26));
   gl.uniform1f(uInner, q("inner", 0.40));
   gl.uniform1f(uOuter, q("outer", 0.56));
   gl.uniform1f(uThick, q("thick", 0.035));
@@ -454,7 +454,7 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
    * three times larger, so the hole is 0.056 of the disc's space -- about 11% of
    * the ring's outer radius. 0.15/3 puts it there.
    */
-  gl.uniform1f(uHoleR, q("hole", 0.10));
+  gl.uniform1f(uHoleR, q("hole", 0.19));
   gl.uniform1f(uRing, q("pring", 0.05));
   gl.uniform3fv(u("u_hole0"), rgb(HOLE[0]));
   gl.uniform3fv(u("u_hole1"), rgb(HOLE[1]));
