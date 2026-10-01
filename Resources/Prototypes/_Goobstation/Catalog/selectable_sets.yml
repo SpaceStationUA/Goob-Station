@@ -648,4 +648,5 @@
     sprite: _Goobstation/Clothing/Back/Modsuits/brigmed.rsi
     state: control
   content:
+
   - ClothingModsuitBrigMedPowerCell

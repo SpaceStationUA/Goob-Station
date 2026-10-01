@@ -10,3 +10,4 @@ slime-latch-fail-already-latched = Ви не можете вчепитися в 
 slime-eat-corpse-success = {THE($eater)} намагається відірвати щось від {THE($target)}!
 slime-eat-corpse-fail-not-eatable = {THE($target)} не здається їстівним.
 slime-eat-corpse-fail-not-dead = {THE($target)} має бути мертвим!
+slime-eat-corpse-fail = Ми не можемо з’їсти цього {THE($target)}!

@@ -38,6 +38,7 @@ public sealed class VoiceBroadcastSystem : EntitySystem
     {
         base.Initialize();
 
+
         SubscribeLocalEvent<CommunicationsConsoleComponent, VoiceBroadcastToggleMessage>(OnToggle);
         SubscribeLocalEvent<VoiceBroadcastConsoleComponent, ComponentShutdown>(OnShutdown);
     }
@@ -98,7 +99,6 @@ public sealed class VoiceBroadcastSystem : EntitySystem
                 recipients.Add(session);
         }
     }
-
     private void OnShutdown(Entity<VoiceBroadcastConsoleComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.Broadcaster is { } user)

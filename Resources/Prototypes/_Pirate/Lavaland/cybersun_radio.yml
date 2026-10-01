@@ -101,3 +101,28 @@
   - type: Loadout
     prototypes: [ LavalandSyndicateMarshalGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]
+
+- type: randomHumanoidSettings
+  id: LavalandLizardGasStationStaff
+  parent: LizardGasStationStaff
+  speciesBlacklist:
+  - Monkey
+  - Kobold
+  - Abductor
+  - Yowie
+  - IPC
+  - Diona
+  - Plasmaman
+  - Human  
+  - Dwarf  
+  - SlimePerson  
+  - Arachnid  
+  - Moth  
+  - Vox  
+  - Vulpkanin 
+  - Felinid
+  - Harpy
+  components:
+    - type: Loadout  
+      prototypes: [ VisitorChef ]
+      roleLoadout: [ RoleSurvivalStandard ]

@@ -142,6 +142,11 @@ public sealed class PirateTvLinkIntegrationTest
                 Is.EqualTo(entMan.GetNetEntity(a)), "Refused cycle disturbed the existing chain.");
             Assert.That(entMan.GetComponent<PirateTvComponent>(c).Source,
                 Is.EqualTo(entMan.GetNetEntity(b)), "Refused cycle disturbed the existing chain.");
+            Assert.That(entMan.GetComponent<DeviceLinkSinkComponent>(a).LinkedSources, Does.Not.Contain(c),
+                "Refused cycle left a source without a reciprocal link.");
+            entMan.DeleteEntity(c);
+            Assert.That(entMan.GetComponent<DeviceLinkSinkComponent>(a).LinkedSources, Is.Empty,
+                "Deleting a refused source left a stale link on the root.");
         });
 
         await pair.CleanReturnAsync();
@@ -149,10 +154,8 @@ public sealed class PirateTvLinkIntegrationTest
 
     /// <summary>
     ///     Deleting the middle of a 1→2→3 chain re-parents the tail onto the
-    ///     root instead of dropping it. The component shutdown runs before the
-    ///     DeviceLink teardown, so the re-parent has to happen first and under
-    ///     the re-parenting guard -- otherwise the teardown resets the tail to
-    ///     off immediately afterwards.
+    ///     root instead of dropping it. Playback and the reciprocal DeviceLink
+    ///     graph must agree, including when the new root is deleted afterwards.
     /// </summary>
     [Test]
     public async Task DeletingTheMiddleOfAChainReparentsTheTail()
@@ -187,6 +190,17 @@ public sealed class PirateTvLinkIntegrationTest
                 "Tail lost its queue when the middle died.");
             Assert.That(cComp.Url, Is.EqualTo(entMan.GetComponent<PirateTvComponent>(a).Url),
                 "Tail is not showing the root's channel after re-parenting.");
+            Assert.That(entMan.GetComponent<DeviceLinkSinkComponent>(c).LinkedSources, Is.EquivalentTo(new[] { a }),
+                "Tail's DeviceLink sources do not match its new parent.");
+            Assert.That(link.GetLinkedSinks(a, "PirateTvBroadcast"), Does.Contain(c),
+                "Root has no reciprocal link to the re-parented tail.");
+
+            entMan.DeleteEntity(a);
+            Assert.That(cComp.IsMirror, Is.False, "Deleting the new root did not detach the tail.");
+            Assert.That(cComp.Queue, Is.Empty, "Deleting the new root did not clear playback.");
+            Assert.That(entMan.GetComponent<DeviceLinkSinkComponent>(c).LinkedSources, Is.Empty,
+                "Deleting the new root left a stale DeviceLink source.");
+            entMan.DeleteEntity(c);
         });
 
         await pair.CleanReturnAsync();
