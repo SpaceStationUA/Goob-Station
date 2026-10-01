@@ -80,7 +80,6 @@ public sealed class VoiceJoinPromptUIController : UIController, IOnStateEntered<
         _prompted = false;
         _promptAt = null;
     }
-
     private void OnConnected(object? sender, NetChannelArgs args)
     {
         _prompted = false;
