@@ -41,7 +41,7 @@
 import { BAYER4, TAU, fbm, fract, hexToRgb, smoothstep, type RGB } from "./paint";
 
 /** Bump when the noise changes, so cached sprites regenerate. */
-export const BLACKHOLE_ALGO_VERSION = 2;
+export const BLACKHOLE_ALGO_VERSION = 3;
 
 export interface BlackHoleOpts {
   seed: number;
@@ -64,11 +64,11 @@ const HOLE: [string, string, string] = ["#0b0912", "#e6d6bc", "#fffaf0"];
 
 /** The disc, dark to hot. Five steps, matching the reference's `n_colors`. */
 const DISC: [string, string, string, string, string] = [
-  "#5e1f0e",
-  "#9c3d18",
-  "#cf7529",
-  "#efb257",
-  "#fdeab4",
+  "#4a1608",
+  "#8f2f10",
+  "#d06a1e",
+  "#f5b43f",
+  "#fff6cf",
 ];
 
 interface Frame {
@@ -167,7 +167,7 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
         // Narrow. At 0.115 the disc was a slab of constant width lying across the
         // sprite, which is the other half of the diagram look: the reference's band
         // is a bright arc with material thinning away from it, not a bar.
-        let dWidth = 0.062;
+        let dWidth = 0.05;
         let lightY = 0.5;
         const b = bump(dC, 0.5);
         if (uy0 < 0.46) {
@@ -209,14 +209,23 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
           // as they do fills the band in and gives a solid slab; holding the darks
           // down lets the noise break the band into streaks, which is what makes it
           // read as gas rather than as a painted shape.
-          disk *= Math.pow(Math.max(0, n), 0.8);
+          disk *= Math.pow(Math.max(0, n), 0.62);
 
           // Their dither. Two steps of a 2x2 ordered pattern; BAYER4 stands in,
           // which is the same idea at twice the resolution.
           const dith = BAYER4[(y & 3) * 4 + (x & 3)] / 16;
-          if (dith < 0.5) disk *= 1.2;
+          // Lifted hard on the dithered side. The reference's own multiplier is
+          // only 1.2, and against our narrower band that lands the whole ribbon in
+          // the middle of the palette: a slab of uniform mid-orange, where the
+          // reference has a bright white-yellow core falling off to deep red. The
+          // posterisation is what turns this into a highlight rather than a tint.
+          if (dith < 0.5) disk *= 1.45;
 
-          if (disk > 0.15) {
+          // 0.2 rather than the reference's 0.15: a low cut keeps the faint outer
+          // wash that fills the gap between the ribbon and the void, and the
+          // reference has exactly that. The ribbon's own edge is set by the
+          // posterisation, not by this.
+          if (disk > 0.2) {
             // Lighting from the pre-warp coordinate, so the bright side does not
             // swim around with the warp.
             const lightD =

@@ -491,8 +491,8 @@ export default function App() {
                                 seed={seedFromId(s().id)}
                                 type={worldType(s())}
                                 px={200}
-                                frames={28}
-                                period={15}
+                                frames={96}
+                                period={12}
                                 ring={hasRings(seedFromId(s().id), worldType(s()), s().rings)}
                                 title={pick(s().name, loc())}
                               />
@@ -501,8 +501,8 @@ export default function App() {
                             <BlackHole
                               px={190}
                               seed={seedFromId(s().id)}
-                              frames={26}
-                              period={11}
+                              frames={48}
+                              period={6}
                               title={pick(s().name, loc())}
                             />
                           </Show>

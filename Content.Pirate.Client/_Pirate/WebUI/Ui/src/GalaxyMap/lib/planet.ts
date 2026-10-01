@@ -1329,6 +1329,78 @@ function renderToDataUri(o: PlanetOpts, frames: number): string {
 }
 
 /** A single still, as a PNG data URI. This is what the chart draws. */
+/**
+ * Build a filmstrip across several macrotasks instead of one blocking one.
+ *
+ * Smoothness is bought with frames, and frames cost time: measured on this machine a
+ * 200px frame at dpr 1 is about 32ms, so the 28-frame strip that was good enough to
+ * see a planet turn took 911ms and the 96 frames that actually look smooth take about
+ * 3.1 seconds. Three seconds inside the click that opened a panel is not a long
+ * animation, it is a frozen page, and it is the reason the frame count was kept low
+ * rather than the reason 28 is enough.
+ *
+ * So the work is spread. `onFrame` is called as each frame lands, which is what lets
+ * a caller show progress, and the final callback fires when the strip is complete.
+ * Nothing is yielded to between batches, so a batch is still a contiguous block of
+ * synchronous work — sized to stay under roughly a frame of jank rather than to be
+ * as small as possible.
+ *
+ * Cancellation: the caller gets a handle with `cancel()`, and generation stops at the
+ * next batch boundary. Without it, dismissing a panel mid-generation leaves a
+ * multi-second loop running against a canvas nobody will read.
+ */
+export interface SheetJob {
+  cancel(): void;
+}
+
+export function planetSheetAsync(
+  o: PlanetOpts,
+  frames: number,
+  onDone: (uri: string) => void,
+  opts?: { batch?: number; onFrame?: (n: number) => void },
+): SheetJob {
+  const batch = Math.max(1, opts?.batch ?? 6);
+  let cancelled = false;
+  let started = false;
+  const start = () => {
+    if (started) return;
+    started = true;
+    const dpr = o.dpr ?? 1;
+    const d = Math.max(3, Math.round(o.px * dpr));
+    const cv = document.createElement("canvas");
+    cv.width = d * frames;
+    cv.height = d;
+    const ctx = cv.getContext("2d");
+    if (!ctx) {
+      onDone("");
+      return;
+    }
+    const img = ctx.createImageData(d * frames, d);
+    // cloudThreshold, not the type's default: the async path has to agree with the
+    // synchronous one or the strip and the still are different planets.
+    const f = prep(o, d, o.cloudThreshold);
+    let k = 0;
+    const step = () => {
+      if (cancelled) return;
+      const end = Math.min(frames, k + batch);
+      for (; k < end; k++) {
+        renderFrame(f, img, d * frames, k * d, 0, k / frames);
+        opts?.onFrame?.(k + 1);
+      }
+      if (k < frames) {
+        setTimeout(step, 0);
+      } else {
+        ctx.putImageData(img, 0, 0);
+        onDone(cv.toDataURL("image/png"));
+      }
+    };
+    setTimeout(step, 0);
+  };
+  // Deferred even for a cached hit, so the caller's own timing is consistent.
+  setTimeout(start, 0);
+  return { cancel: () => (cancelled = true) };
+}
+
 export function planetUri(o: PlanetOpts): string {
   const k = keyOf(o, o.spin ?? 0, 1);
   const hit = cache.get(k);

@@ -1017,13 +1017,17 @@ export default function Chart(props: ChartProps) {
                     {sp => (
                       <>
                         <Show when={sp().saturn}>
-                          <path
-                            class="saturn-far"
-                            data-saturn={n.system.id}
-                            d={ringHalf(ringGeomFor(sp().size, seedFromId(n.system.id)), true)}
-                            transform={`translate(${n.P.x} ${n.P.y})`}
-                            fill="#514639"
-                          />
+                          <For each={[0, 1, 2]}>
+                            {i => (
+                              <path
+                                class="saturn-far"
+                                data-saturn={n.system.id}
+                                d={ringHalf(ringGeomFor(sp().size, seedFromId(n.system.id)), true, i / 3, (i + 1) / 3)}
+                                transform={`translate(${n.P.x} ${n.P.y})`}
+                                fill={["#6b5f4c", "#463c2f", "#8a7a60"][i]}
+                              />
+                            )}
+                          </For>
                         </Show>
                         <Show
                           when={sp().strip}
@@ -1059,13 +1063,17 @@ export default function Chart(props: ChartProps) {
                           </g>
                         </Show>
                         <Show when={sp().saturn}>
-                          <path
-                            class="saturn-near"
-                            data-saturn={n.system.id}
-                            d={ringHalf(ringGeomFor(sp().size, seedFromId(n.system.id)), false)}
-                            transform={`translate(${n.P.x} ${n.P.y})`}
-                            fill="#e6dcc6"
-                          />
+                          <For each={[0, 1, 2]}>
+                            {i => (
+                              <path
+                                class="saturn-near"
+                                data-saturn={n.system.id}
+                                d={ringHalf(ringGeomFor(sp().size, seedFromId(n.system.id)), false, i / 3, (i + 1) / 3)}
+                                transform={`translate(${n.P.x} ${n.P.y})`}
+                                fill={["#c9bda1", "#8d8168", "#f4ecd8"][i]}
+                              />
+                            )}
+                          </For>
                         </Show>
                       </>
                     )}

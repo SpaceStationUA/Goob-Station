@@ -105,7 +105,7 @@ export default function BlackHole(props: BlackHoleProps) {
             style={{
               "background-image": `url(${uri})`,
               "background-size": `${px() * n()}px ${px()}px`,
-              "animation-duration": `${props.period ?? 11}s`,
+              "animation-duration": `${props.period ?? 6}s`,
               "animation-timing-function": `steps(${n()})`,
               "--world-end": `-${px() * n()}px`,
             }}

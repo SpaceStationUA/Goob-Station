@@ -984,9 +984,10 @@ try {
             clientY: r.y + r.height / 2,
           }),
         );
-        // Long enough for the deferred strip, short enough to prove the still was
-        // there first.
-        await new Promise((r2) => setTimeout(r2, 2200));
+        // Long enough for the deferred strip. 96 frames at 200px is ~3.1s of pixel
+        // loop spread across macrotasks, and a shorter wait here reports "no strip at
+        // all" — which is what it did at 2.2s.
+        await new Promise((r2) => setTimeout(r2, 7000));
         const el = document.querySelector(".overlay .world-turn");
         if (!el) return { id, noStrip: true };
         const cs = getComputedStyle(el);
@@ -1056,11 +1057,16 @@ try {
             `expected ${m.expectedW}px for ${m.steps} frames`
           : "no strip",
       );
+      // 200ms a frame, i.e. 5fps minimum, tightened from the 1000ms this started
+      // at. 1000ms is what a 28-frame strip over 48s produced, and it passed while
+      // looking like a slideshow; the point of a threshold is to be the standard, not
+      // the floor of whatever happened to be built. 96 frames over 12s is 125ms.
       check(
-        `and the ${label} turns fast enough to read as turning`,
-        m && !m.noStrip && m.holdMs > 0 && m.holdMs <= 1000,
+        `and the ${label} turns smoothly enough not to read as a slideshow`,
+        m && !m.noStrip && m.holdMs > 0 && m.holdMs <= 200,
         m && !m.noStrip
-          ? `${m.durMs}ms over ${m.steps} frames = ${m.holdMs}ms a frame`
+          ? `${m.durMs}ms over ${m.steps} frames = ${m.holdMs}ms a frame ` +
+            `(${(1000 / m.holdMs).toFixed(1)}fps)`
           : "no strip",
       );
     }
@@ -1530,10 +1536,13 @@ try {
         ? "no label"
         : `label ${bh.labelClearance}px from centre, sprite reaches ${Math.round(bh.w / 2)}px`);
 
+    // Three per half, not one: a single flat band has no interior for the eye to
+    // model and sits on the disc like a sticker. The count has to match on both
+    // sides, which is what says the two halves are drawn to the same recipe.
     check(
-      "a ringed system draws a far half and a near half",
-      ring.far === 1 && ring.near === 1,
-      `${ring.far} far, ${ring.near} near`,
+      "a ringed system draws a layered far half and a layered near half",
+      ring.far >= 3 && ring.far === ring.near,
+      `${ring.far} far slices, ${ring.near} near slices`,
     );
     check(
       "the sprite occludes: far half before the image, near half after",

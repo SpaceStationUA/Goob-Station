@@ -31,7 +31,8 @@
  * both wanted and affordable; see the note in the README.
  */
 
-import { Show } from "solid-js";
+import { For, Show } from "solid-js";
+import { hexToRgb } from "./lib/paint";
 
 export interface RingGeom {
   /** Outer semi-major axis, in pixels. */
@@ -61,11 +62,25 @@ export interface RingGeom {
  * Angles run anticlockwise from +x in an SVG's y-down frame, so the *near* half
  * (the one that passes in front of the planet) is the lower arc, t in [0, PI].
  */
-export function ringHalf(g: RingGeom, above: boolean): string {
-  const rx = g.rx;
-  const ry = g.ry;
-  const rx2 = Math.max(0.5, rx - g.band);
-  const ry2 = Math.max(0.5, ry - g.band * 0.34);
+/**
+ * One slice of one half of the ring.
+ *
+ * `from`/`to` are 0..1 across the band's width: 0 is the outer edge, 1 the inner.
+ * Three slices in three tones is what stops a ring reading as a strip of paper laid
+ * over a planet — a single fill has no interior, so the eye has nothing to model it
+ * with and it sits on the disc like a sticker. Real ring systems are layered, and
+ * three bands is the cheapest thing that says so.
+ */
+export function ringHalf(
+  g: RingGeom,
+  above: boolean,
+  from = 0,
+  to = 1,
+): string {
+  const rx = g.rx - g.band * from;
+  const ry = g.ry - g.band * 0.34 * from;
+  const rx2 = Math.max(0.5, g.rx - g.band * to);
+  const ry2 = Math.max(0.5, g.ry - g.band * 0.34 * to);
   const TAU = Math.PI * 2;
 
   // Work in the half's own frame, where it is simply [0, PI]. Angles run
@@ -169,7 +184,21 @@ export default function WorldRing(props: WorldRingProps) {
     left: `${(props.px - box()) / 2}px`,
     top: `${(props.px - box()) / 2}px`,
   });
-  const d = () => ringHalf(g(), props.front === true);
+  /** Outer slice darkest, middle darkest, inner brightest: a lit face, a gap, a lit face. */
+  const ringTone = (side: string, slice: number, p: WorldRingProps) => {
+    const lit = p.color ?? "#f2ead9";
+    const shade = p.dark ?? "#4a4034";
+    const mixAt = (t: number) => {
+      const a = hexToRgb(lit);
+      const b = hexToRgb(shade);
+      return `rgb(${Math.round(a[0] + (b[0] - a[0]) * t)},${Math.round(
+        a[1] + (b[1] - a[1]) * t,
+      )},${Math.round(a[2] + (b[2] - a[2]) * t)})`;
+    };
+    return side === "front"
+      ? [mixAt(0.72), mixAt(1), mixAt(0.18)][slice]
+      : [mixAt(0.85), mixAt(1), mixAt(0.5)][slice];
+  };
 
   return (
     <Show when={props.front === true ? "front" : "back"}>
@@ -182,18 +211,20 @@ export default function WorldRing(props: WorldRingProps) {
           style={style()}
           aria-hidden="true"
         >
-          <Show when={d()}>
-            {/* Both tones moved, and apart. A wide band in a colour close to the
-                planet's own reads as a smear across the disc rather than as an
-                object in front of it, which is the entire job the near half is
-                doing. The lit half is now pale and slightly cool, the far half much
-                darker, so the ring separates from a cream gas giant and from a blue
-                terran world alike. */}
-            <path
-              d={d()}
-              fill={side() === "front" ? (props.color ?? "#efe7d6") : props.dark ?? "#5f5342"}
-            />
-          </Show>
+          {/* Three concentric slices, not one fill. A single flat band has no
+              interior for the eye to model, so it sits on the disc like a sticker
+              rather than reading as an object in front of it — which is exactly how
+              the one-band version looked on a cream gas giant. The middle slice is
+              darkest, which is both how a ring reads (a shadowed gap between two lit
+              faces) and how it separates from a planet of any colour. */}
+          <For each={[0, 1, 2]}>
+            {i => (
+              <path
+                d={ringHalf(g(), side() === "front", i / 3, (i + 1) / 3)}
+                fill={ringTone(side(), i, props)}
+              />
+            )}
+          </For>
         </svg>
       )}
     </Show>

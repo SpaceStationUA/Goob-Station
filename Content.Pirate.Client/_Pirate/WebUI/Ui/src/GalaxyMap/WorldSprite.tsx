@@ -7,7 +7,7 @@
  */
 
 import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
-import { planetSheet, planetUri, type PlanetType } from "./lib/planet";
+import { planetSheetAsync, planetUri, type PlanetType } from "./lib/planet";
 import { reducedMotion } from "./BlackHole";
 import WorldRing from "./WorldRing";
 
@@ -71,6 +71,22 @@ export default function WorldSprite(props: WorldSpriteProps) {
     live = false;
   });
 
+  /**
+   * Frames across one turn.
+   *
+   * 96 is not a round number anyone would pick by accident: at 200px a frame costs
+   * about 32ms to generate, and 96 of them over 12 seconds is 8fps with a step of
+   * 3.75 degrees of longitude. The 28 frames this replaced were 1.9fps with a step
+   * of nearly 13 degrees, and a jump that size across a high-contrast band pattern
+   * is plainly visible — it reads as a slideshow rather than as a turning planet.
+   *
+   * This is still stepped, and it is worth being plain about why: the reference is
+   * smooth because it evaluates its noise per pixel per frame in a shader, at the
+   * browser's framerate. A baked filmstrip's smoothness is frames divided by period,
+   * and the frame count is bounded by what can be generated without stalling. Real
+   * 60fps here means evaluating the planet live — a WebGL port for the overlay only,
+   * with the baked sprite still serving the chart and the stills.
+   */
   const frames = () => Math.max(1, Math.floor(props.frames ?? 0));
 
   /**
@@ -110,16 +126,21 @@ export default function WorldSprite(props: WorldSpriteProps) {
       return;
     }
     setSheet(undefined);
-    const gen = window.setTimeout(() => {
-      const uri = planetSheet(
-        { seed: target, type, px, dpr: stripDpr(), cloudThreshold: th },
-        n,
-      ).uri;
-      // A system can be dismissed while its strip is generating.
-      if (!live) return;
-      setSheet(uri);
-    }, 0);
-    onCleanup(() => window.clearTimeout(gen));
+    // Spread across macrotasks. A 200px frame costs about 32ms on this machine, so
+    // the frame count that actually looks smooth is ~96 and that is ~3.1 seconds of
+    // pixel loop. Done in one go it is a frozen page; the still is on screen and
+    // correct the whole time, and the strip swaps in when it is ready.
+    const job = planetSheetAsync(
+      { seed: target, type, px, dpr: stripDpr(), cloudThreshold: th },
+      n,
+      (uri) => {
+        // A system can be dismissed while its strip is generating.
+        if (!live) return;
+        setSheet(uri);
+      },
+      { batch: 4 },
+    );
+    onCleanup(() => job.cancel());
   });
 
   return (

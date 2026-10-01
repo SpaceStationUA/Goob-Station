@@ -763,6 +763,60 @@ rather than how opaque it is, and it also catches a strip that is present but
 shorter than it claims — which `background-size` will happily paper over, since that
 is set from `px * frames` rather than from the image.
 
+### Smoothness is a frame budget, and the budget is the explanation
+
+The reference is smooth and this was not, and the reason is structural rather than
+tunable. Their planet is a fragment shader: the noise is evaluated per pixel per
+frame, at whatever rate the browser paints. A baked filmstrip's smoothness is
+*frames divided by period*, and the frame count is bounded by what can be generated
+without stalling the page.
+
+Measured here: a 200px frame at dpr 1 costs about **32ms** (8 frames 268ms, 24
+frames 769ms, 28 frames 911ms). The overlay ran 28 frames over 48s — **1.9fps, a
+12.8° step** — which is why it read as a slideshow. It is now 96 frames over 12s:
+**8fps, a 3.75° step**, which reads as a turning planet. The black hole is 48 over 6s,
+the same 8fps, and its renderer is cheaper.
+
+Getting to 96 frames meant the strip takes about **3.1 seconds** to build, which is
+not something to do inside a click. `planetSheetAsync` spreads the work across
+macrotasks in batches, so the page stays responsive and the still — which is drawn
+at full resolution and is correct on its own — is on screen the whole time. The
+strip swaps in when it is ready. The overlay therefore shows a still for about three
+seconds after the first visit to a system and animates immediately on every visit
+after that, since the strip is cached.
+
+**This is still stepped, and 8fps is not 60.** The honest ceiling: to be genuinely
+smooth the planet has to be evaluated per pixel per frame, which for us means a
+WebGL port of the renderer for the overlay alone — the baked sprite would still
+serve the chart and every still. That is a real piece of work and it is the only way
+to close the remaining gap, so it is a decision rather than a tweak. The check
+threshold is 200ms a frame, deliberately tightened from the 1000ms it started at:
+1000ms is what the 28-frame strip produced, and a threshold that accepts the thing
+you are complaining about is not a threshold.
+
+### The black hole is a ribbon, not a hoop
+
+Comparing side by side with the reference at full size made three things obvious.
+Theirs is a thin, hard-edged ribbon that tapers to a point at each end, with a hot
+white-yellow core falling off to deep red, over a wider dim halo. Ours was a slab of
+uniform mid-orange with soft edges and a rounded end.
+
+The band was too wide (0.115 of the outer radius, now 0.05), and the reference's
+fbm lift — `pow(n, 0.5)` — fills the band in solid. Against a narrow band that lands
+the whole ribbon in the middle of the palette. `pow(n, 0.62)` with a 1.45 dither
+multiplier, and a palette that actually reaches white, is what makes it a highlight
+rather than a tint. The alpha cut went from 0.15 to 0.2 to keep the faint outer wash
+that fills the gap between ribbon and void, which the reference has too.
+
+### A ring needs an interior
+
+One flat band has nothing for the eye to model, so it sits on the disc like a
+sticker — which is exactly how it read on a cream gas giant. Three concentric
+slices in three tones is the cheapest thing that says "layered", and the middle one
+is darkest because that is how a ring reads (a shadowed gap between two lit faces)
+and because it separates the ring from a planet of any colour. Both the overlay and
+the chart markers use the same helper, so they cannot drift apart.
+
 ## Layout
 
 | Path | What it is |
