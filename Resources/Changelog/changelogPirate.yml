@@ -6045,3 +6045,11 @@ Entries:
       message: Порт одягу! Знову...
   id: 571
   time: '2026-10-01T19:17:30.0000000+00:00'
+- author: saloplay
+  changes:
+    - type: Tweak
+      message: Змінено госта Astrally
+    - type: Tweak
+      message: Додано анімацію госту saloplay
+  id: 572
+  time: '2026-10-01T19:32:47.0000000+00:00'
