@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Pirate: NT Representative loadout ported from Starlight.
+
+# Jumpsuits
+- type: loadout
+  id: NanotrasenRepresentativeNoble
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitNtrepNoble

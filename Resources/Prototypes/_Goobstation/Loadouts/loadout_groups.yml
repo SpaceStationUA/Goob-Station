@@ -981,6 +981,7 @@
   - NanotrasenRepresentativeJumpskirt
   - NTRMJ
   - NanotrasenRepresentativeFancyJumpsuit
+  - NanotrasenRepresentativeNoble # Pirate
 
 - type: loadoutGroup
   id: NanotrasenRepresentativeBelt
@@ -1198,6 +1199,7 @@
   name: loadout-group-reporter-outerclothing
   loadouts:
   - NoPro
+  - ReporterPressVest # Pirate
 
 - type: loadoutGroup
   id: ReporterEnvirohelm

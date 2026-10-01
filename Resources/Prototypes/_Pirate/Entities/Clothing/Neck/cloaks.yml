@@ -21,3 +21,26 @@
     sprite: _Pirate/Clothing/Neck/Cloaks/solCloak.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Neck/Cloaks/solCloak.rsi
+
+# Не зміна Нюпека
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingUniformDama0965
+  name: чорний хутряний плащ
+  description: Стильний плащ з хутром на комірі та по низу.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Cloaks/shuba.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Cloaks/shuba.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCentcomBlack
+  name: Плащ Офіцера Спеціальних операцій
+  description: Вишитий золотом логотип NanoTrasen говорить сам за себе.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Cloaks/centcom_officer_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Cloaks/centcom_officer_black.rsi
