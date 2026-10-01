@@ -23,6 +23,7 @@ import { CLAIMS, ROUTES, SYSTEMS, TERRITORIES } from "../src/GalaxyMap/lib/devma
 import type { Vec2 } from "../src/GalaxyMap/lib/hex";
 import { pick, type GalaxyModel } from "../src/GalaxyMap/lib/model";
 import { readableOnDark } from "../src/GalaxyMap/Chart";
+import { ringGeomFor, ringHalf } from "../src/GalaxyMap/WorldRing";
 import {
   DEFAULT_STRINGS,
   installStrings,
@@ -686,6 +687,91 @@ console.log("\ndrag to paint:");
 
   // The fixture is an admin tool host.
   check("the fixture grants paint", source.permissions?.paint === true);
+}
+
+// ---- ring halves ----------------------------------------------------------------
+//
+// A ring half is two concentric elliptical arcs joined by two straight edges, and
+// all four of its points must lie ON one of those two ellipses. That is the whole
+// invariant, and it is checkable without a browser.
+//
+// It is worth stating what this replaces. `ringHalf` used to take a single radius
+// and apply it to both axes, so a partial arc ended at a point that was not on its
+// own ellipse. A whole half could not detect it, because at t=0 and t=PI the sine
+// is zero and rx*sin and ry*sin agree — the mistake had nothing to act on. Only the
+// halves carrying a division were wrong, which is about half of each ring, so a
+// chart with ringed worlds still read as "rings" at a glance. The screenshot looked
+// plausible and the failure was a band ballooned past its own bounds, which is not
+// a thing anyone would look for.
+{
+  /** How far a point may sit off its ellipse, in the normalised metric. */
+  const ON_ELLIPSE = 0.01;
+  const onEllipse = (x: number, y: number, rx: number, ry: number) =>
+    Math.abs((x / rx) ** 2 + (y / ry) ** 2 - 1) <= ON_ELLIPSE;
+
+  // Wide, because the shape of the bug depended on the ratio: rx=128 with ry=28
+  // is a 4.5:1 ellipse, and the endpoint error scales with rx, not with ry.
+  const geoms = [
+    { px: 200, seed: 1 },
+    { px: 200, seed: 7 },
+    { px: 16, seed: 3 },
+    { px: 40, seed: 11 },
+  ];
+  let worst = 0;
+  let worstAt = "";
+  let offEllipse = 0;
+  let arcs = 0;
+
+  for (const { px, seed } of geoms) {
+    const g = ringGeomFor(px, seed, px >= 60 ? 0.22 : undefined);
+    for (const above of [true, false]) {
+      // Sweep the band's width finely: the endpoints move with `from`, and a
+      // single width would only sample one pair of them.
+      for (let i = 0; i < 8; i++) {
+        for (let j = i + 1; j <= 8; j++) {
+          const d = ringHalf(g, above, i / 8, j / 8);
+          if (!d) continue;
+          arcs++;
+          // Four points: the outer arc's two ends and the inner arc's two ends.
+          const nums = d.match(/-?[\d.]+/g)?.map(Number) ?? [];
+          const [x1, y1, , , , , , x2, y2, x3, y3] = nums;
+          const rx = g.rx - g.band * (i / 8);
+          const ry = g.ry - g.band * 0.34 * (i / 8);
+          const rx2 = Math.max(0.5, g.rx - g.band * (j / 8));
+          const ry2 = Math.max(0.5, g.ry - g.band * 0.34 * (j / 8));
+          for (const [x, y, arx, ary] of [
+            [x1, y1, rx, ry],
+            [x2, y2, rx, ry],
+            [x3, y3, rx2, ry2],
+          ] as const) {
+            const err = Math.abs((x / arx) ** 2 + (y / ary) ** 2 - 1);
+            if (err > worst) {
+              worst = err;
+              worstAt = `${px}px seed ${seed} above=${above} [${i}/8,${j}/8] at (${x}, ${y})`;
+            }
+            if (err > ON_ELLIPSE) offEllipse++;
+          }
+        }
+      }
+    }
+  }
+  check(
+    "every ring path's points lie on one of its own two ellipses",
+    offEllipse === 0,
+    offEllipse === 0 ? `${arcs} arcs, worst ${worst.toExponential(1)}` : `${offEllipse} off, worst at ${worstAt}`,
+  );
+  check(
+    "a ring's two halves do not overlap",
+    ringHalf(ringGeomFor(200, 1, 0.22), true) !== ringHalf(ringGeomFor(200, 1, 0.22), false),
+    "the halves are distinct paths",
+  );
+  // A division that lands wholly outside a half must leave that half whole. The
+  // first version did the opposite, which removed the entire far half of every
+  // ring whose gap happened to fall on the near side.
+  const gGap = ringGeomFor(200, 5, 0.22);
+  const whole = ringHalf({ ...gGap, gapAngle: undefined }, true);
+  check("a division outside a half leaves that half whole", ringHalf(gGap, true).length > 0, "not emptied");
+  check("a whole half is a real path", whole.startsWith("M ") && whole.endsWith("Z"), whole.slice(0, 24));
 }
 
 console.log(`\n${failures === 0 ? "all checks passed" : `${failures} CHECK(S) FAILED`}\n`);

@@ -661,7 +661,14 @@ try {
           clientY: r.y + r.height / 2,
         }),
       );
-      await new Promise(res => setTimeout(res, 3500));
+      // Poll rather than sample once. The strip is now built across macrotasks —
+      // 96 frames at 200px is ~3.1s of pixel loop — so a single fixed wait can land
+      // either side of completion depending on machine speed, and "the strip never
+      // arrived" is not a thing that can be concluded from one sample.
+      for (let i = 0; i < 60; i++) {
+        if (document.querySelector(".overlay .world-turn")) break;
+        await new Promise((res) => setTimeout(res, 250));
+      }
       obs.disconnect();
       return marks;
     }, cold);
@@ -697,6 +704,68 @@ try {
         (await page.evaluate(() => document.querySelector(".overlay") === null)),
       );
     }
+
+    /**
+     * Which half of a ring is drawn in front.
+     *
+     * This is a check on the emitted geometry, not on `ringHalf`, because the
+     * defect was never in the function: `above` means the UPPER arc and the near
+     * half is the LOWER one, and the component passed `front` where it wanted
+     * `back`. A unit test of `ringHalf` on its own passes happily through that.
+     *
+     * So: measure the paths. The ring's SVGs are centred on the planet, so in the
+     * path data the near half sits at positive y (SVG y runs down) and the far
+     * half at negative y.
+     */
+    const halves = await page.evaluate(async () => {
+      const open = document.querySelector(".sys-hit[data-sys='burzsia']");
+      if (!open) return null;
+      const r = open.getBoundingClientRect();
+      document
+        .querySelector("svg.chart")
+        .dispatchEvent(
+          new MouseEvent("click", {
+            bubbles: true,
+            clientX: r.x + r.width / 2,
+            clientY: r.y + r.height / 2,
+          }),
+        );
+      for (let i = 0; i < 40 && !document.querySelector(".overlay"); i++) {
+        await new Promise((res) => setTimeout(res, 50));
+      }
+      const centreY = (sel) => {
+        const paths = [...document.querySelectorAll(sel + " path")];
+        if (!paths.length) return null;
+        // getBBox, not a regex over the path data. The data carries the arc's radii
+        // and flags in the same number stream as the coordinates — `A 128 49 0 0 1
+        // -100 12` — so a naive coordinate-pair scan averages the radii in with the
+        // points and every half comes out on the same side.
+        let lo = Infinity;
+        let hi = -Infinity;
+        for (const p of paths) {
+          const bb = p.getBBox();
+          lo = Math.min(lo, bb.y);
+          hi = Math.max(hi, bb.y + bb.height);
+        }
+        return (lo + hi) / 2;
+      };
+      const out = { back: centreY(".world-ring-back"), front: centreY(".world-ring-front") };
+      document.querySelector(".overlay-close")?.click();
+      return out;
+    });
+    check(
+      "a ring's far half is drawn above the planet and its near half below",
+      halves !== null && halves.back < 0 && halves.front > 0,
+      halves
+        ? `far ${halves.back.toFixed(1)}, near ${halves.front.toFixed(1)}`
+        : "burzsia did not open",
+    );
+    check(
+      "the two halves of a ring are on opposite sides of the planet",
+      halves !== null && halves.back < 0 && halves.front > 0 &&
+        Math.abs(halves.back) > 2 && Math.abs(halves.front) > 2,
+      halves ? `far ${halves.back.toFixed(1)}, near ${halves.front.toFixed(1)}` : "no halves",
+    );
 
     // Open space must still select the territory underneath. This is the
     // regression a marker hit target invites: widen the radius far enough and
