@@ -419,8 +419,9 @@ const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", 
 /** Bump when the noise changes, so cached sprites regenerate.
  * 4: screen-space banding and multi-field land, replacing the 3D dot product.
  * 5: craters on the airless worlds.
- * 6: the asteroid silhouette is a noise field, not a circle. */
-export const PLANET_ALGO_VERSION = 6;
+ * 6: the asteroid silhouette is a noise field, not a circle.
+ * 7: star rays sampled in polar space, replacing four angular lobes. */
+export const PLANET_ALGO_VERSION = 7;
 
 export interface PlanetOpts {
   seed: number;
@@ -476,29 +477,49 @@ export interface PlanetOpts {
 
 /* ----------------------------------------------------------------- render */
 
-/**
- * Prominence rays at seeded angles, 0..~1.
- *
- * Narrow on purpose: a wide lobe stops being a ray and becomes a smear. Shared
- * between the disc and the corona so the two agree on where the rays point —
- * they used to be computed only on the disc, which is why they looked like a
- * cross drawn on the planet rather than light coming off it.
- */
-const FLARES = 4;
 const TAU = Math.PI * 2;
 
-function flare(dx: number, dy: number, seed: number): number {
-  const ang = Math.atan2(dy, dx);
-  let fl = 0;
-  for (let k = 0; k < FLARES; k++) {
-    const a0 = hash2(seed, k, 64, 31) * TAU;
-    const da = Math.abs(((ang - a0 + Math.PI * 3) % TAU) - Math.PI);
-    fl = Math.max(
-      fl,
-      Math.pow(Math.max(0, Math.cos(da)), 40) * (0.35 + hash2(seed, k, 64, 77) * 0.5),
-    );
-  }
-  return fl;
+/** How far a prominence ray reaches, 0..1, as a fraction of the photosphere. */
+function rayReach(r: number, a: number, seed: number): number {
+  // POLAR space: radius first, angle second, with the angle compressed to 0.4.
+  //
+  // This is the whole difference between a star and four spikes. The field is
+  // sampled at (radius, angle), so its features are arcs concentric with the star
+  // rather than patches on a square; the threshold below rises with radius, so
+  // each arc is cut off further out the weaker it is. An arc cut off at a radius
+  // IS a ray. Sampling the same noise in Cartesian space — which is what the four
+  // `cos^40` lobes this replaces were, in effect — cannot produce that shape at
+  // all, and on screen it read as a hard white cross ruled across the disc.
+  // The offset is the whole tuning, and it took two attempts to reason about
+  // rather than guess.
+  //
+  // `fbm` here is NOT normalised: three octaves sum to 0.875 with a mean of
+  // 0.4375 and a standard deviation near 0.17, so after the 1.6 the field has a
+  // mean of 0.7 and a standard deviation of 0.27. Subtracting 0.15 therefore left
+  // 43% of all angles producing *some* ray, each a short one from the core
+  // cutoff out to barely past it — and half the disc went cream. Subtracting 0.4
+  // fixed the mean reach but not the spread, which is the number that matters:
+  // what decides whether a ray is visible is how far it gets, not how far it
+  // reaches on average.
+  //
+  // 0.62 puts the mean below the core cutoff, so only the top quarter of the
+  // arcs reach the limb at all, and those are the ones that read as rays.
+  const nf = fbm(r * 7 + 3.1, a * 2.2 + 7.7, 64, 3, seed + 131) * 1.6;
+  return nf - 0.62;
+}
+
+/**
+ * Prominence ray at one point, 0..1. Zero outside the ray.
+ *
+ * Solid along its length and dithered at the tip, which is what makes it read as
+ * light thinning out rather than as a shape with an edge. The original splits
+ * this into two thresholds an arbitrary distance apart for the same reason.
+ */
+function flare(r: number, a: number, seed: number, ditherV: number): number {
+  const reach = rayReach(r, a, seed);
+  if (r > reach) return 0;
+  if (r <= reach - 0.05) return 1;
+  return ditherV > 0.5 ? 0.45 : 0;
 }
 
 /** 4x4 ordered dither, -0.5..0.5. */
@@ -728,15 +749,12 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
         px[i] = atmo ? atmo[0] : 255;
         px[i + 1] = atmo ? atmo[1] : 210;
         px[i + 2] = atmo ? atmo[2] : 140;
-        // Prominence rays, drawn HERE rather than on the disc.
-        //
-        // Painting them on the photosphere was wrong in a way that looked like a
-        // rendering fault: four narrow `cos^40` spikes across a lit disc read as a
-        // hard white cross or a lens artefact, not as a star throwing off light.
-        // A flare is emission *outside* the surface, so it belongs in the only
-        // part of the sprite that is not the surface — and putting it there costs
-        // nothing, because the disc pixels no longer compute it at all.
-        px[i + 3] = Math.round(Math.min(1, g * g * g * 0.85 * (1 + flare(d, dy, seed) * 1.8)) * 255);
+        // The corona brightens where a ray leaves the limb. The ray itself is
+        // drawn on the disc, in polar space — see `rayReach` — because that is
+        // where the original draws it and where a ray is legible; out here it is
+        // only a glow, since the limb is one radius and there is no length to it.
+        const rayOut = flare(Math.sqrt(r2), Math.atan2(dy, dx) * 0.4, seed, 1);
+        px[i + 3] = Math.round(Math.min(1, g * g * g * 0.85 * (1 + rayOut * 0.55)) * 255);
         continue;
       }
       const nx = dx;
@@ -880,11 +898,47 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
         // zones read as a photosphere with a hotter core and a cooler limb, which
         // is all a star needs at this size.
         const tt = 1 - r2;
-        if (tt > 0.62) col = mixRgb(col, sea[3], 0.72);
-        else if (tt > 0.28) col = mixRgb(col, sea[3], 0.3);
+        //
+        // Only the core. There was a second, wider zone here that warmed the
+        // inner 71% of the disc toward the top palette entry, and it was the
+        // reason the star read as a pale cream ball with orange veins: the
+        // granulation's own light bands were already close to that entry, so
+        // lightening them took the contrast out of the surface entirely. The
+        // granulation is the texture; nothing else gets to wash it.
+        // Small, and DITHERED at the edge. At 0.72 this was a hard-edged white
+        // disc covering more than half the radius, which reads as a white circle
+        // pasted onto an orange ball rather than as a photosphere — the one
+        // boundary in this file that was not dithered, and the only one a viewer
+        // would have described as a bug.
+        if (tt > 0.88) col = mixRgb(col, sea[3], 0.5);
+        else if (tt > 0.8 && ditherV > 0.5) col = mixRgb(col, sea[3], 0.25);
         else col = mixRgb(sea[0], col, 0.45);
 
         outRgb = col;
+
+        /**
+         * Prominence rays, over the photosphere.
+         *
+         * Sampled in polar space and thresholded against a radius-rising bound,
+         * which turns concentric arcs into rays. This is the second attempt: the
+         * first used four `cos^40` lobes at seeded angles, and those are four
+         * symmetric spikes that render as a hard white cross ruled across the
+         * disc — which is what a lens artefact looks like, not a star. Four is
+         * also simply the wrong number; a star's limb is crowded.
+         *
+         * Nothing is drawn inside the inner fifth, matching the original's
+         * `step(n2 * 0.25, d)`: rays are something the limb does, and carrying
+         * them into the core turns the whole disc into a starburst.
+         */
+        //
+        // From 0.3 of the radius outward, not 0.2: rays belong to the limb, and
+        // carrying them further in is what turns a granulated photosphere into a
+        // starburst. The colour is the star's own hot tone rather than white, so
+        // a ray brightens the surface instead of erasing it.
+        if (r2 > 0.2) {
+          const ray = flare(Math.sqrt(r2), Math.atan2(ny, nx) * 0.4, seed, ditherV);
+          if (ray > 0) outRgb = mixRgb(outRgb, [255, 233, 186], ray * 0.45);
+        }
       } else {
         /**
          * Distance to the light point, in disc-UV.

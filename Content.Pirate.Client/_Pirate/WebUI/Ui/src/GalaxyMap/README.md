@@ -346,6 +346,41 @@ a crater also produces dark patches, so it cannot distinguish a lumpy outline fr
 a smooth one with holes in it. `terran` is the control — same renderer, same
 lighting, same dither, and a spread of 0.000.
 
+### Star rays are sampled in polar space
+
+The reference builds its prominences by sampling noise at `(radius, angle)` and
+thresholding it against a bound that **rises with radius**. An arc cut off at a
+radius is a ray. That shape cannot be produced by sampling noise in Cartesian
+space, which is what the previous four `cos^40` lobes were in effect — and on
+screen they rendered as a hard white cross ruled across the disc, which reads as a
+lens artefact rather than as a star. Four is also simply the wrong number; a
+star's limb is crowded.
+
+Getting the coverage right needed arithmetic rather than taste, and it is worth
+recording because two attempts of eyeballing it were wrong in opposite
+directions. `fbm` here is **not normalised**: three octaves sum to 0.875 with mean
+0.4375 and standard deviation near 0.17, so after the 1.6 multiplier the field has
+mean 0.7 and standard deviation 0.27. Subtracting 0.15 therefore left **43% of all
+angles** producing some ray, each a short one, and half the disc went cream.
+Subtracting 0.4 fixed the mean reach and not the spread — and the spread is the
+number that decides whether a ray is visible, not the mean.
+
+Two unrelated things were also washing the star out, and both were found by
+looking rather than by reasoning:
+
+- A second, wider "warm" zone lightened the inner 71% of the disc toward the top
+  palette entry. The granulation's own light bands were already close to that
+  entry, so it took the contrast out of the surface.
+- The hot core was a **hard-edged white disc at 53% of the radius** — the only
+  boundary in the file that was not dithered, and the only one anyone would have
+  called a bug. It is now small and dithered at the edge.
+
+No assertion was added for the rays. Their extent is a taste parameter, and the
+one measurement I could construct — the radius at which near-white pixels stop,
+which a dithered edge should make vary — cannot tell a dithered core from a hard
+one, because the granulation scatters near-white pixels either way. A check that
+cannot fail is worse than none.
+
 ## Layout
 
 | Path | What it is |
