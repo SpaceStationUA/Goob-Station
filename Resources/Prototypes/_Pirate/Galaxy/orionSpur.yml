@@ -1,0 +1,110 @@
+# Territory claims for the Orion Spur chart.
+#
+# THIS FILE IS THE INTENT. It says where each nation drew its border; it does not
+# say which hex cells that amounts to. The bake (`npm run bake` in
+# Content.Pirate.Client/_Pirate/WebUI/Ui) turns these loose polygons into a
+# committed cell list, and the game reads the cell list.
+#
+# The split is deliberate. A hand-drawn polygon is the only thing a lore editor
+# can reasonably author, and a border that follows a hex lattice is the only
+# thing the game can store, reason about, and hand to a player. Asking for the
+# second in the first's place means asking someone to draw 40 points per nation
+# and getting it subtly wrong in a way nobody notices until two nations overlap.
+#
+# Coordinates are light-years, in the same frame as `extent` below: origin at the
+# centre of the chart, +x right, +y DOWN (screen coordinates, not maths ones).
+#
+# Claims are expected to OVERLAP. Two nations sharing a border means two outlines
+# drawn a fraction of a light-year apart, and requiring them not to overlap fails:
+# a single unclaimed cell centre in the gap severs the shared border along its
+# whole length. The bake resolves overlaps by depth -- the cell goes to whichever
+# polygon it sits deepest inside -- and marks the cell contested, because "the
+# rule settled this" and "both sides agreed on this" are different facts and the
+# chart can say so.
+
+- type: galaxy
+  id: orionSpur
+  # The chart frame. The hex lattice is derived from this, so changing it moves
+  # every border: re-bake.
+  extent:
+    width: 132
+    height: 74
+  # Centre-to-corner radius of one cell, in light-years. Also re-bakes.
+  hexSize: 2.0
+  # Owner given to every cell no claim covered. Not an error; that is unclaimed
+  # space, and it is drawn as such.
+  unclaimedId: unclaimed
+
+- type: galaxyClaim
+  id: solarianClaim
+  territory: solarian
+  polygon:
+    - [-11, 9]
+    - [-5.5, 18]
+    - [4, 19.5]
+    - [11, 12.5]
+    - [9.5, 4]
+    - [2, -0.5]
+    - [-9, 2]
+
+# Overlaps Solarian along its north-west edge, so the two share a border and the
+# contested band between them exercises the depth rule.
+- type: galaxyClaim
+  id: bieselClaim
+  territory: biesel
+  polygon:
+    - [10.2, 5.2]
+    - [15, 4]
+    - [24, 0.5]
+    - [28, -9]
+    - [20.5, -15.5]
+    - [11, -14]
+    - [3.2, 0.8]
+
+- type: galaxyClaim
+  id: nralakkClaim
+  territory: nralakk
+  polygon:
+    - [-58, 3.5]
+    - [-42.5, 22]
+    - [-25, 24.5]
+    - [-17, 11]
+    - [-22.5, -5.5]
+    - [-37, -17]
+    - [-53.5, -10]
+
+- type: galaxyClaim
+  id: eridianClaim
+  territory: eridian
+  polygon:
+    - [20, 26.5]
+    - [39, 30]
+    - [55, 18.5]
+    - [53, 4.5]
+    - [39, -1]
+    - [26, 6]
+    - [18.5, 16]
+
+# Reaches up into Biesel's southern edge.
+- type: galaxyClaim
+  id: adhomaiClaim
+  territory: adhomai
+  polygon:
+    - [-17, -32.5]
+    - [2, -28]
+    - [13.4, -20]
+    - [11.4, -12.6]
+    - [-2, -15.5]
+    - [-16, -21.5]
+
+# Reaches up into Biesel's south-east corner.
+- type: galaxyClaim
+  id: izweskiClaim
+  territory: izweski
+  polygon:
+    - [25.4, -10]
+    - [43, -16]
+    - [52, -26]
+    - [43, -34]
+    - [28, -31]
+    - [19.4, -14.4]

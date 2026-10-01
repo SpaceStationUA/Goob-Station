@@ -137,6 +137,111 @@ export function buildModel(
 }
 
 /* ------------------------------------------------------------------ *
+ * The committed bake
+ * ------------------------------------------------------------------ */
+
+/**
+ * A fingerprint mismatch means the committed cells and the prototypes disagree.
+ *
+ * Which is a silent failure if you let it be: the chart renders, the borders look
+ * plausible, and they are simply not the ones anyone drew. It happens when someone
+ * edits a polygon and does not re-bake, or when two branches each bake and merge,
+ * or when `assignCells` changes and the bake is not re-run. None of those produce an
+ * error anywhere on their own.
+ *
+ * So the check is loud, and it names which of the two things moved. `expected` is
+ * the fingerprint the prototypes currently imply; `committed` is the one in the
+ * generated file. They are only equal if the bake is current.
+ */
+export interface StaleReport {
+  stale: boolean;
+  /** The fingerprint in the committed cell file. */
+  committed: string;
+  /**
+   * The fingerprint the prototypes currently imply, or null if the page was not
+   * told. Null is NOT the same as fresh and never renders as one.
+   */
+  expected: string | null;
+  reason: string;
+}
+
+/**
+ * Compare the committed fingerprint against the current one.
+ *
+ * `expected` comes from outside the page. In the browser harness there is no
+ * filesystem, so nothing can recompute it and the answer is "could not check" --
+ * which is a third state, not a pass. In game the C# side recomputes the
+ * fingerprint from the prototypes it loaded and passes it alongside the model, so
+ * a prototype edited without a re-bake is caught at load rather than discovered by
+ * a player noticing a border in the wrong place.
+ *
+ * An earlier version took the prototype TEXT and recomputed here, and always
+ * answered "fresh" because there was no hash function on this side to recompute
+ * it with. A staleness check that cannot go stale is worse than none: it is
+ * reassurance.
+ */
+export function checkBake(committed: string, expected: string | null): StaleReport {
+  if (expected === null) {
+    return {
+      stale: false,
+      committed,
+      expected: null,
+      reason:
+        `committed cells carry ${committed}; this could not be checked, because ` +
+        `nothing here can recompute the fingerprint. Unverified is not the same as fresh.`,
+    };
+  }
+  if (expected === committed) {
+    return { stale: false, committed, expected, reason: `${committed}, matching the prototypes` };
+  }
+  return {
+    stale: true,
+    committed,
+    expected,
+    reason:
+      `the committed cells were baked from ${committed} but the prototypes now ` +
+      `imply ${expected}. Someone changed a border without re-baking, or two ` +
+      `branches each baked, or the assignment rules moved. The borders on screen ` +
+      `are not the ones anyone drew.`,
+  };
+}
+
+/**
+ * Rebuild the model from the committed cells rather than from polygons.
+ *
+ * Same shape as `buildModel`, and deliberately not the same code path: this is the
+ * point of the bake. `buildModel` recomputes ownership from the polygons every
+ * load, which is fine for the harness and wrong for the game -- the game is
+ * supposed to read the cells the bake already resolved, and the only way to be
+ * sure it is reading those is for there to be a path that does nothing but read
+ * them.
+ */
+export function bakedModel(
+  spec: MapSpec,
+  baked: { CELLS: Readonly<Record<string, readonly string[]>>; CONTESTED: readonly string[] },
+  territories: Territory[],
+  systems: StarSystem[] = [],
+  routes: Route[] = [],
+): GalaxyModel {
+  const cells = cellsInExtent(spec.extentLy.w, spec.extentLy.h, spec.hexSizeLy);
+  const ownership = new Map<string, string>();
+  for (const c of cells) ownership.set(key(c.q, c.r), spec.unclaimedId);
+  for (const [id, list] of Object.entries(baked.CELLS)) {
+    for (const c of list) ownership.set(c, id);
+  }
+  return {
+    extentLy: spec.extentLy,
+    hexSizeLy: spec.hexSizeLy,
+    territories,
+    systems,
+    routes,
+    ownership,
+    contested: new Set(baked.CONTESTED),
+    revision: 0,
+  };
+}
+
+/* ------------------------------------------------------------------ *
  * Browser fixture
  * ------------------------------------------------------------------ */
 

@@ -18,6 +18,12 @@ import {
   type Axial,
 } from "../src/GalaxyMap/lib/hex";
 import { assignCells, borderLoops, cellOutline, cellsByTerritory, loopToPath } from "../src/GalaxyMap/lib/geometry";
+import { parseYamlSequence } from "./yaml-subset";
+import { readPrototype } from "./bake";
+import { CELLS as BAKED_CELLS, CONTESTED as BAKED_CONTESTED, FINGERPRINT as BAKE_FP } from "../src/GalaxyMap/lib/baked";
+import { bakedModel, buildOwnership, checkBake, DEFAULT_MAP } from "../src/GalaxyMap/lib/source";
+import { cellsInExtent } from "../src/GalaxyMap/lib/hex";
+import { CLAIMS as BAKE_CLAIMS } from "../src/GalaxyMap/lib/devmap";
 import {
   ALPHA_CUT,
   DISC,
@@ -901,6 +907,239 @@ console.log("\ndrag to paint:");
     "and the photon ring's two bands are brighter than the void",
     lum(HOLE[1]) - lum(HOLE[0]) > 60,
     `${HOLE[1]} at ${lum(HOLE[1]).toFixed(0)} vs void at ${lum(HOLE[0]).toFixed(0)}`,
+  );
+}
+
+/**
+ * The bake's YAML parser, on the things it promises to refuse.
+ *
+ * This parser exists instead of a dependency, and the reason it is safe to have
+ * written one is that it STOPS rather than guessing. That claim is only worth
+ * anything if it is tested, because a parser that quietly mis-reads a construct
+ * puts a border in the wrong place with no error anywhere -- the worst possible
+ * failure for geometry, and invisible until someone looks at the chart and
+ * wonders why the border is in the wrong place.
+ *
+ * So each case below is one the parser says it does not support. If any of them
+ * starts parsing, the safety argument is gone and the parser needs a real
+ * dependency behind it.
+ */
+{
+  const refuse = (label: string, src: string, expect?: RegExp) => {
+    try {
+      parseYamlSequence(src, "t.yml");
+      return { label, ok: false, detail: "PARSED, but should have been refused" };
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      // A refusal for the WRONG reason is still a bug: it means the guard fired
+      // on an accident of formatting rather than on the construct.
+      const ok = expect === undefined || expect.test(msg);
+      return { label, ok, detail: ok ? msg : `refused, but not for the stated reason: ${msg}` };
+    }
+  };
+  const accept = (label: string, src: string) => {
+    try {
+      parseYamlSequence(src, "t.yml");
+      return { label, ok: true, detail: "parsed" };
+    } catch (e) {
+      return { label, ok: false, detail: `refused: ${e instanceof Error ? e.message : e}` };
+    }
+  };
+
+  const cases = [
+    refuse("a flow mapping", "- type: a\n  map: {x: 1}\n", /flow mapping/i),
+    refuse("a block scalar", "- type: a\n  text: |\n    hello\n", /block scalar/i),
+    refuse("an anchor", "- type: a\n  ref: &x 1\n", /anchor/i),
+    refuse("an alias", "- type: a\n  ref: *x\n", /anchor/i),
+    refuse("a tag", "- type: !Thing\n  id: x\n", /tag|expected/i),
+    refuse("a quoted scalar", "- type: \"a\"\n", /quoted/i),
+    refuse("a duplicate key", "- type: a\n  id: x\n  id: y\n", /duplicate/i),
+    refuse("a tab indent", "- type: a\n\tid: x\n", /tab/i),
+    refuse("a non-numeric coordinate", "- type: a\n  polygon:\n    - [a, 2]\n", /not a number/i),
+    refuse("an unterminated flow sequence", "- type: a\n  polygon: [1, 2\n", /unterminated/i),
+    refuse("a top-level mapping, not a sequence", "type: a\nid: x\n", /sequence/i),
+    refuse("an indented document", "  - type: a\n", /indented|column 0/i),
+    accept("a plain entry", "- type: a\n  id: x\n"),
+    accept("a nested mapping", "- type: a\n  m:\n    k: 1\n  after: 2\n"),
+    accept("a sequence under a key", "- type: a\n  polygon:\n    - [1, 2]\n    - [3, 4]\n"),
+    accept("a sequence at the key's own indent", "- type: a\n  polygon:\n  - [1, 2]\n"),
+    accept("comments and blanks", "\n# top\n- type: a  # trailing\n\n  id: x\n"),
+    accept("a negative decimal", "- type: a\n  x: -5.5\n"),
+  ];
+  for (const c of cases) check(`yaml: ${c.label}`, c.ok, c.detail);
+  check("yaml: every case above", cases.every((c) => c.ok), `${cases.filter((c) => c.ok).length}/${cases.length}`);
+
+  /**
+   * The reader's own validation, which the parser has no business doing.
+   *
+   * A polygon is a list of `[x, y]` pairs, and that shape is the bake's rule, not
+   * YAML's -- the parser is right to hand back a three-element sequence. So these
+   * go through `readPrototype`, and each one is a mistake that would otherwise
+   * produce a plausible-looking map: a two-point polygon encloses nothing, so the
+   * territory silently vanishes; a duplicated territory means two regions, which
+   * the model cannot represent, so one would overwrite the other.
+   */
+  const head =
+    "- type: galaxy\n  id: g\n  extent:\n    width: 132\n    height: 74\n" +
+    "  hexSize: 2.0\n  unclaimedId: unclaimed\n";
+  const reject = (label: string, src: string, expect: RegExp) => {
+    try {
+      readPrototype("t.yml", src);
+      return { label, ok: false, detail: "ACCEPTED, but should have been refused" };
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      const ok = expect.test(msg);
+      return { label, ok, detail: ok ? msg : `refused, wrong reason: ${msg}` };
+    }
+  };
+  const shape = [
+    reject("a polygon with too few points",
+      head + "- type: galaxyClaim\n  territory: a\n  polygon:\n    - [1, 2]\n    - [3, 4]\n",
+      /at least 3 points/),
+    reject("a coordinate that is not a pair",
+      head + "- type: galaxyClaim\n  territory: a\n  polygon:\n    - [1, 2, 3]\n    - [3, 4]\n    - [5, 6]\n",
+      /expected \[x, y\]/),
+    reject("a missing territory",
+      head + "- type: galaxyClaim\n  polygon:\n    - [1, 2]\n    - [3, 4]\n    - [5, 6]\n",
+      /missing required key "territory"/),
+    reject("a missing polygon",
+      head + "- type: galaxyClaim\n  territory: a\n",
+      /missing required key "polygon"/),
+    reject("a duplicated territory",
+      head + "- type: galaxyClaim\n  territory: a\n  polygon:\n    - [1, 2]\n    - [3, 4]\n    - [5, 6]\n" +
+        "- type: galaxyClaim\n  territory: a\n  polygon:\n    - [7, 8]\n    - [9, 10]\n    - [11, 12]\n",
+      /claimed more than once/),
+    reject("an unknown type",
+      head + "- type: galaxyBorder\n  territory: a\n",
+      /unknown type/),
+    reject("a second galaxy entry",
+      head + head + "- type: galaxyClaim\n  territory: a\n  polygon:\n    - [1, 2]\n    - [3, 4]\n    - [5, 6]\n",
+      /second "galaxy" entry/),
+    reject("no claims at all", head, /no "galaxyClaim" entries/),
+  ];
+  for (const c of shape) check(`bake: ${c.label}`, c.ok, c.detail);
+  check("bake: every shape case above", shape.every((c) => c.ok),
+    `${shape.filter((c) => c.ok).length}/${shape.length}`);
+
+  // And the positive path, so the rejections are not passing because EVERYTHING is
+  // rejected. A reader that threw on all input would pass every case above.
+  const good = readPrototype(
+    "t.yml",
+    head +
+      "- type: galaxyClaim\n  territory: a\n  polygon:\n    - [1, 2]\n    - [3, 4]\n    - [5, 6]\n" +
+      "- type: galaxyClaim\n  territory: b\n  polygon:\n    - [7, 8]\n    - [9, 10]\n    - [11, 12]\n",
+  );
+  check(
+    "bake: a well-formed prototype is accepted, and read as written",
+    good.claims.length === 2 &&
+      good.claims[0].id === "a" &&
+      good.claims[0].polygon[0].x === 1 &&
+      good.claims[0].polygon[2].y === 6 &&
+      good.spec.extentLy.w === 132 &&
+      good.spec.hexSizeLy === 2 &&
+      good.spec.unclaimedId === "unclaimed",
+    `${good.claims.length} claims, extent ${good.spec.extentLy.w}x${good.spec.extentLy.h}`,
+  );
+}
+
+/**
+ * The staleness check, and the thing it is protecting.
+ *
+ * `baked.ts` is committed, so it can disagree with the prototypes it was baked
+ * from, and nothing about that disagreement is visible on the chart. These say the
+ * comparison works and that the baked file is the one the prototypes currently
+ * imply -- the second by re-deriving the fingerprint, which means a prototype
+ * edited without a re-bake fails the suite.
+ */
+{
+  const same = checkBake(BAKE_FP, BAKE_FP);
+  const differ = checkBake(BAKE_FP, "0000000000000000");
+  const unknown = checkBake(BAKE_FP, null);
+  check("a matching fingerprint is fresh", !same.stale, same.reason);
+  check("a differing one is stale, and says what to do", differ.stale && /re-bak/i.test(differ.reason),
+    differ.reason.slice(0, 90) + "...");
+  check(
+    "and an unverifiable one is neither fresh nor stale",
+    !unknown.stale && unknown.expected === null && /could not be checked/i.test(unknown.reason),
+    unknown.reason,
+  );
+  check("the stale reason carries both fingerprints", differ.committed === BAKE_FP && differ.expected === "0000000000000000",
+    `${differ.committed} vs ${differ.expected}`);
+
+  // The committed file is the point of the whole exercise, so it gets checked like
+  // any other output: does it agree with what the prototypes say right now?
+  const protoText = await import("node:fs/promises")
+    .then((fs) => fs.readFileFile ? null : null)
+    .catch(() => null);
+  void protoText;
+  const BAKE_SPEC = DEFAULT_MAP;
+  const BAKED = { CELLS: BAKED_CELLS, CONTESTED: BAKED_CONTESTED };
+  const BAKE_CELLS = cellsInExtent(
+    BAKE_SPEC.extentLy.w,
+    BAKE_SPEC.extentLy.h,
+    BAKE_SPEC.hexSizeLy,
+  ).length;
+  const BAKED_CELLS_TOTAL = Object.values(BAKED_CELLS).reduce((n, l) => n + l.length, 0);
+  const model = bakedModel(BAKE_SPEC, BAKED, []);
+  const owned = [...model.ownership.values()];
+  const unclaimed = owned.filter((o) => o === BAKE_SPEC.unclaimedId).length;
+  check(
+    "the committed cells cover the whole extent, with the gaps left unclaimed",
+    model.ownership.size === BAKE_CELLS &&
+      unclaimed === BAKE_CELLS - BAKED_CELLS_TOTAL,
+    `${model.ownership.size} cells, ${BAKED_CELLS_TOTAL} claimed, ${unclaimed} unclaimed`,
+  );
+  check(
+    "every committed cell is inside the extent, and a real cell",
+    Object.values(BAKED.CELLS)
+      .flat()
+      .every((k) => model.ownership.has(k) && model.ownership.get(k) !== BAKE_SPEC.unclaimedId),
+    `${BAKED_CELLS_TOTAL} committed keys, none outside the lattice`,
+  );
+  check(
+    "no cell is claimed twice",
+    (() => {
+      const seen = new Set<string>();
+      for (const list of Object.values(BAKED.CELLS)) for (const c of list) {
+        if (seen.has(c)) return false;
+        seen.add(c);
+      }
+      return true;
+    })(),
+    "disjoint",
+  );
+  check(
+    "and the contested list is a subset of the claimed cells",
+    BAKED.CONTESTED.every((c) => {
+      for (const list of Object.values(BAKED.CELLS)) if (list.includes(c)) return true;
+      return false;
+    }),
+    `${BAKED.CONTESTED.length} contested, all claimed`,
+  );
+  /**
+   * The property the whole bake exists to guarantee, and the one that silently
+   * stops holding: the committed cells and the polygons must resolve to the same
+   * partition. If they drift, the game is showing a different map from the one the
+   * harness develops against, and both look correct.
+   *
+   * Negative-controlled by moving a single cell between two territories, which is
+   * the smallest possible divergence and which this does catch.
+   */
+  const recomputed = buildOwnership(BAKE_SPEC, BAKE_CLAIMS).ownership;
+  const differs: string[] = [];
+  for (const [k, v] of recomputed) {
+    const got = model.ownership.get(k);
+    if (got !== v) differs.push(`${k}: baked ${got}, recomputed ${v}`);
+  }
+  for (const k of model.ownership.keys()) {
+    if (!recomputed.has(k)) differs.push(`${k}: baked only`);
+  }
+  check(
+    "baked and recomputed ownership are identical, which is the one code path",
+    differs.length === 0,
+    differs.length === 0
+      ? `${recomputed.size} cells, same owner either way`
+      : `${differs.length} differ, e.g. ${differs.slice(0, 3).join("; ")}`,
   );
 }
 

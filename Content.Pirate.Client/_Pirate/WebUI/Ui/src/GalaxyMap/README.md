@@ -38,6 +38,62 @@ still reads every name, every border and every dispute flag. The DOM check flips
 the permission and asserts the tools disappear while the map survives — and that
 a click still selects, so read-only does not degrade into inert.
 
+## The bake
+
+`Resources/Prototypes/_Pirate/Galaxy/orionSpur.yml` is the **intent**: hand-drawn
+polygons, in light-years, one per nation. `lib/baked.ts` is the **result**: a
+committed cell list. Nothing at runtime ever reads a polygon.
+
+That split is the whole design. A polygon is the only thing a lore editor can
+reasonably author, and a cell list is the only thing the game can store, reason
+about, hand to a player, and paint over one cell at a time in-round. Asking for
+the second in the first's place means asking someone to draw 40 points per nation
+and getting it subtly wrong in a way nobody notices until two nations overlap.
+
+```
+npm run bake          # write lib/baked.ts
+npm run bake:check    # fail if it is stale; runs as part of `npm run check`
+```
+
+**One code path.** The bake calls the same `buildOwnership` the browser harness
+renders from, so the committed cells and the harness's map cannot be produced by
+two different rules. `check-galaxy.ts` asserts it, cell by cell, and
+negative-controls that assertion by moving a single cell between two territories.
+
+**The fingerprint** covers the prototype text, the map spec, and
+`ASSIGNMENT_VERSION`. It exists because the failure it catches is otherwise
+silent: someone edits a border, does not re-bake, and the game ships a map that is
+plausible and wrong. `checkBake(committed, expected)` is the runtime half — the C#
+side recomputes `expected` from the prototypes it loaded and passes it with the
+model, so a stale bake is caught at load. It reports three states, not two:
+fresh, stale, and **unverifiable**. Unverifiable is not fresh, and it never
+renders as one; the browser harness sits in that state because it has no
+filesystem to recompute from.
+
+**Bumping `ASSIGNMENT_VERSION` invalidates every bake on purpose.** If the rules
+in `assignCells` move, every cell in the map may move, and that belongs in the diff
+rather than in a bug report.
+
+### The YAML parser
+
+There isn't a dependency for it. `tools/yaml-subset.ts` reads the subset the
+prototype uses and **refuses everything else by name and line** — flow mappings,
+block scalars, anchors, tags, quoted strings, duplicate keys, tabs.
+
+Refusing is the design, not a limitation to apologise for. A permissive parser
+that mis-reads a construct puts a border in the wrong place with no error
+anywhere, which is the worst failure mode geometry has. A parser that stops and
+tells you which line it choked on is one you can hand a prototype. Nineteen cases
+pin that behaviour; a tab is refused because a tab is one column of indent to one
+reader and eight to another, so the same file parses to a different shape
+depending on who is counting.
+
+Two off-by-ones in it are worth recording because both were invisible: `parseSeq`
+and `parseMap` each consumed the cursor's line *before* their loop, so every
+sequence failed on its first item and every mapping silently lost its first key.
+The second one is the dangerous shape — a map missing `width` reads as a
+misconfigured map, not as a broken parser.
+
 ## Generated worlds
 
 `lib/planet.ts` generates pixel planets in the page. Ported from Deep-Fold's
