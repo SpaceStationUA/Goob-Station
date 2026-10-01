@@ -729,6 +729,40 @@ The check for this decodes the strip and compares frame 0 with frame 1. The DOM 
 only report that an animation is *scheduled*; it cannot report that the result looks
 like motion, and on this bug every DOM-level signal was green.
 
+### No world in this project ever turned, and every check passed
+
+`<Show>` in Solid hands its child an **accessor** unless you write `keyed`. The
+overlay's sprite host did not:
+
+```tsx
+<Show when={sheet()}>
+  {uri => <div class="world-turn" style={{ "background-image": `url(${uri})` }} />}
+</Show>
+```
+
+so `uri` was a function, the inline style was `url(() => uri)`, and that is not a
+background image at all — `background-image` computes to `none`. The element
+rendered, the animation ran, `background-position` advanced, `background-size` was
+correct, `playState` was `running`, and the strip was **invisible**. What the viewer
+saw was the still sprite behind it: a planet that never moved.
+
+The black hole worked because its component was written with `keyed`. Same CSS, same
+period, same everything else — one missing word.
+
+Every check written for this passed for the entire time it was broken, and that is
+the part worth keeping. They asked whether generation was **deferred** and whether
+the loop **closed** — both properties of the strip, and the strip was being built
+perfectly. Nothing asked whether it was **visible**, and the one check that did look
+at visibility asserted `opacity > 0.9`, which a fully transparent element passes
+just as readily as a correctly opaque one. An element with no background image and
+an element showing a planet are, to that assertion, the same element.
+
+So the visibility check now decodes the strip's own `background-image` and compares
+its intrinsic width against `size * frames`. It answers what is *in* the element
+rather than how opaque it is, and it also catches a strip that is present but
+shorter than it claims — which `background-size` will happily paper over, since that
+is set from `px * frames` rather than from the image.
+
 ## Layout
 
 | Path | What it is |

@@ -134,7 +134,9 @@ export function ringGeomFor(size: number, seed: number, tilt?: number): RingGeom
     // axis of under two pixels, and the band has to fit inside that or the whole
     // ring collapses to a line the sprite's own dither eats.
     ry: rx * (tilt ?? (size >= 60 ? 0.24 : 0.34)),
-    band: rx * (size >= 60 ? 0.19 : 0.26),
+    // Narrower than it was, for the same reason the colours moved: a wide band in a
+    // tone close to the planet's own does not read as a separate object at all.
+    band: rx * (size >= 60 ? 0.15 : 0.24),
     // One of four quadrants, so a chart with several ringed systems does not
     // show the same gap on all of them.
     gapAngle: [-2.5, -0.9, 0.9, 2.5][(seed >>> 0) % 4] + ((((seed >>> 3) % 100) / 100) - 0.5) * 0.7,
@@ -181,7 +183,16 @@ export default function WorldRing(props: WorldRingProps) {
           aria-hidden="true"
         >
           <Show when={d()}>
-            <path d={d()} fill={side() === "front" ? (props.color ?? "#d9c39a") : props.dark ?? "#8a7358"} />
+            {/* Both tones moved, and apart. A wide band in a colour close to the
+                planet's own reads as a smear across the disc rather than as an
+                object in front of it, which is the entire job the near half is
+                doing. The lit half is now pale and slightly cool, the far half much
+                darker, so the ring separates from a cream gas giant and from a blue
+                terran world alike. */}
+            <path
+              d={d()}
+              fill={side() === "front" ? (props.color ?? "#efe7d6") : props.dark ?? "#5f5342"}
+            />
           </Show>
         </svg>
       )}

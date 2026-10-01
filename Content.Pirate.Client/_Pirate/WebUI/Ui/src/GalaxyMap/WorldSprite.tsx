@@ -140,7 +140,20 @@ export default function WorldSprite(props: WorldSpriteProps) {
           <img class="world-still" src={uri} alt={props.title ?? ""} />
         )}
       </Show>
-      <Show when={sheet()}>
+      {/* `keyed` is load-bearing, and its absence was why no world ever turned.
+          Without it Solid hands the child an ACCESSOR, not the value, so `uri` was a
+          function and the inline style became `url(() => uri)` — which is not a
+          background image at all. The element rendered, the animation ran,
+          `background-position` advanced, `background-size` was correct, `playState`
+          was `running`, and the strip was transparent. Every signal said rotation was
+          working, because rotation WAS working: on nothing. The static sprite behind
+          it is what the viewer saw.
+
+          Worth noting that the checks written for this all passed for the entire time
+          it was broken, because they asked whether generation was deferred and
+          whether the loop closed — both of which are properties of the strip, and the
+          strip was being built perfectly. Nothing asked whether it was visible. */}
+      <Show when={sheet()} keyed>
         {uri => (
           <div
             class="world-turn"

@@ -1022,7 +1022,7 @@ export default function Chart(props: ChartProps) {
                             data-saturn={n.system.id}
                             d={ringHalf(ringGeomFor(sp().size, seedFromId(n.system.id)), true)}
                             transform={`translate(${n.P.x} ${n.P.y})`}
-                            fill="#6f5c46"
+                            fill="#514639"
                           />
                         </Show>
                         <Show
@@ -1064,7 +1064,7 @@ export default function Chart(props: ChartProps) {
                             data-saturn={n.system.id}
                             d={ringHalf(ringGeomFor(sp().size, seedFromId(n.system.id)), false)}
                             transform={`translate(${n.P.x} ${n.P.y})`}
-                            fill="#cbb28c"
+                            fill="#e6dcc6"
                           />
                         </Show>
                       </>

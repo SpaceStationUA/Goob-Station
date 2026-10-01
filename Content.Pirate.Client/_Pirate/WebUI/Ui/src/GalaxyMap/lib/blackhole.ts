@@ -41,7 +41,7 @@
 import { BAYER4, TAU, fbm, fract, hexToRgb, smoothstep, type RGB } from "./paint";
 
 /** Bump when the noise changes, so cached sprites regenerate. */
-export const BLACKHOLE_ALGO_VERSION = 1;
+export const BLACKHOLE_ALGO_VERSION = 2;
 
 export interface BlackHoleOpts {
   seed: number;
@@ -97,10 +97,18 @@ function prep(o: BlackHoleOpts, d: number): Frame {
     discR: d * 0.5,
     hole: HOLE.map(hexToRgb),
     disc: DISC.map(hexToRgb),
-    // A shallow, seeded tip. The reference exposes this as a uniform and sets it to
-    // `rotation + 0.7`; seeding it means a chart with two of these does not show
-    // two identically-posed discs.
-    tilt: (fract(o.seed * 0.6180339887) - 0.5) * 1.9,
+    /**
+     * A seeded tip, and never a flat one.
+     *
+     * The warp is applied in the rotated frame, so the rotation decides which parts
+     * of the sprite get displaced — it is not a cosmetic angle. At a tilt near zero
+     * the displacement is symmetric about the sprite's horizontal midline, and the
+     * result is a straight bar lying across the middle with a matching crescent above
+     * and below it: a diagram of a black hole rather than one. Seeding it in
+     * `0.4..1.1` radians either way keeps every disc visibly tipped.
+     */
+    tilt: (fract(o.seed * 0.6180339887) < 0.5 ? -1 : 1) *
+      (0.4 + fract(o.seed * 0.2718281) * 0.7),
     /**
      * Cells across the disc. The reference uses `size = 50` on a 300px canvas;
      * 5 here gave about five cells over the whole structure, so the band came out
@@ -156,7 +164,10 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
         const uy0 = ry;
 
         let wy = uy0;
-        let dWidth = 0.115;
+        // Narrow. At 0.115 the disc was a slab of constant width lying across the
+        // sprite, which is the other half of the diagram look: the reference's band
+        // is a bright arc with material thinning away from it, not a bar.
+        let dWidth = 0.062;
         let lightY = 0.5;
         const b = bump(dC, 0.5);
         if (uy0 < 0.46) {
@@ -194,7 +205,11 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
           const tcx = cx * Math.cos(texSpin) - cy * Math.sin(texSpin);
           const tcy = cx * Math.sin(texSpin) + cy * Math.cos(texSpin);
           const n = fbm(tcx * size, tcy * size, 64, 3, seed + 17);
-          disk *= Math.pow(Math.max(0, n), 0.5);
+          // pow 0.8 rather than the reference's 0.5. Lifting the mid-tones as hard
+          // as they do fills the band in and gives a solid slab; holding the darks
+          // down lets the noise break the band into streaks, which is what makes it
+          // read as gas rather than as a painted shape.
+          disk *= Math.pow(Math.max(0, n), 0.8);
 
           // Their dither. Two steps of a 2x2 ordered pattern; BAYER4 stands in,
           // which is the same idea at twice the resolution.

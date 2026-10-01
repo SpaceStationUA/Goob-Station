@@ -992,14 +992,42 @@ try {
         const cs = getComputedStyle(el);
         const dur = parseFloat(cs.animationDuration) * 1000;
         const steps = parseInt(cs.animationTimingFunction.replace(/[^0-9]/g, ""), 10) || 1;
+        // Does the strip have an IMAGE, and is it as many frames as it claims?
+        //
+        // This is the check that was missing while no world in this project turned.
+        // `<Show>` without `keyed` hands its child an accessor rather than the value,
+        // so the inline style was `url(() => uri)` — not a background image at all.
+        // The element rendered, the animation ran, `background-position` advanced,
+        // `background-size` was correct and `playState` was `running`, and the strip
+        // was invisible. Asserting opacity, which is what this used to do, passed
+        // throughout: an element with no background image is fully transparent, and
+        // so is one that is correctly opaque. Only asking what is IN it works.
+        const bi = cs.backgroundImage;
+        const m = /url\(["']?(.*?)["']?\)/.exec(bi);
+        let imgW = -1;
+        if (m && m[1]) {
+          try {
+            const im = new Image();
+            im.src = m[1];
+            await im.decode();
+            imgW = im.width;
+          } catch {
+            imgW = -1;
+          }
+        }
+        // parseFloat, not Number: backgroundSize computes to "5600px 200px".
+        const size = parseFloat(cs.backgroundSize) / steps;
         const out = {
           id,
           opacity: parseFloat(cs.opacity),
           playState: cs.animationPlayState,
+          hasImage: bi !== "none" && imgW > 0,
+          imgW,
+          imgH: size,
+          expectedW: size * steps,
           durMs: dur,
           steps,
           holdMs: Math.round(dur / steps),
-          moving: cs.backgroundPosition !== "0px 0px",
         };
         document.querySelector(".overlay-close")?.dispatchEvent(
           new MouseEvent("click", { bubbles: true }),
@@ -1019,6 +1047,14 @@ try {
           : m
             ? `opacity ${m.opacity}, playState ${m.playState}`
             : "no marker to open",
+      );
+      check(
+        `and the ${label}'s strip actually HAS its picture — the check whose absence hid this`,
+        m && !m.noStrip && m.hasImage && Math.abs(m.imgW - m.expectedW) < 2,
+        m && !m.noStrip
+          ? `background-image ${m.hasImage ? `${m.imgW}px wide` : "NONE — nothing to show"}, ` +
+            `expected ${m.expectedW}px for ${m.steps} frames`
+          : "no strip",
       );
       check(
         `and the ${label} turns fast enough to read as turning`,
