@@ -3,7 +3,7 @@ import { cellsInExtent, hexCorners, hexToPixel, type Axial } from "./lib/hex";
 import { cellsByTerritory, cellOutline } from "./lib/geometry";
 import { hasRings, planetTypeFor, planetUri, seedFromId } from "./lib/planet";
 import { ringGeomFor, ringHalf } from "./WorldRing";
-import { BlackHoleShapes, blackHoleBox } from "./BlackHole";
+import { blackHoleUri } from "./lib/blackhole";
 import { loopToPxPath, loopsToPxPath, makeTransform } from "./lib/transform";
 import { pick, type GalaxyModel, type PatternId, type Route, type Territory } from "./lib/model";
 
@@ -280,8 +280,9 @@ export default function Chart(props: ChartProps) {
    * around whatever box this returns.
    */
   const bhOf = (id: string, importance: number) => ({
-    px: importance >= 2 ? 26 : 18,
+    px: importance >= 2 ? 30 : 20,
     seed: seedFromId(id),
+    dpr: typeof window === "undefined" ? 1 : window.devicePixelRatio || 1,
   });
 
   const systemNodes = createMemo(() =>
@@ -901,32 +902,19 @@ export default function Chart(props: ChartProps) {
                 </Show>
                 <Show when={n.system.kind === "blackhole"}>
                   {/* A landmark, so it is drawn whether or not the planet sprites
-                      are on: there is nothing to toggle here.
-
-                      The shapes are emitted straight into the chart's own SVG, from
-                      the same component the overlay uses. An HTML subtree nested
-                      here renders nothing at all and reports no error — the first
-                      version of this mounted a <div> and the marker was simply
-                      absent, which is the worst possible failure for the one object
-                      on the chart that exists to be a fixed point of reference. */}
+                      are on: there is nothing to toggle here. */}
                   <For each={[bhOf(n.system.id, n.system.importance)]}>
-                    {bh => {
-                      const box = () => blackHoleBox(bh.px, bh.seed);
-                      return (
-                        <g transform={`translate(${n.P.x} ${n.P.y})`} data-bh={n.system.id}>
-                          <svg
-                            x={-box() / 2}
-                            y={-box() / 2}
-                            width={box()}
-                            height={box()}
-                            viewBox={`${-box() / 2} ${-box() / 2} ${box()} ${box()}`}
-                            overflow="visible"
-                          >
-                            <BlackHoleShapes px={bh.px} seed={bh.seed} />
-                          </svg>
-                        </g>
-                      );
-                    }}
+                    {bh => (
+                      <image
+                        class="blackhole-mark"
+                        data-bh={n.system.id}
+                        href={blackHoleUri({ seed: bh.seed, px: bh.px, dpr: bh.dpr })}
+                        x={n.P.x - bh.px / 2}
+                        y={n.P.y - bh.px / 2}
+                        width={bh.px}
+                        height={bh.px}
+                      />
+                    )}
                   </For>
                 </Show>
                 <Show when={n.system.kind === "star" || n.system.kind === "planet"}>
@@ -982,7 +970,7 @@ export default function Chart(props: ChartProps) {
                   x={
                     n.P.x +
                     (n.system.kind === "blackhole"
-                      ? blackHoleBox(bhOf(n.system.id, n.system.importance).px, 1) / 2 + 7
+                      ? bhOf(n.system.id, n.system.importance).px / 2 + 5
                       : n.system.importance === 3
                         ? 15
                         : 9)

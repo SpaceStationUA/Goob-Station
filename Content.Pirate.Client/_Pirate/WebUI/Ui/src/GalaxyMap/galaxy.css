@@ -232,18 +232,17 @@ svg.chart.painting {
   z-index: 3;
 }
 
-/* A black hole, on the chart and in the overlay.
-   Same layering contract as a ring: the disc's far half behind, the near half in
-   front, and the horizon between them. */
+/* A black hole is one generated sprite, so it needs no layering of its own: the
+   disc is baked, and the void is the absence of pixels. */
 .blackhole {
   position: relative;
   line-height: 0;
   overflow: visible;
 }
-/* The horizon and photon ring are <circle> elements, not divs: HTML does not
-   render inside an SVG <g>, and the first version of this was built from divs. The
-   fills and strokes live with the geometry in BlackHole.tsx, next to the paths they
-   have to be ordered against. */
+.blackhole .world-turn {
+  position: absolute;
+  inset: 0;
+}
 .sr-only {
   position: absolute;
   width: 1px;

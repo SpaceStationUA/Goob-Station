@@ -573,6 +573,40 @@ positioning, which really is a property of the host — an HTML panel and an SVG
 chart cannot be positioned the same way. `check-dom.mjs` asserts the marker's box
 is non-zero, because the failure was silent and a screenshot cannot see it.
 
+### The black hole disc is a preimage, not a shape
+
+The obvious reading of "black hole" is a dark circle inside a flat annulus, and that
+is what the first attempt was. It looked like a diagram.
+
+The reference does not bend an ellipse. It builds one in a space it has displaced,
+and draws wherever the *displaced* coordinate lands inside the annulus — so what
+you see is the **preimage** of an ellipse under a non-linear map. The displacement
+gives the upper half of the sprite `+bump(distance_from_centre)` and the lower half
+`-bump(...)`, where the bump is 1 at the centre and falls to 0 at the rim. The two
+halves are pulled apart in opposite directions, hardest where the disc is closest to
+the singularity, so the annulus opens into a twisted structure with a hole in the
+middle.
+
+Two consequences, and they decided the architecture:
+
+- **It cannot be SVG geometry.** A ring's boundary is an ellipse and is a path. This
+  boundary is the solution set of a nonlinear equation. Approximating it with warped
+  control points gives something nearly right that reads as nearly right, which is
+  worse than either extreme.
+- **It cannot be flat fills.** The disc is `pow(fbm(...), 0.5)` — textured, and the
+  texture rotating against a fixed shape is most of what makes it read as material
+  in orbit. At the frequency this started at (about five cells across the whole
+  structure) it came out as a smooth cut-out bar with a gradient in it; at eighteen
+  it reads as gas.
+
+So it is baked into a sprite like a planet, and `BlackHole.tsx` is only the two
+hosts that place it. The rotation is a second lever on the same axis: the shape is
+fixed and only the texture turns.
+
+`lib/paint.ts` was extracted for this — the noise, colour and dither primitives
+that `planet.ts` and `blackhole.ts` both need. Importing them from a module called
+"planet" would have been a lie about what that module is.
+
 ## Layout
 
 | Path | What it is |

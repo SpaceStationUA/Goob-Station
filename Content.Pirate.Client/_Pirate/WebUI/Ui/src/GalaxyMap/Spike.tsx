@@ -24,6 +24,7 @@ import {
   seedFromId,
   type PlanetType,
 } from "./lib/planet";
+import { blackHoleUri } from "./lib/blackhole";
 import type { StarSystem } from "./lib/model";
 
 /**
@@ -184,6 +185,7 @@ export function Spike(props: {
     const w = window as unknown as Record<string, unknown>;
     w.__galaxySheet = planetSheet;
     w.__galaxyStill = planetUri;
+    w.__galaxyBlackHole = blackHoleUri;
   });
 
   return (

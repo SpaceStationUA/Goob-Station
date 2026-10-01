@@ -501,6 +501,8 @@ export default function App() {
                             <BlackHole
                               px={190}
                               seed={seedFromId(s().id)}
+                              frames={20}
+                              period={26}
                               title={pick(s().name, loc())}
                             />
                           </Show>

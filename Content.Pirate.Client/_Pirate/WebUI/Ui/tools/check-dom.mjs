@@ -1043,81 +1043,91 @@ try {
      * A black hole is a landmark, and a landmark that is not drawn is the worst
      * failure this chart has.
      *
-     * The first version was a `<div>` with `<div>` children, mounted inside the
-     * chart's `<g>`. HTML does not render inside SVG, so every box measured 0x0,
-     * no error was raised, and the marker was simply absent — at the one size where
-     * it most needed to be seen. `drawn` below is the check for exactly that, and it
-     * is worth having precisely because the failure was silent: a screenshot of the
-     * area would have shown empty space and looked like a placement problem.
+     * The first version was a `<div>` with `<div>` children mounted inside the
+     * chart's `<g>`. HTML does not render inside SVG, so every box measured 0x0, no
+     * error was raised, and the marker was simply absent — at the one size where it
+     * most needed to be seen. A screenshot of the area would have shown empty space
+     * and looked like a placement problem. `drawn` is the check for exactly that.
      *
-     * The two legibility assertions are the reason the horizon is not `#000`. The
-     * page behind the chart is near black, so a true black disc is a hole in the
-     * chart rather than an object in it, and the only thing that makes a black hole
-     * readable is the light around it. Both are measured on the actual attributes
-     * rather than on a screenshot.
+     * The rest are measured on the *decoded pixels* rather than on attributes,
+     * because the thing that matters is legibility on a near-black page and that is
+     * a property of the image, not of the markup. The void is deliberately the
+     * absence of light: `voidLum > 0` says it is opaque without being a `#000`
+     * hole in the chart, and `ringLum - voidLum > 60` says there is a photon ring
+     * bright enough to hold the shape together. Both were true of the reference and
+     * both are what stop this reading as a gap in the territory behind it.
      */
     const bh = await page.evaluate(async () => {
-      const g = document.querySelector("[data-bh]");
-      if (!g) return null;
-      const r = g.getBoundingClientRect();
-      const horizon = g.querySelector(".bh-horizon");
-      const photon = g.querySelector(".bh-photon");
+      const img = document.querySelector("[data-bh]");
+      if (!img) return null;
+      const r = img.getBoundingClientRect();
+      const href = img.getAttribute("href");
+      if (!href) return { drawn: r.width > 8, noHref: true };
+      const im = new Image();
+      im.src = href;
+      await im.decode();
+      const c = document.createElement("canvas");
+      c.width = im.width;
+      c.height = im.height;
+      const cx = c.getContext("2d");
+      cx.drawImage(im, 0, 0);
+      const d = cx.getImageData(0, 0, im.width, im.height).data;
+      const at = (x, y) => {
+        const i = ((y | 0) * im.width + (x | 0)) * 4;
+        return { a: d[i + 3], lum: 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2] };
+      };
+      // The DARKEST opaque pixel, not the centre. The disc is drawn over the
+      // horizon, and at 30px its bar crosses the middle, so the centre sample came
+      // back as disc (luminance 85) and the check could not tell a void from a
+      // highlight. The minimum over the opaque set is the void wherever it is
+      // visible, and "there is a dark-but-not-black pixel" is the property anyway.
+      let voidLum = 255;
+      let ringLum = 0;
+      let warm = 0;
+      for (let i = 0; i < d.length; i += 4) {
+        if (d[i + 3] === 0) continue;
+        const l = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+        if (l < voidLum) voidLum = l;
+        if (l > ringLum) ringLum = l;
+        // The accretion disc: warm, and clearly not the void.
+        if (d[i] > 90 && d[i] > d[i + 2] + 40) warm++;
+      }
+      void at(im.width / 2, im.height / 2);
+      const label = document.querySelector('.system-label[data-sys="the-crow"]');
       return {
-        drawn: r.width > 8 && r.height > 4,
+        drawn: r.width > 8 && r.height > 8,
         w: Math.round(r.width),
-        h: Math.round(r.height),
-        horizonFill: horizon?.getAttribute("fill") ?? "",
-        photonStroke: photon?.getAttribute("stroke") ?? "",
-        horizonR: Number(horizon?.getAttribute("r") ?? 0),
-        photonR: Number(photon?.getAttribute("r") ?? 0),
-        discPaths: g.querySelectorAll("path").length,
-        // A black hole has no surface, so it must not be given a generated sprite.
-        sprite: g.querySelectorAll("image").length,
-        labelClearance: (() => {
-          const t = document.querySelector('.system-label[data-sys="the-crow"]');
-          if (!t) return null;
-          const tb = t.getBoundingClientRect();
-          return Math.round(tb.x - (r.x + r.width / 2));
-        })(),
+        px: im.width,
+        voidLum: Math.round(voidLum),
+        ringLum: Math.round(ringLum),
+        warm,
+        total: d.length / 4,
+        isPlanetMark: img.classList.contains("planet-mark"),
+        labelClearance: label
+          ? Math.round(label.getBoundingClientRect().x - (r.x + r.width / 2))
+          : null,
       };
     });
 
     check("a black hole is actually drawn on the chart", bh !== null && bh.drawn,
-      bh === null ? "no [data-bh] marker in the DOM" : `box ${bh.w}x${bh.h}px`);
-    check("and it has a horizon, a photon ring and both disc halves",
-      bh !== null && bh.horizonR > 0 && bh.photonR > bh.horizonR && bh.discPaths === 2,
-      bh === null ? "no marker" : `horizon r=${bh.horizonR}, photon r=${bh.photonR}, ${bh.discPaths} disc paths`);
-    check("the horizon is not pure black, or it is a hole in the chart rather than an object",
-      bh !== null && bh.horizonFill.toLowerCase() !== "#000" && bh.horizonFill.toLowerCase() !== "#000000",
-      bh === null ? "no marker" : `fill ${bh.horizonFill}`);
-    // Parsed out here rather than in the page: a regular expression with escaped
-    // brackets inside a serialised evaluate callback is a syntax error waiting to
-    // happen, and the failure mode is the check silently not existing.
-    const lumOf = (css) => {
-      const hex = /^#([0-9a-f]{6})$/i.exec(css ?? "");
-      if (hex) {
-        const n = parseInt(hex[1], 16);
-        return 0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255);
-      }
-      const rgb = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/.exec(css ?? "");
-      return rgb ? 0.299 * +rgb[1] + 0.587 * +rgb[2] + 0.114 * +rgb[3] : null;
-    };
-    check(
-      "and the photon ring is brighter than the horizon it outlines",
-      bh !== null && (lumOf(bh.photonStroke) ?? 0) > (lumOf(bh.horizonFill) ?? 0),
-      bh === null
-        ? "no marker"
-        : `photon ${bh.photonStroke} (lum ${Math.round(lumOf(bh.photonStroke) ?? 0)}) vs ` +
-          `horizon ${bh.horizonFill} (lum ${Math.round(lumOf(bh.horizonFill) ?? 0)})`,
-    );
-    check("a black hole gets no generated sprite — it has no surface",
-      bh !== null && bh.sprite === 0,
-      bh === null ? "no marker" : `${bh.sprite} images inside the marker`);
-    check("and its label clears the accretion disc, not just the marker box",
+      bh === null ? "no [data-bh] marker in the DOM" : `${bh.w}px box, ${bh.px}px sprite`);
+    check("its void is drawn, and is dark without being pure black",
+      bh !== null && bh.voidLum > 0 && bh.voidLum < 40,
+      bh === null ? "no marker" : `darkest opaque pixel at luminance ${bh.voidLum}`);
+    check("and the photon ring is bright enough to hold the shape together",
+      bh !== null && bh.ringLum - bh.voidLum > 60,
+      bh === null ? "no marker" : `brightest ${bh.ringLum} vs void ${bh.voidLum}`);
+    check("the accretion disc is there, and it is warm",
+      bh !== null && bh.warm > bh.total * 0.02,
+      bh === null ? "no marker" : `${bh.warm} warm pixels of ${bh.total} (${Math.round((100 * bh.warm) / bh.total)}%)`);
+    check("it is not drawn as a planet sprite",
+      bh !== null && bh.isPlanetMark === false,
+      bh === null ? "no marker" : `class is ${bh.isPlanetMark ? "planet-mark" : "its own"}`);
+    check("and its label clears the disc",
       bh !== null && bh.labelClearance !== null && bh.labelClearance > bh.w / 2,
       bh === null || bh.labelClearance === null
         ? "no label"
-        : `label ${bh.labelClearance}px from centre, disc reaches ${Math.round(bh.w / 2)}px`);
+        : `label ${bh.labelClearance}px from centre, sprite reaches ${Math.round(bh.w / 2)}px`);
 
     check(
       "a ringed system draws a far half and a near half",
