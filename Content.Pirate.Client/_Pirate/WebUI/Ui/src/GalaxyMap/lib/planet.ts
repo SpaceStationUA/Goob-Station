@@ -3,8 +3,10 @@
  *
  * The surface algorithm is ported from Deep-Fold's PixelPlanets Godot shaders
  * (github.com/Deep-Fold/PixelPlanets, MIT): value noise + fbm sampled through a
- * sphere projection, thresholded into bands, lit by a dot product against a
- * light direction, and dithered with an ordered matrix. The cloud layer is
+ * sphere projection, banded by distance to a light point in screen space, and
+ * dithered with an ordered matrix. Land is chosen by comparing four displaced
+ * noise fields against each other rather than by walking one field through
+ * thresholds. The cloud layer is
  * ported from their `Clouds.gdshader`, which warps an fbm with a cellular noise
  * so the result reads as cloud rather than as fog.
  *
@@ -86,6 +88,36 @@ function fbm(x: number, y: number, period: number, octaves: number, seed: number
     amp *= 0.5;
   }
   return v;
+}
+
+/**
+ * Tileable cell noise (Dave Hoskins, shadertoy 4djGRh), which is what the
+ * original's star is built from. F1 distance to the nearest jittered feature
+ * point in a wrapping grid.
+ *
+ * A star wants cells and a planet wants fbm. Cells give the mottled, granular
+ * look with hard-ish boundaries between granules; smooth noise gives a gas cloud
+ * instead, which reads as a fuzzy ball rather than as a star.
+ */
+function worley(x: number, y: number, numCells: number, seed: number): number {
+  const px = x * numCells;
+  const py = y * numCells;
+  const cx = Math.floor(px);
+  const cy = Math.floor(py);
+  let d = Infinity;
+  for (let ox = -1; ox <= 1; ox++) {
+    for (let oy = -1; oy <= 1; oy++) {
+      const gx = cx + ox;
+      const gy = cy + oy;
+      const tx = gx + hash2(gx, gy, numCells, seed);
+      const ty = gy + hash2(gx, gy, numCells, seed + 7919);
+      const ddx = tx - px;
+      const ddy = ty - py;
+      const dd = ddx * ddx + ddy * ddy;
+      if (dd < d) d = dd;
+    }
+  }
+  return Math.sqrt(d);
 }
 
 /**
@@ -175,8 +207,8 @@ export type PlanetType =
   | "asteroid";
 
 /**
- * How the surface is decided: a land cutoff, latitude bands, a lit sphere, or a
- * self-luminous disc. `star` is a different kind of thing rather than a ninth
+ * How the surface is decided: a two-layer sea/land world, a fully-clouded one,
+ * a single noise field, or a self-luminous disc. `star` is a different kind of thing rather than a ninth
  * planet, which is why it is not in the orbital list below.
  */
 type BandKind = "terrain" | "lat" | "solid" | "star";
@@ -185,119 +217,159 @@ interface TypeSpec {
   kind: BandKind;
   /** Surface threshold, 0..1. Higher means less land. */
   cutoff: number;
-  /** Latitude band count for gas giants. */
-  bands: number;
-  /** How far the band edges are pushed around by noise. */
-  warp: number;
   /** Glowing cracks, for lava. */
   emissive: boolean;
   /** Rim and corona colour, or null for an airless world. */
   atmo: string | null;
-  /** Palette, dark to light. Index 0 is the deepest, index 3 the brightest. */
-  pal: [string, string, string, string];
+  /**
+   * Palette, as two lists rather than one.
+   *
+   * The original draws a planet in two passes and this follows it, because the
+   * split is what produces the look rather than being an implementation detail.
+   *
+   * `sea` is the world with no land on it, banded purely by distance to the
+   * light: three steps, lit to shadow. It is what shows through wherever the
+   * land test fails, and for a gas giant or an airless rock it is the whole
+   * planet.
+   *
+   * `land` is four steps picked by comparing displaced noise fields against each
+   * other rather than by walking one field through thresholds — index 0 is the
+   * band that wins nearest the light, index 3 the base that fills everything
+   * else. Null for a world with no continents at all.
+   */
+  sea: [string, string, string, string];
+  land: [string, string, string, string] | null;
+  /**
+   * Water, if this kind of world has any: [deep, bright]. Rivers are drawn as a
+   * separate pass on top of the land, which is why they get their own pair.
+   */
+  water?: [string, string];
   /** Base cloud threshold. Gas and ice worlds are soupy; rock is not. */
   cloud: number;
 }
 
+/**
+ * Palettes.
+ *
+ * `sea` is lit-to-shadow in three steps; `land` is ordered by how close to the
+ * light each band wins, so index 0 is the highlight band and index 3 is the base
+ * that fills the rest of every continent.
+ *
+ * These are not arbitrary. The lit step has to stay clearly lighter than the
+ * shadow step or the planet reads as a flat disc with a gradient on it, and the
+ * land bands have to be distinguishable from each other at 16px, which is a much
+ * harder constraint than at 200px — at map size only two of the four ever show
+ * and they have to be the two that carry the shape.
+ */
 export const PLANET_TYPES: Record<PlanetType, TypeSpec> = {
   star: {
     kind: "star",
     cutoff: 0,
-    bands: 0,
-    warp: 0,
     emissive: false,
     // Warm corona. A star is the one body here that SHOULD bleed past its own
     // edge; the planets were doing the same thing and it read as a sticker.
     atmo: "#ffc46a",
-    pal: ["#7a1e05", "#d4550f", "#ffa62b", "#fff3cd"],
+    // Cell noise is the whole look of a star, so these four steps are granule
+    // brightness rather than depth. The top one is near-white because the core
+    // of a star photographs as blown out.
+    sea: ["#c2470d", "#e8801f", "#ffc463", "#fff3d4"],
+    land: null,
     cloud: 0,
   },
   terran: {
     kind: "terrain",
     cutoff: 0.5,
-    bands: 0,
-    warp: 0,
     emissive: false,
     atmo: "#7cc0ee",
-    // deep sea, land, highland, snow — the order the threshold walk expects.
-    pal: ["#1d4570", "#42764a", "#78a256", "#dde1c9"],
-    cloud: 0.54,
+    sea: ["#2f6796", "#22507c", "#173a5e", "#102845"],
+    // Beach → forest → upland → snow, so the snow only lands on land that is
+    // already high AND near the light, which is what puts caps on mountains
+    // instead of speckling them everywhere.
+    land: ["#7ba055", "#63903f", "#527a35", "#44652c"],
+    water: ["#2a6f8e", "#3f9ec4"],
+    cloud: 0.56,
   },
   ocean: {
     kind: "terrain",
-    cutoff: 0.6,
-    bands: 0,
-    warp: 0,
+    // Mostly water: only the highest field clears the land test, so this is an
+    // archipelagos rather than a world with seas.
+    cutoff: 0.62,
     emissive: false,
     atmo: "#7cc0ee",
-    pal: ["#1a3f6b", "#357a55", "#5f9c62", "#d2d8b6"],
-    cloud: 0.5,
+    sea: ["#2a6a9c", "#1c4d7c", "#10335a", "#0a2340"],
+    land: ["#86ab6a", "#6b9154", "#557841", "#44612f"],
+    water: ["#1f7fa0", "#38b4d6"],
+    cloud: 0.58,
   },
   desert: {
     kind: "terrain",
     // No sea at all: the cutoff sits below the noise floor, so every pixel is
     // land and the whole palette is in play.
     cutoff: 0.04,
-    bands: 0,
-    warp: 0,
     emissive: false,
     atmo: "#e8b878",
-    pal: ["#7a4a26", "#ab7536", "#d6a95e", "#f0e0b4"],
-    cloud: 0.66,
+    sea: ["#c9a066", "#a87c46", "#7d5a31", "#553c21"],
+    land: ["#e8cf9a", "#dcbd80", "#d0ab68", "#c29952"],
+    cloud: 0.72,
   },
   ice: {
     kind: "terrain",
     cutoff: 0.1,
-    bands: 0,
-    warp: 0,
     emissive: false,
     atmo: "#bfe4ff",
-    pal: ["#3f6d9c", "#6b96c6", "#aed0e9", "#f2f9ff"],
-    cloud: 0.46,
+    sea: ["#7fa8cd", "#5c86ad", "#3f6288", "#2c4562"],
+    land: ["#e8f4fc", "#d6e9f6", "#c4dcee", "#b2cfe4"],
+    cloud: 0.56,
   },
   gas: {
     kind: "lat",
     cutoff: 0.5,
-    bands: 7,
-    warp: 0.42,
     emissive: false,
     atmo: "#f0d8a8",
-    pal: ["#8a5836", "#c08c46", "#e2ba74", "#f6e8bc"],
-    // A gas giant really is a cloud deck all the way down, so the layer wants to
-    // be thick — but at the threshold that makes it literally opaque the bands
-    // vanish and it becomes a featureless cream ball, which throws away the one
-    // silhouette that made gas giants worth having. Half cover, so the banding
-    // shows through the weather.
+    // No land, so `sea` is the whole planet: four steps of cloud deck.
+    sea: ["#f8eecd", "#e0b87c", "#bd8a4e", "#8a5c33"],
+    land: null,
+    // A gas giant is a cloud deck all the way down, so the layer wants to be
+    // thick - but at the threshold that makes it literally opaque the deck's own
+    // structure vanishes and it becomes a featureless cream ball, which throws
+    // away the one silhouette that made gas giants worth having. Half cover, so
+    // the weather shows through.
     cloud: 0.44,
   },
   lava: {
     kind: "terrain",
-    cutoff: 0.44,
-    bands: 0,
-    warp: 0,
+    // Higher than the other terrain worlds on purpose. The comparison hands the
+    // brightest band to roughly half of whatever passes the land test, so a low
+    // cutoff gives a lava world that is molten all over and reads as desert.
+    // Raising it means most of the surface stays cooled crust.
+    cutoff: 0.58,
     emissive: true,
     atmo: "#ff7a2a",
-    pal: ["#2a1512", "#5e2413", "#b04016", "#ff9c42"],
+    sea: ["#6e2a12", "#4a1c0e", "#2a1109", "#180905"],
+    // The dark steps are cooled crust and the bright ones are what is still
+    // molten; `emissive` decides which of them glows rather than just being
+    // lighter.
+    land: ["#ffb457", "#e8681f", "#8a3312", "#4a1a0c"],
     cloud: 0,
   },
   barren: {
     kind: "terrain",
     cutoff: 0.08,
-    bands: 0,
-    warp: 0,
     emissive: false,
+    // Airless, so no rim: a glow round a world with no atmosphere is a lie the
+    // eye reads as a sticker even when it cannot say why.
     atmo: null,
-    pal: ["#3a3a46", "#63636f", "#94949f", "#cacad4"],
+    sea: ["#9a9aa6", "#6e6e7a", "#4a4a54", "#30303a"],
+    land: ["#c6c6d0", "#adadb9", "#9494a2", "#7b7b8b"],
     cloud: 0,
   },
   asteroid: {
     kind: "solid",
     cutoff: 0.5,
-    bands: 0,
-    warp: 0,
     emissive: false,
     atmo: null,
-    pal: ["#38332c", "#4e4740", "#6b6154", "#8b8070"],
+    sea: ["#7b7166", "#574f46", "#3a342d", "#241f1b"],
+    land: ["#8d8376", "#786f63", "#635b50", "#4e473e"],
     cloud: 0,
   },
 };
@@ -311,8 +383,9 @@ export const PLANET_TYPE_LIST = Object.keys(PLANET_TYPES) as PlanetType[];
  */
 const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", "lava", "barren"];
 
-/** Bump when the noise changes, so cached sprites regenerate. */
-export const PLANET_ALGO_VERSION = 3;
+/** Bump when the noise changes, so cached sprites regenerate.
+ * 4: screen-space banding and multi-field land, replacing the 3D dot product. */
+export const PLANET_ALGO_VERSION = 4;
 
 export interface PlanetOpts {
   seed: number;
@@ -353,6 +426,31 @@ export interface PlanetOpts {
 }
 
 /* ----------------------------------------------------------------- render */
+
+/**
+ * Prominence rays at seeded angles, 0..~1.
+ *
+ * Narrow on purpose: a wide lobe stops being a ray and becomes a smear. Shared
+ * between the disc and the corona so the two agree on where the rays point —
+ * they used to be computed only on the disc, which is why they looked like a
+ * cross drawn on the planet rather than light coming off it.
+ */
+const FLARES = 4;
+const TAU = Math.PI * 2;
+
+function flare(dx: number, dy: number, seed: number): number {
+  const ang = Math.atan2(dy, dx);
+  let fl = 0;
+  for (let k = 0; k < FLARES; k++) {
+    const a0 = hash2(seed, k, 64, 31) * TAU;
+    const da = Math.abs(((ang - a0 + Math.PI * 3) % TAU) - Math.PI);
+    fl = Math.max(
+      fl,
+      Math.pow(Math.max(0, Math.cos(da)), 40) * (0.35 + hash2(seed, k, 64, 77) * 0.5),
+    );
+  }
+  return fl;
+}
 
 /** 4x4 ordered dither, -0.5..0.5. */
 const BAYER4 = [
@@ -404,12 +502,25 @@ interface Frame {
   glow: number;
   isStar: boolean;
   kind: BandKind;
-  bands: number;
-  warp: number;
   cutoff: number;
   emissive: boolean;
-  pal: RGB[];
+  /** Lit-to-shadow, three steps. */
+  sea: RGB[];
+  /** Four steps, index 0 winning nearest the light. Null when landless. */
+  land: RGB[] | null;
+  /** River colour pair, or null. */
+  water: [RGB, RGB] | null;
   atmo: RGB | null;
+  /**
+   * Light position in disc-UV (0..1 across the sprite), as a vector.
+   *
+   * The original uses this in two different ways and both matter: its *distance*
+   * bands the planet, and its *direction* displaces the land noise so that land
+   * colour correlates with which way from the light a pixel sits. Carried as a
+   * pair because the second use needs the direction, not just the magnitude.
+   */
+  lx: number;
+  ly: number;
   night: RGB;
   nightFloor: number;
   cloud: number;
@@ -418,9 +529,6 @@ interface Frame {
   octaves: number;
   seed: number;
   rot: number;
-  lx: number;
-  ly: number;
-  lz: number;
 }
 
 function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
@@ -444,11 +552,20 @@ function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
   // octave has to land near one pixel. An octave finer than that is not detail,
   // it is per-pixel noise, and it turns every coastline into speckle.
   const small = d < 28;
+  // The light is a POINT in disc space, not a direction. That is the single
+  // biggest difference from the first version of this port, which lit the sphere
+  // with a dot product and got a smooth 3D terminator: correct-looking, and not
+  // what makes a planet read as this generator's work. Banding by distance to a
+  // point gives the flat, poster-like terminator with visible steps in it, and
+  // perturbing that distance with noise is what stops those steps from being a
+  // clean arc.
+  //
+  // `light` arrives as an angle and is mapped onto a point inside the disc, kept
+  // well clear of the edge so the shadow side always has somewhere to go.
   const light = o.light ?? -2.2;
-  // A light with no Z component would leave the whole limb unlit, so the
-  // terminator would be a hard edge through the middle of the disc.
-  const lz = 0.42;
-  const ll = Math.hypot(Math.cos(light), Math.sin(light), lz);
+  const lightR = 0.21;
+  const lx = 0.5 + Math.cos(light) * lightR;
+  const ly = 0.5 + Math.sin(light) * lightR;
 
   return {
     d,
@@ -456,14 +573,21 @@ function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
     glow,
     isStar,
     kind: spec.kind,
-    bands: spec.bands,
-    warp: spec.warp,
     cutoff: spec.cutoff,
     emissive: spec.emissive,
-    pal: spec.pal.map(h => {
+    sea: spec.sea.map(h => {
       const c = hexToRgb(h);
       return tint ? mixHsl(c, tint, tintAmt) : c;
     }),
+    land: spec.land
+      ? spec.land.map(h => {
+          const c = hexToRgb(h);
+          return tint ? mixHsl(c, tint, tintAmt) : c;
+        })
+      : null,
+    water: spec.water
+      ? [hexToRgb(spec.water[0]), hexToRgb(spec.water[1])]
+      : null,
     atmo: spec.atmo ? hexToRgb(spec.atmo) : null,
     // A small sprite cannot afford a dark side. Below about 24px the night half
     // is most of the disc, so a planet drawn at map scale stops reading as a lit
@@ -483,9 +607,8 @@ function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
     octaves: Math.max(2, Math.min(6, Math.floor(Math.log2((d * 2) / 3)) + 1)),
     seed: (o.seed | 0) ^ 0x9e37,
     rot: hash2(o.seed | 0, 7, 64, 13) * Math.PI * 2,
-    lx: Math.cos(light) / ll,
-    ly: Math.sin(light) / ll,
-    lz: lz / ll,
+    lx,
+    ly,
   };
 }
 
@@ -498,10 +621,8 @@ function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
  * until it is in front of a player.
  */
 function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: number, spin: number) {
-  const { d, rPx, glow, pal, atmo, night, nightFloor, period, octaves, seed, kind } = f;
+  const { d, rPx, glow, sea, land, water, atmo, night, nightFloor, period, octaves, seed, kind } = f;
   const px = out.data;
-  const FLARES = 4;
-  const TAU = Math.PI * 2;
   // How far the cloud deck runs ahead of the ground at the middle of a turn.
   // Kept small: the deck is sampled in the same sphere space, so a large shear
   // slides cloud over places that were night-side a moment ago.
@@ -529,7 +650,15 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
         px[i] = atmo ? atmo[0] : 255;
         px[i + 1] = atmo ? atmo[1] : 210;
         px[i + 2] = atmo ? atmo[2] : 140;
-        px[i + 3] = Math.round(g * g * g * g * 0.95 * 255);
+        // Prominence rays, drawn HERE rather than on the disc.
+        //
+        // Painting them on the photosphere was wrong in a way that looked like a
+        // rendering fault: four narrow `cos^40` spikes across a lit disc read as a
+        // hard white cross or a lens artefact, not as a star throwing off light.
+        // A flare is emission *outside* the surface, so it belongs in the only
+        // part of the sprite that is not the surface — and putting it there costs
+        // nothing, because the disc pixels no longer compute it at all.
+        px[i + 3] = Math.round(Math.min(1, g * g * g * 0.85 * (1 + flare(d, dy, seed) * 1.8)) * 255);
         continue;
       }
       const nx = dx;
@@ -579,69 +708,274 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
        */
       const polar = 1 - smoothstep((Math.abs(ny) - 0.7) / 0.3);
 
-      // Light. Below the terminator it falls to a dark blue rather than to black,
-      // which is what keeps the night side from punching a hole in the map.
-      const dot = nx * f.lx + ny * f.ly + nz * f.lz;
-      const shade =
-        dot < 0.14 ? nightFloor + (1 - nightFloor) * smoothstep((dot + 0.5) / 0.64) : 1;
-
       let col: RGB;
       let outRgb: RGB;
+      /**
+       * Distance to the light, carried out of the branch below so the cloud deck
+       * can be shaded by the same front as the ground. Without that, clouds
+       * stay lit on the night side and the planet grows a bright rim all the way
+       * round, which is the single most obvious way to tell a composited cloud
+       * layer from one that belongs to the planet.
+       */
+      let dLight = 1;
+      /**
+       * Discrete terminator level for a pixel that is NOT already banded.
+       *
+       * A single continuous multiply was doing the lighting here on top of the
+       * banding, which meant the sprite carried two terminators at once and the
+       * palette blew out: measured, 1858 distinct colours in a 128px world. The
+       * original composites only discrete layers — every colour in a planet is
+       * one of the palette entries — and matching that is what makes the banding
+       * read as bands rather than as a gradient with steps drawn on it.
+       */
+      let shade = 1;
+      let isLand = false;
       if (f.isStar) {
         // Self-luminous, so there is no terminator at all: brightness falls off
         // from the centre outward. Running a star through the planet lighting
         // model draws a planet, which is exactly the mistake of shading Sol like
         // a world with a bright side.
         const t = 1 - r2;
-        if (t > 0.7) col = mixRgb(pal[3], [255, 255, 255], (t - 0.7) / 0.3);
-        else if (t > 0.4) col = mixRgb(pal[2], pal[3], (t - 0.4) / 0.3);
-        else if (t > 0.14) col = mixRgb(pal[1], pal[2], (t - 0.14) / 0.26);
-        else col = mixRgb(pal[0], pal[1], t / 0.14);
-        const gran = fbm(sx * period * 2, sy * period * 2, period, octaves, seed + 991) - 0.5;
-        col = mixRgb(col, pal[3], Math.max(0, gran) * 0.45);
-        // Flares: narrow spikes at seeded angles, and the thing that makes a disc
-        // read as a star rather than as a glowing coin.
-        const ang = Math.atan2(ny, nx);
-        let fl = 0;
-        for (let k = 0; k < FLARES; k++) {
-          const a0 = hash2(seed, k, 64, 31) * TAU;
-          const da = Math.abs(((ang - a0 + Math.PI * 3) % TAU) - Math.PI);
-          fl = Math.max(fl, Math.pow(Math.max(0, Math.cos(da)), 40) * (0.35 + hash2(seed, k, 64, 77) * 0.5));
-        }
-        outRgb = mixRgb(col, [255, 255, 255], fl * 0.75);
-      } else {
-        const h = 0.5 + (fbm(sx * period, sy * period, period, octaves, seed) - 0.5) * polar;
-        if (kind === "lat") {
-          // Latitude bands, pushed around by noise so they swirl. Gas giants keep
-          // hard edges: banding is the whole read.
-          const lat = Math.asin(Math.max(-1, Math.min(1, ny))) / Math.PI + 0.5;
-          const warp = fbm(sx * period * 0.5, sy * period * 0.5, period, 3, seed + 77) - 0.5;
-          const b = lat * f.bands + warp * f.warp;
-          const th: number[] = [];
-          const nxs: number[] = [];
-          for (let k = 1; k < f.bands; k++) {
-            th.push(k - warp * f.warp);
-            nxs.push(1 + ((k - 1) % 3));
-          }
-          col = ditherBands(pal, b, th, nxs, 0.05, ditherV);
-        } else if (kind === "solid") {
-          col = ditherBands(pal, h, [0.42, 0.56, 0.7], [1, 2, 3], 0.05, ditherV);
-        } else {
-          // Abyss, shelf, lowland, highland, with a hard snow line above the last
-          // threshold so mountains only appear on genuinely high ground.
-          const c = f.cutoff;
-          const span = 1 - c;
-          col = ditherBands(pal, h, [c, c + span * 0.55, c + span * 0.9], [1, 2, 3], 0.045, ditherV);
-          if (f.emissive && h > c + span * 0.5) {
-            col = mixRgb(col, pal[3], 0.8);
-          }
-        }
-        outRgb = mixRgb(night, col, shade);
+        if (t > 0.7) col = mixRgb(sea[0], [255, 255, 255], (t - 0.7) / 0.3);
+        else if (t > 0.4) col = mixRgb(sea[1], sea[0], (t - 0.4) / 0.3);
+        else if (t > 0.14) col = mixRgb(sea[2], sea[1], (t - 0.14) / 0.26);
+        else col = mixRgb(sea[3], sea[2], t / 0.14);
 
-        // Rim light, hugging the lit limb. On the disc, not outside it.
-        if (atmo && r2 > 0.86) {
-          const rim = smoothstep((r2 - 0.86) / 0.14) * Math.max(0, dot);
-          outRgb = mixRgb(outRgb, atmo, rim * 0.55);
+        /**
+         * Granulation from cell noise, quantised into four bands with a dithered
+         * boundary.
+         *
+         * Cell noise rather than fbm is the point: a star's surface is granules
+         * with hard edges between them and the eye reads that specifically. The
+         * first version of this port used fbm and got a smooth orange ball with
+         * faint mottling — fine as a gradient, wrong as a star.
+         *
+         * The statistic is INVERTED and normalised, and that is not cosmetic. A
+         * straight `c10 * c20 * 2` — the obvious transcription of the original —
+         * has a badly skewed distribution: measured over the disc it puts 44% of
+         * pixels in the lowest band and 3% in the highest, so almost the whole
+         * star lands on two adjacent palette entries and reads as a blown-out
+         * white ball with dark outlines. Cell F1 distance is already skewed the
+         * other way, and `1 - a` is close to uniform: 23/27/27/23 across four
+         * bands.
+         *
+         * The fine scale is then added as MODULATION rather than folded into the
+         * statistic. Weighting it into a sum with the coarse scale is what
+         * re-skews the distribution (measured: 10/37/40/13), because the two
+         * scales have different distributions and averaging them favours the
+         * denser one. Adding a small signed term moves pixels within the
+         * distribution instead of dragging it, which is what breaks up the large
+         * cells without unbalancing the bands.
+         */
+        const coarse = worley(sx, sy, 14, seed + 31);
+        const fine = worley(sx, sy, 30, seed + 57);
+        // The PRODUCT of the two fields, not either alone: a single cell field
+        // lights up its cell WALLS, because F1 distance's contours are the walls,
+        // and a star built from walls is a honeycomb. The product only lights up
+        // where two independent centres nearly coincide, which is irregular.
+        //
+        // What the product costs is skew — it is a product of two skewed fields,
+        // so it piles up near zero. Measured over the disc, `coarse * fine * 2`
+        // (the literal transcription of the original) lands 37/37/18/9 across four
+        // bands and the star becomes a blown-out ball on two adjacent colours. A
+        // linear scale cannot fix a skew, so the quartiles are stretched onto
+        // even spacing: 19/35/26/20. Same field, same cells, no honeycomb and no
+        // two-colour star.
+        let gn = Math.min(1, coarse * fine * 2.6);
+        gn = gn < 0.3 ? gn * (0.375 / 0.3)
+            : gn < 0.62 ? 0.375 + (gn - 0.3) * (0.25 / 0.32)
+            : 0.625 + (gn - 0.62) * (0.375 / 0.38);
+        gn += (fine - 0.45) * 0.12;
+        if (ditherV > 0.5) gn += 0.1;
+        col = sea[Math.max(0, Math.min(3, Math.floor(gn * 4)))];
+
+        // Form on top of texture. The granulation says what the surface is made
+        // of; the radius says it is a sphere. The original relies on the sphere
+        // projection alone for this, which gives a disc of even noise — correct
+        // per its own shader, but it loses the limb, and a star with no limb is a
+        // sticker.
+        //
+        // In THREE steps, not a ramp, and the ramp is what it used to be: a
+        // continuous blend here put 831 distinct colours in a 128px star. Three
+        // zones read as a photosphere with a hotter core and a cooler limb, which
+        // is all a star needs at this size.
+        const tt = 1 - r2;
+        if (tt > 0.62) col = mixRgb(col, sea[3], 0.72);
+        else if (tt > 0.28) col = mixRgb(col, sea[3], 0.3);
+        else col = mixRgb(sea[0], col, 0.45);
+
+        outRgb = col;
+      } else {
+        /**
+         * Distance to the light point, in disc-UV.
+         *
+         * Banding on THIS rather than on a dot product is what gives the look:
+         * the terminator becomes a ragged front across the face of the disc
+         * instead of a smooth 3D curve, and the bands are visible as steps
+         * rather than as a gradient. Adding noise to the distance is the other
+         * half — without it the steps land on a clean arc and the whole thing
+         * reads as a vector illustration of a sphere.
+         */
+        const u = 0.5 + nx * 0.5;
+        const v = 0.5 + ny * 0.5;
+        const dLightRaw = Math.hypot(u - f.lx, v - f.ly);
+        dLight =
+          dLightRaw +
+          (fbm(sx * period, sy * period, period, Math.max(2, octaves - 2), seed + 404) - 0.5) *
+            0.55 *
+            polar;
+        // The original squares the distance before using it, which pushes the
+        // mid-tones toward the light and widens the terminator.
+        const dLit = dLight * dLight * 0.62;
+
+        // ---- pass one: the body, banded by distance to the light ----------
+        // Three steps with a dithered edge on each. The dither window is narrow
+        // on purpose: a wide one turns the whole shadow side into a gradient and
+        // the banding — the entire point — disappears.
+        const bandW = 0.055;
+        col = sea[0];
+        if (dLit > 0.085) col = sea[1];
+        if (dLit > 0.085 && dLit < 0.085 + bandW && ditherV > 0.5) col = sea[0];
+        if (dLit > 0.2) col = sea[2];
+        if (dLit > 0.2 && dLit < 0.2 + bandW && ditherV > 0.5) col = sea[1];
+        if (dLit > 0.4) col = sea[3];
+        if (dLit > 0.4 && dLit < 0.4 + bandW && ditherV > 0.5) col = sea[2];
+
+        // ---- pass two: land, chosen by comparing displaced fields ----------
+        /**
+         * Four fbms, each displaced along the light direction by an amount
+         * proportional to the first one, compared against each other.
+         *
+         * The first version walked a single field through three thresholds to
+         * pick abyss/shelf/lowland/highland. That produces smooth concentric
+         * bands around the noise's own contours — it looks like elevation
+         * shading, not like land. Comparing *different* fields is what produces
+         * the original's coastlines: the boundaries stop following one field's
+         * contours and become the places where two independent fields cross,
+         * which is where they get thin, broken and island-like.
+         *
+         * The displacement is what makes it cohere. Pushing each field toward or
+         * away from the light by a noise-driven amount means the comparison
+         * resolves toward the light more often than away from it, so land
+         * brightness correlates with position on the disc instead of being
+         * independent of it.
+         */
+        // One surface field, shared by the land pass and the solid pass. Skipped
+        // entirely for gas giants, which band by latitude and would otherwise
+        // pay for an fbm per pixel to throw it away.
+        const h =
+          land || kind === "solid"
+            ? 0.5 + (fbm(sx * period, sy * period, period, octaves, seed) - 0.5) * polar
+            : 0;
+
+        if (land) {
+          if (h >= f.cutoff) {
+            isLand = true;
+            const du = f.lx - 0.5;
+            const dv = f.ly - 0.5;
+            const g = h * polar;
+            const f2 = fbm(
+              (sx * period - du * g), (sy * period - dv * g), period, octaves, seed + 101,
+            );
+            const f3 = fbm(
+              (sx * period - du * g * 1.5), (sy * period - dv * g * 1.5), period, octaves, seed + 211,
+            );
+            const f4 = fbm(
+              (sx * period - du * g * 2.2), (sy * period - dv * g * 2.2), period, octaves, seed + 307,
+            );
+            // Base, then progressively closer to the light. Note the light term
+            // ADDS to the compared field, so a pixel far from the light needs a
+            // much lower field to win — which is the terminator biting into the
+            // land rather than being painted over it afterwards.
+            col = land[3];
+            if (f4 + dLit < h) col = land[2];
+            if (f3 + dLit < h) col = land[1];
+            if (f2 + dLit < h) col = land[0];
+
+            // Rivers, as a separate pass over the land. Rare enough to be a
+            // detail rather than a feature, which is why it is a hard cut: a
+            // soft one would put a haze over every continent.
+            if (water) {
+              const rf = fbm(sx * period + h * 6, sy * period + h * 6, period, octaves, seed + 503);
+              if (rf < h * 0.5) col = water[0];
+              else if (rf < h * 0.56) col = water[1];
+            }
+
+            if (f.emissive && f2 + dLit < h * 0.7) col = land[0];
+          }
+        }
+
+        if (kind === "lat") {
+          /**
+           * Gas giants are not latitude-banded here, and that took a while to
+           * see. The obvious implementation — bands of constant latitude, warped
+           * by noise — is what this file did first, and it is wrong twice over:
+           * the boundaries came out ruler-straight at warp 0.42, and bending
+           * them to warp 1.5 turned them into stacked rectangles with vertical
+           * ends, because a low-frequency fbm makes broad plateaus rather than
+           * swirls.
+           *
+           * The original draws no bands at all. It samples the same
+           * cellular-displaced cloud field the cloud layer uses and picks the
+           * palette from distance-to-light *plus* cloud depth, so the banding is
+           * a by-product: `circleNoise` shears alternate rows, which biases the
+           * field into horizontal streaks on its own. The streaks then get torn
+           * up by the turbulence, which is exactly what a gas giant looks like,
+           * and no amount of warping a latitude function reproduces it.
+           */
+          const cu = fract(sx0 + spin);
+          const cvv = sy * 1.6 + smoothstep(Math.abs(sx0 - 0.4) / 1.3) * 0.3;
+          let warpN = 0;
+          for (let i = 0; i < 9; i++) {
+            warpN += circleNoise(
+              cu * period * 0.5 + i + 11,
+              cvv * period * 0.5 + i + 11,
+              period,
+              seed + 5,
+            );
+          }
+          warpN /= 9;
+          const c =
+            0.5 +
+            (fbm(cu * period + warpN * 3, cvv * period + warpN * 3, period, octaves, seed + 313) -
+              0.5) *
+              polar;
+          // Cloud depth pushes the band boundary around, so the banding is
+          // ragged and follows the weather instead of cutting across it.
+          const dl = dLight + (c - 0.5) * 0.34;
+          col = sea[0];
+          if (dl > 0.085) col = sea[1];
+          if (dl > 0.085 && dl < 0.085 + bandW && ditherV > 0.5) col = sea[0];
+          if (dl > 0.2) col = sea[2];
+          if (dl > 0.2 && dl < 0.2 + bandW && ditherV > 0.5) col = sea[1];
+          if (dl > 0.4) col = sea[3];
+          if (dl > 0.4 && dl < 0.4 + bandW && ditherV > 0.5) col = sea[2];
+        } else if (kind === "solid") {
+          col = ditherBands(sea, h, [0.42, 0.56, 0.7], [1, 2, 3], 0.05, ditherV);
+        }
+
+        if (isLand) {
+          // Land is chosen by a comparison against the light, not banded by it,
+          // so it needs its own terminator — quantised, for the palette reason
+          // above. Land that faded smoothly into the night would put a gradient
+          // back into the middle of every continent.
+          shade = dLit < 0.085 ? 1 : dLit < 0.2 ? 0.8 : dLit < 0.4 ? 0.58 : 0.36;
+          outRgb = mixRgb(night, col, nightFloor + (1 - nightFloor) * shade);
+        } else {
+          // Sea and the fully-clouded types are already banded by distance to
+          // the light — the band index IS the shading, so shading them again
+          // would apply the terminator twice and crush the shadow side.
+          shade = dLit < 0.085 ? 1 : dLit < 0.2 ? 0.8 : dLit < 0.4 ? 0.58 : 0.36;
+          outRgb = col;
+        }
+
+        // Rim light on the lit limb. Two steps, not a ramp, for the same reason
+        // as everything else here. On the disc, not outside it — the sprite is
+        // exactly the disc, and an atmosphere that bleeds past the edge is what
+        // made the first sprite set look like noise.
+        if (atmo && r2 > 0.82 && dLight < 0.3) {
+          const rim = r2 > 0.93 ? 0.5 : 0.22;
+          outRgb = mixRgb(outRgb, atmo, rim);
         }
       }
 

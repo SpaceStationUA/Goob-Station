@@ -216,6 +216,70 @@ as the thing that was clicked.
   and takes the click, so dragging a stroke across a capital cannot open a panel
   mid-drag.
 
+## Matching the reference generator
+
+The look comes from two things, and both were missing from the first port. Neither
+is a detail of the shader — they are the reason a planet from this generator looks
+like a planet from it.
+
+- **Band by distance to a light POINT in screen space, not by a dot product.** The
+  first version lit the sphere with `dot(normal, light)` and got a smooth 3D
+  terminator: correct, and not the reference look. Banding on
+  `distance(uv, light_origin)` gives a flat, poster-like terminator with visible
+  steps in it. Adding fbm to that distance is the other half — without it the
+  steps land on a clean arc and the result reads as a vector illustration of a
+  sphere rather than as a world.
+- **Pick land by comparing four DISPLACED fields against each other.** The first
+  version walked a single field through three thresholds, which produces smooth
+  bands following that field's own contours: elevation shading, not land.
+  Comparing `fbm2/3/4` — each displaced along the light direction by an amount
+  proportional to `fbm1` — puts the boundaries where two independent fields cross,
+  which is where they get thin, broken and island-like. The displacement is what
+  makes it cohere: the comparison resolves toward the light more often than away
+  from it, so land brightness correlates with position on the disc.
+
+Which is also why the palette is two lists rather than one: `sea` is banded by
+distance to the light, `land` is chosen by the comparison. The original draws these
+as two separate composited layers, and the split is the look, not an
+implementation detail.
+
+### Everything has to be discrete
+
+This was the last thing to fall over and it is the easiest to regress silently,
+because a screenshot of a smooth-shaded planet still looks like a planet. A
+continuous terminator multiply on top of the banding put **1858 distinct colours
+in a 128px world**; making every layer discrete brings that to **337**, and a star
+to **59**. `check-dom.mjs` asserts both, because nothing else would notice.
+
+The corollary: **one cell field lights up its cell WALLS**, because F1 distance's
+contours are the walls. A star built from `1 - worley()` is a honeycomb — which is
+exactly what the second attempt produced. The original uses the *product* of two
+cell fields, which only lights up where two centres nearly coincide and is
+irregular. The product is then skewed (measured 37/37/18/9 across four bands), and
+a linear scale cannot fix a skew, so the quartiles are stretched onto even spacing
+by a piecewise remap: 19/35/26/20.
+
+Three more things that were wrong in ways that only showed up on screen:
+
+- **Gas giants are not latitude-banded.** The obvious implementation — bands of
+  constant latitude warped by noise — is wrong twice: at low warp the boundaries
+  are ruler-straight, and raising it turns them into stacked rectangles with
+  vertical ends, because a low-frequency fbm makes plateaus rather than swirls.
+  The original draws no bands at all; it samples the cellular cloud field and
+  picks the palette from distance-to-light plus cloud depth. The horizontal
+  banding is a by-product, because `circleNoise` shears alternate rows and biases
+  the field into streaks on its own.
+- **Flares belong in the corona.** Painting them on the disc put four narrow
+  `cos^40` spikes across a lit sphere, which reads as a hard white cross or a lens
+  artefact. A flare is emission *outside* the surface, and putting it in the only
+  part of the sprite that is not the surface costs nothing — the disc pixels no
+  longer compute it.
+- **Land palettes must be low-contrast.** The comparison hands the brightest band
+  to roughly half of whatever passes the land test, so a wide land ramp washes out
+  the entire lit side. In the original the land layer composites over the banded
+  sea and is never banded itself, so its four tones are near neighbours and the
+  terminator darkening comes from the shared shade term.
+
 ## Layout
 
 | Path | What it is |
@@ -277,6 +341,12 @@ Worth knowing about:
   answer often enough to look fine. Two overlay checks passed only because the
   capital they happened to compare against was the first marker in the list. Both
   markers and labels now carry `data-sys` so tests address them by id.
+- **One probe point cannot serve two claims about different radii.** "A planet has
+  no halo" wants a point outside its disc; "a star bleeds" wants a point outside
+  the star's disc but inside its corona. A planet's disc has radius d/2 and a
+  star's has radius d/3 with its corona reaching d/2, so the box corner — the
+  obvious single probe — is outside both and transparent for every type. It would
+  have passed a check asserting the exact opposite of the truth.
 - **An assertion that cannot fail is worse than no assertion**, because it is
   reported as coverage. Three in a row here: a ratio check written as
   `natural >= css` passes trivially at dpr 1 (it must be `css * dpr`); a

@@ -754,6 +754,95 @@ try {
     await page.keyboard.press("Escape");
     await page.waitForTimeout(120);
 
+    // --- how a world is drawn ---------------------------------------------
+    // The banding is the look. Both of these guard properties that a change
+    // could quietly remove while every screenshot still looked plausible.
+    const look = await page.evaluate(async () => {
+      const decode = async (uri) => {
+        const im = new Image();
+        im.src = uri;
+        await im.decode();
+        const c = document.createElement("canvas");
+        c.width = im.width;
+        c.height = im.height;
+        const cx = c.getContext("2d");
+        cx.drawImage(im, 0, 0);
+        return { data: cx.getImageData(0, 0, im.width, im.height), w: im.width, h: im.height };
+      };
+      const opts = { seed: 0x5eed1, px: 128, dpr: 1 };
+      const world = await decode(window.__galaxyStill({ ...opts, type: "terran" }));
+      const star = await decode(window.__galaxyStill({ ...opts, type: "star" }));
+
+      // Distinct opaque colours. A smooth-shaded sphere produces tens of
+      // thousands of them; a dithered banded one produces a small palette plus
+      // one dither pixel per blend.
+      const palette = (img) => {
+        const set = new Set();
+        for (let i = 0; i < img.data.data.length; i += 4) {
+          if (img.data.data[i + 3] > 0)
+            set.add((img.data.data[i] << 16) | (img.data.data[i + 1] << 8) | img.data.data[i + 2]);
+        }
+        return set.size;
+      };
+      // Corner transparency: a planet is exactly its disc, a star bleeds.
+      // Two different probes, because the two claims are about different radii.
+      //
+      // A planet's disc has radius d/2 and a star's has radius d/3 with its
+      // corona reaching d/2, so the only place that is outside one and inside the
+      // other is the annulus between d/3 and d/2 — 6% in from the top edge. The
+      // box CORNER is at d/sqrt(2), outside everything including the corona, so
+      // it is transparent for every type and proves nothing about either claim.
+      const cornerAlpha = (img) => img.data.data[3];
+      const annulusAlpha = (img) => {
+        const i = (Math.round(img.h * 0.06) * img.w + Math.round(img.w / 2)) * 4;
+        return img.data.data[i + 3];
+      };
+      const centreAlpha = (img) => {
+        const i = ((img.h / 2) * img.w + img.w / 2) * 4;
+        return img.data.data[i + 3];
+      };
+      return {
+        px: world.w * world.h,
+        worldColours: palette(world),
+        starColours: palette(star),
+        worldCorner: cornerAlpha(world),
+        starEdge: annulusAlpha(star),
+        worldEdge: annulusAlpha(world),
+        worldCentre: centreAlpha(world),
+        starCentre: centreAlpha(star),
+      };
+    });
+
+    check(
+      "a world is drawn from a small discrete palette, not a smooth gradient",
+      look.worldColours < 400,
+      `${look.worldColours} distinct colours in ${look.px} pixels`,
+    );
+    check(
+      "a star is banded too, not a gradient",
+      look.starColours < 400,
+      `${look.starColours} distinct colours`,
+    );
+    // The corona is the one thing allowed outside the disc. Guards the rule that
+    // a planet is exactly its sprite: an atmosphere bleeding past the edge was
+    // what made the first sprite set read as stickers.
+    check(
+      "a planet is exactly its disc — no halo outside",
+      look.worldCorner === 0 && look.worldCentre === 255,
+      `corner alpha ${look.worldCorner}, centre ${look.worldCentre}`,
+    );
+    check(
+      "a star does bleed past its edge",
+      look.starEdge > 0 && look.starCentre === 255,
+      `annulus alpha ${look.starEdge}, centre ${look.starCentre}`,
+    );
+    check(
+      "and it is a corona, not a halo: the annulus is dimmer than the disc",
+      look.starEdge < look.starCentre,
+      `${look.starEdge} vs ${look.starCentre}`,
+    );
+    void look.worldEdge;
+
     // The locale toggle must actually translate the chrome and the content.
     const uk = await page.evaluate(async () => {
       const pick = [...document.querySelectorAll(".locpick button")].find(
