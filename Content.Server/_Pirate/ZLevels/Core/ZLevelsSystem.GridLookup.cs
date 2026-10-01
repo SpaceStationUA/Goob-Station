@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Shared._Pirate.ZLevels.Core.Components;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server._Pirate.ZLevels.Core;
@@ -68,6 +69,40 @@ public sealed partial class CEZLevelsSystem
         foreach (var map in _emptyLookupMaps)
             _lookupGrids.Remove(map);
         _lookupGridsDirty = false;
+    }
+
+    protected override bool TryAttachToCarrierGrid(EntityUid ent, CEZPhysicsComponent zPhys, ref TransformComponent xform)
+    {
+        // Keep the shared early-outs ahead of indexed carrier searches; stair debugging keeps the full path.
+        if (!ZDebugStairsEnabled &&
+            (xform.GridUid != null || zPhys.CurrentGroundFromBelowLevel || zPhys.LocalPosition < 0f ||
+             !ShouldStayAttachedToCarrierGrid(zPhys)))
+            return false;
+
+        return base.TryAttachToCarrierGrid(ent, zPhys, ref xform);
+    }
+
+    // Query order defines the first grid, regardless of its size or position.
+    protected override bool TryResolveAnyGridOnMap(EntityUid mapUid, out EntityUid gridUid, out MapGridComponent gridComp)
+    {
+        if (_lookupGridsDirty)
+            RebuildLookupGrids();
+        if (_lookupGrids.TryGetValue(mapUid, out var grids))
+        {
+            (gridUid, gridComp, _) = grids[0];
+            return true;
+        }
+
+        if (TryComp<MapGridComponent>(mapUid, out var mapAsGrid))
+        {
+            gridUid = mapUid;
+            gridComp = mapAsGrid;
+            return true;
+        }
+
+        gridUid = EntityUid.Invalid;
+        gridComp = default!;
+        return false;
     }
 
     protected override bool TryResolveGridAtWorldPositionOnMap(EntityUid mapUid, Vector2 worldPos,

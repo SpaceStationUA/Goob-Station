@@ -651,7 +651,7 @@ public abstract partial class CESharedZLevelsSystem
         RefreshAttachedZPhysics(ent.Owner);
     }
 
-    private bool ShouldStayAttachedToCarrierGrid(CEZPhysicsComponent zPhys)
+    protected bool ShouldStayAttachedToCarrierGrid(CEZPhysicsComponent zPhys)
     {
         return zPhys.CurrentStickyGround ||
                zPhys.CurrentHasSupportBelow ||
@@ -894,7 +894,7 @@ public abstract partial class CESharedZLevelsSystem
         return false;
     }
 
-    private bool TryAttachToCarrierGrid(EntityUid ent, CEZPhysicsComponent zPhys, ref TransformComponent xform)
+    protected virtual bool TryAttachToCarrierGrid(EntityUid ent, CEZPhysicsComponent zPhys, ref TransformComponent xform)
     {
         if (ShouldBlockClientCarrierReattach(ent, xform))
             return false;
@@ -1437,7 +1437,7 @@ public abstract partial class CESharedZLevelsSystem
         return target.Comp.LocalPosition - target.Comp.CurrentGroundHeight;
     }
 
-    private bool TryResolveAnyGridOnMap(EntityUid mapUid, out EntityUid gridUid, out MapGridComponent gridComp)
+    protected virtual bool TryResolveAnyGridOnMap(EntityUid mapUid, out EntityUid gridUid, out MapGridComponent gridComp)
     {
         var gridQuery = EntityQueryEnumerator<MapGridComponent, TransformComponent>();
         while (gridQuery.MoveNext(out var uid, out var grid, out var xform))
