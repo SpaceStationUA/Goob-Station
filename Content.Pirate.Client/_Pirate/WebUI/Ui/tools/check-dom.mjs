@@ -1082,6 +1082,39 @@ try {
           // whole block exists to catch.
           const c = live;
           const gl = c.getContext("webgl2") || c.getContext("webgl");
+          /**
+           * Does the canvas contain a disc, or is the baked still underneath just
+           * showing through?
+           *
+           * A transparent canvas differs from frame to frame and every assertion
+           * about motion passes, while the picture a viewer sees comes entirely from
+           * the fallback. That is not a hypothetical: it is what happened for a
+           * stretch of work on the disc's shape, where two materially different
+           * shaders produced byte-identical output and the reason was that neither
+           * of them was drawing anything. Frame-to-frame difference cannot see it,
+           * because the animated pixels are the ring and nothing else.
+           *
+           * So read the canvas's own pixels and count warm ones, and separately
+           * confirm it is not simply the still redrawn.
+           */
+          const warm = await (async () => {
+            const url = c.toDataURL();
+            const im = new Image();
+            im.src = url;
+            await im.decode();
+            const off = document.createElement("canvas");
+            off.width = c.width;
+            off.height = c.height;
+            const ctx = off.getContext("2d");
+            ctx.drawImage(im, 0, 0);
+            const px = ctx.getImageData(0, 0, off.width, off.height).data;
+            let n = 0;
+            for (let i = 0; i < px.length; i += 4) {
+              // warm and not the near-white photon ring: the disc's own palette
+              if (px[i] > 70 && px[i] > px[i + 2] * 1.6 && px[i + 2] < 150) n++;
+            }
+            return { warm: n, total: px.length / 4, url };
+          })();
           // Read BEFORE closing. The overlay is torn down by the close, so asking
           // afterwards about what was inside it reports nothing for the same
           // reason asking about a closed overlay's canvas would.
@@ -1109,6 +1142,7 @@ try {
             samples: N,
             stillUnderneath,
             painted: distinct > 0,
+            warmFrac: warm.warm / warm.total,
           };
         }
         const cs = getComputedStyle(el);
@@ -1195,6 +1229,11 @@ try {
           `and the baked still is still underneath it, so the panel is never blank`,
           m.stillUnderneath === true,
           m.stillUnderneath ? "present" : "MISSING",
+        );
+        check(
+          `the canvas draws the disc ITSELF, and is not the fallback showing through`,
+          m.warmFrac > 0.01,
+          `${(m.warmFrac * 100).toFixed(2)}% of the canvas is disc-coloured`,
         );
         continue;
       }
