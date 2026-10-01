@@ -413,7 +413,7 @@ public abstract partial class CESharedZLevelsSystem
             MapGridComponent belowGrid;
             var resolved = useDetachedCarrierProbe
                 ? TryResolveDetachedCarrierProbeGrid(carrierGridUid, offset, out belowGridUid, out belowGrid)
-                : TryResolveGridForMapOffset(ent, xform, -offset, out belowGridUid, out belowGrid);
+                : TryResolveGridForMapOffset(ent, xform, -offset, out belowGridUid, out belowGrid, worldPos);
 
             if (!resolved)
                 break;
@@ -1607,7 +1607,8 @@ public abstract partial class CESharedZLevelsSystem
 
     private bool TryResolveGridForMapOffset(EntityUid ent, TransformComponent xform, int offset, out EntityUid gridUid, out MapGridComponent gridComp, Vector2? worldPositionOverride = null)
     {
-        var worldPos = worldPositionOverride ?? _transform.GetWorldPosition(ent);
+        // Resolved lazily: current-grid and linked-peer hits never need the world position.
+        var worldPos = worldPositionOverride;
 
         if (offset == 0)
         {
@@ -1620,7 +1621,7 @@ public abstract partial class CESharedZLevelsSystem
             }
 
             if (xform.MapUid is { } currentMapUid &&
-                (TryResolveGridAtWorldPositionOnMap(currentMapUid, worldPos, out gridUid, out gridComp) ||
+                (TryResolveGridAtWorldPositionOnMap(currentMapUid, worldPos ?? _transform.GetWorldPosition(ent), out gridUid, out gridComp) ||
                  TryResolveAnyGridOnMap(currentMapUid, out gridUid, out gridComp)))
             {
                 return true;
@@ -1650,7 +1651,7 @@ public abstract partial class CESharedZLevelsSystem
 
         if (xform.MapUid is { } sourceMapUid &&
             TryResolveTraversalMapOffset(sourceMapUid, offset, out var targetMapUid, out _) &&
-            (TryResolveGridAtWorldPositionOnMap(targetMapUid, worldPos, out gridUid, out gridComp) ||
+            (TryResolveGridAtWorldPositionOnMap(targetMapUid, worldPos ?? _transform.GetWorldPosition(ent), out gridUid, out gridComp) ||
              TryResolveAnyGridOnMap(targetMapUid, out gridUid, out gridComp)))
         {
             if (offset != 0)
