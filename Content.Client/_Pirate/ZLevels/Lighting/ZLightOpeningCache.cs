@@ -5,10 +5,13 @@ using Robust.Shared.Map;
 
 namespace Content.Client._Pirate.ZLevels.Lighting;
 
-/// <summary>Short-lived cosmetic geometry results. Photometric values are deliberately not cached.</summary>
+/// <summary>
+/// Short-lived cosmetic geometry results. Photometric values are deliberately not cached. Positions are in
+/// the source light's frame (<see cref="Key.Frame"/>, its grid), so a rigid moving grid keeps its entries.
+/// </summary>
 internal sealed class ZLightOpeningCache
 {
-    internal readonly record struct Key(EntityUid Source, MapId SourceMap, EntityUid OpeningMap);
+    internal readonly record struct Key(EntityUid Source, MapId SourceMap, EntityUid OpeningMap, EntityUid Frame);
 
     internal sealed class Entry
     {

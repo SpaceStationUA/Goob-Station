@@ -1,8 +1,5 @@
 // SPDX-FileCopyrightText: 2026 ColonialMarinesUniverse contributors <https://github.com/AU-14/ColonialMarinesUniverse>
 // SPDX-License-Identifier: AGPL-3.0-only
-// Ported from ColonialMarinesUniverse (Content.Shared/_CMU14/ZLevels/Core/CMUZLevelOpeningCache.cs).
-// CMU code implemented after 2026-04-30 is AGPL-3.0 per their README; renames to lanos identifiers.
-
 using System.Numerics;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -18,6 +15,7 @@ namespace Content.Shared._Pirate.ZLevels.Core;
 public sealed class CMUZLevelOpeningCache
 {
     public const int DefaultChunkSize = 8;
+    private const float LocalPositionResolution = 1024f;
 
     private readonly Dictionary<EntityUid, GridOpeningCache> _gridCaches = new();
     private readonly int _chunkSize;
@@ -244,7 +242,8 @@ public sealed class CMUZLevelOpeningCache
             if (!Matrix3x2.Invert(gridWorldMatrix, out var gridInvWorldMatrix))
                 continue;
 
-            var localSourcePosition = Vector2.Transform(sourcePosition, gridInvWorldMatrix);
+            // Snapped: a source exactly diagonal to an opening would otherwise flip the edge-tile test below.
+            var localSourcePosition = SnapLocalPosition(Vector2.Transform(sourcePosition, gridInvWorldMatrix));
             var sourceInsideOpening = IsExistingOpeningTile(
                 grid,
                 new Vector2i((int) MathF.Floor(localSourcePosition.X), (int) MathF.Floor(localSourcePosition.Y)),
@@ -377,6 +376,16 @@ public sealed class CMUZLevelOpeningCache
         }
 
         return foundOpening;
+    }
+
+    /// <summary>
+    /// Snaps a grid-local position to a 1/1024-tile lattice. On a moving grid the world round trip adds float
+    /// noise that changes every frame, which would flip exact ties in discrete decisions.
+    /// </summary>
+    public static Vector2 SnapLocalPosition(Vector2 local)
+    {
+        return new Vector2(MathF.Round(local.X * LocalPositionResolution) / LocalPositionResolution,
+            MathF.Round(local.Y * LocalPositionResolution) / LocalPositionResolution);
     }
 
     /// <summary>

@@ -12,7 +12,7 @@ namespace Content.Tests.Client._Pirate.ZLevels;
 [TestFixture]
 public sealed class ZLightOpeningCacheTest
 {
-    private static readonly ZLightOpeningCache.Key Key = new(new EntityUid(1), new MapId(1), new EntityUid(2));
+    private static readonly ZLightOpeningCache.Key Key = new(new EntityUid(1), new MapId(1), new EntityUid(2), new EntityUid(5));
 
     [Test]
     public void StableSourceReusesGeometryOnlyUntilExpiry()
@@ -32,7 +32,7 @@ public sealed class ZLightOpeningCacheTest
     }
 
     [Test]
-    public void MovementRadiusAndMapChangesCannotReusePreviousGeometry()
+    public void MovementRadiusMapAndGridChangesCannotReusePreviousGeometry()
     {
         var cache = new ZLightOpeningCache();
         cache.Get(Key, Vector2.Zero, 4, TimeSpan.Zero, 0.1f, out _);
@@ -40,7 +40,9 @@ public sealed class ZLightOpeningCacheTest
         cache.Get(Key, Vector2.One, 5, TimeSpan.Zero, 0.1f, out var resized);
         cache.Get(Key with { SourceMap = new MapId(3) }, Vector2.One, 5, TimeSpan.Zero, 0.1f, out var remapped);
         cache.Get(Key with { OpeningMap = new EntityUid(4) }, Vector2.One, 5, TimeSpan.Zero, 0.1f, out var openingChanged);
-        Assert.That(moved && resized && remapped && openingChanged, Is.True);
+        // Positions are grid-local, so the same position on another grid is another place.
+        cache.Get(Key with { Frame = new EntityUid(6) }, Vector2.One, 5, TimeSpan.Zero, 0.1f, out var regridded);
+        Assert.That(moved && resized && remapped && openingChanged && regridded, Is.True);
     }
 
     [Test]
