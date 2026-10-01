@@ -39,11 +39,14 @@
  * is what puts a near side in front of the singularity, and it is why the photon
  * ring is broken where the band crosses it rather than being a complete circle.
  *
- * They are also different sizes. In the scene, `BlackHole` spans 100x100 and `Disk`
- * spans 300x300, both centred on the same point -- so the horizon is a THIRD of the
- * canvas. Its radius is therefore 0.247/3 = 0.0823 of the canvas, and its UV is
- * the canvas UV scaled by three about the middle. Both facts are in the constants
- * below, and both were wrong by a factor of 1.5 before the scene was read.
+ * They are also different sizes: in the scene `BlackHole` spans 100x100 and `Disk`
+ * spans 300x300, concentric, so the horizon is a THIRD of the canvas. Its UV is
+ * therefore the canvas UV scaled by three about the middle, which the shader does
+ * itself -- and which means the scene's `radius` is ALREADY in the right units.
+ * Dividing it by three as well, on the reasonable-sounding grounds that the sprite
+ * is a third of the canvas, divides twice and makes the horizon three times too
+ * small. It was, and it is the reason the horizon read as a barely visible dot
+ * while the reference's is a prominent ringed circle.
  */
 
 const VERT = `
@@ -356,10 +359,15 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   gl.uniform1f(u("u_size"), 6.598);
   gl.uniform1f(u("u_pixels"), 300);
   gl.uniform1f(u("u_holePixels"), 100);
-  // The horizon sprite is a third of the disc's, so its radius is a third of the
-  // scene's 0.247 and its light bands with it.
-  gl.uniform1f(u("u_holeRadius"), 0.247 / 3);
-  gl.uniform1f(u("u_holeLightWidth"), 0.028 / 3);
+  // The scene's radius, UNCHANGED.
+  //
+  // It is tempting to divide these by three, because the horizon sprite is a third
+  // of the disc's -- and doing so makes the horizon three times too small, which is
+  // what it was. The shader already converts: it measures the distance in huv, which
+  // IS the horizon sprite's own uv, scaled up from the canvas. So the scene's 0.247
+  // is already in the right units and dividing it as well divides twice.
+  gl.uniform1f(u("u_holeRadius"), 0.247);
+  gl.uniform1f(u("u_holeLightWidth"), 0.028);
   gl.uniform3fv(u("u_hole0"), rgb(HOLE[0]));
   gl.uniform3fv(u("u_hole1"), rgb(HOLE[1]));
   gl.uniform3fv(u("u_hole2"), rgb(HOLE[2]));
