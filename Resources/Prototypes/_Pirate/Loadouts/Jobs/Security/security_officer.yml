@@ -29,3 +29,9 @@
   id: SecurityOfficerBlueSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSecurityBlue
+
+# Outerclothes - Верхній одяг
+- type: loadout
+  id: SecurityBomber
+  equipment:
+    outerClothing: ClothingOuterSecurityBomber

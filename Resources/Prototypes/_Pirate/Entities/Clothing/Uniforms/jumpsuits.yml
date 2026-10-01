@@ -66,3 +66,39 @@
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/instructor.rsi
 
+# ПНТ
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitNtrepNoble
+  name: Елегантний костюм Представника Нанотрейзен
+  description: Більш класичний та елегантний стиль одягу, створений на зразок моди старовинної земної знаті.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/ntrepnoble.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/ntrepnoble.rsi
+
+# Офіцер спеціальних операцій
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomOfficerBlack
+  name: Форма Офіцера Спеціальних Операцій
+  description: Уніформа офіцера спеціальних операцій — нічого більше
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/centcom_officer_black.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/centcom_officer_black.rsi
+
+## Юрист / Lawyer
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLawyerPink
+  name: Рожевий костюм адвоката
+  description: Яскраво-рожевий костюм, у якому одягнені адвокати, до яких вам слід звернутися.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/lawyerpink.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/lawyerpink.rsi
+
