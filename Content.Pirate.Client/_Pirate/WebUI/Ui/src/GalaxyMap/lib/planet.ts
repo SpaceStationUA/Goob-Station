@@ -418,8 +418,9 @@ const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", 
 
 /** Bump when the noise changes, so cached sprites regenerate.
  * 4: screen-space banding and multi-field land, replacing the 3D dot product.
- * 5: craters on the airless worlds. */
-export const PLANET_ALGO_VERSION = 5;
+ * 5: craters on the airless worlds.
+ * 6: the asteroid silhouette is a noise field, not a circle. */
+export const PLANET_ALGO_VERSION = 6;
 
 export interface PlanetOpts {
   seed: number;
@@ -604,7 +605,13 @@ function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
   // edge is correct and a planet doing it is not. The disc radius is derived from
   // that ratio, so the sprite never has to be resampled on the way out — and
   // resampling is the one thing that must never happen to pixel art.
-  const glow = isStar ? 1.5 : 1;
+  //
+  // A solid gets 1.2, not 1, because its outline is a noise field rather than a
+  // circle and the lobes need somewhere to go — a rock clipped flat on its
+  // high side is worse than a small rock. This is also the first non-star to
+  // have pixels outside the nominal disc, which is why the corona branch below
+  // now tests isStar explicitly instead of relying on glow being 1.
+  const glow = isStar ? 1.5 : spec.kind === "solid" ? 1.3 : 1;
   const tint = o.tint ? hexToRgb(o.tint) : null;
   const tintAmt = o.tintAmount ?? 0;
 
@@ -703,8 +710,12 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
       const r2 = dx * dx + dy * dy;
       if (r2 > glow * glow) continue;
       if (r2 > 1) {
-        // Corona. Star only — for a planet this branch is unreachable, because a
-        // planet's glow is 1.
+        // Corona, and ONLY a star has one. This used to be unreachable for
+        // everything else because every planet's glow was exactly 1; an asteroid
+        // now has 1.2 so its lobes fit, which makes the guard load-bearing
+        // rather than decorative. Without it an airless rock grows a warm corona,
+        // which is the exact thing an airless rock must not have.
+        if (!f.isStar) continue;
         //
         // The falloff is g^4, not g^2. A square falloff looks right at 16px and
         // wrong at 200px: the corona is a fixed fraction of the sprite box, so at
@@ -797,6 +808,8 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
        */
       let shade = 1;
       let isLand = false;
+      /** Cleared by the asteroid silhouette, which is not a circle. */
+      let shapeA = 1;
       if (f.isStar) {
         // Self-luminous, so there is no terminator at all: brightness falls off
         // from the centre outward. Running a star through the planet lighting
@@ -927,13 +940,11 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
          * brightness correlates with position on the disc instead of being
          * independent of it.
          */
-        // One surface field, shared by the land pass and the solid pass. Skipped
-        // entirely for gas giants, which band by latitude and would otherwise
-        // pay for an fbm per pixel to throw it away.
-        const h =
-          land || kind === "solid"
-            ? 0.5 + (fbm(sx * period, sy * period, period, octaves, seed) - 0.5) * polar
-            : 0;
+        // One surface field, for the land pass only. Skipped entirely for gas
+        // giants, which band by weather, and for asteroids, which take their
+        // surface from two offset fields in the disc plane instead — both would
+        // otherwise pay for an fbm per pixel to throw it away.
+        const h = land ? 0.5 + (fbm(sx * period, sy * period, period, octaves, seed) - 0.5) * polar : 0;
 
         if (land) {
           if (h >= f.cutoff) {
@@ -1018,7 +1029,80 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
           if (dl > 0.4) col = sea[3];
           if (dl > 0.4 && dl < 0.4 + bandW && ditherV > 0.5) col = sea[2];
         } else if (kind === "solid") {
-          col = ditherBands(sea, h, [0.42, 0.56, 0.7], [1, 2, 3], 0.05, ditherV);
+          /**
+           * An asteroid is not a disc.
+           *
+           * The outline is the surface field minus the radius, thresholded — so
+           * the silhouette is wherever the rock happens to be high enough to
+           * still exist at that distance from the middle. It was a circle before,
+           * with banded noise inside it, which is a grey ball: the one shape in
+           * this file that is not a world is also the one shape that must not be
+           * a sphere, and nothing else on the chart has an outline to read.
+           *
+           * Sampled in the DISC plane, not the sphere. The surface detail is
+           * wrapped around a sphere above, which is right for shading a globe;
+           * an outline is a flat 2D shape and warping its coordinate would give a
+           * lumpy circle rather than a lump.
+           *
+           * The threshold is a line in (radius, height) space, so the constant
+           * sets the size: 0.02 puts the mean outline at 0.96 of the nominal
+           * radius and the noise's own spread takes the lobes out to about 1.2,
+           * which is what the 1.3 glow is there to fit. A rock that only fills
+           * half its box is a smudge next to a neighbouring world.
+           */
+          //
+          // Two cells across the disc, two octaves. The first attempt used five
+          // cells and four octaves, which put the finest detail at forty cells
+          // across the rock: the outline came out fractal-edged and read as a
+          // splat or a map of continents rather than as a lump. An asteroid is
+          // two or three big lobes and almost nothing else.
+          const ru = u + spin + f.rot;
+          const edge = 0.5 + (fbm(ru * 2.2, v * 2.2, 3, 2, seed + 907) - 0.5) * polar;
+          const thr = 0.02 + Math.sqrt(r2) * 0.5;
+          shapeA = edge > thr || (edge > thr - 0.05 && ditherV > 0.5) ? 1 : 0;
+
+          /**
+           * Light and shade from two offset copies of the same field.
+           *
+           * Copy the field displaced toward the light and compare: where the
+           * displaced copy is LOWER, the step toward the light drops off the rock,
+           * which is the side facing the source. That gives a terminator running
+           * across the body in the right direction, which the single field cannot
+           * do — banding one field by radius makes concentric rings, which on a
+           * lump of rock reads as a dartboard.
+           */
+          // Five cells, three octaves. At two and a half the zones came out so
+          // large that the three tones read as camouflage patches rather than as
+          // shading; the finest octave here is twenty cells across, which is
+          // texture, and one octave more than that is where it turned to mud.
+          const nEdge = fbm(ru * 5, v * 5, 5, 3, seed + 907);
+          const nLit = fbm(
+            ru * 5 + (f.lx - 0.5) * 1.1,
+            v * 5 + (f.ly - 0.5) * 1.1,
+            5,
+            3,
+            seed + 907,
+          );
+          const rel = nLit - nEdge;
+          // `sea` runs lit to shadow, index 0 lightest. This ladder had it
+          // backwards — brightest band on the shadowed side — which is why the
+          // rock came out muddy and unreadable rather than merely dim.
+          // ONE step either side of the base, never the full ramp. Letting the
+          // comparison reach both ends gave big flat blobs of the darkest and
+          // lightest rock and the whole thing read as camouflage — the noise was
+          // competing with the terminator instead of decorating it. The original
+          // does the same thing: the comparison shifts a step and the light
+          // border is what actually darkens the far side.
+          col = sea[1];
+          if (rel < -0.025) col = sea[0];
+          else if (rel < -0.008) col = ditherV > 0.5 ? sea[0] : sea[1];
+          else if (rel > 0.008) col = sea[2];
+
+          // Terminator, quantised like everything else, and mixed toward the
+          // darkest rock rather than toward night: a small body against a pale
+          // territory fill goes to a hole if it is allowed to reach black.
+          shade = dLit < 0.085 ? 1 : dLit < 0.2 ? 0.82 : dLit < 0.4 ? 0.6 : 0.4;
+          outRgb = mixRgb(sea[3], col, 0.36 + 0.64 * shade);
         }
 
         // ---- pass three: craters ------------------------------------------
@@ -1156,7 +1240,7 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
       px[i] = outRgb[0];
       px[i + 1] = outRgb[1];
       px[i + 2] = outRgb[2];
-      px[i + 3] = 255;
+      px[i + 3] = shapeA * 255;
     }
   }
 }

@@ -891,6 +891,73 @@ try {
       `${crat.terran.changed} pixels changed on a world with no craters to suppress`,
     );
 
+    /**
+     * An asteroid is not a disc.
+     *
+     * Measured as the spread of the outline's radius with angle. A circle gives
+     * a spread of zero by definition, so this cannot pass for a round sprite
+     * however it is shaded, and it does not care what the rock is made of — the
+     * first version of this idea counted dark patches, which a crater also
+     * produces and which therefore could not tell a lumpy outline from a smooth
+     * one with holes in it.
+     *
+     * `terran` is the control, and it is a fair one: same renderer, same lighting
+     * path, same dither, and a perfectly circular outline. If the measurement were
+     * picking up the dither pattern or the banding, it would fire on terran too.
+     */
+    const outline = await page.evaluate(async () => {
+      const spread = async (type) => {
+        const im = new Image();
+        im.src = window.__galaxyStill({ seed: 0x5eed1, type, px: 160, dpr: 1 });
+        await im.decode();
+        const c = document.createElement("canvas");
+        c.width = im.width;
+        c.height = im.height;
+        const cx = c.getContext("2d");
+        cx.drawImage(im, 0, 0);
+        const d = cx.getImageData(0, 0, im.width, im.height).data;
+        const w = im.width;
+        const h = im.height;
+        const N = 180;
+        const radii = [];
+        for (let k = 0; k < N; k++) {
+          const a = (k / N) * Math.PI * 2;
+          const ca = Math.cos(a);
+          const sa = Math.sin(a);
+          let last = 0;
+          // Walk out to the box edge. An earlier version stopped at 0.9, which
+          // silently clipped the measurement: a rock wider than that would have
+          // reported the same radius as one exactly at the limit, and the
+          // standard deviation — the only number this check reads — would have
+          // been computed from truncated data without saying so.
+          for (let t = 1; t <= 100; t++) {
+            const r = t / 100;
+            const x = Math.round(w / 2 + ca * r * w * 0.5);
+            const y = Math.round(h / 2 + sa * r * h * 0.5);
+            if (x < 0 || y < 0 || x >= w || y >= h) break;
+            if (d[(y * w + x) * 4 + 3] > 0) last = r;
+          }
+          radii.push(last);
+        }
+        const mean = radii.reduce((a, b) => a + b, 0) / radii.length;
+        const sd = Math.sqrt(radii.reduce((a, b) => a + (b - mean) ** 2, 0) / radii.length);
+        return { mean, sd, min: Math.min(...radii), max: Math.max(...radii) };
+      };
+      return { asteroid: await spread("asteroid"), terran: await spread("terran") };
+    });
+
+    check(
+      "an asteroid's outline is lumpy, not a circle",
+      outline.asteroid.sd > 0.05,
+      `radius ${outline.asteroid.mean.toFixed(2)} ± ${outline.asteroid.sd.toFixed(3)} ` +
+        `(range ${outline.asteroid.min.toFixed(2)}–${outline.asteroid.max.toFixed(2)})`,
+    );
+    check(
+      "and a world's outline still is — the control",
+      outline.terran.sd < 0.02,
+      `radius ${outline.terran.mean.toFixed(2)} ± ${outline.terran.sd.toFixed(3)}`,
+    );
+
     check(
       "a world is drawn from a small discrete palette, not a smooth gradient",
       look.worldColours < 400,

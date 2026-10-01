@@ -308,6 +308,44 @@ Two measurement notes, because both were wrong first:
   rock and went *below* 1.0 on lava: a crater darkens a dark patch less than it
   darkens a bright one. The check now differences the two renders directly.
 
+### The asteroid is not a disc
+
+Its outline is the surface field minus the radius, thresholded — the silhouette is
+wherever the rock is still high enough to exist at that distance from the middle.
+It was a circle with banded noise inside it, which is a grey ball, and the only
+shape here that is not a world is the one shape that must not be a sphere.
+
+Sampled in the **disc** plane, not the sphere. The surface detail is wrapped around
+a sphere, which is right for shading a globe; an outline is a flat 2D shape, and
+warping its coordinate gives a lumpy circle rather than a lump.
+
+Three things were wrong in a row, all visible only on screen:
+
+- **Frequency.** Five cells with four octaves put the finest detail at forty cells
+  across the rock. The outline came out fractal-edged and read as a splat. Two
+  cells and two octaves: an asteroid is two or three big lobes.
+- **The colour ladder was backwards.** `sea` runs lit to shadow with index 0
+  lightest, and the brightest band was on the *shadowed* side. The rock came out
+  muddy rather than merely dim.
+- **The shading spanned the whole palette.** Three far-apart tones over large
+  zones is camouflage, and the noise was competing with the terminator instead of
+  decorating it. Shading by half-steps toward the neighbours — two extra fixed
+  colours — reads as a surface. Note the threshold has to grow with the field
+  frequency, because the comparison is a directional derivative and its scale goes
+  up with it.
+
+Raising the sprite's `glow` to fit the lobes broke an invariant that had been
+carried by a coincidence: the corona branch used to be unreachable for everything
+except stars, because every planet's glow was exactly 1. An asteroid now has 1.3,
+so that guard tests `isStar` explicitly — otherwise an airless rock grows a warm
+corona, which is the exact thing an airless rock must not have.
+
+The check measures the spread of the outline's radius with angle, which a circle
+cannot have by definition. Counting dark patches was tried first and cannot work:
+a crater also produces dark patches, so it cannot distinguish a lumpy outline from
+a smooth one with holes in it. `terran` is the control — same renderer, same
+lighting, same dither, and a spread of 0.000.
+
 ## Layout
 
 | Path | What it is |
