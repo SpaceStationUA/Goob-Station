@@ -11,6 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
+using Robust.Shared.Containers; // Pirate: persistent diary pages
 using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
 using Robust.Shared.Prototypes;
@@ -30,6 +31,8 @@ using System.Text.RegularExpressions;
 using Content.Shared._Pirate.Paper;
 using Content.Shared._Pirate.PersistentText;
 using Content.Shared.Access.Systems;
+using Content.Shared.Nutrition; // Pirate: persistent diary pages (not edible)
+using Content.Shared.Hands.EntitySystems; // Pirate: persistent diary pages
 using Content.Shared.GameTicking;
 using Content.Shared.Station;
 #endregion
@@ -51,9 +54,17 @@ public sealed class PaperSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IdentitySystem _identitySystem = default!; // Starlight-edit
     [Dependency] private readonly SharedMindSystem _mind = default!; // Pirate: persistent text (diaries)
+    [Dependency] private readonly SharedHandsSystem _hands = default!; // Pirate: persistent diary pages
+    [Dependency] private readonly SharedContainerSystem _containers = default!; // Pirate: persistent diary pages
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
+
+    // Pirate: persistent diary pages
+    private static readonly ProtoId<TagPrototype> PaperTag = "Paper";
+    private static readonly ProtoId<TagPrototype> BookTag = "Book";
+    private const string SheetPrototype = "Paper";
+    private const string SignatureStampState = "paper_stamp-signature";
     #region Pirate: paperwork tags
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
     [Dependency] private readonly SharedStationSystem _station = default!;
@@ -77,6 +88,8 @@ public sealed class PaperSystem : EntitySystem
         SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
         SubscribeLocalEvent<PaperComponent, PaperMacroMenuUsedMessage>(OnMacroMenuUsedMessage); // Pirate: paperwork tags
         SubscribeLocalEvent<PaperComponent, PaperSignatureRequestMessage>(OnSignatureRequest); // Starlight-edit
+        SubscribeLocalEvent<PaperComponent, PaperPageActionMessage>(OnPageActionMessage); // Pirate: persistent diary pages
+        SubscribeLocalEvent<PaperPagesComponent, IngestibleEvent>(OnPagesIngestible); // Pirate: persistent diary pages
 
 
         SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
@@ -171,6 +184,15 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
+        // Pirate: persistent diary pages - a loose sheet tucked into the book becomes a leaf,
+        // carrying its text and its stamps over as that leaf's signatures.
+        if (TryComp<PaperPagesComponent>(entity, out var insertedPages) && IsLooseSheet(args.Used))
+        {
+            TryInsertSheet(entity, insertedPages, args.Used, args.User);
+            args.Handled = true;
+            return;
+        }
+
         // only allow editing if there are no stamps or when using a cyberpen
         var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
         if (_tagSystem.HasTag(args.Used, WriteTag))
@@ -244,47 +266,62 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInputTextMessage(Entity<PaperComponent> entity, ref PaperInputTextMessage args)
     {
+        TryWriteText(entity, args.Actor, args.Text);
+
+        entity.Comp.Mode = PaperAction.Read;
+        UpdateUserInterface(entity);
+    }
+
+    /// <summary>
+    /// Checks the write permission and applies the text to the item - to the whole document,
+    /// or, for paginated items, only to the leaf currently on screen.
+    /// </summary>
+    private bool TryWriteText(Entity<PaperComponent> entity, EntityUid actor, string rawText)
+    {
         var ev = new PaperWriteAttemptEvent(entity.Owner);
-        RaiseLocalEvent(args.Actor, ref ev);
+        RaiseLocalEvent(actor, ref ev);
         if (ev.Cancelled)
-            return;
+            return false;
 
         // Pirate: persistent text (diaries) - only the bound owner may write;
         // unbound items bind to the first writer (e.g. spawned outside a loadout).
         if (TryComp<PersistentTextComponent>(entity, out var persistentText))
         {
-            if (!CanWrite(entity.Owner, persistentText, args.Actor))
+            if (!CanWrite(entity.Owner, persistentText, actor))
             {
-                _popupSystem.PopupClient(Loc.GetString("persistent-text-cant-write"), entity.Owner, args.Actor);
-                return;
+                _popupSystem.PopupClient(Loc.GetString("persistent-text-cant-write"), entity.Owner, actor);
+                return false;
             }
 
-            BindPersistentTextOwner(entity.Owner, persistentText, args.Actor);
+            BindPersistentTextOwner(entity.Owner, persistentText, actor);
         }
 
-        var processedText = ExpandPaperMacros(entity, args.Actor, args.Text); // Pirate: paperwork tags
+        var processedText = ExpandPaperMacros(entity, actor, rawText); // Pirate: paperwork tags
 
-        if (processedText.Length <= entity.Comp.ContentSize) // Pirate: paperwork tags
-        {
+        if (processedText.Length > entity.Comp.ContentSize) // Pirate: paperwork tags
+            return false;
+
+        // Pirate: persistent diary pages - a paginated item only rewrites the leaf on screen.
+        if (TryComp<PaperPagesComponent>(entity, out var pages))
+            SetPageText(entity, pages, processedText);
+        else
             SetContent(entity, processedText); // Pirate: paperwork tags
 
-            var paperStatus = string.IsNullOrWhiteSpace(processedText) ? PaperStatus.Blank : PaperStatus.Written; // Pirate: paperwork tags
+        var paperStatus = string.IsNullOrWhiteSpace(processedText) ? PaperStatus.Blank : PaperStatus.Written; // Pirate: paperwork tags
 
-            if (TryComp<AppearanceComponent>(entity, out var appearance))
-                _appearance.SetData(entity, PaperVisuals.Status, paperStatus, appearance);
+        if (TryComp<AppearanceComponent>(entity, out var appearance))
+            _appearance.SetData(entity, PaperVisuals.Status, paperStatus, appearance);
 
-            if (TryComp(entity, out MetaDataComponent? meta))
-                _metaSystem.SetEntityDescription(entity, "", meta);
+        if (TryComp(entity, out MetaDataComponent? meta))
+            _metaSystem.SetEntityDescription(entity, "", meta);
 
-            _adminLogger.Add(LogType.Chat,
-                LogImpact.Low,
-                $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(entity):entity} the following text: {processedText}"); // Pirate: paperwork tags
+        _adminLogger.Add(LogType.Chat,
+            LogImpact.Low,
+            $"{ToPrettyString(actor):player} has written on {ToPrettyString(entity):entity} the following text: {processedText}"); // Pirate: paperwork tags
 
-            _audio.PlayPvs(entity.Comp.Sound, entity);
-        }
+        _audio.PlayPvs(entity.Comp.Sound, entity);
 
-        entity.Comp.Mode = PaperAction.Read;
-        UpdateUserInterface(entity);
+        return true;
     }
 
     #region Pirate: persistent text (diaries)
@@ -383,6 +420,272 @@ public sealed class PaperSystem : EntitySystem
 
         component.BaseEntityName = baseName;
         _metaSystem.SetEntityName(uid, baseName + suffix, meta);
+    }
+
+    #endregion
+
+    #region Pirate: persistent diary pages
+
+    /// <summary>
+    /// Pirate: a diary you page through is not food - no eat verb, no force-feeding,
+    /// whatever the eater's stomach claims to digest.
+    /// </summary>
+    private void OnPagesIngestible(Entity<PaperPagesComponent> entity, ref IngestibleEvent args)
+    {
+        args.Cancelled = true;
+    }
+
+    private void OnPageActionMessage(Entity<PaperComponent> entity, ref PaperPageActionMessage args)
+    {
+        if (!TryComp<PaperPagesComponent>(entity, out var pages))
+            return;
+
+        switch (args.Action)
+        {
+            case PaperPageAction.Turn:
+                // The flip carries the text still being typed, so the leaf being left
+                // behind keeps it instead of the window silently dropping the edit.
+                if (args.Text != null)
+                    TryWriteText(entity, args.Actor, args.Text);
+
+                SetCurrentPage(entity, pages, args.Page);
+                return;
+
+            case PaperPageAction.Add:
+                if (!CanEditPages(entity, args.Actor))
+                    return;
+
+                // Pirate: persistent diary pages - a fresh leaf is made of paper you carry.
+                var material = FindSheetToUse(args.Actor);
+                if (material == null)
+                {
+                    _popupSystem.PopupClient(
+                        Loc.GetString("paper-page-add-need-paper"),
+                        entity.Owner,
+                        args.Actor,
+                        PopupType.SmallCaution);
+                    return;
+                }
+
+                if (args.Text != null)
+                    TryWriteText(entity, args.Actor, args.Text);
+
+                QueueDel(material);
+                AddPage(entity, pages);
+                _audio.PlayPvs(entity.Comp.Sound, entity);
+
+                _adminLogger.Add(LogType.Chat, LogImpact.Low,
+                    $"{ToPrettyString(args.Actor):player} added a page to {ToPrettyString(entity):entity}");
+                return;
+
+            case PaperPageAction.Remove:
+                if (!CanEditPages(entity, args.Actor))
+                    return;
+
+                // Pirate: persistent diary pages - tearing a leaf out hands you the sheet
+                // itself, with the very same text and signatures, instead of destroying it.
+                var torn = RemovePage(entity, pages);
+                if (torn == null)
+                    return;
+
+                TornOutSheet(args.Actor, torn);
+                _audio.PlayPvs(entity.Comp.Sound, entity);
+                _popupSystem.PopupClient(
+                    Loc.GetString("paper-page-torn-out", ("target", entity.Owner)),
+                    args.Actor,
+                    args.Actor);
+
+                _adminLogger.Add(LogType.Chat, LogImpact.Medium,
+                    $"{ToPrettyString(args.Actor):player} tore a page out of {ToPrettyString(entity):entity}");
+                return;
+        }
+    }
+
+    /// <summary>
+    /// Pirate: persistent text (diaries) - adding or tearing out leaves is writing,
+    /// so it obeys the same owner-only rule.
+    /// </summary>
+    private bool CanEditPages(Entity<PaperComponent> entity, EntityUid actor)
+    {
+        if (!TryComp<PersistentTextComponent>(entity, out var persistentText))
+            return true;
+
+        if (CanWrite(entity.Owner, persistentText, actor))
+            return true;
+
+        _popupSystem.PopupClient(Loc.GetString("persistent-text-cant-write"), entity.Owner, actor);
+        return false;
+    }
+
+    private void SetCurrentPage(Entity<PaperComponent> entity, PaperPagesComponent pages, int page)
+    {
+        if (pages.Pages.Count == 0)
+            pages.Pages.Add(new PaperPage());
+
+        pages.CurrentPage = Math.Clamp(page, 0, pages.Pages.Count - 1);
+        UpdateUserInterface(entity);
+    }
+
+    private void AddPage(Entity<PaperComponent> entity, PaperPagesComponent pages)
+    {
+        var index = CurrentPageIndex(pages);
+        pages.Pages.Insert(index + 1, new PaperPage());
+        pages.CurrentPage = index + 1;
+        SyncPages(entity, pages);
+    }
+
+    /// <summary>
+    /// Pirate: tears the leaf on screen out of the book and returns it, or null when it is
+    /// the last leaf - a book always keeps at least one.
+    /// </summary>
+    private PaperPage? RemovePage(Entity<PaperComponent> entity, PaperPagesComponent pages)
+    {
+        if (pages.Pages.Count <= 1)
+            return null;
+
+        var index = CurrentPageIndex(pages);
+        var torn = pages.Pages[index];
+        pages.Pages.RemoveAt(index);
+        pages.CurrentPage = Math.Min(index, pages.Pages.Count - 1);
+        SyncPages(entity, pages);
+        return torn;
+    }
+
+    /// <summary>
+    /// Pirate: a sheet that can be used as book material - paper, but not a book,
+    /// so nobody's reading material gets eaten to make a leaf.
+    /// </summary>
+    private bool IsLooseSheet(EntityUid uid)
+    {
+        if (!HasComp<PaperComponent>(uid))
+            return false;
+
+        return _tagSystem.HasTag(uid, PaperTag) && !_tagSystem.HasTag(uid, BookTag);
+    }
+
+    /// <summary>Looks for sheet material in the actor's hands and inventory.</summary>
+    private EntityUid? FindSheetToUse(EntityUid actor)
+    {
+        foreach (var container in _containers.GetAllContainers(actor))
+        {
+            foreach (var contained in container.ContainedEntities)
+            {
+                if (IsLooseSheet(contained))
+                    return contained;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Pirate: hands the torn-out leaf to the actor as an actual sheet of paper - same text,
+    /// same signatures, and a signature stamp on the sprite to show it was signed.
+    /// </summary>
+    private void TornOutSheet(EntityUid actor, PaperPage leaf)
+    {
+        var sheet = Spawn(SheetPrototype, Transform(actor).Coordinates);
+        if (!TryComp<PaperComponent>(sheet, out var paper))
+            return;
+
+        if (leaf.Signatures.Count > 0)
+        {
+            paper.StampedBy = new List<StampDisplayInfo>(leaf.Signatures);
+            paper.StampState = SignatureStampState;
+
+            if (TryComp<AppearanceComponent>(sheet, out var appearance))
+                _appearance.SetData(sheet, PaperVisuals.Stamp, paper.StampState, appearance);
+        }
+
+        SetContent((sheet, paper), leaf.Content);
+
+        // Hands full? The sheet just stays where it was dropped.
+        _hands.TryPickupAnyHand(actor, sheet);
+    }
+
+    /// <summary>
+    /// Pirate: tucks a loose sheet into the book as a new leaf, carrying its text and its
+    /// stamps over as that leaf's signatures, and consumes the sheet.
+    /// </summary>
+    private bool TryInsertSheet(Entity<PaperComponent> entity, PaperPagesComponent pages, EntityUid sheet, EntityUid actor)
+    {
+        if (!CanEditPages(entity, actor))
+            return false;
+
+        if (!TryComp<PaperComponent>(sheet, out var sheetPaper))
+            return false;
+
+        var index = CurrentPageIndex(pages);
+        pages.Pages.Insert(index + 1, new PaperPage
+        {
+            Content = sheetPaper.Content,
+            Signatures = new List<StampDisplayInfo>(sheetPaper.StampedBy),
+        });
+        pages.CurrentPage = index + 1;
+        SyncPages(entity, pages);
+
+        var sheetName = ToPrettyString(sheet);
+        QueueDel(sheet);
+
+        _popupSystem.PopupClient(
+            Loc.GetString("paper-page-inserted", ("target", entity.Owner)),
+            actor,
+            actor);
+        _audio.PlayPvs(entity.Comp.Sound, entity);
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            $"{ToPrettyString(actor):player} tucked {sheetName} into {ToPrettyString(entity):entity}");
+        return true;
+    }
+
+    private void SetPageText(Entity<PaperComponent> entity, PaperPagesComponent pages, string text)
+    {
+        pages.Pages[CurrentPageIndex(pages)].Content = text;
+        SyncPages(entity, pages);
+    }
+
+    /// <summary>
+    /// Pirate: persistent diary pages - marks the leaf on screen with a signature.
+    /// Returns false when that name already signed this leaf.
+    /// </summary>
+    public bool SignPage(Entity<PaperComponent> entity, PaperPagesComponent pages, string signatureName)
+    {
+        if (string.IsNullOrWhiteSpace(signatureName))
+            return false;
+
+        var page = pages.Pages[CurrentPageIndex(pages)];
+        if (page.Signatures.Any(stamp => string.Equals(stamp.StampedName, signatureName, StringComparison.Ordinal)))
+            return false;
+
+        page.Signatures.Add(new StampDisplayInfo
+        {
+            StampedName = signatureName,
+            StampedColor = PaperPageFormat.SignatureColor,
+        });
+
+        SyncPages(entity, pages);
+        return true;
+    }
+
+    /// <summary>
+    /// Index of the leaf on screen: clamped into range and never failing on an empty book.
+    /// </summary>
+    private static int CurrentPageIndex(PaperPagesComponent pages)
+    {
+        if (pages.Pages.Count == 0)
+            pages.Pages.Add(new PaperPage());
+
+        return Math.Clamp(pages.CurrentPage, 0, pages.Pages.Count - 1);
+    }
+
+    /// <summary>
+    /// Pirate: persistent diary pages - keeps PaperComponent.Content, the flat string that
+    /// everything else reads and that gets persisted between rounds, in sync with the leaves.
+    /// </summary>
+    private void SyncPages(Entity<PaperComponent> entity, PaperPagesComponent pages)
+    {
+        pages.CurrentPage = CurrentPageIndex(pages);
+        SetPaperContent(entity, PaperPageFormat.Encode(pages.Pages));
     }
 
     #endregion
@@ -640,6 +943,24 @@ public sealed class PaperSystem : EntitySystem
 
     public void SetContent(Entity<PaperComponent> entity, string content)
     {
+        // Pirate: persistent diary pages - a whole-document write (restore from the database,
+        // prototype content, faxes, ...) re-derives the leaves from it.
+        if (TryComp<PaperPagesComponent>(entity, out var pages))
+        {
+            pages.Pages = PaperPageFormat.Decode(content);
+            pages.CurrentPage = Math.Clamp(pages.CurrentPage, 0, pages.Pages.Count - 1);
+        }
+
+        SetPaperContent(entity, content);
+    }
+
+    /// <summary>
+    /// Pirate: persistent diary pages - the one place that actually stores a document:
+    /// keeps PaperComponent.Content (the flat string everything else reads and persists)
+    /// in sync and pushes the new bound UI state.
+    /// </summary>
+    private void SetPaperContent(Entity<PaperComponent> entity, string content)
+    {
         entity.Comp.Content = content;
         Dirty(entity);
         UpdateUserInterface(entity);
@@ -656,7 +977,24 @@ public sealed class PaperSystem : EntitySystem
 
     public void UpdateUserInterface(Entity<PaperComponent> entity)
     {
-        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
+        // Pirate: persistent diary pages - paginated items only show the leaf on screen,
+        // and its signatures stand in for the (deliberately empty) stamp list.
+        var text = entity.Comp.Content;
+        var stampedBy = entity.Comp.StampedBy;
+        var currentPage = 0;
+        var pageCount = 0;
+
+        if (TryComp<PaperPagesComponent>(entity, out var pages))
+        {
+            var index = CurrentPageIndex(pages);
+            currentPage = index;
+            pageCount = pages.Pages.Count;
+            text = pages.Pages[index].Content;
+            stampedBy = pages.Pages[index].Signatures;
+        }
+
+        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key,
+            new PaperBoundUserInterfaceState(text, stampedBy, entity.Comp.Mode, currentPage, pageCount));
     }
 
     private void OnUseInHand(Entity<PaperComponent> entity, ref UseInHandEvent args)

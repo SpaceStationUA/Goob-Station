@@ -14,6 +14,8 @@
     storageKey: randombook
     supportCharacterName: true
     appendOwnerName: false
+  # Pirate: persistent diary pages - a persistent book reads leaf by leaf like a real book
+  - type: PaperPages
 
 - type: entity
   name: book

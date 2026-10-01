@@ -41,11 +41,23 @@ public sealed partial class PaperComponent : Component
         public readonly List<StampDisplayInfo> StampedBy;
         public readonly PaperAction Mode;
 
-        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
+        // Pirate: persistent diary pages - leaf on screen and total leaf count.
+        // PageCount is 0 for plain (unpaged) paper.
+        public readonly int CurrentPage;
+        public readonly int PageCount;
+
+        public PaperBoundUserInterfaceState(
+            string text,
+            List<StampDisplayInfo> stampedBy,
+            PaperAction mode = PaperAction.Read,
+            int currentPage = 0,
+            int pageCount = 0)
         {
             Text = text;
             StampedBy = stampedBy;
             Mode = mode;
+            CurrentPage = currentPage;
+            PageCount = pageCount;
         }
     }
 
@@ -70,6 +82,41 @@ public sealed partial class PaperComponent : Component
         {
             Action = action;
         }
+    }
+    #endregion
+
+    #region Pirate: persistent diary pages
+    [Serializable, NetSerializable]
+    public sealed class PaperPageActionMessage : BoundUserInterfaceMessage
+    {
+        public readonly PaperPageAction Action;
+        public readonly int Page;
+
+        /// <summary>
+        /// Text still being typed on the leaf being left behind. Sent together with
+        /// Turn/Add so flipping pages never drops an unsaved edit; null otherwise.
+        /// </summary>
+        public readonly string? Text;
+
+        public PaperPageActionMessage(PaperPageAction action, int page = 0, string? text = null)
+        {
+            Action = action;
+            Page = page;
+            Text = text;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public enum PaperPageAction : byte
+    {
+        /// <summary>Flip to another leaf.</summary>
+        Turn,
+
+        /// <summary>Insert a fresh leaf after the current one.</summary>
+        Add,
+
+        /// <summary>Tear out the current leaf.</summary>
+        Remove,
     }
     #endregion
 

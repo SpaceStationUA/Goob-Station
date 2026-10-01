@@ -9,6 +9,7 @@ using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Paper;
 using Content.Server.Preferences.Managers;
+using Content.Server._Pirate.Paper;
 using Content.Server._Pirate.PersistentText;
 using Content.Shared._Pirate.PersistentText;
 using Content.Shared._Pirate.Photo;
@@ -29,6 +30,7 @@ public sealed class PersistentTextSystem : EntitySystem
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IServerPreferencesManager _preferences = default!;
+    [Dependency] private readonly BookSkinSystem _bookSkin = default!; // Pirate: persistent diary pages (cover)
     private readonly Dictionary<EntityUid, ResolvedTextPersistenceState> _resolvedTextStates = new();
     private Task? _persistTask;
 
@@ -137,7 +139,13 @@ public sealed class PersistentTextSystem : EntitySystem
                     _paper.UpdatePersistentTextName(uid, persistence);
                 }
 
-                if (snapshot == null || string.IsNullOrEmpty(snapshot.Content))
+                if (snapshot == null)
+                    continue;
+
+                // Pirate: persistent diary pages - the cover rides along in the stored text
+                // and is applied before the leaves are restored.
+                var restoredContent = _bookSkin.ExtractSkinMeta(uid, snapshot.Content);
+                if (string.IsNullOrEmpty(restoredContent))
                     continue;
 
                 // Pirate: the player may have written while the snapshot was loading;
@@ -148,7 +156,7 @@ public sealed class PersistentTextSystem : EntitySystem
                     continue;
                 }
 
-                _paper.SetContent((uid, paper), snapshot.Content);
+                _paper.SetContent((uid, paper), restoredContent);
             }
             catch (Exception ex)
             {
@@ -240,7 +248,8 @@ public sealed class PersistentTextSystem : EntitySystem
                 OwnerCharacterName = persistence.OwnerCharacterName,
                 OwnerUserId = persistence.OwnerUserId?.UserId,
                 SavedAt = DateTime.UtcNow,
-                Content = paper.Content
+                // Pirate: persistent diary pages - store the cover with the text.
+                Content = _bookSkin.AttachSkinMeta(uid, paper.Content)
             };
         }
 
@@ -277,7 +286,12 @@ public sealed class PersistentTextSystem : EntitySystem
             if (string.IsNullOrEmpty(snapshot.Content))
                 return;
 
-            _paper.SetContent((uid, paper), snapshot.Content);
+            // Pirate: persistent diary pages - the cover rides along in the stored text.
+            var restoredContent = _bookSkin.ExtractSkinMeta(uid, snapshot.Content);
+            if (string.IsNullOrEmpty(restoredContent))
+                return;
+
+            _paper.SetContent((uid, paper), restoredContent);
         }
         catch (Exception ex)
         {
