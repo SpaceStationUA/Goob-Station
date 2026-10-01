@@ -87,6 +87,7 @@
   keycode: 'b'
   frequency: 1001
   color: "#5ed7aa"
+
   longRange: true
 
 - type: radioChannel

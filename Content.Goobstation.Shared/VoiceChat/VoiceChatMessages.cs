@@ -194,7 +194,6 @@ public sealed class MsgVoiceAccess : NetMessage
         buffer.Write(Allowed);
     }
 }
-
 public sealed class MsgVoiceSpeakerInfo : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;

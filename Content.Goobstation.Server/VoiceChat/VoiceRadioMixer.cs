@@ -103,7 +103,6 @@ public sealed class VoiceRadioMixer(string channel, IServerNetManager net, Func<
                 _expired.Add(speaker);
                 continue;
             }
-
             if (!contributor.Primed && contributor.Frames.Count >= PrimeFrames)
                 contributor.Primed = true;
 
