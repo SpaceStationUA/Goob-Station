@@ -1,0 +1,37 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float rushPower; // 0..1, driven by remaining stimulant effect time
+
+// Rapid small-amplitude vibration: the meth "shakes"
+const highp float VibStrength = 0.0035;
+const highp float VibFreq = 45.0;
+
+// Chip-module pixel jitter: the screen jitters along a coarse pixel grid
+const highp float JitterFps = 24.0;
+const highp float JitterCellSize = 8.0; // in pixels
+const highp float JitterStrength = 0.0015;
+
+highp float rand(highp vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void fragment() {
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+
+    // Rapid vibration
+    highp vec2 vib = VibStrength * rushPower * vec2(
+        sin(TIME * VibFreq),
+        cos(TIME * VibFreq * 0.83 + 1.7));
+
+    // Stepped pixel jitter: quantized in time, per-cell random direction
+    highp float frame = floor(TIME * JitterFps);
+    highp vec2 cellId = floor(FRAGCOORD.xy / JitterCellSize);
+    highp float r = rand(cellId + frame * 0.6180339);
+    highp float ang = r * 6.2831853;
+    highp vec2 jitter = JitterStrength * rushPower * vec2(cos(ang), sin(ang));
+
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, coord + vib + jitter);
+
+    COLOR = color;
+}

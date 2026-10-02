@@ -19,6 +19,7 @@ loadout-group-generic-shoes = Shoes
 loadout-group-generic-outerclothing = Outer clothing
 loadout-group-belt = Belt
 loadout-group-gloves = Gloves
+loadout-group-reporter-head = Reporter headwear
 
 # Mantis loadout groups
 loadout-group-mantis-head = Mantis headwear

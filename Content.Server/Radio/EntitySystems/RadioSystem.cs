@@ -363,6 +363,7 @@ public sealed partial class RadioSystem : EntitySystem
 
     // Goobstation - Voice chat
     public void GetVoiceReceivers(EntityUid radioSource, RadioChannelPrototype channel, List<EntityUid> receivers)
+
     {
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);

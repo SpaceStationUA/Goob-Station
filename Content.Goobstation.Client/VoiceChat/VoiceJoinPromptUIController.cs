@@ -26,6 +26,7 @@ public sealed class VoiceJoinPromptUIController : UIController, IOnStateEntered<
         base.Initialize();
 
         _net.Connected += OnConnected;
+        _voice.AccessChanged += OnAccessChanged; // Pirate: wait for per-player authorization.
     }
 
     public void OnStateEntered(LobbyState state)
@@ -42,7 +43,7 @@ public sealed class VoiceJoinPromptUIController : UIController, IOnStateEntered<
     {
         base.FrameUpdate(args);
 
-        if (_promptAt is not { } promptAt || _timing.RealTime < promptAt)
+        if (_promptAt is not { } promptAt || _timing.RealTime < promptAt || !_voice.AccessAllowed)
             return;
 
         _promptAt = null;
@@ -65,6 +66,20 @@ public sealed class VoiceJoinPromptUIController : UIController, IOnStateEntered<
             _promptAt = _timing.RealTime + PromptDelay;
     }
 
+    private void OnAccessChanged(bool allowed)
+    {
+        if (allowed)
+        {
+            if (_cfg.GetCVar(GoobCVars.VoiceChatJoinPrompt))
+                SchedulePrompt();
+
+            return;
+        }
+
+        UIManager.GetUIController<VoiceChatGuideUIController>().Close();
+        _prompted = false;
+        _promptAt = null;
+    }
     private void OnConnected(object? sender, NetChannelArgs args)
     {
         _prompted = false;

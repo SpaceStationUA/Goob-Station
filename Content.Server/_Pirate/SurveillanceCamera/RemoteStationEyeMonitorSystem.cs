@@ -175,6 +175,7 @@ public sealed class RemoteStationEyeMonitorSystem : EntitySystem
             IncludeSyndicateCameras = true,
         });
         _mover.SetRelay(viewer, eye);
+        _mover.ResetCamera(viewer);
         _actions.AddAction(viewer, ref state.ExitAction, ExitAction);
         _zEye.ConfigureActions(viewer, ViewUpAction, ViewDownAction);
         return true;
@@ -256,8 +257,6 @@ public sealed class RemoteStationEyeMonitorSystem : EntitySystem
         if (TryComp<RemoteStationEyeMonitorComponent>(state.Monitor, out var monitor))
             monitor.ViewerEyes.Remove(viewer);
 
-        if (TryComp<RelayInputMoverComponent>(viewer, out var relay) && relay.RelayEntity == state.Eye)
-            RemComp<RelayInputMoverComponent>(viewer);
         if (TryComp<EyeComponent>(viewer, out var actorEye))
         {
             if (actorEye.Target == state.Eye)
@@ -281,6 +280,11 @@ public sealed class RemoteStationEyeMonitorSystem : EntitySystem
             RemComp<BlockMovementComponent>(viewer);
         }
 
+        // Restore the blocker before dropping the relay so its final movement refresh sees the restored state.
+        if (TryComp<RelayInputMoverComponent>(viewer, out var relay) && relay.RelayEntity == state.Eye)
+            RemComp<RelayInputMoverComponent>(viewer);
+
+        _mover.ResetCamera(viewer);
         RemComp<StationAiOverlayComponent>(viewer);
         _zEye.RemoveActions(viewer);
         _actions.RemoveAction(viewer, state.ExitAction);

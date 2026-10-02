@@ -479,6 +479,8 @@
   - LawyerJumpskirtRed
   - LawyerJumpsuitGood
   - LawyerJumpskirtGood
+  - LawyerJumpsuitPink # Pirate
+  - LawyerJumpskirtPink # Pirate
   - ServiceMJ # goob
 
 - type: loadoutGroup
@@ -1484,6 +1486,7 @@
   - ArmorVest
   - ArmorVestSlim
   - SecurityOfficerWintercoat
+  - SecurityBomber # Pirate
   #- WinterCoatSeniorSecArmored # Goobstation # Pirate disable
   #- VeteranOfficerArmor # Goobstation # Pirate disable
 
@@ -1543,6 +1546,7 @@
   - DetectiveArmorVest
   - DetectiveCoat
   - DetectiveCoatGrey
+  - SecurityBomber # Pirate
 
 - type: loadoutGroup
   id: DetectiveJobTrinkets

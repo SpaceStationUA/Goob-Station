@@ -76,11 +76,17 @@ namespace Content.Client.PDA
             };
 
             _menu.ContractsButton.OnPressed += _ => SendMessage(new PdaShowContractsMessage()); // Pirate: traitor contracts.
+            _menu.OnThemeToggleRequested += parent => // Pirate: WebUI theme picker (its own view).
+                Content.Pirate.UIKit.PdaThemeHost.Toggle(parent, Owner);
 
             _menu.OnProgramItemPressed += ActivateCartridge;
             _menu.OnInstallButtonPressed += InstallCartridge;
             _menu.OnUninstallButtonPressed += UninstallCartridge;
-            _menu.ProgramCloseButton.OnPressed += _ => DeactivateActiveCartridge();
+            _menu.ProgramCloseButton.OnPressed += _ => // Pirate: theme view close stays in the menu.
+            {
+                if (!_menu.IsThemeView)
+                    DeactivateActiveCartridge();
+            };
 
             var borderColorComponent = GetBorderColorComponent();
             if (borderColorComponent == null)

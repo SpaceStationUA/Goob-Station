@@ -177,6 +177,23 @@ public sealed class MsgVoiceStatus : NetMessage
     }
 }
 
+// Pirate: server-only access policy; never infer eligibility from global CVars on the client.
+public sealed class MsgVoiceAccess : NetMessage
+{
+    public override MsgGroups MsgGroup => MsgGroups.Command;
+
+    public bool Allowed;
+
+    public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
+    {
+        Allowed = buffer.ReadBoolean();
+    }
+
+    public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
+    {
+        buffer.Write(Allowed);
+    }
+}
 public sealed class MsgVoiceSpeakerInfo : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;

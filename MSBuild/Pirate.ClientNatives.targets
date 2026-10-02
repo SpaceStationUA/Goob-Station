@@ -1,0 +1,17 @@
+<Project>
+  <!--
+    Pirate: WebView natives.
+    Robust.Natives.Angle (via Robust.Client) and Robust.Natives.Cef (via Robust.Client.WebView) both ship
+    runtimes/win-x64/native/libEGL.dll and libGLESv2.dll. Every client project writes into the shared
+    bin/Content.Client, so each build copied one package's copy over the other's and the files were never
+    "unchanged". With a client running, the CEF subprocess holds them open and the build fails with MSB3027.
+    CEF's copies are the ones that end up in bin anyway (Content.Pirate.Client builds last), so drop ANGLE's.
+    Import this in every project whose OutputPath is bin/Content.Client.
+  -->
+  <Target Name="PirateDropDuplicateAngleNatives" BeforeTargets="_CopyFilesMarkedCopyLocal">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)"
+                               Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Robust.Natives.Angle' And ('%(Filename)%(Extension)' == 'libEGL.dll' Or '%(Filename)%(Extension)' == 'libGLESv2.dll')" />
+    </ItemGroup>
+  </Target>
+</Project>

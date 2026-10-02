@@ -19,17 +19,20 @@ public abstract partial class CESharedZLevelsSystem
     private void ShutdownOpeningCache()
     {
         _openingCache.Clear();
+        _visualOpeningCache.Clear();
     }
 
     private void OnGridRemovalForCache(EntityUid uid, MapGridComponent comp, GridRemovalEvent args)
     {
         _openingCache.RemoveGrid(uid);
+        _visualOpeningCache.RemoveGrid(uid);
     }
 
     /// <summary>Invalidates the changed chunks for a grid.</summary>
     protected void InvalidateOpeningCache(Entity<MapGridComponent> grid, ReadOnlySpan<TileChangedEntry> changes)
     {
         _openingCache.InvalidateTiles(grid, changes);
+        _visualOpeningCache.InvalidateTiles(grid, changes);
     }
 
     /// <summary>True if the given map's primary grid (planet-style) has an opening tile at <paramref name="worldPos"/>.</summary>
@@ -77,6 +80,16 @@ public abstract partial class CESharedZLevelsSystem
     public bool HasOpeningInTileBounds(Entity<MapGridComponent> grid, Vector2i start, Vector2i end)
     {
         return _openingCache.HasOpeningInTileBounds(grid, start, end, _map, TilDefMan);
+    }
+
+    /// <summary>
+    /// Checks whether a tile-bounded region shows the deck below when rendered: empty, ZTransparent or
+    /// sight-permeable tiles. Use this for render culling; <see cref="HasOpeningInTileBounds"/> is the
+    /// cross-Z sight/PVS predicate and ignores see-through floors.
+    /// </summary>
+    public bool HasVisualOpeningInTileBounds(Entity<MapGridComponent> grid, Vector2i start, Vector2i end)
+    {
+        return _visualOpeningCache.HasOpeningInTileBounds(grid, start, end, _map, TilDefMan);
     }
 
     /// <summary>

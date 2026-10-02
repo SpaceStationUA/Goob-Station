@@ -1,0 +1,108 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+uniform sampler2D artTexture; // the "before" frame (splash / lobby art)
+uniform highp float progress; // 0 = art fully opaque, 1 = art invisible
+uniform highp float maskMode; // 0 = dither cells, 1 = staggered bands, 2 = centered circle, 3 = sweep, 4 = precise stripes, 5 = art stripes
+uniform highp float seed;
+uniform highp vec2 artScale; // maps screen uv into the art's cover-cropped uv space
+uniform highp vec2 artOffset;
+
+const highp float CellSize = 6.0; // art is dithered in ~8px blocks; 6 reads well on both
+const highp float BandCount = 7.0;
+
+highp float hash(highp vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+// mode 5: dissolve the art stripe-by-stripe. The lobby art's own diagonal color
+// bands (8 of them, slope ~0.135 uv) each vanish as a unit on their own timer,
+// with a per-pixel dither inside a short window; other stripes stay intact.
+highp float stripeArtMask(highp vec2 coord) {
+    highp float a = clamp(coord.x - coord.y * 0.135, 0.0, 0.9999);
+    highp float band = floor(a * 8.0);
+    highp float rng = hash(vec2(band, seed * 61.17));
+    // each stripe stays solid until its own start, then erases in a short window
+    highp float start = rng * 0.72;
+    highp float gone = clamp((progress - start) / 0.18, 0.0, 1.0);
+    // hold the value solid until the erase begins, then a tight pixel dither
+    if (gone <= 0.0)
+        return 1.0;
+    highp float pix = hash(floor(coord * SCREEN_PIXEL_SIZE) + band * 7.31);
+    return gone >= 1.0 ? 0.0 : (pix < gone ? 0.0 : 1.0);
+}
+
+// mode 4: precise pixel-locked vertical stripes. Each stripe dissolves from the
+// top down; a 12px fringe between the revealed and intact areas carries the
+// dither, everything else inside and outside the fringe stays solid.
+highp float stripeMask(highp vec2 coord) {
+    highp float stripeFrac = SCREEN_PIXEL_SIZE.x * 24.0;
+    highp float bx = floor(coord.x / stripeFrac);
+    highp float rng = hash(vec2(bx, seed * 61.17));
+    highp float r = hash(floor(coord * SCREEN_PIXEL_SIZE) + seed * 61.17);
+    highp float staggerSpan = 0.35;
+    highp float p = clamp(progress * (1.0 + staggerSpan) - rng * staggerSpan, 0.0, 1.0);
+    highp float fringe = SCREEN_PIXEL_SIZE.y * 12.0;
+    highp float diff = coord.y - p;
+    if (diff <= -fringe)
+        return 0.0;
+    if (diff >= fringe)
+        return 1.0;
+    return clamp(0.5 + diff / (2.0 * fringe) + (r - 0.5) * 0.9, 0.0, 1.0);
+}
+
+// normalized mask 0..1: pixels where mask > progress already show the game
+highp float mask(highp vec2 coord) {
+    highp vec2 cells = floor(coord * SCREEN_PIXEL_SIZE * 1080.0 / CellSize);
+    highp float r = hash(cells + seed * 61.17);
+
+    if (maskMode < 0.5) {
+        // chunky dither cells
+        return r;
+    }
+
+    if (maskMode > 0.5 && maskMode < 1.5) {
+        // staggered diagonal bands, dithered inside each band
+        highp float d = (coord.x + coord.y - 1.0) * 0.5; // along the diagonal
+        highp float band = floor(fract(d + seed * 0.173) * BandCount);
+        return fract(band * 0.61803 + r * 0.5 + 0.25);
+    }
+
+    if (maskMode > 1.5 && maskMode < 2.5) {
+        // growing circle from the center
+        highp vec2 centered = coord - vec2(0.5);
+        highp float dist = length(centered) * 2.0;
+        return clamp(dist / 1.05, 0.0, 1.0);
+    }
+
+    if (maskMode > 3.5 && maskMode < 4.5) {
+        return stripeMask(coord);
+    }
+
+    if (maskMode > 4.5 && maskMode < 5.5) {
+        return stripeArtMask(coord);
+    }
+
+    // sweep across, dithered at the edge
+    highp float along = clamp(coord.x * 0.75 + coord.y * 0.25, 0.0, 1.05);
+    return clamp(along / 1.05, 0.0, 1.0) * 0.5 + r * 0.5;
+}
+
+
+void fragment() {
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+
+    // idle shimmer while the art is up and "still" (cover phase)
+    highp float idle = (1.0 - progress) * 0.0012;
+    highp vec2 artUv = (coord - vec2(0.5)) * artScale + vec2(0.5) + artOffset;
+    artUv.y += sin(TIME * 2.7 + seed * 10.0) * idle;
+    artUv.x += sin(TIME * 2.1 + seed * 7.0 + 1.3) * idle * 0.5;
+
+    highp vec4 art = zTextureSpec(artTexture, clamp(artUv, 0.0, 1.0));
+
+    // punch the dissolve through with a dithered edge, hard binary per cell
+    highp float m = mask(coord);
+    highp float edge = 0.02;
+    highp float t = smoothstep(m - edge, m + edge, progress);
+    highp float artAlpha = 1.0 - t;
+
+    COLOR = art * artAlpha;
+}

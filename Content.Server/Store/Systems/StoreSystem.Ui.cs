@@ -221,7 +221,6 @@ public sealed partial class StoreSystem
         }
 
         Dirty(uid, component);
-
         //spawn entity
         if (listing.ProductEntity != null)
         {
@@ -250,7 +249,7 @@ public sealed partial class StoreSystem
             EntityUid? actionId = null;
             var existingActionFound = false;
 
-            if (!_mind.TryGetMind(buyer, out var mind, out _))
+            if (listing.ApplyToMob || !_mind.TryGetMind(buyer, out var mind, out _)) // Pirate: retain mob ownership alongside action recharge.
             {
                 if (TryComp<ActionsComponent>(buyer, out var buyerActions))
                 {

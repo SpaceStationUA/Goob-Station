@@ -1,0 +1,18 @@
+- type: entity  
+  parent: RMCOverheadRoadsign  
+  id: PirateBillBoardLizardGasStation  
+  name: lizard gas station billboard
+  description: A lizard advertisement billboard.  
+  components:  
+  - type: Sprite  
+    sprite: _Pirate/Structures/billboards.rsi  
+    state: gas_station  
+    drawdepth: Effects  
+  - type: Icon  
+    sprite: _Pirate/Structures/billboards.rsi  
+    state: gas_station
+  - type: InteractionOutline  
+  - type: Physics  
+    bodyType: Static  
+    canCollide: False
+

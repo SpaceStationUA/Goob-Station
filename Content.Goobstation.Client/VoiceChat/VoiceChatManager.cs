@@ -26,8 +26,10 @@ public sealed class VoiceChatManager
     public event Action<bool>? WebConnectedChanged;
     public event Action<bool>? DeafenedChanged;
     public event Action? LinkChanged;
+    public event Action<bool>? AccessChanged; // Pirate
 
     public bool WebConnected { get; private set; }
+    public bool AccessAllowed { get; private set; } // Pirate: unknown is denied until server replies.
 
     public bool MicMuted { get; private set; }
 
@@ -48,6 +50,7 @@ public sealed class VoiceChatManager
         _net.RegisterNetMessage<MsgVoiceLink>(OnLink);
         _net.RegisterNetMessage<MsgVoiceSettings>();
         _net.RegisterNetMessage<MsgVoiceStatus>(OnStatus);
+        _net.RegisterNetMessage<MsgVoiceAccess>(OnAccess);
         _net.RegisterNetMessage<MsgVoiceSpeakerInfo>(message => SpeakerInfoReceived?.Invoke(message));
         _net.RegisterNetMessage<MsgVoiceSelf>(message => SelfReceived?.Invoke(message));
         _net.RegisterNetMessage<MsgVoicePushToTalk>();
@@ -112,7 +115,7 @@ public sealed class VoiceChatManager
 
     public bool RequestLink()
     {
-        if (!_net.IsConnected || !_cfg.GetCVar(GoobCVars.VoiceChatEnabled))
+        if (!_net.IsConnected || !_cfg.GetCVar(GoobCVars.VoiceChatEnabled) || !AccessAllowed)
             return false;
 
         _net.ClientSendMessage(new MsgVoiceLinkRequest());
@@ -138,6 +141,7 @@ public sealed class VoiceChatManager
     {
         _mutedSpeakers.Clear();
         PageUrl = null;
+        SetAccess(false);
         LinkCode = null;
         LinkChanged?.Invoke();
         SetWebConnected(false);
@@ -156,6 +160,27 @@ public sealed class VoiceChatManager
         SetWebConnected(message.Connected);
     }
 
+    private void OnAccess(MsgVoiceAccess message)
+    {
+        SetAccess(message.Allowed);
+    }
+
+    private void SetAccess(bool allowed)
+    {
+        if (AccessAllowed == allowed)
+            return;
+
+        AccessAllowed = allowed;
+        if (!allowed)
+        {
+            PageUrl = null;
+            LinkCode = null;
+            LinkChanged?.Invoke();
+            SetWebConnected(false);
+        }
+
+        AccessChanged?.Invoke(allowed);
+    }
     private void SetWebConnected(bool connected)
     {
         if (WebConnected == connected)

@@ -1,0 +1,13 @@
+TinyYurts — vendored third-party WebArcade game
+Fetched by Scripts/sh/vendor-arcade-games.sh.
+
+id:      yurts
+license: MIT
+repo:    burntcustard/tiny-yurts
+ref:     682fdf012260e7b815f38bbd119cdd9ccc0aae30
+kind:    repo (subpath: dist)
+fetched: 2026-09-19T20:39:20Z
+
+This is a third-party work from the JS13kGames 2024 (or 2023) competition.
+See the repository/source above for the original license text and copyright
+holder. We do not claim authorship and we do not modify the code.

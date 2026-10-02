@@ -38,6 +38,7 @@ public sealed class VoiceBroadcastSystem : EntitySystem
     {
         base.Initialize();
 
+
         SubscribeLocalEvent<CommunicationsConsoleComponent, VoiceBroadcastToggleMessage>(OnToggle);
         SubscribeLocalEvent<VoiceBroadcastConsoleComponent, ComponentShutdown>(OnShutdown);
     }
@@ -58,7 +59,8 @@ public sealed class VoiceBroadcastSystem : EntitySystem
                 !_power.IsPowered(console) ||
                 !_interaction.InRangeUnobstructed(user, console) ||
                 !_player.TryGetSessionByEntity(user, out var session) ||
-                session.Status != SessionStatus.InGame)
+                session.Status != SessionStatus.InGame ||
+                !_voice.CanUseVoice(session))
             {
                 _toStop.Add(user);
             }
@@ -84,7 +86,7 @@ public sealed class VoiceBroadcastSystem : EntitySystem
         {
             foreach (var session in _player.Sessions)
             {
-                if (session.Status == SessionStatus.InGame)
+                if (session.Status == SessionStatus.InGame && _voice.CanUseVoice(session))
                     recipients.Add(session);
             }
 
@@ -93,10 +95,10 @@ public sealed class VoiceBroadcastSystem : EntitySystem
 
         foreach (var session in _station.GetInOwningStation(console).Recipients)
         {
-            recipients.Add(session);
+            if (_voice.CanUseVoice(session))
+                recipients.Add(session);
         }
     }
-
     private void OnShutdown(Entity<VoiceBroadcastConsoleComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.Broadcaster is { } user)
@@ -127,7 +129,8 @@ public sealed class VoiceBroadcastSystem : EntitySystem
             return;
         }
 
-        if (!_player.TryGetSessionByEntity(user, out var session) || !_voice.IsWebConnected(session.UserId))
+        if (!_player.TryGetSessionByEntity(user, out var session) ||
+            !_voice.CanUseVoice(session) || !_voice.IsWebConnected(session.UserId))
         {
             _popup.PopupEntity(Loc.GetString("voice-broadcast-not-connected"), ent, user, PopupType.SmallCaution);
             return;

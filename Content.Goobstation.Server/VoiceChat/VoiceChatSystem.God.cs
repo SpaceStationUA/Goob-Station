@@ -116,7 +116,7 @@ public sealed partial class VoiceChatSystem
         if (!_adminManager.HasAdminFlag(session, AdminFlags.Admin) || !CollectGodRecipients(session, god))
         {
             StopGodVoice(session);
-            return false;
+            return true; // Pirate: consume the private frame; never fall through to ordinary routing.
         }
 
         var speaker = GetSpeaker(frame.User);
@@ -144,7 +144,8 @@ public sealed partial class VoiceChatSystem
         if (god.Target.Mode == VoiceGodMode.Player)
         {
             if (!_player.TryGetSessionById(god.Target.Player, out var target) ||
-                target.Status is SessionStatus.Disconnected or SessionStatus.Zombie)
+                target.Status is SessionStatus.Disconnected or SessionStatus.Zombie ||
+                !_voice.CanUseVoice(target))
             {
                 return false;
             }
@@ -168,6 +169,7 @@ public sealed partial class VoiceChatSystem
         {
             if (session == admin ||
                 session.Status != SessionStatus.InGame ||
+                !_voice.CanUseVoice(session) ||
                 session.AttachedEntity is not { } listener)
             {
                 continue;
@@ -234,7 +236,7 @@ public sealed partial class VoiceChatSystem
         god.Channels.Clear();
         foreach (var recipient in god.Recipients)
         {
-            if (recipient.Status == SessionStatus.Disconnected)
+            if (recipient.Status == SessionStatus.Disconnected || !_voice.CanUseVoice(recipient))
                 continue;
 
             god.Channels.Add(recipient.Channel);

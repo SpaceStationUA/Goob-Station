@@ -755,6 +755,7 @@
   groups:
   - GroupTankHarness
   - ReporterJumpsuit
+  - ReporterHead # Pirate
   - ReporterOuterClothing # Goobstation - Bodycams
   - CommonBackpack
   - Glasses

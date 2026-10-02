@@ -1,0 +1,97 @@
+/* Kit stylesheet - all values come from the theme tokens in tokens.css. */
+
+.pk-window {
+  position: relative;
+  display: flex; flex-direction: column; height: 100%; flex: 1;
+  background: var(--bg); color: var(--text);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.pk-titlebar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, var(--panel2), var(--panel));
+  border-bottom: 1px solid var(--line);
+  text-transform: uppercase; letter-spacing: .12em;
+  font-size: 12px; font-weight: 700;
+}
+.pk-title { color: var(--accent2); }
+.pk-titlebar-spacer { flex: 1; }
+.pk-close {
+  padding: 2px 8px; font-size: 12px; cursor: pointer;
+}
+.pk-content {
+  position: relative;
+  overflow: hidden;
+  /* bound the content column so .list gets a real box to scroll in */
+  flex: 1 1 0; min-height: 0;
+  display: flex; flex-direction: column;
+}
+.watermark {
+  position: absolute; inset: 0;
+  opacity: 0.14;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 58%;
+  mask-size: 58%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pk-panel {
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+.pk-panel-title {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--dim); margin-bottom: 6px;
+}
+
+.pk-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--panel2); color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px 12px; font-size: 13px; cursor: pointer;
+  font-family: inherit;
+}
+.pk-btn:hover { background: color-mix(in srgb, var(--panel2) 82%, var(--accent2)); }
+.pk-btn:active { background: var(--accent); color: #000; }
+.pk-btn.pk-accent { background: var(--accent); color: #fff; font-weight: 600; }
+.pk-btn.pk-accent:hover { filter: brightness(1.15); }
+.pk-btn.pk-danger { background: var(--panel2); color: var(--danger); border-color: var(--danger); }
+.pk-btn.pk-danger:hover { background: var(--danger); color: #fff; }
+.pk-btn.pk-disabled { opacity: .4; cursor: default; }
+
+.pk-icon { display: inline-flex; align-items: center; }
+.pk-icon > svg { display: block; }
+
+.pk-meter {
+  height: 8px; position: relative;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.pk-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width .2s linear;
+}
+.pk-meter-danger .pk-meter-fill,
+.pk-meter-fill.pk-meter-danger {
+  background: linear-gradient(90deg, var(--danger), var(--accent2));
+  animation: pk-pulse 900ms steps(2, jump-none) infinite;
+}
+@keyframes pk-pulse { 50% { filter: brightness(1.6); } }
+
+/* Theme flavor: Syndicate chamfers the gaps between panels. */
+.theme-syndi .pk-window { clip-path: none; }
+.theme-syndi .pk-titlebar {
+  letter-spacing: .22em;
+  text-shadow: 0 0 6px color-mix(in srgb, var(--accent) 55%, transparent);
+}
