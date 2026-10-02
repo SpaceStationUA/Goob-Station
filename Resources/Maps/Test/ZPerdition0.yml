@@ -4589,7 +4589,6 @@ entities:
       siloNetwork: perdition
     - type: DeviceNetwork
       configurators:
-      - invalid
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial
