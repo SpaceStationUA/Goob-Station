@@ -113,3 +113,41 @@
     access:
       - [ Mantis ]
       - [ ResearchDirector ]
+- type: entity
+  id: ComputerShipyard
+  parent: BaseComputer
+  name: shipyard console
+  description: Used to purchase shuttles.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: shipyard
+      sprite: _Pirate/Structures/Machines/computers.rsi
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: generic_panel_open
+  - type: ShipyardConsole
+    categories: [Civilian, Cargo, Command, Small, Medium, Large, Humongous]
+  - type: AccessReader
+    access:
+    - [ Captain ]
+  - type: ActivatableUI
+    key: enum.ShipyardConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ShipyardConsoleUiKey.Key:
+        type: ShipyardConsoleBoundUserInterface
+  - type: Computer
+    board: ShipyardComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: StealTarget
+    stealGroup: ShipyardComputerCircuitboard

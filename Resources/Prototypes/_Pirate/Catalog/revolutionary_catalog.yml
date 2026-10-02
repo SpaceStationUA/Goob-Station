@@ -16,7 +16,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  saleLimit: 1
 
 - type: listing
   id: RevolutionaryUplinkSunglasses
@@ -30,7 +29,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 2
-  saleLimit: 2
 
 - type: listing
   id: RevolutionaryUplinkSyndieKey
@@ -44,7 +42,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  saleLimit: 1
 
 - type: listing
   id: RevolutionaryUplinkFastDrawImplanter
@@ -58,7 +55,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  saleLimit: 1
 
 - type: listing
   id: RevolutionaryUplinkRevLieutenantImplanter
@@ -72,7 +68,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 3
-  saleLimit: 1
 
 - type: listing
   id: RevolutionaryUplinkCameraBug
@@ -86,7 +81,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 3
-  saleLimit: 1
 
 - type: listing
   id: RevolutionaryUplinkListeningBug
@@ -100,7 +94,6 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 5
-  saleLimit: 5
 
 - type: listing
   id: RevolutionaryUplinkTrenchWhistle
@@ -114,4 +107,3 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  saleLimit: 1

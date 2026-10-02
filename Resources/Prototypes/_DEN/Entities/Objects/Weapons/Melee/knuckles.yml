@@ -14,6 +14,8 @@
   name: manifold
   description: "A heavy mnemolith gauntlet designed for control rather than sheer lethality, capable of hurling foes back and, at times, deflecting incoming fire. Said to take its name from its capacity for folding men, and its clever design allows it to be worn on either hand. Deadly when wielded against psionic and otherworldly threats."
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Unarmed # Pirate: weapon skills
   - type: Foldable
     canFoldInsideContainer: true
     foldVerbText: fold-flip-verb
@@ -86,6 +88,8 @@
   name: twinned manifold
   description: "Heavy mnemolith gauntlets forged through forbidden rituals, capable of hurling foes back and, at times, deflecting incoming fire. Said to take their name from their capacity for folding men. Deadly when wielded against psionic and otherworldly threats."
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Unarmed # Pirate: weapon skills
   - type: Sprite
     sprite: _DEN/Objects/Weapons/Melee/Mantis/mantisfistdouble.rsi
     state: icon

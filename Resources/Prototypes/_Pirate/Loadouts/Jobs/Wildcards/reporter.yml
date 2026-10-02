@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Pirate: Reporter loadouts ported from Starlight. The press fedora and the
+# press armor are playtime rewards for people who actually play Reporter.
+
+# Head
+- type: loadout
+  id: ReporterPressFedora
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobReporter
+      time: 10h # same gate as the Starlight original
+  equipment:
+    head: ClothingHeadHatFedoraPress
+
+# Outerclothing
+- type: loadout
+  id: ReporterPressVest
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobReporter
+      time: 35h # same gate as the Starlight original
+  equipment:
+    outerClothing: ClothingOuterPressArmor
+
+- type: loadoutGroup
+  id: ReporterHead
+  name: loadout-group-reporter-head
+  minLimit: 0
+  loadouts:
+  - ReporterPressFedora

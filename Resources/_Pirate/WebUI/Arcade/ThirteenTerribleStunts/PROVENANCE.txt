@@ -1,0 +1,14 @@
+ThirteenTerribleStunts — vendored third-party WebArcade game
+Fetched by Scripts/sh/vendor-arcade-games.sh.
+
+id:      stunts
+license: CC-BY-NC-4.0
+repo:    lopis/thirteen-terrible-stunts
+ref:     5ee4f39c4c8d38c3c7d5a0c9f74d71de1697f12e
+kind:    repo (subpath: dist)
+fetched: 2026-09-19T20:39:19Z
+
+This is a third-party work from the JS13kGames 2024 (or 2023) competition.
+See the repository/source above for the original license text and copyright
+holder. We do not claim authorship and we do not modify the code.
+Exception: removed third-party analytics script (p.jlopes.dev).

@@ -3,6 +3,7 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
+  - AspidTP # Pirate - щож, ви просили аспід - ви отримали аспід
   - Atlas
   - Bagel
   - BoxTP # Pirate
@@ -27,7 +28,7 @@
   #- Train # Goobstation - all my friends hate train
   - FlandHighPop
   - OasisHighPop
-  - Barratry # Goobstation - Re-add barratry
+  # Barratry # Goobstation: removed from rotation
   - KettleTP # Pirate
   #- Kettle # Pirate
   - Leonid # Goobstation - for goob by goob
@@ -35,9 +36,9 @@
   - Chloris # Goobstation - also Corvax because we love [Err404]maps
   - Cog # those who forget to clear their multitool
   - Serpentcrest # Goobstation when contra
-  - PerditionTP # Pirate
+  - ZPerdition # Pirate: ZPerdition map pool
   - PiramideTP # Pirate
   #- Plasma # Goob - No. Leave it to the mappers.
   #- Exo # Goobstation - Just no
   #- Snowball # Pirate - not even Goob station map, nuh uh
-  - Shoukou # Pirate
+  - PirateShoukou # Pirate

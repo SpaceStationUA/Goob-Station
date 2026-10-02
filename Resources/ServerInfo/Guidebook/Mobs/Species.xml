@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <Document>
   # Види
 
-  Nanotrasen працевлаштовує різноманітні розумні види.
+  Nanotrasen працевлаштовує різноманітні розумні види. Варто дізнатися про їхні особливості, щоб розуміти потреби інших членів екіпажу.
 
   <Box>
     <GuideEntityEmbed Entity="MobArachnid" Caption="Арахнід"/>

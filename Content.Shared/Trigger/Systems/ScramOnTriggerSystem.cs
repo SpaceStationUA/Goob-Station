@@ -1,3 +1,4 @@
+using Content.Shared._Pirate.Trigger; // Pirate: scram grid teleport
 using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: scram implant station scope
 using Content.Shared.Maps;
 using Content.Shared.Movement.Pulling.Components;
@@ -10,6 +11,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Containers; // Goobstation
 
 namespace Content.Shared.Trigger.Systems;
 
@@ -22,14 +24,23 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly TurfSystem _turfSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!; // Goobstation
 
     protected override void OnTrigger(Entity<ScramOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
         EntityCoordinates? targetCoords = null;
 
+        #region Pirate: scram grid teleport - teleport to the default station map with the scoped grid selection as fallback
         // Pirate: only commit the server-side trigger when there is somewhere to teleport.
-        if (_net.IsServer && (targetCoords = SelectRandomTileInRange(target, ent.Comp.TeleportRadius)) == null)
-            return;
+        if (_net.IsServer)
+        {
+            var destination = new ScramDefaultMapDestinationEvent(target);
+            RaiseLocalEvent(ent.Owner, ref destination);
+            targetCoords = destination.Coordinates ?? SelectRandomTileInRange(target, ent.Comp.TeleportRadius);
+            if (targetCoords == null)
+                return;
+        }
+        #endregion
 
         // We need stop the user from being pulled so they don't just get "attached" with whoever is pulling them.
         // This can for example happen when the user is cuffed and being pulled.
@@ -58,16 +69,24 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     #region Pirate: scram implant station scope - StationDataComponent.Grids also contains docked shuttles (cargo, ATS, etc), so this uses CEZLinkedGridComponent instead, which only links a station's own floor grids across Z and never shuttles
     private EntityCoordinates? SelectRandomTileInRange(EntityUid uid, float radius, PhysicsComponent? physicsComponent = null)
     {
-        var userXform = Transform(uid);
-        var userCoords = userXform.Coordinates;
         if (!Resolve(uid, ref physicsComponent))
             return null;
 
+        // Pirate: an entity inside a locker or backpack scrams from the outer container's position.
+        var userXform = Transform(uid);
+        if (_container.IsEntityOrParentInContainer(uid))
+        {
+            if (!_container.TryGetOuterContainer(uid, userXform, out var container))
+                return null;
+
+            userXform = Transform(container.Owner);
+        }
+
+        var userCoords = userXform.Coordinates;
         if (userXform.GridUid is not { } currentGridUid)
             return null;
 
-        // PeerGrids excludes the grid's own depth (see CEZLevelsSystem.GridSync), so the current grid
-        // has to be added back in alongside every linked floor above/below.
+        // PeerGrids excludes the grid's own depth, so include this floor and the linked floors.
         List<EntityUid> candidateGrids;
         if (TryComp<CEZLinkedGridComponent>(currentGridUid, out var linkedGrid))
         {

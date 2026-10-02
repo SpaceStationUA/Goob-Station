@@ -181,6 +181,20 @@
     keysExtractionMethod: Prying
     keySlots: 10
   - type: TelecomServer
+  #region Pirate: nanochat monitor
+  # Local NanoChat log viewer. Present on every server, but only live on the one holding the key for
+  # the channel NanoChat runs on - the verb is hidden otherwise. Deliberately no ID check.
+  - type: NanoChatMonitor
+  - type: NanoChatLogHost
+  - type: ActivatableUIRequiresPower
+  - type: ActivatableUI
+    key: enum.NanoChatMonitorUiKey.Key
+    verbText: nanochat-monitor-verb
+  - type: UserInterface
+    interfaces:
+      enum.NanoChatMonitorUiKey.Key:
+        type: NanoChatMonitorBoundUserInterface
+  #endregion
   - type: ContainerContainer
     containers:
       key_slots: !type:Container

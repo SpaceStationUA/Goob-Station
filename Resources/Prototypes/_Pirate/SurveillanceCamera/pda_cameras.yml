@@ -1,0 +1,43 @@
+- type: entity
+  id: BuiltInSyndicatePdaCamera
+  name: Syndicate PDA camera
+  components:
+  - type: SurveillanceCamera
+    networkSet: true
+    nameSet: true
+    mobile: true
+    useEntityNameAsCameraId: true
+  - type: Eye
+  - type: SyndicatePdaCamera
+  - type: StationAiVision
+    range: 8
+  - type: CameraActiveVision
+  - type: SyndicateOnlyVision
+
+- type: entity
+  id: BuiltInErtPdaCamera
+  name: ERT PDA camera
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+    nameSet: true
+    mobile: true
+    useEntityNameAsCameraId: true
+  - type: Eye
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: SurveillanceCameraMicrophone
+    blacklist:
+      components:
+      - SurveillanceCamera
+      - SurveillanceCameraMonitor
+      - RadioSpeaker
+  - type: ActiveListener
+    range: 10
+  - type: StationAiVision
+    range: 8
+  - type: CameraActiveVision

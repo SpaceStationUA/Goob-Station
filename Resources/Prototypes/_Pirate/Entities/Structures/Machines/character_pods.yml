@@ -82,6 +82,9 @@
     - MindRoleGhostRoleCybersun
     raffle:
       settings: default
+  - type: GhostRoleRequiredJobs # Require the Cybersun team-leader whitelist for this ghost role.
+    jobs:
+    - CybersunTeamLeader
   - type: CharacterPod
     settings: LavalandSyndieSoldierTeamLeader
     startingBalance: 1000
@@ -106,3 +109,25 @@
     startingBalance: 1000
     extraComponents:
     - type: TargetObjectiveImmune
+
+- type: entity
+  parent: BaseCharacterPod
+  id: CharacterPodLizardGasStaff
+  suffix: Gas Station Staff
+  components:
+  - type: GhostRole
+    name: працівник Lizard Gas Station
+    description: Невідомо, як ви тут опинилися. Проте відомо лише одне - ви маєте отримати якомога більший прибуток від продажів. Роль можуть обрати лише Ящеролюди / Унаті.
+    rules: Не покидайте заправку та не влаштовуйте суперечки
+    mindRoles:
+    - MindRoleGhostRoleNeutral
+    raffle:
+      settings: default
+  - type: CharacterPod
+    settings: LavalandLizardGasStationStaff
+    startingBalance: 1000
+    extraComponents:
+    - type: TargetObjectiveImmune
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/character_pod_civilian.rsi
+    state: pod

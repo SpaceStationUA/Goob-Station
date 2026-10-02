@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionRemoteStationEyeExit
+  name: Exit observation
+  description: Return to the observation console.
+  components:
+  - type: Action
+    checkCanInteract: false
+    priority: -20
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Shitmed/Interface/Actions/actions_abductor.rsi
+      state: exit
+  - type: InstantAction
+    event: !type:RemoteStationEyeExitEvent

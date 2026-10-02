@@ -8,3 +8,34 @@
     sprite: _Pirate/Clothing/OuterClothing/Armor/security_cadet.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/OuterClothing/Armor/security_cadet.rsi
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterPressArmor
+  name: бронежилет
+  description: На ньому білим кольором написано «PRESS». Це допоможе вам вижити, поки ви шукаєте цікаві заголовки!
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0, 0, 1, 1
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Armor/reportersuit.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Armor/reportersuit.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-vox
+      outerClothing-resomi:
+      - state: equipped-OUTERCLOTHING-resomi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.90
+        Heat: 0.90
+  - type: ExplosionResistance
+    damageCoefficient: 0.85

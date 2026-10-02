@@ -37,6 +37,7 @@ public sealed partial class CEZLevelsSystem : CESharedZLevelsSystem
         InitGridSync();
         InitItems(); // Pirate: multiz
         InitTransitionBudget();
+        InitializeGridLookup();
 
         // Run before round-start variation so floor grids are linked before it spreads across them.
         SubscribeLocalEvent<CEStationZLevelsComponent, StationPostInitEvent>(OnStationPostInit,

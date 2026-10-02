@@ -1,0 +1,287 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# HECU squad roles, in two groups: IPC (the main squad) and organic humans. Both groups are called by
+# callspecforces (HecuIpc / HecuHuman) and spawnable per role.
+#
+# Gear is layered so each role only states its differences:
+#   HECUSquadGearBase -> HECUSquadGearHuman / HECUSquadGearIPC -> HECUOperativeGear, leader
+#   HECUMedicGearBase -> HECUMedicGear / HECUMedicGearIPC
+# startingGear inhand lists always merge with a parent's, so weapons only ever go on the leaves.
+# The bases are deliberately NOT abstract: an abstract startingGear silently drops every descendant from the
+# index (children come out unresolvable, with no load error).
+
+- type: startingGear
+  id: HECUSquadGearBase
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHECUUrbanCamo
+    back: ClothingBackpackHECUFilled
+    mask: ClothingMaskGasHECU
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorHECU
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHelmetHECUPoweredNVG
+    id: HecuPDA
+    belt: ClothingBeltHECUFilled
+    pocket1: FlashlightSeclite
+    pocket2: PowerCellHigh
+
+- type: startingGear
+  parent: HECUSquadGearBase
+  id: HECUSquadGearHuman
+  equipment:
+    eyes: ClothingEyesGlassesMedSec
+    ears: ClothingHeadsetAltCentCom
+
+# IPCs carry their radio keys internally (HecuSoldierIPC) instead of a headset, patch up with the IPC kit, and
+# wear the black set of the HECU gear.
+- type: startingGear
+  parent: HECUSquadGearBase
+  id: HECUSquadGearIPC
+  equipment:
+    eyes: ClothingEyesGlassesHECUCombat
+    back: ClothingBackpackHECUFilledIPC
+    outerClothing: ClothingOuterArmorHECUBlack
+    head: ClothingHeadHelmetHECUPoweredNVGBlack
+    belt: ClothingBeltHECUBlackFilled
+
+- type: startingGear
+  parent: HECUSquadGearIPC
+  id: HECUOperativeGearIPC
+  inhand:
+  - WeaponRifleM16
+
+# HECU squad leader: the powered combat vest and the AR-25T, plus the ERT leader's red phone and pinpointer in
+# the vest's pockets - the HECU backpack has no room left.
+- type: startingGear
+  parent: HECUSquadGearHuman
+  id: HECULeaderGear
+  equipment:
+    outerClothing: ClothingOuterArmorHECUPowered
+  inhand:
+  - WeaponRifleM16Modern
+  storage:
+    outerClothing:
+    - PhoneInstrument
+    - PinpointerNuclear
+
+- type: startingGear
+  parent: HECUSquadGearIPC
+  id: HECULeaderGearIPC
+  equipment:
+    outerClothing: ClothingOuterArmorHECUPoweredBlack
+  inhand:
+  - WeaponRifleM16Modern
+  storage:
+    outerClothing:
+    - PhoneInstrument
+    - PinpointerNuclear
+
+# HECU corpsman: the HECU operative's kit crossed with the ERT medic's. No primary weapon - just the mk32 sidearm.
+# The IPC corpsman keeps every organic medical item; only the backpack's medkit becomes the IPC one.
+- type: startingGear
+  id: HECUMedicGearBase
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHECUUrbanCamo
+    back: ClothingBackpackHECUMedicFilled
+    mask: ClothingMaskGasHECU
+    gloves: ClothingHandsGlovesNitrile
+    outerClothing: ClothingOuterArmorHECUMedic
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHelmetHECUPoweredMedic
+    id: HecuPDA
+    belt: ClothingBeltHECUMedicalFilled
+    pocket1: WeaponPistolUniversal
+    pocket2: FlashlightSeclite
+    suitstorage: MindShieldImplanter
+  storage:
+    belt:
+    - CartridgeAtropine
+    - CartridgeAtropine
+
+- type: startingGear
+  parent: HECUMedicGearBase
+  id: HECUMedicGear
+  equipment:
+    eyes: ClothingEyesGlassesMedSec
+    ears: ClothingHeadsetAltCentCom
+
+- type: startingGear
+  parent: HECUMedicGearBase
+  id: HECUMedicGearIPC
+  equipment:
+    eyes: ClothingEyesGlassesHECUCombat
+    back: ClothingBackpackHECUMedicFilledIPC
+    outerClothing: ClothingOuterArmorHECUMedicBlack
+    head: ClothingHeadHelmetHECUPoweredMedicBlack
+    belt: ClothingBeltHECUMedicalBlackFilled
+
+# The human operative uses RandomHumanoidHECUSpawner / HecuSoldier.
+
+- type: entity
+  parent: RandomHumanoidHECUSpawner
+  id: RandomHumanoidHECULeaderSpawner
+  name: HECU Squad Leader
+  suffix: ERTRole, Human
+  components:
+  - type: RandomHumanoidSpawner
+    settings: HecuLeader
+
+- type: randomHumanoidSettings
+  parent: HecuSoldier
+  id: HecuLeader
+  components:
+  - type: GhostRole
+    name: ghost-role-information-Hecu-leader-name
+    description: ghost-role-information-Hecu-leader-description
+    rules: ghost-role-information-Hecu-rules
+    raffle:
+      settings: short
+  - type: Loadout
+    prototypes: [HECULeaderGear]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-leader
+
+- type: entity
+  parent: RandomHumanoidHECUSpawner
+  id: RandomHumanoidHECUMedicSpawner
+  name: HECU Corpsman
+  suffix: ERTRole, Human
+  components:
+  - type: RandomHumanoidSpawner
+    settings: HecuMedic
+
+- type: randomHumanoidSettings
+  parent: HecuSoldier
+  id: HecuMedic
+  components:
+  - type: GhostRole
+    name: ghost-role-information-Hecu-medic-name
+    description: ghost-role-information-Hecu-medic-description
+    rules: ghost-role-information-Hecu-rules
+    raffle:
+      settings: short
+  - type: Loadout
+    prototypes: [HECUMedicGear]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-corpsman
+  # Human HECU roles inherit SkillChipERT from HecuSoldier; the medic also gets SkillChipCMO.
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipERT
+    - SkillChipCMO
+
+# IPC group. Same roles, IPC bodies; the CentCom headset's keys go into the IPC's own key slots.
+
+- type: entity
+  parent: RandomHumanoidHECUSpawner
+  id: RandomHumanoidHECUIPCSpawner
+  name: HECU Operative
+  suffix: ERTRole, IPC
+  components:
+  - type: RandomHumanoidSpawner
+    settings: HecuSoldierIPC
+
+- type: randomHumanoidSettings
+  parent: EventHumanMindShielded
+  id: HecuSoldierIPC
+  speciesWhitelist: IPC
+  components:
+  # Positronic brains have chip containers, so IPCs receive the same ERT skill chip as human operatives.
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipERT
+  - type: HumanoidAppearanceOverride
+    hairStyles: HecuHairStyles
+    removeFacialHair: true
+    heightCm: 175, 190
+    width: 0.95, 1.04
+  - type: AutoImplant
+    implants: [ FreedomImplant ]
+  - type: GhostRole
+    name: ghost-role-information-Hecu-ipc-name
+    description: ghost-role-information-Hecu-description
+    rules: ghost-role-information-Hecu-rules
+    raffle:
+      settings: short
+  - type: Loadout
+    prototypes: [HECUOperativeGearIPC]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-rifle
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster
+
+- type: entity
+  parent: RandomHumanoidHECUSpawner
+  id: RandomHumanoidHECULeaderIPCSpawner
+  name: HECU Squad Leader
+  suffix: ERTRole, IPC
+  components:
+  - type: RandomHumanoidSpawner
+    settings: HecuLeaderIPC
+
+- type: randomHumanoidSettings
+  parent: HecuSoldierIPC
+  id: HecuLeaderIPC
+  speciesWhitelist: IPC
+  components:
+  - type: GhostRole
+    name: ghost-role-information-Hecu-leader-ipc-name
+    description: ghost-role-information-Hecu-leader-description
+    rules: ghost-role-information-Hecu-rules
+    raffle:
+      settings: short
+  - type: Loadout
+    prototypes: [HECULeaderGearIPC]
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-leader
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster
+
+- type: entity
+  parent: RandomHumanoidHECUSpawner
+  id: RandomHumanoidHECUMedicIPCSpawner
+  name: HECU Corpsman
+  suffix: ERTRole, IPC
+  components:
+  - type: RandomHumanoidSpawner
+    settings: HecuMedicIPC
+
+- type: randomHumanoidSettings
+  parent: HecuSoldierIPC
+  id: HecuMedicIPC
+  speciesWhitelist: IPC
+  components:
+  - type: GhostRole
+    name: ghost-role-information-Hecu-medic-ipc-name
+    description: ghost-role-information-Hecu-medic-description
+    rules: ghost-role-information-Hecu-rules
+    raffle:
+      settings: short
+  - type: Loadout
+    prototypes: [HECUMedicGearIPC]
+  - type: OrganChipsOnSpawn
+    chips:
+    - SkillChipERT
+    - SkillChipCMO
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-corpsman
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCentCom
+      - EncryptionKeyStationMaster

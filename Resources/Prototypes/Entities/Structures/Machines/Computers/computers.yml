@@ -438,6 +438,7 @@
   description: This can be used to check station records.
   components:
   - type: GeneralStationRecordConsole
+  - type: PirateEvidenceBoard # Pirate: evidence board tab
   - type: UserInterface
     interfaces:
         enum.GeneralStationRecordConsoleKey.Key:
@@ -725,6 +726,7 @@
     access: [[ "Command" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
+  - type: VoiceBroadcastConsole # Pirate: voice broadcasts are native to communication consoles.
   - type: DeviceNetwork
     deviceNetId: Wireless
     transmitFrequencyId: ShuttleTimer

@@ -124,6 +124,8 @@
   parent: BaseItem
   description: A cyborg-mounted weapon system based on the L6 SAW platform. Creates ammunition on the fly from an internal fabricator, which slowly self-charges. # Goobstation
   components:
+    - type: WeaponClass # Pirate: weapon skills
+      class: Heavy # Pirate: weapon skills
     - type: Gun
       minAngle: 4
       maxAngle: 25

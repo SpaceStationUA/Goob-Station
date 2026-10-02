@@ -96,7 +96,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 _eye.SetDrawFov(args.Actor, false);
                 _eye.SetRotation(args.Actor, Angle.Zero, eyeComp);
                 if (!HasComp<StationAiOverlayComponent>(args.Actor))
-                    AddComp(args.Actor, new StationAiOverlayComponent { AllowCrossGrid = true });
+                    AddComp(args.Actor, new StationAiOverlayComponent { AllowCrossGrid = true, AllowUnseenMachineAccess = false }); // Pirate: syndicate remote monitoring
                 if (!TryComp(eye, out RemoteEyeSourceContainerComponent? remoteEyeSourceContainerComponent))
                 {
                     remoteEyeSourceContainerComponent = new RemoteEyeSourceContainerComponent { Actor = args.Actor };
@@ -110,7 +110,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
             AddActions(args);
 
-            _mover.SetRelay(args.Actor, eye);
+            _mover.SetRelay(args.Actor, eye); // Pirate: admin NanoChat isolation and camera reset
+            _mover.ResetCamera(args.Actor); // Pirate: admin NanoChat isolation and camera reset
         }
     }
 
@@ -135,6 +136,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 _eye.SetTarget(actor, null, eyeComp);
             }
             RemoveActions(actor);
+            _mover.ResetCamera(actor); // Pirate: admin NanoChat isolation and camera reset
             QueueDel(relay);
         }
     }

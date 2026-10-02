@@ -1,3 +1,4 @@
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Magic;
 using Content.Shared.Movement.Pulling.Systems;
@@ -55,7 +56,7 @@ public sealed class MageSmokeSystem : EntitySystem
         var transform = Transform(args.Performer);
         if (!_mapManager.TryFindGridAt(transform.MapPosition, out _, out var grid))
             return;
-        var coords = grid.MapToGrid(transform.MapPosition);
+        var coords = NodeHelpers.MapSys.MapToGrid(grid.Owner, transform.MapPosition);
 
         if (!_mana.TryUseAbility(args.Performer, comp, args.ManaCost))
             return;

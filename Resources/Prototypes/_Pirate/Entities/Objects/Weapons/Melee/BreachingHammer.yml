@@ -5,6 +5,8 @@
   id: HammerBreachingNT
   description: A robust heavy hammer made for breaching through walls and doors. Its reinforced head and sturdy handle make it ideal for demolition tasks.
   components:
+  - type: WeaponClass
+    class: Bludgeon
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Melee/BreachingHammer.rsi
     state: icon

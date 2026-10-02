@@ -24,6 +24,14 @@
   id: BiodomeSnow
   name: lavaland-ruin-biodome
   path: /Maps/_Lavaland/Lavaland/ruin_snow_biodome.yml
+  priority: -1
+  spawnAttempts: 20
+  patchToPlanet: false
+
+- type: lavalandGridRuin
+  id: LizardGas
+  name: lavaland-ruin-lizard-gas-station
+  path: /Maps/_Lavaland/Lavaland/lizard_gas_station.yml
   priority: 1
   patchToPlanet: false
 

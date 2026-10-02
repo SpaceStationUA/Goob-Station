@@ -6,6 +6,8 @@
   id: Stunbaton
   description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: NonLethal # Pirate: weapon skills
   - type: Tag # goob edit
     tags:
     - Stunbaton
@@ -47,7 +49,7 @@
     angle: 0
     animation: WeaponArcThrust
   - type: StaminaDamageOnHit # goob edited
-    damage: 8 # Pirate edit - was 15
+    damage: 10 # Pirate edit - was 15
     overtime: 40
     lightAttackDamageMultiplier: 4
     lightAttackOvertimeDamageMultiplier: 0
@@ -106,6 +108,7 @@
     - Security
   - type: MartialArtBlocked # Goobstation - Martial Arts
     form: CorporateJudo # Goobstation - Martial Arts
+    staminaDmgBlock: True # Goob
 
 - type: entity
   name: truncheon
@@ -113,6 +116,8 @@
   id: Truncheon
   description: A rigid, steel-studded baton, meant to harm.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Bludgeon # Pirate: weapon skills
   - type: Sprite
     sprite: Objects/Weapons/Melee/truncheon.rsi
     state: icon

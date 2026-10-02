@@ -1,0 +1,64 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Title="{Loc 'nanochat-monitor-window-title'}"
+                      SetSize="880 640"
+                      MinSize="760 520">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="4">
+            <BoxContainer Orientation="Vertical" SetWidth="280" VerticalExpand="True">
+                <LineEdit Name="SearchBar"
+                          PlaceHolder="{Loc 'nanochat-monitor-search-placeholder'}"
+                          HorizontalExpand="True" />
+                <Label Name="NoConversationsLabel"
+                       Text="{Loc 'nanochat-monitor-no-conversations'}"
+                       StyleClasses="LabelSubText"
+                       Margin="4 8 4 0" />
+                <ScrollContainer Name="ConversationScroll"
+                                 HorizontalExpand="True"
+                                 VerticalExpand="True"
+                                 HScrollEnabled="False"
+                                 Margin="0 4 0 0">
+                    <BoxContainer Name="ConversationList" Orientation="Vertical" HorizontalExpand="True" />
+                </ScrollContainer>
+            </BoxContainer>
+
+            <Control SetWidth="6" />
+
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Name="HeaderLabel"
+                           Text="{Loc 'nanochat-monitor-select-conversation'}"
+                           StyleClasses="LabelKeyText"
+                           ClipText="True" />
+                    <Control HorizontalExpand="True" />
+                    <Label Name="CountLabel" StyleClasses="LabelSubText" VerticalAlignment="Center" />
+                    <Control SetWidth="8" />
+                    <Button Name="PrintLogButton"
+                            Text="{Loc 'nanochat-monitor-print-log'}"
+                            Visible="False"
+                            StyleClasses="OpenBoth" />
+                    <Control SetWidth="4" />
+                    <Button Name="DeleteLogButton"
+                            Text="{Loc 'nanochat-monitor-delete-log'}"
+                            Visible="False"
+                            StyleClasses="Caution" />
+                </BoxContainer>
+
+                <ScrollContainer Name="MessageScroll"
+                                 HorizontalExpand="True"
+                                 VerticalExpand="True"
+                                 HScrollEnabled="False"
+                                 Margin="0 4 0 0">
+                    <BoxContainer Name="MessageList" Orientation="Vertical" HorizontalExpand="True" />
+                </ScrollContainer>
+
+                <Button Name="LatestButton"
+                        Text="{Loc 'nanochat-monitor-jump-to-latest'}"
+                        HorizontalAlignment="Center"
+                        Margin="0 4 0 0"
+                        Visible="False"
+                        StyleClasses="OpenBoth" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

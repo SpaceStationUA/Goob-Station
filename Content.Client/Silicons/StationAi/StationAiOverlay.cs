@@ -46,6 +46,15 @@ public sealed partial class StationAiOverlay : Overlay //goob edit
         IoCManager.InjectDependencies(this);
     }
 
+    #region Pirate: AI multiz interactions
+    // Draw static only on the composite pass; a cropped lower-deck pass can shrink the shared visible-tile cache.
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
+    {
+        return args.Viewport.Eye is not Content.Client.Viewport.ScalingViewport.ZEye zEye
+            || zEye.Depth == zEye.HighestDepth;
+    }
+    #endregion Pirate: AI multiz interactions
+
     protected override void Draw(in OverlayDrawArgs args)
     {
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
@@ -113,7 +122,8 @@ public sealed partial class StationAiOverlay : Overlay //goob edit
                 var xrayRange = _cfg.GetCVar(CCVars.MalfAiCameraUpgradeRange);
                 Vector2? xrayOrigin = playerXform == null ? null : xforms.GetWorldPosition(playerXform);
                 _entManager.System<StationAiVisionSystem>().GetView((gridUid, broadphase, grid), worldBounds, _visibleTiles,
-                    xrayCameras: malfUpgrade, xrayRange: xrayRange, xrayOrigin: xrayOrigin);
+                    xrayCameras: malfUpgrade, xrayRange: xrayRange, xrayOrigin: xrayOrigin,
+                    includeSyndicateCameras: _entManager.TryGetComponent(aiEnt, out StationAiOverlayComponent? observation) && observation.IncludeSyndicateCameras); // Pirate: syndicate remote monitoring
             }
 
             var gridMatrix = xforms.GetWorldMatrix(gridUid);
@@ -168,7 +178,8 @@ public sealed partial class StationAiOverlay : Overlay //goob edit
         worldHandle.DrawTextureRect(res.StaticTexture!.Texture, worldBounds);
 
         // goobstation - AI machine view
-        if (grid != null && broadphase != null)
+        if (grid != null && broadphase != null && // Pirate: syndicate remote monitoring
+            _entManager.TryGetComponent(aiEnt, out StationAiOverlayComponent? overlay) && overlay.AllowUnseenMachineAccess) // Pirate: syndicate remote monitoring
             DrawAiMachineView(in args, worldHandle, gridUid, grid);
 
         worldHandle.SetTransform(Matrix3x2.Identity);

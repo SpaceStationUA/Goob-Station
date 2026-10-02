@@ -1,3 +1,4 @@
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Server.Electrocution;
@@ -401,7 +402,7 @@ namespace Content.Server.Psionics.Glimmer
 
             if (TryComp<MapGridComponent>(gridUid, out var grid))
             {
-                var tileIndices = grid.TileIndicesFor(coordinates);
+                var tileIndices = NodeHelpers.MapSys.TileIndicesFor(grid.Owner, grid, coordinates);
 
                 if (_anchorableSystem.TileFree(grid, tileIndices, physics.CollisionLayer, physics.CollisionMask) &&
                     _transform.AnchorEntity(uid, xform))

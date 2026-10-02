@@ -413,7 +413,7 @@ public abstract partial class CESharedZLevelsSystem
             MapGridComponent belowGrid;
             var resolved = useDetachedCarrierProbe
                 ? TryResolveDetachedCarrierProbeGrid(carrierGridUid, offset, out belowGridUid, out belowGrid)
-                : TryResolveGridForMapOffset(ent, xform, -offset, out belowGridUid, out belowGrid);
+                : TryResolveGridForMapOffset(ent, xform, -offset, out belowGridUid, out belowGrid, worldPos);
 
             if (!resolved)
                 break;
@@ -641,7 +641,7 @@ public abstract partial class CESharedZLevelsSystem
         }
     }
 
-    private void OnGridParentChanged(Entity<MapGridComponent> ent, ref EntParentChangedMessage args)
+    protected virtual void OnGridParentChanged(Entity<MapGridComponent> ent, ref EntParentChangedMessage args)
     {
         RefreshAttachedZPhysics(ent.Owner);
     }
@@ -651,7 +651,7 @@ public abstract partial class CESharedZLevelsSystem
         RefreshAttachedZPhysics(ent.Owner);
     }
 
-    private bool ShouldStayAttachedToCarrierGrid(CEZPhysicsComponent zPhys)
+    protected bool ShouldStayAttachedToCarrierGrid(CEZPhysicsComponent zPhys)
     {
         return zPhys.CurrentStickyGround ||
                zPhys.CurrentHasSupportBelow ||
@@ -894,7 +894,7 @@ public abstract partial class CESharedZLevelsSystem
         return false;
     }
 
-    private bool TryAttachToCarrierGrid(EntityUid ent, CEZPhysicsComponent zPhys, ref TransformComponent xform)
+    protected virtual bool TryAttachToCarrierGrid(EntityUid ent, CEZPhysicsComponent zPhys, ref TransformComponent xform)
     {
         if (ShouldBlockClientCarrierReattach(ent, xform))
             return false;
@@ -1437,7 +1437,7 @@ public abstract partial class CESharedZLevelsSystem
         return target.Comp.LocalPosition - target.Comp.CurrentGroundHeight;
     }
 
-    private bool TryResolveAnyGridOnMap(EntityUid mapUid, out EntityUid gridUid, out MapGridComponent gridComp)
+    protected virtual bool TryResolveAnyGridOnMap(EntityUid mapUid, out EntityUid gridUid, out MapGridComponent gridComp)
     {
         var gridQuery = EntityQueryEnumerator<MapGridComponent, TransformComponent>();
         while (gridQuery.MoveNext(out var uid, out var grid, out var xform))
@@ -1462,7 +1462,7 @@ public abstract partial class CESharedZLevelsSystem
         return false;
     }
 
-    protected bool TryResolveGridAtWorldPositionOnMap(EntityUid mapUid, Vector2 worldPos, out EntityUid gridUid, out MapGridComponent gridComp)
+    protected virtual bool TryResolveGridAtWorldPositionOnMap(EntityUid mapUid, Vector2 worldPos, out EntityUid gridUid, out MapGridComponent gridComp)
     {
         var bestNonEmptyGridUid = EntityUid.Invalid;
         MapGridComponent? bestNonEmptyGrid = null;
@@ -1607,7 +1607,8 @@ public abstract partial class CESharedZLevelsSystem
 
     private bool TryResolveGridForMapOffset(EntityUid ent, TransformComponent xform, int offset, out EntityUid gridUid, out MapGridComponent gridComp, Vector2? worldPositionOverride = null)
     {
-        var worldPos = worldPositionOverride ?? _transform.GetWorldPosition(ent);
+        // Resolved lazily: current-grid and linked-peer hits never need the world position.
+        var worldPos = worldPositionOverride;
 
         if (offset == 0)
         {
@@ -1620,7 +1621,7 @@ public abstract partial class CESharedZLevelsSystem
             }
 
             if (xform.MapUid is { } currentMapUid &&
-                (TryResolveGridAtWorldPositionOnMap(currentMapUid, worldPos, out gridUid, out gridComp) ||
+                (TryResolveGridAtWorldPositionOnMap(currentMapUid, worldPos ?? _transform.GetWorldPosition(ent), out gridUid, out gridComp) ||
                  TryResolveAnyGridOnMap(currentMapUid, out gridUid, out gridComp)))
             {
                 return true;
@@ -1650,7 +1651,7 @@ public abstract partial class CESharedZLevelsSystem
 
         if (xform.MapUid is { } sourceMapUid &&
             TryResolveTraversalMapOffset(sourceMapUid, offset, out var targetMapUid, out _) &&
-            (TryResolveGridAtWorldPositionOnMap(targetMapUid, worldPos, out gridUid, out gridComp) ||
+            (TryResolveGridAtWorldPositionOnMap(targetMapUid, worldPos ?? _transform.GetWorldPosition(ent), out gridUid, out gridComp) ||
              TryResolveAnyGridOnMap(targetMapUid, out gridUid, out gridComp)))
         {
             if (offset != 0)

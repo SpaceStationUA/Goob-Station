@@ -11,6 +11,9 @@
       "name": "atlas"
     },
     {
+      "name": "aspid_tp"
+    },
+    {
       "name": "bagel"
     },
     {
@@ -78,6 +81,9 @@
     },
 	    {
       "name": "shoukou"
+    },
+	    {
+      "name": "nebula"
     }
   ]
 }

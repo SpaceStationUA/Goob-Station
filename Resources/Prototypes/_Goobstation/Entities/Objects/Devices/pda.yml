@@ -85,6 +85,8 @@
   name: HECU PDA
   description: Smells of gunpowder.
   components:
+  - type: BuiltInPdaCamera # Pirate: HECU ert rework
+    cameraPrototype: BuiltInErtPdaCamera # Pirate: HECU ert rework
   - type: Appearance
     appearanceDataInit:
       enum.PdaVisuals.PdaType:
@@ -190,6 +192,7 @@
     - AstroNavCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: NavyCaptainPDA
@@ -265,6 +268,7 @@
     - NanoTaskCartridge
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
+    - RadioCartridge # Pirate internet radio
 
 - type: entity
   parent: BaseMedicalPDA
@@ -339,6 +343,15 @@
   components:
   - type: Pda
     id: RadioHostIDCard
+  - type: CartridgeLoader
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - NanoChatCartridge
+      - WalletCartridge
+      - RadioCartridge
 
 - type: entity
   parent: CentcomPDA

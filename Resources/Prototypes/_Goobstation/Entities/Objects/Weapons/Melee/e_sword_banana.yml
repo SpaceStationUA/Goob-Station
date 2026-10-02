@@ -6,6 +6,8 @@
   name: bananium energy sword
   description: A very loud & slippery sword with a beam made of pure, concentrated bananium. Slips un-galoshed targets like butter.
   components:
+    - type: WeaponClass # Pirate: weapon skills
+      class: Energy # Pirate: weapon skills
     - type: EnergySword
       colorOptions:
         - Yellow

@@ -6,6 +6,8 @@
   id: Wirecutter
   description: This kills the wire.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   # Goobstation edit start
   - type: EmitSoundOnPickup
     sound:
@@ -75,6 +77,8 @@
   id: Screwdriver
   description: Industrial grade torque in a small screwdriving package.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   # Goobstation edit start
   - type: EmitSoundOnPickup
     sound:
@@ -138,6 +142,8 @@
   id: Wrench
   description: 'A common tool for assembly and disassembly. Remember: lefty latchy, righty removey.'
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   # Goobstation edit start
   - type: EmitSoundOnPickup
     sound:
@@ -314,6 +320,8 @@
   id: PowerDrill
   description: A simple powered hand drill.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   - type: Tag
     tags:
     - Powerdrill
@@ -463,6 +471,10 @@
     - FilterGas
     # <Goobstation>
     - FilterInline
+    - RadiatorInline
+    - RadiatorInlineBend
+    - PipeManifold
+    - PipePressureRegulator
     # </Goobstation>
     #region Pirate: heat exchange pipes
     - Radiator
@@ -607,6 +619,8 @@
   id: Shovel
   description: A large tool for digging and moving dirt.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Tool # Pirate: weapon skills
   - type: Sprite
     sprite: Objects/Tools/shovel.rsi
     state: icon

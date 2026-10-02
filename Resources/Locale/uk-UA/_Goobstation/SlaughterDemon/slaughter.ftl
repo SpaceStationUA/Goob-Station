@@ -15,6 +15,8 @@ laughter-role-greeting = Ви - Демон Сміху, чарівне створ
 
 # actions
 demonic-whisper-title = Демонічний шепіт
+demonic-whisper-flavor = Раптом у вашій голові лунає дивний демонічний голос...
+demonic-whisper-self = Ви шепочете {$name}: {$message}
 demonic-whisper-popup = Раптом у вашій голові лунає дивний, демонічний голос...
 demonic-whisper-whisper = Ви шепочете {$name}: {$message}
 

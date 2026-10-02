@@ -1,0 +1,65 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              Orientation="Vertical"
+              HorizontalExpand="True">
+
+    <Label Name="SenderLabel"
+           StyleClasses="LabelSubText"
+           Margin="8 2 8 1"
+           Visible="False" />
+
+    <BoxContainer Name="MessageContainer" Orientation="Horizontal" HorizontalExpand="True">
+        <Control Name="LeftSpacer" MinSize="0 0" />
+
+        <BoxContainer Name="MessageBox"
+                      Orientation="Vertical"
+                      MaxWidth="420"
+                      Margin="0 2"
+                      HorizontalExpand="True">
+            <PanelContainer Name="MessagePanel" MaxWidth="420" HorizontalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat ContentMarginLeftOverride="10"
+                                           ContentMarginRightOverride="10"
+                                           ContentMarginTopOverride="6"
+                                           ContentMarginBottomOverride="6"
+                                           BorderThickness="0" />
+                </PanelContainer.PanelOverride>
+
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <Label Name="PhotoNameLabel"
+                           StyleClasses="LabelSubText"
+                           Visible="False"
+                           Margin="0 0 0 4" />
+                    <TextureRect Name="Photo"
+                                 HorizontalExpand="True"
+                                 Stretch="Scale"
+                                 Visible="False"
+                                 Margin="0 0 0 6" />
+                    <Label Name="PhotoLoadingLabel"
+                           Text="{Loc nanochat-monitor-photo-loading}"
+                           StyleClasses="LabelSubText"
+                           Visible="False"
+                           Margin="0 0 0 6" />
+                    <RichTextLabel Name="ContentLabel" HorizontalExpand="True" Visible="False" />
+                    <Button Name="PrintPhotoButton"
+                            Text="{Loc nanochat-monitor-print-photo}"
+                            Visible="False"
+                            HorizontalExpand="True"
+                            HorizontalAlignment="Stretch"
+                            MinSize="0 26"
+                            Margin="0 6 0 0"
+                            StyleClasses="OpenBoth" />
+
+                    <Label Name="LocationLabel"
+                           StyleClasses="LabelSubText"
+                           Margin="0 2 0 0" />
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+
+        <Control Name="RightSpacer" MinSize="6 0" />
+        <Control Name="FlexSpace" HorizontalExpand="True" />
+    </BoxContainer>
+
+    <Control MinSize="0 6" />
+</BoxContainer>

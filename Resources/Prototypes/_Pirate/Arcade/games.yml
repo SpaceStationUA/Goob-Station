@@ -1,0 +1,93 @@
+# SPDX-FileCopyrightText: 2026 Pirate Development Team
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Games shipped with the Pirate WebArcade. Adding a game: drop its bundle
+# under Resources/_Pirate/WebUI/Arcade/<Dir>/ and add an entry here. The
+# paths are relative to the content root (the window prepends res://webres/).
+# The first entry is the default a fresh cabinet loads.
+
+- type: arcadeGame
+  id: packabunchas
+  label: Packabunchas
+  path: _Pirate/WebUI/Arcade/Packabunchas/index.html
+  default: true
+
+- type: arcadeGame
+  id: witchcat
+  label: Witchcat
+  path: _Pirate/WebUI/Arcade/Witchcat/index.html
+
+- type: arcadeGame
+  id: shuttledeck
+  label: Shuttledeck
+  path: _Pirate/WebUI/Arcade/Shuttledeck/index.html
+
+- type: arcadeGame
+  id: catculus
+  label: Catculus
+  path: _Pirate/WebUI/Arcade/Catculus/index.html
+
+- type: arcadeGame
+  id: kuroneko
+  label: Kuro Neko Market
+  path: _Pirate/WebUI/Arcade/KuroNekoMarket/index.html
+
+- type: arcadeGame
+  id: edgenotfound
+  label: Edge Not Found
+  path: _Pirate/WebUI/Arcade/EdgeNotFound/index.html
+
+- type: arcadeGame
+  id: stunts
+  label: Thirteen Terrible Stunts
+  path: _Pirate/WebUI/Arcade/ThirteenTerribleStunts/index.html
+
+- type: arcadeGame
+  id: yurts
+  label: Tiny Yurts
+  path: _Pirate/WebUI/Arcade/TinyYurts/index.html
+
+- type: arcadeGame
+  id: 13steps
+  label: 13 Steps to Escape
+  path: _Pirate/WebUI/Arcade/ThirteenSteps/index.html
+
+- type: arcadeGame
+  id: donotmake13
+  label: Do Not Make 13
+  path: _Pirate/WebUI/Arcade/DoNotMake13/index.html
+
+- type: arcadeGame
+  id: finalseconds
+  label: Those Final Seconds
+  path: _Pirate/WebUI/Arcade/ThoseFinalSeconds/index.html
+
+- type: arcadeGame
+  id: sector13
+  label: Sector 13
+  path: _Pirate/WebUI/Arcade/Sector13/index.html
+
+- type: arcadeGame
+  id: knightdreams
+  label: Knight Dreams
+  path: _Pirate/WebUI/Arcade/KnightDreams/index.html
+
+- type: arcadeGame
+  id: dyingdreams
+  label: Dying Dreams
+  path: _Pirate/WebUI/Arcade/DyingDreams/index.html
+
+- type: arcadeGame
+  id: ghosted
+  label: Ghosted
+  path: _Pirate/WebUI/Arcade/Ghosted/index.html
+
+- type: arcadeGame
+  id: supercastle
+  label: Super Castle Game
+  path: _Pirate/WebUI/Arcade/SuperCastleGame/index.html
+
+- type: arcadeGame
+  id: numberknight
+  label: Number Knight
+  path: _Pirate/WebUI/Arcade/NumberKnight/index.html

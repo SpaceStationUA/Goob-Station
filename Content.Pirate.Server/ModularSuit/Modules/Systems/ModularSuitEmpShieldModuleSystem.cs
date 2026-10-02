@@ -1,3 +1,4 @@
+using Content.Pirate.Server.Emp;
 using Content.Pirate.Shared.ModularSuit;
 using Content.Shared.Emp;
 using Robust.Shared.GameObjects;
@@ -9,6 +10,7 @@ public sealed partial class ModularSuitEmpShieldModuleSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ModularSuitSystem _modularSuit = default!;
+    [Dependency] private readonly EmpShieldClothingSystem _empShieldClothing = default!;
 
     public override void Initialize()
     {
@@ -20,6 +22,7 @@ public sealed partial class ModularSuitEmpShieldModuleSystem : EntitySystem
         SubscribeLocalEvent<ModularSuitEmpShieldModuleComponent, ComponentShutdown>(OnShutdown);
 
         // Metadata exists on every entity, so nested contents are covered.
+        // Also serves EMP-shielding clothing (EmpShieldClothingSystem): only one system may own this subscription.
         SubscribeLocalEvent<MetaDataComponent, EmpAttemptEvent>(OnEmpAttempt);
     }
 
@@ -82,6 +85,13 @@ public sealed partial class ModularSuitEmpShieldModuleSystem : EntitySystem
 
     private void OnEmpAttempt(Entity<MetaDataComponent> target, ref EmpAttemptEvent args)
     {
+        // Passive clothing shields (e.g. HECU combat vests) cost nothing, so check them before the powered suit.
+        if (_empShieldClothing.IsShielded(target))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
         if (!TryFindShield(target, out var shield))
             return;
 

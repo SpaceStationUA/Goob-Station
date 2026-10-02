@@ -69,8 +69,11 @@
 - files: ["convex.yml"]
   authors: Spacemann
 
-- file: ["amber.yml"]
+- files: ["amber.yml"]
   authors: Southbridge, Flipsie27
 
-  - files: ["snowball.yml"]
+- files: ["snowball.yml"]
   authors: Spacemann
+
+- files: ["_Pirate/Shuttles/Shipyard/barge.yml", "_Pirate/Shuttles/Shipyard/breaker.yml", "_Pirate/Shuttles/Shipyard/Bumblebee.yml", "_Pirate/Shuttles/Shipyard/Comet.yml", "_Pirate/Shuttles/Shipyard/GasTransport.yml", "_Pirate/Shuttles/Shipyard/Honeybee.yml", "_Pirate/Shuttles/Shipyard/JSS_MED_Apotherkerin.yml", "_Pirate/Shuttles/Shipyard/Mini_Ingeniator.yml", "_Pirate/Shuttles/Shipyard/Munchies.yml", "_Pirate/Shuttles/Shipyard/pioneer.yml", "_Pirate/Shuttles/Shipyard/prospector.yml", "_Pirate/Shuttles/Shipyard/pts.yml", "_Pirate/Shuttles/Shipyard/ReachButShipyard.yml", "_Pirate/Shuttles/Shipyard/SpaceTruck.yml"]
+  authors: Starlight Team, CrazyPhantom779

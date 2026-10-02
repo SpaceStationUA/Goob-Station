@@ -6,6 +6,8 @@
   id: WeaponLauncherNonLethal
   description: A single shot, break action riot grenade launcher designed for crowd control and law enforcement use. The built in safety prevents the use of lethal grenades.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Heavy # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Launchers/riotlauncher.rsi
     layers:

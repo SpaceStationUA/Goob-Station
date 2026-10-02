@@ -4,6 +4,8 @@
   id: WeaponPlasmaAdder
   description: The future of stellar warfare in the palm of your hand. Uses Echion, produced from advanced synthesizers.
   components:
+  - type: WeaponClass
+    class: Laser
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Special/adder.rsi
     layers:

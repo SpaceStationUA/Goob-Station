@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using Content.IntegrationTests.Tests.Helpers;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Charges;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
@@ -21,6 +22,7 @@ using Content.Shared._Pirate.Temperature;
 using Content.Shared._Pirate.Weapons.Ranged;
 using Content.Shared._DV.Carrying;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Atmos;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Charges;
@@ -426,6 +428,13 @@ public sealed class PortedSupportIntegrationTest
 
         await server.WaitAssertion(() =>
         {
+            // Pirate: isolate drop damage from vacuum damage while the pooled server ticks.
+            var moles = new float[Atmospherics.AdjustedNumberOfGases];
+            moles[(int) Gas.Oxygen] = 21.824779f;
+            moles[(int) Gas.Nitrogen] = 82.10312f;
+            server.System<AtmosphereSystem>().SetMapAtmosphere(
+                map.MapUid, false, new GasMixture(moles, Atmospherics.T20C));
+
             cross = entMan.SpawnEntity("Crucifix", map.GridCoords);
             holder = entMan.SpawnEntity("MobHuman", map.GridCoords);
             carrier = entMan.SpawnEntity("MobHuman", map.GridCoords);

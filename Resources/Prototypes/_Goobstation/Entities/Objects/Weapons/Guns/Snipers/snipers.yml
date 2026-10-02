@@ -6,6 +6,8 @@
   id: WeaponSniperHE1SG8
   description: High Energy One-Shell rifle. On its side, "leading us on and on" is written using a cheap black marker. Takes Gauss-8 cartridges.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Sniper # Pirate: weapon skills
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Snipers/heavensgate_icon_48x.rsi
     layers:
@@ -24,7 +26,7 @@
     shape:
       - 0,0,8,2 # Comically large
   - type: Gun
-    fireRate: 0.3
+    fireRate: 0.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
     soundEmpty:

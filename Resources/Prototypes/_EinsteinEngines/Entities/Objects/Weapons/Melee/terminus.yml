@@ -6,6 +6,8 @@
   id: Terminus
   description: An advanced melee weapon crafted specifically for an oni. It is also capable of firing a spread of disabler shots from its tip.
   components:
+  - type: WeaponClass # Pirate: weapon skills
+    class: Polearm # Pirate: weapon skills
   - type: RestrictedMelee # Omu port
     whitelist:
       tags:

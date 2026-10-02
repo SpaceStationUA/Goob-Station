@@ -397,6 +397,7 @@
     - ModesuitPartStatic
     - PowerCages
     - BorgModulesGoob
+    - SecBorgParts # Goob
     - BasicCybernetics
     - MedicalCybernetics
     - AdvancedCybernetics
@@ -582,6 +583,7 @@
       - SecurityAmmoStaticGoob
       # Pirate Packs
       - SecurityAmmoStaticPirate
+      - M16AmmoStaticPirate # Pirate: M16 magazine recipes
       dynamicPacks:
       # Pirate Packs
       - SecurityAmmoPirate

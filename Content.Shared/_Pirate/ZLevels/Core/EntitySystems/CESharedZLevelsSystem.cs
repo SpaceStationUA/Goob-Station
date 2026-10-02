@@ -40,6 +40,8 @@ public abstract partial class CESharedZLevelsSystem : EntitySystem
     /// without scanning tiles on every event.
     /// </summary>
     private readonly CMUZLevelOpeningCache _openingCache = new();
+    // Tiles the deck below is drawn through (adds ZTransparent); render culling must use this, not sight.
+    private readonly CMUZLevelOpeningCache _visualOpeningCache = new(visual: true);
     private readonly List<Entity<MapGridComponent>> _openingGridScratch = new();
 
     private EntityQuery<MapComponent> _mapQuery;

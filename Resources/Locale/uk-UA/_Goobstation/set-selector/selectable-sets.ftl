@@ -150,6 +150,12 @@ selectable-set-research-director-voidsuit-desc = Легкий скафандр �
     звичайні можливості для виходу в космос.
 selectable-set-research-director-modsuit-name = дослідницький MOD-костюм НД
 selectable-set-research-director-modsuit-desc = Попередньо зібраний дослідницький MOD-костюм зі сканерами реагентів і Т-променів, радіаційним захистом, зварювальним модулем та збільшеним сховищем.
+
+selectable-set-brigmedic-voidsuit-name = Скафандр бригмедика
+selectable-set-brigmedic-voidsuit-desc = Захисний скафандр бригмедика для допомоги пораненим у небезпечних умовах.
+selectable-set-brigmedic-modsuit-name = MOD-костюм бригмедика
+selectable-set-brigmedic-modsuit-desc = Захисний MOD-костюм бригмедика з батареєю підвищеної ємності.
+
 selectable-set-syndicate-sus-name = Підозрілий набір
 selectable-set-syndicate-sus-description = Коли зрадник підозрілий... а зрадник, звісно ж, ви.
     Містить: вдосконалений костюм акробата, ніж зрадника, мініатюрний

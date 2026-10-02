@@ -1,0 +1,338 @@
+/* Evidence board: corkboard + sticky notes + red string. Grid is authored
+ * server-side (cells in the snapshot); this page only maps cells to pixels. */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Verdana", "Tahoma", sans-serif;
+}
+
+.board-root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-cork, #5b4a3a);
+  color: var(--fg, #e8e0d0);
+  font-size: 13px;
+  user-select: none;
+}
+
+/* theme tokens fall back to cork neutrals when tokens.css is absent */
+.board-root.theme-nt {
+  --board-hue: #d8b028;
+}
+.board-root.theme-syndi {
+  --board-hue: #c03820;
+}
+
+.board-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: var(--panel-1, #2a2622);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+  flex-shrink: 0;
+}
+
+.case-tab {
+  padding: 4px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 6px 6px 0 0;
+  background: var(--panel-2, #423a30);
+  color: var(--fg-dim, #cfc6b2);
+  cursor: pointer;
+  font: inherit;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.case-tab.current {
+  background: var(--board-hue, #d8b028);
+  color: #1d1710;
+  font-weight: bold;
+}
+
+.board-header input {
+  background: var(--panel-2, #423a30);
+  color: var(--fg, #e8e0d0);
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font: inherit;
+}
+
+.hd-btn {
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background: var(--panel-2, #423a30);
+  color: var(--fg, #e8e0d0);
+  cursor: pointer;
+  font: inherit;
+}
+
+.hd-btn:hover {
+  filter: brightness(1.15);
+}
+
+.hd-btn.linkmode {
+  background: var(--board-hue, #d8b028);
+  color: #1d1710;
+  font-weight: bold;
+}
+
+.hd-btn.danger:hover {
+  background: #a03c30;
+}
+
+#root,
+.board-root {
+  min-height: 0;
+}
+
+.board-scroll {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+
+/* zoom wrapper: sizes to canvas*zoom, canvas scale-translates inside */
+.board-zoom {
+  position: relative;
+  overflow: hidden;
+}
+
+/* server grid dims live in the snapshot; cells drawn at 52px (+30%) */
+.board-canvas {
+  position: relative;
+  transform-origin: 0 0;
+  background-color: var(--bg-cork, #5b4a3a);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+.board-strings {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.board-strings .string,
+.board-strings .string-selecting {
+  stroke: #d33;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
+}
+
+.board-strings .string:hover {
+  stroke-width: 4.5;
+}
+
+.string-hit {
+  stroke: transparent;
+  stroke-width: 11;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+.sticky-note {
+  position: absolute;
+  width: 252px;
+  height: 200px;
+  padding: 10px 12px;
+  background: var(--note-bg, #e9d47a);
+  color: #3b2f18;
+  font-family: "Comic Sans MS", "Segoe Print", cursive;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.45);
+  border-radius: 2px;
+  transform: rotate(-0.4deg);
+  cursor: grab;
+  box-sizing: border-box;
+}
+
+.sticky-note:nth-child(3n) {
+  transform: rotate(0.6deg);
+}
+
+.sticky-note.dragging {
+  cursor: grabbing;
+  z-index: 30;
+  box-shadow: 4px 8px 14px rgba(0, 0, 0, 0.6);
+  transform: rotate(0deg);
+}
+
+.link-endA,
+.link-endB {
+  z-index: 20;
+  outline: 3px solid var(--board-hue, #d8b028);
+}
+
+.sticky-note .note-text {
+  font-size: 14px;
+  line-height: 1.25;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  height: 100%;
+}
+
+.sticky-note .note-text::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sticky-note .note-text::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 3px;
+}
+
+/* character card pinned from the records console */
+.sticky-note.char {
+  background: #d3e2f0;
+  color: #1e2b3a;
+  font-family: Verdana, sans-serif;
+  cursor: default;
+}
+
+.char-text .char-name {
+  font-weight: bold;
+  font-size: 15px;
+  margin: 2px 0 3px;
+}
+
+.char-text .char-dna {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #5a6b80;
+  text-transform: uppercase;
+}
+
+.char-text .char-hashes {
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  color: #45545f;
+  margin-top: 1px;
+}
+
+.note-editor {
+  position: absolute;
+  inset: 0;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  margin: 10px;
+  padding: 6px 8px;
+  border: 1px dashed #7a6c3f;
+  border-radius: 2px;
+  background: #fdf6d8;
+  color: #3b2f18;
+  font-family: "Comic Sans MS", "Segoe Print", cursive;
+  font-size: 13px;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.sticky-note .note-del {
+  position: absolute;
+  right: 3px;
+  top: 1px;
+  border: none;
+  background: transparent;
+  color: #7a2c20;
+  font-size: 15px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.board-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(232, 224, 208, 0.55);
+  pointer-events: none;
+  font-size: 16px;
+}
+
+/* evidence chips filed from paper (reports, printouts, slips) */
+.sticky-note.chip {
+  background: #ece7d8;
+  color: #38321f;
+  font-family: "Courier New", monospace;
+  font-size: 10.5px;
+  line-height: 1.2;
+  cursor: default;
+}
+
+.sticky-note.chip .note-text {
+  font-size: 10.5px;
+}
+
+/* photo cards: preview on top, caption below */
+.sticky-note.photo {
+  background: #f4f1ea;
+  color: #2b2924;
+  font-family: Verdana, sans-serif;
+  font-size: 11px;
+  cursor: default;
+}
+
+.photo-frame {
+  height: 118px;
+  background: #14120f;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.photo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.photo-none {
+  width: 90%;
+  height: 80%;
+  background:
+    linear-gradient(135deg, #35302a 25%, #201d19 25%, #201d19 50%, #35302a 50%, #35302a 75%, #201d19 75%);
+  background-size: 14px 14px;
+}
+
+.photo-caption {
+  font-size: 10.5px;
+  line-height: 1.3;
+  max-height: 58px;
+  overflow-y: auto;
+}
+
+/* spawn-time portrait on char cards (server-side dummy render) */
+.portrait-frame {
+  height: 92px;
+  background: #10151b;
+  margin: 2px 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.portrait-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}

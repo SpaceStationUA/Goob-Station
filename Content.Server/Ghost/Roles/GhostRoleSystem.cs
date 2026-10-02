@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Content.Server._Pirate.Ghost.Roles; // Pirate: character pods
+using Content.Server._Pirate.Ghost.Roles.Components; // Pirate: ghost role whitelist
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
@@ -518,6 +519,12 @@ public sealed class GhostRoleSystem : EntitySystem
     {
         antags = [];
         jobs = [];
+
+        #region Pirate: ghost role whitelist
+        // These jobs affect eligibility checks without being assigned to the ghost role's taker.
+        if (TryComp<GhostRoleRequiredJobsComponent>(roleEnt, out var requiredJobs))
+            jobs.AddRange(requiredJobs.Jobs);
+        #endregion Pirate: ghost role whitelist
 
         // If there is a mind already, check its mind roles.
         // Not sure if this can ever actually happen.

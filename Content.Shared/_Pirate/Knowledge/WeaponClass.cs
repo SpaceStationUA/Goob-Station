@@ -51,10 +51,13 @@ public sealed partial class WeaponClassPrototype : IPrototype
     };
 }
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class WeaponClassComponent : Component
 {
-    [DataField(required: true)]
+    /// <summary>
+    /// Networked so weapons that change shape at runtime (e.g. the Caduceus) keep client prediction in sync.
+    /// </summary>
+    [DataField(required: true), AutoNetworkedField]
     public ProtoId<WeaponClassPrototype> Class;
 
     [DataField]
@@ -94,7 +97,8 @@ public sealed class WeaponClassSystem : EntitySystem
 
     private void OnGetMeleeDamage(Entity<WeaponClassComponent> ent, ref GetMeleeDamageEvent args)
     {
-        if (!_knowledge.SkillsEnabled)
+        // GetDamage also raises this on the attacker, whose Unarmed class must not stack on top of the weapon's.
+        if (!_knowledge.SkillsEnabled || args.Weapon != ent.Owner)
             return;
 
         var prototype = _prototypes.Index(ent.Comp.Class);
