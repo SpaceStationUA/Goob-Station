@@ -76,21 +76,12 @@ public abstract partial class ServerDbBase
     {
         await using var db = await GetDb(cancel);
 
-        var exists = await db.DbContext.PirateTempRankEligibility
-            .AnyAsync(e => e.UserId == userId.UserId && e.AdminRankId == rankId, cancel);
-        if (exists)
-            return false;
-
-        db.DbContext.PirateTempRankEligibility.Add(new PirateTempRankEligibility
-        {
-            UserId = userId.UserId,
-            AdminRankId = rankId,
-            AddedById = addedBy?.UserId,
-            CreatedAt = DateTime.UtcNow,
-        });
-
-        await db.DbContext.SaveChangesAsync(cancel);
-        return true;
+        var inserted = await db.DbContext.Database.ExecuteSqlAsync($"""
+            INSERT INTO pirate_temp_rank_eligibility (user_id, admin_rank_id, added_by_id, created_at)
+            VALUES ({userId.UserId}, {rankId}, {addedBy?.UserId}, {DateTime.UtcNow})
+            ON CONFLICT (user_id, admin_rank_id) DO NOTHING
+            """, cancel);
+        return inserted != 0;
     }
 
     public async Task<bool> RemoveTempRankEligibilityAsync(NetUserId userId, int rankId, CancellationToken cancel)

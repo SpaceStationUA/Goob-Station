@@ -186,7 +186,11 @@ namespace Content.Server.Administration.Managers
 
         public async void ReloadAdmin(ICommonSession player)
         {
+            var loadVersion = BeginAdminLoad(player); // Pirate: temporary ranks
             var data = await LoadAdminData(player);
+            if (!IsCurrentAdminLoad(player, loadVersion)) // Pirate: temporary ranks
+                return;
+
             var curAdmin = _admins.GetValueOrDefault(player);
 
             if (data == null && curAdmin == null)
@@ -243,7 +247,7 @@ namespace Content.Server.Administration.Managers
 
         public void ReloadAdminsWithRank(int rankId)
         {
-            foreach (var dat in _admins.Values.Where(p => p.RankId == rankId).ToArray())
+            foreach (var dat in _admins.Values.Where(p => p.RankId == rankId || HasTemporaryRank(p.Session, rankId)).ToArray()) // Pirate: temporary ranks
             {
                 ReloadAdmin(dat.Session);
             }
@@ -357,6 +361,7 @@ namespace Content.Server.Administration.Managers
             }
             else if (e.NewStatus == SessionStatus.Disconnected)
             {
+                EndAdminLoad(e.Session); // Pirate: temporary ranks
                 if (_admins.Remove(e.Session, out var reg ) && _cfg.GetCVar(CCVars.AdminAnnounceLogout))
                 {
                     if (reg.Data.Stealth)
@@ -376,7 +381,11 @@ namespace Content.Server.Administration.Managers
 
         private async void LoginAdminMaybe(ICommonSession session)
         {
+            var loadVersion = BeginAdminLoad(session); // Pirate: temporary ranks
             var adminDat = await LoadAdminData(session);
+            if (!IsCurrentAdminLoad(session, loadVersion)) // Pirate: temporary ranks
+                return;
+
             if (adminDat == null)
             {
                 // Not an admin.

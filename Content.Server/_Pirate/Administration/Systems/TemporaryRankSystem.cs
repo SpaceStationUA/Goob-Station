@@ -113,6 +113,7 @@ public sealed class TemporaryRankSystem : EntitySystem
         var grant = new TemporaryRankGrant(userId, username, rank.Id, rank.Name, grantedBy)
         {
             KeepThroughNextRestart = _ticker.RunLevel == GameRunLevel.PostRound,
+            Deadminned = _grants.TryGetValue(userId, out var old) && old.Deadminned,
         };
         _grants[userId] = grant;
 

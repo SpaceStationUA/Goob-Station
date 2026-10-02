@@ -74,7 +74,7 @@ public sealed class MentorHelpSystem : EntitySystem
         if (message.ResponderOnly && !isResponder)
             return;
 
-        var text = message.Text.Trim();
+        var text = message.Text?.Trim() ?? string.Empty;
         if (text.Length == 0)
             return;
 
