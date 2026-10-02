@@ -1,4 +1,5 @@
 using Content.Shared.Roles;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -27,6 +28,9 @@ public sealed partial class EmployerPrototype : IPrototype
 
     [DataField]
     public ResPath LogoPath { get; private set; } = new("/Textures/_Pirate/Interface/Employers/unaffiliated.png");
+
+    [DataField]
+    public Color? AccentColor { get; private set; }
 
     [DataField]
     public int Priority { get; private set; }

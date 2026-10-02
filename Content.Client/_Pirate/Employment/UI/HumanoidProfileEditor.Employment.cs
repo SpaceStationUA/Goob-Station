@@ -40,7 +40,7 @@ public sealed partial class HumanoidProfileEditor
         var selected = _employers.FirstOrDefault(employer => employer.ID == Profile?.Employer);
         EmployerButton.Text = selected == null
             ? Loc.GetString("employment-employer-selector-choose")
-            : Loc.GetString("employment-employer-selector-selected", ("employer", Loc.GetString(selected.NameKey)));
+            : Loc.GetString("employment-employer-profile-selected", ("employer", Loc.GetString(selected.NameKey)));
     }
 
     private List<EmployerPrototype> GetAvailableEmployers(HumanoidCharacterProfile profile)

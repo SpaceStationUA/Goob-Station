@@ -9,12 +9,15 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client._Pirate.Employment.UI;
 
 public sealed class EmployerSelectionWindow : DefaultWindow
 {
+    private static readonly ResPath EmployerGradientPath = new("/Textures/_Pirate/Interface/Employers/employer-gradient.png");
+
     private readonly IResourceCache _resources;
     private readonly RichTextLabel _description = new()
     {
@@ -36,7 +39,7 @@ public sealed class EmployerSelectionWindow : DefaultWindow
         Stretch = TextureRect.StretchMode.KeepAspectCentered,
     };
     private readonly BoxContainer _departments = new() { Orientation = LayoutOrientation.Vertical };
-    private readonly Dictionary<string, ContainerButton> _cards = new();
+    private readonly Dictionary<string, (ContainerButton Card, EmployerPrototype Employer)> _cards = new();
     private readonly Button _chooseButton = new() { HorizontalExpand = true };
     private string? _selectedEmployer;
     private EmployerPrototype? _viewedPrototype;
@@ -144,7 +147,7 @@ public sealed class EmployerSelectionWindow : DefaultWindow
         {
             var card = CreateCard(employer);
             card.OnPressed += _ => ViewEmployer(employer);
-            _cards[employer.ID] = card;
+            _cards[employer.ID] = (card, employer);
             list.AddChild(card);
 
             if (employer.ID == selected)
@@ -197,6 +200,16 @@ public sealed class EmployerSelectionWindow : DefaultWindow
             VerticalAlignment = VAlignment.Center,
             Stretch = TextureRect.StretchMode.KeepAspectCentered,
         });
+        card.AddChild(new TextureRect
+        {
+            Texture = _resources.GetTexture(EmployerGradientPath),
+            CanShrink = true,
+            HorizontalExpand = true,
+            VerticalExpand = true,
+            Stretch = TextureRect.StretchMode.Scale,
+            ModulateSelfOverride = employer.AccentColor,
+            Visible = employer.AccentColor.HasValue,
+        });
         card.AddChild(row);
         return card;
     }
@@ -241,7 +254,7 @@ public sealed class EmployerSelectionWindow : DefaultWindow
             });
 
         _chooseButton.Text = _selectedEmployer == employer.ID
-                ? Loc.GetString("employment-employer-selector-selected", ("employer", Loc.GetString(employer.NameKey)))
+                ? Loc.GetString("employment-employer-selector-selected")
                 : Loc.GetString("employment-employer-selector-choose");
         _chooseButton.Disabled = _selectedEmployer == employer.ID;
         UpdateCardStyles();
@@ -249,13 +262,17 @@ public sealed class EmployerSelectionWindow : DefaultWindow
 
     private void UpdateCardStyles()
     {
-        foreach (var (id, card) in _cards)
+        foreach (var (id, entry) in _cards)
         {
-            var style = (StyleBoxFlat) card.StyleBoxOverride!;
-            style.BorderColor = id == _selectedEmployer
-                ? Color.FromHex("#6F9FE0")
-                : id == _viewedPrototype?.ID ? Color.FromHex("#6B7383") : Color.FromHex("#2E323D");
-            style.BorderThickness = new Thickness(id == _selectedEmployer ? 3 : id == _viewedPrototype?.ID ? 2 : 1);
+            var viewed = id == _viewedPrototype?.ID;
+            var style = (StyleBoxFlat) entry.Card.StyleBoxOverride!;
+            style.BackgroundColor = viewed
+                ? entry.Employer.AccentColor ?? Color.FromHex("#272B35")
+                : Color.FromHex("#272B35");
+            style.BorderColor = viewed
+                ? entry.Employer.AccentColor ?? Color.FromHex("#6B7383")
+                : Color.FromHex("#2E323D");
+            style.BorderThickness = new Thickness(viewed ? 2 : 1);
         }
     }
 

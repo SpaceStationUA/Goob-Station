@@ -2,10 +2,19 @@
   id: NanoTrasen
   priority: 0
   nameKey: employment-employer-name-nanotrasen
+  accentColor: "#14498f"
   descriptionKey: employment-employer-description-nanotrasen
   employeeRelationsKey: employment-employer-relations-nanotrasen
   roleplayRecommendations:
   - employment-employer-roleplay-nanotrasen-1
   - employment-employer-roleplay-nanotrasen-2
-  logoPath: /Textures/_Pirate/Interface/Employers/nanotrasen.png
+  logoPath: /Textures/_Pirate/Interface/Employers/NanoTrasen.png
   departments: [employment-employer-departments-all]
+
+- type: employer
+  id: Idris
+  priority: 1
+  nameKey: employment-employer-name-idris
+  accentColor: "#236f73"
+  logoPath: /Textures/_Pirate/Interface/Employers/Idris.png
+  departments: [department-Security, department-Civilian]
