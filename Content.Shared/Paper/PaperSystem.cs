@@ -19,13 +19,13 @@ using Robust.Shared.Random;
 // Starlight-start
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 // Starlight-end
 
 #region Pirate: paperwork tags
 using Robust.Shared.Network;
+using Content.Shared.Mind;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Content.Shared._Pirate.Paper;
