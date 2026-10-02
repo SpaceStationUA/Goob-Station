@@ -38,7 +38,8 @@ public sealed partial class AdminManager
             {
                 Title = rank.Name,
                 Flags = flags,
-                Active = true,
+                // Temporary-only admins have no DB row, so keep their deadmin state on the grant.
+                Active = !grant.Deadminned,
             };
             return (data, rank.Id, false);
         }

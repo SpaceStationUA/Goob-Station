@@ -13,6 +13,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Administration;
 using System.Text;
 using Content.Server._DV.Psionics.Systems;
 using Content.Pirate.Common.Chat;
@@ -58,6 +59,7 @@ public sealed class NyanoChatSystem : EntitySystem
     private IEnumerable<INetChannel> GetAdminClients()
     {
         return _adminManager.ActiveAdmins
+            .Where(p => _adminManager.HasAdminFlag(p, AdminFlags.Adminchat)) // Telepathic chat must respect the existing ADMINCHAT recipient filter.
             .Select(p => p.Channel);
     }
 

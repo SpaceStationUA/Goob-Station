@@ -13,6 +13,7 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -22,6 +23,9 @@ namespace Content.Server._Pirate.Administration.Systems;
 public sealed record TemporaryRankGrant(NetUserId UserId, string Username, int RankId, string RankName, string GrantedBy)
 {
     public bool KeepThroughNextRestart { get; set; }
+
+    // Preserve manual deadmin for temporary-only admins with no database row.
+    public bool Deadminned { get; set; }
 }
 
 // In-memory grants expire on restart so temporary permissions cannot persist across rounds.
@@ -42,6 +46,23 @@ public sealed class TemporaryRankSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
+        _admin.OnPermsChanged += OnPermsChanged;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _admin.OnPermsChanged -= OnPermsChanged;
+    }
+
+    // Admin status events cover both deadmin and readmin changes.
+    private void OnPermsChanged(Content.Server.Administration.AdminPermsChangedEventArgs args)
+    {
+        if (!_grants.TryGetValue(args.Player.UserId, out var grant))
+            return;
+
+        if (_admin.GetAdminData(args.Player, includeDeAdmin: true) is { } data)
+            grant.Deadminned = !data.Active;
     }
 
     public bool TryGetGrant(NetUserId userId, [NotNullWhen(true)] out TemporaryRankGrant? grant)
@@ -61,7 +82,23 @@ public sealed class TemporaryRankSystem : EntitySystem
         return AdminFlagsHelper.NamesToFlags(rank.Flags.Select(f => f.Flag));
     }
 
-    public void Grant(NetUserId userId, string username, AdminRank rank, string grantedBy)
+    // Admins may grant only ranks whose flags they hold; server console calls are exempt.
+    public static bool CheckCallerHasFlags(IConsoleShell shell, IAdminManager admin, AdminRank rank)
+    {
+        if (shell.Player is not { } caller)
+            return true;
+
+        var callerFlags = admin.GetAdminData(caller)?.Flags ?? AdminFlags.None;
+        var missing = RankFlags(rank) & ~callerFlags;
+        if (missing == AdminFlags.None)
+            return true;
+
+        shell.WriteError(Robust.Shared.Localization.Loc.GetString("cmd-temprank-missing-flags",
+            ("flags", string.Join(", ", AdminFlagsHelper.FlagsToNames(missing)))));
+        return false;
+    }
+
+    public void Grant(NetUserId userId, string username, AdminRank rank, string grantedBy, bool listed)
     {
         var grant = new TemporaryRankGrant(userId, username, rank.Id, rank.Name, grantedBy)
         {
@@ -70,8 +107,8 @@ public sealed class TemporaryRankSystem : EntitySystem
         _grants[userId] = grant;
 
         _adminLog.Add(LogType.AdminCommands, LogImpact.High,
-            $"{grantedBy} gave {username} ({userId}) the temporary rank {rank.Name} until the end of the round");
-        _chat.SendAdminAnnouncement(Loc.GetString("temp-rank-granted-announcement",
+            $"{grantedBy} gave {username} ({userId}) the temporary rank {rank.Name} until the end of the round{(listed ? "" : " (not on the eligibility list)")}");
+        _chat.SendAdminAnnouncement(Loc.GetString(listed ? "temp-rank-granted-announcement" : "temp-rank-granted-unlisted-announcement",
             ("player", username), ("rank", rank.Name), ("admin", grantedBy)));
 
         Reload(userId);

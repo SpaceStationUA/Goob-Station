@@ -145,6 +145,9 @@ internal sealed partial class ChatManager : IChatManager
             if (adminData == null)
                 return false;
 
+            if (!adminData.HasFlag(AdminFlags.Adminchat)) // Pirate: staff chats - announcements (game rules added, SecretPlus picks, prayers) went to every admin regardless of flags
+                return false; // Pirate: staff chats
+
             if (flagBlacklist != null && adminData.HasFlag(flagBlacklist.Value))
                 return false;
 

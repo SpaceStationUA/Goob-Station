@@ -3,6 +3,7 @@ using System;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    partial class SqliteServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261002144701_PirateTempRankEligibility")] // Pirate: temporary ranks
+    partial class PirateTempRankEligibility // Pirate: temporary ranks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
@@ -1469,16 +1471,16 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("pref_unavailable");
 
-                    b.Property<string>("Sex")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("sex");
-
                     b.Property<string>("Secrets")
                         .IsRequired()
                         .HasMaxLength(4096)
                         .HasColumnType("TEXT")
                         .HasColumnName("secrets");
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("sex");
 
                     b.Property<string>("SkinColor")
                         .IsRequired()
@@ -1521,17 +1523,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_loadout_id");
 
-                    b.Property<string>("LoadoutName")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("loadout_name");
-
                     b.Property<string>("CustomColorTint")
                         .HasMaxLength(16)
                         .HasColumnType("TEXT")
                         .HasColumnName("custom_color_tint");
 
-                    #region Pirate: loadout
                     b.Property<string>("CustomDescription")
                         .HasColumnType("TEXT")
                         .HasColumnName("custom_description");
@@ -1539,7 +1535,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<string>("CustomName")
                         .HasColumnType("TEXT")
                         .HasColumnName("custom_name");
-                    #endregion
+
+                    b.Property<string>("LoadoutName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("loadout_name");
 
                     b.Property<int>("ProfileLoadoutGroupId")
                         .HasColumnType("INTEGER")
