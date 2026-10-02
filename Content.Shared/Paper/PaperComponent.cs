@@ -29,6 +29,14 @@ public sealed partial class PaperComponent : Component
     public bool EditingDisabled;
 
     /// <summary>
+    /// Pirate: stamped/signed documents are final, but a stamp-ignoring pen (cyberpen)
+    /// may still edit them. Set while the open write session was started with such a pen
+    /// so later save attempts (page flips, direct messages) are checked against it.
+    /// Deliberately neither a data field nor networked: the client knows its own pen.
+    /// </summary>
+    public bool WriteSessionIgnoresStamps;
+
+    /// <summary>
     /// Sound played after writing to the paper.
     /// </summary>
     [DataField("sound")]

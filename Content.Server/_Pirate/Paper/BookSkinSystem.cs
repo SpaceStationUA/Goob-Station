@@ -147,10 +147,14 @@ public sealed class BookSkinSystem : EntitySystem
         var meta = content[1..end];
         var separator = meta.IndexOf(MetaKeyValue);
 
+        // Only trust a cover that actually exists for this item: the id comes from the
+        // database and may name a prototype removed between versions - an invalid one
+        // would be replicated and then saved back by AttachSkinMeta.
         if (separator > 0 &&
             meta[..separator] == SkinMetaKey &&
             !string.IsNullOrWhiteSpace(meta[(separator + 1)..]) &&
-            TryComp<BookSkinComponent>(uid, out var skin))
+            TryComp<BookSkinComponent>(uid, out var skin) &&
+            IsAvailable(skin, meta[(separator + 1)..]))
         {
             skin.Skin = meta[(separator + 1)..];
             Dirty(uid, skin);

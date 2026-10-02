@@ -76,5 +76,41 @@ namespace Content.Tests.Shared.Paper
 
             Assert.That(decoded.Select(page => page.Content), Is.EqualTo(new[] { "a", "", "c" }));
         }
+
+        [Test]
+        public void SanitizeStripsEveryReservedControlCharacter()
+        {
+            // \f breaks leaves, \u001D/\u001E forge signatures, \u001C/\u001F forge the cover meta block.
+            const string forged = "ok\f text\u001Dname\u001Eevil\u001Cskin\u001FBookX";
+
+            var clean = PaperPageFormat.Sanitize(forged);
+
+            Assert.That(clean, Is.EqualTo("ok textnameevilskinBookX"));
+        }
+
+        [Test]
+        public void SanitizeLeavesOrdinaryTextAlone()
+        {
+            const string text = "plain text with \n newlines, табличний текст і emoji \u2764";
+
+            Assert.That(PaperPageFormat.Sanitize(text), Is.EqualTo(text));
+            Assert.That(PaperPageFormat.Sanitize(string.Empty), Is.Empty);
+        }
+
+        [Test]
+        public void SanitizedMarkerStaysPlainTextWhenStored()
+        {
+            // A forged marker in player text must not become real document structure.
+            var pages = new List<PaperPage>
+            {
+                new() { Content = PaperPageFormat.Sanitize("a\u001Dforged name") },
+            };
+
+            var decoded = PaperPageFormat.Decode(PaperPageFormat.Encode(pages));
+
+            Assert.That(decoded, Has.Count.EqualTo(1));
+            Assert.That(decoded[0].Content, Is.EqualTo("aforged name"));
+            Assert.That(decoded[0].Signatures, Is.Empty);
+        }
     }
 }

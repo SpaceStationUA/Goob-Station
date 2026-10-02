@@ -100,6 +100,30 @@ public static class PaperPageFormat
     }
 
     /// <summary>
+    /// Strips every control character this format (or the hidden cover meta block) uses as
+    /// a separator from player-written text. None of them can be typed legitimately, and a
+    /// forged one would otherwise be decoded into a real leaf break or signature.
+    /// </summary>
+    public static string Sanitize(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+            return text;
+
+        var builder = new StringBuilder(text.Length);
+        foreach (var c in text)
+        {
+            // \f - leaf separator; \u001D/\u001E - signature markers;
+            // \u001C/\u001F - book cover meta block (see BookSkinSystem).
+            if (c == LeafSeparator || c is '\u001C' or '\u001D' or '\u001E' or '\u001F')
+                continue;
+
+            builder.Append(c);
+        }
+
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// Turns a document back into leaves. Documents saved before paging existed simply
     /// decode into a single leaf holding their whole text.
     /// </summary>

@@ -148,6 +148,7 @@ public sealed class PaperSystem : EntitySystem
     private void BeforeUIOpen(Entity<PaperComponent> entity, ref BeforeActivatableUIOpenEvent args)
     {
         entity.Comp.Mode = PaperAction.Read;
+        entity.Comp.WriteSessionIgnoresStamps = false;
         UpdateUserInterface(entity);
     }
 
@@ -194,9 +195,14 @@ public sealed class PaperSystem : EntitySystem
         }
 
         // only allow editing if there are no stamps or when using a cyberpen
-        var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
+        var editable = !IsWriteLocked(entity) || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
         if (_tagSystem.HasTag(args.Used, WriteTag))
         {
+            // Pirate: stamped/signed documents are final - remember whether this write
+            // session was started by a pen that may ignore stamps (cyberpen), so save
+            // attempts arriving later (page flips, direct messages) are checked against it.
+            entity.Comp.WriteSessionIgnoresStamps = _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
+
             if (editable)
             {
                 if (entity.Comp.EditingDisabled)
@@ -229,6 +235,7 @@ public sealed class PaperSystem : EntitySystem
                 _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
                 UpdateUserInterface(entity);
             }
+
             args.Handled = true;
             return;
         }
@@ -254,6 +261,22 @@ public sealed class PaperSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Pirate: a document is final once it carries stamps, and a leaf of a paginated item
+    /// once that leaf carries signatures - a stamped sheet tucked into a diary locks its
+    /// leaf exactly like a stamp locks a loose sheet.
+    /// </summary>
+    private bool IsWriteLocked(Entity<PaperComponent> entity)
+    {
+        if (entity.Comp.StampedBy.Count > 0)
+            return true;
+
+        if (TryComp<PaperPagesComponent>(entity, out var pages))
+            return pages.Pages[CurrentPageIndex(pages)].Signatures.Count > 0;
+
+        return false;
+    }
+
     private static StampDisplayInfo GetStampInfo(StampComponent stamp)
     {
         return new StampDisplayInfo
@@ -269,6 +292,7 @@ public sealed class PaperSystem : EntitySystem
         TryWriteText(entity, args.Actor, args.Text);
 
         entity.Comp.Mode = PaperAction.Read;
+        entity.Comp.WriteSessionIgnoresStamps = false;
         UpdateUserInterface(entity);
     }
 
@@ -296,7 +320,15 @@ public sealed class PaperSystem : EntitySystem
             BindPersistentTextOwner(entity.Owner, persistentText, actor);
         }
 
-        var processedText = ExpandPaperMacros(entity, actor, rawText); // Pirate: paperwork tags
+        // Pirate: stamped/signed documents and leaves are final - only a write session
+        // opened with a stamp-ignoring pen (cyberpen) may still write into them. This also
+        // covers a flip carrying an edit onto a leaf that got signed while the editor was open.
+        if (IsWriteLocked(entity) && !entity.Comp.WriteSessionIgnoresStamps)
+            return false;
+
+        // Pirate: player text must never contain the reserved PaperPageFormat/cover-meta
+        // control characters - otherwise a typed marker forges leaves and signatures later.
+        var processedText = PaperPageFormat.Sanitize(ExpandPaperMacros(entity, actor, rawText)); // Pirate: paperwork tags
 
         if (processedText.Length > entity.Comp.ContentSize) // Pirate: paperwork tags
             return false;
@@ -597,7 +629,7 @@ public sealed class PaperSystem : EntitySystem
                 _appearance.SetData(sheet, PaperVisuals.Stamp, paper.StampState, appearance);
         }
 
-        SetContent((sheet, paper), leaf.Content);
+        SetContent((sheet, paper), PaperPageFormat.Sanitize(leaf.Content));
 
         // Hands full? The sheet just stays where it was dropped.
         _hands.TryPickupAnyHand(actor, sheet);
@@ -618,7 +650,7 @@ public sealed class PaperSystem : EntitySystem
         var index = CurrentPageIndex(pages);
         pages.Pages.Insert(index + 1, new PaperPage
         {
-            Content = sheetPaper.Content,
+            Content = PaperPageFormat.Sanitize(sheetPaper.Content),
             Signatures = new List<StampDisplayInfo>(sheetPaper.StampedBy),
         });
         pages.CurrentPage = index + 1;
@@ -1003,6 +1035,7 @@ public sealed class PaperSystem : EntitySystem
             return;
 
         entity.Comp.Mode = PaperAction.Read;
+        entity.Comp.WriteSessionIgnoresStamps = false;
         UpdateUserInterface(entity);
         _uiSystem.TryToggleUi(entity.Owner, PaperUiKey.Key, args.User);
         args.Handled = true;
