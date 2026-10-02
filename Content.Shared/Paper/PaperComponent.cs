@@ -74,9 +74,16 @@ public sealed partial class PaperComponent : Component
     {
         public readonly string Text;
 
-        public PaperInputTextMessage(string text)
+        /// <summary>
+        /// Pirate: the leaf this text was typed on (0 for plain paper). pages.CurrentPage
+        /// is shared by every viewer, so the server aims the write at this leaf instead.
+        /// </summary>
+        public readonly int Page;
+
+        public PaperInputTextMessage(string text, int page = 0)
         {
             Text = text;
+            Page = page;
         }
     }
 
@@ -106,11 +113,18 @@ public sealed partial class PaperComponent : Component
         /// </summary>
         public readonly string? Text;
 
-        public PaperPageActionMessage(PaperPageAction action, int page = 0, string? text = null)
+        /// <summary>
+        /// Pirate: the leaf <see cref="Text"/> was typed on, so a concurrent flip of the
+        /// shared current page by another viewer cannot reroute the write.
+        /// </summary>
+        public readonly int TextPage;
+
+        public PaperPageActionMessage(PaperPageAction action, int page = 0, string? text = null, int textPage = 0)
         {
             Action = action;
             Page = page;
             Text = text;
+            TextPage = textPage;
         }
     }
 

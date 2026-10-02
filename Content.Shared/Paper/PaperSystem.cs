@@ -264,15 +264,23 @@ public sealed class PaperSystem : EntitySystem
     /// <summary>
     /// Pirate: a document is final once it carries stamps, and a leaf of a paginated item
     /// once that leaf carries signatures - a stamped sheet tucked into a diary locks its
-    /// leaf exactly like a stamp locks a loose sheet.
+    /// leaf exactly like a stamp locks a loose sheet. <paramref name="page"/> picks the
+    /// leaf to inspect, defaulting to the one currently on screen.
     /// </summary>
-    private bool IsWriteLocked(Entity<PaperComponent> entity)
+    private bool IsWriteLocked(Entity<PaperComponent> entity, int? page = null)
     {
         if (entity.Comp.StampedBy.Count > 0)
             return true;
 
         if (TryComp<PaperPagesComponent>(entity, out var pages))
-            return pages.Pages[CurrentPageIndex(pages)].Signatures.Count > 0;
+        {
+            // CurrentPageIndex also keeps the leaf list non-empty, so the clamp is safe.
+            var index = CurrentPageIndex(pages);
+            if (page != null)
+                index = Math.Clamp(page.Value, 0, pages.Pages.Count - 1);
+
+            return pages.Pages[index].Signatures.Count > 0;
+        }
 
         return false;
     }
@@ -289,7 +297,7 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInputTextMessage(Entity<PaperComponent> entity, ref PaperInputTextMessage args)
     {
-        TryWriteText(entity, args.Actor, args.Text);
+        TryWriteText(entity, args.Actor, args.Text, args.Page);
 
         entity.Comp.Mode = PaperAction.Read;
         entity.Comp.WriteSessionIgnoresStamps = false;
@@ -298,9 +306,10 @@ public sealed class PaperSystem : EntitySystem
 
     /// <summary>
     /// Checks the write permission and applies the text to the item - to the whole document,
-    /// or, for paginated items, only to the leaf currently on screen.
+    /// or, for paginated items, only to the leaf the request names (falling back to the one
+    /// on screen when it names none).
     /// </summary>
-    private bool TryWriteText(Entity<PaperComponent> entity, EntityUid actor, string rawText)
+    private bool TryWriteText(Entity<PaperComponent> entity, EntityUid actor, string rawText, int? page = null)
     {
         var ev = new PaperWriteAttemptEvent(entity.Owner);
         RaiseLocalEvent(actor, ref ev);
@@ -320,10 +329,31 @@ public sealed class PaperSystem : EntitySystem
             BindPersistentTextOwner(entity.Owner, persistentText, actor);
         }
 
+        // Pirate: persistent diary pages - the request names the leaf its text was typed
+        // on. pages.CurrentPage is shared by every viewer, so a flip by another player
+        // must never reroute the write; an out-of-range leaf means the leaves changed
+        // under the sender, so the write is rejected instead of saved somewhere else.
+        int? targetPage = null;
+        if (TryComp<PaperPagesComponent>(entity, out var pages))
+        {
+            if (page == null)
+            {
+                targetPage = CurrentPageIndex(pages);
+            }
+            else
+            {
+                var requested = page.Value;
+                if (requested < 0 || requested >= pages.Pages.Count)
+                    return false;
+
+                targetPage = requested;
+            }
+        }
+
         // Pirate: stamped/signed documents and leaves are final - only a write session
         // opened with a stamp-ignoring pen (cyberpen) may still write into them. This also
         // covers a flip carrying an edit onto a leaf that got signed while the editor was open.
-        if (IsWriteLocked(entity) && !entity.Comp.WriteSessionIgnoresStamps)
+        if (IsWriteLocked(entity, targetPage) && !entity.Comp.WriteSessionIgnoresStamps)
             return false;
 
         // Pirate: player text must never contain the reserved PaperPageFormat/cover-meta
@@ -333,11 +363,17 @@ public sealed class PaperSystem : EntitySystem
         if (processedText.Length > entity.Comp.ContentSize) // Pirate: paperwork tags
             return false;
 
-        // Pirate: persistent diary pages - a paginated item only rewrites the leaf on screen.
-        if (TryComp<PaperPagesComponent>(entity, out var pages))
-            SetPageText(entity, pages, processedText);
+        // Pirate: persistent diary pages - a paginated item only rewrites the leaf the
+        // request names, and only after that index has been validated.
+        if (pages != null)
+        {
+            if (!SetPageText(entity, pages, targetPage!.Value, processedText))
+                return false;
+        }
         else
+        {
             SetContent(entity, processedText); // Pirate: paperwork tags
+        }
 
         var paperStatus = string.IsNullOrWhiteSpace(processedText) ? PaperStatus.Blank : PaperStatus.Written; // Pirate: paperwork tags
 
@@ -478,7 +514,7 @@ public sealed class PaperSystem : EntitySystem
                 // The flip carries the text still being typed, so the leaf being left
                 // behind keeps it instead of the window silently dropping the edit.
                 if (args.Text != null)
-                    TryWriteText(entity, args.Actor, args.Text);
+                    TryWriteText(entity, args.Actor, args.Text, args.TextPage);
 
                 SetCurrentPage(entity, pages, args.Page);
                 return;
@@ -499,8 +535,10 @@ public sealed class PaperSystem : EntitySystem
                     return;
                 }
 
-                if (args.Text != null)
-                    TryWriteText(entity, args.Actor, args.Text);
+                // A failed write stops the flow: the sheet is not consumed and no page
+                // is added for text that never got saved.
+                if (args.Text != null && !TryWriteText(entity, args.Actor, args.Text, args.TextPage))
+                    return;
 
                 QueueDel(material);
                 AddPage(entity, pages);
@@ -670,10 +708,18 @@ public sealed class PaperSystem : EntitySystem
         return true;
     }
 
-    private void SetPageText(Entity<PaperComponent> entity, PaperPagesComponent pages, string text)
+    /// <summary>
+    /// Pirate: writes into one concrete leaf, validating the index first - pages.CurrentPage
+    /// is shared by every viewer and may have been flipped since the text was typed.
+    /// </summary>
+    private bool SetPageText(Entity<PaperComponent> entity, PaperPagesComponent pages, int index, string text)
     {
-        pages.Pages[CurrentPageIndex(pages)].Content = text;
+        if (index < 0 || index >= pages.Pages.Count)
+            return false;
+
+        pages.Pages[index].Content = text;
         SyncPages(entity, pages);
+        return true;
     }
 
     /// <summary>

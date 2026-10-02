@@ -69,9 +69,12 @@ namespace Content.Client.Paper.UI
         public event Action<int>? OnSignatureRequested; // Starlight-edit
 
         // Pirate: persistent diary pages
-        public event Action<PaperComponent.PaperPageAction, int, string?>? OnPageAction;
+        public event Action<PaperComponent.PaperPageAction, int, string?, int>? OnPageAction;
         private int _currentPage;
         private int _pageCount;
+
+        /// <summary>Leaf on screen, so saves and flips can name the page they edit.</summary>
+        public int CurrentPage => _currentPage;
 
         private int _MaxInputLength = -1;
         public int MaxInputLength
@@ -163,9 +166,9 @@ namespace Content.Client.Paper.UI
             PrevPageButton.OnPressed += _ => RequestPageTurn(_currentPage - 1);
             NextPageButton.OnPressed += _ => RequestPageTurn(_currentPage + 1);
             AddPageButton.OnPressed += _ =>
-                OnPageAction?.Invoke(PaperComponent.PaperPageAction.Add, 0, TakePendingText());
+                OnPageAction?.Invoke(PaperComponent.PaperPageAction.Add, 0, TakePendingText(), _currentPage);
             RemovePageButton.OnPressed += _ =>
-                OnPageAction?.Invoke(PaperComponent.PaperPageAction.Remove, 0, null);
+                OnPageAction?.Invoke(PaperComponent.PaperPageAction.Remove, 0, null, _currentPage);
             #endregion
         }
 
@@ -175,7 +178,7 @@ namespace Content.Client.Paper.UI
             if (page < 0 || page >= _pageCount || page == _currentPage)
                 return;
 
-            OnPageAction?.Invoke(PaperComponent.PaperPageAction.Turn, page, TakePendingText());
+            OnPageAction?.Invoke(PaperComponent.PaperPageAction.Turn, page, TakePendingText(), _currentPage);
         }
 
         /// <summary>

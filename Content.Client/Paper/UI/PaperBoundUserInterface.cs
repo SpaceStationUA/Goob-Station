@@ -47,7 +47,9 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
 
     private void InputOnTextEntered(string text)
     {
-        SendMessage(new PaperInputTextMessage(text));
+        // Pirate: the save names the leaf it was typed on - the shared current page may
+        // have been flipped by another viewer meanwhile.
+        SendMessage(new PaperInputTextMessage(text, _window?.CurrentPage ?? 0));
 
         if (_window != null)
         {
@@ -67,8 +69,8 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
     private void OnSignatureRequested(int signatureIndex) => SendMessage(new PaperSignatureRequestMessage(signatureIndex));
 
     // Pirate: persistent diary pages
-    private void OnPageAction(PaperPageAction action, int page, string? text)
+    private void OnPageAction(PaperPageAction action, int page, string? text, int textPage)
     {
-        SendMessage(new PaperPageActionMessage(action, page, text));
+        SendMessage(new PaperPageActionMessage(action, page, text, textPage));
     }
 }
