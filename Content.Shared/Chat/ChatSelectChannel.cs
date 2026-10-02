@@ -64,6 +64,12 @@ namespace Content.Shared.Chat
         /// </summary>
         Telepathic = ChatChannel.Telepathic,
 
+        #region Pirate: staff chats
+        Mentor = ChatChannel.MentorChat,
+        Event = ChatChannel.EventChat,
+        CentCom = ChatChannel.CentComChat,
+        #endregion
+
         Console = ChatChannel.Unspecified
     }
 }

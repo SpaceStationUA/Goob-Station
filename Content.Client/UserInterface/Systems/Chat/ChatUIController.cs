@@ -194,6 +194,7 @@ public sealed partial class ChatUIController : UIController
     {
         _sawmill = Logger.GetSawmill("chat");
         _sawmill.Level = LogLevel.Info;
+        RegisterStaffChatPrefixes(); // Pirate: staff chats
         _admin.AdminStatusUpdated += UpdateChannelPermissions; // Goobstation - Starlight collective mind port
         _manager.PermissionsUpdated += UpdateChannelPermissions;
         _player.LocalPlayerAttached += OnAttachedChanged;
@@ -602,6 +603,8 @@ public sealed partial class ChatUIController : UIController
             CanSendChannels |= ChatSelectChannel.Admin;
             FilterableChannels |= ChatChannel.Telepathic; //Nyano - Summary: makes admins able to see psionic chat.
         }
+
+        UpdateStaffChatPermissions(); // Pirate: staff chats
 
         // Pirate: ask Pirate-side systems whether this player can use telepathic chat.
         if (_player.LocalEntity is { } localEntity)

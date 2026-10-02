@@ -137,6 +137,14 @@ namespace Content.Shared.Administration
         /// </summary>
         Polls = 1 << 23,
 
+        #region Pirate: staff chats
+        MentorChat = 1 << 24,
+
+        EventChat = 1 << 25,
+
+        CentComChat = 1 << 26,
+        #endregion
+
         /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>

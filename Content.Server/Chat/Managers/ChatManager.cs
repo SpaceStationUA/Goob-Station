@@ -177,7 +177,9 @@ internal sealed partial class ChatManager : IChatManager
 
     public void SendAdminAlertNoFormatOrEscape(string message)
     {
-        var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
+        var clients = _adminManager.ActiveAdmins
+            .Where(p => _adminManager.HasAdminFlag(p, AdminFlags.Adminchat)) // Pirate: staff chats - alerts were sent to every admin regardless of flags
+            .Select(p => p.Channel);
 
         ChatMessageToMany(ChatChannel.AdminAlert, message, message, default, false, true, clients);
     }
@@ -253,6 +255,13 @@ internal sealed partial class ChatManager : IChatManager
             case OOCChatType.Admin:
                 SendAdminChat(player, message);
                 break;
+            #region Pirate: staff chats
+            case OOCChatType.MentorChat:
+            case OOCChatType.EventChat:
+            case OOCChatType.CentComChat:
+                SendStaffChat(player, message, type);
+                break;
+            #endregion
         }
     }
 
@@ -316,7 +325,9 @@ internal sealed partial class ChatManager : IChatManager
             return;
         }
 
-        var clients = _adminManager.ActiveAdmins.Select(p => p.Channel);
+        var clients = _adminManager.ActiveAdmins
+            .Where(p => _adminManager.HasAdminFlag(p, AdminFlags.Adminchat)) // Pirate: staff chats - asay was sent to every admin regardless of flags
+            .Select(p => p.Channel);
         var wrappedMessage = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                         ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                                         ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
@@ -446,5 +457,10 @@ internal sealed partial class ChatManager : IChatManager
 public enum OOCChatType : byte
 {
     OOC,
-    Admin
+    Admin,
+    #region Pirate: staff chats
+    MentorChat,
+    EventChat,
+    CentComChat,
+    #endregion
 }
