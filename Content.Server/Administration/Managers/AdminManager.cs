@@ -422,7 +422,7 @@ namespace Content.Server.Administration.Managers
 
         private async Task<(AdminData dat, int? rankId, bool specialLogin)?> LoadAdminData(ICommonSession session)
         {
-            var result = await LoadAdminDataCore(session);
+            var result = await ApplyTemporaryRank(session, await LoadAdminDataCore(session)); // Pirate: temporary ranks
 
             // Make sure admin didn't disconnect while data was loading.
             if (session.Status != SessionStatus.InGame)
