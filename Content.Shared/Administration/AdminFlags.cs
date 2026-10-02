@@ -145,6 +145,10 @@ namespace Content.Shared.Administration
         CentComChat = 1 << 26,
         #endregion
 
+        #region Pirate: mentorhelp
+        Mentorhelp = 1 << 27,
+        #endregion
+
         /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>

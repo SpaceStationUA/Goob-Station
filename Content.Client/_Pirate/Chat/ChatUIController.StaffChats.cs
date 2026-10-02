@@ -7,6 +7,12 @@ namespace Content.Client.UserInterface.Systems.Chat;
 
 public sealed partial class ChatUIController
 {
+    // The selector reads ChannelPrefixes during UI startup, before Initialize().
+    static ChatUIController()
+    {
+        RegisterStaffChatPrefixes();
+    }
+
     private static void RegisterStaffChatPrefixes()
     {
         foreach (var chat in StaffChats.All)

@@ -194,7 +194,6 @@ public sealed partial class ChatUIController : UIController
     {
         _sawmill = Logger.GetSawmill("chat");
         _sawmill.Level = LogLevel.Info;
-        RegisterStaffChatPrefixes(); // Pirate: staff chats
         _admin.AdminStatusUpdated += UpdateChannelPermissions; // Goobstation - Starlight collective mind port
         _manager.PermissionsUpdated += UpdateChannelPermissions;
         _player.LocalPlayerAttached += OnAttachedChanged;
