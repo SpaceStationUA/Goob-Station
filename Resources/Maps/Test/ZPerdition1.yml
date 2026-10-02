@@ -8120,7 +8120,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 5647
 - proto: AirlockJanitorLocked
@@ -8528,7 +8528,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 206
@@ -26830,7 +26830,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 3127
@@ -26840,7 +26840,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 3128
@@ -26850,7 +26850,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 3131
@@ -26860,7 +26860,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 3132
@@ -26870,7 +26870,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 3133
@@ -26880,7 +26880,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 3134
@@ -26890,7 +26890,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 3135
@@ -26900,7 +26900,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 3136
@@ -27349,7 +27349,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
+
       deviceLists:
       - 74
   - uid: 3203
@@ -38995,7 +38995,6 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
       deviceLists:
       - 74
     - type: AtmosPipeColor
@@ -39737,7 +39736,6 @@ entities:
       parent: 2
     - type: DeviceNetwork
       configurators:
-      - invalid
       deviceLists:
       - 74
     - type: AtmosPipeLayers
