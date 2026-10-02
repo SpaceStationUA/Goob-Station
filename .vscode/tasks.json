@@ -10,7 +10,8 @@
             "args": [
                 "build",
                 "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'" // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "/consoleloggerparameters:'ForceNoAlign;NoSummary'", // Pirate: WebView module loading
+                "-p:UseSharedCompilation=false" // Pirate: WebView module loading
             ],
             "group": {
                 "kind": "build",
@@ -31,6 +32,7 @@
                 "Tools",
                 "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
                 "/consoleloggerparameters:'ForceNoAlign;NoSummary'", // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "-p:UseSharedCompilation=false" // Pirate: WebView module loading
             ],
             "group": {
                 "kind": "build",
@@ -51,6 +53,7 @@
                 "Release",
                 "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
                 "/consoleloggerparameters:'ForceNoAlign;NoSummary'", // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "-p:UseSharedCompilation=false" // Pirate: WebView module loading
             ],
             "group": {
                 "kind": "build",
@@ -69,7 +72,8 @@
                 "build",
                 "${workspaceFolder}/Content.YAMLLinter/Content.YAMLLinter.csproj",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
+                "/consoleloggerparameters:'ForceNoAlign;NoSummary'", // Pirate: WebView module loading
+                "-p:UseSharedCompilation=false" // Pirate: WebView module loading
             ],
             "problemMatcher": "$msCompile"
         },

@@ -10,6 +10,7 @@ using Content.Shared._Pirate.ZLevels.Ghost;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Gravity;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Physics.Components;
@@ -32,6 +33,10 @@ public sealed class CEWeightlessZLevelMoverSystem : EntitySystem
     [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!;
 
     private TimeSpan _nextUpdate;
+    // Active living mobs: the only bodies these actions apply to. Maintained by activation,
+    // mob-state and component events; every poll still re-checks full eligibility.
+    private readonly HashSet<EntityUid> _eligibleMobs = new();
+    private readonly List<EntityUid> _pollSnapshot = new();
 
     public override void Initialize()
     {
@@ -42,6 +47,17 @@ public sealed class CEWeightlessZLevelMoverSystem : EntitySystem
         SubscribeLocalEvent<CEWeightlessZLevelMoverComponent, CEZLevelActionDown>(OnZLevelDown);
         SubscribeLocalEvent<CEZPhysicsComponent, ComponentShutdown>(OnZPhysicsShutdown);
         SubscribeLocalEvent<CEZPhysicsComponent, CEZPhysicsActivationChangedEvent>(OnZPhysicsActivationChanged);
+        SubscribeLocalEvent<CEZPhysicsComponent, MobStateChangedEvent>(OnMobStateChanged);
+        // Directed MobState component lifecycle events are already owned by other systems.
+        EntityManager.ComponentAdded += OnComponentAdded;
+        EntityManager.ComponentRemoved += OnComponentRemoved;
+    }
+
+    public override void Shutdown()
+    {
+        EntityManager.ComponentAdded -= OnComponentAdded;
+        EntityManager.ComponentRemoved -= OnComponentRemoved;
+        base.Shutdown();
     }
 
     public override void Update(float frameTime)
@@ -53,8 +69,20 @@ public sealed class CEWeightlessZLevelMoverSystem : EntitySystem
 
         _nextUpdate = _timing.CurTime + UpdateInterval;
 
-        foreach (var uid in _zLevels.ActiveBodies)
+        // Action and component callbacks can change membership during UpdateActions.
+        _pollSnapshot.Clear();
+        _pollSnapshot.AddRange(_eligibleMobs);
+        foreach (var uid in _pollSnapshot)
         {
+            if (!_eligibleMobs.Contains(uid))
+                continue;
+
+            if (!Exists(uid))
+            {
+                _eligibleMobs.Remove(uid);
+                continue;
+            }
+
             if (!TryComp<PhysicsComponent>(uid, out var physics) ||
                 !TryComp<TransformComponent>(uid, out var xform))
             {
@@ -211,14 +239,56 @@ public sealed class CEWeightlessZLevelMoverSystem : EntitySystem
 
     private void OnZPhysicsShutdown(Entity<CEZPhysicsComponent> ent, ref ComponentShutdown args)
     {
+        _eligibleMobs.Remove(ent);
         _zLevels.SleepBody(ent);
         RemCompDeferred<CEWeightlessZLevelMoverComponent>(ent);
     }
 
     private void OnZPhysicsActivationChanged(Entity<CEZPhysicsComponent> ent, ref CEZPhysicsActivationChangedEvent args)
     {
-        if (!args.Active)
+        if (args.Active && _mobState.IsAlive(ent))
+        {
+            _eligibleMobs.Add(ent);
+        }
+        else
+        {
+            _eligibleMobs.Remove(ent);
             RemCompDeferred<CEWeightlessZLevelMoverComponent>(ent);
+        }
+    }
+
+    private void OnMobStateChanged(Entity<CEZPhysicsComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.NewMobState == MobState.Alive && _zLevels.IsBodyActive(ent))
+        {
+            _eligibleMobs.Add(ent);
+        }
+        else
+        {
+            _eligibleMobs.Remove(ent);
+            RemCompDeferred<CEWeightlessZLevelMoverComponent>(ent);
+        }
+    }
+
+    private void OnComponentAdded(AddedComponentEventArgs args)
+    {
+        if (args.BaseArgs.Component is not MobStateComponent mobState)
+            return;
+
+        var uid = args.BaseArgs.Owner;
+        if (_zLevels.IsBodyActive(uid) && _mobState.IsAlive(uid, mobState))
+            _eligibleMobs.Add(uid);
+    }
+
+    private void OnComponentRemoved(RemovedComponentEventArgs args)
+    {
+        if (args.BaseArgs.Component is not MobStateComponent)
+            return;
+
+        var uid = args.BaseArgs.Owner;
+        _eligibleMobs.Remove(uid);
+        if (Exists(uid))
+            RemCompDeferred<CEWeightlessZLevelMoverComponent>(uid);
     }
 
     private void OnShutdown(Entity<CEWeightlessZLevelMoverComponent> ent, ref ComponentShutdown args)

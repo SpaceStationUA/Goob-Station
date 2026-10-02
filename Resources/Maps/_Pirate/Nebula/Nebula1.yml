@@ -93,7 +93,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: ZNebulaStation [1]
+      name: NebulaStation [1]
     - type: Transform
       parent: 3
     - type: MapGrid
@@ -480,7 +480,7 @@ entities:
     - type: Fixtures
       fixtures: {}
     - type: BecomesStation
-      id: ZNebula
+      id: Nebula
     - type: OccluderTree
     - type: Shuttle
       dampingModifiers:
@@ -22119,7 +22119,7 @@ entities:
   - uid: 3
     components:
     - type: MetaData
-      name: ZNebulaStation [1]
+      name: NebulaStation [1]
     - type: Transform
     - type: Map
       mapPaused: True
