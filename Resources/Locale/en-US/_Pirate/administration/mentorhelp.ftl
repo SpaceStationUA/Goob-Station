@@ -8,3 +8,5 @@ mentorhelp-no-mentors-online = No mentors are in game right now. If your questio
 mentorhelp-responders-only = Mentors only
 mentorhelp-responders-only-tooltip = Check this box to hide the message from the player. Mentors and admins will still see it.
 mentorhelp-message-responders-only = (Mentors only)
+
+ui-options-mentorhelp-sound = Play Mentorhelp Notification Sound

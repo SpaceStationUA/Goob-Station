@@ -149,6 +149,10 @@ namespace Content.Shared.Administration
         Mentorhelp = 1 << 27,
         #endregion
 
+        #region Pirate: temporary ranks
+        TempRanks = 1 << 28,
+        #endregion
+
         /// <summary>
         ///     Dangerous host permissions like scsi.
         /// </summary>

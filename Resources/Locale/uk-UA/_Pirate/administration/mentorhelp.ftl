@@ -8,3 +8,5 @@ mentorhelp-no-mentors-online = Зараз менторів у грі немає.
 mentorhelp-responders-only = Лише для менторів
 mentorhelp-responders-only-tooltip = Позначте, щоб приховати повідомлення від гравця. Ментори й адміни його бачитимуть.
 mentorhelp-message-responders-only = (Лише для менторів)
+
+ui-options-mentorhelp-sound = Відтворити звук сповіщення менторхелпу

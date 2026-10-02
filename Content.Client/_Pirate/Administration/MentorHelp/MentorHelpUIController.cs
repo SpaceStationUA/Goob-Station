@@ -13,6 +13,7 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Bwoink;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared._Pirate.Administration.MentorHelp;
+using Content.Shared._Pirate.CCVars;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
@@ -57,7 +58,7 @@ public sealed class MentorHelpUIController : UIController,
     private HelpWindowKind? _lastKind;
 
     private string? _aHelpSound;
-    private bool _bwoinkSoundEnabled;
+    private bool _mentorHelpSoundEnabled;
 
     private MenuButton? GameAHelpButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.AHelpButton;
     private Button? LobbyAHelpButton => (UIManager.ActiveScreen as LobbyGui)?.AHelpButton;
@@ -79,7 +80,8 @@ public sealed class MentorHelpUIController : UIController,
 
         _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
         _config.OnValueChanged(CCVars.AHelpSound, v => _aHelpSound = v, true);
-        _config.OnValueChanged(CCVars.BwoinkSoundEnabled, v => _bwoinkSoundEnabled = v, true);
+        // Keep the mentorhelp mute state independent of ahelp.
+        _config.OnValueChanged(PirateVars.MentorHelpSoundEnabled, v => _mentorHelpSoundEnabled = v, true);
     }
 
     public void OnSystemLoaded(MentorHelpSystem system)
@@ -180,7 +182,8 @@ public sealed class MentorHelpUIController : UIController,
 
         if (message.PlaySound && local.UserId != message.TrueSender)
         {
-            if (_aHelpSound != null && (_bwoinkSoundEnabled || !_adminManager.IsActive()))
+            // Only responders can mute mentorhelp sounds.
+            if (_aHelpSound != null && (_mentorHelpSoundEnabled || !IsResponder))
                 _audio.PlayGlobal(_aHelpSound, Filter.Local(), false);
             _clyde.RequestWindowAttention();
         }

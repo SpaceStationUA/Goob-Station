@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server._Pirate.Administration.Systems;
 using Content.Server.Administration;
@@ -16,8 +17,9 @@ using Robust.Shared.Network;
 
 namespace Content.Server._Pirate.Administration.Commands;
 
+[AdminCommand(AdminFlags.TempRanks)]
 [AdminCommand(AdminFlags.Permissions)]
-public sealed class TemporaryRankCommand : LocalizedEntityCommands
+public sealed class TemporaryRankAddCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
@@ -25,7 +27,7 @@ public sealed class TemporaryRankCommand : LocalizedEntityCommands
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly TemporaryRankSystem _ranks = default!;
 
-    public override string Command => "temprank";
+    public override string Command => "temprankadd";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -57,30 +59,27 @@ public sealed class TemporaryRankCommand : LocalizedEntityCommands
 
         if (shell.Player == null && !listed)
         {
-            shell.WriteError(Loc.GetString("cmd-temprank-not-eligible", ("player", located.Username), ("rank", rank.Name)));
+            shell.WriteError(Loc.GetString("cmd-temprankadd-not-eligible", ("player", located.Username), ("rank", rank.Name)));
             return;
         }
 
         var grantedBy = shell.Player?.Name ?? Loc.GetString("temp-rank-server-console");
         _ranks.Grant(located.UserId, located.Username, rank, grantedBy, listed);
-        shell.WriteLine(Loc.GetString("cmd-temprank-success", ("player", located.Username), ("rank", rank.Name)));
+        shell.WriteLine(Loc.GetString("cmd-temprankadd-success", ("player", located.Username), ("rank", rank.Name)));
     }
 
-    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override async ValueTask<CompletionResult> GetCompletionAsync(IConsoleShell shell, string[] args, string argStr, CancellationToken cancel)
     {
-        if (args.Length == 1)
+        return args.Length switch
         {
-            var options = _players.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
-            return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-temprank-arg-player"));
-        }
-
-        if (args.Length == 2)
-            return CompletionResult.FromHint(Loc.GetString("cmd-temprank-arg-rank"));
-
-        return CompletionResult.Empty;
+            1 => TemporaryRankCompletion.OnlinePlayers(_players),
+            2 => await TemporaryRankCompletion.GrantableRanks(shell, _admin, _ranks),
+            _ => CompletionResult.Empty,
+        };
     }
 }
 
+[AdminCommand(AdminFlags.TempRanks)]
 [AdminCommand(AdminFlags.Permissions)]
 public sealed class TemporaryRankRemoveCommand : LocalizedEntityCommands
 {
@@ -113,41 +112,53 @@ public sealed class TemporaryRankRemoveCommand : LocalizedEntityCommands
 
         shell.WriteLine(Loc.GetString("cmd-temprankremove-success", ("player", located.Username)));
     }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length != 1)
+            return CompletionResult.Empty;
+
+        var options = _ranks.Grants.Select(g => g.Username).OrderBy(n => n).ToArray();
+        return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-temprank-arg-player"));
+    }
 }
 
+[AdminCommand(AdminFlags.TempRanks)]
 [AdminCommand(AdminFlags.Permissions)]
 public sealed class TemporaryRankListCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly TemporaryRankSystem _ranks = default!;
 
-    public override string Command => "tempranks";
+    public override string Command => "tempranklist";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_ranks.Grants.Count == 0)
         {
-            shell.WriteLine(Loc.GetString("cmd-tempranks-empty"));
+            shell.WriteLine(Loc.GetString("cmd-tempranklist-empty"));
             return;
         }
 
         foreach (var grant in _ranks.Grants.OrderBy(g => g.Username))
         {
-            shell.WriteLine(Loc.GetString(grant.KeepThroughNextRestart ? "cmd-tempranks-entry-next" : "cmd-tempranks-entry",
+            shell.WriteLine(Loc.GetString(grant.KeepThroughNextRestart ? "cmd-tempranklist-entry-next" : "cmd-tempranklist-entry",
                 ("player", grant.Username), ("rank", grant.RankName), ("admin", grant.GrantedBy)));
         }
     }
 }
 
+[AdminCommand(AdminFlags.TempRanks)]
 [AdminCommand(AdminFlags.Permissions)]
-public sealed class TemporaryRankAllowCommand : LocalizedEntityCommands
+public sealed class RankWhitelistAddCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly TemporaryRankSystem _ranks = default!;
 
-    public override string Command => "temprankallow";
+    public override string Command => "rankwhitelistadd";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -161,26 +172,38 @@ public sealed class TemporaryRankAllowCommand : LocalizedEntityCommands
 
         if (!await _db.AddTempRankEligibilityAsync(player.UserId, rank.Id, shell.Player?.UserId))
         {
-            shell.WriteError(Loc.GetString("cmd-temprankallow-exists", ("player", player.Username), ("rank", rank.Name)));
+            shell.WriteError(Loc.GetString("cmd-rankwhitelistadd-exists", ("player", player.Username), ("rank", rank.Name)));
             return;
         }
 
         var by = shell.Player?.Name ?? Loc.GetString("temp-rank-server-console");
         _adminLog.Add(LogType.AdminCommands, LogImpact.High,
             $"{by} allowed {player.Username} ({player.UserId}) to get the temporary rank {rank.Name} through the bot");
-        shell.WriteLine(Loc.GetString("cmd-temprankallow-success", ("player", player.Username), ("rank", rank.Name)));
+        shell.WriteLine(Loc.GetString("cmd-rankwhitelistadd-success", ("player", player.Username), ("rank", rank.Name)));
+    }
+
+    public override async ValueTask<CompletionResult> GetCompletionAsync(IConsoleShell shell, string[] args, string argStr, CancellationToken cancel)
+    {
+        return args.Length switch
+        {
+            1 => TemporaryRankCompletion.OnlinePlayers(_players),
+            2 => await TemporaryRankCompletion.GrantableRanks(shell, _admin, _ranks),
+            _ => CompletionResult.Empty,
+        };
     }
 }
 
+[AdminCommand(AdminFlags.TempRanks)]
 [AdminCommand(AdminFlags.Permissions)]
-public sealed class TemporaryRankDisallowCommand : LocalizedEntityCommands
+public sealed class RankWhitelistRemoveCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly TemporaryRankSystem _ranks = default!;
 
-    public override string Command => "temprankdisallow";
+    public override string Command => "rankwhitelistremove";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -191,7 +214,7 @@ public sealed class TemporaryRankDisallowCommand : LocalizedEntityCommands
 
         if (!await _db.RemoveTempRankEligibilityAsync(player.UserId, rank.Id))
         {
-            shell.WriteError(Loc.GetString("cmd-temprankdisallow-none", ("player", player.Username), ("rank", rank.Name)));
+            shell.WriteError(Loc.GetString("cmd-rankwhitelistremove-none", ("player", player.Username), ("rank", rank.Name)));
             return;
         }
 
@@ -200,17 +223,43 @@ public sealed class TemporaryRankDisallowCommand : LocalizedEntityCommands
             $"{by} removed {player.Username} ({player.UserId}) from the temporary rank {rank.Name} eligibility list");
 
         // Removing eligibility affects future grants; active grants expire at round end.
-        shell.WriteLine(Loc.GetString("cmd-temprankdisallow-success", ("player", player.Username), ("rank", rank.Name)));
+        shell.WriteLine(Loc.GetString("cmd-rankwhitelistremove-success", ("player", player.Username), ("rank", rank.Name)));
+    }
+
+    public override async ValueTask<CompletionResult> GetCompletionAsync(IConsoleShell shell, string[] args, string argStr, CancellationToken cancel)
+    {
+        if (args.Length == 1)
+            return TemporaryRankCompletion.OnlinePlayers(_players);
+
+        if (args.Length != 2)
+            return CompletionResult.Empty;
+
+        NetUserId? userId = _players.TryGetSessionByUsername(args[0], out var session)
+            ? session.UserId
+            : (await _locator.LookupIdByNameOrIdAsync(args[0], cancel))?.UserId;
+
+        var ranks = userId == null
+            ? Array.Empty<string>()
+            : (await _db.GetTempRankEligibilityAsync(userId.Value)).Select(e => e.AdminRank.Name).OrderBy(n => n).ToArray();
+
+        return CompletionResult.FromHintOptions(ranks, Loc.GetString("cmd-temprank-arg-rank"));
     }
 }
 
+[AdminCommand(AdminFlags.TempRanks)]
 [AdminCommand(AdminFlags.Permissions)]
-public sealed class TemporaryRankAllowedCommand : LocalizedEntityCommands
+public sealed class RankWhitelistGetCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private readonly IPlayerManager _players = default!;
 
-    public override string Command => "temprankallowed";
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        return args.Length == 1 ? TemporaryRankCompletion.OnlinePlayers(_players) : CompletionResult.Empty;
+    }
+
+    public override string Command => "rankwhitelistget";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -230,7 +279,7 @@ public sealed class TemporaryRankAllowedCommand : LocalizedEntityCommands
         var entries = await _db.GetTempRankEligibilityAsync(filter);
         if (entries.Count == 0)
         {
-            shell.WriteLine(Loc.GetString("cmd-temprankallowed-empty"));
+            shell.WriteLine(Loc.GetString("cmd-rankwhitelistget-empty"));
             return;
         }
 
@@ -239,8 +288,28 @@ public sealed class TemporaryRankAllowedCommand : LocalizedEntityCommands
             var userId = new NetUserId(group.Key);
             var name = (await _locator.LookupIdAsync(userId))?.Username ?? group.Key.ToString();
             var ranks = string.Join(", ", group.Select(e => e.AdminRank.Name).OrderBy(n => n));
-            shell.WriteLine(Loc.GetString("cmd-temprankallowed-entry", ("player", name), ("ranks", ranks)));
+            shell.WriteLine(Loc.GetString("cmd-rankwhitelistget-entry", ("player", name), ("ranks", ranks)));
         }
+    }
+}
+
+internal static class TemporaryRankCompletion
+{
+    public static CompletionResult OnlinePlayers(IPlayerManager players)
+    {
+        var options = players.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
+        return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-temprank-arg-player"));
+    }
+
+    // Keep completion limited to ranks the caller may grant.
+    public static async ValueTask<CompletionResult> GrantableRanks(IConsoleShell shell, IAdminManager admin, TemporaryRankSystem ranks)
+    {
+        AdminFlags? callerFlags = shell.Player is { } caller
+            ? admin.GetAdminData(caller)?.Flags ?? AdminFlags.None
+            : null;
+
+        var names = await ranks.GetGrantableRankNames(callerFlags);
+        return CompletionResult.FromHintOptions(names, Loc.GetString("cmd-temprank-arg-rank"));
     }
 }
 

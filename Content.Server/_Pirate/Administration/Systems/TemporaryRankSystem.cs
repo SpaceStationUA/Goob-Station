@@ -82,6 +82,16 @@ public sealed class TemporaryRankSystem : EntitySystem
         return AdminFlagsHelper.NamesToFlags(rank.Flags.Select(f => f.Flag));
     }
 
+    public async Task<string[]> GetGrantableRankNames(AdminFlags? callerFlags)
+    {
+        var (_, ranks) = await _db.GetAllAdminAndRanksAsync();
+        return ranks
+            .Where(r => callerFlags == null || (RankFlags(r) & ~callerFlags.Value) == AdminFlags.None)
+            .Select(r => r.Name)
+            .OrderBy(n => n)
+            .ToArray();
+    }
+
     // Admins may grant only ranks whose flags they hold; server console calls are exempt.
     public static bool CheckCallerHasFlags(IConsoleShell shell, IAdminManager admin, AdminRank rank)
     {
