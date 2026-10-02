@@ -67,7 +67,7 @@
     - _Pirate/Ghosts/astrally.rsi
   alpha: 1
   ghostName: Astrally
-  ghostDescription: Шляпа
+  ghostDescription: Хаос, хаос та ще хаос.
 
 - type: customGhost
   id: bunkeran-ghost

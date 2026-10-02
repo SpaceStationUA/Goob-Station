@@ -70,7 +70,7 @@ public partial class PlumbingNode : PipeNode
             xform.Anchored &&
             grid is { } machineGrid)
         {
-            var position = machineGrid.TileIndicesFor(xform.Coordinates);
+            var position = NodeHelpers.MapSys.TileIndicesFor(machineGrid.Owner, machineGrid, xform.Coordinates);
             var selectedByDirection = new Dictionary<PipeDirection, PipeNode>();
 
             // Optional internal outlet linking.
@@ -138,7 +138,7 @@ public partial class PlumbingNode : PipeNode
             xform.Anchored &&
             grid is { } ductGrid)
         {
-            var pos = ductGrid.TileIndicesFor(xform.Coordinates);
+            var pos = NodeHelpers.MapSys.TileIndicesFor(ductGrid.Owner, ductGrid, xform.Coordinates);
 
             foreach (var direction in GetCardinalDirections(CurrentPipeDirection))
             {

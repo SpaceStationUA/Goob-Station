@@ -67,4 +67,5 @@
      - GlimmerMonitorCartridge
      - NanoChatCartridge
      - WalletCartridge # Pirate banking
+     - RadioCartridge # Pirate internet radio
 

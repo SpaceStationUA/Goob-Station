@@ -1,0 +1,95 @@
+/* Radio page styles - built on the theme tokens; no raw colors. */
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--bg); color: var(--text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+/* Solid mounts into #root; the old page was its own flex column. */
+#root { display: flex; flex-direction: column; height: 100%; }
+
+/* Content column: the ONLY scroller must be .list (the watermark inside
+   GameWindow is pinned to the window shell, so it must not move). */
+.app { display: flex; flex-direction: column; height: 100%; flex: 1; min-height: 0; }
+
+.station-label { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.genre-line, .song-line { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.status-line { font-size: 11px; color: var(--dim); }
+
+.now {
+  padding: 10px 12px;
+  background: linear-gradient(180deg, var(--panel2), var(--panel));
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 10px;
+}
+.eq { width: 26px; height: 22px; display: flex; align-items: flex-end; gap: 3px; }
+.eq i {
+  display: block; width: 4px; background: var(--accent2);
+  height: 4px; border-radius: var(--radius);
+  animation: bounce 900ms ease-in-out infinite;
+}
+.eq i:nth-child(2) { animation-delay: 150ms; }
+.eq i:nth-child(3) { animation-delay: 320ms; }
+.eq i:nth-child(4) { animation-delay: 470ms; }
+.eq.paused i { animation-play-state: paused; height: 4px !important; opacity: .4; }
+@keyframes bounce { 0%,100% { height: 4px; } 50% { height: 20px; } }
+
+.meta { flex: 1; min-width: 0; }
+.volpct { font-size: 11px; color: var(--dim); width: 30px; text-align: right; }
+.vol { flex: 1; accent-color: var(--accent); }
+
+.controls {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs { display: flex; border-bottom: 1px solid var(--line); }
+.tabs .tab {
+  flex: 1; text-align: center; padding: 7px 0;
+  font-size: 12px; color: var(--dim); cursor: pointer;
+  background: var(--panel);
+  border: none; border-radius: 0;
+}
+.tabs .tab.active { background: var(--panel2); color: var(--accent2); font-weight: 600; }
+
+.list {
+  flex: 1; min-height: 0; overflow-y: auto; padding: 6px;
+  position: relative; z-index: 1;
+}
+.station-row {
+  padding: 7px 10px; border-radius: var(--radius); cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+}
+.station-row:hover { background: var(--panel2); }
+.station-row.active { background: var(--accent); color: #fff; }
+.station-row.active .g { opacity: .75; color: #fff; }
+.station-row.dead { opacity: .35; cursor: default; }
+.station-row .name { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+.station-row .g { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 42%; }
+.star { color: var(--accent2); cursor: pointer; padding: 0 2px; font-size: 14px; flex: none; }
+.star.off { color: var(--dim); }
+.station-row.active .star { color: #fff; }
+.genre-row {
+  padding: 8px 10px; border-radius: var(--radius); cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+}
+.genre-row:hover { background: var(--panel2); }
+.genre-row .gname { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+.genre-row .cnt { font-size: 11px; color: var(--dim); }
+.back { padding: 6px 10px; font-size: 12px; color: var(--dim); cursor: pointer; flex: none; }
+.back:hover { color: var(--accent2); }
+.list::-webkit-scrollbar { width: 8px; }
+.list::-webkit-scrollbar-thumb { background: var(--panel2); border-radius: var(--radius); }
+
+.theme-switch { display: inline-flex; gap: 4px; margin-left: 8px; }
+.theme-chip {
+  background: var(--panel2); color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2px 8px; font-size: 11px; cursor: pointer;
+}
+.theme-chip.active { color: var(--text); border-color: var(--accent); }

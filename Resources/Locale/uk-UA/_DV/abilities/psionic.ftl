@@ -148,3 +148,7 @@ psionic-flash-power-metapsionic-feedback = {CAPITALIZE($entity)} випромі�
 # Відгуки для конкретних сутностей
 # ПРИМІТКА: наступні три не мають прототипів сутностей у цій збірці - зарезервовані на майбутнє
 mantis-pendulum-hot-message = Маятник стає неприємно гарячим у вашій руці.
+
+assay-body = Виявлено псіонічні здібності у {$entity}:
+assay-response-refuse = Я тобі нічого не скажу!
+assay-response-why-scan = Чому ви мене скануєте?

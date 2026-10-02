@@ -97,7 +97,6 @@ public sealed partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleCompon
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink request start");
             if (!RequestUplink(traitor, mindId, startingBalance, out uplinkBriefing, out uplinkBriefingShort)) // Goob
                 return false;
-            _reputation.AddContracts(traitor, _uplink.FindUplinkTarget(traitor)); // Pirate: contract state lives on the traitor mind.
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink request completed");
         }
 

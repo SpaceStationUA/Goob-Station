@@ -1,8 +1,5 @@
 // SPDX-FileCopyrightText: 2026 ColonialMarinesUniverse contributors <https://github.com/AU-14/ColonialMarinesUniverse>
 // SPDX-License-Identifier: AGPL-3.0-only
-// Ported from ColonialMarinesUniverse (Content.Shared/_CMU14/ZLevels/Core/CMUZLevelOpeningCache.cs).
-// CMU code implemented after 2026-04-30 is AGPL-3.0 per their README; renames to lanos identifiers.
-
 using System.Numerics;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -13,19 +10,23 @@ namespace Content.Shared._Pirate.ZLevels.Core;
 
 /// <summary>
 /// Per-grid chunk cache for sight openings. Sound and shooting use separate predicates.
+/// A <c>visual</c> cache instead tracks tiles the renderer draws the deck below through (ZTransparent too).
 /// </summary>
 public sealed class CMUZLevelOpeningCache
 {
     public const int DefaultChunkSize = 8;
+    private const float LocalPositionResolution = 1024f;
 
     private readonly Dictionary<EntityUid, GridOpeningCache> _gridCaches = new();
     private readonly int _chunkSize;
+    private readonly bool _visual;
 
-    public CMUZLevelOpeningCache(int chunkSize = DefaultChunkSize)
+    public CMUZLevelOpeningCache(int chunkSize = DefaultChunkSize, bool visual = false)
     {
         if (chunkSize <= 0)
             throw new ArgumentOutOfRangeException(nameof(chunkSize), chunkSize, "chunkSize must be > 0");
         _chunkSize = chunkSize;
+        _visual = visual;
     }
 
     public int ChunkSize => _chunkSize;
@@ -241,7 +242,8 @@ public sealed class CMUZLevelOpeningCache
             if (!Matrix3x2.Invert(gridWorldMatrix, out var gridInvWorldMatrix))
                 continue;
 
-            var localSourcePosition = Vector2.Transform(sourcePosition, gridInvWorldMatrix);
+            // Snapped: a source exactly diagonal to an opening would otherwise flip the edge-tile test below.
+            var localSourcePosition = SnapLocalPosition(Vector2.Transform(sourcePosition, gridInvWorldMatrix));
             var sourceInsideOpening = IsExistingOpeningTile(
                 grid,
                 new Vector2i((int) MathF.Floor(localSourcePosition.X), (int) MathF.Floor(localSourcePosition.Y)),
@@ -377,6 +379,16 @@ public sealed class CMUZLevelOpeningCache
     }
 
     /// <summary>
+    /// Snaps a grid-local position to a 1/1024-tile lattice. On a moving grid the world round trip adds float
+    /// noise that changes every frame, which would flip exact ties in discrete decisions.
+    /// </summary>
+    public static Vector2 SnapLocalPosition(Vector2 local)
+    {
+        return new Vector2(MathF.Round(local.X * LocalPositionResolution) / LocalPositionResolution,
+            MathF.Round(local.Y * LocalPositionResolution) / LocalPositionResolution);
+    }
+
+    /// <summary>
     /// Sight predicate backing this cache.
     /// </summary>
     public static bool IsOpeningTile(
@@ -387,6 +399,33 @@ public sealed class CMUZLevelOpeningCache
             return true;
 
         return ((ContentTileDefinition) tileDefinition[tile.TypeId]).ZSightPermeable;
+    }
+
+    /// <summary>
+    /// Render predicate: the deck below is drawn through empty, ZTransparent and sight-permeable tiles.
+    /// </summary>
+    public static bool IsVisualOpeningTile(
+        Tile tile,
+        ITileDefinitionManager tileDefinition)
+    {
+        if (tile.IsEmpty)
+            return true;
+
+        var def = (ContentTileDefinition) tileDefinition[tile.TypeId];
+        return def.ZTransparent || def.ZSightPermeable;
+    }
+
+    private bool IsCachedOpeningTile(
+        Entity<MapGridComponent> grid,
+        Vector2i tile,
+        SharedMapSystem map,
+        ITileDefinitionManager tileDefinition)
+    {
+        if (!_visual)
+            return IsOpeningTile(grid, tile, map, tileDefinition);
+
+        return !map.TryGetTileRef(grid.Owner, grid.Comp, tile, out var tileRef) ||
+               IsVisualOpeningTile(tileRef.Tile, tileDefinition);
     }
 
     /// <summary>Cross-Z shooting predicate.</summary>
@@ -572,7 +611,7 @@ public sealed class CMUZLevelOpeningCache
             for (var tileY = fallbackTileStartY; tileY <= fallbackTileEndY; tileY++)
             {
                 var openingTile = new Vector2i(tileX, tileY);
-                if (!IsOpeningTile(grid, openingTile, map, tileDefinition))
+                if (!IsCachedOpeningTile(grid, openingTile, map, tileDefinition))
                     continue;
 
                 if (visitor(openingTile))
@@ -653,7 +692,7 @@ public sealed class CMUZLevelOpeningCache
             for (var tileY = fallbackTileStartY; tileY <= fallbackTileEndY; tileY++)
             {
                 var openingTile = new Vector2i(tileX, tileY);
-                if (!IsOpeningTile(grid, openingTile, map, tileDefinition))
+                if (!IsCachedOpeningTile(grid, openingTile, map, tileDefinition))
                     continue;
 
                 TryUseNearestOpeningTile(
@@ -728,7 +767,7 @@ public sealed class CMUZLevelOpeningCache
         {
             for (var y = startY; y < endY; y++)
             {
-                if (IsOpeningTile(grid, new Vector2i(x, y), map, tile))
+                if (IsCachedOpeningTile(grid, new Vector2i(x, y), map, tile))
                 {
                     hasOpening = true;
 

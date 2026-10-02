@@ -350,12 +350,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
             sourceComponent.Outputs.GetOrNew(source).Add(sinkUid);
             sourceComponent.LinkedPorts.GetOrNew(sinkUid).Add((source, sink));
+            sinkComponent.LinkedSources.Add(sourceUid); // Pirate: only accepted links have a reciprocal source.
 
             SendNewLinkEvent(userId, sourceUid, source, sinkUid, sink);
         }
 
-        if (links.Count > 0)
-            sinkComponent.LinkedSources.Add(sourceUid);
     }
 
     /// <summary>

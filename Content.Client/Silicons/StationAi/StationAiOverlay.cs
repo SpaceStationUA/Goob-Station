@@ -46,6 +46,15 @@ public sealed partial class StationAiOverlay : Overlay //goob edit
         IoCManager.InjectDependencies(this);
     }
 
+    #region Pirate: AI multiz interactions
+    // Draw static only on the composite pass; a cropped lower-deck pass can shrink the shared visible-tile cache.
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
+    {
+        return args.Viewport.Eye is not Content.Client.Viewport.ScalingViewport.ZEye zEye
+            || zEye.Depth == zEye.HighestDepth;
+    }
+    #endregion Pirate: AI multiz interactions
+
     protected override void Draw(in OverlayDrawArgs args)
     {
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());

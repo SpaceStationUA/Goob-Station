@@ -65,3 +65,15 @@
     sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/instructor.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/Uniforms/Jumpskirt/Security/instructor.rsi
+
+## Юрист / Lawyer
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtLawyerPink
+  name: Рожева спідниця адвоката
+  description: Яскраво-рожева спідниця-костюм, яку носять адвокати, до яких вам слід звернутися.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/lawyerpink.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpskirt/lawyerpink.rsi

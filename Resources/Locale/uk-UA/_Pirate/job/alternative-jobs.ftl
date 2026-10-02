@@ -1,12 +1,17 @@
 alternative-job-notify = Хоча вашу роль тепер називають '{$newJobName}', це не означає, що ви перестали бути {$parentJobName}. Ваша роль та обов'язки залишаються незмінними.
 # Карго
 job-alternative-name-mailman = Поштар
+job-alternative-name-logistician = Логіст
+job-alternative-name-DirectorQM = Директор з постачання
+job-alternative-name-MilQM = Інтендант
 
 # Civilian
 job-alternative-name-Dungeon-Master = Майстер Підземелля
 job-alternative-name-flora-engineer = Флора-інженер
 job-alternative-name-prankster = Пранкер
+job-alternative-name-jester = Блазень
 job-alternative-name-waiter = Офіціант
+job-alternative-name-steward = Стюард
 job-alternative-name-maid = Покоївка
 job-alternative-name-correspondent = Кореспондент
 
@@ -26,6 +31,15 @@ job-description-bbq-master = Торти? Фрукти? Ви про що? Спр�
 # Пекар
 job-alternative-name-baker = Пекар
 job-description-baker = Хуторок не підведе, моє тісто не вспливе, моє тісто не вспливе.
+
+# Піцайоло
+
+job-alternative-name-pizzaiolo = Піцайоло
+job-description-pizzaiolo = Жузепе тебе навчив випікати найкращу піцу на усій станції, то випікай!
+
+# Кондитер
+
+job-alternative-name-confectioner = Кондитер
 
 # Кінець chef
 
@@ -87,7 +101,13 @@ job-description-monolith-preacher = Несамовитий голос Волі �
 job-alternative-name-command-officer = Офіцер командування
 job-alternative-name-station-director = Директор станції
 job-alternative-name-sherif = Шериф
+job-alternative-name-director-hos = Директор з безпеки
+job-alternative-name-commander = Командир служби безпеки
 job-alternative-name-secretary = Секретар
+job-alternative-name-adjutant = Ад'ютант
+job-alternative-name-admin-personal = Адміністратор Персоналу
+job-alternative-name-Officer-HOP = Офіцер Відділу Кадрів
+job-alternative-name-Director-HOP = Кадровий директор
 
 # Engineering
 job-alternative-name-teg-specialist = Спеціаліст з ТЕГ-двигунів
@@ -95,14 +115,23 @@ job-alternative-name-engine-specialist = Спеціаліст з станцій�
 job-alternative-name-electrician = Електрик
 job-alternative-name-nuclear-physicist = Фізик-ядерник
 job-description-nuclear-physicist = Ви, напевно, єдиний спеціаліст у вашій справі. Оперуйте та вдосконалюйте Ядерний реактор. Випадково наразіть усих на набезпеку, бо вам треба було випити води. Бухайте горілку в кінці зміни, виправдовуючи це захистом від радіації.
+job-alternative-name-CE-Director = Технічний директор
+job-alternative-name-CE-Mil = Старший інженерний офіцер
 
 # Medical
 job-alternative-name-surgeon = Хірург
 job-alternative-name-necrologist = Некролог
 job-alternative-name-cryo-specialist = Спеціаліст з кріогеніки
-job-alternative-name-pharmacist = Фармацеут
+job-alternative-name-pharmacist = Фармацевт
+job-alternative-name-biochem = Біохімік
+job-alternative-name-toxchem = Токсиколог
+job-alternative-name-ord-intern = Ординатор
+job-alternative-name-pract-intern = Практикант
 job-alternative-name-smo = Старший медичний офіцер
+job-alternative-name-director-med = Медичний директор
 job-alternative-name-psychotherapist = Психотерапевт
+job-alternative-name-ep-viro = Епідеміолог
+job-alternative-name-im-viro = Імунолог
 
 # Science
 job-alternative-name-anomalist = Аномаліст
@@ -111,6 +140,7 @@ job-alternative-name-xenoarcheologist = Ксеноархеолог
 job-alternative-name-phoron-researcher = Дослідник форону
 job-alternative-name-aspirant = Аспірант
 job-alternative-name-laborant = Лаборант
+job-alternative-name-RD-Dir = Директор наукового відділу
 
 # Security
 job-alternative-name-peacekeeper = Миротворець
@@ -119,6 +149,9 @@ job-alternative-name-forensist = Слідчий
 job-alternative-name-corpsman = Санітар
 job-alternative-name-lawenforcer = Правоохоронець
 job-description-lawenforcer = Охоронець закону і порядку. Затримуйте злочинців, захищайте станцію, але пам’ятайте: надмірна жорстокість — теж злочин.
+job-alternative-name-patrol = Патрульний
+job-alternative-name-cadet-second = Курсант
+job-alternative-name-recruit = Рекрут
 
 # Кінець lawenforcer
 

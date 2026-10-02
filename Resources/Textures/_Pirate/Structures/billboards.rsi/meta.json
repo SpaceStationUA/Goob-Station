@@ -1,0 +1,38 @@
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from TG station",
+  "size": {
+    "x": 128,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "2000_miles"
+    },
+    {
+      "name": "american_diner"
+    },
+    {
+      "name": "base"
+    },
+    {
+      "name": "donk_co"
+    },
+    {
+      "name": "fuck_nanotrasen"
+    },
+    {
+      "name": "nanotrasen"
+    },
+    {
+      "name": "space_cola"
+    },
+    {
+      "name": "spinward_smoothies"
+    },
+    {
+      "name": "gas_station"
+    }
+  ]
+}

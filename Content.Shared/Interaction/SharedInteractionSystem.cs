@@ -62,6 +62,7 @@ namespace Content.Shared.Interaction
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ISharedChatManager _chat = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -638,8 +639,18 @@ namespace Content.Shared.Interaction
 
         protected bool ValidateInteractAndFace(EntityUid user, EntityCoordinates coordinates)
         {
+            #region Pirate: AI multiz interactions
+            var viewer = user;
+            if (HasComp<Content.Shared.Silicons.StationAi.StationAiOverlayComponent>(user) &&
+                TryComp<RelayInputMoverComponent>(user, out var viewerRelay) && // Pirate: AI multiz interactions
+                Exists(viewerRelay.RelayEntity)) // Pirate: AI multiz interactions
+            {
+                viewer = viewerRelay.RelayEntity;
+            }
+            #endregion Pirate: AI multiz interactions
+
             // Verify user is on the same map as the entity they clicked on
-            if (_transform.GetMapId(coordinates) != Transform(user).MapID)
+            if (_transform.GetMapId(coordinates) != Transform(viewer).MapID) // Pirate: AI multiz interactions
                 return false;
 
             // Only rotate to face if they're not moving.
@@ -962,7 +973,7 @@ namespace Content.Shared.Interaction
                 }
 
                 if (ignoreAnchored && _mapManager.TryFindGridAt(targetCoords, out _, out var grid))
-                    ignored.UnionWith(grid.GetAnchoredEntities(targetCoords));
+                    ignored.UnionWith(_mapSystem.GetAnchoredEntities(grid.Owner, grid, targetCoords));
             }
 
             Ignored combinedPredicate = e => e == target || (predicate?.Invoke(e) ?? false) || ignored.Contains(e);

@@ -1,0 +1,13 @@
+SuperCastleGame — vendored third-party WebArcade game
+Fetched by Scripts/sh/vendor-arcade-games.sh.
+
+id:      supercastle
+license: GPL-3.0
+repo:    mvasilkov/super2023
+ref:     617034ee9884cd50df4dc7c8daa910679c6f7dde
+kind:    zip (https://js13kgames.com/games/super-castle-game.zip)
+fetched: 2026-09-20T10:12:17Z
+
+This is a third-party work from the JS13kGames 2024 (or 2023) competition.
+See the repository/source above for the original license text and copyright
+holder. We do not claim authorship and we do not modify the code.
