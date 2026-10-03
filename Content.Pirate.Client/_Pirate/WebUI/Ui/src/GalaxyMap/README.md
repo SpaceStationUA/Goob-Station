@@ -158,6 +158,28 @@ sequence failed on its first item and every mapping silently lost its first key.
 The second one is the dangerous shape — a map missing `width` reads as a
 misconfigured map, not as a broken parser.
 
+## Planet types
+
+Eight orbital types: terran, ocean, **river**, desert, ice, gas, lava, barren. Plus
+`star` and `asteroid`, which are deliberately not planets.
+
+**River worlds** are the eighth, and they are the reference's `LandRivers.gdshader`
+rather than a tint of terran. Two things had to be added to the type, because the
+river pass already existed and terran and ocean both use it:
+
+- **`riverCutoff`.** The existing test is relative — a river appears where the river
+  field is low *compared to how high the land is* — which gives a few streaks on each
+  continent. The reference's river world has water over roughly two fifths of its
+  surface, because its test is absolute. An absolute cutoff lets one type be mostly
+  river without making every type mostly river.
+- **`riverOctaves`.** Added, then found to be a no-op: the renderer already caps
+  octaves at 6 for a 220px sprite, which is the reference's value. It stays because
+  the cap is a size-derived number and a future smaller sprite would fall below it.
+
+The thing that actually fixed the look was the cutoff. At the reference's 0.368 the
+rivers merged into one large body and the world read as a terran with inland seas.
+At 0.30 they are channels again — 7% of the disc is river water.
+
 ## Generated worlds
 
 `lib/planet.ts` generates pixel planets in the page. Ported from Deep-Fold's

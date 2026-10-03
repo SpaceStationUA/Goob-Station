@@ -2306,6 +2306,58 @@ try {
       "far and near counts agree",
     );
 
+    /**
+     * The eighth planet type: rivers.
+     *
+     * Asserted by counting the reference's own water colour rather than by looking,
+     * because "is this a river world" is not a shape question and a shape question
+     * would pass on a world with one large lake in it.
+     *
+     * The control is terran, which uses the SAME river pass with the default
+     * threshold. Without it this would pass on any world that happened to have water
+     * on it, which is all of them.
+     */
+    const rivers = await page.evaluate(async () => {
+      const count = async (type) => {
+        const uri = window.__galaxyStill({ seed: 4242, type, px: 200, dpr: 1 });
+        const im = new Image();
+        im.src = uri;
+        await im.decode();
+        const c = document.createElement("canvas");
+        c.width = im.width;
+        c.height = im.height;
+        const g = c.getContext("2d");
+        g.drawImage(im, 0, 0);
+        const d = g.getImageData(0, 0, c.width, c.height).data;
+        let opaque = 0;
+        let water = 0;
+        for (let i = 0; i < d.length; i += 4) {
+          if (d[i + 3] < 128) continue;
+          opaque++;
+          const r = d[i];
+          const g2 = d[i + 1];
+          const b = d[i + 2];
+          // The river type's two water steps, #4fa4b8 and #404973. Terran's water is
+          // a different blue entirely, which is why this measures the river palette
+          // specifically rather than "bluish pixels".
+          if (Math.abs(r - 79) < 14 && Math.abs(g2 - 164) < 14 && Math.abs(b - 184) < 14) water++;
+          else if (Math.abs(r - 64) < 14 && Math.abs(g2 - 73) < 14 && Math.abs(b - 115) < 14) water++;
+        }
+        return { pct: (100 * water) / opaque, water };
+      };
+      return { river: await count("river"), terran: await count("terran") };
+    });
+    check(
+      "a river world has rivers, in its own palette",
+      rivers.river.pct > 3,
+      `${rivers.river.pct.toFixed(1)}% of the disc is river water`,
+    );
+    check(
+      "and a terran world does not — the control, without which the one above means nothing",
+      rivers.terran.pct < 0.5,
+      `${rivers.terran.pct.toFixed(1)}%, from the same pass at its default threshold`,
+    );
+
     check(
       "an ice world has melt water on its sheet, not just one continent-sized ocean",
       lake.wetOn > lake.wetOff * 1.2,

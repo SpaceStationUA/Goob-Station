@@ -170,6 +170,7 @@ export const SYSTEMS: StarSystem[] = [
   sys("xanu", L("Xanu", "Ксану"), -41, 13, "planet", 2, "nralakk", "desert"),
   sys("himeo", L("Himeo", "Гімео"), -50, 3, "planet", 1, "nralakk", "barren"),
   sys("vysoka", L("Vysoka", "Висока"), -26, -1, "planet", 1, "nralakk", "ice"),
+  sys("rzeka", L("Rzeka", "Річка"), -38, -6, "planet", 2, "nralakk", "river"),
   sys("tattuqig", L("Tattuqig", "Таттуквіг"), -46, -9, "outpost", 0, "nralakk"),
   sys("persepolis", L("Persepolis", "Персеполіс"), 39, 19, "star", 3, "eridian"),
   sys("gadpathur", L("Gadpathur", "Гадпатур"), 29, 21, "planet", 1, "eridian", "lava"),

@@ -77,6 +77,7 @@ export type PlanetType =
   | "star"
   | "terran"
   | "ocean"
+  | "river"
   | "desert"
   | "ice"
   | "gas"
@@ -122,6 +123,33 @@ interface TypeSpec {
    * separate pass on top of the land, which is why they get their own pair.
    */
   water?: [string, string];
+  /**
+   * Absolute threshold on the river field, rather than the default test against the
+   * land's own height.
+   *
+   * The default couples rivers to the terrain: a river appears where the river field
+   * is low RELATIVE TO how high the land is, which gives a handful of streaks on
+   * each continent. That is right for a terran world and wrong for the reference's
+   * river world, where the rivers are the subject -- roughly two fifths of the
+   * surface is water and the land is what is left over between them. Expressing the
+   * threshold absolutely is what lets a world be mostly river without making every
+   * other type mostly river too.
+   */
+  riverCutoff?: number;
+  /**
+   * Octaves for the river field alone.
+   *
+   * This is what makes a river a river. The field is thresholded, and a threshold on
+   * a smooth field gives broad blobs -- which is what the first version produced, and
+   * it read as a world with inland seas rather than one with rivers. Rivers need the
+   * threshold to cut FILAMENTS, and filaments need detail: at the surface's octave
+   * count the sub-threshold regions are wider than they are long.
+   *
+   * The reference's river world runs its whole surface at six octaves. Six on the
+   * river field alone is enough to get the same look without also multiplying the
+   * cost of every land pixel.
+   */
+  riverOctaves?: number;
   /** Base cloud threshold. Gas and ice worlds are soupy; rock is not. */
   cloud: number;
   /**
@@ -183,6 +211,28 @@ export const PLANET_TYPES: Record<PlanetType, TypeSpec> = {
     land: ["#7ba055", "#63903f", "#527a35", "#44652c"],
     water: ["#2a6f8e", "#3f9ec4"],
     cloud: 0.56,
+  },
+  river: {
+    kind: "terrain",
+    // Land sits low in the field so there is a lot of it. The reference's river
+    // world is a green planet with water running through it, not a planet with a
+    // few streams on it, and the way it gets that way is a cutoff low enough that
+    // the land test passes almost everywhere.
+    cutoff: 0.3,
+    emissive: false,
+    atmo: "#8fd0d8",
+    // The reference's four land steps, brightest first. Its greens are far more
+    // saturated than a terran world's, which is most of what makes the type read as
+    // a different planet rather than a terran with more water.
+    sea: ["#1d4a52", "#16383f", "#102a30", "#0a1c21"],
+    land: ["#63ab3f", "#3b7d4f", "#2f5753", "#283540"],
+    // Teal, not blue: the reference's water here is #4fa4b8 and #404973, and using
+    // a terran world's #2a6f8e made it read as an ocean world rather than a river
+    // one. The second step is the shadowed water and sits under the bright one.
+    water: ["#4fa4b8", "#404973"],
+    riverCutoff: 0.3,
+    riverOctaves: 6,
+    cloud: 0.5,
   },
   ocean: {
     kind: "terrain",
@@ -289,7 +339,16 @@ export const PLANET_TYPE_LIST = Object.keys(PLANET_TYPES) as PlanetType[];
  * among them: a star is not one of these, and an asteroid marks a built station
  * rather than a world.
  */
-const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", "lava", "barren"];
+const ORBITAL_TYPES: PlanetType[] = [
+  "terran",
+  "ocean",
+  "river",
+  "desert",
+  "ice",
+  "gas",
+  "lava",
+  "barren",
+];
 
 /** Bump when the noise changes, so cached sprites regenerate.
  * 4: screen-space banding and multi-field land, replacing the 3D dot product.
@@ -300,8 +359,9 @@ const ORBITAL_TYPES: PlanetType[] = ["terran", "ocean", "desert", "ice", "gas", 
  * 9: ice worlds get a second, independent water field.
  * 10: gas giants lost their redundant cloud deck; the asteroid silhouette
  *     is no longer polar-damped.
- * 11: gas giant tone varies with longitude, so its rotation is visible. */
-export const PLANET_ALGO_VERSION = 11;
+ * 11: gas giant tone varies with longitude, so its rotation is visible.
+ * 12: river worlds, the eighth type, with their own octave count. */
+export const PLANET_ALGO_VERSION = 12;
 
 export interface PlanetOpts {
   seed: number;
@@ -451,6 +511,8 @@ interface Frame {
   land: RGB[] | null;
   /** River colour pair, or null. */
   water: [RGB, RGB] | null;
+  riverCutoff?: number;
+  riverOctaves?: number;
   craters: boolean;
   lakes: boolean;
   /**
@@ -550,6 +612,8 @@ function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
           return tint ? mixHsl(c, tint, tintAmt) : c;
         })
       : null,
+    riverCutoff: spec.riverCutoff,
+    riverOctaves: spec.riverOctaves,
     water: spec.water
       ? [hexToRgb(spec.water[0]), hexToRgb(spec.water[1])]
       : null,
@@ -590,6 +654,8 @@ function prep(o: PlanetOpts, d: number, threshold: number | undefined): Frame {
  */
 function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: number, spin: number) {
   const { d, rPx, glow, sea, land, water, atmo, night, nightFloor, period, octaves, seed, kind } = f;
+  const riverCutoff = f.riverCutoff;
+  const riverOct = f.riverOctaves ?? octaves;
   const px = out.data;
   // How far the cloud deck runs ahead of the ground at the middle of a turn.
   // Kept small: the deck is sampled in the same sphere space, so a large shear
@@ -905,9 +971,15 @@ function renderFrame(f: Frame, out: ImageData, stride: number, ox: number, oy: n
             // detail rather than a feature, which is why it is a hard cut: a
             // soft one would put a haze over every continent.
             if (water) {
-              const rf = fbm(sx * period + h * 6, sy * period + h * 6, period, octaves, seed + 503);
-              if (rf < h * 0.5) col = water[0];
-              else if (rf < h * 0.56) col = water[1];
+              const rf = fbm(sx * period + h * 6, sy * period + h * 6, period, riverOct, seed + 503);
+              // An absolute cutoff makes a world mostly river; the default ties the
+              // rivers to the land's own height, which keeps them a detail. See
+              // `riverCutoff`.
+              const cut = riverCutoff;
+              const lo = cut ?? h * 0.5;
+              const hi = cut !== undefined ? cut * 1.12 : h * 0.56;
+              if (rf < lo) col = water[0];
+              else if (rf < hi) col = water[1];
             }
 
             if (f.emissive && f2 + dLit < h * 0.7) col = land[0];
