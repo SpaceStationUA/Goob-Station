@@ -59,16 +59,6 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
         var comp = RetrieveCartridgeComponent(activeUI);
         var control = ui?.GetUIFragmentRoot();
 
-        /* Goobstation Edit - fix-crew-manifest-open-refresh
-		//Prevent the same, still-alive UI fragment from getting disposed and
-		//attached multiple times. A disposed control means the program was
-		//closed and opened again: rebuild and re-attach it. Upstream matched on
-		//type, which also matched a freshly rebuilt control and made every
-		//open-after-close come back blank.
-        if (_activeUiFragment == control && _activeUiFragment is { Disposed: false })
-            return;
-		*/
-
         if (_activeUiFragment is not null)
             DetachCartridgeUI(_activeUiFragment);
 
