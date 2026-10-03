@@ -1538,3 +1538,68 @@ from prototypes, so a new nation can arrive in a colour nobody looked at.
   host, and drag-to-paint (done) bought far more than zoom would.
 - Contested cells are a flat hatch with no per-claimant identity. A real dispute
   wants "Biesel claims / Izweski claims" rather than a single flag.
+
+## Why it looked cheap, and why that was a rule violation
+
+Everything else on this chart with noise in it is WebGL -- the ring, the accretion disc,
+the background. The jet was SVG gradients on a polygon, so **nothing in it was carved by
+anything**. A gradient-filled trapezoid has no interior, so there is nothing in it to
+look at. It read as cheap next to the disc because the disc has turbulence in it and the
+beam was a rectangle.
+
+So it is `lib/gl-jet.ts` now. Four things a polygon cannot do:
+
+- **Anisotropic interior.** `fbm(vec2(across * 240.0, at * 5.0))` -- about four noise
+  cells across the beam, several along it. Plasma is stretched by the same acceleration
+  that collimates it, so the texture is drawn out into filaments.
+- **A wandering axis.** `axis(t)` from low-frequency noise. A real jet precesses and
+  wiggles; a perfectly straight one is a ruler.
+- **Soft ends, and a taper.** The SVG had to *cut* the polygon at the tip, and a cut is a
+  cut at every resolution. The envelope goes to zero AND narrows the beam, so it comes
+  to a point -- fading only the brightness gives a bulb, because the gaussian profile is
+  widest at the tip and a dim wide end reads as a lozenge.
+- **A shock that swells.** The travelling knot used to be a moving `linearGradient`. Now
+  it is a gaussian in `t` that also multiplies the beam's half-width, so it is a
+  brightening and a swelling at once.
+
+Both poles come out of one loop over `abs(t)`, so they are antipodal **by construction**
+rather than by two sets of mirrored constants that can drift apart -- which was the bug
+the SVG version needed three rounds to shake.
+
+The SVG stays underneath as the fallback, with its masks and its travelling knots, because
+a fallback that is visibly worse than the thing it replaces is a regression rather than a
+degradation. It does not attempt the interior, the wandering axis or the taper.
+
+### Units, and a fault that looked like a broken shader
+
+`JET` was first written as fractions of the panel's **half**-width, where the SVG's had
+been fractions of the **whole** panel. The beam came out twice as long and ten times too
+wide, ending at the canvas edge with a flat white interior. Both surfaces now share one
+table, and `check-galaxy.ts` asserts the proportions as constants -- the browser's
+geometry assertions read the SVG path data, which is the *fallback* now and hidden
+whenever WebGL exists, and a number checked only on the fallback is a number the shader
+can drift from unnoticed. That is exactly how the two disagreed about `reach`.
+
+The interior was invisible for the same class of reason: the noise was sampled at
+`across * 12.0` over a beam 0.02 wide, a range of 0.24 -- less than one noise cell, so
+the whole beam received a single flat value.
+
+The shader also needed `precision highp float;` declared ahead of the shared prelude,
+which does not declare one. Without it the compile failed on the *prelude's* uniforms
+before reaching a line of ours, and the log pointed at line 2 of a file whose line 2 is
+somebody else's declaration. It was caught because the fallback was there and the panel
+was not blank.
+
+### Three instruments for the knots, and one assertion removed rather than shipped
+
+| instrument | measured | why it cannot work |
+|---|---|---|
+| centroid of the whole jet | 1.2px | a symmetric envelope has a fixed centre of mass, so a bulge crossing its middle cannot move it |
+| centroid of the brightest tenth | 0.5-2.6px | the base is brighter than any knot crossing it, so it *is* the brightest tenth, permanently, and its position is pinned |
+| frame at which each pole peaks | both frame 0 | the count is dominated by a constant base, and frame 0 wins by noise |
+
+**"The two poles are not in step" is asserted by nothing right now.** Doing it properly
+needs a per-row maximum well away from the base and about sixty samples to resolve a
+fraction of the 1.6s period. Shipping the assertion with a threshold it happened to pass
+would report a guarantee that is not being made, which is worse than the gap. It is
+written down here instead, and the property is visible in a screenshot.

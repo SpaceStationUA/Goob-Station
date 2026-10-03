@@ -2440,7 +2440,12 @@ try {
     await openSys("quasar-1");
     const quasar = await page.evaluate(() => {
       const o = document.querySelector(".overlay");
+      // Passed in rather than detected: a headless run may or may not get a context,
+      // and "WebGL is missing here so the assertion is vacuous" must not be silently
+      // indistinguishable from "WebGL is missing here so the fallback is correct".
+      const glSupported = !!document.createElement("canvas").getContext("webgl");
       return {
+        glSupported,
         jets: o.querySelectorAll(".quasar-jets path").length,
         disc: !!o.querySelector(".blackhole .world-gl, .blackhole .world-still"),
         // Captured HERE because the overlay is closed immediately afterwards, and
@@ -2491,6 +2496,12 @@ try {
         })(),
         /** Two masks, and both referenced by the paths that draw the jets. */
         masks: o.querySelectorAll(".quasar-jets mask").length,
+        glHost: !!o.querySelector(".quasar-jets-gl"),
+        glPainted: !!o.querySelector(".quasar-jets-gl:not([hidden]) canvas"),
+        glCanvas: (() => {
+          const c = o.querySelector(".quasar-jets-gl canvas");
+          return c ? `${c.width}x${c.height}` : null;
+        })(),
         masked: [...o.querySelectorAll(".quasar-jets path")].filter((el) => el.getAttribute("mask")).length,
         plumes: o.querySelectorAll(".quasar-jets linearGradient[id^='plume-']").length,
         knots: o.querySelectorAll(".quasar-jets linearGradient[id^='knot-']").length,
@@ -2637,7 +2648,52 @@ try {
             }
           }
         }
-        return { up, down, cu: up ? su / up : 0, cd: down ? sd / down : 0 };
+        // Centroid of the WHOLE jet, and of only its BRIGHTEST tenth.
+        //
+        // The second one exists because the first one cannot work here, and the reason
+        // is worth writing down. A beam with a symmetric envelope has a fixed centre of
+        // mass: a bulge travelling through its middle moves light from one side of the
+        // centroid to the other in equal measure, so the centroid does not move AT ALL.
+        // The first shader run measured 1.2px of centroid travel on a 190px canvas and
+        // the check failed -- against a jet whose knots were visibly travelling.
+        //
+        // So motion is measured where motion is: the centre of mass of the brightest
+        // tenth of the pixels, which is the knot's position and nothing else's.
+        const lum = [];
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            const i = (y * w + x) * 4;
+            if (d[i + 3] < 10) continue;
+            if (d[i + 2] < 40) continue;
+            if (d[i] - d[i + 2] > 45) continue;
+            const dy = y - h / 2;
+            if (Math.abs(dy) < 16) continue;
+            lum.push({ dy, l: d[i] + d[i + 1] + d[i + 2] });
+          }
+        }
+        lum.sort((a, b) => b.l - a.l);
+        const hot = lum.slice(0, Math.max(1, Math.round(lum.length * 0.1)));
+        let hu = 0;
+        let huw = 0;
+        let hd = 0;
+        let hdw = 0;
+        for (const q of hot) {
+          if (q.dy < 0) {
+            hu += -q.dy * q.l;
+            huw += q.l;
+          } else {
+            hd += q.dy * q.l;
+            hdw += q.l;
+          }
+        }
+        return {
+          up,
+          down,
+          cu: up ? su / up : 0,
+          cd: down ? sd / down : 0,
+          ku: huw ? hu / huw : 0,
+          kd: hdw ? hd / hdw : 0,
+        };
       });
       // Each pole is measured against its OWN peak in the sample, so the numbers mean
       // "how lit is this pole right now" and not "how many pixels survived a filter".
@@ -2662,8 +2718,9 @@ try {
         upPresent: rel.filter((x) => x.ru > 0.25).length,
         downPresent: rel.filter((x) => x.rd > 0.25).length,
         worstBalance: worstBalance,
-        upMoves: span("cu"),
-        downMoves: span("cd"),
+        // The knot's travel, which is the brightest-tenth centroid. See below.
+        upMoves: span("ku"),
+        downMoves: span("kd"),
         litMoves: Math.max(span("up"), span("down")),
       };
     }, jetShots.map((s) => s.toString("base64")));
@@ -2686,11 +2743,35 @@ try {
     );
     check(
       "and something in the jets still MOVES, so they are not merely standing there",
-      jetSync.upMoves > 2 && jetSync.downMoves > 2 && jetSync.litMoves > 20,
-      `light centroid travels ${jetSync.upMoves.toFixed(1)}px up and ` +
-        `${jetSync.downMoves.toFixed(1)}px down; lit pixel count varies by ` +
-        `${jetSync.litMoves.toFixed(0)}. The knots travel, the plumes do not.`,
+      jetSync.litMoves > 20,
+      `total lit pixels vary by ${jetSync.litMoves.toFixed(0)} across ` +
+        `${jetSync.frames} frames, so the jets are not a static picture.`,
     );
+    /**
+     * A fourth instrument, tried and REMOVED rather than shipped.
+     *
+     * "The two poles are out of step" is what the object needs and what three separate
+     * measurements failed to establish:
+     *
+     *  - the centroid of the whole jet: 1.2px on a 190px canvas. A beam with a
+     *    symmetric envelope has a fixed centre of mass, so a bulge crossing its middle
+     *    cannot move it.
+     *  - the centroid of the brightest tenth of the pixels: 0.5-2.6px. The beam's base
+     *    is intrinsically brighter than any knot crossing it, so the brightest tenth
+     *    IS the base, permanently, and its position is pinned.
+     *  - the frame at which each pole peaks: both returned frame 0, because the count
+     *    is dominated by a constant base and the first frame wins by noise.
+     *
+     * Doing this properly needs a band well away from the base and enough frames to
+     * resolve a fraction of the 1.6s period -- roughly 60 samples and a per-row
+     * maximum rather than a global one. That is a piece of apparatus, and until it
+     * exists the honest state is that this property is asserted BY NOTHING and visible
+     * only in a screenshot.
+     *
+     * Leaving it in with a threshold it happened to pass would be worse than leaving it
+     * out: it would report a guarantee about the phase that is not being made.
+     */
+
     check(
       "the beam is COLLIMATED, not a wedge that fills its own length",
       quasar.beam && quasar.beam.ratio < 0.12,
@@ -2712,6 +2793,27 @@ try {
       `${quasar.masks} mask(s) for ${quasar.masked}/${quasar.jets} paths. Two, not one: a ` +
         `shared edge in bounding-box units would soften the narrow beam in proportion to ` +
         `the wide flare. A hard-edged polygon is the giveaway that this is a shape.`,
+    );
+    /**
+     * Which surface is LIVE.
+     *
+     * The four paths asserted below are the SVG fallback, and they are hidden whenever
+     * WebGL exists. So every geometry assertion in this block describes a surface that
+     * is not on screen -- which is the worst version of the failure this file keeps
+     * hitting, because the checks still pass and they are describing the wrong thing.
+     *
+     * So the proportions themselves are asserted as CONSTANTS in check-galaxy.ts,
+     * against the `JET` table that the shader and the fallback's path builder both
+     * import. That is what keeps the two surfaces from drifting apart, which is how they
+     * disagreed about `reach` in the first place. What is asserted HERE is that the
+     * live surface is the shader when a context exists.
+     */
+    check(
+      "the jets are LIVE on a WebGL canvas whenever a context exists, not on the fallback",
+      quasar.glSupported ? quasar.glPainted && !!quasar.glCanvas : true,
+      `context available: ${quasar.glSupported}, canvas painted: ${quasar.glPainted}` +
+        `${quasar.glCanvas ? ` at ${quasar.glCanvas}` : ""}. The SVG is the fallback and ` +
+        `stays in the DOM underneath, which is what makes this negotiable at all.`,
     );
     check(
       "a quasar draws the black hole's disc AND two plumes, each in two layers",

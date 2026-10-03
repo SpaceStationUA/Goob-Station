@@ -24,6 +24,7 @@ import { CELLS as BAKED_CELLS, CONTESTED as BAKED_CONTESTED, FINGERPRINT as BAKE
 import { bakedModel, buildOwnership, checkBake, DEFAULT_MAP } from "../src/GalaxyMap/lib/source";
 import { cellsInExtent } from "../src/GalaxyMap/lib/hex";
 import { CLAIMS as BAKE_CLAIMS } from "../src/GalaxyMap/lib/devmap";
+import { JET } from "../src/GalaxyMap/lib/gl-jet";
 import {
   ALPHA_CUT,
   DISC,
@@ -62,6 +63,41 @@ const check = (name: string, ok: boolean, detail = "") => {
   if (!ok) failures++;
   console.log(`${ok ? "  ok  " : " FAIL "} ${name}${detail ? ` — ${detail}` : ""}`);
 };
+
+/**
+ * The jet's proportions, asserted as CONSTANTS.
+ *
+ * The browser suite measures the same numbers off the SVG path data, and that is the
+ * fallback now rather than what is on screen -- so those assertions describe a surface
+ * that is hidden whenever WebGL exists. A number that is only checked on the fallback
+ * is a number the shader can drift from without anything noticing, which is exactly
+ * how the SVG and the shader ended up disagreeing about `reach` in the first place.
+ *
+ * The two must share one set of numbers. `JET` is imported by both the shader and the
+ * fallback's path builder, so these are the assertions that keep them honest.
+ */
+const JET_LENGTH = JET.reach + 0.08;
+check(
+  "the jet's beam is COLLIMATED: tip width over length is a beam, not a cone",
+  (JET.tip * 2) / JET_LENGTH < 0.12,
+  `tip half-width ${JET.tip} over length ${JET_LENGTH.toFixed(2)} = ` +
+    `${((JET.tip * 2) / JET_LENGTH).toFixed(3)}. The wedge it replaced was 0.20.`,
+);
+check(
+  "and it does not taper open toward the tip",
+  JET.tip < JET.base,
+  `tip ${JET.tip} vs base ${JET.base}. Wider at the tip is a cone; the shader narrows ` +
+    `the beam with the envelope on top of this, so this being smaller is what keeps the ` +
+    `two from compounding.`,
+);
+check(
+  "the reach fits inside the panel, so the beam cannot run off the edge",
+  JET.reach < 0.5,
+  `reach ${JET.reach}. It was first written as a fraction of the half-width (0.92) ` +
+    `where the SVG's was a fraction of the panel (0.46), which made the beam twice as ` +
+    `long as intended and ended it at the canvas edge.`,
+);
+
 
 const spec = DEFAULT_MAP;
 const cells = cellsInExtent(spec.extentLy.w, spec.extentLy.h, spec.hexSizeLy);
