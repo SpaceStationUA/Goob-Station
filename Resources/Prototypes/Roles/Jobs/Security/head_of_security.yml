@@ -38,13 +38,11 @@
   #    - HumanHairFloorlengthBedhead
   #    - HumanHairClassicFloorlengthBedhead
   #    - HumanHairFloorlengthBraid
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-      - ZavodskiyInterstellar
-      - PMCG
-    # Pirate contractor end
+      - NanoTrasen
+    # Pirate Employment end
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"

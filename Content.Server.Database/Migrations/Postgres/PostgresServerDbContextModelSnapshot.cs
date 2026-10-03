@@ -1486,7 +1486,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
 
-                    b.Property<string>("Nationality")
+                    b.Property<string>("Citizenship")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("nationality");

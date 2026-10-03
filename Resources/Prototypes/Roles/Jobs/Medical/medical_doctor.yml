@@ -9,13 +9,11 @@
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 2.5h
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZengHuPharmaceuticals
-      - PMCG
-    # Pirate contractor end
+    # Pirate Employment end
   startingGear: DoctorGear
   icon: "JobIconMedicalDoctor"
   supervisors: job-supervisors-cmo

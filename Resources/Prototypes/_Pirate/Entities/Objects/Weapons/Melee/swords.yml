@@ -1,6 +1,6 @@
 # An officer without his sword is not in proper uniform.
 - type: entity
-  parent: [CaptainSabre, SolAllianceInfo]
+  parent: [CaptainSabre]
   id: SANMarineSabre
   name: Solarian marine sabre
   suffix: SAN
@@ -16,7 +16,7 @@
       price: 400
 
 - type: entity
-  parent: [ClothingBeltSheath, SolAllianceInfo]
+  parent: [ClothingBeltSheath]
   id: ClothingBeltSheathSANMarineFilled
   name: Solarian sabre sheath
   suffix: SAN
@@ -41,7 +41,7 @@
       size: Normal
 
 - type: entity
-  parent: [ClothingBeltSheath, SolAllianceInfo]
+  parent: [ClothingBeltSheath]
   id: ClothingBeltSheathSANOfficerFilled
   name: Solarian sabre sheath
   suffix: SAN

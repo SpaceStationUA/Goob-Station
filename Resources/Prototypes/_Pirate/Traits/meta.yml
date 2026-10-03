@@ -67,14 +67,18 @@
   components:
     - type: Unchipped
 
+### Experienced і ExperiencedAlt видалити після переробки / адаптації навичок під Аврору VVV
 - type: trait
   id: Experienced
   name: trait-experienced-name
   description: trait-experienced-desc
   category: Meta
   cost: 2
-  conflicts:
-    - ExperiencedAlt
+  conditions:
+    - !type:HasTraitsCondition
+      invert: true
+      traits:
+        - ExperiencedAlt
   components:
     - type: Knowledgeable
       bonusPoints: 6
@@ -85,15 +89,15 @@
   description: trait-experienced-alt-desc
   category: Meta
   cost: 3
-  conflicts:
-    - Experienced
   conditions:
+    - !type:HasTraitsCondition
+      invert: true
+      traits:
+        - Experienced
     - !type:HasTraitsCondition
       traits:
         - Unchipped
   components:
     - type: Knowledgeable
       bonusPoints: 10
-      requiredTraits:
-        - Unchipped
 #endregion

@@ -212,8 +212,12 @@ namespace Content.Server.Database
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)
         {
-            var jobs = profile.Jobs.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
-            var jobAlternatives = profile.Jobs.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => new ProtoId<AlternativeJobPrototype>(j.ActiveAlternativeJobId ?? string.Empty)); // Pirate - Alternative Jobs
+            var jobs = profile.Jobs
+                .Where(j => j.Priority != DbJobPriority.Never)
+                .ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
+            var jobAlternatives = profile.Jobs
+                .Where(j => !string.IsNullOrWhiteSpace(j.ActiveAlternativeJobId))
+                .ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => new ProtoId<AlternativeJobPrototype>(j.ActiveAlternativeJobId!)); // Pirate - Alternative Jobs
             var antags = profile.Antags.Select(a => new ProtoId<AntagPrototype>(a.AntagName));
             var traits = profile.Traits.Select(t => new ProtoId<TraitPrototype>(t.TraitName));
 
@@ -276,8 +280,8 @@ namespace Content.Server.Database
                 profile.CharacterName,
                 profile.FlavorText,
                 profile.Species,
-                profile.Nationality, // Pirate - port EE contractors
-                profile.Employer, // Pirate - port EE contractors
+                profile.Citizenship, // Pirate - Origin: Citizenship
+                profile.Employer, // Pirate - Employer
                 profile.Height, // Goobstation: port EE height/width sliders
                 profile.Width, // Goobstation: port EE height/width sliders
                 profile.Age,
@@ -333,8 +337,8 @@ namespace Content.Server.Database
             profile.Species = humanoid.Species;
             profile.Height = humanoid.Height; // Goobstation: port EE height/width sliders
             profile.Width = humanoid.Width; // Goobstation: port EE height/width sliders
-            profile.Nationality = humanoid.Nationality; // Pirate - port EE contractors
-            profile.Employer = humanoid.Employer; // Pirate - port EE contractors
+            profile.Citizenship = humanoid.Citizenship; // Pirate - Origin: Citizenship
+            profile.Employer = humanoid.Employer; // Pirate - Employer
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
@@ -350,11 +354,24 @@ namespace Content.Server.Database
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
 
             profile.Jobs.Clear();
-            profile.Jobs.AddRange(
-                humanoid.JobPriorities
-                    .Where(j => j.Value != JobPriority.Never)
-                    .Select(j => new Job { JobName = j.Key, Priority = (DbJobPriority) j.Value, ActiveAlternativeJobId = humanoid.JobAlternatives.TryGetValue(j.Key, out var altJob) ? altJob : string.Empty }) // Pirate - Alternative Jobs
-            );
+            var savedJobs = humanoid.JobPriorities
+                .Where(job => job.Value != JobPriority.Never)
+                .ToDictionary(
+                    job => job.Key,
+                    job => new Job { JobName = job.Key, Priority = (DbJobPriority) job.Value });
+
+            foreach (var (jobId, alternativeId) in humanoid.JobAlternatives)
+            {
+                if (!savedJobs.TryGetValue(jobId, out var savedJob))
+                {
+                    savedJob = new Job { JobName = jobId, Priority = DbJobPriority.Never };
+                    savedJobs.Add(jobId, savedJob);
+                }
+
+                savedJob.ActiveAlternativeJobId = alternativeId;
+            }
+
+            profile.Jobs.AddRange(savedJobs.Values);
 
             profile.Antags.Clear();
             profile.Antags.AddRange(

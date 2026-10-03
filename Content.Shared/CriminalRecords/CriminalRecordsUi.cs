@@ -125,15 +125,15 @@ public sealed class CriminalRecordSetStatusFilter : BoundUserInterfaceMessage
 public sealed class CriminalRecordEditIdentity : BoundUserInterfaceMessage
 {
     public readonly string Species;
-    public readonly string Nationality;
+    public readonly string Citizenship;
     public readonly string Employer;
     public readonly int Age;
     public readonly Gender Gender;
 
-    public CriminalRecordEditIdentity(string species, string nationality, string employer, int age, Gender gender)
+    public CriminalRecordEditIdentity(string species, string citizenship, string employer, int age, Gender gender)
     {
         Species = species;
-        Nationality = nationality;
+        Citizenship = citizenship;
         Employer = employer;
         Age = age;
         Gender = gender;

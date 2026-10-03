@@ -39,8 +39,8 @@ public sealed record GeneralStationRecord
     public string JobPrototype = string.Empty;
 
     #region Pirate: records photos
-    [DataField]
-    public string Nationality = string.Empty;
+    [DataField("nationality")]
+    public string Citizenship = string.Empty;
 
     [DataField]
     public string Employer = string.Empty;

@@ -39,8 +39,8 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         #region Pirate: records photos
         _window.OnDeleteRecord += id => SendMessage(new DeleteStationRecord(id));
         _window.OnCreateRecord += name => SendMessage(new GeneralRecordCreateRecord(name));
-        _window.OnIdentityInfoChanged += (species, nationality, employer, age, gender) =>
-            SendMessage(new GeneralRecordEditIdentity(species, nationality, employer, age, gender));
+        _window.OnIdentityInfoChanged += (species, citizenship, employer, age, gender) =>
+            SendMessage(new GeneralRecordEditIdentity(species, citizenship, employer, age, gender));
         _window.OnForensicsInfoChanged += (fingerprint, dna) =>
             SendMessage(new GeneralRecordEditForensics(fingerprint, dna));
         #endregion

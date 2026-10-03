@@ -23,13 +23,11 @@
     #   department: Security # Pirate
     #   time: 18000 #5 hrs # Pirate
     #   inverted: true # stop playing intern if you're good at security! # Pirate
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-      - ZavodskiyInterstellar
-      - PMCG
-    # Pirate contractor end
+      - NanoTrasen
+    # Pirate Employment end
   startingGear: SecurityCadetGear
   icon: "JobIconSecurityCadet"
   ransomModifier: 2 # Pirate: security staff are worth less than heads

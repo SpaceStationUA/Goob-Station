@@ -35,12 +35,11 @@
     #  inverted: true
     #  species:
     #  - Felinid
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - IdrisIncorporated
-    # Pirate contractor end
+    # Pirate Employment end
   guides: # goobstation
   - Command
   - Succession

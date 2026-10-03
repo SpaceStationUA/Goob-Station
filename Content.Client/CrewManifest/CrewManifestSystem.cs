@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Shared.CrewManifest;
+using Content.Shared.Pirate.Jobs; // Pirate
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
@@ -66,7 +67,10 @@ public sealed class CrewManifestSystem : EntitySystem
             return -1;
         }
 
-        if (!_jobDepartmentLookup.TryGetValue(jobPrototype, out var departments))
+        // Pirate start
+        var baseJob = EmployerJobMapping.GetBaseJob(_prototypeManager, new ProtoId<JobPrototype>(jobPrototype)).Id;
+        if (!_jobDepartmentLookup.TryGetValue(baseJob, out var departments))
+        // Pirate end
         {
             return -1;
         }

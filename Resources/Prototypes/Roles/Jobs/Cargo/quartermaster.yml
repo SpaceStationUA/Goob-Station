@@ -27,12 +27,11 @@
     #  inverted: true
     #  species:
     #  - Felinid
-  # Pirate contractor start
+  # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - OrionExpress
-      - HephaestusIndustries
-  # Pirate contractor end
+      - NanoTrasen
+  # Pirate Employment end
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"

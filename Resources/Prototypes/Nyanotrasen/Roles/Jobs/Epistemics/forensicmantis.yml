@@ -14,12 +14,11 @@
       species:
         - IPC
         - Plasmaman
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZengHuPharmaceuticals
-    # Pirate contractor end
+    # Pirate Employment end
   startingGear: ForensicMantisGear
   icon: "JobIconForensicMantis"
   supervisors: job-supervisors-rd

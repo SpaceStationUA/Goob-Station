@@ -110,7 +110,7 @@
 
 - type: entity
   name: M469
-  parent: [BaseWeaponRifle, BaseSecurityContraband, SolAllianceInfo]
+  parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleSol
   suffix: SAN
   description: Надійна штурмова гвинтівка виробництва Zavodskiy Interstellar. M469, є стандартною службовою гвинтівкою Соларіанського Альянсу, що поширена у сухопутних військах. Хоча сама конструкція автомата стара, вона продовжує широко використовуватися в Альянсі та сепаратистськими державами і, ймовірно, використовуватиметься ще багато років.

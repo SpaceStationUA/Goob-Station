@@ -4,6 +4,7 @@ using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Content.Shared.Preferences;
+using Content.Shared.Pirate.Jobs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -127,17 +128,17 @@ public sealed class ReadyManifestSystem : EntitySystem
 
     private List<ProtoId<JobPrototype>> FilterPlayerJobs(HumanoidCharacterProfile profile)
     {
-        var jobs = profile.JobPriorities.Keys.Select(k => new ProtoId<JobPrototype>(k)).ToList();
-        List<ProtoId<JobPrototype>> priorityJobs = new();
-        foreach (var job in jobs)
+        var priorityJobs = new HashSet<ProtoId<JobPrototype>>();
+        foreach (var (job, priority) in profile.JobPriorities)
         {
-            var priority = profile.JobPriorities[job];
-            if (priority == JobPriority.High || (_prototypeManager.Index(job).Weight >= 10 && priority > JobPriority.Never))
+            var baseJob = EmployerJobMapping.GetBaseJob(_prototypeManager, job);
+            if (priority == JobPriority.High
+                || (_prototypeManager.Index(baseJob).Weight >= 10 && priority > JobPriority.Never))
             {
-                priorityJobs.Add(job);
+                priorityJobs.Add(baseJob);
             }
         }
-        return priorityJobs;
+        return priorityJobs.ToList();
     }
 
     public Dictionary<ProtoId<JobPrototype>, int> GetReadyManifest()

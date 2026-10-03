@@ -9,13 +9,11 @@
     - !type:DepartmentTimeRequirement
       department: Civilian
       time: 0.5h
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - IdrisIncorporated
-      - OrionExpress
-    # Pirate contractor end
+    # Pirate Employment end
   startingGear: ChefGear
   icon: "JobIconChef"
   supervisors: job-supervisors-hop

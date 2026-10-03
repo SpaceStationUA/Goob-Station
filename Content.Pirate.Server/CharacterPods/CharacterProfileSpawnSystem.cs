@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Collections.Generic;
-using Content.Pirate.Server.Contractors.Systems;
+using Content.Pirate.Server.Origin.Systems;
 using Content.Server._Pirate.Character.Info;
 using Content.Server._Pirate.Traits;
 using Content.Server.Humanoid;
@@ -9,7 +9,6 @@ using Content.Server.CharacterAppearance.Components;
 using Content.Server.Preferences.Managers;
 using Content.Shared._Pirate.Body.Chips;
 using Content.Shared._Pirate.Knowledge;
-using Content.Shared._Pirate.Traits.Assorted;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -28,7 +27,7 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly OrganChipSystem _chips = default!;
-    [Dependency] private readonly NationalitySystem _nationality = default!;
+    [Dependency] private readonly CitizenshipSystem _citizenship = default!;
     [Dependency] private readonly PirateCharacterInfoSystem _characterInfo = default!;
     [Dependency] private readonly SharedKnowledgeSystem _knowledge = default!;
     [Dependency] private readonly TraitSystem _traits = default!;
@@ -97,7 +96,7 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
         ApplySkills(mob, profile);
         _traits.ApplyProfileTraits(mob, profile, session, null);
         _characterInfo.ApplyCharacterInfo(mob, profile);
-        _nationality.ApplyNationality(mob, profile, session);
+        _citizenship.ApplyCitizenship(mob, profile, session);
     }
 
     public void ApplySkillsForTest(EntityUid mob, HumanoidCharacterProfile profile)
@@ -131,9 +130,12 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
         if (!_prototype.TryIndex<SpeciesPrototype>(speciesId, out var species))
             return;
 
-        var pointsBonus = KnowledgeableComponent.GetBonusPoints(_prototype, profile.TraitPreferences);
+        // knowledgeable trait start
+        var pointsBonus = Content.Shared._Pirate.Traits.Assorted.KnowledgeableComponent.GetBonusPoints(
+            _prototype,
+            profile.TraitPreferences);
+        // knowledgeable trait end
         _knowledge.ApplyProfile(mob, species.Knowledge, profile.Knowledge, pointsBonus);
-        _knowledge.ApplyEmployerBonuses(mob, profile.Employer);
 
         // Rebuild after queued knowledge deletions have run.
         _pendingRestore.Add(mob);

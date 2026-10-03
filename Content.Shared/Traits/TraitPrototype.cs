@@ -61,12 +61,6 @@ public sealed partial class TraitPrototype : IPrototype
     public List<BaseTraitEffect> Effects { get; set; } = new();
 
     /// <summary>
-    /// Pirate port: Modernized - Other traits that are mutually exclusive with this one.
-    /// </summary>
-    [DataField("conflicts")]
-    public List<ProtoId<TraitPrototype>> Conflicts { get; set; } = new();
-
-    /// <summary>
     /// The components that get added to the player, when they pick this trait.
     /// NOTE: When implementing a new trait, it's preferable to add it as a status effect instead if possible.
     /// </summary>

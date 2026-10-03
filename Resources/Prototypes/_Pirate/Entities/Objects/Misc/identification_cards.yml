@@ -189,7 +189,7 @@
     job: AdministrativeAssistant
 
 - type: entity
-  parent: [IDCardStandard, SolAllianceInfo]
+  parent: [IDCardStandard]
   id: SANIdCard
   name: "RFID-мітки Флоту Соляріанського Альянсу"
   components:

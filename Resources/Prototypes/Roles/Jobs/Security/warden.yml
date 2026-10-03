@@ -30,13 +30,11 @@
     #  inverted: true
     #  species:
     #  - Felinid
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-      - ZavodskiyInterstellar
-      - PMCG
-    # Pirate contractor end
+      - NanoTrasen
+    # Pirate Employment end
   weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"

@@ -18,12 +18,12 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
 using System.Linq;
 #region Pirate: records photos
-using Content.Shared.Customization.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared._Pirate.Contractors.Prototypes;
+using Content.Shared._Pirate.Origin;
+using Content.Shared._Pirate.Employment;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Audio;
@@ -57,7 +57,6 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     private static readonly SoundSpecifier PortraitPrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
     private static readonly SoundSpecifier PortraitUploadSound = new SoundPathSpecifier("/Audio/_Pirate/Machines/terminal_prompt_confirm.ogg");
     private static readonly TimeSpan PortraitPrintDelay = TimeSpan.FromSeconds(2.3f);
-    private static readonly IReadOnlyDictionary<string, TimeSpan> EmptyPlayTimes = new Dictionary<string, TimeSpan>();
     #endregion
 
     public override void Initialize()
@@ -198,7 +197,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             JobTitle = Loc.GetString("suit-sensor-component-unknown-job"),
             JobIcon = string.Empty,
             JobPrototype = string.Empty,
-            Nationality = string.Empty,
+            Citizenship = string.Empty,
             Employer = string.Empty,
             Species = string.Empty,
             Gender = Gender.Male,
@@ -427,26 +426,22 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
 
         var age = Math.Clamp(msg.Age, speciesProto.MinAge, speciesProto.MaxAge);
         var profile = BuildEditedProfile(stationRecord, criminalRecord, speciesProto.ID, age, msg.Gender);
-        var nationality = NormalizeNationality(msg.Nationality, profile);
-        profile = profile.WithNationality(nationality);
-        var employer = NormalizeEmployer(msg.Employer, profile);
-        profile = profile.WithEmployer(employer);
+        var citizenship = !string.IsNullOrWhiteSpace(msg.Citizenship)
+                          && _prototypeManager.HasIndex<CitizenshipPrototype>(msg.Citizenship)
+            ? msg.Citizenship
+            : string.Empty;
+        var employer = !string.IsNullOrWhiteSpace(msg.Employer)
+                       && _prototypeManager.HasIndex<EmployerPrototype>(msg.Employer)
+            ? msg.Employer
+            : string.Empty;
+        profile = profile.WithCitizenship(citizenship).WithEmployer(employer);
 
         stationRecord.Species = speciesProto.ID;
         stationRecord.Age = age;
         stationRecord.Gender = msg.Gender;
-        stationRecord.Nationality = nationality;
+        stationRecord.Citizenship = citizenship;
         stationRecord.Employer = employer;
         criminalRecord.GeneralRecordSnapshot = stationRecord with { };
-
-        if (existingGeneral != null)
-        {
-            existingGeneral.Species = stationRecord.Species;
-            existingGeneral.Age = stationRecord.Age;
-            existingGeneral.Gender = stationRecord.Gender;
-            existingGeneral.Nationality = stationRecord.Nationality;
-            existingGeneral.Employer = stationRecord.Employer;
-        }
 
         if (criminalRecord.PortraitProfileSnapshot != null || criminalRecord.PortraitImageData is { Length: > 0 })
             criminalRecord.PortraitProfileSnapshot = profile;
@@ -484,12 +479,6 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             : dna;
         criminalRecord.GeneralRecordSnapshot = stationRecord with { };
 
-        if (existingGeneral != null)
-        {
-            existingGeneral.Fingerprint = stationRecord.Fingerprint;
-            existingGeneral.DNA = stationRecord.DNA;
-        }
-
         _records.Synchronize(key.Value);
     }
 
@@ -511,75 +500,10 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             .WithSpecies(species)
             .WithAge(age)
             .WithGender(gender)
-            .WithNationality(stationRecord.Nationality)
+            .WithCitizenship(stationRecord.Citizenship)
             .WithEmployer(stationRecord.Employer);
     }
 
-    private string NormalizeNationality(string requestedNationality, HumanoidCharacterProfile profile)
-    {
-        if (string.IsNullOrWhiteSpace(requestedNationality))
-            return string.Empty;
-
-        if (_prototypeManager.TryIndex<NationalityPrototype>(requestedNationality, out var nationality)
-            && RequirementsMet(nationality.Requirements, profile.WithNationality(requestedNationality)))
-        {
-            return requestedNationality;
-        }
-
-        if (_prototypeManager.TryIndex<NationalityPrototype>(SharedHumanoidAppearanceSystem.DefaultNationality, out var defaultNationality)
-            && RequirementsMet(defaultNationality.Requirements, profile.WithNationality(defaultNationality.ID)))
-        {
-            return defaultNationality.ID;
-        }
-
-        foreach (var prototype in _prototypeManager.EnumeratePrototypes<NationalityPrototype>())
-        {
-            if (RequirementsMet(prototype.Requirements, profile.WithNationality(prototype.ID)))
-                return prototype.ID;
-        }
-
-        return SharedHumanoidAppearanceSystem.DefaultNationality;
-    }
-
-    private string NormalizeEmployer(string requestedEmployer, HumanoidCharacterProfile profile)
-    {
-        if (string.IsNullOrWhiteSpace(requestedEmployer))
-            return string.Empty;
-
-        if (_prototypeManager.TryIndex<EmployerPrototype>(requestedEmployer, out var employer)
-            && RequirementsMet(employer.Requirements, profile.WithEmployer(requestedEmployer)))
-        {
-            return requestedEmployer;
-        }
-
-        if (_prototypeManager.TryIndex<EmployerPrototype>(SharedHumanoidAppearanceSystem.DefaultEmployer, out var defaultEmployer)
-            && RequirementsMet(defaultEmployer.Requirements, profile.WithEmployer(defaultEmployer.ID)))
-        {
-            return defaultEmployer.ID;
-        }
-
-        foreach (var prototype in _prototypeManager.EnumeratePrototypes<EmployerPrototype>())
-        {
-            if (RequirementsMet(prototype.Requirements, profile.WithEmployer(prototype.ID)))
-                return prototype.ID;
-        }
-
-        return SharedHumanoidAppearanceSystem.DefaultEmployer;
-    }
-
-    private bool RequirementsMet(IReadOnlyCollection<JobRequirement>? requirements, HumanoidCharacterProfile profile)
-    {
-        if (requirements == null || requirements.Count == 0)
-            return true;
-
-        foreach (var requirement in requirements)
-        {
-            if (!requirement.Check(EntityManager, _prototypeManager, profile, EmptyPlayTimes, out _))
-                return false;
-        }
-
-        return true;
-    }
     private void OnPrintPhoto(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordPrintPhoto msg)
     {
         if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
@@ -708,15 +632,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         record.PortraitImageData = [.. preparedImageData];
         record.PortraitPreviewData = preparedPreviewData == null ? null : [.. preparedPreviewData];
         _records.Synchronize(key);
-
         UpdateUserInterface(ent);
-
-        record.PortraitImageData = [.. preparedImageData];
-        record.PortraitPreviewData = preparedPreviewData == null ? null : [.. preparedPreviewData];
-        _records.Synchronize(key);
-
-        if (ent.Comp.ActiveKey == msg.RecordKey)
-            UpdateUserInterface(ent);
     }
 
     private bool TryGetHeldPhotoCard(EntityUid user, [NotNullWhen(true)] out PhotoCardComponent? photo)
@@ -833,7 +749,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             .WithName(record.Name)
             .WithAge(record.Age <= 0 ? 18 : record.Age)
             .WithGender(record.Gender)
-            .WithNationality(record.Nationality)
+            .WithCitizenship(record.Citizenship)
             .WithEmployer(record.Employer);
     }
 

@@ -5,13 +5,12 @@
   name: job-name-cargotech
   description: job-description-cargotech
   playTimeTracker: JobCargoTechnician
-  # Pirate contractor start
+  # Pirate Employment start
   requirements: 
     - !type:CharacterEmployerRequirement
       employers:
-      - OrionExpress
-      - HephaestusIndustries
-  # Pirate contractor end
+      - NanoTrasen
+  # Pirate Employment end
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"
   supervisors: job-supervisors-qm

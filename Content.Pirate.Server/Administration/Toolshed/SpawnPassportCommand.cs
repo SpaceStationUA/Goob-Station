@@ -1,5 +1,5 @@
-﻿using Content.Server.GameTicking;
-using Content.Shared._Pirate.Contractors.Systems;
+using Content.Server.GameTicking;
+using Content.Shared._Pirate.Origin.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Player;
 using Robust.Shared.Toolshed;

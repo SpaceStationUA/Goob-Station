@@ -4,13 +4,11 @@
   description: job-description-radiohost
   playTimeTracker: JobRadioHost
   requirements:
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - IdrisIncorporated
-      - OrionExpress
-    # Pirate contractor end
+    # Pirate Employment end
   startingGear: RadioHostGear
   icon: "JobIconRadioHost"
   supervisors: job-supervisors-hop

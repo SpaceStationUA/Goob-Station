@@ -3,7 +3,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Pirate/Contractors/Passport.rsi
+    sprite: _Pirate/Origin/Passport.rsi
     state: passport_adhomai_closed
 
 - type: entity
@@ -11,7 +11,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Pirate/Contractors/Passport.rsi
+    sprite: _Pirate/Origin/Passport.rsi
     state: passport_biesel_closed
 
 - type: entity
@@ -19,7 +19,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Pirate/Contractors/Passport.rsi
+    sprite: _Pirate/Origin/Passport.rsi
     state: CorpID_eridan_open
 
 - type: entity
@@ -27,7 +27,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Pirate/Contractors/Passport.rsi
+    sprite: _Pirate/Origin/Passport.rsi
     state: passport_goldendeep_closed
 
 - type: entity
@@ -35,7 +35,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Pirate/Contractors/Passport.rsi
+    sprite: _Pirate/Origin/Passport.rsi
     state: passport_izweski_closed
 
 - type: entity
@@ -43,7 +43,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Pirate/Contractors/Passport.rsi
+    sprite: _Pirate/Origin/Passport.rsi
     state: passport_nralakk_closed
 
 - type: entity
@@ -51,5 +51,5 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _Pirate/Contractors/Passport.rsi
+    sprite: _Pirate/Origin/Passport.rsi
     state: passport_sol_closed

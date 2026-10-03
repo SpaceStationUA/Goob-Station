@@ -202,8 +202,8 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         RecordContainer.RemoveAllChildren();
         #region Pirate: records photos
         var newRecord = new GeneralRecord(record, _maxLength, _prototypeManager);
-        newRecord.OnIdentityInfoChanged += (species, nationality, employer, age, gender) =>
-            OnIdentityInfoChanged?.Invoke(species, nationality, employer, age, gender);
+        newRecord.OnIdentityInfoChanged += (species, citizenship, employer, age, gender) =>
+            OnIdentityInfoChanged?.Invoke(species, citizenship, employer, age, gender);
         newRecord.OnForensicsInfoChanged += (fingerprint, dna) =>
             OnForensicsInfoChanged?.Invoke(fingerprint, dna);
         #endregion

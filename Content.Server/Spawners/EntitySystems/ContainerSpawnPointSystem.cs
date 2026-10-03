@@ -4,6 +4,8 @@ using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Preferences;
+using Content.Shared.Pirate.Jobs; // Pirate
+using Content.Shared.Roles; // Pirate
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -50,7 +52,8 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
             if (spawnPoint.SpawnType == SpawnPointType.Unset)
             {
                 // make sure we also check the job here for various reasons.
-                if (spawnPoint.Job == null || spawnPoint.Job == args.Job)
+                if (spawnPoint.Job == null || args.Job is { } selectedJob
+                    && EmployerJobMapping.MatchesBaseJob(_proto, spawnPoint.Job.Value, selectedJob)) // Pirate
                     possibleContainers.Add((uid, spawnPoint, container, xform));
                 continue;
             }
@@ -62,7 +65,8 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
 
             if (_gameTicker.RunLevel != GameRunLevel.InRound &&
                 spawnPoint.SpawnType == SpawnPointType.Job &&
-                (args.Job == null || spawnPoint.Job == args.Job))
+                (args.Job == null || spawnPoint.Job == null
+                 || EmployerJobMapping.MatchesBaseJob(_proto, spawnPoint.Job.Value, args.Job.Value))) // Pirate
             {
                 possibleContainers.Add((uid, spawnPoint, container, xform));
             }

@@ -22,6 +22,7 @@ public sealed partial class RequirementsSelector : BoxContainer
     private readonly RadioOptions<int> _options;
     private readonly StripeBack _lockStripe;
     private List<ProtoId<GuideEntryPrototype>>? _guides;
+    private float _minimumOptionWidth = 90f; // Pirate
 
     public event Action<int>? OnSelected;
     public event Action<List<ProtoId<GuideEntryPrototype>>>? OnOpenGuidebook;
@@ -105,7 +106,25 @@ public sealed partial class RequirementsSelector : BoxContainer
 
         OptionsContainer.AddChild(_options);
         OptionsContainer.AddChild(_lockStripe);
+
+    // Pirate start
+        _options.Measure(new Vector2(float.PositiveInfinity));
+        _lockStripe.MinWidth = _options.DesiredSize.X;
     }
+
+    public void UseFlexibleOptionsWidth(float minimumOptionWidth = 90f)
+    {
+        _minimumOptionWidth = minimumOptionWidth;
+        OptionsContainer.SetWidth = float.NaN;
+        OptionsContainer.HorizontalExpand = true;
+    }
+
+    public void SetOptionsMinHeight(float height)
+    {
+        _options.MinHeight = height;
+        _lockStripe.MinHeight = height;
+    }
+    // Pirate end
 
     public void LockRequirements(FormattedMessage requirements)
     {
@@ -127,7 +146,7 @@ public sealed partial class RequirementsSelector : BoxContainer
         return new Button
         {
             Text = text,
-            MinWidth = 90,
+            MinWidth = _minimumOptionWidth, // Pirate
             HorizontalExpand = true,
         };
     }

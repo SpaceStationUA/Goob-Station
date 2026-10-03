@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
-public abstract class SharedRoleSystem : EntitySystem
+public abstract partial class SharedRoleSystem : EntitySystem // Pirate: employer requirement resolution.
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -677,6 +677,11 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job.ID, out var req))
             return req;
+
+        // Pirate start: employer variants reuse only their base job's department-time requirements.
+        if (GetPirateRoleRequirements(job) is { } pirateRequirements)
+            return pirateRequirements;
+        // Pirate end
 
         return job.Requirements;
     }

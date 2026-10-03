@@ -6,13 +6,11 @@
   description: job-description-clown
   playTimeTracker: JobClown
   requirements:
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - IdrisIncorporated
-      - OrionExpress
-    # Pirate contractor end
+    # Pirate Employment end
   startingGear: ClownGear
   icon: "JobIconClown"
   supervisors: job-supervisors-hop

@@ -23,6 +23,13 @@ public sealed class DisabledTraitsPopupSystem : EntitySystem
         SubscribeNetworkEvent<DisabledTraitsEvent>(OnDisabledTraits);
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _window?.Close();
+        _window = null;
+    }
+
     private void OnDisabledTraits(DisabledTraitsEvent ev)
     {
         if (_cfg.GetCVar(PirateVars.SkipDisabledTraitsPopup))
