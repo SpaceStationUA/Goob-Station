@@ -2602,6 +2602,98 @@ try {
      *     makes the two poles as different as the mirroring allows, and no presence
      *     test catches that because both poles are then plainly lit.
      */
+    /**
+     * DOPPLER BEAMING, as an A/B on one page.
+     *
+     * This is the check that was missing for four attempts, and it is the reason the
+     * feature took that long. The beaming read a plausible 1.33:1 left/right asymmetry
+     * and a negative control with it switched OFF read 1.32:1 -- so the assertion could
+     * not fail. The disc's own light_d gradient is already asymmetric by about that
+     * much, which makes "the two halves differ" a statement about the DISC rather than
+     * about the beaming: it would have passed forever while saying nothing.
+     *
+     * So both settings are rendered on one page, at the same seed and the same rotation
+     * phase, and compared to EACH OTHER. The baseline is MEASURED rather than guessed.
+     * That is the whole trick -- the number to beat is a property of this disc rather
+     * than a constant somebody picked, so it cannot rot when the lighting changes.
+     *
+     * `animate: false` on all three, and that is load-bearing. Animated, the canvases
+     * start at different performance.now() values, so the comparison would measure the
+     * disc's rotation and its fbm instead of the uniform under test. Still, each draws
+     * one frame at u_time = 0 and they are identical apart from that uniform.
+     */
+    const ab = await page.evaluate(async () => {
+      const fn = window.__galaxyBlackHoleAB;
+      if (typeof fn !== "function") return null;
+      const host = document.createElement("div");
+      // Off-screen but laid out and painted. display:none gives a canvas of zero size,
+      // and visibility:hidden may skip the draw entirely.
+      host.style.cssText =
+        "position:fixed;left:-4000px;top:0;width:700px;height:240px;background:#000";
+      document.body.appendChild(host);
+      const px = 200;
+      const pair = fn(px, 7);
+      for (const c of [pair.on, pair.off, pair.noRing]) if (c) host.appendChild(c);
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+      /**
+       * Left/right luminance over the DISC only.
+       *
+       * The region is an ELLIPSE, because the disc is one: u_perspective is 14, so it is
+       * very flat. A circular sample would put most of the measurement on the
+       * background. The inner 12% is excluded because that is where the halves meet and
+       * where the photon ring and the shadow are.
+       */
+      const ratio = (canvas) => {
+        const c = document.createElement("canvas");
+        c.width = canvas.width;
+        c.height = canvas.height;
+        const g = c.getContext("2d");
+        g.drawImage(canvas, 0, 0);
+        const d = g.getImageData(0, 0, c.width, c.height).data;
+        const cx = c.width / 2;
+        const cy = c.height / 2;
+        let L = 0;
+        let R = 0;
+        for (let y = 0; y < c.height; y++) {
+          for (let x = 0; x < c.width; x++) {
+            const k = (y * c.width + x) * 4;
+            if (d[k + 3] < 200) continue;
+            const dx = (x - cx) / (c.width * 0.3);
+            const dy = (y - cy) / (c.height * 0.13);
+            if (dx * dx + dy * dy > 1) continue;
+            if (Math.abs(dx) < 0.12) continue;
+            const lum = d[k] + d[k + 1] + d[k + 2];
+            if (dx < 0) L += lum;
+            else R += lum;
+          }
+        }
+        host.removeChild(canvas);
+        return Math.max(L, R) / Math.max(1, Math.min(L, R));
+      };
+
+      const out = { on: ratio(pair.on), off: ratio(pair.off), noRing: ratio(pair.noRing) };
+      host.remove();
+      return out;
+    });
+    check(
+      "the disc's two halves differ BY MORE THAN a disc rendered without beaming",
+      ab && ab.on - ab.off > 0.04,
+      ab
+        ? `with beaming ${ab.on.toFixed(2)}:1, without ${ab.off.toFixed(2)}:1, so the ` +
+          `beaming adds ${(ab.on - ab.off).toFixed(2)}. The baseline is MEASURED, not ` +
+          `assumed -- light_d already makes this disc asymmetric by ${ab.off.toFixed(2)}, ` +
+          `so an assertion of the form "the halves differ" would be about the DISC.`
+        : "no A/B hook present -- is this a production build?",
+    );
+    check(
+      "and the photon ring does not account for it, so the two are separable",
+      ab && Math.abs(ab.noRing - ab.on) < 0.06,
+      ab
+        ? `beaming with the ring ${ab.on.toFixed(2)}:1, without it ${ab.noRing.toFixed(2)}:1. ` +
+          `A ring bright enough to skew one side would otherwise be credited to the beaming.`
+        : "",
+    );
     const jetShots = [];
     await openSys("quasar-1");
     {

@@ -1876,3 +1876,59 @@ worse than leaving a note, so the note is here.
 **Still true:** the 1.40/1.32 Doppler measurement is a one-off probe and not an assertion
 in `check-dom.mjs`. It is exactly the check that would have caught the frame bug on the
 first run rather than the fourth.
+
+## The Doppler check, and why its first version had no power at all
+
+The check that was four attempts overdue is now in `check-dom.mjs`, and getting it to
+*mean* something took two more failures after the obvious version.
+
+### What the assertion is
+
+Two assertions, both A/B:
+
+- the beaming adds asymmetry **relative to a disc rendered with it off**, and
+- the photon ring does not account for that difference, so the two are separable.
+
+The second exists because the ring is bright and centred on the shadow; a ring bright
+enough to skew one side would otherwise be credited to the beaming.
+
+### Why it compares against a RENDER rather than a threshold
+
+Because the disc is already asymmetric. `light_d` -- the reference's off-canvas light
+origin -- shifts `l_origin.y`, which makes the disc measurably lopsided with the beaming
+switched OFF. So an assertion of the form "the disc's halves differ" is a statement about
+the DISC, not about the beaming: it would have passed forever, said nothing, and looked
+like coverage. The first version of this work measured **1.33 against 1.32** and that
+near-miss was the whole diagnosis.
+
+Comparing against a render at the same seed and phase makes the number to beat a property
+of this disc rather than a constant somebody picked, so it cannot rot when the lighting
+changes.
+
+### rotate(p, 0) IS THE IDENTITY, and that made the check blind
+
+The first version of the check rendered its A/B pair with `animate: false`. That is
+deterministic -- `u_time = 0` -- and it was **useless**: `rotate(p, 0)` is the identity,
+so at t = 0 the disc's rotation does nothing, and a quantity computed before that rotation
+is IDENTICAL to one computed after it.
+
+So the check passed with the frame bug present *and* absent, to three significant
+figures: `1.28 / 1.19` both times. Not a flaky control -- a control with no power
+whatever. `BlackHoleGL` now takes an explicit `time` so a still can be still **at a known
+non-zero phase**, and the pair renders at `time: 3.7`.
+
+The lesson is the one worth carrying: **deterministic is not the same as sensitive.** A
+check pinned to the most convenient point of the cycle can be perfectly repeatable and
+have no power at all, because the thing it measures is invariant there. "Is this
+reproducible" and "would this notice" are different questions, and only asking the second
+one finds this.
+
+### The control, at last
+
+    correct frame      1.28:1  against a measured 1.19:1 baseline    +0.08   passes
+    frame reintroduced 1.10:1  against a measured 1.19:1 baseline    -0.09   FAILS
+
+Note what the failure looks like. It is not "no effect" -- with the term in the wrong
+frame it *cancels* the disc's existing asymmetry, which is why the naive measurement gave
+1.33 and 1.32 and looked like a marginal pass rather than an absence. A control that had
+only checked for "the halves differ" would have seen a plausible number in both cases.

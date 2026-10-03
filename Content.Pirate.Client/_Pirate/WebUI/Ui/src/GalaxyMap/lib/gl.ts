@@ -390,6 +390,20 @@ export interface BlackHoleGLOpts {
   period?: number;
   /** False for `prefers-reduced-motion`: one frame, no rAF. */
   animate?: boolean;
+  /**
+   * Pin `u_time` to a given phase, for a DETERMINISTIC still.
+   *
+   * This is not a cosmetic option. `rotate(p, 0)` is the identity, so a still rendered
+   * at t = 0 cannot distinguish a quantity computed before the disc's rotation from one
+   * computed after it -- and that is exactly the distinction the Doppler beaming check
+   * exists to make. Its first version used `animate: false` with no phase, rendered at
+   * t = 0, and passed identically with the frame bug present and absent: 1.28/1.19 both
+   * times, to three significant figures.
+   *
+   * So a still has to be still AT A KNOWN NON-ZERO PHASE, and that requires being able
+   * to choose the phase.
+   */
+  time?: number;
 
   /**
    * Doppler beaming strength, 0 disables. See DOPPLER.
@@ -527,12 +541,15 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   const period = Math.max(0.5, opts.period ?? 6);
   const t0 = performance.now();
   const uTime = u("u_time");
+  // A pinned phase wins over elapsed time, and `animate` may still be on: the first
+  // frame uses the phase and subsequent ones use the clock, which is what a caller
+  // pinning the phase wants anyway (a comparison still, not a looping one).
   const frame = (now: number) => {
     if (disposed) return;
     resize();
     // Live, so there is no strip to close: the texture may turn at the reference's
     // own 0.6 turns a second indefinitely.
-    gl!.uniform1f(uTime, (now - t0) / 1000);
+    gl!.uniform1f(uTime, opts.time ?? (now - t0) / 1000);
     gl!.drawArrays(gl!.TRIANGLES, 0, 3);
     if (opts.animate !== false) raf = requestAnimationFrame(frame);
   };
