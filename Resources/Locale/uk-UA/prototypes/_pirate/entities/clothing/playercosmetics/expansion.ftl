@@ -1,88 +1,68 @@
 ent-PirateExpansionAngelPin = значок ангела
     .desc = Маленький анімований ангел на згадку про добрі вчинки.
 ent-PirateExpansionAngelWings = сяйливі ангельські крила
-    .desc = Широка пара чисти�
-    біли�
-    церемоніальни�
-    крил.
+    .desc = Широка пара чистих білих церемоніальних крил.
 ent-PirateExpansionArcticFoxCape = плащ арктичної лисиці
-    .desc = Світлий �
-    утряний плащ із величним зимовим силуетом.
+    .desc = Світлий хутряний плащ із величним зимовим силуетом.
 ent-PirateExpansionBallMittens = рукавиці-кульки
     .desc = Круглі м'які рукавиці чудернацької форми.
 ent-PirateExpansionBeeWarmers = бджолині нарукавники
     .desc = Веселі чорно-жовті нарукавники.
 ent-PirateExpansionBeerWings = золоті пивні крила
-    .desc = Іскристі золоті крила з жвавим мере�
-    тінням.
+    .desc = Іскристі золоті крила з жвавим мерехтінням.
 ent-PirateExpansionBlackCatEars = анімовані чорні котячі вушка
     .desc = Чорні котячі вушка, що час від часу ворушаться самі.
 ent-PirateExpansionBloodMantle = жива кривава мантія
     .desc = Срібна мантія, яку можна пробудити до повільного моторошного стікання.
 ent-PirateExpansionBlueGalaxySuit = синій галактичний костюм
-    .desc = Темний костюм, яким повільно ру�
-    ається синя галактика.
+    .desc = Темний костюм, яким повільно рухається синя галактика.
 ent-PirateExpansionBlueSchoolDress = синя шкільна сукня
-    .desc = О�
-    айне синє шкільне вбрання з грайливим червоним бантом.
+    .desc = Охайне синє шкільне вбрання з грайливим червоним бантом.
 ent-PirateExpansionBrimstoneRobes = сірчані шати
     .desc = Чорні окультні шати, розсічені суворим червоним символом.
 ent-PirateExpansionCatPawsBase =
     .desc = Надзвичайно м'які рукавиці-лапки з маленькими подушечками.
 ent-PirateExpansionCatPawsBlack = чорні рукавиці-лапки
-    .desc = Надзвичайно м'які рукавиці-лапки з кри�
-    ітними подушечками.
+    .desc = Надзвичайно м'які рукавиці-лапки з крихітними подушечками.
 ent-PirateExpansionCatPawsBlackWhite = чорно-білі рукавиці-лапки
-    .desc = Надзвичайно м'які рукавиці-лапки з кри�
-    ітними подушечками.
+    .desc = Надзвичайно м'які рукавиці-лапки з крихітними подушечками.
 ent-PirateExpansionCatPawsBrown = коричневі рукавиці-лапки
-    .desc = Надзвичайно м'які рукавиці-лапки з кри�
-    ітними подушечками.
+    .desc = Надзвичайно м'які рукавиці-лапки з крихітними подушечками.
 ent-PirateExpansionCatPawsWhite = білі рукавиці-лапки
-    .desc = Надзвичайно м'які рукавиці-лапки з кри�
-    ітними подушечками.
+    .desc = Надзвичайно м'які рукавиці-лапки з крихітними подушечками.
 ent-PirateExpansionCoderWarmers = нарукавники кодера
-    .desc = Темні нарукавники для довги�
-    ночей за терміналом.
+    .desc = Темні нарукавники для довгих ночей за терміналом.
 ent-PirateExpansionCowHorns = прикрашені коров'ячі ріжки
     .desc = Невеликі коров'ячі ріжки з тендітними прикрасами.
 ent-PirateExpansionCryomancerHood = каптур кріоманта
-    .desc = Крижаний каптур із �
-    олодним блакитним сяйвом.
+    .desc = Крижаний каптур із холодним блакитним сяйвом.
 ent-PirateExpansionCryomancerRobes = шати кріоманта
     .desc = Світлі крижані шати навколо яскраво-блакитного осердя.
 ent-PirateExpansionDemonHorns = демонічні роги
-    .desc = Вигнуті чорні роги з пустотливим маленьким �
-    востиком.
+    .desc = Вигнуті чорні роги з пустотливим маленьким хвостиком.
 ent-PirateExpansionDemonWings = демонічні крила
     .desc = Темні гостро складені крила для драматичного силуету.
 ent-PirateExpansionDevilPin = значок диявола
     .desc = Маленький анімований диявол, що радіє кожному сумнівному вчинку.
 ent-PirateExpansionElegantMaidGloves = елегантні рукавички покоївки
-    .desc = Бездоганні довгі рукавички о�
-    айного формального крою.
+    .desc = Бездоганні довгі рукавички охайного формального крою.
 ent-PirateExpansionEmpressGloves = рукавички імператриці світла
-    .desc = Сліпучо-сині рукавички �
-    олодного сяйливого кольору.
+    .desc = Сліпучо-сині рукавички холодного сяйливого кольору.
 ent-PirateExpansionFireCloak = плащ живого вогню
     .desc = Анімований плащ, що горить, але не випромінює тепла.
 ent-PirateExpansionFlamingHalo = полум'яний німб
     .desc = Живе кільце золотого полум'я, що ширяє над головою.
 ent-PirateExpansionFlowerPrincessDress = сукня квіткової принцеси
-    .desc = Розкішна бузкова сукня у формі багатошарови�
-    пелюсток.
+    .desc = Розкішна бузкова сукня у формі багатошарових пелюсток.
 ent-PirateExpansionFloweredBlackDress = чорна сукня з квітами
     .desc = Чорна вечірня сукня, всипана яскравими квітами.
-ent-PirateExpansionFlyAgaricDress = сукня-му�
-    .desc = Світла сукня, нат�
-    ненна ніжкою яскравого гриба.
-ent-PirateExpansionFlyAgaricHat = капелю�
-    .desc = Яскрава шапинка гриба, перетворена на капелю�
-    .
+ent-PirateExpansionFlyAgaricDress = сукня-мухомор
+    .desc = Світла сукня, натхненна ніжкою яскравого гриба.
+ent-PirateExpansionFlyAgaricHat = капелюх-мухомор
+    .desc = Яскрава шапинка гриба, перетворена на капелюх.
 ent-PirateExpansionGentleYellowDress = ніжна жовта сукня
-    .desc = Тепла жовта сукня з о�
-    айним білим оздобленням.
-ent-PirateExpansionGoldenEraGloves = рукавички золотої епо�
+    .desc = Тепла жовта сукня з охайним білим оздобленням.
+ent-PirateExpansionGoldenEraGloves = рукавички золотої епохи
     .desc = Чорні рукавички з тонкими золотими деталями.
 ent-PirateExpansionGothicDress = готична сукня
     .desc = Ретельно складена багатошарова чорно-біла готична сукня.
@@ -93,46 +73,35 @@ ent-PirateExpansionHighEndHeadphones = висококласні навушник
 ent-PirateExpansionHolocarpCloak = плащ голокарпа
     .desc = Плащ із нескінченно плинної проєкції голокарпа.
 ent-PirateExpansionKittenMittens = рукавиці-кошенята
-    .desc = М'які рожеві рукавиці у вигляді маленьки�
-    кошенят.
-    # Uniforms
-ent-PirateExpansionLadyDress = моно�
-    .desc = Повітряна моно�
-    ромна сукня з широкою багатошаровою спідницею.
+    .desc = М'які рожеві рукавиці у вигляді маленьких кошенят.
+
+# Uniforms
+ent-PirateExpansionLadyDress = монохромна сукня леді
+    .desc = Повітряна монохромна сукня з широкою багатошаровою спідницею.
 ent-PirateExpansionLongBlackGloves = довгі чорні рукавички
     .desc = Лаконічні чорні рукавички значно вище зап'ястя.
 ent-PirateExpansionLongWhiteGloves = довгі білі рукавички
     .desc = Яскраві білі рукавички значно вище зап'ястя.
 ent-PirateExpansionPrideAceWarmers = асексуальні прайд-нарукавники
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideAroWarmers = аромантичні прайд-нарукавники
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideBiWarmers = бісексуальні прайд-нарукавники
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideGayWarmers = нарукавники гей-прайду
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideIntersexWarmers = інтерсекс-прайд нарукавники
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideLesbianWarmers = лесбійські прайд-нарукавники
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideNonbinaryWarmers = небінарні прайд-нарукавники
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPridePanWarmers = пансексуальні прайд-нарукавники
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideRainbowWarmers = райдужні прайд-нарукавники
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPrideTransWarmers = трансгендерні прайд-нарукавники
-    .desc = Смугасті нарукавники в кольора�
-    прайду.
+    .desc = Смугасті нарукавники в кольорах прайду.
 ent-PirateExpansionPurpleCatHeadphones = фіолетові котячі навушники
     .desc = Фіолетові навушники з котячими вушками, анімованим світлом і вимикачем.
 ent-PirateExpansionPurpleStripeWarmers = фіолетові смугасті нарукавники
@@ -140,15 +109,13 @@ ent-PirateExpansionPurpleStripeWarmers = фіолетові смугасті н�
 ent-PirateExpansionPyromancerHood = каптур піроманта
     .desc = Палаючий каптур із поглядом кольору жарин.
 ent-PirateExpansionPyromancerRobes = живі шати піроманта
-    .desc = Анімовані шати, вогняний візерунок яки�
-    ніколи не завмирає.
+    .desc = Анімовані шати, вогняний візерунок яких ніколи не завмирає.
 ent-PirateExpansionRainbowStripeWarmers = райдужні смугасті нарукавники
     .desc = М'які нарукавники з яскравими райдужними смугами.
 ent-PirateExpansionRatvarRobes = шати Ратвара
     .desc = Темно-бронзові шати зі старовинним годинниковим візерунком.
 ent-PirateExpansionRedGalaxySuit = червоний галактичний костюм
-    .desc = Темний костюм, яким повільно ру�
-    ається червона галактика.
+    .desc = Темний костюм, яким повільно рухається червона галактика.
 ent-PirateExpansionRedRegaliaGloves = червоні рукавички регалії
     .desc = Насичено-червоні формальні рукавички для владного образу.
 ent-PirateExpansionRoughSweater = грубий зелений светр
@@ -159,16 +126,14 @@ ent-PirateExpansionSpiderDress = павутинна сукня
     .desc = Темна сукня з виразною білою павутиною.
 ent-PirateExpansionTangoDress = сукня танго
     .desc = Драматична червоно-чорна сукня для танцювального майданчика.
-ent-PirateExpansionTechpriestHood = каптур те�
+ent-PirateExpansionTechpriestHood = каптур техножерця
     .desc = Суворий червоний каптур, оздоблений кабелями й металом.
-ent-PirateExpansionTechpriestRobes = анімовані шати те�
-    .desc = Важкі червоні шати з невпинним ру�
-    ом ме�
-    анічни�
-    деталей.
+ent-PirateExpansionTechpriestRobes = анімовані шати техножерця
+    .desc = Важкі червоні шати з невпинним рухом механічних деталей.
 ent-PirateExpansionTsdMantle = зоряна фіолетова мантія
     .desc = Темно-фіолетова мантія, пронизана анімованими вогниками.
-    # Mask
+
+# Mask
 ent-PirateExpansionValidCoderWarmers = нарукавники справжнього кодера
     .desc = Червоно-чорні нарукавники для винятково валідного коду.
 ent-PirateExpansionVictorianBlackDress = чорна вікторіанська сукня
@@ -176,63 +141,50 @@ ent-PirateExpansionVictorianBlackDress = чорна вікторіанська �
 ent-PirateExpansionVictorianRedDress = червона вікторіанська сукня
     .desc = Насичено-багряна вікторіанська сукня із золотими деталями.
 ent-PirateExpansionVintageDress = вінтажна рожева сукня
-    .desc = Вінтажна червоно-рожева сукня з чітко скроєним вер�
-    ом.
+    .desc = Вінтажна червоно-рожева сукня з чітко скроєним верхом.
 ent-PirateExpansionVoidWizardHood = каптур чаклуна порожнечі
     .desc = Інкрустований самоцвітами каптур, оживлений фіолетовою магією.
 ent-PirateExpansionVoidWizardRobes = шати чаклуна порожнечі
     .desc = Темно-фіолетові шати з мінливими магічними візерунками.
 ent-PirateExpansionWatchdogRespirator = респіратор «Вартовий»
     .desc = Темний промисловий респіратор із поляризованим червоним візором.
-    # Hands
+
+# Hands
 ent-PirateExpansionWhiteStripeWarmers = білі смугасті нарукавники
     .desc = М'які нарукавники з чистими білими смугами.
 ent-PirateExpansionWhiteholeCloak = плащ білої діри
     .desc = Анімований плащ із неможливим маленьким всесвітом у центрі.
-ent-PirateExpansionWitchHunterHat = капелю�
-    .desc = Широкий чорний капелю�
-    із суворою червоною стрічкою.
-    # Neck and multi-slot accessories
+ent-PirateExpansionWitchHunterHat = капелюх мисливця на відьом
+    .desc = Широкий чорний капелюх із суворою червоною стрічкою.
+
+# Neck and multi-slot accessories
 ent-PirateExpansionWitchHunterRobes = шати мисливця на відьом
     .desc = Темний мисливський плащ із суворою золотою емблемою.
 ent-PirateExpansionWreathChamomile = ромашковий вінок
     .desc = Сонячний вінок із квітів ромашки.
 ent-PirateExpansionWreathCornflower = волошковий вінок
-    .desc = Ніжний вінок із сині�
-    волошок.
+    .desc = Ніжний вінок із синіх волошок.
 ent-PirateExpansionWreathGeranium = вінок із герані
-    .desc = Яскравий вінок із рожеви�
-    квітів герані.
+    .desc = Яскравий вінок із рожевих квітів герані.
 ent-PirateExpansionWreathLilyOfTheValley = вінок із конвалій
-    .desc = Вінок із кри�
-    ітни�
-    біли�
-    дзвіночків конвалії.
+    .desc = Вінок із крихітних білих дзвіночків конвалії.
 ent-PirateExpansionWreathPeony = півонієвий вінок
-    .desc = Пишний вінок із велики�
-    квітів півонії.
-ent-PirateExpansionWreathPinkLily = вінок із рожеви�
-    .desc = Ніжний вінок із рожеви�
-    лілій.
-ent-PirateExpansionWreathPinkTulip = вінок із рожеви�
-    .desc = Витончений вінок із рожеви�
-    тюльпанів.
-ent-PirateExpansionWreathRedRose = вінок із червони�
-    .desc = Пристрасний вінок із темно-червони�
-    троянд.
+    .desc = Пишний вінок із великих квітів півонії.
+ent-PirateExpansionWreathPinkLily = вінок із рожевих лілій
+    .desc = Ніжний вінок із рожевих лілій.
+ent-PirateExpansionWreathPinkTulip = вінок із рожевих тюльпанів
+    .desc = Витончений вінок із рожевих тюльпанів.
+ent-PirateExpansionWreathRedRose = вінок із червоних троянд
+    .desc = Пристрасний вінок із темно-червоних троянд.
 ent-PirateExpansionWreathSunflower = соняшниковий вінок
-    .desc = Веселий вінок із яскрави�
-    соняшників.
-ent-PirateExpansionWreathWhiteLily = вінок із біли�
-    .desc = Елегантний вінок із чисти�
-    біли�
-    лілій.
-ent-PirateExpansionWreathWhiteRose = вінок із біли�
-    .desc = Бездоганний вінок із біли�
-    троянд.
-ent-PirateExpansionWreathYellowTulip = вінок із жовти�
-    .desc = Яскравий вінок із золотави�
-    тюльпанів.
+    .desc = Веселий вінок із яскравих соняшників.
+ent-PirateExpansionWreathWhiteLily = вінок із білих лілій
+    .desc = Елегантний вінок із чистих білих лілій.
+ent-PirateExpansionWreathWhiteRose = вінок із білих троянд
+    .desc = Бездоганний вінок із білих троянд.
+ent-PirateExpansionWreathYellowTulip = вінок із жовтих тюльпанів
+    .desc = Яскравий вінок із золотавих тюльпанів.
 ent-PirateExpansionZeroKimono = чорно-золоте кімоно
     .desc = Сучасне чорне кімоно зі сміливим золотим оздобленням.
-    # Outer clothing
+
+# Outer clothing

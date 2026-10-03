@@ -5,9 +5,7 @@ ent-PlumbingDuctBend = рідинний канал
 ent-PlumbingDuctFourway = рідинний канал
     .desc = Канал для транспортування реагентів трубопровідною мережею.
 ent-PlumbingDuctManifold = рідинний колектор
-    .desc = Колектор для з'єднання каналів на всі�
-    шара�
-    .
+    .desc = Колектор для з'єднання каналів на всіх шарах.
 ent-PlumbingDuctStraight = рідинний канал
     .desc = Канал для транспортування реагентів трубопровідною мережею.
 ent-PlumbingDuctTJunction = рідинний канал

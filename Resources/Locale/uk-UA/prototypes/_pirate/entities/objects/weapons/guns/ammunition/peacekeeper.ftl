@@ -1,8 +1,8 @@
 ent-BasePeacekeeperBox = гранатний набій
-ent-BoxPeacekeeperBaton = коробка кийкови�
-ent-BoxPeacekeeperFlash = коробка світлошумови�
-ent-BoxPeacekeeperGas = коробка газови�
-ent-BoxPeacekeeperStinger = коробка жалки�
+ent-BoxPeacekeeperBaton = коробка кийкових набоїв «Миротворця»
+ent-BoxPeacekeeperFlash = коробка світлошумових набоїв «Миротворця»
+ent-BoxPeacekeeperGas = коробка газових набоїв «Миротворця»
+ent-BoxPeacekeeperStinger = коробка жалких набоїв «Миротворця»
 ent-BulletGrenadeGas = озброєна газова граната
 ent-BulletGrenadeStinger = озброєна жалка граната
 ent-GrenadeGaslauncher = газова граната

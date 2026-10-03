@@ -11,16 +11,12 @@ ent-PirateFreshFrontierCapeGalaxy = галактичний плащ
 ent-PirateFreshFrontierCapeLua = плащ Луа
     .desc = Блакитний плащ із грайливою емблемою.
 ent-PirateFreshFrontierCapeNeon = неоновий плащ
-    .desc = Плащ у яскрави�
-    неонови�
-    кольора�
-    .
+    .desc = Плащ у яскравих неонових кольорах.
 ent-PirateFreshFrontierCapeSirius = плащ Сіріуса
-    .desc = Плащ, нат�
-    ненний найяскравішою зорею нічного неба.
+    .desc = Плащ, натхненний найяскравішою зорею нічного неба.
 ent-PirateFreshFrontierCapeViolet = фіолетовий плащ
     .desc = Бузковий плащ із серцем на спині.
-ent-PirateFreshFrontierDandyCoat = чорне те�
+ent-PirateFreshFrontierDandyCoat = чорне технопальто
     .desc = Елегантне чорне пальто із золотими деталями.
 ent-PirateFreshFrontierFlameCape = плащ плазмового полум'я
     .desc = Плащ із яскравим візерунком плазмового полум'я.
@@ -32,7 +28,7 @@ ent-PirateFreshFrontierFoxEarsOrange = помаранчеві лисичі ву�
     .desc = М'які помаранчеві лисичі вушка.
 ent-PirateFreshFrontierFoxEarsWhite = білі лисичі вушка
     .desc = М'які білі лисичі вушка.
-ent-PirateFreshFrontierHorrorWings = крила жа�
+ent-PirateFreshFrontierHorrorWings = крила жаху
     .desc = Дивні крила, яким місце у кошмарі.
 ent-PirateFreshFrontierKimono = церемоніальне кімоно
     .desc = Ошатне кімоно з яскравим візерунком.
@@ -67,28 +63,23 @@ ent-PirateFreshFrontierVioletWings = фіолетові крила
 ent-PirateFreshStarlightAristocratBoots = чоботи аристократа
     .desc = Високі чоботи з відтінком старосвітської драми.
 ent-PirateFreshStarlightBigTophat = великий циліндр
-    .desc = Дуже високий капелю�
-    для дуже важливої персони.
+    .desc = Дуже високий капелюх для дуже важливої персони.
 ent-PirateFreshStarlightBigTophatWhite = білий великий циліндр
     .desc = Світла версія величного класичного циліндра.
 ent-PirateFreshStarlightBodysuitJeans = боді та джинси
     .desc = Практичне боді в парі з міцними джинсами.
 ent-PirateFreshStarlightBrassTophat = латунний циліндр
-    .desc = Відполірований циліндр із ме�
-    анізмами з латуні.
-ent-PirateFreshStarlightBrimHat = широкополий капелю�
+    .desc = Відполірований циліндр із механізмами з латуні.
+ent-PirateFreshStarlightBrimHat = широкополий капелюх
     .desc = Широкі поля прикривають обличчя від яскравого світла.
-ent-PirateFreshStarlightBunnyGangHat = капелю�
-    .desc = Грайливий капелю�
-    із ноткою таємного товариства.
+ent-PirateFreshStarlightBunnyGangHat = капелюх кролячої банди
+    .desc = Грайливий капелюх із ноткою таємного товариства.
 ent-PirateFreshStarlightBunnyScarf = шарф кролячої банди
     .desc = М'який шарф із грайливою емблемою.
 ent-PirateFreshStarlightCargoOveralls = вантажний комбінезон
-    .desc = Міцний комбінезон із легким запа�
-    ом картону.
+    .desc = Міцний комбінезон із легким запахом картону.
 ent-PirateFreshStarlightCoolTanktop = майка без рукавів
-    .desc = Легка майка для тепли�
-    палуб.
+    .desc = Легка майка для теплих палуб.
 ent-PirateFreshStarlightDarkPirateGarb = темне піратське вбрання
     .desc = Потерте пальто для космонавта зі смаком до пригод.
 ent-PirateFreshStarlightDarkTurtleneck = темний гольф
@@ -97,102 +88,78 @@ ent-PirateFreshStarlightDruidRobes = шати друїда
     .desc = Прості шати з природним настроєм.
 ent-PirateFreshStarlightEyeAmulet = амулет-око
     .desc = Пильне око в простій підвісці.
-ent-PirateFreshStarlightFeatheredHat = капелю�
-    .desc = Ефектний капелю�
-    із гордим пером.
+ent-PirateFreshStarlightFeatheredHat = капелюх із пером
+    .desc = Ефектний капелюх із гордим пером.
 ent-PirateFreshStarlightFieldJacket = польова куртка
     .desc = М'яка чорна куртка з вільними манжетами.
 ent-PirateFreshStarlightFlamboyant = екстравагантне вбрання
-    .desc = Театральний образ для ефектного ви�
-    оду.
+    .desc = Театральний образ для ефектного виходу.
 ent-PirateFreshStarlightFlamenco = сукня фламенко
     .desc = Святкова сукня з яскравою сценічною пластикою.
 ent-PirateFreshStarlightFlyCaptain = ретро-форма капітана
     .desc = Яскрава ретро-форма впевненого крою.
 ent-PirateFreshStarlightFoxfire = амулет Лисиччиного вогню
     .desc = Примарні язики полум'я кружляють навколо загадкового амулета.
-ent-PirateFreshStarlightFurBoots = високі �
-    .desc = Високі чорні чоботи з �
-    утром і золотими деталями.
-ent-PirateFreshStarlightGildedWideHat = позолочений широкополий капелю�
-    .desc = Кремовий капелю�
-    із пір'ям і золотим оздобленням.
-ent-PirateFreshStarlightGreenWizardHat = зелений капелю�
-    .desc = Яскравий капелю�
-    для барвистого чаклуна.
+ent-PirateFreshStarlightFurBoots = високі хутряні чоботи
+    .desc = Високі чорні чоботи з хутром і золотими деталями.
+ent-PirateFreshStarlightGildedWideHat = позолочений широкополий капелюх
+    .desc = Кремовий капелюх із пір'ям і золотим оздобленням.
+ent-PirateFreshStarlightGreenWizardHat = зелений капелюх чарівника
+    .desc = Яскравий капелюх для барвистого чаклуна.
 ent-PirateFreshStarlightGreytiderTrenchcoat = тренч сірого тайдера
     .desc = Практичний тренч для звичайного мешканця станції.
 ent-PirateFreshStarlightInspectorCoat = пальто інспектора
-    .desc = Довге пальто для ти�
-    , �
-    то помічає кожну деталь.
+    .desc = Довге пальто для тих, хто помічає кожну деталь.
 ent-PirateFreshStarlightKilt = кілт
     .desc = Класичний складчастий кілт для сміливого образу.
 ent-PirateFreshStarlightLilacDress = бузкова сукня
     .desc = Елегантна сукня, ніби сплетена з пелюсток бузку.
 ent-PirateFreshStarlightLittleBlackDress = маленька чорна сукня
-    .desc = Лаконічна вечірня сукня для нічни�
-    прогулянок станцією.
+    .desc = Лаконічна вечірня сукня для нічних прогулянок станцією.
 ent-PirateFreshStarlightLumberjackOveralls = комбінезон лісоруба
-    .desc = Міцний комбінезон із легким запа�
-    ом �
-    вої.
-ent-PirateFreshStarlightMechanicOveralls = комбінезон ме�
-    .desc = Надійний одяг для довги�
-    змін.
+    .desc = Міцний комбінезон із легким запахом хвої.
+ent-PirateFreshStarlightMechanicOveralls = комбінезон механіка
+    .desc = Надійний одяг для довгих змін.
 ent-PirateFreshStarlightMessyDressShirt = недбала сорочка
-    .desc = Сорочка, накинута поспі�
-    ом перед зміною.
+    .desc = Сорочка, накинута поспіхом перед зміною.
 ent-PirateFreshStarlightMimeFrills = сукня міма з воланами
     .desc = Театральна чорно-біла сукня з чіткими воланами.
 ent-PirateFreshStarlightMoonAmulet = місячний амулет
     .desc = Маленька підвіска, що сяє місячним світлом.
-ent-PirateFreshStarlightOrangeWizardHat = помаранчевий капелю�
-    .desc = Яскравий капелю�
-    для барвистого чаклуна.
-ent-PirateFreshStarlightPancakeHat = капелю�
+ent-PirateFreshStarlightOrangeWizardHat = помаранчевий капелюх чарівника
+    .desc = Яскравий капелюх для барвистого чаклуна.
+ent-PirateFreshStarlightPancakeHat = капелюх-оладок
     .desc = Золотисті оладки, политі медом.
 ent-PirateFreshStarlightPawBoots = чоботи для лап
-    .desc = М'які чоботи для лапати�
-    стоп.
-ent-PirateFreshStarlightPeachWizardHat = персиковий капелю�
-    .desc = Теплий персиковий капелю�
-    для дружнього чаклуна.
+    .desc = М'які чоботи для лапатих стоп.
+ent-PirateFreshStarlightPeachWizardHat = персиковий капелюх чарівника
+    .desc = Теплий персиковий капелюх для дружнього чаклуна.
 ent-PirateFreshStarlightPunkJeans = панк-джинси
-    .desc = Тро�
-    и готики, тро�
-    и металу.
-ent-PirateFreshStarlightPurpleWizardHat = фіолетовий капелю�
-    .desc = Яскравий капелю�
-    для барвистого чаклуна.
+    .desc = Трохи готики, трохи металу.
+ent-PirateFreshStarlightPurpleWizardHat = фіолетовий капелюх чарівника
+    .desc = Яскравий капелюх для барвистого чаклуна.
 ent-PirateFreshStarlightRatvarBoots = латунні чоботи Ратвара
     .desc = Чоботи, вкриті теплим латунним блиском.
 ent-PirateFreshStarlightRedRegalia = червоний костюм регалії
-    .desc = Насичено-червоний костюм для незабутнього ви�
-    оду.
+    .desc = Насичено-червоний костюм для незабутнього виходу.
 ent-PirateFreshStarlightRuggedClothes = потертий одяг
     .desc = Зручне вбрання для важкої зміни.
 ent-PirateFreshStarlightSailor = матроська форма
-    .desc = О�
-    айна форма для найсолонішого космонавта.
-ent-PirateFreshStarlightSeniorChefJacket = куртка старшого ку�
-    .desc = О�
-    айна куртка з яскравою кулінарною обробкою.
+    .desc = Охайна форма для найсолонішого космонавта.
+ent-PirateFreshStarlightSeniorChefJacket = куртка старшого кухаря
+    .desc = Охайна куртка з яскравою кулінарною обробкою.
 ent-PirateFreshStarlightSlickShoes = лаковані туфлі
     .desc = Відполіровані туфлі для бездоганно вбраного космонавта.
 ent-PirateFreshStarlightSovietGreatcoat = шинель
     .desc = Важка шинель із виразним військовим силуетом.
 ent-PirateFreshStarlightSpaceCourierBoots = чоботи космічного кур'єра
-    .desc = О�
-    айні чоботи для своєчасної доставки.
+    .desc = Охайні чоботи для своєчасної доставки.
 ent-PirateFreshStarlightSpaceCourierCoat = важке пальто космічного кур'єра
-    .desc = Міцне пальто для довги�
-    маршрутів крізь порожнечу.
+    .desc = Міцне пальто для довгих маршрутів крізь порожнечу.
 ent-PirateFreshStarlightSquidCoat = потерте пальто
     .desc = Пошарпане пальто з таємничим силуетом.
 ent-PirateFreshStarlightStarAmulet = зоряний амулет
-    .desc = Підвіска у формі зорі з м'яким мере�
-    тінням.
+    .desc = Підвіска у формі зорі з м'яким мерехтінням.
 ent-PirateFreshStarlightSunAmulet = сонячний амулет
     .desc = Тепла золота підвіска, що ловить світло.
 ent-PirateFreshStarlightSundress = літня сукня
@@ -200,25 +167,18 @@ ent-PirateFreshStarlightSundress = літня сукня
 ent-PirateFreshStarlightTVHead = телевізор на голові
     .desc = Портативний екран для незабутнього образу.
 ent-PirateFreshStarlightTieDye = футболка тай-дай
-    .desc = Барвистий привіт із яскравої епо�
-    и.
+    .desc = Барвистий привіт із яскравої епохи.
 ent-PirateFreshStarlightToga = тога
     .desc = Просте драпіроване вбрання для урочистої церемонії.
 ent-PirateFreshStarlightTrendyTop = модний топ
     .desc = Яскравий топ для сучасного образу.
 ent-PirateFreshStarlightVintage = вінтажний одяг
-    .desc = Ретрообраз, що не ви�
-    одить із моди.
-ent-PirateFreshStarlightWideStrawHat = широкий солом'яний капелю�
-    .desc = Широкий солом'яний капелю�
-    із ноткою таємничості.
+    .desc = Ретрообраз, що не виходить із моди.
+ent-PirateFreshStarlightWideStrawHat = широкий солом'яний капелюх
+    .desc = Широкий солом'яний капелюх із ноткою таємничості.
 ent-PirateFreshStarlightWinterBlueBoots = сині зимові чоботи
-    .desc = Теплі сині чоботи для �
-    олодни�
-    палуб.
-ent-PirateFreshStarlightWitchyHat = відьомський капелю�
-    .desc = Високий кривий капелю�
-    для маленької магії.
-ent-PirateFreshStarlightYellowWizardHat = жовтий капелю�
-    .desc = Яскравий капелю�
-    для барвистого чаклуна.
+    .desc = Теплі сині чоботи для холодних палуб.
+ent-PirateFreshStarlightWitchyHat = відьомський капелюх
+    .desc = Високий кривий капелюх для маленької магії.
+ent-PirateFreshStarlightYellowWizardHat = жовтий капелюх чарівника
+    .desc = Яскравий капелюх для барвистого чаклуна.
