@@ -473,7 +473,16 @@ export default function App() {
                               ? "kindGate"
                               : "kindOutpost";
                     return (
-                      <div class="panel overlay">
+                      // A ringed system gets a wider panel, so the ring can be the
+                      // size a ring is instead of a collar. See `.overlay.ringed`.
+                      <div
+                        class="panel overlay"
+                        classList={{
+                          ringed:
+                            s().kind !== "blackhole" &&
+                            hasRings(seedFromId(s().id), worldType(s()), s().rings),
+                        }}
+                      >
                         <button
                           class="panel-close overlay-close"
                           onClick={() => setFocused(undefined)}

@@ -748,9 +748,28 @@ try {
      * path data the near half sits at positive y (SVG y runs down) and the far
      * half at negative y.
      */
-    const halves = await page.evaluate(async () => {
+    /**
+     * The overlay's ring, measured off its own pixels.
+     *
+     * This used to measure the two SVG halves' bounding boxes and assert one was
+     * above the planet and one below. That is the right property for the SVG ring and
+     * it is not this ring any more — the canvas cuts the planet's hole itself, so
+     * there are no halves to find. Asserting on the markup would have kept passing
+     * while measuring nothing at all.
+     *
+     * So: read the canvas. The properties that matter are all visible in its pixels.
+     * Where the planet is, the ring's upper half must be EMPTY. Where the planet's
+     * face is, the ring's lower half must be COVERED. And the ring must reach
+     * further out than the planet, or it is a collar.
+     *
+     * The first of those is the one worth having. It is exactly the bug this was
+     * found with — the far half drawing over the planet — and no check on the DOM
+     * could see it, because the DOM said the ring was behind the image and the
+     * image was static so it painted underneath.
+     */
+    const overlayRing = await page.evaluate(async () => {
       const open = document.querySelector(".sys-hit[data-sys='burzsia']");
-      if (!open) return null;
+      if (!open) return { canvas: false, detail: "burzsia did not open" };
       const r = open.getBoundingClientRect();
       document
         .querySelector("svg.chart")
@@ -764,39 +783,282 @@ try {
       for (let i = 0; i < 40 && !document.querySelector(".overlay"); i++) {
         await new Promise((res) => setTimeout(res, 50));
       }
-      const centreY = (sel) => {
-        const paths = [...document.querySelectorAll(sel + " path")];
-        if (!paths.length) return null;
-        // getBBox, not a regex over the path data. The data carries the arc's radii
-        // and flags in the same number stream as the coordinates — `A 128 49 0 0 1
-        // -100 12` — so a naive coordinate-pair scan averages the radii in with the
-        // points and every half comes out on the same side.
-        let lo = Infinity;
-        let hi = -Infinity;
-        for (const p of paths) {
-          const bb = p.getBBox();
-          lo = Math.min(lo, bb.y);
-          hi = Math.max(hi, bb.y + bb.height);
-        }
-        return (lo + hi) / 2;
+      await new Promise((res) => setTimeout(res, 400));
+
+      const c = document.querySelector(".world-ring-gl");
+      const host = document.querySelector(".world-ring-gl-host");
+      const planet = document.querySelector(".world-still");
+      const panel = document.querySelector(".overlay");
+      if (!c || !host || !planet || !panel) {
+        document.querySelector(".overlay-close")?.click();
+        return {
+          canvas: false,
+          detail: c ? "canvas present but no host/planet/panel" : "no canvas ring in the overlay",
+        };
+      }
+
+      // readPixels on a WebGL canvas is not dependable here, so go through the
+      // compositor: data URL, decode, then a 2D canvas.
+      const im = new Image();
+      im.src = c.toDataURL();
+      await im.decode();
+      const off = document.createElement("canvas");
+      off.width = c.width;
+      off.height = c.height;
+      const ctx = off.getContext("2d");
+      ctx.drawImage(im, 0, 0);
+      const data = ctx.getImageData(0, 0, off.width, off.height).data;
+
+      const mid = off.width / 2;
+      // A ring pixel is warm or plum: never neutral, and never the panel's own
+      // near-black. The panel behind the canvas shows through where the ring is cut.
+      const lit = (x, y) => {
+        const i = ((Math.round(y) * off.width) + Math.round(x)) * 4;
+        const R = data[i];
+        const G = data[i + 1];
+        const B = data[i + 2];
+        return R + G + B > 90;
       };
-      const out = { back: centreY(".world-ring-back"), front: centreY(".world-ring-front") };
+
+      // The planet's radius, in canvas pixels, from the ring host's own geometry.
+      // The shader cuts its hole at exactly this radius, so it is also the number
+      // every assertion below is about.
+      const hole = Number(host.dataset.ringHole);
+
+      /**
+       * The invariant, stated the way the shader states it.
+       *
+       * Inside the planet's disc the ring must be ABSENT above the planet's centre and
+       * PRESENT below it. That is `if (uv.y < 0.5)` made observable, and it is the
+       * whole difference between a ring passing round a planet and a hoop with a
+       * bite taken out of one side.
+       *
+       * Counting inside the disc rather than scanning outward for the ring's edge is
+       * what makes this robust. A 6:1 ellipse rotated 40 degrees crosses the vertical
+       * centre line at about 55px, well inside the planet's 100px radius, so there is
+       * nothing to find on that line outside the hole at all and a "first lit row"
+       * probe returns nothing. This does not care where the ring crosses.
+       */
+      /**
+       * Rotate a canvas pixel back into the ring's own frame, the way the shader
+       * does, so "which side is in front" is asked in the frame the shader answers
+       * in. `rotate` subtracts the centre, applies the matrix, adds it back — and in
+       * the vertex shader's y-down space that is a clockwise turn on screen.
+       */
+      const rot = Number(host.dataset.ringRotation);
+      const cos = Math.cos(rot);
+      const sin = Math.sin(rot);
+
+      /**
+       * The shader's own \`rotated.y\`, MEASURED rather than derived.
+       *
+       * Deriving it is a trap. The shader writes
+       *
+       *     coord *= mat2(vec2(cos, -sin), vec2(sin, cos))
+       *
+       * and the two arguments are the matrix's COLUMNS, so working out what \`v * m\`
+       * does with that by reading gives one answer; getting the row/column convention
+       * wrong yields a check that is confidently 90 degrees out. It was wrong here,
+       * and the symptom was 247 lit pixels on the "far" side of a boundary that was
+       * in the wrong place rather than a shader bug.
+       *
+       * So it is measured. Histogramming the rotated-y of every lit pixel inside the
+       * planet's disc puts them all on one side of \`x * cos + y * sin\` and none on
+       * the other, which is the definition. That is the expression below.
+       */
+      const rotatedY = (x, y) => {
+        const dx = (x - mid) / off.width;
+        // Row 0 of a readback is the visual top, which is where v_uv.y is 0.
+        const dy = (y - mid) / off.height;
+        return dx * cos + dy * sin;
+      };
+
+      let wrongSide = 0;   // lit where the ring should be cut for the planet
+      let rightSide = 0;   // lit where it should cross in front
+      let behindLit = 0;   // lit on the far side, which must be nothing
+      for (let y = 0; y < off.height; y += 2) {
+        for (let x = 0; x < off.width; x += 2) {
+          const dx = x - mid;
+          const dy = y - mid;
+          if (dx * dx + dy * dy >= hole * hole) continue;
+          // The reference's own test, on its own rotated uv: `uv.y < 0.5`, which is
+          // `rotated.y < 0` since the rotation is about the uv centre.
+          const behind = rotatedY(x, y) < 0;
+          const isLit = lit(x, y);
+          if (behind) {
+            if (isLit) behindLit++;
+          } else if (isLit) rightSide++;
+        }
+      }
+      wrongSide = behindLit;
+      insideTotal = behindLit + rightSide;
+
+      const outer = Number(host.dataset.ringOuter);
+      const spread = outer / Number(host.dataset.ringHole);
+      const cb = c.getBoundingClientRect();
+      const pb = panel.getBoundingClientRect();
+      const fits = cb.left >= pb.left - 1 && cb.right <= pb.right + 1;
+
       document.querySelector(".overlay-close")?.click();
-      return out;
+      return {
+        canvas: true,
+        detail: `${c.width}x${c.height} backing, ${Math.round(cb.width)} css`,
+        // A small tolerance, because the cut is a hard threshold and the sampling
+        // grid straddles it: a pixel sitting on the boundary counts as lit or not
+        // depending on which side of it the sample falls. Asserting exactly zero
+        // would make this fail on rounding. Five per cent of the near side is far
+        // below anything a real occlusion bug could produce — that one leaves
+        // roughly half the disc covered.
+        holeClear: rightSide > 0 && behindLit <= rightSide * 0.05,
+        holeDetail:
+          `${behindLit} ring pixels inside the planet's disc on the far side against ` +
+          `${rightSide} on the near side (${(100 * behindLit / Math.max(1, rightSide)).toFixed(1)}% leak)`,
+        nearPresent: rightSide > 0,
+        nearDetail:
+          `${rightSide} ring pixels cross in front of the planet's face, ${behindLit} behind it`,
+        spread,
+        room: (pb.width / 2) / Number(host.dataset.ringHole),
+        fits,
+        fitDetail: `ring ${Math.round(cb.width)}px in a ${Math.round(pb.width)}px panel`,
+      };
     });
+
+    /**
+     * The COMPOSITED page, which is the only thing a viewer sees.
+     *
+     * Everything above reads the ring canvas's own pixels, and that is a real gap:
+     * putting the canvas back behind the planet sprite leaves every one of those
+     * numbers unchanged, because the shader still cuts the hole and still draws the
+     * near arm — the sprite just paints over the result. All of them pass. That was
+     * not hypothetical: it is the arrangement this started in, and it renders as two
+     * stubs either side of a planet instead of a ring round one.
+     *
+     * So this reads the screenshot. The discriminator has to be something the planet
+     * cannot produce, and there is one: the planet's palette is cream, tan and brown,
+     * all of which have green above blue, while the ring's shadowed tones are plum
+     * and violet, which have blue above green. `b > g` therefore holds for the ring
+     * and never for the planet, which makes it safe to look for the ring lying across
+     * the planet's face.
+     */
+    /**
+     * Make sure the overlay is CLOSED, then open it, then wait — each step bounded.
+     *
+     * The first version clicked the system and waited for the canvas unconditionally.
+     * The probe above leaves the overlay open, so that click was a toggle: it closed
+     * the panel, and the wait then sat on a canvas that was never coming, until the
+     * whole suite hit its timeout with no message. A hang is the worst way for a
+     * check to fail, because it looks like the machine rather than the code.
+     *
+     * So: settle the state first, and give up with a recorded failure rather than
+     * throwing, so one broken expectation cannot take the other 300 down with it.
+     */
+    await page.evaluate(async () => {
+      const close = () => document.querySelector(".overlay-close");
+      for (let i = 0; i < 60 && close(); i++) {
+        close().click();
+        await new Promise((ok) => setTimeout(ok, 50));
+      }
+    });
+    await page.evaluate(() => {
+      const open = document.querySelector(".sys-hit[data-sys='burzsia']");
+      const r = open.getBoundingClientRect();
+      document
+        .querySelector("svg.chart")
+        .dispatchEvent(
+          new MouseEvent("click", {
+            bubbles: true,
+            clientX: r.x + r.width / 2,
+            clientY: r.y + r.height / 2,
+          }),
+        );
+    });
+    let gotCanvas = true;
+    try {
+      await page.waitForSelector(".world-ring-gl", { timeout: 8000 });
+    } catch {
+      gotCanvas = false;
+    }
+    await page.waitForTimeout(500);
+
+    const ringClip = await page.evaluate(() => {
+      const planet = document.querySelector(".world-still").getBoundingClientRect();
+      const host = document.querySelector(".world-ring-gl-host");
+      // A box around the planet, so the sample is the planet's face and a little
+      // more. Anything outside the disc is not the thing being asserted.
+      const pad = 4;
+      return {
+        x: Math.round(planet.left - pad),
+        y: Math.round(planet.top - pad),
+        width: Math.round(planet.width + pad * 2),
+        height: Math.round(planet.height + pad * 2),
+        hole: Number(host.dataset.ringHole),
+      };
+    });
+    const ringShot = await page.screenshot({ clip: ringClip });
+    const composed = gotCanvas
+      ? await page.evaluate(
+        async ([b64, size]) => {
+          const im = new Image();
+          im.src = "data:image/png;base64," + b64;
+          await im.decode();
+          const cv = document.createElement("canvas");
+          cv.width = im.width;
+          cv.height = im.height;
+          const c2 = cv.getContext("2d");
+          c2.drawImage(im, 0, 0);
+          const d = c2.getImageData(0, 0, cv.width, cv.height).data;
+          const mid = cv.width / 2;
+          let plum = 0;
+          let inside = 0;
+          for (let y = 0; y < cv.height; y++) {
+            for (let x = 0; x < cv.width; x++) {
+              const dx = (x - mid) * 2;
+              const dy = y - mid;
+              if (dx * dx + dy * dy >= size.hole * size.hole) continue;
+              inside++;
+              const i = (y * cv.width + x) * 4;
+              if (d[i + 2] > d[i + 1] + 6) plum++;
+            }
+          }
+          return { plum, inside, total: cv.width * cv.height };
+        },
+          [ringShot.toString("base64"), { hole: ringClip.hole }],
+        )
+      : { plum: 0, inside: 0, total: 0 };
+    await page.evaluate(() => document.querySelector(".overlay-close")?.click());
+
     check(
-      "a ring's far half is drawn above the planet and its near half below",
-      halves !== null && halves.back < 0 && halves.front > 0,
-      halves
-        ? `far ${halves.back.toFixed(1)}, near ${halves.front.toFixed(1)}`
-        : "burzsia did not open",
+      "the overlay's ring is a live canvas, not the SVG fallback",
+      overlayRing.canvas,
+      overlayRing.detail,
     );
     check(
-      "the two halves of a ring are on opposite sides of the planet",
-      halves !== null && halves.back < 0 && halves.front > 0 &&
-        Math.abs(halves.back) > 2 && Math.abs(halves.front) > 2,
-      halves ? `far ${halves.back.toFixed(1)}, near ${halves.front.toFixed(1)}` : "no halves",
+      "and it is cut for the planet, so the far half passes behind it",
+      overlayRing.holeClear,
+      overlayRing.holeDetail,
     );
+    check(
+      "while the near half is drawn over the planet's face",
+      overlayRing.nearPresent,
+      overlayRing.nearDetail,
+    );
+    check(
+      "the ring reaches well past the planet's edge, so it is a ring and not a collar",
+      overlayRing.spread > 1.6,
+      `outer radius is ${overlayRing.spread.toFixed(2)}x the planet's, panel allows ${overlayRing.room.toFixed(2)}x`,
+    );
+    check(
+      "and it fits the panel it is drawn in",
+      overlayRing.fits,
+      overlayRing.fitDetail,
+    );
+    check(
+      "and the ring is actually visible ACROSS the planet, not just in its own canvas",
+      composed.plum > composed.inside * 0.01,
+      `${composed.plum} of ${composed.inside} pixels inside the planet's disc are ring-coloured ` +
+        `(blue above green, which no planet tone does); the near arm has to reach the face`,
+    );
+
 
     // Open space must still select the territory underneath. This is the
     // regression a marker hit target invites: widen the radius far enough and
@@ -1432,43 +1694,10 @@ try {
         if (!(n.getAttribute("d") ?? "")) nonEmpty = false;
         if (!imageBefore(n)) ordered = false;
       }
-      // Open the ringed system's overlay and measure the ring against the panel.
-      const id = far[0]?.getAttribute("data-saturn");
-      let fits = null;
-      let panel = null;
-      if (id) {
-        const hit = document.querySelector(`.sys-hit[data-sys="${id}"]`);
-        if (hit) {
-          const r = hit.getBoundingClientRect();
-          hit.dispatchEvent(
-            new MouseEvent("click", {
-              bubbles: true,
-              clientX: r.x + r.width / 2,
-              clientY: r.y + r.height / 2,
-            }),
-          );
-          await new Promise((r2) => setTimeout(r2, 1400));
-          const svgs = [...document.querySelectorAll(".overlay .world-ring")];
-          const box = document.querySelector(".overlay");
-          if (svgs.length === 2 && box) {
-            const bw = box.getBoundingClientRect().width;
-            const widest = Math.max(...svgs.map((s) => s.getBoundingClientRect().width));
-            fits = widest;
-            panel = bw;
-          }
-          document.querySelector(".overlay-close")?.dispatchEvent(
-            new MouseEvent("click", { bubbles: true }),
-          );
-        }
-      }
-      return {
-        far: far.length,
-        near: near.length,
-        ordered,
-        nonEmpty,
-        fits,
-        panel,
-      };
+      // The overlay's ring used to be measured here too, for the width of its SVG
+      // against the panel. It is a canvas now, and the check above reads its pixels
+      // and its box, so that measurement moved rather than being duplicated.
+      return { far: far.length, near: near.length, ordered, nonEmpty };
     });
 
     /**
@@ -1835,11 +2064,10 @@ try {
       ring.ordered && ring.nonEmpty,
       `ordering ${ring.ordered}, both halves have geometry ${ring.nonEmpty}`,
     );
-    check(
-      "and the ring fits inside the overlay panel",
-      ring.fits !== null && ring.fits <= ring.panel,
-      ring.fits === null ? "no ring measured" : `ring ${Math.round(ring.fits)}px in a ${Math.round(ring.panel)}px panel`,
-    );
+    // The CHART's rings, measured here. The overlay has its own check above, which
+    // reads the canvas ring's pixels rather than these SVG halves — this one is
+    // about the 16-40px markers, where there is no canvas and no noise, only the
+    // simplified geometry.
     check(
       "a world with no rings contributes no ring geometry",
       await page.evaluate(() => {

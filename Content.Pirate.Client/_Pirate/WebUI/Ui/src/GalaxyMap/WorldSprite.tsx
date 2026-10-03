@@ -9,7 +9,7 @@
 import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
 import { planetSheetAsync, planetUri, type PlanetType } from "./lib/planet";
 import { reducedMotion } from "./BlackHole";
-import WorldRing from "./WorldRing";
+import WorldRingGL from "./WorldRingGL";
 
 export interface WorldSpriteProps {
   seed: number;
@@ -149,10 +149,19 @@ export default function WorldSprite(props: WorldSpriteProps) {
       classList={{ turning: sheet() !== undefined, ringed: props.ring === true }}
       style={{ width: `${props.px}px`, height: `${props.px}px` }}
     >
-      {/* Behind the sprite. The sprite is opaque across its disc and transparent
-          outside it, so the far half is hidden exactly where the planet is. */}
+      {/* ONE canvas, behind the sprite.
+
+          This used to be two SVGs — a far half behind the `<img>` and a near half in
+          front of it — which relied on the sprite being transparent outside its disc
+          to do the occluding. It is the reference's own arrangement now: the shader
+          cuts the planet's hole out of the ring's upper half, in its own uv, so the
+          occlusion is exact and there is no second layer to keep aligned.
+
+          The far/near split survives as a fact about the ring's own geometry — the
+          shader's hole test is `if (uv.y < 0.5)` — but it is the shader's business
+          now, not the DOM's. */}
       <Show when={props.ring === true}>
-        <WorldRing px={props.px} seed={props.seed} tilt={0.22} />
+        <WorldRingGL planetPx={props.px} seed={props.seed} />
       </Show>
       {/* The still is always in the DOM. When the strip arrives it fades in
           over the top, so there is never a blank frame between the two. */}
@@ -190,10 +199,7 @@ export default function WorldSprite(props: WorldSpriteProps) {
           />
         )}
       </Show>
-      {/* In front of both, so the near half of the ring passes over the planet. */}
-      <Show when={props.ring === true}>
-        <WorldRing px={props.px} seed={props.seed} tilt={0.22} front />
-      </Show>
+
     </div>
   );
 }

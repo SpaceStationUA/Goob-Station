@@ -152,6 +152,24 @@ svg.chart.painting {
 .overlay {
   width: 268px;
 }
+
+/**
+ * A ringed system gets a wider panel.
+ *
+ * The reference's ring reaches 3.16 planet radii — around a 200px planet that is
+ * 632px across, and the panel is 268px. So the ring cannot be drawn at the
+ * reference's size in a panel this width, and it was being drawn small enough to
+ * fit, which is most of why it read as a hoop: a ring squeezed to 1.28 radii is a
+ * collar, not a ring system.
+ *
+ * Widening the panel for the ringed case buys real width instead. Saturn's A ring
+ * reaches about 2.3 planetary radii, so 2.3 is both affordable here and closer to
+ * the solar system's own than the reference's 3.16 is — the compromise costs less
+ * than it looks.
+ */
+.overlay.ringed {
+  width: 460px;
+}
 .overlay .overlay-art {
   display: flex;
   justify-content: center;
@@ -159,6 +177,24 @@ svg.chart.painting {
      the disc, plus a little air so the glow is not clipped by the
      panel edge. */
   padding: 6px 0 10px;
+}
+
+/**
+ * A ringed system needs a taller art box, and the reason is the rotation.
+ *
+ * The scene's `rotation` is 0.7 radians, so the ring's major axis is 40 degrees off
+ * horizontal. A 2.2-radii ring at 40 degrees has a bounding box roughly 340 wide and
+ * 285 tall, where the planet itself is 200 square. In a box sized to the planet the
+ * ring runs off the top and the bottom, and being clipped by its own panel reads as
+ * a fault rather than as a crop.
+ *
+ * So the art box grows for the ringed case instead of the ring shrinking to fit it.
+ * Shrinking would have been the easier fix and would have put the ring back to being
+ * a collar, which is the thing this replaced.
+ */
+.overlay.ringed .overlay-art {
+  min-height: 300px;
+  align-items: center;
 }
 .overlay .capital-tag {
   margin: 2px 0 8px;
@@ -225,8 +261,72 @@ svg.chart.painting {
   pointer-events: none;
   overflow: visible;
 }
+
+/* The overlay's ring: one canvas, behind the sprite. It carries its own cut-out
+   for the planet, so nothing has to be layered in front. */
+/**
+ * IN FRONT of the sprite, which is the opposite of what this first did.
+ *
+ * In `GasPlanetLayers.tscn` the `Ring` ColorRect is node index 1 and `GasLayers` is
+ * index 0, and Godot draws later siblings on top. So the reference's ring is drawn
+ * OVER the planet and does its own occlusion: the shader cuts the far arm out with
+ * `if (uv.y < 0.5) ring *= step(...)`, and the near arm is left alone so it can lie
+ * across the planet's face. Both halves of the depth cue come from that one rule.
+ *
+ * This canvas was put BEHIND the sprite, on the reasoning that the sprite is opaque
+ * across its disc so the ring would be occluded for free. That is true and it is
+ * wrong: it hides the near arm too, so the ring stops dead at the planet's edge on
+ * both sides and reads as two stubs rather than a ring passing round a planet. The
+ * hole in the shader is not a substitute for painting the ring on top — it is only
+ * the far half of the arrangement.
+ */
+.world-ring-gl-host {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  z-index: 3;
+}
+.world-ring-gl {
+  display: block;
+}
+
+/* Only when the canvas ring could not be built. Two SVGs, far half and near half,
+   which is the arrangement the canvas replaced. */
+.world-ring-fallback {
+  position: absolute;
+  pointer-events: none;
+}
+/**
+ * Four layers, and ALL of them positioned.
+ *
+ * The layering used to rely on DOM order: far ring, sprite, near ring. That is
+ * correct in SVG, where document order IS paint order, and it is why the chart's
+ * rings were always right while the overlay's were not.
+ *
+ * CSS paints positioned descendants in a later pass than static ones, whatever the
+ * DOM says. `.world-ring-back` is `position: absolute` and `.world-still` was a
+ * static `<img>`, so the far half painted ON TOP of the planet, and its `z-index: 0`
+ * had nothing to contradict it. The ring crossed the planet's face and the system
+ * read as a hoop drawn over a disc.
+ *
+ * So the sprite is positioned too, and the four layers are stated rather than
+ * implied:
+ *
+ *     0  far half of the ring    behind the planet
+ *     1  the still               the planet
+ *     2  the filmstrip           fades in over the still
+ *     3  near half of the ring   in front of both
+ *
+ * z-index 0 is not the absence of layering. It is a level, and it was the wrong one.
+ */
 .world-ring-back {
   z-index: 0;
+}
+.world-still {
+  z-index: 1;
+}
+.world-turn {
+  z-index: 2;
 }
 .world-ring-front {
   z-index: 3;
@@ -283,6 +383,14 @@ svg.chart.painting {
   inset: 0;
   opacity: 0;
   transition: opacity 0.45s ease;
+}
+.world-still {
+  /* Positioned so the ring's z-index has something to be relative to. This is the
+     whole fix for the ring crossing the planet's face; see the layer note above
+     `.world-ring-back`. A static `<img>` paints in an earlier pass than any
+     positioned sibling, whatever the DOM order says. */
+  position: absolute;
+  inset: 0;
 }
 .world.turning .world-turn {
   opacity: 1;

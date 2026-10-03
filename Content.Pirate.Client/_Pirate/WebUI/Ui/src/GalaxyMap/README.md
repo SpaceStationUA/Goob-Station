@@ -38,6 +38,70 @@ still reads every name, every border and every dispute flag. The DOM check flips
 the permission and asserts the tools disappear while the map survives — and that
 a click still selects, so read-only does not degrade into inert.
 
+## Ring systems
+
+`lib/gl-ring.ts` is a transcription of the reference's `Ring.gdshader`, with the
+uniform values `GasPlanetLayers.tscn` gives it. It replaced a design, and the
+design was wrong in three ways that only the source could tell me:
+
+- **The ring is carved by noise.** `ring *= fbm(...)` with four octaves, then
+  `step(0.28, ring)` for the alpha — so the divisions in a ring are where the noise
+  fell below the cut. Three flat ribbons cannot have divisions. That is the whole
+  reason the old ring read as a wire hoop laid across the planet.
+- **`ring_perspective` is 6.0**, not the declared 4.0, and the old ring was authored
+  against 0.22, which is neither and is what you reach for when asked how open a
+  ring should look without the source in front of you.
+- **The planet's hole is the ring's own job**, cut in its own uv by
+  `if (uv.y < 0.5) ring *= step(1/scale_rel_to_planet, distance(uv, vec2(0.5)))`.
+  The ring canvas is three times the planet's and `1/6` is exactly the planet's
+  radius in it.
+
+### The ring goes ON TOP of the planet
+
+In `GasPlanetLayers.tscn` the `Ring` node is index 1 and `GasLayers` index 0, and
+Godot draws later siblings on top. So the reference paints the ring **over** the
+planet and does its own occlusion: the shader cuts the far arm, and the near arm is
+left alone so it can lie across the planet's face.
+
+This canvas was first placed *behind* the sprite, reasoning that the sprite is
+opaque across its disc so the ring would be occluded for free. That is true and it
+is wrong — it hides the near arm too, so the ring stops dead at the planet's edge on
+both sides and reads as two stubs. The hole is not a substitute for painting the
+ring on top; it is only the far half of the arrangement.
+
+The same class of bug bit twice, in opposite directions, which is worth recording:
+first the far half drew over the planet, then the near half was hidden by it. Both
+present as "the ring looks wrong" and neither is visible in the DOM.
+
+### Two deviations, both about fit and neither about structure
+
+- **Size.** The reference's ring reaches 3.16 planetary radii, which around a 200px
+  planet is 632px across. `CANVAS_TO_PLANET` is 2.1, giving 2.21 — affordable, and
+  closer to Saturn's own 2.3 than the reference is. The panel is 490px for the ringed
+  case.
+- **Palette.** The reference's shadowed tones are dark plums and charcoals, chosen
+  against the generator's mid-grey backdrop. This panel is near-black, so that end of
+  the ramp landed at luminance 8-20 against a background at 12 and the outer half of
+  the ring vanished. The three are lifted, keeping their hue relationships.
+
+### What the checks measure, and what they could not
+
+The occlusion is read off the ring canvas's own pixels: inside the planet's disc the
+ring must be absent on the far side of the rotation and present on the near side.
+
+That check passed while the ring was behind the sprite, because z-order does not
+change what the canvas contains. So there is a second check that reads a
+**screenshot of the composited page**, looking for pixels where blue is above green —
+true of the ring's plum tones and of no planet tone, since the planet's palette is
+cream and tan throughout. Negative-controlled by putting the ring back behind the
+sprite: 0 of 15681 pixels.
+
+Deriving the shader's `rotated.y` in that check by reading the `mat2` is a trap: the
+two constructor arguments are the matrix's columns, and getting the convention wrong
+puts the check 90 degrees out. It was wrong, and it showed up as 247 lit pixels on the
+far side of a boundary that was in the wrong place — a confident wrong answer rather
+than an obvious failure. The expression is measured now, and says so.
+
 ## The bake
 
 `Resources/Prototypes/_Pirate/Galaxy/orionSpur.yml` is the **intent**: hand-drawn
