@@ -130,7 +130,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         var user = args.User;
 
         // Admin option to take over the station AI core
-        if (_admin.IsAdmin(args.User) &&
+        if (_admin.HasAdminFlag(args.User, Content.Shared.Administration.AdminFlags.Admin) && // Pirate: staff permissions - any rank (mentors too) could take over the AI
             !TryGetHeld((ent.Owner, ent.Comp), out _))
         {
             args.Verbs.Add(new Verb()

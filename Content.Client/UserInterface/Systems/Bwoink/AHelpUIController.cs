@@ -587,7 +587,7 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         };
         _window.OnClose += () => { OnClose?.Invoke(); };
         _window.OnOpen += () => { OnOpen?.Invoke(); };
-        _window.Contents.AddChild(_chatPanel);
+        Content.Client._Pirate.Administration.MentorHelp.HelpTabs.Install(_window, _chatPanel); // Pirate: mentorhelp - ahelp/mentorhelp tabs
 
         var introText = Loc.GetString("bwoink-system-introductory-message");
         var introMessage = new SharedBwoinkSystem.BwoinkTextMessage(_ownerId, SharedBwoinkSystem.SystemUserId, introText);

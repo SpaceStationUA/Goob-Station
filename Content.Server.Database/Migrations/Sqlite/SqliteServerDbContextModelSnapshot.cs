@@ -1033,6 +1033,35 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("pirate_admin_help_ratings", (string)null);
                 });
 
+            #region Pirate: temporary ranks
+            modelBuilder.Entity("Content.Server.Database.PirateTempRankEligibility", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("AdminRankId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("admin_rank_id");
+
+                    b.Property<Guid?>("AddedById")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("added_by_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("created_at");
+
+                    b.HasKey("UserId", "AdminRankId")
+                        .HasName("PK_pirate_temp_rank_eligibility");
+
+                    b.HasIndex("AdminRankId")
+                        .HasDatabaseName("IX_pirate_temp_rank_eligibility_admin_rank_id");
+
+                    b.ToTable("pirate_temp_rank_eligibility", (string)null);
+                });
+            #endregion Pirate: temporary ranks
+
             modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
                 {
                     b.Property<int>("Id")
@@ -2434,6 +2463,20 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.Navigation("Player");
                 });
+
+            #region Pirate: temporary ranks
+            modelBuilder.Entity("Content.Server.Database.PirateTempRankEligibility", b =>
+                {
+                    b.HasOne("Content.Server.Database.AdminRank", "AdminRank")
+                        .WithMany()
+                        .HasForeignKey("AdminRankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_pirate_temp_rank_eligibility_admin_rank_admin_rank_id");
+
+                    b.Navigation("AdminRank");
+                });
+            #endregion Pirate: temporary ranks
 
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
