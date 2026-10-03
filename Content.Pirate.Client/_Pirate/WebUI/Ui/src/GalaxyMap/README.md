@@ -1603,3 +1603,76 @@ needs a per-row maximum well away from the base and about sixty samples to resol
 fraction of the 1.6s period. Shipping the assertion with a threshold it happened to pass
 would report a guarantee that is not being made, which is worse than the gap. It is
 written down here instead, and the property is visible in a screenshot.
+
+## The star: `lib/gl-star.ts`, a WORK IN PROGRESS
+
+Transcribed from `cosmoglyph/shaders/star.glsl` v5, Luke100000, MIT. The author's words
+in the itch.io comments, unprompted: *"feel free to extract the shaders, or code in
+general."* No per-shader headers in the `.love`; the licence is at the repository level.
+
+We had **no star at all** -- `SystemKind` covers planets and remnants, and a chart of a
+galactic arm is mostly stars. This is the first attempt and it is not finished.
+
+### What is transcribed and working
+
+- **Palette-INDEXED and dithered.** Every pixel picks an index into a small palette and
+  the coverage mask is a `bayer4` threshold with a `discard`. The cell-shaded look is
+  not a filter applied afterwards; it is how each pixel is decided. Ours lerps RGB, which
+  is why ours reads as smooth next to this.
+- **Granulation**, at 150 cells around the sphere, scrolled at a rate set by `activity`.
+- **Spots**, carved out of a third noise channel.
+- **The corona**, with four harmonics of the screen-space direction warping its edge, and
+  the band index inverted so the inner edge is the hot one.
+- **Prominence loops**: 32 of them, each anchored on the sphere by a HASH rather than
+  placed -- angle, depth, therefore radius, all from `hash(seed + order)` -- drawn as an
+  elliptical arc with two independent wobbles and a hashed gap so none is ever a closed
+  ellipse. A prominence is a loop of plasma held above the surface by a magnetic field.
+
+### What is still wrong
+
+1. **The granulation is too contrasty.** It reads as speckle rather than as convective
+   cells. `turb`-style amplitude needs pulling back, and the dither `lift` on the surface
+   is doubling the effect.
+2. **The loops are not visible.** They render, but at the reference's default `flares`
+   they are lost against the corona. They need to be brighter than the corona rather than
+   competing with it -- which is also physically right: a prominence is denser and hotter
+   than the corona it stands in.
+3. **The corona edge is too clean.** The four harmonics are being applied but the ragged
+   edge is not reading; `corona` needs to be higher and `width` needs more variation.
+4. **Limb darkening is too strong** -- the edge goes almost black, which reads as a hole
+   rather than as a cool limb.
+5. **Not wired in.** There is no `star` kind in `SystemKind`, no overlay dispatcher entry
+   and no chart mark. Nothing in the game can reach this yet, which is also why there are
+   no assertions on it: an unwired renderer verified only by screenshot is exactly the
+   failure this project keeps hitting.
+
+### Four defects found by looking, not by reading
+
+- **Granulation at 26 cells is continents.** The first render was a brown-and-cream
+  rocky planet with a purple rim. Granulation is convective cells and there are hundreds.
+- **The spot subtraction was a constant.** `map.g` is an fbm centred on 0.5, so
+  `smoothstep(0.08, 0.55, map.g)` is ~0.93 almost everywhere: a near-constant offset
+  that compressed the whole index distribution into the two END bands, and the two middle
+  colours were never drawn at all. Hence two-tone banding. The reference's `map.g` is
+  near zero almost everywhere because it was RENDERED as a spotness channel, so the
+  noise here is cubed and biased down to be sparse instead.
+- **`radial` substituted for the normal.** The corona's harmonics are functions of a
+  *direction*, bounded in -1..1. Feeding `radial` -- which reaches ~3 at the corners --
+  drove the edge term outside its range.
+- **`smoothstep` with edge0 > edge1, which is UNDEFINED in GLSL.** The loop tube's
+  thickness is `0.4 + (wobbleA - wobbleB)`, a sum of two sines, so it goes negative for
+  part of every loop's life. The reference adds an ABSOLUTE 0.08 for the second edge, so
+  a slightly negative thickness still leaves edge0 < edge1. Scaling the second edge by
+  the thickness instead -- which tightening the falloff tempted -- makes both edges
+  negative together. It returned 1, so `line` was 1 across the whole frame, so coverage
+  was ~0.5 everywhere and the corona drew a half-tone field over the entire canvas.
+
+  The symptom pointed at the harmonics, and at the radial substitution, and both of those
+  were wrong for other reasons and worth fixing anyway. The real one was arithmetic in
+  the dark.
+
+### Backticks inside GLSL template literals
+
+Twice in this file, and it is now the fifth time in this thread. Six of them this round,
+in comments written after the first pass. A backtick inside a GLSL comment closes the
+template literal and the error lands on a line of somebody else's declaration.
