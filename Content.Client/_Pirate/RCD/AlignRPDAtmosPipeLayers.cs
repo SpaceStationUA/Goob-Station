@@ -226,7 +226,8 @@ public sealed class AlignRPDAtmosPipeLayers : PlacementMode
                 textures.Add(_spriteSystem.RsiStateLike(new SpriteSpecifier.Rsi(spriteLayer.ActualRsi.Path, spriteLayer.RsiState.Name)));
         }
 
-        pManager.CurrentTextures = textures;
+        // Without a hijack, the property setter creates a NoRotation ghost; RPD previews must rotate.
+        pManager.PreparePlacementTexList(textures, noRot: false, newProto);
 
         if (newProto.TryGetComponent<PlumbingConnectorAppearanceComponent>(out var plumbingConnector, _entityManager.ComponentFactory) &&
             plumbingConnector.PreviewNodeDirections != Content.Shared.Atmos.PipeDirection.None &&
