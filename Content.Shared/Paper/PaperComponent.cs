@@ -34,7 +34,7 @@ public sealed partial class PaperComponent : Component
     /// so later save attempts (page flips, direct messages) are checked against it.
     /// Deliberately neither a data field nor networked: the client knows its own pen.
     /// </summary>
-    public bool WriteSessionIgnoresStamps;
+    public EntityUid? WriteSessionIgnoresStampsActor;
 
     /// <summary>
     /// Sound played after writing to the paper.
