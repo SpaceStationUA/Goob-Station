@@ -66,7 +66,18 @@ export interface BlackHoleProps {
   /** Frames across one turn. 0 or 1 draws a still. */
   frames?: number;
   title?: string;
-}
+
+  /**
+   * The three disc terms ported from Cosmoglyph's black hole. `undefined` means the
+   * shader's own default; 0 disables the term outright.
+   *
+   * Passed through rather than read from the shader's constants so the toolbar can turn
+   * one off without a rebuild -- which is the only way to show anybody what a term
+   * actually does, since "does this look better" is not answerable from a number.
+   */
+  doppler?: number;
+  photonRing?: number;
+  spiral?: number;}
 
 export default function BlackHole(props: BlackHoleProps) {
   const frames = () => Math.max(1, Math.floor(props.frames ?? 0));
@@ -108,6 +119,9 @@ export default function BlackHole(props: BlackHoleProps) {
       seed: target,
       px: size,
       period: props.period ?? 6,
+      doppler: props.doppler,
+      photonRing: props.photonRing,
+      spiral: props.spiral,
       animate: !still3d,
     });
     if (!inst) return;

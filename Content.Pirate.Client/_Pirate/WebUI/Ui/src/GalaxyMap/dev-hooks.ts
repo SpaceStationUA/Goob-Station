@@ -56,6 +56,7 @@ export function installTestHooks(): void {
    * Still, both draw one frame at u_time = 0 and are pixel-identical apart from the
    * uniform under test.
    */
+  w.__galaxyBlackHoleGL = blackHoleGL;
   w.__galaxyBlackHoleAB = (px: number, seed: number) => {
     const mk = (doppler: number, ring: number) => {
       const inst = blackHoleGL({ seed, px, animate: false, time: 3.7, doppler, photonRing: ring });

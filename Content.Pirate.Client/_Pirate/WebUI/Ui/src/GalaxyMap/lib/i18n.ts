@@ -76,6 +76,10 @@ export interface UiStrings {
   planets: LocalizedText;
   /** Tooltip for the nebula palette button. */
   sky: LocalizedText;
+  discFx: LocalizedText;
+  fxDoppler: LocalizedText;
+  fxRing: LocalizedText;
+  fxSpiral: LocalizedText;
   /* remnants */
   kindPulsar: LocalizedText;
   kindQuasar: LocalizedText;
@@ -136,6 +140,10 @@ export interface UiStrings {
 export const DEFAULT_STRINGS: UiStrings = {
   grid: { en: "GRID", uk: "СІТКА" },
   planets: { en: "PLANETS", uk: "ПЛАНЕТИ" },
+  discFx: { en: "Disc", uk: "Диск" },
+  fxDoppler: { en: "Beaming", uk: "Променювання" },
+  fxRing: { en: "Ring", uk: "Кільце" },
+  fxSpiral: { en: "Spiral", uk: "Спіраль" },
   sky: {
     en: "Space behind the chart. Click to change it.",
     uk: "Космос за картою. Натисніть, щоб змінити.",

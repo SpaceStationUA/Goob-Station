@@ -1932,3 +1932,33 @@ Note what the failure looks like. It is not "no effect" -- with the term in the 
 frame it *cancels* the disc's existing asymmetry, which is why the naive measurement gave
 1.33 and 1.32 and looked like a marginal pass rather than an absence. A control that had
 only checked for "the halves differ" would have seen a plausible number in both cases.
+
+## The three disc terms are switches, not constants
+
+Doppler beaming, the photon ring and the spiral wave are on the toolbar as three toggles,
+all on by default, and each is threaded through `App.tsx` → `BlackHole.tsx` →
+`blackHoleGL` as an optional uniform override where `undefined` means the shader's own
+default and `0` disables the term outright.
+
+They are options because every one is a judgement call a maintainer will want to reverse
+after looking at it. `DOPPLER = 0.24` is not derived, it is set by eye against the
+reference's screenshots and it is within a factor of two of being wrong in either
+direction. The photon ring is bright and asymmetric about nothing. The spiral wave's depth
+is taste. Baking them in means each of those decisions needs a rebuild.
+
+And the only way to show anybody what a term does is to render it beside the version
+without it -- which is now a click rather than a source edit.
+
+**Unlabelled dots on purpose.** Each names a physical effect that means nothing to anyone
+who has not read the shader, so a word on the button would be a label that has to be
+translated into two languages and would still not say what the switch does. The `title`
+carries the name for anyone who hovers; the lit state carries the answer. That is the same
+reason the ring palette shows swatches rather than names.
+
+### What toggling them off looks like
+
+With all three off the photon ring is simply absent -- the dotted white annulus around the
+shadow disappears, which is the most legible of the three changes by a wide margin. The
+spiral wave and the beaming are much less visible at a glance and are the reason the
+switch exists: neither is obvious in a still, and "I can't tell if that switch does
+anything" is not a question worth having about a control.

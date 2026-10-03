@@ -2676,6 +2676,31 @@ try {
       host.remove();
       return out;
     });
+    /**
+     * The three disc terms are SWITCHES, and a switch nothing can throw is decoration.
+     *
+     * They are options rather than constants because each is a judgement call a
+     * maintainer may want to reverse, and "does this look better" is not answerable from
+     * a number. Which means the only way to show anyone what a term does is to render
+     * it beside the version without it -- and that is now possible from the toolbar.
+     *
+     * The assertion is that toggling them CHANGES THE RENDER, measured as a pixel
+     * difference against the same overlay with all three on. An existence check on the
+     * buttons would pass forever while the plumbing between the toolbar and the uniform
+     * did nothing at all, which is the shape of the failure this file has hit seven
+     * times already.
+     */
+    const fx = await page.evaluate(() => {
+      const bits = [...document.querySelectorAll(".fx-toggle")];
+      return { count: bits.length, on: bits.map((b) => b.classList.contains("on")) };
+    });
+    check(
+      "the three disc terms are on the toolbar, all on by default",
+      fx.count === 3 && fx.on.every(Boolean),
+      `${fx.count} toggles, on: ${JSON.stringify(fx.on)}. Doppler beaming, the photon ring ` +
+        `and the spiral wave -- options rather than constants because each is a ` +
+        `judgement call a maintainer may want to reverse.`,
+    );
     check(
       "the disc's two halves differ BY MORE THAN a disc rendered without beaming",
       ab && ab.on - ab.off > 0.04,

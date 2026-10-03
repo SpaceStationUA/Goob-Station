@@ -671,3 +671,31 @@ img.pl {
   image-rendering: pixelated;
   display: block;
 }
+
+/**
+ * The disc terms: Doppler beaming, photon ring, spiral wave.
+ *
+ * Deliberately unlabelled dots. Each names a physical effect that means nothing to
+ * anyone who has not read the shader, so a word would be a label that has to be
+ * translated and would still not say what the switch does. The `title` carries the
+ * name for anyone who hovers; the lit state carries the answer.
+ */
+.fx-pick {
+  display: flex;
+  gap: 3px;
+  padding: 2px 3px;
+  background: rgba(14, 18, 28, 0.9);
+  border: 1px solid rgba(120, 160, 200, 0.28);
+}
+.fx-toggle {
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  border: 1px solid rgba(120, 160, 200, 0.4);
+  background: rgba(10, 14, 22, 0.9);
+  cursor: pointer;
+}
+.fx-toggle.on {
+  background: #ffb457;
+  border-color: #ffd9a0;
+}

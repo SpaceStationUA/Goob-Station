@@ -98,6 +98,20 @@ export default function App() {
 
   /** Draw systems as their generated world rather than as a dot. */
   const [planets, setPlanets] = createSignal(false);
+  /**
+   * The three disc terms ported from Cosmoglyph's black hole, as a bitmask.
+   *
+   * They are options rather than constants because every one of them is a judgement
+   * call that a maintainer will want to reverse after looking at it -- Doppler beaming
+   * shifts the palette, the photon ring is bright and asymmetric about nothing, and the
+   * spiral wave's depth is a matter of taste. Baking them in means every one of those
+   * decisions needs a rebuild, and there is no way to show somebody what a term does
+   * except by rendering it beside the version without it.
+   *
+   * A bitmask rather than three booleans because they are independent and there is no
+   * combination that is not meaningful, so there is no state to collapse.
+   */
+  const [discFx, setDiscFx] = createSignal(7);
 
   /**
    * Which nebula ramp is behind the chart.
@@ -422,6 +436,29 @@ export default function App() {
               {t("planets", loc())}
             </button>
 
+            {/* The disc terms, as three toggles that show what they change.
+                Each is a term with a defensible default that a maintainer may want to
+                reverse, so they are switches rather than a menu: a menu would hide two
+                of the three and make the third look chosen. */}
+            <div class="fx-pick" title={t("discFx", loc())}>
+              <For
+                each={[
+                  ["fxDoppler", 1],
+                  ["fxRing", 2],
+                  ["fxSpiral", 4],
+                ] as const}
+              >
+                {([key, bit]) => (
+                  <button
+                    class="fx-toggle"
+                    classList={{ on: (discFx() & bit) !== 0 }}
+                    title={t(key, loc())}
+                    onClick={() => setDiscFx(v => (v & bit ? v & ~bit : v | bit))}
+                  />
+                )}
+              </For>
+            </div>
+
             {/* The nebula's ramp. Cycles rather than opening a menu, because there are
                 three and a menu for three is a menu that hides two of them.
                 The swatches are the palette's own middle stops, so the button shows
@@ -567,7 +604,16 @@ export default function App() {
                               return <Remnant kind={k} px={190} seed={seed} />;
                             }
                             if (k === "blackhole") {
-                              return <BlackHole px={190} seed={seed} frames={48} period={6} title={pick(s().name, loc())} />;
+                              return <BlackHole
+                                px={190}
+                                seed={seed}
+                                frames={48}
+                                period={6}
+                                doppler={discFx() & 1 ? undefined : 0}
+                                photonRing={discFx() & 2 ? undefined : 0}
+                                spiral={discFx() & 4 ? undefined : 0}
+                                title={pick(s().name, loc())}
+                              />;
                             }
                             /* A star has a body of its own -- photosphere, granulation,
                              * corona, prominence loops -- and it is NOT a planet with a
