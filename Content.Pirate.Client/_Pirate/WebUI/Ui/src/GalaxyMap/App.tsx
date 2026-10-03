@@ -11,6 +11,7 @@ import Remnant from "./Remnant";
 import { readableOnDark } from "./Chart";
 import WorldSprite from "./WorldSprite";
 import BlackHole from "./BlackHole";
+import Star from "./Star";
 import {
   currentLocales,
   installStrings,
@@ -567,6 +568,17 @@ export default function App() {
                             }
                             if (k === "blackhole") {
                               return <BlackHole px={190} seed={seed} frames={48} period={6} title={pick(s().name, loc())} />;
+                            }
+                            /* A star has a body of its own -- photosphere, granulation,
+                             * corona, prominence loops -- and it is NOT a planet with a
+                             * different palette. `SystemKind` has carried "star" since
+                             * the type was written, and until this branch existed every
+                             * star in the chart was being drawn by `WorldSprite` as
+                             * whatever `planetTypeFor` returned for it. The renderer was
+                             * written, screenshotted, committed, and imported by
+                             * nothing. */
+                            if (k === "star") {
+                              return <Star px={200} seed={seed} title={pick(s().name, loc())} />;
                             }
                             return (
                               <WorldSprite

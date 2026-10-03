@@ -613,11 +613,20 @@ try {
     const art = await page.evaluate(() => {
       const w = document.querySelector(".overlay .world");
       const img = document.querySelector(".overlay .world-still");
+      const canvas = document.querySelector(".overlay .world-gl canvas");
       if (!w) return null;
       const r = w.getBoundingClientRect();
       return {
         css: r.width,
         natural: img ? img.naturalWidth : 0,
+        // The star's surface is a WebGL canvas with a BACKING STORE, not an <img> with
+        // a natural size, so it needs reading separately. Before this existed the probe
+        // reported natural: 0 for a star and the dpr assertion failed on a perfectly
+        // good render -- which is the assertion outliving the thing it was probing,
+        // for the seventh time in this file.
+        canvas: canvas ? canvas.width : 0,
+        canvasShown: !!canvas && !canvas.closest("[hidden]"),
+        isStar: !!document.querySelector('[data-testid="star"]'),
         dpr: window.devicePixelRatio || 1,
         panel: document.querySelector(".overlay").getBoundingClientRect().width,
       };
@@ -636,10 +645,21 @@ try {
     // dpr 1, which is exactly where this suite runs — it would have gone green
     // against a sprite generated at half the display resolution, which is the
     // bug it exists to catch.
+    // Two surfaces, and each gets the assertion that applies to IT rather than one
+    // assertion that only ever described the sprite.
     check(
-      "the still is generated at the display ratio, not upscaled",
-      art && art.natural === Math.round(art.css * art.dpr),
-      art ? `${art.natural}px generated for ${art.css} css @ dpr ${art.dpr}` : "",
+      art && art.isStar
+        ? "the star's canvas is sized at the display ratio and has painted"
+        : "the still is generated at the display ratio, not upscaled",
+      art && art.isStar
+        ? art.canvas === Math.round(art.css * art.dpr) && art.canvasShown
+        : art && art.natural === Math.round(art.css * art.dpr),
+      art
+        ? art.isStar
+          ? `${art.canvas}px backing store for ${art.css} css @ dpr ${art.dpr}, ` +
+            `visible: ${art.canvasShown}`
+          : `${art.natural}px generated for ${art.css} css @ dpr ${art.dpr}`
+        : "",
     );
 
     // The close button, before anything else needs a closed panel.

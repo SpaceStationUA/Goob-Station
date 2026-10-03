@@ -1728,3 +1728,44 @@ sit inside the corona's own radius and lose against it.
 - **Still not wired in.** No `star` in `SystemKind`, no overlay dispatcher entry, no chart
   mark, and therefore no assertions -- an unwired renderer verified only by a screenshot
   is precisely the failure this project keeps hitting.
+
+### Third pass: WIRING, which is what "I don't see changes" was about
+
+The star was committed twice before anything in the game could reach it. A player
+opening the chart saw exactly the same six stars as before.
+
+The three disconnects, and only the third was obvious:
+
+- `gl-star.ts` was **imported by nothing.**
+- `SystemKind` had carried `"star"` since the type was first written -- and every
+  renderer routed it to the PLANET branch, so a star was drawn as whatever
+  `planetTypeFor` returned for it.
+- There were **six star systems in the fixture all along** -- Sol, Tau Ceti, Qerrbalak,
+  Persepolis, Epsilon Eridani, Adhomai. I grepped for `kind: "star"` and found none,
+  because the fixture passes kind as a positional argument to a `sys()` helper. I stated
+  the data was missing. It was not; I had grepped wrong.
+
+So the renderer was correct, and pretty, and reachable by nothing, and the honest
+summary is that "not wired in" written in a commit message is a note about a defect and
+not a fix for one.
+
+`Star.tsx` mounts it the way `BlackHole` mounts its canvas, and one branch in App.tsx's
+dispatch routes `kind === "star"` to it. That is the whole change.
+
+There is no CPU fallback, deliberately: `planet.ts` is a pure function of
+`(seed, type, size, dpr, light)` and can be evaluated per pixel in JavaScript, and this
+shader cannot. So the fallback is a named empty element rather than a gradient-filled
+circle -- a circle with no interior is the jet all over again, and it would be worse to
+fall back to something that looks like it works.
+
+### The seventh existence probe that outlived its subject
+
+The overlay probe read `naturalWidth` off `.world-still`. A star has no still -- its
+surface is a WebGL canvas with a backing store -- so it reported `natural: 0` for a
+perfectly good render and the display-ratio assertion failed on it.
+
+The fix is not to loosen the threshold. It is that there are now **two surfaces** and
+each gets the assertion that applies to it: a sprite is measured by its generated pixel
+width, a star by its canvas backing store AND whether it is actually visible. That is
+more coverage than before, not less, and it is the same rule as the nebula being behind
+an opaque rect: a check that describes one surface is not a check.
