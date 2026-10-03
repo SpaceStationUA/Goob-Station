@@ -1769,3 +1769,66 @@ each gets the assertion that applies to it: a sprite is measured by its generate
 width, a star by its canvas backing store AND whether it is actually visible. That is
 more coverage than before, not less, and it is the same rule as the nebula being behind
 an opaque rect: a check that describes one surface is not a check.
+
+## Doppler beaming and a photon ring, from Cosmoglyph's black hole
+
+Ours is a transcription of Deep-Fold's `BlackHoleRing.gdshader` and stays that way,
+because it is what makes this chart look like everything else on it. Cosmoglyph's is a
+different animal -- per-pixel ray/sphere intersection, a disc that is a PLANE, geometric
+occlusion of the far disc by the horizon, and a ray bent toward the closest point -- and
+those are not ports, they are a different renderer.
+
+What *is* worth taking is the two things ours had no equivalent of, and both are two or
+three lines.
+
+### Doppler beaming
+
+In the reference, `heat` gains `dot(tangent, normalize(eye - point)) * 0.16` before the
+palette index is taken. The tangent is the direction of rotation in the disc's plane and
+the eye direction is out of it, so the dot product reduces to the TANGENTIAL COMPONENT
+ALONG THE LINE OF SIGHT. One side of an accretion disc is approaching and the other
+receding, and the approaching side is brighter and bluer. It is the most recognisable
+thing about a real accreting black hole.
+
+In 2D that is the horizontal offset, **normalised by radius** -- which is what puts the
+brightening on the outer disc and leaves the inner one nearly symmetric, because the
+reference's tangent-length normalisation does that for free in 3D.
+
+**And it has to be measured in the same frame as `center_d`.** The first attempt computed
+it after `uv_center` had been rotated by the disc's own time term, so the numerator came
+from the rotating frame and the denominator from the still one. The term swam around the
+disc instead of sitting on one side of it. This is the frame-mixing mistake this file
+already records once, for the warp, and it is now the second.
+
+### The negative control that caught it
+
+Left/right luminance across the disc, disc pixels only:
+
+    doppler 0.24      ratio 1.40
+    doppler 0.00      ratio 1.32
+
+The first attempt measured **1.33 against 1.32** -- indistinguishable. And it is worth
+being clear about why that was such a bad near-miss: the disc's own `light_d` gradient is
+already asymmetric by about that much, so the assertion would have been *decoration*. It
+would have passed forever, said nothing, and looked like coverage. Two real bugs are
+visible in the 1.33/1.32 pair: a feature that was not working, and a test that could not
+tell.
+
+That is the fourth time a control has been the thing that found the fault rather than
+confirming the work.
+
+### The photon ring
+
+From the same shader: `1 - smoothstep(0.015, 0.11, abs(impact - 1.08))`, dithered, in
+the brightest palette entry. `impact` is the sightline's closest approach to the centre,
+which in a 2D panel is just the screen-space distance -- so the two agree without any 3D.
+
+**1.08 is what makes it a photon ring rather than a bright limb.** Light passing just
+outside the horizon is bent so hard it orbits and escapes along a narrow annulus, which
+is why it sits slightly outside the horizon and not on it. The inner and outer edges are
+in units of the horizon radius, as in the reference, and it is drawn after the disc so
+where they overlap the ring wins.
+
+The frame matters here too, and in the opposite direction: the ring uses the horizon
+block's CIRCULAR distance, not the disc's `center_d`, because `center_d` is measured in a
+frame with y stretched by `u_perspective` and would have put the ring in an ellipse.

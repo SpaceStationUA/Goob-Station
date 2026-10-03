@@ -95,6 +95,8 @@ uniform float u_pixels;        // disc UV quantisation
 uniform float u_holePixels;
 uniform float u_holeRadius;
 uniform float u_holeLightWidth;
+uniform float u_doppler;       // asymmetric brightening, 0 disables
+uniform float u_photonRing;    // 0 disables
 uniform float u_holeRatio;
 uniform vec3  u_hole0;         // the void
 uniform vec3  u_hole1;         // white ring
@@ -166,13 +168,20 @@ void main() {
   vec3 col = vec3(0.0);
   float alpha = 0.0;
 
+  // Hoisted out of their blocks so the photon ring can use them. 'd' is the horizon's
+  // CIRCULAR screen-space distance in the horizon sprite's quantised UV, and 'dith' is
+  // the ordered dither the disc already computes. Declaring them here rather than
+  // reaching into the blocks is the only reason the ring is a separate pass at all.
+  float d = 1.0;
+  float dith = 0.0;
+
   // ---- the horizon, underneath -------------------------------------------
   // BlackHole.gdshader. Its sprite is 100x100 and the disc's is 200x200, concentric,
   // so this sprite's UV is the canvas UV scaled by two about the middle.
   {
     vec2 huv = (v_uv - 0.5) * u_holeRatio + 0.5;
     vec2 uv = floor(huv * u_holePixels) / u_holePixels;
-    float d = distance(uv, vec2(0.5));
+    d = distance(uv, vec2(0.5));
     vec3 hc = u_hole0;
     if (d > u_holeRadius - u_holeLightWidth) hc = u_hole1;
     if (d > u_holeRadius - u_holeLightWidth * 0.5) hc = u_hole2;
@@ -186,7 +195,7 @@ void main() {
 
     // dither(UV, uv): the RAW uv as the first argument, the quantised one as the
     // second. Passing the quantised value for both is a different pattern.
-    float dith = mod(v_uv.x + uv.y, 2.0 / u_pixels) <= 1.0 / u_pixels ? 1.0 : 0.0;
+    dith = mod(v_uv.x + uv.y, 2.0 / u_pixels) <= 1.0 / u_pixels ? 1.0 : 0.0;
 
     uv = rotate(uv, u_rotation);
     vec2 uv2 = uv;
@@ -223,6 +232,11 @@ void main() {
     uv_center *= vec2(1.0, u_perspective);
     float center_d = distance(uv_center, vec2(0.5, 0.0));
 
+    float doppler = 0.0;
+    if (u_doppler > 0.0) {
+      doppler = (uv_center.x - 0.5) / max(center_d, 1e-3) * u_doppler;
+    }
+
     // Two circles of different sizes; only the intersection. This describes a FILLED
     // ellipse, not a ring -- the thin band is what survives the alpha cut below, and
     // the fbm decides where that boundary falls.
@@ -233,7 +247,27 @@ void main() {
     disk *= pow(fbm(uv_center * u_size), 0.5);
     if (dith > 0.5) disk *= 1.2;
 
-    float posterized = floor((disk + light_d) * ${N_COLORS - 1}.0);
+    // DOPPLER BEAMING, ported from Cosmoglyph's black_hole.glsl.
+    //
+    // There, heat gains 'dot(tangent, normalize(eye - point)) * 0.16' -- the disc
+    // material's velocity dotted with the line of sight -- before the palette index is
+    // taken. One side of an accretion disc is approaching and the other receding, and
+    // the approaching side is brighter and bluer. It is the single most recognisable
+    // thing about a real accreting black hole and ours had none.
+    //
+    // In the reference the tangent is 'normalize(vec3(-point.z, 0, point.x))', i.e. the
+    // direction of rotation in the disc's plane, and the eye direction is out of that
+    // plane. So the dot product reduces to the TANGENTIAL COMPONENT ALONG THE LINE OF
+    // SIGHT, which for a disc squashed vertically by 'u_perspective' is proportional to
+    // the horizontal offset -- and it must be NORMALISED BY RADIUS.
+    //
+    // The normalisation is the part that matters: the boost is strongest where the
+    // material's velocity is most transverse to our line of sight, which is at the
+    // limb. Dividing by centre_d rather than using the raw offset is what puts the
+    // brightening on the outer disc and leaves the inner disc nearly symmetric, which is
+    // what the reference's tangent-length normalisation does for free in 3D.
+
+    float posterized = floor((disk + light_d + doppler) * ${N_COLORS - 1}.0);
     posterized = min(posterized, ${N_COLORS - 1}.0);
 
     // The alpha is a STEP, not a ramp: opaque or not, with the palette chosen
@@ -249,11 +283,63 @@ void main() {
     }
   }
 
+  // ---- the photon ring ------------------------------------------------------
+  // Ported from Cosmoglyph's black_hole.glsl, which draws it from the ray's IMPACT
+  // PARAMETER: '1.0 - smoothstep(0.015, 0.11, abs(impact - 1.08))', dithered against
+  // bayer4 and painted with the brightest palette entry. The impact parameter is the
+  // closest approach of the sightline to the centre, which in a 2D panel is just the
+  // screen-space distance from the centre -- so the two agree without any 3D.
+  //
+  // 1.08 is the number that makes it a photon ring rather than a bright limb: light
+  // that passes just outside the horizon is bent so hard it orbits and escapes along a
+  // narrow annulus, which is why it sits slightly OUTSIDE the horizon and not on it.
+  // The inner and outer edges are in units of the horizon radius, as in the reference.
+  //
+  // It is drawn AFTER the disc, so where they overlap the ring wins -- the ring is in
+  // front of the near limb of the disc from any viewpoint outside it.
+  if (u_photonRing > 0.0) {
+    // The horizon block already computed a CIRCULAR screen-space distance in the
+    // horizon sprite's own quantised UV, which is the right frame for this: the disc's
+    // 'center_d' is measured in a frame with y stretched by u_perspective and would put
+    // the ring in an ellipse.
+    float pr = abs(d - u_holeRadius * 1.08);
+    float ring = 1.0 - smoothstep(u_holeRadius * 0.015, u_holeRadius * 0.11, pr);
+    ring *= min(1.0, u_photonRing);
+    // The reference dithers this against bayer4. Ours has no bayer4, and the disc
+    // already has 'dith' -- the same ordered pattern in the disc's own UV -- so the
+    // ring is dithered with the same one rather than a second copy of the matrix.
+    if (ring > dith * 0.5 + 0.25) {
+      col = u_d0;
+      alpha = 1.0;
+    }
+  }
+
   if (alpha < 0.5) discard;
   gl_FragColor = vec4(col, 1.0);
 }`;
 
 /** `true` if this browser will give us a context at all. */
+/**
+ * Doppler beaming, in band-index units.
+ *
+ * The reference adds 0.16 to a 0..1 heat and THEN multiplies by the palette count; this
+ * adds to the bracket before it is multiplied by N_COLORS-1, so the numbers are not the
+ * same quantity and 0.16 here would be a quarter of the effect. Measured by eye against
+ * the reference's screenshots rather than derived, which is stated because it is the
+ * kind of number that looks derived and is not.
+ *
+ * Exported so `check-galaxy.ts` can assert it is a REAL asymmetry rather than zero, and
+ * so a negative control can switch it off and see the disc go symmetric.
+ */
+export const DOPPLER = 0.24;
+
+/**
+ * The photon ring's strength. The reference has `PhotonRing` as a 0..1 setting and
+ * clamps it, so 1.0 is its own maximum; ours is a strength rather than a gate so that
+ * turning it down thins the ring instead of removing it.
+ */
+export const PHOTON_RING = 0.9;
+
 export function glSupported(): boolean {
   if (typeof document === "undefined") return false;
   try {
@@ -282,7 +368,17 @@ export interface BlackHoleGLOpts {
   period?: number;
   /** False for `prefers-reduced-motion`: one frame, no rAF. */
   animate?: boolean;
-}
+
+  /**
+   * Doppler beaming strength, 0 disables. See DOPPLER.
+   *
+   * On the options object rather than a constant so a negative control can switch it
+   * off and confirm the disc's two halves actually differ -- a uniform that is only
+   * ever set from a default is a uniform nothing can catch being wrong.
+   */
+  doppler?: number;
+  /** Photon ring strength, 0 disables. See PHOTON_RING. */
+  photonRing?: number;}
 
 /**
  * A live black hole. Returns `null` if WebGL or the shader is unavailable, and the
@@ -366,6 +462,8 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   gl.uniform1f(u("u_timeSpeed"), TIME_SPEED);
   gl.uniform1f(u("u_diskWidth"), DISK_WIDTH);
   gl.uniform1f(u("u_perspective"), PERSPECTIVE);
+  gl.uniform1f(u("u_doppler"), opts.doppler ?? DOPPLER);
+  gl.uniform1f(u("u_photonRing"), opts.photonRing ?? PHOTON_RING);
   gl.uniform1f(u("u_size"), NOISE_SIZE);
   gl.uniform1f(u("u_pixels"), DISC_PIXELS);
   gl.uniform1f(u("u_holePixels"), HOLE_PIXELS);
