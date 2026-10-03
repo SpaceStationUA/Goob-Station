@@ -1,0 +1,16 @@
+ent-ClarkeCentralElectronics = центральний модуль управління clarke
+    .desc = Електричний центр управління механізмом Кларка.
+ent-ClarkePeripheralsElectronics = модуль керування периферійними пристроями clarke
+    .desc = Електрична периферія керує роботом Кларка.
+ent-DurandCentralElectronics = центральний модуль управління durand
+    .desc = Електричний центр управління для механізму Дюранда.
+ent-DurandPeripheralsElectronics = модуль керування периферійними пристроями durand
+    .desc = Електричні периферійні пристрої керують роботою механізму Дюранда.
+ent-DurandTargetingElectronics = модуль управління та наведення зброї durand
+    .desc = Електричне керування наведенням для механізму Дюранда.
+ent-GygaxCentralElectronics = центральний модуль управління gygax
+    .desc = Електричний центр управління для gygax mech.
+ent-GygaxPeripheralsElectronics = модуль керування периферійними пристроями gygax
+    .desc = Електричні периферійні пристрої керують роботою gygax-механізму.
+ent-GygaxTargetingElectronics = Модуль керування та наведення зброї gygax
+    .desc = Електричне керування наведенням для gygax-механізму.

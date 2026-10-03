@@ -1,0 +1,17 @@
+ent-ClothingUniformInstructorUniform = уніформа інструктора
+    .desc = Уніформа висококваліфікованого співробітника служби безпеки. Вони є гарантом безпеки цієї станції.
+ent-ClothingUniformJumpsuitAdminAssistant = комбінезон адміністративного асистента
+    .desc = Костюм, який носить адміністративний асистент. Пахне горілою кавою.
+ent-ClothingUniformJumpsuitCadet = уніформа кадета
+    .desc = Уніформа, яка використовується кадетами Служби Безпеки. Немає ніяких знаків розрізнення чи шевронів, окрім букви К з тильної сторони.
+ent-ClothingUniformJumpsuitCentcomOfficerBlack = форма офіцера спеціальних операцій
+    .desc = Уніформа офіцера спеціальних операцій — нічого більше.
+ent-ClothingUniformJumpsuitJeansBrown = коричневий светр із джинсами
+    .desc = Коричневий светр із синіми джинсами.
+ent-ClothingUniformJumpsuitJeansGreen = зелений светр із джинсами
+    .desc = Зелений светр із синіми джинсами. У цьому комплекті джинси рецесивні.
+ent-ClothingUniformJumpsuitLawyerPink = рожевий костюм адвоката
+    .desc = Яскраво-рожевий костюм, у якому одягнені адвокати, до яких вам слід звернутися.
+ent-ClothingUniformJumpsuitNtrepNoble = елегантний костюм представника Нанотрейзен
+    .desc = Класичний та елегантний костюм, створений за зразком моди старовинної земної знаті.
+ent-ClothingUniformJumpsuitSecurityCorrectionofficer = комбінезон виправного офіцера

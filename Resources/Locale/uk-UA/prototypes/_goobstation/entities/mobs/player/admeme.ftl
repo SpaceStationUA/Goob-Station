@@ -1,0 +1,10 @@
+ent-ConquestSpawner = Завоювання
+ent-RandomHumanoidHECUSpawner = Оперативник HECU
+ent-RandomHumanoidSpawnerChronolegioneer = хронолегіонер
+ent-RandomHumanoidSpawnerDiplomat = Дипломат
+ent-RandomHumanoidSpawnerInspector = Інспектор
+ent-RandomHumanoidSpawnerNavyCaptain = Капітан флоту
+ent-RandomHumanoidSpawnerNavyOfficer = Офіцер флоту
+ent-RandomHumanoidSpawnerNavyOfficerUndercover = Офіцер флоту під прикриттям
+ent-RandomHumanoidSpawnerSpecialOperationsOfficers = Офіцер спецоперацій
+ent-TheGmanSpawer = Джи-мен

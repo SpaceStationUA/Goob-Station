@@ -1,0 +1,9 @@
+ent-BaseGrinningPal =
+    .desc = Я люблю тебе, мій усміхнений друже.
+ent-SmilingBanana = усміхнений банановий хлопець
+ent-SmilingBean = усміхнений маленький хлопець
+ent-SmilingBoss = усміхнений старий хлопець
+ent-SmilingFrog = усміхнений зелений хлопець
+    .desc = Його око палає лютою ненавистю.
+ent-SmilingRedGuy = усміхнений червоний хлопець
+ent-SmilingTylenol = усміхнений тайленол

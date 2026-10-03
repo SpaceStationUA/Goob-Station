@@ -1,0 +1,10 @@
+ent-HereticFireAA = Вогонь єретика
+    .desc = Чорт, як гаряче.
+ent-HereticRustAscensionSpreader = іржа
+    .desc = Вона росте...
+ent-TileHereticRustRune = руна
+    .desc = Іржава...
+ent-TileHereticVoid = Порожнеча єретика
+    .desc = Чорт, як холодно.
+ent-WallFieldCosmic = космічне поле
+    .desc = Поле, яке не можуть пройти люди, позначені космічною зіркою.

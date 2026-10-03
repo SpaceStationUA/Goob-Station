@@ -1,0 +1,12 @@
+ent-BulletDebug = бах, куля!
+ent-CartridgeDebug = бах, розряджений патрон
+ent-MagazinePistolDebug = Бац, Дід Маг!
+ent-MeleeDebug100 = палиця 100 шкоди
+ent-MeleeDebug200 = палиця 200 шкоди
+ent-MeleeDebugGib = палиця для розчленування
+    .desc = бий сильно
+ent-WeaponHitscanDebug = бах hitscan 1 шкоди
+    .desc = піу-піу!
+ent-WeaponHitscanDebugGib = бах hitscan розчленовувач
+ent-WeaponPistolDebug = Бах, Дідо-ган
+    .desc = Дід. Тікайте хто може!

@@ -1,0 +1,12 @@
+ent-ShardCrystalBase = уламок кришталю
+    .desc = Маленький шматочок кришталю.
+ent-ShardCrystalBlack = чорний кришталевий уламок
+ent-ShardCrystalBlue = уламок синього кришталю
+ent-ShardCrystalCyan = уламок блакитного кришталю
+    .desc = Маленький шматочок кришталю.
+ent-ShardCrystalGreen = уламок зеленого кришталю
+ent-ShardCrystalOrange = уламок помаранчевого кришталю
+ent-ShardCrystalPink = уламок рожевого кришталю
+ent-ShardCrystalRandom = випадковий кришталевий осколок
+ent-ShardCrystalRed = уламок червоного кришталю
+ent-ShardCrystalYellow = жовтий кришталевий уламок

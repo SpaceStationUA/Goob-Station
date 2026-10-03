@@ -1,0 +1,11 @@
+ent-MobCivilian = цивільний
+    .desc = Жалюгідна купа секретів.
+ent-MobCluwne = людина
+    .desc = Поліморфний нещасний.
+ent-MobSalvager = утилізатор
+ent-MobSpirate = п'яний пірат
+    .desc = Ярр!
+ent-MobSyndicateFootsoldier = синдикатський піхотинець
+ent-MobSyndicateFootsoldierPilot = пілот шатла синдикату
+ent-SalvageHumanCorpse = невпізнане тіло
+    .desc = Думаю, вони мертві.

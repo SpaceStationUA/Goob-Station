@@ -1,0 +1,1 @@
+ent-MobLavalandGoliathAncient = древній голіаф

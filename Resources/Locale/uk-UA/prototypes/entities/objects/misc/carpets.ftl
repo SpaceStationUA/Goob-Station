@@ -1,0 +1,10 @@
+ent-FloorCarpetItemBlack = чорний килим
+ent-FloorCarpetItemBlue = синій килим
+ent-FloorCarpetItemCyan = ціановий килим
+ent-FloorCarpetItemGreen = зелений килим
+ent-FloorCarpetItemOrange = помаранчевий килим
+ent-FloorCarpetItemPink = рожевий килим
+ent-FloorCarpetItemPurple = фіолетовий килим
+ent-FloorCarpetItemRed = килим
+ent-FloorCarpetItemSkyBlue = блакитний килим
+ent-FloorCarpetItemWhite = білий килим

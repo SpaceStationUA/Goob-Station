@@ -1,0 +1,1 @@
+ent-BaseMobArachnid = Уріст Маквебс

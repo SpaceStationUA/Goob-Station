@@ -1,0 +1,10 @@
+ent-BaseMobAdultSlime = базовий слайм
+    .desc = Воно так схоже на желе. Цікаво, яке воно на смак?
+ent-MobAdultSlimes = основний шлам
+    .desc = Це так схоже на желе. Цікаво, який він на смак?
+ent-MobAdultSlimesBlue = Синій слиз
+ent-MobAdultSlimesBlueAngry = Синій слиз
+ent-MobAdultSlimesGreen = Зелений слиз
+ent-MobAdultSlimesGreenAngry = Зелений слиз
+ent-MobAdultSlimesYellow = Жовтий слиз
+ent-MobAdultSlimesYellowAngry = Жовтий слиз

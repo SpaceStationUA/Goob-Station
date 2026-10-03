@@ -1,0 +1,15 @@
+ent-FoodTinBase = олово
+    .desc = Бляшанка з чимось, щільно закрита.
+ent-FoodTinBaseTrash = порожня бляшанка
+    .desc = Порожня бляшанка. З неї можна отримати трохи металу.
+ent-FoodTinBeans = банка квасолі
+    .desc = Музичний фрукт у трохи менш музичному контейнері.
+ent-FoodTinBeansTrash = банка квасолі
+ent-FoodTinMRE = м'ясні консерви
+    .desc = Стандартна бляшанка для м'яса зі зручною ручкою для витягування.
+ent-FoodTinMRETrash = м'ясні консерви
+ent-FoodTinPeaches = консервовані персики
+    .desc = Просто гарна банка стиглих персиків, що плавають у власному соку.
+ent-FoodTinPeachesMaint = мариновані персики
+ent-FoodTinPeachesMaintTrash = мариновані персики
+ent-FoodTinPeachesTrash = консервовані персики

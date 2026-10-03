@@ -1,0 +1,11 @@
+ent-GlockenspielInstrument = глокеншпіль
+ent-MicrophoneInstrument = мікрофон
+    .desc = Ідеально підходить для того, щоб співати від душі.
+ent-MusicBoxInstrument = музична шкатулка
+    .desc = Граючи в неї, ви відчуваєте себе в безпеці від страшної аніматроніки.
+ent-ReverseCymbalsInstrument = зворотні тарілки
+    .desc = Я думаю, що ви все неправильно зрозуміли.
+ent-WoodblockInstrument = ксилографія
+    .desc = Якщо ви послухаєте її достатньо, вона почне в'їжджати у вашу свідомість.
+ent-XylophoneInstrument = ксилофон
+    .desc = Райдужний глокеншпіль.

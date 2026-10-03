@@ -1,0 +1,1 @@
+ent-BulletGrenadeSlug = шрапнельна граната

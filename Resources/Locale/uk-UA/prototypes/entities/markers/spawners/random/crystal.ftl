@@ -1,0 +1,1 @@
+ent-CrystalSpawner = спавнер кристалів

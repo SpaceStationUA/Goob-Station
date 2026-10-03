@@ -1,0 +1,12 @@
+ent-BananiumOre = бананіумна руда
+ent-Coal = вугілля
+ent-DiamondOre = алмазна руда
+ent-GoldOre = золота руда
+ent-OreBase =
+    .desc = Шматок необробленої руди.
+ent-PlasmaOre = форон
+ent-SaltOre = сіль
+ent-SilverOre = срібна руда
+ent-SpaceQuartz = космічний кварц
+ent-SteelOre = залізна руда
+ent-UraniumOre = уранова руда

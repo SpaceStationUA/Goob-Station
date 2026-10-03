@@ -1,0 +1,14 @@
+ent-SofaBlack = чорний диван
+    .desc = { ent-TPSofaBase.desc }
+ent-SofaBlackCorner = { ent-SofaBlack }
+    .desc = { ent-TPSofaBase.desc }
+ent-SofaRed = червоний диван
+    .desc = { ent-TPSofaBase.desc }
+ent-SofaRedCorner = { ent-SofaRed }
+    .desc = { ent-TPSofaBase.desc }
+ent-SofaWhite = білий диван
+    .desc = { ent-TPSofaBase.desc }
+ent-SofaWhiteCorner = { ent-SofaWhite }
+    .desc = { ent-TPSofaBase.desc }
+ent-TPSofaBase = диван
+    .desc = Зручний диван, на якому можна посидіти і відпочити.

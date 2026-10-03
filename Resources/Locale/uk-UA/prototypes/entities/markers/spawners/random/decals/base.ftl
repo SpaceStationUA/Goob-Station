@@ -1,0 +1,1 @@
+ent-DecalSpawnerBase = Спавнер Декалей

@@ -1,0 +1,10 @@
+ent-APCElectronics = плата АПЦ
+    .desc = Схема, що використовується в будівництві АПЦ.
+ent-SolarTrackerElectronics = електроніка сонячного трекера
+    .desc = Просунута плата, що використовується для відстеження найближчої зірки.
+ent-WallmountGeneratorAPUElectronics = настінна електроніка APU
+    .desc = Схема для побудови настінного блоку живлення.
+ent-WallmountGeneratorElectronics = електроніка настінного генератора
+    .desc = Схема для побудови настінного генератора.
+ent-WallmountSubstationElectronics = прилад настінної підстанції
+    .desc = Контур для побудови настінної підстанції.

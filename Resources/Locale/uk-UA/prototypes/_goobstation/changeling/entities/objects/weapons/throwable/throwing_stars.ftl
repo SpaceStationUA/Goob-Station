@@ -1,0 +1,1 @@
+ent-ThrowingStarChangeling = осколок кістки

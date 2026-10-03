@@ -1,0 +1,11 @@
+ent-SalvageCanisterSpawner = спавнер каністр утилізаторів
+ent-SalvageSpawnerEquipment = Точка появи обладнання
+ent-SalvageSpawnerEquipmentValuable = Точка появи цінного обладнання
+ent-SalvageSpawnerMobMagnet = Спавнер мобів для утилізаційного магніту
+ent-SalvageSpawnerMobMiningAsteroid = Точка появи мобів на гірничому астероїді
+ent-SalvageSpawnerMobShark = Спавнер утилізаційних акул-гольянів
+ent-SalvageSpawnerScrapCommon = Точка появи звичайного брухту
+ent-SalvageSpawnerScrapValuable = Точка появи цінного брухту
+ent-SalvageSpawnerStructuresVarious = Спавнер структур космічного сміття
+ent-SalvageSpawnerTreasure = Точка появи скарбів
+ent-SalvageSpawnerTreasureValuable = Точка появи цінних скарбів

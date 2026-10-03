@@ -1,0 +1,9 @@
+ent-DebugItemShapeWeird = предмет дивної форми
+    .desc = Що це...?
+ent-GasMinerNitrogenSM = газовий добувач азоту
+ent-PonderingOrbRadioactive = зäдумливий шäр [700 рад]
+    .desc = Якщо ви можете це прочитати, ви мертві... також хтось його крäде
+ent-PonderingOrbRadioactiveM = зäдумливий шäр [100 рад]
+    .desc = На славу Річарда Турка
+ent-PonderingOrbRadioactiveS = зäдумливий шäр [7 рад]
+    .desc = Місцевий артефакт став випромінюючим

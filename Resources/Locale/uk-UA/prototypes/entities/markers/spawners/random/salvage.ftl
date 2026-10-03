@@ -1,0 +1,9 @@
+ent-SalvageFleshSpawner = спавнер плоті утилізаторів
+ent-SalvageLootSpawner = спавнер трофеїв з утилізації
+ent-SalvageMaterialCrateSpawner = спавнер ящиків з матеріалами утилізаторів
+ent-SalvageMobSpawner = спавнер мобів утилізаторів
+ent-SpaceTickSpawner = спавнер космічного кліща утилізаторів
+ent-SpawnMobBearSalvage = спавнер космічних ведмедів утилізаторів
+ent-SpawnMobCobraSalvage = спавнер космічної кобри утилізаторів
+ent-SpawnMobKangarooSalvage = спавнер космічного кенгуру утилізаторів
+ent-SpawnMobSpiderSalvage = спавнер космічного павука утилізаторів

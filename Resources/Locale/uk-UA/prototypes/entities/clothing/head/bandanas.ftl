@@ -1,0 +1,10 @@
+ent-ClothingHeadBandBlack = чорна бандана
+ent-ClothingHeadBandBlue = синя бандана
+ent-ClothingHeadBandBotany = ботанічна бандана
+ent-ClothingHeadBandBrown = коричнева бандана
+ent-ClothingHeadBandGold = золота бандана
+ent-ClothingHeadBandGreen = зелена бандана
+ent-ClothingHeadBandGrey = сіра бандана
+ent-ClothingHeadBandMerc = бандана найманця
+ent-ClothingHeadBandRed = червона бандана
+ent-ClothingHeadBandSkull = бандана з черепом

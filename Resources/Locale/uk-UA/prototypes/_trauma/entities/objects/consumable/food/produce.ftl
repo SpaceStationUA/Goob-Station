@@ -1,0 +1,1 @@
+ent-MimanaPeelStealthy = шкірка мімани

@@ -1,0 +1,10 @@
+ent-CartridgeBallBearingForged = кулька підшипника
+ent-CartridgeDisc = лезовий диск
+    .desc = Невеликий снаряд для гаус-гармат. Трохи пробиває броню та спричиняє кровотечу.
+ent-CartridgeDiscForged = лезовий диск
+ent-CartridgeShard = уламковий набій
+    .desc = Невеликий снаряд для гаус-гармат. Після пострілу розлітається на уламки й майже неефективний проти броньованих цілей.
+ent-CartridgeShardForged = уламковий набій
+ent-GaussgunBearing = кулька підшипника
+ent-GaussgunDisk = гострий диск
+ent-GaussgunShard = уламок

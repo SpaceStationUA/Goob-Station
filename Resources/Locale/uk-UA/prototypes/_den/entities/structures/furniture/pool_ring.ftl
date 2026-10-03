@@ -1,0 +1,13 @@
+ent-BaseSwimRing = плавальне кільце
+    .desc = Також відоме як надувний круг, внутрішня камера або водяний пончик. Надувна гумова іграшка для відпочинку на воді.
+ent-SwimRingBlack = чорне плавальне кільце
+ent-SwimRingBlue = синє плавальне кільце
+ent-SwimRingCyan = ціанове плавальне кільце
+ent-SwimRingGreen = зелене плавальне кільце
+ent-SwimRingMagenta = пурпурове плавальне кільце
+ent-SwimRingPink = рожеве плавальне кільце
+ent-SwimRingPurple = фіолетове плавальне кільце
+ent-SwimRingRainbow = райдужне плавальне кільце
+ent-SwimRingRed = червоне плавальне кільце
+ent-SwimRingTrans = пастельне плавальне кільце
+ent-SwimRingYellow = жовте плавальне кільце

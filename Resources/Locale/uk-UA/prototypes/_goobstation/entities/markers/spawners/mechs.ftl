@@ -1,0 +1,12 @@
+ent-SpawnMechClarke = Кларк Споунер
+ent-SpawnMechDurand = Дюран Споунер
+ent-SpawnMechGygax = Gygax Spwner
+ent-SpawnMechGygaxSyndie = Dark Gygax Spawnner
+ent-SpawnMechGygaxSyndieFilled = Dark Gygax Spawnner
+ent-SpawnMechMarauder = Мародер-споунер
+ent-SpawnMechMarauderFilled = Мародерський спайдер
+ent-SpawnMechMaulerSyndie = Маулер Спавнер
+ent-SpawnMechMaulerSyndieFilled = Маулер Спавнер
+ent-SpawnMechRipley2 = Ripley APLU MK-II Spewner
+ent-SpawnMechSeraph = Серафим Споунер
+ent-SpawnMechSeraphFilled = Серафим Споунер

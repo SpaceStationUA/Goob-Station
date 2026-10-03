@@ -1,0 +1,10 @@
+ent-BulletTurret = куля (.22 short)
+ent-FlameThrowerBullet = полум'я
+    .desc = Не стійте поруч із ним.
+ent-MolotovFire = вогонь
+    .desc = Він горить.
+ent-PelletShotgunBreaching = дробина (.50)
+ent-ShellShotgunBreaching = набій (12 калібр, пробивний)
+    .desc = Пробивний боєприпас, призначений для завдання максимальної шкоди конструкціям.
+ent-T45PowerArmor = силова броня T-45 P.O.W.A.R.
+    .desc = Точна орбітальна носима броня для революціонерів.

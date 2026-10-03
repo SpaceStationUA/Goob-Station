@@ -1,0 +1,17 @@
+ent-BaseSoap = мило
+ent-Soap =
+    .desc = Дешевий брусок мила. Не пахне.
+ent-SoapBorg = мило
+    .desc = Брусок мила марки Nanotrasen. Пахне плазмою та машинами.
+ent-SoapDeluxe =
+    .desc = Розкішний брусок мила бренду Waffle Co. Пахне полуницею.
+ent-SoapHomemade =
+    .desc = Домашній брусок мила. Пахне... ну....
+ent-SoapNT =
+    .desc = Брусок мила бренду Nanotrasen. Пахне плазмою.
+ent-SoapOmega = омега-мило
+    .desc = Найдосконаліше мило, відоме людству. Пахне блакитним простором.
+ent-SoapSyndie =
+    .desc = Підозрілий брусок мила. Пахне страхом.
+ent-SoapletSyndie = мило
+    .desc = Крихітний шматочок синдикатського мила.

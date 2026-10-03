@@ -1,0 +1,10 @@
+ent-BasePeacekeeperBox = гранатний набій
+ent-BoxPeacekeeperBaton = коробка кийкови�
+ent-BoxPeacekeeperFlash = коробка світлошумови�
+ent-BoxPeacekeeperGas = коробка газови�
+ent-BoxPeacekeeperStinger = коробка жалки�
+ent-BulletGrenadeGas = озброєна газова граната
+ent-BulletGrenadeStinger = озброєна жалка граната
+ent-GrenadeGaslauncher = газова граната
+ent-GrenadeStingerlauncher = жалка граната
+ent-PelletClusterLesserRubber = гумова кулька

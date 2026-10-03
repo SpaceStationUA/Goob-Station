@@ -1,0 +1,1 @@
+ent-ShipShield = корабельний щит

@@ -1,0 +1,1 @@
+ent-BulletStickyGrenade = липка граната
