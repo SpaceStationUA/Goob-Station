@@ -34,7 +34,7 @@ public sealed partial class MentorHelpControl : Control
         IoCManager.InjectDependencies(this);
 
         _controller = controller;
-        _cfg.OnValueChanged(CCVars.NewPlayerThreshold, val => _newPlayerThreshold = val, true);
+        _cfg.OnValueChanged(CCVars.NewPlayerThreshold, OnNewPlayerThresholdChanged, true);
 
         // Responder-only notes are withheld from the player.
         ResponderOnly.OnToggled += args => PlaySound.Disabled = args.Pressed;
@@ -123,6 +123,11 @@ public sealed partial class MentorHelpControl : Control
         return info.OverallPlaytime is null || info.OverallPlaytime < TimeSpan.FromMinutes(_newPlayerThreshold);
     }
 
+    private void OnNewPlayerThresholdChanged(int value)
+    {
+        _newPlayerThreshold = value;
+    }
+
     private void UpdateButtons()
     {
         Follow.Visible = _adminManager.CanCommand("follow");
@@ -155,7 +160,10 @@ public sealed partial class MentorHelpControl : Control
     {
         base.Dispose(disposing);
 
-        if (disposing)
-            _adminManager.AdminStatusUpdated -= UpdateButtons;
+        if (!disposing)
+            return;
+
+        _adminManager.AdminStatusUpdated -= UpdateButtons;
+        _cfg.UnsubValueChanged(CCVars.NewPlayerThreshold, OnNewPlayerThresholdChanged);
     }
 }

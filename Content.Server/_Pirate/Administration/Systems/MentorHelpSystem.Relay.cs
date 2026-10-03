@@ -236,8 +236,8 @@ public sealed partial class MentorHelpSystem
             ticket.LastRunLevel = _ticker.RunLevel;
         }
 
-        // Ping once per streak if the newest line found no responders.
-        var onCall = !lines.Last().HadReceivers && !ticket.OnCall;
+        var hadReceivers = lines.Last().HadReceivers;
+        var onCall = !hadReceivers && !ticket.OnCall;
 
         while (lines.TryDequeue(out var line))
         {
@@ -284,7 +284,7 @@ public sealed partial class MentorHelpSystem
 
         if (onCall)
             await PingOnCall(userId, ticket);
-        else
+        else if (hadReceivers)
             ticket.OnCall = false;
     }
 
@@ -297,12 +297,15 @@ public sealed partial class MentorHelpSystem
         ticket.OnCall = true;
 
         var message = new StringBuilder();
-        message.AppendLine($"<@&{role}>");
         message.AppendLine("Unanswered mentorhelp");
         if (_webhookData is { GuildId: { } guildId, ChannelId: { } channelId })
             message.AppendLine($"**[Go to mentorhelp](https://discord.com/channels/{guildId}/{channelId}/{ticket.Id})**");
 
         var payload = Payload(message.ToString(), ticket.Username, userId, ticket.CharacterName);
+        payload.Content = $"<@&{role}>";
+        var mentions = payload.AllowedMentions;
+        mentions.AllowRoleMentions();
+        payload.AllowedMentions = mentions;
         var response = await _http.PostAsync($"{_onCallUrl}?wait=true", Json(payload));
         if (!response.IsSuccessStatusCode)
             Log.Error($"Discord returned {response.StatusCode} posting the mentorhelp on-call ping: {await response.Content.ReadAsStringAsync()}");
