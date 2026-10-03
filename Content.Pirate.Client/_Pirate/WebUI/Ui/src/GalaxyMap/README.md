@@ -233,11 +233,69 @@ different reason:
    completely **absent for two of them** and the upper barely moved its light at all.
    A highlight that spends half its time not on the shape is a blink, not a jet.
 
-   `keyTimes` fixes it: 0.8 of the cycle carries the hot stop from the pole to the
-   tip, and the last 0.2 carries it off the end into the gap before the next one
-   starts. The gap is real — plasma leaves and the next follows — and it is short.
-   Both jets are now present in 14-16 frames of 16, and each travels outward in its
-   own direction.
+   `keyTimes` fixes it: 0.88 of the cycle carries the hot stop from the pole to the
+   tip, and the rest carries it off the end into the gap before the next starts.
+
+   And then the phase offset was tried, and it did nothing — which is the finding
+   that actually mattered.
+
+   Deleting the half-cycle `begin` offset entirely still measured correlation
+   **-0.77**. The correlation never measured the offset. The two bounding boxes are
+   mirrored, so the mirrored traversal plus a shared stop list already puts the poles
+   half a cycle apart whether or not `begin` says so — and the symptom the offset was
+   supposed to cure was never cured. The object still read as ONE jet with the other
+   missing, which is what was reported.
+
+   The fix had to be structural rather than a phase value.
+
+4. *The plume is STANDING; only the knot travels.* The actual fix.
+
+   Driving the plume's whole brightness from a travelling gradient means the plume
+   exists only where the gradient is. The highlight is somewhere; the rest of the jet
+   is not. Mirrored across the two poles — which it must be — that puts one highlight
+   at each pole's base simultaneously, so the pair reads as one jet with the other
+   missing. No phase relationship can cure it, because the fault is that the
+   highlight is the *only* thing there.
+
+   So each jet is now two paths of the same shape: a **standing plume**, hot at the
+   pole and fading to the tip, with no animation at all; and a **travelling knot**
+   over the top, a narrow band whose own stops are transparent–hot–transparent. The
+   separation is the point. Where the gradient is no longer decides whether the jet
+   is visible, so the knot's values can leave `0..1` without the jet going dark, and
+   no phase arrangement between the poles can un-light one.
+
+   A quasar is a continuous jet with pulses in it, not a jet that blinks.
+
+## What the checks on this object got wrong, in order
+
+   - Round one: **correlation**. Caught the shared gradient. Blind to two dark jets,
+     which are perfectly uncorrelated.
+   - Round two: **presence**. Caught the ramp leaving the element. Blind to
+     imbalance, because both poles can be plainly lit and wildly different.
+   - Round three: **correlation again**, plus the offset. The negative control —
+     deleting the offset — passed at -0.77, so this whole round proved the assertion
+     was measuring nothing it claimed.
+
+   What ships instead:
+
+   | assertion | what only it can fail |
+   |---|---|
+   | both poles lit in **every** frame | a gradient running off the element |
+   | worst-frame brightness ratio **< 3:1** | one gradient shared across both poles |
+   | centroid and lit count both **move** | a plume that has stopped animating entirely |
+   | plumes static, knots animated | the plume being animated again |
+
+   Negative-controlled, both failing on the right line:
+
+   | control | fails |
+   |---|---|
+   | both plumes use the upper pole's numbers | balance, at **4.4:1** |
+   | plume animated again | plumes-stand-still |
+
+   The second control is the point: re-animating the plume did **not** fail presence
+   or balance, because a mirrored animated plume still lights both poles. It is
+   caught structurally instead, by asserting which gradient moves — because that is
+   the fault, not one of its symptoms.
 
  No shape involved, so nothing to misread, and the
    motion is continuous. The bright stop runs from the pole to the tip and the

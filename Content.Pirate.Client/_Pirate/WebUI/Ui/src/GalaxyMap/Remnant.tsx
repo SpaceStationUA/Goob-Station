@@ -200,85 +200,82 @@ export function Pulsar(props: PulsarProps) {
  */
 export function Quasar(props: { px: number; seed: number }) {
   const reach = () => props.px * 0.46;
-  const up = `jet-up-${props.seed}`;
-  const down = `jet-down-${props.seed}`;
+
+  /** One period for both knots, so the pair never drifts into looking accidental. */
+  const KNOT_PERIOD = 1.6;
 
   /**
-   * TWO gradients, one per pole, and the second one is reversed.
+   * The plume itself: a STANDING structure, hot at the pole and fading to the tip,
+   * with no animation at all.
    *
-   * The first version gave both jets a single gradient and let them share it, which
-   * looks like it should work and does not. `gradientUnits` defaults to
-   * objectBoundingBox, so the gradient's coordinates are relative to EACH referencing
-   * element's own box — and the two boxes are mirrored, because the upper path's apex
-   * is its bbox's BOTTOM and the lower path's apex is its bbox's TOP.
+   * Every animated attempt at this failed the same way, and the reason is worth
+   * writing down because it took three rounds. Driving the plume's whole brightness
+   * from a travelling gradient means the plume only exists where the gradient is:
+   * the highlight is somewhere, the rest of the jet is not. Mirrored across the two
+   * poles — which it must be, since the two bounding boxes are mirrored — that puts
+   * one highlight at each pole's base at the same instant, so the pair reads as
+   * ONE jet with the other missing. Half-cycle phase offsets were tried and measured:
+   * they changed nothing, because the mirrored traversal plus a shared stop list
+   * already puts the two a half cycle apart whether or not `begin` says so. Removing
+   * the offset entirely still gave correlation -0.77, which is why a negative
+   * correlation was never evidence of the offset working.
    *
-   * So `y1 = 1, y2 = 0` means "hot at the pole" for one jet and "hot at the tip" for
-   * the other. The symptom is exactly what was reported: the two jets pulse to the
-   * same side, so the object reads as one thing flexing rather than two plumes
-   * behaving independently.
+   * So the plume is standing and always lit, and only the KNOT travelling through it
+   * moves. A quasar is a continuous jet with pulses in it, not a jet that blinks.
    *
-   * The fix is not to offset the animation, it is to give each pole its own ramp with
-   * its own direction, and the durations differ so they are not in lockstep either.
+   * The two poles' numbers are mirrored, which is the whole reason there are two
+   * gradients rather than one: the upper path's apex is its bbox's bottom and the
+   * lower path's apex is its bbox's top.
    */
-  /**
-   * One pole's ramp.
-   *
-   * `y1` carries the hot stop and `y2` trails it by exactly one unit, so the ramp
-   * keeps its length while it travels instead of stretching.
-   *
-   * `keyTimes` is load-bearing and was missing for two rounds. Gradient coordinates
-   * are in objectBoundingBox units, so anything outside 0..1 is off the element
-   * entirely — and the previous values ran to -0.9 and -1.9, which put the whole
-   * ramp outside the jet for a large part of every cycle. Measured, the lower jet was
-   * entirely ABSENT for four frames out of twelve and the upper barely moved: a
-   * highlight that spends half its time not on the shape is a blink, not a jet.
-   *
-   * So 0.8 of the cycle carries the highlight from the pole to the tip, and the last
-   * 0.2 carries it off the end and into the gap before the next one starts. That gap
-   * is real — plasma leaves, and the next knot follows — and it is short.
-   */
-  const ramp = (id: string, y1: string, y2: string, dur: string) => (
-    <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
-      <animate
-        attributeName="y1"
-        values={y1}
-        keyTimes="0;0.8;1"
-        calcMode="linear"
-        dur={dur}
-        repeatCount="indefinite"
-      />
-      <animate
-        attributeName="y2"
-        values={y2}
-        keyTimes="0;0.8;1"
-        calcMode="linear"
-        dur={dur}
-        repeatCount="indefinite"
-      />
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
-      <stop offset="18%" stop-color={JET_HOT} stop-opacity="0.85" />
-      <stop offset="55%" stop-color={JET_COOL} stop-opacity="0.4" />
-      <stop offset="100%" stop-color={JET_COOL} stop-opacity="0" />
+  const plume = (id: string, y1: string, y2: string) => (
+    <linearGradient id={id} x1="0" y1={y1} x2="0" y2={y2}>
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="14%" stop-color={JET_HOT} stop-opacity="0.7" />
+      <stop offset="52%" stop-color={JET_COOL} stop-opacity="0.3" />
+      <stop offset="100%" stop-color={JET_COOL} stop-opacity="0.04" />
     </linearGradient>
   );
 
   /**
-   * The plume itself.
+   * The travelling knot: a narrow bright band moving from the pole out past the tip.
    *
-   * `dir` is +1 for the upper pole and -1 for the lower, and it decides which ramp
-   * the path uses. The apex is always at the pole and the tip always away from it, so
-   * the geometry is one expression and only the fill differs.
+   * Its own stops are transparent-hot-transparent, so WHERE the gradient is does not
+   * decide whether the jet is visible — that is the plume's job now. That separation
+   * is the fix, and it is also why the animation values can leave 0..1 without the
+   * jet going dark: a band that has left the element contributes nothing, and the
+   * plume underneath is still there.
+   */
+  const knot = (id: string, y1: string, y2: string, phase: string) => (
+    <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
+      <animate attributeName="y1" values={y1} dur={`${KNOT_PERIOD}s`} begin={phase} repeatCount="indefinite" />
+      <animate attributeName="y2" values={y2} dur={`${KNOT_PERIOD}s`} begin={phase} repeatCount="indefinite" />
+      <stop offset="0%" stop-color={JET_HOT} stop-opacity="0" />
+      <stop offset="42%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="58%" stop-color={JET_HOT} stop-opacity="0.5" />
+      <stop offset="100%" stop-color={JET_HOT} stop-opacity="0" />
+    </linearGradient>
+  );
+
+  /**
+   * The plume, drawn as two stacked paths of the SAME shape.
+   *
+   * `dir` is +1 for the upper pole and -1 for the lower. The apex is always at the
+   * pole and the tip always away from it, so the geometry is one expression and only
+   * the fills differ — four gradients in total, two per pole, and every one of them
+   * mirrored relative to its partner.
    */
   const jet = (dir: 1 | -1) => {
     const r = reach();
     const apex = dir * props.px * 0.08;
     const tip = dir * r;
     const w = r * 0.1;
+    const d = `M 0 ${apex} L ${-w} ${tip} L ${w} ${tip} Z`;
+    const p = dir === 1 ? "up" : "down";
     return (
-      <path
-        d={`M 0 ${apex} L ${-w} ${tip} L ${w} ${tip} Z`}
-        fill={`url(#${dir === 1 ? up : down})`}
-      />
+      <>
+        <path d={d} fill={`url(#plume-${p}-${props.seed})`} />
+        <path d={d} fill={`url(#knot-${p}-${props.seed})`} />
+      </>
     );
   };
 
@@ -298,14 +295,18 @@ export function Quasar(props: { px: number; seed: number }) {
         aria-hidden="true"
       >
         <defs>
-          {/* The upper jet: hot stop from the pole (its bbox's bottom, y=1) out to
-              the tip (y=0) and off the end. */}
-          {ramp(up, "1;0;-1", "2;1;0", "1.35s")}
-          {/* The lower jet: same travel, opposite screen direction. Its apex is its
-              bbox's TOP, so the numbers are mirrored rather than reused — which is
-              the whole of the bug this file's two gradients exist to fix. The
-              duration differs too, so the two are never in phase even in direction. */}
-          {ramp(down, "0;1;2", "1;2;3", "1.7s")}
+          {/* Standing plumes. Upper apex is its bbox's bottom, so hot-at-pole reads
+              y1 = 1, y2 = 0; the lower's apex is its bbox's top, so the numbers
+              mirror to y1 = 0, y2 = 1. */}
+          {plume(`plume-up-${props.seed}`, "1", "0")}
+          {plume(`plume-down-${props.seed}`, "0", "1")}
+          {/* Knots, pole to tip and off the end. Same period, half a cycle apart, so
+              the two are never at the same radius. `begin` is negative, which starts
+              an animation mid-cycle — SMIL allows it, and unlike the previous attempt
+              it is now decorative rather than load-bearing, because the plume behind
+              it no longer depends on the knot being on screen. */}
+          {knot(`knot-up-${props.seed}`, "1;0.02;-1", "2;1.02;0", "0s")}
+          {knot(`knot-down-${props.seed}`, "0;0.98;1.98", "1;1.98;2.98", `-${KNOT_PERIOD / 2}s`)}
         </defs>
         <g transform="rotate(-18)">
           {jet(1)}

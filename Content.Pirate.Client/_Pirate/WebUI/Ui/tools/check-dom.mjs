@@ -2446,10 +2446,23 @@ try {
         // Captured HERE because the overlay is closed immediately afterwards, and
         // a check that runs after the close finds nothing and fails for a reason
         // that has nothing to do with the jets.
-        jetMoves: (() => {
-          const a = o.querySelector(".quasar-jets linearGradient animate");
-          return !!a && a.getAttribute("repeatCount") === "indefinite";
-        })(),
+        //
+        // This asks WHICH gradient animates, not whether some animate does. "the first
+        // animate inside a linearGradient" kept passing while the plume went static
+        // and the knots took over the motion, because it was asking for existence and
+        // the object had merely changed which part of itself was moving. Sixth time in
+        // this file that an existence probe outlived the thing it was probing.
+        plumes: o.querySelectorAll(".quasar-jets linearGradient[id^='plume-']").length,
+        knots: o.querySelectorAll(".quasar-jets linearGradient[id^='knot-']").length,
+        plumesStill: [...o.querySelectorAll(".quasar-jets linearGradient[id^='plume-']")].every(
+          (g) => !g.querySelector("animate"),
+        ),
+        knotsMove: [...o.querySelectorAll(".quasar-jets linearGradient[id^='knot-']")].every(
+          (g) => {
+            const a = g.querySelector("animate");
+            return !!a && a.getAttribute("repeatCount") === "indefinite";
+          },
+        ),
       };
     });
     await closeSys();
@@ -2463,9 +2476,11 @@ try {
         `counting the beams is the assertion that means anything.`,
     );
     check(
-      "and the overlay's jets move on the same principle",
-      quasar.jetMoves,
-      "the overlay's jet gradient animates too, so both surfaces agree",
+      "and the overlay's plumes STAND while only the knots travel",
+      quasar.plumes === 2 && quasar.knots === 2 && quasar.plumesStill && quasar.knotsMove,
+      `${quasar.plumes} plume gradients, all static: ${quasar.plumesStill}. ` +
+        `${quasar.knots} knot gradients, all animating: ${quasar.knotsMove}. An animated ` +
+        `plume is what let one pole vanish; a static plume cannot.`,
     );
     /**
      * The two jets must NOT pulse together.
@@ -2481,13 +2496,48 @@ try {
      * tip" for the other, and one shared animation drove both. The symptom was the
      * two jets pulsing to the same side.
      */
+    /**
+     * The two jets must both be LIT, in nearly every frame.
+     *
+     * Three rounds of checks on this object measured the wrong thing, and the
+     * reasons are the interesting part.
+     *
+     * Round one asserted the two halves were uncorrelated, on the theory that
+     * sharing a gradient put them in lockstep. True, and it caught that. It could
+     * not catch the next fault, because two jets that are BOTH DARK are beautifully
+     * uncorrelated.
+     *
+     * Round two added presence and found the ramps were leaving the element: gradient
+     * coordinates outside 0..1 are off the shape entirely, and the values ran to -0.9
+     * and -1.9. The lower jet was absent for frames out of twelve.
+     *
+     * Round three still measured correlation, and a negative-control run — deleting
+     * the half-cycle phase offset — gave -0.77, passing. So the correlation never
+     * measured the offset at all. The two bounding boxes are mirrored, so the
+     * mirrored traversal plus a shared stop list already puts the poles half a cycle
+     * apart whether or not `begin` says so, and the symptom the offset was supposed
+     * to cure was never cured: the object still read as ONE jet with the other
+     * missing.
+     *
+     * The actual fix was structural. The plume is now a standing structure with no
+     * animation, hot at the pole and fading to the tip, and only the KNOT inside it
+     * travels. Both poles are therefore lit unconditionally, and no phase
+     * relationship between them can un-light one.
+     *
+     * Which is what these two assertions measure, and both of them fail on the
+     * animated-plume version:
+     *   - presence, which the previous check could not see past
+     *   - BALANCE, the ratio of lit pixels either side. A single shared gradient
+     *     makes the two poles as different as the mirroring allows, and no presence
+     *     test catches that because both poles are then plainly lit.
+     */
     const jetShots = [];
     await openSys("quasar-1");
     {
       const art = await page.$(".overlay-art");
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 20; i++) {
         jetShots.push(await art.screenshot());
-        await page.waitForTimeout(150);
+        await page.waitForTimeout(100);
       }
     }
     await closeSys();
@@ -2509,58 +2559,84 @@ try {
       const series = imgs.map(({ d }) => {
         let up = 0;
         let down = 0;
+        let su = 0;
+        let sd = 0;
         for (let y = 0; y < h; y++) {
           for (let x = 0; x < w; x++) {
             const i = (y * w + x) * 4;
-            // Cold blue-white only. The disc is orange, and counting it would let
-            // its rotation dominate the series so the correlation measures the disc
-            // rather than the jets.
+            // Cold blue-white only. The disc is orange, and counting it would let its
+            // rotation dominate the series and turn any measurement here into a
+            // measurement of the disc.
             if (d[i + 3] < 40) continue;
-            if (d[i + 2] < 150) continue;
-            if (Math.abs(d[i] - d[i + 2]) > 60) continue;
-            if (y < h / 2) up++;
-            else down++;
+            if (d[i + 2] < 140) continue;
+            if (Math.abs(d[i] - d[i + 2]) > 70) continue;
+            // The disc fills the middle band. Counting it on both sides pins both
+            // centroids to the centre line and makes both jets look immobile, which
+            // is precisely the measurement that was quietly useless in round two.
+            const dy = y - h / 2;
+            if (Math.abs(dy) < 16) continue;
+            if (dy < 0) {
+              up++;
+              su += -dy;
+            } else {
+              down++;
+              sd += dy;
+            }
           }
         }
-        return { up, down };
+        return { up, down, cu: up ? su / up : 0, cd: down ? sd / down : 0 };
       });
-      const norm = (k) => {
-        const m = Math.max(...series.map((s) => s[k])) || 1;
-        return series.map((s) => s[k] / m);
-      };
-      const a = norm("up");
-      const b = norm("down");
-      const mean = (v) => v.reduce((s, x) => s + x, 0) / v.length;
-      const mu = mean(a);
-      const md = mean(b);
-      let num = 0;
-      let du = 0;
-      let dd = 0;
-      for (let i = 0; i < a.length; i++) {
-        const x = a[i] - mu;
-        const y = b[i] - md;
-        num += x * y;
-        du += x * x;
-        dd += y * y;
+      // Balance is the worst ratio of the two poles in any single frame, so one bad
+      // frame is enough to fail it rather than being averaged away.
+      let worstBalance = 0;
+      for (const t of series) {
+        const hi = Math.max(t.up, t.down);
+        const lo = Math.min(t.up, t.down);
+        if (lo > 20) worstBalance = Math.max(worstBalance, hi / lo);
       }
-      return { corr: num / Math.sqrt(du * dd || 1), spreadUp: Math.max(...a) - Math.min(...a) };
+      const span = (k) => {
+        const v = series.map((x) => x[k]);
+        return Math.max(...v) - Math.min(...v);
+      };
+      return {
+        frames: series.length,
+        upPresent: series.filter((x) => x.up > 40).length,
+        downPresent: series.filter((x) => x.down > 40).length,
+        worstBalance: worstBalance,
+        upMoves: span("cu"),
+        downMoves: span("cd"),
+        litMoves: Math.max(span("up"), span("down")),
+      };
     }, jetShots.map((s) => s.toString("base64")));
     check(
-      "the two jets move INDEPENDENTLY, not in lockstep",
-      jetSync.corr < 0.6,
-      `correlation ${jetSync.corr.toFixed(2)} over 12 frames. A shared gradient gives near ` +
-        `+1 because one animation drives both; these have their own ramps, their own ` +
-        `directions and their own durations.`,
+      "BOTH jets are lit in every single frame, so neither blinks",
+      jetSync.upPresent === jetSync.frames && jetSync.downPresent === jetSync.frames,
+      `upper lit in ${jetSync.upPresent}/${jetSync.frames}, lower in ` +
+        `${jetSync.downPresent}/${jetSync.frames}. This is the assertion the old ` +
+        `correlation check could not make: two jets that are both dark are perfectly ` +
+        `uncorrelated, and a gradient running outside 0..1 is off the element, so a ` +
+        `jet can vanish and the correlation still look ideal.`,
     );
     check(
-      "and the jet brightness actually varies, so the correlation measures something",
-      jetSync.spreadUp > 0.15,
-      `upper jet's normalised brightness ranges over ${jetSync.spreadUp.toFixed(2)}`,
+      "and the two poles stay BALANCED, so it reads as two plumes and not one",
+      jetSync.worstBalance > 0 && jetSync.worstBalance < 3,
+      `worst single-frame brightness ratio between the poles is ` +
+        `${jetSync.worstBalance.toFixed(2)}:1. A shared gradient lets the mirroring put ` +
+        `one pole several times brighter than the other while both stay plainly lit, ` +
+        `which no presence test catches.`,
     );
     check(
-      "a quasar draws the black hole's disc AND jets",
-      quasar.disc && quasar.jets === 2,
-      `disc ${quasar.disc}, ${quasar.jets} jet paths`,
+      "and something in the jets still MOVES, so they are not merely standing there",
+      jetSync.upMoves > 2 && jetSync.downMoves > 2 && jetSync.litMoves > 20,
+      `light centroid travels ${jetSync.upMoves.toFixed(1)}px up and ` +
+        `${jetSync.downMoves.toFixed(1)}px down; lit pixel count varies by ` +
+        `${jetSync.litMoves.toFixed(0)}. The knots travel, the plumes do not.`,
+    );
+    check(
+      "a quasar draws the black hole's disc AND two plumes, each in two layers",
+      quasar.disc && quasar.jets === 4,
+      `disc ${quasar.disc}, ${quasar.jets} paths. Two per pole: a standing plume and a ` +
+        `travelling knot over the same shape.`,
     );
 
     /**
