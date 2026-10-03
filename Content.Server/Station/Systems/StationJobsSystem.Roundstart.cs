@@ -8,6 +8,7 @@ using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.Preferences;
+using Content.Shared.Pirate.Jobs; // Pirate: resolve employer variants against shared station slots.
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Network;
@@ -83,7 +84,7 @@ public sealed partial class StationJobsSystem
             }
             else
             {
-                stationJobs.Add(station, GetJobs(station).ToDictionary(x => x.Key, x => x.Value));
+                stationJobs.Add(station, EmployerJobMapping.ExpandSlots(_prototypeManager, GetJobs(station))); // Pirate
             }
         }
 
@@ -128,7 +129,10 @@ public sealed partial class StationJobsSystem
                             jobPlayerOptions.Remove(k);
                     }
 
-                    stationJobs[station][job]--;
+                    // Pirate start: shared role slots decrement together.
+                    DecrementJobSlotPool(stationJobs[station], job);
+                    DecrementJobSlotPool(currentlySelectingJobs[station], job);
+                    // Pirate end
                     profiles.Remove(player);
                     assigned.Add(player, (job, station));
 
@@ -179,10 +183,7 @@ public sealed partial class StationJobsSystem
                 // Intentionally discounts the value of uncapped slots! They're only a single slot when deciding a station's share.
                 foreach (var (station, jobs) in currentlySelectingJobs)
                 {
-                    stationTotalSlots.Add(
-                        station,
-                        (int)jobs.Values.Sum(x => x ?? 1)
-                        );
+                    stationTotalSlots.Add(station, CountSlotsByPool(jobs)); // Pirate
                 }
 
                 var totalSlots = 0;
@@ -256,9 +257,6 @@ public sealed partial class StationJobsSystem
                             AssignPlayer(player, job, station);
                             stationShares[station]--;
 
-                            if (currStationSelectingJobs[job] != null)
-                                currStationSelectingJobs[job]--;
-
                             if (optionsRemaining == 0)
                                 goto done;
                         }
@@ -316,7 +314,7 @@ public sealed partial class StationJobsSystem
                     continue;
 
                 // If the overflow exists, put them in as it.
-                assignedJobs.Add(player, (overflows[0], givenStations[0]));
+                assignedJobs.Add(player, (overflows[0], station)); // Pirate
                 break;
             }
         }
@@ -374,7 +372,10 @@ public sealed partial class StationJobsSystem
                 // Check if this job is blacklisted for the player's session || GOOBSTATION
                 if (_player.TryGetSessionById(player, out var session) && antagBlacklists.TryGetValue(session, out var blacklistedJobs))
                 {
-                    if (blacklistedJobs.Contains(jobId))
+                    // Pirate start: a blacklist for the base job also blocks its employer replacement.
+                    if (blacklistedJobs.Contains(jobId)
+                        || blacklistedJobs.Contains(EmployerJobMapping.GetBaseJob(_prototypeManager, jobId)))
+                    // Pirate end
                         continue;
                 }
 
@@ -384,7 +385,8 @@ public sealed partial class StationJobsSystem
                 if (weight is not null && job.Weight != weight.Value)
                     continue;
 
-                if (!(roleBans == null || !roleBans.Contains(jobId))) //TODO: Replace with IsRoleBanned
+                var baseJobId = EmployerJobMapping.GetBaseJob(_prototypeManager, jobId); // Pirate: variants inherit base-role bans.
+                if (roleBans != null && (roleBans.Contains(jobId) || roleBans.Contains(baseJobId))) // Pirate; TODO: Replace with IsRoleBanned.
                     continue;
 
                 availableJobs ??= new List<string>(profile.JobPriorities.Count);
@@ -397,4 +399,5 @@ public sealed partial class StationJobsSystem
 
         return outputDict;
     }
+
 }

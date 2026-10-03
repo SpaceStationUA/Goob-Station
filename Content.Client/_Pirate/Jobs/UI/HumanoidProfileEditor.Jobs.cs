@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client._Pirate.Jobs.UI;
 using Content.Client.Lobby.UI.Roles;
 using Content.Pirate.Common.AlternativeJobs;
+using Content.Shared.Pirate.Jobs;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
@@ -42,9 +43,16 @@ public sealed partial class HumanoidProfileEditor
         {
             var content = CreateDepartmentSection(department);
 
-            var jobs = department.Roles.Select(jobId => _prototypeManager.Index(jobId))
+            var jobs = department.Roles
+                .Select(jobId => _prototypeManager.Index(jobId))
+                .OrderBy(job => job, JobUIComparer.Instance)
+                .Select(job => _prototypeManager.Index(
+                    EmployerJobMapping.GetJob(
+                        _prototypeManager,
+                        Profile?.Employer,
+                        new ProtoId<JobPrototype>(job.ID))))
                 .Where(job => job.SetPreference)
-                .OrderBy(job => job, JobUIComparer.Instance);
+                .ToList();
 
             foreach (var job in jobs)
                 CreateJobEntry(job, content);

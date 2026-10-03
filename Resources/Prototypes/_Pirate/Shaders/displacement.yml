@@ -1,0 +1,6 @@
+- type: shader
+  id: DisplacedUnshadedDraw
+  kind: source
+  path: "/Textures/_Pirate/Shaders/displacement_unshaded.swsl"
+  params:
+    displacementSize: 127

@@ -32,8 +32,18 @@ public sealed class DisplacementMapSystem : EntitySystem
         if (key.ToString() is null)
             return false;
 
-        if (data.ShaderOverride != null)
-            sprite.Comp.LayerSetShader(index, data.ShaderOverride);
+        var shaderOverride = data.ShaderOverride;
+        // Pirate: keep emissive clothing layers unshaded while applying species displacement.
+        if (shaderOverride != null
+            && sprite.Comp[index] is SpriteComponent.Layer { ShaderPrototype: { } shader }
+            && shader.Id == "unshaded")
+        {
+            shaderOverride = "DisplacedUnshadedDraw";
+        }
+
+        if (shaderOverride != null)
+            sprite.Comp.LayerSetShader(index, shaderOverride);
+        // Pirate end
 
         _sprite.RemoveLayer(sprite.AsNullable(), displacementKey, false);
 

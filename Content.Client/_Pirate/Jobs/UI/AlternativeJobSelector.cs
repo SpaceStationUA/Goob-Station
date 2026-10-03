@@ -65,7 +65,7 @@ public class AlternativeJobSelector : OptionButton
 
         foreach (var altJob in _prototypeManager.EnumeratePrototypes<AlternativeJobPrototype>())
         {
-            if (altJob.ParentJobId != _parentJobId)
+            if (altJob.ParentJobId != _parentJobId.Id)
                 continue;
 
             AddItem(altJob.LocalizedJobName, _optionIds.Count);

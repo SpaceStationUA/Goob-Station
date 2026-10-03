@@ -3,6 +3,8 @@ using Content.Client._Pirate.Employment.UI;
 using Content.Shared._Pirate.Employment;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
+using Content.Shared.Pirate.Jobs;
+using Content.Shared.Roles;
 
 namespace Content.Client.Lobby.UI;
 
@@ -65,9 +67,33 @@ public sealed partial class HumanoidProfileEditor
 
     private void SetEmployer(string employer)
     {
+        var previousEmployer = Profile?.Employer;
         Profile = Profile?.WithEmployer(employer);
+        TransferMappedJobPriorities(previousEmployer, employer);
         RefreshRequirementDependentOptions();
         SetDirty();
         ReloadPreview();
+    }
+
+    private void TransferMappedJobPriorities(string? previousEmployer, string employer)
+    {
+        if (Profile == null || previousEmployer == employer)
+            return;
+
+        foreach (var baseJob in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>()
+                     .SelectMany(department => department.Roles)
+                     .Distinct())
+        {
+            var previousJob = EmployerJobMapping.GetJob(_prototypeManager, previousEmployer, baseJob);
+            var selectedJob = EmployerJobMapping.GetJob(_prototypeManager, employer, baseJob);
+            if (previousJob == selectedJob)
+                continue;
+
+            if (Profile.JobPriorities.TryGetValue(previousJob, out var priority))
+            {
+                Profile = Profile.WithJobPriority(previousJob, JobPriority.Never)
+                    .WithJobPriority(selectedJob, priority);
+            }
+        }
     }
 }
