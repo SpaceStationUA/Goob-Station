@@ -12,6 +12,7 @@ public sealed partial class ContractsWindow : FancyWindow
     public event Action<int>? OnAccept;
     public event Action<int>? OnComplete;
     public event Action<int>? OnReject;
+    public event Action<int>? OnAbandon;
 
     public ContractsWindow()
     {
@@ -30,10 +31,11 @@ public sealed partial class ContractsWindow : FancyWindow
             var index = i;
             if (state.ContractSlots[i].ObjectiveTitle is {} title)
             {
-                var contract = new Contract(title, state.ContractSlots[i].Icon);
+                var slot = state.ContractSlots[i];
+                var contract = new Contract(title, slot.Icon, slot.Abandonable);
                 contract.OnComplete += () => OnComplete?.Invoke(index);
+                contract.OnAbandon += () => OnAbandon?.Invoke(index);
                 Contracts.AddChild(contract);
-                // TODO: green when objective is complete
             }
             else
             {

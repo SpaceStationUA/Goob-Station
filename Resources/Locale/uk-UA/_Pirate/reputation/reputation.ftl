@@ -6,6 +6,8 @@ contracts-rescan = Оновити
 contracts-complete = Виконати
 contracts-accept = Прийняти
 contracts-reject = Відхилити
+contracts-abandon = Відмовитися
+contracts-abandon-confirm = Підтвердити
 
 contract-slot-empty = <немає активного контракту>
 contract-unavailable = <немає доступного контракту>
