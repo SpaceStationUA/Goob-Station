@@ -1,0 +1,1 @@
+ent-BaseMobShadow = Уріст МакТінь

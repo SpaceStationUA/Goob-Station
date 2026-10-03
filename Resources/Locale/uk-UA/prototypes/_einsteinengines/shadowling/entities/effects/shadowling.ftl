@@ -1,0 +1,10 @@
+ent-ShadowlingAscendingEffect = ефект вознесіння тіньовика
+ent-ShadowlingBlackRecuperationEffect = ефект чорної рекуперації тіньовика
+ent-ShadowlingCollectiveMindEffect = ефект колективного розуму тіньовика
+ent-ShadowlingGlareEffect = ефект сліпучого погляду тіньовика
+ent-ShadowlingIcyVeinsEffect = ефект крижаних вен тіньовика
+ent-ShadowlingNullChargeEffect = ефект нульового заряду тіньовика
+ent-ShadowlingRapidRehatchEffect = ефект швидкого переродження тіньовика
+ent-ShadowlingShadowWalkInEffect = ефект входження тіньовика в тіньову ходу
+ent-ShadowlingShadowWalkOutEffect = ефект виходу тіньовика з тіньової ходи
+ent-ShadowlingSonicScreechEffect = ефект звукового вереску тіньовика

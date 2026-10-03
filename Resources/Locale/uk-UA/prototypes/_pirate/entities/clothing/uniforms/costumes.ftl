@@ -1,0 +1,16 @@
+ent-ClothingUniformMNKBlackOveralls = Чорний комбінезон МНК
+    .desc = Зручна майка та товстий чорний комбінезон МНК.
+ent-ClothingUniformMNKBlackShoulder = Вбрання МНК з відкритими плечима
+    .desc = Вбрання МНК із відкритими плечима.
+ent-ClothingUniformMNKDressBlack = Чорна сукня МНК
+    .desc = Стильна чорна сукня з фірмовим віконцем МНК.
+ent-ClothingUniformMNKGymBra = Спортивний бюстгальтер МНК
+    .desc = Максимальна продуктивність із блокаторами поту МНК.
+ent-ClothingUniformMNKOfficeSkirt = Офісна спідниця МНК
+    .desc = Вбрання МНК у межах офісного дрес-коду.
+ent-ClothingUniformMNKTracksuitBlack = Чорний спортивний костюм МНК
+    .desc = Набір легкого спортивного одягу МНК.
+ent-ClothingUniformMNKUnderGarment = Нижній одяг МНК
+    .desc = МНК подбав про комфорт найважливіших місць.
+ent-ClothingUniformRat = вбрання фаната короля щурів
+    .desc = Заявіть про свою відданість монарху гризунів, а також про бажання побачити, як станція палає, *одночасно!*

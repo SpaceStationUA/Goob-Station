@@ -1,0 +1,1 @@
+ent-BaseMobHuman = Уріст МакХендс

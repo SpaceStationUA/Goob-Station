@@ -1,0 +1,14 @@
+ent-ClothingHeadHatBeanieBlackAbsurd = чорна шапка
+    .desc = Чорна шапка — улюблений головний убір скейтера або техніка вантажного відділу.
+ent-ClothingHeadHatBeanieBlackWithPinAbsurd = чорна шапка зі шпилькою
+    .desc = Чорна шапка зі шпилькою — улюблений головний убір скейтера або техніка вантажного відділу.
+ent-ClothingHeadHatBeanieBlueAbsurd = синя шапка
+    .desc = Синя шапка — улюблений головний убір скейтера або техніка вантажного відділу.
+ent-ClothingHeadHatBeanieKhakiAbsurd = хакі шапка
+    .desc = Шапка кольору хакі — улюблений головний убір скейтера або техніка вантажного відділу.
+ent-ClothingHeadHatBeanieNavyBlueAbsurd = темно-синя шапка
+    .desc = Темно-синя шапка — улюблений головний убір скейтера або техніка вантажного відділу.
+ent-ClothingHeadHatBeanieNavyBlueWithPinAbsurd = темно-синя шапка зі шпилькою
+    .desc = Темно-синя шапка зі шпилькою — улюблений головний убір скейтера або техніка вантажного відділу.
+ent-ClothingHeadHatBeanieWhiteAbsurd = біла шапка
+    .desc = Біла шапка — улюблений головний убір скейтера або техніка вантажного відділу.

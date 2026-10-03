@@ -1,0 +1,10 @@
+ent-SlimeCube = слизокуб
+    .desc = { ent-RehydratableAnimalCube.desc }
+ent-SlimeCubeBox = коробка слизокубів
+    .desc = Слизокуби бренду Драймейт. Просто додайте води!
+ent-SlimeCubeBoxSyndie = коробка синдикатських слизокубів
+    .desc = Слизокуби бренду Інтердайн. Просто додайте води!
+ent-SlimeCubeWrapped = загорнутий слизокуб
+    .desc = Розгорніть це, щоб отримати слизокуб.
+ent-SlimeCubeWrappedSyndie = загорнутий синдикатський слизокуб
+    .desc = Розгорніть це, щоб отримати слизокуб.

@@ -1,0 +1,10 @@
+ent-SignalButtonBridge = Кнопка "Вікна мосту
+    .desc = { ent-SignalButton.desc }
+ent-SignalButtonExt1 = зовнішня кнопка 1
+    .desc = { ent-SignalButton.desc }
+ent-SignalButtonExt2 = зовнішня кнопка 2
+    .desc = { ent-SignalButton.desc }
+ent-SignalButtonExt3 = зовнішня кнопка 3
+    .desc = { ent-SignalButton.desc }
+ent-SignalButtonWindows = кнопка зовнішніх вікон
+    .desc = { ent-SignalButton.desc }

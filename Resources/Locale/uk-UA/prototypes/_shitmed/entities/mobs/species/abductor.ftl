@@ -1,0 +1,1 @@
+ent-MobAbductor = Уріст МакАлієн

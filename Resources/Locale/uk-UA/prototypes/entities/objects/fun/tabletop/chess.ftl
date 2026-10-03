@@ -1,0 +1,15 @@
+ent-BlackBishop = чорний офіцер
+ent-BlackKing = чорний король
+ent-BlackKnight = чорний кінь
+ent-BlackPawn = чорний пішак
+ent-BlackQueen = чорна королева
+ent-BlackRook = чорна тура
+ent-ChessBoard = шахівниця
+    .desc = Шахова дошка. Фігури в комплекті!
+ent-ChessBoardTabletop = шахівниця
+ent-WhiteBishop = білий офіцер
+ent-WhiteKing = білий король
+ent-WhiteKnight = білий кінь
+ent-WhitePawn = білий пішак
+ent-WhiteQueen = біла королева
+ent-WhiteRook = біла тура

@@ -1,0 +1,10 @@
+ent-ClothingUniformJumpsuitTCAFArmsman = форма бійця TCAF
+    .desc = Уніформа, яку носять чинні та колишні військовослужбовці збройних сил Тау-Кита.
+ent-ClothingUniformJumpsuitTCFLLegate = Уніформа легата TCFL
+    .desc = Уніформа, яку носять офіцери-легати іноземного легіону Тау Кита.
+ent-ClothingUniformJumpsuitTCFLPilot = Уніформа пілота TCFL
+    .desc = Уніформа, яку носять чинні та колишні пілоти іноземного легіону Тау-Кита.
+ent-ClothingUniformJumpsuitTCFLSentinel = уніформа вартового TCFL
+    .desc = Уніформа, яку носять вартові збройних сил Тау-Кита.
+ent-ClothingUniformJumpsuitTCFLVolunteer = уніформа рядового TCFL
+    .desc = Форма рядового складу Легіону іноземців Тау Кита. Будучи повністю добровільною службою, що приймає всіх незалежно від раси, виду чи віросповідання, TCFL починається для кожного саме з цього рангу.

@@ -1,0 +1,10 @@
+ent-IncompleteAshwoodCudgel = незавершений ясеневий кийок
+    .desc = Кілька дерев'яних дощок, складених докупи.
+ent-IncompleteWoodCudgel = незавершений дерев'яний кийок
+    .desc = Кілька дерев'яних дощок, складених докупи.
+ent-WeaponCudgelAshwood = ясеневий кийок
+    .desc = { ent-WeaponCudgelBase.desc }
+ent-WeaponCudgelBase = основа кийка
+    .desc = Шматок дерева, обтесаний для зручнішого хвату. Улюблена зброя первісного мисливця, ідеальна для варварського руйнування!
+ent-WeaponCudgelWood = дерев'яний кийок
+    .desc = { ent-WeaponCudgelBase.desc }

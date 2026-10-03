@@ -1,0 +1,12 @@
+ent-BaseMagazineCaselessRifle = магазин (9.5мм HP)
+ent-BaseMagazineCaselessRifleShort = короткий безгільзовий гвинтівковий магазин (9.5мм HP)
+ent-BaseMagazinePistolCaselessRifle = пістолетний магазин (9.5мм HP)
+ent-MagazineCaselessRifle = магазин (9.5мм HP)
+ent-MagazineCaselessRifle10x24 = коробчастий магазин (9.5мм HP)
+ent-MagazineCaselessRiflePractice = магазин (9.5мм тренувальний)
+ent-MagazineCaselessRifleShort = короткий магазин (9.5мм HP)
+ent-MagazineCaselessRifleShortPractice = короткий магазин (9.5мм тренувальний)
+ent-MagazinePistolCaselessRifle = пістолетний магазин (9.5мм HP)
+    .desc = 10-зарядний магазин для пістолета Cobra. Призначений для кінетичних боєприпасів загального призначення.
+ent-MagazinePistolCaselessRiflePractice = пістолетний магазин (9.5мм тренувальний)
+    .desc = Магазин на 10 набоїв для пістолета Cobra. Призначений для нешкідливих тренувальних боєприпасів.

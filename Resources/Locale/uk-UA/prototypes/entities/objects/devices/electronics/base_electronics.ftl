@@ -1,0 +1,1 @@
+ent-BaseElectronics = базова електроніка

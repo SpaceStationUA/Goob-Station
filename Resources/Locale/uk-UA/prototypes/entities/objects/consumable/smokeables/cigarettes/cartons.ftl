@@ -1,0 +1,10 @@
+ent-CigCartonBlack = Коробка Nomads
+    .desc = Коробка, що містить 6 пачок Nomads.
+ent-CigCartonBlue = Коробка AcmeCo
+    .desc = Коробка, що містить 6 пачок AcmeCo.
+ent-CigCartonGreen = Коробка Spessman's Smokes
+    .desc = Коробка, що містить 6 пачок Spessman's Smokes.
+ent-CigCartonMixed = пачка Dan's Soaked
+    .desc = Коробка з 3 пачками просоченого тютюну від Дена.
+ent-CigCartonRed = Коробка DromedaryCo
+    .desc = Коробка, що містить 6 пачок DromedaryCo.

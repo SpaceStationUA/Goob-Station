@@ -1,0 +1,9 @@
+ent-AsteroidDebrisLarge = великий уламок астероїда
+ent-AsteroidDebrisLarger = величезний уламок астероїда
+ent-AsteroidDebrisMedium = середній уламок астероїда
+ent-AsteroidDebrisSmall = маленький уламок астероїда
+ent-AsteroidSalvageHuge = величезний утиль-астероїд
+ent-AsteroidSalvageLarge = великий утиль-астероїд
+ent-AsteroidSalvageMedium = середній утиль-астероїд
+ent-AsteroidSalvageSmall = малий утиль-астероїд
+ent-BaseAsteroidDebris = уламок астероїда

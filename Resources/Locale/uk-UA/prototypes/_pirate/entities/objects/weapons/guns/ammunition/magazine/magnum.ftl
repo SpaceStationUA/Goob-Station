@@ -1,0 +1,7 @@
+ent-BaseMagazineUniversalMagnum = мк 32 'Універсальний' магазин (.45 магнум)
+ent-MagazineUniversalMagnum = мк 32 'Універсальний' магазин (.45 магнум)
+ent-MagazineUniversalMagnumEmpty = мк 32 'Універсальний' магазин (.45 магнум будь-який)
+ent-MagazineUniversalMagnumIncendiary = мк 32 'Універсальний' магазин (.45 магнум запалювальний)
+ent-MagazineUniversalMagnumPractice = мк 32 'Універсальний' магазин (.45 магнум тренувальний)
+ent-MagazineUniversalMagnumRubber = мк 32 'Універсальний' магазин (.45 магнум гумовий)
+ent-MagazineUniversalMagnumUranium = мк 32 'Універсальний' магазин (.45 магнум урановий)

@@ -1,0 +1,14 @@
+ent-KoboldCubeBox = коробка з кубиками кобольда
+    .desc = Згущені кобольди в кубі. Просто додай води!
+ent-KoboldCubeWrapped = запакований кобольдський кубик
+    .desc = Розгорніть його, щоб отримати кубик кобольда.
+ent-MonkeyCubeBox = коробка з кубиками мавпи
+    .desc = Кубики-мавпочки бренду Drymate. Просто додайте води!
+ent-MonkeyCubeWrapped = запакований мавпʼячий кубик
+    .desc = Розгорніть його, щоб отримати кубик мавпочки.
+ent-SyndicateSpongeBox = коробка з кубиками мавпи
+    .desc = Кубики-мавпочки бренду Drymate. Просто додайте води!
+ent-SyndicateSpongeWrapped = мавпʼячий кубик
+    .desc = { ent-MonkeyCubeWrapped.desc }
+ent-VariantCubeBox = варіантивна коробка з кубиками
+    .desc = І кубики кобольдів, і кубики мавп. Просто додайте води!

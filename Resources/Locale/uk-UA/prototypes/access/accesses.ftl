@@ -49,3 +49,12 @@ id-card-access-level-wizard = Чарівник
 id-card-access-level-genpop-enter = Вхід до Загального Блоку
 id-card-access-level-genpop-leave = Вихід із Загального Блоку
 id-card-access-level-basic-xenoborg = Ксеноборг
+id-card-access-level-ntr = Представник NT
+id-card-access-level-bso = Офіцер СЩ
+id-card-access-level-robotics = Робототехніка
+
+id-card-access-level-interdyne = Інтердайн
+id-card-access-level-interdyne-command = Місток Інтердайну
+id-card-access-level-interdyne-officer = Офіцер Інтердайну
+id-card-access-level-mantis = Псіо-екстрасенс
+id-card-access-level-emergency-command = Аварійний командний доступ

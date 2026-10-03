@@ -1,0 +1,10 @@
+ent-BaseMobBehonker = бехонкер
+    .desc = Плаваючий демонічний аспект бджолиної матері.
+ent-MobBehonkerElectrical = бехонкер
+    .desc = { ent-BaseMobBehonker.desc }
+ent-MobBehonkerGrav = бехонкер
+    .desc = { ent-BaseMobBehonker.desc }
+ent-MobBehonkerIce = бехонкер
+    .desc = { ent-BaseMobBehonker.desc }
+ent-MobBehonkerPyro = бехонкер
+    .desc = { ent-BaseMobBehonker.desc }

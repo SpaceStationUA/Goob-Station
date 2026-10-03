@@ -1,0 +1,1 @@
+ent-SpawnMobPotyzhnobot = спавнер потужнобота
