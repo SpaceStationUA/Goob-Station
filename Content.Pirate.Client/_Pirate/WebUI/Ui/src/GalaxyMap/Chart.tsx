@@ -3,6 +3,7 @@ import { cellsInExtent, hexCorners, hexToPixel, type Axial } from "./lib/hex";
 import { cellsByTerritory, cellOutline } from "./lib/geometry";
 import { hasRings, planetSheet, planetTypeFor, planetUri, seedFromId } from "./lib/planet";
 import { ringGeomFor, ringHalf } from "./WorldRing";
+import RemnantMark from "./RemnantMark";
 import { blackHoleUri } from "./lib/blackhole";
 import { reducedMotion } from "./BlackHole";
 import { loopToPxPath, loopsToPxPath, makeTransform } from "./lib/transform";
@@ -1023,6 +1024,20 @@ export default function Chart(props: ChartProps) {
                       />
                     )}
                   </For>
+                </Show>
+                {/* Remnants, drawn whether or not the planet sprites are on, for
+                    the same reason the black hole is: a pulsar and a quasar are not
+                    planet sprites and there is nothing here to toggle. They were
+                    missing from the chart entirely for two rounds of work and every
+                    check still passed, because the checks opened the overlay. */}
+                <Show when={n.system.kind === "pulsar" || n.system.kind === "quasar"}>
+                  <RemnantMark
+                    x={n.P.x}
+                    y={n.P.y}
+                    size={bhOf(n.system.id, n.system.importance).px}
+                    kind={n.system.kind as "pulsar" | "quasar"}
+                    seed={seedFromId(n.system.id)}
+                  />
                 </Show>
                 <Show when={n.system.kind === "star" || n.system.kind === "planet"}>
                   <Show

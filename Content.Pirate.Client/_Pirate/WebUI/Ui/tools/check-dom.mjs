@@ -2320,6 +2320,53 @@ try {
      * The quasar has to have the black hole's disc AND jets, because a quasar with
      * no disc is just a black hole and one with no jets is just a black hole again.
      */
+    /**
+     * The remnants exist ON THE CHART.
+     *
+     * This is the check whose absence let the whole thing ship broken. Pulsars and
+     * quasars were added to the overlay, the overlay tests passed, and the chart drew
+     * nothing for both — because a `SystemKind` matching no marker branch is not an
+     * error, it is an absence, and nothing was asserting it was not absent.
+     *
+     * Same shape as the nebula behind an opaque rect, which is twice now, so the
+     * rule is worth stating: a feature added to one surface needs an assertion on the
+     * OTHER surface or it does not exist.
+     */
+    const remMarks = await page.evaluate(() => {
+      const one = (kind) => {
+        const g = document.querySelector(`.remnant-${kind}`);
+        if (!g) return null;
+        const b = g.getBoundingClientRect();
+        return { w: Math.round(b.width), h: Math.round(b.height), paths: g.querySelectorAll("path").length };
+      };
+      return { pulsar: one("pulsar"), quasar: one("quasar") };
+    });
+    check(
+      "a pulsar is drawn ON THE CHART, not only in its overlay",
+      remMarks.pulsar !== null && remMarks.pulsar.w > 10 && remMarks.pulsar.paths >= 2,
+      remMarks.pulsar
+        ? `${remMarks.pulsar.w}x${remMarks.pulsar.h}px, ${remMarks.pulsar.paths} beam paths`
+        : "no .remnant-pulsar in the chart at all",
+    );
+    check(
+      "and it is big enough to find against a territory fill",
+      remMarks.pulsar !== null && remMarks.pulsar.w >= 20,
+      `${remMarks.pulsar?.w}px across; the first version was pale and small and read as nothing`,
+    );
+    check(
+      "a quasar is drawn ON THE CHART too",
+      remMarks.quasar !== null && remMarks.quasar.w >= 20,
+      remMarks.quasar ? `${remMarks.quasar.w}x${remMarks.quasar.h}px` : "no .remnant-quasar in the chart",
+    );
+    check(
+      "and its jets animate, because a quasar that does not move reads as a diagram",
+      await page.evaluate(() => {
+        const a = document.querySelector(".remnant-quasar path animate");
+        return !!a && a.getAttribute("repeatCount") === "indefinite";
+      }),
+      "a SMIL opacity animation on the chart's jets, repeatCount indefinite",
+    );
+
     const openSys = async (id) => {
       await page.evaluate(async (sys) => {
         const hit = document.querySelector(`.sys-hit[data-sys='${sys}']`);

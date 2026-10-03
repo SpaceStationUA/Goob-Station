@@ -185,6 +185,28 @@ The beam sweep is the only animation on this chart and it is deliberate: a pulsa
 distinguished from every other kind of neutron star by the fact that its emission is
 beamed and rotating. Drawn as a static dot it is a white dwarf.
 
+**Both are on the chart as well as the overlay**, and they were MISSING from the
+chart for two rounds of work after being added to the overlay. A `SystemKind` that
+matches no marker branch is not an error, it is an absence, and every check was
+green because every check opened the overlay. That is the same shape of mistake as
+the nebula behind an opaque rect, so it is now written down as a rule: **a feature
+added to one surface needs an assertion on the other surface or it does not exist.**
+
+The chart's marks are SVG rather than the overlay's canvas, because they are 16 to
+40 pixels and the overlay is 190. Four octaves of fbm and a sweeping beam are both
+invisible at 16px, and a path costs nothing per marker where a canvas costs a
+compositing layer each.
+
+What does have to survive the reduction is contrast, not size. The first pulsar mark
+was small AND pale, against a territory fill that is a bright hatch, and it was
+correctly reported as invisible. It now has a dark rim under the core, because a
+white dot on a hatch disappears into it and a rim is what makes it a dot.
+
+**The quasar's jets pulse rather than sweep.** The obvious fix to "it just sits in
+the same position" is to rotate something, and that would be wrong: a jet is a steady
+plume leaving a pole, and a plume that swings is a clock hand. What makes a quasar
+look alive is that its output *varies*, so opacity is animated and position is not.
+
 **The quasar is the cheapest of the four and the most striking**, because the
 expensive part is already built and already correct. Jets are two soft cones along
 the disc's axis, composited with `mix-blend-mode: screen` so the near one crossing

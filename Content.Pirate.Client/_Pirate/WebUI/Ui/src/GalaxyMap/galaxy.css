@@ -167,8 +167,46 @@ svg.chart.painting {
   display: block;
 }
 
+/* Chart marks.  does not apply — these are paths, not rasters. */
+.remnant-mark {
+  pointer-events: none;
+}
+.remnant-pulsar {
+  filter: drop-shadow(0 0 3px rgba(170, 210, 255, 0.9));
+}
+.remnant-quasar {
+  filter: drop-shadow(0 0 2px rgba(200, 160, 80, 0.4));
+}
+
 .quasar {
   position: relative;
+}
+
+/**
+ * The overlay jets pulse rather than sweep.
+ *
+ * The complaint that produced this was that the quasar sat in the same position and
+ * looked inert. The obvious fix is to rotate something, and that would be wrong: a
+ * jet is a steady plume leaving a pole, and a plume that swings is a clock hand. What
+ * makes a quasar look alive is that its OUTPUT VARIES, so opacity is animated and
+ * position is not. The chart's marks do the same thing in SMIL.
+ *
+ * Two beats rather than a smooth loop, because a real quasar is variable on a scale
+ * of days and anything sinusoidal reads as a machine.
+ */
+.quasar-jets path {
+  animation: jet-flicker 2.6s ease-in-out infinite alternate;
+}
+.quasar-jets path:nth-of-type(2) {
+  animation-delay: -1.3s;
+}
+@keyframes jet-flicker {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 0.34;
+  }
 }
 .quasar-jets {
   position: absolute;
