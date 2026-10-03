@@ -353,7 +353,7 @@ public sealed class PaperSystem : EntitySystem
         // Pirate: stamped/signed documents and leaves are final - only a write session
         // opened with a stamp-ignoring pen (cyberpen) may still write into them. This also
         // covers a flip carrying an edit onto a leaf that got signed while the editor was open.
-        if (IsWriteLocked(entity, targetPage) && !entity.Comp.WriteSessionIgnoresStamps)
+        if (IsWriteLocked(entity, targetPage) && entity.Comp.WriteSessionIgnoresStampsActor != actor)
             return false;
 
         // Pirate: player text must never contain the reserved PaperPageFormat/cover-meta
@@ -513,8 +513,8 @@ public sealed class PaperSystem : EntitySystem
             case PaperPageAction.Turn:
                 // The flip carries the text still being typed, so the leaf being left
                 // behind keeps it instead of the window silently dropping the edit.
-                if (args.Text != null)
-                    TryWriteText(entity, args.Actor, args.Text, args.TextPage);
+                if (args.Text != null && !TryWriteText(entity, args.Actor, args.Text, args.TextPage))
+                    return;
 
                 SetCurrentPage(entity, pages, args.Page);
                 return;
