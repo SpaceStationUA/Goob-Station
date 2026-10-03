@@ -202,6 +202,33 @@ was small AND pale, against a territory fill that is a bright hatch, and it was
 correctly reported as invisible. It now has a dark rim under the core, because a
 white dot on a hatch disappears into it and a rim is what makes it a dot.
 
+**The quasar's jets move, and it took three attempts to get right.** "Sits in the
+same position and looks inert" was the complaint, and each fix failed for a
+different reason:
+
+1. *Fading the plume.* Says something is happening without showing anything
+   happening. The eye locks onto the largest stationary thing in the frame and the
+   jet is that.
+2. *Discrete knots travelling outward.* Geometrically right — a jet really does
+   carry bright condensations, visible in M87's — and they rendered as grey blocks.
+   Scaling a trapezoid vertically produces a bigger trapezoid, and a screen-blended
+   off-white trapezoid on a dark background is a rectangle.
+3. *Sliding the jet's GRADIENT.* No shape involved, so nothing to misread, and the
+   motion is continuous. The bright stop runs from the pole to the tip and the
+   gradient's extent moves with it so the ramp never tears.
+
+The quasar's disc also turns at 2.4s against the black hole's 6s. The obvious reason
+is that a quasar is not a stellar black hole. The real one is perceptual: the disc
+is thin and mostly dark, so a slow rotation changes about one per cent of the
+panel's pixels however long you wait, and the eye reads one per cent over six
+seconds as nothing happening.
+
+Worth recording that the metric and the judgement disagreed. The gradient slide
+*halved* the measured fraction of pixels changing — 3.1% down to 1.0% — while making
+the object obviously more alive, because a travelling highlight changes fewer pixels
+than a block flipping. The screenshot is the evidence and the number is the
+thermometer.
+
 **The quasar's jets pulse rather than sweep.** The obvious fix to "it just sits in
 the same position" is to rotate something, and that would be wrong: a jet is a steady
 plume leaving a pole, and a plume that swings is a clock hand. What makes a quasar

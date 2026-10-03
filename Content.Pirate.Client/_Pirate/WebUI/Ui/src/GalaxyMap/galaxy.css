@@ -194,20 +194,6 @@ svg.chart.painting {
  * Two beats rather than a smooth loop, because a real quasar is variable on a scale
  * of days and anything sinusoidal reads as a machine.
  */
-.quasar-jets path {
-  animation: jet-flicker 2.6s ease-in-out infinite alternate;
-}
-.quasar-jets path:nth-of-type(2) {
-  animation-delay: -1.3s;
-}
-@keyframes jet-flicker {
-  from {
-    opacity: 0.85;
-  }
-  to {
-    opacity: 0.34;
-  }
-}
 .quasar-jets {
   position: absolute;
   inset: 0;

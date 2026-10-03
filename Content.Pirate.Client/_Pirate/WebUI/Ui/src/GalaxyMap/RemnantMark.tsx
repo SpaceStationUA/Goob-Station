@@ -74,29 +74,36 @@ export default function RemnantMark(props: RemnantMarkProps) {
               ry={r() * 0.13}
               fill="#0a0f18"
             />
-            {/* The jets. A SMIL `animate` on opacity rather than a transform, so the
-                jets PULSE instead of moving: a jet leaving the pole is a steady
-                plume, and a plume that swings is not a quasar, it is a clock hand.
-                The overlay's black hole turns because its disc really does; the
-                thing that makes a quasar look alive is that its output varies, not
-                that it rotates. */}
+            {/*
+              * The jets, with their brightness travelling outward.
+              *
+              * The overlay slides the jet's GRADIENT to do this and the chart does
+              * the same thing, because the alternative — discrete knots — was tried
+              * and reads as grey blocks: a screen-blended off-white trapezoid on a
+              * dark background is a rectangle, and scaling one vertically only makes
+              * a bigger rectangle. There is no shape to misread when there is no
+              * shape.
+              *
+              * Both poles, because one is a diagram.
+              */}
+            <defs>
+              <linearGradient id={`mj-${props.seed}`} x1="0" y1="1" x2="0" y2="0">
+                <animate attributeName="y1" values="1;0.1;-0.9" dur="1.35s" repeatCount="indefinite" />
+                <animate attributeName="y2" values="2;1.1;0.1" dur="1.35s" repeatCount="indefinite" />
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+                <stop offset="30%" stop-color="#9fc6ff" stop-opacity="0.45" />
+                <stop offset="100%" stop-color="#9fc6ff" stop-opacity="0" />
+              </linearGradient>
+            </defs>
             <g transform={`rotate(${props.seed % 90})`}>
-              <path d={`M 0 ${-r() * 0.2} L ${-r() * 0.13} ${-r() * 1.5} L ${r() * 0.13} ${-r() * 1.5} Z`} fill="#9fc6ff">
-                <animate
-                  attributeName="opacity"
-                  values="0.75;0.3;0.75"
-                  dur="2.4s"
-                  repeatCount="indefinite"
-                />
-              </path>
-              <path d={`M 0 ${r() * 0.2} L ${-r() * 0.13} ${r() * 1.5} L ${r() * 0.13} ${r() * 1.5} Z`} fill="#9fc6ff">
-                <animate
-                  attributeName="opacity"
-                  values="0.75;0.3;0.75"
-                  dur="2.4s"
-                  repeatCount="indefinite"
-                />
-              </path>
+              <path
+                d={`M 0 ${-r() * 0.2} L ${-r() * 0.1} ${-r() * 1.5} L ${r() * 0.1} ${-r() * 1.5} Z`}
+                fill={`url(#mj-${props.seed})`}
+              />
+              <path
+                d={`M 0 ${r() * 0.2} L ${-r() * 0.1} ${r() * 1.5} L ${r() * 0.1} ${r() * 1.5} Z`}
+                fill={`url(#mj-${props.seed})`}
+              />
             </g>
           </>
         }

@@ -2359,12 +2359,16 @@ try {
       remMarks.quasar ? `${remMarks.quasar.w}x${remMarks.quasar.h}px` : "no .remnant-quasar in the chart",
     );
     check(
-      "and its jets animate, because a quasar that does not move reads as a diagram",
+      "and its jets MOVE, because a quasar that does not move reads as a diagram",
       await page.evaluate(() => {
-        const a = document.querySelector(".remnant-quasar path animate");
-        return !!a && a.getAttribute("repeatCount") === "indefinite";
+        // The animation lives on the jet's GRADIENT, not on its path: the motion is
+        // a highlight travelling along a static plume. Asserting on `path animate`
+        // passed while the jets faded in place, which is the version that was
+        // rejected as idle.
+        const a = document.querySelector(".remnant-quasar linearGradient animate");
+        return !!a && a.getAttribute("attributeName") === "y1";
       }),
-      "a SMIL opacity animation on the chart's jets, repeatCount indefinite",
+      "a SMIL animation on the jet gradient's y1 — the highlight travels outward",
     );
 
     const openSys = async (id) => {
@@ -2439,6 +2443,13 @@ try {
       return {
         jets: o.querySelectorAll(".quasar-jets path").length,
         disc: !!o.querySelector(".blackhole .world-gl, .blackhole .world-still"),
+        // Captured HERE because the overlay is closed immediately afterwards, and
+        // a check that runs after the close finds nothing and fails for a reason
+        // that has nothing to do with the jets.
+        jetMoves: (() => {
+          const a = o.querySelector(".quasar-jets linearGradient animate");
+          return !!a && a.getAttribute("repeatCount") === "indefinite";
+        })(),
       };
     });
     await closeSys();
@@ -2450,6 +2461,11 @@ try {
       `${opposedBeams} opposed pair(s) of lit lobes either side of the core. A pulsar drawn as a ` +
         `bright dot is a white dwarf, and the beamed emission is the entire difference, so ` +
         `counting the beams is the assertion that means anything.`,
+    );
+    check(
+      "and the overlay's jets move on the same principle",
+      quasar.jetMoves,
+      "the overlay's jet gradient animates too, so both surfaces agree",
     );
     check(
       "a quasar draws the black hole's disc AND jets",
