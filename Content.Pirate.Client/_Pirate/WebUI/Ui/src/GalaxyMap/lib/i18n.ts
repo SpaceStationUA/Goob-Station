@@ -76,6 +76,11 @@ export interface UiStrings {
   planets: LocalizedText;
   /** Tooltip for the nebula palette button. */
   sky: LocalizedText;
+  /* remnants */
+  kindPulsar: LocalizedText;
+  kindQuasar: LocalizedText;
+  kindDwarf: LocalizedText;
+  kindRemnant: LocalizedText;
   /** The nebula palette names themselves. Endonyms, never translated. */
   paint: LocalizedText;
   undo: LocalizedText;
@@ -135,6 +140,10 @@ export const DEFAULT_STRINGS: UiStrings = {
     en: "Space behind the chart. Click to change it.",
     uk: "Космос за картою. Натисніть, щоб змінити.",
   },
+  kindPulsar: { en: "PULSAR", uk: "ПУЛЬСАР" },
+  kindQuasar: { en: "QUASAR", uk: "КВАЗАР" },
+  kindDwarf: { en: "WHITE DWARF", uk: "БІЛИЙ КАРЛИК" },
+  kindRemnant: { en: "SUPERNOVA REMNANT", uk: "ЗАЛИШОК СНАПЛАВУ" },
   paint: { en: "PAINT", uk: "ФАРБА" },
   undo: { en: "UNDO", uk: "СКАСУВАТИ" },
   close: { en: "CLOSE", uk: "ЗАКРИТИ" },

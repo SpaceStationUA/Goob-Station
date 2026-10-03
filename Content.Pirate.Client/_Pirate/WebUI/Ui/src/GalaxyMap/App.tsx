@@ -4,8 +4,10 @@ import NebulaBackdrop from "./NebulaBackdrop";
 import { DEFAULT_PALETTE, PALETTES } from "./lib/nebula";
 import { cellsInExtent, hexLine, key, pixelToHex, type Axial } from "./lib/hex";
 import { cellsByTerritory } from "./lib/geometry";
-import { pick, type GalaxyModel, type StarSystem } from "./lib/model";
+import { pick, type GalaxyModel, type StarSystem, type SystemKind } from "./lib/model";
+import type { UiStrings } from "./lib/i18n";
 import { hasRings, planetTypeFor, seedFromId } from "./lib/planet";
+import Remnant from "./Remnant";
 import { readableOnDark } from "./Chart";
 import WorldSprite from "./WorldSprite";
 import BlackHole from "./BlackHole";
@@ -51,6 +53,27 @@ const brushId = (b: Brush | undefined): string => {
  * model. The data comes from a FixtureSource here; in game it will come from
  * a bridge source, and nothing below this line has to change.
  */
+/**
+ * System kind -> the locale key for its name in the overlay.
+ *
+ * A table rather than the nested ternary it replaced. Nine arms of ternary is past
+ * what anyone can read, and a new kind added to the union would have failed to
+ * compile in a way that pointed at the wrong file — whereas a missing key here is a
+ * visible `undefined` in the panel and nothing else.
+ */
+const KIND_LABEL: Record<SystemKind, keyof UiStrings> = {
+  star: "kindStar",
+  planet: "kindPlanet",
+  blackhole: "kindBlackHole",
+  pulsar: "kindPulsar",
+  quasar: "kindQuasar",
+  dwarf: "kindDwarf",
+  remnant: "kindRemnant",
+  station: "kindStation",
+  gate: "kindGate",
+  outpost: "kindOutpost",
+};
+
 export default function App() {
   const [model, setModel] = createSignal<GalaxyModel>();
   const [selected, setSelected] = createSignal<string>();
@@ -497,18 +520,7 @@ export default function App() {
                 <Show when={sys}>
                   {s => {
                     const terr = () => terrById().get(s().territory);
-                    const kindKey = () =>
-                      s().kind === "star"
-                        ? "kindStar"
-                        : s().kind === "planet"
-                          ? "kindPlanet"
-                          : s().kind === "blackhole"
-                            ? "kindBlackHole"
-                            : s().kind === "station"
-                            ? "kindStation"
-                            : s().kind === "gate"
-                              ? "kindGate"
-                              : "kindOutpost";
+                    const kindKey = () => KIND_LABEL[s().kind];
                     return (
                       // A ringed system gets a wider panel, so the ring can be the
                       // size a ring is instead of a collar. See `.overlay.ringed`.
@@ -532,31 +544,42 @@ export default function App() {
                             rotation is invisible and the sprite is mostly a
                             coloured dot; at 180px it is the reason to click. */}
                         <div class="overlay-art">
-                          {/* A singularity has no world to draw. The panel still
-                              opens, and still says what the system is — which is
-                              the point of making it its own kind. */}
-                          <Show
-                            when={s().kind === "blackhole"}
-                            fallback={
+                          {/*
+                           * Three renderers, chosen by what the system IS, and the
+                           * order is the point.
+                           *
+                           * A remnant has no world, so it cannot go through
+                           * `WorldSprite` — there is nothing to generate. A
+                           * singularity has no world either but has its own body, and
+                           * gets `BlackHole`. Everything else is a planet.
+                           *
+                           * This was a nested `<Show>` two levels deep and became
+                           * unreadable at nine kinds, so the dispatch is a function
+                           * returning an element. A fourth kind is now one line here
+                           * and one entry in `KIND_LABEL`, rather than another arm
+                           * of a ternary nobody can hold in their head.
+                           */}
+                          {(() => {
+                            const k = s().kind;
+                            const seed = seedFromId(s().id);
+                            if (k === "pulsar" || k === "quasar") {
+                              return <Remnant kind={k} px={190} seed={seed} />;
+                            }
+                            if (k === "blackhole") {
+                              return <BlackHole px={190} seed={seed} frames={48} period={6} title={pick(s().name, loc())} />;
+                            }
+                            return (
                               <WorldSprite
-                                seed={seedFromId(s().id)}
+                                seed={seed}
                                 type={worldType(s())}
                                 px={200}
                                 frames={96}
                                 period={12}
-                                ring={hasRings(seedFromId(s().id), worldType(s()), s().rings)}
+                                ring={hasRings(seed, worldType(s()), s().rings)}
                                 title={pick(s().name, loc())}
                               />
-                            }
-                          >
-                            <BlackHole
-                              px={190}
-                              seed={seedFromId(s().id)}
-                              frames={48}
-                              period={6}
-                              title={pick(s().name, loc())}
-                            />
-                          </Show>
+                            );
+                          })()}
                         </div>
 
                         <h2 style={{ color: readableOnDark(terr()?.color ?? "#94a3b8") }}>

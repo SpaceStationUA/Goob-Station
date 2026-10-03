@@ -64,6 +64,27 @@ export type SystemKind =
   | "star"
   | "planet"
   | "blackhole"
+  /**
+   * What a star leaves behind, and the four kinds here are the endpoints and the
+   * middle of stellar evolution rather than four unrelated specials.
+   *
+   * They are one family on purpose. The chart can now show a star's whole life:
+   *
+   *     star  ->  dwarf      a core that stopped collapsing, still cooling
+   *          \->  remnant    the explosion, and the shell it leaves
+   *             \-> pulsar   a collapsed core, spinning, beams out of its poles
+   *                \-> blackhole   collapsed past the point of no return
+   *
+   * Every one of these is an OBSERVED object. That is the test applied before
+   * adding any of them, and it is the reason a white hole is not on this list: a
+   * white hole is a solution to the equations of general relativity and has never
+   * been observed, which makes it a different kind of thing to put on a map that is
+   * otherwise showing real objects in real positions.
+   */
+  | "dwarf"
+  | "remnant"
+  | "pulsar"
+  | "quasar"
   | "station"
   | "gate"
   | "outpost";

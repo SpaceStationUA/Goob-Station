@@ -155,6 +155,31 @@ svg.chart.painting {
   border-color: #cfe3ff;
 }
 
+/**
+ * Remnants: pulsars and quasars.
+ *
+ * The pulsar is a canvas and the quasar is the black hole's own output with an SVG
+ * of jets over it. Neither is a shader, which is worth noting given the two that
+ * are: those are shaders because their shapes are CARVED BY NOISE, not because
+ * drawing them fast needs one. A pulsar is gradients.
+ */
+.pulsar {
+  display: block;
+}
+
+.quasar {
+  position: relative;
+}
+.quasar-jets {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Additive, so where the near jet crosses the disc the two brighten. That is
+     what gives the object depth: the jet is optically thin, so you see it over
+     the disc rather than under it. */
+  mix-blend-mode: screen;
+}
+
 .panel {
   position: absolute;
   top: 14px;

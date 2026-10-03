@@ -165,6 +165,10 @@ const sys = (
 export const SYSTEMS: StarSystem[] = [
   sys("tau-ceti", L("Tau Ceti", "Тау Цеті"), 17, -5, "star", 3, "biesel"),
   sys("mictlan", L("Mictlan", "Міктлан"), 22, -11, "planet", 2, "biesel", "terran"),
+  // Remnants. A pulsar and a quasar, so both renderers appear on the chart; the
+  // quasar sits where a galaxy would be a more plausible neighbour.
+  sys("pulsar-1", L("Cygnus X-1", "Лебеди X-1"), -5, 7, "pulsar", 2, "solarian"),
+  sys("quasar-1", L("P Cygni", "P Лебіді"), -1, 4, "quasar", 3, "solarian"),
   sys("port-antilla", L("Port Antilla", "Порт Антілья"), 12, -10, "station", 1, "biesel"),
   sys("qerrbalak", L("Qerrbalak", "Керрбалак"), -30, 9, "star", 3, "nralakk"),
   sys("xanu", L("Xanu", "Ксану"), -41, 13, "planet", 2, "nralakk", "desert"),

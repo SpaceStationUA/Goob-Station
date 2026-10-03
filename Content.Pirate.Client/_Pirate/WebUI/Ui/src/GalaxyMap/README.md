@@ -158,6 +158,39 @@ sequence failed on its first item and every mapping silently lost its first key.
 The second one is the dangerous shape — a map missing `width` reads as a
 misconfigured map, not as a broken parser.
 
+## Remnants
+
+Four `SystemKind`s that are the endpoints and the middle of stellar evolution, and
+they are one family on purpose — the chart can show a star's whole life:
+
+    star ──> dwarf        a core that stopped collapsing, still cooling
+         └─> remnant      the explosion, and the shell it leaves
+             └─> pulsar   a collapsed core, spinning, beams out of its poles
+                └─> blackhole   collapsed past the point of no return
+
+**Every one of these is an observed object.** That was the test for adding any of
+them, and it is why there is no white hole: a white hole solves the equations of
+general relativity and nothing has ever been observed that requires one, which makes
+it a different kind of thing to put on a map that otherwise shows real objects in
+real positions.
+
+**The pulsar is canvas 2D and the black hole and the ring are WebGL**, and the
+distinction is not an inconsistency. Those two are shaders because their shapes are
+*carved by noise* — the divisions in a ring and in an accretion disc are where an fbm
+fell below a threshold, and there is no way to draw that with gradients or paths. A
+pulsar is a hard point and two soft cones, which is gradients, and a shader for it
+would be a whole program to do something `createRadialGradient` already does.
+
+The beam sweep is the only animation on this chart and it is deliberate: a pulsar is
+distinguished from every other kind of neutron star by the fact that its emission is
+beamed and rotating. Drawn as a static dot it is a white dwarf.
+
+**The quasar is the cheapest of the four and the most striking**, because the
+expensive part is already built and already correct. Jets are two soft cones along
+the disc's axis, composited with `mix-blend-mode: screen` so the near one crossing
+the disc's face brightens rather than hides — a jet is optically thin, so you see it
+over the disc, and that crossing is what gives the object depth.
+
 ## Planet types
 
 Eight orbital types: terran, ocean, **river**, desert, ice, gas, lava, barren. Plus
