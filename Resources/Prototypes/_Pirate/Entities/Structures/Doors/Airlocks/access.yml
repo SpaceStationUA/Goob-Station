@@ -184,3 +184,23 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMedical ]
+
+- type: entity
+  parent: AirlockExternalGlassShuttleEmergencyLocked
+  id: AirlockExternalGlassShuttleEmergencySecurityLocked
+  suffix: External, Emergency, Glass, Docking, Security, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurity ]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassSecurityLocked
+  suffix: External, Glass, Security, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurity ]
+  - type: Wires
+    layoutId: AirlockSecurity

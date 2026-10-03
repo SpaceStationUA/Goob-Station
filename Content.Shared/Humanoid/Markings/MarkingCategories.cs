@@ -30,12 +30,13 @@ namespace Content.Shared.Humanoid.Markings
         Arms,
         Legs,
         Groin, // Shitmed Change
-        Wings, // For IPC wings porting from SimpleStation
+        Wings,
         Tail,
         Overlay,
         // Pirate - append new values so existing NetSerializable byte values stay stable.
         HairSpecial, // Pirate - Trauma Station hair gradients
-        FacialHairSpecial // Pirate - Trauma Station hair gradients
+        FacialHairSpecial, // Pirate - Trauma Station hair gradients; Pirate: lizard head shape
+        HeadShape // Pirate: lizard head shape; full-head markings stay beneath Head overlays
     }
 
     public static class MarkingCategoriesConversion

@@ -452,7 +452,6 @@
     - PipeBend
     - PipeTJunction
     - CEMultizAtmosPipeAdapter # Pirate: multiz
-    - GasPipeManifold # Pirate: heat exchange pipes
     - OutletInjector
     - ManualValve
     - VolumetricPump
