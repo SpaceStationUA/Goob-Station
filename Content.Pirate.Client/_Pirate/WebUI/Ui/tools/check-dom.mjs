@@ -1105,6 +1105,83 @@ try {
      * inherited by the canvas, but the canvas is inserted from script after the
      * stylesheet is applied, so it is worth checking rather than assuming.
      */
+    /**
+     * Is any of it actually ON SCREEN?
+     *
+     * Every check above reads the nebula canvas. That is not the same question, and
+     * it is not a pedantic one: the canvas rendered 54% coverage at peak luminance
+     * 182 and contributed a maximum per-pixel delta of 2 to the finished page,
+     * because the chart drew an OPAQUE radial gradient over the whole SVG. It was
+     * fully hidden.
+     *
+     * And it stayed hidden through a screenshot review, because the chart already
+     * had two hand-rolled radial gradients behind it labelled `nebulaA` and
+     * `nebulaB` -- one blue, one purple. Those are what I saw, described as gas in
+     * the corners, and wrote up as working. The tell was the only one available: the
+     * gas I described was in a colour the new palette does not contain.
+     *
+     * So this measures the page with the backdrop and without it, and requires a real
+     * difference. It is the only assertion here that would have caught that, and it
+     * is negative-controlled by putting the opaque background back.
+     */
+    const shotWith = await page.screenshot();
+    // `visibility: hidden`, NOT removing the element and NOT reloading.
+    //
+    // Both of those were tried. Removing the backdrop is fine in itself, but it left
+    // the page without it for every check that follows, and reloading to put it back
+    // threw away the armed brush and the paint history that the next three checks
+    // depend on -- so a check about a background decoration broke three unrelated
+    // ones. Hiding it and putting it back touches nothing else.
+    await page.evaluate(() => {
+      document.querySelector(".nebula-backdrop").style.visibility = "hidden";
+    });
+    await page.waitForTimeout(150);
+    const shotWithout = await page.screenshot();
+    await page.evaluate(() => {
+      document.querySelector(".nebula-backdrop").style.visibility = "";
+    });
+    const onScreen = await page.evaluate(
+      async ([x, y]) => {
+        const load = async (s) => {
+          const i = new Image();
+          i.src = "data:image/png;base64," + s;
+          await i.decode();
+          const c = document.createElement("canvas");
+          c.width = i.width;
+          c.height = i.height;
+          const g = c.getContext("2d");
+          g.drawImage(i, 0, 0);
+          return g.getImageData(0, 0, c.width, c.height).data;
+        };
+        const A = await load(x);
+        const B = await load(y);
+        let changed = 0;
+        let sum = 0;
+        let max = 0;
+        for (let i = 0; i < A.length; i += 4) {
+          const d =
+            (Math.abs(A[i] - B[i]) + Math.abs(A[i + 1] - B[i + 1]) + Math.abs(A[i + 2] - B[i + 2])) / 3;
+          if (d > 4) {
+            changed++;
+            sum += d;
+          }
+          if (d > max) max = d;
+        }
+        return {
+          pct: (100 * changed) / (A.length / 4),
+          mean: sum / Math.max(1, changed),
+          max: Math.round(max),
+        };
+      },
+      [shotWith.toString("base64"), shotWithout.toString("base64")],
+    );
+    check(
+      "and it is actually ON SCREEN, not just correct inside its own canvas",
+      onScreen.pct > 20 && onScreen.mean > 10,
+      `removing the backdrop changes ${onScreen.pct.toFixed(1)}% of the page, mean ${onScreen.mean.toFixed(1)}, ` +
+        `peak ${onScreen.max}. An opaque background rect over the SVG is what zeroes this.`,
+    );
+
     const pe = await page.evaluate(() => {
       const host = document.querySelector(".nebula-backdrop");
       const cv = document.querySelector(".nebula-canvas");

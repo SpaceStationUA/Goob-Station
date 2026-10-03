@@ -735,18 +735,29 @@ export default function Chart(props: ChartProps) {
               </clipPath>
             )}
           </For>
-          <radialGradient id="deep" cx="50%" cy="42%" r="78%">
-            <stop offset="0%" stop-color="#0d1526" />
-            <stop offset="55%" stop-color="#070c17" />
-            <stop offset="100%" stop-color="#03050a" />
-          </radialGradient>
-          <radialGradient id="nebulaA" cx="30%" cy="35%" r="42%">
-            <stop offset="0%" stop-color="#2a3f7a" stop-opacity="0.5" />
-            <stop offset="100%" stop-color="#2a3f7a" stop-opacity="0" />
-          </radialGradient>
-          <radialGradient id="nebulaB" cx="72%" cy="66%" r="46%">
-            <stop offset="0%" stop-color="#5a2a5e" stop-opacity="0.38" />
-            <stop offset="100%" stop-color="#5a2a5e" stop-opacity="0" />
+          {/*
+           * A VIGNETTE, and it has to be transparent in the middle.
+           *
+           * This was an opaque gradient -- three colour stops with no stop-opacity --
+           * under two hand-rolled "nebula" gradients, and it did two jobs: it stopped
+           * the chart reading as flat black, and it hid the nebula canvas behind the
+           * SVG completely.
+           *
+           * The hiding is the part worth recording. I added a real procedural nebula,
+           * screenshotted it, saw warm gas in the corners, and wrote that it worked.
+           * What I was seeing was `nebulaA` and `nebulaB` -- two radial gradients that
+           * were already there, one blue and one purple -- and not my canvas at all.
+           * An A/B with the backdrop removed from the DOM measured a maximum per-pixel
+           * delta of 2 across the whole page: the nebula contributed nothing.
+           *
+           * So the two fake gradients are gone and this is only the darkening at the
+           * edges, which is the one thing the procedural nebula does not do: its
+           * `should_tile` branch drops the distance-from-centre falloff.
+           */}
+          <radialGradient id="vignette" cx="50%" cy="42%" r="78%">
+            <stop offset="0%" stop-color="#0d1526" stop-opacity="0" />
+            <stop offset="58%" stop-color="#070c17" stop-opacity="0" />
+            <stop offset="100%" stop-color="#03050a" stop-opacity="0.62" />
           </radialGradient>
 
           <For each={props.model.territories}>
@@ -781,10 +792,9 @@ export default function Chart(props: ChartProps) {
           </pattern>
         </defs>
 
-        {/* Background. Depth first, so nothing reads as flat black. */}
-        <rect x="0" y="0" width={size().w} height={size().h} fill="url(#deep)" />
-        <rect x="0" y="0" width={size().w} height={size().h} fill="url(#nebulaA)" />
-        <rect x="0" y="0" width={size().w} height={size().h} fill="url(#nebulaB)" />
+        {/* Background. Only the vignette -- the gas is the canvas behind this SVG,
+            and the stars below are the chart's own, drawn over it. */}
+        <rect x="0" y="0" width={size().w} height={size().h} fill="url(#vignette)" />
         <For each={stars()}>
           {s => <circle cx={s.x} cy={s.y} r={s.r} fill="#dfe9f5" opacity={s.o} />}
         </For>

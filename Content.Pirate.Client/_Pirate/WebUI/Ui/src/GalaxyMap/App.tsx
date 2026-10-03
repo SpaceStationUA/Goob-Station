@@ -352,7 +352,7 @@ export default function App() {
           {/* Behind everything. `reduce` is on: the reference's own flag for a
               background that has to carry text, and it does -- twenty-odd
               territory labels, a route list and a graticule sit on top. */}
-          <NebulaBackdrop seed={7} />
+          <NebulaBackdrop reduce seed={7} />
           <Chart
             model={m()}
             locale={loc()}
