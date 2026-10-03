@@ -97,6 +97,7 @@ uniform float u_holeRadius;
 uniform float u_holeLightWidth;
 uniform float u_doppler;       // asymmetric brightening, 0 disables
 uniform float u_photonRing;    // 0 disables
+uniform float u_spiral;        // spiral density wave, 0 disables
 uniform float u_holeRatio;
 uniform vec3  u_hole0;         // the void
 uniform vec3  u_hole1;         // white ring
@@ -245,6 +246,25 @@ void main() {
 
     uv_center = rotate(uv_center + vec2(0.0, 0.5), u_time * u_timeSpeed * 3.0);
     disk *= pow(fbm(uv_center * u_size), 0.5);
+
+    // The SPIRAL DENSITY WAVE, from the same reference:
+    //
+    //   float bands = sin(radial * 54.0 - angle * 3.0 + BodySeed * 0.17) * 0.5 + 0.5;
+    //   coverage = edge * DiskDensity * (0.42 + bands * 0.28 + noise * 0.45);
+    //
+    // A coherent two-armed wave in addition to the fbm, which is a field with no
+    // preferred direction at all. The fbm alone gives a disc that looks like static;
+    // what makes a disc read as a disc is that it is SHEARED, and shear is exactly what
+    // a term in 'radial * k - angle * m' is. The two are complementary and both are
+    // wanted: the wave for structure, the noise for texture.
+    //
+    // 54 and 3 are the reference's, so the wave has the same pitch in radial and
+    // azimuthal terms that theirs does. 'center_d' is the radial coordinate.
+    if (u_spiral > 0.0) {
+      float ang = atan(uv.y - 0.5, uv.x - 0.5);
+      float wave = sin(center_d * 54.0 - ang * 3.0 + u_seed * 0.17) * 0.5 + 0.5;
+      disk *= mix(1.0, 0.72 + wave * 0.56, u_spiral);
+    }
     if (dith > 0.5) disk *= 1.2;
 
     // DOPPLER BEAMING, ported from Cosmoglyph's black_hole.glsl.
@@ -340,6 +360,8 @@ export const DOPPLER = 0.24;
  */
 export const PHOTON_RING = 0.9;
 
+export const SPIRAL = 0.85;
+
 export function glSupported(): boolean {
   if (typeof document === "undefined") return false;
   try {
@@ -378,7 +400,9 @@ export interface BlackHoleGLOpts {
    */
   doppler?: number;
   /** Photon ring strength, 0 disables. See PHOTON_RING. */
-  photonRing?: number;}
+  photonRing?: number;
+  /** Spiral density wave depth, 0 disables. See SPIRAL. */
+  spiral?: number;}
 
 /**
  * A live black hole. Returns `null` if WebGL or the shader is unavailable, and the
@@ -464,6 +488,7 @@ export function blackHoleGL(opts: BlackHoleGLOpts): BlackHoleGL | null {
   gl.uniform1f(u("u_perspective"), PERSPECTIVE);
   gl.uniform1f(u("u_doppler"), opts.doppler ?? DOPPLER);
   gl.uniform1f(u("u_photonRing"), opts.photonRing ?? PHOTON_RING);
+  gl.uniform1f(u("u_spiral"), opts.spiral ?? SPIRAL);
   gl.uniform1f(u("u_size"), NOISE_SIZE);
   gl.uniform1f(u("u_pixels"), DISC_PIXELS);
   gl.uniform1f(u("u_holePixels"), HOLE_PIXELS);

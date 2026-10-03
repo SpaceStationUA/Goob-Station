@@ -1832,3 +1832,47 @@ where they overlap the ring wins.
 The frame matters here too, and in the opposite direction: the ring uses the horizon
 block's CIRCULAR distance, not the disc's `center_d`, because `center_d` is measured in a
 frame with y stretched by `u_perspective` and would have put the ring in an ellipse.
+
+### The spiral wave, and a lensing that was removed rather than shipped
+
+**Kept: the spiral density wave.** From the same reference:
+
+    float bands = sin(radial * 54.0 - angle * 3.0 + BodySeed * 0.17) * 0.5 + 0.5;
+    coverage = edge * DiskDensity * (0.42 + bands * 0.28 + noise * 0.45);
+
+A coherent two-armed wave alongside the fbm, which has no preferred direction at all. The
+fbm alone gives a disc that looks like static; what makes a disc read as a disc is that it
+is SHEARED, and a term in `radial * k - angle * m` is exactly what shear is. The two are
+complementary and both are wanted: the wave for structure, the noise for texture. 54 and
+3 are the reference's own.
+
+**Removed: gravitational lensing.** This one is a real loss and it is worth recording
+precisely why, because the failure is not a tuning miss.
+
+The reference bends the ray toward its closest approach:
+
+    float bend = Lensing * (1 - smoothstep(1.0, DiskRadius + 0.5, impact)) * 0.08;
+    localDirection = normalize(localDirection - closestPoint / impact * bend);
+
+In 2D the obvious reduction is to bend the SAMPLE POSITION radially outward: light that
+would have come from the inner disc is sampled from further out. Two things should follow
+-- the inner disc's light piles into a bright band, and the far side's inner edge is
+lifted up and over the silhouette, which is the arc that makes these images recognisable.
+
+**A radial-only reduction produces neither. It produces a hole.** A pixel at small radius
+samples from further out, and further out at the disc's inner edge is the GAP between the
+shadow and the disc -- so the inner disc samples emptiness and goes dark. Measured: at
+0.055 the disc visibly collapsed; at 0.014 it was still measurably thinner than before the
+change. There is no setting at which a radial deflection reads as a brightening.
+
+Getting the arc needs the deflection to bend TANGENTIALLY as well, so the inner region
+samples the disc's far arc rather than its gap. That term is not written. Until it is,
+this is a uniform named after an effect it cannot produce, and it costs disc area doing
+it -- so it is gone rather than present at 0.014 looking like a feature.
+
+Leaving dead GLSL in a shader that visibly damages the thing it is meant to enhance is
+worse than leaving a note, so the note is here.
+
+**Still true:** the 1.40/1.32 Doppler measurement is a one-off probe and not an assertion
+in `check-dom.mjs`. It is exactly the check that would have caught the frame bug on the
+first run rather than the fourth.
