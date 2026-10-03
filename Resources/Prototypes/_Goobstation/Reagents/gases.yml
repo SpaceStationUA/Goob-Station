@@ -251,9 +251,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -1.5 # Pirate: healium nerf
-            Toxin: -3 # Pirate: healium nerf
-            Brute: -1.5 # Pirate: healium nerf
+            Burn: -2 # Pirate: healium buff
+            Toxin: -5 # Pirate: healium buff
+            Brute: -2 # Pirate: healium buff
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -262,9 +262,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -2 # Pirate: healium nerf
-            Toxin: -4 # Pirate: healium nerf
-            Brute: -2 # Pirate: healium nerf
+            Burn: -6 # Pirate: healium buff
+            Toxin: -15 # Pirate: healium buff
+            Brute: -6 # Pirate: healium buff
       - !type:PopupMessage
         conditions:
         - !type:ReagentCondition
@@ -301,10 +301,9 @@
         - !type:MetabolizerTypeCondition #Fuck you
           type: [Hydrakin]
     Gas:
-      #region Pirate: healium nerf
-      # Pirate: healium nerf - Stronger gas healing is capped at 240 per breath.
-      # Keep 23.99/24 adjacent: bounds are inclusive and reagent precision is 0.01.
-      #endregion Pirate: healium nerf
+      #region Pirate: healium buff
+      # Pirate: healium buff - caps gas healing at 810 per breath; 23.99/24 are inclusive at 0.01 precision.
+      #endregion Pirate: healium buff
       effects:
       - !type:HealthChange
         conditions:
@@ -314,9 +313,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -1.5 # Pirate: healium nerf
-            Toxin: -3 # Pirate: healium nerf
-            Brute: -1.5 # Pirate: healium nerf
+            Burn: -2 # Pirate: healium buff
+            Toxin: -5 # Pirate: healium buff
+            Brute: -2 # Pirate: healium buff
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -325,9 +324,9 @@
         ignoreResistances: true
         damage:
           groups:
-            Burn: -2 # Pirate: healium nerf
-            Toxin: -4 # Pirate: healium nerf
-            Brute: -2 # Pirate: healium nerf
+            Burn: -6 # Pirate: healium buff
+            Toxin: -15 # Pirate: healium buff
+            Brute: -6 # Pirate: healium buff
       - !type:PopupMessage
         conditions:
         - !type:ReagentCondition
