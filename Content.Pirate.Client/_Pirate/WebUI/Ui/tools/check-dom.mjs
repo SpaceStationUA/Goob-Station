@@ -2307,6 +2307,110 @@ try {
     );
 
     /**
+     * Remnants: a pulsar and a quasar.
+     *
+     * Two properties each, because "the kind dispatched somewhere" is not the same
+     * as "it drew a body", and the first version of this only checked the first.
+     *
+     * The pulsar has to have BEAMS and they have to be two, opposed, and different
+     * brightnesses — a pulsar drawn as a bright dot is a white dwarf, and the whole
+     * reason it is a separate kind is the beamed emission. Counting the two lobes is
+     * what distinguishes them.
+     *
+     * The quasar has to have the black hole's disc AND jets, because a quasar with
+     * no disc is just a black hole and one with no jets is just a black hole again.
+     */
+    const openSys = async (id) => {
+      await page.evaluate(async (sys) => {
+        const hit = document.querySelector(`.sys-hit[data-sys='${sys}']`);
+        if (!hit) return;
+        const r = hit.getBoundingClientRect();
+        document
+          .querySelector("svg.chart")
+          .dispatchEvent(
+            new MouseEvent("click", {
+              bubbles: true,
+              clientX: r.x + r.width / 2,
+              clientY: r.y + r.height / 2,
+            }),
+          );
+      }, id);
+      await page.waitForSelector(".overlay", { timeout: 8000 });
+      await page.waitForTimeout(800);
+    };
+    const closeSys = async () => {
+      await page.evaluate(() => document.querySelector(".overlay-close")?.click());
+      await page.waitForTimeout(250);
+    };
+
+    await openSys("pulsar-1");
+    const pulsarShown = await page.evaluate(() => !!document.querySelector(".overlay .pulsar"));
+
+    /**
+     * Count the beams by walking out from the core along eight directions.
+     *
+     * Opposed matters as much as present: two lobes on the same side would be one
+     * wide beam, and no lobes at all is a dot. So the count is of directions whose
+     * OPPOSITE also found light, which is a stricter test than counting lit
+     * directions and is the one that says "this is a pulsar" rather than "this is
+     * something glowing".
+     */
+    const opposedBeams = await page.evaluate(async () => {
+      const c = document.querySelector(".pulsar");
+      if (!c) return -1;
+      const im = new Image();
+      im.src = c.toDataURL();
+      await im.decode();
+      const off = document.createElement("canvas");
+      off.width = c.width;
+      off.height = c.height;
+      const g = off.getContext("2d");
+      g.drawImage(im, 0, 0);
+      const d = g.getImageData(0, 0, off.width, off.height).data;
+      const mid = off.width / 2;
+      const lit = (x, y) => {
+        const i = (Math.round(y) * off.width + Math.round(x)) * 4;
+        return d[i + 3] > 40;
+      };
+      const dirs = [];
+      for (let k = 0; k < 8; k++) {
+        const a = (k * Math.PI) / 4;
+        for (let t = mid * 0.18; t < mid * 0.92; t += 2) {
+          if (lit(mid + Math.cos(a) * t, mid + Math.sin(a) * t)) {
+            dirs.push(Math.round((a * 180) / Math.PI));
+            break;
+          }
+        }
+      }
+      return dirs.filter((d0) => dirs.includes((d0 + 180) % 360)).length / 2;
+    });
+    await closeSys();
+
+    await openSys("quasar-1");
+    const quasar = await page.evaluate(() => {
+      const o = document.querySelector(".overlay");
+      return {
+        jets: o.querySelectorAll(".quasar-jets path").length,
+        disc: !!o.querySelector(".blackhole .world-gl, .blackhole .world-still"),
+      };
+    });
+    await closeSys();
+
+    check("a pulsar draws a pulsar canvas", pulsarShown, ".pulsar present in the overlay");
+    check(
+      "with two OPPOSED beams, which is the only reason it is not a white dwarf",
+      opposedBeams >= 1,
+      `${opposedBeams} opposed pair(s) of lit lobes either side of the core. A pulsar drawn as a ` +
+        `bright dot is a white dwarf, and the beamed emission is the entire difference, so ` +
+        `counting the beams is the assertion that means anything.`,
+    );
+    check(
+      "a quasar draws the black hole's disc AND jets",
+      quasar.disc && quasar.jets === 2,
+      `disc ${quasar.disc}, ${quasar.jets} jet paths`,
+    );
+
+    /**
      * The eighth planet type: rivers.
      *
      * Asserted by counting the reference's own water colour rather than by looking,
