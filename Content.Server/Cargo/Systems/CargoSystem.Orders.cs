@@ -82,6 +82,9 @@ namespace Content.Server.Cargo.Systems
             if (!ent.Comp.AllowedGroups.Contains(product.Group))
                 return;
 
+            if (!GetAvailableProducts(ent).Contains(product.ID))
+                return;
+
             var orderId = GenerateOrderId(orderDatabase);
             var data = new CargoOrderData(orderId, product.Product, product.Name, product.Cost, slip.OrderQuantity, slip.Requester, slip.Reason, slip.Account, product.Cooldown);
 

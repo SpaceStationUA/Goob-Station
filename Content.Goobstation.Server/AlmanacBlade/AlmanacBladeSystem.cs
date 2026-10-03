@@ -175,6 +175,10 @@ public sealed class AlmanacBladeSystem : SharedAlmanacBladeSystem
 
     private void Explode(Entity<AlmanacBladeComponent> ent)
     {
+        if (ent.Comp.ExplosionQueued)
+            return;
+
+        ent.Comp.ExplosionQueued = true;
         _explosion.QueueExplosion(ent, ExplosionSystem.DefaultExplosionPrototypeId.Id, ent.Comp.ExplosionIntensity, 5f, 10f, canCreateVacuum: false);
         QueueDel(ent);
     }

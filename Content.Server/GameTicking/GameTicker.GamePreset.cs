@@ -118,6 +118,11 @@ public sealed partial class GameTicker
                 _sawmill.Warning($"Default preset '{preset}' is disabled, using '{fallback}' instead.");
                 preset = fallback;
             }
+            else
+            {
+                _sawmill.Error($"Default preset '{preset}' is disabled and no enabled fallback preset is configured.");
+                return;
+            }
         }
 
         SetGamePreset(preset);
@@ -128,6 +133,12 @@ public sealed partial class GameTicker
         // Do nothing if this game ticker is a dummy!
         if (DummyTicker)
             return;
+
+        if (preset is not null && IsPresetDisabled(preset))
+        {
+            _sawmill.Warning($"Refusing to set disabled preset '{preset.ID}'.");
+            return;
+        }
 
         if (resetDelay is not null)
         {

@@ -40,6 +40,7 @@ public sealed partial class AlmanacBladeComponent : Component
 
     [DataField]
     public float ExplosionIntensity = 40f;
+    public bool ExplosionQueued;
 
     [ViewVariables]
     public EntityUid? HardBassStream;
