@@ -148,7 +148,7 @@ public sealed class PaperSystem : EntitySystem
     private void BeforeUIOpen(Entity<PaperComponent> entity, ref BeforeActivatableUIOpenEvent args)
     {
         entity.Comp.Mode = PaperAction.Read;
-        entity.Comp.WriteSessionIgnoresStamps = false;
+        entity.Comp.WriteSessionIgnoresStampsActor = null;
         UpdateUserInterface(entity);
     }
 
@@ -201,8 +201,8 @@ public sealed class PaperSystem : EntitySystem
             // Pirate: stamped/signed documents are final - remember whether this write
             // session was started by a pen that may ignore stamps (cyberpen), so save
             // attempts arriving later (page flips, direct messages) are checked against it.
-            entity.Comp.WriteSessionIgnoresStamps = _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
-
+            entity.Comp.WriteSessionIgnoresStampsActor =
+                _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag) ? args.User : null;
             if (editable)
             {
                 if (entity.Comp.EditingDisabled)
@@ -297,10 +297,11 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInputTextMessage(Entity<PaperComponent> entity, ref PaperInputTextMessage args)
     {
-        TryWriteText(entity, args.Actor, args.Text, args.Page);
+        if (!TryWriteText(entity, args.Actor, args.Text, args.Page))
+            return;
 
         entity.Comp.Mode = PaperAction.Read;
-        entity.Comp.WriteSessionIgnoresStamps = false;
+        entity.Comp.WriteSessionIgnoresStampsActor = null;
         UpdateUserInterface(entity);
     }
 
@@ -1081,7 +1082,7 @@ public sealed class PaperSystem : EntitySystem
             return;
 
         entity.Comp.Mode = PaperAction.Read;
-        entity.Comp.WriteSessionIgnoresStamps = false;
+        entity.Comp.WriteSessionIgnoresStampsActor = null;
         UpdateUserInterface(entity);
         _uiSystem.TryToggleUi(entity.Owner, PaperUiKey.Key, args.User);
         args.Handled = true;
