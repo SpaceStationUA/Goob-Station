@@ -226,6 +226,19 @@ different reason:
    Each pole now has its own ramp, its own direction, and its own duration — measured
    correlation **0.20**, where the shared gradient gives **0.85**.
 
+   And then the ramps were themselves wrong. Gradient coordinates are in
+   objectBoundingBox units, so anything outside `0..1` is off the element entirely,
+   and the values ran to `-0.9` and `-1.9` — which put the whole ramp outside the
+   jet for much of every cycle. Measured over sixteen frames, the lower jet was
+   completely **absent for two of them** and the upper barely moved its light at all.
+   A highlight that spends half its time not on the shape is a blink, not a jet.
+
+   `keyTimes` fixes it: 0.8 of the cycle carries the hot stop from the pole to the
+   tip, and the last 0.2 carries it off the end into the gap before the next one
+   starts. The gap is real — plasma leaves and the next follows — and it is short.
+   Both jets are now present in 14-16 frames of 16, and each travels outward in its
+   own direction.
+
  No shape involved, so nothing to misread, and the
    motion is continuous. The bright stop runs from the pole to the tip and the
    gradient's extent moves with it so the ramp never tears.

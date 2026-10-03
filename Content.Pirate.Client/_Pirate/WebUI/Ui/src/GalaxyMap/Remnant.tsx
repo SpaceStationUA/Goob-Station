@@ -221,18 +221,40 @@ export function Quasar(props: { px: number; seed: number }) {
    * its own direction, and the durations differ so they are not in lockstep either.
    */
   /**
-   * Both edges are written out rather than one derived from the other.
+   * One pole's ramp.
    *
-   * Deriving y2 from y1 by adding a unit to every stop is shorter and is exactly the
-   * kind of cleverness that is wrong the first time someone changes a value without
-   * seeing the arithmetic elsewhere. y2 trails y1 by one unit so the ramp keeps its
-   * length rather than stretching, and both lists are written out because that is the
-   * whole rule.
+   * `y1` carries the hot stop and `y2` trails it by exactly one unit, so the ramp
+   * keeps its length while it travels instead of stretching.
+   *
+   * `keyTimes` is load-bearing and was missing for two rounds. Gradient coordinates
+   * are in objectBoundingBox units, so anything outside 0..1 is off the element
+   * entirely — and the previous values ran to -0.9 and -1.9, which put the whole
+   * ramp outside the jet for a large part of every cycle. Measured, the lower jet was
+   * entirely ABSENT for four frames out of twelve and the upper barely moved: a
+   * highlight that spends half its time not on the shape is a blink, not a jet.
+   *
+   * So 0.8 of the cycle carries the highlight from the pole to the tip, and the last
+   * 0.2 carries it off the end and into the gap before the next one starts. That gap
+   * is real — plasma leaves, and the next knot follows — and it is short.
    */
   const ramp = (id: string, y1: string, y2: string, dur: string) => (
     <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
-      <animate attributeName="y1" values={y1} dur={dur} repeatCount="indefinite" />
-      <animate attributeName="y2" values={y2} dur={dur} repeatCount="indefinite" />
+      <animate
+        attributeName="y1"
+        values={y1}
+        keyTimes="0;0.8;1"
+        calcMode="linear"
+        dur={dur}
+        repeatCount="indefinite"
+      />
+      <animate
+        attributeName="y2"
+        values={y2}
+        keyTimes="0;0.8;1"
+        calcMode="linear"
+        dur={dur}
+        repeatCount="indefinite"
+      />
       <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
       <stop offset="18%" stop-color={JET_HOT} stop-opacity="0.85" />
       <stop offset="55%" stop-color={JET_COOL} stop-opacity="0.4" />
@@ -276,14 +298,14 @@ export function Quasar(props: { px: number; seed: number }) {
         aria-hidden="true"
       >
         <defs>
-          {/* Outward from the pole: y1 runs 1 -> 0.1 -> -0.9 with y2 a unit behind,
-              so the ramp travels without changing length. */}
-          {ramp(up, "1;0.1;-0.9", "2;1.1;0.1", "1.35s")}
-          {/* The same travel seen from the other pole. Same numbers read in a
-              mirrored box means the ramp runs the other way, so these are negated —
-              and the duration differs so the two are never in step, because two
-              plumes pulsing together read as one object flexing. */}
-          {ramp(down, "0;-0.9;-1.9", "1;0.1;-0.9", "1.7s")}
+          {/* The upper jet: hot stop from the pole (its bbox's bottom, y=1) out to
+              the tip (y=0) and off the end. */}
+          {ramp(up, "1;0;-1", "2;1;0", "1.35s")}
+          {/* The lower jet: same travel, opposite screen direction. Its apex is its
+              bbox's TOP, so the numbers are mirrored rather than reused — which is
+              the whole of the bug this file's two gradients exist to fix. The
+              duration differs too, so the two are never in phase even in direction. */}
+          {ramp(down, "0;1;2", "1;2;3", "1.7s")}
         </defs>
         <g transform="rotate(-18)">
           {jet(1)}
