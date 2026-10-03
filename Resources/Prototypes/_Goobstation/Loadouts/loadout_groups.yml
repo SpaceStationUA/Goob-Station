@@ -981,6 +981,7 @@
   - NanotrasenRepresentativeJumpskirt
   - NTRMJ
   - NanotrasenRepresentativeFancyJumpsuit
+  - NanotrasenRepresentativeNoble # Pirate
 
 - type: loadoutGroup
   id: NanotrasenRepresentativeBelt

@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Pirate: Lawyer jumpsuits ported from Starlight.
+
+# Jumpsuit
+- type: loadout
+  id: LawyerJumpsuitPink
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerPink
+
+- type: loadout
+  id: LawyerJumpskirtPink
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtLawyerPink

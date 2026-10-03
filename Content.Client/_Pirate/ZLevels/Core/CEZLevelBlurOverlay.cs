@@ -60,7 +60,7 @@ public sealed class CEZLevelBlurOverlay : Overlay
         if (ScreenTexture == null || args.Viewport.Eye == null)
             return;
 
-        var ambientColor = new Vector3(0, 0, 1); //Default blue
+        var ambientColor = new Vector3(0, 0, 1);
 
         if (_entity.TryGetComponent<MapLightComponent>(args.MapUid, out var mapLight))
         {
@@ -77,5 +77,11 @@ public sealed class CEZLevelBlurOverlay : Overlay
         worldHandle.UseShader(_blurShader);
         worldHandle.DrawRect(args.WorldBounds, Color.White);
         worldHandle.UseShader(null);
+    }
+
+    protected override void DisposeBehavior()
+    {
+        _blurShader?.Dispose();
+        base.DisposeBehavior();
     }
 }

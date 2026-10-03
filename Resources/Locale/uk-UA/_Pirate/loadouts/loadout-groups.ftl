@@ -6,3 +6,6 @@ loadout-group-instructor-neck = Шийна прикраса інструктор
 loadout-group-instructor-belt = Ремінь інструктора СБ
 
 loadout-group-security-eyes = Окуляри СБ
+
+## Wildcards / Вакансії
+loadout-group-reporter-head = Головний убір репортера

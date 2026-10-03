@@ -421,6 +421,12 @@
     neck: ClothingNeckCloakRedHood
   groupBy: "cloak"
 
+- type: loadout
+  id: BlackFurCloak
+  equipment:
+    neck: ClothingUniformDama0965
+  groupBy: "cloak"
+
 ## Passenger fashion head subgroups (Pirate: mirrors starcup #983 passenger head distribution)
 
 - type: loadoutGroup
@@ -519,6 +525,7 @@
   - BlackCloak
   - GrayCloak
   - RedHoodCloak
+  - BlackFurCloak
 
 ## Starcup #933 (Den cosmetics port) items
 

@@ -1,0 +1,27 @@
+- type: randomHumanoidSettings
+  id: LizardGasStationStaff
+  parent: VisitorCivilian
+  components:
+    - type: OrganChipsOnSpawn
+      chips:
+      - SkillChipEducation
+      - SkillChipJanitor
+      - SkillChipThrowing
+      - SkillChipDoctor
+      - SkillChipPistol
+      - SkillChipMining
+      - SkillChipService
+    - type: NpcFactionMember
+      factions:
+      - Passive
+    - type: GhostRole
+      name: працівник заправки
+      description: Невідомо як ви тут опинилися. Просто продавайте їжу, готуйте каву і робіть хот-доги!
+      rules: Не покидайте заправку і не вступайте в бійки.
+      mindRoles:
+      - MindRoleGhostRoleNeutral
+      raffle:
+        settings: default
+    - type: Loadout  
+      prototypes: [ VisitorChef ]
+      roleLoadout: [ RoleSurvivalStandard ]

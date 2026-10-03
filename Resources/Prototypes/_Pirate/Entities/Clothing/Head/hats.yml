@@ -157,3 +157,15 @@
   - type: Tag
     tags:
     - HidesHair
+
+## Репортер / Reporter
+- type: entity
+  parent: ClothingHeadHatFedoraBrown
+  id: ClothingHeadHatFedoraPress
+  name: Федора Репортера
+  description: На ремінці прикріплена маленька записка з написом «PRESS». Це практично пропуск, що дає доступ куди завгодно!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Hats/presshat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Hats/presshat.rsi

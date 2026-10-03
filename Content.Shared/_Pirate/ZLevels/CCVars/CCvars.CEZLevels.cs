@@ -28,6 +28,18 @@ public sealed partial class CCVars
     public static readonly CVarDef<int>
         CEZLevelsVisibleBelow = CVarDef.Create("zlevels.ce_visible_below", 6, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+    /// <summary>Skip lower decks when opaque tiles cover the viewport and no visible aperture needs them.</summary>
+    public static readonly CVarDef<bool>
+        ZCullHiddenLevels = CVarDef.Create("zlevels.cull_hidden_levels", true, CVar.CLIENTONLY);
+
+    /// <summary>Render lower decks through a cropped stock viewport surrounding visible floor openings.</summary>
+    public static readonly CVarDef<bool>
+        ZCullHiddenRegions = CVarDef.Create("zlevels.cull_hidden_regions", true, CVar.CLIENTONLY);
+
+    /// <summary>Only capture lower-deck textures required by on-screen apertures.</summary>
+    public static readonly CVarDef<bool>
+        ZCullApertureCopies = CVarDef.Create("zlevels.cull_aperture_copies", true, CVar.CLIENTONLY);
+
     /// <summary>
     /// Parallax offset (in tiles) applied per depth step when rendering Z-levels above/below.
     /// Each rendered deck is shifted by this * its depth, faking perspective. Also drives the
@@ -131,6 +143,17 @@ public sealed partial class CCVars
     /// <summary>If true, lights on adjacent Z layers spawn client-only projected lights at floor openings on the viewer's map.</summary>
     public static readonly CVarDef<bool>
         CEZProjectedLightingEnabled = CVarDef.Create("zlevels.ce_projected_lighting_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// Maximum lifetime in seconds of cosmetic light/opening raycasts (clamped to 0..0.25).
+    /// Moving sources and tile edits invalidate immediately. Set to 0 for uncached discovery.
+    /// </summary>
+    public static readonly CVarDef<float>
+        ZProjectedLightCacheSeconds = CVarDef.Create("zlevels.projected_light_cache_seconds", 0.1f, CVar.CLIENTONLY);
+
+    /// <summary>Source discovery: 0 = original scan, 1 = map membership index, 2 = compare both (debug only).</summary>
+    public static readonly CVarDef<int>
+        ZProjectedLightSourceIndex = CVarDef.Create("zlevels.projected_light_source_index", 1, CVar.CLIENTONLY);
 
     /// <summary>Maximum number of projected lights per adjacent Z layer. Caps render cost. Default 16.</summary>
     public static readonly CVarDef<int>

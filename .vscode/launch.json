@@ -19,7 +19,7 @@
             "name": "Client",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Pirate.Client.dll", // Pirate: WebView module loading
             "args": [],
             "console": "internalConsole",
             "stopAtEntry": false
@@ -28,8 +28,8 @@
             "name": "Client - Tools",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build - Tools",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "preLaunchTask": "build - Tools", // Pirate: WebView module loading
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Pirate.Client.dll", // Pirate: WebView module loading
             "args": [],
             "console": "internalConsole",
             "stopAtEntry": false
@@ -38,8 +38,8 @@
             "name": "Client - Release",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build - Release",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "preLaunchTask": "build - Release", // Pirate: WebView module loading
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Pirate.Client.dll", // Pirate: WebView module loading
             "args": [],
             "console": "internalConsole",
             "stopAtEntry": false
@@ -49,7 +49,7 @@
             "name": "Client - (Compatibility renderer)",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Pirate.Client.dll", // Pirate: WebView module loading
             "args": "--cvar display.compat=true",
             "console": "internalConsole",
             "stopAtEntry": false
@@ -58,8 +58,8 @@
             "name": "Client - Tools - (Compatibility renderer)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build - Tools",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "preLaunchTask": "build - Tools", // Pirate: WebView module loading
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Pirate.Client.dll", // Pirate: WebView module loading
             "args": ["--cvar display.compat=true"],
             "console": "internalConsole",
             "stopAtEntry": false
@@ -68,8 +68,8 @@
             "name": "Client - Release - (Compatibility renderer)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build - Release",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "preLaunchTask": "build - Release", // Pirate: WebView module loading
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Pirate.Client.dll", // Pirate: WebView module loading
             "args": ["--cvar display.compat=true"],
             "console": "internalConsole",
             "stopAtEntry": false
@@ -105,7 +105,7 @@
             "name": "ClientCursor",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Pirate.Client.dll", // Pirate: WebView module loading
             "args": [],
             "console": "integratedTerminal",
             "stopAtEntry": false,
@@ -158,16 +158,16 @@
         {
             "name": "Server/Client - Tools",
             "configurations": [
-                "Server - Tools",
-                "Client - Tools"
+                "Server", // Pirate: WebView module loading
+                "Client" // Pirate: WebView module loading
             ],
             "preLaunchTask": "build - Tools"
         },
         {
             "name": "Server/Client - Release",
             "configurations": [
-                "Server - Release",
-                "Client - Release"
+                "Server", // Pirate: WebView module loading
+                "Client" // Pirate: WebView module loading
             ],
             "preLaunchTask": "build - Release"
         }

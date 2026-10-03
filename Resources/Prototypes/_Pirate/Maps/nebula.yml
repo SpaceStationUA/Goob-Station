@@ -1,12 +1,12 @@
 - type: gameMap
-  id: ZNebula
-  mapName: ZNebula
-  mapPath: /Maps/_Pirate/ZNebula/ZNebula1.yml
+  id: Nebula
+  mapName: Nebula
+  mapPath: /Maps/_Pirate/Nebula/Nebula1.yml
   mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
   mapPreview: PirateMapPreviewNebula
   minPlayers: 25
   stations:
-    ZNebula:
+    Nebula:
       stationProto: StandardNanotrasenStation
       components:
       - type: StationNameSetup
@@ -17,7 +17,7 @@
       - type: CEStationZLevels
         defaultSpawnDepth: 1
         mapsBelow:
-        - /Maps/_Pirate/ZNebula/ZNebula0.yml
+        - /Maps/_Pirate/Nebula/Nebula0.yml
       - type: StationEmergencyShuttle
         emergencyShuttlePath: /Maps/_Pirate/Shuttles/emergency_box.yml
       - type: StationJobs
