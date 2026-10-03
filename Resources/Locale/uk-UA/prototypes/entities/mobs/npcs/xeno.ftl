@@ -1,0 +1,15 @@
+ent-MobPurpleSnake = просторовий суматор
+    .desc = Загрозлива фіолетова змія з Kepler-283c.
+ent-MobSmallPurpleSnake = просторовий суматор
+    .desc = Зменшена версія загрозливої фіолетової змії з Kepler-283c.
+ent-MobXeno = риївник
+    .desc = Вони переважно приходять уночі. Переважно.
+ent-MobXenoDrone = дрон
+ent-MobXenoLonePraetorianNoGhost = "Дейл"
+    .desc = Преторіанець, що лишився після первинної зачистки станції службою безпеки. У його пащі застрягла пара закривавлених жетонів із вигравіруваним ім'ям "ряд. Дейл".
+ent-MobXenoPraetorian = преторіанець
+ent-MobXenoQueen = королева
+ent-MobXenoRavager = спустошувач
+ent-MobXenoRouny = руні
+ent-MobXenoRunner = бігун
+ent-MobXenoSpitter = плювальник

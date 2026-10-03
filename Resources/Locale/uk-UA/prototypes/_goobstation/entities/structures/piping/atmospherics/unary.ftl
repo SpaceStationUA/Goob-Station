@@ -1,0 +1,1 @@
+ent-HeatExchangerInline = вбудований радіатор

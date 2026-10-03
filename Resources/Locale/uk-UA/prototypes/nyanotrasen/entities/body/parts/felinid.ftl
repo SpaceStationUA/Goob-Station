@@ -1,0 +1,11 @@
+ent-ChestFelinid = фелінідська грудна клітка
+ent-GroinFelinid = фелінідський пах
+ent-HeadFelinid = фелінідська голова
+ent-LeftArmFelinid = ліва фелінідська рука
+ent-LeftFootFelinid = ліва фелінідська стопа
+ent-LeftHandFelinid = ліва фелінідська кисть
+ent-LeftLegFelinid = ліва фелінідська нога
+ent-RightArmFelinid = права фелінідська рука
+ent-RightFootFelinid = права фелінідська стопа
+ent-RightHandFelinid = права фелінідська кисть
+ent-RightLegFelinid = права фелінідська нога

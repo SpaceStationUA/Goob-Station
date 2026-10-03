@@ -1,0 +1,16 @@
+ent-ClothingOuterArmorHereticCostume = окультні шати
+    .desc = Потертий, запилений комплект шат. Усередині вздовж швів тягнуться дивні розмиті очі.
+ent-ClothingOuterBrassArmor = латунна броня
+    .desc = Стара слов'янська латунна броня, як у наших предків.
+ent-ClothingOuterSuitHEV = костюм H.E.V.
+    .desc = Повнотілий костюм для небезпечних умов, розроблений для захисту власника від радіації, енергетичних розрядів, тупих травм під час роботи з небезпечними матеріалами.
+ent-ClothingOuterSuitHotDog = костюм хот-дога
+    .desc = Гаряча сосиска!
+ent-ClothingOuterSuitPickle = костюм огірка
+    .desc = Жахливо пахне оцтом.
+ent-ClothingOuterSuitTutu = пачка
+    .desc = Навіщо?..
+ent-SurveillanceWirelessCameraBodyEntertainment = камера nopro
+    .desc = Натільна камера. Вона стежить за вами.
+ent-WhiteRobes = шати Обраного
+    .desc = Ці білі шати носять лише найкращі з відділу спецоперацій Нанотрасен.

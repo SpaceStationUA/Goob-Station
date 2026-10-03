@@ -1,0 +1,17 @@
+ent-AreaBridge = місток
+ent-AreaBridgeHall = коридор містка
+ent-AreaCapQuarters = каюта капітана
+ent-AreaCommand = командування
+ent-AreaCommandGateway = брама командування
+ent-AreaCommandMeetingRoom = конференц-зала командування
+ent-AreaCommandShowroom = виставкова зала командування
+ent-AreaCommandTeleporter = телепорт командування
+ent-AreaEvaRoom = кімната ЄВА
+ent-AreaNukeStorage = сховище ядерного заряду
+ent-AreaOfficeCE = кабінет головного інженера
+ent-AreaOfficeCmo = кабінет головного лікаря
+ent-AreaOfficeHop = кабінет голови персоналу
+ent-AreaOfficeHos = кабінет голови служби безпеки
+ent-AreaOfficeQm = кабінет голови карго
+ent-AreaOfficeRd = кабінет наукового керівника
+ent-AreaVault = сховище

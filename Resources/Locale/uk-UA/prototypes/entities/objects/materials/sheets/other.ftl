@@ -1,0 +1,20 @@
+ent-MaterialSheetMeat = м'ясний лист
+ent-SheetOtherBase =
+    .desc = Лист матеріалу, який часто використовується на станції в різних сферах.
+ent-SheetPaper = папір
+ent-SheetPaper1 = папір
+ent-SheetPlasma = плазма
+ent-SheetPlasma1 = плазма
+ent-SheetPlasma10 = Плазма
+ent-SheetPlastic = пластик
+ent-SheetPlastic1 = пластик
+ent-SheetPlastic10 = пластик
+ent-SheetUranium = уран
+ent-SheetUranium1 = уран
+
+ent-SheetPrinter = папір
+    .suffix = Повний
+    .desc = Аркуш білого паперу.
+ent-SheetPrinter1 = { ent-SheetPrinter }
+    .suffix = Один
+    .desc = { ent-SheetPrinter.desc }

@@ -1,0 +1,13 @@
+ent-ActionAGhostShowCargo = Інтерфейс замовлення вантажу
+    .desc = Переглянути інтерфейс замовлення вантажу.
+ent-ActionAGhostShowCommunications = Інтерфейс зв'язку
+    .desc = Переглянути інтерфейс зв'язку.
+ent-ActionAGhostShowCrewMonitoring = Інтерфейс моніторингу екіпажу
+    .desc = Переглянути інтерфейс моніторингу екіпажу.
+ent-ActionAGhostShowRadar = Інтерфейс сканера мас
+    .desc = Переглянути інтерфейс сканера мас.
+ent-ActionAGhostShowSolar = Інтерфейс керування сонячними панелями
+    .desc = Переглянути інтерфейс керування сонячними панелями.
+ent-ActionAGhostShowStationRecords = Інтерфейс записів станції
+    .desc = Переглянути інтерфейс записів станції.
+ent-AdminObserver = адміністратор-спостерігач

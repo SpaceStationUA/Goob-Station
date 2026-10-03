@@ -1,0 +1,17 @@
+ent-AiHeld =
+    .desc = Компоненти, що додаються/видаляються з сутності, яка вставляється в ядро ШІ.
+ent-AiHeldIntellicard =
+    .desc = Компоненти, додані/вилучені з сутності, яка вставляється в Intellicard.
+ent-AiHolder =
+    .desc = Керує взаємодією ШІ між голографічними картками + ядрами ШІ
+ent-Intellicard = Інтелекткарт
+    .desc = Пристрій для зберігання даних для ШІ.
+ent-PlayerBorgSyndicateInvasionGhostRoleSpawner = спавнер боргів для вторгнення синдикату
+ent-PlayerStationAiAssembly = збірка ядра ШІ
+    .desc = Незавершене комп'ютерне ядро для розміщення штучного інтелекту.
+ent-PlayerStationAiEmpty = ядро ШІ
+    .desc = Останнє слово у сфері штучних інтелектів.
+ent-StationAiHolo = Око штучного інтелекту.
+    .desc = Глядач ШІ.
+ent-StationAiHoloLocal = Голограма зі штучним інтелектом
+    .desc = Голографічне зображення штучного інтелекту.

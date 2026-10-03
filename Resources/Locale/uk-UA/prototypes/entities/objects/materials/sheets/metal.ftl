@@ -1,0 +1,12 @@
+ent-SheetBrass = латунь
+    .desc = Лист латуні, що використовується переважно любителями годинникових механізмів та залишків ратваріанських культів.
+ent-SheetBrass1 = латунь
+ent-SheetBrass10 = латунь
+ent-SheetMetalBase =
+    .desc = Лист металу, який часто використовується на станції в різних сферах.
+ent-SheetPlasteel = пласталь
+ent-SheetPlasteel1 = пласталь
+ent-SheetPlasteel10 = пласталь
+ent-SheetSteel = сталь
+ent-SheetSteel1 = сталь
+ent-SheetSteel10 = сталь

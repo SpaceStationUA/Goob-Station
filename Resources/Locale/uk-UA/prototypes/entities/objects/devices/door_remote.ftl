@@ -1,0 +1,14 @@
+ent-DoorRemoteAll = пульт дистанційного керування для супер-дверей
+ent-DoorRemoteArmory = пульт від дверей арсеналу
+ent-DoorRemoteCargo = вантажний пульт для дверей
+ent-DoorRemoteCommand = пульт від командних дверей
+ent-DoorRemoteCustom = користувацький пульт від дверей
+    .desc = Пристрій, який може дистанційно відкривати та замикати двері. Цей розширений варіант не має вбудованого доступу, натомість успадковує доступ ID користувача.
+ent-DoorRemoteDefault = пульт від дверей
+    .desc = Гаджет, який може дистанційно відчиняти та зачиняти двері.
+ent-DoorRemoteEngineering = пульт для інженерних дверей
+ent-DoorRemoteMedical = пульт для медичних дверей
+ent-DoorRemoteResearch = пульт від дослідницьких дверей
+ent-DoorRemoteSecurity = пульт від захисних дверей
+ent-DoorRemoteService = пульт від службових дверей
+ent-DoorRemoteXenoborg = пульт від дверей ксеноборга

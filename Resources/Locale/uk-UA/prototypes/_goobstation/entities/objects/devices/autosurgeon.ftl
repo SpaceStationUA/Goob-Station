@@ -1,0 +1,16 @@
+ent-AutosurgeonBerserker = автохірург синдикату (серце берсерка)
+ent-AutosurgeonJumpstarter = автохірург синдикату (серце-дефібрилятор)
+ent-AutosurgeonLeftMantisBlade = автохірург синдикату (ліве лезо-богомол)
+ent-AutosurgeonLeftSpeedLeg = автохірург (ліва нога S.P.E.E.D)
+ent-AutosurgeonRecoilAbsorber = автохірург синдикату (руки з поглиначем віддачі)
+ent-AutosurgeonRightMantisBlade = автохірург синдикату (праве лезо-богомол)
+ent-AutosurgeonRightSpeedLeg = автохірург (права нога S.P.E.E.D)
+ent-AutosurgeonSandevistan = автохірург синдикату (сандевістан)
+ent-AutosurgeonSmartLink = автохірург синдикату (руки зі smartlink)
+ent-AutosurgeonStatvekaSandevistan = автохірург синдикату (статвека сандевістан)
+ent-BaseAutosurgeon =
+    .desc = Одноразовий автохірург для заміни або модернізації ваших частин кібернетичними імплантами. Розберіть цю станцію і зробіть її частиною себе.
+ent-BaseAutosurgeonMultiple =
+    .desc = Одноразовий автохірург для заміни або модернізації ваших частин тіла кібернетичними імплантатами. Розберіть цю станцію на шматки та зробіть її частиною себе.
+ent-BaseAutosurgeonSingle =
+    .desc = Одноразовий автохірург для заміни або модернізації ваших частин тіла кібернетичними імплантатами. Розберіть цю станцію на шматки та зробіть її частиною себе.

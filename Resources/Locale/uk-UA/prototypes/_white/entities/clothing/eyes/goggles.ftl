@@ -1,0 +1,16 @@
+ent-ClothingEyesNightVisionGoggles = окуляри нічного бачення
+    .desc = Тепер ви можете бачити в темряві!
+ent-ClothingEyesNightVisionGogglesGen1 = окуляри нічного бачення (покоління 1)
+ent-ClothingEyesNightVisionGogglesGen2 = окуляри нічного бачення (покоління 2)
+ent-ClothingEyesNightVisionGogglesGen3 = окуляри нічного бачення (покоління 3)
+ent-ClothingEyesNightVisionGogglesGen4 = окуляри нічного бачення (покоління 4)
+ent-ClothingEyesNightVisionGogglesNukie = окуляри нічного бачення Синдикату
+    .desc = Високотехнологічна пара окулярів нічного бачення. Мають технологію медичного аналізу.
+ent-ClothingEyesNightVisionGogglesSyndie = окуляри нічного бачення синдикату
+    .desc = Високотехнологічні окуляри нічного бачення. Мають технологію медичного аналізу.
+ent-ClothingEyesThermalVisionGoggles = окуляри теплового бачення
+    .desc = Тепер ви можете бачити всіх!
+ent-ClothingEyesThermalVisionGogglesNukie = термальні окуляри
+    .desc = Високотехнологічна пара термальних окулярів.
+ent-ClothingEyesThermalVisionGogglesSyndie = тепловізійні окуляри
+    .desc = Високотехнологічні тепловізійні окуляри.

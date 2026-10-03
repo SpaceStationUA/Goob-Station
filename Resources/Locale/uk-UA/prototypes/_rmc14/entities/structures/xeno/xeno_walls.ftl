@@ -1,0 +1,10 @@
+ent-BaseMembraneXeno = смоляна мембрана
+ent-BaseWallXeno = смоляна стіна
+ent-WallXenoMembrane = смоляна мембрана
+    .desc = Дивний слиз, достатньо прозорий, щоб пропускати світло.
+ent-WallXenoMembraneThick = товста смоляна мембрана
+    .desc = Дивний товстий слиз, ледь прозорий, щоб пропускати світло.
+ent-WallXenoResin = смоляна стіна
+    .desc = Дивний слиз, що затвердів у стіну.
+ent-WallXenoResinThick = товста смоляна стіна
+    .desc = Дивний слиз, що затвердів у товсту стіну.

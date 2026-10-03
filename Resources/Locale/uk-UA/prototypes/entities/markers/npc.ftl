@@ -1,0 +1,1 @@
+ent-PathfindPoint = точка патфайнду

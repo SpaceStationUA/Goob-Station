@@ -1,0 +1,1 @@
+ent-XenoborgWindow = вікно ксеноборга

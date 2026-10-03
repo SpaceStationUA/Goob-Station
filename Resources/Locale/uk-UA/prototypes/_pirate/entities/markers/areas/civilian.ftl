@@ -1,0 +1,13 @@
+ent-AreaChapel = каплиця
+ent-AreaChapelCremate = крематорій
+ent-AreaChapelOffice = офіс каплиці
+ent-AreaCourtRoom = зала суду
+ent-AreaDojo = додзьо
+ent-AreaJanitor = кімната прибиральника
+ent-AreaLawOffice = юридичний офіс
+ent-AreaLibrary = бібліотека
+ent-AreaNewsroom = редакція новин
+ent-AreaTheatre = театр
+ent-AreaToolStorage = склад інструментів
+    .desc = Батьківщина асистентів.
+ent-BaseAreaCivilian = цивільний відділ

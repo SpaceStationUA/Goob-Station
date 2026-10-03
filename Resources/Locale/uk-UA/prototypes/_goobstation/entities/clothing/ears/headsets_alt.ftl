@@ -1,0 +1,12 @@
+ent-ClothingHeadsetAltBlueshield = навушники офіцера синього щита
+ent-ClothingHeadsetAltRadioHost = накладна гарнітура радіоведучого
+    .desc = Накладна гарнітура з додатковою м’якою пінною підкладкою навколо вух.
+ent-ClothingHeadsetAltSecurityRegular = гарнітура служби безпеки
+ent-ClothingHeadsetAltSyndicateCommander = криваво-червона командирська гарнітура
+ent-ClothingHeadsetAltWarden = навушники наглядача
+    .desc = Оновлений, модульний інтерком, що дозволяє швидко спілкуватися з командним персоналом.
+ent-ClothingHeadsetChronolegioneer = футуристична накладна гарнітура
+    .desc = Гарнітура з майбутнього, яка може приймати більшість частот радіостанцій.
+ent-ClothingHeadsetCommandService = командно-сервісна гарнітура
+    .desc = Гарнітура з каналами командування та сервісу.
+ent-ClothingHeadsetDeathsquad = навушники загону смерті

@@ -1,0 +1,12 @@
+ent-AdminAssistantIDCard = посвідчення адміністративного асистента
+ent-CaptainInterdyneIDCard = ID-карта офіцера Interdyne
+ent-InterdyneDeputyIDCard = ID-карта заступника Interdyne
+ent-InterdyneEngineerIDCard = ID-карта інженера Interdyne
+ent-InterdyneIDCard = ID-карта Interdyne
+ent-InterdyneMedIDCard = ID-карта медика Interdyne
+ent-InterdynePilotIDCard = ID-карта пілота Interdyne
+ent-InterdyneSecureIDCard = ID-карта служби безпеки Interdyne
+ent-InterdyneServiceIDCard = ID-карта сервісного персоналу Interdyne
+ent-InterdyneShaftMinersIDCard = ID-карта шахтаря Interdyne
+ent-SANIdCard = RFID-мітки Флоту Соляріанського Альянсу
+ent-SecurityInstructorIDCard = ID-картка інструктора

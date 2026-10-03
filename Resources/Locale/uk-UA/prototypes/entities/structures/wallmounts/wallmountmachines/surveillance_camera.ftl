@@ -1,0 +1,13 @@
+ent-SurveillanceCameraAssembly = камера
+    .desc = Камера спостереження. Не схоже, що найближчим часом вона буде за кимось спостерігати. Напевно.
+ent-SurveillanceCameraBase = камера
+    .desc = Камера спостереження. Вона стежить за тобою. Типу того.
+ent-SurveillanceCameraCommand = камера
+ent-SurveillanceCameraConstructed = камера
+ent-SurveillanceCameraEngineering = камера
+ent-SurveillanceCameraGeneral = камера
+ent-SurveillanceCameraMedical = камера
+ent-SurveillanceCameraScience = камера
+ent-SurveillanceCameraSecurity = камера
+ent-SurveillanceCameraService = камера
+ent-SurveillanceCameraSupply = камера

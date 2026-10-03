@@ -1,0 +1,13 @@
+ent-ClothingHeadsetAlt = гарнітура
+    .desc = Оновлений модульний інтерком, який одягається на голову. Приймає ключі шифрування.
+ent-ClothingHeadsetAltCargo = накладні навушники квартирмейстера
+ent-ClothingHeadsetAltCentCom = накладні навушники ЦентКому
+ent-ClothingHeadsetAltCommand = командна навушникова гарнітура
+ent-ClothingHeadsetAltEngineering = навушник головного інженера
+ent-ClothingHeadsetAltFreelancer = навушник для фрілансера
+ent-ClothingHeadsetAltMedical = навушник головного лікаря
+ent-ClothingHeadsetAltScience = накладні навушники наукового керівника
+ent-ClothingHeadsetAltSecurity = навушник керівника служби безпеки
+ent-ClothingHeadsetAltSyndicate = криваво-червона накладна гарнітура
+    .desc = Оновлений модульний синдикатний інтерком, який одягається на голову і приймає ключі шифрування (є 5 слотів для ключів).
+ent-ClothingHeadsetAltWizard = накладна гарнітура чарівника

@@ -1,0 +1,14 @@
+ent-SurveillanceCameraRouterBase = роутер для камери
+    .desc = Маршрутизатор камер спостереження. Він прокладає маршрути. Можливо.
+ent-SurveillanceCameraRouterCommand = маршрутизатор командних камер
+ent-SurveillanceCameraRouterEngineering = маршрутизатор інженерних камер
+ent-SurveillanceCameraRouterGeneral = маршрутизатор загальних камер
+ent-SurveillanceCameraRouterMedical = маршрутизатор медичних камер
+ent-SurveillanceCameraRouterScience = маршрутизатор наукових камер
+ent-SurveillanceCameraRouterSecurity = маршрутизатор камер безпеки
+ent-SurveillanceCameraRouterService = маршрутизатор сервісних камер
+ent-SurveillanceCameraRouterSupply = маршрутизатор камер постачання
+ent-SurveillanceCameraWirelessRouterBase = бездротовий маршрутизатор для камер
+    .desc = Бездротовий маршрутизатор для камер спостереження. Він прокладає маршрути. Можливо.
+ent-SurveillanceCameraWirelessRouterEntertainment = маршрутизатор розважальних камер
+ent-SurveillanceCameraWirelessRouterXenoborg = бездротовий маршрутизатор камер ксеноборга

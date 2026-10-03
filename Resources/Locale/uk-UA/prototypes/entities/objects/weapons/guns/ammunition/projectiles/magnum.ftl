@@ -1,0 +1,6 @@
+ent-BulletMagnum = куля (.45 magnum)
+ent-BulletMagnumAP = куля (.45 magnum бронебійний)
+ent-BulletMagnumIncendiary = куля (.45 магнум запальний)
+ent-BulletMagnumPractice = куля (.45 magnum practice)
+ent-BulletMagnumRubber = куля (.45 магнум гумовий)
+ent-BulletMagnumUranium = куля (.45 магнум уран)

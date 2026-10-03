@@ -1,0 +1,11 @@
+ent-PelletGlass = осколок скла
+ent-PelletGrapeshot = виноградна дробина
+ent-PelletShotgun = куля (.50)
+ent-PelletShotgunBeanbag = горошок (.50)
+ent-PelletShotgunFlare = куля (.50 факел)
+ent-PelletShotgunImprovised = імпровізована гранула
+ent-PelletShotgunIncendiary = дробинка (.50 запальний)
+ent-PelletShotgunPractice = куля (.50 практика)
+ent-PelletShotgunSlug = куля (.50 slug)
+ent-PelletShotgunTranquilizer = куля (.50 транквілізатор)
+ent-PelletShotgunUranium = пелета (.50 урану)

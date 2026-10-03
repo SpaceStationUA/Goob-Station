@@ -1,0 +1,1 @@
+ent-BulletOuroboros = уроборос-болт

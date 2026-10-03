@@ -1,0 +1,1 @@
+ent-BaseMachineCircuitboard = плата верстата

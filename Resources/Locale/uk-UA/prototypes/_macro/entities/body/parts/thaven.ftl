@@ -1,0 +1,11 @@
+ent-ChestThaven = груди тавена
+ent-GroinThaven = пах тавена
+ent-HeadThaven = голова тавена
+ent-LeftArmThaven = ліва рука тавена
+ent-LeftFootThaven = ліва ступня тавена
+ent-LeftHandThaven = ліва кисть тавена
+ent-LeftLegThaven = ліва нога тавена
+ent-RightArmThaven = права рука тавена
+ent-RightFootThaven = права ступня тавена
+ent-RightHandThaven = права кисть тавена
+ent-RightLegThaven = права нога тавена

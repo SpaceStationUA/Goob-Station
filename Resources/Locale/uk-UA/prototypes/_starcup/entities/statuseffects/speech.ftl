@@ -1,0 +1,1 @@
+ent-StatusEffectMuted = ефект німоти

@@ -1,0 +1,1 @@
+ent-BaseMobYowie = Уріст МакЙові

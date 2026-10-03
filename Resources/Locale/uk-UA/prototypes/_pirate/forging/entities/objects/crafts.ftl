@@ -1,0 +1,14 @@
+ent-ForgedArrow = стріла
+ent-ForgedCleaver = тесак
+ent-ForgedHalberd = алебарда
+    .desc = Потужна древкова зброя з головкою незвичної форми.
+ent-ForgedKatana = катана
+    .desc = Поки вони розважалися на вечірках, я вправлявся з клинком.
+ent-ForgedKnife = ніж
+ent-ForgedLongsword = довгий меч
+    .desc = Це як меч, тільки довший. Для належного використання потрібні дві руки.
+ent-ForgedMorningstar = моргенштерн
+    .desc = Ви ТОЧНО не хочете, щоб він проломив вам череп...
+ent-ForgedSword = лицарський меч
+ent-ForgedWarhammer = бойовий молот
+    .desc = Кожен дворф мусить мати один такий. Або, можливо, сорок тисяч.

@@ -1,0 +1,1 @@
+ent-ClothingUniformJumpsuitAtmosSyndie = Атмосферний комбінезон синдиката

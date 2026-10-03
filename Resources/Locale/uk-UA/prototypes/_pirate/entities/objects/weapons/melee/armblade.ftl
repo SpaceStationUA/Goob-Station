@@ -1,0 +1,1 @@
+ent-MagicArmBlade = магічна лезорука

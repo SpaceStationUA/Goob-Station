@@ -1,0 +1,11 @@
+ent-ChestOni = грудна клітка оні
+ent-GroinOni = пах оні
+ent-HeadOni = голова оні
+ent-LeftArmOni = ліва рука оні
+ent-LeftFootOni = ліва стопа оні
+ent-LeftHandOni = ліва кисть оні
+ent-LeftLegOni = ліва нога оні
+ent-RightArmOni = права рука оні
+ent-RightFootOni = права стопа оні
+ent-RightHandOni = права кисть оні
+ent-RightLegOni = права нога оні

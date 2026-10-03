@@ -1,0 +1,12 @@
+ent-BaseClothingHeadHatTrapper = шапка-вушанка
+    .desc = Модна й зручна хутряна шапка з подовженими боковими клапанами — вона збереже ваші вуха в теплі.
+ent-ClothingHeadHatFuzzyEarmuffs = пухнасті навушники
+    .desc = Обруч із подушечками зі штучного хутра на обох кінцях, створений для захисту вух.
+ent-ClothingHeadHatTrapperBeige = бежева шапка-вушанка
+ent-ClothingHeadHatTrapperBlack = чорна шапка-вушанка
+ent-ClothingHeadHatTrapperBlue = синя шапка-вушанка
+ent-ClothingHeadHatTrapperGray = сіра шапка-вушанка
+ent-ClothingHeadHatTrapperGreen = зелена шапка-вушанка
+ent-ClothingHeadHatTrapperPink = рожева шапка-вушанка
+ent-ClothingHeadHatTrapperPurple = фіолетова шапка-вушанка
+ent-ClothingHeadHatTrapperRed = червона шапка-вушанка

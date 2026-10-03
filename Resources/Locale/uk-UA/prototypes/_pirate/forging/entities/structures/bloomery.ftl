@@ -1,0 +1,10 @@
+ent-BaseBloomery = незапалена сиродутна піч
+ent-BaseBloomeryComplete = димна сиродутна піч
+    .desc = Схоже, усе готово. Розбийте її.
+ent-BaseBloomeryLit = запалена сиродутна піч
+ent-BloomeryColdBrass =
+    .desc = Завантажена латунню, залишилося лише запалити.
+ent-BloomeryColdPlasteel =
+    .desc = Завантажена пласталлю, залишилося лише запалити.
+ent-BloomeryColdSteel =
+    .desc = Завантажена сталлю, залишилося лише запалити.

@@ -1,0 +1,12 @@
+ent-CurseWeaknessSlowDownEffect = сповільнення від прокляття ослаблення
+ent-DisgustSlowDownEffect = сповільнення від огиди
+ent-MartialArtsGenericSlowdownEffect = сповільнення бойових мистецтв
+ent-NitriumStatusEffect = прискорення від нітріуму
+ent-NitrousStatusEffect = прискорення від нітроусу
+ent-OrgansDamagedSlowdownEffect = сповільнення від пошкодження органів
+ent-ShadowCloakSlowdownEffect = сповільнення тіньового плаща
+ent-ShadowlingGlareSlowdownEffect = сповільнення погляду шедоулінга
+ent-SlasherSlowdownStatusEffect = сповільнення слешера
+ent-SlasherStatusEffectKillSpeed = прискорення слешера після вбивства
+ent-TentacleSlowdownStatusEffect = сповільнення щупальця
+ent-TriclorSlowdownEffect = сповільнення від триклору

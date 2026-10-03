@@ -1,0 +1,12 @@
+ent-FishingLure = рибальська приманка
+    .desc = рибо, йди сюди
+ent-FishingLureMakeshift = рибальська приманка
+    .desc = рибо, йди сюди
+ent-FishingRod = вудка
+    .desc = Час іти на риболовлю!
+ent-FishingRodGolden = золота вудка
+    .desc = Нарешті, ти зловив 250 рибин. Ось твій трофей.
+ent-FishingRodGoon = вудка
+    .desc = Час іти на риболовлю!
+ent-FishingRodMakeshift = саморобна вудка
+    .desc = Мабуть, важко буде зловити рибу на таку.

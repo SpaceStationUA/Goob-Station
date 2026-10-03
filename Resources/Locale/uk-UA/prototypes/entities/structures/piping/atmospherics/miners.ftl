@@ -1,0 +1,15 @@
+ent-GasMinerAmmonia = видобувач аміачного газу
+ent-GasMinerBase = газовик
+    .desc = Гази, що видобуваються з газового гіганта внизу (вгорі?), витікають через цей масивний отвір.
+ent-GasMinerCarbonDioxide = Добувач газу CO2
+ent-GasMinerFrezon = видобувач газу фрезон
+ent-GasMinerNitrogen = Видобувач газу N2
+ent-GasMinerNitrogenStation = Видобувач газу N2
+ent-GasMinerNitrogenStationLarge = Видобувач газу N2
+ent-GasMinerNitrousOxide = видобувач закису азоту
+ent-GasMinerOxygen = Добувач газу O2
+ent-GasMinerOxygenStation = Добувач газу O2
+ent-GasMinerOxygenStationLarge = Добувач газу O2
+ent-GasMinerPlasma = плазмовий газовий шахтар
+ent-GasMinerTritium = видобувач тритієвого газу
+ent-GasMinerWaterVapor = газодобувач водяної пари

@@ -1,0 +1,11 @@
+ent-CMCatwalk = місток
+    .desc = Місток для полегшення маневрування у відкритому космосі та прокладання кабелів.
+ent-RMCCatwalkHybrisa = суцільна металева решітка
+ent-RMCCatwalkHybrisaElevator = суцільна металева решітка
+ent-RMCCatwalkHybrisaLattice = структурна решітка
+ent-RMCMonorailStraight = колія монорейки
+    .desc = Рейкова система для монорейки CORSAT.
+ent-RMCRailroadBumper = рейкові бампери
+    .desc = Це (зазвичай) зупиняє вагонетки та інший рейковий транспорт в кінці колії.
+ent-RMCRailroadStraight = рейки
+    .desc = По них їздять вагонетки та рейковий транспорт.

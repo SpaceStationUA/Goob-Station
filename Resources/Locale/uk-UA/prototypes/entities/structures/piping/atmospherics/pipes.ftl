@@ -1,0 +1,9 @@
+ent-GasPipeBase = труба
+    .desc = Тримає газ.
+ent-GasPipeBroken = прорвана труба
+    .desc = Там був газ.
+ent-GasPipeManifold = газовий колектор
+    .desc = Дозволяє з'єднувати між собою газові труби різних конфігурацій.
+ent-GasPipeSansLayers = газова труба
+    .desc = Утримує газ.
+ent-VentCrawlerHolder = Тримач вентиляційного люка

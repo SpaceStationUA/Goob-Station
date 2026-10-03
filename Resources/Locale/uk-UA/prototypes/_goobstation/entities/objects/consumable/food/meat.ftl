@@ -1,0 +1,10 @@
+ent-FoodMeatBingle = сире м'ясо бінгла
+    .desc = Смердить лайном.
+ent-FoodMeatBingleCooked = стейк з бінгла
+    .desc = Все ще смердить лайном.
+ent-FoodMeatGondola = сире м'ясо гондоли
+    .desc = Ти чудовисько.
+ent-FoodMeatGondolaCooked = стейк з гондоли
+    .desc = Приготоване, жорстке м'ясо гондоли.
+ent-FoodMeatVoxFried = смажена ""курка""
+    .desc = Соковитий шматок курячого м'яса... Я так думаю...

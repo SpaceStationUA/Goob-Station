@@ -1,0 +1,15 @@
+ent-BagpipeInstrument = волинка
+    .desc = Чудово поєднується з кілтом.
+ent-ClarinetInstrument = кларнет
+    .desc = Незграбні тонування.
+ent-FluteInstrument = флейта
+    .desc = Досягаючи нових висот жахливого пронизливого звучання.
+ent-HarmonicaInstrument = гармоніка
+ent-OcarinaInstrument = окарина
+    .desc = Добре підходить для виконання колискових.
+ent-PanFluteInstrument = сопілка
+    .desc = Ідеально підходить для заманювання стародавніх міфічних істот на танець з вами.
+ent-RecorderInstrument = рекордер
+    .desc = Поставляється в різних кольорах модного пластику!
+ent-SaxophoneInstrument = саксофон
+    .desc = Інструмент. Можливо, ви могли б перетворити це на сирий джаз.

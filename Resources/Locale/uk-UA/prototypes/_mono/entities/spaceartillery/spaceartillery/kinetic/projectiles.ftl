@@ -1,0 +1,10 @@
+ent-20mmBulletArmorPiercing = 20мм бронебійна куля
+ent-90mmBulletBase = снаряд
+ent-ShipBoforsProjectile = 255мм снаряд Bofors
+ent-ShipCyrexaProjectile = 220мм снаряд CYREXA
+ent-ShipDravonProjectile = 57мм снаряд DRAVON
+ent-ShipHadesProjectile = 305мм снаряд HADES
+    .desc = Я відчуваю первісний страх. Знамення прийшло за мною.
+ent-ShipKargilProjectile = 203мм снаряд Kargil
+ent-ShipRailgunProjectile = 280мм 75.25 кг снаряд M381 CHARON
+ent-ShipTarnyxProjectile = 150мм снаряд TARNYX
