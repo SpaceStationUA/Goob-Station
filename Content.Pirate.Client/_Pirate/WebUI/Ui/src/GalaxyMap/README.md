@@ -213,7 +213,20 @@ different reason:
    carry bright condensations, visible in M87's — and they rendered as grey blocks.
    Scaling a trapezoid vertically produces a bigger trapezoid, and a screen-blended
    off-white trapezoid on a dark background is a rectangle.
-3. *Sliding the jet's GRADIENT.* No shape involved, so nothing to misread, and the
+3. *Sliding the jet's GRADIENT.* **One gradient, shared.** Wrong, and instructive:
+
+   `gradientUnits` defaults to `objectBoundingBox`, so a gradient resolves against
+   each referencing element's OWN box — and the two jets' boxes are mirrored, because
+   the upper path's apex is its bbox's bottom and the lower path's apex is its bbox's
+   top. So one `y1 = 1, y2 = 0` means "hot at the pole" for one jet and "hot at the
+   tip" for the other, and a single animation drove both. The symptom was the two
+   jets pulsing to the same side: the object flexed like one thing instead of
+   behaving like two plumes.
+
+   Each pole now has its own ramp, its own direction, and its own duration — measured
+   correlation **0.20**, where the shared gradient gives **0.85**.
+
+ No shape involved, so nothing to misread, and the
    motion is continuous. The bright stop runs from the pole to the tip and the
    gradient's extent moves with it so the ramp never tears.
 

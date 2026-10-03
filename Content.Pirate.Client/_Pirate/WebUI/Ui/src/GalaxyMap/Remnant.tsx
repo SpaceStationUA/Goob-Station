@@ -200,55 +200,73 @@ export function Pulsar(props: PulsarProps) {
  */
 export function Quasar(props: { px: number; seed: number }) {
   const reach = () => props.px * 0.46;
-  const grad = `jet-${props.seed}`;
+  const up = `jet-up-${props.seed}`;
+  const down = `jet-down-${props.seed}`;
+
   /**
-   * The jet's brightness travels by sliding the GRADIENT along the plume.
+   * TWO gradients, one per pole, and the second one is reversed.
    *
-   * Two previous attempts. Animating the plume's opacity said that something was
-   * happening without showing anything happening, and discrete knots travelling
-   * outward were geometrically right and looked like grey blocks -- scaling a
-   * trapezoid vertically just produces a bigger trapezoid, and a screen-blended
-   * off-white trapezoid on a dark background is a rectangle.
+   * The first version gave both jets a single gradient and let them share it, which
+   * looks like it should work and does not. `gradientUnits` defaults to
+   * objectBoundingBox, so the gradient's coordinates are relative to EACH referencing
+   * element's own box — and the two boxes are mirrored, because the upper path's apex
+   * is its bbox's BOTTOM and the lower path's apex is its bbox's TOP.
    *
-   * Moving the gradient has neither problem: there is no shape involved at all, so
-   * there is nothing to read as an artefact, and the motion is continuous. The
-   * bright stop slides from the pole to the tip and the gradient's extent moves with
-   * it, so the ramp never tears.
+   * So `y1 = 1, y2 = 0` means "hot at the pole" for one jet and "hot at the tip" for
+   * the other. The symptom is exactly what was reported: the two jets pulse to the
+   * same side, so the object reads as one thing flexing rather than two plumes
+   * behaving independently.
    *
-   * SMIL rather than CSS because the thing being animated is an attribute of an
-   * SVG gradient element, and CSS cannot reach that. The chart's marks use the same
-   * technique for the same reason.
+   * The fix is not to offset the animation, it is to give each pole its own ramp with
+   * its own direction, and the durations differ so they are not in lockstep either.
    */
-  const slide = (dur: string) => (
-    <>
-      <animate
-        attributeName="y1"
-        values="1;0.1;-0.9"
-        dur={dur}
-        repeatCount="indefinite"
-      />
-      <animate
-        attributeName="y2"
-        values="2;1.1;0.1"
-        dur={dur}
-        repeatCount="indefinite"
-      />
-    </>
+  /**
+   * Both edges are written out rather than one derived from the other.
+   *
+   * Deriving y2 from y1 by adding a unit to every stop is shorter and is exactly the
+   * kind of cleverness that is wrong the first time someone changes a value without
+   * seeing the arithmetic elsewhere. y2 trails y1 by one unit so the ramp keeps its
+   * length rather than stretching, and both lists are written out because that is the
+   * whole rule.
+   */
+  const ramp = (id: string, y1: string, y2: string, dur: string) => (
+    <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
+      <animate attributeName="y1" values={y1} dur={dur} repeatCount="indefinite" />
+      <animate attributeName="y2" values={y2} dur={dur} repeatCount="indefinite" />
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+      <stop offset="18%" stop-color={JET_HOT} stop-opacity="0.85" />
+      <stop offset="55%" stop-color={JET_COOL} stop-opacity="0.4" />
+      <stop offset="100%" stop-color={JET_COOL} stop-opacity="0" />
+    </linearGradient>
   );
+
+  /**
+   * The plume itself.
+   *
+   * `dir` is +1 for the upper pole and -1 for the lower, and it decides which ramp
+   * the path uses. The apex is always at the pole and the tip always away from it, so
+   * the geometry is one expression and only the fill differs.
+   */
+  const jet = (dir: 1 | -1) => {
+    const r = reach();
+    const apex = dir * props.px * 0.08;
+    const tip = dir * r;
+    const w = r * 0.1;
+    return (
+      <path
+        d={`M 0 ${apex} L ${-w} ${tip} L ${w} ${tip} Z`}
+        fill={`url(#${dir === 1 ? up : down})`}
+      />
+    );
+  };
+
   return (
     <div class="quasar" style={{ width: `${props.px}px`, height: `${props.px}px` }}>
-      {/* The disc turns faster than the black hole's own. Two reasons, and the
-          second is the real one.
-
-          The obvious one is that a quasar is not a stellar black hole: it is
-          feeding, so its disc is not the same object and there is no reason for it
-          to behave identically.
-
-          The real one is perceptual. The disc is thin and mostly dark, so a slow
-          rotation changes about one per cent of the panel's pixels however long you
-          wait, and the eye reads one per cent over six seconds as nothing happening.
-          Halving the period roughly doubles the fraction of the structure that has
-          moved between any two frames, which is what actually reads as motion. */}
+      {/* The disc turns faster than the black hole's own. The obvious reason is that
+          a quasar is not a stellar black hole. The real one is perceptual: the disc
+          is thin and mostly dark, so a slow rotation changes about one per cent of
+          the panel's pixels however long you wait, and the eye reads one per cent
+          over six seconds as nothing happening. */}
       <BlackHole px={props.px} seed={props.seed} frames={0} period={2.4} />
       <svg
         class="quasar-jets"
@@ -258,26 +276,18 @@ export function Quasar(props: { px: number; seed: number }) {
         aria-hidden="true"
       >
         <defs>
-          <linearGradient id={grad} x1="0" y1="1" x2="0" y2="0">
-            {slide("1.35s")}
-            <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
-            <stop offset="18%" stop-color={JET_HOT} stop-opacity="0.85" />
-            <stop offset="55%" stop-color={JET_COOL} stop-opacity="0.4" />
-            <stop offset="100%" stop-color={JET_COOL} stop-opacity="0" />
-            <stop offset="100%" stop-color={JET_COOL} stop-opacity="0" />
-          </linearGradient>
+          {/* Outward from the pole: y1 runs 1 -> 0.1 -> -0.9 with y2 a unit behind,
+              so the ramp travels without changing length. */}
+          {ramp(up, "1;0.1;-0.9", "2;1.1;0.1", "1.35s")}
+          {/* The same travel seen from the other pole. Same numbers read in a
+              mirrored box means the ramp runs the other way, so these are negated —
+              and the duration differs so the two are never in step, because two
+              plumes pulsing together read as one object flexing. */}
+          {ramp(down, "0;-0.9;-1.9", "1;0.1;-0.9", "1.7s")}
         </defs>
-        {/* Both poles, on the disc's own axis rather than the screen's, so the two
-            read as belonging to the same object. */}
         <g transform="rotate(-18)">
-          <path
-            d={`M 0 ${-props.px * 0.08} L ${-reach() * 0.1} ${-reach()} L ${reach() * 0.1} ${-reach()} Z`}
-            fill={`url(#${grad})`}
-          />
-          <path
-            d={`M 0 ${props.px * 0.08} L ${-reach() * 0.1} ${reach()} L ${reach() * 0.1} ${reach()} Z`}
-            fill={`url(#${grad})`}
-          />
+          {jet(1)}
+          {jet(-1)}
         </g>
       </svg>
     </div>

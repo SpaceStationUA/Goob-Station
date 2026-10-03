@@ -2467,6 +2467,96 @@ try {
       quasar.jetMoves,
       "the overlay's jet gradient animates too, so both surfaces agree",
     );
+    /**
+     * The two jets must NOT pulse together.
+     *
+     * This is the check for the bug that was actually reported, and it is a
+     * correlation rather than a presence test because the failure is invisible to any
+     * assertion that asks "are the jets there".
+     *
+     * Both jets originally shared ONE gradient, which looked correct and was not:
+     * `gradientUnits` defaults to objectBoundingBox, so the gradient resolves against
+     * each element's own box, and the two boxes are mirrored. The same
+     * `y1 = 1, y2 = 0` therefore meant "hot at the pole" for one jet and "hot at the
+     * tip" for the other, and one shared animation drove both. The symptom was the
+     * two jets pulsing to the same side.
+     */
+    const jetShots = [];
+    await openSys("quasar-1");
+    {
+      const art = await page.$(".overlay-art");
+      for (let i = 0; i < 12; i++) {
+        jetShots.push(await art.screenshot());
+        await page.waitForTimeout(150);
+      }
+    }
+    await closeSys();
+    const jetSync = await page.evaluate(async (ss) => {
+      const load = async (b64) => {
+        const i = new Image();
+        i.src = "data:image/png;base64," + b64;
+        await i.decode();
+        const c = document.createElement("canvas");
+        c.width = i.width;
+        c.height = i.height;
+        const g = c.getContext("2d");
+        g.drawImage(i, 0, 0);
+        return { d: g.getImageData(0, 0, c.width, c.height).data, w: c.width, h: c.height };
+      };
+      const imgs = [];
+      for (const s of ss) imgs.push(await load(s));
+      const { w, h } = imgs[0];
+      const series = imgs.map(({ d }) => {
+        let up = 0;
+        let down = 0;
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            const i = (y * w + x) * 4;
+            // Cold blue-white only. The disc is orange, and counting it would let
+            // its rotation dominate the series so the correlation measures the disc
+            // rather than the jets.
+            if (d[i + 3] < 40) continue;
+            if (d[i + 2] < 150) continue;
+            if (Math.abs(d[i] - d[i + 2]) > 60) continue;
+            if (y < h / 2) up++;
+            else down++;
+          }
+        }
+        return { up, down };
+      });
+      const norm = (k) => {
+        const m = Math.max(...series.map((s) => s[k])) || 1;
+        return series.map((s) => s[k] / m);
+      };
+      const a = norm("up");
+      const b = norm("down");
+      const mean = (v) => v.reduce((s, x) => s + x, 0) / v.length;
+      const mu = mean(a);
+      const md = mean(b);
+      let num = 0;
+      let du = 0;
+      let dd = 0;
+      for (let i = 0; i < a.length; i++) {
+        const x = a[i] - mu;
+        const y = b[i] - md;
+        num += x * y;
+        du += x * x;
+        dd += y * y;
+      }
+      return { corr: num / Math.sqrt(du * dd || 1), spreadUp: Math.max(...a) - Math.min(...a) };
+    }, jetShots.map((s) => s.toString("base64")));
+    check(
+      "the two jets move INDEPENDENTLY, not in lockstep",
+      jetSync.corr < 0.6,
+      `correlation ${jetSync.corr.toFixed(2)} over 12 frames. A shared gradient gives near ` +
+        `+1 because one animation drives both; these have their own ramps, their own ` +
+        `directions and their own durations.`,
+    );
+    check(
+      "and the jet brightness actually varies, so the correlation measures something",
+      jetSync.spreadUp > 0.15,
+      `upper jet's normalised brightness ranges over ${jetSync.spreadUp.toFixed(2)}`,
+    );
     check(
       "a quasar draws the black hole's disc AND jets",
       quasar.disc && quasar.jets === 2,
