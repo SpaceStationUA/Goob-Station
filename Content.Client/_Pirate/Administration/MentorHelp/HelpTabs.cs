@@ -106,7 +106,9 @@ public sealed class HelpTabs : BoxContainer
         if (_mentorContent == content)
             return;
 
-        _mentorContent?.Orphan();
+        // The controller disposes the old content before handing over new content.
+        if (_mentorContent is { Disposed: false })
+            _mentorContent.Orphan();
         content.Orphan();
         content.HorizontalExpand = true;
         content.VerticalExpand = true;
@@ -212,7 +214,8 @@ public sealed class HelpTabs : BoxContainer
         if (disposing)
         {
             // This control is reused; detach it before the window disposes its children.
-            _mentorContent?.Orphan();
+            if (_mentorContent is { Disposed: false })
+                _mentorContent.Orphan();
             _mentorContent = null;
             Controller.UnregisterTabs(this);
         }
