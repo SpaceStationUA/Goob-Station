@@ -29,6 +29,14 @@ public sealed partial class PaperComponent : Component
     public bool EditingDisabled;
 
     /// <summary>
+    /// Pirate: stamped/signed documents are final, but a stamp-ignoring pen (cyberpen)
+    /// may still edit them. Set while the open write session was started with such a pen
+    /// so later save attempts (page flips, direct messages) are checked against it.
+    /// Deliberately neither a data field nor networked: the client knows its own pen.
+    /// </summary>
+    public EntityUid? WriteSessionIgnoresStampsActor;
+
+    /// <summary>
     /// Sound played after writing to the paper.
     /// </summary>
     [DataField("sound")]
@@ -41,11 +49,23 @@ public sealed partial class PaperComponent : Component
         public readonly List<StampDisplayInfo> StampedBy;
         public readonly PaperAction Mode;
 
-        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
+        // Pirate: persistent diary pages - leaf on screen and total leaf count.
+        // PageCount is 0 for plain (unpaged) paper.
+        public readonly int CurrentPage;
+        public readonly int PageCount;
+
+        public PaperBoundUserInterfaceState(
+            string text,
+            List<StampDisplayInfo> stampedBy,
+            PaperAction mode = PaperAction.Read,
+            int currentPage = 0,
+            int pageCount = 0)
         {
             Text = text;
             StampedBy = stampedBy;
             Mode = mode;
+            CurrentPage = currentPage;
+            PageCount = pageCount;
         }
     }
 
@@ -54,9 +74,16 @@ public sealed partial class PaperComponent : Component
     {
         public readonly string Text;
 
-        public PaperInputTextMessage(string text)
+        /// <summary>
+        /// Pirate: the leaf this text was typed on (0 for plain paper). pages.CurrentPage
+        /// is shared by every viewer, so the server aims the write at this leaf instead.
+        /// </summary>
+        public readonly int Page;
+
+        public PaperInputTextMessage(string text, int page = 0)
         {
             Text = text;
+            Page = page;
         }
     }
 
@@ -70,6 +97,48 @@ public sealed partial class PaperComponent : Component
         {
             Action = action;
         }
+    }
+    #endregion
+
+    #region Pirate: persistent diary pages
+    [Serializable, NetSerializable]
+    public sealed class PaperPageActionMessage : BoundUserInterfaceMessage
+    {
+        public readonly PaperPageAction Action;
+        public readonly int Page;
+
+        /// <summary>
+        /// Text still being typed on the leaf being left behind. Sent together with
+        /// Turn/Add so flipping pages never drops an unsaved edit; null otherwise.
+        /// </summary>
+        public readonly string? Text;
+
+        /// <summary>
+        /// Pirate: the leaf <see cref="Text"/> was typed on, so a concurrent flip of the
+        /// shared current page by another viewer cannot reroute the write.
+        /// </summary>
+        public readonly int TextPage;
+
+        public PaperPageActionMessage(PaperPageAction action, int page = 0, string? text = null, int textPage = 0)
+        {
+            Action = action;
+            Page = page;
+            Text = text;
+            TextPage = textPage;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public enum PaperPageAction : byte
+    {
+        /// <summary>Flip to another leaf.</summary>
+        Turn,
+
+        /// <summary>Insert a fresh leaf after the current one.</summary>
+        Add,
+
+        /// <summary>Tear out the current leaf.</summary>
+        Remove,
     }
     #endregion
 
