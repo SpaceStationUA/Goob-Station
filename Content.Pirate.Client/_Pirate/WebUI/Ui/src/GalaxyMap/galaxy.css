@@ -104,6 +104,30 @@ svg.chart.painting {
 }
 
 /* Side panel */
+/**
+ * The nebula, behind the chart and under every label.
+ *
+ * `pointer-events: none` because it sits under the SVG, which handles all the
+ * pointer work, and a canvas that swallowed clicks would make the whole chart
+ * unresponsive in a way that looks like a hang rather than a bug.
+ *
+ * It is positioned rather than in flow so it can be pulled out of the layout
+ * entirely: the chart-shell's own box is what everything else measures against, and
+ * a full-bleed background in flow would change the chart's size and therefore its
+ * scale.
+ */
+.nebula-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.nebula-canvas {
+  display: block;
+  width: 100%;
+}
+
 .panel {
   position: absolute;
   top: 14px;

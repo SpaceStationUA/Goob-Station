@@ -62,3 +62,28 @@ this replaced:
 
 `GasLayers.gdshader` is here because it is the other half of the same planet, and
 because the ring's colours are chosen to sit against it.
+
+## PixelSpace — the background
+
+`../space/` is Deep-Fold's second generator, [PixelSpace](https://deep-fold.itch.io/space-background-generator),
+which is what the nebula behind the chart is ported from. Same author as the planet
+generator above, and that is the reason for using it: `Nebulae.shader` and
+`StarStuff.shader` use the identical `sin(dot(coord, vec2(12.9898, 78.233)))` hash,
+the same `fbm`, the same `circleNoise`, so the background's dither has the same grain
+as the planets' terminators. Art from anywhere else does not.
+
+**The licence has a condition, unlike the one above.** PixelSpace's README:
+
+> Code available under MIT license, but do not distribute or sell any generated
+> images on their own. Feel free to use them in your games or other projects however.
+
+Which is what this does — the code is MIT and we run it in the page. Nothing is
+generated ahead of time and committed, which is the case the condition is about.
+Anyone replacing this with a baked background PNG would be doing the thing the
+licence forbids, so it is worth knowing before that idea is had.
+
+`Colorscheme.tres` is **user data, not a fixed design**: `GUI.gd` loads it as
+`global_scheme` and `select_colorscheme()` writes the gradient's stops straight from
+colour pickers. The three darkest stops in `lib/nebula.ts` are lifted, and that is
+the generator working as designed rather than a departure from it. See the note
+there for the measured reason.

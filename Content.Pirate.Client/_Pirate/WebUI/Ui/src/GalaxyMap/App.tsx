@@ -1,5 +1,6 @@
 import { createMemo, createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import Chart from "./Chart";
+import NebulaBackdrop from "./NebulaBackdrop";
 import { cellsInExtent, hexLine, key, pixelToHex, type Axial } from "./lib/hex";
 import { cellsByTerritory } from "./lib/geometry";
 import { pick, type GalaxyModel, type StarSystem } from "./lib/model";
@@ -348,6 +349,10 @@ export default function App() {
     <Show when={model()} fallback={<div class="chart-shell" />}>
       {m => (
         <div class="chart-shell">
+          {/* Behind everything. `reduce` is on: the reference's own flag for a
+              background that has to carry text, and it does -- twenty-odd
+              territory labels, a route list and a graticule sit on top. */}
+          <NebulaBackdrop seed={7} />
           <Chart
             model={m()}
             locale={loc()}

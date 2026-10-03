@@ -1027,6 +1027,94 @@ try {
       : { plum: 0, inside: 0, total: 0 };
     await page.evaluate(() => document.querySelector(".overlay-close")?.click());
 
+    /**
+     * The nebula behind the chart.
+     *
+     * Worth checking at all because it is easy to add a decoration that renders
+     * nothing and looks fine: the page has a dark background, so a nebula that
+     * failed to compile, or compiled and drew 80% transparency, is very close to
+     * invisible in a screenshot. Measured off its own pixels instead.
+     */
+    const neb = await page.evaluate(async () => {
+      const c = document.querySelector(".nebula-canvas");
+      if (!c) return { present: false, detail: "no .nebula-canvas in the DOM" };
+      const im = new Image();
+      im.src = c.toDataURL();
+      await im.decode();
+      const off = document.createElement("canvas");
+      off.width = c.width;
+      off.height = c.height;
+      const ctx = off.getContext("2d");
+      ctx.drawImage(im, 0, 0);
+      const d = ctx.getImageData(0, 0, off.width, off.height).data;
+      let covered = 0;
+      let gas = 0;
+      let maxL = 0;
+      const total = d.length / 4;
+      for (let i = 0; i < d.length; i += 4) {
+        if (d[i + 3] < 128) continue;
+        covered++;
+        const l = (d[i] + d[i + 1] + d[i + 2]) / 3;
+        if (l > maxL) maxL = l;
+        // Above the background colour's luminance, so this counts gas and not the
+        // flat fill the shader paints where col_value falls under the cutoff.
+        if (l > 45) gas++;
+      }
+      // Distinct colours, as a proxy for there being more than one layer present.
+      const seen = new Set();
+      for (let i = 0; i < d.length; i += 4 * 97) {
+        if (d[i + 3] < 128) continue;
+        seen.add(`${d[i] >> 4},${d[i + 1] >> 4},${d[i + 2] >> 4}`);
+      }
+      return {
+        present: true,
+        coveredPct: (100 * covered) / total,
+        gasPct: (100 * gas) / total,
+        maxLum: maxL,
+        distinct: seen.size,
+        backing: `${c.width}x${c.height}`,
+        detail: `${c.width}x${c.height} backing`,
+      };
+    });
+    check("the nebula is on the page at all", neb.present, neb.detail ?? "missing");
+    check(
+      "and it covers a real part of the chart",
+      neb.present && neb.coveredPct > 8 && neb.coveredPct < 70,
+      `${(neb.coveredPct ?? 0).toFixed(1)}% of the canvas opaque, ${(neb.gasPct ?? 0).toFixed(1)}% of it gas`,
+    );
+    check(
+      "and it is gas rather than a flat fill",
+      neb.present && neb.gasPct > 1 && neb.maxLum > 90,
+      `${(neb.gasPct ?? 0).toFixed(1)}% above luminance 45, peak ${Math.round(neb.maxLum ?? 0)}`,
+    );
+    check(
+      "with more than one tone in it, so both layers are drawing",
+      neb.present && neb.distinct >= 4,
+      `${neb.distinct} distinct colours`,
+    );
+    /**
+     * The backdrop must not take pointer events.
+     *
+     * The first version of this asked for `elementFromPoint` at the centre of the
+     * viewport and it failed — not because the backdrop was capturing anything, but
+     * because the chart's own box does not reach the exact centre and the point
+     * landed on margin, where the backdrop is the topmost thing. A layout-dependent
+     * probe for a property that is declared in CSS is the wrong kind of test.
+     *
+     * So this asks the question directly. `pointer-events: none` on the host is
+     * inherited by the canvas, but the canvas is inserted from script after the
+     * stylesheet is applied, so it is worth checking rather than assuming.
+     */
+    const pe = await page.evaluate(() => {
+      const host = document.querySelector(".nebula-backdrop");
+      const cv = document.querySelector(".nebula-canvas");
+      if (!host) return { ok: false, why: "no host" };
+      const h = getComputedStyle(host).pointerEvents;
+      const c = cv ? getComputedStyle(cv).pointerEvents : "(no canvas)";
+      return { ok: h === "none" && c === "none", why: `host ${h}, canvas ${c}` };
+    });
+    check("and it does not swallow clicks meant for the chart", pe.ok, pe.why);
+
     check(
       "the overlay's ring is a live canvas, not the SVG fallback",
       overlayRing.canvas,
