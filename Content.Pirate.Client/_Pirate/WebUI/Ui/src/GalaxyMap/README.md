@@ -1676,3 +1676,55 @@ galactic arm is mostly stars. This is the first attempt and it is not finished.
 Twice in this file, and it is now the fifth time in this thread. Six of them this round,
 in comments written after the first pass. A backtick inside a GLSL comment closes the
 template literal and the error lands on a line of somebody else's declaration.
+
+### Second pass: the speckle, and the four things it was not
+
+The surface read as salt-and-pepper. Four causes were found, three of them real, and
+**the one that mattered was last** -- which is the sixth time in this thread that the
+cause sat behind three plausible smaller ones.
+
+1. **The projection was degenerate.** Longitude read `atan(n.z, n.x)` -- the viewer-axis
+   component against x. For a sphere *facing* the camera that component is large and
+   nearly constant across the disc, so the texture was effectively ONE-DIMENSIONAL. A
+   1-D texture sampled at high frequency and cut into four hard bands is precisely
+   salt-and-pepper.
+2. **Then it pinched at the centre.** Fixing the projection revealed the equirectangular
+   pole: every longitude meets at the middle of the visible disc. Fixed by sampling noise
+   on the **surface point** in 3D, which is seamless by construction -- there is no seam
+   to wrap and no pole to converge at. The granulation now scrolls by *rotating the
+   sample point about the star's axis*, so the cells turn with the surface; offsetting a
+   texture coordinate slides the pattern across the sphere instead and shears it at the
+   wrap.
+3. **The surface dither**, which I had added as a deviation. Dithering trades a hard edge
+   for a pattern, which only reads as softer when the two colours either side of the
+   edge are CLOSE. Here they are white against orange -- most of the palette's range --
+   so it was filling the band boundary with high-contrast noise. The reference only ever
+   dithers the CORONA, where the bands are adjacent in the ramp.
+4. **THE ACTUAL CAUSE: it was an fbm.** Four octaves doubles the frequency each octave,
+   so a base of 34 has a top octave at 272 -- about one cycle every one and a half pixels
+   on a 420px disc. That is not granulation, it is per-pixel noise. Every earlier "fix"
+   treated the symptom, and lowering the base frequency only moved the speckle to a
+   different octave.
+
+   Granulation is convective **cells**, and cells are BAND-LIMITED: one characteristic
+   size, not a fractal with eight times the detail on top. One octave of value noise.
+
+Also fixed: **the prominence loops were rendering the entire time and were invisible**,
+because they were banded into the corona palette alongside the corona -- and the corona
+is brightest at exactly the radius the loops stand at, so loop and background landed on
+the same index. A loop now takes the star's hottest band, which is also physically right:
+a prominence is at or above photosphere temperature, which is the whole reason it is
+visible against the sky.
+
+`STAR_DEFAULTS.flares` is 0.5 rather than the reference's 0.3, because at 0.3 the loops
+sit inside the corona's own radius and lose against it.
+
+### Still to do on the star
+
+- Granulation is still finer than it should be, and only two of the four bands are being
+  used -- the distribution is narrower than the palette. The surface reads as one hue
+  with white in it rather than white-hot through to deep red.
+- Limb darkening is still weak at the top of the range and strong at the bottom.
+- **Still not wired in.** No `star` in `SystemKind`, no overlay dispatcher entry, no chart
+  mark, and therefore no assertions -- an unwired renderer verified only by a screenshot
+  is precisely the failure this project keeps hitting.

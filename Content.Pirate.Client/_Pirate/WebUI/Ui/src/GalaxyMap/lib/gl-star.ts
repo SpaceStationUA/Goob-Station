@@ -97,7 +97,11 @@ const SURFACE_BANDS: [string, string, string, string] = [
 
 // Two stops, as the reference builds them (`{ star = colors, corona = 2 }`). Order
 // matters: band 0 is the corona's inner edge and is therefore the brighter of the two.
-const CORONA_BANDS: [string, string] = ["#ffcf8c", "#7a3b52"];
+// The dim band is a desaturated warm shadow rather than a second hue. It was a
+// saturated violet, and a saturated darker colour at the corona's outer edge does not
+// read as haze -- it reads as an OUTLINE drawn round the star, which is the opposite of
+// what a corona is.
+const CORONA_BANDS: [string, string] = ["#ffd9a0", "#a8664a"];
 
 const VERT = `
 attribute vec2 a_pos;
@@ -199,6 +203,58 @@ float fbm(vec2 p) {
 }
 
 /**
+ * 3D value noise, and fbm on top of it.
+ *
+ * This exists because a 2D equirectangular texture CANNOT texture a sphere seen face
+ * on. Every longitude meets at the centre of the visible disc, so any lat/long mapping
+ * has a pole there and the cells converge into a visible pinch -- which is exactly what
+ * appeared once the projection was fixed and stopped being one-dimensional.
+ *
+ * Sampling the noise on the SURFACE POINT is seamless by construction: there is no
+ * seam to wrap and no pole to converge at, because the star's own geometry supplies
+ * the parameterisation. The reference avoids this the same way, by evaluating a
+ * pre-rendered surface MAP -- but a map is a lat/long image too, so it has the pole as
+ * well; it simply happens to sit at the back of the sphere there rather than in the
+ * middle of the visible face.
+ *
+ * Same hash as everything else in this file, so the star breaks down into the same
+ * grain as its own corona.
+ */
+float hash3(vec3 p) {
+  return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+}
+
+float vnoise3(vec3 p) {
+  vec3 i = floor(p);
+  vec3 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float n000 = hash3(i);
+  float n100 = hash3(i + vec3(1.0, 0.0, 0.0));
+  float n010 = hash3(i + vec3(0.0, 1.0, 0.0));
+  float n110 = hash3(i + vec3(1.0, 1.0, 0.0));
+  float n001 = hash3(i + vec3(0.0, 0.0, 1.0));
+  float n101 = hash3(i + vec3(1.0, 0.0, 1.0));
+  float n011 = hash3(i + vec3(0.0, 1.0, 1.0));
+  float n111 = hash3(i + vec3(1.0, 1.0, 1.0));
+  float x00 = mix(n000, n100, f.x);
+  float x10 = mix(n010, n110, f.x);
+  float x01 = mix(n001, n101, f.x);
+  float x11 = mix(n011, n111, f.x);
+  return mix(mix(x00, x10, f.y), mix(x01, x11, f.y), f.z);
+}
+
+float fbm3(vec3 p) {
+  float v = 0.0;
+  float s = 0.5;
+  for (int i = 0; i < ${OCTAVES}; i++) {
+    v += vnoise3(p) * s;
+    p *= 2.0;
+    s *= 0.5;
+  }
+  return v;
+}
+
+/**
  * Three bands, unrolled.
  *
  * GLSL ES 1.00 permits only CONSTANT index expressions into a uniform array, so
@@ -235,11 +291,29 @@ void main() {
     // Equirectangular, and SCROLLED. The scroll rate is the activity: a star with
     // more activity turns faster, and it is the one parameter that separates a still
     // disc from something alive.
-    float rate = 1.0 + floor(u_activity * 2.999);
-    vec2 suv = vec2(
-      fract(atan(n.z, n.x) / TAU + u_phase * rate),
-      n.y * 0.5 + 0.5
-    );
+    // THE PROJECTION, and the first one was degenerate.
+    //
+    // It read atan(n.z, n.x) -- the viewer-axis component against x. For a sphere
+    // FACING the camera that viewer component is large and nearly constant across the
+    // whole disc, so the longitude was pinned near one value and the granulation was
+    // effectively ONE-DIMENSIONAL. A one-dimensional texture sampled at high frequency
+    // and then cut into four hard bands is exactly salt-and-pepper, which is what the
+    // surface looked like no matter what I did to the frequency or the ramp width.
+    //
+    // For a front-facing sphere the longitude comes from the SCREEN-SPACE direction and
+    // the latitude from the viewer axis, which is the standard mapping:
+    //
+    //     longitude = atan2(screen up, screen right)
+    //     latitude  = asin(viewer axis)
+    // The granulation scrolls by ROTATING THE SAMPLE POINT about the star's axis,
+    // rather than by offsetting a texture coordinate. A rotated 3D point on a sphere
+    // stays on the sphere, so the cells turn with the surface and there is still no
+    // seam and no pole. Offsetting a uv would slide the pattern across the sphere
+    // instead, which shears it at the wrap.
+    float spin = u_phase * (1.0 + floor(u_activity * 2.999)) * 0.35;
+    float cs = cos(spin);
+    float sn = sin(spin);
+    vec3 sp = vec3(n.x * cs - n.y * sn, n.x * sn + n.y * cs, n.z);
 
     // Three channels from one fbm at different scales, which is what gives granulation
     // its cells AND gives the spots somewhere to live without a second texture.
@@ -249,9 +323,35 @@ void main() {
     // there are hundreds of them; at 26 this produced brown continents on a cream
     // ball with a purple rim, which is a rocky planet and nothing else. 150 across is
     // the smallest count that still reads as cells rather than as flat tone.
-    float gran = fbm(suv * vec2(150.0, 75.0) + u_seed);
-    float fine = fbm(suv * vec2(340.0, 170.0) + u_seed + 31.0);
-    float spotN = fbm(suv * vec2(11.0, 5.5) + u_seed + 77.0);
+    // 96, not 150, and the reason is ALIASING rather than taste.
+    //
+    // Granulation cells want to be eight to fifteen pixels across on screen. At 150
+    // cells around the equator of a 460px star each cell is about six pixels, which is
+    // the same scale as the 4x4 dither -- so the ordered dither and the cells beat
+    // against each other and the surface reads as speckle instead of as convection.
+    // 34 cells across the DIAMETER. The number is the cell count on the visible face,
+    // not around an equator, because there is no equator here -- the frequency is on
+    // the unit sphere and the visible face is half of it.
+    // SINGLE OCTAVE, and this is the actual cause of the speckle.
+    //
+    // Four things were blamed for it and three were real but incidental: the noise
+    // frequency, the width of the smoothstep, the projection, and the surface dither.
+    // The cause is that this was an fbm.
+    //
+    // fbm3 at four octaves multiplies the frequency by two each octave, so a base of
+    // 34 has a top octave at 272. On a 420px disc that is roughly one cycle every one
+    // and a half pixels -- which is not granulation, it is per-pixel noise, and cutting
+    // it into four hard bands turns it into salt and pepper. Every "fix" applied on top
+    // was treating the SYMPTOM, and lowering the base frequency just moved the
+    // speckle to a different octave.
+    //
+    // Granulation is convective cells and cells are BAND-LIMITED: one characteristic
+    // size, not a fractal with eight times the detail on top. The reference's surface
+    // map is drawn as flat regions, which is the same statement. One octave of value
+    // noise, and the second channel likewise.
+    float gran = vnoise3(sp * 30.0 + u_seed);
+    float fine = vnoise3(sp * 62.0 + u_seed + 31.0);
+    float spotN = vnoise3(sp * 4.0 + u_seed + 77.0);
 
     float g = 0.5;
     if (u_granulation > 0.001) {
@@ -263,7 +363,12 @@ void main() {
     vec3 map = vec3(gran, spotN, fine);
 
     float energy = mix(0.5, clamp(g, 0.0, 1.0), 0.35 + u_granulation * 0.65);
-    float identity = smoothstep(0.24, 0.76, energy + map.b * 0.15);
+    // The transition is much WIDER than the reference's 0.24..0.76, and that is the
+    // single change that stops the speckle. A steep smoothstep across four hard bands
+    // means most pixels sit near a band EDGE, so a small noise excursion flips them
+    // into the neighbouring colour and you get salt and pepper instead of convection.
+    // Spreading the ramp out gives each band a region rather than a boundary.
+    float identity = smoothstep(0.10, 0.94, energy + map.b * 0.05);
 
     // SPOTS, and the transcription made every pixel a spot.
     //
@@ -285,8 +390,11 @@ void main() {
     // falls with it. Written explicitly because with four bands and a hard quantizer
     // it is otherwise too subtle to see, and a star with a uniformly hot face reads as
     // a disc rather than as a sphere.
-    float limb = pow(clamp(z, 0.0, 1.0), 0.42);
-    identity *= 0.55 + 0.45 * limb;
+    // 0.42 was far too aggressive an exponent for a 4-band quantizer: it drove the
+    // outermost band hard enough that the limb read as a dark outline rather than as a
+    // cooler edge, which is the opposite of what limb darkening is for.
+    float limb = pow(clamp(z, 0.0, 1.0), 0.22);
+    identity *= 0.72 + 0.28 * limb;
 
     // One assignment, and the index arithmetic is the reference's: pick a band INDEX
     // out of 'colors', then spread those indices across the four surface bands. With
@@ -294,11 +402,26 @@ void main() {
     float index = floor(clamp(identity, 0.0, 0.999) * u_colors);
     surface = surfaceBand(index * (3.0 / max(1.0, u_colors - 1.0)));
 
-    // Dithered to the pixel grid, so the surface has grain rather than posterised
-    // steps. The reference does this on the corona; doing it on the surface too is a
-    // deviation, and it is what stops four bands reading as four concentric rings.
-    float lift = (bayer4(gl_FragCoord.xy) - 0.5) * (1.0 / max(1.0, u_colors)) * 0.09;
-    gl_FragColor = vec4(surface + lift, 1.0);
+    // NO DITHER ON THE SURFACE, and removing it is what finally stopped the speckle.
+    //
+    // Three separate things were blamed for the salt-and-pepper and two of them were
+    // real but minor: the granulation frequency, and the width of the smoothstep. The
+    // cause was the dither itself.
+    //
+    // Dithering works by trading a hard edge for a pattern -- which only reads as
+    // smoother when the two colours either side of the edge are CLOSE. Here they are
+    // not: the bands are white against orange, which is most of the palette's range.
+    // So the dither was not softening the band boundary, it was filling it with
+    // high-contrast noise, and no amount of lowering its amplitude helped because even
+    // a small perturbation of two far-apart flat colours is visible as two flat colours
+    // alternating.
+    //
+    // The reference only ever dithers the CORONA, and its corona's two bands are
+    // adjacent in the ramp. Its surfaces are FLAT regions with hard edges -- which is
+    // what the screenshots show, and what the cell-shaded look actually is. I had added
+    // surface dithering as a "deviation" to stop four bands reading as four rings, and
+    // it was the deviation causing the artefact.
+    gl_FragColor = vec4(surface, 1.0);
     return;
   }
 
@@ -331,7 +454,10 @@ void main() {
                   + sin(dir.x * 4.0 - dir.y * 3.0 + warp * 2.0 - animation * 2.0)
                   + sin(dir.x * 7.0 + dir.y * 6.0 - warp * 3.0 + animation * 3.0)
                   + sin(dir.x * 11.0 + dir.y * 9.0 - warp * 3.0 + animation * 4.0);
-  float width = u_corona * (0.2 + harmonics * 0.03) * 0.9;
+  // The BASE is down and the HARMONIC amplitude is up, which is what makes the edge
+  // ragged rather than merely soft. At 0.2 + harmonics*0.03 the constant term was half
+  // the total, so the corona read as a smooth glow with a wobble in it.
+  float width = u_corona * (0.11 + harmonics * 0.05) * 0.9;
   float density = clamp(1.0 - (radial - 1.0) / max(0.002, width), 0.0, 1.0);
   float coronaCoverage = pow(density, 0.7) * min(1.0, u_corona * 1.7);
 
@@ -428,6 +554,21 @@ void main() {
   // than a taste call: brightness peaks at the corona's inner edge, so indexing by it
   // put the dimmest colour where the corona is thickest. The inner edge should be the
   // hot one and the falloff should walk outward down the palette.
+  // THE LOOPS GET THEIR OWN COLOUR, and this is what makes them visible.
+  //
+  // They were being drawn, and then banded into the CORONA palette alongside the
+  // corona itself -- and since the corona is brightest at exactly the radius the loops
+  // stand at, a loop and the corona behind it landed on the same index and there was
+  // nothing to see. All 32 were rendering the entire time.
+  //
+  // A prominence is at or above photosphere temperature: it is denser and hotter than
+  // the corona it stands in, which is the whole reason it is visible against the sky at
+  // all. So a loop takes the star's hottest band and the corona never competes.
+  if (flare > 0.02) {
+    gl_FragColor = vec4(mix(u_surface1, u_surface0, clamp(flare * 1.6, 0.0, 1.0)), 1.0);
+    return;
+  }
+
   float brightness = max(density, flare);
   float band = min(u_coronaColors - 1.0, floor(clamp(1.0 - brightness, 0.0, 0.999) * u_coronaColors));
   gl_FragColor = vec4(coronaBand(band), 1.0);
@@ -462,7 +603,11 @@ export const STAR_DEFAULTS = {
   granulation: 0.5,
   spots: 0.3,
   corona: 0.5,
-  flares: 0.3,
+  // 0.5, not the reference's 0.3: at 0.3 the loops are drawn but sit inside the
+  // corona's own radius and lose against it, so the star reads as having no
+  // prominences at all. The parameter is a slider; this is where it has to sit for
+  // them to be visible at the settings a chart would actually pick.
+  flares: 0.5,
 } as const;
 
 export function glStar(opts: StarOpts): StarGL | null {
