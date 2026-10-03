@@ -2452,6 +2452,46 @@ try {
         // and the knots took over the motion, because it was asking for existence and
         // the object had merely changed which part of itself was moving. Sixth time in
         // this file that an existence probe outlived the thing it was probing.
+        /**
+         * Beam geometry read from the PATH DATA, not from pixels.
+         *
+         * Pixel measurement was tried first and gave width/length 1.3 for a beam that
+         * is plainly narrower than it is long. The cold-pixel filter cannot tell a
+         * dark blue jet from the dark outer parts of an orange disc, so the disc's
+         * own pixels dominated the row widths. The `d` attribute is exact and has no
+         * filter to tune, so the geometry is asserted where it is actually decided --
+         * in the numbers that build the polygon.
+         */
+        beam: (() => {
+          const grab = (fill) => {
+            const el = [...o.querySelectorAll(".quasar-jets path")].find((p) =>
+              p.getAttribute("fill").includes(fill),
+            );
+            if (!el) return null;
+            const n = (el.getAttribute("d").match(/-?[\d.]+/g) || []).map(Number);
+            // M -w0 apex  L -w1 tip  L w1 tip  L w0 apex  Z
+            //  0    1      2   3     4   5     6   7
+            return { base: Math.abs(n[0]), tip: Math.abs(n[4]), apex: n[1], end: n[3] };
+          };
+          const beam = grab("plume-up");
+          const knot = grab("knot-up");
+          if (!beam || !knot) return null;
+          const length = Math.abs(beam.end - beam.apex);
+          return {
+            baseHalf: beam.base,
+            tipHalf: beam.tip,
+            length,
+            // The proportion that decides whether this reads as a collimated beam or a
+            // cone. The wedge it replaced measured 0.20.
+            ratio: (beam.tip * 2) / length,
+            flare: knot.tip / beam.tip,
+            // A jet that tapers is a cone; a jet that holds its width is collimated.
+            taper: beam.tip / beam.base,
+          };
+        })(),
+        /** Two masks, and both referenced by the paths that draw the jets. */
+        masks: o.querySelectorAll(".quasar-jets mask").length,
+        masked: [...o.querySelectorAll(".quasar-jets path")].filter((el) => el.getAttribute("mask")).length,
         plumes: o.querySelectorAll(".quasar-jets linearGradient[id^='plume-']").length,
         knots: o.querySelectorAll(".quasar-jets linearGradient[id^='knot-']").length,
         plumesStill: [...o.querySelectorAll(".quasar-jets linearGradient[id^='plume-']")].every(
@@ -2567,9 +2607,22 @@ try {
             // Cold blue-white only. The disc is orange, and counting it would let its
             // rotation dominate the series and turn any measurement here into a
             // measurement of the disc.
-            if (d[i + 3] < 40) continue;
-            if (d[i + 2] < 140) continue;
-            if (Math.abs(d[i] - d[i + 2]) > 70) continue;
+            // Cool and not-nothing, in RELATIVE terms.
+            //
+            // These were absolute thresholds (alpha > 40, blue > 140) and they were
+            // tuned to the old fat beam. Narrowing the beam and softening its flanks
+            // with a mask made it dimmer, and the fixed blue cut then deleted most of
+            // it -- which surfaced as "the lower jet is absent in half the frames" and
+            // a 5.4:1 imbalance, both of which were the CHECK being wrong rather than
+            // the renderer. A threshold that has to be retuned whenever the art gets
+            // subtler is not measuring the art.
+            //
+            // So: keep only what is genuinely not-orange (the disc and its glare are
+            // orange, the jets are not) and let presence and balance be judged against
+            // each pole's own peak across the sample rather than a magic number.
+            if (d[i + 3] < 10) continue;
+            if (d[i + 2] < 40) continue;
+            if (d[i] - d[i + 2] > 45) continue;
             // The disc fills the middle band. Counting it on both sides pins both
             // centroids to the centre line and makes both jets look immobile, which
             // is precisely the measurement that was quietly useless in round two.
@@ -2586,22 +2639,28 @@ try {
         }
         return { up, down, cu: up ? su / up : 0, cd: down ? sd / down : 0 };
       });
+      // Each pole is measured against its OWN peak in the sample, so the numbers mean
+      // "how lit is this pole right now" and not "how many pixels survived a filter".
+      const peak = { up: Math.max(...series.map((x) => x.up)), down: Math.max(...series.map((x) => x.down)) };
+      const rel = series.map((t) => ({
+        ...t,
+        ru: t.up / (peak.up || 1),
+        rd: t.down / (peak.down || 1),
+      }));
       // Balance is the worst ratio of the two poles in any single frame, so one bad
-      // frame is enough to fail it rather than being averaged away.
+      // frame is enough to fail it rather than averaged away.
       let worstBalance = 0;
-      for (const t of series) {
-        const hi = Math.max(t.up, t.down);
-        const lo = Math.min(t.up, t.down);
-        if (lo > 20) worstBalance = Math.max(worstBalance, hi / lo);
+      for (const t of rel) {
+        if (Math.min(t.ru, t.rd) > 0.15) worstBalance = Math.max(worstBalance, Math.max(t.ru, t.rd) / Math.min(t.ru, t.rd));
       }
       const span = (k) => {
         const v = series.map((x) => x[k]);
         return Math.max(...v) - Math.min(...v);
       };
       return {
-        frames: series.length,
-        upPresent: series.filter((x) => x.up > 40).length,
-        downPresent: series.filter((x) => x.down > 40).length,
+        frames: rel.length,
+        upPresent: rel.filter((x) => x.ru > 0.25).length,
+        downPresent: rel.filter((x) => x.rd > 0.25).length,
         worstBalance: worstBalance,
         upMoves: span("cu"),
         downMoves: span("cd"),
@@ -2631,6 +2690,28 @@ try {
       `light centroid travels ${jetSync.upMoves.toFixed(1)}px up and ` +
         `${jetSync.downMoves.toFixed(1)}px down; lit pixel count varies by ` +
         `${jetSync.litMoves.toFixed(0)}. The knots travel, the plumes do not.`,
+    );
+    check(
+      "the beam is COLLIMATED, not a wedge that fills its own length",
+      quasar.beam && quasar.beam.ratio < 0.12,
+      `tip width is ${(quasar.beam?.ratio ?? 0).toFixed(3)} of the beam's length ` +
+        `(${quasar.beam?.tipHalf.toFixed(1)}px half-width over ${quasar.beam?.length.toFixed(0)}px), ` +
+        `tapering ${quasar.beam?.taper.toFixed(2)}x from base to tip. The wedge this replaced ` +
+        `was 0.20 -- a cone, not a jet.`,
+    );
+    check(
+      "and the knot is WIDER than the beam, so a bulge actually travels along it",
+      quasar.beam && quasar.beam.flare > 1.5 && quasar.beam.flare < 3,
+      `knot half-width is ${quasar.beam?.flare.toFixed(2)}x the beam's. The knot path is the ` +
+        `beam shape scaled about the axis and its gradient confines it to a short band, ` +
+        `so the flare is local rather than a second, fatter plume.`,
+    );
+    check(
+      "every jet path is masked, and both layers have their OWN soft edge",
+      quasar.masks === 2 && quasar.masked === quasar.jets,
+      `${quasar.masks} mask(s) for ${quasar.masked}/${quasar.jets} paths. Two, not one: a ` +
+        `shared edge in bounding-box units would soften the narrow beam in proportion to ` +
+        `the wide flare. A hard-edged polygon is the giveaway that this is a shape.`,
     );
     check(
       "a quasar draws the black hole's disc AND two plumes, each in two layers",

@@ -205,6 +205,75 @@ export function Quasar(props: { px: number; seed: number }) {
   const KNOT_PERIOD = 1.6;
 
   /**
+   * Beam geometry, as a fraction of the plume's length rather than as pixels.
+   *
+   * The first version was a wedge: `M 0 apex L -w tip L w tip Z`, a point at the pole
+   * opening to half the plume's length at the tip. Measured that is width/length
+   * 0.20 -- a cone twenty times wider than a relativistic jet, which is collimated by
+   * exactly the thing that makes it visible in the first place. It read as a flat
+   * trapezoid with hard straight sides, which is what "always full width" is looking
+   * at.
+   *
+   * A jet is nearly parallel. So the base is a narrow cap at the pole and the tip is
+   * only a little wider, and both are fractions of the LENGTH so the proportions
+   * survive a change of panel size.
+   */
+  const BEAM_BASE = 0.026;
+  const BEAM_TIP = 0.042;
+
+  /** The knot is wider than the beam, which is the whole of what a travelling knot IS. */
+  const KNOT_FLARE = 1.9;
+
+  /**
+   * One soft edge, as a luminance mask, self-contained.
+   *
+   * A hard-edged wedge is the giveaway that this is a polygon, and the flanks are the
+   * first thing the eye finds. The profile is a bell with a flat core rather than a
+   * linear ramp, which is what a beam's intensity across its width actually looks
+   * like.
+   *
+   * `userSpaceOnUse` because the two layers have different widths, and a mask in
+   * bounding-box units would rescale with each path -- the plume's flank would then be
+   * softened in proportion to the KNOT's width, which is the wrong flank to soften.
+   * The coordinates are the un-rotated jet's own, so the mask turns with the jet inside
+   * the `rotate(-18)` group without any extra transform.
+   *
+   * The gradient is declared INSIDE the mask, so it cannot be referenced from
+   * elsewhere and cannot leak into the document as a stray gradient.
+   */
+  const mask = (id: string, halfWidth: number) => {
+    const pad = halfWidth * 1.3;
+    return (
+      <mask
+        id={id}
+        maskUnits="userSpaceOnUse"
+        x={-pad}
+        y={-props.px}
+        width={pad * 2}
+        height={props.px * 2}
+      >
+        <linearGradient
+          id={`edge-grad-${id}`}
+          gradientUnits="userSpaceOnUse"
+          x1={-halfWidth}
+          y1="0"
+          x2={halfWidth}
+          y2="0"
+        >
+          <stop offset="0%" stop-color="#000000" />
+          <stop offset="26%" stop-color="#4a4a4a" />
+          <stop offset="42%" stop-color="#d8d8d8" />
+          <stop offset="50%" stop-color="#ffffff" />
+          <stop offset="58%" stop-color="#d8d8d8" />
+          <stop offset="74%" stop-color="#4a4a4a" />
+          <stop offset="100%" stop-color="#000000" />
+        </linearGradient>
+        <rect x={-pad} y={-props.px} width={pad * 2} height={props.px * 2} fill={`url(#edge-grad-${id})`} />
+      </mask>
+    );
+  };
+
+  /**
    * The plume itself: a STANDING structure, hot at the pole and fading to the tip,
    * with no animation at all.
    *
@@ -212,13 +281,9 @@ export function Quasar(props: { px: number; seed: number }) {
    * writing down because it took three rounds. Driving the plume's whole brightness
    * from a travelling gradient means the plume only exists where the gradient is:
    * the highlight is somewhere, the rest of the jet is not. Mirrored across the two
-   * poles — which it must be, since the two bounding boxes are mirrored — that puts
-   * one highlight at each pole's base at the same instant, so the pair reads as
-   * ONE jet with the other missing. Half-cycle phase offsets were tried and measured:
-   * they changed nothing, because the mirrored traversal plus a shared stop list
-   * already puts the two a half cycle apart whether or not `begin` says so. Removing
-   * the offset entirely still gave correlation -0.77, which is why a negative
-   * correlation was never evidence of the offset working.
+   * poles -- which it must be, since the two bounding boxes are mirrored -- that puts
+   * one highlight at each pole's base at the same instant, so the pair reads as ONE
+   * jet with the other missing.
    *
    * So the plume is standing and always lit, and only the KNOT travelling through it
    * moves. A quasar is a continuous jet with pulses in it, not a jet that blinks.
@@ -240,41 +305,57 @@ export function Quasar(props: { px: number; seed: number }) {
    * The travelling knot: a narrow bright band moving from the pole out past the tip.
    *
    * Its own stops are transparent-hot-transparent, so WHERE the gradient is does not
-   * decide whether the jet is visible — that is the plume's job now. That separation
-   * is the fix, and it is also why the animation values can leave 0..1 without the
-   * jet going dark: a band that has left the element contributes nothing, and the
-   * plume underneath is still there.
+   * decide whether the jet is visible -- that is the plume's job now. That separation
+   * is what lets the animation values leave 0..1 without the jet going dark.
+   *
+   * The band is centred in the path's own bounding box, so it occupies the middle
+   * ~16% of the length: a knot, not a second plume.
    */
   const knot = (id: string, y1: string, y2: string, phase: string) => (
     <linearGradient id={id} x1="0" y1="1" x2="0" y2="0">
       <animate attributeName="y1" values={y1} dur={`${KNOT_PERIOD}s`} begin={phase} repeatCount="indefinite" />
       <animate attributeName="y2" values={y2} dur={`${KNOT_PERIOD}s`} begin={phase} repeatCount="indefinite" />
       <stop offset="0%" stop-color={JET_HOT} stop-opacity="0" />
-      <stop offset="42%" stop-color="#ffffff" stop-opacity="0.9" />
-      <stop offset="58%" stop-color={JET_HOT} stop-opacity="0.5" />
+      <stop offset="42%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="58%" stop-color={JET_HOT} stop-opacity="0.55" />
       <stop offset="100%" stop-color={JET_HOT} stop-opacity="0" />
     </linearGradient>
   );
 
   /**
-   * The plume, drawn as two stacked paths of the SAME shape.
+   * One pole: a collimated beam, and a wider band travelling along it.
    *
    * `dir` is +1 for the upper pole and -1 for the lower. The apex is always at the
    * pole and the tip always away from it, so the geometry is one expression and only
-   * the fills differ — four gradients in total, two per pole, and every one of them
+   * the fills differ -- four gradients and two masks in total, and every one of them
    * mirrored relative to its partner.
+   *
+   * The knot path is the SAME shape scaled about the axis by KNOT_FLARE, and its
+   * gradient confines it to a short band. So the flare is local and travels with the
+   * knot: the beam stays narrow and a travelling bulge runs along it, which is what
+   * makes it a jet with pulses in it rather than a striped ribbon.
    */
   const jet = (dir: 1 | -1) => {
     const r = reach();
     const apex = dir * props.px * 0.08;
     const tip = dir * r;
-    const w = r * 0.1;
-    const d = `M 0 ${apex} L ${-w} ${tip} L ${w} ${tip} Z`;
     const p = dir === 1 ? "up" : "down";
+    const path = (k: number) => {
+      const w = (t: number) => (t === 0 ? props.px * BEAM_BASE : r * BEAM_TIP) * k;
+      return `M ${-w(0)} ${apex} L ${-w(1)} ${tip} L ${w(1)} ${tip} L ${w(0)} ${apex} Z`;
+    };
     return (
       <>
-        <path d={d} fill={`url(#plume-${p}-${props.seed})`} />
-        <path d={d} fill={`url(#knot-${p}-${props.seed})`} />
+        <path
+          d={path(1)}
+          fill={`url(#plume-${p}-${props.seed})`}
+          mask={`url(#beam-${props.seed})`}
+        />
+        <path
+          d={path(KNOT_FLARE)}
+          fill={`url(#knot-${p}-${props.seed})`}
+          mask={`url(#flare-${props.seed})`}
+        />
       </>
     );
   };
@@ -296,17 +377,30 @@ export function Quasar(props: { px: number; seed: number }) {
       >
         <defs>
           {/* Standing plumes. Upper apex is its bbox's bottom, so hot-at-pole reads
-              y1 = 1, y2 = 0; the lower's apex is its bbox's top, so the numbers
-              mirror to y1 = 0, y2 = 1. */}
+              y1 = 1, y2 = 0; the lower's apex is its bbox's top, so the numbers mirror
+              to y1 = 0, y2 = 1. */}
           {plume(`plume-up-${props.seed}`, "1", "0")}
           {plume(`plume-down-${props.seed}`, "0", "1")}
           {/* Knots, pole to tip and off the end. Same period, half a cycle apart, so
               the two are never at the same radius. `begin` is negative, which starts
-              an animation mid-cycle — SMIL allows it, and unlike the previous attempt
-              it is now decorative rather than load-bearing, because the plume behind
-              it no longer depends on the knot being on screen. */}
+              an animation mid-cycle -- SMIL allows it, and unlike the earlier attempt
+              it is decorative rather than load-bearing, because the plume behind it no
+              longer depends on the knot being on screen. */}
           {knot(`knot-up-${props.seed}`, "1;0.02;-1", "2;1.02;0", "0s")}
           {knot(`knot-down-${props.seed}`, "0;0.98;1.98", "1;1.98;2.98", `-${KNOT_PERIOD / 2}s`)}
+          {/* TWO masks for the whole object, one per layer -- not two per pole.
+
+              The soft edge is a profile symmetric about the jet's axis, and the two
+              poles are mirror images, so the upper pole's beam edge is exactly the
+              lower pole's. Two masks serve four paths; a per-pole copy would be four
+              masks asserting a symmetry one mask already guarantees.
+
+              Each is sized to ITS OWN layer's half-width, which is why they are two and
+              not one shared edge: a shared edge in bounding-box units would soften the
+              narrow beam in proportion to the wide flare and put the falloff in the
+              wrong place entirely. */}
+          {mask(`beam-${props.seed}`, reach() * BEAM_TIP)}
+          {mask(`flare-${props.seed}`, reach() * BEAM_TIP * KNOT_FLARE)}
         </defs>
         <g transform="rotate(-18)">
           {jet(1)}

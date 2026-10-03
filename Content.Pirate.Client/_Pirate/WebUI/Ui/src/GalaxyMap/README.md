@@ -248,7 +248,28 @@ different reason:
 
    The fix had to be structural rather than a phase value.
 
-4. *The plume is STANDING; only the knot travels.* The actual fix.
+4. *The beam was a WEDGE.* `M 0 apex L -w tip L w tip Z` -- a point at the pole opening
+   to a fifth of the plume's length at the tip, width/length **0.20**. That is a cone,
+   not a jet, and it is what "always full width" is looking at: a relativistic jet is
+   collimated by the very thing that makes it visible.
+
+   Now near-parallel, with the widths as fractions of the LENGTH so the proportions
+   survive a change of panel size: base 0.026, tip 0.042, measured **0.102**. A jet
+   that tapers 1.77x from base to tip is a cone again; this one holds at 0.74x.
+
+   The flanks were hard straight lines, which is the giveaway that a thing is a
+   polygon, so each layer gets a luminance mask carrying a bell profile. Two masks,
+   not four: the edge is symmetric about the axis and the poles are mirrors, so one
+   mask serves both. Two rather than one, because each is sized to *its own* layer's
+   half-width -- a shared edge in bounding-box units would soften the narrow beam in
+   proportion to the wide flare and put the falloff in the wrong place.
+
+   And the knot is the beam's shape scaled **1.9x** about the axis, with its gradient
+   confining it to the middle ~16% of the length. That is what makes the bulge
+   *local* and *travelling* -- a beam with a pulse in it, rather than a fatter second
+   plume.
+
+5. *The plume is STANDING; only the knot travels.* The actual fix.
 
    Driving the plume's whole brightness from a travelling gradient means the plume
    exists only where the gradient is. The highlight is somewhere; the rest of the jet
@@ -284,6 +305,25 @@ different reason:
    | worst-frame brightness ratio **< 3:1** | one gradient shared across both poles |
    | centroid and lit count both **move** | a plume that has stopped animating entirely |
    | plumes static, knots animated | the plume being animated again |
+   | tip width / length **< 0.12** | the wedge |
+   | knot wider than the beam, **< 3x** | a fatter second plume instead of a knot |
+   | every path masked, **2 masks** | hard polygon flanks |
+
+   The geometry is asserted from the `d` attribute, not from pixels. Pixel
+   measurement was tried first and reported width/length **1.3** for a beam plainly
+   narrower than it is long: the cold-pixel filter cannot distinguish a dark blue jet
+   from the dark outer reaches of an orange disc, so the disc dominated every row
+   width. The path data is exact and has no filter to tune.
+
+   Which then exposed a nastier version of the same thing. The pixel checks had
+   absolute thresholds -- `alpha > 40`, `blue > 140` -- tuned to the old fat beam.
+   Narrowing it and softening its flanks made it dimmer, the fixed blue cut deleted
+   most of it, and the suite reported "the lower jet is absent in half the frames" and
+   a 5.4:1 imbalance. Both were the **check** being wrong, not the renderer. Presence
+   and balance are now measured against each pole's own peak in the sample.
+
+   That is the seventh time in this thread that a threshold had outlived the art it
+   was measuring.
 
    Negative-controlled, both failing on the right line:
 
@@ -291,6 +331,8 @@ different reason:
    |---|---|
    | both plumes use the upper pole's numbers | balance, at **4.4:1** |
    | plume animated again | plumes-stand-still |
+   | `BEAM_TIP` back to the wedge's 0.10 | collimated, at **0.242** |
+   | masks removed | every-path-masked, **0/4** |
 
    The second control is the point: re-animating the plume did **not** fail presence
    or balance, because a mirrored animated plume still lights both poles. It is
