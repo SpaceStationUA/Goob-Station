@@ -1,6 +1,12 @@
 ent-ClothingEyesGlassesHipsterBlue = сині окуляри з тонованими лінзами
+    .desc = { ent-ClothingEyesGlassesHipster.desc }
 ent-ClothingEyesGlassesHipsterPink = рожеві окуляри з тонованими лінзами
+    .desc = { ent-ClothingEyesGlassesHipster.desc }
 ent-ClothingEyesGlassesHipsterRed = червоні окуляри з тонованими лінзами
+    .desc = { ent-ClothingEyesGlassesHipster.desc }
 ent-ClothingEyesGlassesRimlessBlue = сині безободкові окуляри
+    .desc = { ent-ClothingEyesGlassesRimless.desc }
 ent-ClothingEyesGlassesRimlessPink = рожеві безободкові окуляри
+    .desc = { ent-ClothingEyesGlassesRimless.desc }
 ent-ClothingEyesGlassesRimlessRed = червоні безободкові окуляри
+    .desc = { ent-ClothingEyesGlassesRimless.desc }

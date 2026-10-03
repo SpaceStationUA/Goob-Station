@@ -1,6 +1,6 @@
 ent-DisgustingSweptSoup = солоно-солодкий місо-кола-суп
     .desc = Господи Боже.
-ent-FoodMealBase =
+ent-FoodMealBase = { ent-BaseItem }
     .desc = Смачна їжа, приготована з любов'ю.
 ent-FoodMealBearsteak = філе мігрант
     .desc = Тому що з'їсти ведмедя було недостатньо мужньо.

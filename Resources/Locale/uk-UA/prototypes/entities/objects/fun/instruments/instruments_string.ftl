@@ -1,6 +1,7 @@
 ent-AcousticGuitarInstrument = акустична гітара
     .desc = Так чи інакше, ось Чудо-стіна.
 ent-BanjoInstrument = банджо
+    .desc = { ent-BaseHandheldInstrument.desc }
 ent-BassGuitarInstrument = бас-гітара
     .desc = Ти відчуваєш себе справді круто, тримаючи це в руках. Шкода, що ти єдиний, хто так думає.
 ent-CelloInstrument = віолончель

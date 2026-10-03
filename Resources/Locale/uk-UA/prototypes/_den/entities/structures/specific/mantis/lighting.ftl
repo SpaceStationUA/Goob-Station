@@ -1,8 +1,8 @@
 ent-LightSomberEidoliteFloorLamp = ейдолітова підлогова лампа
     .desc = Ейдолітова піраміда на мнемолітовій колоні, яка черпає енергію з Ноосфери та перетворює її на світло. Її можна ввімкнути вручну.
-ent-LightSomberEidoliteFloorLampOn =
+ent-LightSomberEidoliteFloorLampOn = { ent-LightSomberEidoliteFloorLamp }
     .desc = Ейдолітова піраміда на мнемолітовій колоні, яка черпає енергію з Ноосфери та перетворює її на світло. Вимикач на цій спрацьовує лише після кількох спроб...
 ent-LightSomberEidoliteWellLamp = ейдолітова лампа-колодязь
     .desc = Ейдолітова піраміда, заглиблена в землю, яка черпає енергію з Ноосфери та перетворює її на світло. Її можна ввімкнути вручну.
-ent-LightSomberEidoliteWellLampOn =
+ent-LightSomberEidoliteWellLampOn = { ent-LightSomberEidoliteWellLamp }
     .desc = Ейдолітова піраміда, заглиблена в землю, яка черпає енергію з Ноосфери та перетворює її на світло. Вимикач на цій спрацьовує лише після кількох спроб...

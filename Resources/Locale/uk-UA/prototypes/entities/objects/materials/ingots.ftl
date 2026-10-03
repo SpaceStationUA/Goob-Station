@@ -1,6 +1,10 @@
-ent-IngotBase =
+ent-IngotBase = { ent-BaseItem }
     .desc = Злиток важкого металу з логотипом Нанотрейзен.
 ent-IngotGold = золотий злиток
+    .desc = { ent-IngotBase.desc }
 ent-IngotGold1 = золотий злиток
+    .desc = { ent-IngotBase.desc }
 ent-IngotSilver = срібний злиток
+    .desc = { ent-IngotBase.desc }
 ent-IngotSilver1 = срібний злиток
+    .desc = { ent-IngotBase.desc }

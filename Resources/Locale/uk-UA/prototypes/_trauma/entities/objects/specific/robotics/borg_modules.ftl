@@ -1,8 +1,16 @@
 ent-BorgModuleStickyGrenadeLauncher = модуль кіборга з гранатометом липких гранат
+    .desc = { ent-BaseBorgModule.desc }
 ent-BorgModuleSyndicateChameleonProjector = модуль кіборга з проєктором-хамелеоном
+    .desc = { ent-BaseBorgModule.desc }
 ent-BorgModuleSyndicateDartgun = модуль кіборга з дротикометом
+    .desc = { ent-BaseBorgModule.desc }
 ent-BorgModuleSyndicateDoorControl = модуль кіборга для керування дверима
+    .desc = { ent-BaseBorgModule.desc }
 ent-BorgModuleSyndicateJammer = модуль кіборга з радіоглушником
+    .desc = { ent-BaseBorgModule.desc }
 ent-BorgModuleSyndicateRescue = рятувальний модуль кіборга
+    .desc = { ent-BaseBorgModule.desc }
 ent-BorgModuleSyndicateSurgery = хірургічний модуль кіборга
+    .desc = { ent-BaseBorgModule.desc }
 ent-BorgModuleSyndicateTopical = модуль кіборга для зовнішнього лікування
+    .desc = { ent-BaseBorgModule.desc }

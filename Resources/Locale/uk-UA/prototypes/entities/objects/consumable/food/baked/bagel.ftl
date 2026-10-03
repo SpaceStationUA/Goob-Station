@@ -1,5 +1,6 @@
 ent-FoodBagel = бублик
-ent-FoodBagelBase =
+    .desc = { ent-FoodBagelBase.desc }
+ent-FoodBagelBase = { ent-BaseItem }
     .desc = Смачний бублик.
 ent-FoodBagelCotton = бавовняний бублик
     .desc = Смачний бублик, зроблений з бавовняного тіста.

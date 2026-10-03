@@ -23,3 +23,4 @@ ent-ProjectilePolyboltPigTimed = свиня
 ent-ProjectilePolyboltWizardCatTimed = кіт
     .desc = Ні, я не хочу бути котом!
 ent-SpellswordBolt = болт зачарованого меча
+    .desc = { ent-BaseBullet.desc }

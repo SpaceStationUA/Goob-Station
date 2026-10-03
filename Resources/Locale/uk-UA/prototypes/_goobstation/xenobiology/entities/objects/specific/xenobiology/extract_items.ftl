@@ -1,5 +1,7 @@
 ent-FloorTileItemBluespace = припасований квадрат блюспейс-килима
+    .desc = { ent-FloorTileItemBase.desc }
 ent-FloorTileItemSepia = припасований квадрат сепієвого килима
+    .desc = { ent-FloorTileItemBase.desc }
 ent-XenobioAdamantineBar = адамантиновий брусок
     .desc = Теоретично, якби ви продали кілька таких, вам би більше не довелося працювати на станції. Він, мабуть, має якесь застосування, адже коштує шалені гроші. Але де?
 ent-XenobioGoopBall = кулька слизу

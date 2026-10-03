@@ -29,6 +29,7 @@ ent-ClothingHeadHatOuterCommandcap = кепка зовнішнього кома�
 ent-ClothingHeadHatPropeller = капелюх із пропелером
     .desc = Ох ти ж лишенько!
 ent-ClothingHeadHatPropellerFlipped = капелюх з пропелером
+    .desc = { ent-ClothingHeadHatPropeller.desc }
 ent-ClothingHeadHatTinfoilHat = капелюх з фольги
     .desc = Високотехнологічний шолом, виготовлений з алюмінієвої фольги.
 ent-ClothingHeadHatTrainer = капелюх NCT

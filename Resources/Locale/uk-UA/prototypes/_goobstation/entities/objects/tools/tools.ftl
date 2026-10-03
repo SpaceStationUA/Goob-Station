@@ -1,7 +1,9 @@
 ent-HandheldFax = портативний факс
     .desc = Інструмент, який може надсилати тонни паперу на факс Центкому.
 ent-HandheldFaxNanorep = портативний факс представника Нанотрейзен
+    .desc = { ent-HandheldFax.desc }
 ent-HandheldFaxOfficial = офіційний ручний факс ЦентКому
+    .desc = { ent-HandheldFax.desc }
 ent-MultitoolBorg = мультитул борга
     .desc = Удосконалений інструмент для копіювання, зберігання та надсилання електричних імпульсів та сигналів через дроти та машини.
 ent-RCDChrono = футуристичний УЗК

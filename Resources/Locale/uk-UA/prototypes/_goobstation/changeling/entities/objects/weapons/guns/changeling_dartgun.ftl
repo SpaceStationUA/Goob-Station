@@ -1,8 +1,12 @@
 ent-ChangelingDart = органічний дротик
     .desc = Голчастий тонкий дротик, сформований з кістки.
 ent-ChangelingDartBlind = сліпучий органічний дротик
+    .desc = { ent-ChangelingDart.desc }
 ent-ChangelingDartCryo = кріогенний органічний дротик
+    .desc = { ent-ChangelingDart.desc }
 ent-ChangelingDartLethargic = летаргічний органічний дротик
+    .desc = { ent-ChangelingDart.desc }
 ent-ChangelingDartMute = німий органічний дротик
+    .desc = { ent-ChangelingDart.desc }
 ent-DartGunChangeling = жало з широким діапазоном
     .desc = Реагентне жало здатне стріляти органічними дротиками по мішенях.

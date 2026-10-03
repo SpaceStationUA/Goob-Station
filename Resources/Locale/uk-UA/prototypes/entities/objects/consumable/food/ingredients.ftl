@@ -1,6 +1,6 @@
 ent-FoodBadRecipe = обгоріле місиво
     .desc = За це когось треба звільнити з посади кухаря.
-ent-FoodBakingBase =
+ent-FoodBakingBase = { ent-BaseItem }
     .desc = Використовується в різних рецептах.
 ent-FoodButter = шматочок вершкового масла
     .desc = Паличка смачної, золотистої, жирної смакоти.

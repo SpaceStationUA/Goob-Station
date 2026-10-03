@@ -9,3 +9,4 @@ ent-ClothingOuterCoatInterdyneWhite = Лабораторний халат Інт
 ent-ClothingOuterSecurityBomber = бомбер охорони
     .desc = Звичайна куртка-бомбер, але з броньованими вставками.
 ent-ClothingOuterSecurityBomberOpened = бомбер охорони
+    .desc = { ent-ClothingOuterSecurityBomber.desc }

@@ -1,9 +1,13 @@
 ent-ClothingEyesNightVisionGoggles = окуляри нічного бачення
     .desc = Тепер ви можете бачити в темряві!
 ent-ClothingEyesNightVisionGogglesGen1 = окуляри нічного бачення (покоління 1)
+    .desc = { ent-ClothingEyesNightVisionGoggles.desc }
 ent-ClothingEyesNightVisionGogglesGen2 = окуляри нічного бачення (покоління 2)
+    .desc = { ent-ClothingEyesNightVisionGoggles.desc }
 ent-ClothingEyesNightVisionGogglesGen3 = окуляри нічного бачення (покоління 3)
+    .desc = { ent-ClothingEyesNightVisionGoggles.desc }
 ent-ClothingEyesNightVisionGogglesGen4 = окуляри нічного бачення (покоління 4)
+    .desc = { ent-ClothingEyesNightVisionGoggles.desc }
 ent-ClothingEyesNightVisionGogglesNukie = окуляри нічного бачення Синдикату
     .desc = Високотехнологічна пара окулярів нічного бачення. Мають технологію медичного аналізу.
 ent-ClothingEyesNightVisionGogglesSyndie = окуляри нічного бачення синдикату

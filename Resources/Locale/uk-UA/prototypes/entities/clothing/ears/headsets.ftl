@@ -17,6 +17,7 @@ ent-ClothingHeadsetEngineering = інженерна гарнітура
 ent-ClothingHeadsetFreelance = гарнітура фрілансера
     .desc = Це використовується групою фрілансерів, що блукають.
 ent-ClothingHeadsetGrey = пасажирська гарнітура
+    .desc = { ent-ClothingHeadset.desc }
 ent-ClothingHeadsetMedical = медична гарнітура
     .desc = Гарнітура для навченого персоналу медпункту.
 ent-ClothingHeadsetMedicalScience = медична дослідницька гарнітура

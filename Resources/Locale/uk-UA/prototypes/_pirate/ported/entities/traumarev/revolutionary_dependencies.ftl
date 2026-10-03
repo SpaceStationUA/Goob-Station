@@ -3,3 +3,4 @@ ent-RevCircuitBoard = плата законів (Революційна)
 ent-RevDoorFlatpack = флетпак революційного шлюза
     .desc = Флетпак для побудови дверей, замкнених на революційні картки доступу.
 ent-RevRadioJammer = революційний радіоглушник
+    .desc = { ent-RadioJammer.desc }

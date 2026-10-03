@@ -7,6 +7,7 @@ ent-PinpointerMothershipPiece = частина пінпойнтера ядра
 ent-PinpointerMothershipRepaired = відремонтований пінпойнтер ядра
     .desc = Ручний пристрій стеження, що веде в напрямку ядра Материнського корабля. Цей бачив кращі дні.
 ent-PinpointerNuclear = пінпоінтер
+    .desc = { ent-PinpointerBase.desc }
 ent-PinpointerStation = пеленгатор дослідницького сервера
     .desc = Портативний пристрій відстеження, що вказує напрямок до будь-якого найближчого дослідницького сервера.
 ent-PinpointerSyndicateNuclear = синдикатський пінпоінтер

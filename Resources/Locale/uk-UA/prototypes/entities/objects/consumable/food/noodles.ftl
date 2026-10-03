@@ -1,6 +1,6 @@
 ent-FoodNoodles = спагеті
     .desc = Спагеті з помідорами. Так само, як готував твій жорстокий батько!
-ent-FoodNoodlesBase =
+ent-FoodNoodlesBase = { ent-BaseItem }
     .desc = Ось це гарна паста!
 ent-FoodNoodlesBoiled = відварені спагетті
     .desc = Для звичайної страви з локшини потрібно більше інгредієнтів.

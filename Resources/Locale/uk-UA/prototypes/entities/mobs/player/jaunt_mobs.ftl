@@ -3,3 +3,4 @@ ent-BaseMobJaunt = прогулянка
 ent-DesynchronizedPocket = десинхронізована кишеня
     .desc = Кишеня в просторі-часі, що утримує користувача на частку секунди в майбутньому.
 ent-EtherealJaunt = прогулянка
+    .desc = { ent-BaseMobJaunt.desc }

@@ -7,6 +7,7 @@ ent-MobKangarooSpace = космічний кенгуру
 ent-MobSnail = равлик
     .desc = Огидно, якщо ти не француз.
 ent-MobSnailMoth = Слимак.
+    .desc = { ent-MobSnail.desc }
 ent-MobSpaceBasic = основний
     .desc = Виглядає дружелюбно. Чому б тобі не обійняти його?
 ent-MobSpiderSpace = космічний павук

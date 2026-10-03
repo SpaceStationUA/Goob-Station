@@ -11,3 +11,4 @@ ent-ActionAGhostShowSolar = Інтерфейс керування сонячни
 ent-ActionAGhostShowStationRecords = Інтерфейс записів станції
     .desc = Переглянути інтерфейс записів станції.
 ent-AdminObserver = адміністратор-спостерігач
+    .desc = { ent-MobObserverBase.desc }

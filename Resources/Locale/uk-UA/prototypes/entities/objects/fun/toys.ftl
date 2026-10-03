@@ -7,6 +7,7 @@ ent-Error = помилка
 ent-MrChips = містер Чіпс
     .desc = Це лише лялька, лише лялька!
 ent-MrDips = містер Діпс
+    .desc = { ent-MrChips.desc }
 ent-PlasticBanana = банан
     .desc = Пластиковий банан.
 ent-SnapPop = хлопушка

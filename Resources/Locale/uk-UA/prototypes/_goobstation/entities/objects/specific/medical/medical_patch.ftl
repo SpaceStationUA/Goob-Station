@@ -13,3 +13,4 @@ ent-MedicalPatchTherapeutic = терапевтичний пластир
 ent-UsedMedicalPatch = використаний пластир
     .desc = ...фу.
 ent-UsedMedicalPatchMakeshift = використаний пластир
+    .desc = { ent-UsedMedicalPatch.desc }

@@ -1,7 +1,9 @@
 ent-BaseDemon = демон
     .desc = Він прийшов із пекла.
 ent-BeeLaughterDemon = демон-бджола
+    .desc = { ent-MobAngryBee.desc }
 ent-DemonAcid = демонічний плювок кислотою
+    .desc = { ent-BaseBullet.desc }
 ent-MajorAngelHuman = втілення жадібності
     .desc = Поглинувши безліч пекельних душ, жалюгідний грішник може стати Втіленням. Люди уособлюють жадібність.
 ent-MajorAngelLizard = втілення хижацтва

@@ -8,5 +8,5 @@ ent-ParcelWrapTrash = пакувальний папір
     .desc = Сумні залишки розгорнутого пакунка.
 ent-WrappedParcel = загорнутий пакунок
     .desc = Щось загорнуте в папір. Цікаво, що всередині...
-ent-WrappedParcelHumanoid =
+ent-WrappedParcelHumanoid = { ent-BaseWrappedParcel }
     .desc = Щось загорнуте в папір. Підозріло схоже на людину.

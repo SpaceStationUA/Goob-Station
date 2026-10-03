@@ -3,3 +3,4 @@ ent-ArcadeBase = аркада
 ent-BlockGameArcade = НТетріс
     .desc = Аркадна шафа з дивно знайомою грою.
 ent-SpaceVillainArcade = Космічні Лиходії
+    .desc = { ent-ArcadeBase.desc }

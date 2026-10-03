@@ -48,6 +48,7 @@ ent-FoodEggplant = баклажан
 ent-FoodExtradimensionalOrange = екстравимірний помаранчевий
     .desc = Ви ледве можете зрозуміти, що це таке.
 ent-FoodFakeCapfruit = капфрут
+    .desc = { ent-FoodRealCapfruit.desc }
 ent-FoodFlyAmanita = мухомор
     .desc = Апетитний на вигляд гриб, як у мультфільмах.
 ent-FoodGalaxythistle = розторопша

@@ -12,5 +12,5 @@ ent-AtmosFixOxygenMarker = Фікс Атмосу: Маркер Кисню
     .desc = Кисень @ тиск шахтного газу, T20C
 ent-AtmosFixPlasmaMarker = Фікс Атмосу: Маркер Плазми
     .desc = Плазма @ тиск шахтного газу, T20C
-ent-AtmosFixVoxMarker =
+ent-AtmosFixVoxMarker = { ent-AtmosFixNitrogenMarker }
     .desc = Азот при 101 кПа, 20°C

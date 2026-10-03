@@ -3,3 +3,4 @@ ent-ChemistryEmptyVial = флакон
 ent-ChemistryEmptyVialSmall = мініфлакон
     .desc = Менший флакон.
 ent-VestineChemistryVial = пухирчаста пробірка
+    .desc = { ent-ChemistryEmptyVial.desc }

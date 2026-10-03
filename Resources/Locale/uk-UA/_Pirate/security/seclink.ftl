@@ -95,9 +95,13 @@ ent-Stunsabre = електрошабля
 
 # Disablers and bolts
 ent-BaseBulletDisablerSeclink = заряд дизейблера SecLink
+    .desc = { ent-BaseBullet.desc }
 ent-BulletDisablerSeclink = заряд дизейблера SecLink
+    .desc = { ent-BaseBullet.desc }
 ent-BulletAutoDisabler = заряд автоматичного дизейблера
+    .desc = { ent-BaseBullet.desc }
 ent-BulletMagnumDisabler = посилений заряд дизейблера
+    .desc = { ent-BaseBullet.desc }
 
 ent-WeaponDisablerSeclink = дизейблер SecLink
     .desc = Зброя самооборони, що виснажує органічні цілі, доки вони не знепритомніють.

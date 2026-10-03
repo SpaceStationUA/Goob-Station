@@ -1,6 +1,8 @@
 ent-CardBase = картка
 ent-CardBoxBase = палубний ящик
+    .desc = { ent-BoxCardboard.desc }
 ent-CardBoxBlack = чорна колода
+    .desc = { ent-BoxCardboard.desc }
 ent-CardDeckBase = колода карт
 ent-CardDeckBlack = колода карт
 ent-CardHandBase = картярська рука

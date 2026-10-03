@@ -3,6 +3,7 @@ ent-AllTraitorCodesPaper = реєстр кодових слів синдикат
 ent-Envelope = конверт
     .desc = Маленький конверт для захисту ваших конфіденційних документів від сторонніх очей.
 ent-NukeCodePaper = ядерні коди автентифікації
+    .desc = { ent-Paper.desc }
 ent-Paper = папір
     .desc = Аркуш білого паперу.
 ent-PaperArtifactAnalyzer = роздруківка аналізатора артефактів

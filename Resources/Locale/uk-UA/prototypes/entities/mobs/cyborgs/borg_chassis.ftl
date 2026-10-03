@@ -1,11 +1,17 @@
 ent-BorgChassisDerelict = покинутий кіборг
     .desc = Гібрид людини та машини, який допомагає в діяльності станції. Цей знаходиться у стані сильного занепаду.
 ent-BorgChassisEngineer = кіборг-інженер
+    .desc = { ent-BaseBorgChassis.desc }
 ent-BorgChassisGeneric = загальний кіборг
+    .desc = { ent-BaseBorgChassis.desc }
 ent-BorgChassisJanitor = кіборг-прибиральник
+    .desc = { ent-BaseBorgChassis.desc }
 ent-BorgChassisMedical = медичний кіборг
+    .desc = { ent-BaseBorgChassis.desc }
 ent-BorgChassisMining = кіборг-утилізатор
+    .desc = { ent-BaseBorgChassis.desc }
 ent-BorgChassisService = сервісний кіборг
+    .desc = { ent-BaseBorgChassis.desc }
 ent-BorgChassisSyndicateAssault = синдикатський штурмовий кіборг
     .desc = Худорлява, жорстока машина для вбивства з доступом до різноманітних смертоносних модулів.
 ent-BorgChassisSyndicateMedical = синдикатський медичний кіборг

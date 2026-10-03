@@ -1,6 +1,6 @@
-ent-PottedPlant10 =
+ent-PottedPlant10 = { ent-PottedPlantBase }
     .desc = Гарний шматочок природи в горщику.
-ent-PottedPlant26 =
+ent-PottedPlant26 = { ent-PottedPlantBase }
     .desc = Мені здається, чи він блимає?
 ent-PottedPlant27 = пластикова рослина в горщику
     .desc = Фальшиве, дешеве на вигляд, пластикове дерево. Ідеально підходить для людей, які вбивають кожну рослину, до якої торкаються.

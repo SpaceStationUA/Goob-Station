@@ -54,6 +54,7 @@ ent-MobCorticalBorer = кортикальний бурильник
 ent-CorticalBorerEgg = яйце кортикального бурильника
     .desc = Воно тривожно вологе й м'яке.
 ent-MindRoleCorticalBorer = роль кортикального бурильника
+    .desc = { ent-BaseMindRole.desc }
 
 ent-ActionCorticalBorerChemMenu = Хімікати
     .desc = Відкрити меню хімікатів для введення реагентів носієві.

@@ -9,5 +9,6 @@ ent-MonkeyCubeWrapped = запакований мавпʼячий кубик
 ent-SyndicateSpongeBox = коробка з кубиками мавпи
     .desc = Кубики-мавпочки бренду Drymate. Просто додайте води!
 ent-SyndicateSpongeWrapped = мавпʼячий кубик
+    .desc = { ent-MonkeyCubeWrapped.desc }
 ent-VariantCubeBox = варіантивна коробка з кубиками
     .desc = І кубики кобольдів, і кубики мавп. Просто додайте води!

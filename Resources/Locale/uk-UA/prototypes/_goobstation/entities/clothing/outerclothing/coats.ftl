@@ -9,6 +9,7 @@ ent-ClothingOuterCoatHoPLong = довге пальто ГВК
 ent-ClothingOuterCoatRDPurple = експериментальний халат наукового керівника
     .desc = Витканий за експериментальною технологією... цей халат здається не більш захищеним, ніж звичайний. Принаймні, він гарно виглядає.
 ent-ClothingOuterCoatRDPurpleOpened = експериментальний халат наукового керівника
+    .desc = { ent-ClothingOuterCoatRD.desc }
 ent-ClothingOuterCoatWardenBlue = синя куртка наглядача
     .desc = Міцна, утилітарна куртка для тих, хто знайомий з карцером.
 ent-ClothingOuterCoatZeusJacket = куртка Зевса

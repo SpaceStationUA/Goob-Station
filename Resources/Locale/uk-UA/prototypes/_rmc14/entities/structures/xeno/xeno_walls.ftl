@@ -1,5 +1,7 @@
 ent-BaseMembraneXeno = смоляна мембрана
+    .desc = { ent-BaseWall.desc }
 ent-BaseWallXeno = смоляна стіна
+    .desc = { ent-BaseWall.desc }
 ent-WallXenoMembrane = смоляна мембрана
     .desc = Дивний слиз, достатньо прозорий, щоб пропускати світло.
 ent-WallXenoMembraneThick = товста смоляна мембрана

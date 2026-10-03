@@ -27,3 +27,4 @@ ent-MobSyndieAngryBee = синді бі
 ent-MobWhiteWolf = білий вовк
     .desc = Не намагайтеся погладити цього.
 ent-MouseMenace = загроза
+    .desc = { ent-MobMouse.desc }

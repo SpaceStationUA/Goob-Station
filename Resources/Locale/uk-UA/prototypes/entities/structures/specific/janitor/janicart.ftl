@@ -5,3 +5,4 @@ ent-MopBucket = відро для швабри
 ent-MopBucketCubeWrapped = куб з відром для швабри
     .desc = Розгорніть це, щоб отримати куб з відром для швабри.
 ent-MopBucketFull = відро для швабри
+    .desc = { ent-MopBucket.desc }

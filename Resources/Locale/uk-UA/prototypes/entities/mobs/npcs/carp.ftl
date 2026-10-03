@@ -1,6 +1,7 @@
 ent-BaseMobCarp = космічний короп
     .desc = Ненажерлива небезпечна риба з відкритого космосу.
 ent-MobCarpDragon = космічний короп
+    .desc = { ent-BaseMobCarp.desc }
 ent-MobCarpHolo = голокарп
     .desc = Короп з голографічних енергій. На жаль для вас, це цілком реально.
 ent-MobCarpMagic = magicarp

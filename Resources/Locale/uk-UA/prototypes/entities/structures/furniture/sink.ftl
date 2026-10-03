@@ -1,6 +1,10 @@
 ent-Sink = раковина.
+    .desc = { ent-SinkEmpty.desc }
 ent-SinkEmpty = раковина.
     .desc = Крани були затягнуті з максимально можливим моментом, але вони все одно капають.
 ent-SinkStemless = раковина.
+    .desc = { ent-SinkEmpty.desc }
 ent-SinkStemlessWater = раковина.
+    .desc = { ent-SinkEmpty.desc }
 ent-SinkWide = широка раковина
+    .desc = { ent-SinkEmpty.desc }

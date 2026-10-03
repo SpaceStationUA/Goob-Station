@@ -1,7 +1,10 @@
-ent-BaseTentWall =
+ent-BaseTentWall = { ent-BaseWall }
     .desc = Не пропускає світло, але пропускає повітря.
 ent-TentFlapCloth = тканинна стулка намету
     .desc = Потрібен час, щоб її застебнути або розстебнути.
 ent-TentFlapLeather = шкіряна стулка намету
+    .desc = { ent-TentFlapCloth.desc }
 ent-TentWallCloth = тканинна стінка намету
+    .desc = { ent-BaseTentWall.desc }
 ent-TentWallLeather = шкіряна стінка намету
+    .desc = { ent-BaseTentWall.desc }

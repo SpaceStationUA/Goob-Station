@@ -5,6 +5,7 @@ ent-RandomHostileMobSpawner = спавнер випадкових ворожих
 ent-RandomNeutralMobSpawner = спавнер випадкових нейтральних істот
 ent-RandomPassiveMobSpawner = спавнер випадкових пасивних істот
 ent-XenoExtractChronofield = сепієве хронополе
+    .desc = { ent-Chronofield.desc }
 ent-XenoExtractChronofieldSpawner = спавнер сепійного хрополе
 ent-XenoGooWall = драглистий наріст
     .desc = Це цілком може бути блоб із космічного ЛІДЛу.

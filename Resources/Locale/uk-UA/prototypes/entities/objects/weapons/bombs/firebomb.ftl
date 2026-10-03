@@ -2,5 +2,5 @@ ent-FireBomb = запальна бомба
     .desc = Слабкий, саморобний запальний пристрій.
 ent-FireBombEmpty = запальна бомба
     .desc = Слабкий, саморобний запальний пристрій. Цей без палива.
-ent-FireBombFuel =
+ent-FireBombFuel = { ent-FireBombEmpty }
     .desc = Слабкий, саморобний запальний пристрій. Цьому бракує дротів.

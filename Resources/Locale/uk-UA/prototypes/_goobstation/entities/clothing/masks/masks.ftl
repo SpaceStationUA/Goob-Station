@@ -1,6 +1,7 @@
 ent-ClothingBSOMaskGasSwat = Протигаз Блюшилд СВАТ
     .desc = Стандартний протигаз, що видається офіцерам Блюшилд.
 ent-ClothingMaskClownUnremoveable = незнімна бананова перука та маска клоуна
+    .desc = { ent-ClothingMaskClown.desc }
 ent-ClothingMaskGasChrono = футуристичний протигаз
     .desc = Футуристичний протигаз невідомої конструкції з неймовірною кількістю систем фільтрації
 ent-ClothingMaskGasHalf = половинний протигаз

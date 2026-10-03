@@ -5,6 +5,7 @@ ent-MeteorClown = Хонкстероїд
 ent-MeteorCow = Космічна корова
     .desc = Му-у-у-читься на релятивістських швидкостях!
 ent-MeteorLarge = метеорит
+    .desc = { ent-BaseMeteor.desc }
 ent-MeteorPotato = Космічна картопля
     .desc = Крохмальна загроза з глибин космосу. Містить 200% вашої добової норми натрію!
 ent-MeteorSpaceDust = космічний пил

@@ -3,5 +3,6 @@ ent-BulletCharge = зарядний болт
 ent-BulletKinetic = кінетичний болт
     .desc = Не так вже й погано, але ви все одно не хочете, щоб він вас зачепив.
 ent-RapidBulletKinetic = швидкий кінетичний снаряд
+    .desc = { ent-BulletKinetic.desc }
 ent-WeakBulletKinetic = слабкий кінетичний болт
     .desc = Не дуже погано, але все одно краще не потрапляти під нього.

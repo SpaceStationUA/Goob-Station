@@ -1,6 +1,12 @@
 ent-BulletMagnum = куля (.45 magnum)
+    .desc = { ent-BaseBullet.desc }
 ent-BulletMagnumAP = куля (.45 magnum бронебійний)
+    .desc = { ent-BaseBullet.desc }
 ent-BulletMagnumIncendiary = куля (.45 магнум запальний)
+    .desc = { ent-BaseBullet.desc }
 ent-BulletMagnumPractice = куля (.45 magnum practice)
+    .desc = { ent-BaseBullet.desc }
 ent-BulletMagnumRubber = куля (.45 магнум гумовий)
+    .desc = { ent-BaseBullet.desc }
 ent-BulletMagnumUranium = куля (.45 магнум уран)
+    .desc = { ent-BaseBullet.desc }

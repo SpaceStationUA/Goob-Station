@@ -39,6 +39,7 @@ ent-MobPollyParrot = Папуга Поллі
 ent-MobPossumMorty = Морті
     .desc = Мешканець станції, Опосум віргінський. Чутливий, але витривалий хлопець.
 ent-MobPossumMortyOld = Морті
+    .desc = { ent-MobPossumMorty.desc }
 ent-MobPossumPoppy = Поппі
     .desc = Це опосум, невеликий сумчастий ссавець. Вона носить відповідні засоби захисту.
 ent-MobRaccoonMorticia = Єнотос Педрос

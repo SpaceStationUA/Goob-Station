@@ -11,5 +11,6 @@ ent-DebugGyroscope = відладочний гіроскоп
 ent-RustedThruster = іржавий двигун
     .desc = Непридатний до ремонту двигун, зламаний від зносу. Корисний лише як брухт.
 ent-ThrusterLarge = великий двигун
+    .desc = { ent-BaseThruster.desc }
 ent-ThrusterShuttleEvac = двигун
     .desc = Двигун, що дозволяє шатлу рухатися.

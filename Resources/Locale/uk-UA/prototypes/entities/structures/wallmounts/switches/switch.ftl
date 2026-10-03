@@ -1,12 +1,16 @@
 ent-ApcNetSwitch = мережевий перемикач apc
     .desc = Це перемикач для перемикання ліхтарів, які підключені до одного акумулятора.
 ent-ApcNetSwitchDirectional = мережевий перемикач apc
+    .desc = { ent-ApcNetSwitch.desc }
 ent-ButtonFrame = рамка для кнопок
     .desc = Це рамка, яка допомагає візуально розрізняти перемикачі.
 ent-LockableButton = кнопка з фіксацією
+    .desc = { ent-SignalButton.desc }
 ent-SignalButton = сигнальна кнопка
     .desc = Це кнопка для активації чогось.
 ent-SignalButtonDirectional = сигнальна кнопка
+    .desc = { ent-SignalButton.desc }
 ent-SignalSwitch = сигнальний перемикач
     .desc = Це вимикач для перемикання живлення речей.
 ent-SignalSwitchDirectional = сигнальний перемикач
+    .desc = { ent-SignalSwitch.desc }

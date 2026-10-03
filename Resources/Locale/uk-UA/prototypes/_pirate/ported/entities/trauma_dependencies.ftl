@@ -11,6 +11,7 @@ ent-RevEngineParts = деталі двигуна
 ent-RevGunParts = деталі зброї
     .desc = Невелика купа деталей зброї, готових для революційних машин.
 ent-RevIDCard = революційна картка доступу
+    .desc = { ent-IDCardStandard.desc }
 ent-RevRocketFrame = каркас ракети
     .desc = Каркас революційної ракети.
 ent-RevTurretElectronics = плата революційної турелі

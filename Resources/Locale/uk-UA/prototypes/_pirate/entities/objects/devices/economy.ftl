@@ -2,6 +2,7 @@ ent-CargoBudgetCard = картка бюджету карго
 ent-CivilianBudgetCard = картка бюджету сервісного відділу
 ent-CommandBudgetCard = картка бюджету командування
 ent-CommandBudgetPinPaper = ПІН-код бюджету командування
+    .desc = { ent-Paper.desc }
 ent-Eftpos = платіжний термінал
     .desc = Проведіть ID-карткою, щоб перевести ваші гроші.
 ent-EngineeringBudgetCard = картка бюджету інженерного відділу

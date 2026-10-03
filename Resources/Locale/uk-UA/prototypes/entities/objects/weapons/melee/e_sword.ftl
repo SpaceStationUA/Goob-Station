@@ -1,6 +1,6 @@
-ent-CyborgEnergySword =
+ent-CyborgEnergySword = { ent-EnergySword }
     .desc = Дуже гучний і небезпечний меч із лезом з чистої концентрованої плазми. Спеціально розроблений для кіборгів Синдикату.
-ent-CyborgEnergySwordDouble =
+ent-CyborgEnergySwordDouble = { ent-EnergySwordDouble }
     .desc = Стажери командування Синдикату вирішили, що одного леза на енергетичному мечі недостатньо. Спеціально розроблено для кіборгів синдикату.
 ent-EnergyCutlass = енергетичний абордажний меч
     .desc = Екзотична енергетична зброя.

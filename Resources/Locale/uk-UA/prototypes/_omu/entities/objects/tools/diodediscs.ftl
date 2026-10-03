@@ -3,4 +3,6 @@ ent-DiodeDiscElectroBehavioural = електроповедінковий діо�
 ent-DiodeDiscElectroDisruptive = електродестабілізаційний діодний диск
     .desc = Діодний диск для використання в емітері. Спричиняє в суперматерії подію виправлення причинності, завдяки чому вона відновлює свою цілісність.
 ent-EmitterBoltElectroBehavioural = промінь емітера
+    .desc = { ent-BaseBullet.desc }
 ent-EmitterBoltElectroDisruptive = промінь емітера
+    .desc = { ent-BaseBullet.desc }

@@ -1,5 +1,10 @@
 ent-LockerBartender = шафка бармена
+    .desc = { ent-ClosetBase.desc }
 ent-LockerInterdyne = Шафка персоналу Interdyne
+    .desc = { ent-ClosetBase.desc }
 ent-LockerInterdyneCommand = Шафка просунутого персоналу Interdyne
+    .desc = { ent-ClosetBase.desc }
 ent-LockerInterdyneDeputy = шафка заступника офіцера Інтердайну
+    .desc = { ent-ClosetBase.desc }
 ent-LockerInterdyneOfficer = шафка офіцера Інтердайну
+    .desc = { ent-ClosetBase.desc }

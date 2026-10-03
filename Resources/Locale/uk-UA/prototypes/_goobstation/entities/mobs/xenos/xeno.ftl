@@ -5,6 +5,7 @@ ent-CMMobXenoBurrower = древній Бурровер
 ent-CMMobXenoCrusher = древній крушитель
     .desc = Величезний чужий з величезним броньованим гребенем.
 ent-CMMobXenoDrone = древній трутень
+    .desc = { ent-CMBaseXeno.desc }
 ent-CMMobXenoKing = древній король
     .desc = Масивний чужий, вкритий шипами та броньованими пластинами.
 ent-CMMobXenoQueen = древня королева

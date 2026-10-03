@@ -19,6 +19,7 @@ ent-VendingMachineCentDrobe = CentDrobe
 ent-VendingMachineChang = Пане Чанг.
     .desc = Автомат для приготування китайської їжі з самообслуговуванням, для всіх ваших потреб в китайській їжі.
 ent-VendingMachineChapel = PietyVend
+    .desc = { ent-VendingMachine.desc }
 ent-VendingMachineChefDrobe = ChefDrobe
     .desc = Цей торговий автомат, можливо, не видає м'ясо, але він точно видає одяг для кухарів.
 ent-VendingMachineChefvend = ChefVend

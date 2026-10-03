@@ -1,4 +1,5 @@
 ent-GlockenspielInstrument = глокеншпіль
+    .desc = { ent-BaseHandheldInstrument.desc }
 ent-MicrophoneInstrument = мікрофон
     .desc = Ідеально підходить для того, щоб співати від душі.
 ent-MusicBoxInstrument = музична шкатулка

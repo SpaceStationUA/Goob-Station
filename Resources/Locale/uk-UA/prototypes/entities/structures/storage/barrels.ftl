@@ -1,4 +1,4 @@
-ent-BarrelChemFilledLube =
+ent-BarrelChemFilledLube = { ent-BaseBarrelChem }
     .desc = Слизько...
 ent-BaseBarrelChem = хімічна бочка
     .desc = Невелика металева бочка. Як тропічно.

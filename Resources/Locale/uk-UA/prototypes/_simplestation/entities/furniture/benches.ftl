@@ -1,7 +1,12 @@
 ent-BenchBaseMiddle = лавка
     .desc = Кілька сидінь, що охоплюють один об'єкт. Справді диво науки.
 ent-BenchParkBambooMiddle = паркова лавка з бамбука
+    .desc = { ent-BenchBaseMiddle.desc }
 ent-BenchParkMiddle = паркова лавка
+    .desc = { ent-BenchBaseMiddle.desc }
 ent-BenchPewMiddle = церковна лава
+    .desc = { ent-BenchBaseMiddle.desc }
 ent-BenchSteelMiddle = сталева лавка
+    .desc = { ent-BenchBaseMiddle.desc }
 ent-BenchSteelWhiteMiddle = біла сталева лавка
+    .desc = { ent-BenchBaseMiddle.desc }

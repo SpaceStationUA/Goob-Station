@@ -25,6 +25,7 @@ ent-ScrapFirelock1 = Двері протипожежного замка
 ent-ScrapFirelock2 = Двері протипожежного замка
     .desc = О! Ось куди поділася інша половина!
 ent-ScrapFirelock3 = Рама протипожежного замка
+    .desc = { ent-BaseScrap.desc }
 ent-ScrapGeneratorFrame = Рама генератора
     .desc = Рама генератора типу P.A.C.M.A.N. або S.U.P.E.R.P.A.C.M.A.N. Де решта?
 ent-ScrapGeneratorFuelTank = Паливний бак

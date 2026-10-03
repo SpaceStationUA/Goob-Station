@@ -1,12 +1,16 @@
 ent-BulletDebug = бах, куля!
+    .desc = { ent-BaseBullet.desc }
 ent-CartridgeDebug = бах, розряджений патрон
 ent-MagazinePistolDebug = Бац, Дід Маг!
 ent-MeleeDebug100 = палиця 100 шкоди
+    .desc = { ent-MeleeDebugGib.desc }
 ent-MeleeDebug200 = палиця 200 шкоди
+    .desc = { ent-MeleeDebugGib.desc }
 ent-MeleeDebugGib = палиця для розчленування
     .desc = бий сильно
 ent-WeaponHitscanDebug = бах hitscan 1 шкоди
     .desc = піу-піу!
 ent-WeaponHitscanDebugGib = бах hitscan розчленовувач
+    .desc = { ent-WeaponHitscanDebug.desc }
 ent-WeaponPistolDebug = Бах, Дідо-ган
     .desc = Дід. Тікайте хто може!

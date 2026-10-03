@@ -3,6 +3,7 @@ ent-GlowstickBase = світлова паличка
 ent-GlowstickBlue = блакитна світло-паличка
     .desc = Виглядає як зелений світловий меч... Майже...
 ent-GlowstickGreen = зелена світлова паличка
+    .desc = { ent-GlowstickBase.desc }
 ent-GlowstickPurple = фіолетова світло-паличка
     .desc = Виглядає як фіолетовий світловий меч... Майже...
 ent-GlowstickRed = червона світло-паличка

@@ -1,4 +1,4 @@
-ent-VehicleClowncarAntag =
+ent-VehicleClowncarAntag = { ent-VehicleClowncarBase }
     .desc = Як хтось взагалі може туди поміститися - незрозуміло.
 ent-VehicleClowncarBase = машина клоуна
 ent-VehicleClowncarTrainee = машина клоуна-стажера

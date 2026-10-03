@@ -1,6 +1,7 @@
 ent-DebugItemShapeWeird = предмет дивної форми
     .desc = Що це...?
 ent-GasMinerNitrogenSM = газовий добувач азоту
+    .desc = { ent-GasMinerBase.desc }
 ent-PonderingOrbRadioactive = зäдумливий шäр [700 рад]
     .desc = Якщо ви можете це прочитати, ви мертві... також хтось його крäде
 ent-PonderingOrbRadioactiveM = зäдумливий шäр [100 рад]

@@ -49,6 +49,7 @@ ent-ClothingUniformJumpsuitChiefEngineerTurtle = водолазка Головн
 ent-ClothingUniformJumpsuitClown = костюм клоуна
     .desc = ГУДОК!
 ent-ClothingUniformJumpsuitClownBanana = банановий костюм клоуна
+    .desc = { ent-ClothingUniformJumpsuitClown.desc }
 ent-ClothingUniformJumpsuitCluwne = костюм клувні
     .desc = Клятий костюм клувні.
 ent-ClothingUniformJumpsuitCommandGeneric = командний комбінезон

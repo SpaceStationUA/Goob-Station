@@ -1,12 +1,12 @@
-ent-DrinkBacchusBlessing =
+ent-DrinkBacchusBlessing = { ent-DrinkGlass }
     .desc = Ви не думали, що рідина може бути настільки огидною. Ви впевнені в цьому...?
 ent-DrinkGlass = метаморфна склянка
     .desc = Метаморфна склянка, яка автоматично перетворюється на склянку, що відповідає напою всередині. На дні є зашліфований номер патенту.
-ent-DrinkHoochGlass =
+ent-DrinkHoochGlass = { ent-DrinkGlass }
     .desc = Ви дійсно досягли дна... Ваша печінка спакувала валізи і пішла вчора ввечері.
 ent-DrinkJar = банка
     .desc = Чашка хіпстера.
-ent-DrinkSakeGlass =
+ent-DrinkSakeGlass = { ent-DrinkGlass }
     .desc = Вино з рису, це ж саке!
 ent-DrinkWaterJug = глечик з водою
     .desc = Не забувайте пити воду.

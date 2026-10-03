@@ -5,6 +5,7 @@ ent-ClarinetInstrument = кларнет
 ent-FluteInstrument = флейта
     .desc = Досягаючи нових висот жахливого пронизливого звучання.
 ent-HarmonicaInstrument = гармоніка
+    .desc = { ent-BaseHandheldInstrument.desc }
 ent-OcarinaInstrument = окарина
     .desc = Добре підходить для виконання колискових.
 ent-PanFluteInstrument = сопілка

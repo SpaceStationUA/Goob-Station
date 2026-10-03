@@ -12,6 +12,7 @@ ent-MobMothRandom = Уріст МакПухнастик
 ent-MobReptilianRandom = Уріст МакЛускатий
 ent-MobRodentiaRandom = Уріст МакЩур
 ent-MobShadowkinRandom = Уріст МакТінелюд
+    .desc = { ent-MobShadowkin.desc }
 ent-MobSlimePersonRandom = Уріст МакСлайм
 ent-MobTajaranRandom = Уріст МакТаяран
 ent-MobVoxRandom = Урістіті МакВокс

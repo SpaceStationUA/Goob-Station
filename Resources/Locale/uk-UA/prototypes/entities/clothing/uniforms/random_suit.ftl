@@ -1,8 +1,14 @@
 ent-ClothingRandomSpawner = довільний барвистий костюм
-ent-ClothingUniformRandom =
+    .desc = { ent-ClothingUniformRandom.desc }
+ent-ClothingUniformRandom = { ent-BaseItem }
     .desc = Генерується нейронними мережами на основі останніх модних тенденцій.
 ent-ClothingUniformRandomArmless = барвистий безрукавий костюм
+    .desc = { ent-ClothingUniformRandom.desc }
 ent-ClothingUniformRandomBra = барвистий топ
+    .desc = { ent-ClothingUniformRandom.desc }
 ent-ClothingUniformRandomShirt = барвистий костюм
+    .desc = { ent-ClothingUniformRandom.desc }
 ent-ClothingUniformRandomShorts = барвисті штани
+    .desc = { ent-ClothingUniformRandom.desc }
 ent-ClothingUniformRandomStandard = барвистий костюм
+    .desc = { ent-ClothingUniformRandom.desc }

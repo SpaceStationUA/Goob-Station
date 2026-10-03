@@ -1,7 +1,12 @@
 ent-BasePKAUpgrade = модифікація ПКА
     .desc = Модифікація для протокінетичного прискорювача.
 ent-PKAUpgradeDamage = модифікація ПКА (пошкодження)
+    .desc = { ent-BasePKAUpgrade.desc }
 ent-PKAUpgradeFireRate = модифікація ПКА (швидкострільність)
+    .desc = { ent-BasePKAUpgrade.desc }
 ent-PKAUpgradePressure = мод-кіт PKA (тиск)
+    .desc = { ent-BasePKAUpgrade.desc }
 ent-PKAUpgradeRange = модифікація ПКА (дальність)
+    .desc = { ent-BasePKAUpgrade.desc }
 ent-PKAUpgradeSpace = модкіт ПКА (космос)
+    .desc = { ent-BasePKAUpgrade.desc }
