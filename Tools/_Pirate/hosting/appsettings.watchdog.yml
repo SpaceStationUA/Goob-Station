@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+Serilog:
+  Using: [Serilog.Sinks.Console]
+  MinimumLevel:
+    Default: Information
+    Override:
+      Microsoft: Warning
+  WriteTo:
+    - Name: Console
+      Args:
+        OutputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3} {SourceContext}] {Message:lj}{NewLine}{Exception}"
+AllowedHosts: localhost;127.0.0.1
+Urls: http://127.0.0.1:5000
+BaseUrl: http://127.0.0.1:5000/
+Process:
+  Mode: Basic
+  PersistServers: false
+Servers:
+  Instances:
+    pirate:
+      Name: Pirate UA
+      ApiTokenFile: /home/alwyzon/ss14-hosting/secrets/watchdog-token
+      ApiPort: 1212
+      UpdateType: Manifest
+      Updates:
+        ManifestUrl: http://127.0.0.1:27691/fork/pirate-ua/manifest
+      TimeoutSeconds: 300
+      DumpOnTimeout: false
+      RunCommand: /home/alwyzon/ss14-hosting/run-game.sh
+      Arguments:
+        - --cvar
+        - log.path=/home/alwyzon/Pirate/bin/Content.Server/logs
+      EnvironmentVariables:
+        DOTNET_TieredPGO: '1'
+        DOTNET_TC_QuickJitForLoops: '1'
+        DOTNET_ReadyToRun: '0'

@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+[Unit]
+Description=Pirate Robust.Cdn 2
+Wants=network-online.target
+After=network-online.target
+ConditionPathExists=/home/alwyzon/ss14-hosting/ACTIVATED
+
+[Service]
+Type=notify
+User=alwyzon
+Group=alwyzon
+WorkingDirectory=/home/alwyzon/ss14-hosting/cdn
+ExecStart=/usr/bin/dotnet /home/alwyzon/ss14-hosting/cdn/bin/Robust.Cdn.dll
+Restart=on-failure
+RestartSec=10
+UMask=0077
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+
+[Install]
+WantedBy=multi-user.target
