@@ -1,6 +1,7 @@
 import { createMemo, createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import Chart from "./Chart";
 import NebulaBackdrop from "./NebulaBackdrop";
+import { DEFAULT_PALETTE, PALETTES } from "./lib/nebula";
 import { cellsInExtent, hexLine, key, pixelToHex, type Axial } from "./lib/hex";
 import { cellsByTerritory } from "./lib/geometry";
 import { pick, type GalaxyModel, type StarSystem } from "./lib/model";
@@ -73,6 +74,15 @@ export default function App() {
 
   /** Draw systems as their generated world rather than as a dot. */
   const [planets, setPlanets] = createSignal(false);
+
+  /**
+   * Which nebula ramp is behind the chart.
+   *
+   * A signal rather than a constant because the reference ships a scheme selector
+   * for exactly this -- `GUI/SchemeSelectButton.gd` -- and because the shipped ramp
+   * genuinely does not suit this chart. See `lib/nebula.ts` for why.
+   */
+  const [sky, setSky] = createSignal(DEFAULT_PALETTE);
 
   /**
    * In-progress drag: the cells covered so far, and the cell the pointer was on
@@ -352,7 +362,7 @@ export default function App() {
           {/* Behind everything. `reduce` is on: the reference's own flag for a
               background that has to carry text, and it does -- twenty-odd
               territory labels, a route list and a graticule sit on top. */}
-          <NebulaBackdrop reduce seed={7} />
+          <NebulaBackdrop reduce seed={7} palette={sky()} />
           <Chart
             model={m()}
             locale={loc()}
@@ -386,6 +396,28 @@ export default function App() {
                 place; a dot reads as a pin. The panel it started in is gone. */}
             <button classList={{ on: planets() }} onClick={() => setPlanets(v => !v)}>
               {t("planets", loc())}
+            </button>
+
+            {/* The nebula's ramp. Cycles rather than opening a menu, because there are
+                three and a menu for three is a menu that hides two of them.
+                The swatches are the palette's own middle stops, so the button shows
+                the thing it changes. */}
+            <button
+              class="sky-pick"
+              title={t("sky", loc())}
+              onClick={() => setSky(v => (v + 1) % PALETTES.length)}
+            >
+              <For each={PALETTES}>
+                {(p, i) => (
+                  <span
+                    class="sky-swatch"
+                    classList={{ on: sky() === i() }}
+                    style={{
+                      background: `linear-gradient(90deg, ${p.stops[1]}, ${p.stops[3]}, ${p.stops[5]}, ${p.stops[7]})`,
+                    }}
+                  />
+                )}
+              </For>
             </button>
 
             <div class="locpick">

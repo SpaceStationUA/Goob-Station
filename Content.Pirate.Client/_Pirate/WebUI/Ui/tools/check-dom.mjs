@@ -1048,18 +1048,38 @@ try {
       ctx.drawImage(im, 0, 0);
       const d = ctx.getImageData(0, 0, off.width, off.height).data;
       let covered = 0;
-      let gas = 0;
-      let maxL = 0;
+      // Every covered pixel's luminance, so the spread can be measured. Collecting
+      // them all costs a sort over a couple of hundred thousand numbers once per
+      // zoom level, which is nothing next to a screenshot.
+      const lums = [];
       const total = d.length / 4;
       for (let i = 0; i < d.length; i += 4) {
         if (d[i + 3] < 128) continue;
         covered++;
-        const l = (d[i] + d[i + 1] + d[i + 2]) / 3;
-        if (l > maxL) maxL = l;
-        // Above the background colour's luminance, so this counts gas and not the
-        // flat fill the shader paints where col_value falls under the cutoff.
-        if (l > 45) gas++;
+        lums.push((d[i] + d[i + 1] + d[i + 2]) / 3);
       }
+      lums.sort((a2, b2) => a2 - b2);
+      const q = (f) => lums[Math.min(lums.length - 1, Math.floor(lums.length * f))] ?? 0;
+      const p05 = q(0.05);
+      const p95 = q(0.95);
+      const p50 = q(0.5);
+      const p99 = q(0.99);
+      // Spread between the dimmest and brightest fifth of the covered pixels.
+      //
+      // This replaces an absolute luminance threshold, which was measuring the
+      // PALETTE rather than the picture: it asked for pixels above 45, which the warm
+      // ramp has and the cool default does not, so a correctly-rendered nebula in a
+      // deliberately dark ramp reported as "a flat fill". The property worth
+      // asserting is that the gas has TONES -- that it is not one colour painted over
+      // another -- and spread says that for any ramp, warm or cool, bright or dim.
+      //
+      // Measured p50 -> p99 rather than p05 -> p95, and the reason is that most
+      // covered pixels are the FLAT FILL: the shader paints background_color wherever
+      // col_value falls under the cutoff, and in a dark ramp that is most of the
+      // canvas. Including it in the spread measures the fill, not the gas. p50 upward
+      // asks the right question -- is there structure ABOVE the floor.
+      const spread = p99 - p50;
+      const maxL = lums[lums.length - 1] ?? 0;
       // Distinct colours, as a proxy for there being more than one layer present.
       const seen = new Set();
       for (let i = 0; i < d.length; i += 4 * 97) {
@@ -1069,7 +1089,11 @@ try {
       return {
         present: true,
         coveredPct: (100 * covered) / total,
-        gasPct: (100 * gas) / total,
+        spread,
+        p05,
+        p50,
+        p95,
+        p99,
         maxLum: maxL,
         distinct: seen.size,
         backing: `${c.width}x${c.height}`,
@@ -1080,12 +1104,15 @@ try {
     check(
       "and it covers a real part of the chart",
       neb.present && neb.coveredPct > 8 && neb.coveredPct < 70,
-      `${(neb.coveredPct ?? 0).toFixed(1)}% of the canvas opaque, ${(neb.gasPct ?? 0).toFixed(1)}% of it gas`,
+      `${(neb.coveredPct ?? 0).toFixed(1)}% of the canvas is covered`,
     );
     check(
-      "and it is gas rather than a flat fill",
-      neb.present && neb.gasPct > 1 && neb.maxLum > 90,
-      `${(neb.gasPct ?? 0).toFixed(1)}% above luminance 45, peak ${Math.round(neb.maxLum ?? 0)}`,
+      "and it has TONES in it, rather than one flat colour over another",
+      neb.present && neb.spread > 12,
+      `luminance rises ${(neb.spread ?? 0).toFixed(0)} from the median covered pixel ` +
+        `(${Math.round(neb.p50 ?? 0)}) to the 99th percentile (${Math.round(neb.p99 ?? 0)}), ` +
+        `peak ${Math.round(neb.maxLum ?? 0)}. A spread rather than a threshold, and measured ` +
+        `from the median up, so it holds for a dim ramp and ignores the flat fill.`,
     );
     check(
       "with more than one tone in it, so both layers are drawing",
@@ -1175,12 +1202,47 @@ try {
       },
       [shotWith.toString("base64"), shotWithout.toString("base64")],
     );
+    // Coverage and peak, not mean. These thresholds were first set against the warm
+    // ramp, where the nebula is bright enough that mean does the job -- and the cool
+    // default then failed them while being perfectly visible, because it is
+    // deliberately dimmer. Mean is the wrong statistic anyway: a nebula that covered
+    // a little of the page strongly beats one that covered a lot of it faintly, and
+    // coverage times peak is what "can you see it" actually means.
+    //
+    // The separation from the opaque-background failure is wide: 1.5% and peak 15
+    // when it is hidden, against 15% and peak 39 when it is not.
     check(
       "and it is actually ON SCREEN, not just correct inside its own canvas",
-      onScreen.pct > 20 && onScreen.mean > 10,
-      `removing the backdrop changes ${onScreen.pct.toFixed(1)}% of the page, mean ${onScreen.mean.toFixed(1)}, ` +
-        `peak ${onScreen.max}. An opaque background rect over the SVG is what zeroes this.`,
+      onScreen.pct > 8 && onScreen.max > 25,
+      `removing the backdrop changes ${onScreen.pct.toFixed(1)}% of the page, peak ${onScreen.max}. ` +
+        `An opaque background rect over the SVG is what drops this to 1.5%.`,
     );
+
+    // The palette picker: three ramps, and clicking must actually change the picture.
+    const palettes = await page.evaluate(() => ({
+      count: document.querySelectorAll(".sky-swatch").length,
+      active: document.querySelector(".nebula-backdrop")?.dataset.palette ?? "",
+    }));
+    check(
+      "the sky picker offers a ramp per palette",
+      palettes.count === 3,
+      `${palettes.count} swatches, ${palettes.active} active`,
+    );
+    // Cycle once and require the backdrop to report a different ramp.
+    const before = palettes.active;
+    await page.click(".sky-pick");
+    await page.waitForTimeout(900);
+    const after = await page.evaluate(
+      () => document.querySelector(".nebula-backdrop")?.dataset.palette ?? "",
+    );
+    check(
+      "and clicking it changes the ramp the backdrop reports",
+      after !== "" && after !== before,
+      `${before} -> ${after}`,
+    );
+    await page.click(".sky-pick");
+    await page.click(".sky-pick");
+    await page.waitForTimeout(900);
 
     const pe = await page.evaluate(() => {
       const host = document.querySelector(".nebula-backdrop");

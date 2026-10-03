@@ -18,7 +18,7 @@
  * the chart's mount path would be a broken chart.
  */
 
-import { onCleanup, onMount } from "solid-js";
+import { createEffect, onCleanup, onMount } from "solid-js";
 import { nebula } from "./lib/nebula";
 
 export interface NebulaBackdropProps {
@@ -32,6 +32,8 @@ export interface NebulaBackdropProps {
    */
   reduce?: boolean;
   seed?: number;
+  /** Index into `PALETTES`. Changing it rebuilds. */
+  palette?: number;
 }
 
 export default function NebulaBackdrop(props: NebulaBackdropProps) {
@@ -40,10 +42,16 @@ export default function NebulaBackdrop(props: NebulaBackdropProps) {
   const build = () => {
     const box = host.getBoundingClientRect();
     if (box.width < 8) return;
-    const n = nebula({ px: Math.round(box.width), reduce: props.reduce, seed: props.seed });
+    const n = nebula({
+      px: Math.round(box.width),
+      reduce: props.reduce,
+      seed: props.seed,
+      palette: props.palette,
+    });
     if (!n) return;
     n.canvas.classList.add("nebula-canvas");
     host.dataset.layers = String(n.layers);
+    host.dataset.palette = n.palette;
     host.replaceChildren(n.canvas);
     onCleanup(() => n.dispose());
   };
@@ -53,6 +61,13 @@ export default function NebulaBackdrop(props: NebulaBackdropProps) {
     // Resize only, debounced. The generation is two fbm chains over the whole canvas
     // and doing that on every resize frame is the one way to make this expensive.
     let t: ReturnType<typeof setTimeout> | undefined;
+    // A palette change has to rebuild too, and that is not a resize, so the
+    // observer alone will not catch it.
+    createEffect(() => {
+      props.palette;
+      props.reduce;
+      build();
+    });
     const ro = new ResizeObserver(() => {
       if (t) clearTimeout(t);
       t = setTimeout(build, 180);

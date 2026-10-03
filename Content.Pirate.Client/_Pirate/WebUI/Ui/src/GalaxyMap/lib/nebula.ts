@@ -54,51 +54,95 @@ import { noisePrelude } from "./glsl";
  * nebula lit from inside, and there is no blue in it at all.
  */
 /**
- * The colourscheme. HUES are `Colorscheme.tres`'s; the bottom three are LIFTED.
+ * Palettes.
  *
- * And lifting is not a deviation here, the way it was for the ring's palette. The
- * reference treats this as user data, not as a fixed design: `GUI.gd` loads
- * `Colorscheme.tres` as `global_scheme` and `select_colorscheme()` writes the
- * gradient's colours straight from the colour pickers. The shipped file is a
- * starting point the tool expects you to edit, so choosing a different one is the
- * generator working as designed.
+ * There is more than one because the shipped one does not work here, and the reason
+ * is worth stating rather than quietly fixing.
  *
- * Why it needs editing here: the noise's contribution is a PRODUCT of three fbm
- * values each averaging about 0.44, so it lands near 0.084. `col_value` is
- * `floor(0.084 * 14) / 7`, which is 0.143 — the second of eight stops. Measured on
- * the chart: of the pixels the nebula actually covers, 72% come out as
- * `background_color` and most of the rest as stops 0 and 1, which are luminance 19
- * and 29. On a page that is luminance 13, that is not a nebula, it is a slightly
- * uneven dark.
+ * `Colorscheme.tres` is warm end to end -- olive, brown, red, orange, cream. That is
+ * a good palette for a mid-grey generator window showing a nebula and nothing else.
+ * This is a chart: seven territories in blue, green, grey, teal, magenta, amber and
+ * slate, twenty-odd labels, and a graticule. A warm gas fights the four cool ones and
+ * the amber one vanishes into it, which is precisely what it looked like.
  *
- * So the bottom three are raised to sit around luminance 55 to 90: enough to read
- * as gas, well below the territory fills and the labels, which is the whole job.
- * The reference's own ramp continues up through orange to cream, and that top half
- * is untouched.
+ * So `abyss` is the default: a cool ramp from the page's own near-black up to a
+ * muted slate blue at luminance ~80, which is above the background by enough to
+ * read as depth and below every territory fill. The reference's own ramp is kept as
+ * `ember` rather than deleted, because it is the authentic output and someone may
+ * want to see it.
  *
- *     reference    lifted
- *     #202215      #1e2118   barely moved: this end is the background
- *     #3a2802      #6b4420
- *     #963c3c      #a2543a
- *     #ca5a2e      #ca5a2e   unchanged
- *     #ff7831      #ff7831
- *     #f39949      #f39949
- *     #ebc275      #ebc275
- *     #dfd785      #dfd785
+ * **This is the reference's own idea, not a departure from it.** `Colorscheme.tres`
+ * is user data: `GUI.gd` loads it as `global_scheme` and `select_colorscheme()`
+ * writes the gradient's stops straight from colour pickers, and the tool ships a
+ * `SchemeSelectButton` for exactly this. So the selector below is a port of a
+ * feature that already exists, and the shipped ramp is a starting point rather than
+ * a fixed design.
  */
-export const PALETTE: readonly string[] = [
-  "#1e2118",
-  "#6b4420",
-  "#a2543a",
-  "#ca5a2e",
-  "#ff7831",
-  "#f39949",
-  "#ebc275",
-  "#dfd785",
+export interface Palette {
+  /** Endonym label. The reference's selector does not translate these either. */
+  label: string;
+  /**
+   * What this is for, in one line. Shown as the button's tooltip, because "abyss"
+   * does not tell you whether it is the loud one.
+   */
+  note: string;
+  /** Eight evenly spaced stops, dark to light. */
+  stops: string[];
+  /** What the shader paints where `col_value` falls under the cutoff. */
+  background: string;
+}
+
+export const PALETTES: readonly Palette[] = [
+  {
+    label: "ABYSS",
+    note: "cool and deep, so the territories keep their colours",
+    // #04060b is the page. The ramp climbs to luminance ~80, which is under every
+    // territory fill and well under the labels.
+    stops: [
+      "#070a12",
+      "#0c1120",
+      "#111a30",
+      "#172440",
+      "#1d2f52",
+      "#243a64",
+      "#2c4676",
+      "#345287",
+    ],
+    background: "#070a12",
+  },
+  {
+    label: "EMBER",
+    note: "the reference's own ramp, warm end to end",
+    stops: [
+      "#1e2118",
+      "#6b4420",
+      "#a2543a",
+      "#ca5a2e",
+      "#ff7831",
+      "#f39949",
+      "#ebc275",
+      "#dfd785",
+    ],
+    background: "#171711",
+  },
+  {
+    label: "DUST",
+    note: "neutral and nearly flat, for when the gas should not be noticed",
+    stops: [
+      "#08080a",
+      "#101013",
+      "#18171b",
+      "#201e23",
+      "#28252a",
+      "#302c31",
+      "#383338",
+      "#403a3f",
+    ],
+    background: "#08080a",
+  },
 ];
 
-/** `Nebulae.tres`'s `background_color`: a near-black olive, not a neutral black. */
-export const BACKGROUND = "#171711";
+export const DEFAULT_PALETTE = 0;
 
 export const NEBULAE = {
   /** `size` */
@@ -237,6 +281,8 @@ function rgb(hex: string): [number, number, number] {
 
 export interface Nebula {
   canvas: HTMLCanvasElement;
+  /** Which palette actually drew, for the check to read. */
+  palette: string;
   /**
    * How many of the two layers actually built and drew. Must be 2.
    *
@@ -258,6 +304,8 @@ export interface NebulaOpts {
    * sit on top of it.
    */
   reduce?: boolean;
+  /** Index into `PALETTES`. Defaults to `DEFAULT_PALETTE`. */
+  palette?: number;
 }
 
 export function nebulaSupported(): boolean {
@@ -281,6 +329,7 @@ export function nebulaSupported(): boolean {
  */
 export function nebula(opts: NebulaOpts): Nebula | null {
   if (!nebulaSupported()) return null;
+  const pal = PALETTES[opts.palette ?? DEFAULT_PALETTE] ?? PALETTES[DEFAULT_PALETTE];
   const canvas = document.createElement("canvas");
   const gl =
     (canvas.getContext("webgl2", {
@@ -377,8 +426,8 @@ export function nebula(opts: NebulaOpts): Nebula | null {
     // generator's own canvas is square. Ours is not, so without this the noise is
     // stretched horizontally by the width ratio and a cloud comes out as a smear.
     gl.uniform2f(u("u_uvCorrect"), h > w ? w / h : 1, w > h ? h / w : 1);
-    gl.uniform4fv(u("u_background"), [...rgb(BACKGROUND), 1]);
-    gl.uniform3fv(u("u_palette"), PALETTE.flatMap((c) => rgb(c)));
+    gl.uniform4fv(u("u_background"), [...rgb(pal.background), 1]);
+    gl.uniform3fv(u("u_palette"), pal.stops.flatMap((c) => rgb(c)));
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -432,6 +481,7 @@ export function nebula(opts: NebulaOpts): Nebula | null {
 
   return {
     canvas,
+    palette: pal.label,
     layers: layersDrawn,
     dispose() {
       disposed = true;

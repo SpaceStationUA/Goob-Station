@@ -74,6 +74,9 @@ export interface UiStrings {
    * a pin. That is a chart decision, not a debug one.
    */
   planets: LocalizedText;
+  /** Tooltip for the nebula palette button. */
+  sky: LocalizedText;
+  /** The nebula palette names themselves. Endonyms, never translated. */
   paint: LocalizedText;
   undo: LocalizedText;
   close: LocalizedText;
@@ -128,6 +131,10 @@ export interface UiStrings {
 export const DEFAULT_STRINGS: UiStrings = {
   grid: { en: "GRID", uk: "СІТКА" },
   planets: { en: "PLANETS", uk: "ПЛАНЕТИ" },
+  sky: {
+    en: "Space behind the chart. Click to change it.",
+    uk: "Космос за картою. Натисніть, щоб змінити.",
+  },
   paint: { en: "PAINT", uk: "ФАРБА" },
   undo: { en: "UNDO", uk: "СКАСУВАТИ" },
   close: { en: "CLOSE", uk: "ЗАКРИТИ" },

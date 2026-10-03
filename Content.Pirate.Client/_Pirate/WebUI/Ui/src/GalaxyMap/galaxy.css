@@ -128,6 +128,33 @@ svg.chart.painting {
   width: 100%;
 }
 
+/**
+ * The nebula ramp picker. Three swatches, one per palette, and the active one is
+ * ringed.
+ *
+ * The swatches are gradients of each palette's own middle stops rather than flat
+ * fills, because a ramp is what the choice is about -- a single flat chip cannot
+ * show whether a palette is warm or cool, which is the only thing anyone needs to
+ * know when picking one.
+ */
+.sky-pick {
+  display: flex;
+  gap: 3px;
+  padding: 2px 3px;
+  background: rgba(14, 18, 28, 0.9);
+  border: 1px solid rgba(120, 160, 200, 0.28);
+  cursor: pointer;
+}
+.sky-swatch {
+  width: 16px;
+  height: 10px;
+  display: block;
+  border: 1px solid transparent;
+}
+.sky-swatch.on {
+  border-color: #cfe3ff;
+}
+
 .panel {
   position: absolute;
   top: 14px;
