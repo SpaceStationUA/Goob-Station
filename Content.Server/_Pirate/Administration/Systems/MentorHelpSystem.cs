@@ -1,8 +1,9 @@
-﻿// SPDX-FileCopyrightText: 2026 SpaceStationUA
+// SPDX-FileCopyrightText: 2026 SpaceStationUA
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
 using Content.Goobstation.Common.CCVar;
+using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Players.RateLimiting;
@@ -21,7 +22,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server._Pirate.Administration.Systems;
 
-public sealed class MentorHelpSystem : EntitySystem
+public sealed partial class MentorHelpSystem : EntitySystem
 {
     private const string RateLimitKey = "MentorHelp";
 
@@ -45,6 +46,14 @@ public sealed class MentorHelpSystem : EntitySystem
             new RateLimitRegistration(CCVars.AhelpRateLimitPeriod,
                 CCVars.AhelpRateLimitCount,
                 OnRateLimited));
+
+        InitializeRelay();
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        ShutdownRelay();
     }
 
     private void OnRateLimited(ICommonSession session)
@@ -100,28 +109,81 @@ public sealed class MentorHelpSystem : EntitySystem
 
         var responderOnly = message.ResponderOnly;
         var playSound = (!isResponder || message.PlaySound) && !responderOnly;
+
+        Deliver(message.UserId, sender.UserId, sender.Name, senderName, text, isResponder,
+            playSound, message.ResponderOnly, fromDiscord: false, userOnly: false, sendWebhook: true);
+    }
+
+    public void OnWebhookMessage(ICommonSession player, ServerApi.BwoinkActionBody body)
+    {
+        var text = body.Text.Trim();
+        if (text.Length == 0)
+            return;
+
+        var color = _config.GetCVar(GoobCVars.DiscordReplyColor);
+        if (_config.GetCVar(GoobCVars.UseDiscordRoleColor) && Color.TryFromHex(body.RoleColor) is { } roleColor)
+            color = roleColor.ToHex();
+        if (string.IsNullOrEmpty(color))
+            color = StaffChats.Mentor.Color.ToHex();
+
+        var title = _config.GetCVar(CCVars.AhelpAdminPrefix)
+                    && _config.GetCVar(GoobCVars.UseDiscordRoleName)
+                    && !string.IsNullOrWhiteSpace(body.RoleName)
+            ? $"[bold]\\[{FormattedMessage.EscapeText(body.RoleName)}\\][/bold] "
+            : string.Empty;
+
+        var prefix = FormattedMessage.EscapeText(_config.GetCVar(GoobCVars.DiscordReplyPrefix));
+        var senderName = $"{prefix}[color={color}]{title}{FormattedMessage.EscapeText(body.Username)}[/color]";
+
+        Deliver(player.UserId, default, body.Username, senderName, text, isResponder: true,
+            playSound: true, responderOnly: false, fromDiscord: true, userOnly: body.UserOnly, sendWebhook: body.WebhookUpdate);
+    }
+
+    private void Deliver(
+        NetUserId channel,
+        NetUserId senderId,
+        string rawSenderName,
+        string senderMarkup,
+        string text,
+        bool isResponder,
+        bool playSound,
+        bool responderOnly,
+        bool fromDiscord,
+        bool userOnly,
+        bool sendWebhook)
+    {
         var tag = responderOnly
             ? Loc.GetString("mentorhelp-message-responders-only")
             : playSound ? "" : Loc.GetString("bwoink-message-silent");
-        var line = $"{tag} {senderName}: {FormattedMessage.EscapeText(text)}";
-        var msg = new MentorHelpTextMessage(message.UserId, sender.UserId, line, playSound: playSound, responderOnly: responderOnly);
+        var line = $"{tag} {senderMarkup}: {FormattedMessage.EscapeText(text)}";
+        var msg = new MentorHelpTextMessage(channel, senderId, line, playSound: playSound, responderOnly: responderOnly);
+
+        _players.TryGetSessionById(channel, out var player);
 
         var responders = GetResponders();
-        foreach (var responder in responders)
+        if (!userOnly)
         {
-            RaiseNetworkEvent(msg, responder.Channel);
+            foreach (var responder in responders)
+            {
+                RaiseNetworkEvent(msg, responder.Channel);
+            }
         }
 
-        if (!responderOnly && _players.TryGetSessionById(message.UserId, out var player) && !responders.Contains(player))
+        if (!responderOnly && player != null && (userOnly || !responders.Contains(player)))
             RaiseNetworkEvent(msg, player.Channel);
 
+        var from = fromDiscord ? $"Discord user {rawSenderName}" : rawSenderName;
         _adminLog.Add(LogType.Chat, LogImpact.Low,
-            $"Mentorhelp{(responderOnly ? " (responders only)" : "")} from {sender:Player} in the ticket of {message.UserId}: {text}");
+            $"Mentorhelp{(responderOnly ? " (responders only)" : "")} from {from} in the ticket of {channel}: {text}");
 
-        if (responders.Count == 0 && sender.UserId == message.UserId)
+        if (sendWebhook)
+            QueueRelay(channel, rawSenderName, text, isResponder, playSound, responderOnly, fromDiscord);
+
+        // Avoid the empty-responder notice when Discord can receive the ticket.
+        if (responders.Count == 0 && senderId == channel && !RelayEnabled && player != null)
         {
-            RaiseNetworkEvent(new MentorHelpTextMessage(message.UserId, default, Loc.GetString("mentorhelp-no-mentors-online")),
-                sender.Channel);
+            RaiseNetworkEvent(new MentorHelpTextMessage(channel, default, Loc.GetString("mentorhelp-no-mentors-online")),
+                player.Channel);
         }
     }
 

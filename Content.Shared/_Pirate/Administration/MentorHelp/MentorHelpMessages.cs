@@ -42,6 +42,17 @@ public sealed class MentorHelpTextMessage : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
+public sealed class MentorHelpDiscordRelayUpdated : EntityEventArgs
+{
+    public bool Enabled { get; }
+
+    public MentorHelpDiscordRelayUpdated(bool enabled)
+    {
+        Enabled = enabled;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class MentorHelpClientTypingUpdated : EntityEventArgs
 {
     public NetUserId Channel { get; }

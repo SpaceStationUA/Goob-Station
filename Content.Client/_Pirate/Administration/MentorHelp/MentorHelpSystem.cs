@@ -13,6 +13,7 @@ public sealed class MentorHelpSystem : EntitySystem
 
     public event Action<MentorHelpTextMessage>? MessageReceived;
     public event Action<MentorHelpPlayerTypingUpdated>? TypingReceived;
+    public event Action<bool>? DiscordRelayChanged;
 
     private (TimeSpan Timestamp, bool Typing) _lastTypingUpdateSent;
 
@@ -22,6 +23,7 @@ public sealed class MentorHelpSystem : EntitySystem
 
         SubscribeNetworkEvent<MentorHelpTextMessage>(msg => MessageReceived?.Invoke(msg));
         SubscribeNetworkEvent<MentorHelpPlayerTypingUpdated>(msg => TypingReceived?.Invoke(msg));
+        SubscribeNetworkEvent<MentorHelpDiscordRelayUpdated>(msg => DiscordRelayChanged?.Invoke(msg.Enabled));
     }
 
     public void Send(NetUserId channel, string text, bool playSound, bool responderOnly = false)

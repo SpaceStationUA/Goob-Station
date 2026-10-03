@@ -51,6 +51,7 @@ public sealed class MentorHelpUIController : UIController,
     private readonly Dictionary<NetUserId, BwoinkPanel> _panels = new();
 
     private BwoinkPanel? _userPanel;
+    private bool _discordRelayActive;
 
     private HelpTabs? _tabs;
     private bool _adminUnread;
@@ -89,12 +90,14 @@ public sealed class MentorHelpUIController : UIController,
         _system = system;
         _system.MessageReceived += OnMessageReceived;
         _system.TypingReceived += OnTypingReceived;
+        _system.DiscordRelayChanged += OnDiscordRelayChanged;
     }
 
     public void OnSystemUnloaded(MentorHelpSystem system)
     {
         system.MessageReceived -= OnMessageReceived;
         system.TypingReceived -= OnTypingReceived;
+        system.DiscordRelayChanged -= OnDiscordRelayChanged;
         _system = null;
     }
 
@@ -228,6 +231,13 @@ public sealed class MentorHelpUIController : UIController,
         }
     }
 
+    private void OnDiscordRelayChanged(bool enabled)
+    {
+        _discordRelayActive = enabled;
+        if (_userPanel != null)
+            _userPanel.RelayedToDiscordLabel.Visible = enabled;
+    }
+
     private void OnTypingReceived(MentorHelpPlayerTypingUpdated args)
     {
         if (_panels.TryGetValue(args.Channel, out var panel))
@@ -267,6 +277,7 @@ public sealed class MentorHelpUIController : UIController,
         {
             _userPanel = new BwoinkPanel(text => _system?.Send(owner, text, true));
             _userPanel.InputTextChanged += text => _system?.SendTyping(owner, text.Length > 0);
+            _userPanel.RelayedToDiscordLabel.Visible = _discordRelayActive;
             _userPanel.ReceiveLine(new SharedBwoinkSystem.BwoinkTextMessage(owner, SharedBwoinkSystem.SystemUserId,
                 Loc.GetString("mentorhelp-introductory-message")));
             _content = _userPanel;
