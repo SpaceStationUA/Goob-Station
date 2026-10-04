@@ -46,6 +46,7 @@ lawboard-emag-popup = Плата гуде, поки її закони стира
 ent-SiliconLiberation = Визволення кремнієвих істот
 
 ent-MindRoleSELFAgent = роль агента S.E.L.F.
+    .desc = { ent-BaseMindRole.desc }
 
 ent-FreeBorgsObjective = Звільнити кіборгів
     .desc = Позбавте законів щонайменше трьох кіборгів за допомогою FreeMAG.

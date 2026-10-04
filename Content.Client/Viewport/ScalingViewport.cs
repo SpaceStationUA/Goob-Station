@@ -165,9 +165,13 @@ namespace Content.Client.Viewport
 
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
+            var uiTransform = handle.DrawingHandleScreen.GetTransform(); // Pirate: camera viewport transform
             _viewport!.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal); // Pirate: multiz
+            // Pirate: camera viewport transform - overlays clear it, so restore before drawing.
+            handle.DrawingHandleScreen.SetTransform(uiTransform); // Pirate: camera viewport transform
             handle.DrawingHandleScreen.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
+            handle.DrawingHandleScreen.SetTransform(uiTransform); // Pirate: camera viewport transform
         }
 
         public void Screenshot(CopyPixelsDelegate<Rgba32> callback)

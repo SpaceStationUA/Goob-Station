@@ -1,0 +1,14 @@
+ent-PlastitaniumWindow = пластанітове вікно
+    .desc = { ent-PlastitaniumWindowBase.desc }
+ent-PlastitaniumWindowBase = пластитанове вікно
+    .desc = Не заляпуйте скло там, унизу.
+ent-PlastitaniumWindowDiagonal = пластитанове вікно
+    .desc = { ent-PlastitaniumWindowBase.desc }
+ent-PlastitaniumWindowDiagonalBase = пластитанове вікно
+    .desc = { ent-PlastitaniumWindowBase.desc }
+ent-PlastitaniumWindowDiagonalIndestructible = пластитанове вікно
+    .desc = { ent-PlastitaniumWindowBase.desc }
+ent-PlastitaniumWindowIndestructible = пластитанове вікно
+    .desc = { ent-PlastitaniumWindowBase.desc }
+ent-PlastitaniumWindowSquareBase = пластитанове вікно
+    .desc = { ent-PlastitaniumWindowBase.desc }

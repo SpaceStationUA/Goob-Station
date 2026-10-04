@@ -603,6 +603,8 @@ public sealed partial class ChatUIController : UIController
             FilterableChannels |= ChatChannel.Telepathic; //Nyano - Summary: makes admins able to see psionic chat.
         }
 
+        UpdateStaffChatPermissions(); // Pirate: staff chats
+
         // Pirate: ask Pirate-side systems whether this player can use telepathic chat.
         if (_player.LocalEntity is { } localEntity)
         {

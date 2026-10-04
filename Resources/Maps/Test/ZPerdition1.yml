@@ -8119,8 +8119,8 @@ entities:
       pos: 31.5,-19.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 5647
 - proto: AirlockJanitorLocked
@@ -8527,8 +8527,8 @@ entities:
       pos: 32.5,-7.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 206
@@ -26829,8 +26829,8 @@ entities:
       pos: 18.5,-6.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 3127
@@ -26839,8 +26839,8 @@ entities:
       pos: 22.5,-5.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 3128
@@ -26849,8 +26849,8 @@ entities:
       pos: 26.5,-5.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 3131
@@ -26859,8 +26859,8 @@ entities:
       pos: 30.5,-7.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 3132
@@ -26869,8 +26869,8 @@ entities:
       pos: 26.5,-1.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 3133
@@ -26879,8 +26879,8 @@ entities:
       pos: 28.5,-1.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 3134
@@ -26889,8 +26889,8 @@ entities:
       pos: 32.5,-9.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 3135
@@ -26899,8 +26899,8 @@ entities:
       pos: 32.5,-5.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 3136
@@ -27348,8 +27348,8 @@ entities:
       pos: 19.5,-6.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
+
       deviceLists:
       - 74
   - uid: 3203
@@ -38994,8 +38994,7 @@ entities:
       pos: 34.5,-8.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
       deviceLists:
       - 74
     - type: AtmosPipeColor
@@ -39736,8 +39735,7 @@ entities:
       pos: 34.5,-6.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
       deviceLists:
       - 74
     - type: AtmosPipeLayers

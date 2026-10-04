@@ -1,0 +1,10 @@
+ent-BaseBlueprintDatachip = чип даних
+    .desc = Чип даних, який можна вставити в збирач мікроелектроніки для створення нових корисних технологій.
+ent-DataChipAIBoard = чип даних (плата перевизначення ШІ)
+    .desc = { ent-BaseBlueprintDatachip.desc }
+ent-DataChipFakeMindshield = чип даних (підроблений захист розуму)
+    .desc = { ent-BaseBlueprintDatachip.desc }
+ent-DataChipReflectivePlate = чип даних (відбивна пластина)
+    .desc = { ent-BaseBlueprintDatachip.desc }
+ent-DataChipShieldRipper = чип даних (виривач захисту розуму)
+    .desc = { ent-BaseBlueprintDatachip.desc }

@@ -34,6 +34,9 @@ public sealed partial class ChannelFilterPopup : Popup
         ChatChannel.Admin,
         ChatChannel.AdminAlert,
         ChatChannel.AdminChat,
+        ChatChannel.MentorChat, // Pirate: staff chats
+        ChatChannel.EventChat, // Pirate: staff chats
+        ChatChannel.CentComChat, // Pirate: staff chats
         ChatChannel.Server,
     };
 

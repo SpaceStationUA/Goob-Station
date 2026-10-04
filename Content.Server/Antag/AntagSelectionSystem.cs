@@ -284,8 +284,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         foreach (var se in pool)
         {
             var lastRoll = (float)(_playTimeManager.GetOverallPlaytime(se) - _lastRolled.GetLastRolled(se.UserId)).TotalSeconds;
-            //weight clamped between 5 hours and 20 hours
-            weights[se] = float.Clamp(lastRoll, 18000.0f, 72000.0f);
+            // Pirate: antag pity bonus - ramps from 1x to 2x at 5 hours and 8x at 20 hours.
+            weights[se] = 18000f * (1f + float.Clamp(lastRoll / 18000f, 0f, 1f) + 6f * float.Clamp((lastRoll - 18000f) / 54000f, 0f, 1f)); // Pirate: antag pity bonus
         }
 
         return weights;

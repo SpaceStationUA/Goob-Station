@@ -1,0 +1,1 @@
+ent-BaseMobSlimePerson = Уріст МакСлайм

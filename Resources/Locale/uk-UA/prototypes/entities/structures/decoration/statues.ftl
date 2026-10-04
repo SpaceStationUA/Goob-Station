@@ -1,0 +1,16 @@
+ent-BaseIronsandStatue =
+    .desc = Таємнича статуя, знайдена в пустелі залізного піску.
+ent-StatueBananiumClown = бананіумна статуя рятівника
+    .desc = Бананіумна статуя. Вона зображує повернення спасителя, який підніметься і поведе клоунів під великий гудок.
+ent-StatueIronsandSmall = мала статуя із залізного піску
+    .desc = { ent-BaseIronsandStatue.desc }
+ent-StatueIronsandSmall2 = мала статуя із залізного піску
+    .desc = { ent-BaseIronsandStatue.desc }
+ent-StatueIronsandTall = висока статуя із залізного піску
+    .desc = { ent-BaseIronsandStatue.desc }
+ent-StatueIronsandTall2 = висока статуя із залізного піску
+    .desc = { ent-BaseIronsandStatue.desc }
+ent-StatueVenusBlue = статуя пречистої діви
+    .desc = Антична мармурова статуя. Об'єкт зображений з косою до підлоги і тримає в руках синій ящик з інструментами.
+ent-StatueVenusRed = статуя пречистої діви
+    .desc = Антична мармурова статуя. Об'єкт зображений з косою до підлоги і тримає в руках червоний ящик з інструментами.

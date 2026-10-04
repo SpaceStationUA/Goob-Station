@@ -1,0 +1,1 @@
+ent-MobRodentia = Уріст МакРат

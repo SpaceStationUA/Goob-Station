@@ -1,0 +1,16 @@
+ent-BaseMobAdultSlime = базовий слайм
+    .desc = Воно так схоже на желе. Цікаво, яке воно на смак?
+ent-MobAdultSlimes = основний шлам
+    .desc = Це так схоже на желе. Цікаво, який він на смак?
+ent-MobAdultSlimesBlue = Синій слиз
+    .desc = { ent-MobAdultSlimes.desc }
+ent-MobAdultSlimesBlueAngry = Синій слиз
+    .desc = { ent-MobAdultSlimes.desc }
+ent-MobAdultSlimesGreen = Зелений слиз
+    .desc = { ent-MobAdultSlimes.desc }
+ent-MobAdultSlimesGreenAngry = Зелений слиз
+    .desc = { ent-MobAdultSlimes.desc }
+ent-MobAdultSlimesYellow = Жовтий слиз
+    .desc = { ent-MobAdultSlimes.desc }
+ent-MobAdultSlimesYellowAngry = Жовтий слиз
+    .desc = { ent-MobAdultSlimes.desc }

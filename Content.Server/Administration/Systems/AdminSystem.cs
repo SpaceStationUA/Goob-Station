@@ -39,7 +39,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;
 
-public sealed class AdminSystem : EntitySystem
+public sealed partial class AdminSystem : EntitySystem // Pirate: mentorhelp
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
@@ -116,7 +116,7 @@ public sealed class AdminSystem : EntitySystem
 
         foreach (var admin in _adminManager.ActiveAdmins)
         {
-            RaiseNetworkEvent(updateEv, admin.Channel);
+            RaiseNetworkEvent(FilterPlayerListFor(admin, updateEv), admin.Channel); // Pirate: mentorhelp - hide antag info from mentors
         }
     }
 
@@ -136,7 +136,7 @@ public sealed class AdminSystem : EntitySystem
 
         foreach (var admin in _adminManager.ActiveAdmins)
         {
-            RaiseNetworkEvent(playerInfoChangedEvent, admin.Channel);
+            RaiseNetworkEvent(FilterPlayerInfoFor(admin, playerInfoChangedEvent), admin.Channel); // Pirate: mentorhelp - hide antag info from mentors
         }
     }
 
@@ -214,7 +214,7 @@ public sealed class AdminSystem : EntitySystem
 
         ev.PlayersInfo = _playerList.Values.ToList();
 
-        RaiseNetworkEvent(ev, playerSession.Channel);
+        RaiseNetworkEvent(FilterPlayerListFor(playerSession, ev), playerSession.Channel); // Pirate: mentorhelp - hide antag info from mentors
     }
 
     private PlayerInfo GetPlayerInfo(SessionData data, ICommonSession? session)

@@ -1,0 +1,7 @@
+ent-MobHumanLoneNuclearOperativeSuitCommanderDebug = самотній командир в костюмі (дебаг)
+ent-MobHumanLoneNuclearOperativeSuitDebug = самотній оперативник в костюмі (дебаг)
+ent-MobHumanLoneNuclearOperativeSuitDreadDebug = самотній дред-оперативник в костюмі (дебаг)
+ent-MobHumanLoneNuclearOperativeSuitEliteDebug = самотній елітний оперативник в костюмі (дебаг)
+ent-MobHumanLoneNuclearOperativeSuitJuggDebug = самотній джаггернаут в костюмі (дебаг)
+ent-MobHumanLoneNuclearOperativeSuitMedicDebug = самотній медик-оперативник в костюмі (дебаг)
+ent-MobHumanLoneNuclearOperativeSuitStealthDebug = самотній стелс-оперативник в костюмі (дебаг)

@@ -1,0 +1,10 @@
+ent-ClothingNeckNeckerchiefBlack = чорний шийний хустинник
+    .desc = { ent-ClothingNeckNeckerchief.desc }
+ent-ClothingNeckNeckerchiefBrown = коричневий шийний хустинник
+    .desc = { ent-ClothingNeckNeckerchief.desc }
+ent-ClothingNeckNeckerchiefDarkGreen = темно-зелений шийний хустинник
+    .desc = { ent-ClothingNeckNeckerchief.desc }
+ent-ClothingNeckNeckerchiefGray = сірий шийний хустинник
+    .desc = { ent-ClothingNeckNeckerchief.desc }
+ent-ClothingNeckNeckerchiefPink = рожевий шийний хустинник
+    .desc = { ent-ClothingNeckNeckerchief.desc }

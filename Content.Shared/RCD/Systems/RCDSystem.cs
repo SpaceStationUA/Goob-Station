@@ -872,10 +872,8 @@ public sealed class RCDSystem : EntitySystem
                     _ => Angle.Zero // Fallback
                 };
 
-                // Convert EntityCoordinates to MapCoordinates
                 var entityCoords = _mapSystem.GridTileToLocal(gridUid, mapGrid, position);
-                var mapCoords = _transform.ToMapCoordinates(entityCoords);
-                var ent = Spawn(proto, mapCoords, rotation: rotation);
+                var ent = SpawnAttachedTo(proto, entityCoords, rotation: rotation); // Pirate: RCD placement; keep rotation grid-relative like the preview
                 #region Pirate: chem plumbing
                 if ((component.IsRpd || component.IsRPLD) && prototype.HasLayers &&
                     TryComp<AtmosPipeLayersComponent>(ent, out var spawnedLayers))

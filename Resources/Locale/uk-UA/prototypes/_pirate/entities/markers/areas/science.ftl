@@ -1,0 +1,11 @@
+ent-AreaCytology = цитологія
+ent-AreaGenetics = генетика
+ent-AreaRobotics = робототехніка
+ent-AreaRoboticsMechBay = ангар мехів
+ent-AreaScience = науковий відділ
+ent-AreaScienceBreak = кімната відпочинку науки
+ent-AreaScienceLobby = вестибюль науки
+ent-AreaScienceServer = серверна
+ent-AreaTeleSci = теленаука
+ent-AreaXenobio = ксенобіологія
+ent-BaseAreaScience = науковий відділ

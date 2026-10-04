@@ -1,0 +1,12 @@
+ent-MachineParticleAcceleratorEmitterForeCircuitboard = плата переднього емітера ПЧ
+    .desc = Машинна плата для центрального емітера прискорювача частинок.
+ent-MachineParticleAcceleratorEmitterPortCircuitboard = плата лівого емітера ПЧ
+    .desc = Машинна плата для правого емітера прискорювача частинок.
+ent-MachineParticleAcceleratorEmitterStarboardCircuitboard = плата правого емітера ПЧ
+    .desc = Машинна плата для лівого емітера прискорювача частинок.
+ent-MachineParticleAcceleratorEndCapCircuitboard = плата кінцевої кришки ПЧ
+    .desc = Машинна плата для кінцевої кришки прискорювача частинок.
+ent-MachineParticleAcceleratorFuelChamberCircuitboard = плата паливної камери ПЧ
+    .desc = Машинна плата для паливної камери прискорювача частинок.
+ent-MachineParticleAcceleratorPowerBoxCircuitboard = плата блоку живлення ПЧ
+    .desc = Машинна плата для блоку живлення прискорювача частинок.

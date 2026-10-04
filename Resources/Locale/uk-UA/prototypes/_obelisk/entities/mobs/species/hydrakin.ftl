@@ -1,0 +1,1 @@
+ent-BaseMobHydrakin = Уріст МакГідра

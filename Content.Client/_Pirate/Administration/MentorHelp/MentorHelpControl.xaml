@@ -1,0 +1,24 @@
+<!--
+SPDX-FileCopyrightText: 2026 SpaceStationUA
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Control
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
+    <PanelContainer StyleClasses="BackgroundDark">
+        <BoxContainer Orientation="Vertical">
+            <SplitContainer Orientation="Horizontal" VerticalExpand="True">
+                <cc:PlayerListControl Access="Public" Name="ChannelSelector" HorizontalExpand="True" SizeFlagsStretchRatio="2" />
+                <BoxContainer Access="Public" Name="HelpArea" Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2" />
+            </SplitContainer>
+            <BoxContainer Orientation="Horizontal" SetHeight="30">
+                <CheckBox Name="ResponderOnly" Access="Public" Text="{Loc 'mentorhelp-responders-only'}" ToolTip="{Loc 'mentorhelp-responders-only-tooltip'}" />
+                <Control MinWidth="5" />
+                <CheckBox Name="PlaySound" Access="Public" Text="{Loc 'admin-bwoink-play-sound'}" Pressed="True" />
+                <Control HorizontalExpand="True" />
+                <Button Visible="False" Name="Follow" Text="{Loc 'admin-player-actions-follow'}" />
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</Control>

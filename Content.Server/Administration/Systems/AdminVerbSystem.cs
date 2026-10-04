@@ -95,7 +95,7 @@ namespace Content.Server.Administration.Systems
 
             var player = actor.PlayerSession;
 
-            if (_adminManager.IsAdmin(player))
+            if (_adminManager.HasAdminFlag(player, AdminFlags.Admin)) // Pirate: staff permissions - any rank (mentors too) got erase/spawn/clone/freeze/teleport verbs
             {
                 Verb mark = new();
                 mark.Text = Loc.GetString("toolshed-verb-mark");

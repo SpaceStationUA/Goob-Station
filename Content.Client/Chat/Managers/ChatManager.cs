@@ -112,6 +112,15 @@ internal sealed class ChatManager : IChatManager
                 _consoleHost.ExecuteCommand($"cmsay \"{CommandParsing.Escape(str)}\"");
                 break;
 
+            #region Pirate: staff chats
+            case ChatSelectChannel.Mentor:
+            case ChatSelectChannel.Event:
+            case ChatSelectChannel.CentCom:
+                if (Content.Shared._Pirate.Chat.StaffChats.TryGet(channel, out var staffChat))
+                    _consoleHost.ExecuteCommand($"{staffChat.Command} \"{CommandParsing.Escape(str)}\"");
+                break;
+            #endregion
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
         }

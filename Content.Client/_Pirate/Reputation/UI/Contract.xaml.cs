@@ -12,8 +12,9 @@ namespace Content.Client._Pirate.Reputation.UI;
 public sealed partial class Contract : BoxContainer
 {
     public event Action? OnComplete;
+    public event Action? OnAbandon;
 
-    public Contract(string title, SpriteSpecifier? icon)
+    public Contract(string title, SpriteSpecifier? icon, bool abandonable)
     {
         RobustXamlLoader.Load(this);
 
@@ -24,5 +25,7 @@ public sealed partial class Contract : BoxContainer
             Icon.Visible = false;
 
         CompleteButton.OnPressed += _ => OnComplete?.Invoke();
+        AbandonButton.Visible = abandonable;
+        AbandonButton.OnPressed += _ => OnAbandon?.Invoke();
     }
 }

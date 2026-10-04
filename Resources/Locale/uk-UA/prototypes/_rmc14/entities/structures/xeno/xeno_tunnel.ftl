@@ -1,0 +1,10 @@
+ent-XenoTunnel = Тунель
+    .desc = Вхід у тунель. Схоже, його вирила якась пазуриста тварюка.
+ent-XenoTunnelMaint = Технічний люк
+    .desc = Вхід у технічний тунель. Видно шматки слизу та смоли. Уламки не дають роздивитися ближче.
+ent-XenoTunnelMaintHybrisa = Каналізаційний люк
+    .desc = { ent-XenoTunnelMaint.desc }
+ent-XenoTunnelMaintHybrisaNoXenoDesc = Каналізаційний люк
+    .desc = { ent-XenoTunnelMaintNoXenoDesc.desc }
+ent-XenoTunnelMaintNoXenoDesc = { ent-XenoTunnelMaint }
+    .desc = Вхід у технічний тунель. Уламки не дають роздивитися ближче.

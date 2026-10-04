@@ -1,0 +1,14 @@
+ent-FitnessPunchingBag = боксерська груша
+    .desc = Фітнес-сумка для тренувань.
+ent-FitnessPunchingBagBopClown = клоунська боп-сумка
+    .desc = Сумка для фітнес-тренувань із зображенням клоуна.
+ent-FitnessPunchingBagCaptain = { ent-FitnessPunchingBag }
+    .desc = Сумка для фітнес-тренувань з надрукованим на ній капітаном.
+ent-FitnessPunchingBagSyndicate = { ent-FitnessPunchingBag }
+    .desc = Сумка для фітнес-тренувань, на якій надруковано агента синдикату.
+ent-FitnessPunchingBagWizard = { ent-FitnessPunchingBag }
+    .desc = Сумка для фітнес-тренувань з надрукованим на ній майстром.
+ent-FitnessWeightLifter = штанга
+    .desc = { ent-SeatBase.desc }
+ent-FitnessWeightsBench1 = гирьова лавка
+    .desc = { ent-SeatBase.desc }

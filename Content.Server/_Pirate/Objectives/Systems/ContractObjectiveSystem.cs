@@ -122,6 +122,11 @@ public sealed class ContractObjectiveSystem : SharedContractObjectiveSystem
             _reputation.TryFailContract(contracts, objective);
     }
 
+    public override bool CanAbandon(EntityUid objective)
+    {
+        return !TryComp<ContractObjectiveComponent>(objective, out var contract) || contract.Rejectable;
+    }
+
     public override string ContractName(EntityUid objective)
     {
         var title = base.ContractName(objective);

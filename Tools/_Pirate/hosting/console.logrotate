@@ -1,0 +1,10 @@
+/home/alwyzon/ss14-hosting/logs/console.log {
+    daily
+    maxsize 100M
+    rotate 7
+    compress
+    missingok
+    notifempty
+    copytruncate
+    su alwyzon alwyzon
+}

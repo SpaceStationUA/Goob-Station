@@ -1,0 +1,14 @@
+ent-BorgModuleAdvancedSurgery = передовий хірургічний модуль-кіборг
+    .desc = { ent-BaseBorgModule.desc }
+ent-BorgModuleLollypop = кіборг-модуль льодяників
+    .desc = { ent-BaseBorgModule.desc }
+ent-BorgModulePKA = прото-кінетичний модуль кіборга
+    .desc = { ent-BaseBorgModule.desc }
+ent-BorgModuleSECLethal = летальний модуль охоронного кіборга
+    .desc = Бойовий модуль охоронного кіборга зі слотами для гвинтівки «Лектер» або її набоїв, які надає служба безпеки.
+ent-BorgModuleSECNonLethal = нелетальний модуль охоронного кіборга
+    .desc = Стандартний модуль охоронного кіборга з електрошоковою палицею, дизейблером і бойовим ножем, а також слотами для бол і кайданків.
+ent-BorgModuleSurgery = хірургічний модуль "кіборг
+    .desc = { ent-BaseBorgModule.desc }
+ent-BorgModuleSyndicateWeaponAdvanced = модуль кіборга з вдосконаленою зброєю
+    .desc = { ent-BaseBorgModule.desc }

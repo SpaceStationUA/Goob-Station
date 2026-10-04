@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Administration; // Pirate: staff chats
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Server._EinsteinEngines.Language;
 using Content.Server.Administration.Managers;
@@ -160,6 +161,6 @@ private void ProcessBloodLoss(EntityUid uid, BloodstreamComponent bloodstream)
         Filter.Empty()
             .AddWhereAttachedEntity(entity => CanHearXenoHivemind(entity, languageId))
             .Recipients
-            .Union(_adminManager.ActiveAdmins)
+            .Union(_adminManager.ActiveAdmins.Where(p => _adminManager.HasAdminFlag(p, AdminFlags.Adminchat))) // Pirate: staff chats - xeno hivemind was copied to every admin, mentors included
             .Select(p => p.Channel);
 }

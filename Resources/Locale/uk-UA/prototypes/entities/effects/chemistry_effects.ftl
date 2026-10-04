@@ -1,0 +1,13 @@
+ent-AluminiumMetalFoam = алюмінієва піна
+ent-BaseFoamedMetal = основа зі спіненого металу
+ent-Foam = піна
+ent-FoamedAluminiumMetal = алюмінієва піна
+    .desc = Залишки розрідженої піни від гранати з алюмінієвою піною. Легко руйнується.
+ent-FoamedIronMetal = метал з спіненого заліза
+    .desc = Для герметизації пробоїн в корпусі.
+ent-IronMetalFoam = залізна піна
+ent-MetalFoam = металева піна
+ent-Resin = смола
+ent-Smoke = дим
+ent-TearGasSmoke = сльозогінний газ
+ent-WizardSmoke = дим

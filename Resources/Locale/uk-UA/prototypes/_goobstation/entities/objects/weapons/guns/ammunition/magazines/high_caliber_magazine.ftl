@@ -1,0 +1,7 @@
+ent-BaseMagazineAntiMateriel = магазин (.60 калібр)
+ent-BaseMagazineHighCaliber = магазин (.50 калібру)
+ent-MagazineAntiMateriel = магазин (.60 анти-матеріальний)
+ent-MagazineAntiMaterielEmpty = магазин (.60 порожній)
+ent-MagazineHighCaliber = магазин (.50 протиматеріальний)
+ent-MagazineHighCaliberEmpty = магазин (.50 порожній)
+ent-MagazineHighCaliberExplosive = магазин (.50 фугасно-запалювальний)

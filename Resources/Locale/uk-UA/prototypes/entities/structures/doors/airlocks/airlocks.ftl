@@ -1,0 +1,10 @@
+ent-AirlockHatch = герметичний люк
+    .desc = { ent-Airlock.desc }
+ent-AirlockHatchMaintenance = люк для обслуговування
+    .desc = { ent-Airlock.desc }
+ent-AirlockHatchSyndicate = герметичний люк
+    .desc = { ent-Airlock.desc }
+ent-AirlockMaint = доступ до технічного обслуговування
+    .desc = { ent-Airlock.desc }
+ent-AirlockXenoborg = шлюз ксеноборга
+    .desc = { ent-Airlock.desc }

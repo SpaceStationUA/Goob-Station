@@ -68,6 +68,7 @@ public sealed class ChannelSelectorButton : ChatPopupButton<ChannelSelectorPopup
             ChatSelectChannel.Dead => Color.MediumPurple,
             ChatSelectChannel.Admin => Color.HotPink,
             ChatSelectChannel.Telepathic => Color.PaleVioletRed, //Nyano - Summary: determines the color for the chat.
+            _ when Content.Shared._Pirate.Chat.StaffChats.TryGet(channel, out var staffChat) => staffChat.Color, // Pirate: staff chats
             _ => Color.DarkGray
         };
     }

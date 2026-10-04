@@ -76,6 +76,7 @@ namespace Content.Server.Database
         #region Pirate: cameras (photo persistence)
         public DbSet<PersistentPhotoAlbum> PersistentPhotoAlbums { get; set; } = default!;
         public DbSet<PersistentPhotoAlbumPhoto> PersistentPhotoAlbumPhotos { get; set; } = default!;
+        public DbSet<PirateTempRankEligibility> PirateTempRankEligibility { get; set; } = default!; // Pirate: temporary ranks
         #endregion
 
         #region Pirate: persistent text (diaries)
@@ -449,6 +450,7 @@ namespace Content.Server.Database
             //Pirate Changes End
             PersistentPhotoAlbumModelConfiguration.Configure(modelBuilder); //Pirate: cameras (photo persistence)
             PersistentTextModelConfiguration.Configure(modelBuilder); //Pirate: persistent text (diaries)
+            PirateTempRankEligibilityModelConfiguration.Configure(modelBuilder); // Pirate: temporary ranks
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)

@@ -109,7 +109,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (args.SenderSession.AttachedEntity is not { } player)
             return;
 
-        if (!HasComp<GhostComponent>(player) && !_admin.IsAdmin(player) && !_scrying.IsScryingOrbEquipped(player)) // Goob edit
+        if (!HasComp<GhostComponent>(player) && !_admin.HasAdminFlag(player, AdminFlags.Admin) && !_scrying.IsScryingOrbEquipped(player)) // Goob edit // Pirate: staff permissions - any rank (mentors too) could drop FOV/lighting while alive
             return;
 
         if (TryComp<EyeComponent>(player, out var eyeComp))

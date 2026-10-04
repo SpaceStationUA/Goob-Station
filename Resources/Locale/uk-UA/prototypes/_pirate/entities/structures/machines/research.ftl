@@ -1,0 +1,1 @@
+ent-PirateBaseResearchAndDevelopmentServer = абстрактний сервер НДДКР

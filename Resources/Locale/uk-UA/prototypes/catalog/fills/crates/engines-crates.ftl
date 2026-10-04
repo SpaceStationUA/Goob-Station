@@ -15,6 +15,7 @@ ent-CrateEngineeringSingularityGenerator = Ящик з генератором с
 ent-CrateEngineeringParticleAccelerator = Ящик з прискорювачем часток
     .desc = Складний у налаштуванні, але дуже корисний.
 ent-CrateEngineeringGenerator = Ящик з генератором
+    .desc = { ent-CrateGeneric.desc }
 ent-CrateEngineeringSolar = Ящик з частинами сонячних панелей
     .desc = Частини для будівництва сонячних панелей і трекерів.
 ent-CrateEngineeringShuttle = Ящик для живлення шатла

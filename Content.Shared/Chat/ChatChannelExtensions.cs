@@ -17,6 +17,7 @@ public static class ChatChannelExtensions
             ChatChannel.AdminAlert => Color.Red,
             ChatChannel.AdminChat => Color.HotPink,
             ChatChannel.Whisper => Color.DarkGray,
+            _ when Content.Shared._Pirate.Chat.StaffChats.TryGet(channel, out var staffChat) => staffChat.Color, // Pirate: staff chats
             _ => Color.LightGray
         };
     }
