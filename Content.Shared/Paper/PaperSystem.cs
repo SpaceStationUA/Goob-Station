@@ -644,8 +644,13 @@ public sealed class PaperSystem : EntitySystem
         {
             foreach (var contained in container.ContainedEntities)
             {
-                if (IsLooseSheet(contained))
+                if (IsLooseSheet(contained) &&
+                    TryComp<PaperComponent>(contained, out var sheetPaper) &&
+                    string.IsNullOrWhiteSpace(sheetPaper.Content) &&
+                    sheetPaper.StampedBy.Count == 0)
+                {
                     return contained;
+                }
             }
         }
 
