@@ -115,6 +115,7 @@ public sealed partial class AudioTab : Control
         Control.AddOptionCheckBox(PirateVars.TranscribedAnnouncementSounds, TranscribedAnnouncementSoundsCheckBox); // Pirate: announcement audio settings
         Control.AddOptionCheckBox(CCVars.AdminSoundsEnabled, AdminSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.BwoinkSoundEnabled, BwoinkSoundCheckBox);
+        Control.AddOptionCheckBox(PirateVars.MentorHelpSoundEnabled, MentorHelpSoundCheckBox); // Pirate: mentorhelp
         Control.AddOptionCheckBox(CCVars.RadioSoundsEnabled, RadioSoundsCheckBox); // Pirate: radio sounds
 
         Control.Initialize();
@@ -137,6 +138,7 @@ public sealed partial class AudioTab : Control
     private void UpdateAdminButtonsVisibility()
     {
         BwoinkSoundCheckBox.Visible = _admin.IsActive();
+        MentorHelpSoundCheckBox.Visible = Content.Shared._Pirate.Administration.MentorHelp.MentorHelpAccess.CanRespond(_admin.GetAdminData()); // Pirate: mentorhelp
     }
 
     private void OnMasterVolumeSliderChanged(float value)

@@ -4,7 +4,8 @@ generic-not-available-shorthand = н/д
 generic-article-a = -
 generic-article-an = -
 generic-unknown = невідомий
-generic-unknown-title = невідома Назва
+# Pirate: mentorhelp - was "невідома Назва", a bad translation of "Unknown" (shown as playtime, job and GPS name)
+generic-unknown-title = Невідомо
 generic-error = помилка
 generic-invalid = невірний
 generic-hours = годин
