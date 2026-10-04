@@ -13,6 +13,32 @@ body,
   color: #c8d3e0;
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   overflow: hidden;
+
+  /**
+   * THE TYPE UNIT. Every size in this file is a multiple of it, and nothing else.
+   *
+   * The sizes were all absolute pixels -- 10px labels, a 12px panel heading, an 11px
+   * territory floor -- which is the right answer for a browser tab at a known size and
+   * the wrong answer everywhere else. In the game this page is a CEF surface inside a
+   * DefaultWindow, and the first screenshot of that showed the window title rendering at
+   * a readable ~16px next to chart labels at 9-11px. Nothing was wrong with either; they
+   * were simply not in the same units.
+   *
+   * So the unit is viewport-relative and clamped, which makes the chart's type track the
+   * WINDOW rather than the stylesheet:
+   *
+   *     760px window   ->  11.2px   (the floor, and still legible)
+   *    1180px window   ->  13.5px   (what the screenshot showed as too small)
+   *    1600px window   ->  15.8px   (the dev server's size, where it always looked fine)
+   *
+   * The clamp matters more than the slope. `vw` alone makes the type tiny in a small
+   * window and the point of a floor is that there is one.
+   *
+   * It is declared on #root and not on .chart-host so the side panel, the overlay and
+   * the toolbar all inherit the same unit -- they are one interface, and a panel whose
+   * heading is a different size from the chart it describes reads as two interfaces.
+   */
+  --ui: clamp(13px, 0.45vw + 7.4px, 18px);
 }
 
 .chart-shell {
@@ -72,10 +98,28 @@ svg.chart.painting {
   paint-order: stroke fill;
   stroke: rgba(0, 0, 0, 0.85);
   stroke-width: 4px;
-  opacity: 0.82;
+
+  /**
+   * A WATERMARK, and 0.82 was not dim enough once the type got bigger.
+   *
+   * Making the type readable solved the accessibility problem and created a legibility
+   * one: at 0.82 the territory names sat on top of the place names at a size where both
+   * were competing, and the chart became a wall. "SOLARIAN ALLIANCE" ran through Epsilon
+   * Eridani, Sol and Cygnus X-1; "PEOPLE'S REPUBLIC OF ADHOMAI" buried Adhomai.
+   *
+   * The territory name is the LOWER tier of two -- the code that draws it says so
+   * outright ("place names are the ones you actually look up") -- and it was being drawn
+   * at the higher tier's weight. So it drops below the place names in size AND in
+   * opacity, which is what makes it read as the watermark it was always meant to be.
+   *
+   * The dark stroke stays at full strength: it is what keeps the name legible where it
+   * crosses a bright territory fill, and dropping the opacity is enough separation
+   * without that.
+   */
+  opacity: 0.5;
 }
 .terr-name.dim {
-  opacity: 0.22;
+  opacity: 0.16;
 }
 .terr-name.hot {
   opacity: 1;
@@ -84,12 +128,12 @@ svg.chart.painting {
    un-letterspaced watermark — its centroid is the centre of the chart, which is
    the worst possible place for a headline. */
 .terr-name.faint {
-  opacity: 0.3;
+  opacity: 0.22;
   stroke-width: 3px;
 }
 
 .system-label {
-  font-size: 10px;
+  font-size: calc(var(--ui) * 1.0);
   letter-spacing: 0.6px;
   fill: #e6eef7;
   paint-order: stroke fill;
@@ -99,7 +143,7 @@ svg.chart.painting {
 }
 .system-label.capital {
   fill: #fff;
-  font-size: 12px;
+  font-size: calc(var(--ui) * 1.2);
   letter-spacing: 1.4px;
 }
 
@@ -212,19 +256,19 @@ svg.chart.painting {
   padding: 12px 14px;
   background: rgba(8, 13, 22, 0.9);
   border: 1px solid rgba(120, 160, 200, 0.22);
-  font-size: 11px;
+  font-size: calc(var(--ui) * 0.9);
   line-height: 1.55;
   backdrop-filter: blur(3px);
 }
 .panel h2 {
   margin: 0 0 2px;
-  font-size: 12px;
+  font-size: calc(var(--ui) * 0.95);
   letter-spacing: 1.6px;
   font-weight: 600;
 }
 .panel .sub {
   color: rgba(170, 195, 220, 0.6);
-  font-size: 10px;
+  font-size: calc(var(--ui) * 0.85);
   letter-spacing: 0.6px;
   margin-bottom: 8px;
 }
@@ -236,7 +280,7 @@ svg.chart.painting {
   display: flex;
   justify-content: space-between;
   color: rgba(170, 195, 220, 0.72);
-  font-size: 10px;
+  font-size: calc(var(--ui) * 0.85);
   border-top: 1px solid rgba(120, 160, 200, 0.12);
   padding: 3px 0;
 }
@@ -298,7 +342,7 @@ svg.chart.painting {
 }
 .overlay .capital-tag {
   margin: 2px 0 8px;
-  font-size: 9px;
+  font-size: calc(var(--ui) * 0.85);
   letter-spacing: 1.2px;
   color: rgba(190, 210, 230, 0.66);
 }
@@ -512,7 +556,7 @@ svg.chart.painting {
 .toolbar button,
 .panel-close {
   font: inherit;
-  font-size: 10px;
+  font-size: calc(var(--ui) * 0.85);
   letter-spacing: 0.8px;
   color: #b8c8da;
   background: rgba(10, 16, 26, 0.85);
@@ -537,7 +581,7 @@ svg.chart.painting {
   margin-left: 8px;
 }
 .toolbar .paintlabel {
-  font-size: 10px;
+  font-size: calc(var(--ui) * 0.85);
   letter-spacing: 0.8px;
   color: #6d8299;
 }
@@ -604,7 +648,7 @@ svg.chart.stroking {
   color: #ffd479;
 }
 .toolbar .armed-note {
-  font-size: 10px;
+  font-size: calc(var(--ui) * 0.85);
   letter-spacing: 0.8px;
   color: #ffd479;
   background: rgba(10, 16, 26, 0.85);
@@ -623,7 +667,7 @@ svg.chart.stroking {
   position: absolute;
   bottom: 12px;
   left: 14px;
-  font-size: 10px;
+  font-size: calc(var(--ui) * 0.85);
   color: rgba(160, 185, 210, 0.62);
   letter-spacing: 0.5px;
   line-height: 1.7;

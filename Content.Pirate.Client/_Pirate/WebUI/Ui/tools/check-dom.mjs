@@ -681,13 +681,27 @@ try {
     // being asserted is about a cold generate, so it has to use a cold system —
     // otherwise the check passes for the wrong reason and would not notice the
     // strip being made synchronous.
+    /**
+     * A PLANET, specifically.
+     *
+     * This used to take the first unopened system of any kind, which was fine while
+     * every kind except `star` had a still and a rotation strip. Adding two Golden Deep
+     * systems put a STAR first in the fixture, so the check began timing a star -- which
+     * has neither, by design -- and failed with "no still" and "strip never arrived",
+     * having measured nothing at all.
+     *
+     * The subject is now chosen by kind, which needs `data-kind` on the hit target; the
+     * alternative was hardcoding a planet's id, which is the same fragility with more
+     * steps. The DOM carrying the kind is useful for anything else that has to pick a
+     * representative system.
+     */
     const cold = await page.evaluate((used) => {
       for (const h of document.querySelectorAll(".sys-hit")) {
-        if (h.dataset.sys !== used) return h.dataset.sys;
+        if (h.dataset.sys !== used && h.dataset.kind === "planet") return h.dataset.sys;
       }
       return null;
     }, star.id);
-    check("found an unopened system to time", cold !== null, cold ?? "");
+    check("found an unopened PLANET to time", cold !== null, cold ?? "");
     // The close-button check above already left the panel shut, which is the
     // state this needs: the overlay toggles, so timing an open panel would time
     // the close. page.evaluate cannot close over `cold`, so it is passed in.

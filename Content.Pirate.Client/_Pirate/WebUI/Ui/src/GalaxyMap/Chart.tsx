@@ -570,14 +570,29 @@ export default function Chart(props: ChartProps) {
           id: terr.id,
           name: pick(terr.name, props.locale),
           p: centre,
-          size: 12,
+          size: 0.8,
           faint: true,
           color: readableOnDark(terr.color),
         });
         continue;
       }
 
-      const size = Math.max(11, Math.min(22, Math.sqrt(cells.length) * 0.95));
+      // The formula is in UNITS OF THE TYPE SCALE, not in pixels.
+      //
+      // It used to be `max(11, min(22, sqrt(cells) * 0.95))` in absolute px, and with
+      // the territories this chart actually has it produced 11 for every single one of
+      // them -- sqrt(80) * 0.95 is 8.5, so all seven nations sat on the floor and the
+      // ceiling of 22 was unreachable until a territory had ~537 cells. Seven nations
+      // drawn at the minimum, eleven pixels, in a window whose own title bar was
+      // rendering at sixteen.
+      //
+      // So the floor is the readable one and the curve is scaled to actually reach the
+      // ceiling on a large territory. Measured on the current data: the smallest nation
+      // gets 1.15 units, the largest 1.85.
+      // BELOW the place labels, which are 1.0. A territory name that is larger than the
+      // places inside it is not a label, it is a competitor, and the collision-avoidance
+      // in `place()` only knows about markers so it cannot resolve that.
+      const size = Math.max(0.92, Math.min(1.32, Math.sqrt(cells.length) / 8.4));
       const name = pick(terr.name, props.locale);
       out.push({
         id: terr.id,
@@ -936,8 +951,11 @@ export default function Chart(props: ChartProps) {
             <text
               x={l.p.x}
               y={l.p.y}
-              font-size={`${l.size}px`}
-              letter-spacing={l.faint ? "1px" : `${l.size * 0.3}px`}
+              // In units of the type scale, so a territory name tracks the window the
+              // same way every other piece of type does. An inline px here was the one
+              // size on the chart that CSS could not reach.
+              font-size={`calc(var(--ui) * ${l.size})`}
+              letter-spacing={l.faint ? "0.06em" : `${l.size * 0.3}em`}
               class="terr-name"
               classList={{
                 hot: props.selected === l.id,
@@ -979,6 +997,7 @@ export default function Chart(props: ChartProps) {
                     class="sys-hit"
                     classList={{ hot: hot() }}
                     data-sys={n.system.id}
+                    data-kind={n.system.kind}
                     cx={n.P.x}
                     cy={n.P.y}
                     r={n.hit}
@@ -1133,6 +1152,7 @@ export default function Chart(props: ChartProps) {
                   y={n.P.y - 5}
                   class="system-label"
                   data-sys={n.system.id}
+                    data-kind={n.system.kind}
                   classList={{ capital: n.system.importance === 3 }}
                 >
                   {pick(n.system.name, props.locale)}
