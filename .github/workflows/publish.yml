@@ -5,7 +5,6 @@ name: Publish
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
     - cron: '0 1 * * *'
 
 permissions:
@@ -16,30 +15,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  schedule_gate:
-    runs-on: ubuntu-latest
-    outputs:
-      run: ${{ steps.gate.outputs.run }}
-    steps:
-      - name: Allow only 03:00 Europe/Kyiv
-        id: gate
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-        run: |
-          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          if [[ "$(TZ=Europe/Kyiv date +%H)" == "03" ]]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "run=false" >> "$GITHUB_OUTPUT"
-          fi
-
   build:
-    needs: schedule_gate
-    if: github.repository == 'SpaceStationUA/Goob-Station' && needs.schedule_gate.outputs.run == 'true' && (github.event_name == 'workflow_dispatch' || (github.ref == 'refs/heads/master' && vars.PUBLISH_ENABLED == 'true'))
+    if: github.repository == 'SpaceStationUA/Goob-Station' && (github.event_name == 'workflow_dispatch' || (github.ref == 'refs/heads/master' && vars.PUBLISH_ENABLED == 'true'))
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
