@@ -6177,3 +6177,9 @@ Entries:
         або ADMINCHAT дозволи
   id: 580
   time: '2026-10-04T07:55:13.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Pirate TV більше не залишає YouTube WebView працювати після закриття
+  id: 581
+  time: '2026-10-04T16:50:39.0000000+00:00'
