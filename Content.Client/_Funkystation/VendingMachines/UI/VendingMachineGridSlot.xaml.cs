@@ -65,7 +65,7 @@ public sealed partial class VendingMachineGridSlot : PanelContainer
         CodeLabel.Text = code;
         ItemSprite.SetPrototype(protoId);
 
-        PriceLabel.Text = price > 0 ? $"{price}¥" : "";
+        PriceLabel.Text = price > 0 ? $"{price}电" : "";
         LayoutContainer.SetPosition(PriceLabel, new Vector2(2f, SlotSize - BadgeSize - 2f));
 
         if (_protoManager.TryIndex(protoId, out var proto))
@@ -84,7 +84,7 @@ public sealed partial class VendingMachineGridSlot : PanelContainer
             }
 
             if (price > 0)
-                tooltipText = $"{tooltipText}\n{price}¥";
+                tooltipText = $"{tooltipText}\n{price}电";
 
             ToolTip = string.IsNullOrWhiteSpace(proto.Description)
                 ? tooltipText

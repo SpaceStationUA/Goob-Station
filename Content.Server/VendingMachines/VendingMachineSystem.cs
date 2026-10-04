@@ -258,10 +258,32 @@ namespace Content.Server.VendingMachines
 
                 if (PrototypeManager.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
                 {
-                    foreach (var (item, amount) in inventoryPrototype.StartingInventory)
+                    // Pirate start: add categories
+                    AddInventoryPrice(inventoryPrototype.StartingInventory);
+                    AddInventoryPrice(inventoryPrototype.EmaggedInventory);
+                    AddInventoryPrice(inventoryPrototype.ContrabandInventory);
+
+                    foreach (var categoryId in inventoryPrototype.Categories)
                     {
-                        if (PrototypeManager.TryIndex(item, out EntityPrototype? entity))
-                            total += _pricing.GetEstimatedPrice(entity) * amount;
+                        if (!PrototypeManager.TryIndex<VendingMachineCategoryPrototype>(categoryId, out var category))
+                            continue;
+
+                        AddInventoryPrice(category.StartingInventory);
+                        AddInventoryPrice(category.EmaggedInventory);
+                        AddInventoryPrice(category.ContrabandInventory);
+                    }
+
+                    void AddInventoryPrice(Dictionary<string, uint>? inventory)
+                    {
+                        if (inventory == null)
+                            return;
+
+                        foreach (var (item, amount) in inventory)
+                        {
+                            if (PrototypeManager.TryIndex(item, out EntityPrototype? entity))
+                                total += _pricing.GetEstimatedPrice(entity) * amount;
+                        }
+                    // Pirate end
                     }
                 }
 
@@ -284,8 +306,29 @@ namespace Content.Server.VendingMachines
 
         private void UpdateVendingMachineInterfaceState(EntityUid uid, VendingMachineComponent component)
         {
-            var state = new VendingMachineInterfaceState(GetAllInventory(uid, component), GetPriceMultiplier(component),
-                component.Credits);
+            // Pirate start: add categories
+            var categories = new Dictionary<string, string>();
+            if (PrototypeManager.TryIndex<VendingMachineInventoryPrototype>(component.PackPrototypeId, out var pack))
+            {
+                foreach (var categoryId in pack.Categories)
+                {
+                    if (PrototypeManager.TryIndex<VendingMachineCategoryPrototype>(categoryId, out var category))
+                        categories[categoryId] = category.Name;
+                }
+            }
+
+            var inventory = GetAllInventory(uid, component)
+                .Select(entry =>
+                {
+                    var copy = new VendingMachineInventoryEntry(entry);
+                    copy.Category = entry.Category is { } categoryId
+                        ? categories.GetValueOrDefault(categoryId)
+                        : null;
+                    return copy;
+                })
+                .ToList();
+            var state = new VendingMachineInterfaceState(inventory, GetPriceMultiplier(component), component.Credits);
+            // Pirate end
 
             UISystem.SetUiState(uid, VendingMachineUiKey.Key, state);
         }
@@ -387,7 +430,7 @@ namespace Content.Server.VendingMachines
         protected override int GetEntryPrice(EntityPrototype proto)
         {
             var price = (int) _pricing.GetEstimatedPrice(proto);
-            return price; 
+            return price;
         }
 
         private int GetPrice(VendingMachineInventoryEntry entry, VendingMachineComponent comp)
@@ -407,7 +450,7 @@ namespace Content.Server.VendingMachines
 
             if (!IsAuthorized(uid, args.Actor, component))
                 return;
-                
+
             _stackSystem.SpawnAtPosition(component.Credits, PrototypeManager.Index(component.CreditStackPrototype),
                 Transform(uid).Coordinates);
             component.Credits = 0;

@@ -26,6 +26,11 @@ namespace Content.Client.VendingMachines.UI
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
         private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
         private readonly Dictionary<EntProtoId, uint> _amounts = new();
+        // Pirate start: add categories
+        private readonly List<VendorItemsListData> _listData = new();
+        private readonly List<string> _categories = new();
+        private string? _selectedCategory;
+        // Pirate end
 
         /// <summary>
         /// Whether the vending machine is able to be interacted with or not.
@@ -46,6 +51,7 @@ namespace Content.Client.VendingMachines.UI
             VendingContents.DataFilterCondition += DataFilterCondition;
             VendingContents.GenerateItem += GenerateButton;
             VendingContents.ItemKeyBindDown += (args, data) => OnItemSelected?.Invoke(args, data);
+            CategoryOptionButton.OnItemSelected += OnCategorySelected; // Pirate
 
             WithdrawButton.OnPressed += OnWithdrawPressed; // Pirate banking
         }
@@ -73,6 +79,7 @@ namespace Content.Client.VendingMachines.UI
             _dummies.Clear();
 
             WithdrawButton.OnPressed -= OnWithdrawPressed; // Pirate banking
+            CategoryOptionButton.OnItemSelected -= OnCategorySelected; // Pirate
         }
 
         private bool DataFilterCondition(string filter, ListData data)
@@ -155,7 +162,7 @@ namespace Content.Client.VendingMachines.UI
 
                 var price = (int)(entry.Price * priceMultiplier); // Pirate banking
                 var itemName = Identity.Name(dummy, _entityManager);
-                var itemText = $"[{price}¥] {itemName} [{entry.Amount}]"; // Pirate banking
+                var itemText = $"[{price}电] {itemName} [{entry.Amount}]"; // Pirate banking
                 _amounts[entry.ID] = entry.Amount;
 
                 if (itemText.Length > longestEntry.Length)
@@ -164,10 +171,16 @@ namespace Content.Client.VendingMachines.UI
                 listData.Add(new VendorItemsListData(prototype.ID, i)
                 {
                     ItemText = itemText,
+                    Category = entry.Category, // Pirate
                 });
             }
 
-            VendingContents.PopulateList(listData);
+            // Pirate start: add categories
+            _listData.Clear();
+            _listData.AddRange(listData);
+            RefreshCategories(inventory);
+            PopulateVisibleItems();
+            // Pirate end
 
             SetSizeAfterUpdate(longestEntry.Length, inventory.Count);
         }
@@ -207,7 +220,55 @@ namespace Content.Client.VendingMachines.UI
         private string GetItemText(EntityUid dummy, uint amount, int price) // Pirate banking
         {
             var itemName = Identity.Name(dummy, _entityManager);
-            return $"[{price}¥] {itemName} [{amount}]"; // Pirate banking
+            return $"[{price}电] {itemName} [{amount}]"; // Pirate banking
+        }
+
+        // Pirate start: add categories
+        private void RefreshCategories(List<VendingMachineInventoryEntry> inventory)
+        {
+            var previousCategory = _selectedCategory;
+            _categories.Clear();
+            _categories.AddRange(inventory
+                .Select(entry => entry.Category)
+                .Where(category => !string.IsNullOrEmpty(category))
+                .Select(category => category!)
+                .Distinct()
+                .OrderBy(category => Loc.GetString(category), StringComparer.CurrentCulture));
+
+            CategoryOptionButton.Clear();
+            CategoryOptionButton.AddItem(Loc.GetString("vending-machine-category-all"), 0);
+            for (var i = 0; i < _categories.Count; i++)
+                CategoryOptionButton.AddItem(Loc.GetString(_categories[i]), i + 1);
+
+            CategoryOptionButton.Visible = _categories.Count > 0;
+            var categoryIndex = previousCategory == null ? -1 : _categories.IndexOf(previousCategory);
+            var selectedId = categoryIndex < 0 ? 0 : categoryIndex + 1;
+
+            CategoryOptionButton.SelectId(selectedId);
+            _selectedCategory = selectedId == 0 ? null : _categories[selectedId - 1];
+        }
+
+        private void OnCategorySelected(OptionButton.ItemSelectedEventArgs args)
+        {
+            _selectedCategory = args.Id == 0 ? null : _categories[args.Id - 1];
+            PopulateVisibleItems();
+        }
+
+        private void PopulateVisibleItems()
+        {
+            _listItems.Clear();
+
+            if (_selectedCategory == null)
+            {
+                VendingContents.PopulateList(_listData);
+                return;
+            }
+
+            VendingContents.PopulateList(_listData
+                .Where(item => item.Category == _selectedCategory)
+                .Cast<ListData>()
+                .ToList());
+        // Pirate end
         }
 
         private void SetSizeAfterUpdate(int longestEntryLength, int contentCount)
@@ -220,5 +281,6 @@ namespace Content.Client.VendingMachines.UI
     public record VendorItemsListData(EntProtoId ItemProtoID, int ItemIndex) : ListData
     {
         public string ItemText = string.Empty;
+        public string? Category; // Pirate
     }
 }

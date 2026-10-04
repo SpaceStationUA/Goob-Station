@@ -9,6 +9,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     xmlns:co="clr-namespace:Content.Client.UserInterface.Controls"
     MinHeight="210">
     <BoxContainer Name="MainContainer" Orientation="Vertical">
+        <!-- Pirate: optional category filter. -->
+        <OptionButton Name="CategoryOptionButton" HorizontalExpand="True" Margin="4 2"/>
         <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}" HorizontalExpand="True"  Margin ="4 4"/>
         <BoxContainer Orientation="Horizontal" Margin="4 0">
             <Label Name="CreditsLabel" HorizontalExpand="True"/>
@@ -22,7 +24,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <Label Text="{Loc 'vending-machine-flavor-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'vending-machine-flavor-right'}" StyleClasses="WindowFooterText"
                         HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
-                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                <TextureRect StyleClasses="IdrisLogoDark" Stretch="KeepAspectCentered"
                         VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
             </BoxContainer>
         </BoxContainer>

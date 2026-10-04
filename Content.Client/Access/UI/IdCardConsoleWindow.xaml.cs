@@ -30,6 +30,10 @@ namespace Content.Client.Access.UI
         private int _maxIdJobLength;
 
         private AccessLevelControl _accessButtons = new();
+        // Pirate start: add categories
+        private readonly List<JobPrototype> _visibleJobs = new();
+        private readonly List<IdCardJobCategoryPrototype> _jobCategories = new();
+        // Pirate end
         private readonly List<string> _jobPrototypeIds = new();
 
         private string? _lastFullName;
@@ -86,19 +90,22 @@ namespace Content.Client.Access.UI
             };
             // Goobstation End
 
-            var jobs = _prototypeManager.EnumeratePrototypes<JobPrototype>().ToList();
-            jobs.Sort((x, y) => string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCulture));
+            // Pirate start: add categories
+            _visibleJobs.AddRange(_prototypeManager.EnumeratePrototypes<JobPrototype>()
+                .Where(job => job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
+                .OrderBy(job => job.LocalizedName, StringComparer.CurrentCulture));
+            _jobCategories.AddRange(_prototypeManager.EnumeratePrototypes<IdCardJobCategoryPrototype>()
+                .Where(category => category.Jobs.Any(jobId => _visibleJobs.Any(job => job.ID == jobId.Id)))
+                .OrderBy(category => Loc.GetString(category.Name), StringComparer.CurrentCulture));
 
-            foreach (var job in jobs)
-            {
-                if (!job.OverrideConsoleVisibility.GetValueOrDefault(job.SetPreference))
-                {
-                    continue;
-                }
+            JobCategoryOptionButton.AddItem(Loc.GetString("id-card-console-window-job-category-general"), 0);
+            JobCategoryOptionButton.SelectId(0);
+            for (var i = 0; i < _jobCategories.Count; i++)
+                JobCategoryOptionButton.AddItem(Loc.GetString(_jobCategories[i].Name), i + 1);
 
-                _jobPrototypeIds.Add(job.ID);
-                JobPresetOptionButton.AddItem(Loc.GetString(job.Name), _jobPrototypeIds.Count - 1);
-            }
+            PopulateJobPresets(0, _defaultJob.Id);
+            JobCategoryOptionButton.OnItemSelected += SelectJobCategory;
+            // Pirate end
 
             SelectAllButton.OnPressed += _ =>
             {
@@ -134,13 +141,22 @@ namespace Content.Client.Access.UI
 
         private void SelectJobPreset(OptionButton.ItemSelectedEventArgs args)
         {
+            if (args.Id < 0 || args.Id >= _jobPrototypeIds.Count) // Pirate add categories
+                return;
+
             if (!_prototypeManager.TryIndex(_jobPrototypeIds[args.Id], out JobPrototype? job))
             {
                 return;
             }
 
             JobTitleLineEdit.Text = Loc.GetString(job.Name);
+            _lastJobProto = job.ID;// Pirate add categories
             args.Button.SelectId(args.Id);
+
+            // Pirate start: add categories
+            var categoryIndex = _jobCategories.FindIndex(category => category.Jobs.Contains(job.ID));
+            JobCategoryOptionButton.SelectId(categoryIndex < 0 ? 0 : categoryIndex + 1);
+            // Pirate end
 
             SetAllAccess(false);
 
@@ -169,7 +185,7 @@ namespace Content.Client.Access.UI
                 }
             }
 
-            SubmitData();
+            SubmitData(job.ID); // Pirate - add (job.ID)
         }
 
         public void UpdateState(IdCardConsoleBoundUserInterfaceState state)
@@ -211,40 +227,66 @@ namespace Content.Client.Access.UI
             JobTitleSaveButton.Disabled = !interfaceEnabled || !jobTitleDirty;
 
             JobPresetOptionButton.Disabled = !interfaceEnabled;
+            JobCategoryOptionButton.Disabled = !interfaceEnabled; // Pirate add categories
 
             _accessButtons.UpdateState(state.TargetIdAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>(),
                                        state.AllowedModifyAccessList?.ToList() ??
                                        new List<ProtoId<AccessLevelPrototype>>());
 
-            var jobIndex = _jobPrototypeIds.IndexOf(state.TargetIdJobPrototype);
-            // If the job index is < 0 that means they don't have a job registered in the station records
-            // or the IdCardComponent's JobPrototype field.
-            // For example, a new ID from a box would have no job index.
-            if (jobIndex < 0)
-            {
-                jobIndex = _jobPrototypeIds.IndexOf(_defaultJob);
-            }
-
-            JobPresetOptionButton.SelectId(jobIndex);
+            // Pirate start: add categories
+            var categoryIndex = _jobCategories.FindIndex(category => category.Jobs.Contains(state.TargetIdJobPrototype));
+            categoryIndex = categoryIndex < 0 ? 0 : categoryIndex + 1;
+            JobCategoryOptionButton.SelectId(categoryIndex);
+            PopulateJobPresets(categoryIndex, state.TargetIdJobPrototype);
+            // Pirate end
 
             _lastFullName = state.TargetIdFullName;
             _lastJobTitle = state.TargetIdJobTitle;
             _lastJobProto = state.TargetIdJobPrototype;
         }
 
-        private void SubmitData()
+        private void SubmitData(string jobPrototype = "") // Pirate
         {
-            // Don't send this if it isn't dirty.
-            var jobProtoDirty = _lastJobProto != null &&
-                                _jobPrototypeIds[JobPresetOptionButton.SelectedId] != _lastJobProto;
-
             _owner.SubmitData(
                 FullNameLineEdit.Text,
                 JobTitleLineEdit.Text,
                 // Iterate over the buttons dictionary, filter by `Pressed`, only get key from the key/value pair
                 _accessButtons.ButtonsList.Where(x => x.Value.Pressed).Select(x => x.Key).ToList(),
-                jobProtoDirty ? _jobPrototypeIds[JobPresetOptionButton.SelectedId] : string.Empty);
+                jobPrototype);
+        }
+
+        // Pirate start: add categories
+        private void SelectJobCategory(OptionButton.ItemSelectedEventArgs args)
+        {
+            args.Button.SelectId(args.Id);
+            PopulateJobPresets(args.Id, _lastJobProto);
+        }
+
+        private void PopulateJobPresets(int categoryIndex, string? preferredJob)
+        {
+            var categorizedJobs = _jobCategories.SelectMany(category => category.Jobs).ToHashSet();
+            var jobs = categoryIndex == 0
+                ? _visibleJobs.Where(job => !categorizedJobs.Contains(job.ID))
+                : _visibleJobs.Where(job => _jobCategories[categoryIndex - 1].Jobs.Contains(job.ID));
+
+            _jobPrototypeIds.Clear();
+            JobPresetOptionButton.Clear();
+            foreach (var job in jobs)
+            {
+                _jobPrototypeIds.Add(job.ID);
+                JobPresetOptionButton.AddItem(Loc.GetString(job.Name), _jobPrototypeIds.Count - 1);
+            }
+
+            var selectedIndex = preferredJob == null ? -1 : _jobPrototypeIds.IndexOf(preferredJob);
+            if (selectedIndex < 0)
+                selectedIndex = _jobPrototypeIds.IndexOf(_defaultJob.Id);
+            if (selectedIndex < 0 && _jobPrototypeIds.Count > 0)
+                selectedIndex = 0;
+
+            if (selectedIndex >= 0)
+                JobPresetOptionButton.SelectId(selectedIndex);
+        // Pirate end
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared._Pirate.Employment;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
@@ -38,34 +37,22 @@ public static class EmployerJobMapping
         return GetBaseJob(prototypes, firstJob) == GetBaseJob(prototypes, secondJob);
     }
 
-    public static string GetSlotPoolId(IPrototypeManager prototypes, ProtoId<JobPrototype> jobId)
-    {
-        var baseJob = GetBaseJob(prototypes, jobId);
-        foreach (var group in prototypes.EnumeratePrototypes<JobSlotGroupPrototype>())
-        {
-            if (group.Jobs.Any(member => GetBaseJob(prototypes, member) == baseJob))
-                return $"group:{group.ID}";
-        }
-
-        return $"job:{baseJob.Id}";
-    }
-
     public static Dictionary<ProtoId<JobPrototype>, int?> ExpandSlots(
         IPrototypeManager prototypes,
         IReadOnlyDictionary<ProtoId<JobPrototype>, int?> sourceSlots)
     {
         var result = new Dictionary<ProtoId<JobPrototype>, int?>();
-        var slotsByPool = new Dictionary<string, int?>();
+        var slotsByBaseJob = new Dictionary<ProtoId<JobPrototype>, int?>();
         foreach (var (job, slots) in sourceSlots)
         {
-            var poolId = GetSlotPoolId(prototypes, job);
-            if (!slotsByPool.TryGetValue(poolId, out var existing))
+            var baseJob = GetBaseJob(prototypes, job);
+            if (!slotsByBaseJob.TryGetValue(baseJob, out var existing))
             {
-                slotsByPool.Add(poolId, slots);
+                slotsByBaseJob.Add(baseJob, slots);
                 continue;
             }
 
-            slotsByPool[poolId] = existing == null || slots == null
+            slotsByBaseJob[baseJob] = existing == null || slots == null
                 ? null
                 : checked(existing.Value + slots.Value);
         }
@@ -76,8 +63,8 @@ public static class EmployerJobMapping
             if (!job.SetPreference && !sourceSlots.ContainsKey(jobId))
                 continue;
 
-            var poolId = GetSlotPoolId(prototypes, jobId);
-            if (!slotsByPool.TryGetValue(poolId, out var slots))
+            var baseJob = GetBaseJob(prototypes, jobId);
+            if (!slotsByBaseJob.TryGetValue(baseJob, out var slots))
                 continue;
 
             result[jobId] = slots;

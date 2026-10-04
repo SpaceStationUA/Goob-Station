@@ -259,7 +259,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        return TryGetJobSlot(station, jobPrototypeId, out var slots, stationJobs) && slots == null; // Pirate: query grouped slot pools.
+        return TryGetJobSlot(station, jobPrototypeId, out var slots, stationJobs) && slots == null; // Pirate: replacement roles share their base job's slots.
     }
 
     /// <inheritdoc cref="TryGetJobSlot(Robust.Shared.GameObjects.EntityUid,string,out System.Nullable{uint},Content.Server.Station.Components.StationJobsComponent?)"/>
@@ -284,7 +284,7 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <remarks>slots will be null if the slot doesn't exist, as well, so make sure to check the return value.</remarks>
     public bool TryGetJobSlot(EntityUid station, string jobPrototypeId, out int? slots, StationJobsComponent? stationJobs = null)
     {
-        // Pirate: return the combined quota for grouped roles and variants.
+        // Pirate: replacement roles share their base job's available slots.
         return TryGetJobSlotPirate(station, jobPrototypeId, out slots, stationJobs);
     }
 

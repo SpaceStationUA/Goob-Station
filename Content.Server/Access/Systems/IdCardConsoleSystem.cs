@@ -268,7 +268,6 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         record.Name = newFullName;
         record.JobTitle = newJobTitle;
-
         if (newJobProto != null)
         {
             record.JobPrototype = newJobProto.ID;

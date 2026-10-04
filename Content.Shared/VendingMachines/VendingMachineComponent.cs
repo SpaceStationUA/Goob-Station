@@ -261,6 +261,7 @@ namespace Content.Shared.VendingMachines
             ID = entry.ID;
             Amount = entry.Amount;
             Price = entry.Price; // Pirate banking
+            Category = entry.Category; // Pirate Categories
         }
     }
 

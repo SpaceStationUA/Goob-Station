@@ -28,9 +28,9 @@ public sealed partial class StationJobsSystem
 
         var jobList = stationJobs.JobList;
         var jobId = new ProtoId<JobPrototype>(jobPrototypeId);
-        var poolId = EmployerJobMapping.GetSlotPoolId(_prototypeManager, jobId);
+        var baseJob = EmployerJobMapping.GetBaseJob(_prototypeManager, jobId);
         var slotKeys = jobList.Keys
-            .Where(key => EmployerJobMapping.GetSlotPoolId(_prototypeManager, key) == poolId)
+            .Where(key => EmployerJobMapping.GetBaseJob(_prototypeManager, key) == baseJob)
             .OrderBy(key => key == jobId ? 0 : 1)
             .ToList();
 
@@ -106,9 +106,9 @@ public sealed partial class StationJobsSystem
 
         var jobList = stationJobs.JobList;
         var jobId = new ProtoId<JobPrototype>(jobPrototypeId);
-        var poolId = EmployerJobMapping.GetSlotPoolId(_prototypeManager, jobId);
+        var baseJob = EmployerJobMapping.GetBaseJob(_prototypeManager, jobId);
         var poolKeys = jobList.Keys
-            .Where(key => EmployerJobMapping.GetSlotPoolId(_prototypeManager, key) == poolId)
+            .Where(key => EmployerJobMapping.GetBaseJob(_prototypeManager, key) == baseJob)
             .ToArray();
 
         if (poolKeys.Length == 0 && !createSlot)
@@ -137,10 +137,10 @@ public sealed partial class StationJobsSystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         var jobId = new ProtoId<JobPrototype>(jobPrototypeId);
-        var poolId = EmployerJobMapping.GetSlotPoolId(_prototypeManager, jobId);
+        var baseJob = EmployerJobMapping.GetBaseJob(_prototypeManager, jobId);
         var jobList = stationJobs.JobList;
         var poolKeys = jobList.Keys
-            .Where(key => EmployerJobMapping.GetSlotPoolId(_prototypeManager, key) == poolId)
+            .Where(key => EmployerJobMapping.GetBaseJob(_prototypeManager, key) == baseJob)
             .ToArray();
         var target = poolKeys.FirstOrDefault();
         if (poolKeys.Length == 0)
@@ -163,9 +163,9 @@ public sealed partial class StationJobsSystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        var poolId = EmployerJobMapping.GetSlotPoolId(_prototypeManager, new ProtoId<JobPrototype>(jobPrototypeId));
+        var baseJob = EmployerJobMapping.GetBaseJob(_prototypeManager, new ProtoId<JobPrototype>(jobPrototypeId));
         var matching = stationJobs.JobList
-            .Where(pair => EmployerJobMapping.GetSlotPoolId(_prototypeManager, pair.Key) == poolId)
+            .Where(pair => EmployerJobMapping.GetBaseJob(_prototypeManager, pair.Key) == baseJob)
             .Select(pair => pair.Value)
             .ToArray();
         if (matching.Length == 0)
@@ -231,27 +231,27 @@ public sealed partial class StationJobsSystem
         return new TickerJobsAvailableEvent(stationNames, jobs);
     }
 
-    private int CountSlotsByPool(IReadOnlyDictionary<ProtoId<JobPrototype>, int?> jobs)
+    private int CountSlotsByBaseJob(IReadOnlyDictionary<ProtoId<JobPrototype>, int?> jobs)
     {
-        var seenPools = new HashSet<string>();
+        var seenBaseJobs = new HashSet<ProtoId<JobPrototype>>();
         var count = 0;
         foreach (var (job, slots) in jobs)
         {
-            if (seenPools.Add(EmployerJobMapping.GetSlotPoolId(_prototypeManager, job)))
+            if (seenBaseJobs.Add(EmployerJobMapping.GetBaseJob(_prototypeManager, job)))
                 count += slots ?? 1;
         }
 
         return count;
     }
 
-    private void DecrementJobSlotPool(
+    private void DecrementBaseJobSlots(
         Dictionary<ProtoId<JobPrototype>, int?> slots,
         ProtoId<JobPrototype> selectedJob)
     {
-        var poolId = EmployerJobMapping.GetSlotPoolId(_prototypeManager, selectedJob);
+        var baseJob = EmployerJobMapping.GetBaseJob(_prototypeManager, selectedJob);
         foreach (var job in slots.Keys.ToArray())
         {
-            if (EmployerJobMapping.GetSlotPoolId(_prototypeManager, job) != poolId || slots[job] is not { } remaining)
+            if (EmployerJobMapping.GetBaseJob(_prototypeManager, job) != baseJob || slots[job] is not { } remaining)
                 continue;
 
             slots[job] = Math.Max(remaining - 1, 0);

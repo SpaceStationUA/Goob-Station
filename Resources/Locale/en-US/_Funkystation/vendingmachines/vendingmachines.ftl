@@ -1,7 +1,7 @@
 vending-machine-keypad-sold-out = SOLD OUT
 vending-machine-keypad-clear = CLR
 vending-machine-keypad-enter = ENT
-vending-machine-keypad-credits = CR: {$credits}¥
+vending-machine-keypad-credits = CR: {$credits}电
 vending-machine-keypad-insert-credits = INSERT CREDITS
 vending-machine-keypad-error = [ ERROR ]
 vending-machine-keypad-sold = [ SOLD ]

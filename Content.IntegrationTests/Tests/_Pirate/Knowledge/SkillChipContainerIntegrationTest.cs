@@ -8,6 +8,7 @@ using Content.Goobstation.Common.Grab;
 using Content.Goobstation.Shared.GrabIntent;
 using Content.Shared._Pirate.Body.Chips;
 using Content.Shared._Pirate.Knowledge;
+using Content.Shared._Pirate.Traits.Assorted;
 using Content.Shared.Body.Systems;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Movement.Pulling.Components;
@@ -145,6 +146,43 @@ public sealed class SkillChipContainerIntegrationTest
 
             var container = entMan.GetComponent<OrganChipContainerComponent>(store.Owner).Container!;
             Assert.That(container.Count, Is.EqualTo(3));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task UnchippedRemovesExistingChipsAndRejectsNewOnes()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var knowledge = server.System<SharedKnowledgeSystem>();
+        var chips = server.System<OrganChipSystem>();
+
+        EntityUid human = default;
+        await server.WaitAssertion(() =>
+        {
+            human = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            var store = knowledge.EnsureKnowledgeContainer(human);
+
+            Assert.That(chips.InstallChip(human, "PirateContainerChipB"), Is.True);
+            Assert.That(knowledge.GetKnowledge(store, Skill)!.Value.Comp.TemporaryLevel, Is.EqualTo(20));
+
+            entMan.EnsureComponent<UnchippedComponent>(human);
+            var rejectedChip = entMan.SpawnEntity("PirateContainerChipA", MapCoordinates.Nullspace);
+            var brainContainer = entMan.GetComponent<OrganChipContainerComponent>(store.Owner);
+            Assert.That(chips.CanInsertChip((store.Owner, brainContainer), rejectedChip, out _), Is.False);
+            entMan.DeleteEntity(rejectedChip);
+        });
+
+        await pair.RunTicksSync(1);
+        await server.WaitAssertion(() =>
+        {
+            var store = knowledge.GetContainer(human);
+            Assert.That(store, Is.Not.Null);
+            Assert.That(entMan.GetComponent<OrganChipContainerComponent>(store!.Value.Owner).Container, Is.Empty);
+            Assert.That(knowledge.GetKnowledge(store.Value, Skill)!.Value.Comp.TemporaryLevel, Is.Zero);
         });
 
         await pair.CleanReturnAsync();

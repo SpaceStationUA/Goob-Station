@@ -8,7 +8,7 @@
   roleplayRecommendations:
   - employment-employer-roleplay-nanotrasen-1
   - employment-employer-roleplay-nanotrasen-2
-  logoPath: /Textures/_Pirate/Interface/Employers/NanoTrasenLogo.png
+  logoPath: /Textures/_Pirate/Interface/Employers/NanoTrasen.png
   departments: [employment-employer-departments-all]
 
 - type: employer
@@ -16,5 +16,13 @@
   priority: 1
   nameKey: employment-employer-name-idris
   accentColor: "#236f73"
-  logoPath: /Textures/_Pirate/Interface/Employers/IdrisLogo.png
+  logoPath: /Textures/_Pirate/Interface/Employers/Idris.png
   departments: [department-Security, department-Civilian]
+
+- type: employer
+  id: Unaffiliated
+  priority: 2
+  nameKey: employment-employer-name-unaffiliated
+  accentColor: "#808080"
+  logoPath: /Textures/_Pirate/Interface/Employers/unaffiliated.png
+  departments: [employment-employer-departments-none]

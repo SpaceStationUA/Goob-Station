@@ -38,7 +38,11 @@ public sealed class NotoFontFamilyStack(IResourceCache resCache, string variant 
     /// <summary>
     ///     The fallback font path, exactly. (no string substitutions.)
     /// </summary>
-    private string[] _extras = new[] { "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf" };
+    private string[] _extras =
+    [
+        "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf",
+        "/Fonts/NotoSans/NotoSansSC-Regular.ttf", // Pirate: fallback for the 电 currency symbol.
+    ];
 
     public HashSet<FontKind> AvailableKinds = [FontKind.Regular, FontKind.Bold, FontKind.Italic, FontKind.BoldItalic];
 

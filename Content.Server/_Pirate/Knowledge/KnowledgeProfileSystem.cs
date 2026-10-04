@@ -76,7 +76,7 @@ public sealed class KnowledgeProfileSystem : EntitySystem
             _prototypes,
             args.Profile.TraitPreferences);
         _knowledge.ApplyProfile(args.Mob, species.Knowledge, args.Profile.Knowledge, pointsBonus);
-        // Piknowledgeable trait end
+        // knowledgeable trait end
         // Pirate: skill chips start
         _knowledge.ReplayCompetency(args.Mob);
         _chips.ReconcileInstalledChipModifiers(args.Mob);

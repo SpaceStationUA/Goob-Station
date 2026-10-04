@@ -8,6 +8,18 @@
 
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" MinWidth="460">
 
+            <!-- Pirate: search and categories -->
+            <PanelContainer HorizontalExpand="True" Margin="8 8 8 4">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#111115" BorderColor="#222228" BorderThickness="1" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="6" SeparationOverride="6">
+                    <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}"
+                              HorizontalExpand="True" MinHeight="28" />
+                    <OptionButton Name="CategoryOptionButton" MinSize="150 28" />
+                </BoxContainer>
+            </PanelContainer>
+
             <PanelContainer Name="GlassBackground" VerticalExpand="True" HorizontalExpand="True">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#111115" />
@@ -35,7 +47,7 @@
                 <Label Text="{Loc 'vending-machine-flavor-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'vending-machine-flavor-right'}" StyleClasses="WindowFooterText"
                        HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0" />
-                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                <TextureRect StyleClasses="IdrisLogoDark" Stretch="KeepAspectCentered"
                              VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
             </BoxContainer>
         </BoxContainer>
@@ -66,6 +78,21 @@
                 </controls:StripeBack>
 
             </BoxContainer>
+
+            <!-- Pirate:cash withdraw -->
+            <controls:StripeBack HorizontalAlignment="Right" Margin="0 2 24 8">
+                <PanelContainer Margin="2" MinSize="126 32">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#0a120a" BorderColor="#1a331a" BorderThickness="2" />
+                    </PanelContainer.PanelOverride>
+                    <Button Name="WithdrawButton" Text="{Loc 'store-ui-default-withdraw-text'}"
+                            HorizontalExpand="True" MinSize="126 28">
+                        <Button.StyleBoxOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#00000000" BorderColor="#00000000" BorderThickness="0" />
+                        </Button.StyleBoxOverride>
+                    </Button>
+                </PanelContainer>
+            </controls:StripeBack>
 
             <Control VerticalExpand="True" />
 

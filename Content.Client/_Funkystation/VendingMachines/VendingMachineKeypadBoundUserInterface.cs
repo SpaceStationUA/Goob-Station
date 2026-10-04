@@ -57,16 +57,16 @@ public sealed class VendingMachineKeypadBoundUserInterface(EntityUid owner, Enum
     {
         var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
 
-        _menu?.Populate(_cachedInventory, enabled);
         _menu?.SetCredits(_credits, _priceMultiplier);
+        _menu?.Populate(_cachedInventory, enabled);
     }
 
     public void UpdateAmounts()
     {
         var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
 
-        _menu?.UpdateAmounts(_cachedInventory, enabled);
         _menu?.SetCredits(_credits, _priceMultiplier);
+        _menu?.UpdateAmounts(_cachedInventory, enabled);
     }
 
     private void OnWithdraw(VendingMachineWithdrawMessage message)

@@ -37,7 +37,7 @@
 
             <BoxContainer Orientation="Horizontal" Margin="8 4 8 4" MinHeight="24" VerticalAlignment="Center">
                 <Label Text="Idris Incorporated" StyleClasses="WindowFooterText" />
-                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                <TextureRect StyleClasses="IdrisLogoDark" Stretch="KeepAspectCentered"
                              VerticalAlignment="Center" HorizontalAlignment="Right" HorizontalExpand="True" SetSize="19 19"/>
             </BoxContainer>
 

@@ -129,9 +129,9 @@ public sealed partial class StationJobsSystem
                             jobPlayerOptions.Remove(k);
                     }
 
-                    // Pirate start: shared role slots decrement together.
-                    DecrementJobSlotPool(stationJobs[station], job);
-                    DecrementJobSlotPool(currentlySelectingJobs[station], job);
+                    // Pirate start: replacement roles share their base role's remaining slots.
+                    DecrementBaseJobSlots(stationJobs[station], job);
+                    DecrementBaseJobSlots(currentlySelectingJobs[station], job);
                     // Pirate end
                     profiles.Remove(player);
                     assigned.Add(player, (job, station));
@@ -183,7 +183,7 @@ public sealed partial class StationJobsSystem
                 // Intentionally discounts the value of uncapped slots! They're only a single slot when deciding a station's share.
                 foreach (var (station, jobs) in currentlySelectingJobs)
                 {
-                    stationTotalSlots.Add(station, CountSlotsByPool(jobs)); // Pirate
+                    stationTotalSlots.Add(station, CountSlotsByBaseJob(jobs)); // Pirate
                 }
 
                 var totalSlots = 0;
