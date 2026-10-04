@@ -24,7 +24,7 @@ Prepared for Alwyzon. Do not activate while players are online unless the operat
 7. Set `SERVER_CONSOLE_DRIVER=socket` in the bot `.env`, clear config cache and restart only its console process. Verify a harmless Discord `help` command and resulting output. Install `console.logrotate` as `/etc/logrotate.d/pirate-console`.
 8. Add one `NotifyWatchdogs` entry to CDN config with URL `http://127.0.0.1:5000/`, instance `pirate`, and the private watchdog token. Restart **only** the CDN to load the notification config. Future Publish completions notify Watchdog; content waits for round end (or the server-empty restart delay) before shutdown, download and restart.
 
-Watchdog's `/restart` is immediate; `/update` checks the manifest and queues a round-end restart. `/stop` queues shutdown at round end. Use Basic authentication from the private token, without printing it. Normal updates no longer run the old local compile/update scripts or PHP `cdn` command.
+Current live state after cutover: `pirate-cdn.service` and `pirate-watchdog.service` are enabled and active, `ACTIVATED` exists, and the game is launched through redirected pipes (no PTY). Before any manual restart, check `/status` player count; restart is permitted at 0–10 players and must be deferred above 10 unless the operator explicitly accepts the disruption.
 
 ## Rollback
 
