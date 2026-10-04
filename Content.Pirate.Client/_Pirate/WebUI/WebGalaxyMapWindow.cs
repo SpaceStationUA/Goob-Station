@@ -53,8 +53,25 @@ namespace Content.Pirate.Client._Pirate.WebUI;
 /// </summary>
 public sealed class WebGalaxyMapWindow : DefaultWindow, IDisposable
 {
-    /// <summary>Committed bundle, same scheme the other webui apps use.</summary>
-    public const string PageUrl = "res://_Pirate/WebUI/GalaxyMap/index.html";
+    /**
+     *     The committed bundle.
+     *
+     *     "res://webres/_Pirate/..." and NOT "res://_Pirate/...", and the difference is
+     *     the whole reason the first attempt showed a page reading "Not found" in a
+     *     perfectly working browser.
+     *
+     *     The stock upstream Web module resolves the content prefix INSIDE the path
+     *     rather than re-attaching a res:// host per content root. Every other webui
+     *     window here already knows this -- `WebArcadeWindow.ResPrefix` is
+     *     "res://webres/" and `WebThemeWindow` has its own -- and the local engine
+     *     patch's own comment spells it out. This file was written from the PLAN.md
+     *     description of the ORIGINAL spike, which predates that change, so it carried
+     *     the old scheme.
+     *
+     *     Borrowed from `WebArcadeWindow.ResPrefix` rather than spelled out again, so
+     *     there is one constant for it.
+     */
+    public const string PageUrl = WebArcadeWindow.ResPrefix + "_Pirate/WebUI/GalaxyMap/index.html";
 
     private readonly WebViewControl _web;
     private readonly Label _status = new()
@@ -94,7 +111,7 @@ public sealed class WebGalaxyMapWindow : DefaultWindow, IDisposable
         {
             try
             {
-                if (ctx.Url.StartsWith("res://", StringComparison.Ordinal))
+                if (ctx.Url.StartsWith(WebArcadeWindow.ResPrefix, StringComparison.Ordinal))
                     return;
                 ctx.DoCancel();
             }
