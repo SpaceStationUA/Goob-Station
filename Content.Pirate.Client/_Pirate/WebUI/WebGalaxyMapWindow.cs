@@ -84,15 +84,24 @@ public sealed class WebGalaxyMapWindow : DefaultWindow, IDisposable
         };
 
         // The fence. Cancels everything that is not our own bundle.
-        _web.AddBeforeBrowseHandler((control, url) =>
+        //
+        // ONE argument, not two, and cancelling is `ctx.DoCancel()` rather than a bool
+        // return. That signature cost a build: the handler is an
+        // Action<IBeforeBrowseContext>, and a lambda written as (control, url) => bool
+        // is a compile error rather than a wrong answer at runtime. WebUiTuiIpc's
+        // HandleBeforeBrowse is the reference for the shape.
+        _web.AddBeforeBrowseHandler(ctx =>
         {
             try
             {
-                return !url.StartsWith("res://", StringComparison.Ordinal);
+                if (ctx.Url.StartsWith("res://", StringComparison.Ordinal))
+                    return;
+                ctx.DoCancel();
             }
             catch
             {
-                return true;
+                // A URL we cannot even read is not our page.
+                try { ctx.DoCancel(); } catch { /* already gone */ }
             }
         });
 
