@@ -11,7 +11,7 @@
         "DisplayName": "Pirate UA",
         "BuildsPageLink": "https://github.com/SpaceStationUA/Goob-Station",
         "BuildsPageLinkText": "Source",
-        "PruneBuildsDays": 90,
+        "PruneBuildsDays": 30,
         "NotifyWatchdogs": []
       }
     }

@@ -25,7 +25,7 @@ Servers:
       Updates:
         ManifestUrl: http://127.0.0.1:27691/fork/pirate-ua/manifest
       TimeoutSeconds: 300
-      DumpOnTimeout: false
+      DumpOnTimeout: true
       RunCommand: /home/alwyzon/ss14-hosting/run-game.sh
       Arguments:
         - --cvar

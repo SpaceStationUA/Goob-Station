@@ -4,11 +4,6 @@ name: Publish
 
 on:
   workflow_dispatch:
-    inputs:
-      publish:
-        description: Publish to CDN (requires PUBLISH_ENABLED)
-        type: boolean
-        default: false
   schedule:
     - cron: '0 10 * * *'
 
@@ -51,8 +46,10 @@ jobs:
           name: pirate-release
           path: release/*.zip
           retention-days: 7
-      - name: Publish through restricted SSH tunnel
-        if: github.ref == 'refs/heads/master' && vars.PUBLISH_ENABLED == 'true' && (github.event_name == 'schedule' || inputs.publish)
+        if: github.ref == 'refs/heads/master' && (github.event_name == 'workflow_dispatch' || vars.PUBLISH_ENABLED == 'true')
+
+      - name: Publish release
+        if: github.ref == 'refs/heads/master' && (github.event_name == 'workflow_dispatch' || vars.PUBLISH_ENABLED == 'true')
         env:
           PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
           PUBLISH_SSH_KEY: ${{ secrets.PUBLISH_SSH_KEY }}
