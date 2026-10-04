@@ -19,7 +19,7 @@ import {
 } from "../src/GalaxyMap/lib/hex";
 import { assignCells, borderLoops, cellOutline, cellsByTerritory, loopToPath } from "../src/GalaxyMap/lib/geometry";
 import { parseYamlSequence } from "./yaml-subset";
-import { readPrototype } from "./bake";
+import { readPrototype, yamlClaims } from "./bake";
 import { CELLS as BAKED_CELLS, CONTESTED as BAKED_CONTESTED, FINGERPRINT as BAKE_FP } from "../src/GalaxyMap/lib/baked";
 import { bakedModel, buildOwnership, checkBake, DEFAULT_MAP } from "../src/GalaxyMap/lib/source";
 import { cellsInExtent } from "../src/GalaxyMap/lib/hex";
@@ -116,6 +116,59 @@ for (const c of cells) {
   if (back.q !== c.q || back.r !== c.r) rt++;
 }
 check("pixel<->hex round trips", rt === 0, `${rt}/${cells.length} mismatched`);
+
+/**
+ * The FIXTURE's polygons must be the YAML's.
+ *
+ * `bake.ts` computes ownership from `orionSpur.yml` and `check-galaxy.ts` computes it
+ * from the fixture's own copy of the same six -- later seven -- polygons. That
+ * duplication is the whole reason this assertion exists, and it is not hypothetical: the
+ * seventh nation was added to the YAML and to TERRITORIES, and the suite reported
+ * "no territory came out empty -- goldendeep" while the bake said 398 claimed and the
+ * check said 644 unclaimed, from the same chart, in the same second.
+ *
+ * Asserting agreement is cheaper and safer than rewiring the check to read the YAML, and
+ * it fails on the thing that actually goes wrong -- someone edits one copy. The
+ * assertion is on IDs, polygons AND ORDER, because order decides which polygon wins a
+ * depth tie, so a reordering is a real behavioural change and not a cosmetic one.
+ */
+{
+  const yaml = yamlClaims();
+  const same =
+    yaml.length === CLAIMS.length &&
+    yaml.every((c, i) => {
+      const f = CLAIMS[i];
+      if (!f || c.id !== f.id) return false;
+      if (c.polygon.length !== f.polygon.length) return false;
+      return c.polygon.every((p, j) => {
+        const q = f.polygon[j];
+        return !!q && p.x === q.x && p.y === q.y;
+      });
+    });
+  check(
+    "the fixture's claim polygons ARE the YAML's, in the same order",
+    same,
+    same
+      ? `${yaml.length} claims, identical to orionSpur.yml`
+      : `yaml [${yaml.map(c => c.id).join(",")}] vs fixture [${CLAIMS.map(c => c.id).join(",")}];` +
+        ` first divergence: ${(() => {
+          for (let i = 0; i < Math.max(yaml.length, CLAIMS.length); i++) {
+            const y = yaml[i];
+            const f = CLAIMS[i];
+            if (!y || !f) return `index ${i} (${y?.id ?? "none"} vs ${f?.id ?? "none"})`;
+            if (y.id !== f.id) return `index ${i}: ${y.id} vs ${f.id}`;
+            if (y.polygon.length !== f.polygon.length)
+              return `${y.id}: ${y.polygon.length} vs ${f.polygon.length} points`;
+            for (let j = 0; j < y.polygon.length; j++) {
+              if (y.polygon[j].x !== f.polygon[j].x || y.polygon[j].y !== f.polygon[j].y)
+                return `${y.id} point ${j}: (${y.polygon[j].x},${y.polygon[j].y}) vs ` +
+                  `(${f.polygon[j].x},${f.polygon[j].y})`;
+            }
+          }
+          return "identical";
+        })()}`,
+  );
+}
 
 // --- claims -> ownership ---------------------------------------------------
 const { ownership, contested, unclaimedCells } = assignCells(
@@ -379,8 +432,8 @@ console.log("\npaint:");
     latest = m;
   });
 
-  // Take a real Biesel cell and hand it to Nralakk.
-  const victim = (byTerr.get("biesel") ?? [])[0];
+  // Take a real Bieselite cell and hand it to Nralakk.
+  const victim = (byTerr.get("bieselite") ?? [])[0];
   const [vq, vr] = victim.split(",").map(Number);
 
   const changed = await source.paint(vq, vr, "nralakk");
@@ -388,7 +441,7 @@ console.log("\npaint:");
   check("paint notifies listeners", notified === 1, `${notified} notification(s)`);
   check("paint hands back a NEW model object", !!latest && latest !== before);
   check("the painted cell really changed owner", latest?.ownership.get(victim) === "nralakk");
-  check("the model the view already had is left alone", before.ownership.get(victim) === "biesel");
+  check("the model the view already had is left alone", before.ownership.get(victim) === "bieselite");
 
   // Exactly one cell may differ, or painting is quietly doing more than asked.
   let diffs = 0;
@@ -403,7 +456,7 @@ console.log("\npaint:");
   check("re-painting the same territory is a no-op", noop === false && notified === 1);
 
   await source.undo();
-  check("undo restores the cell", latest?.ownership.get(victim) === "biesel");
+  check("undo restores the cell", latest?.ownership.get(victim) === "bieselite");
   check("undo restores the whole map", [...before.ownership].every(([c, o]) => latest!.ownership.get(c) === o));
 }
 
@@ -435,7 +488,7 @@ console.log("\ncontested:");
   });
 
   // A cell nobody disputes yet.
-  const quiet = (byTerr.get("biesel") ?? []).find(c => !base.contested.has(c))!;
+  const quiet = (byTerr.get("bieselite") ?? []).find(c => !base.contested.has(c))!;
   const [cq, cr] = quiet.split(",").map(Number);
 
   const flagged = await source.setContested(cq, cr, true);
@@ -443,7 +496,7 @@ console.log("\ncontested:");
   check("flagging notifies listeners", notified === 1, `${notified} notification(s)`);
   check("the flag is set on the new model", latest?.contested.has(quiet) === true);
   check("the model the view already had is untouched", base.contested.has(quiet) === false);
-  check("flagging a dispute does not change the owner", latest?.ownership.get(quiet) === "biesel");
+  check("flagging a dispute does not change the owner", latest?.ownership.get(quiet) === "bieselite");
   check("a fresh set, not a mutation of the old one", latest!.contested !== base.contested);
 
   const again = await source.setContested(cq, cr, true);
@@ -682,7 +735,7 @@ console.log("\ndrag to paint:");
   let notified = 0;
   source.onChange(() => notified++);
 
-  const biesel = (byTerr.get("biesel") ?? []).slice(0, 5);
+  const biesel = (byTerr.get("bieselite") ?? []).slice(0, 5);
   const targets = biesel.map(k => {
     const [q, r] = k.split(",");
     return { q: +q, r: +r };

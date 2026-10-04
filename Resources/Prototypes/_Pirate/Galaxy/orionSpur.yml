@@ -50,8 +50,8 @@
 # Overlaps Solarian along its north-west edge, so the two share a border and the
 # contested band between them exercises the depth rule.
 - type: galaxyClaim
-  id: bieselClaim
-  territory: biesel
+  id: bieseliteClaim
+  territory: bieselite
   polygon:
     - [10.2, 5.2]
     - [15, 4]
@@ -74,8 +74,8 @@
     - [-53.5, -10]
 
 - type: galaxyClaim
-  id: eridianClaim
-  territory: eridian
+  id: eridanianClaim
+  territory: eridanian
   polygon:
     - [20, 26.5]
     - [39, 30]
@@ -108,3 +108,35 @@
     - [43, -34]
     - [28, -31]
     - [19.4, -14.4]
+
+# The seventh nation, and the only claim that reaches the chart's south-west
+# QUADRANT -- before this the map simply did not go there: every other claim
+# stopped at y = -17 or so and the whole corner was unclaimed, which is a
+# different thing from a nation nobody has claimed yet.
+#
+# It overlaps Nralakk's southern edge in two places, which is the point: the file
+# header says claims are expected to overlap so that neighbours share a border, and
+# a nation placed in a gap nobody else touches would exercise nothing. The contested
+# band between the two is where the depth rule does its work.
+#
+# NAME AND IDS: "Golden Deep" is a real, selectable nationality in
+# Resources/Prototypes/_Pirate/Contractors/nationality.yml (`GoldenDeep`,
+# `nationality_name_goldendeep`) and has a passport sprite and a guidebook entry.
+# It has no PROSE anywhere -- no description, no relations -- which is the same gap
+# the other six have and is the lore editors' to close, not this file's.
+#
+# The placement is a guess: south-west, filling the empty quadrant, because that is
+# the one region of the chart no nation reaches. If Golden Deep belongs somewhere
+# else on the spur, move the polygon and re-bake; nothing else depends on where it is.
+- type: galaxyClaim
+  id: goldendeepClaim
+  territory: goldendeep
+  polygon:
+    - [-53, -12]
+    - [-37, -14]
+    - [-20, -9]
+    - [-17, -21]
+    - [-26, -33]
+    - [-43, -36]
+    - [-60, -28]
+    - [-64, -16]

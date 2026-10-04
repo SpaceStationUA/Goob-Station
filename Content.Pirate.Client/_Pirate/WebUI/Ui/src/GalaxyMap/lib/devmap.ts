@@ -30,8 +30,8 @@ const L = (en: string, uk: string): LocalizedText => ({ en, uk });
 
 export const TERRITORIES: Territory[] = [
   {
-    id: "biesel",
-    name: L("REPUBLIC OF BIESEL", "РЕСПУБЛІКА БІЗЕЛІТ"),
+    id: "bieselite",
+    name: L("BISELITE REPUBLIC", "РЕСПУБЛІКА БІЗЕЛІТ"),
     color: "#3f6fd8",
     pattern: "grid",
     blurb: L(
@@ -54,11 +54,26 @@ export const TERRITORIES: Territory[] = [
     blurb: L("A shrinking core. Earth, Mars, the Jewel Worlds.", "Скорочуває ядро. Земля, Марс, Перлинові Світи."),
   },
   {
-    id: "eridian",
+    id: "eridanian",
     name: L("ERIDANIAN FEDERATION", "ФЕДЕРАЦІЯ ЕРІДАНУ"),
     color: "#31b0c4",
     pattern: "hatch",
     blurb: L("Corporate holdings strung along the Tradeband.", "Корпоративні володіння вздовж Трейдбанду."),
+  },
+  {
+    // The seventh nation. The display name matches the game's own
+    // `nationality_name_goldendeep` ("Золота Глибина" nominative -- the locale
+    // entry is genitive, "Золотої Глибини", because that is the case the phrase
+    // needs when it follows "you must be a citizen of").
+    //
+    // The blurb is the same guess as the polygon's placement and is the same kind of
+    // placeholder: there is no prose for Golden Deep anywhere in the repo, so this
+    // says what the shape of the claim suggests rather than what the lore says.
+    id: "goldendeep",
+    name: L("GOLDEN DEEP", "ЗОЛОТА ГЛИБИНА"),
+    color: "#8a6ec4",
+    pattern: "grid",
+    blurb: L("The chart's south-west, where nothing else reaches.", "Південний захід карти, куди не дістається ніхто інший."),
   },
   {
     id: "adhomai",
@@ -107,7 +122,7 @@ export const CLAIMS: TerritoryClaim[] = [
   {
     // Overlaps Solarian along its north-west edge, so the two share a border
     // and the contested band between them exercises the depth rule.
-    id: "biesel",
+    id: "bieselite",
     polygon: [
       p(10.2, 5.2), p(15, 4), p(24, 0.5), p(28, -9), p(20.5, -15.5), p(11, -14), p(3.2, 0.8),
     ],
@@ -119,7 +134,7 @@ export const CLAIMS: TerritoryClaim[] = [
     ],
   },
   {
-    id: "eridian",
+    id: "eridanian",
     polygon: [
       p(20, 26.5), p(39, 30), p(55, 18.5), p(53, 4.5), p(39, -1), p(26, 6), p(18.5, 16),
     ],
@@ -136,6 +151,27 @@ export const CLAIMS: TerritoryClaim[] = [
     id: "izweski",
     polygon: [
       p(25.4, -10), p(43, -16), p(52, -26), p(43, -34), p(28, -31), p(19.4, -14.4),
+    ],
+  },
+  {
+    // DUPLICATED from Resources/Prototypes/_Pirate/Galaxy/orionSpur.yml, which is the
+    // real Intent. This fixture keeps its own copy because `check-galaxy.ts` computes
+    // ownership from HERE and not from the YAML -- so the borders live in two files and
+    // a change to one is invisible to the other.
+    //
+    // That duplication is a real hazard and this entry is where it already bit: the
+    // seventh nation was added to the YAML and to TERRITORIES, and the check reported
+    // "no territory came out empty -- goldendeep" because the fixture had never heard
+    // of it. The bake said 398 claimed and the check said 644 unclaimed, from the same
+    // chart, in the same second.
+    //
+    // One fix is for `check-galaxy.ts` to read the YAML through `readPrototype` like
+    // `bake.ts` does, so there is one code path and one set of polygons. Until then
+    // THIS MUST MATCH THE YAML.
+    id: "goldendeep",
+    polygon: [
+      p(-53, -12), p(-37, -14), p(-20, -9), p(-17, -21),
+      p(-26, -33), p(-43, -36), p(-60, -28), p(-64, -16),
     ],
   },
 ];
@@ -163,23 +199,28 @@ const sys = (
 ): StarSystem => ({ id, name, xLy, yLy, kind, importance, territory, planetType, rings });
 
 export const SYSTEMS: StarSystem[] = [
-  sys("tau-ceti", L("Tau Ceti", "Тау Цеті"), 17, -5, "star", 3, "biesel"),
-  sys("mictlan", L("Mictlan", "Міктлан"), 22, -11, "planet", 2, "biesel", "terran"),
+  // Golden Deep. Two systems rather than four: it is the smallest claim on the
+  // chart by area, and a nation with a large footprint and one dot reads as an
+  // oversight while a small nation with two reads as deliberate.
+  sys("kettlebel", L("Kettlebel", "Кетлбел"), -41, -22, "star", 2, "goldendeep"),
+  sys("ashgrave", L("Ashgrave", "Ешгрейв"), -27, -27, "planet", 1, "goldendeep", "barren"),
+  sys("tau-ceti", L("Tau Ceti", "Тау Цеті"), 17, -5, "star", 3, "bieselite"),
+  sys("mictlan", L("Mictlan", "Міктлан"), 22, -11, "planet", 2, "bieselite", "terran"),
   // Remnants. A pulsar and a quasar, so both renderers appear on the chart; the
   // quasar sits where a galaxy would be a more plausible neighbour.
   sys("pulsar-1", L("Cygnus X-1", "Лебеди X-1"), -5, 7, "pulsar", 2, "solarian"),
   sys("quasar-1", L("P Cygni", "P Лебіді"), -1, 4, "quasar", 3, "solarian"),
-  sys("port-antilla", L("Port Antilla", "Порт Антілья"), 12, -10, "station", 1, "biesel"),
+  sys("port-antilla", L("Port Antilla", "Порт Антілья"), 12, -10, "station", 1, "bieselite"),
   sys("qerrbalak", L("Qerrbalak", "Керрбалак"), -30, 9, "star", 3, "nralakk"),
   sys("xanu", L("Xanu", "Ксану"), -41, 13, "planet", 2, "nralakk", "desert"),
   sys("himeo", L("Himeo", "Гімео"), -50, 3, "planet", 1, "nralakk", "barren"),
   sys("vysoka", L("Vysoka", "Висока"), -26, -1, "planet", 1, "nralakk", "ice"),
   sys("rzeka", L("Rzeka", "Річка"), -38, -6, "planet", 2, "nralakk", "river"),
   sys("tattuqig", L("Tattuqig", "Таттуквіг"), -46, -9, "outpost", 0, "nralakk"),
-  sys("persepolis", L("Persepolis", "Персеполіс"), 39, 19, "star", 3, "eridian"),
-  sys("gadpathur", L("Gadpathur", "Гадпатур"), 29, 21, "planet", 1, "eridian", "lava"),
-  sys("burzsia", L("Burzsia", "Бурзія"), 50, 15, "planet", 2, "eridian", "gas", true),
-  sys("meropis", L("Meropis", "Меропіс"), 52, 7, "planet", 0, "eridian", "ocean"),
+  sys("persepolis", L("Persepolis", "Персеполіс"), 39, 19, "star", 3, "eridanian"),
+  sys("gadpathur", L("Gadpathur", "Гадпатур"), 29, 21, "planet", 1, "eridanian", "lava"),
+  sys("burzsia", L("Burzsia", "Бурзія"), 50, 15, "planet", 2, "eridanian", "gas", true),
+  sys("meropis", L("Meropis", "Меропіс"), 52, 7, "planet", 0, "eridanian", "ocean"),
   sys("sol", L("Sol", "Соль"), -2, 11, "star", 3, "solarian"),
   sys("earth", L("Earth", "Земля"), 3, 5, "planet", 2, "solarian", "terran"),
   sys("mars", L("Mars", "Марс"), -6, 12, "planet", 1, "solarian", "barren"),
@@ -199,7 +240,7 @@ export const SYSTEMS: StarSystem[] = [
 ];
 
 export const ROUTES: Route[] = [
-  { from: "tau-ceti", to: "persepolis", kind: "gate", allowed: ["biesel", "eridian"] },
+  { from: "tau-ceti", to: "persepolis", kind: "gate", allowed: ["bieselite", "eridanian"] },
   { from: "qerrbalak", to: "epsilon-eridani", kind: "gate", allowed: ["nralakk", "solarian"] },
   { from: "sol", to: "tau-ceti", kind: "gate", allowed: [] },
   { from: "adhomai", to: "moghes", kind: "hyperlane", allowed: [] },
