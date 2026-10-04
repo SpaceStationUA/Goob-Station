@@ -1962,3 +1962,36 @@ shadow disappears, which is the most legible of the three changes by a wide marg
 spiral wave and the beaming are much less visible at a glance and are the reason the
 switch exists: neither is obvious in a still, and "I can't tell if that switch does
 anything" is not a question worth having about a control.
+
+### The ring's dither, and a fallback that hid a broken shader for one build
+
+The ring was dithered with `dith` -- the disc's own ordered pattern, reused because
+carrying a second copy of a matrix felt redundant. It is a 2-pixel pattern, so the ring came
+out visibly BEADED: at chart scale that reads as sparkle and is fine, and at the overlay's
+190px it is a dotted circle. The reference dithers against `bayer4`, a 4x4 ordered matrix,
+which is finer and more even. Now it does, and the two copies of the same function in two
+files are in step.
+
+**The interesting part is how the change was nearly shipped broken.** An edit asserted on the
+ring's use-site *after* inserting the matrix's definition, so the assertion aborted and
+nothing was written; a second edit then replaced the use-site alone. Result: `bayer4` called
+once and defined nowhere.
+
+The shader failed to compile, `blackHoleGL` returned null, and `BlackHole` fell back to the
+baked CPU still -- which is a perfectly good-looking black hole that has none of the three
+Cosmoglyph terms in it. The panel was not blank, nothing logged to the console, and the
+overlay looked like a slightly worse version of the thing rather than like a failure. The
+photon ring had simply *disappeared* and it read as a design change.
+
+That is the fallback doing exactly its job and hiding a fault, which is the flip side of
+why it exists: it was introduced so that a missing WebGL context would not produce a blank
+panel, and it does that so well that a missing FUNCTION is indistinguishable from a missing
+context.
+
+`glStar`'s missing `precision` was caught the same way -- by the fallback making the panel
+non-blank -- so the fallback has now caught two faults and hidden one. What it cannot do is
+distinguish "no context" from "no shader", and only the build can.
+
+The A/B check does cover it, incidentally: the hook returns nulls when compilation fails,
+and the ratio of a null throws. So `check-dom.mjs` would have failed -- after the fact,
+rather than at the moment of the edit.

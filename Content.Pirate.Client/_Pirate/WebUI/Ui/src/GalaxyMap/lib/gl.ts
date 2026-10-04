@@ -129,6 +129,45 @@ float bump(float d, float outer, float inner) {
   return t * t * (3.0 - 2.0 * t);
 }
 
+/**
+ * The 4x4 ordered dither, for the photon ring.
+ *
+ * The ring was originally dithered with 'dith' -- the disc's own ordered pattern, reused
+ * because carrying a second copy of a matrix felt redundant. It is a 2-pixel pattern, so
+ * the ring came out visibly BEADED: at chart scale that reads as sparkle and is fine, and
+ * at the overlay's 190px it is a dotted circle. The reference dithers this against
+ * bayer4, which is a 4x4 ordered matrix and is finer and more even.
+ *
+ * Transcribed as a branch tree rather than a 16-entry lookup, because the branch form is
+ * what gl-star.ts already carries for the same matrix and two copies of the same function
+ * in two files is one more thing to keep in step.
+ */
+float bayer4(vec2 position) {
+  vec2 cell = mod(floor(position), 4.0);
+  if (cell.y < 1.0) {
+    if (cell.x < 1.0) return 0.03125;
+    if (cell.x < 2.0) return 0.53125;
+    if (cell.x < 3.0) return 0.15625;
+    return 0.65625;
+  }
+  if (cell.y < 2.0) {
+    if (cell.x < 1.0) return 0.8125;
+    if (cell.x < 2.0) return 0.3125;
+    if (cell.x < 3.0) return 0.9375;
+    return 0.4375;
+  }
+  if (cell.y < 3.0) {
+    if (cell.x < 1.0) return 0.21875;
+    if (cell.x < 2.0) return 0.71875;
+    if (cell.x < 3.0) return 0.09375;
+    return 0.59375;
+  }
+  if (cell.x < 1.0) return 0.578125;
+  if (cell.x < 2.0) return 0.078125;
+  if (cell.x < 3.0) return 0.878125;
+  return 0.378125;
+}
+
 /** The reference's hash: sin-based, and tiling at 2*size by size. */
 float rnd(vec2 coord) {
   vec2 m = vec2(2.0, 1.0) * floor(u_size + 0.5);
@@ -325,10 +364,17 @@ void main() {
     float pr = abs(d - u_holeRadius * 1.08);
     float ring = 1.0 - smoothstep(u_holeRadius * 0.015, u_holeRadius * 0.11, pr);
     ring *= min(1.0, u_photonRing);
-    // The reference dithers this against bayer4. Ours has no bayer4, and the disc
-    // already has 'dith' -- the same ordered pattern in the disc's own UV -- so the
-    // ring is dithered with the same one rather than a second copy of the matrix.
-    if (ring > dith * 0.5 + 0.25) {
+    // Dithered against bayer4, as the reference does. Against 'dith' instead -- the
+    // disc's own 2-pixel pattern -- the ring was visibly BEADED at overlay size, which is
+    // the one thing about it that did not look right. At chart scale the beading reads
+    // as sparkle and is fine; at 190px it is a dotted circle.
+    //
+    // The matrix is scaled rather than used raw, because the ring's profile is a smooth
+    // falloff across roughly three pixels and an ordered pattern only reads as ordered
+    // dithering when its full range is used. Dividing by four lays the matrix's 0..1
+    // across the ring's narrow band, and the ring's own value carries most of the
+    // decision so the falloff still reads as a falloff.
+    if (ring > bayer4(gl_FragCoord.xy) * 0.25 + ring * 0.75) {
       col = u_d0;
       alpha = 1.0;
     }
