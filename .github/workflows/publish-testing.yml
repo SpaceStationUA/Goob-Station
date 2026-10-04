@@ -12,7 +12,7 @@ on:
 jobs:
   build:
     # Pirate: no testing stream is configured; keep this legacy workflow inactive.
-    if: github.repository != 'SpaceStationUA/Goob-Station'
+    if: false
     runs-on: ubuntu-latest
 
     steps:

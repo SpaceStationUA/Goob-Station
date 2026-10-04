@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Watchdog child: game PTY with a local command socket and console log."""
+"""Watchdog child: game process with a local command socket and console log."""
 
 import argparse
-import errno
+import selectors
 import fcntl
 import os
 from pathlib import Path
-import pty
-import selectors
+import sys
 import signal
 import socket
 import subprocess
-import struct
-import termios
-import sys
+import time
 
 
 def main():
@@ -37,10 +34,17 @@ def main():
     with open(str(socket_path) + ".lock", "a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         socket_path.unlink(missing_ok=True)
-        master, slave = pty.openpty()
-        fcntl.ioctl(slave, termios.TIOCSWINSZ, struct.pack("HHHH", 40, 120, 0, 0))
-        process = subprocess.Popen(command, stdin=slave, stdout=slave, stderr=slave, start_new_session=True)
-        os.close(slave)
+        process = subprocess.Popen(
+            command,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            start_new_session=True,
+            bufsize=0,
+        )
+        assert process.stdin is not None and process.stdout is not None
+        child_stdin = process.stdin
+        child_stdout = process.stdout
         stopping = False
 
         def terminate(signum, _frame):
@@ -59,34 +63,36 @@ def main():
                 os.chmod(socket_path, 0o600)
                 listener.listen(8)
                 listener.setblocking(False)
-                selector.register(master, selectors.EVENT_READ)
+                child_stdout_fd = child_stdout.fileno()
+                os.set_blocking(child_stdout_fd, False)
+                selector.register(child_stdout_fd, selectors.EVENT_READ)
                 selector.register(listener, selectors.EVENT_READ)
-                pty_open = True
-                while process.poll() is None or pty_open:
+                output_open = True
+                while process.poll() is None or output_open:
                     for key, _ in selector.select(timeout=1):
-                        if key.fileobj == master:
+                        if key.fileobj == child_stdout_fd:
                             try:
-                                data = os.read(master, 65536)
-                            except OSError as error:
-                                if error.errno == errno.EIO:
-                                    selector.unregister(master)
-                                    pty_open = False
-                                    continue
-                                raise
+                                data = os.read(child_stdout_fd, 65536)
+                            except BlockingIOError:
+                                continue
                             if data:
                                 log.write(data)
                                 sys.stdout.buffer.write(data)
                                 sys.stdout.buffer.flush()
                             else:
-                                selector.unregister(master)
-                                pty_open = False
+                                selector.unregister(child_stdout_fd)
+                                output_open = False
                             continue
                         connection, _ = listener.accept()
                         with connection:
-                            connection.settimeout(2)
                             data = bytearray()
+                            request_deadline = time.monotonic() + 2
                             try:
                                 while len(data) <= 4096 and not data.endswith(b"\n"):
+                                    remaining = request_deadline - time.monotonic()
+                                    if remaining <= 0:
+                                        raise TimeoutError
+                                    connection.settimeout(remaining)
                                     part = connection.recv(4097 - len(data))
                                     if not part:
                                         break
@@ -97,15 +103,17 @@ def main():
                                 elif not command_line or len(data) > 4096 or any(byte < 32 or byte == 127 for byte in command_line):
                                     connection.sendall(b"ERR invalid command\n")
                                 else:
-                                    os.write(master, command_line + b"\r")
+                                    child_stdin.write(command_line + b"\n")
+                                    child_stdin.flush()
                                     connection.sendall(b"OK\n")
-                            except (TimeoutError, ConnectionError):
+                            except (TimeoutError, ConnectionError, BrokenPipeError):
                                 # A stalled or disconnected client must not kill the game.
                                 continue
                 return process.wait()
         finally:
             socket_path.unlink(missing_ok=True)
-            os.close(master)
+            child_stdin.close()
+            child_stdout.close()
             if process.poll() is None:
                 os.killpg(process.pid, signal.SIGKILL)
                 process.wait()
