@@ -75,6 +75,7 @@ namespace Content.Server.Database
         #region Pirate: cameras (photo persistence)
         public DbSet<PersistentPhotoAlbum> PersistentPhotoAlbums { get; set; } = default!;
         public DbSet<PersistentPhotoAlbumPhoto> PersistentPhotoAlbumPhotos { get; set; } = default!;
+        public DbSet<PirateTempRankEligibility> PirateTempRankEligibility { get; set; } = default!; // Pirate: temporary ranks
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -443,6 +444,7 @@ namespace Content.Server.Database
                 .OnDelete(DeleteBehavior.Cascade);
             //Pirate Changes End
             PersistentPhotoAlbumModelConfiguration.Configure(modelBuilder); //Pirate: cameras (photo persistence)
+            PirateTempRankEligibilityModelConfiguration.Configure(modelBuilder); // Pirate: temporary ranks
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)

@@ -1,0 +1,1 @@
+ent-BaseMobBananaMen = Уріст Маккалій

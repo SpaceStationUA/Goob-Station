@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+[Unit]
+Description=Pirate SS14 Watchdog
+Wants=network-online.target
+After=network-online.target pirate-cdn.service
+ConditionPathExists=/home/alwyzon/ss14-hosting/ACTIVATED
+
+[Service]
+Type=simple
+User=alwyzon
+Group=alwyzon
+WorkingDirectory=/home/alwyzon/ss14-hosting/watchdog
+ExecStart=/usr/bin/dotnet /home/alwyzon/ss14-hosting/watchdog/bin/SS14.Watchdog.dll
+Restart=on-failure
+RestartSec=10
+KillMode=control-group
+TimeoutStopSec=45
+UMask=0077
+Nice=-5
+OOMScoreAdjust=-1000
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

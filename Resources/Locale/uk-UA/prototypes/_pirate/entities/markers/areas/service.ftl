@@ -1,0 +1,11 @@
+ent-AreaBar = бар
+ent-AreaBarBackRoom = задня кімната бару
+ent-AreaBarber = перукарня
+ent-AreaBotany = гідропоніка
+ent-AreaCafeteria = кафетерій
+ent-AreaColdRoom = холодильна кімната
+ent-AreaDiner = закусочна
+ent-AreaKitchen = кухня
+ent-AreaKitchenBackRoom = задня кімната кухні
+ent-AreaServiceHall = сервісний хол
+ent-BaseAreaService = сервісний відділ

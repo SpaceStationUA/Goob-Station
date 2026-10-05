@@ -5,6 +5,7 @@ damage-type-soul = Душевна
 ent-MobSkia = скія
     .desc = Тінь, що набула форми й кидається на кожного, хто підійде надто близько.
 ent-MindRoleSkia = Роль Скії
+    .desc = { ent-BaseMindRole.desc }
 ent-SpawnPointSkia = точка появи скії
 
 ghost-role-information-skia-name = Скія

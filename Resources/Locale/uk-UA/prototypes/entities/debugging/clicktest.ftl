@@ -1,0 +1,6 @@
+ent-ClickTestFixedCornerInvisible = ClickTestFixedCornerInvisible
+ent-ClickTestFixedCornerVisible = ClickTestFixedCornerVisible
+ent-ClickTestRotatingCornerInvisible = ClickTestRotatingCornerInvisible
+ent-ClickTestRotatingCornerInvisibleNoRot = ClickTestRotatingCornerInvisibleNoRot
+ent-ClickTestRotatingCornerVisible = ClickTestRotatingCornerVisible
+ent-ClickTestRotatingCornerVisibleNoRot = ClickTestRotatingCornerVisibleNoRot

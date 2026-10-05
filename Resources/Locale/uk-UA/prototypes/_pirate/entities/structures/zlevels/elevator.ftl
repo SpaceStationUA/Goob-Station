@@ -1,0 +1,14 @@
+ent-ElevatorCallButton = кнопка виклику ліфта
+    .desc = Викликає ліфт на цей поверх.
+ent-ElevatorController = контролер ліфта
+    .desc = Керує кабіною ліфта. Маркер мапи, розміщений у шахті.
+ent-ElevatorIndicator = індикатор поверху ліфта
+    .desc = Показує поточний поверх і напрямок руху ліфта.
+ent-ElevatorMusicSpeaker = музика ліфта
+    .desc = Цього не видно — динамік встановлено в кабіні ліфта.
+ent-ElevatorPanel = панель керування ліфтом
+    .desc = Викликає кабіну ліфта на вибраний поверх.
+ent-ElevatorPlatform = платформа ліфта
+    .desc = Підлога кабіни ліфта.
+ent-ElevatorTravelWarning = небезпека ліфта
+    .desc = Відійдіть подалі.

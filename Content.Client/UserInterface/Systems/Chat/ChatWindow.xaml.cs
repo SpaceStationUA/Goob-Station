@@ -37,7 +37,8 @@ public sealed partial class ChatWindow : FancyWindow
             var isAdminInterest = channel == ChatChannel.Admin
                                   || channel == ChatChannel.AdminChat
                                   || channel == ChatChannel.AdminAlert
-                                  || channel == ChatChannel.AdminRelated;
+                                  || channel == ChatChannel.AdminRelated
+                                  || Content.Shared._Pirate.Chat.StaffChats.TryGet(channel, out _); // Pirate: staff chats
             filter.SetActive(channel, isAdminInterest);
         }
     }

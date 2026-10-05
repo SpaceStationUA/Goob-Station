@@ -6,4 +6,9 @@ public abstract class SharedContractObjectiveSystem : EntitySystem
     {
         return Name(objective);
     }
+
+    public virtual bool CanAbandon(EntityUid objective)
+    {
+        return true;
+    }
 }

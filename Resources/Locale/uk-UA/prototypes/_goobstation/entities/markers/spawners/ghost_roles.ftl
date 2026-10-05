@@ -1,0 +1,9 @@
+ent-MaintsSpawnMarker = Маркер спавну технічних тунелів
+ent-SpawnPointGhostChosenOne = спавн «Обраного»
+ent-SpawnPointGhostDarkLord = спавн антагоніста «Темний лорд»
+ent-SpawnPointGhostDarkPriest = Спавнер темного жерця
+ent-SpawnPointGhostGreyTide = спавн антагоніста «Грей тайд»
+ent-SpawnPointGhostMimeAssassin = спавн антагоніста «Мім-убивця»
+ent-SpawnPointGhostSingulothKnight = спавн антагоніста «Лицарі Синґулота»
+ent-SpawnPointGhostTunnelClown = спавн антагоніста «Тунельний клоун»
+ent-SpawnPointGhostVoxRaider = Спавнер вокс-рейдера

@@ -1,0 +1,10 @@
+ent-GasFilter = газовий фільтр
+    .desc = Дуже корисний для фільтрації газів.
+ent-GasFilterFlipped = газовий фільтр
+    .desc = { ent-GasFilter.desc }
+ent-GasMixer = газозмішувач
+    .desc = Дуже корисний для змішування газів.
+ent-GasMixerFlipped = газозмішувач
+    .desc = { ent-GasMixer.desc }
+ent-PressureControlledValve = пневматичний клапан
+    .desc = Двонаправлений клапан, керований тиском. Відкривається, якщо тиск у вихідній трубі нижчий за тиск у контрольній трубі на 101.325 кПа.

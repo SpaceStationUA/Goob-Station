@@ -1,0 +1,16 @@
+ent-EnchantingRune = руна зачарування
+    .desc = Руна для зачарування предметів.
+ent-EnchantingRuneCarved = незавершена руна
+    .desc = Незавершена руна, потребує крові.
+ent-MajorDemonRune = велике коло призову
+    .desc = Руна для призову великих демонів.
+ent-MajorRuneCarved = незавершена руна
+    .desc = Незавершена руна, потребує крові.
+ent-MediumDemonRune = коло призову
+    .desc = Руна для призову демонів.
+ent-MediumRuneCarved = незавершена руна
+    .desc = Незавершена руна, потребує крові.
+ent-MinorDemonRune = мале коло призову
+    .desc = Руна для призову малих демонів.
+ent-MinorRuneCarved = незавершена руна
+    .desc = Незавершена руна, потребує крові.

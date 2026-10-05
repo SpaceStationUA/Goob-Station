@@ -1,0 +1,14 @@
+ent-HamtrCentralElectronics = центральний модуль управління HAMTR
+    .desc = Електричний центр управління механізмом HAMTR.
+ent-HamtrPeripheralsElectronics = модуль керування периферійними пристроями HAMTR
+    .desc = Електрична периферія для управління механізмом HAMTR.
+ent-HonkerCentralElectronics = модуль центрального управління H.O.N.K.
+    .desc = Електричний центр управління механізмом H.O.N.K.
+ent-HonkerPeripheralsElectronics = модуль керування периферією H.O.N.K.
+    .desc = Керування електричною периферією для механізму H.O.N.K.
+ent-HonkerTargetingElectronics = модуль управління та наведення зброї H.O.N.K.
+    .desc = Електричне керування прицілюванням для механізму H.O.N.K.
+ent-RipleyCentralElectronics = центральний модуль управління Ripley
+    .desc = Електричний центр управління для ріппі-меха.
+ent-RipleyPeripheralsElectronics = модуль управління периферійними пристроями Ripley
+    .desc = Електрична периферія керує роботою механізму.

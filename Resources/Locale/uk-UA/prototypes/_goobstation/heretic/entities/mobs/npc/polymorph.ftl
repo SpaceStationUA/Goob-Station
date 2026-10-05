@@ -1,0 +1,10 @@
+ent-MobHereticFleshAscend = олдріт хоррор
+    .desc = Незрозуміле місиво з кінцівок і очей. Ти відчуваєш, як воно дивиться тобі в душу.
+ent-PolymorphAshJaunt = Невідомо
+    .desc = Ви не можете зрозуміти, що це таке.
+ent-PolymorphAshJauntAnimation = Невідомо
+    .desc = Ви не можете зрозуміти, що це таке.
+ent-PolymorphAshJauntEndAnimation = Невідомо
+    .desc = Ви не можете зрозуміти, що це таке.
+ent-VoidPrison = В'язниця Пустки
+    .desc = Позіхаюча пустка огортає їхню смертну оболонку.

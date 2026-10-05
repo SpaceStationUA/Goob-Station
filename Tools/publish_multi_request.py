@@ -20,8 +20,9 @@ RELEASE_DIR = "release"
 # CONFIGURATION PARAMETERS
 # Forks should change these to publish to their own infrastructure.
 #
-ROBUST_CDN_URL = "https://cdn.goobstation.com/"
-FORK_ID = "GoobLRP"
+# Pirate: require an explicit destination; never publish to another fork's CDN.
+ROBUST_CDN_URL = os.environ["ROBUST_CDN_URL"].rstrip("/") + "/"
+FORK_ID = os.environ["FORK_ID"]
 
 def main():
     session = requests.Session()

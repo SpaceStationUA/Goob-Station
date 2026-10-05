@@ -49,6 +49,12 @@ public sealed class ContractsRejectMessage(int index) : BoundUserInterfaceMessag
 }
 
 [Serializable, NetSerializable]
+public sealed class ContractsAbandonMessage(int index) : BoundUserInterfaceMessage
+{
+    public readonly int Index = index;
+}
+
+[Serializable, NetSerializable]
 public sealed class PdaShowContractsMessage : BoundUserInterfaceMessage;
 
 /// <summary>

@@ -13,6 +13,7 @@ public static class SlimeMorphCategories
         MarkingCategories.FacialHair,
         MarkingCategories.FacialHairSpecial,
         MarkingCategories.Head,
+        MarkingCategories.HeadShape,
         MarkingCategories.HeadTop,
         MarkingCategories.HeadSide,
         MarkingCategories.Snout,

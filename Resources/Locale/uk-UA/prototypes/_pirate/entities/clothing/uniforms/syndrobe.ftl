@@ -1,0 +1,12 @@
+ent-ClothingUniformJumpskirtSyndieTactical = тактичний гольф-спідниця
+    .desc = Обтислий гольф кольору Синдикату з чорною спідницею. Успіхів у суперечках щодо лояльності в цьому вбранні.
+ent-ClothingUniformJumpsuitBloodRedPajamas = криваво-червона піжама
+    .desc = Чи сняться оперативникам ядерні вівці?
+ent-ClothingUniformJumpsuitCamoGreen = камуфляжна форма
+    .desc = Зелена військова камуфляжна форма.
+ent-ClothingUniformJumpsuitSyndieCombat = бойова форма
+    .desc = З такою кількістю кишень у костюмі ти готовий до роботи.
+ent-ClothingUniformJumpsuitSyndieInsulated = утеплений тактичний гольф
+    .desc = Непримітний і трохи підозрілий гольф із цифровими камуфляжними штанами-карго. Усередині є спеціальна ізоляція для тепла й захисту.
+ent-ClothingUniformJumpsuitSyndieTactical = тактичний гольф
+    .desc = Обтислий гольф кольору Синдикату з чорними штанами-карго. Успіхів у суперечках щодо лояльності в цьому вбранні.

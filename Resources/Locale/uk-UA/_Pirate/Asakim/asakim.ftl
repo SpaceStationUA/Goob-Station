@@ -24,12 +24,14 @@ damage-on-unequip-begin = {$item} починає скрипіти й стогн�
 damage-on-unequip-finish = {$item} здирається з тіла {$wearer}!
 
 ent-MindRoleAsakim = роль Асакима
+    .desc = { ent-BaseMindRole.desc }
 ent-MobAsakimGhostrole = воїн Асаким
     .desc = Генетично вдосконалена рептилоїдна біозброя.
     .suffix = Асаким
 ent-MobAsakimDummy =
     .desc = Манекен Асакима для меню створення персонажа.
 ent-OrganAsakimEyes = очі Асакима
+    .desc = { ent-OrganHumanEyes.desc }
 
 ent-PartAsakim = частина тіла Асакима
 ent-ChestAsakim = груди Асакима
@@ -62,7 +64,9 @@ ent-ClothingUniformJumpsuitAsakim = бойовий комбінезон
 ent-WeaponRifleAsakimAutopulser = плазмовий автомат
     .desc = Вдосконалена ручна плазмова гвинтівка.
 ent-HandheldAutopulserProjectile = плазмовий заряд
+    .desc = { ent-BaseBullet.desc }
 ent-HandheldAutopulserDisablerProjectile = паралізувальний плазмовий заряд
+    .desc = { ent-BaseBullet.desc }
 ent-WeaponHFKatana = високочастотний клинок
     .desc = Надзвичайно потужний клинок, що вібрує з високою частотою.
 

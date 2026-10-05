@@ -1,0 +1,14 @@
+ent-BulletBigshot = великий постріл
+    .desc = { ent-BaseBullet.desc }
+ent-BulletClownshot = клоуншот
+    .desc = { ent-BaseBullet.desc }
+ent-BulletDetain = затримати
+    .desc = { ent-BaseBullet.desc }
+ent-BulletExecute = стратити
+    .desc = { ent-BaseBullet.desc }
+ent-BulletHotshot = гарячий постріл
+    .desc = { ent-BaseBullet.desc }
+ent-BulletPulse = імпульс
+    .desc = { ent-BaseBullet.desc }
+ent-BulletSleepshot = сонний постріл
+    .desc = { ent-BaseBullet.desc }

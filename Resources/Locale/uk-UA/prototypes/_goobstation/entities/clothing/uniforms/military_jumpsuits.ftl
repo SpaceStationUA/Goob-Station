@@ -1,0 +1,12 @@
+ent-ClothingUniformJumpsuitMilitaryColorBlackAlt = чорний комбінезон
+    .desc = Звичайний чорний комбінезон без знаків розрізнення.
+ent-ClothingUniformJumpsuitMilitaryMailCarrier = комбінезон поштаря
+    .desc = Ворог усіх службових собак.
+ent-ClothingUniformJumpsuitMilitarySalvageSpecialist = комбінезон спеціаліста з утилізації
+    .desc = { ent-ClothingUniformJumpsuitSalvageSpecialist.desc }
+ent-ClothingUniformJumpsuitMilitarySecurity = комбінезон служби безпеки
+    .desc = Комбінезон із міцного матеріалу, що забезпечує надійний захист.
+ent-ClothingUniformJumpsuitMilitarySecuritySeniorOfficer = комбінезон старшого офіцера СБ
+    .desc = Ознака майстерності та престижу у відділі служби безпеки.
+ent-ClothingUniformJumpsuitMilitarySeniorResearcher = комбінезон старшого дослідника
+    .desc = Ознака майстерності та престижу в науковому відділі.

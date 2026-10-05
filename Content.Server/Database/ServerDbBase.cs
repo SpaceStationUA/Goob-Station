@@ -33,7 +33,7 @@ using Content.Shared._Pirate.Photo; // Pirate: cameras (photo persistence)
 
 namespace Content.Server.Database
 {
-    public abstract class ServerDbBase
+    public abstract partial class ServerDbBase // Pirate: temporary ranks
     {
         private readonly ISawmill _opsLog;
         public event Action<DatabaseNotification>? OnNotificationReceived;

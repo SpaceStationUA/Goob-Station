@@ -1,0 +1,1 @@
+ent-BaseMobChitinid = Уріст МакАнт

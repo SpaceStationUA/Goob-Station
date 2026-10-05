@@ -38,6 +38,7 @@ public sealed class ReputationSystem : EntitySystem
             subs.Event<ContractsAcceptMessage>(OnAcceptMessage);
             subs.Event<ContractsCompleteMessage>(OnCompleteMessage);
             subs.Event<ContractsRejectMessage>(OnRejectMessage);
+            subs.Event<ContractsAbandonMessage>(OnAbandonMessage);
         });
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
@@ -141,6 +142,12 @@ public sealed class ReputationSystem : EntitySystem
     {
         if (GetContracts(ent.Comp.Mind) is {} contracts)
             TryRejectOffering(contracts, args.Index);
+    }
+
+    private void OnAbandonMessage(Entity<StoreContractsComponent> ent, ref ContractsAbandonMessage args)
+    {
+        if (GetContracts(ent.Comp.Mind) is {} contracts)
+            TryAbandonContract(contracts, args.Index);
     }
 
     #endregion
@@ -267,6 +274,7 @@ public sealed class ReputationSystem : EntitySystem
         var slot = ent.Comp.Slots[index];
         slot.ObjectiveTitle = _contract.ContractName(objective);
         slot.Icon = Comp<ObjectiveComponent>(objective).Icon;
+        slot.Abandonable = _contract.CanAbandon(objective);
         ent.Comp.Slots[index] = slot;
         Dirty(ent);
 
@@ -336,10 +344,22 @@ public sealed class ReputationSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Call this to fail a contract if it becomes impossible to complete.
-    /// E.g. trying to steal an item that gets deleted
-    /// </summary>
+    // Completed and prepaid contracts cannot be abandoned.
+    public bool TryAbandonContract(Entity<ContractsComponent> ent, int index)
+    {
+        if (index < 0 ||
+            index >= ent.Comp.Slots.Count ||
+            ent.Comp.Objectives[index] is not {} objective ||
+            !TryComp<MindComponent>(ent, out var mind) ||
+            _objectives.IsCompleted(objective, (ent.Owner, mind)) ||
+            !_contract.CanAbandon(objective))
+        {
+            return false;
+        }
+
+        return TryFailContract(ent, objective);
+    }
+
     public bool TryFailContract(Entity<ContractsComponent> ent, EntityUid objective)
     {
         if (FindContract(ent, objective) is not {} index)

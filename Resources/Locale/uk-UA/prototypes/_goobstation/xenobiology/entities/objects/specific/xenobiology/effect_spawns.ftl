@@ -1,0 +1,11 @@
+ent-RHostileMobSpawner = випадковий спавнер ворожих мобів
+ent-RNeutralMobSpawner = випадковий спавнер нейтральних мобів
+ent-RPassiveMobSpawner = випадковий спавнер пасивних мобів
+ent-RandomHostileMobSpawner = спавнер випадкових ворожих істот
+ent-RandomNeutralMobSpawner = спавнер випадкових нейтральних істот
+ent-RandomPassiveMobSpawner = спавнер випадкових пасивних істот
+ent-XenoExtractChronofield = сепієве хронополе
+    .desc = { ent-Chronofield.desc }
+ent-XenoExtractChronofieldSpawner = спавнер сепійного хрополе
+ent-XenoGooWall = драглистий наріст
+    .desc = Це цілком може бути блоб із космічного ЛІДЛу.

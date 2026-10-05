@@ -30,7 +30,7 @@ using System.Collections.Generic; // Pirate: persistent photo albums
 
 namespace Content.Server.Database
 {
-    public interface IServerDbManager
+    public partial interface IServerDbManager // Pirate: temporary ranks
     {
         void Init();
 
@@ -455,7 +455,7 @@ namespace Content.Server.Database
         public string? Payload { get; set; }
     }
 
-    public sealed class ServerDbManager : IServerDbManager
+    public sealed partial class ServerDbManager : IServerDbManager // Pirate: temporary ranks
     {
         public static readonly Counter DbReadOpsMetric = Metrics.CreateCounter(
             "db_read_ops",

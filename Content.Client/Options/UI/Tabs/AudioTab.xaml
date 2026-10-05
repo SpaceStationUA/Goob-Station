@@ -38,6 +38,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                           ToolTip="{Loc 'ui-options-transcribed-announcement-sounds-tooltip'}" />
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
                 <CheckBox Name="BwoinkSoundCheckBox" Text="{Loc 'ui-options-bwoink-sound'}" />
+                <!-- Pirate: mentorhelp -->
+                <CheckBox Name="MentorHelpSoundCheckBox" Text="{Loc 'ui-options-mentorhelp-sound'}" />
                 <!-- Pirate: radio sounds -->
                 <CheckBox Name="RadioSoundsCheckBox" Text="{Loc 'ui-options-radio-sounds'}" />
             </BoxContainer>

@@ -1,0 +1,1 @@
+ent-BaseMobShadowling = Уріст МакСлінг

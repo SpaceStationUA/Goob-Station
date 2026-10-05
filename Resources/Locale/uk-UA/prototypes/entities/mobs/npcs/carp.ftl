@@ -1,0 +1,12 @@
+ent-BaseMobCarp = космічний короп
+    .desc = Ненажерлива небезпечна риба з відкритого космосу.
+ent-MobCarpDragon = космічний короп
+    .desc = { ent-BaseMobCarp.desc }
+ent-MobCarpHolo = голокарп
+    .desc = Короп з голографічних енергій. На жаль для вас, це цілком реально.
+ent-MobCarpMagic = magicarp
+    .desc = Схоже на якусь рибу. Може, чарівна.
+ent-MobCarpRainbow = райдужний короп
+    .desc = Ого, яка блискуча рибка!
+ent-MobShark = sharkminnow
+    .desc = Небезпечна акула з чорноти нескінченного космосу, яка любить пити кров.

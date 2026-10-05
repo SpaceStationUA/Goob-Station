@@ -283,7 +283,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         var applyUndergarmentTop = censorNudity;
         var applyUndergarmentBottom = censorNudity;
 
-        foreach (var markingList in humanoid.MarkingSet.Markings.Values)
+        foreach (var markingList in humanoid.MarkingSet.InApplyOrder()) // Pirate: lizard head shape
         {
             foreach (var marking in markingList)
             {

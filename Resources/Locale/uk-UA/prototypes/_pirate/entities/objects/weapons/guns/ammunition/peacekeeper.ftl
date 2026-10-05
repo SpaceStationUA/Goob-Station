@@ -1,0 +1,13 @@
+ent-BasePeacekeeperBox = гранатний набій
+ent-BoxPeacekeeperBaton = коробка кийкових набоїв «Миротворця»
+ent-BoxPeacekeeperFlash = коробка світлошумових набоїв «Миротворця»
+ent-BoxPeacekeeperGas = коробка газових набоїв «Миротворця»
+ent-BoxPeacekeeperStinger = коробка жалких набоїв «Миротворця»
+ent-BulletGrenadeGas = озброєна газова граната
+    .desc = { ent-BaseBullet.desc }
+ent-BulletGrenadeStinger = озброєна жалка граната
+    .desc = { ent-BaseBullet.desc }
+ent-GrenadeGaslauncher = газова граната
+ent-GrenadeStingerlauncher = жалка граната
+ent-PelletClusterLesserRubber = гумова кулька
+    .desc = { ent-BaseBullet.desc }

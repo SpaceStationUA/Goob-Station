@@ -15,6 +15,7 @@ namespace Content.Client.Administration.UI.Bwoink
         public BwoinkWindow()
         {
             RobustXamlLoader.Load(this);
+            Content.Client._Pirate.Administration.MentorHelp.HelpTabs.Install(this, Bwoink); // Pirate: mentorhelp - ahelp/mentorhelp tabs
 
             Bwoink.ChannelSelector.OnSelectionChanged += sel =>
             {
