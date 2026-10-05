@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Message;
 using Content.Client.Resources;
+using Content.Client.Stylesheets;
 using Content.Shared._Pirate.Employment;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -40,16 +41,29 @@ public sealed class EmployerSelectionWindow : DefaultWindow
     };
     private readonly BoxContainer _departments = new() { Orientation = LayoutOrientation.Vertical };
     private readonly Dictionary<string, (ContainerButton Card, EmployerPrototype Employer)> _cards = new();
+    private readonly IReadOnlyDictionary<string, FormattedMessage> _requirementFailures;
     private readonly Button _chooseButton = new() { HorizontalExpand = true };
+    private readonly Label _requirementHint = new()
+    {
+        HorizontalAlignment = HAlignment.Center,
+        HorizontalExpand = true,
+        StyleClasses = { StyleClass.LabelSubText },
+        FontColorOverride = Color.FromHex("#A0A8B8"),
+        Visible = false,
+    };
     private string? _selectedEmployer;
     private EmployerPrototype? _viewedPrototype;
 
     public event Action<EmployerPrototype>? OnEmployerSelected;
 
-    public EmployerSelectionWindow(IReadOnlyList<EmployerPrototype> employers, string? selected)
+    public EmployerSelectionWindow(
+        IReadOnlyList<EmployerPrototype> employers,
+        string? selected,
+        IReadOnlyDictionary<string, FormattedMessage> requirementFailures)
     {
         IoCManager.InjectDependencies(this);
         _resources = IoCManager.Resolve<IResourceCache>();
+        _requirementFailures = requirementFailures;
         _selectedEmployer = selected;
         Title = Loc.GetString("employment-employer-selector-title");
         MinSize = new Vector2(900, 560);
@@ -121,6 +135,7 @@ public sealed class EmployerSelectionWindow : DefaultWindow
         side.AddChild(NanoHeader("employment-employer-selector-departments"));
         side.AddChild(_departments);
         side.AddChild(new Control { VerticalExpand = true, MinHeight = 10 });
+        side.AddChild(_requirementHint);
         side.AddChild(_chooseButton);
         _chooseButton.OnPressed += _ =>
         {
@@ -253,10 +268,27 @@ public sealed class EmployerSelectionWindow : DefaultWindow
                 HorizontalAlignment = HAlignment.Center,
             });
 
-        _chooseButton.Text = _selectedEmployer == employer.ID
+        if (_requirementFailures.TryGetValue(employer.ID, out var requirementFailure))
+        {
+            var tooltip = new Tooltip();
+            tooltip.SetMessage(requirementFailure);
+            _requirementHint.Text = Loc.GetString("employment-employer-selector-requirement-hint");
+            _requirementHint.Visible = true;
+            _requirementHint.TooltipSupplier = _ => tooltip;
+            _chooseButton.Text = Loc.GetString("employment-employer-selector-blocked");
+            _chooseButton.Disabled = true;
+            _chooseButton.TooltipSupplier = _ => tooltip;
+        }
+        else
+        {
+            _requirementHint.Visible = false;
+            _requirementHint.TooltipSupplier = null;
+            _chooseButton.Text = _selectedEmployer == employer.ID
                 ? Loc.GetString("employment-employer-selector-selected")
                 : Loc.GetString("employment-employer-selector-choose");
-        _chooseButton.Disabled = _selectedEmployer == employer.ID;
+            _chooseButton.Disabled = _selectedEmployer == employer.ID;
+            _chooseButton.TooltipSupplier = null;
+        }
         UpdateCardStyles();
     }
 

@@ -4,6 +4,8 @@ humanoid-profile-editor-employer-hint = Наразі впливає тільки
 # Вибір роботодавця
 employment-employer-selector-choose = Обрати роботодавця
 employment-employer-selector-selected = Обрано
+employment-employer-selector-blocked = Заблоковано
+employment-employer-selector-requirement-hint = Наведіть для деталей
 employment-employer-profile-selected = {$employer}
 employment-employer-selector-title = Виберіть роботодавця
 employment-employer-selector-list-title = Роботодавці
@@ -25,7 +27,7 @@ employment-employer-info-roleplay-title = Рекомендації до віді
 
 ### VVV РОБОТОДАВЦІ VVV
 # Безробітній
-employment-employer-name-unaffiliated = Безробітній
+employment-employer-name-unaffiliated = Безробітний
 
 ## НАЗВИ КОРПОРАЦІЙ ПИСАТИ НА АНГЛІЙСЬКІЙ!!!
 # NanoTrasen

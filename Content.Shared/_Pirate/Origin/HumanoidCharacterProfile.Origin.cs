@@ -1,5 +1,12 @@
+using System.Linq;
+using Content.Shared._Pirate.Employment;
 using Content.Shared._Pirate.Origin;
 using Content.Shared.Humanoid;
+using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Roles;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -25,6 +32,100 @@ public sealed partial class HumanoidCharacterProfile
 
         if (!prototypes.HasIndex<CitizenshipPrototype>(Citizenship))
             Citizenship = SharedHumanoidAppearanceSystem.DefaultCitizenship;
+    }
+
+    private void EnsurePirateProfileRequirementsValid(ICommonSession session, IDependencyCollection collection)
+    {
+        var prototypes = collection.Resolve<IPrototypeManager>();
+        var entityManager = collection.Resolve<IEntityManager>();
+        var playTimes = collection.Resolve<ISharedPlaytimeManager>().GetPlayTimes(session);
+        var originalEmployer = Employer;
+
+        for (var attempt = 0; attempt < 3; attempt++)
+        {
+            var citizenshipValid = MeetsRequirements(
+                prototypes.Index<CitizenshipPrototype>(Citizenship).Requirements,
+                this,
+                entityManager,
+                prototypes,
+                playTimes);
+            var employerValid = MeetsRequirements(
+                prototypes.Index<EmployerPrototype>(Employer).Requirements,
+                this,
+                entityManager,
+                prototypes,
+                playTimes);
+
+            if (citizenshipValid && employerValid)
+                break;
+
+            if (!citizenshipValid)
+                Citizenship = SharedHumanoidAppearanceSystem.DefaultCitizenship;
+
+            if (!employerValid)
+                Employer = SharedHumanoidAppearanceSystem.DefaultEmployer;
+        }
+
+        if (!MeetsRequirements(
+                prototypes.Index<CitizenshipPrototype>(Citizenship).Requirements,
+                this,
+                entityManager,
+                prototypes,
+                playTimes)
+            || !MeetsRequirements(
+                prototypes.Index<EmployerPrototype>(Employer).Requirements,
+                this,
+                entityManager,
+                prototypes,
+                playTimes))
+        {
+            Citizenship = SharedHumanoidAppearanceSystem.DefaultCitizenship;
+            Employer = SharedHumanoidAppearanceSystem.DefaultEmployer;
+        }
+
+        if (originalEmployer != Employer)
+            TransferEmployerJobPriorities(prototypes, originalEmployer, Employer);
+    }
+
+    private void TransferEmployerJobPriorities(
+        IPrototypeManager prototypes,
+        string previousEmployerId,
+        string selectedEmployerId)
+    {
+        if (!prototypes.TryIndex<EmployerPrototype>(previousEmployerId, out var previousEmployer)
+            || !prototypes.TryIndex<EmployerPrototype>(selectedEmployerId, out var selectedEmployer))
+        {
+            return;
+        }
+
+        foreach (var baseJob in prototypes.EnumeratePrototypes<DepartmentPrototype>()
+                     .SelectMany(department => department.Roles)
+                     .Distinct())
+        {
+            var previousJob = previousEmployer.JobReplacements.GetValueOrDefault(baseJob, baseJob);
+            var selectedJob = selectedEmployer.JobReplacements.GetValueOrDefault(baseJob, baseJob);
+            if (previousJob == selectedJob || !_jobPriorities.Remove(previousJob, out var priority))
+                continue;
+
+            if (priority != JobPriority.Never)
+                _jobPriorities[selectedJob] = priority;
+        }
+    }
+
+    private static bool MeetsRequirements(
+        IEnumerable<JobRequirement> requirements,
+        HumanoidCharacterProfile profile,
+        IEntityManager entityManager,
+        IPrototypeManager prototypes,
+        IReadOnlyDictionary<string, TimeSpan> playTimes)
+    {
+        foreach (var requirement in requirements)
+        {
+            if (!requirement.Check(entityManager, prototypes, profile, playTimes, out _))
+                return false;
+        }
+
+        return true;
     }
 
     private static string ValidateText(string? value, int maxLength)

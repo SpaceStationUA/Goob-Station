@@ -1,7 +1,6 @@
-using System.Linq;
-using Content.Shared.Customization.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby.UI;
 
@@ -31,13 +30,31 @@ public sealed partial class HumanoidProfileEditor
         RefreshTraits();
     }
 
-    private bool RequirementsValid(IReadOnlyCollection<JobRequirement>? requirements, HumanoidCharacterProfile profile)
+    private bool AreRequirementsMet(
+        IReadOnlyCollection<JobRequirement>? requirements,
+        HumanoidCharacterProfile profile)
+    {
+        return GetRequirementFailureReason(requirements, profile) == null;
+    }
+
+    private FormattedMessage? GetRequirementFailureReason(
+        IReadOnlyCollection<JobRequirement>? requirements,
+        HumanoidCharacterProfile profile)
     {
         if (requirements == null || requirements.Count == 0)
-            return true;
+            return null;
 
         var session = _playerManager.LocalSession;
         var playTimes = session == null ? new Dictionary<string, TimeSpan>() : _requirements.GetPlayTimes(session);
-        return requirements.All(requirement => requirement.Check(_entManager, _prototypeManager, profile, playTimes, out _));
+        var reasons = new List<string>();
+        foreach (var requirement in requirements)
+        {
+            if (requirement.Check(_entManager, _prototypeManager, profile, playTimes, out var reason))
+                continue;
+
+            reasons.Add(reason.ToMarkup());
+        }
+
+        return reasons.Count == 0 ? null : FormattedMessage.FromMarkupOrThrow(string.Join('\n', reasons));
     }
 }

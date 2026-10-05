@@ -783,6 +783,7 @@ namespace Content.Shared.Preferences
 
             EnsureCitizenshipValid(prototypeManager, maxFlavorTextLength); // Pirate - Origin
             EnsureEmployerValid(prototypeManager, maxFlavorTextLength); // Pirate - Origin
+            EnsurePirateProfileRequirementsValid(session, collection); // Pirate - profile requirements
             EnsureJobAlternativesValid(prototypeManager); // Pirate - Alternative Jobs
 
             PreferenceUnavailable = prefsUnavailableMode;

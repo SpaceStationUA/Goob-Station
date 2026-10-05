@@ -31,7 +31,9 @@ public sealed partial class HumanoidProfileEditor
 
         var profile = Profile ?? HumanoidCharacterProfile.DefaultWithSpecies();
         var available = _prototypeManager.EnumeratePrototypes<CitizenshipPrototype>()
-            .Where(citizenship => RequirementsValid(citizenship.Requirements, profile.WithCitizenship(citizenship.ID)))
+            .Where(citizenship => AreRequirementsMet(
+                citizenship.Requirements,
+                profile.WithCitizenship(citizenship.ID)))
             .OrderBy(citizenship => Loc.GetString(citizenship.NameKey))
             .ToList();
 

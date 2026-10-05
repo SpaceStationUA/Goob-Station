@@ -38,6 +38,9 @@ public sealed partial class EmployerPrototype : IPrototype
     [DataField]
     public List<string> Departments { get; private set; } = new();
 
+    /// <summary>
+    /// Character-profile requirements for selecting this employer.
+    /// </summary>
     [DataField]
     public List<JobRequirement> Requirements = new();
 
