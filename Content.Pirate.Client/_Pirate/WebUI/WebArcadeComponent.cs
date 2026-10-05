@@ -8,8 +8,8 @@ namespace Content.Pirate.Client._Pirate.WebUI;
 /// <summary>
 ///     Marker for in-world arcade machines running the Pirate WebArcade
 ///     games (CEF pages served from res://). Client-only: the attaching
-///     system ensures it on arcade-machine prototypes (ID contains
-///     "Arcade"), the server never sees it.
+///     system ensures it on prototypes inheriting ArcadeBase, the server
+///     never sees it.
 /// </summary>
 [RegisterComponent]
 public sealed partial class WebArcadeComponent : Component
