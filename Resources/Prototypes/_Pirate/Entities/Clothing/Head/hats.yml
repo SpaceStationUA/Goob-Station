@@ -24,6 +24,18 @@
         Piercing: 0.7
         Heat: 0.8
 
+## Копія для звичайного лоадауту (всім професіям): без резистів
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretInterdyneWhiteCasual
+  name: білий берет
+  description: Дешева копія берета Інтердайна. Від ліків та лікарні тут хіба що логотип, пришитий криво.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Hats/interdyne_beret.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Hats/interdyne_beret.rsi
+
 - type: entity
   abstract: true # Спрощення файлу абстракцією, щоб не треба було лишній раз копіювати відповідні характеристики
   parent: [ClothingHeadBase, BaseInterdyneContraband]

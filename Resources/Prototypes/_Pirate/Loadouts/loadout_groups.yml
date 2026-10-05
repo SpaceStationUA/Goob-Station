@@ -624,6 +624,7 @@
   - LoadoutHeadBowSmall
   - LoadoutHeadHatBeanieGreen
   - LoadoutHeadHatMountie
+  - LoadoutHeadBeretInterdyneWhite # Інтердайн
   subgroups:
   - PiratePassengerHead
 
@@ -768,6 +769,9 @@
   - LoadoutOuterCoatSubmarinerOpened
   - LoadoutOuterVestColorable
   - LoadoutOuterVestThick
+  - LoadoutOuterCoatInterdyneJacket # Інтердайн
+  - LoadoutOuterCoatInterdyneWhite # Інтердайн
+  - LoadoutOuterCoatInterdyneBlack # Інтердайн
   subgroups:
   - PiratePassengerOuterClothing
 

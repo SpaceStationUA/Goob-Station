@@ -74,6 +74,44 @@
   - type: Clothing
     sprite: _Pirate/Clothing/OuterClothing/Coats/ip_labcoatblack.rsi
 
+## Копії для звичайного лоадауту (всім професіям): без резистів,
+## у куртки лише теплозахист як у зимової куртки
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatInterdyneJacketCasual
+  name: зелена куртка
+  description: Дешева копія куртки Інтердайна. Зовні майже не відрізняється від оригіналу, але замість захисних вставок тут лише тепла підкладка.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/ip_jacket.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/ip_jacket.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 1.1
+    coolingCoefficient: 0.1
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBaseOpened
+  id: ClothingOuterCoatInterdyneWhiteCasual
+  name: білий халат
+  description: Дешева копія лабораторного халата Інтердайна. Зберігає фірмовий вигляд, але виготовлена зі звичайної тканини.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/ip_labcoat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/ip_labcoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBaseOpened
+  id: ClothingOuterCoatInterdyneBlackCasual
+  name: чорний халат
+  description: Дешева копія чорного лабораторного халата Інтердайна. Зберігає фірмовий вигляд, але виготовлена зі звичайної тканини.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/ip_labcoatblack.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/ip_labcoatblack.rsi
+
 - type: entity
   parent: ClothingOuterCoatAMG
   id: ClothingOuterCoatBrigMedic

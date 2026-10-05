@@ -92,6 +92,12 @@
   equipment:
     head: ClothingHeadHatBeretPeaked
 
+# Інтердайн (касуальні копії без резистів)
+- type: loadout
+  id: LoadoutHeadBeretInterdyneWhite
+  equipment:
+    head: ClothingHeadHatBeretInterdyneWhiteCasual
+
 - type: loadout
   id: LoadoutHeadBeanie
   customColorTint: true
@@ -938,6 +944,22 @@
   id: LoadoutOuterOeCorporateJacket
   equipment:
     outerClothing: ClothingOuterOeCorporateJacket
+
+# Інтердайн (касуальні копії без резистів)
+- type: loadout
+  id: LoadoutOuterCoatInterdyneJacket
+  equipment:
+    outerClothing: ClothingOuterCoatInterdyneJacketCasual
+
+- type: loadout
+  id: LoadoutOuterCoatInterdyneWhite
+  equipment:
+    outerClothing: ClothingOuterCoatInterdyneWhiteCasual
+
+- type: loadout
+  id: LoadoutOuterCoatInterdyneBlack
+  equipment:
+    outerClothing: ClothingOuterCoatInterdyneBlackCasual
 
 - type: loadout
   id: LoadoutOuterIdrisIncorporatedWindbreaker
