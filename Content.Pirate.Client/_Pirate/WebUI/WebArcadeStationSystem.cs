@@ -3,7 +3,6 @@
 
 using System;
 using Content.Shared.Verbs;
-using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -12,38 +11,72 @@ namespace Content.Pirate.Client._Pirate.WebUI;
 /// <summary>
 ///     Gives arcade machines the Pirate WebArcade verb ("Игровой автомат"):
 ///     right-click a machine in world and open the CEF game in a window.
-///     Arcade prototypes get a <see cref="WebArcadeComponent"/> client-side
-///     by prototype name (contains "Arcade"), so the server layer stays
-///     untouched.
+///     Entities whose prototype inherits <c>ArcadeBase</c> get a <see cref="WebArcadeComponent"/>
+///     client-side when they are created, so the server layer stays untouched.
 /// </summary>
-public sealed class WebArcadeStationSystem : EntitySystem
+public sealed partial class WebArcadeStationSystem : EntitySystem
 {
+    [Dependency] private IPrototypeManager _prototype = default!;
+
+    private const string ArcadeBaseId = "ArcadeBase";
+
+    // Matched by inheritance, not by "Arcade" in the ID: that also caught signs, floor tiles,
+    // circuitboards and the arcade holopad.
+    private readonly HashSet<string> _arcadePrototypes = new();
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<WebArcadeComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
+        // Replaces a per-frame scan of every sprite entity the client had ever received,
+        // which cost ~2 ms a frame on Nebula and grew the longer the client was connected.
+        EntityManager.EntityInitialized += OnEntityInitialized;
+        RebuildArcadePrototypes();
     }
 
-    public override void FrameUpdate(float frameTime)
+    public override void Shutdown()
     {
-        base.FrameUpdate(frameTime);
+        base.Shutdown();
+        EntityManager.EntityInitialized -= OnEntityInitialized;
+    }
 
-        // Cheap poll: attach the arcade marker when the entity first becomes
-        // animated (seen-set keeps it a no-op thereafter).
-        var query = AllEntityQuery<SpriteComponent>();
-        while (query.MoveNext(out var uid, out _))
+    private void OnEntityInitialized(Entity<MetaDataComponent> ent)
+    {
+        if (ent.Comp.EntityPrototype is { } proto && _arcadePrototypes.Contains(proto.ID))
+            EnsureComp<WebArcadeComponent>(ent);
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (!args.WasModified<EntityPrototype>())
+            return;
+
+        RebuildArcadePrototypes();
+
+        var query = AllEntityQuery<MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var meta))
         {
-            if (HasComp<WebArcadeComponent>(uid))
-                continue;
+            OnEntityInitialized((uid, meta));
+        }
+    }
 
-            var proto = MetaData(uid).EntityPrototype;
-            if (proto == null)
-                continue;
+    private void RebuildArcadePrototypes()
+    {
+        _arcadePrototypes.Clear();
+        foreach (var proto in _prototype.EnumeratePrototypes<EntityPrototype>())
+        {
+            // Abstract ancestors are skipped by EnumerateParents, so look for ArcadeBase among
+            // the direct parents of each concrete ancestor (and the prototype itself).
+            foreach (var ancestor in _prototype.EnumerateParents<EntityPrototype>(proto, includeSelf: true))
+            {
+                if (ancestor.Parents == null || Array.IndexOf(ancestor.Parents, ArcadeBaseId) < 0)
+                    continue;
 
-            // Real arcade machines: SpaceVillainArcade*, ArcadeMachine,
-            // BlockGame* — anything with "Arcade" in the prototype id.
-            if (proto.ID.Contains("Arcade", StringComparison.OrdinalIgnoreCase))
-                EnsureComp<WebArcadeComponent>(uid);
+                _arcadePrototypes.Add(proto.ID);
+                break;
+            }
         }
     }
 
