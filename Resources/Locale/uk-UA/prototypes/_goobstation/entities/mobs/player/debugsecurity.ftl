@@ -1,0 +1,17 @@
+ent-MobHumanBSOBase = базовий офіцер синього щита
+ent-MobHumanBSOModSuit = офіцер синього щита
+ent-MobHumanBSOSuit = офіцер синього щита
+ent-MobHumanBrigmedic = бригмедик
+ent-MobHumanBrigmedicSuit = бригмедик в костюмі
+ent-MobHumanHoSSuit = ГСБ в костюмі
+ent-MobHumanHos = глава служби безпеки
+ent-MobHumanHosModSuit = ГСБ з модкостюмом
+ent-MobHumanSecurityBase = базовий охоронець
+ent-MobHumanSecurityOfficerBasicArmorHelmet = офіцер СБ з базовою бронею
+ent-MobHumanSecurityOfficerBulletproofArmorHelmet = офіцер СБ з бронежилетом
+ent-MobHumanSecurityOfficerModSuit = офіцер СБ з модкостюмом
+ent-MobHumanSecurityOfficerReflectiveArmorHelmet = офіцер СБ з відбивною бронею
+ent-MobHumanSecurityOfficerRiotArmorHelmet = офіцер СБ з протиударною бронею
+ent-MobHumanSecurityOfficerSuit = офіцер СБ в костюмі
+ent-MobHumanWarden = смотритель
+ent-MobHumanWardenSuit = смотритель в костюмі

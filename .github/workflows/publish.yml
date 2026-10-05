@@ -1,80 +1,75 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-
+# Pirate: publication stays disabled until the operator enables PUBLISH_ENABLED.
 name: Publish
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '0 1 * * *'
+
+permissions:
+  contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: pirate-publish
+  cancel-in-progress: false
 
 jobs:
   build:
-    runs-on: self-hosted
-
+    if: github.repository == 'SpaceStationUA/Goob-Station' && (github.event_name == 'workflow_dispatch' || (github.ref == 'refs/heads/master' && vars.PUBLISH_ENABLED == 'true'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
-    - name: Fail if we are attempting to run on the master branch
-      if: ${{GITHUB.REF_NAME == 'master' && github.repository == 'space-wizards/space-station-14'}}
-      run: exit 1
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install publish dependencies
+        run: python -m pip install requests
+      - name: Get engine tags
+        run: git -C RobustToolbox fetch --tags --force
+      - name: Restore
+        run: dotnet restore
+      - name: Build packaging
+        run: dotnet build Content.Packaging --configuration Release --no-restore /m
+      - name: Package server
+        run: dotnet run --project Content.Packaging --configuration Release --no-build -- server --platform linux-x64
+      - name: Package client
+        run: dotnet run --project Content.Packaging --configuration Release --no-build -- client --no-wipe-release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pirate-release
+          path: release/*.zip
+          retention-days: 7
+        if: github.ref == 'refs/heads/master' && (github.event_name == 'workflow_dispatch' || vars.PUBLISH_ENABLED == 'true')
 
-    - name: Install dependencies
-      run: sudo apt-get install -y python3-paramiko python3-lxml
-
-    - name: Check .NET Installation
-      id: check-dotnet
-      run: |
-        if dotnet --info > /dev/null 2>&1; then
-          echo "skip=true" >> $GITHUB_ENV
-        else
-          echo "skip=false" >> $GITHUB_ENV
-        fi
-
-    - uses: actions/checkout@v3.6.0
-      with:
-        submodules: 'recursive'
-    - name: Setup .NET Core
-      if: env.skip == 'false'
-      uses: actions/setup-dotnet@v3.2.0
-      with:
-        dotnet-version: 10.0.x
-
-    - name: Get Engine Tag
-      run: |
-        cd RobustToolbox
-        git fetch --depth=1
-
-
-    - name: Clean
-      run: dotnet clean
-
-    - name: Install dependencies
-      run: dotnet restore
-
-    - name: Build Packaging
-      run: dotnet build Content.Packaging --configuration Release --no-restore /m
-
-    - name: Package server
-      run: dotnet run --project Content.Packaging server --platform win-x64 --platform win-arm64 --platform linux-x64 --platform linux-arm64 --platform osx-x64 --platform osx-arm64
-
-    - name: Package client
-      run: dotnet run --project Content.Packaging client --no-wipe-release
-
-    - name: Publish version
-      run: Tools/publish_multi_request.py
-      env:
-        PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
-
-    - name: Publish changelog (Discord)
-      run: Tools/actions_changelogs_since_last_run.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
-        DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
-
-#    - name: Publish changelog (RSS)
-#      run: Tools/actions_changelog_rss.py
-#      env:
-#        CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}
+      - name: Publish release
+        if: github.ref == 'refs/heads/master' && (github.event_name == 'workflow_dispatch' || vars.PUBLISH_ENABLED == 'true')
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          PUBLISH_SSH_KEY: ${{ secrets.PUBLISH_SSH_KEY }}
+          PUBLISH_SSH_KNOWN_HOSTS: ${{ secrets.PUBLISH_SSH_KNOWN_HOSTS }}
+          ROBUST_CDN_URL: http://127.0.0.1:27691/
+          FORK_ID: pirate-ua
+        run: |
+          set -euo pipefail
+          : "${PUBLISH_TOKEN:?Missing PUBLISH_TOKEN}"
+          : "${PUBLISH_SSH_KEY:?Missing PUBLISH_SSH_KEY}"
+          : "${PUBLISH_SSH_KNOWN_HOSTS:?Missing PUBLISH_SSH_KNOWN_HOSTS}"
+          key="$RUNNER_TEMP/publish.key"
+          hosts="$RUNNER_TEMP/publish.known_hosts"
+          control="$RUNNER_TEMP/publish.sock"
+          umask 077
+          printf '%s\n' "$PUBLISH_SSH_KEY" > "$key"
+          printf '%s\n' "$PUBLISH_SSH_KNOWN_HOSTS" > "$hosts"
+          trap 'ssh -S "$control" -O exit ss14-publish@31.14.17.169 || true; rm -f "$key" "$hosts"' EXIT
+          ssh -fNM -S "$control" -i "$key" \
+            -o BatchMode=yes -o IdentitiesOnly=yes -o ExitOnForwardFailure=yes \
+            -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$hosts" \
+            -L 127.0.0.1:27691:127.0.0.1:27691 ss14-publish@31.14.17.169
+          python Tools/publish_multi_request.py

@@ -1,0 +1,15 @@
+ent-AreaChem = хімлабораторія
+ent-AreaCloning = клонування
+ent-AreaMedical = медвідсік
+ent-AreaMedicalBreak = кімната відпочинку медвідсіку
+ent-AreaMedicalLobby = вестибюль медвідсіку
+ent-AreaMedicalStorage = склад медвідсіку
+ent-AreaMorgue = морг
+ent-AreaParamedic = парамедик
+ent-AreaPatientRoom = палата пацієнтів
+ent-AreaPharmacy = аптека
+ent-AreaPsychology = психологія
+ent-AreaSurgery = хірургія
+ent-AreaSurgeryTheatre = операційна зала
+ent-AreaVirology = вірусологія
+ent-BaseAreaMedical = медичний відділ

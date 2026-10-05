@@ -56,12 +56,10 @@ namespace Content.Server._Shitmed.Body.Systems
                 || organ.IntegrityCap <= 0)
                 return;
 
-
-            // Omu: The expected input is scaled as a number between 12 and 3,
-            // such that "blindness" occurs at 25% eye integrity.
-
-            var blindnessSeverity = (int) ((organ.IntegrityCap - organ.OrganIntegrity) / (organ.IntegrityCap / 12)); // Omu
-            _blindableSystem.SetEyeDamage((organ.Body.Value, blindable), blindnessSeverity); // Omu
+            #region Pirate: eye damage balance - half strength avoids easy explosion blindness
+            var lost = 1f - (float) (organ.OrganIntegrity / organ.IntegrityCap);
+            _blindableSystem.SetEyeDamage((organ.Body.Value, blindable), (int) (blindable.MaxDamage * lost * 0.5f));
+            #endregion
         }
 
         private void OnOrganEnabled(EntityUid uid, EyesComponent component, OrganEnabledEvent args)
@@ -74,7 +72,7 @@ namespace Content.Server._Shitmed.Body.Systems
             var lost = args.Organ.Comp.IntegrityCap > 0
                 ? 1f - (float) (args.Organ.Comp.OrganIntegrity / args.Organ.Comp.IntegrityCap)
                 : 1f;
-            _blindableSystem.SetEyeDamage((body, blindable), (int) (blindable.MaxDamage * lost));
+            _blindableSystem.SetEyeDamage((body, blindable), (int) (blindable.MaxDamage * lost * 0.5f)); // Pirate: eye damage balance
         }
 
         private void OnOrganDisabled(EntityUid uid, EyesComponent component, OrganDisabledEvent args)

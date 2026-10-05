@@ -188,6 +188,7 @@ ent-ActionCultistSanguineDream = Кривавий сон
 ent-ActionCultistTwistedConstruction = Викривлене будівництво
     .desc = Зловісне закляття, що перетворює сталь або скло на рунічну сталь чи рунічне скло.
 ent-MindRoleCultist = Роль культиста
+    .desc = { ent-BaseMindRole.desc }
 ent-ClothingOuterRobesBloodCult = роби культу крові
     .desc = Зловісна тканинна роба, заляпана кров'ю й підсилена бронепластинами, із прикріпленим каптуром.
 ent-ClothingHeadHatHoodBloodCult = каптур культу крові

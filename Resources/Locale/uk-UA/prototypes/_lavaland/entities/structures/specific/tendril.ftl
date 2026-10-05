@@ -1,0 +1,14 @@
+ent-LavalandTendrilBase = вусик
+    .desc = Величезна структура.
+ent-LavalandTendrilGoliath = вусик
+    .desc = Величезна структура.
+ent-LavalandTendrilIcewingWatcher = вусик
+    .desc = Величезна структура.
+ent-LavalandTendrilLavaWatcher = вусик
+    .desc = Величезна структура.
+ent-LavalandTendrilLegion = вусик
+    .desc = Величезна структура.
+ent-LavalandTendrilMagmawingWatcher = вусик
+    .desc = Величезна структура.
+ent-LavalandTendrilSpaceCarp = вусик
+    .desc = Величезна структура.

@@ -4,3 +4,4 @@ lavaland-deathrattle-implant-critical-message = Життєві показник�
 ent-DeathRattleLavalandImplant = Останній Подих
     .desc = Цей імплант сповіщає локальний канал постачання та ретранслює сигнал на станційні канали медичного відділу й постачання, коли носій помирає або переходить у критичний стан. У разі смерті сигнал досягає станції й передає точні координати смерті.
 ent-DeathRattleLavalandImplanter = імплантер «Останній Подих»
+    .desc = { ent-BaseImplantOnlyImplanter.desc }

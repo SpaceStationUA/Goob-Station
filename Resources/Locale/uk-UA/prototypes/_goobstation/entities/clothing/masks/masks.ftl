@@ -1,0 +1,16 @@
+ent-ClothingBSOMaskGasSwat = Протигаз Блюшилд СВАТ
+    .desc = Стандартний протигаз, що видається офіцерам Блюшилд.
+ent-ClothingMaskClownUnremoveable = незнімна бананова перука та маска клоуна
+    .desc = { ent-ClothingMaskClown.desc }
+ent-ClothingMaskGasChrono = футуристичний протигаз
+    .desc = Футуристичний протигаз невідомої конструкції з неймовірною кількістю систем фільтрації
+ent-ClothingMaskGasHalf = половинний протигаз
+    .desc = Протигаз... тільки його половина.
+ent-ClothingMaskGasThunderdome = протигаз Тандердому
+    .desc = ВИ ГОТОВІ ДО РУБИЛОВААА?
+ent-ClothingMaskGasVoiceCraftable = Маска з модулятором голосу
+    .desc = Погано сконструйований модулятор голосу, зроблений з протигаза та голосового тригера.
+ent-ClothingMaskMuzzleSecure = надійний намордник
+    .desc = Може завадити вампірам кусати людей, або не дати набридливим людям розмовляти.
+ent-ClothingMaskMuzzleShock = шоковий намордник
+    .desc = Намордник, призначений для запобігання укусам. Цей оснащений системою корекції поведінки.

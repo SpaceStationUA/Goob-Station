@@ -1,0 +1,10 @@
+ent-ShuttleGunDusterCircuitboard = плата "Дастера" EXP-2100g
+    .desc = Машинна друкована плата для "Дастера" EXP-2100g.
+ent-ShuttleGunFriendshipCircuitboard = плата "Дружби" EXP-320g
+    .desc = Машинна друкована плата для "Дружби" EXP-320g.
+ent-ShuttleGunKineticCircuitboard = плата "Дематеріалізатора матерії" PTK-800
+    .desc = Машинна друкована плата для "Дематеріалізатора матерії" PTK-800.
+ent-ShuttleGunPerforatorCircuitboard = плата "Перфоратора" LSE-1200c
+    .desc = Машинна друкована плата для "Перфоратора" LSE-1200c.
+ent-ShuttleGunSvalinnMachineGunCircuitboard = плата кулемета "Свалінн" LSE-400c
+    .desc = Машинна друкована плата для кулемета "Свалінн" LSE-400c.

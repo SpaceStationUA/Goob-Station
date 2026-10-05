@@ -4588,8 +4588,7 @@ entities:
     - type: OreSiloClient
       siloNetwork: perdition
     - type: DeviceNetwork
-      configurators:
-      - invalid
+      configurators: []
     - type: TechnologyDatabase
       supportedDisciplines:
       - Industrial

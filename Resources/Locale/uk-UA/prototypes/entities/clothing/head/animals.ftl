@@ -1,0 +1,10 @@
+ent-ClothingHeadHatAnimalCat = сіра котяча шапка
+    .desc = Мила та пухнаста голова сірого кота.
+ent-ClothingHeadHatAnimalCatBlack = чорна котяча шапка
+    .desc = Мила і пухнаста голова чорного кота.
+ent-ClothingHeadHatAnimalCatBrown = коричнева котяча шапка
+    .desc = Мила та пухнаста голова коричневого кота.
+ent-ClothingHeadHatAnimalHeadslime = капелюх з вапна
+    .desc = Зелене, липке вапно для голови, і ви надягаєте його на голову.
+ent-ClothingHeadHatAnimalMonkey = мавпяча шапка
+    .desc = Це голова мавпи. У неї отвір на роті, щоб їсти банани.

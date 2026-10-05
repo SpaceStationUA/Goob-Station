@@ -1,0 +1,9 @@
+ent-CapGunSpawner90 = спавнер пістолетів із пістонами
+ent-CrayonSpawner90 = спавнер крейди
+ent-MechFigurineSpawner50 = спавнер фігурок мехів
+ent-MiscToySpawner90 = спавнер різних іграшок
+ent-PlushieSpawner50 = спавнер плюшевих іграшок
+ent-SpacemenFigurineSpawner90 = спавнер мініфігурок космонавтів
+ent-ToySoundMakerSpawner90 = спавнер іграшок зі звуком
+ent-ToySpawner90 = спавнер іграшок
+ent-ToyWeaponSpawner90 = спавнер іграшкової зброї

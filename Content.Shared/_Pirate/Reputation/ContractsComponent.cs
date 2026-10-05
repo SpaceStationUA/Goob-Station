@@ -71,11 +71,8 @@ public sealed partial class ContractsComponent : Component
     [DataField]
     public TimeSpan CompleteDelay = TimeSpan.FromMinutes(5);
 
-    /// <summary>
-    /// How long you have to wait before you can get a new offering after you reject one.
-    /// </summary>
     [DataField]
-    public TimeSpan RejectDelay = TimeSpan.FromMinutes(15);
+    public TimeSpan RejectDelay = TimeSpan.FromMinutes(10);
 
     /// <summary>
     /// How long you have to wait before you can get a new offering after you accept one.
@@ -101,6 +98,9 @@ public partial record struct ContractSlot
     /// </summary>
     [DataField]
     public SpriteSpecifier? Icon;
+
+    [DataField]
+    public bool Abandonable;
 
     /// <summary>
     /// When the slot gets unlocked and a new contract can be taken.

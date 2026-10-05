@@ -1,0 +1,1 @@
+ent-SpawnPointForensicMantis = псіо-екстрасенс

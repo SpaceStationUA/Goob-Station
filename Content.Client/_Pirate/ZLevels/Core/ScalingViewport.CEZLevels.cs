@@ -10,7 +10,6 @@ using Content.Shared._Pirate.ZLevels.Apertures.Components;
 using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared.CCVar;
-using Content.Shared.Maps;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
@@ -26,9 +25,7 @@ namespace Content.Client.Viewport;
 public sealed partial class ScalingViewport
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly ITileDefinitionManager _tile = default!;
     [Dependency] private readonly IOverlayManager _overlayManager = default!; // Pirate: multiz
     [Dependency] private readonly IPlacementManager _placement = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -55,67 +52,10 @@ public sealed partial class ScalingViewport
 
     // Cached reference to the engine's PlacementOverlay, found by type name. Pirate: multiz
     private Overlay? _cachedPlacementOverlay; // Pirate: multiz
-    // Only the deepest pass may draw full-screen parallax.
-    private Overlay? _cachedParallaxOverlay;
-
-    /// <summary>
-    /// We are looking for at least one empty tile on the screen.
-    /// This is used to ensure that it makes sense to draw the z-planes and that they are visible.
-    /// </summary>
-    public bool TryFindEmptyTiles(EntityUid mapUid)
-    {
-        if (_xformQuery is null || !_xformQuery.Value.TryComp(mapUid, out var xform))
-            return true;
-
-        var drawBox = GetDrawBox();
-        var mapId = xform.MapID;
-
-        var corners = new[]
-        {
-            _eyeManager.ScreenToMap(drawBox.BottomLeft).Position,
-            _eyeManager.ScreenToMap(drawBox.BottomRight).Position,
-            _eyeManager.ScreenToMap(drawBox.TopLeft).Position,
-            _eyeManager.ScreenToMap(drawBox.TopRight).Position
-        };
-
-        float minX = float.MaxValue, minY = float.MaxValue;
-        float maxX = float.MinValue, maxY = float.MinValue;
-
-        foreach (var c in corners)
-        {
-            if (c.X < minX)
-                minX = c.X;
-            if (c.Y < minY)
-                minY = c.Y;
-            if (c.X > maxX)
-                maxX = c.X;
-            if (c.Y > maxY)
-                maxY = c.Y;
-        }
-
-        var mapCoordsBottomLeft = new MapCoordinates(new Vector2(minX, minY), mapId);
-        var mapCoordsTopRight = new MapCoordinates(new Vector2(maxX, maxY), mapId);
-
-        if (!_mapManager.TryFindGridAt(mapUid, mapCoordsBottomLeft.Position, out _, out var grid))
-            return true;
-
-        _mapSystem ??= _entityManager.System<SharedMapSystem>();
-        var tileBottomLeft = _mapSystem.TileIndicesFor(mapUid, grid, mapCoordsBottomLeft);
-        var tileTopRight = _mapSystem.TileIndicesFor(mapUid, grid, mapCoordsTopRight);
-
-        for (var x = tileBottomLeft.X - 1; x <= tileTopRight.X + 1; x++)
-        {
-            for (var y = tileBottomLeft.Y - 1; y <= tileTopRight.Y + 1; y++)
-            {
-                var tile = _mapSystem.GetTileRef(mapUid, grid, new Vector2i(x, y));
-                var tileDef = (ContentTileDefinition)_tile[tile.Tile.TypeId];
-                if (tileDef.ZTransparent || tile.Tile.IsEmpty)
-                    return true;
-            }
-        }
-
-        return false;
-    }
+    // Only the deepest pass draws space backgrounds; resolve the meteor overlay by name because it lives in another assembly.
+    private const string MeteorParallaxOverlayName = "Content.Goobstation.Client.Parallax.MeteorParallaxOverlay";
+    private Type? _meteorParallaxOverlayType;
+    private readonly List<Overlay> _hiddenBackgroundOverlays = new();
 
     /// <summary>
     /// Resolves the map for a depth offset, preferring linked-grid peers.
@@ -312,6 +252,7 @@ public sealed partial class ScalingViewport
         _zApertureValidTargets.Clear();
         _zApertureMapUids.Clear();
         _zApertureEyes.Clear();
+        _zApertureRequiredTargets.Clear();
 
         var lowestDepth = 0;
         for (var i = 0; i >= -visibleBelow; i--)
@@ -325,7 +266,24 @@ public sealed partial class ScalingViewport
             lowestDepth = i;
         }
 
-        _zApertureCaptureThisFrame = HasZLevelAperturesInRenderedDepths(playerXform.MapUid.Value, effectiveGridUid, lowestDepth, highestDepth);
+        // Look-up and stair previews keep the full path until their compositing has separate coverage tests.
+        if (lowestDepth < 0 && highestDepth == 0 && !zLevelViewer.LookUp && !zLevelViewer.StairPreviewUp &&
+            _cfg.GetCVar(CCVars.ZCullHiddenLevels) && CanCullLowerZLevels(playerXform.MapUid.Value, viewport))
+        {
+            lowestDepth = 0;
+        }
+
+        if (_cfg.GetCVar(CCVars.ZCullApertureCopies))
+        {
+            CollectRequiredZLevelApertureTargets(playerXform, effectiveGridUid, lowestDepth, highestDepth);
+        }
+        else if (HasZLevelAperturesInRenderedDepths(playerXform.MapUid.Value, effectiveGridUid, lowestDepth, highestDepth))
+        {
+            for (var depth = lowestDepth; depth < highestDepth; depth++)
+                _zApertureRequiredTargets.Add(depth);
+        }
+
+        _zApertureCaptureThisFrame = _zApertureRequiredTargets.Count > 0;
 
         if (_zApertureCaptureThisFrame)
         {
@@ -337,8 +295,8 @@ public sealed partial class ScalingViewport
         // Hide it on secondary passes to avoid duplicate previews. Pirate: multiz
         _cachedPlacementOverlay ??= _overlayManager.AllOverlays // Pirate: multiz
             .FirstOrDefault(o => o.GetType().FullName == "Robust.Client.Placement.PlacementManager+PlacementOverlay"); // Pirate: multiz
-        _cachedParallaxOverlay ??= _overlayManager.AllOverlays
-            .FirstOrDefault(o => o is Content.Client.Parallax.ParallaxOverlay);
+        _meteorParallaxOverlayType ??= _overlayManager.AllOverlays
+            .FirstOrDefault(o => o.GetType().FullName == MeteorParallaxOverlayName)?.GetType();
 
         var playerEye = _fallbackEye as Robust.Shared.Graphics.Eye;
         var playerEyePosition = playerEye?.Position ?? default;
@@ -347,6 +305,10 @@ public sealed partial class ScalingViewport
         var playerEyeOffset = playerEye?.Offset ?? default;
         var playerEyeRotation = playerEye?.Rotation ?? default;
         var playerEyeScale = playerEye?.Scale ?? default;
+
+        PrepareLowerZRenderRegions(viewport, playerXform, effectiveGridUid, lowestDepth,
+            highestDepth == 0 && !zLevelViewer.LookUp && !zLevelViewer.StairPreviewUp &&
+            _cfg.GetCVar(CCVars.ZCullHiddenRegions));
 
         try
         {
@@ -415,21 +377,32 @@ public sealed partial class ScalingViewport
                 if (hidePlacement)
                     _overlayManager.RemoveOverlay(_cachedPlacementOverlay!);
 
-                // Higher deck parallax would cover the already composited lower decks.
-                var hideParallax = depth != lowestDepth && _cachedParallaxOverlay != null;
-                if (hideParallax)
-                    _overlayManager.RemoveOverlay(_cachedParallaxOverlay!);
+                // A higher deck's space background would cover the already composited lower decks.
+                _hiddenBackgroundOverlays.Clear();
+                if (depth != lowestDepth)
+                {
+                    HideBackgroundOverlay(typeof(Content.Client.Parallax.ParallaxOverlay));
+                    if (_meteorParallaxOverlayType != null)
+                        HideBackgroundOverlay(_meteorParallaxOverlayType);
+                }
 
-                viewport.Render();
+                try
+                {
+                    if (!TryRenderLowerZRegion(viewport, screenHandle, eye, depth))
+                        viewport.Render();
 
-                if (_zApertureCaptureThisFrame && depth < highestDepth)
-                    CaptureZLevelApertureTexture(screenHandle, viewport, depth);
+                    if (_zApertureRequiredTargets.Contains(depth))
+                        CaptureZLevelApertureTexture(screenHandle, viewport, depth);
+                }
+                finally
+                {
+                    foreach (var overlay in _hiddenBackgroundOverlays)
+                        _overlayManager.AddOverlay(overlay);
+                    _hiddenBackgroundOverlays.Clear();
 
-                if (hideParallax)
-                    _overlayManager.AddOverlay(_cachedParallaxOverlay!);
-
-                if (hidePlacement)
-                    _overlayManager.AddOverlay(_cachedPlacementOverlay!);
+                    if (hidePlacement)
+                        _overlayManager.AddOverlay(_cachedPlacementOverlay!);
+                }
                 #endregion Pirate: multiz
             }
         }
@@ -448,6 +421,13 @@ public sealed partial class ScalingViewport
             Eye = _fallbackEye;
             viewport.Eye = Eye;
         }
+    }
+
+    // Hides the live instance, so a re-created overlay (reconnect) is never swapped for a stale cached one.
+    private void HideBackgroundOverlay(Type overlayType)
+    {
+        if (_overlayManager.TryGetOverlay(overlayType, out var overlay) && _overlayManager.RemoveOverlay(overlay))
+            _hiddenBackgroundOverlays.Add(overlay);
     }
 
     // Returns the remote eye currently viewed by the local player, if any.
@@ -507,6 +487,9 @@ public sealed partial class ScalingViewport
     {
         for (var depth = lowestDepth; depth < lookUp; depth++)
         {
+            if (!_zApertureRequiredTargets.Contains(depth))
+                continue;
+
             if (_zApertureTargets.TryGetValue(depth, out var existing) && existing.Size == size)
                 continue;
 
@@ -537,7 +520,7 @@ public sealed partial class ScalingViewport
     {
         if (_fallbackEye is null ||
             _viewport is null ||
-            !ReferenceEquals(viewport, _viewport))
+            (!ReferenceEquals(viewport, _viewport) && !ReferenceEquals(viewport, _zActiveCropViewport)))
         {
             return;
         }
@@ -695,6 +678,8 @@ public sealed partial class ScalingViewport
 
         if (!disposing)
             return;
+
+        DisposeZCropViewports();
 
         if (_zApertureOverlay != null)
         {

@@ -14,6 +14,22 @@
     description: ghost-role-information-laika-description
     job: RoleLaika
   - type: GhostTakeoverAvailable
+  - type: StaminaDamageOnHit
+    damage: 14
+  - type: Grappler
+    damageThreshold: 2
+    activationMode:
+      !type:GrapplerActivationStaminaDrain
+        staminaDrainRate: 5
+        movementSpeedModifier: 0.2
+        initialKnockdownTime: 0.5
+        initialDamage:
+          types:
+            Slash: 5
+            Piercing: 10
+          woundSeverityMultipliers:
+            Slash: 2
+            Piercing: 2
   - type: InteractionPopup
     successChance: 1
   - type: Grammar

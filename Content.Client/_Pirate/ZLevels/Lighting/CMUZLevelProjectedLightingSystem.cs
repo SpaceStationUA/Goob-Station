@@ -1,6 +1,5 @@
 // SPDX-FileCopyrightText: 2026 ColonialMarinesUniverse contributors <https://github.com/AU-14/ColonialMarinesUniverse>
 // SPDX-License-Identifier: AGPL-3.0-only
-// Ported from ColonialMarinesUniverse Content.Client/_CMU14/ZLevels/Lighting/CMUZLevelProjectedLightingSystem.cs.
 // Client-only fake-light projection: lights on adjacent Z layers spawn PointLights at floor-opening
 // centers on the viewer's map, attenuated by depth and distance. Purely cosmetic.
 
@@ -80,11 +79,14 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
         _mapQuery = GetEntityQuery<MapComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
         _zMapQuery = GetEntityQuery<CEZLevelMapComponent>();
+        InitializeLightOpeningCache();
+        InitializeSourceIndex();
     }
 
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
+        SourceStats = default;
 
         if (!_config.GetCVar(CCVars.CEZProjectedLightingEnabled))
         {
@@ -119,11 +121,12 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
 
         var currentFrame = _timing.CurFrame;
         _activeThisFrame.Clear();
+        _lightOpeningCache.Prune(_timing.RealTime);
 
         var viewBounds = _eyeManager.GetWorldViewbounds();
-        BuildSourceLightBuckets(viewBounds, minEnergy);
-
         Entity<CEZLevelMapComponent?> playerZLevelMap = (playerMapUid, playerZMap);
+        CollectSourceMaps(playerZLevelMap, playerMapComp.MapId, maxDepth);
+        DiscoverSourceLights(viewBounds, minEnergy);
 
         // Pass 1: lights on adjacent layers project onto the player's map. Accumulate every source
         // layer into one candidate set so the cap is enforced on the receiving (player) level as a
@@ -232,30 +235,39 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
         var lightQuery = EntityQueryEnumerator<PointLightComponent, TransformComponent>();
         while (lightQuery.MoveNext(out var lightUid, out var light, out var lightXform))
         {
-            // Skip our own projections + disabled/dark lights + lights outside the view AABB.
-            if (_projectedQuery.HasComp(lightUid) ||
-                lightXform.MapID == MapId.Nullspace ||
-                !light.Enabled ||
-                light.Radius <= 0f ||
-                light.Energy <= 0f ||
-                light.Energy < minEnergy)
-            {
-                continue;
-            }
-
-            var lightWorldPos = _transform.GetWorldPosition(lightXform);
-            var expandedBounds = viewBounds.Enlarged(light.Radius + ViewBoundsLightPadding);
-            if (!expandedBounds.Contains(lightWorldPos))
-                continue;
-
-            GetSourceLightBucket(lightXform.MapID).Add(new SourceLight(
-                lightUid,
-                lightWorldPos,
-                light.Radius,
-                light.Energy,
-                light.Color,
-                light.Softness));
+            AddSourceLight(lightUid, light, lightXform, viewBounds, minEnergy);
         }
+    }
+
+    private void AddSourceLight(EntityUid lightUid, PointLightComponent light, TransformComponent lightXform,
+        Box2Rotated viewBounds, float minEnergy)
+    {
+        SourceStats = SourceStats with { Considered = SourceStats.Considered + 1 };
+        // Skip our own projections + disabled/dark lights + lights outside the view AABB.
+        if (_projectedQuery.HasComp(lightUid) ||
+            lightXform.MapID == MapId.Nullspace ||
+            !light.Enabled ||
+            light.Radius <= 0f ||
+            light.Energy <= 0f ||
+            light.Energy < minEnergy)
+        {
+            return;
+        }
+
+        SourceStats = SourceStats with { Positions = SourceStats.Positions + 1 };
+        var lightWorldPos = _transform.GetWorldPosition(lightXform);
+        var expandedBounds = viewBounds.Enlarged(light.Radius + ViewBoundsLightPadding);
+        if (!expandedBounds.Contains(lightWorldPos))
+            return;
+
+        SourceStats = SourceStats with { Accepted = SourceStats.Accepted + 1 };
+        GetSourceLightBucket(lightXform.MapID).Add(new SourceLight(
+            lightUid,
+            lightWorldPos,
+            light.Radius,
+            light.Energy,
+            light.Color,
+            light.Softness));
     }
 
     private List<SourceLight> GetSourceLightBucket(MapId mapId)
@@ -323,7 +335,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
             var bestIndex = i;
             for (var j = i + 1; j < _candidates.Count; j++)
             {
-                if (_candidates[j].ProjectedEnergy > _candidates[bestIndex].ProjectedEnergy)
+                if (CompareProjectedEnergyDescending(_candidates[j], _candidates[bestIndex]) < 0)
                     bestIndex = j;
             }
 
@@ -334,9 +346,21 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
         }
     }
 
+    // A total order: equal energies must not swap places from frame to frame.
     private static int CompareProjectedEnergyDescending(ProjectedLightCandidate left, ProjectedLightCandidate right)
     {
-        return right.ProjectedEnergy.CompareTo(left.ProjectedEnergy);
+        var energy = right.ProjectedEnergy.CompareTo(left.ProjectedEnergy);
+        if (energy != 0)
+            return energy;
+
+        var source = left.SourceLight.Id.CompareTo(right.SourceLight.Id);
+        return source != 0 ? source : CompareLocalOpening(left, right);
+    }
+
+    private static int CompareLocalOpening(ProjectedLightCandidate left, ProjectedLightCandidate right)
+    {
+        var x = left.LocalOpening.X.CompareTo(right.LocalOpening.X);
+        return x != 0 ? x : left.LocalOpening.Y.CompareTo(right.LocalOpening.Y);
     }
 
     private ProjectedLightCandidate MergeOverflowCandidates(int startIndex)
@@ -399,36 +423,16 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
 
         foreach (var sourceLight in sourceLights)
         {
-            _tempOpenings.Clear();
-            _zLevels.FindOpeningCentersNear(
-                openingMapComp.MapId,
-                sourceLight.WorldPosition,
-                sourceLight.Radius,
-                _tempOpenings,
-                _openingGrids);
-
-            if (_tempOpenings.Count == 0)
+            var frame = GetLightFrame(sourceLight);
+            var openings = GetUnoccludedLightOpenings(sourceLight, frame, adjacentMapId, openingMap, openingMapComp.MapId);
+            if (openings.Count == 0)
                 continue;
 
             _sourceCandidates.Clear();
-            foreach (var (openingCenter, sourceToOpeningDistance) in _tempOpenings)
+            foreach (var (openingCenter, sourceToOpeningDistance) in openings)
             {
-                // Top-down occlusion: walls between source and opening kill the leak.
-                var rayDirection = openingCenter - sourceLight.WorldPosition;
+                var rayDirection = openingCenter - frame.Source;
                 var rayLength = rayDirection.Length();
-                if (rayLength > 0.01f)
-                {
-                    var ray = new CollisionRay(sourceLight.WorldPosition, rayDirection.Normalized(), (int) CollisionGroup.Opaque);
-                    var blocked = false;
-                    foreach (var _ in _physics.IntersectRay(adjacentMapId, ray, rayLength, ignoredEnt: sourceLight.Entity, returnOnFirstHit: true))
-                    {
-                        blocked = true;
-                        break;
-                    }
-
-                    if (blocked)
-                        continue;
-                }
 
                 // Smooth attenuation: (1 - s²)² / (1 + depth*ad + dist*at). Keeps the projection
                 // from being brighter than the source.
@@ -461,12 +465,14 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
                     adjacentMapId,
                     playerMapId,
                     depthOffset,
-                    openingCenter,
-                    projectedCenter,
+                    frame.World(openingCenter),
+                    frame.World(projectedCenter),
                     projectedRadius,
                     projectedEnergy,
                     sourceLight.Color,
-                    sourceLight.Softness);
+                    sourceLight.Softness,
+                    LocalOpening: openingCenter,
+                    LocalProjected: projectedCenter);
 
                 _sourceCandidates.Add(candidate);
             }
@@ -492,7 +498,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
 
         for (var i = 0; i < _sourceCandidates.Count; i++)
         {
-            var bucketKey = GetOpeningCandidateBucketKey(_sourceCandidates[i].OpeningCenter);
+            var bucketKey = GetOpeningCandidateBucketKey(_sourceCandidates[i].LocalOpening);
             if (!_openingCandidateBuckets.TryGetValue(bucketKey, out var bucket))
             {
                 bucket = RentOpeningCandidateBucket();
@@ -565,7 +571,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
 
     private void QueueConnectedOpeningCandidates(ProjectedLightCandidate candidate)
     {
-        var bucketKey = GetOpeningCandidateBucketKey(candidate.OpeningCenter);
+        var bucketKey = GetOpeningCandidateBucketKey(candidate.LocalOpening);
         for (var x = -1; x <= 1; x++)
         {
             for (var y = -1; y <= 1; y++)
@@ -598,7 +604,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
 
     private static bool AreConnectedOpenings(ProjectedLightCandidate left, ProjectedLightCandidate right)
     {
-        return Vector2.DistanceSquared(left.OpeningCenter, right.OpeningCenter) <=
+        return Vector2.DistanceSquared(left.LocalOpening, right.LocalOpening) <=
                OpeningConnectionDistance * OpeningConnectionDistance;
     }
 
@@ -659,7 +665,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
         var mean = Vector2.Zero;
         foreach (var candidate in component)
         {
-            mean += candidate.OpeningCenter;
+            mean += candidate.LocalOpening;
         }
 
         mean /= component.Count;
@@ -669,7 +675,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
         var yy = 0f;
         foreach (var candidate in component)
         {
-            var delta = candidate.OpeningCenter - mean;
+            var delta = candidate.LocalOpening - mean;
             xx += delta.X * delta.X;
             xy += delta.X * delta.Y;
             yy += delta.Y * delta.Y;
@@ -687,7 +693,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
 
         foreach (var candidate in component)
         {
-            var relative = candidate.OpeningCenter - mean;
+            var relative = candidate.LocalOpening - mean;
             var along = Vector2.Dot(relative, axis);
             var across = Vector2.Dot(relative, perpendicular);
             minAlong = Math.Min(minAlong, along);
@@ -730,7 +736,8 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
             }
 
             var minSeparation = Math.Max(0.75f, Math.Min(candidate.ProjectedRadius, accepted.ProjectedRadius) * 0.5f);
-            if (Vector2.DistanceSquared(candidate.ProjectedCenter, accepted.ProjectedCenter) < minSeparation * minSeparation)
+            // Same source light, so both are in its frame.
+            if (Vector2.DistanceSquared(candidate.LocalProjected, accepted.LocalProjected) < minSeparation * minSeparation)
                 return true;
         }
 
@@ -786,7 +793,8 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
     private EntityUid GetOrCreateProjectedLight(ProjectedLightCandidate candidate)
     {
         EntityUid projectedUid;
-        var key = new ProjectedLightKey(candidate.SourceLight, candidate.ReceivingMapId, candidate.OpeningCenter);
+        // Keyed in the source light's frame, so a moving grid keeps its projected lights instead of spawning new ones.
+        var key = new ProjectedLightKey(candidate.SourceLight, candidate.ReceivingMapId, candidate.LocalOpening);
         var mergedKey = new MergedProjectedLightKey(candidate.ReceivingMapId, candidate.DepthOffset);
         var hasProjectedLight = candidate.IsMerged
             ? _mergedProjectedLights.TryGetValue(mergedKey, out projectedUid)
@@ -851,6 +859,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
 
     private void CleanupAllProjectedLights()
     {
+        _lightOpeningCache.Clear();
         foreach (var (_, projectedUid) in _projectedLights)
         {
             if (Exists(projectedUid))
@@ -868,10 +877,14 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
         _activeThisFrame.Clear();
         ClearSourceLightBuckets();
         ClearOpeningCandidateBuckets();
+        // Disabled projection or leaving a Z network must not retain old component references.
+        _sourceIndex.Clear();
+        _sourceIndexDirty = true;
     }
 
     public override void Shutdown()
     {
+        ShutdownSourceIndex();
         base.Shutdown();
         CleanupAllProjectedLights();
     }
@@ -879,7 +892,7 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
     private readonly record struct ProjectedLightKey(
         EntityUid SourceLight,
         MapId ReceivingMapId,
-        Vector2 OpeningCenter);
+        Vector2 LocalOpening);
 
     private readonly record struct MergedProjectedLightKey(
         MapId ReceivingMapId,
@@ -908,7 +921,9 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
         float ProjectedEnergy,
         Color Color,
         float Softness,
-        bool IsMerged = false);
+        bool IsMerged = false,
+        Vector2 LocalOpening = default,
+        Vector2 LocalProjected = default);
 
     private sealed class ProjectedLightAlongAxisComparer : IComparer<ProjectedLightCandidate>
     {
@@ -916,7 +931,8 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
 
         public int Compare(ProjectedLightCandidate left, ProjectedLightCandidate right)
         {
-            return Vector2.Dot(left.OpeningCenter, Axis).CompareTo(Vector2.Dot(right.OpeningCenter, Axis));
+            var along = Vector2.Dot(left.LocalOpening, Axis).CompareTo(Vector2.Dot(right.LocalOpening, Axis));
+            return along != 0 ? along : CompareLocalOpening(left, right);
         }
     }
 }

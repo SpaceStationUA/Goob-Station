@@ -1,0 +1,1 @@
+ent-BaseMobPlasmaman = Уріст Макплазма

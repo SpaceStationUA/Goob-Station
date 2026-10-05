@@ -98,12 +98,20 @@ namespace Content.Shared.Chat
         /// </summary>
         Telepathic = 1 << 16, // Goobstation - Starlight collective mind port
 
+        #region Pirate: staff chats
+        MentorChat = 1 << 17,
+
+        EventChat = 1 << 18,
+
+        CentComChat = 1 << 19,
+        #endregion
+
         /// <summary>
         ///     Channels considered to be IC.
         /// </summary>
         IC = Local | Whisper | Radio | Dead | Emotes | Damage | Visual | Telepathic | CollectiveMind | Notifications, // Goobstation - Starlight collective mind port
 
-        AdminRelated = Admin | AdminAlert | AdminChat,
+        AdminRelated = Admin | AdminAlert | AdminChat | MentorChat | EventChat | CentComChat, // Pirate: staff chats
     }
 
     /// <summary>

@@ -108,3 +108,7 @@ ent-ClothingHeadHelmetHardsuitShiweiUnpainted = Шолом CSA-54UA
     .desc = Елітна версія шолома костюма Shanlin з покращеною бронею та вогнезахистом. Це нефарбований голий космічний корабельний сплав.
 ent-ClothingHeadHelmetHardsuitCybersunStealth = CSA-91x helmet
     .desc = Помірно захисний герметичний шолом, розроблений для захисного костюму. Має метаматеріали "Cloaking".
+ent-ClothingHeadHelmetHardsuitERTChaplain = шолом скафандра капелана КШР
+    .desc = Спеціальний шолом скафандра, який носять члени команди швидкого реагування.
+ent-ClothingHeadHelmetHardsuitGoliath = шолом скафандра "Голіаф"
+    .desc = Міцний шолом для скафандра, посилений шкірою голіафа і моторошним, немиготливим оком, вирізаним з його маси.

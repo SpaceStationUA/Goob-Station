@@ -95,7 +95,7 @@
 - type: marking
   id: MarkingLizardBaseHead
   bodyPart: Head
-  markingCategory: Head
+  markingCategory: HeadShape
   speciesRestriction: [Reptilian]
   sprites:
   - sprite: _Pirate/Mobs/Customization/rept_head.rsi
@@ -106,7 +106,7 @@
 - type: marking
   id: MarkingLizardFlattenedHead
   bodyPart: Head
-  markingCategory: Head
+  markingCategory: HeadShape
   speciesRestriction: [Reptilian]
   sprites:
   - sprite: _Pirate/Mobs/Customization/rept_head.rsi

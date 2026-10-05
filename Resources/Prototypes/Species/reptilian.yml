@@ -46,10 +46,15 @@
   onlyWhitelisted: true
   points:
   # PIRATE START
-    Head:
+    #region Pirate: lizard head shape
+    HeadShape:
       points: 1
       required: true
       defaultMarkings: [ MarkingLizardBaseHead ]
+    Head:
+      points: 3
+      required: false
+    #endregion Pirate: lizard head shape
     Face:
       points: 3
       required: false

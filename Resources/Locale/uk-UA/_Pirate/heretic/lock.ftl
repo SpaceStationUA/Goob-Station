@@ -44,12 +44,18 @@ ent-LeftFootShattered = розколота ліва ступня
 ent-RightFootShattered = розколота права ступня
 
 ent-ArmBladeShattered = розколотий клинок-рука
+    .desc = { ent-ArmBlade.desc }
 ent-ArmBladeShatteredEmpowered = посилений розколотий клинок-рука
+    .desc = { ent-ArmBlade.desc }
 ent-ArmHammerShattered = розколотий молот-рука
+    .desc = { ent-ArmHammerChangeling.desc }
 ent-ArmHammerShatteredEmpowered = посилений розколотий молот-рука
+    .desc = { ent-ArmHammerChangeling.desc }
 
 ent-ClothingOuterArmorHereticLock = обладунок єретика Замка
+    .desc = { ent-ClothingOuterArmorHeretic.desc }
 ent-ClothingHeadHatHoodHereticLock = каптур єретика Замка
+    .desc = { ent-ClothingHeadHatHoodHeretic.desc }
 
 ent-PolymorphMirrorJaunt = невідоме
     .desc = Ви не можете збагнути, що це таке.

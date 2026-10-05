@@ -1,0 +1,16 @@
+ent-AtmosFixAirMarker = Маркер виправлення повітря Atmos
+    .desc = Кисень (21%) та азот (79%) @ тиск газового майнера, T20C
+ent-AtmosFixBlockerMarker = Фікс Атмосу: Вакуум
+    .desc = Вакуум, T20C
+ent-AtmosFixFreezerMarker = Маркер морозильника для фіксації атмосфери
+    .desc = Змінює температуру повітря до 235K, для морозильника з невеликим запасом для налаштування.
+ent-AtmosFixInstantPlasmaFireMarker = Фікс Атмосу: Маркер Миттєвого Плазмового Вогню
+    .desc = МИТТЄВИЙ ПЛАЗМОВИЙ ВОГОНЬ
+ent-AtmosFixNitrogenMarker = Фікс Атмосу: Маркер Азоту
+    .desc = Азот @ тиск шахтного газу, T20C
+ent-AtmosFixOxygenMarker = Фікс Атмосу: Маркер Кисню
+    .desc = Кисень @ тиск шахтного газу, T20C
+ent-AtmosFixPlasmaMarker = Фікс Атмосу: Маркер Плазми
+    .desc = Плазма @ тиск шахтного газу, T20C
+ent-AtmosFixVoxMarker = { ent-AtmosFixNitrogenMarker }
+    .desc = Азот при 101 кПа, 20°C

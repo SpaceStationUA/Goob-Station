@@ -1,0 +1,10 @@
+ent-ClothingOuterCoatLettermanRed = червона університетська куртка
+    .desc = Це червона шкільна куртка з великою «14», вишитою на спині.
+ent-ClothingOuterCoatMNKBlackJacket = Чорна куртка МНК
+    .desc = Легка чорна куртка МНК.
+ent-ClothingOuterCoatMNKBlackTopCoat = Чорне пальто МНК
+    .desc = Міцне чорне пальто МНК.
+ent-ClothingOuterCoatMNKWhiteHoodie = Біла худі МНК
+    .desc = Класична біла худі, вироблена МНК.
+ent-ClothingOuterVestFlak = бронежилет
+    .desc = Запилений і потертий бронежилет.

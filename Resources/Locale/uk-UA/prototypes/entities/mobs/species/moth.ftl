@@ -1,0 +1,1 @@
+ent-BaseMobMoth = Уріст МакФлафф

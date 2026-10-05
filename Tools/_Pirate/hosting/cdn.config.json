@@ -1,0 +1,23 @@
+{
+  "Logging": { "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning", "Quartz": "Warning" } },
+  "AllowedHosts": "*",
+  "Urls": "http://0.0.0.0:27691/",
+  "BaseUrl": "http://31.14.17.169:27691/",
+  "Manifest": {
+    "FileDiskPath": "/home/alwyzon/ss14-hosting/cdn/builds",
+    "DatabaseFileName": "/home/alwyzon/ss14-hosting/cdn/manifest.db",
+    "Forks": {
+      "pirate-ua": {
+        "DisplayName": "Pirate UA",
+        "BuildsPageLink": "https://github.com/SpaceStationUA/Goob-Station",
+        "BuildsPageLinkText": "Source",
+        "PruneBuildsDays": 30,
+        "NotifyWatchdogs": []
+      }
+    }
+  },
+  "Cdn": {
+    "DatabaseFileName": "/home/alwyzon/ss14-hosting/cdn/content.db",
+    "BlobCompressLevel": 5
+  }
+}

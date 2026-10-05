@@ -1,0 +1,16 @@
+ent-ChemistryEmptyBottleMantis = електрумова пляшка
+    .desc = Ейдолітова пляшка в міцній електрумовій оболонці. Стане в пригоді для ваших ритуалів.
+ent-PillCanisterCryptobiolinMantis = { ent-PillCanisterMantis }
+    .desc = Препарат, що спричиняє легку сплутаність, але забезпечує псіонічну ізоляцію. Дія кожної пігулки триває близько п’яти хвилин.
+ent-PillCanisterMantis = контейнер пігулок псіо-екстрасенса
+    .desc = Електрумовий контейнер для пігулок з ейдолітовим віконцем, витравленим грецькою літерою псі.
+ent-PillCanisterMindbreakerToxinMantis = { ent-PillCanisterMantis }
+    .desc = Назавжди позбавляє псіоніки після вживання. Не варто ставитися до цього легковажно.
+ent-PillCanisterSoulbreakerToxinMantis = { ent-PillCanisterMantis }
+    .desc = Назавжди позбавляє псіоніки після вживання. Не варто ставитися до цього легковажно.
+ent-PillCanisterSpaceDrugsMantis = { ent-PillCanisterMantis }
+    .desc = Потужний психоделік, що може пробудити псіонічні здібності у тих, хто має потенціал; у просторіччі його називають «космічними наркотиками».
+ent-PillCryptobiolin = пігулка
+    .desc = Тимчасовий засіб проти псіоніки.
+ent-SyringeMantis = електрумовий шприц
+    .desc = Електрумовий шприц з ейдолітовим корпусом. Від природи антимікробний.

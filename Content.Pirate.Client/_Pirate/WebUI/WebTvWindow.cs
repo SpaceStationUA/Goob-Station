@@ -91,8 +91,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
     private bool _appliedPlaying;
     private bool _appliedMuted;
 
-    private bool _disposed;
-
     public WebTvWindow()
     {
         Title = "Pirate TV";
@@ -100,7 +98,8 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
 
         _web = new WebViewControl
         {
-            AlwaysActive = true,
+            HorizontalExpand = true,
+            VerticalExpand = true,
         };
         _ipc = new WebUiTuiIpc((_, _) => { })
         {
@@ -110,8 +109,6 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _driver = new WebUiTvDriver(_web, _ipc);
         _driver.State += StateReceived;
 
-        _web.VerticalExpand = true;
-        _web.HorizontalExpand = true;
 
         var right = new BoxContainer
         {
@@ -193,13 +190,9 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         _panelToggle.OnPressed += OnPanelToggle;
         _pick.OnPressed += OnPickPressed;
 
-        // AlwaysActive browsers survive window closes; drop the browser here
-        // to stop background audio.
-        OnClose += () =>
-        {
-            try { _web.AlwaysActive = false; } catch { }
-            UnregisterWindow();
-        };
+        // Disable keep-alive before BaseWindow removes the control from the UI
+        // tree, so WebViewControl closes its browser in ExitedTree.
+        OnClose += UnregisterWindow;
     }
 
     // ===== one window per TV (client-side) =====
@@ -693,10 +686,19 @@ public sealed class WebTvWindow : DefaultWindow, IDisposable
         }
     }
 
-    public void Dispose()
+    public override void Close()
     {
-        _disposed = true;
+        if (!IsOpen)
+        {
+            UnregisterWindow();
+            return;
+        }
+
+        try { _web.AlwaysActive = false; } catch { }
+        base.Close();
     }
+
+    public new void Dispose() => Close();
 
     // ===== tiny JSON readers (flat objects; strings may be quoted) =====
 

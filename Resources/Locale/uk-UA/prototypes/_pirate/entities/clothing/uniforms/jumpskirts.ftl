@@ -1,0 +1,11 @@
+ent-ClothingUniformInstructorSkirt = спідниця інструктора
+    .desc = Укорочена уніформа висококваліфікованого співробітника служби безпеки. Вони є гарантом безпеки цієї станції.
+ent-ClothingUniformJumpskirtAdminAssistant = спідниця-комбінезон адміністративного асистента
+    .desc = Костюм, який носить адміністративний асистент. Пахне горілою кавою.
+ent-ClothingUniformJumpskirtHeadMaid = Вбрання старшої покоївки
+    .desc = Було випущене обмеженим тиражем під спеціальне замовлення компанії, яка надавала послуги з прибирання станцій після різноманітних катастроф.
+ent-ClothingUniformJumpskirtLawyerPink = рожева спідниця адвоката
+    .desc = Яскраво-рожева спідниця-костюм, яку носять адвокати, до яких вам слід звернутися.
+ent-ClothingUniformJumpskirtSecurityBlue = спідниця-комбінезон офіцера СБ
+ent-ClothingUniformJumpskirtSecurityCorrectionofficer = спідниця-комбінезон виправного офіцера
+ent-ClothingUniformJumpskirtSecurityHosBlue = синя спідниця голови СБ

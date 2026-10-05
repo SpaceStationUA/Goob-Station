@@ -1,0 +1,1 @@
+ent-LightningNoospheric = ноосферні блискавки

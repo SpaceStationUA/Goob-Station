@@ -1,0 +1,17 @@
+ent-CargoTechFabCircuitboard = плата вантажного техфаба
+    .desc = Друкована плата для вантажного техфаба.
+ent-ERTTechFabCircuitboard = плата машини техфаба ЕРТ
+    .desc = Друкована плата машини для техфаба ЕРТ.
+ent-EnergyChemDispenserMachineCircuitboard = машинна плата енергетичного хімічного диспенсера
+    .desc = Друкована плата машини для енергетичного хімічного диспенсера.
+ent-EngineeringTechFabCircuitboard = плата інженерного техфаба
+    .desc = Друкована плата для інженерного техфаба.
+ent-PlumbingPumpCircuitboard = плата рідинного насоса
+ent-RadiationCollectorCircuitboard = плата збирача радіації
+ent-ScienceTechFabCircuitboard = плата наукового техфаба
+    .desc = Друкована плата для наукового техфаба.
+ent-ServiceTechFabCircuitboard = плата сервісного техфаба
+    .desc = Друкована плата для сервісного техфаба.
+ent-TelecomTransmitterCircuitboard = плата телекомунікаційного передавача
+    .desc = Друкована плата для телекомунікаційного передавача.
+ent-TeslaCoilCircuitboard = плата котушки Тесли

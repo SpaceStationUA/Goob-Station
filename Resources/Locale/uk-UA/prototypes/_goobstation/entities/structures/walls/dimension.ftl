@@ -1,0 +1,1 @@
+ent-WallDimension = габаритна стіна

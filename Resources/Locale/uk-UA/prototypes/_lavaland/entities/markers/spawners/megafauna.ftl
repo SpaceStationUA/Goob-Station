@@ -1,0 +1,1 @@
+ent-SpawnMobHierophant = Спавнер ієрофанта

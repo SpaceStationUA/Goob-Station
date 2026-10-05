@@ -1,0 +1,1 @@
+ent-AdminInstantEffectBase = миттєвий ефект

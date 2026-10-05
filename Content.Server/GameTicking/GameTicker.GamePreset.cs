@@ -63,6 +63,9 @@ public sealed partial class GameTicker
             _sawmill.Info($"Fallback - Failed to start round, attempting to start fallback presets.");
             foreach (var preset in fallbackPresets)
             {
+                if (FindGamePreset(preset) is { } fallbackProto && IsPresetDisabled(fallbackProto))
+                    continue;
+
                 _sawmill.Info($"Fallback - Clearing up gamerules");
                 ClearGameRules();
                 _sawmill.Info($"Fallback - Attempting to start '{preset}'");
@@ -105,7 +108,24 @@ public sealed partial class GameTicker
 
     private void InitializeGamePreset()
     {
-        SetGamePreset(LobbyEnabled ? _cfg.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
+        var preset = LobbyEnabled ? _cfg.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox";
+        if (FindGamePreset(preset) is { } proto && IsPresetDisabled(proto))
+        {
+            var fallback = _cfg.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",")
+                .FirstOrDefault(id => FindGamePreset(id) is { } fallbackProto && !IsPresetDisabled(fallbackProto));
+            if (fallback != null)
+            {
+                _sawmill.Warning($"Default preset '{preset}' is disabled, using '{fallback}' instead.");
+                preset = fallback;
+            }
+            else
+            {
+                _sawmill.Error($"Default preset '{preset}' is disabled and no enabled fallback preset is configured.");
+                return;
+            }
+        }
+
+        SetGamePreset(preset);
     }
 
     public void SetGamePreset(GamePresetPrototype? preset, bool force = false, GamePresetPrototype? decoy = null, int? resetDelay = null)
@@ -113,6 +133,12 @@ public sealed partial class GameTicker
         // Do nothing if this game ticker is a dummy!
         if (DummyTicker)
             return;
+
+        if (preset is not null && IsPresetDisabled(preset))
+        {
+            _sawmill.Warning($"Refusing to set disabled preset '{preset.ID}'.");
+            return;
+        }
 
         if (resetDelay is not null)
         {

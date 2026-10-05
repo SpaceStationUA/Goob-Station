@@ -1,0 +1,5 @@
+- type: zMap
+  id: Nebula
+  maps:
+  - /Maps/_Pirate/Nebula/Nebula0.yml
+  - /Maps/_Pirate/Nebula/Nebula1.yml

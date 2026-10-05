@@ -100,17 +100,14 @@ public sealed class BackEquipSystem : EntitySystem
             return;
         }
         // Pirate
-        // The slot item is an item-slot holder (e.g. a sheath): sheathe a held weapon into an
-        // empty matching slot, or unsheathe the slotted weapon into an empty hand.
-        if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
+        #region Pirate: back equip weapons - ignore gun internals and nonweapon cells
+        if (!IsWeapon(slotItem) && TryComp<ItemSlotsComponent>(slotItem, out var slots))
         {
             if (handItem == null)
             {
                 var ejectCandidates = slots.Slots.Values
-                    .Where(s => s.HasItem)
+                    .Where(s => s.Item is { } item && IsWeapon(item))
                     .OrderByDescending(s => s.Priority)
-                    .OrderByDescending(s => s.Item.HasValue &&
-                        (HasComp<GunComponent>(s.Item.Value) || HasComp<MeleeWeaponComponent>(s.Item.Value)))
                     .ToList();
 
                 foreach (var slot in ejectCandidates)
@@ -119,24 +116,30 @@ public sealed class BackEquipSystem : EntitySystem
                         return;
                 }
 
-                _popup.PopupClient(emptyEquipmentSlotString, uid, uid);
+                if (ejectCandidates.Count > 0 || slots.Slots.Values.All(s => !s.HasItem))
+                {
+                    _popup.PopupClient(emptyEquipmentSlotString, uid, uid);
+                    return;
+                }
+            }
+            else if (IsWeapon(handItem.Value))
+            {
+                var insertCandidates = slots.Slots.Values
+                    .Where(s => !s.HasItem && _whitelistSystem.IsWhitelistPassOrNull(s.Whitelist, handItem.Value))
+                    .OrderByDescending(s => s.Priority)
+                    .ToList();
+
+                foreach (var slot in insertCandidates)
+                {
+                    if (_slots.TryInsertFromHand(slotItem, slot, uid, hands, excludeUserAudio: true))
+                        return;
+                }
+
+                _popup.PopupClient(Loc.GetString("smart-equip-no-valid-item-slot-insert", ("item", handItem.Value)), uid, uid);
                 return;
             }
-
-            var insertCandidates = slots.Slots.Values
-                .Where(s => !s.HasItem && _whitelistSystem.IsWhitelistPassOrNull(s.Whitelist, handItem.Value))
-                .OrderByDescending(s => s.Priority)
-                .ToList();
-
-            foreach (var slot in insertCandidates)
-            {
-                if (_slots.TryInsertFromHand(slotItem, slot, uid, hands, excludeUserAudio: true))
-                    return;
-            }
-
-            _popup.PopupClient(Loc.GetString("smart-equip-no-valid-item-slot-insert", ("item", handItem.Value)), uid, uid);
-            return;
         }
+        #endregion Pirate: back equip weapons
         // Pirate end
 
         if (handItem != null)
@@ -150,4 +153,13 @@ public sealed class BackEquipSystem : EntitySystem
         _inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true, checkDoafter: true);
         _hands.TryPickup(uid, slotItem, handsComp: hands);
     }
+
+    // Pirate
+    #region Pirate: back equip weapons
+    private bool IsWeapon(EntityUid uid)
+    {
+        return HasComp<GunComponent>(uid) || HasComp<MeleeWeaponComponent>(uid);
+    }
+    #endregion Pirate: back equip weapons
+    // Pirate end
 }

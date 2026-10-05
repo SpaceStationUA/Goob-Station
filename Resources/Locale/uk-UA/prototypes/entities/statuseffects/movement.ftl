@@ -1,0 +1,9 @@
+ent-FlashSlowdownStatusEffect = сповільнення від спалаху
+ent-ReagentSpeedStatusEffect = швидкість від реагенту
+ent-StatusEffectFriction = тертя
+ent-StatusEffectSlowdown = сповільнення
+ent-StatusEffectSpeed = швидкість
+ent-StatusEffectStaminaLow = низька витривалість
+ent-StatusEffectStunned = оглушення
+ent-TaserSlowdownStatusEffect = сповільнення від пострілу тазером
+ent-VomitingSlowdownStatusEffect = сповільнення від блювання

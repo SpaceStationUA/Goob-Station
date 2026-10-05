@@ -1,0 +1,10 @@
+ent-RifleBulletEnergyGunAsh = попелястий енергетичний заряд
+    .desc = { ent-BaseBullet.desc }
+ent-RifleBulletEnergyGunDisabler = Дизейблерний заряд гвинтівки
+    .desc = { ent-BaseBullet.desc }
+ent-RifleBulletEnergyGunIon = Іонний заряд гвинтівки
+    .desc = { ent-BaseBullet.desc }
+ent-RifleBulletEnergyGunLethal = Енергетичний заряд гвинтівки
+    .desc = { ent-BaseBullet.desc }
+ent-RifleBulletEnergyGunOverchargeLethal = перевантажений енергетичний заряд гвинтівки
+    .desc = { ent-BaseBullet.desc }
