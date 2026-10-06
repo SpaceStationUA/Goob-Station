@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared._Pirate.Employment;
 using Content.Shared._Pirate.Origin;
 using Content.Shared.Humanoid;
@@ -39,8 +38,6 @@ public sealed partial class HumanoidCharacterProfile
         var prototypes = collection.Resolve<IPrototypeManager>();
         var entityManager = collection.Resolve<IEntityManager>();
         var playTimes = collection.Resolve<ISharedPlaytimeManager>().GetPlayTimes(session);
-        var originalEmployer = Employer;
-
         for (var attempt = 0; attempt < 3; attempt++)
         {
             var citizenshipValid = MeetsRequirements(
@@ -83,33 +80,6 @@ public sealed partial class HumanoidCharacterProfile
             Employer = SharedHumanoidAppearanceSystem.DefaultEmployer;
         }
 
-        if (originalEmployer != Employer)
-            TransferEmployerJobPriorities(prototypes, originalEmployer, Employer);
-    }
-
-    private void TransferEmployerJobPriorities(
-        IPrototypeManager prototypes,
-        string previousEmployerId,
-        string selectedEmployerId)
-    {
-        if (!prototypes.TryIndex<EmployerPrototype>(previousEmployerId, out var previousEmployer)
-            || !prototypes.TryIndex<EmployerPrototype>(selectedEmployerId, out var selectedEmployer))
-        {
-            return;
-        }
-
-        foreach (var baseJob in prototypes.EnumeratePrototypes<DepartmentPrototype>()
-                     .SelectMany(department => department.Roles)
-                     .Distinct())
-        {
-            var previousJob = previousEmployer.JobReplacements.GetValueOrDefault(baseJob, baseJob);
-            var selectedJob = selectedEmployer.JobReplacements.GetValueOrDefault(baseJob, baseJob);
-            if (previousJob == selectedJob || !_jobPriorities.Remove(previousJob, out var priority))
-                continue;
-
-            if (priority != JobPriority.Never)
-                _jobPriorities[selectedJob] = priority;
-        }
     }
 
     private static bool MeetsRequirements(

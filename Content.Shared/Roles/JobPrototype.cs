@@ -5,8 +5,6 @@ using Content.Shared.Guidebook;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes; // Pirate
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array; // Pirate
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Roles
@@ -15,20 +13,11 @@ namespace Content.Shared.Roles
     ///     Describes information for a single job on the station.
     /// </summary>
     [Prototype]
-    public sealed partial class JobPrototype : IPrototype, IInheritingPrototype // Pirate - add: (IInheritingPrototype)
+    public sealed partial class JobPrototype : IPrototype
     {
         [ViewVariables]
         [IdDataField]
         public string ID { get; private set; } = default!;
-
-        // Pirate start: allow employer job variants
-        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<JobPrototype>))]
-        public string[]? Parents { get; private set; }
-
-        [NeverPushInheritance]
-        [AbstractDataField]
-        public bool Abstract { get; private set; }
-        // Pirate end
 
         [DataField(required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
         public string PlayTimeTracker { get; private set; } = string.Empty;
@@ -60,7 +49,6 @@ namespace Content.Shared.Roles
         /// <summary>
         ///     Requirements for the job.
         /// </summary>
-        [NeverPushInheritance] // Pirate
         [DataField, Access(typeof(SharedRoleSystem), Other = AccessPermissions.None)]
         public HashSet<JobRequirement>? Requirements;
 

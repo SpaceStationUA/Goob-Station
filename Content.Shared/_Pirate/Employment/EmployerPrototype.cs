@@ -44,9 +44,4 @@ public sealed partial class EmployerPrototype : IPrototype
     [DataField]
     public List<JobRequirement> Requirements = new();
 
-    // Pirate start: base job ID > corporation-specific replacement job ID.
-    [DataField]
-    public Dictionary<ProtoId<JobPrototype>, ProtoId<JobPrototype>> JobReplacements { get; private set; } = new();
-    // Pirate end
-
 }

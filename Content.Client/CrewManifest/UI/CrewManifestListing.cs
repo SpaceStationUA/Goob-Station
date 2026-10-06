@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Shared.CrewManifest;
-using Content.Shared.Pirate.Jobs; // Pirate
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
@@ -28,15 +27,10 @@ public sealed class CrewManifestListing : BoxContainer
 
         foreach (var entry in entries.Entries)
         {
-            // Pirate start
-            var baseJob = EmployerJobMapping.GetBaseJob(
-                _prototypeManager,
-                new ProtoId<JobPrototype>(entry.JobPrototype));
-            // Pirate end
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
                 // this is a little expensive, and could be better
-                if (department.Roles.Contains(baseJob)) // Pirate: entry.JobPrototype > baseJob
+                if (department.Roles.Contains(entry.JobPrototype))
                 {
                     entryDict.GetOrNew(department).Add(entry);
                 }

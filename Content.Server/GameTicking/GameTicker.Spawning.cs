@@ -18,7 +18,6 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
-using Content.Shared.Pirate.Jobs; // Pirate
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
@@ -171,8 +170,7 @@ namespace Content.Server.GameTicking
             var character = GetPlayerProfile(player);
 
             var jobBans = _banManager.GetJobBans(player.UserId);
-            if (jobBans == null || jobId != null && (jobBans.Contains(jobId)
-                || jobBans.Contains(EmployerJobMapping.GetBaseJob(_prototypeManager, jobId)))) // Pirate
+            if (jobBans == null || jobId != null && jobBans.Contains(jobId)) //TODO: use IsRoleBanned directly?
                 return;
 
             if (jobId != null)
@@ -268,18 +266,7 @@ namespace Content.Server.GameTicking
 
             var jobBans = _banManager.GetJobBans(player.UserId);
             if (jobBans != null)
-            {
                 restrictedRoles.UnionWith(jobBans);
-
-                // Pirate start: bans on a base role also exclude its available employer replacements.
-                foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
-                {
-                    var candidateJobId = new ProtoId<JobPrototype>(job.ID);
-                    if (jobBans.Contains(EmployerJobMapping.GetBaseJob(_prototypeManager, candidateJobId)))
-                        restrictedRoles.Add(candidateJobId);
-                }
-                // Pirate end
-            }
 
             // Pick best job best on prefs.
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station,

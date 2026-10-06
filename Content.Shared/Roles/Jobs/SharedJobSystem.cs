@@ -2,7 +2,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared._Pirate.Employment; // Pirate
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles.Components;
@@ -32,7 +31,7 @@ public abstract partial class SharedJobSystem : EntitySystem
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {
-        if (obj.WasModified<JobPrototype>() || obj.WasModified<EmployerPrototype>()) // Pirate: add EmployerPrototype
+        if (obj.WasModified<JobPrototype>())
             SetupTrackerLookup();
     }
 
@@ -40,26 +39,9 @@ public abstract partial class SharedJobSystem : EntitySystem
     {
         _inverseTrackerLookup.Clear();
 
-        // Pirate start
-        var employerJobBases = new Dictionary<string, string>();
-        foreach (var employer in _prototypes.EnumeratePrototypes<EmployerPrototype>())
-        {
-            foreach (var (baseJob, replacement) in employer.JobReplacements)
-                employerJobBases.TryAdd(replacement.Id, baseJob.Id);
-        }
-
         // This breaks if you have N trackers to 1 JobId but future concern.
-        foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>()
-                     .OrderBy(job => employerJobBases.ContainsKey(job.ID)))
+        foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
-            if (_inverseTrackerLookup.TryAdd(job.PlayTimeTracker, job.ID))
-                continue;
-
-            if (employerJobBases.TryGetValue(job.ID, out var baseJob)
-                && baseJob == _inverseTrackerLookup[job.PlayTimeTracker])
-                continue;
-        // Pirate end
-
             _inverseTrackerLookup.Add(job.PlayTimeTracker, job.ID);
         }
     }
@@ -81,13 +63,12 @@ public abstract partial class SharedJobSystem : EntitySystem
     public bool TryGetDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
     {
         // Not that many departments so we can just eat the cost instead of storing the inverse lookup.
-        var baseJob = EmployerJobReplacementHelper.GetBaseJob(_prototypes, new ProtoId<JobPrototype>(jobProto)).Id; // Pirate
         var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>().ToList();
         departmentProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
 
         foreach (var department in departmentProtos)
         {
-            if (department.Roles.Contains(baseJob)) // Pirate: jobProto > baseJob
+            if (department.Roles.Contains(jobProto))
             {
                 departmentPrototype = department;
                 return true;
@@ -106,14 +87,13 @@ public abstract partial class SharedJobSystem : EntitySystem
     public bool TryGetPrimaryDepartment(string jobProto,
         [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
     {
-        var baseJob = EmployerJobReplacementHelper.GetBaseJob(_prototypes, new ProtoId<JobPrototype>(jobProto)).Id;  // Pirate
         // not sorting it since there should only be 1 primary department for a job.
         // this is enforced by the job tests.
         var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
 
         foreach (var department in departmentProtos)
         {
-            if (department.Primary && department.Roles.Contains(baseJob))  // Pirate: jobProto > baseJob
+            if (department.Primary && department.Roles.Contains(jobProto))
             {
                 departmentPrototype = department;
                 return true;
@@ -129,7 +109,6 @@ public abstract partial class SharedJobSystem : EntitySystem
     /// </summary>
     public bool TryGetAllDepartments(string jobProto, out List<DepartmentPrototype> departmentPrototypes)
     {
-        var baseJob = EmployerJobReplacementHelper.GetBaseJob(_prototypes, new ProtoId<JobPrototype>(jobProto)).Id; // Pirate
         // not sorting it since there should only be 1 primary department for a job.
         // this is enforced by the job tests.
         var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
@@ -138,7 +117,7 @@ public abstract partial class SharedJobSystem : EntitySystem
 
         foreach (var department in departmentProtos)
         {
-            if (department.Roles.Contains(baseJob)) // Pirate: jobProto > baseJob
+            if (department.Roles.Contains(jobProto))
             {
                 departmentPrototypes.Add(department);
                 found = true;

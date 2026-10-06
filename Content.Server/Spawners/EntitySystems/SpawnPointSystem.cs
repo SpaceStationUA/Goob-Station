@@ -3,10 +3,7 @@
 using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
-using Content.Shared.Pirate.Jobs; // Pirate
-using Content.Shared.Roles; // Pirate
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes; // Pirate
 using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems;
@@ -17,7 +14,6 @@ public sealed class SpawnPointSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // Pirate
 
     public override void Initialize()
     {
@@ -45,8 +41,7 @@ public sealed class SpawnPointSystem : EntitySystem
 
             if (_gameTicker.RunLevel != GameRunLevel.InRound &&
                 spawnPoint.SpawnType == SpawnPointType.Job &&
-                (args.Job == null || spawnPoint.Job == null
-                 || EmployerJobMapping.MatchesBaseJob(_prototypeManager, spawnPoint.Job.Value, args.Job.Value))) // Pirate
+                (args.Job == null || spawnPoint.Job == null || spawnPoint.Job == args.Job))
             {
                 possiblePositions.Add(xform.Coordinates);
             }

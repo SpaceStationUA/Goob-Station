@@ -150,8 +150,47 @@ public sealed partial class StationJobsSystem : EntitySystem
         bool clamp = false,
         StationJobsComponent? stationJobs = null)
     {
-        // Pirate: shared-slot implementation is isolated in StationJobsSystem.Pirate.cs.
-        return TryAdjustJobSlotPirate(station, jobPrototypeId, amount, createSlot, clamp, stationJobs);
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        var jobList = stationJobs.JobList;
+
+        // This should:
+        // - Return true when zero slots are added/removed.
+        // - Return true when you add.
+        // - Return true when you remove and do not exceed the number of slot available.
+        // - Return false when you remove from a job that doesn't exist.
+        // - Return false when you remove and exceed the number of slots available.
+        // And additionally, if adding would add a job not previously on the manifest when createSlot is false, return false and do nothing.
+
+        if (amount == 0)
+            return true;
+
+        switch (jobList.TryGetValue(jobPrototypeId, out var available))
+        {
+            case false when amount < 0:
+                return false;
+            case false:
+                if (!createSlot)
+                    return false;
+                stationJobs.TotalJobs += amount;
+                jobList[jobPrototypeId] = amount;
+                UpdateJobsAvailable();
+                return true;
+            case true:
+                // Job is unlimited so just say we adjusted it and do nothing.
+                if (available is not {} avail)
+                    return true;
+
+                // Would remove more jobs than we have available.
+                if (available + amount < 0 && !clamp)
+                    return false;
+
+                jobList[jobPrototypeId] = Math.Max(avail + amount, 0);
+                stationJobs.TotalJobs = jobList.Values.Select(x => x ?? 0).Sum();
+                UpdateJobsAvailable();
+                return true;
+        }
     }
 
     public bool TryGetPlayerJobs(EntityUid station,
@@ -211,8 +250,29 @@ public sealed partial class StationJobsSystem : EntitySystem
         bool createSlot = false,
         StationJobsComponent? stationJobs = null)
     {
-        // Pirate: variants map back to their source map job.
-        return TrySetJobSlotPirate(station, jobPrototypeId, amount, createSlot, stationJobs);
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+        if (amount < 0)
+            throw new ArgumentException("Tried to set a job to have a negative number of slots!", nameof(amount));
+
+        var jobList = stationJobs.JobList;
+
+        switch (jobList.ContainsKey(jobPrototypeId))
+        {
+            case false:
+                if (!createSlot)
+                    return false;
+                stationJobs.TotalJobs += amount;
+                jobList[jobPrototypeId] = amount;
+                UpdateJobsAvailable();
+                return true;
+            case true:
+                stationJobs.TotalJobs += amount - (jobList[jobPrototypeId] ?? 0);
+
+                jobList[jobPrototypeId] = amount;
+                UpdateJobsAvailable();
+                return true;
+        }
     }
 
     /// <inheritdoc cref="MakeJobUnlimited(Robust.Shared.GameObjects.EntityUid,string,Content.Server.Station.Components.StationJobsComponent?)"/>
@@ -233,8 +293,16 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public void MakeJobUnlimited(EntityUid station, string jobPrototypeId, StationJobsComponent? stationJobs = null)
     {
-        // Pirate: variants map back to their source map job.
-        MakeJobUnlimitedPirate(station, jobPrototypeId, stationJobs);
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        // Subtract out the job we're fixing to make have unlimited slots.
+        if (stationJobs.JobList.TryGetValue(jobPrototypeId, out var existing))
+            stationJobs.TotalJobs -= existing ?? 0;
+
+        stationJobs.JobList[jobPrototypeId] = null;
+
+        UpdateJobsAvailable();
     }
 
     /// <inheritdoc cref="IsJobUnlimited(Robust.Shared.GameObjects.EntityUid,string,Content.Server.Station.Components.StationJobsComponent?)"/>
@@ -259,7 +327,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        return TryGetJobSlot(station, jobPrototypeId, out var slots, stationJobs) && slots == null; // Pirate: replacement roles share their base job's slots.
+        return stationJobs.JobList.TryGetValue(jobPrototypeId, out var job) && job == null;
     }
 
     /// <inheritdoc cref="TryGetJobSlot(Robust.Shared.GameObjects.EntityUid,string,out System.Nullable{uint},Content.Server.Station.Components.StationJobsComponent?)"/>
@@ -284,8 +352,10 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <remarks>slots will be null if the slot doesn't exist, as well, so make sure to check the return value.</remarks>
     public bool TryGetJobSlot(EntityUid station, string jobPrototypeId, out int? slots, StationJobsComponent? stationJobs = null)
     {
-        // Pirate: replacement roles share their base job's available slots.
-        return TryGetJobSlotPirate(station, jobPrototypeId, out slots, stationJobs);
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        return stationJobs.JobList.TryGetValue(jobPrototypeId, out slots);
     }
 
     /// <summary>
@@ -297,8 +367,12 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public IEnumerable<ProtoId<JobPrototype>> GetAvailableJobs(EntityUid station, StationJobsComponent? stationJobs = null)
     {
-        // Pirate: expose employer variants for the source job's map slots.
-        return GetAvailableJobsPirate(station, stationJobs);
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        return stationJobs.JobList
+            .Where(x => x.Value != 0)
+            .Select(x => x.Key);
     }
 
     /// <summary>
@@ -310,8 +384,10 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public IReadOnlySet<ProtoId<JobPrototype>> GetOverflowJobs(EntityUid station, StationJobsComponent? stationJobs = null)
     {
-        // Pirate: overflow availability follows source job slots.
-        return GetOverflowJobsPirate(station, stationJobs);
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        return stationJobs.OverflowJobs;
     }
 
     /// <summary>
@@ -338,8 +414,12 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <exception cref="ArgumentException">Thrown when the given station is not a station.</exception>
     public Dictionary<ProtoId<JobPrototype>, int?> GetRoundStartJobs(EntityUid station, StationJobsComponent? stationJobs = null)
     {
-        // Pirate: expand map quotas to applicable employer variants.
-        return GetRoundStartJobsPirate(station, stationJobs);
+        if (!Resolve(station, ref stationJobs))
+            throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        return stationJobs.SetupAvailableJobs.ToDictionary(
+            x => x.Key,
+            x=> (int?)(x.Value[0] < 0 ? null : x.Value[0]));
     }
 
     /// <summary>
@@ -417,8 +497,23 @@ public sealed partial class StationJobsSystem : EntitySystem
     /// <returns>The event.</returns>
     private TickerJobsAvailableEvent GenerateJobsAvailableEvent()
     {
-        // Pirate: publish role variants alongside the source map roles.
-        return GenerateJobsAvailableEventPirate();
+        // If late join is disallowed, return no available jobs.
+        if (_gameTicker.DisallowLateJoin)
+            return new TickerJobsAvailableEvent(new(), new());
+
+        var jobs = new Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>>();
+        var stationNames = new Dictionary<NetEntity, string>();
+
+        var query = EntityQueryEnumerator<StationJobsComponent>();
+
+        while (query.MoveNext(out var station, out var comp))
+        {
+            var netStation = GetNetEntity(station);
+            var list = comp.JobList.ToDictionary(x => x.Key, x => x.Value);
+            jobs.Add(netStation, list);
+            stationNames.Add(netStation, Name(station));
+        }
+        return new TickerJobsAvailableEvent(stationNames, jobs);
     }
 
     /// <summary>
