@@ -15,25 +15,28 @@
   id: Civilian
   name: department-Civilian
   description: department-Civilian-description
-  color: "#9FED58"
+  color: "#808080" # Pirate
   weight: -10
   roles:
-  - Bartender
-  - Botanist
-  - Chaplain
-  - Chef
+  # Pirate start: civilian jobs are grouped under the Pirate Service department.
+  # - Bartender
+  # - Botanist
+  # - Chaplain
+  # - Chef
   - Clown
-  - HeadOfPersonnel
-  - Janitor
+  # - HeadOfPersonnel
+  # - Janitor
   - Lawyer
-  - Librarian
+  # - Librarian
   - Mime
   - Musician
   - Passenger
   - Reporter
   - Visitor
-  - ServiceWorker
+  # - ServiceWorker
   - PartyMaker # event-restricted, Goobstation
+  - RadioHost
+  # Pirate end
 
 - type: department
   id: CentralCommand
@@ -158,14 +161,14 @@
   - Borg
   - StationAi
 
-- type: department
-  id: Specific
-  name: department-Specific
-  description: department-Specific-description
-  color: "#9FED58"
-  weight: 10
-  roles:
-  - RadioHost # Goobstation
-  - Reporter
-  - Psychologist
-  primary: false
+# - type: department
+#   id: Specific
+#   name: department-Specific
+#   description: department-Specific-description
+#   color: "#9FED58"
+#   weight: 10
+#   roles:
+#   - RadioHost # Goobstation
+#   - Reporter
+#   - Psychologist
+#   primary: false

@@ -8,6 +8,8 @@
   roleplayRecommendations:
   - employment-employer-roleplay-nanotrasen-1
   - employment-employer-roleplay-nanotrasen-2
+  - employment-employer-roleplay-nanotrasen-3
+  - employment-employer-roleplay-nanotrasen-4
   logoPath: /Textures/_Pirate/Interface/Employers/NanoTrasen.png
   departments: [employment-employer-departments-all]
 
@@ -15,13 +17,63 @@
   id: Idris
   priority: 1
   nameKey: employment-employer-name-idris
-  accentColor: "#236f73"
+  accentColor: "#369fa1"
+  descriptionKey: employment-employer-description-idris
+  employeeRelationsKey: employment-employer-relations-idris
+  roleplayRecommendations:
+  - employment-employer-roleplay-idris-1
+  - employment-employer-roleplay-idris-2
+  - employment-employer-roleplay-idris-3
+  - employment-employer-roleplay-idris-4
   logoPath: /Textures/_Pirate/Interface/Employers/Idris.png
-  departments: [department-Security, department-Civilian]
+  departments: [department-Security, department-Service]
+
+- type: employer
+  id: Zavod
+  priority: 2
+  nameKey: employment-employer-name-zavod
+  accentColor: "#8a1414"
+  logoPath: /Textures/_Pirate/Interface/Employers/Zavod.png
+  departments: [department-Security, department-Science, department-Engineering]
+
+- type: employer
+  id: Interdyne
+  priority: 3
+  nameKey: employment-employer-name-interdyne
+  accentColor: "#4f8f56"
+  logoPath: /Textures/_Pirate/Interface/Employers/Interdyne.png
+  departments: [department-Science, department-Medical]
+
+- type: employer
+  id: Hephaest
+  priority: 4
+  nameKey: employment-employer-name-hephaest
+  accentColor: "#263e23"
+  logoPath: /Textures/_Pirate/Interface/Employers/Hephaest.png
+  departments: [department-Engineering, department-Cargo]
+
+- type: employer
+  id: Orion
+  priority: 5
+  nameKey: employment-employer-name-orion
+  accentColor: "#7a6347"
+  logoPath: /Textures/_Pirate/Interface/Employers/Orion.png
+  departments: [department-Cargo, department-Service]
+
+- type: employer
+  id: PMCG
+  priority: 6
+  nameKey: employment-employer-name-pmcg
+  accentColor: "#363c43"
+  logoPath: /Textures/_Pirate/Interface/Employers/PMCG.png
+  departments: [department-Security, department-Medical]
+
+
+
 
 - type: employer
   id: Unaffiliated
-  priority: 2
+  priority: 10
   nameKey: employment-employer-name-unaffiliated
   accentColor: "#808080"
   logoPath: /Textures/_Pirate/Interface/Employers/unaffiliated.png

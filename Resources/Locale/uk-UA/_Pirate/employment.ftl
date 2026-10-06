@@ -26,16 +26,45 @@ employment-employer-info-roleplay-title = Рекомендації до віді
 
 
 ### VVV РОБОТОДАВЦІ VVV
-# Безробітній
+# Безробітний
 employment-employer-name-unaffiliated = Безробітний
 
 ## НАЗВИ КОРПОРАЦІЙ ПИСАТИ НА АНГЛІЙСЬКІЙ!!!
 # NanoTrasen
 employment-employer-name-nanotrasen = NanoTrasen
-employment-employer-description-nanotrasen = Test / TODO - 1 - TEST MAX AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-employment-employer-relations-nanotrasen = Test / TODO - 2
-employment-employer-roleplay-nanotrasen-1 = Test / TODO - 3.1
-employment-employer-roleplay-nanotrasen-2 = Test / TODO - 3.2
+employment-employer-description-nanotrasen = NanoTrasen - найбільша й найвпливовіша корпорація в Рукаві Оріона. На початку своєї кар'єри вона була простою біотехнологічною компанією, а врешті, після відкриття форону, перетворилася на гіганта, що контролює його видобуток, переробку й більшість ключових застосувань (зокрема виготовлення форонових двигунів, які дали змогу подорожувати крізь сонячні системи швидше і набагато безпечніше) що дає змогу тиснути на інші корпорації і держави.
+
+    Від форону залежить енергетика, більшість сучасного обладнання та значна частина міжзоряної економіки, тож вплив NanoTrasen виходить далеко за межі її власних станцій. Однак час від часу спливають новини про дефіцит форону, що ставить під сумнів колишню впевненість і велич корпорації.
+employment-employer-relations-nanotrasen = Навчання у NanoTrasen дає працівникам потрібні для роботи знання, водночас знайомить їх із корпоративною культурою, де успіх компанії подають як спільну мету. Працівникам обіцяють швидке кар'єрне зростання та добре страхування; однак більшість працівників зустрічають високі вимоги, сильний тиск і жорсткі дедлайни.
+employment-employer-roleplay-nanotrasen-1 = Якщо ваш персонаж вчився у NT - виявляйте лояльність. Працівник може захищати NanoTrasen перед конкурентами, сперечатися з начальством інших корпорацій через рішення, що можуть призвести до втрат активів NT, але не перетворюйте конфлікт на саботаж.
 
 # Idris
 employment-employer-name-idris = Idris Incorporated
+employment-employer-description-idris = Починаючи свій шлях як перший міжзоряний банк, Idris перетворилася на найбільший банк і одну з провідних фінансових установ у Рукаві Оріона. Займаючись кредитуванням, страхуванням та контролюючи весь міжзоряний потік грошей, її фінансові установи присутні майже в кожному куточку людського космосу, а сама корпорація має доступ до величезного обсягу особистої інформації своїх клієнтів і працівників та володіє значним впливом на уряди й інші корпорації.
+
+    Окрім фінансів, Idris також займається наданням преміального сервісу, контролюючи численні готелі, туристичні компанії, ресторани, ювелірні та інші бренди.
+
+    Водночас корпорація сумнозвісна своїми жорсткими методами стягнення боргів; займаючись пошуком боржників, поверненням заставного майна та інших активів, використовуючи для цього як юридичні, так і силові методи з використанням ІПШ.
+employment-employer-relations-idris = Idris пропонує працівникам хороші умови життя, якісне навчання та нагороджує тих хто відповідає її високим стандартам; натомість вимагаючи високої лояльності та суворого дотримання корпоративних стандартів. Усі працівники Idris підписують NDA, який забороняє розголошувати внутрішню інформацію компанії, включно з особливостями навчання, оплатою праці та внутрішніми процесами. Порушення цих умов може мати серйозні наслідки.
+
+    Для багатьох працівників Idris стає своєрідною "золотою кліткою". Корпорація може забезпечити їх усім необхідним для комфортного життя: якісним житлом, медичним страхуванням, харчуванням та іншими перевагами. Однак значна частина цих благ надається в кредит і накопичуючи боргові зобов'язання. У разі розірвання контракту працівник зобов'язаний погасити накопичений борг, що робить звільнення фінансово обтяжливим і змушує багатьох залишатися в Idris навіть тоді, коли вони хотіли б піти.
+employment-employer-roleplay-idris-1 = Граючи за сервіс - будьте вічливими та привітними до кліентів, навіть якщо вони вам не подобаються.
+employment-employer-roleplay-idris-2 = Граючи за сервіс - старайтесь тримати свою уніформу, обладнання та робоче місце в ідеальному стані.
+employment-employer-roleplay-idris-3 = Граючи за сервіс - старайтесь нав'язати бренд розкоші своїм кліентам, пропонуйте їм преміальні послуги та товари, але не робіть це прямо і не набридайте.
+employment-employer-roleplay-idris-4 = Граючи за службу безпеки - будьте стриманими та професійними, навіть якщо порушник поводиться агресивно. Не переходьте межу, навіть якщо вас провокують.
+employment-employer-roleplay-idris-5 = Звільнення для вас - це дуже погані наслідки, намагайтесь зробити все, аби не втратити свій контракт.
+
+# Interdyne
+employment-employer-name-interdyne = Interdyne Pharmaceuticals
+
+# Zavod
+employment-employer-name-zavod = Zavodskiy Interstellar
+
+# Hephaest
+employment-employer-name-hephaest = Hephaestus Industries
+
+# PMCG
+employment-employer-name-pmcg = Private Military Contracting Group
+
+# Orion
+employment-employer-name-orion = Orion Express

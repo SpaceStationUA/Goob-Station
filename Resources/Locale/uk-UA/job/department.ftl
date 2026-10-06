@@ -12,7 +12,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 department-Cargo = Карго
-department-Civilian = Цивільний
+department-Civilian = Цивільні
 department-Command = Командування
 department-CentralCommand = Центральне Командування
 department-Engineering = Інженерний
