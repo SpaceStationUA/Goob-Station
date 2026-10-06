@@ -1,0 +1,6 @@
+﻿- type: soundCollection
+  id: VulpSniff
+  files:
+  - /Audio/_Pirate/Effects/VulpSniff/sniffing-1.ogg
+  - /Audio/_Pirate/Effects/VulpSniff/sniffing-2.ogg
+  - /Audio/_Pirate/Effects/VulpSniff/sniffing-3.ogg
