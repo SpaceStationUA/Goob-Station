@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "ROR 2 fan art made by salo",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "animated",
+            "delays": [
+                [0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15]
+            ]
+        }
+    ]
+}

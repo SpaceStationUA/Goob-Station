@@ -436,4 +436,20 @@
   alpha: 1
   ghostName: polygon
 
+- type: customGhost
+  id: adam-white-ghost
+  ckey: Adam_White
+  sprite:
+    - _Pirate/Ghosts/Adam_White.rsi
+  alpha: 1
+  ghostName: Adam_White
+  ghostDescription: А ви знали, що Адам найпригодніший для ЕРП тіньовик?
 
+- type: customGhost
+  id: amuletfish-ghost
+  ckey: amuletfish
+  sprite:
+    - _Pirate/Ghosts/amuletfish.rsi
+  alpha: 1
+  ghostName: amuletfish
+  ghostDescription: хтось рибний.. може навіть саловий?

@@ -23,6 +23,7 @@
   - Origin
   #- Saltern # Pirate
   - SalternTP
+  
   - Packed
   #- Reach # Goobstation, removed from map pool
   #- Train # Goobstation - all my friends hate train
@@ -31,7 +32,8 @@
   # Barratry # Goobstation: removed from rotation
   - KettleTP # Pirate
   #- Kettle # Pirate
-  - Leonid # Goobstation - for goob by goob
+  #- Leonid # Pirate
+  - LeonidTP 
   - Delta # Goobstation - ported from Corvax
   - Chloris # Goobstation - also Corvax because we love [Err404]maps
   - Cog # those who forget to clear their multitool
