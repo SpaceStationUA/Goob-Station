@@ -68,6 +68,14 @@ namespace Content.Client.Paper.UI
         public event Action<string>? OnSaved;
         public event Action<int>? OnSignatureRequested; // Starlight-edit
 
+        // Pirate: persistent diary pages
+        public event Action<PaperComponent.PaperPageAction, int, string?, int>? OnPageAction;
+        private int _currentPage;
+        private int _pageCount;
+
+        /// <summary>Leaf on screen, so saves and flips can name the page they edit.</summary>
+        public int CurrentPage => _currentPage;
+
         private int _MaxInputLength = -1;
         public int MaxInputLength
         {
@@ -148,7 +156,58 @@ namespace Content.Client.Paper.UI
 
             SaveButton.Text = Loc.GetString("paper-ui-save-button",
                 ("keybind", _inputManager.GetKeyFunctionButtonString(EngineKeyFunctions.MultilineTextSubmit)));
+
+            #region Pirate: persistent diary pages
+            PrevPageButton.Text = Loc.GetString("paper-ui-page-prev");
+            NextPageButton.Text = Loc.GetString("paper-ui-page-next");
+            AddPageButton.Text = Loc.GetString("paper-ui-page-add");
+            RemovePageButton.Text = Loc.GetString("paper-ui-page-remove");
+
+            PrevPageButton.OnPressed += _ => RequestPageTurn(_currentPage - 1);
+            NextPageButton.OnPressed += _ => RequestPageTurn(_currentPage + 1);
+            AddPageButton.OnPressed += _ =>
+                OnPageAction?.Invoke(PaperComponent.PaperPageAction.Add, 0, TakePendingText(), _currentPage);
+            RemovePageButton.OnPressed += _ =>
+                OnPageAction?.Invoke(PaperComponent.PaperPageAction.Remove, 0, null, _currentPage);
+            #endregion
         }
+
+        #region Pirate: persistent diary pages
+        private void RequestPageTurn(int page)
+        {
+            if (page < 0 || page >= _pageCount || page == _currentPage)
+                return;
+
+            OnPageAction?.Invoke(PaperComponent.PaperPageAction.Turn, page, TakePendingText(), _currentPage);
+        }
+
+        /// <summary>
+        /// The text still sitting in the editor, to be written into the leaf being left
+        /// behind so flipping pages never drops an unsaved edit. Null while merely reading,
+        /// so a reader flipping through never triggers a write attempt.
+        /// </summary>
+        private string? TakePendingText()
+        {
+            return InputContainer.Visible && Input.TextLength > 0
+                ? Rope.Collapse(Input.TextRope)
+                : null;
+        }
+
+        private void UpdatePageBar(PaperComponent.PaperBoundUserInterfaceState state)
+        {
+            // Plain paper has no leaves, so it gets no bar.
+            PageBar.Visible = state.PageCount > 0;
+            if (state.PageCount <= 0)
+                return;
+
+            PageLabel.Text = Loc.GetString("paper-ui-page-label",
+                ("current", state.CurrentPage + 1),
+                ("total", state.PageCount));
+            PrevPageButton.Disabled = state.CurrentPage <= 0;
+            NextPageButton.Disabled = state.CurrentPage >= state.PageCount - 1;
+            RemovePageButton.Disabled = state.PageCount <= 1; // the last leaf stays in the book
+        }
+        #endregion
 
         #region Pirate: paperwork tags
         private void InitializeMacroPopup()
@@ -368,10 +427,17 @@ namespace Content.Client.Paper.UI
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
             // End
 
+            // Pirate: persistent diary pages - the leaf on screen changed, so the editor
+            // must follow it even when it still holds text.
+            var leafChanged = state.CurrentPage != _currentPage || state.PageCount != _pageCount;
+            _currentPage = state.CurrentPage;
+            _pageCount = state.PageCount;
+            UpdatePageBar(state);
+
             // For premade documents, we want to be able to edit them rather than
             // replace them.
             var shouldCopyText = 0 == Input.TextLength && 0 != state.Text.Length;
-            if (!wasEditing || shouldCopyText)
+            if (!wasEditing || shouldCopyText || leafChanged)
             {
                 // We can get repeated messages with state.Mode == Write if another
                 // player opens the UI for reading. In this case, don't update the
@@ -380,6 +446,10 @@ namespace Content.Client.Paper.UI
                 Input.TextRope = Rope.Leaf.Empty;
                 Input.CursorPosition = new TextEdit.CursorPos();
                 Input.InsertAtCursor(state.Text);
+
+                // Start reading a freshly turned leaf from its top.
+                if (leafChanged)
+                    ScrollingContents.VScroll = 0f;
             }
 
             // Starlight start, paperwork tag shit

@@ -79,6 +79,10 @@ namespace Content.Server.Database
         public DbSet<PirateTempRankEligibility> PirateTempRankEligibility { get; set; } = default!; // Pirate: temporary ranks
         #endregion
 
+        #region Pirate: persistent text (diaries)
+        public DbSet<PersistentText> PersistentTexts { get; set; } = default!;
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Preference>()
@@ -445,6 +449,7 @@ namespace Content.Server.Database
                 .OnDelete(DeleteBehavior.Cascade);
             //Pirate Changes End
             PersistentPhotoAlbumModelConfiguration.Configure(modelBuilder); //Pirate: cameras (photo persistence)
+            PersistentTextModelConfiguration.Configure(modelBuilder); //Pirate: persistent text (diaries)
             PirateTempRankEligibilityModelConfiguration.Configure(modelBuilder); // Pirate: temporary ranks
         }
 

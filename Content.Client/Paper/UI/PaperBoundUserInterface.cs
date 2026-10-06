@@ -27,6 +27,7 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
         _window.OnSaved += InputOnTextEntered;
         _window.OnMacroMenuUsed += OnMacroMenuUsed; // Pirate: paperwork tags
         _window.OnSignatureRequested += OnSignatureRequested; // Starlight-edit
+        _window.OnPageAction += OnPageAction; // Pirate: persistent diary pages
 
         if (EntMan.TryGetComponent<PaperComponent>(Owner, out var paper))
         {
@@ -46,7 +47,9 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
 
     private void InputOnTextEntered(string text)
     {
-        SendMessage(new PaperInputTextMessage(text));
+        // Pirate: the save names the leaf it was typed on - the shared current page may
+        // have been flipped by another viewer meanwhile.
+        SendMessage(new PaperInputTextMessage(text, _window?.CurrentPage ?? 0));
 
         if (_window != null)
         {
@@ -64,4 +67,10 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
 
     // Starlight
     private void OnSignatureRequested(int signatureIndex) => SendMessage(new PaperSignatureRequestMessage(signatureIndex));
+
+    // Pirate: persistent diary pages
+    private void OnPageAction(PaperPageAction action, int page, string? text, int textPage)
+    {
+        SendMessage(new PaperPageActionMessage(action, page, text, textPage));
+    }
 }
