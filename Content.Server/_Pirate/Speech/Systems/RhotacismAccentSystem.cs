@@ -21,7 +21,7 @@ public sealed class RhotacismAccentSystem : EntitySystem
     private void OnAccent(EntityUid uid, RhotacismAccentComponent component, AccentGetEvent args)
     {
         var message = Rs.Replace(args.Message, match => new string(match.Value[0], _random.Next(1, 4)));
-        message = Ls.Replace(message, match => match.Length > 1 || match.Value[0] == '\u041B' ? "\u0420" : "\u0440");
+        message = Ls.Replace(message, match => match.Value[0] == '\u041B' ? "\u0420" : "\u0440");
         args.Message = message;
     }
 }
