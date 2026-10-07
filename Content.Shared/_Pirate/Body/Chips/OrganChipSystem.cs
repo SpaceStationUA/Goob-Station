@@ -35,6 +35,7 @@ public sealed class OrganChipSystem : EntitySystem
     [Dependency] private readonly INetManager _network = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -386,6 +387,9 @@ public sealed class OrganChipSystem : EntitySystem
 
     private void SetChipDisabled(EntityUid chip, bool disabled)
     {
+        // Before the early return: CyberneticsSystem may already have flipped the flag.
+        _appearance.SetData(chip, OrganChipVisuals.Disabled, disabled);
+
         if (!TryComp<CyberneticsComponent>(chip, out var cybernetics) || cybernetics.Disabled == disabled)
             return;
 

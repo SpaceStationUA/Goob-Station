@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared._Pirate.Body.Chips;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared._Pirate.Roles;
+using Content.Shared.Contraband;
 using Content.Shared.Roles;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
@@ -157,6 +158,11 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("SkillChipDatabaseSyndicate", "SkillChipDatabase"),
     ];
 
+    private static readonly HashSet<string> StrongerSyndicateVariants = SyndicateVariants
+        .Select(v => v.Variant)
+        .Where(v => v is not ("SkillChipFieldMedicineSyndicate" or "SkillChipDatabaseSyndicate"))
+        .ToHashSet();
+
     private static readonly string[] NanotrasenChips = ["SkillChipERT", "SkillChipDeathSquad"];
 
     private static readonly string[] ExcludedTraumaChips = ["SkillChipChef", "SkillChipLibrarian"];
@@ -237,8 +243,14 @@ public sealed class SkillChipPrototypeIntegrityTest
 
                 Assert.That(variant.TryGetComponent<KnowledgeGrantOnWearComponent>(out var variantGrant, factory), Is.True);
                 Assert.That(original.TryGetComponent<KnowledgeGrantOnWearComponent>(out var originalGrant, factory), Is.True);
-                Assert.That(variantGrant!.Skills, Is.EquivalentTo(originalGrant!.Skills),
-                    $"{variantId} is a reskin and must grant exactly what {originalId} grants.");
+                Assert.That(variantGrant!.Skills.Keys, Is.EquivalentTo(originalGrant!.Skills.Keys),
+                    $"{variantId} must train the same skills as {originalId}.");
+
+                foreach (var (skill, level) in variantGrant.Skills)
+                {
+                    var expected = StrongerSyndicateVariants.Contains(variantId) ? 35 : originalGrant.Skills[skill];
+                    Assert.That(level, Is.EqualTo(expected), $"{variantId} grants the wrong level of {skill}.");
+                }
             }
         });
 
@@ -279,6 +291,53 @@ public sealed class SkillChipPrototypeIntegrityTest
             {
                 Assert.That(loc.HasString(family.Name), Is.True,
                     $"Chip family {family.ID} has no localized name {family.Name}, so its examine line is broken.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    // Null severity means the chip is not contraband.
+    private static readonly (string Chip, string? Severity, string[] Departments)[] ExpectedContraband =
+    [
+        ("SkillChipUnarmed", "Restricted", ["Security"]),
+        ("SkillChipSidearmsAdvanced", "Restricted", ["Security"]),
+        ("SkillChipUnarmedSyndicate", "Syndicate", []),
+        ("SkillChipDatabaseSyndicate", "Syndicate", []),
+        ("SkillChipNukie", "Syndicate", []),
+        ("SkillChipCossack", "Syndicate", []),
+        ("SkillChipERT", "Restricted", ["CentralCommand"]),
+        ("SkillChipDeathSquad", "Restricted", ["CentralCommand"]),
+        ("SkillChipFreelancer", "Syndicate", []),
+        ("SkillChipEducation", null, []),
+        ("SkillChipCombatDampener", null, []),
+        ("SkillChipThrowingTampered", null, []),
+    ];
+
+    [Test]
+    public async Task ChipContrabandMatchesItsCategory()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var factory = server.EntMan.ComponentFactory;
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var (chipId, severity, departments) in ExpectedContraband)
+            {
+                var chip = server.ProtoMan.Index<EntityPrototype>(chipId);
+                if (severity == null)
+                {
+                    Assert.That(chip.TryGetComponent<ContrabandComponent>(out _, factory), Is.False,
+                        $"{chipId} should not be contraband.");
+                    continue;
+                }
+
+                Assert.That(chip.TryGetComponent<ContrabandComponent>(out var contraband, factory), Is.True,
+                    $"{chipId} should be {severity} contraband.");
+                Assert.That(contraband!.Severity.Id, Is.EqualTo(severity), $"{chipId} has the wrong severity.");
+                Assert.That(contraband.AllowedDepartments.Select(d => d.Id), Is.EquivalentTo(departments),
+                    $"{chipId} is allowed to the wrong departments.");
             }
         });
 

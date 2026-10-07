@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: [ BaseSkillChipNanotrasen, BaseSkillChipPSON, BaseCentcommContraband ]
+  parent: [ BaseSkillChipNanotrasen, BaseSkillChipPSON ]
   id: SkillChipDeathSquad
   components:
   - type: OrganChip
@@ -47,7 +47,7 @@
       JanitorKnowledge: 100
 
 - type: entity
-  parent: [ BaseSkillChipNanotrasen, BaseSkillChipPSON, BaseCentcommContraband ]
+  parent: [ BaseSkillChipNanotrasen, BaseSkillChipPSON ]
   id: SkillChipERT
   components:
   - type: OrganChip
@@ -91,6 +91,12 @@
       TailoringKnowledge: 50
       JanitorKnowledge: 50
 
+# Use Syndicate contraband instead of CentralCommand-only.
 - type: entity
-  parent: SkillChipERT
+  parent: [ BaseSyndicateContraband, SkillChipERT ]
   id: SkillChipFreelancer
+  components:
+  # Clear the inherited CentralCommand allowance.
+  - type: Contraband
+    allowedDepartments: []
+    allowedJobs: []

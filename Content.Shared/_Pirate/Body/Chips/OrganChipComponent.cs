@@ -3,6 +3,7 @@
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Pirate.Body.Chips;
 
@@ -34,6 +35,18 @@ public sealed partial class OrganChipComponent : Component
     // Hidden chips stay out of health analyzer scans.
     [DataField]
     public bool HiddenFromScanners;
+}
+
+[Serializable, NetSerializable]
+public enum OrganChipVisuals : byte
+{
+    Disabled,
+}
+
+[Serializable, NetSerializable]
+public enum OrganChipVisualLayers : byte
+{
+    Leds,
 }
 
 [ByRefEvent]

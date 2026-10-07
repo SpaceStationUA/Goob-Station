@@ -10,6 +10,7 @@ using Content.Shared._Pirate.Body.Chips;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared._Pirate.Traits.Assorted;
 using Content.Shared.Body.Systems;
+using Content.Shared.Emp;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
@@ -226,6 +227,32 @@ public sealed class SkillChipContainerIntegrationTest
                 .EntityPrototype!.ID);
             Assert.That(reported, Is.EquivalentTo(new[] { "SkillChipUnarmed" }),
                 "Syndicate chips, copies and antagonist packs alike, must not show up on a scan.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task EmpTurnsTheChipLedsOff()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var appearance = server.System<SharedAppearanceSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var chip = entMan.SpawnEntity("SkillChipUnarmed", MapCoordinates.Nullspace);
+
+            var pulse = new EmpPulseEvent(0f, false, false, TimeSpan.FromSeconds(10), null);
+            entMan.EventBus.RaiseLocalEvent(chip, ref pulse);
+            Assert.That(appearance.TryGetData<bool>(chip, OrganChipVisuals.Disabled, out var disabled) && disabled,
+                Is.True, "An EMP-disabled chip must report Disabled so its LED layer is hidden.");
+
+            var recovered = new EmpDisabledRemovedEvent();
+            entMan.EventBus.RaiseLocalEvent(chip, ref recovered);
+            Assert.That(appearance.TryGetData<bool>(chip, OrganChipVisuals.Disabled, out disabled) && !disabled,
+                Is.True, "A recovered chip must bring its LEDs back.");
         });
 
         await pair.CleanReturnAsync();

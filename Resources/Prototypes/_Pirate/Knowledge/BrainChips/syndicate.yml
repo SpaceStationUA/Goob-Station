@@ -5,77 +5,143 @@
 
 - type: entity
   abstract: true
+  parent: BaseSyndicateContraband
   id: BaseSkillChipSyndicateVariant
   suffix: Syndicate
   components:
+  # Clear inherited departments; parent maps otherwise merge.
+  - type: Contraband
+    allowedDepartments: []
+    allowedJobs: []
   - type: OrganChip
     hiddenFromScanners: true
   - type: Sprite
     layers:
     - state: syndicate
     - state: leds-rows
+      map: [ "enum.OrganChipVisualLayers.Leds" ]
       color: "#ff4848"
       shader: unshaded
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipUnarmed ]
   id: SkillChipUnarmedSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      MeleeKnowledge: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipBludgeon ]
   id: SkillChipBludgeonSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsBludgeon: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipShortBlade ]
   id: SkillChipShortBladeSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsShortBlade: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipLongBlade ]
   id: SkillChipLongBladeSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsLongBlade: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipPolearm ]
   id: SkillChipPolearmSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsPolearm: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipNonLethal ]
   id: SkillChipNonLethalSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsNonLethal: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipTool ]
   id: SkillChipToolSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsTool: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipEnergy ]
   id: SkillChipEnergySyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsEnergy: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipSMG ]
   id: SkillChipSMGSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsSMG: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipPistol ]
   id: SkillChipPistolSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsPistol: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipRifle ]
   id: SkillChipRifleSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsRifle: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipShotgun ]
   id: SkillChipShotgunSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsShotgun: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipSniper ]
   id: SkillChipSniperSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsSniper: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipLaser ]
   id: SkillChipLaserSyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsLaser: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipHeavy ]
   id: SkillChipHeavySyndicate
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsHeavy: 35
 
 - type: entity
   parent: [ BaseSkillChipSyndicateVariant, SkillChipFieldMedicine ]
