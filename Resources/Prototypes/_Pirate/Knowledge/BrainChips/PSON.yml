@@ -38,9 +38,6 @@
   parent: BaseSkillChipPSON
   id: SkillChipTiderDampener
   components:
-  - type: OrganChip
-    canRemove: true
-    canSelfRemove: false
   - type: KnowledgeGrantOnWear
     skills:
       MeleeKnowledge: -15

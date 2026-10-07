@@ -74,7 +74,8 @@
           color: "#d7a6ff"
           shader: unshaded
     - type: OrganChip
-      canRemove: false
+      canRemove: true
+      canSelfRemove: false
 
 - type: entity
   abstract: true

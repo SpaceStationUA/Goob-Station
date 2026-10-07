@@ -182,10 +182,10 @@ ent-SkillChipThrowingTampered = СОМА-чип (розігнана коорди
     .desc = { ent-BaseSkillChipHPYS.desc }
 
 
-ent-SkillChipDeathSquad = ОТРУ-чип (перезапис: ескадрон смерті)
-    .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipERT = ОТРУ-чип (перезапис: ГШР)
-    .desc = { ent-BaseSkillChipPSON.desc }
+ent-SkillChipDeathSquad = ПЗП-чип (ескадрон смерті)
+    .desc = { ent-BaseSkillChipMRAM.desc }
+ent-SkillChipERT = ПЗП-чип (ГШР)
+    .desc = { ent-BaseSkillChipMRAM.desc }
 
 
 ent-SkillChipNukie = ПЗП-чип (горлекс)
@@ -196,8 +196,8 @@ ent-SkillChipSyndieSoldier = ПЗП-чип (боєць синдикату)
     .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipFieldMedicine = ПЗП-чип (польова медицина)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipFreelancer = ОТРУ-чип (перезапис: фрілансер)
-    .desc = { ent-BaseSkillChipPSON.desc }
+ent-SkillChipFreelancer = ПЗП-чип (фрілансер)
+    .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipSidearms = ГАРТ-чип (особиста зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
 ent-SkillChipSidearmsAdvanced = ГАРТ-чип (особиста зброя: просунутий)

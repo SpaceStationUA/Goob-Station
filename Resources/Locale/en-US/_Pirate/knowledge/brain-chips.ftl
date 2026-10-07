@@ -180,10 +180,10 @@ ent-SkillChipThrowingTampered = HPYS-chip (tampered hand-eye coordination)
     .desc = { ent-BaseSkillChipHPYS.desc }
 
 
-ent-SkillChipDeathSquad = PSON-chip (deathsquad overwrite)
-    .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipERT = PSON-chip (ERT overwrite)
-    .desc = { ent-BaseSkillChipPSON.desc }
+ent-SkillChipDeathSquad = MRAM-chip (death squad)
+    .desc = { ent-BaseSkillChipMRAM.desc }
+ent-SkillChipERT = MRAM-chip (ERT)
+    .desc = { ent-BaseSkillChipMRAM.desc }
 
 
 ent-SkillChipNukie = MRAM-chip (gorlex)
@@ -194,8 +194,8 @@ ent-SkillChipSyndieSoldier = MRAM-chip (syndicate soldier)
     .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipFieldMedicine = MRAM-chip (field medicine)
     .desc = { ent-BaseSkillChipMRAM.desc }
-ent-SkillChipFreelancer = PSON-chip (overwrite: freelancer)
-    .desc = { ent-BaseSkillChipPSON.desc }
+ent-SkillChipFreelancer = MRAM-chip (freelancer)
+    .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipSidearms = APTR-chip (sidearms)
     .desc = { ent-BaseSkillChipAPTR.desc }
 ent-SkillChipSidearmsAdvanced = APTR-chip (advanced sidearms)

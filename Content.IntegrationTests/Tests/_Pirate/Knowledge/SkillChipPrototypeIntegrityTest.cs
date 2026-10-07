@@ -344,6 +344,38 @@ public sealed class SkillChipPrototypeIntegrityTest
         await pair.CleanReturnAsync();
     }
 
+    private static readonly (string Chip, bool CanRemove, bool CanSelfRemove)[] ExpectedRemoval =
+    [
+        ("SkillChipMagicalDampener", true, false),
+        ("SkillChipCombatDampener", true, false),
+        ("SkillChipMindPurge", true, false),
+        ("SkillChipTiderDampener", true, false),
+        ("SkillChipERT", true, true),
+        ("SkillChipDeathSquad", true, true),
+        ("SkillChipFreelancer", true, true),
+        ("SkillChipEducation", true, true),
+    ];
+
+    [Test]
+    public async Task ChipRemovalRulesMatchTheirCategory()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var (chipId, canRemove, canSelfRemove) in ExpectedRemoval)
+            {
+                Assert.That(server.ProtoMan.Index<EntityPrototype>(chipId)
+                    .TryGetComponent<OrganChipComponent>(out var chip, server.EntMan.ComponentFactory), Is.True);
+                Assert.That((chip!.CanRemove, chip.CanSelfRemove), Is.EqualTo((canRemove, canSelfRemove)),
+                    $"{chipId} has the wrong removal rules.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task EveryChipFitsABrain()
     {
