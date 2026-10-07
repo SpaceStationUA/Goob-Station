@@ -152,6 +152,86 @@ public sealed class SkillChipContainerIntegrationTest
     }
 
     [Test]
+    public async Task OneChipPerFamily()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var knowledge = server.System<SharedKnowledgeSystem>();
+        var chips = server.System<OrganChipSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var packs = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            knowledge.EnsureKnowledgeContainer(packs);
+            Assert.That(chips.InstallChip(packs, "SkillChipERT"), Is.True);
+            Assert.That(chips.InstallChip(packs, "SkillChipNukie"), Is.False,
+                "Two broad faction skill packs must not share a brain.");
+            Assert.That(chips.InstallChip(packs, "SkillChipSyndieMarshal"), Is.False,
+                "Chips inheriting from a pack must stay in its family.");
+
+            var packStore = knowledge.EnsureKnowledgeContainer(packs);
+            var brain = (packStore.Owner, entMan.GetComponent<OrganChipContainerComponent>(packStore.Owner));
+            var installedErt = brain.Item2.Container!.ContainedEntities.Single();
+            var nukie = entMan.SpawnEntity("SkillChipNukie", MapCoordinates.Nullspace);
+            Assert.That(chips.CanInsertChip(brain, nukie, out var reason, out var conflict), Is.False);
+            Assert.That(reason, Is.EqualTo("organ-chip-same-family"));
+            Assert.That(conflict, Is.EqualTo(installedErt));
+            entMan.DeleteEntity(nukie);
+
+            var tiers = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            knowledge.EnsureKnowledgeContainer(tiers);
+            Assert.That(chips.InstallChip(tiers, "SkillChipBlacksmith2"), Is.True);
+            Assert.That(chips.InstallChip(tiers, "SkillChipBlacksmith"), Is.False,
+                "Only one tier of a chip may be installed.");
+            Assert.That(chips.InstallChip(tiers, "SkillChipEducation"), Is.True);
+            Assert.That(chips.InstallChip(tiers, "SkillChipCombatEducation"), Is.False,
+                "Only one education chip may be installed.");
+
+            var reskins = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            knowledge.EnsureKnowledgeContainer(reskins);
+            Assert.That(chips.InstallChip(reskins, "SkillChipUnarmed"), Is.True);
+            Assert.That(chips.InstallChip(reskins, "SkillChipUnarmedSyndicate"), Is.True,
+                "A Syndicate copy stacks with the station chip it copies.");
+            Assert.That(chips.InstallChip(reskins, "SkillChipDatabaseSyndicate"), Is.True);
+            var store = knowledge.EnsureKnowledgeContainer(reskins);
+            Assert.That(entMan.GetComponent<OrganChipContainerComponent>(store.Owner).Container!.Count, Is.EqualTo(3));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task HealthScansListChipsButNotSyndicateOnes()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var knowledge = server.System<SharedKnowledgeSystem>();
+        var chips = server.System<OrganChipSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var human = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            var store = knowledge.EnsureKnowledgeContainer(human);
+            Assert.That(chips.InstallChip(human, "SkillChipUnarmed"), Is.True);
+            Assert.That(chips.InstallChip(human, "SkillChipUnarmedSyndicate"), Is.True);
+            Assert.That(chips.InstallChip(human, "SkillChipNukie"), Is.True);
+
+            var scan = chips.GetScannedChips(human);
+            var brain = entMan.GetNetEntity(store.Owner);
+            Assert.That(scan.Keys, Is.EquivalentTo(new[] { brain }), "Only the brain holds chips.");
+
+            var reported = scan[brain].Select(n => entMan.GetComponent<MetaDataComponent>(entMan.GetEntity(n))
+                .EntityPrototype!.ID);
+            Assert.That(reported, Is.EquivalentTo(new[] { "SkillChipUnarmed" }),
+                "Syndicate chips, copies and antagonist packs alike, must not show up on a scan.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task UnchippedRemovesExistingChipsAndRejectsNewOnes()
     {
         await using var pair = await PoolManager.GetServerClient();

@@ -1,4 +1,3 @@
-### Мозкові чипи: інтерфейс, взаємодія та огляд.
 
 verb-categories-organ-chips = Чипи
 
@@ -23,6 +22,9 @@ organ-chip-not-a-chip = Це не чип.
 organ-chip-incompatible = { CAPITALIZE($chip) } не підходить до органа { $organ }.
 organ-chip-no-room = У { $organ } більше немає місця для чипів.
 organ-chip-duplicate = Такий самий чип уже встановлено.
+organ-chip-same-family = { CAPITALIZE($chip) } конфліктує з: { $installed }. Чип такого типу може бути лише один.
+organ-chip-installed-unknown = чип { $index } ({ $organ })
+organ-chip-family-examine = У мозку може бути лише один чип такого типу: [bold]{ $family }[/bold].
 organ-chip-not-removable = Цей чип вмонтовано намертво.
 organ-chip-no-self-removal = Ви не дотягнетеся до цього чипа самотужки. Потрібна чужа рука.
 organ-chip-need-hard-grab = Спершу потрібен жорсткий захват!
@@ -33,7 +35,22 @@ knowledge-grant-on-wear-examine = Поки встановлено, змінює 
 knowledge-grant-on-wear-examine-positive = - [color=green]+{ $level }[/color] [bold]{ $skill }[/bold]
 knowledge-grant-on-wear-examine-negative = - [color=red]{ $level }[/color] [bold]{ $skill }[/bold]
 
-### Чипи
+
+organ-chip-family-overwrite = фракційний пакет навичок
+organ-chip-family-armorsmithing = спогади бронника
+organ-chip-family-weaponsmithing = спогади зброяра
+organ-chip-family-blacksmith = спогади коваля
+organ-chip-family-woodworker = спогади столяра
+organ-chip-family-gunsmith = спогади рушничного майстра
+organ-chip-family-mechanic = спогади механіка
+organ-chip-family-electronics = спогади електрика
+organ-chip-family-tailor = спогади кравця
+organ-chip-family-database = база креслень
+organ-chip-family-database-syndicate = база креслень Синдикату
+organ-chip-family-sidearms = особиста зброя
+organ-chip-family-education = освіта клона
+organ-chip-family-throwing = координація рук і очей
+
 
 ent-BaseBrainChip = мозковий чип
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною.
@@ -46,7 +63,6 @@ ent-BaseSkillChipPSON = ОТРУ-чип
 ent-BaseSkillChipHPYS = СОМА-чип
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей зміщує гормональний баланс, покращуючи фізичні дані.
 
-# APTR (ГАРТ)
 
 ent-SkillChipHeavy = ГАРТ-чип (важка зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
@@ -89,7 +105,6 @@ ent-SkillChipShield = ГАРТ-чип (щити)
 ent-SkillChipCombatHOS = ПЗП-чип (розширена бойова підготовка)
     .desc = { ent-BaseSkillChipMRAM.desc }
 
-# MRAM (ПЗП)
 
 ent-SkillChipArmorsmithing = ПЗП-чип (спогади бронника)
     .desc = { ent-BaseSkillChipMRAM.desc }
@@ -150,7 +165,6 @@ ent-SkillChipSurgeon = ПЗП-чип (спогади хірурга)
 ent-SkillChipCMO = ПЗП-чип (спогади головного хірурга)
     .desc = { ent-BaseSkillChipMRAM.desc }
 
-# PSON (ОТРУ)
 
 ent-SkillChipMagicalDampener = ОТРУ-чип (випалення магічного хисту)
     .desc = { ent-BaseSkillChipPSON.desc }
@@ -161,21 +175,18 @@ ent-SkillChipMindPurge = ОТРУ-чип (випалення розуму)
 ent-SkillChipTiderDampener = ОТРУ-чип (нейродемпфер)
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей збиває запал. Щоб вийняти його, знадобиться друг.
 
-# HPYS (СОМА)
 
 ent-SkillChipThrowing = СОМА-чип (координація рук і очей)
     .desc = { ent-BaseSkillChipHPYS.desc }
 ent-SkillChipThrowingTampered = СОМА-чип (розігнана координація рук і очей)
     .desc = { ent-BaseSkillChipHPYS.desc }
 
-# Центком
 
 ent-SkillChipDeathSquad = ОТРУ-чип (перезапис: ескадрон смерті)
     .desc = { ent-BaseSkillChipPSON.desc }
 ent-SkillChipERT = ОТРУ-чип (перезапис: ГШР)
     .desc = { ent-BaseSkillChipPSON.desc }
 
-# Антагоністи
 
 ent-SkillChipNukie = ПЗП-чип (горлекс)
     .desc = { ent-BaseSkillChipMRAM.desc }
@@ -205,3 +216,39 @@ ent-SkillChipBlackmarketeer = ПЗП-чип (чорний ділок)
     .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipCossack = ПЗП-чип (козак)
     .desc = { ent-BaseSkillChipMRAM.desc }
+
+# Брендовані копії Синдикату мають ті самі назви й описи, що й оригінали.
+ent-SkillChipUnarmedSyndicate = { ent-SkillChipUnarmed }
+    .desc = { ent-SkillChipUnarmed.desc }
+ent-SkillChipBludgeonSyndicate = { ent-SkillChipBludgeon }
+    .desc = { ent-SkillChipBludgeon.desc }
+ent-SkillChipShortBladeSyndicate = { ent-SkillChipShortBlade }
+    .desc = { ent-SkillChipShortBlade.desc }
+ent-SkillChipLongBladeSyndicate = { ent-SkillChipLongBlade }
+    .desc = { ent-SkillChipLongBlade.desc }
+ent-SkillChipPolearmSyndicate = { ent-SkillChipPolearm }
+    .desc = { ent-SkillChipPolearm.desc }
+ent-SkillChipNonLethalSyndicate = { ent-SkillChipNonLethal }
+    .desc = { ent-SkillChipNonLethal.desc }
+ent-SkillChipToolSyndicate = { ent-SkillChipTool }
+    .desc = { ent-SkillChipTool.desc }
+ent-SkillChipEnergySyndicate = { ent-SkillChipEnergy }
+    .desc = { ent-SkillChipEnergy.desc }
+ent-SkillChipSMGSyndicate = { ent-SkillChipSMG }
+    .desc = { ent-SkillChipSMG.desc }
+ent-SkillChipPistolSyndicate = { ent-SkillChipPistol }
+    .desc = { ent-SkillChipPistol.desc }
+ent-SkillChipRifleSyndicate = { ent-SkillChipRifle }
+    .desc = { ent-SkillChipRifle.desc }
+ent-SkillChipShotgunSyndicate = { ent-SkillChipShotgun }
+    .desc = { ent-SkillChipShotgun.desc }
+ent-SkillChipSniperSyndicate = { ent-SkillChipSniper }
+    .desc = { ent-SkillChipSniper.desc }
+ent-SkillChipLaserSyndicate = { ent-SkillChipLaser }
+    .desc = { ent-SkillChipLaser.desc }
+ent-SkillChipHeavySyndicate = { ent-SkillChipHeavy }
+    .desc = { ent-SkillChipHeavy.desc }
+ent-SkillChipFieldMedicineSyndicate = { ent-SkillChipFieldMedicine }
+    .desc = { ent-SkillChipFieldMedicine.desc }
+ent-SkillChipDatabaseSyndicate = { ent-SkillChipDatabase }
+    .desc = { ent-SkillChipDatabase.desc }

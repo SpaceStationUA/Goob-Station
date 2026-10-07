@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: [ BaseSkillChipPSON, BaseCentcommContraband ]
+  parent: [ BaseSkillChipNanotrasen, BaseSkillChipPSON, BaseCentcommContraband ]
   id: SkillChipDeathSquad
   components:
+  - type: OrganChip
+    family: ChipFamilyOverwrite
   - type: KnowledgeGrantOnWear
     skills:
       CookingKnowledge: 100
@@ -45,9 +47,11 @@
       JanitorKnowledge: 100
 
 - type: entity
-  parent: [ BaseSkillChipPSON, BaseCentcommContraband ]
+  parent: [ BaseSkillChipNanotrasen, BaseSkillChipPSON, BaseCentcommContraband ]
   id: SkillChipERT
   components:
+  - type: OrganChip
+    family: ChipFamilyOverwrite
   - type: KnowledgeGrantOnWear
     skills:
       DoorsKnowledge: 50

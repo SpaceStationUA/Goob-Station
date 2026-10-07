@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: organChipFamily
+  id: ChipFamilyOverwrite
+  name: organ-chip-family-overwrite
+
+- type: organChipFamily
+  id: ChipFamilyArmorsmithing
+  name: organ-chip-family-armorsmithing
+
+- type: organChipFamily
+  id: ChipFamilyWeaponsmithing
+  name: organ-chip-family-weaponsmithing
+
+- type: organChipFamily
+  id: ChipFamilyBlacksmith
+  name: organ-chip-family-blacksmith
+
+- type: organChipFamily
+  id: ChipFamilyWoodworker
+  name: organ-chip-family-woodworker
+
+- type: organChipFamily
+  id: ChipFamilyGunsmith
+  name: organ-chip-family-gunsmith
+
+- type: organChipFamily
+  id: ChipFamilyMechanic
+  name: organ-chip-family-mechanic
+
+- type: organChipFamily
+  id: ChipFamilyElectronics
+  name: organ-chip-family-electronics
+
+- type: organChipFamily
+  id: ChipFamilyTailor
+  name: organ-chip-family-tailor
+
+- type: organChipFamily
+  id: ChipFamilyDatabase
+  name: organ-chip-family-database
+
+# A separate family lets the Syndicate chip stack with the station chip.
+- type: organChipFamily
+  id: ChipFamilyDatabaseSyndicate
+  name: organ-chip-family-database-syndicate
+
+- type: organChipFamily
+  id: ChipFamilySidearms
+  name: organ-chip-family-sidearms
+
+- type: organChipFamily
+  id: ChipFamilyEducation
+  name: organ-chip-family-education
+
+- type: organChipFamily
+  id: ChipFamilyThrowing
+  name: organ-chip-family-throwing

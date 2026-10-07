@@ -9,7 +9,11 @@ using Content.Shared.Roles;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Sequence;
+using Robust.Shared.Serialization.Markdown.Value;
 
 namespace Content.IntegrationTests.Tests._Pirate.Knowledge;
 
@@ -132,6 +136,29 @@ public sealed class SkillChipPrototypeIntegrityTest
         "SkillChipPirateScooner", "SkillChipBlackmarketeer", "SkillChipCossack",
     ];
 
+    private static readonly (string Variant, string Original)[] SyndicateVariants =
+    [
+        ("SkillChipUnarmedSyndicate", "SkillChipUnarmed"),
+        ("SkillChipBludgeonSyndicate", "SkillChipBludgeon"),
+        ("SkillChipShortBladeSyndicate", "SkillChipShortBlade"),
+        ("SkillChipLongBladeSyndicate", "SkillChipLongBlade"),
+        ("SkillChipPolearmSyndicate", "SkillChipPolearm"),
+        ("SkillChipNonLethalSyndicate", "SkillChipNonLethal"),
+        ("SkillChipToolSyndicate", "SkillChipTool"),
+        ("SkillChipEnergySyndicate", "SkillChipEnergy"),
+        ("SkillChipSMGSyndicate", "SkillChipSMG"),
+        ("SkillChipPistolSyndicate", "SkillChipPistol"),
+        ("SkillChipRifleSyndicate", "SkillChipRifle"),
+        ("SkillChipShotgunSyndicate", "SkillChipShotgun"),
+        ("SkillChipSniperSyndicate", "SkillChipSniper"),
+        ("SkillChipLaserSyndicate", "SkillChipLaser"),
+        ("SkillChipHeavySyndicate", "SkillChipHeavy"),
+        ("SkillChipFieldMedicineSyndicate", "SkillChipFieldMedicine"),
+        ("SkillChipDatabaseSyndicate", "SkillChipDatabase"),
+    ];
+
+    private static readonly string[] NanotrasenChips = ["SkillChipERT", "SkillChipDeathSquad"];
+
     private static readonly string[] ExcludedTraumaChips = ["SkillChipChef", "SkillChipLibrarian"];
 
     private static readonly string[] AbsentJobs = ["DClass", "Geneticist"];
@@ -180,13 +207,78 @@ public sealed class SkillChipPrototypeIntegrityTest
                 .Where(id => id.StartsWith("SkillChip"))
                 .ToArray();
 
-            Assert.That(found, Is.EquivalentTo(ExpectedChips),
+            Assert.That(found, Is.EquivalentTo(ExpectedChips.Concat(SyndicateVariants.Select(v => v.Variant))),
                 "The enabled chip inventory drifted from the declared set.");
 
             foreach (var excluded in ExcludedTraumaChips)
             {
                 Assert.That(server.ProtoMan.HasIndex<EntityPrototype>(excluded), Is.False,
                     $"{excluded} is deliberately unported until its unsupported payload has a target-native design.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task SyndicateVariantsCopyTheirOriginal()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var prototypes = server.ProtoMan;
+        var factory = server.EntMan.ComponentFactory;
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var (variantId, originalId) in SyndicateVariants)
+            {
+                var variant = prototypes.Index<EntityPrototype>(variantId);
+                var original = prototypes.Index<EntityPrototype>(originalId);
+
+                Assert.That(variant.TryGetComponent<KnowledgeGrantOnWearComponent>(out var variantGrant, factory), Is.True);
+                Assert.That(original.TryGetComponent<KnowledgeGrantOnWearComponent>(out var originalGrant, factory), Is.True);
+                Assert.That(variantGrant!.Skills, Is.EquivalentTo(originalGrant!.Skills),
+                    $"{variantId} is a reskin and must grant exactly what {originalId} grants.");
+            }
+        });
+
+        // Client merging uses the first parent to determine the winning sprite.
+        await pair.Client.WaitAssertion(() =>
+        {
+            var expectedStates = SyndicateVariants.Select(v => (v.Variant, "syndicate"))
+                .Concat(NanotrasenChips.Select(id => (id, "icon")));
+
+            foreach (var (chipId, state) in expectedStates)
+            {
+                Assert.That(pair.Client.ProtoMan.TryGetMapping(typeof(EntityPrototype), chipId, out var mapping),
+                    Is.True);
+                var sprite = ((SequenceDataNode) mapping!["components"]).Cast<MappingDataNode>()
+                    .Single(c => ((ValueDataNode) c["type"]).Value == "Sprite");
+                var firstLayer = (MappingDataNode) ((SequenceDataNode) sprite["layers"])[0];
+                Assert.That(((ValueDataNode) firstLayer["state"]).Value, Is.EqualTo(state),
+                    $"{chipId} lost its branded sprite to another parent.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task EveryChipFamilyHasAName()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var loc = server.ResolveDependency<ILocalizationManager>();
+
+        await server.WaitAssertion(() =>
+        {
+            var families = server.ProtoMan.EnumeratePrototypes<OrganChipFamilyPrototype>().ToArray();
+            Assert.That(families, Is.Not.Empty);
+
+            foreach (var family in families)
+            {
+                Assert.That(loc.HasString(family.Name), Is.True,
+                    $"Chip family {family.ID} has no localized name {family.Name}, so its examine line is broken.");
             }
         });
 
@@ -234,6 +326,16 @@ public sealed class SkillChipPrototypeIntegrityTest
                     Assert.That(chips.Chips, Has.Count.LessThanOrEqualTo(3),
                         $"Job {job.ID} asks for {chips.Chips.Count} chips, but a brain holds three.");
                     Assert.That(chips.Chips, Is.Unique, $"Job {job.ID} lists the same chip twice.");
+
+                    var families = chips.Chips
+                        .Select(c => prototypes.TryIndex<EntityPrototype>(c.Id, out var p)
+                                     && p.TryGetComponent<OrganChipComponent>(out var comp, server.EntMan.ComponentFactory)
+                            ? comp.Family
+                            : null)
+                        .Where(f => f != null)
+                        .ToArray();
+                    Assert.That(families, Is.Unique,
+                        $"Job {job.ID} lists two chips of one family, so one of them can never be installed.");
 
                     foreach (var id in chips.Chips)
                     {

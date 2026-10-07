@@ -13,6 +13,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Emp;
+using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -33,6 +34,7 @@ public sealed class OrganChipSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly INetManager _network = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -81,6 +83,8 @@ public sealed class OrganChipSystem : EntitySystem
         // Reapply contributions when the EMP recovers.
         SubscribeLocalEvent<OrganChipComponent, EmpPulseEvent>(OnChipEmpPulse);
         SubscribeLocalEvent<OrganChipComponent, EmpDisabledRemovedEvent>(OnChipEmpRecovered);
+
+        SubscribeLocalEvent<OrganChipComponent, ExaminedEvent>(OnChipExamined);
 
         // Reconcile after knowledge-store transfers that do not emit chip events.
         SubscribeLocalEvent<KnowledgeStoreMovedEvent>(OnStoreMoved);
@@ -157,7 +161,17 @@ public sealed class OrganChipSystem : EntitySystem
 
     public bool CanInsertChip(Entity<OrganChipContainerComponent> ent, EntityUid chip, out string? reason)
     {
+        return CanInsertChip(ent, chip, out reason, out _);
+    }
+
+    public bool CanInsertChip(
+        Entity<OrganChipContainerComponent> ent,
+        EntityUid chip,
+        out string? reason,
+        out EntityUid? conflict)
+    {
         reason = null;
+        conflict = null;
 
         if (!_chipQuery.TryComp(chip, out var comp))
         {
@@ -192,19 +206,101 @@ public sealed class OrganChipSystem : EntitySystem
             return false;
         }
 
-        if (Prototype(chip)?.ID is not { } id)
-            return true;
+        var id = Prototype(chip)?.ID;
 
         foreach (var installed in container.ContainedEntities)
         {
-            if (Prototype(installed)?.ID != id)
-                continue;
+            if (id != null && Prototype(installed)?.ID == id)
+            {
+                reason = "organ-chip-duplicate";
+                conflict = installed;
+                return false;
+            }
 
-            reason = "organ-chip-duplicate";
-            return false;
+            if (comp.Family != null
+                && _chipQuery.TryComp(installed, out var installedComp)
+                && installedComp.Family == comp.Family)
+            {
+                reason = "organ-chip-same-family";
+                conflict = installed;
+                return false;
+            }
         }
 
         return true;
+    }
+
+    private void PopupInsertRefused(
+        Entity<OrganChipContainerComponent> ent,
+        EntityUid chip,
+        EntityUid user,
+        string? reason,
+        EntityUid? conflict)
+    {
+        var installed = conflict is { } other ? DescribeInstalledChip(ent, other, user) : string.Empty;
+        _popup.PopupClient(
+            Loc.GetString(reason ?? "organ-chip-incompatible",
+                ("chip", Name(chip)),
+                ("organ", Name(ent.Owner)),
+                ("installed", installed)),
+            user,
+            user);
+    }
+
+    // Only the owner and admins see chip names; everyone else sees a slot number.
+    private string DescribeInstalledChip(Entity<OrganChipContainerComponent> ent, EntityUid installed, EntityUid user)
+    {
+        if (GetOrganBody(ent.Owner) == user || _bypassQuery.HasComp(user))
+            return Name(installed);
+
+        var index = 0;
+        if (ent.Comp.Container is { } container)
+        {
+            foreach (var chip in container.ContainedEntities)
+            {
+                if (!_chipQuery.HasComp(chip))
+                    continue;
+
+                index++;
+                if (chip == installed)
+                    break;
+            }
+        }
+
+        return Loc.GetString("organ-chip-installed-unknown", ("organ", Name(ent.Owner)), ("index", index));
+    }
+
+    private void OnChipExamined(Entity<OrganChipComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.Family is not { } familyId || !_prototypes.TryIndex(familyId, out var family))
+            return;
+
+        args.PushMarkup(Loc.GetString("organ-chip-family-examine", ("family", Loc.GetString(family.Name))));
+    }
+
+    public Dictionary<NetEntity, List<NetEntity>> GetScannedChips(EntityUid body)
+    {
+        var result = new Dictionary<NetEntity, List<NetEntity>>();
+        foreach (var (organ, _) in _body.GetBodyOrgans(body))
+        {
+            if (!_containerQuery.TryComp(organ, out var socket))
+                continue;
+
+            var chips = new List<NetEntity>();
+            if (socket.Container is { } container)
+            {
+                foreach (var chip in container.ContainedEntities)
+                {
+                    // Keep hidden chips out of scans to avoid exposing them.
+                    if (_chipQuery.TryComp(chip, out var comp) && !comp.HiddenFromScanners)
+                        chips.Add(GetNetEntity(chip));
+                }
+            }
+
+            result[GetNetEntity(organ)] = chips;
+        }
+
+        return result;
     }
 
     private void OnChipInserted(Entity<OrganChipContainerComponent> ent, ref EntInsertedIntoContainerMessage args)
@@ -514,14 +610,9 @@ public sealed class OrganChipSystem : EntitySystem
         if (GetDelay(ent.Owner, chip, user, out var body, popup: true) is not { } delay)
             return;
 
-        if (!CanInsertChip(ent, chip, out var reason))
+        if (!CanInsertChip(ent, chip, out var reason, out var conflict))
         {
-            _popup.PopupClient(
-                Loc.GetString(reason ?? "organ-chip-incompatible",
-                    ("chip", Name(chip)),
-                    ("organ", Name(ent.Owner))),
-                user,
-                user);
+            PopupInsertRefused(ent, chip, user, reason, conflict);
             return;
         }
 
@@ -703,14 +794,9 @@ public sealed class OrganChipSystem : EntitySystem
             return;
         }
 
-        if (!CanInsertChip(ent, chip, out var reason))
+        if (!CanInsertChip(ent, chip, out var reason, out var conflict))
         {
-            _popup.PopupClient(
-                Loc.GetString(reason ?? "organ-chip-incompatible",
-                    ("chip", Name(chip)),
-                    ("organ", Name(ent.Owner))),
-                user,
-                user);
+            PopupInsertRefused(ent, chip, user, reason, conflict);
             return;
         }
 
@@ -807,10 +893,10 @@ public sealed class OrganChipSystem : EntitySystem
 
         if (!CanInsertChip(host, chip, out var reason) || !_containers.Insert(chip, EnsureContainer(host)))
         {
-            // Full containers and duplicate requests are expected overlap.
+            // Expected chip conflicts should be logged at debug level.
             var message =
                 $"Did not install chip {id} into {ToPrettyString(host.Owner)} of {ToPrettyString(mob)}: {reason ?? "insertion refused"}.";
-            if (reason is "organ-chip-duplicate" or "organ-chip-no-room")
+            if (reason is "organ-chip-duplicate" or "organ-chip-same-family" or "organ-chip-no-room")
                 Log.Debug(message);
             else
                 Log.Error(message);

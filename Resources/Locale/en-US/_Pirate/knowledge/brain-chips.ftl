@@ -1,4 +1,3 @@
-### Brain chip UI, interaction and examine text.
 
 verb-categories-organ-chips = Chips
 
@@ -23,6 +22,9 @@ organ-chip-not-a-chip = That is not a chip.
 organ-chip-incompatible = { CAPITALIZE($chip) } does not fit a { $organ }.
 organ-chip-no-room = That { $organ } has no room for another chip.
 organ-chip-duplicate = An identical chip is already installed.
+organ-chip-same-family = { CAPITALIZE($chip) } clashes with { $installed }. Only one chip of this kind fits.
+organ-chip-installed-unknown = { $organ } chip { $index }
+organ-chip-family-examine = Only one chip of this kind fits in a brain: [bold]{ $family }[/bold].
 organ-chip-not-removable = That chip is fused in place.
 organ-chip-no-self-removal = You cannot reach that chip yourself. Someone else will have to pull it.
 organ-chip-need-hard-grab = You need a hard grab on them first!
@@ -33,7 +35,22 @@ knowledge-grant-on-wear-examine = It offsets these skills while installed:
 knowledge-grant-on-wear-examine-positive = - [color=green]+{ $level }[/color] [bold]{ $skill }[/bold]
 knowledge-grant-on-wear-examine-negative = - [color=red]{ $level }[/color] [bold]{ $skill }[/bold]
 
-### Chips
+
+organ-chip-family-overwrite = faction skill pack
+organ-chip-family-armorsmithing = armoursmith memories
+organ-chip-family-weaponsmithing = weaponsmith memories
+organ-chip-family-blacksmith = blacksmith memories
+organ-chip-family-woodworker = woodworker memories
+organ-chip-family-gunsmith = gunsmith memories
+organ-chip-family-mechanic = mechanic memories
+organ-chip-family-electronics = electrician memories
+organ-chip-family-tailor = tailor memories
+organ-chip-family-database = blueprint database
+organ-chip-family-database-syndicate = Syndicate blueprint database
+organ-chip-family-sidearms = sidearms training
+organ-chip-family-education = clone education
+organ-chip-family-throwing = hand-eye coordination
+
 
 ent-BaseBrainChip = brain chip
     .desc = A sterilised microchip assembly that interfaces directly with brain tissue.
@@ -46,7 +63,6 @@ ent-BaseSkillChipPSON = PSON-chip
 ent-BaseSkillChipHPYS = HPYS-chip
     .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one shifts hormone balances to enhance physical traits.
 
-# APTR
 
 ent-SkillChipHeavy = APTR-chip (heavy weapon training)
     .desc = { ent-BaseSkillChipAPTR.desc }
@@ -88,7 +104,6 @@ ent-SkillChipShield = APTR-chip (shield training)
 ent-SkillChipCombatHOS = MRAM-chip (extended combat training)
     .desc = { ent-BaseSkillChipMRAM.desc }
 
-# MRAM
 
 ent-SkillChipArmorsmithing = MRAM-chip (memories of an armoursmith)
     .desc = { ent-BaseSkillChipMRAM.desc }
@@ -148,7 +163,6 @@ ent-SkillChipSurgeon = MRAM-chip (memories of a surgeon)
 ent-SkillChipCMO = MRAM-chip (memories of a surgeon general)
     .desc = { ent-BaseSkillChipMRAM.desc }
 
-# PSON
 
 ent-SkillChipMagicalDampener = PSON-chip (purge magical talent)
     .desc = { ent-BaseSkillChipPSON.desc }
@@ -159,21 +173,18 @@ ent-SkillChipMindPurge = PSON-chip (purge mind)
 ent-SkillChipTiderDampener = PSON-chip (neural dampener)
     .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one takes the edge off. You will need a friend to get it back out.
 
-# HPYS
 
 ent-SkillChipThrowing = HPYS-chip (hand-eye coordination)
     .desc = { ent-BaseSkillChipHPYS.desc }
 ent-SkillChipThrowingTampered = HPYS-chip (tampered hand-eye coordination)
     .desc = { ent-BaseSkillChipHPYS.desc }
 
-# Central Command
 
 ent-SkillChipDeathSquad = PSON-chip (deathsquad overwrite)
     .desc = { ent-BaseSkillChipPSON.desc }
 ent-SkillChipERT = PSON-chip (ERT overwrite)
     .desc = { ent-BaseSkillChipPSON.desc }
 
-# Antagonists
 
 ent-SkillChipNukie = MRAM-chip (gorlex)
     .desc = { ent-BaseSkillChipMRAM.desc }
@@ -203,3 +214,39 @@ ent-SkillChipBlackmarketeer = MRAM-chip (blackmarketeer)
     .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipCossack = MRAM-chip (cossack)
     .desc = { ent-BaseSkillChipMRAM.desc }
+
+# Syndicate variants use the original names and descriptions.
+ent-SkillChipUnarmedSyndicate = { ent-SkillChipUnarmed }
+    .desc = { ent-SkillChipUnarmed.desc }
+ent-SkillChipBludgeonSyndicate = { ent-SkillChipBludgeon }
+    .desc = { ent-SkillChipBludgeon.desc }
+ent-SkillChipShortBladeSyndicate = { ent-SkillChipShortBlade }
+    .desc = { ent-SkillChipShortBlade.desc }
+ent-SkillChipLongBladeSyndicate = { ent-SkillChipLongBlade }
+    .desc = { ent-SkillChipLongBlade.desc }
+ent-SkillChipPolearmSyndicate = { ent-SkillChipPolearm }
+    .desc = { ent-SkillChipPolearm.desc }
+ent-SkillChipNonLethalSyndicate = { ent-SkillChipNonLethal }
+    .desc = { ent-SkillChipNonLethal.desc }
+ent-SkillChipToolSyndicate = { ent-SkillChipTool }
+    .desc = { ent-SkillChipTool.desc }
+ent-SkillChipEnergySyndicate = { ent-SkillChipEnergy }
+    .desc = { ent-SkillChipEnergy.desc }
+ent-SkillChipSMGSyndicate = { ent-SkillChipSMG }
+    .desc = { ent-SkillChipSMG.desc }
+ent-SkillChipPistolSyndicate = { ent-SkillChipPistol }
+    .desc = { ent-SkillChipPistol.desc }
+ent-SkillChipRifleSyndicate = { ent-SkillChipRifle }
+    .desc = { ent-SkillChipRifle.desc }
+ent-SkillChipShotgunSyndicate = { ent-SkillChipShotgun }
+    .desc = { ent-SkillChipShotgun.desc }
+ent-SkillChipSniperSyndicate = { ent-SkillChipSniper }
+    .desc = { ent-SkillChipSniper.desc }
+ent-SkillChipLaserSyndicate = { ent-SkillChipLaser }
+    .desc = { ent-SkillChipLaser.desc }
+ent-SkillChipHeavySyndicate = { ent-SkillChipHeavy }
+    .desc = { ent-SkillChipHeavy.desc }
+ent-SkillChipFieldMedicineSyndicate = { ent-SkillChipFieldMedicine }
+    .desc = { ent-SkillChipFieldMedicine.desc }
+ent-SkillChipDatabaseSyndicate = { ent-SkillChipDatabase }
+    .desc = { ent-SkillChipDatabase.desc }

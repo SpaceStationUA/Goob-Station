@@ -4,6 +4,8 @@
   parent: BaseSkillChipHPYS
   id: SkillChipThrowing
   components:
+  - type: OrganChip
+    family: ChipFamilyThrowing
   - type: KnowledgeGrantOnWear
     skills:
       ThrowingKnowledge: 25
@@ -12,6 +14,8 @@
   parent: BaseSkillChipHPYS
   id: SkillChipThrowingTampered
   components:
+  - type: OrganChip
+    family: ChipFamilyThrowing
   - type: KnowledgeGrantOnWear
     skills:
       ThrowingKnowledge: 50

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipNukie
   components:
   - type: KnowledgeGrantOnWear
@@ -51,7 +51,7 @@
       KnowledgeWeaponsNonLethal: 50
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipSyndieVisitor
   components:
   - type: KnowledgeGrantOnWear
@@ -62,7 +62,7 @@
       KnowledgeWeaponsPistol: 10
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipPirateCaptainScooner
   components:
   - type: KnowledgeGrantOnWear
@@ -76,7 +76,7 @@
       FirstAidKnowledge: 15
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipPirateScooner
   components:
   - type: KnowledgeGrantOnWear
@@ -90,7 +90,7 @@
       FirstAidKnowledge: 5
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipBlackmarketeer
   components:
   - type: KnowledgeGrantOnWear
@@ -101,7 +101,7 @@
       KnowledgeWeaponsPistol: 10
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipCossack
   components:
   - type: KnowledgeGrantOnWear

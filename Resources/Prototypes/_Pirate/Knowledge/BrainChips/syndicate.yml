@@ -1,0 +1,89 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Separate families let each copy stack with its station original.
+# Keep BaseSkillChipSyndicateVariant first; the first parent supplies the sprite.
+
+- type: entity
+  abstract: true
+  id: BaseSkillChipSyndicateVariant
+  suffix: Syndicate
+  components:
+  - type: OrganChip
+    hiddenFromScanners: true
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: leds-rows
+      color: "#ff4848"
+      shader: unshaded
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipUnarmed ]
+  id: SkillChipUnarmedSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipBludgeon ]
+  id: SkillChipBludgeonSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipShortBlade ]
+  id: SkillChipShortBladeSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipLongBlade ]
+  id: SkillChipLongBladeSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipPolearm ]
+  id: SkillChipPolearmSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipNonLethal ]
+  id: SkillChipNonLethalSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipTool ]
+  id: SkillChipToolSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipEnergy ]
+  id: SkillChipEnergySyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipSMG ]
+  id: SkillChipSMGSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipPistol ]
+  id: SkillChipPistolSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipRifle ]
+  id: SkillChipRifleSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipShotgun ]
+  id: SkillChipShotgunSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipSniper ]
+  id: SkillChipSniperSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipLaser ]
+  id: SkillChipLaserSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipHeavy ]
+  id: SkillChipHeavySyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipFieldMedicine ]
+  id: SkillChipFieldMedicineSyndicate
+
+- type: entity
+  parent: [ BaseSkillChipSyndicateVariant, SkillChipDatabase ]
+  id: SkillChipDatabaseSyndicate
+  components:
+  - type: OrganChip
+    family: ChipFamilyDatabaseSyndicate
