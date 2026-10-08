@@ -129,8 +129,9 @@ public sealed class SkillChipPrototypeIntegrityTest
         "SkillChipMagLit", "SkillChipJanitor", "SkillChipClown", "SkillChipDoctor",
         "SkillChipChemist", "SkillChipSurgeon", "SkillChipCMO",
         "SkillChipMagicalDampener", "SkillChipCombatDampener", "SkillChipMindPurge",
-        "SkillChipTiderDampener",
-        "SkillChipThrowing", "SkillChipThrowingTampered",
+        "SkillChipTiderDampener", "SkillChipPsionicAmplifier",
+        "SkillChipThrowing", "SkillChipThrowingTampered", "SkillChipEndorphin", "SkillChipAdrenal", "SkillChipThyroid",
+        "SkillChipProprioception",
         "SkillChipDeathSquad", "SkillChipERT", "SkillChipFreelancer",
         "SkillChipNukie", "SkillChipSyndieSoldierTeamLeader", "SkillChipSyndieSoldier",
         "SkillChipSyndieMarshal", "SkillChipSyndieVisitor", "SkillChipPirateCaptainScooner",
@@ -258,6 +259,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         await pair.Client.WaitAssertion(() =>
         {
             var expectedStates = SyndicateVariants.Select(v => (v.Variant, "syndicate"))
+                .Append(("SkillChipFreelancer", "syndicate"))
                 .Concat(NanotrasenChips.Select(id => (id, "icon")));
 
             foreach (var (chipId, state) in expectedStates)
@@ -311,7 +313,9 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("SkillChipFreelancer", "Syndicate", []),
         ("SkillChipEducation", null, []),
         ("SkillChipCombatDampener", null, []),
+        ("SkillChipEndorphin", null, []),
         ("SkillChipThrowingTampered", null, []),
+        ("SkillChipPsionicAmplifier", null, []),
     ];
 
     [Test]
@@ -350,6 +354,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("SkillChipCombatDampener", true, false),
         ("SkillChipMindPurge", true, false),
         ("SkillChipTiderDampener", true, false),
+        ("SkillChipPsionicAmplifier", true, true),
         ("SkillChipERT", true, true),
         ("SkillChipDeathSquad", true, true),
         ("SkillChipFreelancer", true, true),

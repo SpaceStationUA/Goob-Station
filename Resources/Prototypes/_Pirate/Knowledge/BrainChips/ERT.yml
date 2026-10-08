@@ -91,9 +91,9 @@
       TailoringKnowledge: 50
       JanitorKnowledge: 50
 
-# Use Syndicate contraband instead of CentralCommand-only.
+# BaseSkillChipSyndicate must come first so its sprite and contraband win.
 - type: entity
-  parent: [ BaseSyndicateContraband, SkillChipERT ]
+  parent: [ BaseSkillChipSyndicate, SkillChipERT ]
   id: SkillChipFreelancer
   components:
   # Clear the inherited CentralCommand allowance.

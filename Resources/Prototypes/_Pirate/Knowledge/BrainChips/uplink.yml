@@ -186,3 +186,14 @@
   discountCategory: null
   categories:
   - UplinkSkills
+
+- type: listing
+  id: UplinkSkillChipThrowingTampered
+  name: uplink-skill-chip-throwing-tampered-name
+  description: uplink-skill-chip-throwing-tampered-desc
+  productEntity: SkillChipThrowingTampered
+  cost:
+    Telecrystal: 5
+  discountCategory: null
+  categories:
+  - UplinkSkills

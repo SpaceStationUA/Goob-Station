@@ -56,3 +56,15 @@
 - type: organChipFamily
   id: ChipFamilyThrowing
   name: organ-chip-family-throwing
+
+- type: organChipFamily
+  id: ChipFamilyEndorphin
+  name: organ-chip-family-endorphin
+
+- type: organChipFamily
+  id: ChipFamilyAdrenal
+  name: organ-chip-family-adrenal
+
+- type: organChipFamily
+  id: ChipFamilyThyroid
+  name: organ-chip-family-thyroid

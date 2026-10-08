@@ -25,6 +25,20 @@ organ-chip-duplicate = An identical chip is already installed.
 organ-chip-same-family = { CAPITALIZE($chip) } clashes with { $installed }. Only one chip of this kind fits.
 organ-chip-installed-unknown = { $organ } chip { $index }
 organ-chip-family-examine = Only one chip of this kind fits in a brain: [bold]{ $family }[/bold].
+hormone-chip-examine = It changes the host's body while installed:
+hormone-chip-examine-crit-up = - [color=green]+{ $amount }[/color] damage before going critical
+hormone-chip-examine-crit-down = - [color=red]-{ $amount }[/color] damage before going critical
+hormone-chip-examine-stamina-up = - [color=green]+{ $amount }%[/color] stamina before collapsing
+hormone-chip-examine-stamina-down = - [color=red]-{ $amount }%[/color] stamina before collapsing
+hormone-chip-examine-heat-up = - [color=green]+{ $amount }%[/color] heat tolerance
+hormone-chip-examine-heat-down = - [color=red]-{ $amount }%[/color] heat tolerance
+hormone-chip-examine-cold-up = - [color=green]+{ $amount }%[/color] cold tolerance
+hormone-chip-examine-cold-down = - [color=red]-{ $amount }%[/color] cold tolerance
+hormone-chip-examine-light-step = - [color=green]silent footsteps[/color]
+psionic-amplifier-chip-examine = While installed:
+psionic-amplifier-chip-examine-cooldown = - [color=green]{ $percent }% shorter[/color] psionic power cooldowns
+psionic-amplifier-chip-examine-dispel = - [color=red]takes damage[/color] when dispelled
+psionic-amplifier-chip-examine-overload = - [color=red]anti-psionic weapons always knock powers offline[/color] for { $seconds } seconds
 organ-chip-not-removable = That chip is fused in place.
 organ-chip-no-self-removal = You cannot reach that chip yourself. Someone else will have to pull it.
 organ-chip-need-hard-grab = You need a hard grab on them first!
@@ -50,6 +64,9 @@ organ-chip-family-database-syndicate = Syndicate blueprint database
 organ-chip-family-sidearms = sidearms training
 organ-chip-family-education = clone education
 organ-chip-family-throwing = hand-eye coordination
+organ-chip-family-endorphin = endorphin regulation
+organ-chip-family-adrenal = adrenal boost
+organ-chip-family-thyroid = thyroid modulation
 
 
 ent-BaseBrainChip = brain chip
@@ -172,11 +189,21 @@ ent-SkillChipMindPurge = PSON-chip (purge mind)
     .desc = { ent-BaseSkillChipPSON.desc }
 ent-SkillChipTiderDampener = PSON-chip (neural dampener)
     .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one takes the edge off. You will need a friend to get it back out.
+ent-SkillChipPsionicAmplifier = PSON-chip (psionic amplifier)
+    .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one amplifies psionic potential, but leaves the mind raw against anything that suppresses it.
 
 
 ent-SkillChipThrowing = HPYS-chip (hand-eye coordination)
     .desc = { ent-BaseSkillChipHPYS.desc }
 ent-SkillChipThrowingTampered = HPYS-chip (tampered hand-eye coordination)
+    .desc = { ent-BaseSkillChipHPYS.desc }
+ent-SkillChipEndorphin = HPYS-chip (endorphin regulator)
+    .desc = { ent-BaseSkillChipHPYS.desc }
+ent-SkillChipAdrenal = HPYS-chip (adrenal booster)
+    .desc = { ent-BaseSkillChipHPYS.desc }
+ent-SkillChipThyroid = HPYS-chip (thyroid modulator)
+    .desc = { ent-BaseSkillChipHPYS.desc }
+ent-SkillChipProprioception = HPYS-chip (proprioception tuner)
     .desc = { ent-BaseSkillChipHPYS.desc }
 
 

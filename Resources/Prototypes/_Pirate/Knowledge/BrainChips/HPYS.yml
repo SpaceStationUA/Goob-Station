@@ -19,3 +19,38 @@
   - type: KnowledgeGrantOnWear
     skills:
       ThrowingKnowledge: 50
+
+- type: entity
+  parent: BaseSkillChipHPYS
+  id: SkillChipEndorphin
+  components:
+  - type: OrganChip
+    family: ChipFamilyEndorphin
+  - type: HormoneChip
+    critThresholdModifier: 10
+
+- type: entity
+  parent: BaseSkillChipHPYS
+  id: SkillChipAdrenal
+  components:
+  - type: OrganChip
+    family: ChipFamilyAdrenal
+  - type: HormoneChip
+    stamcritMultiplier: 1.25
+
+- type: entity
+  parent: BaseSkillChipHPYS
+  id: SkillChipThyroid
+  components:
+  - type: OrganChip
+    family: ChipFamilyThyroid
+  - type: HormoneChip
+    heatThresholdMultiplier: 1.1
+    coldThresholdMultiplier: 0.9
+
+- type: entity
+  parent: BaseSkillChipHPYS
+  id: SkillChipProprioception
+  components:
+  - type: HormoneChip
+    lightStep: true
