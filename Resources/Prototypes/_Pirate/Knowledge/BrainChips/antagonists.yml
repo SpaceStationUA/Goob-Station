@@ -6,6 +6,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       LiteracyKnowledge: 50
       MeleeKnowledge: 50
       ShootingKnowledge: 50
@@ -57,6 +58,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       LiteracyKnowledge: 50
       MeleeKnowledge: 15
       ShootingKnowledge: 15
@@ -69,6 +71,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       LiteracyKnowledge: 50
       MeleeKnowledge: 50
       ShootingKnowledge: 35
@@ -84,6 +87,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       LiteracyKnowledge: 50
       MeleeKnowledge: 30
       ShootingKnowledge: 25
@@ -99,6 +103,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       LiteracyKnowledge: 50
       MeleeKnowledge: 20
       ShootingKnowledge: 20
@@ -111,6 +116,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       LiteracyKnowledge: 50
       MeleeKnowledge: 25
       ShootingKnowledge: 25

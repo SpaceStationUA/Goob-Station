@@ -8,6 +8,7 @@
     family: ChipFamilyOverwrite
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       CookingKnowledge: 100
       DoorsKnowledge: 100
       AirlocksKnowledge: 100
@@ -54,6 +55,7 @@
     family: ChipFamilyOverwrite
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       DoorsKnowledge: 50
       AirlocksKnowledge: 50
       BananiumKnowledge: 50
@@ -100,3 +102,6 @@
   - type: Contraband
     allowedDepartments: []
     allowedJobs: []
+  - type: KnowledgeGrantOnWear
+    skills:
+      PilotingKnowledge: 100

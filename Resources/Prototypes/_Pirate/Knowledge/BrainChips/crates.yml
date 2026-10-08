@@ -10,6 +10,8 @@
         children:
         - id: SkillChipMining
           amount: 3
+        - id: SkillChipEducationPilot
+        - id: SkillChipCombatEducationPilot
 
 - type: entity
   parent: CrateEngineeringSecure
@@ -27,6 +29,7 @@
           amount: 3
         - id: SkillChipBludgeon
           amount: 3
+        - id: SkillChipEducationPilot
 
 - type: entity
   parent: CrateMedicalSecure
@@ -42,6 +45,7 @@
           amount: 3
         - id: SkillChipSurgeon
           amount: 3
+        - id: SkillChipEducationPilot
 
 - type: entity
   parent: CrateScienceSecure
@@ -76,6 +80,7 @@
           amount: 2
         - id: SkillChipMarksmanship
           amount: 2
+        - id: SkillChipCombatEducationPilot
 
 - type: entity
   parent: CrateEngineeringSecure

@@ -113,8 +113,9 @@ public sealed class KnowledgeGrantSystem : EntitySystem
 
         args.Repeat = learned;
 
+        // Small per-cycle gain; ends once the book has nothing left to teach.
         if (learned)
-            _literacy.Train(args.User, LiteracyTrainingSystem.ReadingExperience);
+            _literacy.Train(args.User, LiteracyTrainingSystem.ReadingCycleExperience);
 
         if (!learned)
         {

@@ -18,6 +18,9 @@ public sealed class LiteracyTrainingSystem : EntitySystem
 
     public const int ReadingExperience = 5;
 
+    // Per read cycle; literacy's TimeBetweenExperience caps it at one gain per 5s.
+    public const int ReadingCycleExperience = 1;
+
     public const int WritingExperience = 5;
 
     public override void Initialize()

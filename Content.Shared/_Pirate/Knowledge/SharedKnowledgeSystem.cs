@@ -610,8 +610,9 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
             return;
 
         knowledge.Comp.TimeToNextExperience = _timing.CurTime + knowledge.Comp.TimeBetweenExperience;
-        // Random rounding preserves fractional gains without bias.
-        var gained = (amount + knowledge.Comp.BonusExperience) * GetLearningMultiplier(holder);
+        // Literacy cannot boost its own gains.
+        var multiplier = Prototype(knowledge.Owner)?.ID == LiteracyKnowledge.Id ? 1f : GetLearningMultiplier(holder);
+        var gained = (amount + knowledge.Comp.BonusExperience) * multiplier;
         var experience = (int) gained;
         if (PredictedRandom(knowledge.Owner).NextDouble() < gained - experience)
             experience++;

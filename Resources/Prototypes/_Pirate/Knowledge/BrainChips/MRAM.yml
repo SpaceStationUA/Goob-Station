@@ -410,3 +410,29 @@
       FirstAidKnowledge: 75
       ChemistryKnowledge: 100
       SurgeryKnowledge: 75
+
+# Keep each base chip's family and grants; add piloting only.
+
+- type: entity
+  parent: SkillChipEducation
+  id: SkillChipEducationPilot
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      PilotingKnowledge: 50
+
+- type: entity
+  parent: SkillChipCombatEducation
+  id: SkillChipCombatEducationPilot
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      PilotingKnowledge: 50
+
+- type: entity
+  parent: SkillChipEchelonEducation
+  id: SkillChipEchelonEducationPilot
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      PilotingKnowledge: 50

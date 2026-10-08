@@ -52,6 +52,7 @@ public sealed class KnowledgePrototypeIntegrityTest
         "TailoringKnowledge",
         "MagicalLiteracyKnowledge",
         "LiteracyKnowledge",
+        "PilotingKnowledge",
         "JanitorKnowledge",
         "CookingKnowledge",
         "DoorsKnowledge",

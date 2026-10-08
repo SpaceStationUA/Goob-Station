@@ -65,7 +65,7 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipEchelonEducation
+    - SkillChipEchelonEducationPilot # Pirate: piloting skill
     - SkillChipLaser
   # Pirate: skill chips end
   - !type:AddImplantSpecial
