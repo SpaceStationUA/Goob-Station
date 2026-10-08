@@ -54,10 +54,9 @@ public sealed class KnowledgeProfileSystem : EntitySystem
                 continue;
             }
 
-            var pointsBonus = TryComp<KnowledgeableComponent>(uid, out var knowledgeable)
-                ? knowledgeable.BonusPoints
-                : 0;
-            _knowledge.ApplyProfile(uid, species.Knowledge, new KnowledgeProfile(), pointsBonus);
+            TryComp<KnowledgeableComponent>(uid, out var knowledgeable);
+            _knowledge.ApplyProfile(uid, species.Knowledge, new KnowledgeProfile(),
+                knowledgeable?.BonusPoints ?? 0, knowledgeable?.MasteryGrants);
 
             // Restore grants lost when ApplyProfile rebuilds the store.
             _knowledge.ReplayCompetency(uid);
@@ -72,7 +71,8 @@ public sealed class KnowledgeProfileSystem : EntitySystem
         // Restore pre-spawn grants after the profile rebuild.
         var species = _prototypes.Index<SpeciesPrototype>(args.Profile.Species);
         var pointsBonus = KnowledgeableComponent.GetBonusPoints(_prototypes, args.Profile.TraitPreferences);
-        _knowledge.ApplyProfile(args.Mob, species.Knowledge, args.Profile.Knowledge, pointsBonus);
+        var masteryGrants = KnowledgeableComponent.GetMasteryGrants(_prototypes, args.Profile.TraitPreferences);
+        _knowledge.ApplyProfile(args.Mob, species.Knowledge, args.Profile.Knowledge, pointsBonus, masteryGrants);
         // Pirate: skill chips start
         _knowledge.ReplayCompetency(args.Mob);
         _chips.ReconcileInstalledChipModifiers(args.Mob);

@@ -5,6 +5,7 @@
   effects:
   - !type:GrantSkills
     skills:
+      LiteracyKnowledge: 50
       MeleeKnowledge: 50
       ShootingKnowledge: 50
       WeaponsKnowledge: 50

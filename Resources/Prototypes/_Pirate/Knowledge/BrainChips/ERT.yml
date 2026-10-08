@@ -18,7 +18,7 @@
       ElectronicsKnowledge: 100
       WallsKnowledge: 100
       WindowsKnowledge: 100
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 50
       SurgeryKnowledge: 100
       FirstAidKnowledge: 100
       ChemistryKnowledge: 100
@@ -63,7 +63,7 @@
       ElectronicsKnowledge: 50
       WallsKnowledge: 50
       WindowsKnowledge: 50
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 50
       SurgeryKnowledge: 50
       FirstAidKnowledge: 50
       ChemistryKnowledge: 50

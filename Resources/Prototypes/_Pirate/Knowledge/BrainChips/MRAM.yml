@@ -251,7 +251,7 @@
     family: ChipFamilyEducation
   - type: KnowledgeGrantOnWear
     skills:
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 25
       DoorsKnowledge: 50
       AirlocksKnowledge: 50
       BotsKnowledge: 50
@@ -271,7 +271,7 @@
     family: ChipFamilyEducation
   - type: KnowledgeGrantOnWear
     skills:
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 33
       DoorsKnowledge: 50
       AirlocksKnowledge: 50
       BotsKnowledge: 50
@@ -291,7 +291,7 @@
     family: ChipFamilyEducation
   - type: KnowledgeGrantOnWear
     skills:
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 50
       DoorsKnowledge: 50
       AirlocksKnowledge: 50
       BotsKnowledge: 50

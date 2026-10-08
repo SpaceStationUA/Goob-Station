@@ -381,6 +381,40 @@ public sealed class SkillChipPrototypeIntegrityTest
         await pair.CleanReturnAsync();
     }
 
+    private static readonly (string Chip, int Literacy)[] ExpectedLiteracy =
+    [
+        ("SkillChipEducation", 25),
+        ("SkillChipCombatEducation", 33),
+        ("SkillChipEchelonEducation", 50),
+        ("SkillChipERT", 50),
+        ("SkillChipDeathSquad", 50),
+        ("SkillChipFreelancer", 50),
+        ("SkillChipNukie", 50),
+        ("SkillChipSyndieMarshal", 50),
+        ("SkillChipCossack", 50),
+    ];
+
+    [Test]
+    public async Task ChipLiteracyMatchesTheRole()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var factory = server.EntMan.ComponentFactory;
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var (chipId, literacy) in ExpectedLiteracy)
+            {
+                Assert.That(server.ProtoMan.Index<EntityPrototype>(chipId)
+                    .TryGetComponent<KnowledgeGrantOnWearComponent>(out var grant, factory), Is.True);
+                Assert.That(grant!.Skills.GetValueOrDefault("LiteracyKnowledge"), Is.EqualTo(literacy),
+                    $"{chipId} grants the wrong literacy; inherited chips must keep their parent's.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task EveryChipFitsABrain()
     {

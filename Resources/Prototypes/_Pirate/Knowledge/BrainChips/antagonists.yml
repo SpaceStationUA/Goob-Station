@@ -6,6 +6,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      LiteracyKnowledge: 50
       MeleeKnowledge: 50
       ShootingKnowledge: 50
       KnowledgeWeaponsShield: 50
@@ -56,6 +57,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      LiteracyKnowledge: 50
       MeleeKnowledge: 15
       ShootingKnowledge: 15
       KnowledgeWeaponsShortBlade: 10
@@ -67,6 +69,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      LiteracyKnowledge: 50
       MeleeKnowledge: 50
       ShootingKnowledge: 35
       KnowledgeWeaponsShortBlade: 20
@@ -81,6 +84,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      LiteracyKnowledge: 50
       MeleeKnowledge: 30
       ShootingKnowledge: 25
       KnowledgeWeaponsShortBlade: 20
@@ -95,6 +99,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      LiteracyKnowledge: 50
       MeleeKnowledge: 20
       ShootingKnowledge: 20
       KnowledgeWeaponsShortBlade: 10
@@ -106,6 +111,7 @@
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      LiteracyKnowledge: 50
       MeleeKnowledge: 25
       ShootingKnowledge: 25
       KnowledgeWeaponsBludgeon: 10

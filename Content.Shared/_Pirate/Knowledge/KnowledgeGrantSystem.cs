@@ -16,6 +16,7 @@ public sealed class KnowledgeGrantSystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedKnowledgeSystem _knowledge = default!;
+    [Dependency] private readonly LiteracyTrainingSystem _literacy = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly INetManager _network = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -45,7 +46,7 @@ public sealed class KnowledgeGrantSystem : EntitySystem
         var doAfter = new DoAfterArgs(
             EntityManager,
             args.User,
-            ent.Comp.Instant ? TimeSpan.Zero : ent.Comp.DoAfter,
+            ent.Comp.Instant ? TimeSpan.Zero : ent.Comp.DoAfter / _knowledge.GetLearningMultiplier(args.User),
             new KnowledgeLearnDoAfterEvent(),
             ent.Owner,
             target: ent.Owner,
@@ -75,6 +76,9 @@ public sealed class KnowledgeGrantSystem : EntitySystem
 
         if (ent.Comp.Instant)
         {
+            // Limit reading XP to once per reader per book.
+            _literacy.TrainOnce(args.User, ent.Owner, LiteracyTrainingSystem.ReadingExperience);
+
             foreach (var (id, level) in ent.Comp.Skills)
                 _knowledge.EnsureKnowledge(store, id, level);
 
@@ -108,6 +112,10 @@ public sealed class KnowledgeGrantSystem : EntitySystem
         }
 
         args.Repeat = learned;
+
+        if (learned)
+            _literacy.Train(args.User, LiteracyTrainingSystem.ReadingExperience);
+
         if (!learned)
         {
             _popup.PopupClient(
