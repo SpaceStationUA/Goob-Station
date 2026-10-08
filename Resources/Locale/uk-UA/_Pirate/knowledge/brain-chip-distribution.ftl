@@ -35,8 +35,8 @@ uplink-skill-chip-weapons-laser-name = ГАРТ-чип (лазерна збро�
 uplink-skill-chip-weapons-laser-desc = Вчить вести ціль лазерним карабіном.
 uplink-skill-chip-weapons-heavy-name = ГАРТ-чип (важка зброя)
 uplink-skill-chip-weapons-heavy-desc = Вчить носити й наводити щось надто велике.
-uplink-skill-chip-throwing-tampered-name = Розігнаний чип координації рук і очей
-uplink-skill-chip-throwing-tampered-desc = Гормональний чип, вигнаний за безпечні межі. +50 до метання.
+uplink-skill-chip-throwing-tampered-name = { ent-SkillChipThrowingTampered }
+uplink-skill-chip-throwing-tampered-desc = { ent-SkillChipThrowingTampered.desc }
 
 ### Ящики
 

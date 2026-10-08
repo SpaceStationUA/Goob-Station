@@ -22,10 +22,10 @@ organ-chip-not-a-chip = Це не чип.
 organ-chip-incompatible = { CAPITALIZE($chip) } не підходить до органа { $organ }.
 organ-chip-no-room = У { $organ } більше немає місця для чипів.
 organ-chip-duplicate = Такий самий чип уже встановлено.
-organ-chip-same-family = { CAPITALIZE($chip) } конфліктує з: { $installed }. Чип такого типу може бути лише один.
+organ-chip-same-family = { CAPITALIZE($chip) } конфліктує з: { $installed }. Можна встановити лише один чип із кожного сімейства.
 organ-chip-installed-unknown = чип { $index } ({ $organ })
-organ-chip-family-examine = У мозку може бути лише один чип такого типу: [bold]{ $family }[/bold].
-hormone-chip-examine = Поки встановлено, змінює тіло носія:
+organ-chip-family-examine = Сімейство: [bold]{ $family }[/bold]. Можна встановити лише один чип із цього сімейства.
+hormone-chip-examine = Поки чип встановлено:
 hormone-chip-examine-crit-up = - [color=green]+{ $amount }[/color] шкоди до критичного стану
 hormone-chip-examine-crit-down = - [color=red]-{ $amount }[/color] шкоди до критичного стану
 hormone-chip-examine-stamina-up = - [color=green]+{ $amount }%[/color] витривалості до знесилення
@@ -35,9 +35,9 @@ hormone-chip-examine-heat-down = - [color=red]-{ $amount }%[/color] стійко
 hormone-chip-examine-cold-up = - [color=green]+{ $amount }%[/color] стійкості до холоду
 hormone-chip-examine-cold-down = - [color=red]-{ $amount }%[/color] стійкості до холоду
 hormone-chip-examine-light-step = - [color=green]тихі кроки[/color]
-psionic-amplifier-chip-examine = Поки встановлено:
-psionic-amplifier-chip-examine-cooldown = - [color=green]на { $percent }% коротші[/color] перезарядки псіонічних сил
-psionic-amplifier-chip-examine-dispel = - [color=red]отримує шкоду[/color] від розвіювання
+psionic-amplifier-chip-examine = Поки чип встановлено:
+psionic-amplifier-chip-examine-cooldown = - Час відновлення псіонічних сил [color=green]менший на { $percent }%[/color]
+psionic-amplifier-chip-examine-dispel = - Розвіювання [color=red]завдає носію електричної шкоди[/color]
 psionic-amplifier-chip-examine-overload = - [color=red]антипсіонічна зброя завжди вимикає сили[/color] на { $seconds } с
 organ-chip-not-removable = Цей чип вмонтовано намертво.
 organ-chip-no-self-removal = Ви не дотягнетеся до цього чипа самотужки. Потрібна чужа рука.
@@ -64,21 +64,21 @@ organ-chip-family-database-syndicate = база креслень Синдика�
 organ-chip-family-sidearms = особиста зброя
 organ-chip-family-education = освіта клона
 organ-chip-family-throwing = координація рук і очей
-organ-chip-family-endorphin = регуляція ендорфінів
-organ-chip-family-adrenal = адреналінове підсилення
-organ-chip-family-thyroid = модуляція щитоподібної залози
+organ-chip-family-endorphin = больовий поріг
+organ-chip-family-adrenal = витривалість
+organ-chip-family-thyroid = терморегуляція
 
 
 ent-BaseBrainChip = мозковий чип
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною.
 ent-BaseSkillChipMRAM = ПЗП-чип
-    .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей підкидає спогади про навички, яких ви ніколи не вчили.
+    .desc = Нейрочип із записами чужих знань і професійного досвіду.
 ent-BaseSkillChipAPTR = ГАРТ-чип
-    .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей дає рефлекси та вроджене розуміння зброї.
+    .desc = Нейрочип із записами бойових рефлексів і навичок поводження зі зброєю.
 ent-BaseSkillChipPSON = ОТРУ-чип
-    .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей притлумлює вроджені навички та переписує особистість.
+    .desc = Нейрочип, що змінює активність мозку. Ця серія містить пригнічувачі навичок і псіонічні підсилювачі.
 ent-BaseSkillChipHPYS = СОМА-чип
-    .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей зміщує гормональний баланс, покращуючи фізичні дані.
+    .desc = Нейрочип, що коригує рухи та гормональну регуляцію.
 
 
 ent-SkillChipHeavy = ГАРТ-чип (важка зброя)
@@ -183,30 +183,30 @@ ent-SkillChipCMO = ПЗП-чип (спогади головного хірург
     .desc = { ent-BaseSkillChipMRAM.desc }
 
 
-ent-SkillChipMagicalDampener = ОТРУ-чип (випалення магічного хисту)
-    .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipCombatDampener = ОТРУ-чип (випалення бойового хисту)
-    .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipMindPurge = ОТРУ-чип (випалення розуму)
-    .desc = { ent-BaseSkillChipPSON.desc }
+ent-SkillChipMagicalDampener = ОТРУ-чип (пригнічення магічної грамотності)
+    .desc = Пригнічує магічну грамотність, поки встановлений. Вийняти його може лише хтось інший.
+ent-SkillChipCombatDampener = ОТРУ-чип (пригнічення бойових навичок)
+    .desc = Пригнічує бойові навички, поки встановлений. Вийняти його може лише хтось інший.
+ent-SkillChipMindPurge = ОТРУ-чип (пригнічення бойових навичок)
+    .desc = { ent-SkillChipCombatDampener.desc }
 ent-SkillChipTiderDampener = ОТРУ-чип (нейродемпфер)
-    .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей збиває запал. Щоб вийняти його, знадобиться друг.
+    .desc = Знижує навички ближнього бою та стрільби, поки встановлений. Вийняти його може лише хтось інший.
 ent-SkillChipPsionicAmplifier = ОТРУ-чип (псіонічний підсилювач)
-    .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною. Цей підсилює псіонічний потенціал, але робить розум беззахисним перед усім, що його пригнічує.
+    .desc = Удвічі скорочує час відновлення псіонічних сил. Розвіювання завдає носію електричної шкоди, а антипсіонічна зброя тимчасово вимикає його сили.
 
 
 ent-SkillChipThrowing = СОМА-чип (координація рук і очей)
-    .desc = { ent-BaseSkillChipHPYS.desc }
+    .desc = Покращує техніку кидка. Кинуті предмети летять швидше та б'ють сильніше.
 ent-SkillChipThrowingTampered = СОМА-чип (розігнана координація рук і очей)
-    .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipEndorphin = СОМА-чип (регулятор ендорфінів)
-    .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipAdrenal = СОМА-чип (адреналіновий підсилювач)
-    .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipThyroid = СОМА-чип (модулятор щитоподібної залози)
-    .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipProprioception = СОМА-чип (налаштування пропріоцепції)
-    .desc = { ent-BaseSkillChipHPYS.desc }
+    .desc = Розігнаний чип координації, що покращує контроль рухів під час кидка.
+ent-SkillChipEndorphin = СОМА-чип (больовий поріг)
+    .desc = Регулює виділення ендорфінів, щоб ви могли витримати більше шкоди до критичного стану. Травм не лікує.
+ent-SkillChipAdrenal = СОМА-чип (витривалість)
+    .desc = Регулює виділення адреналіну, щоб ви могли витримати більше шкоди витривалості до знесилення.
+ent-SkillChipThyroid = СОМА-чип (терморегуляція)
+    .desc = Коригує роботу щитоподібної залози, щоб тіло витримувало вищі та нижчі температури без шкоди.
+ent-SkillChipProprioception = СОМА-чип (тихий крок)
+    .desc = Коригує ходу, щоб ваші кроки не видавали звуку.
 
 
 ent-SkillChipDeathSquad = ПЗП-чип (ескадрон смерті)

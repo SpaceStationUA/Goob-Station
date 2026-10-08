@@ -22,10 +22,10 @@ organ-chip-not-a-chip = That is not a chip.
 organ-chip-incompatible = { CAPITALIZE($chip) } does not fit a { $organ }.
 organ-chip-no-room = That { $organ } has no room for another chip.
 organ-chip-duplicate = An identical chip is already installed.
-organ-chip-same-family = { CAPITALIZE($chip) } clashes with { $installed }. Only one chip of this kind fits.
+organ-chip-same-family = { CAPITALIZE($chip) } conflicts with { $installed }. Only one chip from each family can be installed.
 organ-chip-installed-unknown = { $organ } chip { $index }
-organ-chip-family-examine = Only one chip of this kind fits in a brain: [bold]{ $family }[/bold].
-hormone-chip-examine = It changes the host's body while installed:
+organ-chip-family-examine = Chip family: [bold]{ $family }[/bold]. Only one chip from this family can be installed.
+hormone-chip-examine = While installed:
 hormone-chip-examine-crit-up = - [color=green]+{ $amount }[/color] damage before going critical
 hormone-chip-examine-crit-down = - [color=red]-{ $amount }[/color] damage before going critical
 hormone-chip-examine-stamina-up = - [color=green]+{ $amount }%[/color] stamina before collapsing
@@ -37,7 +37,7 @@ hormone-chip-examine-cold-down = - [color=red]-{ $amount }%[/color] cold toleran
 hormone-chip-examine-light-step = - [color=green]silent footsteps[/color]
 psionic-amplifier-chip-examine = While installed:
 psionic-amplifier-chip-examine-cooldown = - [color=green]{ $percent }% shorter[/color] psionic power cooldowns
-psionic-amplifier-chip-examine-dispel = - [color=red]takes damage[/color] when dispelled
+psionic-amplifier-chip-examine-dispel = - Dispel [color=red]deals shock damage to the wearer[/color]
 psionic-amplifier-chip-examine-overload = - [color=red]anti-psionic weapons always knock powers offline[/color] for { $seconds } seconds
 organ-chip-not-removable = That chip is fused in place.
 organ-chip-no-self-removal = You cannot reach that chip yourself. Someone else will have to pull it.
@@ -45,7 +45,7 @@ organ-chip-need-hard-grab = You need a hard grab on them first!
 organ-chip-out-of-reach = You cannot reach the operation site any more.
 organ-chip-lost-chip = You are no longer holding the chip.
 
-knowledge-grant-on-wear-examine = It offsets these skills while installed:
+knowledge-grant-on-wear-examine = Skill changes while installed:
 knowledge-grant-on-wear-examine-positive = - [color=green]+{ $level }[/color] [bold]{ $skill }[/bold]
 knowledge-grant-on-wear-examine-negative = - [color=red]{ $level }[/color] [bold]{ $skill }[/bold]
 
@@ -64,21 +64,21 @@ organ-chip-family-database-syndicate = Syndicate blueprint database
 organ-chip-family-sidearms = sidearms training
 organ-chip-family-education = clone education
 organ-chip-family-throwing = hand-eye coordination
-organ-chip-family-endorphin = endorphin regulation
-organ-chip-family-adrenal = adrenal boost
-organ-chip-family-thyroid = thyroid modulation
+organ-chip-family-endorphin = pain tolerance
+organ-chip-family-adrenal = stamina
+organ-chip-family-thyroid = temperature tolerance
 
 
 ent-BaseBrainChip = brain chip
     .desc = A sterilised microchip assembly that interfaces directly with brain tissue.
 ent-BaseSkillChipMRAM = MRAM-chip
-    .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one rewires it to supply memories of skills you never learned.
+    .desc = A neural chip loaded with someone else's training and work experience.
 ent-BaseSkillChipAPTR = APTR-chip
-    .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one supplies reflexes and intrinsic knowledge of weaponry.
+    .desc = A neural chip loaded with weapon drills and combat reflexes.
 ent-BaseSkillChipPSON = PSON-chip
-    .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one weakens innate skills and overwrites personalities.
+    .desc = A neural chip that alters brain activity. Models include skill dampeners and psionic amplifiers.
 ent-BaseSkillChipHPYS = HPYS-chip
-    .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one shifts hormone balances to enhance physical traits.
+    .desc = A neural chip that adjusts motor control and hormone regulation.
 
 
 ent-SkillChipHeavy = APTR-chip (heavy weapon training)
@@ -181,30 +181,30 @@ ent-SkillChipCMO = MRAM-chip (memories of a surgeon general)
     .desc = { ent-BaseSkillChipMRAM.desc }
 
 
-ent-SkillChipMagicalDampener = PSON-chip (purge magical talent)
-    .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipCombatDampener = PSON-chip (purge combat talent)
-    .desc = { ent-BaseSkillChipPSON.desc }
-ent-SkillChipMindPurge = PSON-chip (purge mind)
-    .desc = { ent-BaseSkillChipPSON.desc }
+ent-SkillChipMagicalDampener = PSON-chip (magical literacy dampener)
+    .desc = Suppresses magical literacy while installed. Someone else must remove it.
+ent-SkillChipCombatDampener = PSON-chip (combat dampener)
+    .desc = Suppresses combat skills while installed. Someone else must remove it.
+ent-SkillChipMindPurge = PSON-chip (combat dampener)
+    .desc = { ent-SkillChipCombatDampener.desc }
 ent-SkillChipTiderDampener = PSON-chip (neural dampener)
-    .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one takes the edge off. You will need a friend to get it back out.
+    .desc = Reduces melee and shooting skills while installed. Someone else must remove it.
 ent-SkillChipPsionicAmplifier = PSON-chip (psionic amplifier)
-    .desc = A sterilised microchip assembly that interfaces directly with brain tissue. This one amplifies psionic potential, but leaves the mind raw against anything that suppresses it.
+    .desc = Halves the cooldowns of your psionic powers. Dispel causes shock damage, and anti-psionic weapons temporarily disable your powers.
 
 
 ent-SkillChipThrowing = HPYS-chip (hand-eye coordination)
-    .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipThrowingTampered = HPYS-chip (tampered hand-eye coordination)
-    .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipEndorphin = HPYS-chip (endorphin regulator)
-    .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipAdrenal = HPYS-chip (adrenal booster)
-    .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipThyroid = HPYS-chip (thyroid modulator)
-    .desc = { ent-BaseSkillChipHPYS.desc }
-ent-SkillChipProprioception = HPYS-chip (proprioception tuner)
-    .desc = { ent-BaseSkillChipHPYS.desc }
+    .desc = Improves throwing technique. Thrown objects travel faster and hit harder.
+ent-SkillChipThrowingTampered = HPYS-chip (overclocked hand-eye coordination)
+    .desc = An overclocked coordination chip that sharpens control of your throwing motion.
+ent-SkillChipEndorphin = HPYS-chip (pain tolerance)
+    .desc = Regulates endorphin release so you can take more damage before going critical. It does not heal injuries.
+ent-SkillChipAdrenal = HPYS-chip (stamina)
+    .desc = Regulates adrenaline release so you can withstand more stamina damage before collapsing.
+ent-SkillChipThyroid = HPYS-chip (temperature tolerance)
+    .desc = Adjusts thyroid activity so your body can tolerate more heat and cold before taking damage.
+ent-SkillChipProprioception = HPYS-chip (silent step)
+    .desc = Adjusts your gait to silence your footsteps.
 
 
 ent-SkillChipDeathSquad = MRAM-chip (death squad)
