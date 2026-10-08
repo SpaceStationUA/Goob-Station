@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipNukie
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
+      LiteracyKnowledge: 50
       MeleeKnowledge: 50
       ShootingKnowledge: 50
       KnowledgeWeaponsShield: 50
@@ -51,22 +53,26 @@
       KnowledgeWeaponsNonLethal: 50
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipSyndieVisitor
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
+      LiteracyKnowledge: 50
       MeleeKnowledge: 15
       ShootingKnowledge: 15
       KnowledgeWeaponsShortBlade: 10
       KnowledgeWeaponsPistol: 10
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipPirateCaptainScooner
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
+      LiteracyKnowledge: 50
       MeleeKnowledge: 50
       ShootingKnowledge: 35
       KnowledgeWeaponsShortBlade: 20
@@ -76,11 +82,13 @@
       FirstAidKnowledge: 15
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipPirateScooner
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
+      LiteracyKnowledge: 50
       MeleeKnowledge: 30
       ShootingKnowledge: 25
       KnowledgeWeaponsShortBlade: 20
@@ -90,22 +98,26 @@
       FirstAidKnowledge: 5
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipBlackmarketeer
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
+      LiteracyKnowledge: 50
       MeleeKnowledge: 20
       ShootingKnowledge: 20
       KnowledgeWeaponsShortBlade: 10
       KnowledgeWeaponsPistol: 10
 
 - type: entity
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipSyndicate
   id: SkillChipCossack
   components:
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
+      LiteracyKnowledge: 50
       MeleeKnowledge: 25
       ShootingKnowledge: 25
       KnowledgeWeaponsBludgeon: 10

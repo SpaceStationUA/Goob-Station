@@ -2,6 +2,7 @@
 
 using Content.Server.Administration.Logs;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared._Pirate.Knowledge; // Pirate: skill chip expansion
 using Content.Shared.Camera;
 using Content.Shared.Coordinates;
 using Content.Shared.Damage;
@@ -24,6 +25,7 @@ public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly KnowledgeGameplaySystem _knowledgeGameplay = default!; // Pirate: skill chip expansion
 
     public override void Initialize()
     {
@@ -41,7 +43,8 @@ public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
             return;
 
         var dmg = _damageable.TryChangeDamage(args.Target,
-            component.Damage * _damageable.UniversalThrownDamageModifier,
+            component.Damage * _damageable.UniversalThrownDamageModifier
+                * _knowledgeGameplay.GetThrownDamageMultiplier(args.Component.Thrower), // Pirate: skill chip expansion
             component.IgnoreResistances,
             origin: args.Component.Thrower,
             increaseOnly: component.IncreaseOnly);

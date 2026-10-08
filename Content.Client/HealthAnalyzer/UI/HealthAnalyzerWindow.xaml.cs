@@ -364,6 +364,7 @@ namespace Content.Client.HealthAnalyzer.UI
                     continue;
 
                 DrawOrganDiagnostics(organEnt, organName, data.Integrity / data.IntegrityCap * 100);
+                DrawOrganChips(organ, msg.Chips); // Pirate: skill chips
 
                 if (_entityManager.HasComponent<RottingComponent>(organEnt))
                 {

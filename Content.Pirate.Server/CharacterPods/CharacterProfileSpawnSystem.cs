@@ -132,7 +132,8 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
             return;
 
         var pointsBonus = KnowledgeableComponent.GetBonusPoints(_prototype, profile.TraitPreferences);
-        _knowledge.ApplyProfile(mob, species.Knowledge, profile.Knowledge, pointsBonus);
+        var masteryGrants = KnowledgeableComponent.GetMasteryGrants(_prototype, profile.TraitPreferences);
+        _knowledge.ApplyProfile(mob, species.Knowledge, profile.Knowledge, pointsBonus, masteryGrants);
         _knowledge.ApplyEmployerBonuses(mob, profile.Employer);
 
         // Rebuild after queued knowledge deletions have run.

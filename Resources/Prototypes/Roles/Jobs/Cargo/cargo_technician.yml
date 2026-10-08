@@ -28,7 +28,7 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipEducation
+    - SkillChipEducationPilot # Pirate: piloting skill
   # Pirate: skill chips end
   - !type:GiveItemOnHolidaySpecial
     holiday: BoxingDay

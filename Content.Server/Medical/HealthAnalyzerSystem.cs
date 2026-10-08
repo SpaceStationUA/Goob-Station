@@ -41,6 +41,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Damage;
 using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
+using Content.Shared._Pirate.Body.Chips; // Pirate: skill chips
 
 namespace Content.Server.Medical;
 
@@ -61,6 +62,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     [Dependency] private readonly TraumaSystem _trauma = default!; // Shitmed Change
     [Dependency] private readonly MobThresholdSystem _threshold = default!; // Goobstation
     [Dependency] private readonly ChatSystem _chat = default!; // Goobstation
+    [Dependency] private readonly OrganChipSystem _organChips = default!; // Pirate: skill chips
 
     public override void Initialize()
     {
@@ -371,7 +373,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
                     bleeding,
                     vitalDamage, // Goobstation
                     bodyStatus,
-                    organs
+                    organs,
+                    _organChips.GetScannedChips(target) // Pirate: skill chips
                 ));
                 break;
 

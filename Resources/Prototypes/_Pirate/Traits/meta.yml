@@ -78,6 +78,8 @@
   components:
     - type: Knowledgeable
       bonusPoints: 6
+      masteryGrants:
+        LiteracyKnowledge: 2 # literacy 50: learns x1.5
 
 - type: trait
   id: ExperiencedAlt
@@ -94,6 +96,8 @@
   components:
     - type: Knowledgeable
       bonusPoints: 10
+      masteryGrants:
+        LiteracyKnowledge: 3 # literacy 75: learns x1.75
       requiredTraits:
         - Unchipped
 #endregion
