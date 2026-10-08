@@ -17,6 +17,7 @@ using Content.Client.UserInterface.RichText;
 using Robust.Shared.Input;
 using Robust.Client.UserInterface; // Pirate: paperwork tags
 using Robust.Shared.Maths; // Pirate: paperwork tags
+using Robust.Shared.Timing; // Pirate: persistent diary pages
 
 namespace Content.Client.Paper.UI
 {
@@ -27,6 +28,7 @@ namespace Content.Client.Paper.UI
         private string _currentRawText = string.Empty; // starlight-edit
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IResourceCache _resCache = default!;
+        [Dependency] private readonly IGameTiming _timing = default!; // Pirate: persistent diary pages
 
         private static Color DefaultTextColor = new(25, 25, 25);
 
@@ -72,6 +74,11 @@ namespace Content.Client.Paper.UI
         public event Action<PaperComponent.PaperPageAction, int, string?, int>? OnPageAction;
         private int _currentPage;
         private int _pageCount;
+        private bool _canAddPage = true;
+        private TimeSpan _nextSheetProbe;
+
+        /// <summary>Probed live so picking paper up or dropping it updates the add button.</summary>
+        public Func<bool>? SheetAvailableProbe { get; set; }
 
         /// <summary>Leaf on screen, so saves and flips can name the page they edit.</summary>
         public int CurrentPage => _currentPage;
@@ -206,6 +213,20 @@ namespace Content.Client.Paper.UI
             PrevPageButton.Disabled = state.CurrentPage <= 0;
             NextPageButton.Disabled = state.CurrentPage >= state.PageCount - 1;
             RemovePageButton.Disabled = state.PageCount <= 1; // the last leaf stays in the book
+        }
+
+        /// <summary>
+        /// Pirate: enables "+ Листок" only while the player actually carries a sheet that
+        /// could become a leaf; a disabled button explains itself with the need-paper message.
+        /// </summary>
+        public void SetCanAddPage(bool available)
+        {
+            if (_canAddPage == available)
+                return;
+
+            _canAddPage = available;
+            AddPageButton.Disabled = !available;
+            AddPageButton.ToolTip = available ? null : Loc.GetString("paper-page-add-need-paper");
         }
         #endregion
 
@@ -374,6 +395,14 @@ namespace Content.Client.Paper.UI
         /// </summary>
         protected override void Draw(DrawingHandleScreen handle)
         {
+            // Pirate: persistent diary pages - keep the add button in sync with the paper
+            // the player carries while the window stays open.
+            if (PageBar.Visible && SheetAvailableProbe != null && _timing.CurTime >= _nextSheetProbe)
+            {
+                _nextSheetProbe = _timing.CurTime + TimeSpan.FromMilliseconds(250);
+                SetCanAddPage(SheetAvailableProbe());
+            }
+
             // Now do the deferred setup of the written area. At the point
             // that InitVisuals runs, the label hasn't had it's style initialized
             // so we need to get some info out now:

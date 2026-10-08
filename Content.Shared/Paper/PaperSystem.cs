@@ -23,16 +23,19 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 // Starlight-end
 
-#region Pirate: paperwork tags
+#region Pirate: persistent diary pages
 using Robust.Shared.Network;
 using Content.Shared.Mind;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using Content.Shared._Pirate.Paper;
 using Content.Shared._Pirate.PersistentText;
+using Content.Shared.Nutrition;
+using Content.Shared.Hands.EntitySystems;
+using Robust.Shared.Audio;
+#endregion
+#region Pirate: paperwork tags
+using System.Globalization;
+using System.Text.RegularExpressions;
 using Content.Shared.Access.Systems;
-using Content.Shared.Nutrition; // Pirate: persistent diary pages (not edible)
-using Content.Shared.Hands.EntitySystems; // Pirate: persistent diary pages
 using Content.Shared.GameTicking;
 using Content.Shared.Station;
 #endregion
@@ -53,9 +56,10 @@ public sealed class PaperSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IdentitySystem _identitySystem = default!; // Starlight-edit
-    [Dependency] private readonly SharedMindSystem _mind = default!; // Pirate: persistent text (diaries)
+    [Dependency] private readonly SharedMindSystem _mind = default!; // Pirate: persistent diary pages
     [Dependency] private readonly SharedHandsSystem _hands = default!; // Pirate: persistent diary pages
     [Dependency] private readonly SharedContainerSystem _containers = default!; // Pirate: persistent diary pages
+    [Dependency] private readonly INetManager _net = default!; // Pirate: persistent diary pages
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
@@ -65,6 +69,10 @@ public sealed class PaperSystem : EntitySystem
     private static readonly ProtoId<TagPrototype> BookTag = "Book";
     private const string SheetPrototype = "Paper";
     private const string SignatureStampState = "paper_stamp-signature";
+    // Pirate: persistent diary pages - tucking a leaf in or tearing one out is paper
+    // handling, not writing: these play instead of the pen-scribble PaperComponent.Sound.
+    private static readonly SoundSpecifier LeafInsertSound = new SoundPathSpecifier("/Audio/_Goobstation/Items/handling/paper_pickup.ogg");
+    private static readonly SoundSpecifier LeafRemoveSound = new SoundPathSpecifier("/Audio/_Goobstation/Items/handling/paper_drop.ogg");
     #region Pirate: paperwork tags
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
     [Dependency] private readonly SharedStationSystem _station = default!;
@@ -173,7 +181,7 @@ public sealed class PaperSystem : EntitySystem
             if (entity.Comp.StampedBy.Count > 0)
             {
                 var commaSeparated =
-                    string.Join(", ", entity.Comp.StampedBy.Select(s => Loc.GetString(s.StampedName)));
+                    string.Join(", ", entity.Comp.StampedBy.Select(s => Loc.TryGetString(s.StampedName, out var locName) ? locName : s.StampedName)); // Pirate: persistent diary pages - signatures are raw names, not loc keys
                 args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-stamped-by",
@@ -269,7 +277,7 @@ public sealed class PaperSystem : EntitySystem
     /// leaf exactly like a stamp locks a loose sheet. <paramref name="page"/> picks the
     /// leaf to inspect, defaulting to the one currently on screen.
     /// </summary>
-    private bool IsWriteLocked(Entity<PaperComponent> entity, int? page = null)
+    private bool IsWriteLocked(Entity<PaperComponent> entity, int? page = null) // Pirate: persistent diary pages
     {
         if (entity.Comp.StampedBy.Count > 0)
             return true;
@@ -320,7 +328,7 @@ public sealed class PaperSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        // Pirate: persistent text (diaries) - only the bound owner may write;
+        // Pirate: persistent diary pages - only the bound owner may write;
         // unbound items bind to the first writer (e.g. spawned outside a loadout).
         if (TryComp<PersistentTextComponent>(entity, out var persistentText))
         {
@@ -396,7 +404,7 @@ public sealed class PaperSystem : EntitySystem
         return true;
     }
 
-    #region Pirate: persistent text (diaries)
+    #region Pirate: persistent diary pages - owner-bound persistent text
 
     /// <summary>
     /// Checks whether the actor may write into the persistent text entity.
@@ -411,7 +419,7 @@ public sealed class PaperSystem : EntitySystem
         if (!string.Equals(component.OwnerKind, PersistentTextOwnerKinds.Profile, StringComparison.Ordinal))
             return true;
 
-        // Pirate: persistent text (diaries) - the check is by CHARACTER, not by the mind.
+        // Pirate: persistent diary pages - the check is by CHARACTER, not by the mind.
         // Exiting and re-entering a character wipes and recreates the mind, which used to
         // lock the diary even for its rightful owner. The character is identified by its
         // in-world name plus the account behind it (session first, mind only as a fallback
@@ -444,7 +452,7 @@ public sealed class PaperSystem : EntitySystem
         if (!string.Equals(component.OwnerKind, PersistentTextOwnerKinds.Profile, StringComparison.Ordinal))
             return;
 
-        // Pirate: bind to the CHARACTER (in-world name + account), not the mind —
+        // Pirate: persistent diary pages - bind to the CHARACTER (in-world name + account), not the mind —
         // the mind is replaced whenever a player exits and re-enters their character.
         var characterName = Name(actor);
         if (string.IsNullOrWhiteSpace(characterName))
@@ -544,9 +552,10 @@ public sealed class PaperSystem : EntitySystem
                 if (args.Text != null && !TryWriteText(entity, args.Actor, args.Text, args.TextPage))
                     return;
 
-                QueueDel(material);
+                if (_net.IsServer) // Pirate: persistent diary pages - a predicted client must never queue-delete networked entities
+                    QueueDel(material);
                 AddPage(entity, pages);
-                _audio.PlayPvs(entity.Comp.Sound, entity);
+                _audio.PlayPvs(LeafInsertSound, entity);
 
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
                     $"{ToPrettyString(args.Actor):player} added a page to {ToPrettyString(entity):entity}");
@@ -563,7 +572,7 @@ public sealed class PaperSystem : EntitySystem
                     return;
 
                 TornOutSheet(args.Actor, torn);
-                _audio.PlayPvs(entity.Comp.Sound, entity);
+                _audio.PlayPvs(LeafRemoveSound, entity);
                 _popupSystem.PopupClient(
                     Loc.GetString("paper-page-torn-out", ("target", entity.Owner)),
                     args.Actor,
@@ -576,7 +585,7 @@ public sealed class PaperSystem : EntitySystem
     }
 
     /// <summary>
-    /// Pirate: persistent text (diaries) - adding or tearing out leaves is writing,
+    /// Pirate: persistent diary pages - adding or tearing out leaves is writing,
     /// so it obeys the same owner-only rule.
     /// </summary>
     private bool CanEditPages(Entity<PaperComponent> entity, EntityUid actor)
@@ -638,7 +647,7 @@ public sealed class PaperSystem : EntitySystem
     }
 
     /// <summary>Looks for sheet material in the actor's hands and inventory.</summary>
-    private EntityUid? FindSheetToUse(EntityUid actor)
+    public EntityUid? FindSheetToUse(EntityUid actor) // Pirate: persistent diary pages
     {
         foreach (var container in _containers.GetAllContainers(actor))
         {
@@ -704,13 +713,14 @@ public sealed class PaperSystem : EntitySystem
         SyncPages(entity, pages);
 
         var sheetName = ToPrettyString(sheet);
-        QueueDel(sheet);
+        if (_net.IsServer) // Pirate: persistent diary pages - predicting a networked deletion logs errors on the client
+            QueueDel(sheet);
 
         _popupSystem.PopupClient(
             Loc.GetString("paper-page-inserted", ("target", entity.Owner)),
             actor,
             actor);
-        _audio.PlayPvs(entity.Comp.Sound, entity);
+        _audio.PlayPvs(LeafInsertSound, entity);
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low,
             $"{ToPrettyString(actor):player} tucked {sheetName} into {ToPrettyString(entity):entity}");
@@ -976,7 +986,7 @@ public sealed class PaperSystem : EntitySystem
     /// </summary>
     public bool TryStamp(Entity<PaperComponent> entity, StampDisplayInfo stampInfo, string spriteStampState)
     {
-        // Pirate: persistent text (diaries) - no stamping on protected paper (e.g. diaries)
+        // Pirate: persistent diary pages - no stamping on protected paper (e.g. diaries)
         if (HasComp<NoStampingComponent>(entity))
             return false;
 
@@ -1064,6 +1074,13 @@ public sealed class PaperSystem : EntitySystem
 
     public void UpdateUserInterface(Entity<PaperComponent> entity)
     {
+        // Pirate: persistent diary pages - only the server ever produces bound UI states:
+        // the client's PaperPages copy is stale prototype data (a single leaf), so a
+        // predicted update here flickered a wrong leaf count and raw text into the
+        // open window.
+        if (!_net.IsServer)
+            return;
+
         // Pirate: persistent diary pages - paginated items only show the leaf on screen,
         // and its signatures stand in for the (deliberately empty) stamp list.
         var text = entity.Comp.Content;

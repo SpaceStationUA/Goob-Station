@@ -64,7 +64,7 @@ public sealed partial class BookSkinWindow : DefaultWindow
     public void Populate(string? currentSkin, ProtoId<TagPrototype> sourceTag)
     {
         _looks.Clear();
-        _looks.AddRange(BookSkinLooks.Get(_proto, _compFactory, _tag, sourceTag));
+        _looks.AddRange(BookSkinLooks.Get(_proto, _compFactory, _tag, sourceTag).Where(HasSwappableCover));
 
         _current = currentSkin;
         RebuildGrid();
@@ -112,6 +112,25 @@ public sealed partial class BookSkinWindow : DefaultWindow
             button.OnPressed += _ => OnCoverSelected?.Invoke(id);
             CoverGrid.AddChild(button);
         }
+    }
+
+    /// <summary>
+    /// Skips books whose sprite cannot be transplanted at all: their states live in
+    /// another RSI and match no swappable role (cover/decor/icon/overlay/paper), so
+    /// picking one would silently change nothing.
+    /// </summary>
+    private bool HasSwappableCover(EntityPrototype look)
+    {
+        if (!look.TryGetComponent(out SpriteComponent? sprite, _compFactory))
+            return false;
+
+        foreach (var layer in sprite.AllLayers)
+        {
+            if (BookSkinSystem.RoleOf(layer.RsiState.Name) != null)
+                return true;
+        }
+
+        return false;
     }
 
     private bool MatchesFilter(EntityPrototype look)

@@ -51,7 +51,7 @@ public sealed partial class StampWidget : PanelContainer
 
            else
            {
-               StampedByLabel.Text = Loc.GetString(value.StampedName);
+               StampedByLabel.Text = Loc.TryGetString(value.StampedName, out var locName) ? locName : value.StampedName; // Pirate: persistent diary pages - signatures are raw names, not loc keys
                StampedByLabel.FontColorOverride = value.StampedColor;
                ModulateSelfOverride = value.StampedColor;
            }

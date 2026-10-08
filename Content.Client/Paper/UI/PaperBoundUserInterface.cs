@@ -28,6 +28,7 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
         _window.OnMacroMenuUsed += OnMacroMenuUsed; // Pirate: paperwork tags
         _window.OnSignatureRequested += OnSignatureRequested; // Starlight-edit
         _window.OnPageAction += OnPageAction; // Pirate: persistent diary pages
+        _window.SheetAvailableProbe = ProbeSheetAvailable; // Pirate: persistent diary pages
 
         if (EntMan.TryGetComponent<PaperComponent>(Owner, out var paper))
         {
@@ -72,5 +73,14 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
     private void OnPageAction(PaperPageAction action, int page, string? text, int textPage)
     {
         SendMessage(new PaperPageActionMessage(action, page, text, textPage));
+    }
+
+    // Pirate: persistent diary pages - the client scans its own containers (they are
+    // networked) with the very rule the server uses, so the add button reflects the
+    // paper the player actually carries.
+    private bool ProbeSheetAvailable()
+    {
+        var player = PlayerManager.LocalEntity;
+        return player is { } actor && EntMan.System<PaperSystem>().FindSheetToUse(actor) != null;
     }
 }

@@ -128,8 +128,10 @@ public sealed class BookSkinSystem : EntitySystem
     /// <summary>
     /// Which part of a book a sprite state belongs to. Books only ever differ in their
     /// cover, decor, icon and overlay, so those can be swapped one by one.
+    /// Public so the cover picker can tell a transplantable book from one whose sprite
+    /// shares none of these states (skillbooks, schematics, mime guides).
     /// </summary>
-    private static string? RoleOf(string? state)
+    public static string? RoleOf(string? state)
     {
         if (string.IsNullOrEmpty(state))
             return null;
