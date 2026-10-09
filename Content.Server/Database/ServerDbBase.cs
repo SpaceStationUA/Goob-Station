@@ -20,6 +20,7 @@ using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
+using Content.Shared._Pirate.CustomMarkings; // Pirate
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
@@ -309,7 +310,8 @@ namespace Content.Server.Database
                 profile.ExploitableInfo).WithKnowledge(
                 new KnowledgeProfile(profile.KnowledgeMastery.ToDictionary(
                     pair => new EntProtoId(pair.Key),
-                    pair => pair.Value)));
+                    pair => pair.Value))).WithCustomMarkings(
+                CustomMarkingRules.FromStored(profile.CustomMarkings)); // Pirate
         }
 
         private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot, Profile? profile = null)
@@ -346,6 +348,7 @@ namespace Content.Server.Database
             profile.SkinColor = appearance.SkinColor.ToHex();
             profile.SpawnPriority = (int) humanoid.SpawnPriority;
             profile.Markings = markings;
+            profile.CustomMarkings = CustomMarkingRules.ToStored(humanoid.CustomMarkings); // Pirate
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
 

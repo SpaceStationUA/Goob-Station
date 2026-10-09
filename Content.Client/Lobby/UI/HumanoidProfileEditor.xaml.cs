@@ -609,6 +609,7 @@ namespace Content.Client.Lobby.UI
 
             UpdateSpeciesGuidebookIcon();
             InitializePirateKnowledgeEditor(); // Pirate
+            InitializeCustomMarkings(); // Pirate
             IsDirty = false;
         }
 
@@ -2074,6 +2075,7 @@ namespace Content.Client.Lobby.UI
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();
+            UpdateCustomMarkings(); // Pirate
             UpdateBarkVoice(); // Goob Station - Barks
             UpdateHairPickers();
             UpdateCMarkingsHair();
@@ -2514,6 +2516,7 @@ namespace Content.Client.Lobby.UI
 
         protected override void Dispose(bool disposing)
         {
+            CloseCustomMarkings(); // Pirate
             base.Dispose(disposing);
             if (!disposing)
                 return;
@@ -3055,6 +3058,7 @@ namespace Content.Client.Lobby.UI
         private void SetPreviewRotation(Direction direction)
         {
             SpriteView.OverrideDirection = (Direction) ((int) direction % 4 * 2);
+            SetCustomMarkingsDirection(SpriteView.OverrideDirection.Value); // Pirate
         }
 
         private void RandomizeEverything()

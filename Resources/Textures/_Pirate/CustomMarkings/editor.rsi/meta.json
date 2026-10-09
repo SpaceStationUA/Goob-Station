@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made for Wolfgate (CustomMarkings) by Tools/_WF/CustomMarkings/gen_editor_icons.py",
+  "size": {
+    "x": 16,
+    "y": 16
+  },
+  "states": [
+    {
+      "name": "pencil"
+    },
+    {
+      "name": "eraser"
+    },
+    {
+      "name": "fill"
+    },
+    {
+      "name": "picker"
+    },
+    {
+      "name": "bodyeraser"
+    },
+    {
+      "name": "symmetry"
+    },
+    {
+      "name": "undo"
+    },
+    {
+      "name": "redo"
+    },
+    {
+      "name": "flip"
+    },
+    {
+      "name": "mirror"
+    },
+    {
+      "name": "trash"
+    },
+    {
+      "name": "left"
+    },
+    {
+      "name": "up"
+    },
+    {
+      "name": "down"
+    },
+    {
+      "name": "right"
+    },
+    {
+      "name": "export"
+    },
+    {
+      "name": "previous"
+    },
+    {
+      "name": "next"
+    },
+    {
+      "name": "add"
+    },
+    {
+      "name": "remove"
+    },
+    {
+      "name": "play"
+    }
+  ]
+}
