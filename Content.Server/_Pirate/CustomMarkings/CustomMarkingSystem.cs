@@ -300,9 +300,16 @@ public sealed partial class CustomMarkingSystem : EntitySystem
 
         // Pirate: misses must not evict real art, including when the DB read completes synchronously.
         var art = await known;
-        if (art == null && _art.TryGetValue(hash, out var cached) && ReferenceEquals(known, cached))
-            _art.Remove(hash);
-        return art;
+        if (_art.TryGetValue(hash, out var cached) && ReferenceEquals(known, cached))
+        {
+            if (art == null)
+                _art.Remove(hash);
+            return art;
+        }
+
+        // Moderation or a completed save invalidated this read while it awaited the database.
+        // A positive result must be checked again; a missing result is already safe to refuse.
+        return art == null ? null : await GetArt(hash);
     }
 
     private async Task<CustomMarkingStoredArt?> ReadArt(string hash)

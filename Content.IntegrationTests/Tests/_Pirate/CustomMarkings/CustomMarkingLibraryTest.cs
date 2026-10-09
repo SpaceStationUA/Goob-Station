@@ -522,8 +522,9 @@ public sealed class CustomMarkingLibraryTest
         await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task SaveCompletionCannotRestoreBlockedArtTest()
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SaveCompletionCannotRestoreBlockedArtTest(bool pendingRead)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
         var server = pair.Server;
@@ -533,6 +534,8 @@ public sealed class CustomMarkingLibraryTest
         var original = server.ResolveDependency<IServerDbManager>();
         var databaseSaved = new TaskCompletionSource<Content.Server._Pirate.CustomMarkings.CustomMarkingSaveResult>(TaskCreationOptions.RunContinuationsAsynchronously);
         var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var artRead = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseRead = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var delayed = new Mock<IServerDbManager>();
         delayed.Setup(db => db.SaveCustomMarkingAsync(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(),
                 It.IsAny<string>(), It.IsAny<StoredArt>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
@@ -546,7 +549,17 @@ public sealed class CustomMarkingLibraryTest
         delayed.Setup(db => db.GetCustomMarkingsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .Returns((Guid user, CancellationToken cancel) => original.GetCustomMarkingsAsync(user, cancel));
         delayed.Setup(db => db.GetCustomMarkingArtAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .Returns((string hash, CancellationToken cancel) => original.GetCustomMarkingArtAsync(hash, cancel));
+            .Returns(async (string hash, CancellationToken cancel) =>
+            {
+                var art = await original.GetCustomMarkingArtAsync(hash, cancel);
+                if (pendingRead && art != null)
+                {
+                    artRead.TrySetResult();
+                    await releaseRead.Task;
+                }
+
+                return art;
+            });
         delayed.Setup(db => db.SetCustomMarkingArtBlockedAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
             .Returns((string hash, bool blocked, CancellationToken cancel) => original.SetCustomMarkingArtBlockedAsync(hash, blocked, cancel));
 
@@ -567,12 +580,18 @@ public sealed class CustomMarkingLibraryTest
             var saved = await databaseSaved.Task;
             Assert.That(saved.Error, Is.Null);
             var hash = saved.Entry!.ArtHash;
+            if (pendingRead)
+            {
+                await client.WaitPost(() => clientSystem.TryGetArt(hash, out _));
+                await WaitFor(pair, () => artRead.Task.IsCompleted, "a positive art read to pause before publication");
+            }
             Task<bool> block = default!;
             await server.WaitPost(() => block = system.SetBlocked(hash, true, "the test"));
             await WaitFor(pair, () => block.IsCompleted, "moderation to commit before save completion");
             Assert.That(await block, Is.True);
 
             release.TrySetResult();
+            releaseRead.TrySetResult();
             await WaitFor(pair, () => answer != null, "the delayed save response");
             await pair.RunTicksSync(30);
             await client.WaitAssertion(() =>
@@ -585,6 +604,7 @@ public sealed class CustomMarkingLibraryTest
         finally
         {
             release.TrySetResult();
+            releaseRead.TrySetResult();
             await server.WaitPost(() => database.SetValue(system, original));
             await client.WaitPost(() => clientSystem.SaveAnswered -= OnAnswer);
         }
