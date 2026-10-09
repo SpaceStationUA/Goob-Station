@@ -1,0 +1,103 @@
+- type: ghostWarpGroup
+  id: NuclearOperatives
+  name: ghost-warp-group-nukeops
+  priority: 0
+  color: "#b22c20"
+  mindRoles:
+  - MindRoleNukeops
+  - MindRoleNukeopsMedic
+  - MindRoleNukeopsCommander
+
+- type: ghostWarpGroup
+  id: Pirates
+  name: ghost-warp-group-pirates
+  priority: 1
+  color: "#a8841f"
+  mindRoles:
+  - MindRolePirate
+
+- type: ghostWarpGroup
+  id: Cybersun
+  name: ghost-warp-group-cybersun
+  priority: 2
+  color: "#73313f"
+  mindRoles:
+  - MindRoleGhostRoleCybersun
+
+- type: ghostWarpGroup
+  id: SANDeserters
+  name: ghost-warp-group-san-deserters
+  priority: 3
+  color: "#5f6b2e"
+  mindRoles:
+  - MindRoleDeserter
+
+- type: ghostWarpGroup
+  id: Xenomorphs
+  name: ghost-warp-group-xenomorphs
+  priority: 4
+  color: "#7a3e9d"
+  whitelist:
+    components:
+    - Xenomorph
+
+- type: ghostWarpGroup
+  id: Xenoborgs
+  name: ghost-warp-group-xenoborgs
+  priority: 5
+  radioChannel: Xenoborg
+  mindRoles:
+  - MindRoleXenoborg
+  - MindRoleMothershipCore
+  whitelist:
+    components:
+    - Xenoborg
+    - MothershipCore
+
+- type: ghostWarpGroup
+  id: TerrorSpiders
+  name: ghost-warp-group-terror-spiders
+  priority: 6
+  color: "#8a2323"
+  whitelist:
+    components:
+    - TerrorSpider
+
+# Match rift spawns and the dragon's summons; ordinary carp and sharks stay separate.
+- type: ghostWarpGroup
+  id: DragonRift
+  name: ghost-warp-group-dragon-rift
+  priority: 7
+  color: "#366db5"
+  mindRoles:
+  - MindRoleDragon
+  prototypes:
+  - MobDragon
+  - MobCarpDragon
+  - MobSharkDragon
+
+# Match by body so only turned zombies qualify and cured players leave the group.
+- type: ghostWarpGroup
+  id: Zombies
+  name: ghost-warp-group-zombies
+  priority: 8
+  color: "#4f7a28"
+  whitelist:
+    components:
+    - Zombie
+
+# Keep after Zombies so a zombified response team member matches the zombie group first.
+- type: ghostWarpGroup
+  id: ResponseTeams
+  name: ghost-warp-group-response-teams
+  priority: 9
+  jobs:
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedical
+  - ERTSecurity
+  - ERTEngineer
+  - CBURN
+  - DeathSquad
+  - HecuOperative

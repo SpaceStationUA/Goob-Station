@@ -21,13 +21,16 @@ using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
 using Content.Shared.StatusIcon;
 using Content.Shared.Warps;
+using Content.Shared.Whitelist;
 using Content.Shared.Body.Organ;
 using Content.Shared.Bed.Cryostorage;
 using Content.Goobstation.Shared.Blob.Components;
+using Content.Shared._Pirate.Ghost;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -41,6 +44,7 @@ public sealed partial class GhostSystem
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     private static readonly HashSet<ProtoId<NpcFactionPrototype>> ImportantNpcFactions = new()
     {
@@ -270,8 +274,47 @@ public sealed partial class GhostSystem
             var departmentId = GetDepartmentIdFromMind(mindId);
             if (string.IsNullOrEmpty(departmentId))
                 departmentId = GetDepartmentIdFromEntity(target);
-            yield return new GhostWarp(GetNetEntity(target), entityName, GhostWarpType.Player, _followerSystem.GetGhostFollowerCount(target), jobIconId, mobState, jobName, healthState, departmentId);
+            var groupId = GetWarpGroupId(target, mindId);
+            yield return new GhostWarp(GetNetEntity(target), entityName, GhostWarpType.Player, _followerSystem.GetGhostFollowerCount(target), jobIconId, mobState, jobName, healthState, departmentId, groupId);
         }
+    }
+
+    private string GetWarpGroupId(EntityUid target, EntityUid? mindId)
+    {
+        TryComp<MindComponent>(mindId, out var mind);
+        var bodyProto = MetaData(target).EntityPrototype?.ID;
+        ProtoId<JobPrototype>? jobId = null;
+        if (mindId is { } id && _jobs.MindTryGetJobId(id, out var job))
+            jobId = job;
+
+        GhostWarpGroupPrototype? best = null;
+        foreach (var group in _prototypeManager.EnumeratePrototypes<GhostWarpGroupPrototype>())
+        {
+            if (best != null && group.Priority >= best.Priority)
+                continue;
+
+            if (_whitelist.IsWhitelistPass(group.Whitelist, target) ||
+                bodyProto != null && group.Prototypes.Contains(bodyProto) ||
+                MindHasAnyRole(mind, group.MindRoles) ||
+                jobId is { } j && group.Jobs.Contains(j))
+                best = group;
+        }
+
+        return best?.ID ?? string.Empty;
+    }
+
+    private bool MindHasAnyRole(MindComponent? mind, HashSet<EntProtoId> roles)
+    {
+        if (mind == null || roles.Count == 0)
+            return false;
+
+        foreach (var role in mind.MindRoleContainer.ContainedEntities)
+        {
+            if (MetaData(role).EntityPrototype?.ID is { } roleProto && roles.Contains(roleProto))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>

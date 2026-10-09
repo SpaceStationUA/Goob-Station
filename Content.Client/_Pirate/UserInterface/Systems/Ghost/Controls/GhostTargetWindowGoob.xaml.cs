@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client._Pirate.Lobby.UI.Loadouts;
 using Content.Client._Pirate.UserInterface.Controls;
+using Content.Shared._Pirate.Ghost;
 using Content.Shared.Ghost;
 using Content.Shared.Mobs;
 using Content.Shared.Radio;
@@ -23,15 +24,17 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
     [GenerateTypedNameReferences]
     public sealed partial class GhostTargetWindowGoob : DefaultWindow
     {
-        private List<(string RawName, NetEntity Entity, GhostWarpType Type, int ObserverCount, string JobIconId, MobState MobState, string ProfessionTitle, GhostWarpHealthState HealthState, string DepartmentId)> _warps = new();
+        private List<(string RawName, NetEntity Entity, GhostWarpType Type, int ObserverCount, string JobIconId, MobState MobState, string ProfessionTitle, GhostWarpHealthState HealthState, string DepartmentId, string GroupId)> _warps = new();
         private readonly Dictionary<NetEntity, ChipState> _entityToChip = new();
 
-        private sealed record ChipState(ContainerButton Chip, StyleBoxTexture StyleBox, Label NameLabel, BoxContainer ObserverBlock, Label ObserverCountLabel, string ProfessionTitle, GhostWarpHealthState HealthState, string DepartmentId, string JobIconId);
+        private sealed record ChipState(ContainerButton Chip, StyleBoxTexture StyleBox, Label NameLabel, BoxContainer ObserverBlock, Label ObserverCountLabel, string ProfessionTitle, GhostWarpHealthState HealthState, string DepartmentId, string JobIconId, string GroupId);
         private string _searchText = string.Empty;
         private readonly Dictionary<GhostWarpType, bool> _sectionExpandedState = new();
 
         private enum ViewMode { Health, Department }
         private ViewMode _viewMode = ViewMode.Health;
+
+        private bool _separateGroups = true;
 
         private IPrototypeManager? _prototypeManager;
         private SpriteSystem? _spriteSystem;
@@ -57,6 +60,9 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
         private const string ObserverIconPath = "/Textures/_Pirate/Interface/VerbIcons/ghost.svg.192dpi.png";
         private const float IconSize = 20f;
         private const string JobIconBorgId = "JobIconBorg";
+        private static readonly Color GroupHeaderTextColor = new(0.78f, 0.78f, 0.80f);
+        private const int GroupTitleGapAbove = 2;
+        private const int GroupTitleGapBelow = 2;
         private static readonly Color SiliconColorFallback = new(0x5e / 255f, 0xd7 / 255f, 0xaa / 255f);
 
         public GhostTargetWindowGoob()
@@ -87,6 +93,16 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
             ViewModeButton.Label.VerticalAlignment = VAlignment.Stretch;
             ViewModeButton.Label.VAlign = Label.VAlignMode.Center;
 
+            var roundedGroupToggleStyle = LoadoutStyles.RoundedBordered(Color.White, padding: 1f, patchMargin: 5f);
+            roundedGroupToggleStyle.SetContentMarginOverride(StyleBox.Margin.Top, 0);
+            roundedGroupToggleStyle.SetContentMarginOverride(StyleBox.Margin.Bottom, 0);
+            roundedGroupToggleStyle.SetPadding(StyleBox.Margin.Top, 0);
+            roundedGroupToggleStyle.SetPadding(StyleBox.Margin.Bottom, 2);
+            GroupModeButton.StyleBoxOverride = roundedGroupToggleStyle;
+            GroupModeButton.MaxSize = new Vector2(float.PositiveInfinity, 24f);
+            GroupModeButton.Label.VerticalAlignment = VAlignment.Stretch;
+            GroupModeButton.Label.VAlign = Label.VAlignMode.Center;
+
             SearchBar.OnTextChanged += OnSearchTextChanged;
             GhostnadoButton.OnPressed += _ => OnGhostnadoClicked?.Invoke();
             RefreshButton.OnPressed += _ => RefreshPressed?.Invoke();
@@ -106,6 +122,9 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
 
             ViewModeButton.OnPressed += CycleViewMode;
             UpdateViewModeButtonText();
+
+            GroupModeButton.OnPressed += ToggleGroupMode;
+            UpdateGroupModeButtonText();
         }
 
         public void UpdateWarps(IEnumerable<GhostWarp> warps)
@@ -114,7 +133,7 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
                 .OrderBy(w => w.Type)
                 .ThenBy(w => w.DisplayName, Comparer<string>.Create(
                     (x, y) => string.Compare(x, y, StringComparison.Ordinal)))
-                .Select(w => (w.DisplayName, w.Entity, w.Type, w.ObserverCount, w.JobIconId, w.MobState, w.ProfessionTitle, w.HealthState, w.DepartmentId))
+                .Select(w => (w.DisplayName, w.Entity, w.Type, w.ObserverCount, w.JobIconId, w.MobState, w.ProfessionTitle, w.HealthState, w.DepartmentId, w.GroupId))
                 .ToList();
         }
 
@@ -144,8 +163,21 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
             return DimForDisplay(SiliconColorFallback);
         }
 
-        private Color GetDisplayColor(ViewMode mode, GhostWarpHealthState healthState, string professionTitle, string departmentId, string? jobIconId)
+        private Color? GetColorForGroup(string? groupId)
         {
+            if (string.IsNullOrEmpty(groupId) || !PrototypeManager.TryIndex<GhostWarpGroupPrototype>(groupId, out var group))
+                return null;
+            if (group.Color is { } color)
+                return color;
+            if (group.RadioChannel is { } channel && PrototypeManager.TryIndex(channel, out var radio))
+                return radio.Color;
+            return null;
+        }
+
+        private Color GetDisplayColor(ViewMode mode, GhostWarpHealthState healthState, string professionTitle, string departmentId, string? jobIconId, string? groupId)
+        {
+            if (mode == ViewMode.Department && GetColorForGroup(groupId) is { } groupColor)
+                return groupColor;
             if (mode == ViewMode.Department && jobIconId == JobIconBorgId)
                 return GetColorForSilicon();
             return mode == ViewMode.Department
@@ -159,7 +191,7 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
             UpdateViewModeButtonText();
             foreach (var state in _entityToChip.Values)
             {
-                var color = GetDisplayColor(_viewMode, state.HealthState, state.ProfessionTitle, state.DepartmentId, state.JobIconId);
+                var color = GetDisplayColor(_viewMode, state.HealthState, state.ProfessionTitle, state.DepartmentId, state.JobIconId, state.GroupId);
                 state.StyleBox.Modulate = color;
             }
         }
@@ -169,6 +201,22 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
             var key = _viewMode == ViewMode.Health ? "ghost-target-window-color-mode-health" : "ghost-target-window-color-mode-department";
             ViewModeButton.Text = Loc.GetString(key);
             ViewModeButton.TooltipSupplier = _ => new Tooltip { Text = Loc.GetString("ghost-target-window-color-mode-tooltip") };
+        }
+
+        private void ToggleGroupMode(BaseButton.ButtonEventArgs _)
+        {
+            _separateGroups = !_separateGroups;
+            UpdateGroupModeButtonText();
+            var scroll = GhostScroll.GetScrollValue();
+            Populate();
+            GhostScroll.SetScrollValue(scroll);
+        }
+
+        private void UpdateGroupModeButtonText()
+        {
+            var key = _separateGroups ? "ghost-target-window-group-mode-separate" : "ghost-target-window-group-mode-together";
+            GroupModeButton.Text = Loc.GetString(key);
+            GroupModeButton.TooltipSupplier = _ => new Tooltip { Text = Loc.GetString("ghost-target-window-group-mode-tooltip") };
         }
 
         private static Color DimForDisplay(Color color, float factor = 0.78f)
@@ -191,8 +239,8 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
             {
                 if (_warps[i].Entity != entity)
                     continue;
-                var (rawName, _, type, _, jobIconId, mobState, professionTitle, healthState, departmentId) = _warps[i];
-                _warps[i] = (rawName, entity, type, count, jobIconId, mobState, professionTitle, healthState, departmentId);
+                var (rawName, _, type, _, jobIconId, mobState, professionTitle, healthState, departmentId, groupId) = _warps[i];
+                _warps[i] = (rawName, entity, type, count, jobIconId, mobState, professionTitle, healthState, departmentId, groupId);
                 if (_entityToChip.TryGetValue(entity, out var state))
                 {
                     state.NameLabel.Text = rawName;
@@ -217,7 +265,7 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
                 var count = _warps.Count(w => w.Type == type);
                 var wrap = new PirateWrapContainer { SeparationOverride = 6, HorizontalExpand = true };
 
-                var headingText = $"{Loc.GetString(titleKey)} - ({count})";
+                var headingText = $"{Loc.GetString(titleKey)} ({count})";
                 var section = new FramedCollapsible(headingText)
                 {
                     Expanded = _sectionExpandedState.GetValueOrDefault(type, true),
@@ -227,118 +275,183 @@ namespace Content.Client._Pirate.UserInterface.Systems.Ghost.Controls
                 {
                     _sectionExpandedState[type] = expanded;
                 };
-                section.Body.AddChild(wrap);
+                // CollapsibleBody does not stack its contents.
+                var sectionContent = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, SeparationOverride = 0, HorizontalExpand = true };
+                sectionContent.AddChild(wrap);
+                section.Body.AddChild(sectionContent);
                 SectionsContainer.AddChild(section);
 
-                foreach (var (rawName, warpTarget, warpType, observerCount, jobIconId, mobState, professionTitle, healthState, departmentId) in _warps)
+                var groups = new Dictionary<string, PirateWrapContainer>();
+                foreach (var warp in _warps)
                 {
-                    if (warpType != type)
+                    if (warp.Type != type)
                         continue;
 
-                    var bgColor = GetDisplayColor(_viewMode, healthState, professionTitle ?? string.Empty, departmentId ?? string.Empty, jobIconId);
-                    var entity = warpTarget;
+                    var chip = CreateChip(warp.RawName, warp.Entity, warp.ObserverCount, warp.JobIconId, warp.ProfessionTitle, warp.HealthState, warp.DepartmentId, warp.GroupId);
 
-                    var styleBox = LoadoutStyles.RoundedFilled(bgColor, padding: 0f, patchMargin: 5f);
-                    styleBox.SetContentMarginOverride(StyleBox.Margin.Left, 4);
-                    styleBox.SetContentMarginOverride(StyleBox.Margin.Right, 6);
-                    styleBox.SetContentMarginOverride(StyleBox.Margin.Top, 2);
-                    styleBox.SetContentMarginOverride(StyleBox.Margin.Bottom, 2);
-
-                    var chip = new ContainerButton
+                    if (_separateGroups && type == GhostWarpType.Player && !string.IsNullOrEmpty(warp.GroupId))
                     {
-                        StyleBoxOverride = styleBox,
-                        ModulateSelfOverride = Color.White,
-                        MinSize = new Vector2(0, 26),
-                    };
-                    chip.OnMouseEntered += _ =>
-                    {
-                        if (_entityToChip.TryGetValue(entity, out var s))
+                        if (!groups.TryGetValue(warp.GroupId, out var groupWrap))
                         {
-                            styleBox.Modulate = LightenForHover(GetDisplayColor(_viewMode, s.HealthState, s.ProfessionTitle, s.DepartmentId, s.JobIconId));
+                            groupWrap = new PirateWrapContainer { SeparationOverride = 6, HorizontalExpand = true };
+                            groups[warp.GroupId] = groupWrap;
                         }
-                    };
-                    chip.OnMouseExited += _ =>
-                    {
-                        if (_entityToChip.TryGetValue(entity, out var s))
-                        {
-                            styleBox.Modulate = GetDisplayColor(_viewMode, s.HealthState, s.ProfessionTitle, s.DepartmentId, s.JobIconId);
-                        }
-                    };
 
-                    var content = new BoxContainer
-                    {
-                        Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                        SeparationOverride = 4,
-                    };
-
-                    if (!string.IsNullOrEmpty(jobIconId) && PrototypeManager.TryIndex<JobIconPrototype>(jobIconId, out var jobIcon))
-                    {
-                        try
-                        {
-                            var texture = SpriteSystem.Frame0(jobIcon.Icon);
-                            var iconWrapper = new BoxContainer
-                            {
-                                Orientation = BoxContainer.LayoutOrientation.Vertical,
-                                MinSize = new Vector2(24, 0),
-                                VerticalExpand = true,
-                            };
-                            var iconRect = new TextureRect
-                            {
-                                Texture = texture,
-                                HorizontalExpand = true,
-                                VerticalExpand = true,
-                                Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                                CanShrink = true,
-                            };
-                            iconWrapper.AddChild(iconRect);
-                            content.AddChild(iconWrapper);
-                        }
-                        catch { }
+                        groupWrap.AddChild(chip);
+                        continue;
                     }
 
-                    var nameLabel = new Label
-                    {
-                        Text = rawName,
-                        VerticalAlignment = VAlignment.Center,
-                        ClipText = false,
-                        HorizontalExpand = true,
-                    };
-                    content.AddChild(nameLabel);
-
-                    var observerBlock = new BoxContainer
-                    {
-                        Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                        SeparationOverride = 2,
-                        VerticalAlignment = VAlignment.Center,
-                        Visible = observerCount > 0,
-                    };
-                    var observerIcon = new TextureRect
-                    {
-                        TexturePath = ObserverIconPath,
-                        MinSize = new Vector2(IconSize, IconSize),
-                        MaxSize = new Vector2(IconSize, IconSize),
-                        Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                        VerticalAlignment = VAlignment.Center,
-                    };
-                    observerBlock.AddChild(observerIcon);
-                    var observerCountLabel = new Label
-                    {
-                        Text = observerCount.ToString(),
-                        VerticalAlignment = VAlignment.Center,
-                        ClipText = false,
-                    };
-                    observerBlock.AddChild(observerCountLabel);
-                    content.AddChild(observerBlock);
-
-                    chip.AddChild(content);
-                    chip.OnPressed += _ => WarpClicked?.Invoke(warpTarget);
-                    if (!string.IsNullOrEmpty(professionTitle))
-                        chip.TooltipSupplier = _ => new Tooltip { Text = professionTitle };
-                    chip.Visible = ButtonIsVisible(rawName, professionTitle, departmentId);
-                    _entityToChip[warpTarget] = new ChipState(chip, styleBox, nameLabel, observerBlock, observerCountLabel, professionTitle ?? string.Empty, healthState, departmentId ?? string.Empty, jobIconId ?? string.Empty);
                     wrap.AddChild(chip);
                 }
+
+                if (groups.Count > 0)
+                    AddGroupSections(sectionContent, groups);
             }
+        }
+
+        private void AddGroupSections(BoxContainer parent, Dictionary<string, PirateWrapContainer> groups)
+        {
+            var ordered = groups
+                .Select(kv => (Id: kv.Key, Wrap: kv.Value, Proto: PrototypeManager.TryIndex<GhostWarpGroupPrototype>(kv.Key, out var proto) ? proto : null))
+                .OrderBy(g => g.Proto?.Priority ?? int.MaxValue)
+                .ThenBy(g => g.Id, StringComparer.Ordinal);
+
+            var container = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical,
+                SeparationOverride = GroupTitleGapAbove,
+                HorizontalExpand = true,
+                Margin = new Thickness(0, GroupTitleGapAbove, 0, 0),
+            };
+
+            foreach (var (id, groupWrap, proto) in ordered)
+            {
+                var name = proto != null ? Loc.GetString(proto.Name) : id;
+                var header = new Label
+                {
+                    Text = $"{name} ({groupWrap.ChildCount})",
+                    FontColorOverride = GroupHeaderTextColor,
+                    ClipText = true,
+                };
+
+                var group = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Vertical,
+                    SeparationOverride = GroupTitleGapBelow,
+                    HorizontalExpand = true,
+                };
+                group.AddChild(header);
+                group.AddChild(groupWrap);
+                container.AddChild(group);
+            }
+
+            parent.AddChild(container);
+        }
+
+        private ContainerButton CreateChip(string rawName, NetEntity warpTarget, int observerCount, string? jobIconId, string? professionTitle, GhostWarpHealthState healthState, string? departmentId, string? groupId)
+        {
+            var bgColor = GetDisplayColor(_viewMode, healthState, professionTitle ?? string.Empty, departmentId ?? string.Empty, jobIconId, groupId);
+            var entity = warpTarget;
+
+            var styleBox = LoadoutStyles.RoundedFilled(bgColor, padding: 0f, patchMargin: 5f);
+            styleBox.SetContentMarginOverride(StyleBox.Margin.Left, 4);
+            styleBox.SetContentMarginOverride(StyleBox.Margin.Right, 6);
+            styleBox.SetContentMarginOverride(StyleBox.Margin.Top, 2);
+            styleBox.SetContentMarginOverride(StyleBox.Margin.Bottom, 2);
+
+            var chip = new ContainerButton
+            {
+                StyleBoxOverride = styleBox,
+                ModulateSelfOverride = Color.White,
+                MinSize = new Vector2(0, 26),
+            };
+            chip.OnMouseEntered += _ =>
+            {
+                if (_entityToChip.TryGetValue(entity, out var s))
+                {
+                    styleBox.Modulate = LightenForHover(GetDisplayColor(_viewMode, s.HealthState, s.ProfessionTitle, s.DepartmentId, s.JobIconId, s.GroupId));
+                }
+            };
+            chip.OnMouseExited += _ =>
+            {
+                if (_entityToChip.TryGetValue(entity, out var s))
+                {
+                    styleBox.Modulate = GetDisplayColor(_viewMode, s.HealthState, s.ProfessionTitle, s.DepartmentId, s.JobIconId, s.GroupId);
+                }
+            };
+
+            var content = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                SeparationOverride = 4,
+            };
+
+            if (!string.IsNullOrEmpty(jobIconId) && PrototypeManager.TryIndex<JobIconPrototype>(jobIconId, out var jobIcon))
+            {
+                try
+                {
+                    var texture = SpriteSystem.Frame0(jobIcon.Icon);
+                    var iconWrapper = new BoxContainer
+                    {
+                        Orientation = BoxContainer.LayoutOrientation.Vertical,
+                        MinSize = new Vector2(24, 0),
+                        VerticalExpand = true,
+                    };
+                    var iconRect = new TextureRect
+                    {
+                        Texture = texture,
+                        HorizontalExpand = true,
+                        VerticalExpand = true,
+                        Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                        CanShrink = true,
+                    };
+                    iconWrapper.AddChild(iconRect);
+                    content.AddChild(iconWrapper);
+                }
+                catch { }
+            }
+
+            var nameLabel = new Label
+            {
+                Text = rawName,
+                VerticalAlignment = VAlignment.Center,
+                ClipText = false,
+                HorizontalExpand = true,
+            };
+            content.AddChild(nameLabel);
+
+            var observerBlock = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                SeparationOverride = 2,
+                VerticalAlignment = VAlignment.Center,
+                Visible = observerCount > 0,
+            };
+            var observerIcon = new TextureRect
+            {
+                TexturePath = ObserverIconPath,
+                MinSize = new Vector2(IconSize, IconSize),
+                MaxSize = new Vector2(IconSize, IconSize),
+                Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                VerticalAlignment = VAlignment.Center,
+            };
+            observerBlock.AddChild(observerIcon);
+            var observerCountLabel = new Label
+            {
+                Text = observerCount.ToString(),
+                VerticalAlignment = VAlignment.Center,
+                ClipText = false,
+            };
+            observerBlock.AddChild(observerCountLabel);
+            content.AddChild(observerBlock);
+
+            chip.AddChild(content);
+            chip.OnPressed += _ => WarpClicked?.Invoke(warpTarget);
+            if (!string.IsNullOrEmpty(professionTitle))
+                chip.TooltipSupplier = _ => new Tooltip { Text = professionTitle };
+            chip.Visible = ButtonIsVisible(rawName, professionTitle, departmentId);
+            _entityToChip[warpTarget] = new ChipState(chip, styleBox, nameLabel, observerBlock, observerCountLabel, professionTitle ?? string.Empty, healthState, departmentId ?? string.Empty, jobIconId ?? string.Empty, groupId ?? string.Empty);
+            return chip;
         }
 
         private bool ButtonIsVisible(string? displayName, string? professionTitle, string? departmentId)
