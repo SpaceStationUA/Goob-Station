@@ -62,11 +62,7 @@ public sealed partial class CustomMarkingLibraryWindow : CustomMarkingWindow
         // A set size to open at: sizing itself, the window grows as wide as the screen to fit the hint on one line.
         MinSize = SetSize = new Vector2(760, 560);
 
-        if (profile() is { } character)
-        {
-            var bare = character.WithCustomMarkings(new List<CustomMarking>());
-            _doll = UserInterfaceManager.GetUIController<LobbyUIController>().LoadProfileEntity(bare, null, false);
-        }
+        UpdateDoll();
 
         var hint = new RichTextLabel { HorizontalExpand = true };
         hint.SetMessage(FormattedMessage.FromUnformatted(Loc.GetString("wf-custom-marking-library-hint")));
@@ -154,8 +150,22 @@ public sealed partial class CustomMarkingLibraryWindow : CustomMarkingWindow
     /// <summary>Shows which markings the character wears. Call when the profile is loaded or changed elsewhere.</summary>
     public void SetWorn(IEnumerable<CustomMarking> worn)
     {
+        UpdateDoll();
         _worn = worn.ToList();
         Rebuild();
+    }
+
+    private void UpdateDoll()
+    {
+        if (_doll is { } old)
+            _entMan.DeleteEntity(old);
+
+        _doll = null;
+        if (_profile() is not { } profile)
+            return;
+
+        var bare = profile.WithCustomMarkings(new List<CustomMarking>());
+        _doll = UserInterfaceManager.GetUIController<LobbyUIController>().LoadProfileEntity(bare, null, false);
     }
 
     private void OnArtLoaded(string hash)

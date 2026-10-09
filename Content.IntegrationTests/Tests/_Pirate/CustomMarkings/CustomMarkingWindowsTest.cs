@@ -9,6 +9,7 @@ using Content.Client._Pirate.CustomMarkings;
 using Content.Client._Pirate.CustomMarkings.UI;
 using Content.IntegrationTests.Pair;
 using Content.Shared._Pirate.CustomMarkings;
+using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -312,7 +313,17 @@ public sealed class CustomMarkingWindowsTest
             Assert.That(Descendants(library).OfType<CustomMarkingIconButton>().Count(), Is.EqualTo(3), "a library row offers edit, export and delete");
 
             // Wearing from outside, as the creator does when a profile loads.
+            var previousBody = thumbnail.Body!.Value;
+            profile = HumanoidCharacterProfile.DefaultWithSpecies("Reptilian");
             library.SetWorn(new List<CustomMarking> { new(system.Library[0].Hash, CustomMarkingPlacement.Hair) });
+            var refreshed = Descendants(library).OfType<CustomMarkingCanvas>().First();
+            Assert.Multiple(() =>
+            {
+                Assert.That(refreshed.Body, Is.Not.EqualTo(previousBody), "the thumbnails rebuild their doll after a profile change");
+                Assert.That(client.EntMan.GetComponent<HumanoidAppearanceComponent>(refreshed.Body!.Value).Species,
+                    Is.EqualTo(profile.Species), "body clipping follows the current species");
+                Assert.That(client.EntMan.EntityExists(previousBody), Is.False, "the old preview doll is released");
+            });
             Assert.That(Descendants(library).OfType<Button>().Any(button => button.Text == Loc.GetString("wf-custom-marking-library-take-off")),
                 Is.True, "a worn marking offers to come off");
 
