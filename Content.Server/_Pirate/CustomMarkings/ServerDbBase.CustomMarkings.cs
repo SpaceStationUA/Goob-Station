@@ -83,16 +83,20 @@ public abstract partial class ServerDbBase
             }
 
             // Pirate: concurrent saves share the winning row, including its uploader and moderation data.
-            var inserted = await ctx.Database.ExecuteSqlAsync($"""
+            await ctx.Database.ExecuteSqlAsync($"""
                 INSERT INTO pirate_custom_marking_art
                     (hash, png, frame_times, erase, uploader_user_id, uploaded_at, blocked)
                 VALUES ({effectiveHash}, {art.Png}, {art.FrameTimes}, {art.Erase}, {userId}, {DateTime.UtcNow}, {false})
                 ON CONFLICT (hash) DO NOTHING
                 """, cancel);
-
-            if (inserted == 0 && await ctx.PirateCustomMarkingArt.AnyAsync(a => a.Hash == effectiveHash && a.Blocked, cancel))
-                return CustomMarkingSaveResult.Fail("wf-custom-marking-error-blocked");
         }
+
+        // Pirate: lock the unblocked row through commit so moderation cannot race this save on either provider.
+        var unblocked = await ctx.PirateCustomMarkingArt
+            .Where(a => a.Hash == effectiveHash && !a.Blocked)
+            .ExecuteUpdateAsync(setters => setters.SetProperty(a => a.Blocked, false), cancel);
+        if (unblocked == 0)
+            return CustomMarkingSaveResult.Fail("wf-custom-marking-error-blocked");
 
         string? previous = entry != null && hash != null && entry.ArtHash != hash ? entry.ArtHash : null;
         if (entry == null)
