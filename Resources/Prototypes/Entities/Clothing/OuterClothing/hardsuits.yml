@@ -564,6 +564,8 @@
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHelmetHardsuitWarden
+  - type: StealTarget # Pirate: traitor contracts
+    stealGroup: ClothingOuterHardsuitWarden # Pirate: traitor contracts
   - type: StaminaResistance # Goobstation
     damageCoefficient: 0.5
   - type: ModifyDelayedKnockdown # Goobstation
@@ -714,6 +716,8 @@
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHelmetHardsuitMedical
+  - type: StealTarget # Pirate: traitor contracts
+    stealGroup: ClothingOuterHardsuitMedical # Pirate: traitor contracts
   - type: Tag
     tags:
     - CorgiWearable

@@ -124,6 +124,8 @@
         whitelist:
           components:
           - DefibrillatorPaddles
+  - type: StealTarget
+    stealGroup: DefibrillatorBeltCMO
 
 - type: entity
   id: DefibrillatorBeltCombat

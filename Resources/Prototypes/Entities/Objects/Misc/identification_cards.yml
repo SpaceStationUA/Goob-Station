@@ -405,6 +405,8 @@
     heldPrefix: silver
   - type: PresetIdCard
     job: HeadOfPersonnel
+  - type: StealTarget # Pirate: traitor contracts
+    stealGroup: HoPIDCard # Pirate: traitor contracts
 
 - type: entity
   parent: IDCardStandard

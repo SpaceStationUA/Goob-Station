@@ -19,6 +19,8 @@
   components:
     - type: Sprite
       state: cpu_science
+    - type: StealTarget
+      stealGroup: PsionicsRecordsComputerCircuitboard
     - type: ComputerBoard
       prototype: ComputerPsionicsRecords
 - type: entity
