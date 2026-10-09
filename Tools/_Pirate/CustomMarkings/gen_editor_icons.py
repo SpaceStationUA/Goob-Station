@@ -13,7 +13,7 @@ from pathlib import Path
 from PIL import Image
 
 REPO = Path(__file__).resolve().parents[3]
-RSI = REPO / "Resources" / "Textures" / "_WF" / "CustomMarkings" / "editor.rsi"
+RSI = REPO / "Resources" / "Textures" / "_Pirate" / "CustomMarkings" / "editor.rsi"
 
 # '#' is full white, '+' is 55% white (softens a diagonal), '.' is empty. Every map is 16 rows of 16.
 ICONS = {

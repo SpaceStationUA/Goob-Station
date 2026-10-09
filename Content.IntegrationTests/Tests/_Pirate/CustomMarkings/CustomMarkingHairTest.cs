@@ -10,7 +10,6 @@ using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -45,7 +44,6 @@ public sealed class CustomMarkingHairTest
             var humanoids = entMan.System<HumanoidAppearanceSystem>();
             var system = entMan.System<CustomMarkingSystem>();
             var markings = client.ResolveDependency<MarkingManager>();
-            var resources = CustomMarkingResources.For(client.ResolveDependency<IResourceCache>());
 
             // A drawing that covers every facing, so some of it lies on the body whatever the hair does.
             var art = new CustomMarkingArt();
@@ -60,7 +58,7 @@ public sealed class CustomMarkingHairTest
                 }
             }
 
-            resources.Store(Hash, art.ToPng());
+            system.Remember(Hash, art);
 
             var profile = HumanoidCharacterProfile.DefaultWithSpecies("Human");
             profile = profile
@@ -102,7 +100,6 @@ public sealed class CustomMarkingHairTest
 
             // A helmet hides the hair: the marking on the hair goes with it, whole, and the others stay.
             humanoids.SetLayerVisibility((doll, humanoid), HumanoidVisualLayers.Hair, false);
-            system.Refresh((doll, humanoid));
             Assert.Multiple(() =>
             {
                 Assert.That(Shown(0), Is.False, "the marking over the hair is hidden like the hair");
@@ -111,7 +108,6 @@ public sealed class CustomMarkingHairTest
             });
 
             humanoids.SetLayerVisibility((doll, humanoid), HumanoidVisualLayers.Hair, true);
-            system.Refresh((doll, humanoid));
             Assert.That(Shown(0), Is.True, "and comes back with it");
 
             entMan.DeleteEntity(doll);

@@ -63,12 +63,12 @@ public sealed class CustomMarkingLimbsTest
                 }
             }
 
-            resources.Store(Hash, art.ToPng());
+            system.Remember(Hash, art);
 
             // And one that sits on the middle of the torso.
             var fitting = new CustomMarkingArt();
             fitting.SetPixel(0, CustomMarkingArt.South, 15, 15, Red);
-            resources.Store(FittingHash, fitting.ToPng());
+            system.Remember(FittingHash, fitting);
 
             var profile = HumanoidCharacterProfile.DefaultWithSpecies("Human");
             var species = client.ResolveDependency<IPrototypeManager>().Index<SpeciesPrototype>(profile.Species);
@@ -137,7 +137,6 @@ public sealed class CustomMarkingLimbsTest
 
             // The arm goes, and its section with it, margin and all.
             humanoids.SetLayerVisibility((doll, humanoid), HumanoidVisualLayers.LArm, false);
-            system.Refresh((doll, humanoid));
             var cutRsi = Shown().ActualRsi;
             Assert.That(cutRsi, Is.Not.SameAs(fittedRsi));
             var cut = Read(cutRsi);
@@ -171,7 +170,6 @@ public sealed class CustomMarkingLimbsTest
 
             // The arm comes back, and its section with it.
             humanoids.SetLayerVisibility((doll, humanoid), HumanoidVisualLayers.LArm, true);
-            system.Refresh((doll, humanoid));
             Assert.That(Shown().ActualRsi, Is.SameAs(fittedRsi));
 
             // A drawing that already fits the body is drawn as it is, with no copy made.
@@ -268,7 +266,7 @@ public sealed class CustomMarkingLimbsTest
             }
 
             var hash = new string('f', CustomMarkingRules.HashLength);
-            resources.Store(hash, art.ToPng());
+            system.Remember(hash, art);
 
             var profile = HumanoidCharacterProfile.DefaultWithSpecies("Reptilian");
             profile = profile
@@ -307,7 +305,6 @@ public sealed class CustomMarkingLimbsTest
 
             // Hidden, as under a hardsuit, the tail is out of reach and the art there with it.
             humanoids.SetLayerVisibility((doll, humanoid), HumanoidVisualLayers.Tail, false);
-            system.Refresh((doll, humanoid));
             sections = system.GetSections((sprite.Owner, sprite.Comp), CustomMarkingPlacement.Front);
             Assert.That(sections[at], Is.EqualTo(CustomMarkingSections.None));
             Assert.That(Shown().GetPixel(0, found.Value.Facing, found.Value.X, found.Value.Y).A, Is.Zero);

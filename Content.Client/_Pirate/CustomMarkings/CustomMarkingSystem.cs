@@ -7,6 +7,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Configuration;
+using Robust.Shared.Timing;
 
 namespace Content.Client._Pirate.CustomMarkings;
 
@@ -19,6 +20,7 @@ public sealed partial class CustomMarkingSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IResourceCache _resCache = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     /// <summary>Layer keys are numbered, so this is also the most markings one body can show.</summary>
     private const int MaxLayers = CustomMarkingRules.MaxWornCap;
@@ -49,8 +51,10 @@ public sealed partial class CustomMarkingSystem : EntitySystem
     /// <summary>Hashes the server has no art for, so they aren't asked for again.</summary>
     private readonly HashSet<string> _unavailable = new();
 
-    /// <summary>Hashes asked for and not yet answered.</summary>
-    private readonly HashSet<string> _requested = new();
+    /// <summary>Hashes awaiting a reply and when an unanswered request can be retried.</summary>
+    private readonly Dictionary<string, TimeSpan> _requested = new();
+
+    private static readonly TimeSpan ArtRequestTimeout = TimeSpan.FromSeconds(5);
 
     private readonly List<string> _toRequest = new();
 
@@ -79,11 +83,8 @@ public sealed partial class CustomMarkingSystem : EntitySystem
         if (!CustomMarkingRules.IsValidHash(hash) || _unavailable.Contains(hash))
             return false;
 
-        // Fetched before a reconnect: the root outlives this system.
-        if (_resources.Has(hash))
-            return Load(hash, out rsi);
-
-        if (_requested.Add(hash))
+        // Pirate: the resource root survives reconnects, but approval belongs to this connection.
+        if (_requested.TryAdd(hash, TimeSpan.MaxValue))
             _toRequest.Add(hash);
 
         return false;
@@ -98,6 +99,8 @@ public sealed partial class CustomMarkingSystem : EntitySystem
             return;
 
         _unavailable.Remove(hash);
+        _requested.Remove(hash);
+        _toRequest.Remove(hash);
         Store(hash, art.ToPng(), art.GetFrameTimes(), art.Erase);
         if (Load(hash, out _))
             ArtLoaded?.Invoke(hash);
@@ -106,7 +109,8 @@ public sealed partial class CustomMarkingSystem : EntitySystem
     /// <summary>The PNG sheet for a hash that <see cref="TryGetArt"/> has returned.</summary>
     public bool TryGetPng(string hash, [NotNullWhen(true)] out byte[]? png)
     {
-        return _resources.TryGetPng(hash, out png);
+        png = null;
+        return TryGetArt(hash, out _) && _resources.TryGetPng(hash, out png);
     }
 
     /// <summary>
@@ -116,7 +120,7 @@ public sealed partial class CustomMarkingSystem : EntitySystem
     public bool TryReadArt(string hash, [NotNullWhen(true)] out CustomMarkingArt? art)
     {
         art = null;
-        if (!_resources.TryGetPng(hash, out var png) || CustomMarkingPng.Read(png) is not { } read)
+        if (!TryGetPng(hash, out var png) || CustomMarkingPng.Read(png) is not { } read)
             return false;
 
         if (_resources.GetFrameTimes(hash) is { } times && times.Length == read.Frames)
@@ -138,10 +142,23 @@ public sealed partial class CustomMarkingSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
+        // Pirate: a server may drop a request when its per-session budget is spent.
+        var now = _timing.RealTime;
+        foreach (var (hash, deadline) in _requested)
+        {
+            if (deadline <= now)
+                _toRequest.Add(hash);
+        }
+
         while (_toRequest.Count > 0)
         {
             var count = Math.Min(_toRequest.Count, CustomMarkingRules.MaxRequestedArt);
-            RaiseNetworkEvent(new CustomMarkingArtRequestEvent(_toRequest.GetRange(0, count)));
+            var hashes = _toRequest.GetRange(0, count);
+            foreach (var hash in hashes)
+            {
+                _requested[hash] = now + ArtRequestTimeout;
+            }
+            RaiseNetworkEvent(new CustomMarkingArtRequestEvent(hashes));
             _toRequest.RemoveRange(0, count);
         }
     }
@@ -152,6 +169,7 @@ public sealed partial class CustomMarkingSystem : EntitySystem
             return;
 
         var asked = _requested.Remove(ev.Hash);
+        _toRequest.Remove(ev.Hash);
         if (ev.Png == null)
         {
             // Also sent unasked when an admin blocks art, so anything already fetched is dropped.

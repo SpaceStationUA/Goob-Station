@@ -299,7 +299,7 @@ namespace Content.Shared.Preferences
         {
             CopyPirateCharacterInfo(other); // Pirate: Starlight character descriptions.
             CopyPirateKnowledge(other); // Pirate: Trauma knowledge port.
-            CustomMarkings = new(other.CustomMarkings); // Pirate
+            CustomMarkings = other.CustomMarkings is { } worn ? new(worn) : new(); // Pirate: validate after copying network data.
         }
 
         /// <summary>
@@ -987,7 +987,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
-            hashCode.Add(CustomMarkings.Count); // Pirate
+            hashCode.Add(CustomMarkings?.Count ?? 0); // Pirate
             AddPirateCharacterInfoHash(ref hashCode); // Pirate: Starlight character descriptions.
             AddPirateKnowledgeHash(ref hashCode); // Pirate: Trauma knowledge port.
             hashCode.Add(Species);

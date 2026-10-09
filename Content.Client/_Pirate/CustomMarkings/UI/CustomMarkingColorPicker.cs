@@ -101,15 +101,29 @@ public sealed class CustomMarkingColorPicker : BoxContainer
         _popup.Open(UIBox2.FromDimensions(origin, new Vector2(260, 334)));
     }
 
+    // Pirate: closing a window removes its controls from the tree without disposing them.
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+        ClosePopup();
+    }
+
+    private void ClosePopup()
+    {
+        if (_popup is not { } popup)
+            return;
+
+        _popup = null;
+        popup.OnColorChanged -= Pick;
+        popup.Close();
+        popup.Orphan();
+        popup.Dispose();
+    }
+
     protected override void Dispose(bool disposing)
     {
+        if (disposing)
+            ClosePopup();
         base.Dispose(disposing);
-        if (disposing && _popup != null)
-        {
-            _popup.Close();
-            _popup.Orphan();
-            _popup.Dispose();
-            _popup = null;
-        }
     }
 }

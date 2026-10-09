@@ -217,7 +217,7 @@ public sealed class CustomMarkingColorPopup : Popup
                 return;
             _textureHue = hue;
             _texture?.Dispose();
-            var image = new Image<Rgba32>(Resolution, Resolution);
+            using var image = new Image<Rgba32>(Resolution, Resolution);
             for (var y = 0; y < Resolution; y++)
             {
                 for (var x = 0; x < Resolution; x++)
@@ -292,7 +292,7 @@ public sealed class CustomMarkingColorPopup : Popup
         {
             if (_texture != null)
                 return _texture;
-            var image = new Image<Rgba32>(360, 1);
+            using var image = new Image<Rgba32>(360, 1);
             for (var x = 0; x < 360; x++)
             {
                 var c = Color.FromHsv(new Vector4(x / 360f, 1f, 1f, 1f));

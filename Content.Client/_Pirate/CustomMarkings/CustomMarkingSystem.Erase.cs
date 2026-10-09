@@ -63,6 +63,10 @@ public sealed partial class CustomMarkingSystem
     /// <summary>The body pixels a marking erases, for art that <see cref="TryGetArt"/> has returned. False when it erases none.</summary>
     public bool TryGetErase(string hash, [NotNullWhen(true)] out byte[]? erase)
     {
+        erase = null;
+        if (!TryGetArt(hash, out _))
+            return false;
+
         if (_eraseMasks.TryGetValue(hash, out erase))
             return erase != null;
 

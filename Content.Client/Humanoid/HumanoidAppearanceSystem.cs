@@ -592,5 +592,9 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
                     ApplyMarking(markingPrototype, marking.MarkingColors, marking.Visible, (ent, ent.Comp, sprite));
             }
         }
+
+        // Pirate: preview loadouts change visibility without rebuilding the profile's marking set.
+        var applied = new HumanoidMarkingsAppliedEvent();
+        RaiseLocalEvent(ent.Owner, ref applied);
     }
 }

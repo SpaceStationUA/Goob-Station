@@ -19,7 +19,7 @@ public sealed partial class HumanoidCharacterProfile
 
     private bool CustomMarkingsEqual(HumanoidCharacterProfile other)
     {
-        return CustomMarkings.SequenceEqual(other.CustomMarkings);
+        return (CustomMarkings ?? []).SequenceEqual(other.CustomMarkings ?? []);
     }
 
     private void EnsureCustomMarkingsValid(IConfigurationManager cfg)

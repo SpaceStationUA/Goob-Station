@@ -118,9 +118,9 @@ public sealed class CustomMarkingBodyEraseTest
                 }
             }
 
-            resources.Store(PatchHash, patch.ToPng(), null, patch.Erase);
-            resources.Store(AllHash, Everything(false).ToPng(), null, Everything(false).Erase);
-            resources.Store(RedrawnHash, Everything(true).ToPng(), null, Everything(true).Erase);
+            system.Remember(PatchHash, patch);
+            system.Remember(AllHash, Everything(false));
+            system.Remember(RedrawnHash, Everything(true));
 
             var profile = HumanoidCharacterProfile.DefaultWithSpecies("Human");
             var species = client.ResolveDependency<IPrototypeManager>().Index<SpeciesPrototype>(profile.Species);
@@ -333,11 +333,10 @@ public sealed class CustomMarkingBodyEraseTest
             var sprites = entMan.System<SpriteSystem>();
             var humanoids = entMan.System<HumanoidAppearanceSystem>();
             var system = entMan.System<CustomMarkingSystem>();
-            var resources = CustomMarkingResources.For(client.ResolveDependency<IResourceCache>());
             var tailSprites = client.ResolveDependency<MarkingManager>().Markings[tail].Sprites;
 
             var art = Everything(true);
-            resources.Store(TailHash, art.ToPng(), null, art.Erase);
+            system.Remember(TailHash, art);
 
             var profile = HumanoidCharacterProfile.DefaultWithSpecies("Reptilian");
             profile = profile
@@ -364,7 +363,6 @@ public sealed class CustomMarkingBodyEraseTest
 
             // Hidden, as under a hardsuit, the tail has nothing to erase, and is left as it was.
             humanoids.SetLayerVisibility((doll, humanoid), HumanoidVisualLayers.Tail, false);
-            system.Refresh((doll, humanoid));
             masked = Masked(sprites, doll, sprite);
             foreach (var key in keys)
             {

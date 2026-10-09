@@ -29,6 +29,43 @@ public sealed class CustomMarkingVisualsTest
     private static readonly string OtherHash = new('b', CustomMarkingRules.HashLength);
 
     [Test]
+    public async Task CachedArtNeedsServerApprovalTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var client = pair.Client;
+        var system = client.System<CustomMarkingSystem>();
+        CustomMarkingResources resources = default!;
+        string hash = default!;
+
+        await client.WaitAssertion(() =>
+        {
+            var art = new CustomMarkingArt();
+            art.SetPixel(0, CustomMarkingArt.West, 3, 4, new Rgba32(17, 123, 201, 255));
+            art.SetErased(CustomMarkingArt.South, 1, 1, true);
+            hash = Content.Server._Pirate.CustomMarkings.CustomMarkingSystem.Hash(art);
+            resources = CustomMarkingResources.For(client.ResolveDependency<IResourceCache>());
+            resources.Store(hash, art.ToPng(), art.GetFrameTimes(), art.Erase);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(resources.Has(hash), Is.True, "simulates art retained from an earlier connection");
+                Assert.That(system.TryGetArt(hash, out _), Is.False);
+                Assert.That(system.TryGetPng(hash, out _), Is.False);
+                Assert.That(system.TryReadArt(hash, out _), Is.False);
+                Assert.That(system.TryGetErase(hash, out _), Is.False, "unapproved art cannot erase the preview's body");
+            });
+        });
+
+        await pair.RunTicksSync(30);
+        await client.WaitAssertion(() =>
+        {
+            Assert.That(resources.Has(hash), Is.False, "the server's refusal removes stale cached art");
+            Assert.That(system.TryGetArt(hash, out _), Is.False);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task ArtLoadsFromMemoryTest()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
@@ -37,9 +74,9 @@ public sealed class CustomMarkingVisualsTest
         await client.WaitAssertion(() =>
         {
             var system = client.EntMan.System<CustomMarkingSystem>();
-            Store(client.ResolveDependency<IResourceCache>(), Hash);
+            Store(system, Hash);
 
-            Assert.That(system.TryGetArt(Hash, out var rsi), Is.True, "art in the root loads without asking the server");
+            Assert.That(system.TryGetArt(Hash, out var rsi), Is.True, "art approved for this connection loads from memory");
             Assert.That(rsi!.Size, Is.EqualTo(new Vector2i(CustomMarkingRules.FrameSize, CustomMarkingRules.FrameSize)));
             Assert.That(rsi.TryGetState(CustomMarkingResources.State, out var state), Is.True);
             Assert.That(state!.RsiDirections, Is.EqualTo(RsiDirectionType.Dir4), "one frame for each facing");
@@ -60,9 +97,9 @@ public sealed class CustomMarkingVisualsTest
         {
             var entMan = client.EntMan;
             var sprites = entMan.System<SpriteSystem>();
-            var resCache = client.ResolveDependency<IResourceCache>();
-            Store(resCache, Hash);
-            Store(resCache, OtherHash);
+            var system = entMan.System<CustomMarkingSystem>();
+            Store(system, Hash);
+            Store(system, OtherHash);
 
             var profile = HumanoidCharacterProfile.DefaultWithSpecies().WithCustomMarkings(new List<CustomMarking>
             {
@@ -133,12 +170,12 @@ public sealed class CustomMarkingVisualsTest
         await pair.CleanReturnAsync();
     }
 
-    private static void Store(IResourceCache resCache, string hash)
+    private static void Store(CustomMarkingSystem system, string hash)
     {
         // One pixel on the body, which is what shows, and one far off it.
         var art = new CustomMarkingArt();
         art.SetPixel(0, CustomMarkingArt.South, 15, 15, new Rgba32(200, 30, 30, 255));
         art.SetPixel(0, CustomMarkingArt.West, 3, 4, new Rgba32(1, 2, 3, 255));
-        CustomMarkingResources.For(resCache).Store(hash, art.ToPng());
+        system.Remember(hash, art);
     }
 }

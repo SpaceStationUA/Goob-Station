@@ -83,6 +83,18 @@ public sealed class CustomMarkingLibraryTest
                 Assert.That(valid.MemberwiseEquals(valid.WithCustomMarkings(worn.Take(1))), Is.False);
             });
 
+            // Pirate: a crafted null list must reach validation through the copy constructor.
+            var nullProfile = profile.Clone();
+            nullProfile.CustomMarkings = null!;
+            var validatedNull = (HumanoidCharacterProfile) nullProfile.Validated(pair.Player!, IoCManager.Instance!);
+            Assert.Multiple(() =>
+            {
+                Assert.That(validatedNull.CustomMarkings, Is.Empty);
+                Assert.That(nullProfile.Clone().CustomMarkings, Is.Empty);
+                Assert.That(nullProfile.MemberwiseEquals(profile.WithCustomMarkings([])), Is.True);
+                Assert.That(() => nullProfile.GetHashCode(), Throws.Nothing);
+            });
+
             // A character exported to a file and imported again.
             var humanoids = server.System<SharedHumanoidAppearanceSystem>();
             using var file = new MemoryStream();

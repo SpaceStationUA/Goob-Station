@@ -4,6 +4,7 @@ using System.IO;
 using Content.Shared._Pirate.CustomMarkings;
 using Robust.Client.Utility;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client._Pirate.CustomMarkings;
@@ -22,7 +23,23 @@ public static class CustomMarkingPng
 
         try
         {
-            using var image = Image.Load<Rgba32>(new MemoryStream(png, false));
+            // Pirate: reject oversized decoded images before allocating their pixel buffers.
+            using var stream = new MemoryStream(png, false);
+            var options = new DecoderOptions { MaxFrames = 1 };
+            var info = Image.Identify(options, stream);
+            if (info == null)
+                return null;
+
+            var single = info.Width == CustomMarkingRules.FrameSize && info.Height == CustomMarkingRules.FrameSize;
+            var sheet = info.Width == CustomMarkingRules.SheetSize
+                        && info.Height > 0
+                        && info.Height % CustomMarkingRules.SheetSize == 0
+                        && info.Height / CustomMarkingRules.SheetSize <= CustomMarkingRules.MaxFrames;
+            if (!single && !sheet)
+                return null;
+
+            stream.Position = 0;
+            using var image = Image.Load<Rgba32>(options, stream);
             return CustomMarkingArt.FromImage(image.Width, image.Height, image.GetPixelSpan());
         }
         catch (Exception)

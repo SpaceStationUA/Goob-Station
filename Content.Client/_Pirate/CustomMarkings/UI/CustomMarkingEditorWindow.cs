@@ -103,6 +103,7 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
     private Vector2i? _last;
     private EntityUid? _body;
     private int _request = -1;
+    private CustomMarkingArt? _submittedArt;
 
     /// <summary>The frame shown and drawn on.</summary>
     private int _frame;
@@ -485,6 +486,7 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
         OnClose += () =>
         {
             _system.SaveAnswered -= OnSaveAnswered;
+            _submittedArt = null;
             DeleteBody();
             _sampler.Orphan();
         };
@@ -972,7 +974,9 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
 
         // Unchanged art isn't sent again: the server keeps what the entry has.
         var changed = _entry == null || !Art.Same(_opened);
-        _request = _system.Save(_entry?.Id ?? 0, CustomMarkingRules.CleanName(_name.Text), Placement, changed ? Art : null);
+        // Pirate: later strokes must not change the art cached under this request's saved hash.
+        _submittedArt = Art.Clone();
+        _request = _system.Save(_entry?.Id ?? 0, CustomMarkingRules.CleanName(_name.Text), Placement, changed ? _submittedArt : null);
         _saveButton.Disabled = true;
         SetStatus(Loc.GetString("wf-custom-marking-editor-saving"), false);
     }
@@ -982,6 +986,8 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
         if (ev.Request != _request)
             return;
 
+        var submitted = _submittedArt;
+        _submittedArt = null;
         _request = -1;
         _saveButton.Disabled = false;
         if (ev.Entry is not { } saved)
@@ -990,7 +996,8 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
             return;
         }
 
-        _system.Remember(saved.Hash, Art);
+        if (submitted != null)
+            _system.Remember(saved.Hash, submitted);
         OnSaved?.Invoke(_entry, saved);
         Close();
     }

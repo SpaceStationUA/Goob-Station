@@ -46,7 +46,7 @@ public sealed partial class CustomMarkingSystem : EntitySystem
     private const int LibraryBudget = 16;
     private static readonly TimeSpan LibraryRefill = TimeSpan.FromMilliseconds(500);
 
-    /// <summary>Art by hash as read from the database; null where it has none to show.</summary>
+    /// <summary>Art by hash, including in-flight reads; missing results are removed after the read.</summary>
     private readonly Dictionary<string, Task<CustomMarkingStoredArt?>> _art = new();
 
     private readonly Dictionary<ICommonSession, TimeSpan> _nextSave = new();
@@ -285,15 +285,22 @@ public sealed partial class CustomMarkingSystem : EntitySystem
         return true;
     }
 
-    private Task<CustomMarkingStoredArt?> GetArt(string hash)
+    private async Task<CustomMarkingStoredArt?> GetArt(string hash)
     {
-        if (_art.TryGetValue(hash, out var known))
-            return known;
+        if (!_art.TryGetValue(hash, out var known))
+        {
+            if (_art.Count >= MaxCachedArt)
+                _art.Clear();
 
-        if (_art.Count >= MaxCachedArt)
-            _art.Clear();
+            known = ReadArt(hash);
+            _art[hash] = known;
+        }
 
-        return _art[hash] = ReadArt(hash);
+        // Pirate: misses must not evict real art, including when the DB read completes synchronously.
+        var art = await known;
+        if (art == null && _art.TryGetValue(hash, out var cached) && ReferenceEquals(known, cached))
+            _art.Remove(hash);
+        return art;
     }
 
     private async Task<CustomMarkingStoredArt?> ReadArt(string hash)
@@ -305,7 +312,6 @@ public sealed partial class CustomMarkingSystem : EntitySystem
         catch (Exception e)
         {
             Log.Error($"Reading custom marking art {hash} threw: {e}");
-            _art.Remove(hash);
             return null;
         }
     }
@@ -316,7 +322,21 @@ public sealed partial class CustomMarkingSystem : EntitySystem
     /// </summary>
     public async Task<bool> SetBlocked(string hash, bool blocked, string actor)
     {
-        if (!CustomMarkingRules.IsValidHash(hash) || await _db.SetCustomMarkingArtBlockedAsync(hash, blocked) is not { } uploader)
+        if (!CustomMarkingRules.IsValidHash(hash))
+            return false;
+
+        Guid? found;
+        try
+        {
+            found = await _db.SetCustomMarkingArtBlockedAsync(hash, blocked);
+        }
+        catch (Exception e)
+        {
+            Log.Error($"Blocking custom marking art {hash} threw: {e}");
+            return false;
+        }
+
+        if (found is not { } uploader)
             return false;
 
         _art.Remove(hash);

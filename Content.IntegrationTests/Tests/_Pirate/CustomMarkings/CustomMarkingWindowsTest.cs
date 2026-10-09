@@ -6,11 +6,14 @@ using System.Linq;
 using System.Numerics;
 using Content.Client._Pirate.CustomMarkings;
 using Content.Client._Pirate.CustomMarkings.UI;
+using Content.IntegrationTests.Pair;
 using Content.Shared._Pirate.CustomMarkings;
 using Content.Shared.Preferences;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -23,6 +26,105 @@ namespace Content.IntegrationTests.Tests._Pirate.CustomMarkings;
 public sealed class CustomMarkingWindowsTest
 {
     [Test]
+    public async Task SaveCachesSubmittedArtTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var client = pair.Client;
+        var localization = client.ResolveDependency<ILocalizationManager>();
+        var previousCulture = localization.DefaultCulture;
+        var system = client.System<CustomMarkingSystem>();
+        var submitted = new CustomMarkingArt();
+        submitted.SetPixel(0, CustomMarkingArt.South, 16, 12, new Rgba32(10, 200, 10, 255));
+
+        CustomMarkingEditorWindow editor = default!;
+        CustomMarkingArt edited = default!;
+        CustomMarkingEntry? saved = null;
+        Button save = default!;
+        await client.WaitPost(() =>
+        {
+            localization.SetCulture(CultureInfo.GetCultureInfo("uk-UA"));
+            editor = new CustomMarkingEditorWindow(null, submitted.Clone(), "Snapshot", null);
+            editor.OnSaved += (_, entry) => saved = entry;
+            editor.OpenCentered();
+            save = Descendants(editor).OfType<Button>().Single(button => button.Text == Loc.GetString("wf-custom-marking-editor-save"));
+            edited = Descendants(editor).OfType<CustomMarkingCanvas>().First().Art!;
+            // Edit immediately after submission, before the network reply can run on the client thread.
+            save.OnPressed += _ =>
+            {
+                edited.SetPixel(0, CustomMarkingArt.South, 16, 12, new Rgba32(200, 10, 10, 255));
+                edited.AddFrame(0);
+                edited.SetFrameTime(1, 750);
+                edited.SetErased(CustomMarkingArt.South, 1, 1, true);
+            };
+        });
+
+        await Click(pair, save);
+        await pair.RunTicksSync(30);
+        await client.WaitAssertion(() =>
+        {
+            Assert.That(saved, Is.Not.Null);
+            var entry = saved!.Value;
+            Assert.That(edited.Same(submitted), Is.False, "edits occurred while the request was in flight");
+            Assert.That(entry.Hash, Is.EqualTo(Content.Server._Pirate.CustomMarkings.CustomMarkingSystem.Hash(submitted)));
+            Assert.That(system.TryReadArt(entry.Hash, out var cached), Is.True);
+            Assert.That(cached!.Same(submitted), Is.True, "pixels, frame times and erase mask match the submitted snapshot");
+            Assert.That(editor.IsOpen, Is.False);
+            localization.SetCulture(previousCulture!);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task ClosingEditorRemovesColorPopupTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var client = pair.Client;
+        var localization = client.ResolveDependency<ILocalizationManager>();
+        var previousCulture = localization.DefaultCulture;
+        var ui = client.ResolveDependency<IUserInterfaceManager>();
+        CustomMarkingEditorWindow editor = default!;
+        Button custom = default!;
+        await client.WaitPost(() =>
+        {
+            localization.SetCulture(CultureInfo.GetCultureInfo("uk-UA"));
+            editor = new CustomMarkingEditorWindow(null, new CustomMarkingArt(), "Popup", null);
+            editor.OpenCentered();
+            var picker = Descendants(editor).OfType<CustomMarkingColorPicker>().Single();
+            custom = Descendants(picker).OfType<Button>().Single();
+        });
+
+        await Click(pair, custom);
+        await client.WaitAssertion(() =>
+        {
+            var popup = ui.ModalRoot.Children.OfType<CustomMarkingColorPopup>().Single();
+            Assert.That(popup.IsInsideTree, Is.True);
+            editor.Close();
+            Assert.Multiple(() =>
+            {
+                Assert.That(popup.Parent, Is.Null);
+                Assert.That(popup.IsInsideTree, Is.False);
+                Assert.That(popup.OnColorChanged, Is.Null, "the popup releases the callback that retains its editor");
+            });
+            localization.SetCulture(previousCulture!);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    private static async Task Click(TestPair pair, BaseButton button)
+    {
+        await pair.Client.WaitPost(() =>
+        {
+            button.Mode = BaseButton.ActionMode.Press;
+            button.MuteSounds = true;
+        });
+        var screen = new ScreenCoordinates(Vector2.Zero, default);
+        await pair.Client.DoGuiEvent(button, new GUIBoundKeyEventArgs(
+            EngineKeyFunctions.UIClick, BoundKeyState.Down, screen, false, Vector2.Zero, Vector2.Zero));
+        await pair.Client.DoGuiEvent(button, new GUIBoundKeyEventArgs(
+            EngineKeyFunctions.UIClick, BoundKeyState.Up, screen, false, Vector2.Zero, Vector2.Zero));
+    }
+
+    [Test]
     public async Task WindowsOpenTest()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
@@ -32,7 +134,7 @@ public sealed class CustomMarkingWindowsTest
         var previousCulture = localization.DefaultCulture;
         await client.WaitPost(() => localization.SetCulture(CultureInfo.GetCultureInfo("uk-UA")));
         var system = client.System<CustomMarkingSystem>();
-        var profile = HumanoidCharacterProfile.DefaultWithSpecies("Human");
+        HumanoidCharacterProfile profile = default!;
 
         var art = new CustomMarkingArt();
         art.SetPixel(0, CustomMarkingArt.South, 16, 12, new Rgba32(10, 200, 10, 255));
@@ -41,6 +143,7 @@ public sealed class CustomMarkingWindowsTest
         CustomMarkingEditorWindow editor = null;
         await client.WaitPost(() =>
         {
+            profile = HumanoidCharacterProfile.DefaultWithSpecies("Human"); // Pirate: requires the client's IoC context.
             library = new CustomMarkingLibraryWindow(() => profile);
             library.OpenCentered();
             editor = new CustomMarkingEditorWindow(null, art, "Leaf", profile);
