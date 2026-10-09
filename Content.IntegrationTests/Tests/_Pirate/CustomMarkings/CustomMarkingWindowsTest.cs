@@ -97,6 +97,7 @@ public sealed class CustomMarkingWindowsTest
         CustomMarkingEditorWindow editor = default!;
         CustomMarkingCanvas canvas = default!;
         CustomMarkingIconButton picker = default!;
+        CustomMarkingIconButton undo = default!;
         await client.WaitPost(() =>
         {
             localization.SetCulture(CultureInfo.GetCultureInfo("uk-UA"));
@@ -106,6 +107,7 @@ public sealed class CustomMarkingWindowsTest
             editor.Arrange(UIBox2.FromDimensions(Vector2.Zero, editor.DesiredSize));
             canvas = Descendants(editor).OfType<CustomMarkingCanvas>().First();
             picker = Icon(editor, "wf-custom-marking-tool-picker");
+            undo = Icon(editor, "wf-custom-marking-editor-undo");
         });
         await Click(pair, picker);
 
@@ -137,7 +139,7 @@ public sealed class CustomMarkingWindowsTest
             EngineKeyFunctions.UIClick, BoundKeyState.Up, screen, false, moved, moved));
         await client.WaitAssertion(() => Assert.That(canvas.Art!.GetPixel(0, CustomMarkingArt.South, 8, 5),
             Is.EqualTo(original.GetPixel(0, CustomMarkingArt.South, 4, 5))));
-        await Click(pair, Icon(editor, "wf-custom-marking-editor-undo"));
+        await Click(pair, undo);
         await client.WaitAssertion(() =>
         {
             Assert.That(canvas.Art!.Same(original), Is.True, "the following pencil stroke owns its undo step");

@@ -36,8 +36,10 @@ public static class CustomMarkingPng
     // Pirate: the pinned sandbox only permits Load(Stream), so inspect PNG dimensions before decoding.
     private static bool HasValidHeader(byte[] png)
     {
+        // Pirate: direct comparisons avoid Span conversions rejected by the pinned IL verifier.
         if (png.Length < 33
-            || !png.AsSpan(0, 8).SequenceEqual(new byte[] { 137, 80, 78, 71, 13, 10, 26, 10 })
+            || png[0] != 137 || png[1] != 80 || png[2] != 78 || png[3] != 71
+            || png[4] != 13 || png[5] != 10 || png[6] != 26 || png[7] != 10
             || ReadUInt32(png, 8) != 13
             || ReadUInt32(png, 12) != 0x49484452) // IHDR
             return false;
