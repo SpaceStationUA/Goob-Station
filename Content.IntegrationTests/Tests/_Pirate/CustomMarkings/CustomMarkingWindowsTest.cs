@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using Content.Client._Pirate.CustomMarkings;
 using Content.Client._Pirate.CustomMarkings.UI;
 using Content.IntegrationTests.Pair;
@@ -25,8 +26,9 @@ namespace Content.IntegrationTests.Tests._Pirate.CustomMarkings;
 [TestOf(typeof(CustomMarkingEditorWindow))]
 public sealed class CustomMarkingWindowsTest
 {
-    [Test]
-    public async Task SaveCachesSubmittedArtTest()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task SaveCachesSubmittedArtTest(bool eraseEnabled)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
         var client = pair.Client;
@@ -35,6 +37,12 @@ public sealed class CustomMarkingWindowsTest
         var system = client.System<CustomMarkingSystem>();
         var submitted = new CustomMarkingArt();
         submitted.SetPixel(0, CustomMarkingArt.South, 16, 12, new Rgba32(10, 200, 10, 255));
+        submitted.SetErased(CustomMarkingArt.South, 1, 1, true);
+        var accepted = submitted.Clone();
+        if (!eraseEnabled)
+            accepted.ClearErase(CustomMarkingArt.South);
+        await pair.Server.WaitPost(() => pair.Server.CfgMan.SetCVar(CustomMarkingCVars.EraseBody, eraseEnabled));
+        await pair.RunTicksSync(10);
 
         CustomMarkingEditorWindow editor = default!;
         CustomMarkingArt edited = default!;
@@ -60,15 +68,80 @@ public sealed class CustomMarkingWindowsTest
 
         await Click(pair, save);
         await pair.RunTicksSync(30);
+        // Re-enabling erasure must not reveal a mask that the server discarded while saving.
+        await pair.Server.WaitPost(() => pair.Server.CfgMan.SetCVar(CustomMarkingCVars.EraseBody, true));
+        await pair.RunTicksSync(10);
         await client.WaitAssertion(() =>
         {
             Assert.That(saved, Is.Not.Null);
             var entry = saved!.Value;
             Assert.That(edited.Same(submitted), Is.False, "edits occurred while the request was in flight");
-            Assert.That(entry.Hash, Is.EqualTo(Content.Server._Pirate.CustomMarkings.CustomMarkingSystem.Hash(submitted)));
+            Assert.That(entry.Hash, Is.EqualTo(Content.Server._Pirate.CustomMarkings.CustomMarkingSystem.Hash(accepted)));
             Assert.That(system.TryReadArt(entry.Hash, out var cached), Is.True);
-            Assert.That(cached!.Same(submitted), Is.True, "pixels, frame times and erase mask match the submitted snapshot");
+            Assert.That(cached!.Same(accepted), Is.True, "the cache matches the submitted snapshot as accepted by the server");
             Assert.That(editor.IsOpen, Is.False);
+            localization.SetCulture(previousCulture!);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task PickerGestureDoesNotDrawTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var client = pair.Client;
+        var localization = client.ResolveDependency<ILocalizationManager>();
+        var previousCulture = localization.DefaultCulture;
+        var original = new CustomMarkingArt();
+        original.SetPixel(0, CustomMarkingArt.South, 4, 5, new Rgba32(10, 200, 10, 255));
+        CustomMarkingEditorWindow editor = default!;
+        CustomMarkingCanvas canvas = default!;
+        CustomMarkingIconButton picker = default!;
+        await client.WaitPost(() =>
+        {
+            localization.SetCulture(CultureInfo.GetCultureInfo("uk-UA"));
+            editor = new CustomMarkingEditorWindow(null, original.Clone(), "Picker", null);
+            editor.OpenCentered();
+            editor.Measure(new Vector2(1920, 1080));
+            editor.Arrange(UIBox2.FromDimensions(Vector2.Zero, editor.DesiredSize));
+            canvas = Descendants(editor).OfType<CustomMarkingCanvas>().First();
+            picker = Icon(editor, "wf-custom-marking-tool-picker");
+        });
+        await Click(pair, picker);
+
+        var cell = canvas.PixelSize.X / (float) CustomMarkingRules.FrameSize;
+        var picked = new Vector2(4.5f, 5.5f) * cell;
+        var moved = new Vector2(8.5f, 5.5f) * cell;
+        var screen = new ScreenCoordinates(Vector2.Zero, default);
+        await client.DoGuiEvent(canvas, new GUIBoundKeyEventArgs(
+            EngineKeyFunctions.UIClick, BoundKeyState.Down, screen, false, picked, picked));
+        await client.WaitAssertion(() =>
+        {
+            // The integration input helper exposes keys; dispatch the engine's mouse-move hook on its thread.
+            typeof(CustomMarkingCanvas).GetMethod("MouseMove", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .Invoke(canvas, new object[] { new GUIMouseMoveEventArgs(moved - picked, canvas, moved, screen, moved, moved) });
+            Assert.That(canvas.Art!.Same(original), Is.True, "dragging the picker never paints a stroke");
+            Assert.That(Icon(editor, "wf-custom-marking-editor-undo").Disabled, Is.True);
+        });
+        await client.DoGuiEvent(canvas, new GUIBoundKeyEventArgs(
+            EngineKeyFunctions.UIClick, BoundKeyState.Up, screen, false, moved, moved));
+        await client.WaitAssertion(() =>
+        {
+            Assert.That(Icon(editor, "wf-custom-marking-tool-pencil").Pressed, Is.True);
+            Assert.That(canvas.Art!.Same(original), Is.True);
+        });
+
+        await client.DoGuiEvent(canvas, new GUIBoundKeyEventArgs(
+            EngineKeyFunctions.UIClick, BoundKeyState.Down, screen, false, moved, moved));
+        await client.DoGuiEvent(canvas, new GUIBoundKeyEventArgs(
+            EngineKeyFunctions.UIClick, BoundKeyState.Up, screen, false, moved, moved));
+        await client.WaitAssertion(() => Assert.That(canvas.Art!.GetPixel(0, CustomMarkingArt.South, 8, 5),
+            Is.EqualTo(original.GetPixel(0, CustomMarkingArt.South, 4, 5))));
+        await Click(pair, Icon(editor, "wf-custom-marking-editor-undo"));
+        await client.WaitAssertion(() =>
+        {
+            Assert.That(canvas.Art!.Same(original), Is.True, "the following pencil stroke owns its undo step");
+            editor.Close();
             localization.SetCulture(previousCulture!);
         });
         await pair.CleanReturnAsync();

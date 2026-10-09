@@ -276,7 +276,10 @@ public sealed partial class CustomMarkingSystem : EntitySystem
             if (ArtFor(sprite, marking, rsi, depth) is not { } shown)
                 continue;
 
-            if (TryGetErase(marking.Hash, out var mask))
+            var visible = marking.Placement != CustomMarkingPlacement.Hair
+                          || !ent.Comp.HiddenLayers.ContainsKey(HumanoidVisualLayers.Hair)
+                          && !ent.Comp.PermanentlyHidden.Contains(HumanoidVisualLayers.Hair);
+            if (visible && TryGetErase(marking.Hash, out var mask))
                 CustomMarkingErase.Add(erase, mask);
 
             if (shown.Rsi == null)
@@ -288,9 +291,6 @@ public sealed partial class CustomMarkingSystem : EntitySystem
             var layer = _sprite.AddRsiLayer(sprite, CustomMarkingResources.State, shown.Rsi, depth);
             _sprite.LayerMapSet(sprite, LayerKey(i), layer);
 
-            var visible = marking.Placement != CustomMarkingPlacement.Hair
-                          || !ent.Comp.HiddenLayers.ContainsKey(HumanoidVisualLayers.Hair)
-                          && !ent.Comp.PermanentlyHidden.Contains(HumanoidVisualLayers.Hair);
             _sprite.LayerSetVisible(sprite, layer, visible);
             if (visible)
                 CustomMarkingErase.Add(covered, shown.Solid);

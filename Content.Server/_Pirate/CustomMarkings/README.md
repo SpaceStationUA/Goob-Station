@@ -31,7 +31,8 @@ the skin's glass panel is unreadable over the creator. The icons are drawn by
 Art is stored once per drawing, under a hash of its pixels, and of its frame times and erase mask when it has them,
 and sent to a client the first time it sees that hash. A character's profile lists what it wears as hash and
 placement pairs, so a saved character keeps its markings when the library entry is changed or deleted; changing an
-entry updates the character open in the creator.
+entry updates the character open in the creator. Cached art needs server approval after reconnecting, and saved art
+is fetched from the server so the cache contains the accepted pixels and erase mask.
 
 Entry points: the server `CustomMarkingSystem` (library, saving, art requests, admin controls), the client
 `CustomMarkingSystem` (fetches art, draws the layers), `CustomMarkingResources` (fetched art as in-memory RSIs),

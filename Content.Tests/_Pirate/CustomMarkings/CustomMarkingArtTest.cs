@@ -263,12 +263,15 @@ public sealed class CustomMarkingArtTest
 
         using var wide = new Image<Rgba32>(Sheet, Frame);
         using var large = new Image<Rgba32>(Sheet * 2, Sheet * 2);
+        using var animated = new Image<Rgba32>(Frame, Frame);
+        animated.Frames.AddFrame(single.Frames.RootFrame);
         Assert.Multiple(() =>
         {
             Assert.That(CustomMarkingPng.Read(Png(wide)), Is.Null, "not square");
             Assert.That(CustomMarkingPng.Read(Png(large)), Is.Null, "too big");
             Assert.That(CustomMarkingPng.Read(new byte[] { 1, 2, 3 }), Is.Null, "not an image");
             Assert.That(CustomMarkingPng.Read(new byte[CustomMarkingPng.MaxFileBytes + 1]), Is.Null, "too many bytes");
+            Assert.That(CustomMarkingPng.Read(Png(animated)), Is.Null, "animation belongs in bounded sheet rows, not APNG frames");
         });
     }
 

@@ -201,6 +201,16 @@ public sealed class CustomMarkingLibraryTest
         Assert.That(await db.GetCustomMarkingArtAsync(HashA), Is.Null);
         Assert.That((await db.SaveCustomMarkingAsync(other, 0, "Again", 0, HashA, artA, limit)).Error,
             Is.EqualTo("wf-custom-marking-error-blocked"));
+        var blockedEntry = library.Single(entry => entry.ArtHash == HashA);
+        Assert.That((await db.SaveCustomMarkingAsync(user, blockedEntry.Id, "Blocked rename", (int) CustomMarkingPlacement.Hair,
+                null, null, limit)).Error,
+            Is.EqualTo("wf-custom-marking-error-blocked"), "metadata-only saves also reject blocked art");
+        var unchanged = (await db.GetCustomMarkingsAsync(user)).Single(entry => entry.Id == blockedEntry.Id);
+        Assert.Multiple(() =>
+        {
+            Assert.That(unchanged.Name, Is.EqualTo(blockedEntry.Name));
+            Assert.That(unchanged.Placement, Is.EqualTo(blockedEntry.Placement));
+        });
         Assert.That(await db.SetCustomMarkingArtBlockedAsync(HashA, false), Is.EqualTo(user));
         Assert.That((await db.GetCustomMarkingArtAsync(HashA))?.Png, Is.EqualTo(pngA));
 

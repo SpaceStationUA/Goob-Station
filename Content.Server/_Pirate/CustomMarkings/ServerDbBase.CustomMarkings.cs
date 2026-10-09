@@ -55,45 +55,46 @@ public abstract partial class ServerDbBase
             return CustomMarkingSaveResult.Fail("wf-custom-marking-error-full");
         }
 
-        string? previous = null;
-        if (hash != null && art != null)
+        // Pirate: metadata-only edits must also validate the art the entry keeps.
+        var effectiveHash = hash ?? entry!.ArtHash;
+        var blocked = await ctx.PirateCustomMarkingArt
+            .Where(a => a.Hash == effectiveHash)
+            .Select(a => (bool?) a.Blocked)
+            .SingleOrDefaultAsync(cancel);
+
+        if (blocked == true)
+            return CustomMarkingSaveResult.Fail("wf-custom-marking-error-blocked");
+
+        await using var transaction = await ctx.Database.BeginTransactionAsync(cancel);
+        if (blocked == null)
         {
-            var blocked = await ctx.PirateCustomMarkingArt
-                .Where(a => a.Hash == hash)
-                .Select(a => (bool?) a.Blocked)
-                .SingleOrDefaultAsync(cancel);
+            if (art == null)
+                return CustomMarkingSaveResult.Fail("wf-custom-marking-error-missing");
 
-            if (blocked == true)
-                return CustomMarkingSaveResult.Fail("wf-custom-marking-error-blocked");
-
-            if (blocked == null)
+            // Art the server doesn't hold yet is a new row, and a player only gets so many of those a day.
+            if (dailyArtLimit > 0)
             {
-                // Art the server doesn't hold yet is a new row, and a player only gets so many of those a day.
-                if (dailyArtLimit > 0)
-                {
-                    var since = DateTime.UtcNow - TimeSpan.FromDays(1);
-                    var today = await ctx.PirateCustomMarkingArt
-                        .CountAsync(a => a.UploaderUserId == userId && a.UploadedAt > since, cancel);
+                var since = DateTime.UtcNow - TimeSpan.FromDays(1);
+                var today = await ctx.PirateCustomMarkingArt
+                    .CountAsync(a => a.UploaderUserId == userId && a.UploadedAt > since, cancel);
 
-                    if (today >= dailyArtLimit)
-                        return CustomMarkingSaveResult.Fail("wf-custom-marking-error-daily");
-                }
-
-                ctx.PirateCustomMarkingArt.Add(new PirateCustomMarkingArt
-                {
-                    Hash = hash,
-                    Png = art.Png,
-                    FrameTimes = art.FrameTimes,
-                    Erase = art.Erase,
-                    UploaderUserId = userId,
-                    UploadedAt = DateTime.UtcNow,
-                });
+                if (today >= dailyArtLimit)
+                    return CustomMarkingSaveResult.Fail("wf-custom-marking-error-daily");
             }
 
-            if (entry != null && entry.ArtHash != hash)
-                previous = entry.ArtHash;
+            // Pirate: concurrent saves share the winning row, including its uploader and moderation data.
+            var inserted = await ctx.Database.ExecuteSqlAsync($"""
+                INSERT INTO pirate_custom_marking_art
+                    (hash, png, frame_times, erase, uploader_user_id, uploaded_at, blocked)
+                VALUES ({effectiveHash}, {art.Png}, {art.FrameTimes}, {art.Erase}, {userId}, {DateTime.UtcNow}, {false})
+                ON CONFLICT (hash) DO NOTHING
+                """, cancel);
+
+            if (inserted == 0 && await ctx.PirateCustomMarkingArt.AnyAsync(a => a.Hash == effectiveHash && a.Blocked, cancel))
+                return CustomMarkingSaveResult.Fail("wf-custom-marking-error-blocked");
         }
 
+        string? previous = entry != null && hash != null && entry.ArtHash != hash ? entry.ArtHash : null;
         if (entry == null)
         {
             entry = new PirateCustomMarking { PlayerUserId = userId };
@@ -107,6 +108,7 @@ public abstract partial class ServerDbBase
         entry.Placement = placement;
         entry.UpdatedAt = DateTime.UtcNow;
         await ctx.SaveChangesAsync(cancel);
+        await transaction.CommitAsync(cancel);
 
         return new CustomMarkingSaveResult(entry, previous, null);
     }

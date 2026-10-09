@@ -121,6 +121,10 @@ public sealed class CustomMarkingBodyEraseTest
             system.Remember(PatchHash, patch);
             system.Remember(AllHash, Everything(false));
             system.Remember(RedrawnHash, Everything(true));
+            var hairPatch = patch.Clone();
+            hairPatch.SetPixel(0, CustomMarkingArt.South, 14, 15, Red);
+            var hairHash = Content.Server._Pirate.CustomMarkings.CustomMarkingSystem.Hash(hairPatch);
+            system.Remember(hairHash, hairPatch);
 
             var profile = HumanoidCharacterProfile.DefaultWithSpecies("Human");
             var species = client.ResolveDependency<IPrototypeManager>().Index<SpeciesPrototype>(profile.Species);
@@ -196,6 +200,22 @@ public sealed class CustomMarkingBodyEraseTest
                 Assert.That(sprites.LayerMapTryGet((doll, sprite), "jumpsuit", out var jumpsuit, false) && !erasable.Contains(jumpsuit),
                     Is.True, "clothing is never erased");
             });
+
+            // Hidden hair-placement art must not erase exposed body parts, including erase-only art.
+            foreach (var hash in new[] { PatchHash, hairHash })
+            {
+                Wear(new CustomMarking(hash, CustomMarkingPlacement.Hair));
+                Assert.That(Masked(sprites, doll, sprite), Does.Contain(HumanoidVisualLayers.Chest));
+                humanoids.SetLayerVisibility(doll, HumanoidVisualLayers.Hair, false);
+                Assert.That(Masked(sprites, doll, sprite), Is.Empty, "headgear hides the erase mask with its artwork");
+                humanoids.SetLayerVisibility(doll, HumanoidVisualLayers.Hair, true);
+                Assert.That(Masked(sprites, doll, sprite), Does.Contain(HumanoidVisualLayers.Chest));
+                humanoid.PermanentlyHidden.Add(HumanoidVisualLayers.Hair);
+                system.Refresh((doll, humanoid));
+                Assert.That(Masked(sprites, doll, sprite), Is.Empty, "permanently hidden hair cannot contribute an erase mask");
+                humanoid.PermanentlyHidden.Remove(HumanoidVisualLayers.Hair);
+                system.Refresh((doll, humanoid));
+            }
 
             // Taken off, the body is drawn as it was.
             Wear();

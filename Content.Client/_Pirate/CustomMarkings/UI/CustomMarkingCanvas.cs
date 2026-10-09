@@ -365,12 +365,10 @@ public sealed partial class CustomMarkingCanvas : Control
             var drawn = (Vector2) texture.Size * cell;
             var centre = size / 2f + new Vector2(layer.Offset.X, -layer.Offset.Y) * Frame * cell;
             var erased = erase != null && erasable != null && erasable.Contains(index);
-            if (erased)
-                handle.UseShader(erase!.For(texture.Size));
+            handle.UseShader(erased ? erase!.For(texture.Size) : layer.Shader);
 
             handle.DrawTextureRect(texture, UIBox2.FromDimensions(centre - drawn / 2f, drawn), layer.Color * sprite.Color);
-            if (erased)
-                handle.UseShader(null);
+            handle.UseShader(null);
         }
     }
 

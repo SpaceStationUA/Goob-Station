@@ -60,6 +60,12 @@ public sealed partial class CustomMarkingSystem
 
     private void OnSaveResult(CustomMarkingSaveResultEvent ev)
     {
+        if (ev.Entry is { } entry)
+        {
+            // Pirate: fetch canonical art; the server may have discarded a submitted erase mask.
+            _unavailable.Remove(entry.Hash);
+            TryGetArt(entry.Hash, out _);
+        }
         SaveAnswered?.Invoke(ev);
     }
 }

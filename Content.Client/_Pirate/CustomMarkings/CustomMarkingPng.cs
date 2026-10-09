@@ -4,7 +4,6 @@ using System.IO;
 using Content.Shared._Pirate.CustomMarkings;
 using Robust.Client.Utility;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client._Pirate.CustomMarkings;
@@ -18,28 +17,13 @@ public static class CustomMarkingPng
     /// <summary>Art from a PNG of a whole sheet or of one facing; null for anything else.</summary>
     public static CustomMarkingArt? Read(byte[] png)
     {
-        if (png.Length > MaxFileBytes)
+        if (png.Length > MaxFileBytes || !HasValidHeader(png))
             return null;
 
         try
         {
-            // Pirate: reject oversized decoded images before allocating their pixel buffers.
             using var stream = new MemoryStream(png, false);
-            var options = new DecoderOptions { MaxFrames = 1 };
-            var info = Image.Identify(options, stream);
-            if (info == null)
-                return null;
-
-            var single = info.Width == CustomMarkingRules.FrameSize && info.Height == CustomMarkingRules.FrameSize;
-            var sheet = info.Width == CustomMarkingRules.SheetSize
-                        && info.Height > 0
-                        && info.Height % CustomMarkingRules.SheetSize == 0
-                        && info.Height / CustomMarkingRules.SheetSize <= CustomMarkingRules.MaxFrames;
-            if (!single && !sheet)
-                return null;
-
-            stream.Position = 0;
-            using var image = Image.Load<Rgba32>(options, stream);
+            using var image = Image.Load<Rgba32>(stream);
             return CustomMarkingArt.FromImage(image.Width, image.Height, image.GetPixelSpan());
         }
         catch (Exception)
@@ -47,5 +31,50 @@ public static class CustomMarkingPng
             // Not an image ImageSharp can read.
             return null;
         }
+    }
+
+    // Pirate: the pinned sandbox only permits Load(Stream), so inspect PNG dimensions before decoding.
+    private static bool HasValidHeader(byte[] png)
+    {
+        if (png.Length < 33
+            || !png.AsSpan(0, 8).SequenceEqual(new byte[] { 137, 80, 78, 71, 13, 10, 26, 10 })
+            || ReadUInt32(png, 8) != 13
+            || ReadUInt32(png, 12) != 0x49484452) // IHDR
+            return false;
+
+        var width = ReadUInt32(png, 16);
+        var height = ReadUInt32(png, 20);
+        var single = width == CustomMarkingRules.FrameSize && height == CustomMarkingRules.FrameSize;
+        var sheet = width == CustomMarkingRules.SheetSize
+                    && height > 0
+                    && height % CustomMarkingRules.SheetSize == 0
+                    && height / CustomMarkingRules.SheetSize <= CustomMarkingRules.MaxFrames;
+        if (!single && !sheet)
+            return false;
+
+        for (var offset = 8; offset <= png.Length - 12;)
+        {
+            var length = ReadUInt32(png, offset);
+            if (length > png.Length - offset - 12)
+                return false;
+
+            var type = ReadUInt32(png, offset + 4);
+            // Animation is represented by sheet rows. Reject APNG to bound decoded frame allocations too.
+            if (type == 0x6163544C) // acTL
+                return false;
+
+            if (type == 0x49454E44) // IEND
+                return length == 0;
+
+            offset += (int) length + 12;
+        }
+
+        return false;
+    }
+
+    private static uint ReadUInt32(byte[] png, int offset)
+    {
+        return (uint) png[offset] << 24 | (uint) png[offset + 1] << 16
+               | (uint) png[offset + 2] << 8 | png[offset + 3];
     }
 }

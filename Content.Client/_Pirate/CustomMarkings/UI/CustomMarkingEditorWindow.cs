@@ -103,7 +103,7 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
     private Vector2i? _last;
     private EntityUid? _body;
     private int _request = -1;
-    private CustomMarkingArt? _submittedArt;
+    private bool _pickedColor;
 
     /// <summary>The frame shown and drawn on.</summary>
     private int _frame;
@@ -486,7 +486,6 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
         OnClose += () =>
         {
             _system.SaveAnswered -= OnSaveAnswered;
-            _submittedArt = null;
             DeleteBody();
             _sampler.Orphan();
         };
@@ -709,13 +708,19 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
             return;
         }
 
-        DrawAgain();
+        // Pirate: keep this gesture in picker mode until the mouse is released.
+        _pickedColor = true;
     }
 
     private void EndStroke()
     {
         _last = null;
         _sketch.End();
+        if (_pickedColor)
+        {
+            _pickedColor = false;
+            DrawAgain();
+        }
         Changed();
     }
 
@@ -974,9 +979,9 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
 
         // Unchanged art isn't sent again: the server keeps what the entry has.
         var changed = _entry == null || !Art.Same(_opened);
-        // Pirate: later strokes must not change the art cached under this request's saved hash.
-        _submittedArt = Art.Clone();
-        _request = _system.Save(_entry?.Id ?? 0, CustomMarkingRules.CleanName(_name.Text), Placement, changed ? _submittedArt : null);
+        // Pirate: the queued request owns its pixels while the player continues editing.
+        var submitted = changed ? Art.Clone() : null;
+        _request = _system.Save(_entry?.Id ?? 0, CustomMarkingRules.CleanName(_name.Text), Placement, submitted);
         _saveButton.Disabled = true;
         SetStatus(Loc.GetString("wf-custom-marking-editor-saving"), false);
     }
@@ -986,8 +991,6 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
         if (ev.Request != _request)
             return;
 
-        var submitted = _submittedArt;
-        _submittedArt = null;
         _request = -1;
         _saveButton.Disabled = false;
         if (ev.Entry is not { } saved)
@@ -996,8 +999,6 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
             return;
         }
 
-        if (submitted != null)
-            _system.Remember(saved.Hash, submitted);
         OnSaved?.Invoke(_entry, saved);
         Close();
     }
