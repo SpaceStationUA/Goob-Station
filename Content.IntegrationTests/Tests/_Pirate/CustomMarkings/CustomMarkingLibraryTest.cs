@@ -570,7 +570,8 @@ public sealed class CustomMarkingLibraryTest
         try
         {
             var art = new CustomMarkingArt();
-            art.SetPixel(0, CustomMarkingArt.South, 16, 16, new Rgba32(79, 113, 211, 255));
+            // Each case blocks its art; the pooled database keeps those moderation records.
+            art.SetPixel(0, CustomMarkingArt.South, 16, 16, new Rgba32((byte) (pendingRead ? 80 : 79), 113, 211, 255));
             await client.WaitPost(() =>
             {
                 clientSystem.SaveAnswered += OnAnswer;

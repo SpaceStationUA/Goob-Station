@@ -69,7 +69,7 @@ public sealed class CustomMarkingHairTest
             }
 
             Assert.That(sprite[Marking()].Visible, Is.True, "a gas mask leaves hair-placement artwork visible");
-            Assert.That(inventory.TryUnequip(doll, "mask", force: true), Is.True);
+            Assert.That(inventory.TryUnequip(doll, "mask", force: true, reparent: false), Is.True);
             Assert.That(sprites.LayerMapTryGet((doll, sprite), HumanoidVisualLayers.Hair, out hair, false), Is.True);
             Assert.That(Marking(), Is.GreaterThan(hair), "taking off the mask restores the normal depth automatically");
             entMan.DeleteEntity(mask);
