@@ -263,6 +263,17 @@ public sealed partial class CustomMarkingSystem
         return limbs.Count == 0 ? null : SectionsFor(limbs, FindExtras(sprite), GetLayerIndex(sprite, placement), out _);
     }
 
+    /// <summary>The same body-clipped, animated state that this marking would use when worn.</summary>
+    public RSI.State? GetPreviewState(Entity<SpriteComponent?> sprite, CustomMarking marking)
+    {
+        if (!Resolve(sprite.Owner, ref sprite.Comp, false)
+            || !TryGetArt(marking.Hash, out var whole)
+            || ArtFor(sprite, marking, whole, GetLayerIndex(sprite, marking.Placement))?.Rsi is not { } shown)
+            return null;
+
+        return shown.TryGetState(CustomMarkingResources.State, out var state) ? state : null;
+    }
+
     /// <summary>
     /// What to draw for a marking on this body: the drawing without whatever lies out of the body's reach or on a
     /// hidden body part. That is the whole drawing when nothing does. Null for a sprite with no body parts, and

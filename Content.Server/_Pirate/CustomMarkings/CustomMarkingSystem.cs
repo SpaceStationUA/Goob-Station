@@ -218,7 +218,9 @@ public sealed partial class CustomMarkingSystem : EntitySystem
         // Awaits resume on the game thread, so the cache is only touched there.
         if (result.Entry != null && hash != null)
         {
-            _art[hash] = Task.FromResult(stored);
+            // Moderation may have committed while this save awaited its game-thread continuation.
+            // The next request must read the canonical row and its current moderation status.
+            _art.Remove(hash);
             _adminLog.Add(LogType.Identity, LogImpact.Low,
                 $"{session:player} saved custom marking \"{name}\" with art {hash}");
         }

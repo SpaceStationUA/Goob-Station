@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
+using Content.Client.Clothing;
+using Content.Client.Inventory;
 using Content.Shared._Pirate.CustomMarkings;
+using Content.Shared.Clothing;
 using Content.Shared.Humanoid;
+using Content.Shared.Inventory.Events;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -69,6 +73,9 @@ public sealed partial class CustomMarkingSystem : EntitySystem
 
         SubscribeNetworkEvent<CustomMarkingArtEvent>(OnArt);
         SubscribeLocalEvent<HumanoidAppearanceComponent, HumanoidMarkingsAppliedEvent>(OnMarkingsApplied);
+        SubscribeLocalEvent<EquipmentVisualsUpdatedEvent>(OnEquipmentVisualsUpdated);
+        SubscribeLocalEvent<HumanoidAppearanceComponent, DidUnequipEvent>(
+            (uid, humanoid, _) => Refresh((uid, humanoid)), after: [typeof(ClientClothingSystem)]);
         Subs.CVar(_cfg, CustomMarkingCVars.EraseBody, _ => RefreshAll());
 
         InitializeLibrary();
@@ -316,7 +323,15 @@ public sealed partial class CustomMarkingSystem : EntitySystem
         switch (placement)
         {
             case CustomMarkingPlacement.Behind:
-                return _sprite.LayerMapTryGet(sprite, HumanoidVisualLayers.Chest, out index, false) ? index : 0;
+                // Pirate: Groin precedes Chest; other species may order their body parts differently too.
+                int? firstBody = null;
+                foreach (var limb in Limbs)
+                {
+                    if (_sprite.LayerMapTryGet(sprite, limb, out index, false) && (firstBody == null || index < firstBody))
+                        firstBody = index;
+                }
+
+                return firstBody ?? 0;
             case CustomMarkingPlacement.Skin:
                 // Pirate: our underwear has two layers instead of Wolfgate's Genital layer.
                 int? underClothes = null;
@@ -351,6 +366,9 @@ public sealed partial class CustomMarkingSystem : EntitySystem
     /// </summary>
     private int? GetIndexOverHead(Entity<SpriteComponent?> sprite)
     {
+        if (!Resolve(sprite.Owner, ref sprite.Comp, false))
+            return null;
+
         var top = -1;
         foreach (var layer in HeadLayers)
         {
@@ -370,10 +388,37 @@ public sealed partial class CustomMarkingSystem : EntitySystem
 
         foreach (var slot in OverHeadSlots)
         {
-            if (_sprite.LayerMapTryGet(sprite, slot, out var index, false) && index > top && (over == null || index < over))
-                over = index;
+            if (_sprite.LayerMapTryGet(sprite, slot, out var index, false))
+                Consider(index);
+
+            // Clothing uses dynamic layers beside its anchor, including mask items mapped to maskalt.
+            if (!TryComp<InventorySlotsComponent>(sprite.Owner, out var inventory)
+                || !inventory.VisualLayerKeys.TryGetValue(slot, out var keys))
+                continue;
+
+            foreach (var key in keys)
+            {
+                if (_sprite.LayerMapTryGet(sprite, key, out index, false))
+                    Consider(index);
+            }
         }
 
         return over;
+
+        void Consider(int index)
+        {
+            var layer = sprite.Comp[index];
+            // Pirate: mask/maskalt can precede HeadTop, and maskalt can even precede Hair.
+            // Visible headgear takes priority; empty earlier anchors must not bury art under the hair.
+            var drawn = layer.Visible && (layer.Texture != null || layer.ActualRsi?.TryGetState(layer.RsiState, out _) == true);
+            if ((index > top || drawn) && (over == null || index < over))
+                over = index;
+        }
+    }
+
+    private void OnEquipmentVisualsUpdated(EquipmentVisualsUpdatedEvent args)
+    {
+        if (TryComp<HumanoidAppearanceComponent>(args.Equipee, out var humanoid))
+            Refresh((args.Equipee, humanoid));
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Server._Pirate.CustomMarkings;
 using Content.Shared._Pirate.CustomMarkings;
 using Microsoft.EntityFrameworkCore;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Database;
 
@@ -14,6 +15,15 @@ public abstract partial class ServerDbBase
 {
     /// <summary>How many art rows one statement of the cleanup names.</summary>
     private const int CustomMarkingPurgeBatch = 200;
+
+    // Profile references must stay unchanged from the cleanup's snapshot through its final deletion.
+    private readonly SemaphoreSlim _customMarkingProfiles = new(1, 1);
+
+    private async ValueTask<LockUtility.SemaphoreGuard> LockCustomMarkingProfilesAsync(CancellationToken cancel = default)
+    {
+        await _customMarkingProfiles.WaitAsync(cancel);
+        return new LockUtility.SemaphoreGuard(_customMarkingProfiles);
+    }
 
     public async Task<List<PirateCustomMarking>> GetCustomMarkingsAsync(Guid userId, CancellationToken cancel = default)
     {
@@ -146,6 +156,7 @@ public abstract partial class ServerDbBase
 
     public async Task<(int Found, int Deleted)> PurgeUnusedCustomMarkingArtAsync(TimeSpan keep, CancellationToken cancel = default)
     {
+        using var profiles = await LockCustomMarkingProfilesAsync(cancel);
         await using var db = await GetDb(cancel);
         var ctx = db.DbContext;
         var now = DateTime.UtcNow;

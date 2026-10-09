@@ -279,6 +279,8 @@ public sealed partial class CustomMarkingLibraryWindow : CustomMarkingWindow
     {
         RSI.State? state = null;
         rsi?.TryGetState(CustomMarkingResources.State, out state);
+        if (rsi != null && _doll is { } doll)
+            state = _system.GetPreviewState((doll, null), new CustomMarking(hash, placement));
 
         byte[]? erase = null;
         if (rsi != null && _system.EraseEnabled)

@@ -10,12 +10,14 @@ using Content.Client._Pirate.CustomMarkings.UI;
 using Content.IntegrationTests.Pair;
 using Content.Shared._Pirate.CustomMarkings;
 using Content.Shared.Preferences;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.IntegrationTests.Tests._Pirate.CustomMarkings;
@@ -213,6 +215,7 @@ public sealed class CustomMarkingWindowsTest
 
         var art = new CustomMarkingArt();
         art.SetPixel(0, CustomMarkingArt.South, 16, 12, new Rgba32(10, 200, 10, 255));
+        art.SetPixel(0, CustomMarkingArt.South, 0, 0, new Rgba32(10, 200, 10, 255));
 
         CustomMarkingLibraryWindow library = null;
         CustomMarkingEditorWindow editor = null;
@@ -290,6 +293,16 @@ public sealed class CustomMarkingWindowsTest
 
             // The library shows each marking from its finished sprite, so an animated one plays there.
             Assert.That(Descendants(library).OfType<CustomMarkingCanvas>().Select(canvas => canvas.ArtState), Has.All.Not.Null);
+            var thumbnail = Descendants(library).OfType<CustomMarkingCanvas>().First();
+            var resources = CustomMarkingResources.For(client.ResolveDependency<IResourceCache>());
+            Assert.That(resources.TryGetPng(thumbnail.ArtState!.RSI.Path.FilenameWithoutExtension, out var clippedPng), Is.True);
+            var clipped = CustomMarkingPng.Read(clippedPng)!;
+            Assert.Multiple(() =>
+            {
+                Assert.That(clipped.GetPixel(0, CustomMarkingArt.South, 0, 0).A, Is.Zero, "a library thumbnail cuts out-of-reach imported pixels");
+                Assert.That(clipped.GetPixel(0, CustomMarkingArt.South, 16, 12).A, Is.EqualTo(255), "art on the preview body stays");
+                Assert.That(art.GetPixel(0, CustomMarkingArt.South, 0, 0).A, Is.EqualTo(255), "clipping does not modify the editable original");
+            });
 
             // A facing tile is picked by clicking anywhere on it, so its preview must not take the click itself.
             var canvases = Descendants(editor).OfType<CustomMarkingCanvas>().ToList();

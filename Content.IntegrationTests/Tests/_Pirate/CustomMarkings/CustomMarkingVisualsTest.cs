@@ -87,8 +87,9 @@ public sealed class CustomMarkingVisualsTest
         await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task DollWearsProfileMarkingsTest()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task DollWearsProfileMarkingsTest(bool preview)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var client = pair.Client;
@@ -109,7 +110,7 @@ public sealed class CustomMarkingVisualsTest
                 new(Hash, CustomMarkingPlacement.Hair),
             });
             var species = client.ResolveDependency<IPrototypeManager>().Index<SpeciesPrototype>(profile.Species);
-            var doll = entMan.SpawnEntity(species.DollPrototype, MapCoordinates.Nullspace);
+            var doll = entMan.SpawnEntity(preview ? species.DollPrototype : "MobHuman", MapCoordinates.Nullspace);
             entMan.System<HumanoidAppearanceSystem>().LoadProfile(doll, profile);
 
             var sprite = new Entity<SpriteComponent>(doll, entMan.GetComponent<SpriteComponent>(doll));
@@ -117,6 +118,7 @@ public sealed class CustomMarkingVisualsTest
             Assert.Multiple(() =>
             {
                 Assert.That(at[0], Is.LessThan(Index(HumanoidVisualLayers.Chest)), "behind the body");
+                Assert.That(at[0], Is.LessThan(Index(HumanoidVisualLayers.Groin)), "behind Pirate's earliest body layer");
                 Assert.That(at[1], Is.GreaterThan(Index(HumanoidVisualLayers.LLeg)), "over every body part");
                 Assert.That(at[2], Is.EqualTo(at[1] + 1), "a later marking draws over an earlier one");
                 Assert.That(at[2] + 1, Is.EqualTo(Math.Min(Index(HumanoidVisualLayers.UndergarmentTop), Index(HumanoidVisualLayers.UndergarmentBottom))), "under underwear and clothing");

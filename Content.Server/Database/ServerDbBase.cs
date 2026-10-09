@@ -92,6 +92,7 @@ namespace Content.Server.Database
 
         public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
         {
+            using var customMarkings = await LockCustomMarkingProfilesAsync(); // Pirate: coordinate profile references with art cleanup.
             await using var db = await GetDb();
 
             if (profile is null)
@@ -149,6 +150,7 @@ namespace Content.Server.Database
 
         public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
         {
+            using var customMarkings = await LockCustomMarkingProfilesAsync(); // Pirate: initial/imported profiles also reference art.
             await using var db = await GetDb();
 
             var profile = ConvertProfiles((HumanoidCharacterProfile) defaultProfile, 0);

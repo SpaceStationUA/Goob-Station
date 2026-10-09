@@ -3,7 +3,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
+using System.Threading;
 using Content.IntegrationTests.Pair;
 using Content.Server.Database;
 using Content.Shared._Pirate.CustomMarkings;
@@ -11,6 +13,8 @@ using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Moq;
 using Robust.Client.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -475,6 +479,119 @@ public sealed class CustomMarkingLibraryTest
         await pair.CleanReturnAsync();
     }
 
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task CleanupWaitsForProfileSaveTest(bool firstProfile)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var pause = new ProfileSavePause();
+        // Allow independent contexts, as PostgreSQL does, while the profile write is deliberately paused.
+        var db = GetDb(server, pause, concurrent: true);
+        var user = new NetUserId(Guid.NewGuid());
+        var hash = FakeHash('6');
+        HumanoidCharacterProfile bare = default!;
+        await server.WaitPost(() => bare = HumanoidCharacterProfile.DefaultWithSpecies());
+        if (!firstProfile)
+            await db.InitPrefsAsync(user, bare);
+
+        var entry = await db.SaveCustomMarkingAsync(user, 0, "Orphan", 0, hash, new StoredArt(new byte[] { 1 }, null, null), 24);
+        Assert.That(entry.Error, Is.Null);
+        Assert.That(await db.DeleteCustomMarkingAsync(user, entry.Entry!.Id), Is.True);
+        Assert.That(await db.PurgeUnusedCustomMarkingArtAsync(TimeSpan.Zero), Is.EqualTo((1, 0)));
+
+        var worn = bare.WithCustomMarkings(new List<CustomMarking> { new(hash, CustomMarkingPlacement.Skin) });
+        pause.HashToPause = hash;
+        Task save = firstProfile ? db.InitPrefsAsync(user, worn) : db.SaveCharacterSlotAsync(user, worn, 0);
+        await pause.Started.Task.WaitAsync(TimeSpan.FromSeconds(10));
+        var cleanup = db.PurgeUnusedCustomMarkingArtAsync(TimeSpan.Zero);
+        try
+        {
+            Assert.That(await Task.WhenAny(cleanup, Task.Delay(100)), Is.Not.SameAs(cleanup),
+                "cleanup cannot snapshot references while a character save/import is in progress");
+        }
+        finally
+        {
+            pause.Release.TrySetResult();
+            await save;
+            await cleanup;
+        }
+
+        Assert.That(await cleanup, Is.EqualTo((0, 0)));
+        Assert.That(await db.GetCustomMarkingArtAsync(hash), Is.Not.Null, "the newly saved character keeps its artwork");
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task SaveCompletionCannotRestoreBlockedArtTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var server = pair.Server;
+        var client = pair.Client;
+        var system = server.System<ServerCustomMarkingSystem>();
+        var clientSystem = client.System<ClientCustomMarkingSystem>();
+        var original = server.ResolveDependency<IServerDbManager>();
+        var databaseSaved = new TaskCompletionSource<Content.Server._Pirate.CustomMarkings.CustomMarkingSaveResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var delayed = new Mock<IServerDbManager>();
+        delayed.Setup(db => db.SaveCustomMarkingAsync(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(),
+                It.IsAny<string>(), It.IsAny<StoredArt>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Returns(async (Guid user, int id, string name, int placement, string hash, StoredArt art, int limit, int daily, CancellationToken cancel) =>
+            {
+                var result = await original.SaveCustomMarkingAsync(user, id, name, placement, hash, art, limit, daily, cancel);
+                databaseSaved.TrySetResult(result);
+                await release.Task;
+                return result;
+            });
+        delayed.Setup(db => db.GetCustomMarkingsAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .Returns((Guid user, CancellationToken cancel) => original.GetCustomMarkingsAsync(user, cancel));
+        delayed.Setup(db => db.GetCustomMarkingArtAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Returns((string hash, CancellationToken cancel) => original.GetCustomMarkingArtAsync(hash, cancel));
+        delayed.Setup(db => db.SetCustomMarkingArtBlockedAsync(It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+            .Returns((string hash, bool blocked, CancellationToken cancel) => original.SetCustomMarkingArtBlockedAsync(hash, blocked, cancel));
+
+        var database = typeof(ServerCustomMarkingSystem).GetField("_db", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        CustomMarkingSaveResultEvent? answer = null;
+        void OnAnswer(CustomMarkingSaveResultEvent result) => answer = result;
+        await server.WaitPost(() => database.SetValue(system, delayed.Object));
+        try
+        {
+            var art = new CustomMarkingArt();
+            art.SetPixel(0, CustomMarkingArt.South, 16, 16, new Rgba32(79, 113, 211, 255));
+            await client.WaitPost(() =>
+            {
+                clientSystem.SaveAnswered += OnAnswer;
+                clientSystem.Save(0, "Moderated while saving", CustomMarkingPlacement.Skin, art);
+            });
+            await WaitFor(pair, () => databaseSaved.Task.IsCompleted, "the database to accept the upload");
+            var saved = await databaseSaved.Task;
+            Assert.That(saved.Error, Is.Null);
+            var hash = saved.Entry!.ArtHash;
+            Task<bool> block = default!;
+            await server.WaitPost(() => block = system.SetBlocked(hash, true, "the test"));
+            await WaitFor(pair, () => block.IsCompleted, "moderation to commit before save completion");
+            Assert.That(await block, Is.True);
+
+            release.TrySetResult();
+            await WaitFor(pair, () => answer != null, "the delayed save response");
+            await pair.RunTicksSync(30);
+            await client.WaitAssertion(() =>
+            {
+                Assert.That(answer!.Error, Is.Null);
+                Assert.That(clientSystem.TryGetArt(hash, out _), Is.False,
+                    "the upload continuation must not serve pixels blocked before it resumed");
+            });
+        }
+        finally
+        {
+            release.TrySetResult();
+            await server.WaitPost(() => database.SetValue(system, original));
+            await client.WaitPost(() => clientSystem.SaveAnswered -= OnAnswer);
+        }
+
+        await pair.CleanReturnAsync();
+    }
+
     /// <summary>
     /// An animated marking that erases some of the body makes the whole trip: its frames, their times and its mask
     /// are saved, stored, fetched by a client and put on a body.
@@ -648,7 +765,28 @@ public sealed class CustomMarkingLibraryTest
         Assert.That(condition(), Is.True, $"Timed out waiting for {what}.");
     }
 
-    private static ServerDbSqlite GetDb(RobustIntegrationTest.ServerIntegrationInstance server)
+    private sealed class ProfileSavePause : SaveChangesInterceptor
+    {
+        public string? HashToPause;
+        public readonly TaskCompletionSource Started = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        public readonly TaskCompletionSource Release = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(
+            DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+        {
+            if (HashToPause != null && eventData.Context!.ChangeTracker.Entries<Profile>()
+                    .Any(entry => entry.Entity.CustomMarkings.Contains(HashToPause, StringComparison.Ordinal)))
+            {
+                Started.TrySetResult();
+                await Release.Task.WaitAsync(cancellationToken);
+            }
+
+            return result;
+        }
+    }
+
+    private static ServerDbSqlite GetDb(RobustIntegrationTest.ServerIntegrationInstance server,
+        SaveChangesInterceptor? interceptor = null, bool concurrent = false)
     {
         var cfg = server.ResolveDependency<IConfigurationManager>();
         var opsLog = server.ResolveDependency<ILogManager>().GetSawmill("db.ops");
@@ -656,6 +794,8 @@ public sealed class CustomMarkingLibraryTest
         var conn = new SqliteConnection("Data Source=:memory:");
         conn.Open();
         builder.UseSqlite(conn);
-        return new ServerDbSqlite(() => builder.Options, true, cfg, true, opsLog);
+        if (interceptor != null)
+            builder.AddInterceptors(interceptor);
+        return new ServerDbSqlite(() => builder.Options, !concurrent, cfg, !concurrent, opsLog);
     }
 }
