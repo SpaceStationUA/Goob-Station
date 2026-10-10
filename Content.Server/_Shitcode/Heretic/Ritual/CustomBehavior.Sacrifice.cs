@@ -22,7 +22,7 @@ using Content.Shared.Heretic;
 using Content.Server.Heretic.EntitySystems;
 using Content.Shared.Gibbing.Events;
 using Content.Shared.Silicons.Borgs.Components;
-using Content.Goobstation.Shared.Teleportation.Systems; // Pirate
+using Content.Server._Pirate.Teleportation; // Pirate
 using Robust.Shared.Random; // Pirate
 using Robust.Shared.GameObjects; // Pirate
 using Content.Shared._Shitmed.Targeting; // Pirate
@@ -67,7 +67,7 @@ namespace Content.Server.Heretic.Ritual;
     protected BodySystem _body = default!;
     protected EntityLookupSystem _lookup = default!;
     protected DamageableSystem _damageable = default!; // Pirate
-    protected SharedRandomTeleportSystem _randomTeleport = default!; // Pirate
+    protected RandomTeleportSystemPirate _randomTeleport = default!; // Pirate
     protected MobStateSystem _mobState = default!; // Pirate
     [Dependency] protected IRobustRandom _random = default!; // Pirate
     [Dependency] protected IPrototypeManager _proto = default!;
@@ -84,7 +84,7 @@ namespace Content.Server.Heretic.Ritual;
         _body = args.EntityManager.System<BodySystem>();
         _lookup = args.EntityManager.System<EntityLookupSystem>();
         _damageable = args.EntityManager.System<DamageableSystem>(); // Pirate
-        _randomTeleport = args.EntityManager.System<SharedRandomTeleportSystem>(); // Pirate
+        _randomTeleport = args.EntityManager.System<RandomTeleportSystemPirate>(); // Pirate
         _proto = IoCManager.Resolve<IPrototypeManager>();
         _log = IoCManager.Resolve<ILogManager>();
         _random = IoCManager.Resolve<IRobustRandom>(); // Pirate
