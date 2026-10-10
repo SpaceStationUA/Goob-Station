@@ -65,8 +65,13 @@ public sealed partial class HumanoidProfileEditor
         UpdateCustomMarkingsButton();
         // Whichever of the two the change came from, the other shows it.
         _customMarkingList?.SetWorn(worn);
-        _customMarkingWindow?.SetWorn(worn);
         ReloadProfilePreview();
+    }
+
+    private void RefreshCustomMarkingsPreview()
+    {
+        if (Profile != null)
+            _customMarkingWindow?.SetWorn(Profile.CustomMarkings);
     }
 
     private void CloseCustomMarkings()

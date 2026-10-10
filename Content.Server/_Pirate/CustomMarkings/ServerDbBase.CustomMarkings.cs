@@ -19,6 +19,10 @@ public abstract partial class ServerDbBase
     // Profile references must stay unchanged from the cleanup's snapshot through its final deletion.
     private readonly SemaphoreSlim _customMarkingProfiles = new(1, 1);
 
+    // Bounded gates serialize each player's quota checks through commit. Hash collisions only add waiting.
+    private readonly SemaphoreSlim[] _customMarkingSaveLocks = Enumerable.Range(0, 64)
+        .Select(_ => new SemaphoreSlim(1, 1)).ToArray();
+
     private async ValueTask<LockUtility.SemaphoreGuard> LockCustomMarkingProfilesAsync(CancellationToken cancel = default)
     {
         await _customMarkingProfiles.WaitAsync(cancel);
@@ -46,6 +50,9 @@ public abstract partial class ServerDbBase
         int dailyArtLimit = 0,
         CancellationToken cancel = default)
     {
+        var gate = _customMarkingSaveLocks[(int) ((uint) userId.GetHashCode() % _customMarkingSaveLocks.Length)];
+        await gate.WaitAsync(cancel);
+        using var saveLock = new LockUtility.SemaphoreGuard(gate);
         await using var db = await GetDb(cancel);
         var ctx = db.DbContext;
 

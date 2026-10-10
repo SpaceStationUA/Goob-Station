@@ -5,19 +5,29 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
+using Content.Client.Lobby;
+using Content.Client.Lobby.UI;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Client._Pirate.CustomMarkings;
 using Content.Client._Pirate.CustomMarkings.UI;
 using Content.IntegrationTests.Pair;
 using Content.Shared._Pirate.CustomMarkings;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
+using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Input;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -29,6 +39,73 @@ namespace Content.IntegrationTests.Tests._Pirate.CustomMarkings;
 [TestOf(typeof(CustomMarkingEditorWindow))]
 public sealed class CustomMarkingWindowsTest
 {
+    [Test]
+    public async Task OrdinaryAppearanceChangesRefreshLibraryTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var client = pair.Client;
+        var system = client.System<CustomMarkingSystem>();
+        var art = new CustomMarkingArt();
+        art.SetPixel(0, CustomMarkingArt.South, 16, 12, new Rgba32(20, 200, 40, 255));
+        await client.WaitPost(() => system.Save(0, "Appearance", CustomMarkingPlacement.Skin, art));
+        await pair.RunTicksSync(30);
+
+        await client.WaitAssertion(() =>
+        {
+            var creator = new HumanoidProfileEditor(
+                client.ResolveDependency<IClientPreferencesManager>(),
+                client.ResolveDependency<IConfigurationManager>(),
+                client.EntMan,
+                client.ResolveDependency<IFileDialogManager>(),
+                client.ResolveDependency<ILogManager>(),
+                client.ResolveDependency<IPlayerManager>(),
+                client.ResolveDependency<IPrototypeManager>(),
+                client.ResolveDependency<IResourceManager>(),
+                client.ResolveDependency<JobRequirementsManager>(),
+                client.ResolveDependency<MarkingManager>());
+            try
+            {
+                var type = typeof(HumanoidProfileEditor);
+                var reload = type.GetMethod("ReloadPreview", BindingFlags.Instance | BindingFlags.NonPublic)!;
+                var slim = type.GetMethod("ReloadProfilePreview", BindingFlags.Instance | BindingFlags.NonPublic)!;
+                creator.Profile = HumanoidCharacterProfile.DefaultWithSpecies("Human");
+                reload.Invoke(creator, null);
+                type.GetMethod("OpenCustomMarkings", BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(creator, null);
+                var library = (CustomMarkingLibraryWindow) type.GetField("_customMarkingWindow", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .GetValue(creator)!;
+                var previousBody = Descendants(library).OfType<CustomMarkingCanvas>().First().Body!.Value;
+
+                creator.Profile = creator.Profile.WithSpecies("Reptilian");
+                reload.Invoke(creator, null);
+                var afterSpecies = Descendants(library).OfType<CustomMarkingCanvas>().First().Body!.Value;
+                Assert.Multiple(() =>
+                {
+                    Assert.That(library.IsOpen, Is.True);
+                    Assert.That(client.EntMan.GetComponent<HumanoidAppearanceComponent>(afterSpecies).Species,
+                        Is.EqualTo(creator.Profile.Species), "a species edit updates the open library without toggling a custom marking");
+                    Assert.That(client.EntMan.EntityExists(previousBody), Is.False);
+                });
+
+                creator.Profile = creator.Profile.WithCharacterAppearance(creator.Profile.Appearance.WithSkinColor(new Color(0.3f, 0.6f, 0.4f)));
+                slim.Invoke(creator, null);
+                var afterSkin = Descendants(library).OfType<CustomMarkingCanvas>().First().Body!.Value;
+                Assert.Multiple(() =>
+                {
+                    Assert.That(client.EntMan.GetComponent<HumanoidAppearanceComponent>(afterSkin).SkinColor,
+                        Is.EqualTo(creator.Profile.Appearance.SkinColor), "the slim appearance refresh also updates library thumbnails");
+                    Assert.That(client.EntMan.EntityExists(afterSpecies), Is.False);
+                });
+            }
+            finally
+            {
+                client.EntMan.DeleteEntity(creator.PreviewDummy);
+                creator.Dispose();
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     [TestCase(true)]
     [TestCase(false)]
     public async Task SaveCachesSubmittedArtTest(bool eraseEnabled)

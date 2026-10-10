@@ -2014,6 +2014,7 @@ namespace Content.Client.Lobby.UI
         /// </remarks>
         private void ReloadPreview()
         {
+            RefreshCustomMarkingsPreview(); // Pirate: keep an open marking library in sync with appearance edits.
             _entManager.DeleteEntity(PreviewDummy);
             PreviewDummy = EntityUid.Invalid;
 
@@ -2107,6 +2108,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         private void ReloadProfilePreview()
         {
+            RefreshCustomMarkingsPreview(); // Pirate: skin, hair and ordinary markings also affect library previews.
             if (Profile == null || !_entManager.EntityExists(PreviewDummy))
                 return;
 

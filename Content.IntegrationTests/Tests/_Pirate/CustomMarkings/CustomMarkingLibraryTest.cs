@@ -401,6 +401,45 @@ public sealed class CustomMarkingLibraryTest
     /// Art nothing uses is found, kept a while and then deleted. What a library holds or a saved character wears
     /// stays, and so does what an admin blocked.
     /// </summary>
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ConcurrentSavesRespectQuotaTest(bool dailyQuota)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var pause = new MarkingSavePause();
+        var db = GetDb(pair.Server, pause, concurrent: true);
+        var user = Guid.NewGuid();
+        var art = new StoredArt(new byte[] { 1 }, null, null);
+        var limit = dailyQuota ? 24 : 2;
+        var daily = dailyQuota ? 2 : 0;
+        Assert.That((await db.SaveCustomMarkingAsync(user, 0, "First", 0, FakeHash('7'), art, limit, daily)).Error, Is.Null);
+
+        pause.HashToPause = FakeHash('8');
+        var first = db.SaveCustomMarkingAsync(user, 0, "Second", 0, pause.HashToPause, art, limit, daily);
+        await pause.Started.Task.WaitAsync(TimeSpan.FromSeconds(10));
+        var second = db.SaveCustomMarkingAsync(user, 0, "Third", 0, FakeHash('9'), art, limit, daily);
+        try
+        {
+            Assert.That(await Task.WhenAny(second, Task.Delay(100)), Is.Not.SameAs(second),
+                "the next save must wait until this player's preceding save commits");
+        }
+        finally
+        {
+            pause.Release.TrySetResult();
+            await Task.WhenAll(first, second);
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(first.Result.Error, Is.Null);
+            Assert.That(second.Result.Error, Is.EqualTo(dailyQuota ? "wf-custom-marking-error-daily" : "wf-custom-marking-error-full"));
+        });
+        Assert.That(await db.GetCustomMarkingsAsync(user), Has.Count.EqualTo(2));
+        Assert.That(await db.GetCustomMarkingArtAsync(FakeHash('9')), Is.Null, "a rejected save does not store its new art");
+
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task UnusedArtCleanupTest()
     {
@@ -784,6 +823,26 @@ public sealed class CustomMarkingLibraryTest
         }
 
         Assert.That(condition(), Is.True, $"Timed out waiting for {what}.");
+    }
+
+    private sealed class MarkingSavePause : SaveChangesInterceptor
+    {
+        public string? HashToPause;
+        public readonly TaskCompletionSource Started = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        public readonly TaskCompletionSource Release = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(
+            DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+        {
+            if (HashToPause != null && eventData.Context!.ChangeTracker.Entries<PirateCustomMarking>()
+                    .Any(entry => entry.Entity.ArtHash == HashToPause))
+            {
+                Started.TrySetResult();
+                await Release.Task.WaitAsync(cancellationToken);
+            }
+
+            return result;
+        }
     }
 
     private sealed class ProfileSavePause : SaveChangesInterceptor

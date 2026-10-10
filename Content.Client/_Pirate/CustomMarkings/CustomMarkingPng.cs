@@ -62,7 +62,8 @@ public static class CustomMarkingPng
 
             var type = ReadUInt32(png, offset + 4);
             // Animation is represented by sheet rows. Reject APNG to bound decoded frame allocations too.
-            if (type == 0x6163544C) // acTL
+            // Pirate: ImageSharp also reads frame chunks when the animation-control chunk is absent.
+            if (type is 0x6163544C or 0x6663544C or 0x66644154) // acTL, fcTL, fdAT
                 return false;
 
             if (type == 0x49454E44) // IEND

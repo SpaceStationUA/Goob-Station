@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System;
+using System.Buffers.Binary;
 using System.IO;
+using System.Text;
 using Content.Client._Pirate.CustomMarkings;
 using Content.Shared._Pirate.CustomMarkings;
 using NUnit.Framework;
@@ -273,6 +276,43 @@ public sealed class CustomMarkingArtTest
             Assert.That(CustomMarkingPng.Read(new byte[CustomMarkingPng.MaxFileBytes + 1]), Is.Null, "too many bytes");
             Assert.That(CustomMarkingPng.Read(Png(animated)), Is.Null, "animation belongs in bounded sheet rows, not APNG frames");
         });
+    }
+
+    [TestCase("acTL")]
+    [TestCase("fcTL")]
+    [TestCase("fdAT")]
+    public void ImportRejectsStandaloneAnimationChunksTest(string keepChunk)
+    {
+        using var animated = new Image<Rgba32>(Frame, Frame);
+        animated[4, 5] = Red;
+        animated.Frames.AddFrame(animated.Frames.RootFrame);
+        // Keep the encoded second frame full-size even when ImageSharp crops unchanged pixels.
+        animated.Frames[1][0, 0] = Blue;
+        animated.Frames[1][Frame - 1, Frame - 1] = Blue;
+        var original = Png(animated);
+        using var file = new MemoryStream();
+        file.Write(original, 0, 8);
+        var keptControl = false;
+        for (var offset = 8; offset < original.Length;)
+        {
+            var length = (int) BinaryPrimitives.ReadUInt32BigEndian(original.AsSpan(offset, 4)) + 12;
+            var type = Encoding.ASCII.GetString(original, offset + 4, 4);
+            var animation = type is "acTL" or "fcTL" or "fdAT";
+            if (!animation || type == keepChunk && !keptControl)
+            {
+                file.Write(original, offset, length);
+                if (type == "fcTL")
+                    keptControl = true;
+            }
+
+            offset += length;
+        }
+
+        var png = file.ToArray();
+        // The pinned decoder accepts these chunks independently; fdAT can even add a frame without acTL/fcTL.
+        using var decoded = Image.Load<Rgba32>(png);
+        Assert.That(decoded.Frames.Count, Is.EqualTo(keepChunk == "fdAT" ? 2 : 1));
+        Assert.That(CustomMarkingPng.Read(png), Is.Null, "reject animation chunks before allocating decoded frames");
     }
 
     /// <summary>An animated marking: frames are added as copies, drawn on apart, timed and taken out.</summary>
