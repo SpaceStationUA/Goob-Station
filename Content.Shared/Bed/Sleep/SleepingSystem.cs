@@ -143,7 +143,9 @@ public sealed partial class SleepingSystem : EntitySystem
         _stun.TryUnstun(ent.Owner);
         _stun.TryStanding(ent.Owner);
 
-        RemComp<SpamEmitSoundComponent>(ent);
+        // Pirate: replicated wake-up can arrive after the server already removed the sound.
+        if (TryComp<SpamEmitSoundComponent>(ent, out var wakeSound))
+            RemComp(ent.Owner, wakeSound);
     }
 
     private void OnCompInit(Entity<SleepingComponent> ent, ref ComponentInit args)
@@ -286,7 +288,9 @@ public sealed partial class SleepingSystem : EntitySystem
     {
         if (args.NewMobState == MobState.Dead || args.NewMobState == MobState.Critical) // Goobstation - xenobio
         {
-            RemComp<SpamEmitSoundComponent>(ent);
+            // Pirate: removing Sleeping also raises the wake-up event, so only remove a live sound component.
+            if (TryComp<SpamEmitSoundComponent>(ent, out var sleepSound))
+                RemComp(ent.Owner, sleepSound);
             RemComp<SleepingComponent>(ent);
             return;
         }

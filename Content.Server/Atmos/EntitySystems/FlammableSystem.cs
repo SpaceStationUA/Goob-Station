@@ -16,6 +16,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Repairable; // Pirate
 using Content.Shared.Temperature;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
@@ -35,7 +36,6 @@ using Content.Shared._Shitmed.Targeting;
 using Robust.Shared.Timing;
 using Content.Server._Goobstation.Wizard.Systems;
 using Content.Shared.Body.Systems;
-using Microsoft.Extensions.Configuration;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -72,7 +72,8 @@ namespace Content.Server.Atmos.EntitySystems
             _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
             SubscribeLocalEvent<FlammableComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<FlammableComponent, InteractUsingEvent>(OnInteractUsing);
+            // Pirate: lit welders should repair damaged IPCs before generic ignition handles the interaction.
+            SubscribeLocalEvent<FlammableComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(RepairableSystem) });
             SubscribeLocalEvent<FlammableComponent, StartCollideEvent>(OnCollide);
             SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHot);
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);

@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared._Shitmed.Body;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
@@ -11,7 +12,6 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Medical.Healing;
 using Content.Shared.Repairable;
-using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests._Pirate.Repairable;
 
@@ -74,14 +74,12 @@ public sealed class RepairableIntegrationTest : InteractionTest
 
     private async Task WeldTarget()
     {
-        var welder = await PlaceInHands(Weld);
+        await InteractUsing(Weld, awaitDoAfters: false);
         await Server.WaitAssertion(() =>
         {
-            var target = STarget!.Value;
-            Assert.That(InteractSys.InRangeAndAccessible(SPlayer, target), Is.True);
-            var coordinates = SEntMan.GetComponent<TransformComponent>(target).Coordinates;
-            Assert.That(InteractSys.InteractUsing(SPlayer, ToServer(welder), target, coordinates), Is.True);
             Assert.That(ActiveDoAfters.Any(), Is.True, "Welding must start a repair do-after.");
+            if (SEntMan.TryGetComponent<FlammableComponent>(STarget!.Value, out var flammable))
+                Assert.That(flammable.OnFire, Is.False, "Welding must repair the IPC instead of igniting it.");
         });
         await AwaitDoAfters();
     }
