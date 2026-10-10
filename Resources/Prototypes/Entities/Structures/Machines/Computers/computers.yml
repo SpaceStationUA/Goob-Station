@@ -727,7 +727,6 @@
   - type: VoiceBroadcastConsole # Goobstation
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
-  - type: VoiceBroadcastConsole # Pirate: voice broadcasts are native to communication consoles.
   - type: DeviceNetwork
     deviceNetId: Wireless
     transmitFrequencyId: ShuttleTimer
