@@ -429,10 +429,12 @@ public sealed class CustomMarkingLibraryTest
             await Task.WhenAll(first, second);
         }
 
+        var firstResult = await first;
+        var secondResult = await second;
         Assert.Multiple(() =>
         {
-            Assert.That(first.Result.Error, Is.Null);
-            Assert.That(second.Result.Error, Is.EqualTo(dailyQuota ? "wf-custom-marking-error-daily" : "wf-custom-marking-error-full"));
+            Assert.That(firstResult.Error, Is.Null);
+            Assert.That(secondResult.Error, Is.EqualTo(dailyQuota ? "wf-custom-marking-error-daily" : "wf-custom-marking-error-full"));
         });
         Assert.That(await db.GetCustomMarkingsAsync(user), Has.Count.EqualTo(2));
         Assert.That(await db.GetCustomMarkingArtAsync(FakeHash('9')), Is.Null, "a rejected save does not store its new art");
