@@ -8,7 +8,7 @@
   special:
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipEducation
+    - SkillChipEducationPilot
     - SkillChipPistol
   access:
     - Maintenance

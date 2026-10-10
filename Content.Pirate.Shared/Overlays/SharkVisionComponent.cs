@@ -10,10 +10,8 @@ namespace Content.Pirate.Shared.Overlays;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SharkVisionComponent : SwitchableVisionOverlayComponent
 {
-    [DataField]
     public override EntProtoId? ToggleAction { get; set; } = "ActionSharkVisionPulse";
 
-    [DataField]
     public override Color Color { get; set; } = Color.FromHex("#fc0800ff");
 
     /// <summary>

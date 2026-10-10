@@ -35,6 +35,7 @@
   - TailoringKnowledge
   - MagicalLiteracyKnowledge
   - LiteracyKnowledge
+  - PilotingKnowledge
   - JanitorKnowledge
   - CookingKnowledge
   - DoorsKnowledge
@@ -422,3 +423,14 @@
   components:
   - type: Knowledge
     costs: null
+
+- type: entity
+  parent: BasePirateKnowledge
+  id: PilotingKnowledge
+  components:
+  - type: Knowledge
+    category: Intellectual
+    color: "#3fa7d6"
+    experienceCost: 20
+    timeBetweenExperience: 6.25
+    costs: null # Not buyable with character points.

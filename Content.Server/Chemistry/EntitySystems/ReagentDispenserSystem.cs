@@ -330,7 +330,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
 
             // Pirate: chem recipes - preserve exact dispense amount for pure sources (avoid 10 -> 9 rounding).
-            if (sol.Contents.Count == 1 && sol.Contents[0].Reagent.Prototype is { } onlyReagentId)
+            if (sol.Contents.Count == 1 && sol.Contents[0].Reagent.Prototype.Id is { } onlyReagentId)
             {
                 return PirateChemRecipeSharedHelper.TryAddRecordedReagent(onlyReagentId, transferredAmount, recordingRecipe);
             }
@@ -340,7 +340,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             foreach (var reagent in sol.Contents)
             {
-                if (reagent.Reagent.Prototype is not { } reagentId)
+                if (reagent.Reagent.Prototype.Id is not { } reagentId)
                     continue;
 
                 var recordedAmount = reagent.Quantity * transferRatio;

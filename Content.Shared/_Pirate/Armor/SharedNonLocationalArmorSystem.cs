@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared.Armor;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;

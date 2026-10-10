@@ -18,7 +18,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
   </Box>
   <Box>
     <GuideEntityEmbed Entity="MobHuman" Caption="Людина"/>
-    <GuideEntityEmbed Entity="MobIPCDummy" Caption="IPC"/>
+    <GuideEntityEmbed Entity="MobІПШDummy" Caption="ІПШ"/>
     <GuideEntityEmbed Entity="MobMoth" Caption="Людина-міль"/>
     <GuideEntityEmbed Entity="MobOni" Caption="Оні"/>
     <GuideEntityEmbed Entity="MobReptilian" Caption="Рептилоїд"/>
@@ -39,6 +39,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     <GuideEntityEmbed Entity="MobFelinid" Caption="Фелінід"/>
     <GuideEntityEmbed Entity="MobHydrakin" Caption="Гідракін"/>
     <GuideEntityEmbed Entity="MobThaven" Caption="Тавен"/>
+    <GuideEntityEmbed Entity="MobSynth" Caption="Синт"/> <!-- Goob - Afterlight -->
   </Box>
 
 </Document>

@@ -41,6 +41,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Damage;
 using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
+using Content.Shared._Pirate.Body.Chips; // Pirate: skill chips
 
 namespace Content.Server.Medical;
 
@@ -61,6 +62,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     [Dependency] private readonly TraumaSystem _trauma = default!; // Shitmed Change
     [Dependency] private readonly MobThresholdSystem _threshold = default!; // Goobstation
     [Dependency] private readonly ChatSystem _chat = default!; // Goobstation
+    [Dependency] private readonly OrganChipSystem _organChips = default!; // Pirate: skill chips
 
     public override void Initialize()
     {
@@ -303,12 +305,13 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         if (TryComp<TemperatureComponent>(target, out var temp))
             bodyTemperature = temp.CurrentTemperature;
 
-        var bloodAmount = _bloodstreamSystem.GetBloodLevel(target); // Goobstation
+        var bloodAmount = float.NaN; // Goobstation
         var unrevivable = false;
         var bloodLow = false; // Goobstation
 
         if (TryComp<BloodstreamComponent>(target, out var bloodstream)) // Goobstation - Don't resolve twice
         {
+            bloodAmount = _bloodstreamSystem.GetBloodLevel((target, bloodstream)); // Goob - Fix (bloodless targets)
             bloodLow = bloodAmount < bloodstream.BloodlossThreshold; // Goobstation
         }
 
@@ -321,7 +324,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
 
             string msg = Loc.GetString(analyzerComp.SpeakerMessage,
                 ("damage", damageableComp.TotalDamage.ToString()),
-                ("bloodLevel", $"{bloodAmount * 100:F1}")
+                ("bloodLevel", float.IsNaN(bloodAmount) ? "0" : $"{bloodAmount * 100:F1}") // Goob - Fix (bloodless targets)
             );
 
             _chat.TrySendInGameICMessage(healthAnalyzer, msg, InGameICChatType.Speak, hideChat: true);
@@ -371,7 +374,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
                     bleeding,
                     vitalDamage, // Goobstation
                     bodyStatus,
-                    organs
+                    organs,
+                    _organChips.GetScannedChips(target) // Pirate: skill chips
                 ));
                 break;
 
@@ -409,7 +413,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         {
             traumas.Add(GetNetEntity(woundable), FetchTraumaData(woundable, component));
             pain.Add(GetNetEntity(woundable), FetchPainData(woundable, component));
-            bleeding.Add(_bodySystem.GetTargetBodyPart(woundable), component.Bleeds > 0);
+            var part = _bodySystem.GetTargetBodyPart(woundable);
+            bleeding[part] = bleeding.GetValueOrDefault(part) || component.Bleeds > 0;
         }
     }
 
@@ -421,7 +426,10 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             return bleeding;
 
         foreach (var (woundable, component) in _woundSystem.GetAllWoundableChildren(rootPart))
-            bleeding.Add(_bodySystem.GetTargetBodyPart(woundable), component.Bleeds > 0);
+        {
+            var part = _bodySystem.GetTargetBodyPart(woundable);
+            bleeding[part] = bleeding.GetValueOrDefault(part) || component.Bleeds > 0;
+        }
 
         return bleeding;
     }

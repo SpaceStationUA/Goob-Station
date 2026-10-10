@@ -5,6 +5,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Numerics;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;

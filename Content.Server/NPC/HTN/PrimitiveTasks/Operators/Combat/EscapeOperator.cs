@@ -106,6 +106,10 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
             {
                 status = HTNOperatorStatus.Finished;
             }
+            else if (!_entManager.HasComponent<EntityStorageComponent>(target)) // Goob - Fix (non-storage containers)
+            {
+                status = HTNOperatorStatus.Failed;
+            }
             else
             {
                 if (TryOpenEntityStorage(owner, target))

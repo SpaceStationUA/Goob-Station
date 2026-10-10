@@ -17,7 +17,7 @@ using Robust.Shared.Prototypes; // Pirate - port EE contractors
 
 namespace Content.Server.Database
 {
-    public abstract class ServerDbContext : DbContext
+    public abstract partial class ServerDbContext : DbContext // Pirate: custom marking storage.
     {
         protected ServerDbContext(DbContextOptions options) : base(options)
         {
@@ -446,6 +446,7 @@ namespace Content.Server.Database
             //Pirate Changes End
             PersistentPhotoAlbumModelConfiguration.Configure(modelBuilder); //Pirate: cameras (photo persistence)
             PirateTempRankEligibilityModelConfiguration.Configure(modelBuilder); // Pirate: temporary ranks
+            ConfigureCustomMarkings(modelBuilder); // Pirate
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)

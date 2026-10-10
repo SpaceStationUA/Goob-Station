@@ -7,7 +7,6 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Client.WebView;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -80,17 +79,6 @@ public sealed class WebArcadeWindow : DefaultWindow, IDisposable
     {
         Title = "Ігровий автомат";
         SetSize = new Vector2i(560, 760);
-
-        // CEF refuses to instantiate a WebAssembly module unless the resource
-        // is served as application/wasm (the engine's MIME table has no wasm
-        // entry), so WASM games (FRI3) silently fail to load. Register it
-        // once, before the control exists.
-        try
-        {
-            IoCManager.Resolve<Robust.Client.WebView.IWebViewManager>()
-                .SetResourceMimeType("wasm", "application/wasm");
-        }
-        catch { /* headless dev */ }
 
         _web = new WebViewControl
         {

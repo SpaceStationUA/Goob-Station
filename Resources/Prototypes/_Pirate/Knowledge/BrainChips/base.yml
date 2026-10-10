@@ -5,44 +5,117 @@
   parent: BaseItem
   id: BaseBrainChip
   components:
-  - type: Sprite
-    sprite: _Pirate/Objects/Specific/brain_chips.rsi
-    layers:
-    - state: icon
-  - type: Item
-    size: Tiny
-  - type: OrganChip
-    whitelist:
-      components:
-      - Brain
-  # EMP disables the chip without harming the host.
-  - type: Cybernetics
-  - type: GuideHelp
-    guides:
-    - PirateBrainChips
+    - type: Sprite
+      sprite: _Pirate/Objects/Specific/brain_chips.rsi
+      scale: 0.7, 0.7
+      layers:
+        - state: icon
+        - state: leds-rows
+          map: [ "enum.OrganChipVisualLayers.Leds" ]
+          color: "#ffce5b"
+          shader: unshaded
+    - type: Item
+      size: Tiny
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.OrganChipVisuals.Disabled:
+          enum.OrganChipVisualLayers.Leds:
+            True: { visible: false }
+            False: { visible: true }
+    - type: OrganChip
+      whitelist:
+        components:
+          - Brain
+    # EMP disables the chip without harming the host.
+    - type: Cybernetics
+    - type: GuideHelp
+      guides:
+        - PirateBrainChips
 
 - type: entity
   abstract: true
   parent: BaseBrainChip
   id: BaseSkillChipMRAM
   components:
-  - type: KnowledgeGrantOnWear
-    examinable: true
+    - type: Sprite
+      layers:
+        - state: mram
+        - state: leds-rows
+          map: [ "enum.OrganChipVisualLayers.Leds" ]
+          color: "#4fd0e8"
+          shader: unshaded
+    - type: KnowledgeGrantOnWear
+      examinable: true
 
 - type: entity
   abstract: true
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: [BaseSkillChipMRAM, BaseSecurityContraband]
   id: BaseSkillChipAPTR
+  components:
+    - type: Sprite
+      layers:
+        - state: aptr
+        - state: leds-rows
+          map: [ "enum.OrganChipVisualLayers.Leds" ]
+          color: "#e8b040"
+          shader: unshaded
 
 - type: entity
   abstract: true
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipMRAM
   id: BaseSkillChipPSON
   components:
-  - type: OrganChip
-    canRemove: false
+    - type: Sprite
+      layers:
+        - state: pson
+        - state: leds-rows
+          map: [ "enum.OrganChipVisualLayers.Leds" ]
+          color: "#d7a6ff"
+          shader: unshaded
+    - type: OrganChip
+      canRemove: true
+      canSelfRemove: false
 
 - type: entity
   abstract: true
-  parent: [ BaseSkillChipMRAM, BaseSecurityContraband ]
+  parent: BaseSkillChipMRAM
   id: BaseSkillChipHPYS
+  components:
+    - type: Sprite
+      layers:
+        - state: hpys
+        - state: leds-rows
+          map: [ "enum.OrganChipVisualLayers.Leds" ]
+          color: "#9ff0e0"
+          shader: unshaded
+
+- type: entity
+  abstract: true
+  parent: [BaseSkillChipMRAM, BaseSyndicateContraband]
+  id: BaseSkillChipSyndicate
+  components:
+    - type: OrganChip
+      family: ChipFamilyOverwrite
+      hiddenFromScanners: true
+    - type: Sprite
+      layers:
+        - state: syndicate
+        - state: leds-rows
+          map: [ "enum.OrganChipVisualLayers.Leds" ]
+          color: "#ff4848"
+          shader: unshaded
+
+# The first parent wins; keep this one first to override sprite and contraband.
+- type: entity
+  abstract: true
+  parent: BaseCentcommContraband
+  id: BaseSkillChipNanotrasen
+  components:
+    - type: Sprite
+      layers:
+        - state: icon
+        - state: leds-rows
+          map: [ "enum.OrganChipVisualLayers.Leds" ]
+          color: "#ffce5b"
+          shader: unshaded

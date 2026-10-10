@@ -9,7 +9,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
     <PropertyGroup>
       <TargetFramework>$(TargetFramework)</TargetFramework>
-      <LangVersion>12</LangVersion>
       <IsPackable>false</IsPackable>
       <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
       <OutputPath>..\bin\Content.Client\</OutputPath>
@@ -27,7 +26,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
     <Import Project="..\RobustToolbox\Imports\Client.props" />
     <Import Project="..\RobustToolbox\Imports\Shared.props" />
-    <Import Project="..\RobustToolbox\Imports\WebView.props" />
 
     <ItemGroup>
       <ProjectReference Include="..\Content.Client\Content.Client.csproj" />
@@ -39,36 +37,5 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
     <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
     <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
-    <Import Project="..\MSBuild\Pirate.ClientNatives.targets" /> <!-- Pirate: WebView natives -->
-
-    <!--
-      Pirate: Robust.Client.WebView must NOT sit next to the content assemblies.
-      If it does, the engine loads it twice (module ALC via ROBUST_MODULE_* and
-      the default ALC next to content), producing two incompatible copies of
-      its types and breaking IoC registration. The canonical copy lives in
-      bin/modules/Robust.Client.WebView (see Scripts/sh/runclient-webui.sh)
-      which matches how the launcher unpacks module zips.
-    -->
-    <Target Name="StripWebViewModuleOutOfBin" Condition="'$(PirateStripWebView)' == '1'" AfterTargets="Build">
-      <PropertyGroup>
-        <_PirateWebViewOutput>$(MSBuildProjectDirectory)\..\RobustToolbox\Robust.Client.WebView\bin\$(Configuration)\$(TargetFramework)\</_PirateWebViewOutput>
-        <_PirateWebViewStage>$(MSBuildProjectDirectory)\..\bin\modules\Robust.Client.WebView\</_PirateWebViewStage>
-        <_PirateWebViewNativePlatform Condition="$([MSBuild]::IsOSPlatform('Windows'))">win-x64</_PirateWebViewNativePlatform>
-        <_PirateWebViewNativePlatform Condition="$([MSBuild]::IsOSPlatform('Linux'))">linux-x64</_PirateWebViewNativePlatform>
-      </PropertyGroup>
-      <ItemGroup>
-        <!-- The CEF subprocess is a separate .NET host and resolves its own dependencies. -->
-        <_PirateWebViewFile Include="$(_PirateWebViewOutput)*.dll;$(_PirateWebViewOutput)*.json" />
-        <_PirateWebViewFile Include="$(_PirateWebViewOutput)Robust.Client.WebView.exe" Condition="Exists('$(_PirateWebViewOutput)Robust.Client.WebView.exe')" />
-        <_PirateWebViewFile Include="$(_PirateWebViewOutput)Robust.Client.WebView" Condition="Exists('$(_PirateWebViewOutput)Robust.Client.WebView')" />
-        <_PirateWebViewFile Include="$(_PirateWebViewOutput)Robust.Client.WebView.pdb" Condition="Exists('$(_PirateWebViewOutput)Robust.Client.WebView.pdb')" />
-        <_PirateWebViewFile Include="$(_PirateWebViewOutput)SpaceWizards.CefGlue.pdb" Condition="Exists('$(_PirateWebViewOutput)SpaceWizards.CefGlue.pdb')" />
-        <_PirateWebViewNativeFile Include="$(_PirateWebViewOutput)runtimes\$(_PirateWebViewNativePlatform)\native\**\*" Condition="'$(_PirateWebViewNativePlatform)' != ''" />
-      </ItemGroup>
-      <MakeDir Directories="$(_PirateWebViewStage)" />
-      <Copy SourceFiles="@(_PirateWebViewFile)" DestinationFolder="$(_PirateWebViewStage)" SkipUnchangedFiles="true" />
-      <Copy SourceFiles="@(_PirateWebViewNativeFile)" DestinationFiles="@(_PirateWebViewNativeFile->'$(_PirateWebViewStage)runtimes\$(_PirateWebViewNativePlatform)\native\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-      <Delete Files="$(OutputPath)Robust.Client.WebView.dll;$(OutputPath)Robust.Client.WebView.pdb;$(OutputPath)Robust.Client.WebView.deps.json;$(OutputPath)Robust.Client.WebView.runtimeconfig.json;$(OutputPath)SpaceWizards.CefGlue.dll;$(OutputPath)SpaceWizards.CefGlue.pdb" />
-    </Target>
 
 </Project>

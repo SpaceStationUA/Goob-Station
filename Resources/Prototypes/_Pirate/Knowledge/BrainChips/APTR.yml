@@ -12,6 +12,8 @@
   parent: BaseSkillChipAPTR
   id: SkillChipSidearms
   components:
+  - type: OrganChip
+    family: ChipFamilySidearms
   - type: KnowledgeGrantOnWear
     skills:
       KnowledgeWeaponsPistol: 28
@@ -21,6 +23,8 @@
   parent: BaseSkillChipAPTR
   id: SkillChipSidearmsAdvanced
   components:
+  - type: OrganChip
+    family: ChipFamilySidearms
   - type: KnowledgeGrantOnWear
     skills:
       KnowledgeWeaponsPistol: 50

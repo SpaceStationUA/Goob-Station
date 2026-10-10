@@ -26,7 +26,7 @@ public sealed class GhostRoleChipIntegrationTest
         ("DeathSquad", ["SkillChipDeathSquad"]),
         ("SyndieSoldier", ["SkillChipSyndieSoldier"]),
         ("LavalandSyndieMarshal",
-            ["SkillChipSyndieMarshal", "SkillChipFieldMedicine", "SkillChipDatabase"]),
+            ["SkillChipSyndieMarshal", "SkillChipFieldMedicineSyndicate", "SkillChipDatabaseSyndicate"]),
         ("VisitorSecurityOfficer",
             ["SkillChipCombatEducation", "SkillChipSidearms", "SkillChipNonLethal"]),
         ("HecuSoldierIPC", ["SkillChipERT"]),

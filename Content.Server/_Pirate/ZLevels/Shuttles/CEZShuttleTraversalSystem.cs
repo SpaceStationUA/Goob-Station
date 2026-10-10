@@ -36,7 +36,7 @@ public sealed class CEZShuttleTraversalSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;

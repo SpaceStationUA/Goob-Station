@@ -1,11 +1,14 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 - type: entity
-  parent: [ BaseSkillChipPSON, BaseCentcommContraband ]
+  parent: [ BaseSkillChipNanotrasen, BaseSkillChipMRAM ]
   id: SkillChipDeathSquad
   components:
+  - type: OrganChip
+    family: ChipFamilyOverwrite
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       CookingKnowledge: 100
       DoorsKnowledge: 100
       AirlocksKnowledge: 100
@@ -16,7 +19,7 @@
       ElectronicsKnowledge: 100
       WallsKnowledge: 100
       WindowsKnowledge: 100
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 50
       SurgeryKnowledge: 100
       FirstAidKnowledge: 100
       ChemistryKnowledge: 100
@@ -45,11 +48,14 @@
       JanitorKnowledge: 100
 
 - type: entity
-  parent: [ BaseSkillChipPSON, BaseCentcommContraband ]
+  parent: [ BaseSkillChipNanotrasen, BaseSkillChipMRAM ]
   id: SkillChipERT
   components:
+  - type: OrganChip
+    family: ChipFamilyOverwrite
   - type: KnowledgeGrantOnWear
     skills:
+      PilotingKnowledge: 50
       DoorsKnowledge: 50
       AirlocksKnowledge: 50
       BananiumKnowledge: 50
@@ -59,7 +65,7 @@
       ElectronicsKnowledge: 50
       WallsKnowledge: 50
       WindowsKnowledge: 50
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 50
       SurgeryKnowledge: 50
       FirstAidKnowledge: 50
       ChemistryKnowledge: 50
@@ -87,6 +93,15 @@
       TailoringKnowledge: 50
       JanitorKnowledge: 50
 
+# BaseSkillChipSyndicate must come first so its sprite and contraband win.
 - type: entity
-  parent: SkillChipERT
+  parent: [ BaseSkillChipSyndicate, SkillChipERT ]
   id: SkillChipFreelancer
+  components:
+  # Clear the inherited CentralCommand allowance.
+  - type: Contraband
+    allowedDepartments: []
+    allowedJobs: []
+  - type: KnowledgeGrantOnWear
+    skills:
+      PilotingKnowledge: 100

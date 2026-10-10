@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.BloodCult;
 using Content.Shared.BloodCult.Components;

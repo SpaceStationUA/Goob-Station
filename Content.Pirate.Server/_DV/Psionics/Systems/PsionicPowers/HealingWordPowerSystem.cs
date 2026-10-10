@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using Content.Shared._DV.Psionics.Components.PsionicPowers;
 using Content.Shared._DV.Psionics.Events.PowerActionEvents;
 using Content.Shared._DV.Psionics.Events.PowerDoAfterEvents;
@@ -69,7 +70,7 @@ public sealed class HealingWordSystem : SharedHealingWordSystem
             _rotting.ReduceAccumulator(target, TimeSpan.FromSeconds(psionic.Comp.RotReduction));
 
         if (psionic.Comp.HealingAmount is { } healing && TryComp<DamageableComponent>(target, out var damageable))
-            _damageable.TryChangeDamage(target, healing, true, false, damageable, psionic);
+            _damageable.TryChangeDamage((target, damageable), healing, true, false, psionic);
 
         if (!psionic.Comp.DoRevive
             || _rotting.IsRotten(target)

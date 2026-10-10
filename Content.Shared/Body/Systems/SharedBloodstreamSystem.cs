@@ -17,6 +17,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.Fluids;
 using Content.Shared.Forensics.Components;
@@ -105,10 +106,11 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
                     var t = (0.8f - bloodPercentage) / 0.8f;
                     var amt = bloodstream.BloodlossDamage * (1f + MathF.Pow(t, 2.1f) * 9f) * _bloodlossMultiplier;
 
-                    // Goobstation start
+                    // Goob start
                     var multiplierEv = new GetBloodlossDamageMultiplierEvent();
                     RaiseLocalEvent(uid, multiplierEv);
                     amt *= multiplierEv.Multiplier;
+                    // Goob end
 
                     _damageableSystem.TryChangeDamage(uid, amt,
                         ignoreResistances: false, interruptsDoAfters: false,

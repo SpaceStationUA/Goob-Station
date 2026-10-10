@@ -4,6 +4,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipArmorsmithing
   components:
+  - type: OrganChip
+    family: ChipFamilyArmorsmithing
   - type: KnowledgeGrantOnWear
     skills:
       ArmorKnowledge: 50
@@ -14,6 +16,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipArmorsmithing2
   components:
+  - type: OrganChip
+    family: ChipFamilyArmorsmithing
   - type: KnowledgeGrantOnWear
     skills:
       ArmorKnowledge: 75
@@ -24,6 +28,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipWeaponsmithing
   components:
+  - type: OrganChip
+    family: ChipFamilyWeaponsmithing
   - type: KnowledgeGrantOnWear
     skills:
       WeaponsKnowledge: 50
@@ -34,6 +40,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipWeaponsmithing2
   components:
+  - type: OrganChip
+    family: ChipFamilyWeaponsmithing
   - type: KnowledgeGrantOnWear
     skills:
       WeaponsKnowledge: 75
@@ -44,6 +52,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipBlacksmith
   components:
+  - type: OrganChip
+    family: ChipFamilyBlacksmith
   - type: KnowledgeGrantOnWear
     skills:
       MetalworkingKnowledge: 50
@@ -53,6 +63,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipBlacksmith2
   components:
+  - type: OrganChip
+    family: ChipFamilyBlacksmith
   - type: KnowledgeGrantOnWear
     skills:
       MetalworkingKnowledge: 75
@@ -62,6 +74,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipWoodworker
   components:
+  - type: OrganChip
+    family: ChipFamilyWoodworker
   - type: KnowledgeGrantOnWear
     skills:
       CarvingKnowledge: 50
@@ -71,6 +85,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipWoodworker2
   components:
+  - type: OrganChip
+    family: ChipFamilyWoodworker
   - type: KnowledgeGrantOnWear
     skills:
       CarvingKnowledge: 75
@@ -80,6 +96,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipGunsmith
   components:
+  - type: OrganChip
+    family: ChipFamilyGunsmith
   - type: KnowledgeGrantOnWear
     skills:
       GunsmithingKnowledge: 50
@@ -89,6 +107,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipGunsmith2
   components:
+  - type: OrganChip
+    family: ChipFamilyGunsmith
   - type: KnowledgeGrantOnWear
     skills:
       GunsmithingKnowledge: 75
@@ -98,6 +118,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipMechanic
   components:
+  - type: OrganChip
+    family: ChipFamilyMechanic
   - type: KnowledgeGrantOnWear
     skills:
       MechanicsKnowledge: 50
@@ -107,6 +129,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipMechanic2
   components:
+  - type: OrganChip
+    family: ChipFamilyMechanic
   - type: KnowledgeGrantOnWear
     skills:
       MechanicsKnowledge: 75
@@ -116,6 +140,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipElectronics
   components:
+  - type: OrganChip
+    family: ChipFamilyElectronics
   - type: KnowledgeGrantOnWear
     skills:
       ElectronicsKnowledge: 50
@@ -125,6 +151,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipElectronics2
   components:
+  - type: OrganChip
+    family: ChipFamilyElectronics
   - type: KnowledgeGrantOnWear
     skills:
       ElectronicsKnowledge: 75
@@ -134,6 +162,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipTailor
   components:
+  - type: OrganChip
+    family: ChipFamilyTailor
   - type: KnowledgeGrantOnWear
     skills:
       TailoringKnowledge: 50
@@ -143,6 +173,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipTailor2
   components:
+  - type: OrganChip
+    family: ChipFamilyTailor
   - type: KnowledgeGrantOnWear
     skills:
       TailoringKnowledge: 75
@@ -171,6 +203,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipDatabaseBasic
   components:
+  - type: OrganChip
+    family: ChipFamilyDatabase
   - type: KnowledgeGrantOnWear
     skills:
       FabricationKnowledge: 25
@@ -187,6 +221,8 @@
   parent: BaseSkillChipMRAM
   id: SkillChipDatabase
   components:
+  - type: OrganChip
+    family: ChipFamilyDatabase
   - type: KnowledgeGrantOnWear
     skills:
       FabricationKnowledge: 50
@@ -211,9 +247,11 @@
   parent: BaseSkillChipMRAM
   id: SkillChipEducation
   components:
+  - type: OrganChip
+    family: ChipFamilyEducation
   - type: KnowledgeGrantOnWear
     skills:
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 25
       DoorsKnowledge: 50
       AirlocksKnowledge: 50
       BotsKnowledge: 50
@@ -229,9 +267,11 @@
   parent: BaseSkillChipMRAM
   id: SkillChipCombatEducation
   components:
+  - type: OrganChip
+    family: ChipFamilyEducation
   - type: KnowledgeGrantOnWear
     skills:
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 33
       DoorsKnowledge: 50
       AirlocksKnowledge: 50
       BotsKnowledge: 50
@@ -247,9 +287,11 @@
   parent: BaseSkillChipMRAM
   id: SkillChipEchelonEducation
   components:
+  - type: OrganChip
+    family: ChipFamilyEducation
   - type: KnowledgeGrantOnWear
     skills:
-      LiteracyKnowledge: 100
+      LiteracyKnowledge: 50
       DoorsKnowledge: 50
       AirlocksKnowledge: 50
       BotsKnowledge: 50
@@ -368,3 +410,29 @@
       FirstAidKnowledge: 75
       ChemistryKnowledge: 100
       SurgeryKnowledge: 75
+
+# Keep each base chip's family and grants; add piloting only.
+
+- type: entity
+  parent: SkillChipEducation
+  id: SkillChipEducationPilot
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      PilotingKnowledge: 50
+
+- type: entity
+  parent: SkillChipCombatEducation
+  id: SkillChipCombatEducationPilot
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      PilotingKnowledge: 50
+
+- type: entity
+  parent: SkillChipEchelonEducation
+  id: SkillChipEchelonEducationPilot
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      PilotingKnowledge: 50

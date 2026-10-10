@@ -8,7 +8,6 @@ using System.Linq;
 using Content.Pirate.Client._Pirate.WebUI;
 using Content.Pirate.Shared.Radio;
 using Robust.Client.Player;
-using Robust.Client.WebView;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Client.UserInterface.Controls;
