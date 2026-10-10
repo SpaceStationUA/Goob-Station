@@ -7,7 +7,6 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Robust.Shared.Log;
-using Robust.Client.WebView;
 
 namespace Content.Pirate.Client._Pirate.WebUI;
 
@@ -48,7 +47,7 @@ public sealed class WebUiSpikeBridge
     }
 
     /// <summary>
-    ///     Handler to pass into <see cref="Robust.Client.WebView.WebViewControl.AddResourceRequestHandler"/>.
+    ///     Handler to pass into <see cref="WebViewControl.AddResourceRequestHandler"/>.
     /// </summary>
     public void HandleRequest(IRequestHandlerContext ctx)
     {

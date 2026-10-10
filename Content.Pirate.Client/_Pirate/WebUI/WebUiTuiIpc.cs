@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Robust.Client.WebView;
 using Robust.Shared.Log;
 
 namespace Content.Pirate.Client._Pirate.WebUI;
