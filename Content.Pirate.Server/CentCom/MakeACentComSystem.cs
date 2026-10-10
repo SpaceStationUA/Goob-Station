@@ -19,10 +19,9 @@ namespace Content.Pirate.Server.CentCom
     {
         private const string ShuttlePath = "Maps/_Pirate/Shuttles/Qazmlp/shuttle_CentCom_atmos.yml";
 
-        [ValidatePrototypeId<RandomHumanoidSettingsPrototype>]
-        private const string Official = "CentcomOfficial";
+        private static readonly ProtoId<RandomHumanoidSettingsPrototype> Official = "CentcomOfficial";
 
-        [ValidatePrototypeId<EntityPrototype>] private const string Disk = "CoordinatesDisk";
+        private static readonly EntProtoId Disk = "CoordinatesDisk";
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedMapSystem _mapManager = default!;

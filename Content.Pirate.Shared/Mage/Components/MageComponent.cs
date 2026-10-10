@@ -5,15 +5,14 @@ using Content.Shared.Store;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Pirate.Shared.Mage.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]//, AutoGenerateComponentState]
 public sealed partial class MageComponent : Component
 {
-    [DataField("ExperinceCurrencyPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<CurrencyPrototype>))]
-    public string ExperinceCurrencyPrototype = "Experince";
+    [DataField("ExperinceCurrencyPrototype")]
+    public ProtoId<CurrencyPrototype> ExperinceCurrencyPrototype = "Experince";
 
     /// <summary>
     /// The total amount of Points the revenant has. Functions

@@ -2,7 +2,6 @@
 
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared._Pirate.Knowledge.Quality; // Pirate
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
