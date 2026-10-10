@@ -86,6 +86,7 @@
 
 - type: decal
   id: WoodTrimThinEndWWhite
+  showMenu: false # Pirate: decal picker deduplication
   tags: ["station", "markings"]
   sprite:
     sprite: _Pirate/Decals/wood_trim.rsi # Pirate - resprite

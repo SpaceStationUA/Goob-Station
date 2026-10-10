@@ -325,6 +325,7 @@
     rules: ghost-role-information-Hecu-rules
     raffle:
       settings: short
+    job: HecuOperative # Pirate: ghost warp groups (HECU grouping requires a job role)
   - type: Loadout
     prototypes: [HECUOperativeGear]
   - type: RandomMetadata

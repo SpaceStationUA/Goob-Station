@@ -13,6 +13,8 @@
         - state: tablet
         - state: powerconsole
           shader: unshaded
+    - type: StealTarget # Pirate: traitor contracts
+      stealGroup: HandheldStationMapPowerCe # Pirate: traitor contracts
     - type: ActivatableUI
       inHandsOnly: true
       singleUser: true

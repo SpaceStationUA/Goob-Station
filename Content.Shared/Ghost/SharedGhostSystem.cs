@@ -173,7 +173,7 @@ namespace Content.Shared.Ghost
         {
         }
 
-        public GhostWarp(NetEntity entity, string displayName, GhostWarpType type, int observerCount, string? jobIconId, MobState mobState, string? professionTitle, GhostWarpHealthState healthState, string? departmentId = null)
+        public GhostWarp(NetEntity entity, string displayName, GhostWarpType type, int observerCount, string? jobIconId, MobState mobState, string? professionTitle, GhostWarpHealthState healthState, string? departmentId = null, string? groupId = null) // Pirate: ghost warp groups
         {
             Entity = entity;
             DisplayName = displayName;
@@ -184,6 +184,7 @@ namespace Content.Shared.Ghost
             ProfessionTitle = professionTitle ?? string.Empty;
             HealthState = healthState;
             DepartmentId = departmentId ?? string.Empty;
+            GroupId = groupId ?? string.Empty; // Pirate: ghost warp groups
         }
 
         /// <summary>
@@ -234,6 +235,10 @@ namespace Content.Shared.Ghost
         /// When set, client uses <see cref="Content.Shared.Roles.DepartmentPrototype.Color"/>; language-independent.
         /// </summary>
         public string DepartmentId { get; }
+        #endregion
+
+        #region Pirate: ghost warp groups
+        public string GroupId { get; }
         #endregion
     }
 

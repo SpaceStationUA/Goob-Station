@@ -37,6 +37,7 @@
 
 - type: decal
   id: BrickTileSteelInnerNe
+  showMenu: false # Pirate: decal picker deduplication
   tags: ["station", "markings"]
   sprite:
     sprite: _Pirate/Decals/bricktile.rsi # Pirate - resprite
@@ -44,6 +45,7 @@
 
 - type: decal
   id: BrickTileSteelInnerSe
+  showMenu: false # Pirate: decal picker deduplication
   tags: ["station", "markings"]
   sprite:
     sprite: _Pirate/Decals/bricktile.rsi # Pirate - resprite
@@ -51,6 +53,7 @@
 
 - type: decal
   id: BrickTileSteelInnerNw
+  showMenu: false # Pirate: decal picker deduplication
   tags: ["station", "markings"]
   sprite:
     sprite: _Pirate/Decals/bricktile.rsi # Pirate - resprite
@@ -58,6 +61,7 @@
 
 - type: decal
   id: BrickTileSteelInnerSw
+  showMenu: false # Pirate: decal picker deduplication
   tags: ["station", "markings"]
   sprite:
     sprite: _Pirate/Decals/bricktile.rsi # Pirate - resprite

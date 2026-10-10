@@ -39,3 +39,137 @@
   sprite:
     sprite: Objects/Misc/module.rsi
     state: cpu_supply
+
+- type: stealTargetGroup
+  id: MailTeleporterMachineCircuitboard
+  name: steal-target-groups-mail-teleporter-machine-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: supply
+
+- type: stealTargetGroup
+  id: CargoTechFabCircuitboard
+  name: steal-target-groups-cargo-tech-fab-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: supply
+
+- type: stealTargetGroup
+  id: ScienceTechFabCircuitboard
+  name: steal-target-groups-science-tech-fab-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: science
+
+- type: stealTargetGroup
+  id: EngineeringTechFabCircuitboard
+  name: steal-target-groups-engineering-tech-fab-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: engineering
+
+- type: stealTargetGroup
+  id: ServiceTechFabCircuitboard
+  name: steal-target-groups-service-tech-fab-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: service
+
+- type: stealTargetGroup
+  id: SecurityTechFabCircuitboard
+  name: steal-target-groups-security-tech-fab-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: security
+
+- type: stealTargetGroup
+  id: DiagnoserMachineCircuitboard
+  name: steal-target-groups-diagnoser-machine-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: medical
+
+- type: stealTargetGroup
+  id: MedicalBiofabMachineBoard
+  name: steal-target-groups-medical-biofab-machine-board
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: medical
+
+- type: stealTargetGroup
+  id: RoboticsConsoleCircuitboard
+  name: steal-target-groups-robotics-console-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_science
+
+- type: stealTargetGroup
+  id: PsionicsRecordsComputerCircuitboard
+  name: steal-target-groups-psionics-records-computer-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_science
+
+- type: stealTargetGroup
+  id: FundingAllocationComputerCircuitboard
+  name: steal-target-groups-funding-allocation-computer-circuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_command
+
+- type: stealTargetGroup
+  id: CrewMonitoringServerMachineCircuitboard
+  name: steal-target-groups-crew-monitoring-server-machine-circuitboard
+  sprite:
+    sprite: Structures/Machines/server.rsi
+    state: server
+
+
+- type: stealTargetGroup
+  id: HandheldStationMapPowerCe
+  name: steal-target-groups-handheld-power-console-ce
+  sprite:
+    sprite: _Goobstation/Objects/Devices/tablets.rsi
+    state: tablet
+
+- type: stealTargetGroup
+  id: WeaponLauncherSingularityBuster
+  name: steal-target-groups-singularity-buster
+  sprite:
+    sprite: Objects/Weapons/Guns/Launchers/buster_rocket.rsi
+    state: base
+
+- type: stealTargetGroup
+  id: ClothingOuterHardsuitMedical
+  name: steal-target-groups-cmo-hardsuit
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: DefibrillatorBeltCMO
+  name: steal-target-groups-cmo-belt-defibrillator
+  sprite:
+    sprite: _Pirate/Objects/Specific/Medical/defibcmo.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: ClothingOuterHardsuitWarden
+  name: steal-target-groups-warden-hardsuit
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: ClothingHandsGlovesKravMaga
+  name: steal-target-groups-krav-maga-gloves
+  sprite:
+    sprite: _Goobstation/Clothing/Hands/Gloves/kravgloves.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: HoPIDCard
+  name: steal-target-groups-hop-id-card
+  sprite:
+    sprite: Objects/Misc/id_cards.rsi
+    state: silver

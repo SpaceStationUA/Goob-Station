@@ -1,0 +1,753 @@
+# SPDX-License-Identifier: MIT
+
+- type: decal
+  id: TrimlineLineSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_south
+
+- type: decal
+  id: TrimlineLineNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_north
+
+- type: decal
+  id: TrimlineLineSoutheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_southeast
+
+- type: decal
+  id: TrimlineLineSouthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_southwest
+
+- type: decal
+  id: TrimlineLineNortheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_northeast
+
+- type: decal
+  id: TrimlineLineNorthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_northwest
+
+- type: decal
+  id: TrimlineMidSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_mid_south
+
+- type: decal
+  id: TrimlineMidNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_mid_north
+
+- type: decal
+  id: TrimlineCornerSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_south
+
+- type: decal
+  id: TrimlineCornerNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_north
+
+- type: decal
+  id: TrimlineCornerEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_east
+
+- type: decal
+  id: TrimlineCornerWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_west
+
+- type: decal
+  id: TrimlineEndSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_end_south
+
+- type: decal
+  id: TrimlineEndNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_end_north
+
+- type: decal
+  id: TrimlineEndEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_end_east
+
+- type: decal
+  id: TrimlineEndWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_end_west
+
+- type: decal
+  id: TrimlineBox
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_box
+
+- type: decal
+  id: TrimlineFillSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_fill_south
+
+- type: decal
+  id: TrimlineFillNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_fill_north
+
+- type: decal
+  id: TrimlineFillEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_fill_east
+
+- type: decal
+  id: TrimlineFillWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_fill_west
+
+- type: decal
+  id: TrimlineFillSoutheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_fill_southeast
+
+- type: decal
+  id: TrimlineFillSouthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_fill_southwest
+
+- type: decal
+  id: TrimlineFillNortheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_fill_northeast
+
+- type: decal
+  id: TrimlineFillNorthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_fill_northwest
+
+- type: decal
+  id: TrimlineMidFillSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_mid_fill_south
+
+- type: decal
+  id: TrimlineMidFillNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_mid_fill_north
+
+- type: decal
+  id: TrimlineMidFillEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_mid_fill_east
+
+- type: decal
+  id: TrimlineMidFillWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_mid_fill_west
+
+- type: decal
+  id: TrimlineCornerFillSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_fill_south
+
+- type: decal
+  id: TrimlineCornerFillNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_fill_north
+
+- type: decal
+  id: TrimlineCornerFillEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_fill_east
+
+- type: decal
+  id: TrimlineCornerFillWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_fill_west
+
+- type: decal
+  id: TrimlineEndFillSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_end_fill_south
+
+- type: decal
+  id: TrimlineEndFillNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_end_fill_north
+
+- type: decal
+  id: TrimlineEndFillEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_end_fill_east
+
+- type: decal
+  id: TrimlineEndFillWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_end_fill_west
+
+- type: decal
+  id: TrimlineBoxFill
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_box_fill
+
+- type: decal
+  id: TrimlineArrowCwSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_south
+
+- type: decal
+  id: TrimlineArrowCwNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_north
+
+- type: decal
+  id: TrimlineArrowCwSoutheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_southeast
+
+- type: decal
+  id: TrimlineArrowCwSouthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_southwest
+
+- type: decal
+  id: TrimlineArrowCwNortheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_northeast
+
+- type: decal
+  id: TrimlineArrowCwNorthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_northwest
+
+- type: decal
+  id: TrimlineArrowCcwSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_south
+
+- type: decal
+  id: TrimlineArrowCcwNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_north
+
+- type: decal
+  id: TrimlineArrowCcwSoutheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_southeast
+
+- type: decal
+  id: TrimlineArrowCcwSouthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_southwest
+
+- type: decal
+  id: TrimlineArrowCcwNortheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_northeast
+
+- type: decal
+  id: TrimlineArrowCcwNorthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_northwest
+
+- type: decal
+  id: TrimlineArrowCwFillSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_fill_south
+
+- type: decal
+  id: TrimlineArrowCwFillNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_fill_north
+
+- type: decal
+  id: TrimlineArrowCwFillEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_fill_east
+
+- type: decal
+  id: TrimlineArrowCwFillWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_fill_west
+
+- type: decal
+  id: TrimlineArrowCwFillSoutheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_fill_southeast
+
+- type: decal
+  id: TrimlineArrowCwFillSouthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_fill_southwest
+
+- type: decal
+  id: TrimlineArrowCwFillNortheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_fill_northeast
+
+- type: decal
+  id: TrimlineArrowCwFillNorthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_cw_fill_northwest
+
+- type: decal
+  id: TrimlineArrowCcwFillSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_fill_south
+
+- type: decal
+  id: TrimlineArrowCcwFillNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_fill_north
+
+- type: decal
+  id: TrimlineArrowCcwFillEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_fill_east
+
+- type: decal
+  id: TrimlineArrowCcwFillWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_arrow_ccw_fill_west
+
+- type: decal
+  id: TrimlineWarnSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_south
+
+- type: decal
+  id: TrimlineWarnNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_north
+
+- type: decal
+  id: TrimlineWarnEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_east
+
+- type: decal
+  id: TrimlineWarnWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_west
+
+- type: decal
+  id: TrimlineWarnSoutheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_southeast
+
+- type: decal
+  id: TrimlineWarnSouthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_southwest
+
+- type: decal
+  id: TrimlineWarnNortheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_northeast
+
+- type: decal
+  id: TrimlineWarnNorthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_northwest
+
+- type: decal
+  id: TrimlineWarnFillSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_fill_south
+
+- type: decal
+  id: TrimlineWarnFillNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_fill_north
+
+- type: decal
+  id: TrimlineWarnFillEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_fill_east
+
+- type: decal
+  id: TrimlineWarnFillWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_fill_west
+
+- type: decal
+  id: TrimlineWarnFillSoutheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_fill_southeast
+
+- type: decal
+  id: TrimlineWarnFillSouthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_fill_southwest
+
+- type: decal
+  id: TrimlineWarnFillNortheast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_fill_northeast
+
+- type: decal
+  id: TrimlineWarnFillNorthwest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_warn_fill_northwest
+
+- type: decal
+  id: TrimlineShrinkCwSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_shrink_cw_south
+
+- type: decal
+  id: TrimlineShrinkCwNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_shrink_cw_north
+
+- type: decal
+  id: TrimlineShrinkCwEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_shrink_cw_east
+
+- type: decal
+  id: TrimlineShrinkCwWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_shrink_cw_west
+
+- type: decal
+  id: TrimlineShrinkCcwSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_shrink_ccw_south
+
+- type: decal
+  id: TrimlineShrinkCcwNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_shrink_ccw_north
+
+- type: decal
+  id: TrimlineShrinkCcwEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_shrink_ccw_east
+
+- type: decal
+  id: TrimlineShrinkCcwWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_shrink_ccw_west
+
+- type: decal
+  id: TrimlineTramSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_tram_south
+
+- type: decal
+  id: TrimlineTramNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_tram_north
+
+- type: decal
+  id: TrimlineTramEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_tram_east
+
+- type: decal
+  id: TrimlineTramWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_tram_west
+
+- type: decal
+  id: TrimlineCornerWarnFillSouth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_warn_fill_south
+
+- type: decal
+  id: TrimlineCornerWarnFillNorth
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_warn_fill_north
+
+- type: decal
+  id: TrimlineCornerWarnFillEast
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_warn_fill_east
+
+- type: decal
+  id: TrimlineCornerWarnFillWest
+  tags: ["station", "markings", "trimline"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Pirate/Decals/trimlines.rsi
+    state: trimline_corner_warn_fill_west

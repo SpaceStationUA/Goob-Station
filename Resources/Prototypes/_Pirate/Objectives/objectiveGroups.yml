@@ -6,6 +6,22 @@
     TraitorContractCargoRequestObjective: 1
     TraitorContractResearchComputerObjective: 1
     TraitorContractCriminalRecordsObjective: 0.75
+    TraitorContractCargoShuttleBoardObjective: 0.75
+    TraitorContractMailTeleporterBoardObjective: 0.5
+    TraitorContractCargoTechFabBoardObjective: 0.75
+    TraitorContractScienceTechFabBoardObjective: 0.75
+    TraitorContractEngineeringTechFabBoardObjective: 0.75
+    TraitorContractServiceTechFabBoardObjective: 0.75
+    TraitorContractMedicalTechFabBoardObjective: 0.75
+    TraitorContractDiagnoserBoardObjective: 0.75
+    TraitorContractBiofabBoardObjective: 0.5
+    TraitorContractPsionicsRecordsBoardObjective: 0.5
+    TraitorContractFundingAllocationBoardObjective: 0.75
+    TraitorContractRoboticsConsoleBoardObjective: 0.75
+    TraitorContractCEPowerConsoleObjective: 0.75
+    TraitorContractWantedListCartridgeObjective: 0.75
+    TraitorContractSecurityTechFabBoardObjective: 0.5
+    TraitorContractCrewMonitoringServerObjective: 0.5
 
 - type: weightedRandom
   id: PirateTraitorContractGroupSteal
@@ -20,6 +36,16 @@
     TraitorContractCaptainJetpackObjective: 0.5
     TraitorContractCaptainGunObjective: 0.5
     TraitorContractNukeDiskObjective: 0.2
+    TraitorContractGeminiProjectorObjective: 0.5
+    TraitorContractSingularityBusterObjective: 0.5
+    TraitorContractRapidSyringeGunObjective: 1
+    TraitorContractCMOHardsuitObjective: 0.75
+    TraitorContractCMODefibrillatorObjective: 1
+    TraitorContractHoPIDCardObjective: 1
+    TraitorContractWardenHardsuitObjective: 0.5
+    TraitorContractKravMagaGlovesObjective: 0.5
+    TraitorContractJusticeObjective: 0.5
+    TraitorContractEnergyShotgunObjective: 0.5
 
 - type: weightedRandom
   id: PirateTraitorContractGroupMurder
@@ -37,6 +63,7 @@
   id: PirateTraitorContractGroupSabotage
   weights:
     TraitorContractCritAnomalyObjective: 1
+    TraitorContractResearchServerObjective: 0.1
 
 - type: weightedRandom
   id: PirateTraitorContractGroupSpecial
@@ -48,3 +75,9 @@
   weights:
     TraitorContractRansomRandomPersonObjective: 1
     TraitorContractRansomRandomHeadObjective: 0.5
+    TraitorContractRansomSecurityOfficerObjective: 0.3
+    TraitorContractRansomWardenObjective: 0.2
+    TraitorContractRansomNanotrasenRepObjective: 0.2
+    TraitorContractRansomBlueshieldObjective: 0.15
+    TraitorContractRansomHeadOfSecurityObjective: 0.15
+    TraitorContractRansomCaptainObjective: 0.1

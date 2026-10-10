@@ -2,6 +2,7 @@
 # Flowers
 - type: decal
   id: FlowersBROne
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -10,6 +11,7 @@
 
 - type: decal
   id: FlowersBRTwo
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -18,6 +20,7 @@
 
 - type: decal
   id: FlowersBRThree
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -27,6 +30,7 @@
 # Grass
 - type: decal
   id: BushAOne
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -35,6 +39,7 @@
 
 - type: decal
   id: BushATwo
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -43,6 +48,7 @@
 
 - type: decal
   id: BushAThree
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -51,6 +57,7 @@
 
 - type: decal
   id: BushCOne
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -59,6 +66,7 @@
 
 - type: decal
   id: BushCTwo
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -67,6 +75,7 @@
 
 - type: decal
   id: BushCThree
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -75,6 +84,7 @@
 
 - type: decal
   id: BushDOne
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -83,6 +93,7 @@
 
 - type: decal
   id: BushDTwo
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
@@ -91,6 +102,7 @@
 
 - type: decal
   id: BushDThree
+  showMenu: false # Pirate: decal picker deduplication
   snapCardinals: true
   defaultSnap: false
   sprite:
