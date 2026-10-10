@@ -5676,12 +5676,12 @@ entities:
             5572: 73,17
         - node:
             color: '#639137FF'
-            id: TgTrimlineCornerFillEast
+            id: TrimlineCornerFillEast
           decals:
             5309: -23,62
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineCornerFillEast
+            id: TrimlineCornerFillEast
           decals:
             5243: -16,52
             5280: -19,47
@@ -5689,14 +5689,14 @@ entities:
             5396: -14,61
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineCornerFillNorth
+            id: TrimlineCornerFillNorth
           decals:
             5242: -12,52
             5244: -17,52
             5395: -15,61
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineCornerFillSouth
+            id: TrimlineCornerFillSouth
           decals:
             5237: -16,59
             5272: -19,51
@@ -5704,20 +5704,20 @@ entities:
             5366: -11,60
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineCornerFillWest
+            id: TrimlineCornerFillWest
           decals:
             5238: -12,59
             5288: -17,60
             5394: -15,68
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineEndFillEast
+            id: TrimlineEndFillEast
           decals:
             5278: -18,49
             5279: -18,47
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineFillEast
+            id: TrimlineFillEast
           decals:
             5222: -16,53
             5223: -16,54
@@ -5746,12 +5746,12 @@ entities:
             5382: -14,70
         - node:
             color: '#639137FF'
-            id: TgTrimlineFillNorth
+            id: TrimlineFillNorth
           decals:
             5308: -24,63
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineFillNorth
+            id: TrimlineFillNorth
           decals:
             5234: -15,52
             5235: -14,52
@@ -5770,37 +5770,37 @@ entities:
             5454: -15,71
         - node:
             color: '#639137FF'
-            id: TgTrimlineFillNortheast
+            id: TrimlineFillNortheast
           decals:
             5301: -23,63
             5302: -22,62
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineFillNortheast
+            id: TrimlineFillNortheast
           decals:
             5362: -8,61
             5452: -14,71
         - node:
             color: '#639137FF'
-            id: TgTrimlineFillNorthwest
+            id: TrimlineFillNorthwest
           decals:
             5300: -25,63
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineFillNorthwest
+            id: TrimlineFillNorthwest
           decals:
             5262: -20,52
             5294: -20,61
             5453: -16,71
         - node:
             color: '#639137FF'
-            id: TgTrimlineFillSouth
+            id: TrimlineFillSouth
           decals:
             5304: -24,61
             5305: -23,61
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineFillSouth
+            id: TrimlineFillSouth
           decals:
             5239: -15,59
             5240: -14,59
@@ -5819,35 +5819,35 @@ entities:
             5365: -10,60
         - node:
             color: '#639137FF'
-            id: TgTrimlineFillSoutheast
+            id: TrimlineFillSoutheast
           decals:
             5303: -22,61
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineFillSoutheast
+            id: TrimlineFillSoutheast
           decals:
             5261: -11,51
             5363: -8,60
         - node:
             color: '#639137FF'
-            id: TgTrimlineFillSouthwest
+            id: TrimlineFillSouthwest
           decals:
             5299: -25,61
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineFillSouthwest
+            id: TrimlineFillSouthwest
           decals:
             5284: -20,47
             5289: -20,60
             5393: -16,68
         - node:
             color: '#639137FF'
-            id: TgTrimlineFillWest
+            id: TrimlineFillWest
           decals:
             5306: -25,62
         - node:
             color: '#BC863FFF'
-            id: TgTrimlineFillWest
+            id: TrimlineFillWest
           decals:
             5228: -12,53
             5229: -12,54

@@ -1,0 +1,293 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Trimlines by Mickyan and other tgstation contributors; tgstation/tgstation icons/turf/decals.dmi at 21ce3d66d4ceff1e547f6e2c137231c599efcf2a.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "trimline_south"
+    },
+    {
+      "name": "trimline_north"
+    },
+    {
+      "name": "trimline_southeast"
+    },
+    {
+      "name": "trimline_southwest"
+    },
+    {
+      "name": "trimline_northeast"
+    },
+    {
+      "name": "trimline_northwest"
+    },
+    {
+      "name": "trimline_mid_south"
+    },
+    {
+      "name": "trimline_mid_north"
+    },
+    {
+      "name": "trimline_corner_south"
+    },
+    {
+      "name": "trimline_corner_north"
+    },
+    {
+      "name": "trimline_corner_east"
+    },
+    {
+      "name": "trimline_corner_west"
+    },
+    {
+      "name": "trimline_end_south"
+    },
+    {
+      "name": "trimline_end_north"
+    },
+    {
+      "name": "trimline_end_east"
+    },
+    {
+      "name": "trimline_end_west"
+    },
+    {
+      "name": "trimline_box"
+    },
+    {
+      "name": "trimline_fill_south"
+    },
+    {
+      "name": "trimline_fill_north"
+    },
+    {
+      "name": "trimline_fill_east"
+    },
+    {
+      "name": "trimline_fill_west"
+    },
+    {
+      "name": "trimline_fill_southeast"
+    },
+    {
+      "name": "trimline_fill_southwest"
+    },
+    {
+      "name": "trimline_fill_northeast"
+    },
+    {
+      "name": "trimline_fill_northwest"
+    },
+    {
+      "name": "trimline_mid_fill_south"
+    },
+    {
+      "name": "trimline_mid_fill_north"
+    },
+    {
+      "name": "trimline_mid_fill_east"
+    },
+    {
+      "name": "trimline_mid_fill_west"
+    },
+    {
+      "name": "trimline_corner_fill_south"
+    },
+    {
+      "name": "trimline_corner_fill_north"
+    },
+    {
+      "name": "trimline_corner_fill_east"
+    },
+    {
+      "name": "trimline_corner_fill_west"
+    },
+    {
+      "name": "trimline_end_fill_south"
+    },
+    {
+      "name": "trimline_end_fill_north"
+    },
+    {
+      "name": "trimline_end_fill_east"
+    },
+    {
+      "name": "trimline_end_fill_west"
+    },
+    {
+      "name": "trimline_box_fill"
+    },
+    {
+      "name": "trimline_arrow_cw_south"
+    },
+    {
+      "name": "trimline_arrow_cw_north"
+    },
+    {
+      "name": "trimline_arrow_cw_southeast"
+    },
+    {
+      "name": "trimline_arrow_cw_southwest"
+    },
+    {
+      "name": "trimline_arrow_cw_northeast"
+    },
+    {
+      "name": "trimline_arrow_cw_northwest"
+    },
+    {
+      "name": "trimline_arrow_ccw_south"
+    },
+    {
+      "name": "trimline_arrow_ccw_north"
+    },
+    {
+      "name": "trimline_arrow_ccw_southeast"
+    },
+    {
+      "name": "trimline_arrow_ccw_southwest"
+    },
+    {
+      "name": "trimline_arrow_ccw_northeast"
+    },
+    {
+      "name": "trimline_arrow_ccw_northwest"
+    },
+    {
+      "name": "trimline_arrow_cw_fill_south"
+    },
+    {
+      "name": "trimline_arrow_cw_fill_north"
+    },
+    {
+      "name": "trimline_arrow_cw_fill_east"
+    },
+    {
+      "name": "trimline_arrow_cw_fill_west"
+    },
+    {
+      "name": "trimline_arrow_cw_fill_southeast"
+    },
+    {
+      "name": "trimline_arrow_cw_fill_southwest"
+    },
+    {
+      "name": "trimline_arrow_cw_fill_northeast"
+    },
+    {
+      "name": "trimline_arrow_cw_fill_northwest"
+    },
+    {
+      "name": "trimline_arrow_ccw_fill_south"
+    },
+    {
+      "name": "trimline_arrow_ccw_fill_north"
+    },
+    {
+      "name": "trimline_arrow_ccw_fill_east"
+    },
+    {
+      "name": "trimline_arrow_ccw_fill_west"
+    },
+    {
+      "name": "trimline_warn_south"
+    },
+    {
+      "name": "trimline_warn_north"
+    },
+    {
+      "name": "trimline_warn_east"
+    },
+    {
+      "name": "trimline_warn_west"
+    },
+    {
+      "name": "trimline_warn_southeast"
+    },
+    {
+      "name": "trimline_warn_southwest"
+    },
+    {
+      "name": "trimline_warn_northeast"
+    },
+    {
+      "name": "trimline_warn_northwest"
+    },
+    {
+      "name": "trimline_warn_fill_south"
+    },
+    {
+      "name": "trimline_warn_fill_north"
+    },
+    {
+      "name": "trimline_warn_fill_east"
+    },
+    {
+      "name": "trimline_warn_fill_west"
+    },
+    {
+      "name": "trimline_warn_fill_southeast"
+    },
+    {
+      "name": "trimline_warn_fill_southwest"
+    },
+    {
+      "name": "trimline_warn_fill_northeast"
+    },
+    {
+      "name": "trimline_warn_fill_northwest"
+    },
+    {
+      "name": "trimline_shrink_cw_south"
+    },
+    {
+      "name": "trimline_shrink_cw_north"
+    },
+    {
+      "name": "trimline_shrink_cw_east"
+    },
+    {
+      "name": "trimline_shrink_cw_west"
+    },
+    {
+      "name": "trimline_shrink_ccw_south"
+    },
+    {
+      "name": "trimline_shrink_ccw_north"
+    },
+    {
+      "name": "trimline_shrink_ccw_east"
+    },
+    {
+      "name": "trimline_shrink_ccw_west"
+    },
+    {
+      "name": "trimline_tram_south"
+    },
+    {
+      "name": "trimline_tram_north"
+    },
+    {
+      "name": "trimline_tram_east"
+    },
+    {
+      "name": "trimline_tram_west"
+    },
+    {
+      "name": "trimline_corner_warn_fill_south"
+    },
+    {
+      "name": "trimline_corner_warn_fill_north"
+    },
+    {
+      "name": "trimline_corner_warn_fill_east"
+    },
+    {
+      "name": "trimline_corner_warn_fill_west"
+    }
+  ]
+}
