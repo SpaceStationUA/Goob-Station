@@ -309,9 +309,9 @@ public sealed class CustomMarkingArtTest
         }
 
         var png = file.ToArray();
-        // The pinned decoder accepts these chunks independently; fdAT can even add a frame without acTL/fcTL.
+        // The decoder accepts standalone animation chunks even when they do not add frames.
         using var decoded = Image.Load<Rgba32>(png);
-        Assert.That(decoded.Frames.Count, Is.EqualTo(keepChunk == "fdAT" ? 2 : 1));
+        Assert.That(decoded.Frames.Count, Is.EqualTo(1));
         Assert.That(CustomMarkingPng.Read(png), Is.Null, "reject animation chunks before allocating decoded frames");
     }
 
