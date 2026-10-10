@@ -1,13 +1,16 @@
+using System.Linq;
 using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Goobstation.Maths.FixedPoint;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server._Pirate.Damage;
 using Content.Server.Body.Systems;
+using Content.Shared.Body.Part;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._Pirate.Damage;
@@ -29,6 +32,7 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
         FixedPoint2 additionalSoulDamage = 3;
         FixedPoint2 healAmount = 0;
         var halfRecoveryDelay = 0f;
+        EntityUid damagedPart = default;
 
         await Server.WaitAssertion(() =>
         {
@@ -37,8 +41,10 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             var mobState = SEntMan.System<MobStateSystem>();
             var soulType = ProtoMan.Index(SoulDamageType);
 
+            // Pirate: seed exact part damage so whole-body split rounding does not affect regeneration assertions.
+            damagedPart = body.GetBodyChildrenOfType(SPlayer, BodyPartType.Chest).Single().Id;
             var applied = damageable.ChangeDamage(
-                SPlayer,
+                damagedPart,
                 new DamageSpecifier(soulType, initialSoulDamage),
                 ignoreResistances: true,
                 canMiss: false);
@@ -76,7 +82,7 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             var damageable = SEntMan.System<DamageableSystem>();
             var soulType = ProtoMan.Index(SoulDamageType);
             var additionalApplied = damageable.ChangeDamage(
-                SPlayer,
+                damagedPart,
                 new DamageSpecifier(soulType, additionalSoulDamage),
                 ignoreResistances: true,
                 canMiss: false);

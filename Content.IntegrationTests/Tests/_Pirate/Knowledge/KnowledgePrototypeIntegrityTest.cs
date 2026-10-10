@@ -103,6 +103,7 @@ public sealed class KnowledgePrototypeIntegrityTest
             ["Shattered"] = "Human",
             ["Skeleton"] = "Plasmaman",
             ["SlimePerson"] = "Slimeperson",
+            ["Synth"] = "IPC",
             ["Tajaran"] = "Human",
             ["Thaven"] = "Human",
             ["Vox"] = "Vox",
