@@ -108,7 +108,7 @@ public sealed class AlignRPDAtmosPipeLayers : PlacementMode
     public override void AlignPlacementMode(ScreenCoordinates mouseScreen)
     {
         _mouseCoordsRaw = ScreenToCursorGrid(mouseScreen);
-        MouseCoords = _mouseCoordsRaw.AlignWithClosestGridTile(SearchBoxSize, _entityManager, _mapManager);
+        MouseCoords = _mouseCoordsRaw.AlignWithClosestGridTile(SearchBoxSize, _entityManager);
 
         var gridId = _transformSystem.GetGrid(MouseCoords);
 
