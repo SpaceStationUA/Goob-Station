@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://nn5fi105o1xv"]
+
+[ext_resource type="PackedScene" path="res://Planets/Planet.tscn" id="1"]
+[ext_resource type="Script" path="res://Planets/BlackHole/BlackHole.gd" id="2"]
+[ext_resource type="Shader" path="res://Planets/BlackHole/BlackHoleRing.gdshader" id="3"]
+[ext_resource type="Shader" path="res://Planets/BlackHole/BlackHole.gdshader" id="4"]
+
+[sub_resource type="ShaderMaterial" id="3"]
+shader = ExtResource("4")
+shader_parameter/pixels = 100.0
+shader_parameter/colors = PackedColorArray(0.152941, 0.152941, 0.211765, 1, 1, 1, 0.921569, 1, 0.929412, 0.482353, 0.223529, 1)
+shader_parameter/radius = 0.247
+shader_parameter/light_width = 0.028
+
+[sub_resource type="ShaderMaterial" id="6"]
+shader = ExtResource("3")
+shader_parameter/pixels = 300.0
+shader_parameter/rotation = 0.766
+shader_parameter/light_origin = Vector2(0.607, 0.444)
+shader_parameter/time_speed = 0.2
+shader_parameter/disk_width = 0.065
+shader_parameter/ring_perspective = 14.0
+shader_parameter/should_dither = true
+shader_parameter/colors = PackedColorArray(1, 1, 0.921569, 1, 1, 0.960784, 0.25098, 1, 1, 0.721569, 0.290196, 1, 0.929412, 0.482353, 0.223529, 1, 0.741176, 0.25098, 0.207843, 1)
+shader_parameter/n_colors = 5
+shader_parameter/size = 6.598
+shader_parameter/OCTAVES = 3
+shader_parameter/seed = 8.175
+shader_parameter/time = 0.0
+
+[node name="Planet" instance=ExtResource("1")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 3
+anchors_preset = 15
+offset_right = -412.0
+offset_bottom = -200.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
+relative_scale = 2.0
+gui_zoom = 2.0
+
+[node name="BlackHole" type="ColorRect" parent="." index="0"]
+material = SubResource("3")
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="Disk" type="ColorRect" parent="." index="1"]
+material = SubResource("6")
+layout_mode = 0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 200.0
