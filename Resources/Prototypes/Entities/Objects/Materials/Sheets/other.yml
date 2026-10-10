@@ -108,6 +108,15 @@
   - type: Appearance
   - type: Extractable
     grindableSolutionName: plasma
+  # Goob start - Afterlight synths
+  - type: Edible
+    requiresSpecialDigestion: true
+    solution: plasma
+  - type: FlavorProfile
+    flavors:
+    - sour
+  - type: BadFood
+  # Goob end
   - type: SolutionContainerManager
     solutions:
       plasma:
@@ -176,6 +185,15 @@
   - type: Appearance
   - type: Extractable
     grindableSolutionName: plastic
+  # Goob start - Afterlight synths
+  - type: Edible
+    requiresSpecialDigestion: true
+    solution: plastic
+  - type: FlavorProfile
+    flavors:
+    - bitter
+  - type: BadFood
+  # Goob end
   - type: SolutionContainerManager
     solutions:
       plastic:

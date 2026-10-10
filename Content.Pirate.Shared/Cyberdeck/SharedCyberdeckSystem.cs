@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Pirate.Common.Cyberdeck.Components;
 using Content.Shared.Actions;
 using Content.Shared.Alert;

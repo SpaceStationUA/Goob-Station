@@ -18,8 +18,7 @@ namespace Content.Pirate.Server.Mage.EntitySystems;
 
 public sealed class MageSystem : EntitySystem
 {
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string MageShopId = "ActionMageShop";
+    private static readonly EntProtoId MageShopId = "ActionMageShop";
 
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly IEntityManager _entity = default!;

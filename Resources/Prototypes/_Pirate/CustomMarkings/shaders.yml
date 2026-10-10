@@ -1,0 +1,11 @@
+# What a body layer is drawn with while a custom marking erases part of it (CustomMarkingSystem.Erase).
+- type: shader
+  id: WolfgateCustomMarkingErase
+  kind: source
+  path: "/Textures/_Pirate/CustomMarkings/erase.swsl"
+
+# The same for a layer that is drawn unshaded, such as glowing eyes or a screen.
+- type: shader
+  id: WolfgateCustomMarkingEraseUnshaded
+  kind: source
+  path: "/Textures/_Pirate/CustomMarkings/erase_unshaded.swsl"

@@ -42,7 +42,10 @@ async function main() {
 
     // Get all changes from the body
     const entries = getChanges(commentlessBody);
-
+    if (entries.length === 0) {
+        console.log("No valid changes found, skipping");
+        return;
+    }
 
     // Time is something like 2021-08-29T20:00:00Z
     // Time should be something like 2023-02-18T00:00:00.0000000+00:00
@@ -159,7 +162,7 @@ function writeChangelog(entry) {
     // Write updated changelogs file
     fs.writeFileSync(
         filePath, // Pirate
-        "Name: Pirate Log\nOrder: -2\nEntries:\n" + // Pirate
+        "Name: Pirate\nOrder: -2\nEntries:\n" + // Pirate
             yaml.dump(data.Entries, { indent: 2 }).replace(/^---/, "")
     );
 }

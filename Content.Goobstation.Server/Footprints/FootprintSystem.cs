@@ -272,7 +272,7 @@ public sealed class FootprintSystem : EntitySystem
 
     private bool TryGetAnchoredEntity<T>(Entity<MapGridComponent> grid, Vector2i pos, [NotNullWhen(true)] out Entity<T>? entity) where T : IComponent
     {
-        var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(grid, grid, pos);
+        var anchoredEnumerator = _map.GetAnchoredEntities(grid, grid, pos);
         var entityQuery = GetEntityQuery<T>();
 
         while (anchoredEnumerator.MoveNext(out var ent))

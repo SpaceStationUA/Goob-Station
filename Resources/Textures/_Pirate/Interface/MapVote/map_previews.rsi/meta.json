@@ -79,14 +79,17 @@
     {
       "name": "piramide_tp"
     },
-	    {
+    {
       "name": "shoukou"
     },
-	    {
+    {
       "name": "nebula"
     },
     {
       "name": "zperdition"
+    },
+    {
+      "name": "core"
     }
   ]
 }

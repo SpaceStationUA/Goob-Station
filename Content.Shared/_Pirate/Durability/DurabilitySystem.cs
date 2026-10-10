@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using System.Linq;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Damage;

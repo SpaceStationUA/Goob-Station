@@ -246,7 +246,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var convEv = new BeforeConversionEvent(ev.Target);
         RaiseLocalEvent(ev.Target, ref convEv, true);
 
-        if (HasComp<RevolutionaryComponent>(ev.Target) ||
+        if (convEv.Blocked || // Goob
+            HasComp<RevolutionaryComponent>(ev.Target) ||
             HasComp<MindShieldComponent>(ev.Target) ||
             !HasComp<HumanoidAppearanceComponent>(ev.Target) &&
             !alwaysConvertible ||

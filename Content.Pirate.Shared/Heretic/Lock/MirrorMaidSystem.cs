@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared._Goobstation.Heretic.Systems;
 using Content.Shared._Shitcode.Heretic.Systems;
 using Content.Shared.Damage;
@@ -54,11 +55,11 @@ public sealed class MirrorMaidSystem : EntitySystem
             _status.HasStatusEffect(args.Examiner, ent.Comp.ExamineStatus))
             return;
 
-        if (_damageable.TryChangeDamage(ent.Owner,
+        if (!_damageable.TryChangeDamage(ent.Owner,
                 ent.Comp.ExamineDamage,
                 true,
                 origin: args.Examiner,
-                targetPart: Content.Shared._Shitmed.Targeting.TargetBodyPart.Vital) == null)
+                targetPart: Content.Shared._Shitmed.Targeting.TargetBodyPart.Vital))
             return;
 
         _status.TryUpdateStatusEffectDuration(args.Examiner, ent.Comp.ExamineStatus, ent.Comp.ExamineDelay);

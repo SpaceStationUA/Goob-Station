@@ -23,7 +23,6 @@ namespace Content.Client._Pirate.Xray;
 public sealed class XRayVisionOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
@@ -134,7 +133,7 @@ public sealed class XRayVisionOverlay : Overlay
         var modulate = Color.White.WithAlpha(TileAlpha);
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(args.MapId, bounds, ref _grids);
+        _map.FindGridsIntersecting(args.MapId, bounds, ref _grids);
 
         foreach (var grid in _grids)
         {
@@ -214,7 +213,9 @@ public sealed class XRayVisionOverlay : Overlay
 
             hash.Add(uid);
             hash.Add(position);
-            hash.Add(occluder.BoundingBox);
+            hash.Add(occluder.LocalBounds);
+            foreach (var vertex in occluder.Polygon)
+                hash.Add(vertex);
         }
 
         return hash.ToHashCode();
@@ -253,7 +254,7 @@ public sealed class XRayVisionOverlay : Overlay
 
     private bool TileHasOccluder(Entity<MapGridComponent> grid, Vector2i indices)
     {
-        var anchored = _map.GetAnchoredEntitiesEnumerator(grid.Owner, grid.Comp, indices);
+        var anchored = _map.GetAnchoredEntities(grid.Owner, grid.Comp, indices);
         while (anchored.MoveNext(out var ent))
         {
             if (_occluderQuery.TryGetComponent(ent, out var occluder) && occluder.Enabled)

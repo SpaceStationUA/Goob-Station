@@ -1,4 +1,4 @@
-Name: Pirate Log
+Name: Pirate
 Order: -2
 Entries:
 - author: luciusGodGame
@@ -6261,3 +6261,29 @@ Entries:
         прискорення до +30% на максимумі
   id: 583
   time: '2026-10-08T20:46:44.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Add
+      message: >-
+        Додано редактор власних анімованих міток персонажа з особистою
+        бібліотекою.
+  id: 584
+  time: '2026-10-10T07:14:43.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Tweak
+      message: Оновлено upstream та рушій RobustToolbox до 292.0.0.
+    - type: Fix
+      message: Додано прев’ю Core у голосуванні за мапу.
+    - type: Fix
+      message: Виправлено назву вкладки «Наші зміни» в оновленнях.
+  id: 585
+  time: '2026-10-10T14:06:05.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Fix
+      message: Виправлено запуск клієнта після оновлення рушія.
+    - type: Tweak
+      message: Веб-інтерфейси тимчасово замінено заглушкою «Немає сигналу».
+  id: 586
+  time: '2026-10-10T14:55:32.0000000+00:00'

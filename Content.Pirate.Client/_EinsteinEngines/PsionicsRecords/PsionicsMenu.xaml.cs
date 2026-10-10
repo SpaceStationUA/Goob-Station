@@ -31,8 +31,7 @@ public sealed partial class PsionicsMenu : FancyWindow
     private readonly IRobustRandom _random;
     private readonly SpriteSystem _spriteSystem;
 
-	    [ValidatePrototypeId<DatasetPrototype>]
-	    private const string ReasonPlaceholders = "PsionicsRecordsReasonPlaceholders";
+	    private static readonly ProtoId<DatasetPrototype> ReasonPlaceholders = "PsionicsRecordsReasonPlaceholders";
 
     public Action<PsionicsStatus>? OnStatusSelected;
     public Action<PsionicsStatus, string>? OnDialogConfirmed;

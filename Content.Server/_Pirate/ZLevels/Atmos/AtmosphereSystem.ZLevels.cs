@@ -209,7 +209,7 @@ public sealed partial class AtmosphereSystem
                 ref bestTile);
         }
 
-        foreach (var grid in _mapManager.GetAllGrids(entity.Comp.MapID))
+        foreach (var grid in _mapSystem.GetAllGrids(entity.Comp.MapID))
         {
             if (!checkedGrids.Add(grid.Owner))
                 continue;

@@ -9,10 +9,16 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._DV.NanoChat;
 
 [Serializable, NetSerializable]
-public sealed partial class PdaPhotoUploadDoAfterEvent(NetEntity cardUid, NanoChatPhotoData photo) : SimpleDoAfterEvent
+public sealed partial class PdaPhotoUploadDoAfterEvent : SimpleDoAfterEvent
 {
-    public NetEntity CardUid = cardUid;
-    public NanoChatPhotoData Photo = photo;
+    public NetEntity CardUid;
+    public NanoChatPhotoData Photo;
+
+    public PdaPhotoUploadDoAfterEvent(NetEntity cardUid, NanoChatPhotoData photo)
+    {
+        CardUid = cardUid;
+        Photo = photo;
+    }
 
     public PdaPhotoUploadDoAfterEvent() : this(NetEntity.Invalid, default)
     {

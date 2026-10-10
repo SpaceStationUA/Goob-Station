@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Systems;
@@ -122,7 +123,7 @@ public sealed class LockAbilitySystem : EntitySystem
         if (HasComp<GhoulComponent>(user) && HasComp<GhoulComponent>(polymorphed.Value) &&
             TryComp(user, out DamageableComponent? userDamage) &&
             TryComp(polymorphed.Value, out DamageableComponent? polymorphedDamage))
-            _damage.SetDamage(polymorphed.Value, polymorphedDamage, userDamage.Damage);
+            _damage.SetDamage((polymorphed.Value, polymorphedDamage), userDamage.Damage);
 
         _npcFaction.AddFaction(polymorphed.Value, HereticSystem.HereticFactionId);
 

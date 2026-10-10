@@ -29,8 +29,18 @@ public sealed partial class StrangeMoodInitUi : FancyWindow
         {
             MoodPresetDropDown.AddItem(proto.Name, i);
 
-            var def = new StrangeMoodDefinition();
-            _serialization.CopyTo(proto, ref def, notNullableOverride: true);
+            // Pirate: prototype copiers require prototype targets; send only independent runtime mood data.
+            var def = new StrangeMoodDefinition
+            {
+                ProtoId = proto.ProtoId,
+                SharedMoodPrototype = proto.SharedMoodPrototype,
+                Datasets = _serialization.CreateCopy(proto.Datasets, notNullableOverride: true),
+                Moods = _serialization.CreateCopy(proto.Moods, notNullableOverride: true),
+                MoodsChangedMessage = proto.MoodsChangedMessage,
+                MoodsChangedSound = _serialization.CreateCopy(proto.MoodsChangedSound),
+                MoodsChangedColor = proto.MoodsChangedColor,
+                ActionViewMoods = proto.ActionViewMoods,
+            };
             _definitions.Insert(i++, def);
         }
     }

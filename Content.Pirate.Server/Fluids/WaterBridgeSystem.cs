@@ -43,7 +43,7 @@ public sealed class WaterBridgeSystem : EntitySystem
         if (!TryGetTile(xform, out var gridUid, out var grid, out var tile))
             return;
 
-        var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+        var anchored = _map.GetAnchoredEntities(gridUid, grid, tile);
         while (anchored.MoveNext(out var ent))
         {
             if (HasComp<FloorWaterComponent>(ent.Value))
@@ -66,7 +66,7 @@ public sealed class WaterBridgeSystem : EntitySystem
 
     private bool TileHasBridge(EntityUid gridUid, MapGridComponent grid, Vector2i tile, EntityUid? ignore)
     {
-        var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+        var anchored = _map.GetAnchoredEntities(gridUid, grid, tile);
         while (anchored.MoveNext(out var ent))
         {
             if (ent.Value != ignore && HasComp<WaterBridgeComponent>(ent.Value))
