@@ -65,9 +65,11 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             if (!dead)
                 return;
 
+            var thresholds = SEntMan.System<MobThresholdSystem>();
+            Assert.That(thresholds.TryGetDeadThreshold(SPlayer, out var deadThreshold), Is.True);
             damageable.ChangeDamage(
                 damagedPart,
-                new DamageSpecifier(ProtoMan.Index(BluntDamageType), 210),
+                new DamageSpecifier(ProtoMan.Index(BluntDamageType), deadThreshold!.Value + FixedPoint2.New(10)),
                 ignoreResistances: true,
                 canMiss: false);
             Assert.That(mobState.IsDead(SPlayer), Is.True);
