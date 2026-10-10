@@ -1,5 +1,7 @@
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared._Afterlight.Silicons.Synths.Body;
+using Content.Shared._Shitmed.Damage; // Pirate
+using Content.Shared._Shitmed.Targeting; // Pirate
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
@@ -71,7 +73,8 @@ public sealed partial class SynthBloodstreamSystem : EntitySystem
         LimitRepairByHunger(repair, ent.Comp1.HungerCostPerRepair, availableHunger);
 
         if (!repair.Empty
-            && _damageable.TryChangeDamage((ent.Owner, ent.Comp4), repair, out var repaired, true, false))
+            && _damageable.TryChangeDamage((ent.Owner, ent.Comp4), repair, out var repaired, true, false,
+                targetPart: TargetBodyPart.All, splitDamage: SplitDamageBehavior.SplitEnsureAllDamaged)) // Pirate: repair damaged extremities too.
         {
             hungerCost += MathF.Max(0f, -repaired.GetTotal().Float()) * ent.Comp1.HungerCostPerRepair;
         }

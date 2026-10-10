@@ -9,6 +9,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Medical.Healing;
 using Content.Shared.Repairable;
 
 namespace Content.IntegrationTests.Tests._Pirate.Repairable;
@@ -42,9 +43,20 @@ public sealed class RepairableIntegrationTest : InteractionTest
                 new DamageSpecifier(ProtoMan.Index<DamageTypePrototype>("Blunt"), 35),
                 ignoreResistances: true);
             Assert.That(SEntMan.GetComponent<DamageableComponent>(target).TotalDamage, Is.EqualTo(FixedPoint2.New(35)));
+
+            if (bodyType == BodyType.Complex)
+            {
+                Assert.That(repairable.Damage, Is.Not.Null);
+                Assert.That(SEntMan.System<HealingSystem>().TryGetNextDamagedPart(target,
+                    new HealingComponent { Damage = repairable.Damage!, BloodlossModifier = -100 },
+                    out var repairTarget), Is.True, "The IPC chest must be eligible for welding.");
+                Assert.That(repairTarget, Is.EqualTo(damagedPart));
+            }
         });
 
-        await InteractUsing(Weld);
+        await InteractUsing(Weld, awaitDoAfters: false);
+        await Server.WaitAssertion(() => Assert.That(ActiveDoAfters.Any(), Is.True, "Welding must start a repair do-after."));
+        await AwaitDoAfters();
 
         await Server.WaitAssertion(() =>
         {

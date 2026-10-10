@@ -135,7 +135,9 @@ public sealed partial class TargetOutlineSystem : EntitySystem
 
         foreach (var entity in pvsEntities)
         {
-            if (!_spriteQuery.TryGetComponent(entity, out var sprite) || !sprite.Visible)
+            // Pirate: target selection must not reveal cloaked silhouettes.
+            if (!_spriteQuery.TryGetComponent(entity, out var sprite) || !sprite.Visible
+                || _sprite.HasPostShader(sprite, ContentPostShaderIds.Stealth))
                 continue;
 
             // Check the predicate

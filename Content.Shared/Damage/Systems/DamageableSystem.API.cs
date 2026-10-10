@@ -260,6 +260,7 @@ public sealed partial class DamageableSystem
         // Check for integrity cap on body parts
         var isWoundable = _woundableQuery.TryComp(ent, out var woundable);
         var damageCap = isWoundable ? woundable!.IntegrityCap : FixedPoint2.MaxValue;
+        var remainingCap = damageCap - ent.Comp.TotalDamage; // Pirate: all damage types share the limb's integrity budget.
         var damageDoneHypotheticalUncapped = new DamageSpecifier(damage.ArmorPenetration,
             damage.PartDamageVariation,
             damage.WoundSeverityMultipliers); // slop
@@ -286,8 +287,6 @@ public sealed partial class DamageableSystem
             //dict[type] = newValue;
             //damageDone.DamageDict[type] = newValue - oldValue;
 
-            var remainingCap = damageCap - oldValue;
-
             // For positive damage, we need to check if we've hit the cap
             if (value > 0)
             {
@@ -295,7 +294,7 @@ public sealed partial class DamageableSystem
                 damageDoneHypotheticalUncapped.DamageDict[type] = value;
 
                 // If we're not a woundable or we don't have a cap, apply the damage normally
-                if (!isWoundable || remainingCap == FixedPoint2.MaxValue)
+                if (!isWoundable || damageCap == FixedPoint2.MaxValue)
                 {
                     dict[type] = oldValue + value;
                     damageDone.DamageDict[type] = value;
@@ -317,6 +316,7 @@ public sealed partial class DamageableSystem
                 var applied = newValue - oldValue;
                 dict[type] = newValue;
                 damageDone.DamageDict[type] = applied;
+                remainingCap -= applied; // Pirate
             }
             else
             {
@@ -327,17 +327,19 @@ public sealed partial class DamageableSystem
                 {
                     dict[type] = newValue;
                     damageDone.DamageDict[type] = newValue - oldValue;
+                    remainingCap -= newValue - oldValue; // Pirate: healing frees room for subsequent damage types.
                 }
             }
             // </Woundmed>
         }
 
-        if (!damageDone.Empty)
+        // Pirate: residual wounds still need healing events after stored limb damage reaches zero.
+        if (!damageDone.Empty || isWoundable && !damageDoneHypotheticalUncapped.Empty)
         {
             OnEntityDamageChanged((ent, ent.Comp), damageDone, interruptsDoAfters, origin, ignoreBlockers, // Pirate: preserve wound blockers.
                 uncappedDamage: damageDoneHypotheticalUncapped); // Woundmed
 
-            if (isWoundable) // Woundmed
+            if (isWoundable && !damageDone.Empty) // Pirate: only stored damage changes affect the parent body.
                 UpdateParentBodyDamage(ent, interruptsDoAfters, origin, ignoreBlockers);
         }
 

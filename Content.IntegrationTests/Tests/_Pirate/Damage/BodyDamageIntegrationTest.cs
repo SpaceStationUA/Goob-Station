@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared._Shitmed.Damage;
+using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
+using Content.Shared._Shitmed.Medical.Surgery.Wounds.Systems;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
@@ -15,6 +17,83 @@ namespace Content.IntegrationTests.Tests._Pirate.Damage;
 [TestFixture]
 public sealed class BodyDamageIntegrationTest
 {
+    [Test]
+    public async Task LimbIntegrityCapIsSharedAcrossDamageTypes()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            var entMan = server.EntMan;
+            var body = server.System<SharedBodySystem>();
+            var damageable = server.System<DamageableSystem>();
+            var blunt = server.ProtoMan.Index<DamageTypePrototype>("Blunt");
+            var heat = server.ProtoMan.Index<DamageTypePrototype>("Heat");
+            var mob = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            var chest = body.GetBodyChildrenOfType(mob, BodyPartType.Chest).Single().Id;
+            var woundable = entMan.GetComponent<WoundableComponent>(chest);
+            woundable.AllowWounds = false;
+            woundable.IntegrityCap = FixedPoint2.New(60);
+
+            damageable.ChangeDamage(chest, new DamageSpecifier(blunt, 40), ignoreResistances: true);
+            var applied = damageable.ChangeDamage(chest, new DamageSpecifier(heat, 40), ignoreResistances: true);
+            Assert.That(applied.DamageDict[heat.ID], Is.EqualTo(FixedPoint2.New(20)));
+            Assert.That(entMan.GetComponent<DamageableComponent>(chest).TotalDamage, Is.EqualTo(FixedPoint2.New(60)));
+            Assert.That(entMan.GetComponent<DamageableComponent>(mob).TotalDamage, Is.EqualTo(FixedPoint2.New(60)));
+
+            // A capped limb must reject other damage types, while healing releases the shared budget.
+            Assert.That(damageable.ChangeDamage(chest,
+                new DamageSpecifier(blunt, 10) + new DamageSpecifier(heat, 10),
+                ignoreResistances: true).Empty, Is.True);
+            applied = damageable.ChangeDamage(chest,
+                new DamageSpecifier(blunt, -10) + new DamageSpecifier(heat, 10),
+                ignoreResistances: true);
+            Assert.That(applied.DamageDict[blunt.ID], Is.EqualTo(FixedPoint2.New(-10)));
+            Assert.That(applied.DamageDict[heat.ID], Is.EqualTo(FixedPoint2.New(10)));
+            Assert.That(entMan.GetComponent<DamageableComponent>(chest).Damage.DamageDict[blunt.ID], Is.EqualTo(FixedPoint2.New(30)));
+            Assert.That(entMan.GetComponent<DamageableComponent>(chest).Damage.DamageDict[heat.ID], Is.EqualTo(FixedPoint2.New(30)));
+            Assert.That(entMan.GetComponent<DamageableComponent>(mob).TotalDamage, Is.EqualTo(FixedPoint2.New(60)));
+
+            entMan.DeleteEntity(mob);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task HealingResidualWoundsWithNoStoredDamage()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            var entMan = server.EntMan;
+            var body = server.System<SharedBodySystem>();
+            var wounds = server.System<WoundSystem>();
+            var damageable = server.System<DamageableSystem>();
+            var blunt = server.ProtoMan.Index<DamageTypePrototype>("Blunt");
+            var mob = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            var chest = body.GetBodyChildrenOfType(mob, BodyPartType.Chest).Single().Id;
+
+            // Fractures can leave wounds behind after healing has already cleared stored damage.
+            Assert.That(wounds.TryInduceWound(chest, blunt.ID, FixedPoint2.New(20), out _), Is.True);
+            var severity = wounds.GetWoundableSeverityPoint(chest);
+            Assert.That(severity, Is.GreaterThan(FixedPoint2.Zero));
+            Assert.That(entMan.GetComponent<DamageableComponent>(chest).TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+
+            var applied = damageable.ChangeDamage(chest, new DamageSpecifier(blunt, -5), ignoreResistances: true);
+            Assert.That(applied.Empty, Is.True);
+            Assert.That(wounds.GetWoundableSeverityPoint(chest), Is.LessThan(severity));
+            Assert.That(entMan.GetComponent<DamageableComponent>(mob).TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+
+            entMan.DeleteEntity(mob);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     [TestCase(TargetBodyPart.Vital)]
     [TestCase(TargetBodyPart.Hands)]
     [TestCase(TargetBodyPart.Legs)]

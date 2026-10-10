@@ -74,16 +74,20 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem // Goob
 
         var deleted = Deleted(target);
 
-        if (_damageableSystem.TryChangeDamage((target, damageableComponent), ev.Damage, out var damage, component.IgnoreResistances, origin: component.Shooter, targetPart: targetPart) && Exists(component.Shooter)) // Goob - add shitmed targeting targetPart
+        if (_damageableSystem.TryChangeDamage((target, damageableComponent), ev.Damage, out var damage, component.IgnoreResistances, origin: component.Shooter, targetPart: targetPart)) // Goob - add shitmed targeting targetPart
         {
             if (!deleted)
             {
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
-            _adminLogger.Add(LogType.BulletHit,
-                LogImpact.Medium,
-                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
+            // Pirate: fragments and projectiles whose shooter was deleted still penetrate.
+            if (Exists(component.Shooter))
+            {
+                _adminLogger.Add(LogType.BulletHit,
+                    LogImpact.Medium,
+                    $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
+            }
 
             /* // Goob start
             // TODO: i don't know why we are moving this to TryPenetrate. logic is reordered and i'm lazy to find out why
