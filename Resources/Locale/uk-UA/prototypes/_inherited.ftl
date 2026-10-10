@@ -10418,6 +10418,7 @@ ent-PirateMapPreviewBoxTP = { ent-BaseSign }
 ent-PirateMapPreviewChloris = { ent-BaseSign }
 ent-PirateMapPreviewCluster = { ent-BaseSign }
 ent-PirateMapPreviewCog = { ent-BaseSign }
+ent-PirateMapPreviewCore = { ent-BaseSign }
 ent-PirateMapPreviewDelta = { ent-BaseSign }
 ent-PirateMapPreviewFland = { ent-BaseSign }
 ent-PirateMapPreviewGlacierTP = { ent-BaseSign }

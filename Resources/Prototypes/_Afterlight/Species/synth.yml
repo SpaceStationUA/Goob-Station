@@ -8,6 +8,7 @@
   markingLimits: MobSynthMarkingLimits
   dollPrototype: AppearanceSynth
   skinColoration: Hues
+  knowledge: IPC # Pirate: synthetic species use the existing synthetic knowledge profile.
 
 - type: speciesBaseSprites
   id: MobSynthSprites

@@ -162,7 +162,7 @@ function writeChangelog(entry) {
     // Write updated changelogs file
     fs.writeFileSync(
         filePath, // Pirate
-        "Name: Pirate Log\nOrder: -2\nEntries:\n" + // Pirate
+        "Name: Pirate\nOrder: -2\nEntries:\n" + // Pirate
             yaml.dump(data.Entries, { indent: 2 }).replace(/^---/, "")
     );
 }

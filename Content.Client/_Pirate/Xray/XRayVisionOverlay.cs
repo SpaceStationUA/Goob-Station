@@ -23,7 +23,6 @@ namespace Content.Client._Pirate.Xray;
 public sealed class XRayVisionOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
@@ -134,7 +133,7 @@ public sealed class XRayVisionOverlay : Overlay
         var modulate = Color.White.WithAlpha(TileAlpha);
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(args.MapId, bounds, ref _grids);
+        _map.FindGridsIntersecting(args.MapId, bounds, ref _grids);
 
         foreach (var grid in _grids)
         {
