@@ -6,7 +6,6 @@ using Content.Pirate.Client.Radio;
 using Content.Shared.CartridgeLoader;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.WebView;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 

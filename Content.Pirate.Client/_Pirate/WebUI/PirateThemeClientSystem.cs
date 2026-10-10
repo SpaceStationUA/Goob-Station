@@ -7,7 +7,6 @@ using Content.Pirate.Client._Pirate.WebUI;
 using Content.Pirate.Shared.WebUi;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
-using Robust.Client.WebView;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;

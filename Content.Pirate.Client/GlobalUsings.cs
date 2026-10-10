@@ -15,3 +15,8 @@ global using Robust.Shared.IoC;
 global using Robust.Shared.Maths;
 global using Robust.Shared.ViewVariables;
 global using Robust.Shared.Serialization.Manager.Attributes;
+
+// Pirate: temporarily keep web windows native until the launcher provides a compatible WebView module.
+global using WebViewControl = Content.Pirate.Client._Pirate.WebUI.UnavailableWebViewControl;
+global using IBeforeBrowseContext = Content.Pirate.Client._Pirate.WebUI.IWebUiBrowseContext;
+global using IRequestHandlerContext = Content.Pirate.Client._Pirate.WebUI.IWebUiRequestContext;
