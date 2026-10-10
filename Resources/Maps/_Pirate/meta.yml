@@ -121123,8 +121123,6 @@ entities:
       pos: 1.5,28.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 52
     - type: AtmosPipeColor
@@ -123047,8 +123045,6 @@ entities:
       pos: 1.5,27.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 52
     - type: AtmosPipeColor
@@ -153273,9 +153269,6 @@ entities:
     - type: Transform
       pos: 55.5,6.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
 - proto: ShuttersRadiation
   entities:
   - uid: 23868
@@ -166874,9 +166867,6 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         8228:
-        - - GasTurbineDataSender
-          - GasTurbineDataReceiver
-        invalid:
         - - GasTurbineDataSender
           - GasTurbineDataReceiver
     - type: AccessReader
