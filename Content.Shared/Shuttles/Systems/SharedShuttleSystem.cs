@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._NF.Shuttles;
+using Content.Shared._Pirate.Shuttles.Warp; // Pirate: warp drive
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
@@ -176,10 +177,20 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// <summary>
     /// Frontier edit
     /// </summary>
+    // Pirate start: warp drive
+    // A hull under warp can reach much further than any bluespace drive allows, so an engaged
+    // warp drive overrides the bluespace radius outright rather than adding to it. The drive only
+    // publishes WarpDriveGridComponent while its field is actually up, so a cold or spooling
+    // drive leaves the hull on whatever its bluespace drives grant - which is what makes the
+    // drive's power draw and stability window a gameplay concern instead of decoration.
     public float GetFTLRange(EntityUid shuttleUid, FTLDriveComponent? ftl = null)
     {
+        if (TryComp<WarpDriveGridComponent>(shuttleUid, out var warp) && warp.Active)
+            return warp.Range;
+
         return !Resolve(shuttleUid, ref ftl) ? 0f : ftl.Data.Range;
     }
+    // Pirate end
 
     public float GetFTLBufferRange(EntityUid shuttleUid, MapGridComponent? grid = null)
     {

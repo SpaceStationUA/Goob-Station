@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from NSV13 at https://github.com/BeeStation/NSV13/blob/95c6df96dc3e66fee9fee62d16224b6431200dc7/nsv13/icons/obj/machinery/FTL_drive.dmi via FlagshipSS14 PR 23 (https://github.com/FlagshipSS14/Flagship/pull/23).",
+  "size": {
+    "x": 160,
+    "y": 128
+  },
+  "states": [
+    {
+      "name": "core_idle"
+    },
+    {
+      "name": "core_active",
+      "delays": [
+        [
+          0.03,
+          0.03
+        ]
+      ]
+    },
+    {
+      "name": "screen",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}
