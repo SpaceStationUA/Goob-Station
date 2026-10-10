@@ -54,8 +54,8 @@ public sealed partial class StrangeMoodsSystem : SharedStrangeMoodsSystem
             // Pirate: generated prototype copiers require a prototype target; keep runtime mood data separate.
             mood.ProtoId = moodProto.ProtoId;
             mood.SharedMoodPrototype = moodProto.SharedMoodPrototype;
-            mood.Datasets = _serialization.CreateCopy(moodProto.Datasets);
-            mood.Moods = _serialization.CreateCopy(moodProto.Moods);
+            mood.Datasets = _serialization.CreateCopy(moodProto.Datasets, notNullableOverride: true);
+            mood.Moods = _serialization.CreateCopy(moodProto.Moods, notNullableOverride: true);
             mood.MoodsChangedMessage = moodProto.MoodsChangedMessage;
             mood.MoodsChangedSound = _serialization.CreateCopy(moodProto.MoodsChangedSound);
             mood.MoodsChangedColor = moodProto.MoodsChangedColor;
@@ -310,8 +310,8 @@ public sealed partial class StrangeMoodsSystem : SharedStrangeMoodsSystem
             ProtoId = proto.ProtoId,
             MoodName = proto.MoodName,
             MoodDesc = proto.MoodDesc,
-            Conflicts = _serialization.CreateCopy(proto.Conflicts),
-            MoodVars = _serialization.CreateCopy(proto.MoodVars),
+            Conflicts = _serialization.CreateCopy(proto.Conflicts, notNullableOverride: true),
+            MoodVars = _serialization.CreateCopy(proto.MoodVars, notNullableOverride: true),
         };
         var alreadyChosen = new HashSet<ProtoId<StrangeMoodPrototype>>();
 
@@ -484,7 +484,7 @@ public sealed partial class StrangeMoodsSystem : SharedStrangeMoodsSystem
         var mood = new SharedMood
         {
             UniqueId = sharedMood.UniqueId,
-            Moods = _serialization.CreateCopy(sharedMood.Moods),
+            Moods = _serialization.CreateCopy(sharedMood.Moods, notNullableOverride: true),
             Dataset = sharedMood.Dataset,
             Count = sharedMood.Count,
         };
