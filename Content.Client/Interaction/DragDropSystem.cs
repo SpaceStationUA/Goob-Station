@@ -436,8 +436,10 @@ public sealed partial class DragDropSystem : SharedDragDropSystem
 
         foreach (var entity in pvsEntities)
         {
+            // Pirate: outlines must not expose sprites rendered with stealth.
             if (!_spriteQuery.TryGetComponent(entity, out var inRangeSprite) ||
                 !inRangeSprite.Visible ||
+                _sprite.HasPostShader(inRangeSprite, ContentPostShaderIds.Stealth) ||
                 entity == _draggedEntity)
             {
                 continue;

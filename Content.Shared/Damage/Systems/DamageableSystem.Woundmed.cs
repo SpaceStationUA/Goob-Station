@@ -47,7 +47,7 @@ public sealed partial class DamageableSystem
     /// Get only the primitive flags (powers of 2) - these are the actual individual body parts
     /// </summary>
     private static readonly TargetBodyPart[] PrimitiveTargetBodyParts = Enum.GetValues<TargetBodyPart>()
-        .Where(flag => flag != 0 && (flag ^ (flag - 1)) == 0) // Power of 2 check
+        .Where(flag => flag != 0 && (flag & (flag - 1)) == 0) // Pirate: select individual flags.
         .ToArray();
 
     /// <summary>
@@ -219,11 +219,23 @@ public sealed partial class DamageableSystem
             var damagePerPart = ApplySplitDamageBehaviors(splitDamageBehavior, adjustedDamage, targettedParts);
             var appliedDamage = new DamageSpecifier();
             var surplusHealing = new DamageSpecifier();
+            // Pirate: these modes allocate healing only to parts damaged in each damage type.
+            var healingOnlyDamagedParts = splitDamageBehavior is SplitDamageBehavior.SplitEnsureAll
+                or SplitDamageBehavior.SplitEnsureAllDamaged
+                or SplitDamageBehavior.SplitEnsureAllOrganic
+                or SplitDamageBehavior.SplitEnsureAllDamagedAndOrganic;
             for (var i = 0; i < targettedParts.Count; i++)
             {
                 var part = targettedParts[i];
-                var modifiedDamage = damagePerPart;
-                modifiedDamage += surplusHealing;
+                var modifiedDamage = damagePerPart + surplusHealing;
+                if (healingOnlyDamagedParts)
+                {
+                    foreach (var (type, allocation) in damagePerPart.DamageDict)
+                    {
+                        if (allocation < 0 && part.Comp2.Damage.DamageDict.GetValueOrDefault(type) <= 0)
+                            modifiedDamage.DamageDict[type] = surplusHealing.DamageDict.GetValueOrDefault(type);
+                    }
+                }
 
                 // Apply damage to this part
                 var partDamageResult = ChangeDamage(

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Shitmed.Body; // Pirate
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Systems;
 using Content.Shared._Shitmed.Targeting;
@@ -17,10 +18,19 @@ public sealed partial class RepairableSystem
     [Dependency] private readonly HealingSystem _healingSystem = default!;
     [Dependency] private readonly WoundSystem _wounds = default!;
 
+    // Pirate: limb repairs require a complex body and a per-type repair specifier.
+    private bool UsesBodyPartRepair(Entity<RepairableComponent> ent)
+    {
+        return ent.Comp.DamageValue == null
+            && ent.Comp.Damage != null
+            && TryComp<BodyComponent>(ent, out var body)
+            && body.BodyType == BodyType.Complex;
+    }
+
     // If there is nothign to heal on a body, dont try it.
     private bool GoobCanRepair(Entity<RepairableComponent> ent)
     {
-        if (!HasComp<BodyComponent>(ent))
+        if (!UsesBodyPartRepair(ent))
             return true;
 
         if (ent.Comp.Damage != null)

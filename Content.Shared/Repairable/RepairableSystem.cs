@@ -1,5 +1,4 @@
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
@@ -34,8 +33,8 @@ public sealed partial class RepairableSystem : EntitySystem
             return;
 
         var ipcSaysMoreRepairies = false; // Goob
-        var isBody = HasComp<BodyComponent>(ent); // Goob
-        if (isBody) // Goob
+        var repairBodyParts = UsesBodyPartRepair(ent); // Pirate: simple bodies use normal repairs.
+        if (repairBodyParts)
             ipcSaysMoreRepairies = GoobTryRepairIPC(ent, args.User);
         else if (ent.Comp.DamageValue != null)
             RepairSomeDamage((ent, damageable), ent.Comp.DamageValue.Value, args.User);
@@ -44,7 +43,7 @@ public sealed partial class RepairableSystem : EntitySystem
         else
             RepairAllDamage((ent, damageable), args.User);
 
-        args.Repeat = ent.Comp.AutoDoAfter && (isBody ? ipcSaysMoreRepairies : damageable.TotalDamage > 0); // Goob
+        args.Repeat = ent.Comp.AutoDoAfter && (repairBodyParts ? ipcSaysMoreRepairies : damageable.TotalDamage > 0); // Goob
         args.Args.Event.Repeat = args.Repeat;
         args.Handled = true;
 
