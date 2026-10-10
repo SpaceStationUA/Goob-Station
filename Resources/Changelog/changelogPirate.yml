@@ -6269,3 +6269,13 @@ Entries:
         бібліотекою.
   id: 584
   time: '2026-10-10T07:14:43.0000000+00:00'
+- author: v0idRift
+  changes:
+    - type: Tweak
+      message: Оновлено upstream та рушій RobustToolbox до 292.0.0.
+    - type: Fix
+      message: Додано прев’ю Core у голосуванні за мапу.
+    - type: Fix
+      message: Виправлено назву вкладки «Наші зміни» в оновленнях.
+  id: 585
+  time: '2026-10-10T14:06:05.0000000+00:00'
