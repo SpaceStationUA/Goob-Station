@@ -28,7 +28,7 @@ public sealed class MalfAiViewportSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedViewSubscriberSystem _viewSubscriber = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
@@ -135,7 +135,7 @@ public sealed class MalfAiViewportSystem : EntitySystem
         // Anchor the entity to the grid so it moves with the grid
         if (EntityManager.TryGetComponent<TransformComponent>(comp.ViewportAnchor.Value, out var anchorTransform))
         {
-            anchorTransform.Anchored = true;
+            _transform.AnchorEntity(comp.ViewportAnchor.Value, anchorTransform);
         }
 
         // Record chosen coordinates.

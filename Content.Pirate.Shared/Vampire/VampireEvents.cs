@@ -465,9 +465,7 @@ public sealed class VampireShadowBoxingPunchEvent : EntityEventArgs
         Source = source;
         Target = target;
     }
-    [DataField]
     public TimeSpan PunchLifetime = TimeSpan.FromSeconds(0.33);
-    [DataField]
     public string EffectProto = "VampireShadowBoxingPunch";
 }
 

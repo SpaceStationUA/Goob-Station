@@ -84,8 +84,62 @@ env:
     Content.IntegrationTests.Tests.Weapons
 
 jobs:
+  build:
+    name: Build test binaries
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Enlarge swap
+        run: |
+          sudo swapoff -a
+          sudo rm -f /mnt/swapfile
+          sudo fallocate -l 12G /mnt/swapfile
+          sudo chmod 600 /mnt/swapfile
+          sudo mkswap /mnt/swapfile
+          sudo swapon /mnt/swapfile
+
+      - name: Checkout Master
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup Submodule
+        run: git submodule update --init --recursive
+
+      - name: Pull engine updates
+        uses: space-wizards/submodule-dependency@v0.1.5
+
+      - name: Update Engine Submodules
+        run: git -C RobustToolbox submodule update --init --recursive
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4.1.0
+        with:
+          dotnet-version: 10.0.x
+
+      # Pirate: one build supplies all eight test groups, including Content.Tests.
+      - name: Install dependencies
+        run: dotnet restore Content.IntegrationTests/Content.IntegrationTests.csproj
+
+      - name: Build Project
+        run: dotnet build Content.IntegrationTests/Content.IntegrationTests.csproj --configuration DebugOpt --no-restore /m
+
+      - name: Save build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: |
+            bin/Content.*/*.json
+            bin/Content.IntegrationTests/*.dll
+            bin/Content.IntegrationTests/*.pdb
+            bin/Content.IntegrationTests/runtimes/linux-x64/**
+            bin/Content.Tests/*.dll
+            bin/Content.Tests/*.pdb
+          retention-days: 1
+          if-no-files-found: error
+
   tests:
     name: ${{ matrix.name }}
+    needs: build
     if: github.event.pull_request.draft == false
     strategy:
       fail-fast: false
@@ -94,28 +148,20 @@ jobs:
       matrix:
         include:
           - name: Entity integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: entity
           - name: Atmos core integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: atmos-core
           - name: Validation serialization integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: validation-serialization
           - name: Validation map integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: validation-map
           - name: World, atmos tile, and unit tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: world-unit
           - name: Mind integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: minds
           - name: Gameplay and core validation integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: gameplay-validation
           - name: Unmapped integration tests
-            project: Content.IntegrationTests/Content.IntegrationTests.csproj
             shard: unmapped
 
     runs-on: ubuntu-latest
@@ -127,36 +173,34 @@ jobs:
       uses: actions/checkout@v4.2.2
 
     - name: Setup Submodule
-      run: |
-        git submodule update --init --recursive
+      run: git submodule update --init
 
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
-
-    - name: Update Engine Submodules
-      run: |
-        cd RobustToolbox/
-        git submodule update --init --recursive
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4.1.0
       with:
         dotnet-version: 10.0.x
 
-    - name: Install dependencies
-      run: dotnet restore
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-output
+        path: bin/
 
-    - name: Build Project
-      run: dotnet build --configuration DebugOpt --no-restore /m
+    - name: Link unit test runtimes
+      if: matrix.shard == 'world-unit'
+      run: ln -s "$GITHUB_WORKSPACE/bin/Content.IntegrationTests/runtimes" bin/Content.Tests/runtimes
 
     - name: Run ${{ matrix.name }}
       timeout-minutes: 60
       env:
-        TEST_PROJECT: ${{ matrix.project }}
         TEST_SHARD: ${{ matrix.shard }}
+        DOTNET_TieredPGO: 0
       run: |
         export DOTNET_gcServer=1
-        test_args=(--no-build --configuration DebugOpt "$TEST_PROJECT")
+        test_args=(bin/Content.IntegrationTests/Content.IntegrationTests.dll)
         nunit_args=(NUnit.ConsoleOut=0)
 
         read -r -a entity_patterns <<< "$ENTITY_TEST_PATTERNS"
@@ -239,13 +283,19 @@ jobs:
         dotnet test "${test_args[@]}" -- "${nunit_args[@]}"
 
         if [[ "$TEST_SHARD" == "world-unit" ]]; then
-          dotnet test --no-build --configuration DebugOpt Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0
+          dotnet test bin/Content.Tests/Content.Tests.dll -- NUnit.ConsoleOut=0
         fi
   ci-success:
     name: Build & Test Debug
     needs:
+      - build
       - tests
     runs-on: ubuntu-latest
+    if: always() && github.event.pull_request.draft == false
     steps:
       - name: CI succeeded
-        run: exit 0
+        run: |
+          if [[ "${{ needs.build.result }}" != "success" || "${{ needs.tests.result }}" != "success" ]]; then
+            echo "Build or tests failed!"
+            exit 1
+          fi

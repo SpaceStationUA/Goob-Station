@@ -226,7 +226,7 @@ public abstract partial class CESharedZLevelsSystem
         isHighGround = false;
         var tileIndices = _map.WorldToTile(gridUid, grid, worldPos);
 
-        var anchoredQuery = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tileIndices);
+        var anchoredQuery = _map.GetAnchoredEntities(gridUid, grid, tileIndices);
         while (anchoredQuery.MoveNext(out var uid))
         {
             if (_highgroundQuery.HasComp(uid.Value))
@@ -287,7 +287,7 @@ public abstract partial class CESharedZLevelsSystem
         var tileIndices = _map.WorldToTile(gridUid, grid, worldPos);
         var blockingLayers = (int) (CollisionGroup.Impassable | CollisionGroup.HighImpassable);
 
-        var anchoredQuery = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tileIndices);
+        var anchoredQuery = _map.GetAnchoredEntities(gridUid, grid, tileIndices);
         while (anchoredQuery.MoveNext(out var uid))
         {
             if (_highgroundQuery.HasComp(uid.Value))
@@ -419,7 +419,7 @@ public abstract partial class CESharedZLevelsSystem
                 break;
 
             var tileIndices = _map.WorldToTile(belowGridUid, belowGrid, worldPos);
-            var anchoredQuery = _map.GetAnchoredEntitiesEnumerator(belowGridUid, belowGrid, tileIndices);
+            var anchoredQuery = _map.GetAnchoredEntities(belowGridUid, belowGrid, tileIndices);
             while (anchoredQuery.MoveNext(out var uid))
             {
                 if (!_highgroundQuery.HasComp(uid.Value))
@@ -1878,7 +1878,7 @@ public abstract partial class CESharedZLevelsSystem
     public bool HasSupportAtWorldPositionOnGrid(EntityUid gridUid, MapGridComponent grid, Vector2 worldPos)
     {
         var tileIndices = _map.WorldToTile(gridUid, grid, worldPos);
-        var anchoredQuery = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tileIndices);
+        var anchoredQuery = _map.GetAnchoredEntities(gridUid, grid, tileIndices);
         while (anchoredQuery.MoveNext(out var uid))
         {
             if (_highgroundQuery.HasComp(uid.Value))
@@ -2315,7 +2315,7 @@ public abstract partial class CESharedZLevelsSystem
 
             var foundHighGround = false;
             var bestHighGround = default(GroundSupportSample);
-            var query = _map.GetAnchoredEntitiesEnumerator(checkingGridUid, checkingGrid, tileIndices);
+            var query = _map.GetAnchoredEntities(checkingGridUid, checkingGrid, tileIndices);
             while (query.MoveNext(out var uid))
             {
                 if (!_highgroundQuery.TryComp(uid, out var heightComp))

@@ -5,6 +5,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Numerics;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -36,7 +38,7 @@ namespace Content.Server.BloodCult.EntitySystems
 		[Dependency] private readonly DamageableSystem _damageableSystem = default!;
 		[Dependency] private readonly PopupSystem _popupSystem = default!;
 		[Dependency] private readonly IPrototypeManager _protoMan = default!;
-		[Dependency] private readonly IMapManager _mapManager = default!;
+		[Dependency] private readonly SharedMapSystem _mapManager = default!;
 		[Dependency] private readonly BloodCultRuleSystem _bloodCultRule = default!;
 
 		private EntityQuery<BloodCultRuneComponent> _runeQuery;
@@ -147,7 +149,7 @@ namespace Content.Server.BloodCult.EntitySystems
 
 		private bool CanPlaceBarrierAt(EntityCoordinates clickedAt, out EntityCoordinates location)
 		{
-			location = clickedAt.AlignWithClosestGridTile(entityManager: EntityManager, mapManager: _mapManager);
+			location = clickedAt.AlignWithClosestGridTile(entityManager: EntityManager);
 			var gridUid = _transform.GetGrid(location);
 			if (!TryComp<MapGridComponent>(gridUid, out var grid))
 			{

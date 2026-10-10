@@ -11,12 +11,34 @@ public sealed class ShatteredRisenSystem : EntitySystem
 {
     [Dependency] private readonly HandsSystem _hands = default!;
 
+    private bool _flushingEntities;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ShatteredRisenComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ShatteredRisenComponent, HandCountChangedEvent>(OnHandCountChanged);
+
+        EntityManager.BeforeEntityFlush += OnBeforeEntityFlush;
+        EntityManager.AfterEntityFlush += OnAfterEntityFlush;
+    }
+
+    public override void Shutdown()
+    {
+        EntityManager.BeforeEntityFlush -= OnBeforeEntityFlush;
+        EntityManager.AfterEntityFlush -= OnAfterEntityFlush;
+        base.Shutdown();
+    }
+
+    private void OnBeforeEntityFlush()
+    {
+        _flushingEntities = true;
+    }
+
+    private void OnAfterEntityFlush()
+    {
+        _flushingEntities = false;
     }
 
     private void OnMapInit(Entity<ShatteredRisenComponent> ent, ref MapInitEvent args)
@@ -26,12 +48,15 @@ public sealed class ShatteredRisenSystem : EntitySystem
 
     private void OnHandCountChanged(Entity<ShatteredRisenComponent> ent, ref HandCountChangedEvent args)
     {
-        if (!TerminatingOrDeleted(ent))
-            RefreshHands(ent);
+        RefreshHands(ent);
     }
 
     private void RefreshHands(Entity<ShatteredRisenComponent> ent)
     {
+        // Body parts can be deleted before their owner starts terminating during a world flush.
+        if (_flushingEntities || TerminatingOrDeleted(ent))
+            return;
+
         if (!TryComp(ent, out HandsComponent? hands) || hands.Count == 0)
             return;
 

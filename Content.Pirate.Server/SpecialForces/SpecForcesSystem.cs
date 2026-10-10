@@ -174,7 +174,7 @@ public sealed class SpecialForcesSystem : EntitySystem
         foreach (var (_, meta, xform) in EntityManager
                      .EntityQuery<SpawnPointComponent, MetaDataComponent, TransformComponent>(true))
         {
-            if (meta.EntityPrototype?.ID != SpawnMarker)
+            if (meta.EntityPrototype?.ID != SpawnMarker.Id)
                 continue;
 
             if (xform.ParentUid != shuttle)
@@ -294,7 +294,7 @@ public sealed class SpecialForcesSystem : EntitySystem
         }
         else
         {
-            var mapId = _mapManager.CreateMap();
+            _mapManager.CreateMap(out var mapId);
             var gridOpts = DeserializationOptions.Default with { InitializeMaps = true };
             if (!_mapLoader.TryLoadGrid(mapId, new ResPath(shuttlePath), out var gridUid, gridOpts))
             {
@@ -411,29 +411,29 @@ public sealed class SpecialForcesSystem : EntitySystem
         }
     }
 
-    [ValidatePrototypeId<EntityPrototype>] private const string SpawnMarker = "MarkerSpecialforce";
+    private static readonly EntProtoId SpawnMarker = "MarkerSpecialforce";
     private const string EtrShuttlePath = "Maps/_Pirate/Shuttles/Kokomo/ERT.yml";
-    [ValidatePrototypeId<EntityPrototype>] private const string ErtLeader = "RandomHumanoidSpawnerERTLeaderEVA";
-    [ValidatePrototypeId<EntityPrototype>] private const string ErtSecurity = "RandomHumanoidSpawnerERTSecurity";
-    [ValidatePrototypeId<EntityPrototype>] private const string ErtEngineer = "RandomHumanoidSpawnerERTEngineer";
-    [ValidatePrototypeId<EntityPrototype>] private const string ErtJanitor = "RandomHumanoidSpawnerERTJanitor";
-    [ValidatePrototypeId<EntityPrototype>] private const string ErtMedical = "RandomHumanoidSpawnerERTMedical";
+    private static readonly EntProtoId ErtLeader = "RandomHumanoidSpawnerERTLeaderEVA";
+    private static readonly EntProtoId ErtSecurity = "RandomHumanoidSpawnerERTSecurity";
+    private static readonly EntProtoId ErtEngineer = "RandomHumanoidSpawnerERTEngineer";
+    private static readonly EntProtoId ErtJanitor = "RandomHumanoidSpawnerERTJanitor";
+    private static readonly EntProtoId ErtMedical = "RandomHumanoidSpawnerERTMedical";
 
     private const string CburnShuttlePath = "Maps/_Pirate/Shuttles/Kokomo/CBURN.yml";
-    [ValidatePrototypeId<EntityPrototype>] private const string CburnLeader = "RandomHumanoidSpawnerCBURNUnit";
-    [ValidatePrototypeId<EntityPrototype>] private const string Cburn = "RandomHumanoidSpawnerCBURNUnit";
-    [ValidatePrototypeId<EntityPrototype>] private const string CburnFlamer = "RandomHumanoidSpawnerCBURNUnit";
+    private static readonly EntProtoId CburnLeader = "RandomHumanoidSpawnerCBURNUnit";
+    private static readonly EntProtoId Cburn = "RandomHumanoidSpawnerCBURNUnit";
+    private static readonly EntProtoId CburnFlamer = "RandomHumanoidSpawnerCBURNUnit";
 
     private const string DeadsquadShuttlePath = "Maps/Shuttles/dart.yml";
-    [ValidatePrototypeId<EntityPrototype>] private const string DeadsquadLeader = "RandomHumanoidSpawnerDeathSquad";
-    [ValidatePrototypeId<EntityPrototype>] private const string Deadsquad = "RandomHumanoidSpawnerDeathSquad";
+    private static readonly EntProtoId DeadsquadLeader = "RandomHumanoidSpawnerDeathSquad";
+    private static readonly EntProtoId Deadsquad = "RandomHumanoidSpawnerDeathSquad";
 
-    [ValidatePrototypeId<EntityPrototype>] private const string HecuLeader = "RandomHumanoidHECULeaderSpawner";
-    [ValidatePrototypeId<EntityPrototype>] private const string HecuMedic = "RandomHumanoidHECUMedicSpawner";
-    [ValidatePrototypeId<EntityPrototype>] private const string Hecu = "RandomHumanoidHECUSpawner";
-    [ValidatePrototypeId<EntityPrototype>] private const string HecuLeaderIpc = "RandomHumanoidHECULeaderIPCSpawner";
-    [ValidatePrototypeId<EntityPrototype>] private const string HecuMedicIpc = "RandomHumanoidHECUMedicIPCSpawner";
-    [ValidatePrototypeId<EntityPrototype>] private const string HecuIpc = "RandomHumanoidHECUIPCSpawner";
+    private static readonly EntProtoId HecuLeader = "RandomHumanoidHECULeaderSpawner";
+    private static readonly EntProtoId HecuMedic = "RandomHumanoidHECUMedicSpawner";
+    private static readonly EntProtoId Hecu = "RandomHumanoidHECUSpawner";
+    private static readonly EntProtoId HecuLeaderIpc = "RandomHumanoidHECULeaderIPCSpawner";
+    private static readonly EntProtoId HecuMedicIpc = "RandomHumanoidHECUMedicIPCSpawner";
+    private static readonly EntProtoId HecuIpc = "RandomHumanoidHECUIPCSpawner";
 
     private static readonly Dictionary<string, string> HecuHumanReplacements = new()
     {
@@ -451,7 +451,7 @@ public sealed class SpecialForcesSystem : EntitySystem
 
     private readonly SoundSpecifier _ertAnnounce = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IRobustRandom _random = default!;

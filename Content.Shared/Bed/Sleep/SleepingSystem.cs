@@ -7,6 +7,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.ForceSay;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
 using Content.Shared.Eye.Blinding.Systems;
@@ -117,6 +118,10 @@ public sealed partial class SleepingSystem : EntitySystem
     /// </summary>
     private void OnSleepStateChanged(Entity<MobStateComponent> ent, ref SleepStateChangedEvent args)
     {
+        // Pirate: the server replicates these side effects; changing components here invalidates the client's removal batch.
+        if (_gameTiming.ApplyingState)
+            return;
+
         if (args.FellAsleep)
         {
             // Just in case we're not using the sleeping status
@@ -142,7 +147,9 @@ public sealed partial class SleepingSystem : EntitySystem
         _stun.TryUnstun(ent.Owner);
         _stun.TryStanding(ent.Owner);
 
-        RemComp<SpamEmitSoundComponent>(ent);
+        // Pirate: replicated wake-up can arrive after the server already removed the sound.
+        if (TryComp<SpamEmitSoundComponent>(ent, out var wakeSound))
+            RemComp(ent.Owner, wakeSound);
     }
 
     private void OnCompInit(Entity<SleepingComponent> ent, ref ComponentInit args)
@@ -285,7 +292,9 @@ public sealed partial class SleepingSystem : EntitySystem
     {
         if (args.NewMobState == MobState.Dead || args.NewMobState == MobState.Critical) // Goobstation - xenobio
         {
-            RemComp<SpamEmitSoundComponent>(ent);
+            // Pirate: removing Sleeping also raises the wake-up event, so only remove a live sound component.
+            if (TryComp<SpamEmitSoundComponent>(ent, out var sleepSound))
+                RemComp(ent.Owner, sleepSound);
             RemComp<SleepingComponent>(ent);
             return;
         }

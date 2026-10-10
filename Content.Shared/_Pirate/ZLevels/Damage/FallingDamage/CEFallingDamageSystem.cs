@@ -3,6 +3,7 @@
  * https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT
  */
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared.Damage;
 
 namespace Content.Shared._Pirate.ZLevels.Damage.FallingDamage;

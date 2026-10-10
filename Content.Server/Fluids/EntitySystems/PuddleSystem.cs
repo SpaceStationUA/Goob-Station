@@ -47,20 +47,17 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly TurfSystem _turf = default!;
 
 
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Blood = "Blood";
+    private static readonly ProtoId<ReagentPrototype> Blood = "Blood";
 
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Slime = "Slime";
+    private static readonly ProtoId<ReagentPrototype> Slime = "Slime";
 
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string CopperBlood = "CopperBlood";
+    private static readonly ProtoId<ReagentPrototype> CopperBlood = "CopperBlood";
 
-    [ValidatePrototypeId<ReagentPrototype>] // goobstation
-    private const string BloodChangeling = "BloodChangeling"; // goobstation
+     // goobstation
+    private static readonly ProtoId<ReagentPrototype> BloodChangeling = "BloodChangeling"; // goobstation
 
-    [ValidatePrototypeId<ReagentPrototype>] // goobstation
-    private const string BlackBlood = "BlackBlood"; // goobstation
+     // goobstation
+    private static readonly ProtoId<ReagentPrototype> BlackBlood = "BlackBlood"; // goobstation
 
     private static string[] _standoutReagents = [Blood, Slime, CopperBlood, BloodChangeling, BlackBlood]; // goobstation - added BloodChangeling, BlackBlood
 
@@ -619,7 +616,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         // Get normalized co-ordinate for spill location and spill it in the centre
         // TODO: Does SnapGrid or something else already do this?
-        var anchored = _map.GetAnchoredEntitiesEnumerator(gridId, mapGrid, tileRef.GridIndices);
+        var anchored = _map.GetAnchoredEntities(gridId, mapGrid, tileRef.GridIndices);
         var puddleQuery = GetEntityQuery<PuddleComponent>();
         var sparklesQuery = GetEntityQuery<EvaporationSparkleComponent>();
         var footprintQuery = GetEntityQuery<FootprintComponent>(); // Corvax-Next-Footprints
@@ -673,7 +670,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (!TryComp<MapGridComponent>(tile.GridUid, out var grid))
             return false;
 
-        var anc = _map.GetAnchoredEntitiesEnumerator(tile.GridUid, grid, tile.GridIndices);
+        var anc = _map.GetAnchoredEntities(tile.GridUid, grid, tile.GridIndices);
         var puddleQuery = GetEntityQuery<PuddleComponent>();
         var footprintQuery = GetEntityQuery<FootprintComponent>(); // Corvax-Next-Footprints
 
