@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Server.Construction.Components;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
@@ -172,8 +173,8 @@ public sealed class MalfAiOverrideSystem : EntitySystem
 
         // Without a modifier set, the threshold is a literal damage pool.
         _damageable.ChangeDamageContainer(machine, "StructuralInorganic", damageable);
-        _damageable.SetDamageModifierSetId(machine, null, damageable);
-        _damageable.SetAllDamage(machine, damageable, FixedPoint2.Zero);
+        _damageable.SetDamageModifierSetId((machine, damageable), null);
+        _damageable.SetAllDamage((machine, damageable), FixedPoint2.Zero);
 
         var destructible = EnsureComp<DestructibleComponent>(machine);
         destructible.IsBroken = false;

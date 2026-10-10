@@ -243,7 +243,7 @@ public sealed class RCDSystem : EntitySystem
         #endregion
 
         // Try to start the do after
-        var effect = Spawn(effectPrototype, location);
+        var effect = Spawn(effectPrototype, _mapSystem.ToCenterCoordinates(tile, mapGrid));
         var ev = new RCDDoAfterEvent(GetNetCoordinates(location), component.ConstructionDirection, placementLayer, component.ProtoId, cost, GetNetEntity(effect)); // Pirate: chem plumbing
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, ev, uid, target: args.Target, used: uid)
@@ -869,7 +869,7 @@ public sealed class RCDSystem : EntitySystem
                     RcdRotation.Fixed => Angle.Zero,
                     RcdRotation.Camera => Transform(uid).LocalRotation,
                     RcdRotation.User => direction.ToAngle(),
-                    _ => Angle.Zero // Fallback
+                    _ => Angle.Zero
                 };
 
                 var entityCoords = _mapSystem.GridTileToLocal(gridUid, mapGrid, position);

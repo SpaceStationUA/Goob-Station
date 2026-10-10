@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using Content.Pirate.Shared.Vampire.Components;
 using Content.Pirate.Shared.Vampire.Components.Classes;
 using Content.Shared.Actions;

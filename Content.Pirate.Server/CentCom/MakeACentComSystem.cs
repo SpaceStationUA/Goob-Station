@@ -25,7 +25,7 @@ namespace Content.Pirate.Server.CentCom
         [ValidatePrototypeId<EntityPrototype>] private const string Disk = "CoordinatesDisk";
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedMapSystem _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly RandomHumanoidSystem _randomHumanoidSystem = default!;
         [Dependency] private readonly RandomMetadataSystem _randomMetadataSystem = default!;

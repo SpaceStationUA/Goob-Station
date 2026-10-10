@@ -14,7 +14,7 @@ namespace Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 public abstract partial class CESharedZLevelsSystem
 {
     [Dependency] protected readonly ITileDefinitionManager TilDefMan = default!;
-    [Dependency] protected readonly IMapManager _mapMan = default!;
+    [Dependency] protected readonly SharedMapSystem _mapMan = default!;
     private void InitView()
     {
         SubscribeLocalEvent<CEZLevelViewerComponent, MoveEvent>(OnViewerMove);

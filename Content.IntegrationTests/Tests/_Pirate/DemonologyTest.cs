@@ -2033,13 +2033,12 @@ public sealed class DemonologyTest : InteractionTest
             var damageable = SEntMan.GetComponent<DamageableComponent>(demonUid);
             var before = damageable.Damage.DamageDict.GetValueOrDefault("Holy");
             var changed = SEntMan.System<DamageableSystem>().TryChangeDamage(
-                demonUid,
-                CreateDamage("Holy", 1),
-                damageable: damageable);
-            Assert.That(changed, Is.Not.Null, $"{test.Id}: Holy damage was ignored");
+                (demonUid, damageable),
+                CreateDamage("Holy", 1));
+            Assert.That(changed, Is.True, $"{test.Id}: Holy damage was ignored");
             Assert.That(damageable.Damage.DamageDict["Holy"] - before,
                 Is.EqualTo(FixedPoint2.New(1)), $"{test.Id}: Holy damage delta");
-            SEntMan.System<DamageableSystem>().SetAllDamage(demonUid, damageable, FixedPoint2.Zero);
+            SEntMan.System<DamageableSystem>().SetAllDamage((demonUid, damageable), FixedPoint2.Zero);
         });
     }
 
@@ -2052,9 +2051,8 @@ public sealed class DemonologyTest : InteractionTest
         await Server.WaitPost(() =>
         {
             Assert.That(SEntMan.System<DamageableSystem>().TryChangeDamage(
-                demonUid,
-                CreateDamage("Blunt", test.DestructionDamage),
-                damageable: damageable), Is.Not.Null, test.Id);
+                (demonUid, damageable),
+                CreateDamage("Blunt", test.DestructionDamage)), Is.True, test.Id);
         });
         await RunTicks(3);
 

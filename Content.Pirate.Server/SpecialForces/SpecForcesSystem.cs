@@ -294,7 +294,7 @@ public sealed class SpecialForcesSystem : EntitySystem
         }
         else
         {
-            var mapId = _mapManager.CreateMap();
+            _mapManager.CreateMap(out var mapId);
             var gridOpts = DeserializationOptions.Default with { InitializeMaps = true };
             if (!_mapLoader.TryLoadGrid(mapId, new ResPath(shuttlePath), out var gridUid, gridOpts))
             {
@@ -451,7 +451,7 @@ public sealed class SpecialForcesSystem : EntitySystem
 
     private readonly SoundSpecifier _ertAnnounce = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IRobustRandom _random = default!;

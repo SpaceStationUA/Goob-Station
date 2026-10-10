@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System;
 using System.Numerics;
 using Content.Shared.Actions;
@@ -100,7 +101,7 @@ public sealed class MalfAiGyroscopeSystem : EntitySystem
                     continue;
 
                 // Apply damage once per traversal per entity.
-                _damage.TryChangeDamage(ent, dmg, true);
+                _damage.TryChangeDamage(ent.Owner, dmg, true);
                 traverse.Damaged.Add(ent);
             }
 

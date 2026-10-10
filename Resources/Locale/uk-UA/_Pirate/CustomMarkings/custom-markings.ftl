@@ -110,10 +110,10 @@ cmd-custommarkingblock-blocked = Малюнок заблоковано.
 cmd-custommarkingblock-unblocked = Малюнок розблоковано.
 
 wf-color-custom = Власний колір
-wf-color-red = R
-wf-color-green = G
-wf-color-blue = B
-wf-color-hue = H
-wf-color-saturation = S
-wf-color-value = V
-wf-color-hex = Hex
+wf-color-red = Ч
+wf-color-green = З
+wf-color-blue = С
+wf-color-hue = В
+wf-color-saturation = Н
+wf-color-value = Я
+wf-color-hex = Шістнадц.

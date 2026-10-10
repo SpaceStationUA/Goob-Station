@@ -27,7 +27,6 @@ namespace Content.Client._Mono.FireControl.UI;
 
 public sealed class FireControlNavControl : BaseShuttleControl
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     private readonly SharedShuttleSystem _shuttles;
     private readonly SharedTransformSystem _transform;
     private readonly IEntitySystemManager _sysManager = default!;
@@ -244,7 +243,7 @@ public sealed class FireControlNavControl : BaseShuttleControl
         _zLevelGrids.Clear(); // Pirate: multiz
         var maxRange = new Vector2(WorldRange, WorldRange);
         var queryBox = new Box2(mapPos.Position - maxRange, mapPos.Position + maxRange); // Pirate: multiz
-        _mapManager.FindGridsIntersecting(xform.MapID, queryBox, ref _grids, approx: true, includeMap: false); // Pirate: multiz
+        Maps.FindGridsIntersecting(xform.MapID, queryBox, ref _grids, approx: true, includeMap: false); // Pirate: multiz
 
         #region Pirate: multiz — overlay grids from the ±1 adjacent z-layers, marked for dimming
         var zLevels = EntManager.System<CESharedZLevelsSystem>();
@@ -260,7 +259,7 @@ public sealed class FireControlNavControl : BaseShuttleControl
                     continue;
 
                 _adjGrids.Clear();
-                _mapManager.FindGridsIntersecting(adjMapComp.MapId, queryBox, ref _adjGrids, approx: true, includeMap: false);
+                Maps.FindGridsIntersecting(adjMapComp.MapId, queryBox, ref _adjGrids, approx: true, includeMap: false);
                 foreach (var g in _adjGrids)
                 {
                     _zLevelGrids.Add(g.Owner);

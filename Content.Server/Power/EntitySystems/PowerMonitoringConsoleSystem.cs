@@ -1040,7 +1040,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     {
         // Stale ChildDevices entries can point at deleted children during round-restart node-group
         // rebuilds; skip them rather than crash on GetNetEntity/Transform.
-        if (!Exists(child) || !TryComp<TransformComponent>(child, out var xform)) // Pirate: multiz
+        if (TerminatingOrDeleted(child) || TerminatingOrDeleted(master) || !TryComp<TransformComponent>(child, out var xform)) // Pirate: multiz
             return; // Pirate: multiz
         var netEntity = GetNetEntity(child);
         var monitoringGrids = xform.GridUid != null ? GetHubLinkedMonitoringGrids(xform.GridUid.Value) : null; // Pirate: multiz
@@ -1205,7 +1205,8 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             {
                 if (!entDevice.IsCollectionMaster)
                 {
-                    metaData.CollectionMaster = GetNetEntity(entDevice.CollectionMaster);
+                    if (!TerminatingOrDeleted(entDevice.CollectionMaster)) // Goob - Fix (deleted collection master)
+                        metaData.CollectionMaster = GetNetEntity(entDevice.CollectionMaster);
                 }
 
                 else if (entDevice.ChildDevices.Count > 0)

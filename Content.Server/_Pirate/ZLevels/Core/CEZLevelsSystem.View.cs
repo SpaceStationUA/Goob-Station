@@ -409,7 +409,7 @@ public sealed partial class CEZLevelsSystem
             for (var y = -tileRadius; y <= tileRadius; y++)
             {
                 var tile = centerTile + new Vector2i(x, y);
-                var query = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+                var query = _map.GetAnchoredEntities(gridUid, grid, tile);
                 while (query.MoveNext(out var uid))
                 {
                     if (uid is not { } highGroundUid ||

@@ -17,7 +17,7 @@ namespace Content.Server._Pirate.Trigger;
 public sealed class ScramDefaultMapDestinationSystem : EntitySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly SharedStationSystem _station = default!;
     [Dependency] private readonly CEZLevelFloorGridsSystem _zFloors = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;

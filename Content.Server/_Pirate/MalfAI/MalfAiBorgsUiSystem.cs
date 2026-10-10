@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI.Actions;
 using Robust.Server.GameObjects;
@@ -33,7 +35,7 @@ public sealed class MalfAiBorgsUiSystem : EntitySystem
         // Refresh UI when a borg becomes (un)linked and when it takes damage.
         SubscribeLocalEvent<MalfAiControlledComponent, ComponentStartup>(OnMalfBorgStart);
         SubscribeLocalEvent<MalfAiControlledComponent, ComponentShutdown>(OnMalfBorgShutdown);
-        SubscribeLocalEvent<MalfAiControlledComponent, Content.Shared.Damage.DamageChangedEvent>(OnMalfBorgDamaged);
+        SubscribeLocalEvent<MalfAiControlledComponent, Content.Shared.Damage.Systems.DamageChangedEvent>(OnMalfBorgDamaged);
         // Handle BUI messages from the AI-held owner; avoid MetaDataComponent in generics to prevent registration at startup.
         Subs.BuiEvents<Content.Shared.Silicons.StationAi.StationAiHeldComponent>(MalfAiBorgsUiKey.Key,
             subs =>
@@ -232,7 +234,7 @@ public sealed class MalfAiBorgsUiSystem : EntitySystem
         PushRefreshForControllerAndMind(controller);
     }
 
-    private void OnMalfBorgDamaged(Entity<MalfAiControlledComponent> ent, ref Content.Shared.Damage.DamageChangedEvent args)
+    private void OnMalfBorgDamaged(Entity<MalfAiControlledComponent> ent, ref Content.Shared.Damage.Systems.DamageChangedEvent args)
     {
         if (ent.Comp.Controller is not { } controller)
             return;
@@ -257,7 +259,7 @@ public sealed class MalfAiBorgsUiSystem : EntitySystem
             // Compute health as percentage relative to critical threshold (100 damage = 0%, 0 damage = 100%).
             var health = 1.0f;
             var isCritical = false;
-            if (TryComp<Content.Shared.Damage.DamageableComponent>(uid, out var dmg))
+            if (TryComp<Content.Shared.Damage.Components.DamageableComponent>(uid, out var dmg))
             {
                 // Check if the borg is in critical state by comparing current damage to critical threshold
                 if (_mobThreshold.TryGetThresholdForState(uid, Content.Shared.Mobs.MobState.Critical, out var critThreshold))

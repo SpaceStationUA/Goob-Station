@@ -12,3 +12,5 @@ ui-options-auto-focus-search-on-build-menu = Автоматично фокусу
 ui-options-admin-notifications-title = Адмін сповіщення
 ui-options-admin-notifications-volume = Гучність адмін сповіщень
 ui-options-lock-action-bar-drag = Дозволяти перетягувати дії на панелі швидкого доступу лише коли відкрите меню дій
+
+ui-options-inhand-interaction-particle-scale = Розмір піктограми взаємодії над головою

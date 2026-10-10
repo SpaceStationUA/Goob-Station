@@ -1,3 +1,5 @@
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
@@ -499,7 +501,7 @@ public sealed partial class ElevatorSystem : EntitySystem
             if (!_map.TryGetTileRef(gridUid, grid, tile, out var tileRef))
                 continue;
 
-            var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+            var anchored = _map.GetAnchoredEntities(gridUid, grid, tile);
             while (anchored.MoveNext(out var anchoredUid))
             {
                 if (anchoredUid is not { } anchoredEnt)

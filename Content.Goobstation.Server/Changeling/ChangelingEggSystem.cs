@@ -59,6 +59,12 @@ public sealed class ChangelingEggSystem : EntitySystem
 
         comp.LingComponents.Clear();
         RemComp<ChangelingEggComponent>(uid);
+        foreach (var listing in comp.lingStore.FullListingsCatalog)
+        {
+            if (listing is { PurchaseAmount: > 0, RaiseProductEventOnUser: true, ProductEvent: { } productEvent })
+                RaiseLocalEvent(newUid, productEvent);
+        }
+
         _bodySystem.GibBody(uid);
     }
 }

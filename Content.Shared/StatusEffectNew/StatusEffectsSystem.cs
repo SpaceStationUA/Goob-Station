@@ -87,6 +87,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
             if (ent.TryGetComponent<StatusEffectComponent>(out _, _factory))
                 _statusEffectPrototypes.Add(ent.ID);
         }
+
     }
 
     private void OnStatusContainerInit(Entity<StatusEffectContainerComponent> ent, ref ComponentInit args)

@@ -120,7 +120,7 @@ public sealed class CEZLevelDamageSystem : EntitySystem
                 _stun.TryKnockdown(victim, TimeSpan.FromSeconds(otherStun));
             if (otherDamage > 0)
             {
-                if (_damage.TryChangeDamage(victim, new DamageSpecifier(_proto.Index(BluntDamageType), otherDamage)) != null && _net.IsClient)
+                if (_damage.TryChangeDamage(victim, new DamageSpecifier(_proto.Index(BluntDamageType), otherDamage)) && _net.IsClient)
                     redDamageFlash.Add(victim);
             }
         }
@@ -136,7 +136,7 @@ public sealed class CEZLevelDamageSystem : EntitySystem
             if (!hadFallGuard)
                 RemComp<CEZFallDamageInProgressComponent>(ent.Owner);
 
-            if (result != null && _net.IsClient)
+            if (result && _net.IsClient)
                 redDamageFlash.Add(ent.Owner);
         }
 
