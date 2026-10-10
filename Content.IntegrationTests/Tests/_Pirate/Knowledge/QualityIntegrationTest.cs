@@ -15,6 +15,7 @@ using Content.Shared.Armor;
 using Content.Shared.Blocking;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Destructible.Thresholds.Triggers;
 using Content.Shared.Explosion.Components;
 using Content.Shared.NameModifier.EntitySystems;
@@ -519,6 +520,6 @@ public sealed class QualityIntegrationTest
     private static float Damage(IReadOnlyDictionary<string, FixedPoint2> damage, string type)
         => damage[type].Float();
 
-    private static float Damage(IReadOnlyDictionary<string, float> damage, string type)
+    private static float Damage(IReadOnlyDictionary<ProtoId<DamageTypePrototype>, float> damage, ProtoId<DamageTypePrototype> type)
         => damage[type];
 }
