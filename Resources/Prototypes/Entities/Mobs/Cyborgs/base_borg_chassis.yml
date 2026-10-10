@@ -115,9 +115,16 @@
     - Binary
     - Common
     - Science
+  - type: CollectiveMind # Pirate: retain receive-only binary interception alongside radio.
+    defaultChannel: Binary
+    channels:
+    - Binary
+    canUseInCrit: true
   - type: ZombieImmune
   - type: Repairable
-    doAfterDelay: 10
+    damageValue: -10 # 10 seconds to repair from crit
+    doAfterDelay: 1
+    fuelCost: 0.5
     # allowSelfRepair: false # Goobstation
   - type: BorgChassis
   - type: CyberdeckSiliconTarget # Pirate - Cyberdeck
@@ -242,7 +249,7 @@
       isLooped: true
   - type: PointLight
     enabled: false
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
     radius: 4
     netsync: false
@@ -522,6 +529,11 @@
     color: "#dd200b"
   - type: BypassLock
     bypassDelay: 15 # We don't want people to easily be able to remove syndieborg brains.
+
+  - type: CollectiveMind # Pirate: retain the downstream binary channel.
+    defaultChannel: Binary
+    channels:
+    - Binary
 
 - type: entity
   parent: BaseBorgChassisNotIonStormable

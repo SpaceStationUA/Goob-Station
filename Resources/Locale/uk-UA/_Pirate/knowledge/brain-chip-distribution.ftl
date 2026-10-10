@@ -35,6 +35,8 @@ uplink-skill-chip-weapons-laser-name = ГАРТ-чип (лазерна збро�
 uplink-skill-chip-weapons-laser-desc = Вчить вести ціль лазерним карабіном.
 uplink-skill-chip-weapons-heavy-name = ГАРТ-чип (важка зброя)
 uplink-skill-chip-weapons-heavy-desc = Вчить носити й наводити щось надто велике.
+uplink-skill-chip-throwing-tampered-name = { ent-SkillChipThrowingTampered }
+uplink-skill-chip-throwing-tampered-desc = { ent-SkillChipThrowingTampered.desc }
 
 ### Ящики
 
@@ -71,3 +73,5 @@ ent-BoxSkillChipsMed = коробка медичних чипів
     .desc = { ent-BoxSkillChipsBase.desc }
 ent-BoxSkillChipsSci = коробка наукових чипів
     .desc = { ent-BoxSkillChipsBase.desc }
+
+research-technology-hormone-regulation = Гормональна регуляція

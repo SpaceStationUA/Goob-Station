@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: MIT
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System;
 using System.Collections.Generic;
 using Content.Server.Body.Components;

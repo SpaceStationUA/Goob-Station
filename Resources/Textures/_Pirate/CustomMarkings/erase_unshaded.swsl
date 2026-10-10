@@ -1,0 +1,17 @@
+// erase.swsl for a body sprite that glows: the same mask, without the lighting.
+
+light_mode unshaded;
+
+uniform sampler2D eraseMask;
+uniform highp vec4 eraseUV;
+
+varying highp vec2 eraseUVOut;
+
+void vertex() {
+    eraseUVOut = mix(eraseUV.xy, eraseUV.zw, tCoord2);
+}
+
+void fragment() {
+    COLOR = zTexture(UV);
+    COLOR.a *= 1.0 - texture2D(eraseMask, eraseUVOut).a;
+}

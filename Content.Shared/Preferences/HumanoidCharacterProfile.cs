@@ -299,6 +299,7 @@ namespace Content.Shared.Preferences
         {
             CopyPirateCharacterInfo(other); // Pirate: Starlight character descriptions.
             CopyPirateKnowledge(other); // Pirate: Trauma knowledge port.
+            CustomMarkings = other.CustomMarkings is { } worn ? new(worn) : new(); // Pirate: validate after copying network data.
         }
 
         /// <summary>
@@ -660,6 +661,7 @@ namespace Content.Shared.Preferences
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
             if (!PirateCharacterInfoEquals(other)) return false; // Pirate: Starlight character descriptions.
+            if (!CustomMarkingsEqual(other)) return false; // Pirate
             if (!PirateKnowledgeEquals(other)) return false; // Pirate: Trauma knowledge port.
             return Appearance.MemberwiseEquals(other.Appearance);
         }
@@ -667,6 +669,7 @@ namespace Content.Shared.Preferences
         public void EnsureValid(ICommonSession session, IDependencyCollection collection)
         {
             var configManager = collection.Resolve<IConfigurationManager>();
+            EnsureCustomMarkingsValid(configManager); // Pirate
             var prototypeManager = collection.Resolve<IPrototypeManager>();
 
             if (!prototypeManager.TryIndex(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
@@ -984,6 +987,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
+            hashCode.Add(CustomMarkings?.Count ?? 0); // Pirate
             AddPirateCharacterInfoHash(ref hashCode); // Pirate: Starlight character descriptions.
             AddPirateKnowledgeHash(ref hashCode); // Pirate: Trauma knowledge port.
             hashCode.Add(Species);

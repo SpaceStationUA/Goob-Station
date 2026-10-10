@@ -273,7 +273,7 @@ public sealed partial class CEZLevelsSystem
 
         var found = false;
         var peakHeight = 0f;
-        var enumerator = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tileIndices);
+        var enumerator = _map.GetAnchoredEntities(gridUid, grid, tileIndices);
         while (enumerator.MoveNext(out var anchored))
         {
             // SupportOnlyFromAbove high-ground (ladder bases) holds climbers from above only; it

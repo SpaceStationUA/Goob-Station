@@ -8,6 +8,7 @@ using Content.Client.UserInterface.Systems;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Components; // Shitmed Change
 using Content.Shared.Damage;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.Damage.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -29,7 +30,7 @@ public sealed class EntityHealthBarOverlay : Overlay
     private readonly IEntityManager _entManager;
     private readonly IPrototypeManager _prototype;
 
-    private readonly SharedTransformSystem _transform;
+    private readonly TransformSystem _transform;
     private readonly MobStateSystem _mobStateSystem;
     private readonly MobThresholdSystem _mobThresholdSystem;
     private readonly StatusIconSystem _statusIconSystem;
@@ -47,7 +48,7 @@ public sealed class EntityHealthBarOverlay : Overlay
     {
         _entManager = entManager;
         _prototype = prototype;
-        _transform = _entManager.System<SharedTransformSystem>();
+        _transform = _entManager.System<TransformSystem>();
         _mobStateSystem = _entManager.System<MobStateSystem>();
         _mobThresholdSystem = _entManager.System<MobThresholdSystem>();
         _statusIconSystem = _entManager.System<StatusIconSystem>();
@@ -93,7 +94,7 @@ public sealed class EntityHealthBarOverlay : Overlay
             var bounds = _entManager.GetComponentOrNull<StatusIconComponent>(uid)?.Bounds ?? _spriteSystem.GetLocalBounds((uid, spriteComponent));
             var elevationOffset = _zLevels.GetRenderScreenOffset(uid); // Pirate: multiz
             Angle elevationRotation = rotation * -1; // Pirate: multiz
-            var worldPos = _transform.GetWorldPosition(xform, xformQuery) + elevationRotation.RotateVec(elevationOffset); // Pirate: multiz
+            var worldPos = _transform.GetRenderWorldPosition((uid, xform)) + elevationRotation.RotateVec(elevationOffset); // Pirate: multiz
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
                 continue;

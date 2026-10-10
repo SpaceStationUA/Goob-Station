@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Linq;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Systems;
 using Content.Shared._Shitmed.Targeting;

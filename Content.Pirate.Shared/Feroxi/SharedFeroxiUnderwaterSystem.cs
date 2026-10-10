@@ -78,7 +78,7 @@ public sealed class SharedFeroxiUnderwaterSystem : EntitySystem
             return null;
 
         var tile = _map.TileIndicesFor(gridUid, grid, xform.Coordinates);
-        var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+        var anchored = _map.GetAnchoredEntities(gridUid, grid, tile);
 
         while (anchored.MoveNext(out var anchoredUid))
         {

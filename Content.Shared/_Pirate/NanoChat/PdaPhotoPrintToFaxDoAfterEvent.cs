@@ -5,10 +5,16 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Pirate.NanoChat;
 
 [Serializable, NetSerializable]
-public sealed partial class PdaPhotoPrintToFaxDoAfterEvent(NetEntity cardUid, NanoChatPhotoData photo) : SimpleDoAfterEvent
+public sealed partial class PdaPhotoPrintToFaxDoAfterEvent : SimpleDoAfterEvent
 {
-    public NetEntity CardUid = cardUid;
-    public NanoChatPhotoData Photo = photo;
+    public NetEntity CardUid;
+    public NanoChatPhotoData Photo;
+
+    public PdaPhotoPrintToFaxDoAfterEvent(NetEntity cardUid, NanoChatPhotoData photo)
+    {
+        CardUid = cardUid;
+        Photo = photo;
+    }
 
     public PdaPhotoPrintToFaxDoAfterEvent() : this(NetEntity.Invalid, default)
     {

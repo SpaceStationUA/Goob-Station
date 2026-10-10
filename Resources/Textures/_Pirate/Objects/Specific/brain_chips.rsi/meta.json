@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Created by @legendary_lamb_59637 (discord) for Trauma Station, taken from https://github.com/Trauma-Station/Trauma-Station at commit f1819e0d7047486791badc221450c5956f3e0a51",
+    "copyright": "Created by @legendary_lamb_59637 (discord) for Trauma Station, taken from https://github.com/Trauma-Station/Trauma-Station at commit f1819e0d7047486791badc221450c5956f3e0a51. Recoloured per chip type, with per-type lettering on all states but icon, and animated leds / leds-rows / leds-faulty overlays, for Pirate Station",
     "size": {
         "x": 32,
         "y": 32
@@ -10,6 +10,39 @@
     "states": [
         {
             "name": "icon"
+        },
+        {
+            "name": "mram"
+        },
+        {
+            "name": "aptr"
+        },
+        {
+            "name": "pson"
+        },
+        {
+            "name": "hpys"
+        },
+        {
+            "name": "syndicate"
+        },
+        {
+            "name": "leds",
+            "delays": [
+                [ 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08 ]
+            ]
+        },
+        {
+            "name": "leds-rows",
+            "delays": [
+                [ 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08 ]
+            ]
+        },
+        {
+            "name": "leds-faulty",
+            "delays": [
+                [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ]
+            ]
         }
     ]
 }

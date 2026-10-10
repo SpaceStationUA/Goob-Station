@@ -4,6 +4,7 @@ using Content.Goobstation.Shared.Enchanting.Components;
 using Content.Shared._Pirate.Durability;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Electrocution;
 using Content.Shared.Inventory;
 using Content.Shared.StepTrigger.Systems;

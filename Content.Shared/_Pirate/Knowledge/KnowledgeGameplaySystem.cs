@@ -21,6 +21,14 @@ public sealed class KnowledgeGameplaySystem : EntitySystem
     public static readonly EntProtoId JanitorKnowledge = "JanitorKnowledge";
     public static readonly EntProtoId CookingKnowledge = "CookingKnowledge";
 
+    public const float MaxThrowSpeedBonus = 1f;
+
+    public const float UnskilledThrownDamage = 0.9f;
+
+    public const int TrainedThrowingLevel = 25;
+
+    public const float MaxThrownDamageBonus = 0.25f;
+
     [Dependency] private readonly SharedKnowledgeSystem _knowledge = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
@@ -97,16 +105,34 @@ public sealed class KnowledgeGameplaySystem : EntitySystem
         args.Fraction *= effect.Curve.GetCurve(skill.Comp.NetLevel);
     }
 
+    public static float ThrowSpeedMultiplier(int level)
+        => 1f + MaxThrowSpeedBonus * Math.Clamp(level, 0, 100) / 100f;
+
+    public static float ThrownDamageMultiplier(int level)
+    {
+        level = Math.Clamp(level, 0, 100);
+        if (level < TrainedThrowingLevel)
+            return UnskilledThrownDamage + (1f - UnskilledThrownDamage) * level / TrainedThrowingLevel;
+
+        return 1f + MaxThrownDamageBonus * (level - TrainedThrowingLevel) / (100f - TrainedThrowingLevel);
+    }
+
+    public float GetThrownDamageMultiplier(EntityUid? thrower)
+    {
+        if (!_knowledge.SkillsEnabled || thrower is not { } user ||
+            _knowledge.GetKnowledge(user, ThrowingKnowledge) is not { } skill)
+            return 1f;
+
+        return ThrownDamageMultiplier(skill.Comp.NetLevel);
+    }
+
     private void OnModifyThrownSpeed(Entity<KnowledgeHolderComponent> ent, ref ModifyThrownSpeedEvent args)
     {
         if (!_knowledge.SkillsEnabled || _knowledge.GetContainer(ent.Owner) is not { } store)
             return;
 
-        if (_knowledge.GetKnowledge(store, ThrowingKnowledge) is { } skill &&
-            SharedKnowledgeSystem.GetMastery(skill.Comp.NetLevel) > 2)
-        {
-            args.BaseThrowSpeed *= 0.75f * SharedKnowledgeSystem.SharpCurve(skill.Comp.NetLevel, 200, 200);
-        }
+        if (_knowledge.GetKnowledge(store, ThrowingKnowledge) is { } skill)
+            args.BaseThrowSpeed *= ThrowSpeedMultiplier(skill.Comp.NetLevel);
 
         _knowledge.AddExperience(store, ThrowingKnowledge, 1, Math.Clamp((int) args.Distance * 5, 0, 100));
     }

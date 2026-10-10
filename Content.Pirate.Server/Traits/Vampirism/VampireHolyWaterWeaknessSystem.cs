@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Goobstation.Shared.Religion;
 using Content.Pirate.Server.Traits.Vampirism.Components;
@@ -53,7 +54,7 @@ public sealed class VampireHolyWaterWeaknessSystem : EntitySystem
         comp.NextHolyWaterTick = _timing.CurTime + comp.HolyTickDelay;
 
         if (_proto.TryIndex<DamageGroupPrototype>(_burnGroupId, out var burn))
-            _damageable.TryChangeDamage(ent, new DamageSpecifier(burn, FixedPoint2.New(comp.HolyWaterBurnDamage)), true);
+            _damageable.TryChangeDamage(ent.Owner, new DamageSpecifier(burn, FixedPoint2.New(comp.HolyWaterBurnDamage)), true);
 
         if (_rand.Prob(comp.HolyWaterFireChance))
             _flammable.AdjustFireStacks(ent, comp.HolyWaterFireStacks, ignite: true);

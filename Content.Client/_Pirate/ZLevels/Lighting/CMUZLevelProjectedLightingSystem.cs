@@ -12,6 +12,7 @@ using Content.Shared.Physics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -123,7 +124,23 @@ public sealed partial class CMUZLevelProjectedLightingSystem : EntitySystem
         _activeThisFrame.Clear();
         _lightOpeningCache.Prune(_timing.RealTime);
 
-        var viewBounds = _eyeManager.GetWorldViewbounds();
+        // Pirate: use the actual viewport projection, including rotation and the multiz ScalingViewport.
+        var viewport = _eyeManager.MainViewport;
+        if (viewport is not Control control || control.PixelWidth <= 0 || control.PixelHeight <= 0 ||
+            !Matrix3x2.Invert(viewport.GetWorldToScreenMatrix(), out var screenToWorld))
+        {
+            CleanupAllProjectedLights();
+            return;
+        }
+
+        var screenTopLeft = (Vector2)control.GlobalPixelPosition;
+        var topLeft = Vector2.Transform(screenTopLeft, screenToWorld);
+        var topRight = Vector2.Transform(screenTopLeft + new Vector2(control.PixelWidth, 0), screenToWorld);
+        var bottomLeft = Vector2.Transform(screenTopLeft + new Vector2(0, control.PixelHeight), screenToWorld);
+        var center = (topRight + bottomLeft) / 2f;
+        var viewportBounds = Box2.CenteredAround(center,
+            new Vector2(Vector2.Distance(topLeft, topRight), Vector2.Distance(topLeft, bottomLeft)));
+        var viewBounds = new Box2Rotated(viewportBounds, Angle.FromWorldVec(topRight - topLeft), center);
         Entity<CEZLevelMapComponent?> playerZLevelMap = (playerMapUid, playerZMap);
         CollectSourceMaps(playerZLevelMap, playerMapComp.MapId, maxDepth);
         DiscoverSourceLights(viewBounds, minEnergy);

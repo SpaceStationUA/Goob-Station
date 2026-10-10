@@ -4,8 +4,7 @@ defaultWindowTitle: Space Station 14
 windowIconSet: /Textures/Logo/icon
 splashLogo: /Textures/Logo/splashlogo.png
 
-# Optional engine modules loaded by the client.
-modules:
-  - Robust.Client.WebView
+# Pirate: the launcher's WebView 277 module cannot run with engine 292.
+modules: []
 
 # PJB PLEASE

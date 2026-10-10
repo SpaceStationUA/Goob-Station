@@ -22,24 +22,18 @@ namespace Content.Pirate.Server.MakeATraitor
             // Pirate end
         }
 
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string DefaultTraitorRule = "Traitor";
+        private static readonly EntProtoId DefaultTraitorRule = "Traitor";
 
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string DefaultRevsRule = "Revolutionary";
+        private static readonly EntProtoId DefaultRevsRule = "Revolutionary";
 
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string DefaultThiefRule = "Thief";
+        private static readonly EntProtoId DefaultThiefRule = "Thief";
 
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string DefaultChangelingRule = "Changeling";
+        private static readonly EntProtoId DefaultChangelingRule = "Changeling";
 
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string DefaultHereticRule = "Heretic";
+        private static readonly EntProtoId DefaultHereticRule = "Heretic";
 
         // Pirate start
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string DefaultVampireRule = "Vampire";
+        private static readonly EntProtoId DefaultVampireRule = "Vampire";
         // Pirate end
 
         [Dependency] private readonly AntagSelectionSystem _antag = default!;

@@ -1,11 +1,15 @@
+using System.Linq;
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Goobstation.Maths.FixedPoint;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server._Pirate.Damage;
 using Content.Server.Body.Systems;
-using Content.Shared._Shitmed.Targeting;
+using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._Pirate.Damage;
@@ -27,6 +31,7 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
         FixedPoint2 additionalSoulDamage = 3;
         FixedPoint2 healAmount = 0;
         var halfRecoveryDelay = 0f;
+        EntityUid damagedPart = default;
 
         await Server.WaitAssertion(() =>
         {
@@ -35,13 +40,15 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             var mobState = SEntMan.System<MobStateSystem>();
             var soulType = ProtoMan.Index(SoulDamageType);
 
-            var applied = damageable.TryChangeDamage(
-                SPlayer,
+            // Pirate: seed exact part damage so whole-body split rounding does not affect regeneration assertions.
+            damagedPart = body.GetBodyChildrenOfType(SPlayer, BodyPartType.Chest).Single().Id;
+            var applied = damageable.ChangeDamage(
+                damagedPart,
                 new DamageSpecifier(soulType, initialSoulDamage),
                 ignoreResistances: true,
                 canMiss: false);
 
-            Assert.That(applied?.DamageDict[SoulDamageType.Id], Is.EqualTo(initialSoulDamage));
+            Assert.That(applied.DamageDict[SoulDamageType.Id], Is.EqualTo(initialSoulDamage));
 
             var regeneration = SEntMan.GetComponent<SoulDamageRegenerationComponent>(SPlayer);
             healAmount = regeneration.HealAmount;
@@ -58,11 +65,12 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             if (!dead)
                 return;
 
-            damageable.TryChangeDamage(
-                SPlayer,
-                new DamageSpecifier(ProtoMan.Index(BluntDamageType), 210),
+            var thresholds = SEntMan.System<MobThresholdSystem>();
+            Assert.That(thresholds.TryGetDeadThreshold(SPlayer, out var deadThreshold), Is.True);
+            damageable.ChangeDamage(
+                damagedPart,
+                new DamageSpecifier(ProtoMan.Index(BluntDamageType), deadThreshold!.Value + FixedPoint2.New(10)),
                 ignoreResistances: true,
-                targetPart: TargetBodyPart.Vital,
                 canMiss: false);
             Assert.That(mobState.IsDead(SPlayer), Is.True);
         });
@@ -73,13 +81,13 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
         {
             var damageable = SEntMan.System<DamageableSystem>();
             var soulType = ProtoMan.Index(SoulDamageType);
-            var additionalApplied = damageable.TryChangeDamage(
-                SPlayer,
+            var additionalApplied = damageable.ChangeDamage(
+                damagedPart,
                 new DamageSpecifier(soulType, additionalSoulDamage),
                 ignoreResistances: true,
                 canMiss: false);
 
-            Assert.That(additionalApplied?.DamageDict[SoulDamageType.Id], Is.EqualTo(additionalSoulDamage));
+            Assert.That(additionalApplied.DamageDict[SoulDamageType.Id], Is.EqualTo(additionalSoulDamage));
         });
 
         var expectedSoulDamage = initialSoulDamage + additionalSoulDamage;
@@ -114,7 +122,7 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
             var playerDamage = Comp<DamageableComponent>(Player);
             var storedDamage = new DamageSpecifier(playerDamage.Damage);
             storedDamage.DamageDict[SoulDamageType.Id] = initialSoulDamage;
-            damageable.SetDamage(SPlayer, playerDamage, storedDamage);
+            damageable.SetDamage((SPlayer, playerDamage), storedDamage);
 
             var regeneration = SEntMan.GetComponent<SoulDamageRegenerationComponent>(SPlayer);
             // Parent-only damage is transient on complex bodies, so exercise the fallback before body aggregation

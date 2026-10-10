@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
@@ -47,7 +48,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         SubscribeLocalEvent<TurbineComponent, ExaminedEvent>(OnExamined);
 
         SubscribeLocalEvent<TurbineComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<TurbineComponent, RepairFinishedEvent>(OnRepairDoAfter);
+        SubscribeLocalEvent<TurbineComponent, RepairDoAfterEvent>(OnRepairDoAfter);
 
         SubscribeLocalEvent<TurbineComponent, ItemSlotInsertAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<TurbineComponent, ItemSlotEjectAttemptEvent>(OnEjectAttempt);
@@ -153,10 +154,10 @@ public abstract partial class SharedTurbineSystem : EntitySystem
             return;
         }
 
-        _tool.UseTool(args.Used, user, uid, comp.RepairDelay, comp.RepairTool, new RepairFinishedEvent(), comp.RepairFuelCost);
+        _tool.UseTool(args.Used, user, uid, comp.RepairDelay, comp.RepairTool, new RepairDoAfterEvent(), comp.RepairFuelCost);
     }
 
-    private void OnRepairDoAfter(Entity<TurbineComponent> ent, ref RepairFinishedEvent args)
+    private void OnRepairDoAfter(Entity<TurbineComponent> ent, ref RepairDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
@@ -177,7 +178,7 @@ public abstract partial class SharedTurbineSystem : EntitySystem
         }
 
         Popup.PopupClient(Loc.GetString("turbine-repair", ("target", ent), ("tool", args.Used!)), ent, args.User);
-        _damage.SetAllDamage(ent.Owner, Comp<DamageableComponent>(ent.Owner), 0);
+        _damage.SetAllDamage((ent.Owner, Comp<DamageableComponent>(ent.Owner)), 0);
         UpdateUI(ent);
     }
 

@@ -215,3 +215,11 @@
   components:
   - type: Sprite
     state: nebula
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewCore
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: core

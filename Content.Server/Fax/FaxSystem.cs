@@ -826,9 +826,9 @@ public sealed class FaxSystem : EntitySystem
         var printout = component.PrintingQueue.Dequeue();
 
         #region Pirate: camera
-        var entityToSpawn = printout.PrototypeId.Length == 0
+        var entityToSpawn = string.IsNullOrEmpty(printout.PrototypeId.Id)
             ? (printout.PhotoImageData != null ? "PhotoCard" : component.PrintPaperId.ToString())
-            : printout.PrototypeId;
+            : printout.PrototypeId.Id;
         #endregion
         var coordinates = _transform.GetMapCoordinates(uid); // Goobstation
         var printed = Spawn(entityToSpawn, coordinates);

@@ -3,6 +3,7 @@
 using Content.Goobstation.Shared.Enchanting.Components;
 using Content.Shared._Pirate.Durability;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Goobstation.Shared.Enchanting.Systems;
 

@@ -5,6 +5,8 @@
   effects:
   - !type:GrantSkills
     skills:
+      PilotingKnowledge: 50
+      LiteracyKnowledge: 50
       MeleeKnowledge: 50
       ShootingKnowledge: 50
       WeaponsKnowledge: 50

@@ -33,3 +33,5 @@ knowledge-weapon-examine-effect-spread = shot spread
 knowledge-weapon-examine-effect-block = damage blocked
 knowledge-weapon-examine-effect-parry = parry
 knowledge-weapon-examine-effect-reflect = reflect shots
+
+piloting-confused-controls = You confuse the controls!

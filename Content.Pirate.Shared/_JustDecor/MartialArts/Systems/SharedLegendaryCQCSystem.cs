@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Goobstation.Common.DoAfter;
