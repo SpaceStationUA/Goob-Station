@@ -4,6 +4,7 @@ using Content.Goobstation.Shared.Changeling.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Store.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Server.Changeling;
@@ -59,10 +60,14 @@ public sealed class ChangelingEggSystem : EntitySystem
 
         comp.LingComponents.Clear();
         RemComp<ChangelingEggComponent>(uid);
-        foreach (var listing in comp.lingStore.FullListingsCatalog)
+        // Pirate: replay purchases from the store restored onto the new body.
+        if (TryComp<StoreComponent>(newUid, out var restoredStore))
         {
-            if (listing is { PurchaseAmount: > 0, RaiseProductEventOnUser: true, ProductEvent: { } productEvent })
-                RaiseLocalEvent(newUid, productEvent);
+            foreach (var listing in restoredStore.FullListingsCatalog)
+            {
+                if (listing is { PurchaseAmount: > 0, RaiseProductEventOnUser: true, ProductEvent: { } productEvent })
+                    RaiseLocalEvent(newUid, productEvent);
+            }
         }
 
         _bodySystem.GibBody(uid);
