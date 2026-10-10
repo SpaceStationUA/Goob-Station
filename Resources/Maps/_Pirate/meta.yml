@@ -16555,7 +16555,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 79.5,28.5
       parent: 2
-- proto: AlwaysPoweredlightGreen
+- proto: PoweredlightGreen
   entities:
   - uid: 881
     components:
@@ -16586,20 +16586,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 58.5,23.5
-      parent: 2
-- proto: AlwaysPoweredLightSodium
-  entities:
-  - uid: 4455
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 61.5,14.5
-      parent: 2
-  - uid: 25095
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 61.5,27.5
       parent: 2
 - proto: AmeController
   entities:
@@ -143672,6 +143658,12 @@ entities:
       parent: 2
 - proto: PoweredlightSodium
   entities:
+  - uid: 4455
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 61.5,14.5
+      parent: 2
   - uid: 20139
     components:
     - type: Transform
@@ -143688,6 +143680,12 @@ entities:
       parent: 2
     - type: ApcPowerReceiver
       powerLoad: 0
+  - uid: 25095
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 61.5,27.5
+      parent: 2
   - uid: 28498
     components:
     - type: Transform
