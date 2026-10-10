@@ -208,6 +208,16 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 </BoxContainer>
                 <!-- Pirate: loadout -->
                 <BoxContainer Name="MarkingsTab" Orientation="Vertical" Margin="10">
+                    <!-- Pirate: the custom marking library and quick wear controls. -->
+                    <PanelContainer Name="CustomMarkingsCard" StyleClasses="CreatorCard" Margin="0 0 0 8">
+                        <BoxContainer Name="CustomMarkingsBody" Orientation="Vertical" SeparationOverride="6">
+                            <BoxContainer SeparationOverride="12">
+                                <Label Text="{Loc 'wf-custom-marking-library-title'}" StyleClasses="CreatorHeading" HorizontalExpand="True" VerticalAlignment="Center" />
+                                <Button Name="CustomMarkingsButton" StyleClasses="CreatorToggle" />
+                            </BoxContainer>
+                            <Label Text="{Loc 'wf-custom-marking-creator-hint'}" StyleClasses="CreatorFieldLabel" />
+                        </BoxContainer>
+                    </PanelContainer>
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">
                         <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />

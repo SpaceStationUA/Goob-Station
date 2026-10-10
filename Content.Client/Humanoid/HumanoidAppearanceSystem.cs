@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Shared._Pirate.CustomMarkings; // Pirate
 using Content.Client.DisplacementMap;
 using Content.Shared.CCVar;
 using Content.Shared.CCVar;
@@ -253,6 +254,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         DebugTools.Assert(IsClientSide(uid));
 
         humanoid.MarkingSet = markings;
+        humanoid.CustomMarkings = ProfileCustomMarkings(profile); // Pirate
         humanoid.PermanentlyHidden = new HashSet<HumanoidVisualLayers>();
         humanoid.HiddenLayers = new Dictionary<HumanoidVisualLayers, SlotFlags>();
         humanoid.CustomBaseLayers = customBaseLayers;
@@ -301,6 +303,8 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         humanoid.ClientOldMarkings = new MarkingSet(humanoid.MarkingSet);
 
         AddUndergarments(entity, applyUndergarmentTop, applyUndergarmentBottom);
+        var applied = new HumanoidMarkingsAppliedEvent(); // Pirate: redraw custom markings after the body's layers.
+        RaiseLocalEvent(entity.Owner, ref applied);
     }
 
     private void ClearAllMarkings(Entity<HumanoidAppearanceComponent, SpriteComponent> entity)
@@ -588,5 +592,9 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
                     ApplyMarking(markingPrototype, marking.MarkingColors, marking.Visible, (ent, ent.Comp, sprite));
             }
         }
+
+        // Pirate: preview loadouts change visibility without rebuilding the profile's marking set.
+        var applied = new HumanoidMarkingsAppliedEvent();
+        RaiseLocalEvent(ent.Owner, ref applied);
     }
 }
