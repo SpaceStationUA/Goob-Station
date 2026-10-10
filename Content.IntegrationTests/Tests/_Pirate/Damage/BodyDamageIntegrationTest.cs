@@ -79,6 +79,8 @@ public sealed class BodyDamageIntegrationTest
 
             // Fractures can leave wounds behind after healing has already cleared stored damage.
             Assert.That(wounds.TryInduceWound(chest, blunt.ID, FixedPoint2.New(20), out _), Is.True);
+            Assert.That(wounds.TryHaltAllBleeding(chest), Is.True);
+            Assert.That(wounds.GetWoundableWounds(chest).All(wound => wounds.CanHealWound(wound)), Is.True);
             var severity = wounds.GetWoundableSeverityPoint(chest);
             Assert.That(severity, Is.GreaterThan(FixedPoint2.Zero));
             Assert.That(entMan.GetComponent<DamageableComponent>(chest).TotalDamage, Is.EqualTo(FixedPoint2.Zero));

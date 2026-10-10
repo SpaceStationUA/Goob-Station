@@ -11,6 +11,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Medical.Healing;
 using Content.Shared.Repairable;
+using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests._Pirate.Repairable;
 
@@ -54,9 +55,7 @@ public sealed class RepairableIntegrationTest : InteractionTest
             }
         });
 
-        await InteractUsing(Weld, awaitDoAfters: false);
-        await Server.WaitAssertion(() => Assert.That(ActiveDoAfters.Any(), Is.True, "Welding must start a repair do-after."));
-        await AwaitDoAfters();
+        await WeldTarget();
 
         await Server.WaitAssertion(() =>
         {
@@ -65,11 +64,37 @@ public sealed class RepairableIntegrationTest : InteractionTest
         });
 
         // The remaining damage takes multiple automatic repairs with the same welder.
-        await InteractUsing(Weld);
+        await WeldTarget();
 
         await Server.WaitAssertion(() =>
         {
             Assert.That(Comp<DamageableComponent>().TotalDamage, Is.EqualTo(FixedPoint2.Zero));
         });
+    }
+
+    private async Task WeldTarget()
+    {
+        var welder = await PlaceInHands(Weld);
+        await Server.WaitAssertion(() =>
+        {
+            var target = STarget!.Value;
+            Assert.That(InteractSys.InRangeAndAccessible(SPlayer, target), Is.True);
+            var coordinates = SEntMan.GetComponent<TransformComponent>(target).Coordinates;
+            Assert.That(InteractSys.InteractUsing(SPlayer, ToServer(welder), target, coordinates), Is.True);
+            Assert.That(ActiveDoAfters.Any(), Is.True, "Welding must start a repair do-after.");
+        });
+        await AwaitDoAfters();
+    }
+
+    [TearDown]
+    public async Task DeleteRepairTarget()
+    {
+        // Delete the complex body while its map still exists, before the base fixture removes the map.
+        await Server.WaitPost(() =>
+        {
+            if (STarget is { } target && !SEntMan.Deleted(target))
+                SEntMan.DeleteEntity(target);
+        });
+        await RunTicks(2);
     }
 }
