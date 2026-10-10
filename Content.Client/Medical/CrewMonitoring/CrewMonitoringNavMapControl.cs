@@ -20,7 +20,7 @@ namespace Content.Client.Medical.CrewMonitoring;
 public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 {
     // # Pirate Start - New Monitor: radar/navmap fields + corner alert UI
-    [Dependency] private readonly SharedMapSystem _mapManager = default!;
+    private readonly SharedMapSystem _mapManager;
     [Dependency] private readonly IParallelManager _parallel = default!;
 
     public NetEntity? Focus;
@@ -86,6 +86,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
     // # Pirate Start - New Monitor: ctor radar + corner controls
     public CrewMonitoringNavMapControl()
     {
+        _mapManager = EntManager.System<SharedMapSystem>(); // Pirate: entity systems are resolved through EntityManager.
         _transform = EntManager.System<SharedTransformSystem>();
         _shuttles = EntManager.System<SharedShuttleSystem>(); // Pirate: stealth shuttle filter
         _gameTiming = IoCManager.Resolve<IGameTiming>();

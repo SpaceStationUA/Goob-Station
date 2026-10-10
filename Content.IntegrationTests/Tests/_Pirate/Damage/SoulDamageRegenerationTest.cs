@@ -6,7 +6,6 @@ using Content.IntegrationTests.Tests.Interaction;
 using Content.Server._Pirate.Damage;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Part;
-using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Mobs.Systems;
@@ -67,10 +66,9 @@ public sealed class SoulDamageRegenerationTest : InteractionTest
                 return;
 
             damageable.ChangeDamage(
-                SPlayer,
+                damagedPart,
                 new DamageSpecifier(ProtoMan.Index(BluntDamageType), 210),
                 ignoreResistances: true,
-                targetPart: TargetBodyPart.Vital,
                 canMiss: false);
             Assert.That(mobState.IsDead(SPlayer), Is.True);
         });
