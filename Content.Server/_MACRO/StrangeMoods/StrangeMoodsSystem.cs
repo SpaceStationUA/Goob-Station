@@ -51,7 +51,15 @@ public sealed partial class StrangeMoodsSystem : SharedStrangeMoodsSystem
 
         if (_proto.TryIndex(ent.Comp.StrangeMoodPrototype, out var moodProto))
         {
-            _serialization.CopyTo(moodProto, ref mood, notNullableOverride: true);
+            // Pirate: generated prototype copiers require a prototype target; keep runtime mood data separate.
+            mood.ProtoId = moodProto.ProtoId;
+            mood.SharedMoodPrototype = moodProto.SharedMoodPrototype;
+            mood.Datasets = _serialization.CreateCopy(moodProto.Datasets);
+            mood.Moods = _serialization.CreateCopy(moodProto.Moods);
+            mood.MoodsChangedMessage = moodProto.MoodsChangedMessage;
+            mood.MoodsChangedSound = _serialization.CreateCopy(moodProto.MoodsChangedSound);
+            mood.MoodsChangedColor = moodProto.MoodsChangedColor;
+            mood.ActionViewMoods = moodProto.ActionViewMoods;
 
             // Add any required components
             if (moodProto.Components is { } components)
@@ -296,8 +304,15 @@ public sealed partial class StrangeMoodsSystem : SharedStrangeMoodsSystem
     /// </summary>
     public StrangeMood RollMood(StrangeMoodPrototype proto)
     {
-        var mood = new StrangeMood();
-        _serialization.CopyTo(proto, ref mood, notNullableOverride: true);
+        // Pirate: copy runtime fields without invoking the derived prototype copier.
+        var mood = new StrangeMood
+        {
+            ProtoId = proto.ProtoId,
+            MoodName = proto.MoodName,
+            MoodDesc = proto.MoodDesc,
+            Conflicts = _serialization.CreateCopy(proto.Conflicts),
+            MoodVars = _serialization.CreateCopy(proto.MoodVars),
+        };
         var alreadyChosen = new HashSet<ProtoId<StrangeMoodPrototype>>();
 
         foreach (var (name, datasetId) in proto.MoodVarDatasets)
@@ -465,8 +480,14 @@ public sealed partial class StrangeMoodsSystem : SharedStrangeMoodsSystem
     /// </summary>
     private bool TryAddSharedMood(SharedMood sharedMood, List<StrangeMood>? newMoods = null, bool checkConflicts = true, bool notify = true)
     {
-        var mood = new SharedMood();
-        _serialization.CopyTo(sharedMood, ref mood, notNullableOverride: true);
+        // Pirate: sharedMood can be a prototype; copy into independent, network-serializable runtime data.
+        var mood = new SharedMood
+        {
+            UniqueId = sharedMood.UniqueId,
+            Moods = _serialization.CreateCopy(sharedMood.Moods),
+            Dataset = sharedMood.Dataset,
+            Count = sharedMood.Count,
+        };
 
         if (newMoods == null)
         {
