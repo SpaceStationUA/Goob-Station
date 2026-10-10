@@ -74,11 +74,11 @@ public sealed partial class StationAiVisionSystem : EntitySystem // Pirate: synd
     {
         lock (_lock) // Goob - Fix (parallel access race)
         {
-            return IsAccessibleUnlocked(grid, tile, expansionSize, fastPath);
+            return IsAccessibleUnlocked(grid, tile, expansionSize, fastPath, xrayCameras, xrayRange, xrayOrigin, includeSyndicateCameras); // Pirate: preserve camera upgrades under the upstream lock.
         }
     }
 
-    private bool IsAccessibleUnlocked(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize, bool fastPath)
+    private bool IsAccessibleUnlocked(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize, bool fastPath, bool xrayCameras, float xrayRange, Vector2? xrayOrigin, bool includeSyndicateCameras) // Pirate: syndicate remote monitoring
     {
         _viewportTiles.Clear();
         _opaque.Clear();
@@ -192,11 +192,11 @@ public sealed partial class StationAiVisionSystem : EntitySystem // Pirate: synd
     {
         lock (_lock) // Goob - Fix (parallel access race)
         {
-            GetViewUnlocked(grid, worldBounds, visibleTiles, expansionSize);
+            GetViewUnlocked(grid, worldBounds, visibleTiles, expansionSize, xrayCameras, xrayRange, xrayOrigin, includeSyndicateCameras); // Pirate: preserve camera upgrades under the upstream lock.
         }
     }
 
-    private void GetViewUnlocked(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize)
+    private void GetViewUnlocked(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize, bool xrayCameras, float xrayRange, Vector2? xrayOrigin, bool includeSyndicateCameras) // Pirate: syndicate remote monitoring
     {
         _viewportTiles.Clear();
         _opaque.Clear();

@@ -15,7 +15,6 @@ namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCCombatSystem
 {
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly RotateToFaceSystem _rotate = default!;
     [Dependency] private readonly SharedLaserPointerSystem _pointer = default!; // Goobstation

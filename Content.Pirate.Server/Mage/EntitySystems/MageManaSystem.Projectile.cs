@@ -23,7 +23,6 @@ public sealed class MageProgectileSystem : EntitySystem
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly MageManaSystem _mana = default!;
     [Dependency] private readonly SharedMapSystem _sharedMapSystem = default!;
-    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
@@ -60,9 +59,9 @@ public sealed class MageProgectileSystem : EntitySystem
         {
             // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
                 var mapPos = _transformSystem.ToMapCoordinates(pos);
-                var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
+                var spawnCoords = _sharedMapSystem.TryFindGridAt(mapPos, out var gridUid, out _)
                     ? _transformSystem.WithEntityId(pos, gridUid)
-                    : new EntityCoordinates(_mapManager.GetMapOrInvalid(mapPos.MapId), mapPos.Position);
+                    : new EntityCoordinates(_sharedMapSystem.GetMapOrInvalid(mapPos.MapId), mapPos.Position);
 
             var ent = Spawn(ev.Prototype, spawnCoords);
             var direction = _transformSystem.ToMapCoordinates(ev.Target).Position -

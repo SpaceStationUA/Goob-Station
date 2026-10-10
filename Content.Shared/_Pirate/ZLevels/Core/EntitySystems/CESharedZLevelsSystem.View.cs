@@ -14,7 +14,6 @@ namespace Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 public abstract partial class CESharedZLevelsSystem
 {
     [Dependency] protected readonly ITileDefinitionManager TilDefMan = default!;
-    [Dependency] protected readonly SharedMapSystem _mapMan = default!;
     private void InitView()
     {
         SubscribeLocalEvent<CEZLevelViewerComponent, MoveEvent>(OnViewerMove);
@@ -96,7 +95,7 @@ public abstract partial class CESharedZLevelsSystem
             return false;
 
         var aboveMapId = Transform(aboveMapUid).MapID;
-        if (!_mapMan.TryFindGridAt(aboveMapId, aboveWorld, out var aboveGridUid, out var aboveGrid))
+        if (!_map.TryFindGridAt(aboveMapId, aboveWorld, out var aboveGridUid, out var aboveGrid))
             return false;
 
         if (!_map.TryGetTileRef(aboveGridUid, aboveGrid, aboveWorld, out var tileRef))

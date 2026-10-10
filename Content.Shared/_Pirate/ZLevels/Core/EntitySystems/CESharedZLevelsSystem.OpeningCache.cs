@@ -67,7 +67,7 @@ public abstract partial class CESharedZLevelsSystem
             radius,
             out openingPosition,
             _openingGridScratch,
-            _mapMan,
+            _map,
             _map,
             _transform,
             TilDefMan,
@@ -105,7 +105,7 @@ public abstract partial class CESharedZLevelsSystem
         var bounds = Box2.CenteredAround(position, new Vector2(radius * 2f, radius * 2f));
         _openingGridScratch.Clear();
         var grids = _openingGridScratch;
-        _mapMan.FindGridsIntersecting(mapComp.MapId, bounds, ref grids, approx: true, includeMap: true);
+        _map.FindGridsIntersecting(mapComp.MapId, bounds, ref grids, approx: true, includeMap: true);
 
         if (grids.Count == 0)
             return false;
@@ -166,7 +166,7 @@ public abstract partial class CESharedZLevelsSystem
             radius,
             openings,
             gridScratch,
-            _mapMan,
+            _map,
             _map,
             _transform,
             TilDefMan,
@@ -200,7 +200,7 @@ public abstract partial class CESharedZLevelsSystem
             return false;
 
         // No grid at the shooter's XY means the column is unobstructed.
-        if (!_mapMan.TryFindGridAt(openingMapComp.MapId, from, out var gridUidValue, out var grid))
+        if (!_map.TryFindGridAt(openingMapComp.MapId, from, out var gridUidValue, out var grid))
         {
             opening = new EntityCoordinates(openingMapUid, from);
             return true;

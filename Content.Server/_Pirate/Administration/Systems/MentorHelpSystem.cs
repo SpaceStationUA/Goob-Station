@@ -121,7 +121,7 @@ public sealed partial class MentorHelpSystem : EntitySystem
             return;
 
         var color = _config.GetCVar(GoobCVars.DiscordReplyColor);
-        if (_config.GetCVar(GoobCVars.UseDiscordRoleColor) && Color.TryFromHex(body.RoleColor) is { } roleColor)
+        if (_config.GetCVar(GoobCVars.UseDiscordRoleColor) && Color.TryFromHex(body.RoleColor, out var roleColor))
             color = roleColor.ToHex();
         if (string.IsNullOrEmpty(color))
             color = StaffChats.Mentor.Color.ToHex();

@@ -370,7 +370,7 @@ public sealed partial class CEZLevelsSystem
 
         // Use a spatial grid lookup rather than querying the map entity for MapGridComponent
         // (which only works on planet-style maps).
-        if (!_mapMan.TryFindGridAt(mapXform.MapID, globalPos, out var gridUid, out var grid))
+        if (!_map.TryFindGridAt(mapXform.MapID, globalPos, out var gridUid, out var grid))
             return true;
 
         var mapCoordinates = new MapCoordinates(globalPos, mapXform.MapID);
@@ -397,7 +397,7 @@ public sealed partial class CEZLevelsSystem
         if (!TryResolveViewerMap((viewer.Owner, viewerXform), 1, out _))
             return false;
 
-        if (!_mapMan.TryFindGridAt(viewerXform.MapID, globalPos, out var gridUid, out var grid))
+        if (!_map.TryFindGridAt(viewerXform.MapID, globalPos, out var gridUid, out var grid))
             return false;
 
         var origin = new MapCoordinates(globalPos, viewerXform.MapID);

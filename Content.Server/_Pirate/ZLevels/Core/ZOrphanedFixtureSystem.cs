@@ -18,7 +18,6 @@ namespace Content.Server._Pirate.ZLevels.Core;
 /// </summary>
 public sealed class ZOrphanedFixtureSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -51,7 +50,7 @@ public sealed class ZOrphanedFixtureSystem : EntitySystem
         // Slightly fat AABB so a point over a hole still resolves to the surrounding deck grid.
         var aabb = new Box2(worldPos - new Vector2(0.15f, 0.15f), worldPos + new Vector2(0.15f, 0.15f));
         var grids = new List<Entity<MapGridComponent>>();
-        _mapManager.FindGridsIntersecting(xform.MapID, aabb, ref grids, approx: true, includeMap: false);
+        _map.FindGridsIntersecting(xform.MapID, aabb, ref grids, approx: true, includeMap: false);
         if (grids.Count == 0)
             return;
 
