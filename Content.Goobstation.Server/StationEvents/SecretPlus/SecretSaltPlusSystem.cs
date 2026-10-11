@@ -6,6 +6,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Server.StationEvents.Components;
 using Content.Goobstation.Shared.StationEvents;
@@ -22,6 +26,7 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
+using Content.Shared.Players;
 using Content.Shared.Roles;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
@@ -62,6 +67,9 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
     private float _roundstartChaosScoreMultiplier;
 
     private ISawmill _sawmill = default!;
+
+    // Reuse one client instead of opening a connection for every round.
+    private static readonly HttpClient AuthorReportHttpClient = new();
 
     public override void Initialize()
     {
@@ -126,15 +134,30 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
         // AntagSelectionSystem. Count only totals; never log player identifiers.
         var roundAntagonistMinds = 0;
         var roundAntagonistRoles = 0;
+        var authorRoster = new List<string>();
         var minds = EntityQueryEnumerator<MindComponent>();
-        while (minds.MoveNext(out var mindUid, out _))
+        while (minds.MoveNext(out var mindUid, out var mind))
         {
             if (!_roles.MindIsAntagonist(mindUid))
                 continue;
 
+            var roles = _roles.MindGetAllRoleInfo(mindUid)
+                .Where(role => role.Antagonist)
+                .ToList();
+
             roundAntagonistMinds++;
-            roundAntagonistRoles += _roles.MindGetAllRoleInfo(mindUid)
-                .Count(role => role.Antagonist);
+            roundAntagonistRoles += roles.Count;
+
+            // Follow the same name source as the vanilla round-end scoreboard.
+            // Do not send NetUserId, mind UID, IP address, or other account data.
+            var playerName = "Нікнейм невідомий";
+            var userId = mind.UserId ?? mind.OriginalOwnerUserId;
+            if (userId != null && _playerManager.TryGetPlayerData(userId.Value, out var playerData))
+                playerName = playerData.ContentData().Name;
+
+            var roleNames = roles.Select(role => SafeDiscordText(Loc.GetString(role.Name), 90)).ToList();
+            var roleList = roleNames.Count > 0 ? string.Join(", ", roleNames) : "Невизначена роль";
+            authorRoster.Add($"• {SafeDiscordText(playerName, 80)} — {roleList}");
         }
 
         scheduler.TelemetryAntagonistMindsAtEnd = roundAntagonistMinds;
@@ -148,6 +171,90 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
         var summary = $"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} trackedUniqueAssignedMinds={scheduler.TelemetryUniqueTrackedAssignedMinds} antagonistMindsAtEnd={scheduler.TelemetryAntagonistMindsAtEnd} antagonistRolesAtEnd={scheduler.TelemetryAntagonistRolesAtEnd} roundstartAttempts={scheduler.TelemetryRoundstartAttempts} roundstartAdded={scheduler.TelemetryRoundstartAdded} roundstartSkips=[{skipReasons}] initialPlayers={scheduler.TelemetryInitialPlayers} initialChaos={scheduler.TelemetryInitialChaos} chaos={scheduler.ChaosScore} midroundRolls={scheduler.TelemetryMidroundRolls} midroundCandidates={scheduler.TelemetryMidroundCandidates} midroundAdded={scheduler.TelemetryMidroundAdded} midroundNoCandidates={scheduler.TelemetryMidroundNoCandidates} duration={_ticker.RoundDuration()}";
         scheduler.TelemetryLastRoundSummary = summary;
         LogMessage(summary, false);
+
+        // Only the private report contains nicknames and antagonist roles.
+        // It is produced after the round ends, never inserted into the public
+        // round-end scoreboard or administrative announcements.
+        authorRoster.Sort(StringComparer.OrdinalIgnoreCase);
+        var rosterText = authorRoster.Count == 0
+            ? "Антагоністів наприкінці раунду не виявлено."
+            : string.Join("\n", authorRoster);
+        scheduler.TelemetryAuthorReport =
+            $"🧂 Секрет Сіль 1.4 — раунд #{_ticker.RoundId}\n" +
+            $"{summary}\n\nАнтагоністи наприкінці раунду (нікнейм — роль):\n{rosterText}";
+
+        // Opt-in only: no webhook configured means no external transmission.
+        // The server owner must point this confidential setting to a private
+        // author-only Discord channel. The public station webhook is never used.
+        var privateWebhook = _cfg.GetCVar(GoobCVars.SecretSaltAuthorDiscordWebhook);
+        if (!scheduler.TelemetryAuthorReportSendRequested && !string.IsNullOrWhiteSpace(privateWebhook))
+        {
+            scheduler.TelemetryAuthorReportSendRequested = true;
+            _ = SendAuthorReportAsync(privateWebhook, scheduler.TelemetryAuthorReport);
+        }
+    }
+
+    // Strip Discord formatting/control characters from player-controlled text,
+    // and cap lengths to avoid oversized or forged report entries.
+    private static string SafeDiscordText(string value, int limit)
+    {
+        var sanitized = new string(value
+            .Where(c => !char.IsControl(c) && c != '`')
+            .Take(limit)
+            .ToArray());
+        return sanitized.Replace("@", "＠").Replace("|", "¦");
+    }
+
+    private async Task SendAuthorReportAsync(string url, string report)
+    {
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri)
+            || uri.Scheme != Uri.UriSchemeHttps
+            || (uri.Host != "discord.com" && uri.Host != "discordapp.com")
+            || !uri.AbsolutePath.StartsWith("/api/webhooks/", StringComparison.Ordinal))
+        {
+            _sawmill.Warning("Secret Salt private report: invalid Discord webhook destination.");
+            return;
+        }
+
+        try
+        {
+            // Discord has a 2000-character message limit; split at line boundaries.
+            // This report is only sent after the scoreboard has revealed antagonists.
+            var chunk = new StringBuilder();
+            foreach (var rawLine in report.Split('\n'))
+            {
+                var line = rawLine.Length > 1700 ? rawLine[..1700] : rawLine;
+                if (chunk.Length > 0 && chunk.Length + line.Length + 1 > 1900)
+                {
+                    await SendChunkAsync(uri, chunk.ToString());
+                    chunk.Clear();
+                }
+
+                chunk.AppendLine(line);
+            }
+
+            if (chunk.Length > 0)
+                await SendChunkAsync(uri, chunk.ToString());
+        }
+        catch (Exception)
+        {
+            // HTTP exception messages may contain a tokenized webhook URL.
+            // Never log the URL, token, or individual player names.
+            _sawmill.Warning("Secret Salt private author report delivery failed.");
+        }
+    }
+
+    private static async Task SendChunkAsync(Uri destination, string message)
+    {
+        var payload = JsonSerializer.Serialize(new
+        {
+            content = message,
+            allowed_mentions = new { parse = Array.Empty<string>() }
+        });
+
+        using var content = new StringContent(payload, Encoding.UTF8, "application/json");
+        using var response = await AuthorReportHttpClient.PostAsync(destination, content);
+        response.EnsureSuccessStatusCode();
     }
 
     private static void RecordRoundstartSkip(SecretSaltPlusComponent scheduler, string reason)
