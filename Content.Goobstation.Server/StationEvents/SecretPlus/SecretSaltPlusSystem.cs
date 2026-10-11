@@ -7,7 +7,6 @@
 
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Server.StationEvents.Components;
@@ -214,39 +213,13 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
 
     private async Task SendAuthorReportAsync(string url, string report)
     {
-        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri)
-            || uri.Scheme != Uri.UriSchemeHttps
-            || (uri.Host != "discord.com" && uri.Host != "discordapp.com")
-            || !uri.AbsolutePath.StartsWith("/api/webhooks/", StringComparison.Ordinal))
-        {
-            _sawmill.Warning("Secret Salt private report: invalid Discord webhook destination.");
-            return;
-        }
-
         try
         {
-            // Discord has a 2000-character message limit; split at line boundaries.
-            // This report is only sent after the scoreboard has revealed antagonists.
-            var chunk = new StringBuilder();
-            foreach (var rawLine in report.Split('\n'))
-            {
-                var line = rawLine.Length > 1700 ? rawLine[..1700] : rawLine;
-                if (chunk.Length > 0 && chunk.Length + line.Length + 1 > 1900)
-                {
-                    await SecretSaltPlusDiscordSender.SendChunkAsync(AuthorReportHttpClient, uri, chunk.ToString());
-                    chunk.Clear();
-                }
-
-                chunk.AppendLine(line);
-            }
-
-            if (chunk.Length > 0)
-                await SecretSaltPlusDiscordSender.SendChunkAsync(AuthorReportHttpClient, uri, chunk.ToString());
+            await SecretSaltPlusDiscordSender.SendReportAsync(AuthorReportHttpClient, url, report);
         }
         catch (Exception)
         {
-            // HTTP exception messages may contain a tokenized webhook URL.
-            // Never log the URL, token, or individual player names.
+            // The exception might contain the secret Discord webhook URL.
             _sawmill.Warning("Secret Salt private author report delivery failed.");
         }
     }
