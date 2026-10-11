@@ -48,6 +48,66 @@ public sealed class SecretSaltFeedbackNetworkTest
     }
 
     [Test]
+    public async Task TestOrdinarySecretNeverOffersSaltFeedback()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Dirty = true,
+            DummyTicker = false,
+            Connected = true,
+            InLobby = true
+        });
+
+        var server = pair.Server;
+        var client = pair.Client;
+        await server.WaitIdleAsync();
+
+        await server.WaitAssertion(() => server.CfgMan.SetCVar(CCVars.GridFill, true));
+        await pair.WaitClientCommand("toggleready True");
+        await pair.WaitCommand("setgamepreset Secret 9999");
+        await pair.WaitCommand("startround");
+        await pair.RunTicksSync(10);
+
+        var round = 0;
+        await server.WaitAssertion(() =>
+        {
+            var systems = server.ResolveDependency<IEntitySystemManager>();
+            var ticker = systems.GetEntitySystem<GameTicker>();
+            Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
+            Assert.That(ticker.CurrentPreset?.ID, Is.EqualTo("Secret"));
+            round = ticker.RoundId;
+            Assert.That(GetParticipants(systems.GetEntitySystem<SecretSaltFeedbackSystem>()),
+                Is.Empty, "Even a ready player must not qualify in another preset.");
+            ticker.EndRound();
+        });
+        await pair.RunTicksSync(5);
+
+        await client.WaitAssertion(() =>
+        {
+            var system = client.ResolveDependency<IEntitySystemManager>()
+                .GetEntitySystem<SecretSaltFeedbackClientSystem>();
+            Assert.That(GetFeedbackWindow(system), Is.Null,
+                "Ordinary Secret must not offer Secret Salt's post-round dialog.");
+            // A modified client must not be able to bypass the mode check.
+            system.SubmitFeedback(round, 5, new[] { SecretSaltFeedbackReason.Other },
+                "Not a Secret Salt round");
+        });
+        await pair.RunTicksSync(5);
+
+        await server.WaitAssertion(() =>
+        {
+            var systems = server.ResolveDependency<IEntitySystemManager>();
+            var feedback = GetTracker(systems.GetEntitySystem<SecretSaltFeedbackSystem>())
+                .GetReviews(round);
+            Assert.That(feedback, Is.Empty);
+            systems.GetEntitySystem<GameTicker>().RestartRound();
+            server.CfgMan.SetCVar(CCVars.GridFill, CCVars.GridFill.DefaultValue);
+        });
+        await pair.RunTicksSync(3);
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task TestActualClientSubmissionRejectedInRoundAndDeduplicatedAfterEnd()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
