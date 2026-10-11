@@ -94,8 +94,8 @@ public sealed class SecretSaltDiscordSenderTest
         using var fake = new FakeDiscordHandler(
             HttpStatusCode.NoContent, HttpStatusCode.NoContent, HttpStatusCode.NoContent);
         using var client = new HttpClient(fake);
-        var report = new string('А', 1899) + "🧂\\n" + new string('Ж', 2600)
-            + "\\nКінець звіту @everyone";
+        var report = new string('А', 1899) + "🧂\n" + new string('Ж', 2600)
+            + "\nКінець звіту @everyone";
 
         await SecretSaltPlusDiscordSender.SendReportAsync(client, DummyWebhook.ToString(), report);
 
