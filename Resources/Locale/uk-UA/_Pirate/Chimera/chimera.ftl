@@ -39,10 +39,13 @@ reagent-effect-guidebook-revert-polymorph =
 
 ent-Letoferol = Спалах інфекції хімер
 ent-PillLetoferol = пігулка
+    .desc = { ent-Pill.desc }
     .suffix = Летоферол
 ent-SyringeLetoferol = шприц
+    .desc = { ent-PrefilledSyringe.desc }
     .suffix = Летоферол
 ent-BottleLetoferol = пляшечка летоферолу
+    .desc = { ent-BaseChemistryBottleFilled.desc }
     .suffix = Летоферол
 ent-MindRoleChimera = Роль хімери
 ent-MindRoleChimeraInitial = Початковий агент хімер
