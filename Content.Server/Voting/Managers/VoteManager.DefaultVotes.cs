@@ -600,6 +600,11 @@ namespace Content.Server.Voting.Managers
                 if(!preset.ShowInVote)
                     continue;
 
+                // Do not offer a mode which the ticker would reject at launch.
+                if (preset.ID == SecretSaltRotationTracker.PresetId &&
+                    _entityManager.System<SecretSaltRotationSystem>().IsBlocked)
+                    continue;
+
                 if(_playerManager.PlayerCount < (preset.MinPlayers ?? int.MinValue))
                     continue;
 
