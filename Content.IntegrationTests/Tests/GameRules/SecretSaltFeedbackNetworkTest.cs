@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Content.Goobstation.Client.RoundEnd;
@@ -10,6 +11,7 @@ using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
@@ -35,6 +37,14 @@ public sealed class SecretSaltFeedbackNetworkTest
             "_window", BindingFlags.Instance | BindingFlags.NonPublic);
         Assert.That(field, Is.Not.Null);
         return (SecretSaltFeedbackWindow?) field!.GetValue(system);
+    }
+
+    private static HashSet<NetUserId> GetParticipants(SecretSaltFeedbackSystem system)
+    {
+        var field = typeof(SecretSaltFeedbackSystem).GetField(
+            "_participants", BindingFlags.Instance | BindingFlags.NonPublic);
+        Assert.That(field, Is.Not.Null);
+        return (HashSet<NetUserId>) field!.GetValue(system)!;
     }
 
     [Test]
@@ -85,6 +95,35 @@ public sealed class SecretSaltFeedbackNetworkTest
                 .GetEntitySystem<GameTicker>().EndRound();
         });
         await pair.RunTicksSync(5);
+
+        // A real spawned player was registered by the server. Temporarily
+        // remove that participant to simulate a client submitting as an
+        // unqualified observer. Reinstating eligibility permits a real review.
+        NetUserId eligibleUser = default;
+        await server.WaitAssertion(() =>
+        {
+            var feedback = server.ResolveDependency<IEntitySystemManager>()
+                .GetEntitySystem<SecretSaltFeedbackSystem>();
+            var participants = GetParticipants(feedback);
+            Assert.That(participants.Count, Is.EqualTo(1));
+            eligibleUser = participants.Single();
+            participants.Clear();
+        });
+        await client.WaitAssertion(() =>
+        {
+            var system = client.ResolveDependency<IEntitySystemManager>()
+                .GetEntitySystem<SecretSaltFeedbackClientSystem>();
+            system.SubmitFeedback(round, 5, new[] { SecretSaltFeedbackReason.Other },
+                "Unqualified account must be rejected");
+        });
+        await pair.RunTicksSync(3);
+        await server.WaitAssertion(() =>
+        {
+            var feedback = server.ResolveDependency<IEntitySystemManager>()
+                .GetEntitySystem<SecretSaltFeedbackSystem>();
+            Assert.That(GetTracker(feedback).GetReviews(round), Is.Empty);
+            GetParticipants(feedback).Add(eligibleUser);
+        });
 
         await client.WaitAssertion(() =>
         {
