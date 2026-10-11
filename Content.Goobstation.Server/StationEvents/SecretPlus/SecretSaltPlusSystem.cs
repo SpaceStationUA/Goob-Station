@@ -21,6 +21,8 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
@@ -51,6 +53,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
 
@@ -90,6 +93,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
     protected override void AppendRoundEndText(EntityUid uid, SecretSaltPlusComponent scheduler, GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
     {
         var assignedMinds = 0;
+        var assignedMindsUnique = new HashSet<EntityUid>();
         foreach (var (ruleUid, ruleId) in scheduler.TelemetryRules)
         {
             if (!Exists(ruleUid))
@@ -105,6 +109,12 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
                 : null;
 
             assignedMinds += assigned ?? 0;
+            if (antagSelection != null)
+            {
+                foreach (var (mindUid, _) in antagSelection.AssignedMinds)
+                    assignedMindsUnique.Add(mindUid);
+            }
+
             var state = HasComp<ActiveGameRuleComponent>(ruleUid) ? "active"
                 : HasComp<EndedGameRuleComponent>(ruleUid) ? "ended"
                 : "pending";
@@ -112,11 +122,30 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             LogMessage($"RULE SUMMARY scheduler={uid} candidate={ruleId} ruleUid={ruleUid} everStarted={scheduler.TelemetryStartedRules.Contains(ruleUid)} state={state} assignedMinds={assigned?.ToString() ?? "n/a"}", false);
         }
 
+        // Actual antagonist status at round end, including roles created outside
+        // AntagSelectionSystem. Count only totals; never log player identifiers.
+        var roundAntagonistMinds = 0;
+        var roundAntagonistRoles = 0;
+        var minds = EntityQueryEnumerator<MindComponent>();
+        while (minds.MoveNext(out var mindUid, out _))
+        {
+            if (!_roles.MindIsAntagonist(mindUid))
+                continue;
+
+            roundAntagonistMinds++;
+            roundAntagonistRoles += _roles.MindGetAllRoleInfo(mindUid)
+                .Count(role => role.Antagonist);
+        }
+
+        scheduler.TelemetryAntagonistMindsAtEnd = roundAntagonistMinds;
+        scheduler.TelemetryAntagonistRolesAtEnd = roundAntagonistRoles;
+        scheduler.TelemetryUniqueTrackedAssignedMinds = assignedMindsUnique.Count;
+
         var skipReasons = string.Join(",", scheduler.TelemetryRoundstartSkips
             .OrderBy(pair => pair.Key)
             .Select(pair => $"{pair.Key}:{pair.Value}"));
 
-        var summary = $"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} roundstartAttempts={scheduler.TelemetryRoundstartAttempts} roundstartAdded={scheduler.TelemetryRoundstartAdded} roundstartSkips=[{skipReasons}] initialPlayers={scheduler.TelemetryInitialPlayers} initialChaos={scheduler.TelemetryInitialChaos} chaos={scheduler.ChaosScore} midroundRolls={scheduler.TelemetryMidroundRolls} midroundCandidates={scheduler.TelemetryMidroundCandidates} midroundAdded={scheduler.TelemetryMidroundAdded} midroundNoCandidates={scheduler.TelemetryMidroundNoCandidates} duration={_ticker.RoundDuration()}";
+        var summary = $"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} trackedUniqueAssignedMinds={scheduler.TelemetryUniqueTrackedAssignedMinds} antagonistMindsAtEnd={scheduler.TelemetryAntagonistMindsAtEnd} antagonistRolesAtEnd={scheduler.TelemetryAntagonistRolesAtEnd} roundstartAttempts={scheduler.TelemetryRoundstartAttempts} roundstartAdded={scheduler.TelemetryRoundstartAdded} roundstartSkips=[{skipReasons}] initialPlayers={scheduler.TelemetryInitialPlayers} initialChaos={scheduler.TelemetryInitialChaos} chaos={scheduler.ChaosScore} midroundRolls={scheduler.TelemetryMidroundRolls} midroundCandidates={scheduler.TelemetryMidroundCandidates} midroundAdded={scheduler.TelemetryMidroundAdded} midroundNoCandidates={scheduler.TelemetryMidroundNoCandidates} duration={_ticker.RoundDuration()}";
         scheduler.TelemetryLastRoundSummary = summary;
         LogMessage(summary, false);
     }
