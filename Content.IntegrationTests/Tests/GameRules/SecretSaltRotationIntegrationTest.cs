@@ -32,6 +32,9 @@ public sealed class SecretSaltRotationIntegrationTest
         await server.WaitAssertion(() =>
         {
             server.CfgMan.SetCVar(CCVars.GridFill, true);
+            // Reproduce the server where Salt is the default preset:
+            // the one-round Secret substitution must return to Salt.
+            server.CfgMan.SetCVar(CCVars.GameLobbyDefaultPreset, "SecretSalt");
 
             // We test preset rotation, not autonomous NPC food evaluation.
             // Random NPC spawns during game rounds can otherwise fail in
@@ -77,8 +80,11 @@ public sealed class SecretSaltRotationIntegrationTest
 
             // A command or a stale vote winner selecting Salt must be replaced
             // with a valid different preset, not a third Salt start.
-            ticker.SetGamePreset("SecretSalt");
+            // An explicitly requested long resetDelay must not make the
+            // substitute Secret preset permanent.
+            ticker.SetGamePreset("SecretSalt", resetDelay: 9999);
             Assert.That(ticker.Preset?.ID, Is.EqualTo("Secret"));
+            Assert.That(ticker.ResetCountdown, Is.EqualTo(0));
             Assert.That(rotation.ConsecutiveRounds, Is.EqualTo(2));
         });
 
@@ -100,6 +106,13 @@ public sealed class SecretSaltRotationIntegrationTest
             RemoveTestPhotoAlbumPersistence(server.ResolveDependency<IEntityManager>());
             ticker.EndRound();
             ticker.RestartRound();
+
+            // The actual played non-Salt round cleared rotation. Its
+            // temporary fallback must now restore the configured default.
+            Assert.That(ticker.Preset?.ID, Is.EqualTo("SecretSalt"));
+            Assert.That(ticker.ResetCountdown, Is.Null);
+
+            server.CfgMan.SetCVar(CCVars.GameLobbyDefaultPreset, CCVars.GameLobbyDefaultPreset.DefaultValue);
             server.CfgMan.SetCVar(CCVars.GridFill, CCVars.GridFill.DefaultValue);
             server.CfgMan.SetCVar(CCVars.NPCEnabled, CCVars.NPCEnabled.DefaultValue);
         });
