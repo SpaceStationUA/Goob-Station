@@ -65,6 +65,24 @@ public sealed class SecretSaltDiscordSenderTest
         Assert.That(fake.CallCount, Is.EqualTo(3));
     }
 
+    [TestCase(false)]
+    [TestCase(true)]
+    public void TestLargeRetryAfterCancelsWithoutPrematureRetry(bool absoluteDate)
+    {
+        using var cancellation = new CancellationTokenSource();
+        using var fake = new LongRetryAfterHandler(cancellation, absoluteDate);
+        using var client = new HttpClient(fake);
+
+        // If Retry-After is an hour, a shorter report-wide budget must
+        // abort delivery rather than violate Discord's rate limit.
+        Assert.ThrowsAsync<TaskCanceledException>(async () =>
+            await SecretSaltPlusDiscordSender.SendChunkAsync(
+                client, DummyWebhook, "Report", cancellation.Token));
+
+        Assert.That(fake.CallCount, Is.EqualTo(1),
+            "The sender must not retry while Discord's Retry-After is active.");
+    }
+
     [Test]
     public async Task TestTransportFailureRetriesOnlyUnsentChunk()
     {
@@ -174,6 +192,34 @@ public sealed class SecretSaltDiscordSenderTest
                 "https://evil.example/api/webhooks/123/fake-token", "Private report"));
 
         Assert.That(fake.CallCount, Is.Zero);
+    }
+
+    private sealed class LongRetryAfterHandler : HttpMessageHandler
+    {
+        private readonly CancellationTokenSource _cancellation;
+        private readonly bool _absoluteDate;
+        public int CallCount;
+
+        public LongRetryAfterHandler(CancellationTokenSource cancellation, bool absoluteDate)
+        {
+            _cancellation = cancellation;
+            _absoluteDate = absoluteDate;
+        }
+
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            CallCount++;
+            var response = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+            response.Headers.RetryAfter = _absoluteDate
+                ? new RetryConditionHeaderValue(DateTimeOffset.UtcNow.AddHours(1))
+                : new RetryConditionHeaderValue(TimeSpan.FromHours(1));
+
+            // Trigger cancellation after the response has been returned and
+            // the long Retry-After delay is about to run.
+            _cancellation.CancelAfter(TimeSpan.FromMilliseconds(25));
+            return Task.FromResult(response);
+        }
     }
 
     private sealed class FaultingDiscordHandler : HttpMessageHandler
