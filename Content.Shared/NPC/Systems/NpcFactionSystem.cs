@@ -323,6 +323,8 @@ public sealed partial class NpcFactionSystem : EntitySystem
                 Hostile = faction.Hostile.ToHashSet()
             });
 
+        AddChimeraHostility(); // Pirate: apply reciprocal hostility before refreshing NPCs.
+
         var query = AllEntityQuery<NpcFactionMemberComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
