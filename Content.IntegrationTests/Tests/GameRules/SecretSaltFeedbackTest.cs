@@ -97,12 +97,50 @@ public sealed class SecretSaltFeedbackTest
     }
 
     [Test]
+    public void TestFeedbackSummaryAverageAndMostCommonReasons()
+    {
+        var tracker = new SecretSaltFeedbackTracker();
+        Assert.That(tracker.TryRecord(123, "private-A", "А", Review(rating: 5,
+            reasons: new[] { SecretSaltFeedbackReason.TooFewEvents, SecretSaltFeedbackReason.TooChaotic })),
+            Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+        Assert.That(tracker.TryRecord(123, "private-B", "Б", Review(rating: 4,
+            reasons: new[] { SecretSaltFeedbackReason.TooFewEvents })),
+            Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+        Assert.That(tracker.TryRecord(123, "private-C", "В", Review(rating: 2,
+            reasons: new[] { SecretSaltFeedbackReason.TooChaotic, SecretSaltFeedbackReason.Other })),
+            Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+
+        var report = SecretSaltFeedbackReport.Format(123, tracker.GetReviews(123));
+        Assert.That(report, Does.Contain("Отримано відгуків: 3"));
+        Assert.That(report, Does.Contain("Середня оцінка: 3,67/5"));
+        Assert.That(report, Does.Contain(
+            "Найчастіші причини: Замало подій — 2; Надмірний хаос — 2; Інше — 1"));
+        Assert.That(report, Does.Not.Contain("private-A"));
+        Assert.That(report, Does.Not.Contain("private-B"));
+        Assert.That(report, Does.Not.Contain("private-C"));
+    }
+
+    [Test]
+    public void TestFeedbackSummaryWithoutSelectedReasons()
+    {
+        var tracker = new SecretSaltFeedbackTracker();
+        Assert.That(tracker.TryRecord(123, "private-D", "Г", Review(
+            reasons: Array.Empty<SecretSaltFeedbackReason>())),
+            Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+        var report = SecretSaltFeedbackReport.Format(123, tracker.GetReviews(123));
+        Assert.That(report, Does.Contain("Середня оцінка: 5,00/5"));
+        Assert.That(report, Does.Contain("Найчастіші причини: Не вказано"));
+    }
+
+    [Test]
     public void TestNoReviewReportAndRoundIsolation()
     {
         var tracker = new SecretSaltFeedbackTracker();
         tracker.StartRound(123);
-        Assert.That(SecretSaltFeedbackReport.Format(123, tracker.GetReviews(123)),
-            Does.Contain("Гравці не залишили відгуків."));
+        var emptyReport = SecretSaltFeedbackReport.Format(123, tracker.GetReviews(123));
+        Assert.That(emptyReport, Does.Contain("Гравці не залишили відгуків."));
+        Assert.That(emptyReport, Does.Contain("Середня оцінка: немає даних."));
+        Assert.That(emptyReport, Does.Contain("Найчастіші причини: немає даних."));
         Assert.That(tracker.TryRecord(123, "account-A", "Гравець A", Review()),
             Is.EqualTo(SecretSaltFeedbackResult.Accepted));
         tracker.StartRound(124);
