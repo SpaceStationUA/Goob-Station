@@ -132,6 +132,6 @@
 ## Після оновлення SpaceStationUA (11.10.2026)
 
 - [x] [CI №38149671650](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38149671650): компіляція PASS, 21/21 тестів PASS (включно з ротацією після тестової ізоляції SQLite-побічних операцій).
-- [ ] [CI №38150250465](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38150250465): новий інтеграційний тест завантаження восьми правил і StationEvent у чотирьох midround-правил; результат очікується.
+- [x] [CI №38150250465](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38150250465): **SUCCESS**, компіляція PASS, **22/22 тестів PASS**, включно з завантаженням восьми ігрових правил та перевіркою StationEvent для чотирьох midround-кандидатів.
 - [ ] Живі раунди при різному онлайні з Gangwars, MalfAiMidround, TerrorSpiders, AsakimShuttle, TraitorMidround; підтвердження не отримано.
 - [ ] Повна перевірка реальної Discord-доставки та форми відгуків на тестовому сервері.
