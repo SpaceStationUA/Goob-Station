@@ -18,6 +18,53 @@ public enum SecretSaltFeedbackReason : byte
 }
 
 /// <summary>
+/// Five UI choices are encoded as a single byte on the network. An untrusted
+/// client can therefore never request allocation of an arbitrarily long
+/// reasons array during network deserialization.
+/// </summary>
+public static class SecretSaltFeedbackReasonMask
+{
+    private const byte ValidBits = 0b0001_1111;
+
+    public static byte Encode(IReadOnlyList<SecretSaltFeedbackReason> reasons)
+    {
+        byte mask = 0;
+        foreach (var reason in reasons)
+        {
+            var number = (int) reason;
+            if (number is < 1 or > 5)
+                throw new ArgumentOutOfRangeException(nameof(reasons), "Unknown feedback reason.");
+
+            var bit = (byte) (1 << (number - 1));
+            if ((mask & bit) != 0)
+                throw new ArgumentException("Duplicate feedback reason.", nameof(reasons));
+
+            mask |= bit;
+        }
+
+        return mask;
+    }
+
+    public static bool TryDecode(byte mask, out SecretSaltFeedbackReason[] reasons)
+    {
+        reasons = Array.Empty<SecretSaltFeedbackReason>();
+        if ((mask & ~ValidBits) != 0)
+            return false;
+
+        // No more than five elements are ever constructed.
+        var selected = new List<SecretSaltFeedbackReason>(5);
+        for (var index = 0; index < 5; index++)
+        {
+            if ((mask & (1 << index)) != 0)
+                selected.Add((SecretSaltFeedbackReason) (index + 1));
+        }
+
+        reasons = selected.ToArray();
+        return true;
+    }
+}
+
+/// <summary>
 /// Player-supplied data only. Account identity is taken from the authenticated
 /// server session, never from the submission.
 /// </summary>
