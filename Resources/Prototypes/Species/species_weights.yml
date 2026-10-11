@@ -3,6 +3,7 @@
 - type: weightedRandomSpecies
   id: SpeciesWeights
   weights:
+    Experiment: 1 # Pirate
     Human: 5
     Reptilian: 4
     SlimePerson: 4

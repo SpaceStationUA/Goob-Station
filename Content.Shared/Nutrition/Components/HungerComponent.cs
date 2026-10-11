@@ -2,6 +2,7 @@
 
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Goobstation.Maths.FixedPoint; // Pirate
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -125,6 +126,16 @@ public sealed partial class HungerComponent : Component
     /// </summary>
     [DataField("starvationDamage")]
     public DamageSpecifier? StarvationDamage;
+
+    // Pirate: Starlight hunger-dependent regeneration.
+    [DataField("passiveCap"), AutoNetworkedField]
+    public FixedPoint2 PassiveDamageCap;
+
+    [DataField("passiveThreshold"), AutoNetworkedField]
+    public HungerThreshold PassiveDamageThreshold = HungerThreshold.Peckish;
+
+    [DataField("passiveDamage"), AutoNetworkedField]
+    public DamageSpecifier? PassiveDamageSpecifier;
 
     /// <summary>
     /// The time when the hunger threshold will update next.

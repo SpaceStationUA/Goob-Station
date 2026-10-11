@@ -5,6 +5,7 @@
   name: guide-entry-species
   text: "/ServerInfo/Guidebook/Mobs/Species.xml"
   children:
+    - Sawians # Pirate
     - Arachnid
     - Diona
     - Dwarf

@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+
+- type: reagent
+  parent: Blood
+  id: SawianBlood
+  name: reagent-name-sawian-blood
+  group: Biological
+  desc: reagent-desc-sawian-blood
+  flavor: sawianBlood
+  color: "#ffbb00"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-sawian

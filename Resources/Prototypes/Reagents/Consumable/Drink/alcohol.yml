@@ -164,6 +164,15 @@
     Alcohol:
       metabolismRate: 0.05
       effects:
+      # Pirate: source alcohol sensitivity for Experiments.
+      - !type:Vomit
+        probability: 0.5
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 0.01
+        - !type:MetabolizerTypeCondition
+          type: [Experiment]
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition

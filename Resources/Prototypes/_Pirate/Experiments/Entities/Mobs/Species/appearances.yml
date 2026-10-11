@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: MIT
+
+- type: entity
+  parent: [BaseSpeciesDummy, BaseInventoryExperiment]
+  id: AppearanceExperiment
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Experiment
+    eyeColor: "#FFFFFF"
+  - type: Body
+    prototype: Experiment
+
+- type: entity
+  id: GuideExpie
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite # here cause the eyes do not have a default coloration comp so they appear black in the quidebook
+    layers:
+      - sprite: _Pirate/Experiments/Mobs/Species/Experiment/parts.rsi
+        state: full

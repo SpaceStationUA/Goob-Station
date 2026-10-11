@@ -211,7 +211,7 @@ namespace Content.Server.Ghost
             if (!_minds.TryGetMind(uid, out var mindId, out var mind) || mind.IsVisitingEntity)
                 return;
 
-            if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
+            if (component.MustBeDead && !_mobState.IsDead(uid) /* Pirate: soft critical is alive. */)
                 return;
 
             OnGhostAttempt(mindId, component.CanReturn, mind: mind);
@@ -606,7 +606,7 @@ namespace Content.Server.Ghost
                 handleEv.CanReturnGlobal && // Goob - use now settable CanReturnGlobal
                 TryComp(playerEntity, out MobStateComponent? mobState))
             {
-                if (_mobState.IsCritical(playerEntity.Value, mobState))
+                if (_mobState.IsCritical(playerEntity.Value, mobState) || _mobState.IsSoftCritical(playerEntity.Value, mobState)) // Pirate
                 {
                     canReturn = true;
 

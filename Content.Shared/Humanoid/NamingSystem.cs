@@ -51,6 +51,9 @@ namespace Content.Shared.Humanoid
                 case SpeciesNaming.FirstRoman: // EE Plasmeme Change
                     return Loc.GetString("namepreset-firstlast",
                         ("first", GetFirstName(speciesProto, gender)), ("last", _romanNamingSystem.GenerateRomanNumeral()));
+                case SpeciesNaming.IdFirst: // Pirate
+                    return Loc.GetString("namepreset-idfirst",
+                        ("id", GetRandomExperimentId()), ("first", GetFirstName(speciesProto, gender)));
                 case SpeciesNaming.FirstLast:
                 default:
                     return Loc.GetString("namepreset-firstlast",
@@ -72,6 +75,17 @@ namespace Content.Shared.Humanoid
                     else
                         return _random.Pick(_prototypeManager.Index(speciesProto.FemaleFirstNames));
             }
+        }
+
+        // Pirate: source PR #6300 excludes low IDs and inappropriate number sequences.
+        private string GetRandomExperimentId()
+        {
+            string id;
+            do
+            {
+                id = _random.Next(100, 9999).ToString().PadLeft(4, '0');
+            } while (id.Contains("69") || id.Contains("67") || id.Contains("8008") || id.Contains("420"));
+            return id;
         }
 
         public string GetLastName(SpeciesPrototype speciesProto)

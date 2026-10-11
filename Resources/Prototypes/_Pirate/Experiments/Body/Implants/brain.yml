@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: MIT
+
+- type: entity
+  id: BrainImplantExpiScan
+  name: health scanner implant
+  description: A surgically-installed brain implant that provides a readout of your present physical health.
+  parent: BaseHumanOrgan # Pirate: local surgical organ base.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Experiments/Objects/Specific/Medical/implants.rsi
+    state: brain_implant_scan
+  - type: Organ # Pirate: local equivalent of FunctionalOrgan.
+    slotId: brain_implant
+    onAdd:
+    - type: HealthSelfAnalyzer
+    - type: HealthAnalyzer
+      maxScanRange: 0
+      scanningBeginSound: !type:SoundPathSpecifier
+        path: /Audio/_Pirate/Experiments/Effects/Experiment/woundon.ogg
+        params:
+          volume: -4
+      scanningEndSound: !type:SoundPathSpecifier
+        path: /Audio/_Pirate/Experiments/Effects/Experiment/close.ogg
+        params:
+          volume: -1.5
+    - type: ActionGrant
+      actions:
+        - ActionHealthSelfAnalyze
+    - type: DamageThresholdSounds
+      thresholds:
+        0: null
+        100:
+          sound: !type:SoundPathSpecifier
+            path: /Audio/_Pirate/Experiments/Effects/Experiment/healthpanel-alert.ogg
+            params:
+              loop: true
+              maxDistance: 6
+          #ambient: true
+          empEffected: true
+        200:
+          sound: !type:SoundPathSpecifier
+            path: /Audio/_Pirate/Experiments/Effects/Experiment/flatline.ogg
+            params:
+              maxDistance: 7
+          empEffected: true

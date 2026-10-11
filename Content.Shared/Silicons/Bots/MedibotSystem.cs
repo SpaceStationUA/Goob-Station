@@ -83,6 +83,8 @@ public sealed class MedibotSystem : EntitySystem
     /// </remarks>
     public bool TryGetTreatment(MedibotComponent comp, MobState state, [NotNullWhen(true)] out MedibotTreatment? treatment)
     {
+        if (state == MobState.SoftCritical) // Pirate
+            state = MobState.Critical;
         return comp.Treatments.TryGetValue(state, out treatment);
     }
 
@@ -103,7 +105,7 @@ public sealed class MedibotSystem : EntitySystem
         if (!TryComp<DamageableComponent>(target, out var damageable)) return false;
         if (!_solutionContainer.TryGetInjectableSolution(target, out _, out _)) return false;
 
-        if (mobState.CurrentState != MobState.Alive && mobState.CurrentState != MobState.Critical)
+        if (mobState.CurrentState == MobState.Dead /* Pirate: include soft critical patients. */)
         {
             _popup.PopupClient(Loc.GetString("medibot-target-dead"), medibot, medibot);
             return false;

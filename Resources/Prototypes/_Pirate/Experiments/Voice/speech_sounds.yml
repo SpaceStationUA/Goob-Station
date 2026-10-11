@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+
+- type: speechSounds
+  id: AllExpi
+  saySound:
+    path: /Audio/_Pirate/Experiments/Voice/Experiment/exp_speak.ogg
+  askSound:
+    path: /Audio/_Pirate/Experiments/Voice/Experiment/exp_ask.ogg
+  exclaimSound:
+    path: /Audio/_Pirate/Experiments/Voice/Experiment/exp_exclaim.ogg

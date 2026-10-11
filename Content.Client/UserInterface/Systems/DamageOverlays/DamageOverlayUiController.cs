@@ -137,6 +137,7 @@ public sealed class DamageOverlayUiController : UIController
                         _overlay.DeadLevel = 0;
                         break;
                         }
+                        case MobState.SoftCritical: // Pirate
                         case MobState.Critical:
                         {
                             if (!_mobThresholdSystem.TryGetDeadPercentage(entity,
@@ -192,6 +193,7 @@ public sealed class DamageOverlayUiController : UIController
 
                         break;
                     }
+                case MobState.SoftCritical: // Pirate
                 case MobState.Critical:
                     {
                         _overlay.CritLevel = FixedPoint2.Min(1f,
