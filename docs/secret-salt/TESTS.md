@@ -1,5 +1,7 @@
 # Перевірки технічних виправлень «Секрет Сіль 1.4»
 
+> **Новий етап 11.10.2026:** [CI №38126115787](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38126115787) **SUCCESS** для компіляції й інтеграційних тестів midround. Наступний тест перевіряє підсумок антагоністичних ролей (`antagonistMindsAtEnd`, `antagonistRolesAtEnd`, `trackedUniqueAssignedMinds`) і його наявність лише після завершення раунду. [CI №38126857003](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38126857003) **ще не завершений**. **Точне значення:** `antagonistMindsAtEnd` — антагоністичний статус саме при завершенні; історію всіх виданих за раунд ролей він не замінює. Персональні дані й імена гравців не виводимо.
+
 > **CI-результат на 11.10.2026:** [№38125756548](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125756548) — **FAILURE до запуску тестів**; `RA0002` у `SecretSaltTelemetryTest.cs:104`, сторонній запис в `TimeNextEvent`. У [коміті `e029e5d`](https://github.com/The-Devils-Luck/Goob-Station/commit/e029e5d36babba1ff9db0f1df5ec8b3c5ae9c457) тест змінено на `GetField(...).SetValue(...)` у тестовому середовищі, продукційний код не зачеплено. Повторна [CI №38126115787](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38126115787) **ще не завершилась**. Не вважати сценарій Т17 пройденим до результату.
 
 > **Стан на 11.10.2026:** [CI №38125207666](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125207666) — **SUCCESS**: компіляція, `SecretStartsTest`, `TestRoundstartCountersAndRuleStarts` та `TestSummaryOnlyGeneratedAtRoundEnd`. Наступний коміт [`a1117b0`](https://github.com/The-Devils-Luck/Goob-Station/commit/a1117b03a48bbd7ae6f4739a3e73c767ca2f8b16) додає перевірку справжнього midround-вибору та нових полів зведення; [CI №38125756548](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125756548) очікує результату. **Повноцінне випробування на бойовому сервері, перевірка Discord та інших функцій ще попереду.**
@@ -41,6 +43,8 @@
 | Т15 | Перехід до нового раунду | Дані завершеного раунду не переносяться до нового | Не виконано |
 | Т16 | Реальний запуск і завершення раунду `SecretSalt` | Після `EndRound` заповнено `TelemetryLastRoundSummary`, а до завершення воно `null` | **PASS: CI №38125207666** |
 | Т17 | Вибір подій посеред раунду та підсумок | `midroundRolls = midroundCandidates + midroundNoCandidates`; збережено початковий хаос і всі лічильники | Очікує CI №38125756548 |
+
+| Т18 | Фактичні антагоністичні ролі під час завершення раунду | `antagonistMindsAtEnd` і `antagonistRolesAtEnd` з фактичних mind-ролей, `trackedUniqueAssignedMinds` без дублювання; відсутні ідентифікатори гравців | Чекає CI №38126857003 |
 
 ## Що ще потрібно зробити
 
