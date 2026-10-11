@@ -6,6 +6,7 @@ using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Server.StationEvents.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;
@@ -18,6 +19,60 @@ namespace Content.IntegrationTests.Tests.GameRules;
 [Category("GameRuleTests")]
 public sealed class SecretSaltTelemetryTest
 {
+    [Test]
+    public async Task TestSaltExpandedCandidatePrototypesAreUsable()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Dirty = true
+        });
+
+        var server = pair.Server;
+        await server.WaitIdleAsync();
+        await server.WaitAssertion(() =>
+        {
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var ticker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
+            var rules = new[]
+            {
+                "SecretSaltConspirators",
+                "SecretSaltSiliconLiberation",
+                "SecretSaltBloodCult",
+                "SecretSaltGangwars",
+                "SecretSaltTerrorSpidersSpawn",
+                "AsakimShuttle",
+                "TraitorMidround",
+                "MalfAiMidround",
+            };
+            foreach (var id in rules)
+            {
+                // A rule being loadable is necessary but not sufficient to
+                // prove it can be selected and spawned in a real Salt round.
+                var uid = ticker.AddGameRule(id);
+                Assert.That(entityManager.HasComponent<GameRuleComponent>(uid), Is.True,
+                    $"Expanded Salt candidate '{id}' must be an actual game rule.");
+            }
+
+            foreach (var id in new[]
+                     {
+                         "SecretSaltTerrorSpidersSpawn",
+                         "AsakimShuttle",
+                         "TraitorMidround",
+                         "MalfAiMidround",
+                     })
+            {
+                var uid = ticker.GetAddedGameRules().First(rule =>
+                    entityManager.GetComponent<MetaDataComponent>(rule).EntityPrototype?.ID == id);
+                Assert.That(entityManager.HasComponent<StationEventComponent>(uid), Is.True,
+                    $"Midround candidate '{id}' needs StationEvent to pass the event scheduler.");
+            }
+
+            ticker.ClearGameRules();
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task TestRoundstartCountersAndRuleStarts()
     {
