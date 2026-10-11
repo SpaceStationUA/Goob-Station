@@ -1,5 +1,21 @@
 # 🧂 Аудит сумісності «Секрет Сіль 1.4»
 
+## Додатковий аудит поточної інтеграційної гілки — 11.10.2026
+
+**База перевірки:** `feature/secret-salt-1.4-upstream-integration`, код після CI [№38156842384](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38156842384) — компіляція PASS, 24/24 тести PASS. **Живе тестування пропущено за рішенням автора.**
+
+### Важлива знахідка: додавання midround-правила без його запуску
+
+- У `Content.Goobstation.Server/StationEvents/SecretPlus/SecretSaltPlusSystem.cs`, метод `ActiveTick`, вибрана подія викликається як `StartRule(..., false)` (рядок 392).
+- `StartRule` викликає `GameTicker.AddGameRule(rule)`, але `GameTicker.StartGameRule(ruleUid)` лише за `doStart == true` (рядки 551–590).
+- `Content.Server/GameTicking/GameTicker.GameRule.cs` явно розмежовує `AddGameRule` (створює правило без запуску) та `StartGameRule` (додає `ActiveGameRuleComponent` і викликає `GameRuleStartedEvent`). `UpdateGameRules` запускає лише правила з `DelayedStartRuleComponent`, який сам `AddGameRule` не додає.
+- Для Voidwalker це істотно: `AntagSelectionSystem` у середині раунду обробляє `GameRuleStartedEvent`, а не лише додавання правила. У тесті `TestSummaryOnlyGeneratedAtRoundEnd` перевіряється `TelemetryMidroundAdded`, але не активність конкретного midround-правила.
+- **Статус: ПІДТВЕРДЖЕНО КОДОМ як пропущений виклик запуску на шляху Salt; реальний наслідок у живому раунді — НЕПЕРЕВІРЕНО.** Потенційно позначає midround-події як «ADDED» без фактичного запуску. Подібний виклик `StartRule(..., false)` є і в `SecretPlusSystem.cs`, тому потрібна локальна, а не сліпа глобальна зміна.
+- **Рекомендовано після дозволу автора:** окремим мінімальним комітом виправити запуск **тільки для midround у Salt**, не змінюючи `doStart=false` для правил раундстарту; додати інтеграційний тест на `GameRuleStartedEvent`/`ActiveGameRuleComponent` (або коректний `DelayedStartRuleComponent` для відкладеного правила). Залишити таблиці, ваги й формули хаосу без змін. Перед виправленням інші статуси midround вважати НЕПЕРЕВІРЕНО.
+- **Поки що:** лише запис у документацію. Код не виправлявся, PR і злиття в `master` не виконувалися.
+
+---
+
 > **Оновлення 11.10.2026:** GitHub Actions [№38139888171](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38139888171) **SUCCESS — 21/21 тести**. Нижче первинний аудит зберігає історичні порівняння стану файлів. Код реалізації з того часу оновлено; поточні критерії та залишкові ризики — у [PLAN.md](PLAN.md) та [TESTS.md](TESTS.md). Баланс `secret_salt.yml` лишається незмінним.
 
 **Проведено:** 11 жовтня 2026 р.  
