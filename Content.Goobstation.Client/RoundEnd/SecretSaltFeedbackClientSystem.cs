@@ -72,7 +72,8 @@ public sealed class SecretSaltFeedbackClientSystem : EntitySystem
     /// </summary>
     public void SubmitFeedback(int roundId, int rating, SecretSaltFeedbackReason[] reasons, string? comment)
     {
-        RaiseNetworkEvent(new SecretSaltFeedbackRequestEvent(roundId, rating, reasons, comment));
+        RaiseNetworkEvent(new SecretSaltFeedbackRequestEvent(
+            roundId, rating, SecretSaltFeedbackReasonMask.Encode(reasons), comment));
     }
 
     private void TryOpen()
