@@ -1,5 +1,9 @@
 # Перевірки технічних виправлень «Секрет Сіль 1.4»
 
+> **Статус CI на 11.10.2026:** [№38123571609](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123571609) — **SUCCESS (компіляція C#)**. Нові лічильники [f851f9c](https://github.com/The-Devils-Luck/Goob-Station/commit/f851f9caa952bfb94260bf08930bd06f4a473795) перевіряє [№38123892196](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123892196). Ці запуски **не** замінюють ігрових тестів.
+
+**Нові невиконані сценарії:** Т13 — звірити `roundstartAttempts` із кількістю випадкових кандидатів, а `roundstartAdded` із реально доданими стартовими правилами; Т14 — звірити `roundstartSkips` за всіма причинами; Т15 — перевірити очищення лічильників між раундами.
+
 **Статус на 11.10.2026:** сценарії перевірок описано; окремий CI-процес [№38123571609](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123571609) **розпочав компіляцію**. Результат збірки та виконання тестів у грі ще не підтверджені.
 
 Кодові коміти: [`278b61f` — захисти](https://github.com/The-Devils-Luck/Goob-Station/commit/278b61f37ffd0561e9cb63f703d50e0baf9abd65), [`1f6ea69` — поля телеметрії](https://github.com/The-Devils-Luck/Goob-Station/commit/1f6ea6901f01956eda807b07a518d1f68b9756d5), [`e03a49f` — звіт](https://github.com/The-Devils-Luck/Goob-Station/commit/e03a49fc3a3f6448eaee96eb8fd883c3a60c97b).
