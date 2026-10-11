@@ -114,6 +114,11 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
             return;
 
         _reportRequested = true;
+
+        // The client must stop accepting input when the server closes the
+        // sixty-second window, even if the round has not restarted yet.
+        RaiseNetworkEvent(new SecretSaltFeedbackClosedEvent(_feedbackRound));
+
         var report = SecretSaltFeedbackReport.Format(
             _feedbackRound, _tracker.GetReviews(_feedbackRound));
 
