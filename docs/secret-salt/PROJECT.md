@@ -1,5 +1,7 @@
 # 🧂 Секрет Сіль 1.4 — журнал проєкту
 
+> **Поточний стан (11.10.2026):** [збірка №38124715402](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124715402) — **SUCCESS**, C# та два інтеграційні тести пройшли. Реалізовано збереження післяраундового рядка в `TelemetryLastRoundSummary` ([коміти `04ade64`](https://github.com/The-Devils-Luck/Goob-Station/commit/04ade643ec87fa34aa69db6603ee7b84c52270a1), [`6e576b3`](https://github.com/The-Devils-Luck/Goob-Station/commit/6e576b3b6945375589b6fe40a702fe4e84c45710)); додано інтеграційний тест старту та завершення раунду ([`9449e2d`](https://github.com/The-Devils-Luck/Goob-Station/commit/9449e2d7ea38721a0a16fb58067719092c43dfcf)). [Нова перевірка №38125207666](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125207666) **очікує результату**. Наступне — проаналізувати цей тест, а потім вирішити повноту обліку антагоністів і формат для Discord. Баланс незмінний.
+
 > **Перевірено 11.10.2026:** GitHub Actions [№38124715402](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124715402) — **SUCCESS**: компіляція, `SecretSaltTelemetryTest` і `SecretStartsTest`. Наступне — перевірити виконання телеметрії при завершенні раунду та інші поведінкові сценарії з [TESTS.md](TESTS.md).
 
 > **Інтеграційна перевірка 11.10.2026:** [запуск №38124255947](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124255947) — **FAILURE**: компіляція пройшла, `SecretStartsTest` успішний, але `SecretSaltTelemetryTest` впав через `Log.Error` при штатному пропуску кандидата `BloodBrothers` із `nullChaosScore`. Діагностичний `ROUNDSTART SKIP` уже фіксував цю причину. [Коміт `8374e34`](https://github.com/The-Devils-Luck/Goob-Station/commit/8374e34b38b0c7be3c44037e2a3143c83cf8838a) прибирає дубльований запис рівня `ERROR`, **не змінюючи вибір кандидатів, ваги або бюджет хаосу**. Повторний [запуск №38124715402](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124715402) **SUCCESS** — компіляція та обидва інтеграційні тести пройшли. **Наступне:** перевірити повторні тести, потім окремо перевірити підсумок раунду.
@@ -140,7 +142,8 @@
 
 ## 7. Точний наступний крок
 
-**Реалізовано три кодові кроки:** захисти планувальника, початкову телеметрію та лічильники відхилень. **Наступне — перевірка нової збірки №38123892196 і сценарії [TESTS.md](TESTS.md)**: підтвердити події запуску, лічильники призначень та відсутність впливу на інші режими. Для перевірки нашої гілки додано окремий [`secret-salt-build.yml`](https://github.com/The-Devils-Luck/Goob-Station/blob/feature/secret-salt-1.4/.github/workflows/secret-salt-build.yml), який уже створив [запуск №38123571609](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123571609). Це **перевірка збірки**, а не тестовий раунд. Після перевірок — повноцінне агрегування причин відхилення, узгодження безпечного Discord-звіту, відгуки й ротація. **Не змінювати `secret_salt.yml`, ваги та формули.**
+**Наступне — [CI №38125207666](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125207666) зі сценарієм реального старту та завершення раунду.** Не позначати перевірку завершеною до результату. При успіху — поглибити телеметрію фактично виданих ролей та підготувати безпечний звіт у Discord; при провалі — виправити точну причину без змін балансу.
+
 
 ## 8. Як оновлювати цей документ
 
