@@ -8,7 +8,6 @@
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Server.StationEvents.Components;
@@ -234,7 +233,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
                 var line = rawLine.Length > 1700 ? rawLine[..1700] : rawLine;
                 if (chunk.Length > 0 && chunk.Length + line.Length + 1 > 1900)
                 {
-                    await SendChunkAsync(uri, chunk.ToString());
+                    await SecretSaltPlusDiscordSender.SendChunkAsync(AuthorReportHttpClient, uri, chunk.ToString());
                     chunk.Clear();
                 }
 
@@ -242,44 +241,13 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             }
 
             if (chunk.Length > 0)
-                await SendChunkAsync(uri, chunk.ToString());
+                await SecretSaltPlusDiscordSender.SendChunkAsync(AuthorReportHttpClient, uri, chunk.ToString());
         }
         catch (Exception)
         {
             // HTTP exception messages may contain a tokenized webhook URL.
             // Never log the URL, token, or individual player names.
             _sawmill.Warning("Secret Salt private author report delivery failed.");
-        }
-    }
-
-    private static async Task SendChunkAsync(Uri destination, string message)
-    {
-        var payload = JsonSerializer.Serialize(new
-        {
-            content = message,
-            allowed_mentions = new { parse = Array.Empty<string>() }
-        });
-
-        // Retry rate limits and transient Discord errors. Avoid retrying permanent
-        // failures such as an invalid or revoked webhook. Never log the URL.
-        for (var attempt = 1; attempt <= 3; attempt++)
-        {
-            using var content = new StringContent(payload, Encoding.UTF8, "application/json");
-            using var response = await AuthorReportHttpClient.PostAsync(destination, content);
-            if (response.IsSuccessStatusCode)
-                return;
-
-            var status = (int) response.StatusCode;
-            var canRetry = status == 429 || status >= 500;
-            if (!canRetry || attempt == 3)
-            {
-                response.EnsureSuccessStatusCode();
-                return;
-            }
-
-            var delay = response.Headers.RetryAfter?.Delta
-                ?? TimeSpan.FromSeconds(attempt * 2);
-            await Task.Delay(delay);
         }
     }
 
