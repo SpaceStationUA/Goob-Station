@@ -8,6 +8,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Server.StationEvents.Components;
 using Content.Server.StationEvents;
+using Content.Goobstation.Server.StationEvents.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;
