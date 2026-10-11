@@ -454,7 +454,6 @@ reagent-effect-guidebook-chem-roll-psionic = { $chance ->
         [1] Дає
         *[other] дає
     } шанс отримати псіонічну силу з множником x{$multiplier}
-
 entity-effect-guidebook-knockdown = { $type ->
         [update]{ $chance ->
                     [1] Спричиняє

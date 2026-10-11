@@ -3,7 +3,6 @@
 
 jukebox-menu-buttoneject = Витягти
 jukebox-menu-record-entry = ♪ { $track }
-
 jukebox-record-examine = На етикетці написано: [color=cyan]{ $track }[/color].
 jukebox-record-examine-blank = Етикетка порожня.
 jukebox-record-blank = Ця платівка порожня.
@@ -12,4 +11,3 @@ jukebox-record-inserted = Ви вставляєте { $track } у музични
 jukebox-record-examine-missing = [color=red]Трек відсутній:[/color] { $path }
 jukebox-record-unknown-track = невідомий трек
 jukebox-records-eject-all-verb = Всі платівки
-

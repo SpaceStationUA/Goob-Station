@@ -16,7 +16,6 @@ ent-GoldBrutePack1 = золотий пакет від забиттів
 ent-GoldOintment = золота мазь
     .desc = Лімітована серія золотої мазі, що лікує також легкі їдкі опіки.
 ent-GoldOintment1 = золота мазь
-
 ent-DeforestJetInjector = ін'єктор DeForest
     .desc = Сучасний високоякісний ін'єктор із меншою місткістю та швидкою ін'єкцією.
 ent-PillLead5 = свинцева пігулка
@@ -37,7 +36,6 @@ ent-WeirdPill = дивна пігулка
     .desc = На цій дивній пігулці немає позначок. Напевно, вона не смертельна. Напевно.
 ent-GoldenPill = золота пігулка
     .desc = Джекпот! Золота пігулка без позначок. Тут може бути що завгодно!
-
 ent-VendingMachineMedicalBaseSyndicate = Interdyne Commercial
     .desc = Медичний автомат від Interdyne Pharmaceutics.
 ent-VendingMachineMedicalSyndicate = Інтердайн Ентерпрайз
@@ -62,7 +60,6 @@ ent-VendingMachineWallMedicalCivilianGold = настінний NanoMed band-aid 
     .desc = Рідкісний розкішний настінний медичний автомат.
 ent-VendingMachineWallMedicalGold = настінний NanoMed GOLD
     .desc = { ent-VendingMachineWallMedicalCivilianGold.desc }
-
 ent-RandomVendingMedical = випадковий медичний автомат
 ent-RandomVendingMedicalCivilian = випадковий цивільний медичний автомат
 ent-RandomVendingMedicalWall = випадковий настінний медичний автомат

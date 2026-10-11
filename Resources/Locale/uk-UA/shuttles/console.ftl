@@ -28,7 +28,6 @@ shuttle-console-map-settings = Налаштування
 shuttle-console-ftl-button = НАДСВІТЛОВА ШВИДКІСТЬ
 shuttle-console-map-rebuild = Сканувати об'єкти
 shuttle-console-map-beacons = Показати маяки
-
 shuttle-console-no-signal = Немає сигналу
 shuttle-console-map-objects = Об'єкти сектора
 

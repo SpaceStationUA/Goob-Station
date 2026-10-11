@@ -5,13 +5,11 @@ knowledge-category-crafting = Ремесло
 knowledge-category-intellectual = Інтелектуальні
 knowledge-category-scientific = Наукові
 knowledge-category-recipes = Рецепти
-
 knowledge-mastery-unskilled = Ненавчений
 knowledge-mastery-average = Базовий
 knowledge-mastery-advanced = Просунутий
 knowledge-mastery-expert = Експертний
 knowledge-mastery-master = Майстерний
-
 knowledge-editor-tab = Навички
 knowledge-editor-points = Залишилось очок: {$points}
 knowledge-editor-profile-unavailable = Профіль навичок для цього виду недоступний.
@@ -29,13 +27,11 @@ knowledge-editor-reset = Скинути
 knowledge-editor-reset-tooltip = Скинути всі вибрані навички
 knowledge-editor-apply = Застосувати
 knowledge-editor-apply-tooltip = Застосувати вибрані навички
-
 knowledge-level-up-popup = Ваш рівень володіння навичкою «{$knowledge}» зріс до «{$mastery}»!
 knowledge-unit-learned-popup = Ви опанували навичку «{$knowledge}»!
 knowledge-unit-forgotten-popup = Ви забули секрети навички «{$knowledge}»!
 knowledge-info-description = Рівень: {$level}. Майстерність: {$mastery}.
 knowledge-weapon-class-examine = Ця зброя залежить від навички [color=green]{$class}[/color].
-
 knowledge-weapon-class-unarmed = рукопашного бою
 knowledge-weapon-class-bludgeon = ударної зброї
 knowledge-weapon-class-knife = коротких клинків
@@ -53,7 +49,6 @@ knowledge-weapon-class-sniper = снайперських гвинтівок
 knowledge-weapon-class-heavy = важкої зброї
 knowledge-weapon-class-laser = лазерної зброї
 knowledge-weapon-class-mining = шахтарської зброї
-
 knowledge-weapon-examine-verb-text = Навички
 knowledge-weapon-examine-verb-message = Показати, які навички впливають на цю зброю.
 knowledge-weapon-examine-header = Навички, що впливають на цю зброю:
@@ -69,7 +64,6 @@ knowledge-weapon-examine-effect-spread = розкид пострілів
 knowledge-weapon-examine-effect-block = заблокована шкода
 knowledge-weapon-examine-effect-parry = парирування
 knowledge-weapon-examine-effect-reflect = відбиття пострілів
-
 ent-MeleeKnowledge = Рукопашна підготовка
     .desc = Уміння ефективно битися голіруч або кігтями.
 ent-KnowledgeWeaponsBludgeon = Ударна зброя
@@ -88,7 +82,6 @@ ent-KnowledgeWeaponsShield = Щити
     .desc = Покращує частку шкоди, яку ви блокуєте щитом.
 ent-KnowledgeWeaponsEnergy = Енергетична зброя
     .desc = Підготовка до використання небезпечної енергетичної зброї.
-
 ent-ShootingKnowledge = Влучність
     .desc = Загальна вправність зі стрілецькою зброєю, що зменшує розкид.
 ent-KnowledgeWeaponsPistol = Пістолети
@@ -109,14 +102,12 @@ ent-KnowledgeWeaponsMining = Шахтарська зброя
     .desc = Вправність із кінетичними прискорювачами та шахтарськими інструментами.
 ent-ThrowingKnowledge = Метання
     .desc = Дозволяє кидати предмети швидше й точніше.
-
 ent-SurgeryKnowledge = Хірургія
     .desc = Впливає на швидкість і надійність хірургічних дій.
 ent-FirstAidKnowledge = Перша допомога
     .desc = Впливає на швидкість ін'єкцій та використання базових медичних засобів.
 ent-ChemistryKnowledge = Хімія
     .desc = Впливає на роботу з реакціями та лабораторним обладнанням.
-
 ent-FabricationKnowledge = Виготовлення
     .desc = Відкриває складніші конструкції та впливає на якість ручної роботи.
 ent-WeaponsKnowledge = Зброярство
@@ -133,7 +124,6 @@ ent-MechanicsKnowledge = Механіка
     .desc = Визначає якість механізмів і саморобних пристроїв.
 ent-TailoringKnowledge = Кравецтво
     .desc = Визначає якість виготовленого одягу.
-
 ent-MagicalLiteracyKnowledge = Магічна грамотність
     .desc = Дозволяє розуміти магічні конструкції, демонологію та основи зачарування.
 ent-LiteracyKnowledge = Грамотність
@@ -142,7 +132,6 @@ ent-PilotingKnowledge = Пілотування
     .desc = Впливає на керування шаттлами, новачків , а досвідчені пілоти маневрують швидше. Зростає від польотів.
 ent-JanitorKnowledge = Прибирання
     .desc = Допомагає точно закидати сміття до контейнерів.
-
 ent-CookingKnowledge = Кулінарія
     .desc = Визначає якість приготованої їжі та зростає від нових рецептів.
 ent-DoorsKnowledge = Двері
@@ -169,12 +158,10 @@ ent-SmokeablesKnowledge = Курильні вироби
     .desc = Визначає якість скручених сигарет, косяків і сигар.
 ent-RevolutionaryKnowledge = Революційне ремесло
     .desc = Дозволяє виготовляти революційні предмети та споруди.
-
 knowledge-character-tab = Навички
 knowledge-character-empty = Немає вивчених навичок.
 knowledge-character-level-mastery = Рівень {$level} · {$mastery}
 knowledge-character-experience = {$current} / {$required} ОД
-
 knowledge-admin-title = Редактор навичок
 knowledge-admin-verb = Редагувати навички
 knowledge-admin-verb-description = Змінити рівні навичок і досвід цього персонажа.
@@ -196,11 +183,6 @@ knowledge-admin-no-results = Навичок за цим запитом не зн
 knowledge-could-not-learn = Ви більше нічого не можете вивчити з цього джерела.
 knowledge-construction-no-container = Ваші навички недоступні, тому ви не можете почати це будівництво.
 knowledge-construction-missing = Для цього потрібна навичка «{$knowledge}» рівня «{$mastery}».
-knowledge-construction-theory = Для розуміння потрібні знання:
-knowledge-construction-practical = Практичні навички для якості:
-knowledge-construction-theory-requirement = Потрібно: {$mastery} (рівень {$required-level}+); у вас: {$current-mastery} (рівень {$current-level}).
-knowledge-construction-practical-requirement = Для якості: {$mastery} (рівень {$required-level}+); у вас: {$current-mastery} (рівень {$current-level}).
-
 ent-PirateCrateRandomSkillbooks = ящик випадкових підручників
     .desc = Містить добірку підручників і креслень для розвитку навичок.
 ent-PirateBookDebugSkills = Путівник Галактикою
@@ -239,7 +221,6 @@ ent-PirateBookWindows = креслення вікон
     .desc = Креслення станційних вікон.
 ent-PirateBookSmokeables = креслення курильних виробів
     .desc = Інструкції зі скручування сигарет, косяків і сигар.
-
 quality-name--5 = катастрофічний {$baseName}
 quality-name--4 = жахливий {$baseName}
 quality-name--3 = кепський {$baseName}
@@ -251,8 +232,6 @@ quality-name-2 = високоякісний {$baseName}
 quality-name-3 = відмінний {$baseName}
 quality-name-4 = майстерний {$baseName}
 quality-name-5 = бездоганний {$baseName}
-
 ent-PirateBookPiloting = ПІЛОТУВАННЯ ДЛЯ ЧАЙНИКІВ
     .desc = Основи керування шаттлом: де газ, де гальмо і чому не варто таранити док. Навчає пілотування до базового рівня.
-
 piloting-confused-controls = Ви плутаєте органи керування!

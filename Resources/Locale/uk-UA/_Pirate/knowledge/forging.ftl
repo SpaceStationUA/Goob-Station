@@ -1,13 +1,10 @@
 construction-category-forging = Ковальство
-
 materials-charcoal = деревне вугілля
 materials-brick = цегла
 stack-charcoal = деревне вугілля
 stack-brick = цегла
-
 reagent-name-cement = цемент
 reagent-desc-cement = Хімічна суміш для виготовлення цегли.
-
 workable-metal-popup-too-cold = Метал недостатньо гарячий для обробки!
 workable-metal-examine = Виглядає так, ніби метал {$workable ->
     [true] достатньо гарячий, щоб надавати йому форму ударами
@@ -16,18 +13,15 @@ workable-metal-examine = Виглядає так, ніби метал {$workable
 workable-metal-overheat-popup = {$name} став крихким від перегріву!
 metal-melted-popup = {$name} плавиться у шлак!
 item-slot-heater-temp = Температура предмета всередині: [color=yellow]{$temp} K[/color].
-
 forging-unfinished-name = незавершений {$metal} {$item}
 forging-result-name = {$metal} {$item}
 heated-name-text = {$name}
-
 construction-graph-tag-plasteelscraps = пласталевий брухт
 construction-graph-tag-steelscraps = сталевий брухт
 construction-graph-tag-brassscraps = латунний брухт
 construction-graph-tag-anviltop = верхня частина ковадла
 construction-graph-tag-ingotsteel = гарячий сталевий зливок
 construction-graph-tag-cement = цемент
-
 ent-Charcoal = деревне вугілля
     .desc = Деревина, випалена з мінімальним доступом кисню; горить значно гарячіше за звичайне дерево.
 ent-Brick = цегла

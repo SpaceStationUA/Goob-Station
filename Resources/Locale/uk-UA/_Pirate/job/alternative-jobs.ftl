@@ -33,12 +33,10 @@ job-alternative-name-baker = Пекар
 job-description-baker = Хуторок не підведе, моє тісто не вспливе, моє тісто не вспливе.
 
 # Піцайоло
-
 job-alternative-name-pizzaiolo = Піцайоло
 job-description-pizzaiolo = Жузепе тебе навчив випікати найкращу піцу на усій станції, то випікай!
 
 # Кондитер
-
 job-alternative-name-confectioner = Кондитер
 
 # Кінець chef
