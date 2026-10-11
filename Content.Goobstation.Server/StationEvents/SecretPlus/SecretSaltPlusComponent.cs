@@ -188,6 +188,10 @@ public sealed partial class SecretSaltPlusComponent : Component
     [ViewVariables]
     public Dictionary<string, int> TelemetryRoundstartSkips = new();
 
+    // Snapshot only populated at round end. May be reused by a future Discord report.
+    [ViewVariables]
+    public string? TelemetryLastRoundSummary;
+
     /// <summary>
     ///   Weight table for primary roundstart antags.
     /// </summary>
