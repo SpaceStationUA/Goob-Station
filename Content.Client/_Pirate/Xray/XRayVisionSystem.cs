@@ -6,7 +6,6 @@ using Content.Shared.GameTicking;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
-using static Robust.Shared.GameObjects.SharedMapSystem;
 
 namespace Content.Client._Pirate.Xray;
 
@@ -27,7 +26,6 @@ public sealed class XRayVisionSystem : SharedXRayVisionSystem
         SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<XRayVisionComponent, AfterAutoHandleStateEvent>(OnHandleState);
-        SubscribeLocalEvent<TileChangedEvent>(OnTilesChanged);
         SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
@@ -49,15 +47,9 @@ public sealed class XRayVisionSystem : SharedXRayVisionSystem
 
     private void OnRoundRestart(RoundRestartCleanupEvent args)
     {
-        _overlay.InvalidateVisibility();
         var localPlayer = _player.LocalSession?.AttachedEntity;
         if (localPlayer != null)
             Deactivate(localPlayer.Value);
-    }
-
-    private void OnTilesChanged(ref TileChangedEvent args)
-    {
-        _overlay.InvalidateVisibility(args.Entity.Owner);
     }
 
     private void Update(EntityUid entity, List<Entity<XRayVisionComponent>> entities)
@@ -87,7 +79,7 @@ public sealed class XRayVisionSystem : SharedXRayVisionSystem
             return;
         }
 
-        _overlay.SetParameters(xray.ShowTiles, xray.Range, xray.TileAlpha);
+        _overlay.SetParameters(xray.ShowTiles, xray.TileOverlayColor, xray.ScanlinesIntensity);
 
         if (!_overlayMan.HasOverlay<XRayVisionOverlay>())
             _overlayMan.AddOverlay(_overlay);

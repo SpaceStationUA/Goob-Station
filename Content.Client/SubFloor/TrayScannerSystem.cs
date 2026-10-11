@@ -62,6 +62,9 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
                     if (!scannerQuery.TryGetComponent(ent, out var sneakScanner) || !sneakScanner.Enabled)
                         continue;
 
+                    if (sneakScanner.RequireWorn && slot.ID != "eyes") // Pirate: tray scanner wear checks
+                        continue; // Pirate: tray scanner wear checks
+
                     canSee = true;
                     range = MathF.Max(range, sneakScanner.Range);
                 }
@@ -75,6 +78,9 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
 
             if (!scannerQuery.TryGetComponent(heldEntity, out var heldScanner) || !heldScanner.Enabled)
                 continue;
+
+            if (heldScanner.RequireWorn) // Pirate: tray scanner wear checks
+                continue; // Pirate: tray scanner wear checks
 
             range = MathF.Max(heldScanner.Range, range);
             canSee = true;
