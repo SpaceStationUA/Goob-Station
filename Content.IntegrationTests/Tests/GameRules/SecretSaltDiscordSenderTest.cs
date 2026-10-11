@@ -1,0 +1,91 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Content.Goobstation.Server.StationEvents.SecretPlus;
+
+namespace Content.IntegrationTests.Tests.GameRules;
+
+/// <summary>
+/// No real Discord calls or webhook secrets: all HTTP responses are simulated.
+/// </summary>
+[TestFixture]
+[Category("GameRuleTests")]
+public sealed class SecretSaltDiscordSenderTest
+{
+    private static readonly Uri DummyWebhook = new("https://discord.com/api/webhooks/123/fake-token-not-used");
+
+    [Test]
+    public async Task TestRetriesRateLimitAndDisablesMentions()
+    {
+        using var fake = new FakeDiscordHandler(HttpStatusCode.TooManyRequests, HttpStatusCode.NoContent);
+        using var client = new HttpClient(fake);
+
+        await SecretSaltPlusDiscordSender.SendChunkAsync(client, DummyWebhook, "Привіт @everyone");
+
+        Assert.That(fake.CallCount, Is.EqualTo(2));
+        Assert.That(fake.Payloads[0], Is.EqualTo(fake.Payloads[1]));
+
+        using var payload = JsonDocument.Parse(fake.Payloads[0]);
+        Assert.That(payload.RootElement.GetProperty("content").GetString(), Is.EqualTo("Привіт @everyone"));
+        Assert.That(payload.RootElement.GetProperty("allowed_mentions").GetProperty("parse").GetArrayLength(), Is.Zero);
+    }
+
+    [Test]
+    public void TestRevokedWebhookDoesNotRetry()
+    {
+        using var fake = new FakeDiscordHandler(HttpStatusCode.NotFound);
+        using var client = new HttpClient(fake);
+
+        Assert.ThrowsAsync<HttpRequestException>(async () =>
+            await SecretSaltPlusDiscordSender.SendChunkAsync(client, DummyWebhook, "Test"));
+
+        Assert.That(fake.CallCount, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void TestStopsAfterThreeRateLimitFailures()
+    {
+        using var fake = new FakeDiscordHandler(
+            HttpStatusCode.TooManyRequests,
+            HttpStatusCode.TooManyRequests,
+            HttpStatusCode.TooManyRequests);
+        using var client = new HttpClient(fake);
+
+        Assert.ThrowsAsync<HttpRequestException>(async () =>
+            await SecretSaltPlusDiscordSender.SendChunkAsync(client, DummyWebhook, "Test"));
+
+        Assert.That(fake.CallCount, Is.EqualTo(3));
+    }
+
+    private sealed class FakeDiscordHandler : HttpMessageHandler
+    {
+        private readonly Queue<HttpStatusCode> _responses;
+        public readonly List<string> Payloads = new();
+        public int CallCount;
+
+        public FakeDiscordHandler(params HttpStatusCode[] responses)
+        {
+            _responses = new Queue<HttpStatusCode>(responses);
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            CallCount++;
+            Payloads.Add(await request.Content!.ReadAsStringAsync(cancellationToken));
+
+            var response = new HttpResponseMessage(_responses.Dequeue());
+            if (response.StatusCode == HttpStatusCode.TooManyRequests)
+                response.Headers.RetryAfter = new RetryConditionHeaderValue(TimeSpan.Zero);
+            return response;
+        }
+    }
+}
