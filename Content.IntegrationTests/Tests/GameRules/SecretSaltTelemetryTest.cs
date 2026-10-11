@@ -132,6 +132,29 @@ public sealed class SecretSaltTelemetryTest
             Assert.That(lowPopulation.Keys.Any(proto => proto.ID == "VoidwalkerSpawn"),
                 Is.False, "Voidwalker is unavailable below 35 players.");
 
+            // Check the Voidwalker event at both eligibility boundaries, not
+            // merely at a very low population and late in the round.
+            var justBelowMinimumPlayers = events.AvailableEvents(
+                playerCountOverride: 34,
+                currentTimeOverride: TimeSpan.FromMinutes(31));
+            Assert.That(justBelowMinimumPlayers.Keys.Any(proto => proto.ID == "VoidwalkerSpawn"),
+                Is.False, "Voidwalker must remain unavailable with 34 players.");
+
+            var beforeEarliestStart = events.AvailableEvents(
+                playerCountOverride: 35,
+                currentTimeOverride: TimeSpan.FromMinutes(29));
+            Assert.That(beforeEarliestStart.Keys.Any(proto => proto.ID == "VoidwalkerSpawn"),
+                Is.False, "Voidwalker must remain unavailable before 30 minutes.");
+
+            var atEligiblePopulationAndTime = events.AvailableEvents(
+                playerCountOverride: 35,
+                currentTimeOverride: TimeSpan.FromMinutes(31));
+            Assert.That(events.TryBuildLimitedEvents(
+                    table.ScheduledGameRules, atEligiblePopulationAndTime, out var eligiblePool),
+                Is.True);
+            Assert.That(eligiblePool.Keys.Any(proto => proto.ID == "VoidwalkerSpawn"),
+                Is.True, "Voidwalker must be reachable in Salt at 35 players after 30 minutes.");
+
             ticker.ClearGameRules();
         });
 
