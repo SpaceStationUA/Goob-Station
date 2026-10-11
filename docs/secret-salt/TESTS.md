@@ -1,5 +1,7 @@
 # Перевірки технічних виправлень «Секрет Сіль 1.4»
 
+> **Новий тест (11.10.2026):** попередні інтеграційні тести та компіляція в [№38124715402](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124715402) — **PASS**. Тепер [тест `TestSummaryOnlyGeneratedAtRoundEnd`](https://github.com/The-Devils-Luck/Goob-Station/blob/feature/secret-salt-1.4/Content.IntegrationTests/Tests/GameRules/SecretSaltTelemetryTest.cs) перевіряє звичайний старт і завершення раунду: `TelemetryLastRoundSummary == null` до завершення; після `EndRound` — наявні `ROUND SUMMARY`, `roundstartAttempts`, `roundstartAdded` та `roundstartSkips`. Це ще **не** відправлення в Discord. [Нова перевірка №38125207666](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125207666) — результат очікується.
+
 > **Підтверджений CI-результат 11.10.2026:** [№38124715402](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124715402) — **SUCCESS**: компіляція, власний `SecretSaltTelemetryTest` та штатний `SecretStartsTest` пройшли. Це **не** є повноцінним тестуванням завершення раунду, ротації чи Discord.
 
 > **Інтеграційний тест — перша спроба FAILED:** [№38124255947](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124255947), компіляція PASS, штатний `SecretStartsTest` PASS, власний `SecretSaltTelemetryTest` FAIL. Точна причина за журналом: `Log.Error("Tried running roundstart event BloodBrothers, but chaos score was null")` у `SecretSaltPlusSystem.TrySpawnRoundstartAntags`. Роль пропускається через `nullChaosScore`, але інтеграційний тест вважає журнал `ERROR` винятком. [Коміт `8374e34`](https://github.com/The-Devils-Luck/Goob-Station/commit/8374e34b38b0c7be3c44037e2a3143c83cf8838a) залишає структурований запис пропуску, прибирає дубльований `ERROR`; шанси й логіка вибору не змінюються. [Повторний запуск №38124715402](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124715402) — **SUCCESS**, `SecretSaltTelemetryTest` та `SecretStartsTest` пройшли.
@@ -44,6 +46,8 @@
 | Т10 | Правило додано, але завершено до активації | `rulesAdded` збільшено, `rulesStarted` не збільшено | Не виконано |
 | Т11 | Антагоністів призначено системою `AntagSelectionSystem` | Підсумок `AssignedMinds` відповідає призначеним mind; ролі іншого походження не помилково видаються за повний облік усіх антагоністів | Не виконано |
 | Т12 | Завершення раунду та наступний раунд | `RULE SUMMARY` / `ROUND SUMMARY` з'являються після завершення раунду, а дані не переходять між раундами | Не виконано |
+
+| Т16 | Реальний запуск і завершення раунду `SecretSalt` | Після `EndRound` заповнено `TelemetryLastRoundSummary`, а до завершення воно `null` | Не виконано; CI №38125207666 |
 
 ## Що ще потрібно зробити
 
