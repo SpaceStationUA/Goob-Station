@@ -1,22 +1,23 @@
 using Content.Shared.Tag;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Shared.Voidwalker.GlassPasser;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GlassPasserComponent : Component
 {
     /// <summary>
     /// Any structures with these tags will not be collided with.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public HashSet<ProtoId<TagPrototype>> PassableTags =
         [ "Window", "Grille" ];
 
     /// <summary>
     /// The tag for a structure that has been voided and therefore rendered passable.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<TagPrototype> VoidedStructureTag = "VoidedStructure";
 
     /// <summary>
@@ -28,6 +29,6 @@ public sealed partial class GlassPasserComponent : Component
     /// <summary>
     /// How long do the components added to an object by passing through them last?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan EntityPassedAddedComponentsDuration = TimeSpan.FromSeconds(5);
 }

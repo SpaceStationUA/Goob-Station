@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-using Content.Goobstation.Shared.Dash;
 using Content.Pirate.Shared.Voidwalker;
 using Content.Pirate.Server.Voidwalker.Kidnapping;
 using Content.Pirate.Server.Voidwalker.Kidnapping.Voided;
@@ -7,12 +5,8 @@ using Content.Pirate.Server.Voidwalker.Objectives.Components;
 using Content.Pirate.Shared.Voidwalker.Actions;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.DoAfter;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Pirate.Server.Voidwalker;
 
@@ -99,6 +93,9 @@ public sealed partial class VoidwalkerSystem
 
     private void StartKidnap(Entity<VoidwalkerComponent> entity, EntityUid target)
     {
+        if (!CanKidnap(entity, target))
+            return;
+
         var popup = Loc.GetString("voidwalker-kidnap-begin", ("target", Name(target)), ("user", Name(entity.Owner)));
         _popup.PopupEntity(popup, target, PopupType.MediumCaution);
 
@@ -127,25 +124,29 @@ public sealed partial class VoidwalkerSystem
 
         args.Handled = true;
 
-        if (_mind.TryGetMind(entity, out var voidwalkerMindId, out var voidwalkerMind)
-            && _mind.TryGetObjectiveComp<VoidwalkerKidnapConditionComponent>(voidwalkerMindId, out var objective, voidwalkerMind))
-            objective.Kidnapped += 1;
-
-        if (!TryComp<MindContainerComponent>(target, out var targetMindContainer)
-            || !targetMindContainer.HasMind)
+        // The grab, critical state, and space status can change during the channel.
+        if (!CanKidnap(entity, target))
             return;
 
-        var originalMapId = Transform(target).MapID;
-        var originalMapUid = _map.GetMap(originalMapId);
+        var targetXform = Transform(target);
+        if (targetXform.MapUid is not { } originalMap)
+            return;
+
+        var originalCoordinates = targetXform.Coordinates;
+        if (!TrySendToShadowRealm(target))
+            return;
 
         var kidnappedComp = EnsureComp<VoidwalkerKidnappedComponent>(target);
         kidnappedComp.ExitVoidTime = _timing.CurTime + entity.Comp.KidnapDuration;
-        kidnappedComp.OriginalMap = originalMapUid;
+        kidnappedComp.OriginalMap = originalMap;
+        kidnappedComp.OriginalCoordinates = originalCoordinates;
 
         var voidedComp = EnsureComp<VoidedComponent>(target);
         voidedComp.Voidwalker = entity;
 
-        TrySendToShadowRealm(target);
+        if (_mind.TryGetMind(entity, out var voidwalkerMindId, out var voidwalkerMind)
+            && _mind.TryGetObjectiveComp<VoidwalkerKidnapConditionComponent>(voidwalkerMindId, out var objective, voidwalkerMind))
+            objective.Kidnapped += 1;
     }
 
     private void OnVoidWalk(Entity<VoidwalkerComponent> entity, ref VoidwalkerVoidWalkEvent args)

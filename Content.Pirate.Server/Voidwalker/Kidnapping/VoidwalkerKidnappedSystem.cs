@@ -1,13 +1,9 @@
-using System.Numerics;
-using Content.Pirate.Server.Voidwalker.Kidnapping.Voided;
 using Content.Server.Respawn;
 using Content.Shared.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Shared.Gibbing.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
-using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.Voidwalker.Kidnapping;
@@ -23,17 +19,7 @@ public sealed class VoidwalkerKidnappedSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
 
     private const int MaxTeleportAttempts = 100;
-    private ISawmill _sawmill = null!;
-
-    private Dictionary<EntityUid, int> _teleportFailCount = new();
-    private const int MaxTeleportAttemptFails = 10;
-
-    /// <inheritdoc />
-    public override void Initialize()
-    {
-        base.Initialize();
-        _sawmill = Logger.GetSawmill("voidwalker-kidnapping");
-    }
+    private static readonly TimeSpan ReturnRetryInterval = TimeSpan.FromSeconds(2);
 
     public override void Update(float frameTime)
     {
@@ -42,24 +28,39 @@ public sealed class VoidwalkerKidnappedSystem : EntitySystem
         var kidnappedQuery = EntityQueryEnumerator<VoidwalkerKidnappedComponent>();
         while (kidnappedQuery.MoveNext(out var uid, out var kidnapped))
         {
-            if (_timing.CurTime < kidnapped.ExitVoidTime
-                || !_mind.TryGetMind(uid, out _, out var mind))
+            if (_timing.CurTime < kidnapped.ExitVoidTime)
                 continue;
 
-            mind.PreventGhosting = false;
+            if (_mind.TryGetMind(uid, out _, out var mind))
+                mind.PreventGhosting = false;
 
             if (TryTeleportToRandomPartOfStation(uid, kidnapped.OriginalMap))
+            {
                 RemCompDeferred(uid, kidnapped);
+                continue;
+            }
+
+            // Salvage and other non-station maps still need a return destination.
+            if (kidnapped.OriginalCoordinates.IsValid(EntityManager)
+                && !TerminatingOrDeleted(kidnapped.OriginalCoordinates.EntityId))
+            {
+                _transform.SetCoordinates(uid, kidnapped.OriginalCoordinates);
+                OnReturned(uid);
+                RemCompDeferred(uid, kidnapped);
+                continue;
+            }
+
+            kidnapped.ExitVoidTime = _timing.CurTime + ReturnRetryInterval;
         }
     }
 
     public bool TryTeleportToRandomPartOfStation(EntityUid uid, EntityUid originalMap)
     {
-        var xform = Transform(uid);
-        if (xform is null)
+        if (!TryComp<TransformComponent>(originalMap, out var originalMapXform)
+            || TerminatingOrDeleted(originalMap))
             return false;
 
-        var destinationMap = Transform(originalMap).MapID;
+        var destinationMap = originalMapXform.MapID;
 
         if (_station.GetStationInMap(destinationMap) is not { } station)
             return false;
@@ -69,36 +70,21 @@ public sealed class VoidwalkerKidnappedSystem : EntitySystem
 
         var entityGridUid = _station.GetLargestGrid((station, stationData));
 
-        if (entityGridUid is null
-            || xform.MapUid is null)
+        if (entityGridUid is null)
             return false;
 
         // Pirate: check the destination atmosphere, rather than the victim's current void map.
-        if (_respawn.TryFindRandomTile(entityGridUid.Value, originalMap, MaxTeleportAttempts, out var randomPos))
-            _transform.SetCoordinates(uid, randomPos);
-        else
-        {
-            if (!_teleportFailCount.TryGetValue(uid, out var failCount))
-                failCount = 0;
+        if (!_respawn.TryFindRandomTile(entityGridUid.Value, originalMap, MaxTeleportAttempts, out var randomPos))
+            return false;
 
-            failCount++;
+        _transform.SetCoordinates(uid, randomPos);
+        OnReturned(uid);
+        return true;
+    }
 
-            _teleportFailCount[uid] = failCount;
-            if (failCount >= MaxTeleportAttemptFails)
-            {
-                _sawmill.Warning($"Could not find station to return {ToPrettyString(uid)} to within {MaxTeleportAttempts * MaxTeleportAttemptFails} attempts. Deleting.");
-                Del(uid);
-                return false;
-            }
-
-            var mapCoordinates = new MapCoordinates(new Vector2(0, 0), destinationMap); // Pirate: return to the destination map.
-            _transform.SetMapCoordinates(uid, mapCoordinates);
-            _sawmill.Warning($"Could not find station to return {ToPrettyString(uid)} to within {MaxTeleportAttempts}. Returning to default position.");
-        }
-
+    private void OnReturned(EntityUid uid)
+    {
         _stun.KnockdownOrStun(uid, TimeSpan.FromSeconds(5), true); // whatever, go my magic number
         _popup.PopupEntity(Loc.GetString("voidwalker-kidnap-return"), uid, uid);
-
-        return true;
     }
 }

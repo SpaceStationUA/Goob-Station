@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using Content.Goobstation.Common.Atmos;
 using Content.Goobstation.Server.Changeling;
+using Content.Pirate.Server.Voidwalker.Kidnapping;
 using Content.Pirate.Shared.Voidwalker;
 using Content.Pirate.Shared.Voidwalker.Actions;
 using Content.Pirate.Shared.Voidwalker.GlassPasser;
@@ -21,6 +22,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
 using Content.Shared.Speech.EntitySystems;
@@ -165,9 +167,7 @@ public sealed partial class VoidwalkerSystem : EntitySystem
             || !args.CanAccess)
             return;
 
-        if (entity.Comp.IsInSpace
-            && _mobState.IsCritical(target)
-            && _changeling.IsHardGrabbed(target))
+        if (CanKidnap(entity, target))
         {
             InnateVerb kidnapVerb = new()
             {
@@ -258,6 +258,18 @@ public sealed partial class VoidwalkerSystem : EntitySystem
 
     #region Helpers
 
+    private bool CanKidnap(Entity<VoidwalkerComponent> entity, EntityUid target)
+    {
+        return CheckInSpace(entity.Owner, entity.Comp)
+               && _mobState.IsCritical(target)
+               && _changeling.IsHardGrabbed(target)
+               && TryComp<PullerComponent>(entity, out var puller)
+               && puller.Pulling == target
+               && TryComp<MindContainerComponent>(target, out var mindContainer)
+               && mindContainer.HasMind
+               && !HasComp<VoidwalkerKidnappedComponent>(target);
+    }
+
     public bool CanSeeVoidwalker(EntityUid target)
     {
         if (HasComp<PermanentBlindnessComponent>(target)
@@ -294,15 +306,9 @@ public sealed partial class VoidwalkerSystem : EntitySystem
 
     public bool TrySendToShadowRealm(EntityUid target)
     {
-        var popup = Loc.GetString("voidwalker-kidnap-enter");
-        _popup.PopupEntity(popup, target, target, PopupType.SmallCaution);
-
         if (!TryComp<MindContainerComponent>(target, out var targetMindContainer)
             || !targetMindContainer.HasMind)
             return false;
-
-        var targetMind = Comp<MindComponent>(targetMindContainer.Mind.Value);
-        targetMind.PreventGhosting = true;
 
         var spawnPoints = EntityManager
             .GetAllComponents(typeof(VoidedSpawnComponent))
@@ -317,6 +323,11 @@ public sealed partial class VoidwalkerSystem : EntitySystem
         _transform.SetCoordinates(target, spawnTarget);
         _rejuvenate.PerformRejuvenate(target);
         _stun.KnockdownOrStun(target, TimeSpan.FromSeconds(5), true);
+        var targetMind = Comp<MindComponent>(targetMindContainer.Mind.Value);
+        targetMind.PreventGhosting = true;
+
+        var popup = Loc.GetString("voidwalker-kidnap-enter");
+        _popup.PopupEntity(popup, target, target, PopupType.SmallCaution);
         // need more sfx here later
 
         return true;

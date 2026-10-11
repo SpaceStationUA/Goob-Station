@@ -1,10 +1,8 @@
 using Content.Pirate.Shared.Voidwalker;
-using Content.Server.Gibbing.Systems;
 using Content.Shared.Medical;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
-using Content.Shared.Speech.Muting;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -18,7 +16,6 @@ public sealed class VoidedSystem : EntitySystem
     [Dependency] private readonly VoidwalkerSystem _voidwalker = null!;
     [Dependency] private readonly VoidwalkerKidnappedSystem _voidKidnapped = null!;
     [Dependency] private readonly VomitSystem _vomit = null!;
-    [Dependency] private readonly SharedMapSystem _map = null!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -75,17 +72,15 @@ public sealed class VoidedSystem : EntitySystem
         {
             if (_timing.CurTime >= comp.NextSpacedCheck)
             {
-                if (_voidwalker.CheckInSpace(uid))
-                {
-                    var map = _map.GetMap(Transform(uid).MapID);
-                    if (!_voidKidnapped.TryTeleportToRandomPartOfStation(uid, map))
-                        return;
+                comp.NextSpacedCheck = _timing.CurTime + comp.SpacedCheckInterval;
 
+                if (_voidwalker.CheckInSpace(uid)
+                    && Transform(uid).MapUid is { } map
+                    && _voidKidnapped.TryTeleportToRandomPartOfStation(uid, map))
+                {
                     var popup = Loc.GetString("voided-spaced-teleport");
                     _popup.PopupEntity(popup, uid, uid, PopupType.MediumCaution);
                 }
-
-                comp.NextSpacedCheck = _timing.CurTime + comp.SpacedCheckInterval;
             }
 
             if (_timing.CurTime >= comp.NextVomitTime)

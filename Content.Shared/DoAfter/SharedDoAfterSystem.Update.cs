@@ -188,11 +188,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         // Whether the user and the target are too far apart.
-        if (args.Target != null && !args.IgnoreObstruction) // Pirate: Voidwalker can gaze through windows.
+        if (args.Target != null)
         {
             if (args.DistanceThreshold != null)
             {
-                if (!_interaction.InRangeAndAccessible(args.User, args.Target.Value, args.DistanceThreshold.Value))
+                // Pirate: ignoring obstructions must still enforce distance and map checks.
+                if (args.IgnoreObstruction
+                    ? !_transform.InRange((args.User, userXform), (args.Target.Value, targetXform), args.DistanceThreshold.Value)
+                    : !_interaction.InRangeAndAccessible(args.User, args.Target.Value, args.DistanceThreshold.Value))
                     return true;
             }
         }

@@ -5,10 +5,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Shared.Voidwalker;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class VoidwalkerComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool IsInSpace;
 
     [ViewVariables(VVAccess.ReadOnly)]

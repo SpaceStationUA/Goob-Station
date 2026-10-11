@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Client.Graphics;
 using Content.Pirate.Shared.Voidwalker;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -13,6 +14,9 @@ namespace Content.Pirate.Client.VoidedVisualizer;
 public sealed class VoidedVisualizerSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
+    private const string PostShaderId = "pirate-voidwalker";
 
     private readonly ProtoId<ShaderPrototype> _shaderId = "VoidedShader";
     private ShaderPrototype? _shaderProto;
@@ -21,19 +25,22 @@ public sealed class VoidedVisualizerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<VoidedVisualsComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<VoidedVisualsComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<VoidedVisualsComponent, ComponentShutdown>(OnComponentShutdown);
     }
 
-    private void OnComponentInit(EntityUid uid, VoidedVisualsComponent component, ComponentInit args)
+    private void OnComponentStartup(EntityUid uid, VoidedVisualsComponent component, ComponentStartup args)
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
-            sprite.PostShader = (_shaderProto ??= _protoMan.Index(_shaderId)).InstanceUnique();
+            _sprite.SetPostShader((uid, sprite), new SpriteComponent.PostShaderArgs(PostShaderId, (_shaderProto ??= _protoMan.Index(_shaderId)).InstanceUnique())
+            {
+                Before = ContentPostShaderIds.BeforeOutlines,
+            });
     }
 
     private void OnComponentShutdown(EntityUid uid, VoidedVisualsComponent component, ComponentShutdown args)
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
-            sprite.PostShader = null;
+            _sprite.RemovePostShader((uid, sprite), PostShaderId);
     }
 }
