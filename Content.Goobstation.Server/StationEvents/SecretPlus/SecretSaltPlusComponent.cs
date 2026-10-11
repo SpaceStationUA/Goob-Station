@@ -192,6 +192,25 @@ public sealed partial class SecretSaltPlusComponent : Component
     [ViewVariables]
     public string? TelemetryLastRoundSummary;
 
+    // Round context and midround rolls; observability only (not part of game balance).
+    [ViewVariables]
+    public float TelemetryInitialChaos;
+
+    [ViewVariables]
+    public int TelemetryInitialPlayers;
+
+    [ViewVariables]
+    public int TelemetryMidroundRolls;
+
+    [ViewVariables]
+    public int TelemetryMidroundCandidates;
+
+    [ViewVariables]
+    public int TelemetryMidroundAdded;
+
+    [ViewVariables]
+    public int TelemetryMidroundNoCandidates;
+
     /// <summary>
     ///   Weight table for primary roundstart antags.
     /// </summary>
