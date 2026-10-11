@@ -40,8 +40,8 @@
         acts: [ "Destruction" ]
   - type: TrayScanReveal
   - type: Kudzu
-    growthTickChance: 0.1
-    spreadChance: 0.2 # omu change - was 0.5
+    growthTickChance: 0.05
+    spreadChance: 0.1
     # Heals each time it manages to do a growth tick:
     damageRecovery:
       types:

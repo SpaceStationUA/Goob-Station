@@ -8,12 +8,12 @@
     nonSpacedSpeedModifier: 0.6
     healingWhenSpaced:
       groups:
-        Brute: -22.5
-        Burn: -22.5
-        Airloss: -10.5
+        Brute: -7.5
+        Burn: -7.5
+        Airloss: -3.5
       types:
-        Heat: -7.5
-        Shock: -7.5
+        Heat: -2.5
+        Shock: -2.5
   - type: GlassPasser
   - type: VoidWhisper
   - type: SpawnItemsOnGib
@@ -111,8 +111,8 @@
         layer:
         - MobLayer
   - type: MovementSpeedModifier
-    baseWalkSpeed: 4.4
-    baseSprintSpeed: 4.4
+    baseWalkSpeed: 3.6
+    baseSprintSpeed: 3.6
     weightlessAcceleration: 2
     weightlessFriction: 1
     weightlessModifier: 1
