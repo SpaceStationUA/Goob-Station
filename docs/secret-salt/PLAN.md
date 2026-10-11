@@ -1,16 +1,8 @@
 # План розробки — «Секрет Сіль 1.4»
 
-> **Поточний стан (11.10.2026):** [CI №38124715402](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124715402) — **SUCCESS** для компіляції, `SecretSaltTelemetryTest` та `SecretStartsTest`. Додано `TelemetryLastRoundSummary` для майбутнього експорту в Discord і окремий тест `TestSummaryOnlyGeneratedAtRoundEnd`, що запускає `SecretSalt` як повний раунд, перевіряє відсутність звіту до завершення та його появу після завершення. [CI №38125207666](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125207666) **очікує результату**. Жодних змін у вагових таблицях та формулах.
+> **Актуально 11.10.2026:** CI [№38125207666](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125207666) — **SUCCESS**: код компілюється, працюють тести старту правил та збереження післяраундової статистики. Додано початковий бюджет хаосу й лічильники вибору подій посеред раунду ([`ca2aa4b`](https://github.com/The-Devils-Luck/Goob-Station/commit/ca2aa4b41d922e3de40294a7d1199acdac9e8438), [`71f6851`](https://github.com/The-Devils-Luck/Goob-Station/commit/71f6851c3b0aa319788138df67916f72f71c3ed3)); тест [`a1117b0`](https://github.com/The-Devils-Luck/Goob-Station/commit/a1117b03a48bbd7ae6f4739a3e73c767ca2f8b16) перевіряє їх у раунді. [Нова CI №38125756548](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125756548) **ще не завершена**. Ваги та формули не змінені; Discord, відгуки, ротація й обмеження ролей привидів не реалізовані.
 
-> **Стан на 11.10.2026:** [повторний CI №38124715402](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124715402) — **SUCCESS**; обидва інтеграційні тести пройшли. Переходимо до перевірки післяраундового звіту, збереження лічильників та повноти обліку антагоністів. Змін у балансі немає.
-
-> **Виявлена помилка інтеграційного тесту:** [№38124255947](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124255947) завершився **FAILURE**: `SecretStartsTest` — PASS, `SecretSaltTelemetryTest` — FAIL через запис `ERROR` для `BloodBrothers/nullChaosScore`, який очікувано пропускається генератором. Патч [`8374e34`](https://github.com/The-Devils-Luck/Goob-Station/commit/8374e34b38b0c7be3c44037e2a3143c83cf8838a) залишив `ROUNDSTART SKIP` та прибрав зайвий `Log.Error`, **без зміни балансу**. [Повторний CI №38124715402](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124715402) завершився **SUCCESS**; два інтеграційні тести та компіляція пройшли. Інші тестові сценарії ще не виконані.
-
-> **Стан перевірок 11.10.2026:** друга компіляція [№38123892196](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123892196) — **SUCCESS**. Створено [інтеграційний тест `SecretSaltTelemetryTest.cs`](https://github.com/The-Devils-Luck/Goob-Station/blob/feature/secret-salt-1.4/Content.IntegrationTests/Tests/GameRules/SecretSaltTelemetryTest.cs), який перевіряє облік спроб/відхилень/доданих правил і факт старту на сервері. Окрема [перевірка №38124255947](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124255947) **запущена**, результат ще невідомий. Повноцінні тестові раунди, післяраундові логи та Discord ще **не перевірені**.
-
-> **Прогрес 11.10.2026:** перша збірка [№38123571609](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123571609) **успішна**. Наступні коміти [a76846d](https://github.com/The-Devils-Luck/Goob-Station/commit/a76846d135477e39a2a1297fb4cd56be04cf5a4e) та [f851f9c](https://github.com/The-Devils-Luck/Goob-Station/commit/f851f9caa952bfb94260bf08930bd06f4a473795) додали лічильники фактичних випадкових виборів, доданих стартових правил і причин відхилення. [Нова збірка №38123892196](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123892196) перевіряє саме ці зміни. Тестових раундів ще немає.
-
-**Статус:** аудит завершено; технічні захисти й початкова телеметрія **успішно скомпільовані в CI №38123571609**. Нові лічильники спроб і відхилень перевіряються в CI №38123892196. **Ігрових тестів ще не було**; Discord, опитування, ротація та обмеження ролей привидів не реалізовані.
+**Статус:** аудит, захисти та стартова/післяраундова телеметрія реалізовані; базові інтеграційні тести успішні. Лічильники midround на етапі CI. **Discord, відгуки, ротація й правила привидів — ще не реалізовані.**
 
 **Оновлено:** 11 жовтня 2026 року.
 
@@ -160,7 +152,8 @@
 
 ## Поточний наступний крок
 
-**Поточна задача:** перевірити [CI №38125207666](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125207666) для сценарію завершення раунду. Збереження текстового підсумку в компоненті реалізовано, але **не підтверджено тестом до отримання CI-результату**. Далі — перевірити охоплення всіх шляхів видачі антагоністичних ролей та формат безпечного Discord-звіту. Ваги й формули залишити незмінними.
+**Перевірити [CI №38125756548](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125756548)** для нових лічильників midround. Якщо пройде — завершити оцінку **фактичних антагоністичних призначень** і спроєктувати безпечний експорт звіту в Discord без публікації вебхука. Якщо впаде — виправити за логами, **не змінюючи баланс**.
+
 
 > Після кожного завершеного етапу: позначити чекбокси, додати посилання на відповідні коміти, оновити «Наступний крок» у [журналі](PROJECT.md). Не плутати внесення документації з реалізацією функціональності.
 
