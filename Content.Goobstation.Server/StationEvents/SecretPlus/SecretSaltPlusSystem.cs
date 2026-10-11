@@ -112,7 +112,17 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             LogMessage($"RULE SUMMARY scheduler={uid} candidate={ruleId} ruleUid={ruleUid} everStarted={scheduler.TelemetryStartedRules.Contains(ruleUid)} state={state} assignedMinds={assigned?.ToString() ?? "n/a"}", false);
         }
 
-        LogMessage($"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} chaos={scheduler.ChaosScore} duration={_ticker.RoundDuration()}", false);
+        var skipReasons = string.Join(",", scheduler.TelemetryRoundstartSkips
+            .OrderBy(pair => pair.Key)
+            .Select(pair => $"{pair.Key}:{pair.Value}"));
+
+        LogMessage($"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} roundstartAttempts={scheduler.TelemetryRoundstartAttempts} roundstartAdded={scheduler.TelemetryRoundstartAdded} roundstartSkips=[{skipReasons}] chaos={scheduler.ChaosScore} duration={_ticker.RoundDuration()}", false);
+    }
+
+    private static void RecordRoundstartSkip(SecretSaltPlusComponent scheduler, string reason)
+    {
+        scheduler.TelemetryRoundstartSkips.TryGetValue(reason, out var count);
+        scheduler.TelemetryRoundstartSkips[reason] = count + 1;
     }
 
     protected override void Added(EntityUid uid, SecretSaltPlusComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -284,6 +294,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
         if (scheduler.Comp.NoRoundstartAntags)
         {
             var skippedProto = MetaData(scheduler.Owner).EntityPrototype?.ID ?? "<unknown>";
+            RecordRoundstartSkip(scheduler.Comp, "noRoundstartAntags");
             LogMessage($"ROUNDSTART SKIP proto={skippedProto} uid={scheduler.Owner} reason=noRoundstartAntags", false);
             return;
         }
@@ -309,11 +320,13 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             var pickWeights = i == 1 ? primaryWeights : weights;
             if (pickWeights.Count == 0 || pickWeights.Values.All(weight => weight <= 0f))
             {
+                RecordRoundstartSkip(scheduler.Comp, "noPositiveWeights");
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} reason=noPositiveWeights iteration={i}", false);
                 break;
             }
 
             var pick = _random.Pick(pickWeights);
+            scheduler.Comp.TelemetryRoundstartAttempts++;
 
             // on lowpop this may still go no likey even for the primary antag pick and pick thief or something, intended
             GameRuleComponent? ruleComp = null;
@@ -321,6 +334,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
                 || !entProto.TryGetComponent<GameRuleComponent>(out ruleComp, _factory)
             )
             {
+                RecordRoundstartSkip(scheduler.Comp, "missingGameRulePrototype");
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=missingGameRulePrototype", false);
                 continue;
             }
@@ -329,6 +343,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
 
             if (chaosScore == null)
             {
+                RecordRoundstartSkip(scheduler.Comp, "nullChaosScore");
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=nullChaosScore", false);
                 Log.Error($"Tried running roundstart event {entProto.ID}, but chaos score was null");
                 continue;
@@ -340,6 +355,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             pickProb = MathF.Min(1f, pickProb); // to shut up debug
             if (!_random.Prob(pickProb)) // have a chance to re-pick if we have low chaos budget left compared to this
             {
+                RecordRoundstartSkip(scheduler.Comp, "probability");
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=probability probability={pickProb} chaos={scheduler.Comp.ChaosScore} candidateScore={chaosScore.Value}", false);
                 continue;
             }
@@ -379,6 +395,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
 
             if (ruleComp.MinPlayers > count)
             {
+                RecordRoundstartSkip(scheduler.Comp, "minPlayers");
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=minPlayers minPlayers={ruleComp.MinPlayers} players={count}", false);
                 return;
             }
@@ -390,10 +407,12 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             var ruleUid = StartRule(scheduler, pick, false, effPlayers);
             if (ruleUid == EntityUid.Invalid)
             {
+                RecordRoundstartSkip(scheduler.Comp, "invalidChaosScoreAfterAdd");
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=invalidChaosScoreAfterAdd", false);
                 return;
             }
 
+            scheduler.Comp.TelemetryRoundstartAdded++;
             LogMessage($"ROUNDSTART ADDED proto={proto} uid={scheduler.Owner} candidate={pick} ruleUid={ruleUid} score={score} players={effPlayers} chaos={chaos}", false);
             LogMessage($"Roundstart rule chosen: {pick} with score {score}");
         }
