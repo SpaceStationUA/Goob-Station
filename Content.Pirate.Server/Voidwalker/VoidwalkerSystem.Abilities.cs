@@ -143,6 +143,7 @@ public sealed partial class VoidwalkerSystem
 
         var voidedComp = EnsureComp<VoidedComponent>(target);
         voidedComp.Voidwalker = entity;
+        voidedComp.ExpireTime = _timing.CurTime + voidedComp.Duration;
 
         if (_mind.TryGetMind(entity, out var voidwalkerMindId, out var voidwalkerMind)
             && _mind.TryGetObjectiveComp<VoidwalkerKidnapConditionComponent>(voidwalkerMindId, out var objective, voidwalkerMind))

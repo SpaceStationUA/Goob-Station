@@ -45,6 +45,8 @@ public sealed class VoidedSystem : EntitySystem
 
     private void OnStartup(Entity<VoidedComponent> entity, ref ComponentStartup args)
     {
+        entity.Comp.ExpireTime = _timing.CurTime + entity.Comp.Duration;
+
         EnsureComp<VoidedVisualsComponent>(entity);
         EnsureComp<VoidAccentComponent>(entity); // This was muted in ss13, but I think this accent is cooler.
         EnsureComp<PacifiedComponent>(entity);
@@ -70,6 +72,12 @@ public sealed class VoidedSystem : EntitySystem
         var query = EntityQueryEnumerator<VoidedComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
+            if (_timing.CurTime >= comp.ExpireTime)
+            {
+                RemCompDeferred(uid, comp);
+                continue;
+            }
+
             if (_timing.CurTime >= comp.NextSpacedCheck)
             {
                 comp.NextSpacedCheck = _timing.CurTime + comp.SpacedCheckInterval;
