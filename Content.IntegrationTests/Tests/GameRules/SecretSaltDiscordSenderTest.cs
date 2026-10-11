@@ -66,6 +66,53 @@ public sealed class SecretSaltDiscordSenderTest
     }
 
     [Test]
+    public async Task TestTransportFailureRetriesOnlyUnsentChunk()
+    {
+        // First chunk succeeds. The second chunk fails once at the network
+        // layer and then succeeds; an earlier delivered chunk is not repeated.
+        using var fake = new FaultingDiscordHandler(null,
+            new HttpRequestException("Simulated connection reset"), null);
+        using var client = new HttpClient(fake);
+        var report = new string('A', 1900) + new string('B', 50);
+
+        await SecretSaltPlusDiscordSender.SendReportAsync(client, DummyWebhook.ToString(), report);
+
+        Assert.That(fake.CallCount, Is.EqualTo(3));
+        Assert.That(fake.Payloads[0], Is.Not.EqualTo(fake.Payloads[1]));
+        Assert.That(fake.Payloads[1], Is.EqualTo(fake.Payloads[2]));
+    }
+
+    [Test]
+    public async Task TestRequestTimeoutIsRetried()
+    {
+        using var fake = new FaultingDiscordHandler(
+            new TaskCanceledException("Simulated request timeout"), null);
+        using var client = new HttpClient(fake);
+
+        await SecretSaltPlusDiscordSender.SendChunkAsync(client, DummyWebhook, "Retry timeout");
+
+        Assert.That(fake.CallCount, Is.EqualTo(2));
+        Assert.That(fake.Payloads[0], Is.EqualTo(fake.Payloads[1]));
+    }
+
+    [Test]
+    public void TestStopsAfterThreeTransportFailures()
+    {
+        using var fake = new FaultingDiscordHandler(
+            new HttpRequestException("Connection failure 1"),
+            new HttpRequestException("Connection failure 2"),
+            new HttpRequestException("Connection failure 3"));
+        using var client = new HttpClient(fake);
+
+        Assert.ThrowsAsync<HttpRequestException>(async () =>
+            await SecretSaltPlusDiscordSender.SendChunkAsync(client, DummyWebhook, "Test"));
+
+        Assert.That(fake.CallCount, Is.EqualTo(3));
+        Assert.That(fake.Payloads[0], Is.EqualTo(fake.Payloads[1]));
+        Assert.That(fake.Payloads[1], Is.EqualTo(fake.Payloads[2]));
+    }
+
+    [Test]
     public async Task TestLongReportSplitsIntoDiscordSafeChunks()
     {
         using var fake = new FakeDiscordHandler(
@@ -127,6 +174,31 @@ public sealed class SecretSaltDiscordSenderTest
                 "https://evil.example/api/webhooks/123/fake-token", "Private report"));
 
         Assert.That(fake.CallCount, Is.Zero);
+    }
+
+    private sealed class FaultingDiscordHandler : HttpMessageHandler
+    {
+        private readonly Queue<Exception?> _failures;
+        public readonly List<string> Payloads = new();
+        public int CallCount;
+
+        public FaultingDiscordHandler(params Exception?[] failures)
+        {
+            _failures = new Queue<Exception?>(failures);
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            CallCount++;
+            Payloads.Add(await request.Content!.ReadAsStringAsync(cancellationToken));
+            var failure = _failures.Dequeue();
+            if (failure != null)
+                throw failure;
+
+            return new HttpResponseMessage(HttpStatusCode.NoContent);
+        }
     }
 
     private sealed class FakeDiscordHandler : HttpMessageHandler
