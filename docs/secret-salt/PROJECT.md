@@ -1,5 +1,7 @@
 # 🧂 Секрет Сіль 1.4 — журнал проєкту
 
+> **Актуально (11.10.2026):** [CI №38125756548](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125756548) — **FAILURE на етапі компіляції тестів**: аналізатор `RA0002` заборонив пряму зміну `SecretSaltPlusComponent.TimeNextEvent` з інтеграційного тесту. Ігровий код скомпілювався, самі тести не стартували. [Коміт `e029e5d`](https://github.com/The-Devils-Luck/Goob-Station/commit/e029e5d36babba1ff9db0f1df5ec8b3c5ae9c457) виправляє **тільки тест**: час наступної події задається рефлексією у тестовому середовищі. [Повторний CI №38126115787](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38126115787) **виконується**. Баланс незмінний. Наступний крок: дочекатись CI, проаналізувати результат та за потреби виправити тест/діагностику.
+
 > **Актуально 11.10.2026:** [CI №38125207666](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125207666) — **SUCCESS**, пройшов інтеграційний тест з реальним запуском і завершенням тестового раунду. У робочій гілці доповнено статистику стартовим бюджетом хаосу та лічильниками подій посеред раунду ([`ca2aa4b`](https://github.com/The-Devils-Luck/Goob-Station/commit/ca2aa4b41d922e3de40294a7d1199acdac9e8438), [`71f6851`](https://github.com/The-Devils-Luck/Goob-Station/commit/71f6851c3b0aa319788138df67916f72f71c3ed3)). [CI №38125756548](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125756548) ще виконується. Режим на бойовому сервері не тестувався; баланс незмінний.
 
 > **Єдине місце для відновлення контексту між чатами.**
