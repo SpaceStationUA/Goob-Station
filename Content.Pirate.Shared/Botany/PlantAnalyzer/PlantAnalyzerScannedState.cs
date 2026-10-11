@@ -27,7 +27,6 @@ public sealed class PlantAnalyzerScannedState : BoundUserInterfaceState
     public PlantAnalyzerScanType ScanType;
     public NetEntity? Entity;
     public bool HarvestReady;
-    private PlantAnalyzerStatus _active;
 
     // Condition
     public float? Health;
@@ -69,12 +68,6 @@ public sealed class PlantAnalyzerScannedState : BoundUserInterfaceState
     public float? LowPressureTolerance;
     public float? HighPressureTolerance;
     public List<string>? MissingGases;
-
-    public PlantAnalyzerScannedState(PlantAnalyzerStatus active, string name)
-    {
-        _active = active;
-        Name = name;
-    }
 
     public PlantAnalyzerScannedState(
         PlantAnalyzerStatus status,
@@ -165,6 +158,7 @@ public enum PlantAnalyzerStatus : byte
     OutOfRange,
 }
 
+[Serializable, NetSerializable]
 public enum PlantAnalyzerScanType
 {
     None,

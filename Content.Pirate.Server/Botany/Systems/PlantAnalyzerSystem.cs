@@ -65,9 +65,6 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
             if (comp.ScannedEntity is not { } target)
                 continue;
 
-            if (!TryComp<PlantHolderComponent>(target, out _))
-                continue;
-
             if (!_ui.IsUiOpen(uid, PlantAnalyzerUiKey.Key))
             {
                 StopUsingAnalyzer(uid, comp);
@@ -115,8 +112,11 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
                 continue;
             }
 
+            // Pirate: validate every target while retaining static seed/produce snapshots.
+            var wasOutOfRange = comp.OutOfRangeSince != null;
             comp.OutOfRangeSince = null;
-            SendScannedState(uid, comp, target);
+            if (wasOutOfRange || HasComp<PlantHolderComponent>(target))
+                SendScannedState(uid, comp, target);
         }
     }
 
@@ -640,6 +640,11 @@ public sealed partial class PlantAnalyzerSystem : EntitySystem
             return;
 
         if (Deleted(target) || !_cell.HasDrawCharge(uid))
+            return;
+
+        // Pirate: do not print fresh data from a target outside the scan range.
+        if (!TryComp<TransformComponent>(target, out var targetXform) ||
+            !_transform.InRange(Transform(uid).Coordinates, targetXform.Coordinates, comp.Settings.MaxScanRange))
             return;
 
         if (!TryGetSeedData(target, out var seed, out _))

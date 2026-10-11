@@ -35,7 +35,8 @@
 
 - type: entity
   id: PlantAnalyzerDebug
-  parent: [ BaseHandheldComputer ]
+  # Pirate: the handheld-computer base requires a battery even for debug scans.
+  parent: [ BaseItem ]
   name: plant analyzer (debug)
   description: A debug plant scanner that does not draw power and scans instantly.
   components:
