@@ -6,6 +6,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Server.StationEvents.Components;
 using Content.Goobstation.Shared.StationEvents;
@@ -21,6 +23,9 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
+using Content.Shared.Players;
+using Content.Shared.Roles;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
@@ -51,6 +56,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
 
@@ -60,14 +66,168 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
 
     private ISawmill _sawmill = default!;
 
+    // Reuse one client instead of opening a connection for every round.
+    private static readonly HttpClient AuthorReportHttpClient = new();
+
     public override void Initialize()
     {
         base.Initialize();
+
+        // The game ticker broadcasts rule starts after adding ActiveGameRuleComponent.
+        // This distinguishes a rule being queued from one actually starting.
+        SubscribeLocalEvent<GameRuleStartedEvent>(OnAnyGameRuleStarted);
 
         _sawmill = _log.GetSawmill("secret_salt_plus");
 
         Subs.CVar(_cfg, GoobCVars.MinimumTimeUntilFirstEvent, value => _minimumTimeUntilFirstEvent = value, true);
         Subs.CVar(_cfg, GoobCVars.RoundstartChaosScoreMultiplier, value => _roundstartChaosScoreMultiplier = value, true);
+    }
+
+    private void OnAnyGameRuleStarted(ref GameRuleStartedEvent args)
+    {
+        var query = EntityQueryEnumerator<SecretSaltPlusComponent>();
+        while (query.MoveNext(out var schedulerUid, out var scheduler))
+        {
+            if (!scheduler.TelemetryRules.TryGetValue(args.RuleEntity, out var trackedRule))
+                continue;
+
+            scheduler.TelemetryStartedRules.Add(args.RuleEntity);
+            LogMessage($"RULE STARTED scheduler={schedulerUid} candidate={trackedRule} ruleUid={args.RuleEntity}", false);
+        }
+    }
+
+    protected override void AppendRoundEndText(EntityUid uid, SecretSaltPlusComponent scheduler, GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
+    {
+        var assignedMinds = 0;
+        var assignedMindsUnique = new HashSet<EntityUid>();
+        foreach (var (ruleUid, ruleId) in scheduler.TelemetryRules)
+        {
+            if (!Exists(ruleUid))
+            {
+                LogMessage($"RULE SUMMARY scheduler={uid} candidate={ruleId} ruleUid={ruleUid} state=missing", false);
+                continue;
+            }
+
+            // AssignedMinds records assignments made by AntagSelectionSystem, not
+            // necessarily every antagonist created by unrelated game systems.
+            int? assigned = TryComp<AntagSelectionComponent>(ruleUid, out var antagSelection)
+                ? antagSelection.AssignedMinds.Count
+                : null;
+
+            assignedMinds += assigned ?? 0;
+            if (antagSelection != null)
+            {
+                foreach (var (mindUid, _) in antagSelection.AssignedMinds)
+                    assignedMindsUnique.Add(mindUid);
+            }
+
+            var state = HasComp<ActiveGameRuleComponent>(ruleUid) ? "active"
+                : HasComp<EndedGameRuleComponent>(ruleUid) ? "ended"
+                : "pending";
+
+            LogMessage($"RULE SUMMARY scheduler={uid} candidate={ruleId} ruleUid={ruleUid} everStarted={scheduler.TelemetryStartedRules.Contains(ruleUid)} state={state} assignedMinds={assigned?.ToString() ?? "n/a"}", false);
+        }
+
+        // Actual antagonist status at round end, including roles created outside
+        // AntagSelectionSystem. Count only totals; never log player identifiers.
+        var roundAntagonistMinds = 0;
+        var roundAntagonistRoles = 0;
+        var authorRoster = new List<string>();
+        var minds = EntityQueryEnumerator<MindComponent>();
+        while (minds.MoveNext(out var mindUid, out var mind))
+        {
+            if (!_roles.MindIsAntagonist(mindUid))
+                continue;
+
+            var roles = _roles.MindGetAllRoleInfo(mindUid)
+                .Where(role => role.Antagonist)
+                .ToList();
+
+            roundAntagonistMinds++;
+            roundAntagonistRoles += roles.Count;
+
+            // Follow the same name source as the vanilla round-end scoreboard.
+            // Do not send NetUserId, mind UID, IP address, or other account data.
+            var playerName = "Нікнейм невідомий";
+            var userId = mind.UserId ?? mind.OriginalOwnerUserId;
+            if (userId != null && _playerManager.TryGetPlayerData(userId.Value, out var playerData))
+                playerName = playerData.ContentData()?.Name ?? playerName;
+
+            var roleNames = roles.Select(role => SafeDiscordText(Loc.GetString(role.Name), 90)).ToList();
+            var roleList = roleNames.Count > 0 ? string.Join(", ", roleNames) : "Невизначена роль";
+            authorRoster.Add($"• {SafeDiscordText(playerName, 80)} — {roleList}");
+        }
+
+        scheduler.TelemetryAntagonistMindsAtEnd = roundAntagonistMinds;
+        scheduler.TelemetryAntagonistRolesAtEnd = roundAntagonistRoles;
+        scheduler.TelemetryUniqueTrackedAssignedMinds = assignedMindsUnique.Count;
+
+        var skipReasons = string.Join(",", scheduler.TelemetryRoundstartSkips
+            .OrderBy(pair => pair.Key)
+            .Select(pair => $"{pair.Key}:{pair.Value}"));
+
+        var summary = $"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} trackedUniqueAssignedMinds={scheduler.TelemetryUniqueTrackedAssignedMinds} antagonistMindsAtEnd={scheduler.TelemetryAntagonistMindsAtEnd} antagonistRolesAtEnd={scheduler.TelemetryAntagonistRolesAtEnd} roundstartAttempts={scheduler.TelemetryRoundstartAttempts} roundstartAdded={scheduler.TelemetryRoundstartAdded} roundstartSkips=[{skipReasons}] initialPlayers={scheduler.TelemetryInitialPlayers} initialChaos={scheduler.TelemetryInitialChaos} chaos={scheduler.ChaosScore} midroundRolls={scheduler.TelemetryMidroundRolls} midroundCandidates={scheduler.TelemetryMidroundCandidates} midroundAdded={scheduler.TelemetryMidroundAdded} midroundNoCandidates={scheduler.TelemetryMidroundNoCandidates} duration={_ticker.RoundDuration()}";
+        scheduler.TelemetryLastRoundSummary = summary;
+        LogMessage(summary, false);
+
+        // Only the private report contains nicknames and antagonist roles.
+        // It is produced after the round ends, never inserted into the public
+        // round-end scoreboard or administrative announcements.
+        authorRoster.Sort(StringComparer.OrdinalIgnoreCase);
+        var rosterText = authorRoster.Count == 0
+            ? "Антагоністів наприкінці раунду не виявлено."
+            : string.Join("\n", authorRoster);
+        scheduler.TelemetryAuthorReport =
+            $"🧂 Секрет Сіль 1.4 — раунд #{_ticker.RoundId}\n" +
+            $"{summary}\n\nАнтагоністи наприкінці раунду (нікнейм — роль):\n{rosterText}";
+
+        // Mandatory after every Secret Salt round; there is no on/off toggle.
+        // The one-time server secret must point to the author's private channel.
+        // Never fall back to the public station-report webhook.
+        if (scheduler.TelemetryAuthorReportSendRequested)
+            return;
+
+        var privateWebhook = _cfg.GetCVar(GoobCVars.SecretSaltAuthorDiscordWebhook);
+        if (string.IsNullOrWhiteSpace(privateWebhook))
+        {
+            // One warning per round rather than silently dropping the report.
+            // The full private report remains available to the server until reset.
+            _sawmill.Warning("Secret Salt author report NOT DELIVERED: mandatory private Discord webhook is not configured (secret_salt.author_discord_webhook).");
+            return;
+        }
+
+        scheduler.TelemetryAuthorReportSendRequested = true;
+        _ = SendAuthorReportAsync(privateWebhook, scheduler.TelemetryAuthorReport);
+    }
+
+    // Strip Discord formatting/control characters from player-controlled text,
+    // and cap lengths to avoid oversized or forged report entries.
+    private static string SafeDiscordText(string value, int limit)
+    {
+        var sanitized = new string(value
+            .Where(c => !char.IsControl(c) && c != '`')
+            .Take(limit)
+            .ToArray());
+        return sanitized.Replace("@", "＠").Replace("|", "¦");
+    }
+
+    private async Task SendAuthorReportAsync(string url, string report)
+    {
+        try
+        {
+            await SecretSaltPlusDiscordSender.SendReportAsync(AuthorReportHttpClient, url, report);
+        }
+        catch (Exception)
+        {
+            // The exception might contain the secret Discord webhook URL.
+            _sawmill.Warning("Secret Salt private author report delivery failed.");
+        }
+    }
+
+    private static void RecordRoundstartSkip(SecretSaltPlusComponent scheduler, string reason)
+    {
+        scheduler.TelemetryRoundstartSkips.TryGetValue(reason, out var count);
+        scheduler.TelemetryRoundstartSkips[reason] = count + 1;
     }
 
     protected override void Added(EntityUid uid, SecretSaltPlusComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -85,6 +245,9 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
         scheduler.ChaosScore =
             -_random.NextFloat(scheduler.MinStartingChaos * totalPlayers, scheduler.MaxStartingChaos * totalPlayers) *
             _roundstartChaosScoreMultiplier;
+
+        scheduler.TelemetryInitialPlayers = totalPlayers;
+        scheduler.TelemetryInitialChaos = scheduler.ChaosScore;
 
         // roll midroundchaos generation variation
         var roll = _random.NextFloat();
@@ -221,11 +384,28 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
         else
             SetupEvents((uid, scheduler), count);
 
+        scheduler.TelemetryMidroundRolls++;
         var selectedEvent = ChooseEvent((uid, scheduler));
         if (selectedEvent != null)
-            StartRule((uid, scheduler), selectedEvent.Proto.ID, false);
+        {
+            scheduler.TelemetryMidroundCandidates++;
+            var ruleUid = StartRule((uid, scheduler), selectedEvent.Proto.ID, false);
+            if (ruleUid != EntityUid.Invalid)
+            {
+                scheduler.TelemetryMidroundAdded++;
+                LogMessage($"MIDROUND ADDED scheduler={uid} candidate={selectedEvent.Proto.ID} ruleUid={ruleUid} chaos={scheduler.ChaosScore} players={count.Players} ghosts={count.Ghosts}", false);
+            }
+            else
+            {
+                LogMessage($"MIDROUND SKIP scheduler={uid} candidate={selectedEvent.Proto.ID} reason=nullChaosScoreAfterAdd", false);
+            }
+        }
         else
+        {
+            scheduler.TelemetryMidroundNoCandidates++;
+            LogMessage($"MIDROUND SKIP scheduler={uid} reason=noRunnableEvents chaos={scheduler.ChaosScore} players={count.Players} ghosts={count.Ghosts}", false);
             LogMessage($"No runnable events");
+        }
 
     }
 
@@ -239,6 +419,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
         if (scheduler.Comp.NoRoundstartAntags)
         {
             var skippedProto = MetaData(scheduler.Owner).EntityPrototype?.ID ?? "<unknown>";
+            RecordRoundstartSkip(scheduler.Comp, "noRoundstartAntags");
             LogMessage($"ROUNDSTART SKIP proto={skippedProto} uid={scheduler.Owner} reason=noRoundstartAntags", false);
             return;
         }
@@ -261,7 +442,16 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             i++;
 
             // on first iter pick a primary antag
-            var pick = _random.Pick(i == 1 ? primaryWeights : weights);
+            var pickWeights = i == 1 ? primaryWeights : weights;
+            if (pickWeights.Count == 0 || pickWeights.Values.All(weight => weight <= 0f))
+            {
+                RecordRoundstartSkip(scheduler.Comp, "noPositiveWeights");
+                LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} reason=noPositiveWeights iteration={i}", false);
+                break;
+            }
+
+            var pick = _random.Pick(pickWeights);
+            scheduler.Comp.TelemetryRoundstartAttempts++;
 
             // on lowpop this may still go no likey even for the primary antag pick and pick thief or something, intended
             GameRuleComponent? ruleComp = null;
@@ -269,6 +459,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
                 || !entProto.TryGetComponent<GameRuleComponent>(out ruleComp, _factory)
             )
             {
+                RecordRoundstartSkip(scheduler.Comp, "missingGameRulePrototype");
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=missingGameRulePrototype", false);
                 continue;
             }
@@ -277,8 +468,11 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
 
             if (chaosScore == null)
             {
+                RecordRoundstartSkip(scheduler.Comp, "nullChaosScore");
+                // This candidate is not eligible for chaos-based selection; the
+                // structured skip below already records the reason. Integration tests
+                // fail on ERROR logs, so do not treat a rejected candidate as a crash.
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=nullChaosScore", false);
-                Log.Error($"Tried running roundstart event {entProto.ID}, but chaos score was null");
                 continue;
             }
                              // negative
@@ -288,6 +482,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             pickProb = MathF.Min(1f, pickProb); // to shut up debug
             if (!_random.Prob(pickProb)) // have a chance to re-pick if we have low chaos budget left compared to this
             {
+                RecordRoundstartSkip(scheduler.Comp, "probability");
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=probability probability={pickProb} chaos={scheduler.Comp.ChaosScore} candidateScore={chaosScore.Value}", false);
                 continue;
             }
@@ -327,6 +522,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
 
             if (ruleComp.MinPlayers > count)
             {
+                RecordRoundstartSkip(scheduler.Comp, "minPlayers");
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=minPlayers minPlayers={ruleComp.MinPlayers} players={count}", false);
                 return;
             }
@@ -336,7 +532,15 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             var score = GetChaosScore(pickProto, ruleComp, effPlayers);
             var chaos = scheduler.Comp.ChaosScore;
             var ruleUid = StartRule(scheduler, pick, false, effPlayers);
-            LogMessage($"ROUNDSTART START proto={proto} uid={scheduler.Owner} candidate={pick} ruleUid={ruleUid} score={score} players={effPlayers} chaos={chaos}", false);
+            if (ruleUid == EntityUid.Invalid)
+            {
+                RecordRoundstartSkip(scheduler.Comp, "invalidChaosScoreAfterAdd");
+                LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=invalidChaosScoreAfterAdd", false);
+                return;
+            }
+
+            scheduler.Comp.TelemetryRoundstartAdded++;
+            LogMessage($"ROUNDSTART ADDED proto={proto} uid={scheduler.Owner} candidate={pick} ruleUid={ruleUid} score={score} players={effPlayers} chaos={chaos}", false);
             LogMessage($"Roundstart rule chosen: {pick} with score {score}");
         }
     }
@@ -348,7 +552,21 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
     {
         var ruleUid = _ticker.AddGameRule(rule);
 
-        scheduler.Comp.ChaosScore += GetChaosScore(ruleUid, players)!.Value;
+        // Automatically scheduled roundstart rules must not cancel the entire preset
+        // if the number of available players changes after the initial selection.
+        if (!doStart && TryComp<GameRuleComponent>(ruleUid, out var addedRule))
+            addedRule.CancelPresetOnTooFewPlayers = false;
+
+        var chaosScore = GetChaosScore(ruleUid, players);
+        if (chaosScore is null)
+        {
+            // The rule was already added: mark it ended so it cannot start later.
+            _ticker.EndGameRule(ruleUid);
+            LogMessage($"RULE SKIP uid={ruleUid} candidate={rule} reason=nullChaosScoreAfterAdd", false);
+            return EntityUid.Invalid;
+        }
+
+        scheduler.Comp.ChaosScore += chaosScore.Value;
 
         // if we hijack playercount, also hijack how many antags we pick
         if (players != null && TryComp<AntagSelectionComponent>(ruleUid, out var selection))
@@ -361,6 +579,10 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
                 selection.Definitions[i] = def;
             }
         }
+
+        // Keep the attribution before starting the rule: a start event can fire
+        // synchronously, and it must be matched to this scheduler.
+        scheduler.Comp.TelemetryRules[ruleUid] = rule;
 
         if (doStart)
             _ticker.StartGameRule(ruleUid);
