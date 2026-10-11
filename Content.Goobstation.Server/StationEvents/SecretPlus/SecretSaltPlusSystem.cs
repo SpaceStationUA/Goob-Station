@@ -183,15 +183,23 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             $"🧂 Секрет Сіль 1.4 — раунд #{_ticker.RoundId}\n" +
             $"{summary}\n\nАнтагоністи наприкінці раунду (нікнейм — роль):\n{rosterText}";
 
-        // Opt-in only: no webhook configured means no external transmission.
-        // The server owner must point this confidential setting to a private
-        // author-only Discord channel. The public station webhook is never used.
+        // Mandatory after every Secret Salt round; there is no on/off toggle.
+        // The one-time server secret must point to the author's private channel.
+        // Never fall back to the public station-report webhook.
+        if (scheduler.TelemetryAuthorReportSendRequested)
+            return;
+
         var privateWebhook = _cfg.GetCVar(GoobCVars.SecretSaltAuthorDiscordWebhook);
-        if (!scheduler.TelemetryAuthorReportSendRequested && !string.IsNullOrWhiteSpace(privateWebhook))
+        if (string.IsNullOrWhiteSpace(privateWebhook))
         {
-            scheduler.TelemetryAuthorReportSendRequested = true;
-            _ = SendAuthorReportAsync(privateWebhook, scheduler.TelemetryAuthorReport);
+            // One warning per round rather than silently dropping the report.
+            // The full private report remains available to the server until reset.
+            _sawmill.Warning("Secret Salt author report NOT DELIVERED: mandatory private Discord webhook is not configured (secret_salt.author_discord_webhook).");
+            return;
         }
+
+        scheduler.TelemetryAuthorReportSendRequested = true;
+        _ = SendAuthorReportAsync(privateWebhook, scheduler.TelemetryAuthorReport);
     }
 
     // Strip Discord formatting/control characters from player-controlled text,
@@ -252,9 +260,27 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             allowed_mentions = new { parse = Array.Empty<string>() }
         });
 
-        using var content = new StringContent(payload, Encoding.UTF8, "application/json");
-        using var response = await AuthorReportHttpClient.PostAsync(destination, content);
-        response.EnsureSuccessStatusCode();
+        // Retry rate limits and transient Discord errors. Avoid retrying permanent
+        // failures such as an invalid or revoked webhook. Never log the URL.
+        for (var attempt = 1; attempt <= 3; attempt++)
+        {
+            using var content = new StringContent(payload, Encoding.UTF8, "application/json");
+            using var response = await AuthorReportHttpClient.PostAsync(destination, content);
+            if (response.IsSuccessStatusCode)
+                return;
+
+            var status = (int) response.StatusCode;
+            var canRetry = status == 429 || status >= 500;
+            if (!canRetry || attempt == 3)
+            {
+                response.EnsureSuccessStatusCode();
+                return;
+            }
+
+            var delay = response.Headers.RetryAfter?.Delta
+                ?? TimeSpan.FromSeconds(attempt * 2);
+            await Task.Delay(delay);
+        }
     }
 
     private static void RecordRoundstartSkip(SecretSaltPlusComponent scheduler, string reason)
