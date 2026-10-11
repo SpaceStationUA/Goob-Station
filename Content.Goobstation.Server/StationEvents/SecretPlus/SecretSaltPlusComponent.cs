@@ -192,6 +192,18 @@ public sealed partial class SecretSaltPlusComponent : Component
     [ViewVariables]
     public string? TelemetryLastRoundSummary;
 
+    // Counted from the actual mind roles at round end (all sources, including
+    // antagonist roles that were not assigned by tracked scheduler rules).
+    [ViewVariables]
+    public int TelemetryAntagonistMindsAtEnd;
+
+    [ViewVariables]
+    public int TelemetryAntagonistRolesAtEnd;
+
+    // Unique minds assigned by rules that belong to this scheduler only.
+    [ViewVariables]
+    public int TelemetryUniqueTrackedAssignedMinds;
+
     // Round context and midround rolls; observability only (not part of game balance).
     [ViewVariables]
     public float TelemetryInitialChaos;
