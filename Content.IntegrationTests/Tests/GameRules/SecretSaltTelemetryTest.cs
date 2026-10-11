@@ -3,6 +3,8 @@
 using System.Linq;
 using Content.Goobstation.Server.StationEvents.SecretPlus;
 using Content.Server.GameTicking;
+using Content.Shared.CCVar;
+using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.GameObjects;
 
@@ -64,4 +66,54 @@ public sealed class SecretSaltTelemetryTest
 
         await pair.CleanReturnAsync();
     }
+    [Test]
+    public async Task TestSummaryOnlyGeneratedAtRoundEnd()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Dirty = true,
+            DummyTicker = false,
+            Connected = true,
+            InLobby = true
+        });
+
+        var server = pair.Server;
+        await server.WaitIdleAsync();
+
+        await server.WaitAssertion(() => server.CfgMan.SetCVar(CCVars.GridFill, true));
+
+        await pair.WaitClientCommand("toggleready True");
+        await pair.WaitCommand("setgamepreset SecretSalt 9999");
+        await pair.WaitCommand("startround");
+        await pair.RunTicksSync(10);
+
+        await server.WaitAssertion(() =>
+        {
+            var entMan = server.ResolveDependency<IEntityManager>();
+            var ticker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
+            Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
+
+            var saltRule = ticker.GetAddedGameRules()
+                .Single(rule => entMan.HasComponent<SecretSaltPlusComponent>(rule));
+            var salt = entMan.GetComponent<SecretSaltPlusComponent>(saltRule);
+
+            Assert.That(salt.TelemetryLastRoundSummary, Is.Null,
+                "Round telemetry must not be published before the round ends.");
+
+            ticker.EndRound();
+
+            Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
+            Assert.That(salt.TelemetryLastRoundSummary, Is.Not.Null);
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain("ROUND SUMMARY round="));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"roundstartAttempts={salt.TelemetryRoundstartAttempts}"));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"roundstartAdded={salt.TelemetryRoundstartAdded}"));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain("roundstartSkips=["));
+
+            ticker.RestartRound();
+            server.CfgMan.SetCVar(CCVars.GridFill, CCVars.GridFill.DefaultValue);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
 }
