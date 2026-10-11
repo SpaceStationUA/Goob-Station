@@ -64,6 +64,40 @@ public sealed class SecretSaltDiscordSenderTest
         Assert.That(fake.CallCount, Is.EqualTo(3));
     }
 
+    [Test]
+    public async Task TestLongReportSplitsIntoDiscordSafeChunks()
+    {
+        using var fake = new FakeDiscordHandler(
+            HttpStatusCode.NoContent, HttpStatusCode.NoContent);
+        using var client = new HttpClient(fake);
+        var report = string.Join("\n", new[] { new string('A', 1200), new string('B', 1200) });
+
+        await SecretSaltPlusDiscordSender.SendReportAsync(client, DummyWebhook.ToString(), report);
+
+        Assert.That(fake.CallCount, Is.EqualTo(2));
+        foreach (var json in fake.Payloads)
+        {
+            using var payload = JsonDocument.Parse(json);
+            Assert.That(payload.RootElement.GetProperty("content").GetString()!.Length,
+                Is.LessThanOrEqualTo(1900));
+            Assert.That(payload.RootElement.GetProperty("allowed_mentions")
+                .GetProperty("parse").GetArrayLength(), Is.Zero);
+        }
+    }
+
+    [Test]
+    public void TestPrivateReportRejectsUnexpectedDestination()
+    {
+        using var fake = new FakeDiscordHandler(HttpStatusCode.NoContent);
+        using var client = new HttpClient(fake);
+
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await SecretSaltPlusDiscordSender.SendReportAsync(client,
+                "https://evil.example/api/webhooks/123/fake-token", "Private report"));
+
+        Assert.That(fake.CallCount, Is.Zero);
+    }
+
     private sealed class FakeDiscordHandler : HttpMessageHandler
     {
         private readonly Queue<HttpStatusCode> _responses;
