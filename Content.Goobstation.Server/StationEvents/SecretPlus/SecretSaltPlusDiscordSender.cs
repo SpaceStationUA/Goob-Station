@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Content.Goobstation.Server.StationEvents.SecretPlus;
@@ -27,6 +28,9 @@ public static class SecretSaltPlusDiscordSender
             || !destination.AbsolutePath.StartsWith("/api/webhooks/", StringComparison.Ordinal))
             throw new ArgumentException("Invalid Discord webhook destination.");
 
+        // One deadline for the entire report. Never shorten Discord's
+        // Retry-After: cancel delivery instead of retrying prematurely.
+        using var deliveryBudget = new CancellationTokenSource(TimeSpan.FromMinutes(3));
         const int maxContentLength = 1900;
         var chunk = new StringBuilder(maxContentLength);
 
@@ -43,7 +47,7 @@ public static class SecretSaltPlusDiscordSender
 
             if (chunk.Length + scalarLength > maxContentLength)
             {
-                await SendChunkAsync(client, destination, chunk.ToString());
+                await SendChunkAsync(client, destination, chunk.ToString(), deliveryBudget.Token);
                 chunk.Clear();
             }
 
@@ -52,10 +56,11 @@ public static class SecretSaltPlusDiscordSender
         }
 
         if (chunk.Length > 0)
-            await SendChunkAsync(client, destination, chunk.ToString());
+            await SendChunkAsync(client, destination, chunk.ToString(), deliveryBudget.Token);
     }
 
-    public static async Task SendChunkAsync(HttpClient client, Uri destination, string message)
+    public static async Task SendChunkAsync(
+        HttpClient client, Uri destination, string message, CancellationToken cancellationToken = default)
     {
         var payload = JsonSerializer.Serialize(new
         {
@@ -67,24 +72,25 @@ public static class SecretSaltPlusDiscordSender
         // or revoked webhooks. The caller keeps tokens out of error logs.
         for (var attempt = 1; attempt <= 3; attempt++)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             using var content = new StringContent(payload, Encoding.UTF8, "application/json");
             HttpResponseMessage response;
             try
             {
                 // Catch only transport failures here. Non-retryable HTTP
                 // responses are checked below and must not be retried.
-                response = await client.PostAsync(destination, content);
+                response = await client.PostAsync(destination, content, cancellationToken);
             }
-            catch (HttpRequestException) when (attempt < 3)
+            catch (HttpRequestException) when (attempt < 3 && !cancellationToken.IsCancellationRequested)
             {
-                await Task.Delay(TimeSpan.FromSeconds(attempt * 2));
+                await Task.Delay(TimeSpan.FromSeconds(attempt * 2), cancellationToken);
                 continue;
             }
-            catch (TaskCanceledException) when (attempt < 3)
+            catch (TaskCanceledException) when (attempt < 3 && !cancellationToken.IsCancellationRequested)
             {
                 // HttpClient reports request timeouts as TaskCanceledException.
                 // Retrying just this chunk avoids repeating earlier chunks.
-                await Task.Delay(TimeSpan.FromSeconds(attempt * 2));
+                await Task.Delay(TimeSpan.FromSeconds(attempt * 2), cancellationToken);
                 continue;
             }
 
@@ -100,9 +106,16 @@ public static class SecretSaltPlusDiscordSender
                     return;
                 }
 
-                var delay = response.Headers.RetryAfter?.Delta
-                    ?? TimeSpan.FromSeconds(attempt * 2);
-                await Task.Delay(delay);
+                // Respect Retry-After as either seconds or an absolute date.
+                // The report-wide cancellation token limits overall duration.
+                var retryAfter = response.Headers.RetryAfter;
+                var delay = retryAfter?.Delta
+                    ?? (retryAfter?.Date is { } until
+                        ? until - DateTimeOffset.UtcNow
+                        : TimeSpan.FromSeconds(attempt * 2));
+                if (delay < TimeSpan.Zero)
+                    delay = TimeSpan.Zero;
+                await Task.Delay(delay, cancellationToken);
             }
         }
     }
