@@ -7,6 +7,7 @@ using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Server.StationEvents.Components;
+using Content.Server.StationEvents;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;
@@ -66,6 +67,58 @@ public sealed class SecretSaltTelemetryTest
                 Assert.That(entityManager.HasComponent<StationEventComponent>(uid), Is.True,
                     $"Midround candidate '{id}' needs StationEvent to pass the event scheduler.");
             }
+
+            ticker.ClearGameRules();
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task TestNewMidroundEventsAreReachableFromSaltEventTable()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Dirty = true
+        });
+
+        var server = pair.Server;
+        await server.WaitIdleAsync();
+
+        await server.WaitAssertion(() =>
+        {
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var systems = server.ResolveDependency<IEntitySystemManager>();
+            var ticker = systems.GetEntitySystem<GameTicker>();
+            var events = systems.GetEntitySystem<EventManagerSystem>();
+            var salt = ticker.AddGameRule("SecretSalt");
+            var table = entityManager.GetComponent<SelectedGameRulesComponent>(salt);
+
+            // Call the same table-flattening and eligibility methods as Salt.
+            // The synthetic population and clock avoid relying on real clients.
+            var available = events.AvailableEvents(
+                playerCountOverride: 100,
+                currentTimeOverride: TimeSpan.FromMinutes(90));
+            Assert.That(events.TryBuildLimitedEvents(table.ScheduledGameRules, available, out var pool),
+                Is.True, "Salt must have an eligible event pool.");
+
+            foreach (var id in new[]
+                     {
+                         "SecretSaltTerrorSpidersSpawn",
+                         "AsakimShuttle",
+                         "TraitorMidround",
+                     })
+            {
+                Assert.That(pool.Keys.Any(proto => proto.ID == id), Is.True,
+                    $"'{id}' must be reachable from SecretSaltTable through the event scheduler.");
+            }
+
+            // Terror spiders must not bypass their minimum player requirement.
+            var lowPopulation = events.AvailableEvents(
+                playerCountOverride: 20,
+                currentTimeOverride: TimeSpan.FromMinutes(90));
+            Assert.That(lowPopulation.Keys.Any(proto => proto.ID == "SecretSaltTerrorSpidersSpawn"),
+                Is.False, "Terror spiders are unavailable below 50 players.");
 
             ticker.ClearGameRules();
         });
