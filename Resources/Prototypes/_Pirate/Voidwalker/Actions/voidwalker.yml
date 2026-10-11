@@ -42,7 +42,7 @@
   description: E??SCAPE THEI??R ?GAZES
   components:
   - type: Action
-    useDelay: 8
+    useDelay: 20
     itemIconStyle: NoItem
     icon:
       sprite: _Pirate/Actions/voidwalker.rsi
