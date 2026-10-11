@@ -1,5 +1,7 @@
 # 🧂 Секрет Сіль 1.4 — журнал проєкту
 
+> **Стан перевірок 11.10.2026:** [GitHub Actions №38123892196](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123892196) завершився **SUCCESS** — нові лічильники антагоністичних правил **успішно компілюються**. Створено спеціальний інтеграційний тест [`SecretSaltTelemetryTest.cs`](https://github.com/The-Devils-Luck/Goob-Station/blob/feature/secret-salt-1.4/Content.IntegrationTests/Tests/GameRules/SecretSaltTelemetryTest.cs); його [збірка й виконання №38124255947](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38124255947) **ще не підтверджені**. Наступний крок — перевірити результат інтеграційного тесту, усунути проблеми, далі перевірити післяраундові логи в повноцінному тестовому раунді. Баланс не змінювали.
+
 > **Оновлення 11.10.2026:** [перша збірка №38123571609](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123571609) **успішна**. Коміт [f851f9c](https://github.com/The-Devils-Luck/Goob-Station/commit/f851f9caa952bfb94260bf08930bd06f4a473795) додає до післяраундового логу кількість випадкових доборів, успішних додавань і агреговані причини пропуску антагоністичних правил. [Друга збірка №38123892196](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38123892196) очікує підтвердження, ігрові тести ще не виконано. **Наступне:** перевірити другу збірку, виконати сценарії [TESTS.md](TESTS.md), завершити повноту збору антагоністичних призначень та підготувати безпечний Discord-звіт.
 
 > **Єдине місце для відновлення контексту між чатами.**
