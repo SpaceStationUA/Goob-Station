@@ -116,7 +116,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             .OrderBy(pair => pair.Key)
             .Select(pair => $"{pair.Key}:{pair.Value}"));
 
-        var summary = $"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} roundstartAttempts={scheduler.TelemetryRoundstartAttempts} roundstartAdded={scheduler.TelemetryRoundstartAdded} roundstartSkips=[{skipReasons}] chaos={scheduler.ChaosScore} duration={_ticker.RoundDuration()}";
+        var summary = $"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} roundstartAttempts={scheduler.TelemetryRoundstartAttempts} roundstartAdded={scheduler.TelemetryRoundstartAdded} roundstartSkips=[{skipReasons}] initialPlayers={scheduler.TelemetryInitialPlayers} initialChaos={scheduler.TelemetryInitialChaos} chaos={scheduler.ChaosScore} midroundRolls={scheduler.TelemetryMidroundRolls} midroundCandidates={scheduler.TelemetryMidroundCandidates} midroundAdded={scheduler.TelemetryMidroundAdded} midroundNoCandidates={scheduler.TelemetryMidroundNoCandidates} duration={_ticker.RoundDuration()}";
         scheduler.TelemetryLastRoundSummary = summary;
         LogMessage(summary, false);
     }
@@ -142,6 +142,9 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
         scheduler.ChaosScore =
             -_random.NextFloat(scheduler.MinStartingChaos * totalPlayers, scheduler.MaxStartingChaos * totalPlayers) *
             _roundstartChaosScoreMultiplier;
+
+        scheduler.TelemetryInitialPlayers = totalPlayers;
+        scheduler.TelemetryInitialChaos = scheduler.ChaosScore;
 
         // roll midroundchaos generation variation
         var roll = _random.NextFloat();
@@ -278,11 +281,28 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
         else
             SetupEvents((uid, scheduler), count);
 
+        scheduler.TelemetryMidroundRolls++;
         var selectedEvent = ChooseEvent((uid, scheduler));
         if (selectedEvent != null)
-            StartRule((uid, scheduler), selectedEvent.Proto.ID, false);
+        {
+            scheduler.TelemetryMidroundCandidates++;
+            var ruleUid = StartRule((uid, scheduler), selectedEvent.Proto.ID, false);
+            if (ruleUid != EntityUid.Invalid)
+            {
+                scheduler.TelemetryMidroundAdded++;
+                LogMessage($"MIDROUND ADDED scheduler={uid} candidate={selectedEvent.Proto.ID} ruleUid={ruleUid} chaos={scheduler.ChaosScore} players={count.Players} ghosts={count.Ghosts}", false);
+            }
+            else
+            {
+                LogMessage($"MIDROUND SKIP scheduler={uid} candidate={selectedEvent.Proto.ID} reason=nullChaosScoreAfterAdd", false);
+            }
+        }
         else
+        {
+            scheduler.TelemetryMidroundNoCandidates++;
+            LogMessage($"MIDROUND SKIP scheduler={uid} reason=noRunnableEvents chaos={scheduler.ChaosScore} players={count.Players} ghosts={count.Ghosts}", false);
             LogMessage($"No runnable events");
+        }
 
     }
 
