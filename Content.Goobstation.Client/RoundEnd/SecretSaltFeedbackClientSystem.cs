@@ -20,7 +20,9 @@ public sealed class SecretSaltFeedbackClientSystem : EntitySystem
     {
         base.Initialize();
         SubscribeNetworkEvent<SecretSaltFeedbackOfferEvent>(OnOffer);
+        SubscribeNetworkEvent<SecretSaltFeedbackClosedEvent>(OnFeedbackClosed);
         SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEnd);
+        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
     private void OnOffer(SecretSaltFeedbackOfferEvent ev)
@@ -33,6 +35,34 @@ public sealed class SecretSaltFeedbackClientSystem : EntitySystem
     {
         _scoreboardRound = ev.RoundId;
         TryOpen();
+    }
+
+    private void OnFeedbackClosed(SecretSaltFeedbackClosedEvent ev)
+    {
+        if (ev.RoundId != _offeredRound && ev.RoundId != _scoreboardRound)
+            return;
+
+        _handledRound = ev.RoundId;
+        _offeredRound = 0;
+        _scoreboardRound = 0;
+        CloseWindow();
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        // Cleanup also runs when the round ends before the normal feedback
+        // deadline, or when a non-SecretSalt round begins.
+        _offeredRound = 0;
+        _scoreboardRound = 0;
+        CloseWindow();
+    }
+
+    private void CloseWindow()
+    {
+        var window = _window;
+        _window = null;
+        if (window is { Disposed: false })
+            window.Close();
     }
 
     /// <summary>
