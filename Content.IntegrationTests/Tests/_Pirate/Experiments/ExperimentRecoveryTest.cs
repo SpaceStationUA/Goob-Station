@@ -20,7 +20,6 @@ using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests._Pirate.Experiments;
 
@@ -96,7 +95,6 @@ public sealed class ExperimentRecoveryTest
             Assert.That(server.System<MobStateSystem>().IsSoftCritical(mob), Is.True);
             var hunger = entMan.GetComponent<HungerComponent>(mob);
             hungerSystem.SetHunger(mob, fed ? 175f : 40f, hunger);
-            hunger.NextThresholdUpdateTime = server.Resolve<IGameTiming>().CurTime;
             hungerSystem.Update(0f);
 
             foreach (var limb in new[] { arm, leg })
@@ -130,18 +128,16 @@ public sealed class ExperimentRecoveryTest
         await pair.Client.WaitAssertion(() =>
         {
             var entMan = pair.Client.EntMan;
-            var mob = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
-            var thresholds = new MobThresholdsComponent();
-            thresholds.Thresholds[0] = MobState.Alive;
-            thresholds.Thresholds[100] = softCritical ? MobState.SoftCritical : MobState.Critical;
-            if (softCritical)
-                thresholds.Thresholds[150] = MobState.Critical;
-            thresholds.Thresholds[200] = MobState.Dead;
+            var mob = entMan.SpawnEntity(softCritical ? "MobExperiment" : "MobHuman", MapCoordinates.Nullspace);
+            var blunt = pair.Client.ProtoMan.Index<DamageTypePrototype>("Blunt");
+            entMan.System<DamageableSystem>().SetDamage(mob, new DamageSpecifier(blunt, damage));
+            entMan.System<MobStateSystem>().ChangeMobState(mob, state);
 
             var overlay = new EntityHealthBarOverlay(entMan, pair.Client.ProtoMan);
             var calculate = typeof(EntityHealthBarOverlay).GetMethod("CalcProgress", BindingFlags.Instance | BindingFlags.NonPublic)!;
             var result = ((float ratio, bool inCrit)) calculate.Invoke(overlay,
-                new object[] { mob, new MobStateComponent { CurrentState = state }, new DamageableComponent { TotalDamage = damage }, thresholds })!;
+                new object[] { mob, entMan.GetComponent<MobStateComponent>(mob),
+                    entMan.GetComponent<DamageableComponent>(mob), entMan.GetComponent<MobThresholdsComponent>(mob) })!;
 
             Assert.That(result.ratio, Is.InRange(0f, 1f));
             Assert.That(result.ratio, Is.EqualTo(expectedRatio).Within(0.001f));
