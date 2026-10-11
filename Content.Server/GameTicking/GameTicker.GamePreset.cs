@@ -114,6 +114,22 @@ public sealed partial class GameTicker
         if (DummyTicker)
             return;
 
+        // Secret Salt rotation is enforced here for ALL preset-selection paths:
+        // vote winners, automatic selection, commands and forced selections.
+        // Never allow the third consecutive played SecretSalt round.
+        if (preset?.ID == SecretSaltRotationTracker.PresetId &&
+            EntityManager.System<SecretSaltRotationSystem>().IsBlocked)
+        {
+            _sawmill.Warning("Секрет Сіль: два зіграні раунди поспіль, обрано інший режим.");
+            SendServerMessage("Секрет Сіль уже був двічі поспіль. Наступний раунд буде в іншому режимі.");
+            preset = FindGamePreset("Secret");
+            if (preset == null)
+            {
+                _sawmill.Error("Secret Salt rotation: fallback preset 'Secret' does not exist.");
+                return;
+            }
+        }
+
         if (resetDelay is not null)
         {
             ResetCountdown = resetDelay.Value;
