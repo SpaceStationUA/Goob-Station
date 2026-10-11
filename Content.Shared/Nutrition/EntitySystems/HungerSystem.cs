@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared._Shitmed.Damage; // Pirate
+using Content.Shared._Shitmed.Targeting; // Pirate
 using Content.Shared.Alert;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Damage.Components; // Pirate
@@ -195,7 +197,8 @@ public sealed class HungerSystem : EntitySystem
             TryComp<DamageableComponent>(uid, out var damageable) &&
             _damageable.GetDamage((uid, damageable)).GetTotal() < component.PassiveDamageCap &&
             !_mobState.IsDead(uid))
-            _damageable.TryChangeDamage(uid, passiveDamage, true, false);
+            _damageable.TryChangeDamage((uid, damageable), passiveDamage, true, false,
+                targetPart: TargetBodyPart.All, splitDamage: SplitDamageBehavior.SplitEnsureAllDamagedAndOrganic);
     }
 
     /// <summary>

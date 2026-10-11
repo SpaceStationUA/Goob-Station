@@ -18,6 +18,7 @@ namespace Content.Shared.Mobs.Systems;
 public partial class MobStateSystem : EntitySystem
 {
     [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
     private void InitializeSoftCritical()
     {
         SubscribeLocalEvent<MobStateComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
@@ -57,8 +58,16 @@ public partial class MobStateSystem : EntitySystem
 
     private bool PirateOnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
     {
-        if (state != MobState.SoftCritical) return false;
-        _standing.Stand(target);
+        if (state != MobState.SoftCritical)
+            return false;
+
+        // Pirate: release soft-critical knockdown before Alive entry, retaining any active knockdown timer.
+        if (TryComp<KnockedDownComponent>(target, out var knockedDown))
+        {
+            _stun.SetAutoStand((target, knockedDown), true);
+            if (knockedDown.NextUpdate <= _timing.CurTime)
+                RemComp<KnockedDownComponent>(target);
+        }
         return true;
     }
 
