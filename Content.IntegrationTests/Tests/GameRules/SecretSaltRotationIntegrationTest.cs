@@ -27,7 +27,16 @@ public sealed class SecretSaltRotationIntegrationTest
 
         var server = pair.Server;
         await server.WaitIdleAsync();
-        await server.WaitAssertion(() => server.CfgMan.SetCVar(CCVars.GridFill, true));
+        await server.WaitAssertion(() =>
+        {
+            server.CfgMan.SetCVar(CCVars.GridFill, true);
+
+            // We test preset rotation, not autonomous NPC food evaluation.
+            // Random NPC spawns during game rounds can otherwise fail in
+            // NPCUtilitySystem.TotalFoodUtilityConditioned and make this
+            // unrelated integration test flaky. This is test-only.
+            server.CfgMan.SetCVar(CCVars.NPCEnabled, false);
+        });
 
         for (var count = 1; count <= 2; count++)
         {
@@ -84,6 +93,7 @@ public sealed class SecretSaltRotationIntegrationTest
             ticker.EndRound();
             ticker.RestartRound();
             server.CfgMan.SetCVar(CCVars.GridFill, CCVars.GridFill.DefaultValue);
+            server.CfgMan.SetCVar(CCVars.NPCEnabled, CCVars.NPCEnabled.DefaultValue);
         });
 
         await pair.CleanReturnAsync();
