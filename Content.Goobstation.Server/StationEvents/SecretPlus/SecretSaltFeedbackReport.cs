@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Content.Goobstation.Common.SecretSalt;
@@ -22,9 +23,28 @@ public static class SecretSaltFeedbackReport
 
         if (reviews.Count == 0)
         {
+            buffer.AppendLine("Середня оцінка: немає даних.");
+            buffer.AppendLine("Найчастіші причини: немає даних.");
             buffer.AppendLine("Гравці не залишили відгуків.");
             return buffer.ToString();
         }
+
+        // Ratings are already validated by the authenticated server handler.
+        // An explicit locale keeps the author report Ukrainian independently
+        // of the host operating system or server process settings.
+        var average = reviews.Average(entry => entry.Submission.Rating);
+        buffer.AppendLine($"Середня оцінка: {average.ToString("0.00", CultureInfo.GetCultureInfo("uk-UA"))}/5");
+
+        var mostFrequentReasons = reviews
+            .SelectMany(entry => entry.Submission.Reasons)
+            .GroupBy(reason => reason)
+            .OrderByDescending(group => group.Count())
+            .ThenBy(group => group.Key)
+            .Take(3)
+            .Select(group => $"{ReasonName(group.Key)} — {group.Count()}");
+
+        var reasonSummary = string.Join("; ", mostFrequentReasons);
+        buffer.AppendLine($"Найчастіші причини: {(reasonSummary.Length > 0 ? reasonSummary : "Не вказано")}");
 
         foreach (var entry in reviews.OrderBy(e => e.Nickname, StringComparer.OrdinalIgnoreCase))
         {
