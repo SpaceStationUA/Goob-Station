@@ -98,6 +98,12 @@ highp vec3 blendScreen(highp vec3 base, highp vec3 blend) {
 }
 
 void fragment() {
+    // Clip the effect to the original sprite silhouette, including each animation frame.
+    highp vec4 sprite_color = zTexture(UV);
+    if (sprite_color.a == 0.0) {
+        discard;
+    }
+
     highp float dist_intensity = intensity;
     if (dist_intensity == 0.0) dist_intensity = 0.15;
 
@@ -123,12 +129,15 @@ void fragment() {
     highp float pulse_noise = snoise(vec3(UV * 1.5, TIME * dist_speed * 0.5));
     distorted_uv += pulse_noise * dist_intensity * 0.05 * pulse;
 
-    highp vec4 tex_color = texture(TEXTURE, distorted_uv);
+    highp vec4 tex_color = zTexture(distorted_uv);
+    // Post-shaders receive premultiplied colors. Recover RGB before adding the tint.
+    highp vec3 original_color = sprite_color.rgb / sprite_color.a;
+    highp vec3 distorted_color = tex_color.a > 0.0 ? tex_color.rgb / tex_color.a : original_color;
 
     highp float distortion_amount = length(distorted_uv - UV);
     highp float purple_strength = clamp(distortion_amount * 4.0, 0.0, 0.7);
 
-    highp vec3 tinted_color = mix(tex_color.rgb, purple_color, purple_strength * 0.5);
+    highp vec3 tinted_color = mix(distorted_color, purple_color, purple_strength * 0.5);
 
     highp vec3 purple_glow = purple_color * distortion_amount * 2.0;
     tinted_color = blendScreen(tinted_color, purple_glow);
@@ -145,7 +154,7 @@ void fragment() {
     tinted_color *= 1.0 - edge * 0.3;
 
     highp float alpha_variation = 0.9 + 0.1 * sin(TIME * 2.0 + UV.x * 10.0);
-    highp float final_alpha = tex_color.a * alpha_variation;
+    highp float final_alpha = sprite_color.a * alpha_variation;
 
-    COLOR = vec4(tinted_color, final_alpha);
+    COLOR = vec4(tinted_color * final_alpha, final_alpha);
 }
