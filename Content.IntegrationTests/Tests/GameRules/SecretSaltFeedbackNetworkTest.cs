@@ -29,6 +29,14 @@ public sealed class SecretSaltFeedbackNetworkTest
         return (SecretSaltFeedbackTracker) field!.GetValue(system)!;
     }
 
+    private static SecretSaltFeedbackWindow? GetFeedbackWindow(SecretSaltFeedbackClientSystem system)
+    {
+        var field = typeof(SecretSaltFeedbackClientSystem).GetField(
+            "_window", BindingFlags.Instance | BindingFlags.NonPublic);
+        Assert.That(field, Is.Not.Null);
+        return (SecretSaltFeedbackWindow?) field!.GetValue(system);
+    }
+
     [Test]
     public async Task TestActualClientSubmissionRejectedInRoundAndDeduplicatedAfterEnd()
     {
@@ -82,6 +90,8 @@ public sealed class SecretSaltFeedbackNetworkTest
         {
             var system = client.ResolveDependency<IEntitySystemManager>()
                 .GetEntitySystem<SecretSaltFeedbackClientSystem>();
+            Assert.That(GetFeedbackWindow(system), Is.Not.Null,
+                "The post-round scoreboard and SecretSalt offer must open the review window.");
             system.SubmitFeedback(round, 4,
                 new[] { SecretSaltFeedbackReason.TooFewEvents }, "Мало подій @everyone");
             system.SubmitFeedback(round, 1,
@@ -107,8 +117,42 @@ public sealed class SecretSaltFeedbackNetworkTest
             Assert.That(feedback.Single().Submission.Comment,
                 Is.EqualTo("Мало подій @everyone"));
 
+        });
+
+        // Test-only time jump: end the 60-second collection without waiting
+        // in real time and verify that the server closes the client's dialog.
+        await server.WaitAssertion(() =>
+        {
+            var feedback = server.ResolveDependency<IEntitySystemManager>()
+                .GetEntitySystem<SecretSaltFeedbackSystem>();
+            var field = typeof(SecretSaltFeedbackSystem).GetField(
+                "_feedbackDeadline", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(field, Is.Not.Null);
+            field!.SetValue(feedback, TimeSpan.Zero);
+        });
+        await pair.RunTicksSync(5);
+        await client.WaitAssertion(() =>
+        {
+            var feedback = client.ResolveDependency<IEntitySystemManager>()
+                .GetEntitySystem<SecretSaltFeedbackClientSystem>();
+            Assert.That(GetFeedbackWindow(feedback), Is.Null,
+                "The review window must close when the server stops accepting reviews.");
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            var ticker = server.ResolveDependency<IEntitySystemManager>()
+                .GetEntitySystem<GameTicker>();
             ticker.RestartRound();
             server.CfgMan.SetCVar(CCVars.GridFill, CCVars.GridFill.DefaultValue);
+        });
+        await pair.RunTicksSync(3);
+        await client.WaitAssertion(() =>
+        {
+            var feedback = client.ResolveDependency<IEntitySystemManager>()
+                .GetEntitySystem<SecretSaltFeedbackClientSystem>();
+            Assert.That(GetFeedbackWindow(feedback), Is.Null,
+                "A closed review must not reappear in the next round's lobby.");
         });
 
         await pair.CleanReturnAsync();
