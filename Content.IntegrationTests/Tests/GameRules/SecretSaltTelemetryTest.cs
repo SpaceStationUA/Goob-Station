@@ -100,8 +100,13 @@ public sealed class SecretSaltTelemetryTest
             Assert.That(salt.TelemetryLastRoundSummary, Is.Null,
                 "Round telemetry must not be published before the round ends.");
 
-            // Trigger one midround event-selection cycle without waiting minutes.
-            salt.TimeNextEvent = TimeSpan.FromTicks(1);
+            // Test-only forced tick: component write access is restricted to its
+            // owning system, so use reflection here instead of exposing a public
+            // gameplay API or relaxing production component access rules.
+            var nextEventField = typeof(SecretSaltPlusComponent).GetField(
+                nameof(SecretSaltPlusComponent.TimeNextEvent));
+            Assert.That(nextEventField, Is.Not.Null);
+            nextEventField!.SetValue(salt, TimeSpan.FromTicks(1));
         });
 
         await pair.RunTicksSync(2);
