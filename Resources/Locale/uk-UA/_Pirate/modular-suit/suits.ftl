@@ -338,7 +338,6 @@ ent-ClothingModularControllerResponsoryPreassembled = { ent-ClothingModularContr
 ent-ClothingModularControllerInquisitoryPreassembled = { ent-ClothingModularControllerInquisitory }
     .desc = { ent-ClothingModularControllerInquisitory.desc }
     .suffix = Зібраний
-
 ent-ClothingModularControllerERTLeader = контролер командира загону швидкого реагування MOD-костюма
     .desc = Модульний контролер костюма, виданий командиру загону швидкого реагування.
 ent-ClothingModularHelmetERTLeader = шолом командира загону швидкого реагування MOD-костюма
@@ -389,7 +388,6 @@ ent-ClothingModularGauntletsERTJanitor = рукавиці прибиральни
     .desc = Ізольовані рукавиці реагування, видані прибиральнику загону швидкого реагування.
 ent-ClothingModularBootsERTJanitor = чоботи прибиральника загону швидкого реагування MOD-костюма
     .desc = Герметичні чоботи реагування, видані прибиральнику загону швидкого реагування.
-
 ent-ClothingModularControllerERTLeaderPreassembled = { ent-ClothingModularControllerERTLeader }
     .desc = { ent-ClothingModularControllerERTLeader.desc }
     .suffix = Зібраний

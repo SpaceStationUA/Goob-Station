@@ -2,7 +2,6 @@ elevator-status-idle = стоїть
 elevator-status-going-up = піднімається
 elevator-status-going-down = спускається
 elevator-indicator-examine = Ліфт знаходиться на поверсі {$floor} ({$status}).
-
 elevator-floor-label = Поверх {$floor}
 
 # Control panel window.

@@ -42,3 +42,4 @@ loadout-group-mantis-Melee = Ближня зброя Мантіса
 loadout-group-mantis-Equipment = Спорядження Мантіса
 loadout-group-service-worker-head = Головний убір сервісника
 loadout-group-role-restriction = Цей предмет доступний лише для відповідної посади.
+loadout-group-reporter-head = Головний убір репортера

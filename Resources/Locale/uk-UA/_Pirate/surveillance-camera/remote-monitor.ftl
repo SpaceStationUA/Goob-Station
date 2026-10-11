@@ -1,6 +1,5 @@
 syndicate-monitor-direct-surveillance-mode = Прямий огляд
 syndicate-monitor-station-center = Центр станції
-
 ent-ComputerSurveillanceCameraMonitorSyndicate = монітор камер Синдикату
     .desc = Далекодійний монітор камер із режимом прямого спостереження за станцією.
     .suffix = Синдикат, далекодійний

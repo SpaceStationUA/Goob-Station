@@ -5,3 +5,7 @@ construction-presenter-tool-step = Використати {LOC($tool)}.
 construction-presenter-material-step = Додати {$amount}x {LOC($material)}.
 construction-presenter-arbitrary-step = Додати {LOC($name)}.
 construction-presenter-temperature-step = Нагріти до {$temperature}.
+knowledge-construction-theory = Для розуміння потрібні знання:
+knowledge-construction-practical = Практичні навички для якості:
+knowledge-construction-theory-requirement = Потрібно: {$mastery} (рівень {$required-level}+); у вас: {$current-mastery} (рівень {$current-level}).
+knowledge-construction-practical-requirement = Для якості: {$mastery} (рівень {$required-level}+); у вас: {$current-mastery} (рівень {$current-level}).

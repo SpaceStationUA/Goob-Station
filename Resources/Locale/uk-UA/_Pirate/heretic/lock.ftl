@@ -2,7 +2,6 @@
 
 ent-LabyrinthHandbook = довідник Лабіринту
     .desc = Книга законів і правил Замкненого Лабіринту, написана на невідомій речовині. Її сторінки звиваються й напружуються, ніби прагнуть вирватися назовні.
-
 ent-ActionHereticBurglarsFinesse = { knowledge-path-lock-s7-name }
     .desc = { knowledge-path-lock-s7-desc }
 ent-ActionHereticLastRefuge = { knowledge-path-lock-s9-name }
@@ -11,14 +10,12 @@ ent-ActionHereticShapeshiftLock = { heretic-ability-shapeshift }
     .desc = { heretic-ability-shapeshift-desc }
 ent-ActionMirrorJaunt = { heretic-ability-mirror-jaunt }
     .desc = { heretic-ability-mirror-jaunt-desc }
-
 ent-WallLabyrinth = сторінки Лабіринту
     .desc = Поле паперів, що літають у повітрі та з незбагненною силою відштовхують язичників.
 ent-RealityCrack = тріщина в реальності
     .desc = Неможливо глибока тріщина в просторі, від якої болять очі. Це точно небезпечно.
 ent-LabyrinthTear = ???
     .desc = Воно дивиться у відповідь. Залишатися немає сенсу. Тікайте.
-
 ent-MobGhoulMirrorMaid = дзеркальна служниця
     .desc = Летючий струмінь холодного повітря, що постійно змінює форму. Від погляду він ледь помітно мерехтить.
 ent-MobGhoulShattered = розколотий повсталий
@@ -29,7 +26,6 @@ ent-MobGhoulMirrorMaidLock = посилена дзеркальна служни�
     .desc = Летючий струмінь холодного повітря, що постійно змінює форму. Від погляду він ледь помітно мерехтить.
 ent-MobGhoulFireSharkLock = посилена вогняна акула
 ent-MobGhoulRustWalkerLock = посилений іржавий ходок
-
 ent-MobShattered = розколотий повсталий
 ent-ChestShattered = розколоті груди
 ent-GroinShattered = розколотий пах
@@ -42,7 +38,6 @@ ent-LeftLegShattered = розколота ліва нога
 ent-RightLegShattered = розколота права нога
 ent-LeftFootShattered = розколота ліва ступня
 ent-RightFootShattered = розколота права ступня
-
 ent-ArmBladeShattered = розколотий клинок-рука
     .desc = { ent-ArmBlade.desc }
 ent-ArmBladeShatteredEmpowered = посилений розколотий клинок-рука
@@ -51,12 +46,10 @@ ent-ArmHammerShattered = розколотий молот-рука
     .desc = { ent-ArmHammerChangeling.desc }
 ent-ArmHammerShatteredEmpowered = посилений розколотий молот-рука
     .desc = { ent-ArmHammerChangeling.desc }
-
 ent-ClothingOuterArmorHereticLock = обладунок єретика Замка
     .desc = { ent-ClothingOuterArmorHeretic.desc }
 ent-ClothingHeadHatHoodHereticLock = каптур єретика Замка
     .desc = { ent-ClothingHeadHatHoodHeretic.desc }
-
 ent-PolymorphMirrorJaunt = невідоме
     .desc = Ви не можете збагнути, що це таке.
 ent-LockMarkedStatusEffect = позначений Замком

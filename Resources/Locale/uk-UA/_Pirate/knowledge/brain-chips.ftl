@@ -1,23 +1,19 @@
 
 verb-categories-organ-chips = Чипи
-
 organ-chip-verb-none = Чипів не встановлено ({ $organ })
 organ-chip-verb-remove-known = Вийняти { $chip }
 organ-chip-verb-remove-unknown = Вийняти чип { $index } ({ $organ })
 organ-chip-unchipped = Не має аугментації для встановлення мозкових чипів.
-
 organ-chip-insert-start-self = Ви починаєте встановлювати чип у свій { $organ }!
 organ-chip-insert-start-other = Ви починаєте встановлювати чип у { $organ } ({ CAPITALIZE($target) })!
 organ-chip-insert-start-victim = { CAPITALIZE($user) } починає встановлювати чип у ваш { $organ }!
 organ-chip-insert-start-loose = Ви починаєте встановлювати чип у { $organ }.
 organ-chip-insert-success = Ви встановлюєте чип у { $organ }.
-
 organ-chip-remove-start-self = Ви починаєте виколупувати чип зі свого { $organ }!
 organ-chip-remove-start-other = Ви починаєте виколупувати чип із { $organ } ({ CAPITALIZE($target) })!
 organ-chip-remove-start-victim = { CAPITALIZE($user) } починає виколупувати чип із вашого { $organ }!
 organ-chip-remove-start-loose = Ви починаєте виколупувати чип із { $organ }.
 organ-chip-remove-success = Ви виймаєте чип із { $organ }.
-
 organ-chip-not-a-chip = Це не чип.
 organ-chip-incompatible = { CAPITALIZE($chip) } не підходить до органа { $organ }.
 organ-chip-no-room = У { $organ } більше немає місця для чипів.
@@ -44,12 +40,9 @@ organ-chip-no-self-removal = Ви не дотягнетеся до цього ч
 organ-chip-need-hard-grab = Спершу потрібен жорсткий захват!
 organ-chip-out-of-reach = Ви більше не дотягуєтеся до місця операції.
 organ-chip-lost-chip = Чипа більше немає у ваших руках.
-
 knowledge-grant-on-wear-examine = Поки встановлено, змінює навички:
 knowledge-grant-on-wear-examine-positive = - [color=green]+{ $level }[/color] [bold]{ $skill }[/bold]
 knowledge-grant-on-wear-examine-negative = - [color=red]{ $level }[/color] [bold]{ $skill }[/bold]
-
-
 organ-chip-family-overwrite = фракційний пакет навичок
 organ-chip-family-armorsmithing = спогади бронника
 organ-chip-family-weaponsmithing = спогади зброяра
@@ -67,8 +60,6 @@ organ-chip-family-throwing = координація рук і очей
 organ-chip-family-endorphin = больовий поріг
 organ-chip-family-adrenal = витривалість
 organ-chip-family-thyroid = терморегуляція
-
-
 ent-BaseBrainChip = мозковий чип
     .desc = Стерилізований мікрочип, що взаємодіє напряму з мозковою тканиною.
 ent-BaseSkillChipMRAM = ПЗП-чип
@@ -79,8 +70,6 @@ ent-BaseSkillChipPSON = ОТРУ-чип
     .desc = Нейрочип, що змінює активність мозку. Ця серія містить пригнічувачі навичок і псіонічні підсилювачі.
 ent-BaseSkillChipHPYS = СОМА-чип
     .desc = Нейрочип, що коригує рухи та гормональну регуляцію.
-
-
 ent-SkillChipHeavy = ГАРТ-чип (важка зброя)
     .desc = { ent-BaseSkillChipAPTR.desc }
 ent-SkillChipLaser = ГАРТ-чип (лазерна зброя)
@@ -121,8 +110,6 @@ ent-SkillChipShield = ГАРТ-чип (щити)
     .desc = { ent-BaseSkillChipAPTR.desc }
 ent-SkillChipCombatHOS = ПЗП-чип (розширена бойова підготовка)
     .desc = { ent-BaseSkillChipMRAM.desc }
-
-
 ent-SkillChipArmorsmithing = ПЗП-чип (спогади бронника)
     .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipArmorsmithing2 = ПЗП-чип (спогади майстра-бронника)
@@ -187,8 +174,6 @@ ent-SkillChipSurgeon = ПЗП-чип (спогади хірурга)
     .desc = { ent-SkillChipDoctor.desc }
 ent-SkillChipCMO = ПЗП-чип (спогади головного хірурга)
     .desc = { ent-BaseSkillChipMRAM.desc }
-
-
 ent-SkillChipMagicalDampener = ОТРУ-чип (пригнічення магічної грамотності)
     .desc = Пригнічує магічну грамотність, поки встановлений. Вийняти його може лише хтось інший.
 ent-SkillChipCombatDampener = ОТРУ-чип (пригнічення бойових навичок)
@@ -199,8 +184,6 @@ ent-SkillChipTiderDampener = ОТРУ-чип (нейродемпфер)
     .desc = Знижує навички ближнього бою та стрільби, поки встановлений. Вийняти його може лише хтось інший.
 ent-SkillChipPsionicAmplifier = ОТРУ-чип (псіонічний підсилювач)
     .desc = Удвічі скорочує час відновлення псіонічних сил. Розвіювання завдає носію електричної шкоди, а антипсіонічна зброя тимчасово вимикає його сили.
-
-
 ent-SkillChipThrowing = СОМА-чип (координація рук і очей)
     .desc = Покращує техніку кидка. Кинуті предмети летять швидше та б'ють сильніше.
 ent-SkillChipThrowingTampered = СОМА-чип (розігнана координація рук і очей)
@@ -213,14 +196,10 @@ ent-SkillChipThyroid = СОМА-чип (терморегуляція)
     .desc = Коригує роботу щитоподібної залози, щоб тіло витримувало вищі та нижчі температури без шкоди.
 ent-SkillChipProprioception = СОМА-чип (тихий крок)
     .desc = Коригує ходу, щоб ваші кроки не видавали звуку.
-
-
 ent-SkillChipDeathSquad = ПЗП-чип (ескадрон смерті)
     .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipERT = ПЗП-чип (ГШР)
     .desc = { ent-BaseSkillChipMRAM.desc }
-
-
 ent-SkillChipNukie = ПЗП-чип (горлекс)
     .desc = { ent-BaseSkillChipMRAM.desc }
 ent-SkillChipSyndieSoldierTeamLeader = ПЗП-чип (командир синдикату)

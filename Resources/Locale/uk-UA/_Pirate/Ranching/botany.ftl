@@ -14,7 +14,6 @@ seeds-balloonmelon-name = кавун-кулька
 seeds-balloonmelon-display-name = лоза кавунів-кульок
 seeds-steelwheat-name = сталева пшениця
 seeds-steelwheat-display-name = стебла сталевої пшениці
-
 ent-deliciousAppleSeeds = пакет насіння апетитного яблука
     .desc = Насіння яблуні з підозріло досконалими плодами.
 ent-MethAppleSeeds = пакет насіння метамфетамінового яблука
@@ -31,7 +30,6 @@ ent-BalloonMelonSeeds = пакет насіння кавуна-кульки
     .desc = Насіння напрочуд легкої та газонаповненої баштанної культури.
 ent-SteelWheatSeeds = пакет насіння сталевої пшениці
     .desc = Насіння пшениці з металевими зернами.
-
 ent-FoodDeliciousApple = апетитне яблуко
     .desc = Спокусливий плід, наче щойно з Едему.
 ent-FoodMethApple = метамфетамінове яблуко

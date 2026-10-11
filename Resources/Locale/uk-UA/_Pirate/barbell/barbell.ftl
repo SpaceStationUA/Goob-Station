@@ -7,7 +7,6 @@ ent-Barbell = штанга
     .desc = Важка штанга для жиму лежачи.
 ent-PunchingBag = боксерська груша
     .desc = Важка груша для тренування ударів.
-
 barbell-lift-emote = піднімає штангу.
 barbell-lift-emote-self = Ти піднімаєш штангу.
 barbell-bench-recovered = Штанга повернулася на місце.

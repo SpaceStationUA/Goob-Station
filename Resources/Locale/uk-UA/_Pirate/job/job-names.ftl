@@ -9,13 +9,10 @@ job-name-interdyne-engineer = Інженер Інтердайна
 job-name-interdyne-secure = Охоронець Інтердайна
 job-name-interdyne-service = Сервісний працівник Інтердайна
 job-name-interdyne-shaft-miners = Утилізатор Інтердайна
-
 job-name-security-instructor = Інструктор СБ
-
 job-name-syndicate-soldier = Солдат Синдикату
 job-name-syndicate-marshal = Наглядач Синдикату
 job-name-syndicate-team-leader = Лідер команди Синдикату
-
 job-name-syndicate-brig-officer = Офіцер брига Синдикату
 job-name-syndicate-liaison = Представник Синдикату
 job-name-syndicate-doctor = Медичний офіцер Синдикату

@@ -42,7 +42,6 @@ ent-SpaceBladeGay = веселкове космолезо
     .desc = { ent-SpaceBlade.desc }
 ent-SpaceBladeRatKing = космолезо щурячого короля
     .desc = { ent-SpaceBlade.desc }
-
 ent-SpaceBladeBoxTrash = розкладена коробка космолеза
     .desc = Маленька розкладена картонна коробка від іграшки.
 ent-MysterySpaceBladeBox = таємнича коробка космолеза

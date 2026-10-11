@@ -37,7 +37,6 @@ heretic-blade-void-examine = [color=cyan]Поки в великому радіу
 mansus-infused-item-examine = [color=purple]Сама присутність цього предмета викликає у вас тремтіння. Чи варто його піднімати?[/color]
 heretic-lock-unlocked = Відімкнено!
 heretic-last-refuge-examine-message = [color=purple]{CAPITALIZE(SUBJECT($target))} оповитий нечестивим серпанком![/color]
-
 heretic-ability-mirror-jaunt = Хода Дзеркалами
 heretic-ability-mirror-jaunt-desc = Дозволяє невидимо й вільно пересуватися царством дзеркал. Увійти до нього або вийти можна лише біля дзеркальних предметів і поверхонь, як-от вікна чи дзеркала.
 heretic-ability-shapeshift = Перевтілення

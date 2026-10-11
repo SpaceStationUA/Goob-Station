@@ -4,13 +4,11 @@ goob-ui-ghost-cosmetics-particles = Частинки
 goob-ui-ghost-cosmetics-hat = Капелюх
 goob-ui-ghost-cosmetics-mask = Маска
 goob-ui-ghost-cosmetics-none = Нічого
-
 ghost-cosmetic-sparkles = Іскорки
 ghost-cosmetic-embers = Жарини
 ghost-cosmetic-ectoplasm = Ектоплазма
 ghost-cosmetic-frost = Іній
 ghost-cosmetic-gloom = Морок
-
 ghost-cosmetic-top-hat = Циліндр
 ghost-cosmetic-wizard-hat = Капелюх чарівника
 ghost-cosmetic-pirate-hat = Піратський капелюх
@@ -31,7 +29,6 @@ ghost-cosmetic-sombrero = Сомбреро
 ghost-cosmetic-straw-hat = Солом'яний капелюх
 ghost-cosmetic-witch-hat = Відьомський капелюх
 ghost-cosmetic-christmas-crown = Різдвяна корона
-
 ghost-cosmetic-clown-mask = Маска клоуна
 ghost-cosmetic-mime-mask = Маска міма
 ghost-cosmetic-fox-mask = Маска лисиці

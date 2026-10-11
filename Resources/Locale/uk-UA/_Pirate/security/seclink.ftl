@@ -5,11 +5,9 @@ store-preset-name-seclink = SecLink
 store-category-secbaton = Кийки
 store-category-secdisabler = Дизейблери
 store-category-secutility = Спорядження
-
 store-currency-display-batontoken = жетони кийка
 store-currency-display-disablertoken = жетони дизейблера
 store-currency-display-utilitytoken = жетони спорядження
-
 stack-baton-token = жетон кийка
 stack-disabler-token = жетон дизейблера
 stack-utility-token = жетон спорядження
@@ -58,7 +56,6 @@ ent-BatonToken1 = { ent-BatonToken }
 ent-BatonToken5 = { ent-BatonToken }
     .desc = { ent-BatonToken.desc }
     .suffix = 5 BT
-
 ent-DisablerToken = жетон дизейблера
     .desc = Жетон для придбання дизейблера через рацію SecLink. Центральне Командування нагадує, що він неїстівний і не має смаку блакитної малини.
     .suffix = 3 DT
@@ -68,7 +65,6 @@ ent-DisablerToken1 = { ent-DisablerToken }
 ent-DisablerToken5 = { ent-DisablerToken }
     .desc = { ent-DisablerToken.desc }
     .suffix = 5 DT
-
 ent-UtilityToken = жетон спорядження
     .desc = Жетон для придбання допоміжного спорядження через рацію SecLink. Після низки «випадкових» госпіталізацій НДВ надало йому штучного виноградного смаку, щоб відбити бажання його їсти.
     .suffix = 3 UT
@@ -78,7 +74,6 @@ ent-UtilityToken1 = { ent-UtilityToken }
 ent-UtilityToken5 = { ent-UtilityToken }
     .desc = { ent-UtilityToken.desc }
     .suffix = 5 UT
-
 ent-BaseSeclinkRadio = рація SecLink
     .desc = Усередині встановлено мініатюрний телепортатор, що обмінює жетони SecLink на корисне спорядження. Пристрій виглядає підозріло знайомим, але це напевно випадковість.
     .suffix = По одному жетону кожного типу
@@ -102,7 +97,6 @@ ent-BulletAutoDisabler = заряд автоматичного дизейбле�
     .desc = { ent-BaseBullet.desc }
 ent-BulletMagnumDisabler = посилений заряд дизейблера
     .desc = { ent-BaseBullet.desc }
-
 ent-WeaponDisablerSeclink = дизейблер SecLink
     .desc = Зброя самооборони, що виснажує органічні цілі, доки вони не знепритомніють.
 ent-WeaponFunnyDisabler = дезорієнтатор
@@ -132,11 +126,8 @@ ent-BrokenSecShield = зламаний щит
     .desc = Компактний щит, який украй потребує зварювання.
 ent-ClothingEyesSurplusNVGoggles = списані окуляри нічного бачення
     .desc = Громіздка стара модель, яка технічно ще працює. Місця для звичайних лінз усередині немає.
-
 flavor-complex-secticket = як тухлі яйця
-
-code-violation =
-    {"[head=2]ШТРАФНА КВИТАНЦІЯ[/head]"}
+code-violation = {"[head=2]ШТРАФНА КВИТАНЦІЯ[/head]"}
     {"[bold]Порушник:[/bold]"}
     {"[bold]Порушення:[/bold]"}
     {"[bold]Сума штрафу:[/bold]"}

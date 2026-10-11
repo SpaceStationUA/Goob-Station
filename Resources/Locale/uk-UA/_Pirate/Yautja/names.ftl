@@ -1,6 +1,5 @@
 species-name-yautja = Яутжа
 job-name-yautja = Яутжа
-
 goob-name-yautja-first-1 = Nu'koir
 goob-name-yautja-first-2 = Za-ai'stba
 goob-name-yautja-first-3 = Au'stbep
@@ -34,7 +33,6 @@ goob-name-yautja-first-30 = Tocha
 goob-name-yautja-first-31 = Ba-A'ytall
 goob-name-yautja-first-32 = Mihn'tha
 goob-name-yautja-first-33 = Kjhute
-
 goob-name-yautja-last-1 = Tha'jo
 goob-name-yautja-last-2 = Ba'ytui
 goob-name-yautja-last-3 = Thwa'dtei
