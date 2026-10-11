@@ -99,6 +99,8 @@ public sealed class SecretSaltTelemetryTest
 
             Assert.That(salt.TelemetryLastRoundSummary, Is.Null,
                 "Round telemetry must not be published before the round ends.");
+            Assert.That(salt.TelemetryAuthorReport, Is.Null,
+                "Private nickname and role roster must not be generated before round end.");
 
             // Test-only forced tick: component write access is restricted to its
             // owning system, so use reflection here instead of exposing a public
@@ -130,6 +132,12 @@ public sealed class SecretSaltTelemetryTest
             Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
             Assert.That(salt.TelemetryLastRoundSummary, Is.Not.Null);
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain("ROUND SUMMARY round="));
+            Assert.That(salt.TelemetryAuthorReport, Is.Not.Null);
+            Assert.That(salt.TelemetryAuthorReport, Does.Contain("Секрет Сіль 1.4"));
+            Assert.That(salt.TelemetryAuthorReport, Does.Contain("Антагоністи наприкінці раунду"));
+            Assert.That(salt.TelemetryAuthorReport, Does.Contain("ROUND SUMMARY round="));
+            Assert.That(salt.TelemetryAuthorReportSendRequested, Is.False,
+                "Private Discord delivery must be opt-in, with no webhook by default.");
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"roundstartAttempts={salt.TelemetryRoundstartAttempts}"));
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"roundstartAdded={salt.TelemetryRoundstartAdded}"));
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain("roundstartSkips=["));
