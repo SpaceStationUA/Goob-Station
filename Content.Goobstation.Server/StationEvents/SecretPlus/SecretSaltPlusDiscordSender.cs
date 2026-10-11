@@ -15,6 +15,35 @@ namespace Content.Goobstation.Server.StationEvents.SecretPlus;
 /// </summary>
 public static class SecretSaltPlusDiscordSender
 {
+    /// <summary>
+    /// Send a full private report in Discord-safe chunks. All callers must handle
+    /// exceptions without logging the tokenized URL.
+    /// </summary>
+    public static async Task SendReportAsync(HttpClient client, string url, string report)
+    {
+        if (!Uri.TryCreate(url, UriKind.Absolute, out var destination)
+            || destination.Scheme != Uri.UriSchemeHttps
+            || (destination.Host != "discord.com" && destination.Host != "discordapp.com")
+            || !destination.AbsolutePath.StartsWith("/api/webhooks/", StringComparison.Ordinal))
+            throw new ArgumentException("Invalid Discord webhook destination.");
+
+        var chunk = new StringBuilder();
+        foreach (var rawLine in report.Split('\n'))
+        {
+            var line = rawLine.Length > 1700 ? rawLine[..1700] : rawLine;
+            if (chunk.Length > 0 && chunk.Length + line.Length + 1 > 1900)
+            {
+                await SendChunkAsync(client, destination, chunk.ToString());
+                chunk.Clear();
+            }
+
+            chunk.AppendLine(line);
+        }
+
+        if (chunk.Length > 0)
+            await SendChunkAsync(client, destination, chunk.ToString());
+    }
+
     public static async Task SendChunkAsync(HttpClient client, Uri destination, string message)
     {
         var payload = JsonSerializer.Serialize(new
