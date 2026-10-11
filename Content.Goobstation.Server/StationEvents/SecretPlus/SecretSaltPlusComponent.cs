@@ -169,6 +169,14 @@ public sealed partial class SecretSaltPlusComponent : Component
     [ViewVariables]
     public List<SelectedEvent> SelectedEvents = new();
 
+    // Server-only diagnostics. Tracks rules scheduled by this Secret Salt instance;
+    // these values do not affect the scheduler's choices or chaos calculations.
+    [ViewVariables]
+    public Dictionary<EntityUid, string> TelemetryRules = new();
+
+    [ViewVariables]
+    public HashSet<EntityUid> TelemetryStartedRules = new();
+
     /// <summary>
     ///   Weight table for primary roundstart antags.
     /// </summary>
