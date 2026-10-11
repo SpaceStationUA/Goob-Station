@@ -261,7 +261,14 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             i++;
 
             // on first iter pick a primary antag
-            var pick = _random.Pick(i == 1 ? primaryWeights : weights);
+            var pickWeights = i == 1 ? primaryWeights : weights;
+            if (pickWeights.Count == 0 || pickWeights.Values.All(weight => weight <= 0f))
+            {
+                LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} reason=noPositiveWeights iteration={i}", false);
+                break;
+            }
+
+            var pick = _random.Pick(pickWeights);
 
             // on lowpop this may still go no likey even for the primary antag pick and pick thief or something, intended
             GameRuleComponent? ruleComp = null;
@@ -336,6 +343,12 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             var score = GetChaosScore(pickProto, ruleComp, effPlayers);
             var chaos = scheduler.Comp.ChaosScore;
             var ruleUid = StartRule(scheduler, pick, false, effPlayers);
+            if (ruleUid == EntityUid.Invalid)
+            {
+                LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=invalidChaosScoreAfterAdd", false);
+                return;
+            }
+
             LogMessage($"ROUNDSTART START proto={proto} uid={scheduler.Owner} candidate={pick} ruleUid={ruleUid} score={score} players={effPlayers} chaos={chaos}", false);
             LogMessage($"Roundstart rule chosen: {pick} with score {score}");
         }
@@ -348,7 +361,21 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
     {
         var ruleUid = _ticker.AddGameRule(rule);
 
-        scheduler.Comp.ChaosScore += GetChaosScore(ruleUid, players)!.Value;
+        // Automatically scheduled roundstart rules must not cancel the entire preset
+        // if the number of available players changes after the initial selection.
+        if (!doStart && TryComp<GameRuleComponent>(ruleUid, out var addedRule))
+            addedRule.CancelPresetOnTooFewPlayers = false;
+
+        var chaosScore = GetChaosScore(ruleUid, players);
+        if (chaosScore is null)
+        {
+            // The rule was already added: mark it ended so it cannot start later.
+            _ticker.EndGameRule(ruleUid);
+            LogMessage($"RULE SKIP uid={ruleUid} candidate={rule} reason=nullChaosScoreAfterAdd", false);
+            return EntityUid.Invalid;
+        }
+
+        scheduler.Comp.ChaosScore += chaosScore.Value;
 
         // if we hijack playercount, also hijack how many antags we pick
         if (players != null && TryComp<AntagSelectionComponent>(ruleUid, out var selection))
