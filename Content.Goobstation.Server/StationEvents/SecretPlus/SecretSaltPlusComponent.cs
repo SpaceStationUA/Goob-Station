@@ -177,6 +177,17 @@ public sealed partial class SecretSaltPlusComponent : Component
     [ViewVariables]
     public HashSet<EntityUid> TelemetryStartedRules = new();
 
+    // Counts actual random roundstart picks, separate from successful AddGameRule calls.
+    [ViewVariables]
+    public int TelemetryRoundstartAttempts;
+
+    [ViewVariables]
+    public int TelemetryRoundstartAdded;
+
+    // Reason counters are diagnostics only; they never affect weights or decisions.
+    [ViewVariables]
+    public Dictionary<string, int> TelemetryRoundstartSkips = new();
+
     /// <summary>
     ///   Weight table for primary roundstart antags.
     /// </summary>
