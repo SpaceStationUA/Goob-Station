@@ -1,0 +1,17 @@
+accent-voidwalker-words-1 = (?:вбити|вбий|вбивати|убити|убий|убивати)
+accent-voidwalker-words-replace-1 = просвітити
+
+accent-voidwalker-words-2 = (?:космос|космосі|космосу)
+accent-voidwalker-words-replace-2 = порожнеча
+
+accent-voidwalker-words-3 = (?:ти|тебе|тобі|ви|вас|вам)
+accent-voidwalker-words-replace-3 = порожнеча
+
+accent-voidwalker-words-4 = (?:я|мене|мені)
+accent-voidwalker-words-replace-4 = порожнеча
+
+accent-voidwalker-words-5 = (?:людина|людини|людину|люди)
+accent-voidwalker-words-replace-5 = непросвітлені
+
+accent-voidwalker-words-6 = (?:смерть|смерті)
+accent-voidwalker-words-replace-6 = розчинення

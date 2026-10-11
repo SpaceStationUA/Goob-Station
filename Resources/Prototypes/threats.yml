@@ -11,6 +11,7 @@
     TerrorSpider: 0.5 # Pirate - Starlight terror spider threat
     # Slasher: 1 # Pirate disable
     # Goobstation end
+    Voidwalker: 1 # Pirate
 
 - type: ninjaHackingThreat
   id: Dragon
