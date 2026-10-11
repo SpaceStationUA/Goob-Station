@@ -227,9 +227,11 @@ public sealed partial class GoobCVars
         CVarDef.Create("stationreport.discord_webhook", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
     /// <summary>
-    /// Private Discord webhook for the Secret Salt author's post-round report.
-    /// Set it in the server's private configuration only; empty disables delivery.
-    /// This is intentionally independent from the public station report webhook.
+    /// Required destination for the automatic Secret Salt post-round report.
+    /// Set it once in the server's private configuration before deploying the mode.
+    /// Every completed Secret Salt round sends automatically; an empty value is a
+    /// configuration error logged by the server, never a normal off switch.
+    /// Do not reuse the public station report webhook.
     /// </summary>
     public static readonly CVarDef<string> SecretSaltAuthorDiscordWebhook =
         CVarDef.Create("secret_salt.author_discord_webhook", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
