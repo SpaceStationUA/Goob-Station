@@ -878,6 +878,10 @@ public sealed class AccessReaderSystem : EntitySystem
             items.Add(idUid.Value);
         }
 
+        // Pirate: Experiment PDAs can be worn on the belt without a uniform.
+        if (_inventorySystem.TryGetSlotEntity(uid, "belt", out var beltUid))
+            items.Add(beltUid.Value);
+
         // Pirate: include ID cards embedded in subdermal implants.
         if (_subdermalId.TryGetIdCard(uid, out var idEntity))
             items.Add(idEntity.Value);

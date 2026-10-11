@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: MIT
+
+- type: guideEntry
+  id: Sawians
+  name: species-name-sawian
+  text: "/ServerInfo/_Pirate/Experiments/Guidebook/Mobs/Sawians.xml"
+  children:
+    - Experiment
+
+- type: guideEntry
+  id: Experiment
+  name: species-name-experiment
+  text: "/ServerInfo/_Pirate/Experiments/Guidebook/Mobs/Experiment.xml"

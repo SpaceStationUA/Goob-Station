@@ -68,6 +68,11 @@
         {
             "name": "equipped-MASK-hydrakin",
             "directions": 4
+        },
+        {
+            "name": "equipped-MASK-experiment",
+            "copyright": "Modified state by DocMoth",
+            "directions": 4
         }
     ]
 }

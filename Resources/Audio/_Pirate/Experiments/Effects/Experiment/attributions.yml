@@ -1,0 +1,17 @@
+- files: ["flatline.ogg"]
+  license: "Custom"
+  copyright: "Read LICENSE-Sawians.md for terms, Created by Orsoniks."
+  source: "https://store.steampowered.com/app/4576490/Casualties_Unknown/"
+- files: ["woundon.ogg"]
+  license: "Custom"
+  copyright: "Read LICENSE-Sawians.md for terms, Created by Orsoniks."
+  source: "https://store.steampowered.com/app/4576490/Casualties_Unknown/"
+- files: ["close.ogg"]
+  license: "Custom"
+  copyright: "Read LICENSE-Sawians.md for terms, Created by Orsoniks."
+  source: "https://store.steampowered.com/app/4576490/Casualties_Unknown/"
+
+- files: ["healthpanel-alert.ogg"]
+  license: "Custom"
+  copyright: "Read LICENSE-Sawians.md for terms, Created by Orsoniks."
+  source: "https://github.com/Orsoniks"

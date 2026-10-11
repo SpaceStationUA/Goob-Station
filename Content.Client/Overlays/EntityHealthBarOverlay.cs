@@ -158,7 +158,7 @@ public sealed class EntityHealthBarOverlay : Overlay
             return (ratio, false);
         }
 
-        if (_mobStateSystem.IsCritical(uid, component))
+        if (_mobStateSystem.IsCritical(uid, component) || _mobStateSystem.IsSoftCritical(uid, component)) // Pirate
         {
             if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold, thresholds) ||
                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold, thresholds))

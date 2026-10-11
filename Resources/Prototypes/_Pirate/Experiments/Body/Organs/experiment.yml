@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: MIT
+# Pirate: use local organ bases and metabolism groups instead of Starlight stages.
+
+- type: entity
+  id: OrganExperimentStomach
+  parent: OrganAnimalStomach
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+  - type: Metabolizer
+    updateInterval: 0.75
+
+- type: entity
+  id: OrganExperimentHeart
+  parent: OrganHumanHeart
+  description: Skips a beat at the sight of landmines.
+  components:
+  - type: Metabolizer
+    maxReagents: 2
+    maxPoisonsProcessable: 2
+    metabolizerTypes: [Experiment]
+    updateInterval: 0.75
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  id: OrganExperimentLiver
+  parent: OrganHumanLiver
+  components:
+  - type: Metabolizer
+    maxReagents: 1
+    maxPoisonsProcessable: 1
+    metabolizerTypes: [Experiment]
+    groups:
+    - id: Alcohol
+
+- type: entity
+  id: OrganExperimentEyes
+  parent: OrganHumanEyes
+  suffix: Experiment
+  description: Couldn't have seen that one coming.
+  components:
+  - type: Organ
+    onAdd:
+    - type: PointLight
+      color: orange
+    - type: FlashImmunityTogglePointLight
+      invert: true
+
+- type: entity
+  id: OrganExperimentTongue
+  parent: OrganHumanTongue
+  suffix: Experiment

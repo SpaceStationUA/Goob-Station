@@ -3,6 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Damage.Components; // Pirate
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -187,6 +188,14 @@ public sealed class HungerSystem : EntitySystem
         {
             _damageable.TryChangeDamage(uid, damage, true, false);
         }
+
+        // Pirate: Starlight hunger-dependent regeneration.
+        if (component.CurrentThreshold >= component.PassiveDamageThreshold &&
+            component.PassiveDamageSpecifier is { } passiveDamage &&
+            TryComp<DamageableComponent>(uid, out var damageable) &&
+            _damageable.GetDamage((uid, damageable)).GetTotal() < component.PassiveDamageCap &&
+            !_mobState.IsDead(uid))
+            _damageable.TryChangeDamage(uid, passiveDamage, true, false);
     }
 
     /// <summary>

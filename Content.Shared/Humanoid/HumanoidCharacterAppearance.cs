@@ -110,7 +110,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             Color.Black,
             HairStyles.DefaultFacialHairStyle,
             Color.Black,
-            Color.Black,
+            species == "Experiment" ? Color.White : Color.Black, // Pirate
             skinColor,
             new()
         );
@@ -148,7 +148,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
         // TODO: Add random markings
 
-        var newEyeColor = random.Pick(_realisticEyeColors);
+        var newEyeColor = species == "Experiment" ? Color.White : random.Pick(_realisticEyeColors); // Pirate
 
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
         var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
@@ -181,7 +181,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
         var hairColor = ClampColor(appearance.HairColor);
         var facialHairColor = ClampColor(appearance.FacialHairColor);
-        var eyeColor = ClampColor(appearance.EyeColor);
+        var eyeColor = species == "Experiment" ? Color.White : ClampColor(appearance.EyeColor); // Pirate
 
         var proto = IoCManager.Resolve<IPrototypeManager>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
