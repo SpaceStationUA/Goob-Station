@@ -297,7 +297,10 @@ public sealed class BodySetupTest
 
                 var initialBodyPartCount = bodySystem.GetBodyPartCount(dummy, BodyPartType.Head);
                 var headEntity = bodySystem.GetBodyChildrenOfType(dummy, BodyPartType.Head).FirstOrDefault();
-                var groinEntity = bodySystem.GetBodyChildrenOfType(dummy, BodyPartType.Groin).FirstOrDefault();
+                // Pirate: Experiments retain one torso; use the chest when the body has no separate groin.
+                var woundedPart = bodySystem.GetBodyChildrenOfType(dummy, BodyPartType.Groin)
+                    .Concat(bodySystem.GetBodyChildrenOfType(dummy, BodyPartType.Chest))
+                    .First();
 
                 Assert.Multiple(() =>
                 {
@@ -305,18 +308,18 @@ public sealed class BodySetupTest
                     Assert.That(parentPart, Is.Not.Null, $"Failed species to pass the test: {speciesPrototype.ID}");
 
                     Assert.That(entMan.TryGetComponent(headEntity.Id, out WoundableComponent woundable), $"Failed species to pass the test: {speciesPrototype.ID}");
-                    Assert.That(entMan.TryGetComponent(groinEntity.Id, out WoundableComponent groinWoundable), $"Failed species to pass the test: {speciesPrototype.ID}");
+                    Assert.That(entMan.TryGetComponent(woundedPart.Id, out WoundableComponent partWoundable), $"Failed species to pass the test: {speciesPrototype.ID}");
 
-                    // Destroy the head, and damage the groin so we can check.
+                    // Destroy the head, and damage another body part so we can check.
                     woundSystem.DestroyWoundable(parentPart.Value, headEntity.Id, woundable);
-                    woundSystem.TryInduceWound(groinEntity.Id, "Blunt", 25f, out _, groinWoundable);
+                    woundSystem.TryInduceWound(woundedPart.Id, "Blunt", 25f, out _, partWoundable);
 
                     rejuvenateSystem.PerformRejuvenate(dummy);
 
                     Assert.That(initialBodyPartCount, Is.EqualTo(bodySystem.GetBodyPartCount(dummy, BodyPartType.Head)), $"Failed species to pass the test: {speciesPrototype.ID}");
 
                     Assert.That(woundSystem.GetWoundableSeverityPoint(parentPart.Value), Is.GreaterThanOrEqualTo(FixedPoint2.Zero), $"Failed species to pass the test: {speciesPrototype.ID}");
-                    Assert.That(woundSystem.GetWoundableSeverityPoint(groinEntity.Id), Is.GreaterThanOrEqualTo(FixedPoint2.Zero), $"Failed species to pass the test: {speciesPrototype.ID}");
+                    Assert.That(woundSystem.GetWoundableSeverityPoint(woundedPart.Id), Is.GreaterThanOrEqualTo(FixedPoint2.Zero), $"Failed species to pass the test: {speciesPrototype.ID}");
 
                     Assert.That(consciousnessSystem.CheckConscious(dummy), $"Failed species to pass the test: {speciesPrototype.ID}");
                 });
