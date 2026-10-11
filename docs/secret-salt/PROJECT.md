@@ -1,5 +1,7 @@
 # 🧂 Секрет Сіль 1.4 — журнал проєкту
 
+> **Актуальний стан 11.10.2026:** [CI №38126115787](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38126115787) — **SUCCESS**, компіляція та інтеграційні тести midround пройшли. У [комітах `a03f6f2`](https://github.com/The-Devils-Luck/Goob-Station/commit/a03f6f2051b72e8868f0030bfd4716972114dd91) і [`69ce7ce`](https://github.com/The-Devils-Luck/Goob-Station/commit/69ce7ce9776d9440c7152c090c922792e2e06a25) додано післяраундовий підрахунок `antagonistMindsAtEnd`, `antagonistRolesAtEnd` і `trackedUniqueAssignedMinds`; [тест `a76b691`](https://github.com/The-Devils-Luck/Goob-Station/commit/a76b6915bffa3f2a9dcbf6279dd14446e7f3dbb5). Останній [CI №38126857003](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38126857003) **очікує результату**. **Важливо:** загальні антагоністи — це статус на момент завершення раунду, а не повна історія призначень і не лише антагоністи, створені режимом. Дані персональних акаунтів у звіт не записуються; Discord-відправлення не реалізовано.
+
 > **Актуально (11.10.2026):** [CI №38125756548](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125756548) — **FAILURE на етапі компіляції тестів**: аналізатор `RA0002` заборонив пряму зміну `SecretSaltPlusComponent.TimeNextEvent` з інтеграційного тесту. Ігровий код скомпілювався, самі тести не стартували. [Коміт `e029e5d`](https://github.com/The-Devils-Luck/Goob-Station/commit/e029e5d36babba1ff9db0f1df5ec8b3c5ae9c457) виправляє **тільки тест**: час наступної події задається рефлексією у тестовому середовищі. [Повторний CI №38126115787](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38126115787) **виконується**. Баланс незмінний. Наступний крок: дочекатись CI, проаналізувати результат та за потреби виправити тест/діагностику.
 
 > **Актуально 11.10.2026:** [CI №38125207666](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125207666) — **SUCCESS**, пройшов інтеграційний тест з реальним запуском і завершенням тестового раунду. У робочій гілці доповнено статистику стартовим бюджетом хаосу та лічильниками подій посеред раунду ([`ca2aa4b`](https://github.com/The-Devils-Luck/Goob-Station/commit/ca2aa4b41d922e3de40294a7d1199acdac9e8438), [`71f6851`](https://github.com/The-Devils-Luck/Goob-Station/commit/71f6851c3b0aa319788138df67916f72f71c3ed3)). [CI №38125756548](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125756548) ще виконується. Режим на бойовому сервері не тестувався; баланс незмінний.
@@ -136,7 +138,7 @@
 
 ## 7. Точний наступний крок
 
-Перевірити [CI №38125756548](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38125756548) (нові midround-лічильники та тест післяраундового зведення). Потім розібрати, як безпечно й достовірно порахувати **всі фактичні антагоністичні призначення**, підготувати формат Discord-звіту та передачу через захищену серверну конфігурацію. **Не змінювати ваги, алгоритм і формули.**
+**Наступний крок:** перевірити [CI №38126857003](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38126857003) для обліку ролей. Після успіху — підготувати знеособлений формат післяраундового Discord-звіту й механізм його безпечної передачі автору; для цього необхідно узгодити місце доставки і доступ до серверної конфігурації. Не вносити жодних змін до балансу.
 
 ## 8. Як оновлювати цей документ
 
