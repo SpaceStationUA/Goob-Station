@@ -153,7 +153,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             var playerName = "Нікнейм невідомий";
             var userId = mind.UserId ?? mind.OriginalOwnerUserId;
             if (userId != null && _playerManager.TryGetPlayerData(userId.Value, out var playerData))
-                playerName = playerData.ContentData().Name;
+                playerName = playerData.ContentData()?.Name ?? playerName;
 
             var roleNames = roles.Select(role => SafeDiscordText(Loc.GetString(role.Name), 90)).ToList();
             var roleList = roleNames.Count > 0 ? string.Join(", ", roleNames) : "Невизначена роль";
