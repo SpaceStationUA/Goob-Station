@@ -389,7 +389,9 @@ namespace Content.Server.GameTicking
 
                 var wasPreloaded = CurrentPreset != null;
                 ClearGameRules();
-                SetGamePreset(fallback);
+                // This fallback starts now, not after another completed round.
+                // Preloaded rules need no extra countdown tick.
+                SetGamePreset(fallback, resetDelay: wasPreloaded ? 0 : 1);
                 if (wasPreloaded)
                     AddGamePresetRules();
             }
