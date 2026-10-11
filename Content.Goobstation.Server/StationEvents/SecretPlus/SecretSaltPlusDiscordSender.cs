@@ -27,17 +27,28 @@ public static class SecretSaltPlusDiscordSender
             || !destination.AbsolutePath.StartsWith("/api/webhooks/", StringComparison.Ordinal))
             throw new ArgumentException("Invalid Discord webhook destination.");
 
-        var chunk = new StringBuilder();
-        foreach (var rawLine in report.Split('\n'))
+        const int maxContentLength = 1900;
+        var chunk = new StringBuilder(maxContentLength);
+
+        // Split the entire report without deleting long lines, comments or
+        // newlines. The previous implementation silently discarded everything
+        // after character 1700 on each line. Keep UTF-16 surrogate pairs
+        // together so that emoji and other non-BMP text remain valid.
+        for (var i = 0; i < report.Length; i++)
         {
-            var line = rawLine.Length > 1700 ? rawLine[..1700] : rawLine;
-            if (chunk.Length > 0 && chunk.Length + line.Length + 1 > 1900)
+            var scalarLength = i + 1 < report.Length
+                && char.IsHighSurrogate(report[i])
+                && char.IsLowSurrogate(report[i + 1])
+                ? 2 : 1;
+
+            if (chunk.Length + scalarLength > maxContentLength)
             {
                 await SendChunkAsync(client, destination, chunk.ToString());
                 chunk.Clear();
             }
 
-            chunk.AppendLine(line);
+            chunk.Append(report, i, scalarLength);
+            i += scalarLength - 1;
         }
 
         if (chunk.Length > 0)
