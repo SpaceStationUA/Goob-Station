@@ -133,5 +133,7 @@
 
 - [x] [CI №38149671650](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38149671650): компіляція PASS, 21/21 тестів PASS (включно з ротацією після тестової ізоляції SQLite-побічних операцій).
 - [x] [CI №38150250465](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38150250465): **SUCCESS**, компіляція PASS, **22/22 тестів PASS**, включно з завантаженням восьми ігрових правил та перевіркою StationEvent для чотирьох midround-кандидатів.
+- [x] [CI №38152327128](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38152327128): **SUCCESS**, компіляція PASS, **23/23 тестів PASS**; Salt-only таблиця видає TerrorSpiders, AsakimShuttle, TraitorMidround для синтетичних 100 гравців після 90 хв, а TerrorSpiders виключається за 20 гравців.
+- [ ] Створити реальні ігрові сценарії появи нових антагоністів та перевірити ролі, спавн, завершення подій і логи — наявний тест перевіряє **доступність таблиці, не реальну появу**.
 - [ ] Живі раунди при різному онлайні з Gangwars, MalfAiMidround, TerrorSpiders, AsakimShuttle, TraitorMidround; підтвердження не отримано.
 - [ ] Повна перевірка реальної Discord-доставки та форми відгуків на тестовому сервері.
