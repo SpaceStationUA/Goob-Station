@@ -219,6 +219,20 @@ public sealed class SecretSaltFeedbackNetworkTest
             server.CfgMan.SetCVar(CCVars.GridFill, CCVars.GridFill.DefaultValue);
         });
         await pair.RunTicksSync(3);
+        await server.WaitAssertion(() =>
+        {
+            var systems = server.ResolveDependency<IEntitySystemManager>();
+            var feedback = systems.GetEntitySystem<SecretSaltFeedbackSystem>();
+
+            Assert.That(GetParticipants(feedback), Is.Empty,
+                "Roundstart review eligibility must not survive a round restart.");
+
+            var roundField = typeof(SecretSaltFeedbackSystem).GetField(
+                "_participantsRound", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(roundField, Is.Not.Null);
+            Assert.That(roundField!.GetValue(feedback), Is.EqualTo(0),
+                "The old round ID must not authorize reviews next round.");
+        });
         await client.WaitAssertion(() =>
         {
             var feedback = client.ResolveDependency<IEntitySystemManager>()
