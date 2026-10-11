@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using System.Collections.Generic;
 using Content.Goobstation.Server.StationEvents.SecretPlus;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
@@ -51,11 +52,13 @@ public sealed class SecretSaltTelemetryTest
                 "TraitorMidround",
                 "MalfAiMidround",
             };
+            var added = new Dictionary<string, EntityUid>();
             foreach (var id in rules)
             {
                 // A rule being loadable is necessary but not sufficient to
                 // prove it can be selected and spawned in a real Salt round.
                 var uid = ticker.AddGameRule(id);
+                added.Add(id, uid);
                 Assert.That(entityManager.HasComponent<GameRuleComponent>(uid), Is.True,
                     $"Expanded Salt candidate '{id}' must be an actual game rule.");
             }
@@ -67,11 +70,9 @@ public sealed class SecretSaltTelemetryTest
                          "TraitorMidround",
                          "VoidwalkerSpawn",
                          "MalfAiMidround",
-                         "VoidwalkerSpawn",
                      })
             {
-                var uid = ticker.GetAddedGameRules().First(rule =>
-                    entityManager.GetComponent<MetaDataComponent>(rule).EntityPrototype?.ID == id);
+                var uid = added[id];
                 Assert.That(entityManager.HasComponent<StationEventComponent>(uid), Is.True,
                     $"Midround candidate '{id}' needs StationEvent to pass the event scheduler.");
             }
@@ -115,6 +116,7 @@ public sealed class SecretSaltTelemetryTest
                          "SecretSaltTerrorSpidersSpawn",
                          "AsakimShuttle",
                          "TraitorMidround",
+                         "VoidwalkerSpawn",
                      })
             {
                 Assert.That(pool.Keys.Any(proto => proto.ID == id), Is.True,
