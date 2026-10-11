@@ -133,6 +133,14 @@ public sealed class SecretSaltTelemetryTest
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"roundstartAttempts={salt.TelemetryRoundstartAttempts}"));
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"roundstartAdded={salt.TelemetryRoundstartAdded}"));
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain("roundstartSkips=["));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"trackedUniqueAssignedMinds={salt.TelemetryUniqueTrackedAssignedMinds}"));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"antagonistMindsAtEnd={salt.TelemetryAntagonistMindsAtEnd}"));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"antagonistRolesAtEnd={salt.TelemetryAntagonistRolesAtEnd}"));
+            Assert.That(salt.TelemetryAntagonistRolesAtEnd, Is.GreaterThanOrEqualTo(salt.TelemetryAntagonistMindsAtEnd));
+            Assert.That(salt.TelemetryUniqueTrackedAssignedMinds,
+                Is.LessThanOrEqualTo(salt.TelemetryRules
+                    .Where(rule => entMan.HasComponent<Content.Server.Antag.Components.AntagSelectionComponent>(rule.Key))
+                    .Sum(rule => entMan.GetComponent<Content.Server.Antag.Components.AntagSelectionComponent>(rule.Key).AssignedMinds.Count)));
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"initialPlayers={salt.TelemetryInitialPlayers}"));
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"initialChaos={salt.TelemetryInitialChaos}"));
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"midroundRolls={salt.TelemetryMidroundRolls}"));
