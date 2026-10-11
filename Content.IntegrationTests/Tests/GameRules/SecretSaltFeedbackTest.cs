@@ -59,17 +59,55 @@ public sealed class SecretSaltFeedbackTest
     {
         var tracker = new SecretSaltFeedbackTracker();
 
-        Assert.That(tracker.TryRecord(123, "account-A", Review()), Is.EqualTo(SecretSaltFeedbackResult.Accepted));
-        Assert.That(tracker.TryRecord(123, "account-A", Review(rating: 2)), Is.EqualTo(SecretSaltFeedbackResult.AlreadySubmitted));
-        Assert.That(tracker.TryRecord(123, "account-B", Review(rating: 2)), Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+        Assert.That(tracker.TryRecord(123, "account-A", "Гравець A", Review()), Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+        Assert.That(tracker.TryRecord(123, "account-A", "Підмінене ім’я", Review(rating: 2)), Is.EqualTo(SecretSaltFeedbackResult.AlreadySubmitted));
+        Assert.That(tracker.TryRecord(123, "account-B", "Гравець B", Review(rating: 2)), Is.EqualTo(SecretSaltFeedbackResult.Accepted));
         Assert.That(tracker.Count, Is.EqualTo(2));
+        Assert.That(tracker.GetReviews(123)[0].Nickname, Is.EqualTo("Гравець A"));
+        Assert.That(tracker.GetReviews(123).Count, Is.EqualTo(2));
 
         // A malicious or stale client must not clear the current round's guard.
-        Assert.That(tracker.TryRecord(124, "account-C", Review(round: 123)), Is.EqualTo(SecretSaltFeedbackResult.WrongRound));
+        Assert.That(tracker.TryRecord(124, "account-C", "Гравець C", Review(round: 123)), Is.EqualTo(SecretSaltFeedbackResult.WrongRound));
         Assert.That(tracker.Count, Is.EqualTo(2));
-        Assert.That(tracker.TryRecord(123, "", Review()), Is.EqualTo(SecretSaltFeedbackResult.MissingServerIdentity));
+        Assert.That(tracker.TryRecord(123, "", "Невідомий", Review()), Is.EqualTo(SecretSaltFeedbackResult.MissingServerIdentity));
 
-        Assert.That(tracker.TryRecord(124, "account-A", Review(round: 124)), Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+        Assert.That(tracker.TryRecord(124, "account-A", "Гравець A", Review(round: 124)), Is.EqualTo(SecretSaltFeedbackResult.Accepted));
         Assert.That(tracker.Count, Is.EqualTo(1));
     }
+    [Test]
+    public void TestPrivateAuthorReportSanitizesDiscordAndOmitsAccountIds()
+    {
+        var tracker = new SecretSaltFeedbackTracker();
+        var submission = Review(
+            reasons: new[] { SecretSaltFeedbackReason.TooChaotic, SecretSaltFeedbackReason.Other },
+            comment: "Надто багато подій! @everyone\\nГравець: admin");
+        Assert.That(tracker.TryRecord(123, "private-user-id-123", "@here Player",
+            submission), Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+
+        var report = SecretSaltFeedbackReport.Format(123, tracker.GetReviews(123));
+        Assert.That(report, Does.Contain("Секрет Сіль 1.4"));
+        Assert.That(report, Does.Contain("Отримано відгуків: 1"));
+        Assert.That(report, Does.Contain("Оцінка: 5/5"));
+        Assert.That(report, Does.Contain("Надмірний хаос, Інше"));
+        Assert.That(report, Does.Contain("＠everyone"));
+        Assert.That(report, Does.Contain("＠here Player"));
+        Assert.That(report, Does.Not.Contain("private-user-id-123"));
+        Assert.That(report, Does.Not.Contain("@everyone"));
+        Assert.That(report, Does.Not.Contain("@here"));
+    }
+
+    [Test]
+    public void TestNoReviewReportAndRoundIsolation()
+    {
+        var tracker = new SecretSaltFeedbackTracker();
+        tracker.StartRound(123);
+        Assert.That(SecretSaltFeedbackReport.Format(123, tracker.GetReviews(123)),
+            Does.Contain("Гравці не залишили відгуків."));
+        Assert.That(tracker.TryRecord(123, "account-A", "Гравець A", Review()),
+            Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+        tracker.StartRound(124);
+        Assert.That(tracker.GetReviews(123), Is.Empty);
+        Assert.That(tracker.GetReviews(124), Is.Empty);
+    }
+
 }
