@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Common.SecretSalt;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Events;
 using Robust.Server.Player;
 using Content.Shared.GameTicking;
 using Robust.Shared.Configuration;
@@ -35,8 +36,11 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
 
     private readonly SecretSaltFeedbackTracker _tracker = new();
 
-    // Participants of this round, recorded by the authoritative crew spawn
-    // event. Spectators and people arriving after round end are not eligible.
+    // Capture the ready pool BEFORE roundstart antag assignment consumes its
+    // members. Finalize only after the GameTicker has spawned everyone.
+    // This includes roundstart pre-spawn antagonists, who call PlayerJoinGame
+    // without firing PlayerSpawnCompleteEvent.
+    private readonly HashSet<NetUserId> _roundStartReady = new();
     private readonly HashSet<NetUserId> _participants = new();
     private int _participantsRound;
     private ISawmill _sawmill = default!;
@@ -50,29 +54,31 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
         _sawmill = _log.GetSawmill("secret_salt_feedback");
         SubscribeNetworkEvent<SecretSaltFeedbackRequestEvent>(OnFeedbackRequest);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
     }
 
-    private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
+    private void OnRoundStarting(RoundStartingEvent ev)
     {
-        if (_ticker.CurrentPreset?.ID != "SecretSalt" || _ticker.RoundId <= 0)
+        _roundStartReady.Clear();
+        _participants.Clear();
+        _participantsRound = 0;
+
+        if (ev.Id <= 0 || _ticker.CurrentPreset?.ID != "SecretSalt")
             return;
 
-        // Includes actual late-join crew spawns; lobby visitors and ghosts
-        // do not trigger this normal crew spawn event.
-        if (_participantsRound != _ticker.RoundId)
+        _participantsRound = ev.Id;
+        foreach (var (userId, status) in _ticker.PlayerGameStatuses)
         {
-            _participantsRound = _ticker.RoundId;
-            _participants.Clear();
+            if (status == PlayerGameStatus.ReadyToPlay)
+                _roundStartReady.Add(userId);
         }
-
-        _participants.Add(ev.Player.UserId);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
+        _roundStartReady.Clear();
         _participants.Clear();
         _participantsRound = 0;
     }
@@ -146,6 +152,24 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
+        if (ev.New == GameRunLevel.InRound &&
+            ev.Old != GameRunLevel.InRound &&
+            _participantsRound == _ticker.RoundId &&
+            _ticker.CurrentPreset?.ID == "SecretSalt")
+        {
+            // By now special antagonists selected by RulePlayerSpawningEvent
+            // and normally spawned crew have both been recorded as JoinedGame.
+            // Late joins happen after this snapshot and cannot add themselves.
+            foreach (var userId in _roundStartReady)
+            {
+                if (SecretSaltFeedbackEligibility.IsConfirmedRoundStartParticipant(
+                    userId, _roundStartReady, _ticker.PlayerGameStatuses))
+                    _participants.Add(userId);
+            }
+
+            _roundStartReady.Clear();
+        }
+
         if (ev.Old == GameRunLevel.PostRound && ev.New != GameRunLevel.PostRound)
             CompleteFeedbackWindow();
     }
@@ -187,5 +211,23 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
             // Never include URL tokens, usernames or comment text in logs.
             _sawmill.Warning("Secret Salt private feedback report delivery failed.");
         }
+    }
+}
+
+/// <summary>
+/// Uses the existing GameTicker roster, not a separate gameplay population
+/// counter. The caller snapshots ready users before the roundstart rule pool
+/// is consumed and checks their JoinedGame status after spawning completes.
+/// </summary>
+public static class SecretSaltFeedbackEligibility
+{
+    public static bool IsConfirmedRoundStartParticipant(
+        NetUserId userId,
+        IReadOnlySet<NetUserId> readyAtStart,
+        IReadOnlyDictionary<NetUserId, PlayerGameStatus> statuses)
+    {
+        return readyAtStart.Contains(userId) &&
+            statuses.TryGetValue(userId, out var status) &&
+            status == PlayerGameStatus.JoinedGame;
     }
 }
