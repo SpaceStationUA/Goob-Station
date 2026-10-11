@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f032bb1d4d982d4ee57c214c18238aaddb45d512, slightly edited by Timfa",
+    "copyright": "Sprite by tyrone-ss14",
     "states": [
         {
             "name": "analyzer",
@@ -22,9 +22,17 @@
                     0.1,
                     0.1,
                     0.1,
-                    0.1
+                    0.5
                 ]
             ]
+        },
+        {
+            "name": "analyzer-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "analyzer-inhand-right",
+            "directions": 4
         },
         {
             "name": "icon"
