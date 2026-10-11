@@ -3,6 +3,8 @@
 using Content.Shared.Actions;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Map;
+using System.Numerics;
 
 namespace Content.Pirate.Shared.Chimera;
 
@@ -26,13 +28,24 @@ public sealed class ActionGunSystem : EntitySystem
             return;
 
         _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
-        ent.Comp.Gun = Spawn(ent.Comp.GunProto);
+        // Pirate: keep firing and recharge sounds at the owner's position.
+        ent.Comp.Gun = SpawnAttachedTo(ent.Comp.GunProto, new EntityCoordinates(ent, Vector2.Zero));
     }
 
     private void OnShutdown(Entity<ActionGunComponent> ent, ref ComponentShutdown args)
     {
+        if (ent.Comp.ActionEntity is { } action)
+        {
+            _actions.RemoveAction(action);
+            QueueDel(action);
+            ent.Comp.ActionEntity = null;
+        }
+
         if (ent.Comp.Gun is { } gun)
+        {
             QueueDel(gun);
+            ent.Comp.Gun = null;
+        }
     }
 
     private void OnShoot(Entity<ActionGunComponent> ent, ref ActionGunShootEvent args)

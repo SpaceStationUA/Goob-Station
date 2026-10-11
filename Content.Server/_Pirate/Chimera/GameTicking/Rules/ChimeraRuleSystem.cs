@@ -170,9 +170,8 @@ public sealed class ChimeraRuleSystem : GameRuleSystem<ChimeraRuleComponent>
             _roundEnd.RequestRoundEnd(null, false);
         }
 
-        // we include dead for this count because we don't want to end the round
-        // when everyone gets on the shuttle.
-        if (GetInfectedFraction() >= 1) // Oops, all chimera
+        // Pirate: healthy survivors on the shuttle or other grids still prevent extinction.
+        if (GetInfectedFraction(includeOffStation: true) >= 1) // Oops, all chimera
             _roundEnd.EndRound();
     }
 }

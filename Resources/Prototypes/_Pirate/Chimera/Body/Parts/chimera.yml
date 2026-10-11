@@ -8,6 +8,8 @@
     sprite: Mobs/Species/Skeleton/parts.rsi
   - type: Icon
     sprite: Mobs/Species/Skeleton/parts.rsi
+  - type: Damageable
+    damageModifierSet: Chimera # Pirate: complex bodies apply damage modifiers on their parts.
   - type: Destructible # Shitmed Change: Let blunt weapons break bones
     thresholds:
     - trigger: !type:DamageTypeTrigger
