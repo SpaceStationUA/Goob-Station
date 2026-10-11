@@ -192,6 +192,13 @@ public sealed partial class SecretSaltPlusComponent : Component
     [ViewVariables]
     public string? TelemetryLastRoundSummary;
 
+    // Server-only author report, generated after round end. Contains player nicknames
+    // and antagonist role names; never displayed in public round text or admin chat.
+    public string? TelemetryAuthorReport;
+
+    // Avoid duplicate sends if the scoreboard is assembled more than once.
+    public bool TelemetryAuthorReportSendRequested;
+
     // Counted from the actual mind roles at round end (all sources, including
     // antagonist roles that were not assigned by tracked scheduler rules).
     [ViewVariables]
