@@ -64,10 +64,55 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
     {
         base.Initialize();
 
+        // The game ticker broadcasts rule starts after adding ActiveGameRuleComponent.
+        // This distinguishes a rule being queued from one actually starting.
+        SubscribeLocalEvent<GameRuleStartedEvent>(OnAnyGameRuleStarted);
+
         _sawmill = _log.GetSawmill("secret_salt_plus");
 
         Subs.CVar(_cfg, GoobCVars.MinimumTimeUntilFirstEvent, value => _minimumTimeUntilFirstEvent = value, true);
         Subs.CVar(_cfg, GoobCVars.RoundstartChaosScoreMultiplier, value => _roundstartChaosScoreMultiplier = value, true);
+    }
+
+    private void OnAnyGameRuleStarted(ref GameRuleStartedEvent args)
+    {
+        var query = EntityQueryEnumerator<SecretSaltPlusComponent>();
+        while (query.MoveNext(out var schedulerUid, out var scheduler))
+        {
+            if (!scheduler.TelemetryRules.TryGetValue(args.RuleEntity, out var trackedRule))
+                continue;
+
+            scheduler.TelemetryStartedRules.Add(args.RuleEntity);
+            LogMessage($"RULE STARTED scheduler={schedulerUid} candidate={trackedRule} ruleUid={args.RuleEntity}", false);
+        }
+    }
+
+    protected override void AppendRoundEndText(EntityUid uid, SecretSaltPlusComponent scheduler, GameRuleComponent gameRule, ref RoundEndTextAppendEvent args)
+    {
+        var assignedMinds = 0;
+        foreach (var (ruleUid, ruleId) in scheduler.TelemetryRules)
+        {
+            if (!Exists(ruleUid))
+            {
+                LogMessage($"RULE SUMMARY scheduler={uid} candidate={ruleId} ruleUid={ruleUid} state=missing", false);
+                continue;
+            }
+
+            // AssignedMinds records assignments made by AntagSelectionSystem, not
+            // necessarily every antagonist created by unrelated game systems.
+            int? assigned = TryComp<AntagSelectionComponent>(ruleUid, out var antagSelection)
+                ? antagSelection.AssignedMinds.Count
+                : null;
+
+            assignedMinds += assigned ?? 0;
+            var state = HasComp<ActiveGameRuleComponent>(ruleUid) ? "active"
+                : HasComp<EndedGameRuleComponent>(ruleUid) ? "ended"
+                : "pending";
+
+            LogMessage($"RULE SUMMARY scheduler={uid} candidate={ruleId} ruleUid={ruleUid} everStarted={scheduler.TelemetryStartedRules.Contains(ruleUid)} state={state} assignedMinds={assigned?.ToString() ?? "n/a"}", false);
+        }
+
+        LogMessage($"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} chaos={scheduler.ChaosScore} duration={_ticker.RoundDuration()}", false);
     }
 
     protected override void Added(EntityUid uid, SecretSaltPlusComponent scheduler, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -349,7 +394,7 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
                 return;
             }
 
-            LogMessage($"ROUNDSTART START proto={proto} uid={scheduler.Owner} candidate={pick} ruleUid={ruleUid} score={score} players={effPlayers} chaos={chaos}", false);
+            LogMessage($"ROUNDSTART ADDED proto={proto} uid={scheduler.Owner} candidate={pick} ruleUid={ruleUid} score={score} players={effPlayers} chaos={chaos}", false);
             LogMessage($"Roundstart rule chosen: {pick} with score {score}");
         }
     }
@@ -388,6 +433,10 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
                 selection.Definitions[i] = def;
             }
         }
+
+        // Keep the attribution before starting the rule: a start event can fire
+        // synchronously, and it must be matched to this scheduler.
+        scheduler.Comp.TelemetryRules[ruleUid] = rule;
 
         if (doStart)
             _ticker.StartGameRule(ruleUid);
