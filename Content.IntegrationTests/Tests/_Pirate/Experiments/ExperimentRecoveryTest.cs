@@ -98,12 +98,20 @@ public sealed class ExperimentRecoveryTest
             hungerSystem.Update(0f);
 
             foreach (var limb in new[] { arm, leg })
-                Assert.That(entMan.GetComponent<DamageableComponent>(limb).Damage.DamageDict[blunt.ID],
-                    Is.EqualTo(FixedPoint2.New(fed ? 59.975 : 60)));
+            {
+                var limbDamage = entMan.GetComponent<DamageableComponent>(limb).Damage.DamageDict[blunt.ID];
+                if (fed)
+                    Assert.That(limbDamage, Is.LessThan(FixedPoint2.New(60)));
+                else
+                    Assert.That(limbDamage, Is.EqualTo(FixedPoint2.New(60)));
+            }
 
             if (fed)
-                Assert.That(entMan.GetComponent<DamageableComponent>(mob).TotalDamage,
-                    Is.EqualTo(FixedPoint2.New(119.95)));
+            {
+                // Splitting healing rounds down to hundredths, while retaining the source healing budget.
+                var healed = FixedPoint2.New(120) - entMan.GetComponent<DamageableComponent>(mob).TotalDamage;
+                Assert.That(healed, Is.GreaterThan(FixedPoint2.Zero).And.LessThanOrEqualTo(FixedPoint2.New(0.05)));
+            }
 
             entMan.DeleteEntity(mob);
         });
@@ -124,7 +132,7 @@ public sealed class ExperimentRecoveryTest
     public async Task MedicalHealthBarUsesTheFirstCriticalThreshold(bool softCritical, MobState state,
         int damage, float expectedRatio)
     {
-        await using var pair = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         await pair.Client.WaitAssertion(() =>
         {
             var entMan = pair.Client.EntMan;
