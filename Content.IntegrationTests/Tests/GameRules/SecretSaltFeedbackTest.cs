@@ -46,6 +46,40 @@ public sealed class SecretSaltFeedbackTest
     }
 
     [Test]
+    public void TestBoundedNetworkReasonMask()
+    {
+        var all = new[]
+        {
+            SecretSaltFeedbackReason.TooFewAntagonists,
+            SecretSaltFeedbackReason.TooManyAntagonists,
+            SecretSaltFeedbackReason.TooFewEvents,
+            SecretSaltFeedbackReason.TooChaotic,
+            SecretSaltFeedbackReason.Other
+        };
+
+        var mask = SecretSaltFeedbackReasonMask.Encode(all);
+        Assert.That(mask, Is.EqualTo(0b0001_1111));
+        Assert.That(SecretSaltFeedbackReasonMask.TryDecode(mask, out var decoded), Is.True);
+        Assert.That(decoded, Is.EquivalentTo(all));
+
+        Assert.That(SecretSaltFeedbackReasonMask.TryDecode(0, out var empty), Is.True);
+        Assert.That(empty, Is.Empty);
+        Assert.That(SecretSaltFeedbackReasonMask.TryDecode(0b0010_0000, out _), Is.False);
+        Assert.That(SecretSaltFeedbackReasonMask.TryDecode(byte.MaxValue, out _), Is.False);
+
+        Assert.Throws<ArgumentException>(() =>
+            SecretSaltFeedbackReasonMask.Encode(new[] { SecretSaltFeedbackReason.Other, SecretSaltFeedbackReason.Other }));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            SecretSaltFeedbackReasonMask.Encode(new[] { (SecretSaltFeedbackReason) 99 }));
+
+        // Guard the wire contract against accidental reintroduction of
+        // client-sized reason arrays before server-side validation.
+        Assert.That(typeof(SecretSaltFeedbackRequestEvent).GetProperty("Reasons"), Is.Null);
+        Assert.That(typeof(SecretSaltFeedbackRequestEvent).GetProperty("ReasonsMask")?.PropertyType,
+            Is.EqualTo(typeof(byte)));
+    }
+
+    [Test]
     public void TestCommentLengthWithoutContentCensorship()
     {
         Assert.That(SecretSaltFeedbackValidator.IsValid(Review(comment: new string('x', 500))), Is.True);
