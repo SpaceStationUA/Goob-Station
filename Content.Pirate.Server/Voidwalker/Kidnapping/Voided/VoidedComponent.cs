@@ -1,10 +1,17 @@
 using Content.Pirate.Shared.Voidwalker;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Pirate.Server.Voidwalker.Kidnapping.Voided;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class VoidedComponent : Component
 {
+    [DataField]
+    public TimeSpan Duration = TimeSpan.FromMinutes(15);
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan ExpireTime;
+
     /// <summary>
     /// The voidwalker that kidnapped this entity.
     /// </summary>
