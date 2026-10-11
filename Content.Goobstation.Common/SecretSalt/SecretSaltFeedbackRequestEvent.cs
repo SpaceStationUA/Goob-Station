@@ -13,18 +13,19 @@ public sealed class SecretSaltFeedbackRequestEvent : EntityEventArgs
 {
     public int RoundId { get; }
     public int Rating { get; }
-    public SecretSaltFeedbackReason[] Reasons { get; }
+    // Fixed-size wire representation: no client-controlled array allocation.
+    public byte ReasonsMask { get; }
     public string? Comment { get; }
 
     public SecretSaltFeedbackRequestEvent(
         int roundId,
         int rating,
-        SecretSaltFeedbackReason[] reasons,
+        byte reasonsMask,
         string? comment)
     {
         RoundId = roundId;
         Rating = rating;
-        Reasons = reasons;
+        ReasonsMask = reasonsMask;
         Comment = comment;
     }
 }
