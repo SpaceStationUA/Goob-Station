@@ -169,6 +169,67 @@ public sealed partial class SecretSaltPlusComponent : Component
     [ViewVariables]
     public List<SelectedEvent> SelectedEvents = new();
 
+    // Server-only diagnostics. Tracks rules scheduled by this Secret Salt instance;
+    // these values do not affect the scheduler's choices or chaos calculations.
+    [ViewVariables]
+    public Dictionary<EntityUid, string> TelemetryRules = new();
+
+    [ViewVariables]
+    public HashSet<EntityUid> TelemetryStartedRules = new();
+
+    // Counts actual random roundstart picks, separate from successful AddGameRule calls.
+    [ViewVariables]
+    public int TelemetryRoundstartAttempts;
+
+    [ViewVariables]
+    public int TelemetryRoundstartAdded;
+
+    // Reason counters are diagnostics only; they never affect weights or decisions.
+    [ViewVariables]
+    public Dictionary<string, int> TelemetryRoundstartSkips = new();
+
+    // Snapshot only populated at round end. May be reused by a future Discord report.
+    [ViewVariables]
+    public string? TelemetryLastRoundSummary;
+
+    // Server-only author report, generated after round end. Contains player nicknames
+    // and antagonist role names; never displayed in public round text or admin chat.
+    public string? TelemetryAuthorReport;
+
+    // Avoid duplicate sends if the scoreboard is assembled more than once.
+    public bool TelemetryAuthorReportSendRequested;
+
+    // Counted from the actual mind roles at round end (all sources, including
+    // antagonist roles that were not assigned by tracked scheduler rules).
+    [ViewVariables]
+    public int TelemetryAntagonistMindsAtEnd;
+
+    [ViewVariables]
+    public int TelemetryAntagonistRolesAtEnd;
+
+    // Unique minds assigned by rules that belong to this scheduler only.
+    [ViewVariables]
+    public int TelemetryUniqueTrackedAssignedMinds;
+
+    // Round context and midround rolls; observability only (not part of game balance).
+    [ViewVariables]
+    public float TelemetryInitialChaos;
+
+    [ViewVariables]
+    public int TelemetryInitialPlayers;
+
+    [ViewVariables]
+    public int TelemetryMidroundRolls;
+
+    [ViewVariables]
+    public int TelemetryMidroundCandidates;
+
+    [ViewVariables]
+    public int TelemetryMidroundAdded;
+
+    [ViewVariables]
+    public int TelemetryMidroundNoCandidates;
+
     /// <summary>
     ///   Weight table for primary roundstart antags.
     /// </summary>
