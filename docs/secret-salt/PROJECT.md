@@ -5,6 +5,8 @@
 >
 > **Новий чат:** надай посилання на цей файл і напиши: «Прочитай журнал проєкту „Секрет Сіль 1.4“ та продовж із наступного кроку». Перед кожним кроком звіряй файл з фактичним станом GitHub.
 
+**Детальний покроковий план:** [PLAN.md](PLAN.md) — етапи, критерії готовності, перевірки та наступний крок.
+
 ## 1. Посилання й призначення
 
 - Форк для роботи: [The-Devils-Luck/Goob-Station](https://github.com/The-Devils-Luck/Goob-Station).
@@ -66,7 +68,7 @@
 - **Перевірено в коді SpaceStationUA:** `Content.Pirate.Server/Voting/AutoVoteSystem.cs` створює автоматичне голосування за пресет у лобі; `Content.Server/Voting/Managers/VoteManager.DefaultVotes.cs` формує список `GetGamePresets()`; `Content.Server/GameTicking/GameTicker.GamePreset.cs` містить `SetGamePreset`/`IsPresetDisabled`, а `Content.Server/GameTicking/GameTicker.RoundFlow.cs` контролює старт і перезапуск раунду. Пресет `SecretSalt` оголошено в `Resources/Prototypes/_Pirate/game_presets.yml` із `showInVote: true`.
 - **Статус:** вимогу внесено в план; код ротації ще не реалізований і не протестований.
 
-### 3.4. Українська
+### 3.5. Українська
 
 - Видима назва: **«Секрет Сіль 1.4»**.
 - Усі тексти для гравців і Discord-звіти — **українською**.
