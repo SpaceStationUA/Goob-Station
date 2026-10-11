@@ -65,10 +65,9 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
         _participants.Clear();
         _participantsRound = 0;
 
-        // The ticker can change CurrentPreset during failed-start fallback.
-        // Snapshot the start roster regardless of the initial preset, then
-        // finalize eligibility only if SecretSalt actually starts InRound.
-        if (ev.Id <= 0)
+        // Review eligibility is tracked only for explicitly selected
+        // SecretSalt rounds. No snapshots for unrelated game presets.
+        if (ev.Id <= 0 || _ticker.CurrentPreset?.ID != "SecretSalt")
             return;
 
         _participantsRound = ev.Id;
