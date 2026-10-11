@@ -75,6 +75,39 @@ public sealed class SecretSaltFeedbackNetworkTest
             var ticker = systems.GetEntitySystem<GameTicker>();
             Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
             round = ticker.RoundId;
+
+            var feedbackSystem = systems.GetEntitySystem<SecretSaltFeedbackSystem>();
+            var registered = GetParticipants(feedbackSystem);
+            Assert.That(registered.Count, Is.EqualTo(1),
+                "A regular roundstart crew member must be eligible.");
+            var account = registered.Single();
+
+            // This simulates the *existing* GameTicker roster state used by
+            // pre-spawn special antagonists (who call PlayerJoinGame instead
+            // of raising PlayerSpawnCompleteEvent).
+            var readyAtStart = new HashSet<NetUserId> { account };
+            var statuses = new Dictionary<NetUserId, PlayerGameStatus>
+            {
+                [account] = PlayerGameStatus.JoinedGame
+            };
+            Assert.That(SecretSaltFeedbackEligibility.IsConfirmedRoundStartParticipant(
+                account, readyAtStart, statuses), Is.True,
+                "A special antagonist with ReadyToPlay -> JoinedGame is included.");
+
+            // A late-joiner may have JoinedGame, but was not in the original
+            // ReadyToPlay snapshot and must never gain review permission.
+            readyAtStart.Clear();
+            Assert.That(SecretSaltFeedbackEligibility.IsConfirmedRoundStartParticipant(
+                account, readyAtStart, statuses), Is.False);
+
+            // A ready player who never spawned receives no review permission.
+            readyAtStart.Add(account);
+            statuses[account] = PlayerGameStatus.ReadyToPlay;
+            Assert.That(SecretSaltFeedbackEligibility.IsConfirmedRoundStartParticipant(
+                account, readyAtStart, statuses), Is.False);
+            statuses[account] = PlayerGameStatus.NotReadyToPlay;
+            Assert.That(SecretSaltFeedbackEligibility.IsConfirmedRoundStartParticipant(
+                account, readyAtStart, statuses), Is.False);
         });
 
         await client.WaitAssertion(() =>
