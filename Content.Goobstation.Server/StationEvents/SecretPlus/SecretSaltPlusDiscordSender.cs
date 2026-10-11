@@ -68,20 +68,42 @@ public static class SecretSaltPlusDiscordSender
         for (var attempt = 1; attempt <= 3; attempt++)
         {
             using var content = new StringContent(payload, Encoding.UTF8, "application/json");
-            using var response = await client.PostAsync(destination, content);
-            if (response.IsSuccessStatusCode)
-                return;
-
-            var status = (int) response.StatusCode;
-            if (status != 429 && status < 500 || attempt == 3)
+            HttpResponseMessage response;
+            try
             {
-                response.EnsureSuccessStatusCode();
-                return;
+                // Catch only transport failures here. Non-retryable HTTP
+                // responses are checked below and must not be retried.
+                response = await client.PostAsync(destination, content);
+            }
+            catch (HttpRequestException) when (attempt < 3)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(attempt * 2));
+                continue;
+            }
+            catch (TaskCanceledException) when (attempt < 3)
+            {
+                // HttpClient reports request timeouts as TaskCanceledException.
+                // Retrying just this chunk avoids repeating earlier chunks.
+                await Task.Delay(TimeSpan.FromSeconds(attempt * 2));
+                continue;
             }
 
-            var delay = response.Headers.RetryAfter?.Delta
-                ?? TimeSpan.FromSeconds(attempt * 2);
-            await Task.Delay(delay);
+            using (response)
+            {
+                if (response.IsSuccessStatusCode)
+                    return;
+
+                var status = (int) response.StatusCode;
+                if (status != 429 && status < 500 || attempt == 3)
+                {
+                    response.EnsureSuccessStatusCode();
+                    return;
+                }
+
+                var delay = response.Headers.RetryAfter?.Delta
+                    ?? TimeSpan.FromSeconds(attempt * 2);
+                await Task.Delay(delay);
+            }
         }
     }
 }
