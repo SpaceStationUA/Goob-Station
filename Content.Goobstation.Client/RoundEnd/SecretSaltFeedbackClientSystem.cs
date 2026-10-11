@@ -35,6 +35,16 @@ public sealed class SecretSaltFeedbackClientSystem : EntitySystem
         TryOpen();
     }
 
+    /// <summary>
+    /// Send a review through the same client-to-server path as the UI button.
+    /// The server remains authoritative about the active mode, phase, sender,
+    /// rate limit, and whether an account has already submitted this round.
+    /// </summary>
+    public void SubmitFeedback(int roundId, int rating, SecretSaltFeedbackReason[] reasons, string? comment)
+    {
+        RaiseNetworkEvent(new SecretSaltFeedbackRequestEvent(roundId, rating, reasons, comment));
+    }
+
     private void TryOpen()
     {
         if (_offeredRound <= 0 || _offeredRound != _scoreboardRound ||
@@ -45,7 +55,7 @@ public sealed class SecretSaltFeedbackClientSystem : EntitySystem
         var round = _offeredRound;
         _window = new SecretSaltFeedbackWindow();
         _window.Submitted += (rating, reasons, comment) =>
-            RaiseNetworkEvent(new SecretSaltFeedbackRequestEvent(round, rating, reasons, comment));
+            SubmitFeedback(round, rating, reasons, comment);
         _window.OnClose += () => _window = null;
         _window.OpenCentered();
     }
