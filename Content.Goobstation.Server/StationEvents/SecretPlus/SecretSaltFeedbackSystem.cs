@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Common.SecretSalt;
 using Content.Server.GameTicking;
+using Robust.Server.Player;
 using Content.Shared.GameTicking;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Server.StationEvents.SecretPlus;
@@ -28,8 +31,14 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private readonly IPlayerManager _players = default!;
 
     private readonly SecretSaltFeedbackTracker _tracker = new();
+
+    // Participants of this round, recorded by the authoritative crew spawn
+    // event. Spectators and people arriving after round end are not eligible.
+    private readonly HashSet<NetUserId> _participants = new();
+    private int _participantsRound;
     private ISawmill _sawmill = default!;
     private int _feedbackRound;
     private TimeSpan _feedbackDeadline;
@@ -41,7 +50,31 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
         _sawmill = _log.GetSawmill("secret_salt_feedback");
         SubscribeNetworkEvent<SecretSaltFeedbackRequestEvent>(OnFeedbackRequest);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
+    }
+
+    private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
+    {
+        if (_ticker.CurrentPreset?.ID != "SecretSalt" || _ticker.RoundId <= 0)
+            return;
+
+        // Includes actual late-join crew spawns; lobby visitors and ghosts
+        // do not trigger this normal crew spawn event.
+        if (_participantsRound != _ticker.RoundId)
+        {
+            _participantsRound = _ticker.RoundId;
+            _participants.Clear();
+        }
+
+        _participants.Add(ev.Player.UserId);
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        _participants.Clear();
+        _participantsRound = 0;
     }
 
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
@@ -59,8 +92,15 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
         _reportRequested = false;
         _tracker.StartRound(roundId);
 
-        // Client UI waits for the actual scoreboard before showing the offer.
-        RaiseNetworkEvent(new SecretSaltFeedbackOfferEvent(roundId));
+        // Send offers privately to actual participants, not all spectators.
+        if (_participantsRound != roundId)
+            return;
+
+        foreach (var player in _players.Sessions)
+        {
+            if (_participants.Contains(player.UserId))
+                RaiseNetworkEvent(new SecretSaltFeedbackOfferEvent(roundId), player.Channel);
+        }
     }
 
     private void OnFeedbackRequest(SecretSaltFeedbackRequestEvent msg, EntitySessionEventArgs args)
@@ -69,7 +109,9 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
             _ticker.CurrentPreset?.ID != "SecretSalt" ||
             _feedbackRound != msg.RoundId ||
             _reportRequested ||
-            _timing.CurTime >= _feedbackDeadline)
+            _timing.CurTime >= _feedbackDeadline ||
+            _participantsRound != msg.RoundId ||
+            !_participants.Contains(args.SenderSession.UserId))
             return;
 
         // Reject malformed client payloads before tracking them.
