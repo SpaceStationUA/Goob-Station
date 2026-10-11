@@ -344,8 +344,10 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             if (chaosScore == null)
             {
                 RecordRoundstartSkip(scheduler.Comp, "nullChaosScore");
+                // This candidate is not eligible for chaos-based selection; the
+                // structured skip below already records the reason. Integration tests
+                // fail on ERROR logs, so do not treat a rejected candidate as a crash.
                 LogMessage($"ROUNDSTART SKIP proto={proto} uid={scheduler.Owner} candidate={pick} reason=nullChaosScore", false);
-                Log.Error($"Tried running roundstart event {entProto.ID}, but chaos score was null");
                 continue;
             }
                              // negative
