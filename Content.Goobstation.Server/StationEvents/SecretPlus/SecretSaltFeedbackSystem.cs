@@ -2,6 +2,7 @@
 
 using Content.Goobstation.Common.SecretSalt;
 using Content.Server.GameTicking;
+using Content.Shared.GameTicking;
 using Robust.Shared.Player;
 
 namespace Content.Goobstation.Server.StationEvents.SecretPlus;
@@ -20,6 +21,17 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
     {
         base.Initialize();
         SubscribeNetworkEvent<SecretSaltFeedbackRequestEvent>(OnFeedbackRequest);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
+    }
+
+    private void OnRoundEnd(RoundEndTextAppendEvent ev)
+    {
+        if (_ticker.RunLevel != GameRunLevel.PostRound ||
+            _ticker.CurrentPreset?.ID != "SecretSalt")
+            return;
+
+        // Client UI waits for the actual scoreboard before displaying the offer.
+        RaiseNetworkEvent(new SecretSaltFeedbackOfferEvent(_ticker.RoundId));
     }
 
     private void OnFeedbackRequest(SecretSaltFeedbackRequestEvent msg, EntitySessionEventArgs args)
