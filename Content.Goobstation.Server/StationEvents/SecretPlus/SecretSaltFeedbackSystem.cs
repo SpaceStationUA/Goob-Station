@@ -122,15 +122,16 @@ public sealed class SecretSaltFeedbackSystem : EntitySystem
             !_participants.Contains(args.SenderSession.UserId))
             return;
 
-        // Reject malformed client payloads before tracking them.
-        if (msg.Reasons == null)
+        // Decode at most five reasons from one byte. Reject unused bits
+        // rather than allocating a client-controlled reasons array.
+        if (!SecretSaltFeedbackReasonMask.TryDecode(msg.ReasonsMask, out var reasons))
             return;
 
         var submission = new SecretSaltFeedbackSubmission
         {
             RoundId = msg.RoundId,
             Rating = msg.Rating,
-            Reasons = msg.Reasons,
+            Reasons = reasons,
             Comment = msg.Comment
         };
 
