@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Goobstation.Common.SecretSalt;
 
 namespace Content.Goobstation.Server.StationEvents.SecretPlus;
@@ -21,16 +22,32 @@ public enum SecretSaltFeedbackResult
 /// Its caller must check that the current preset is SecretSalt, the round is
 /// finished, and pass the account identity from the authenticated session.
 /// </summary>
+public sealed record SecretSaltRecordedFeedback(string Nickname, SecretSaltFeedbackSubmission Submission);
+
 public sealed class SecretSaltFeedbackTracker
 {
-    private readonly Dictionary<string, SecretSaltFeedbackSubmission> _reviews = new();
+    private readonly Dictionary<string, SecretSaltRecordedFeedback> _reviews = new();
     private int _roundId;
 
     public int Count => _reviews.Count;
 
+    public void StartRound(int roundId)
+    {
+        if (_roundId == roundId)
+            return;
+
+        _reviews.Clear();
+        _roundId = roundId;
+    }
+
+    // No account IDs are exposed to the Discord report renderer.
+    public IReadOnlyList<SecretSaltRecordedFeedback> GetReviews(int roundId) =>
+        _roundId == roundId ? _reviews.Values.ToArray() : Array.Empty<SecretSaltRecordedFeedback>();
+
     public SecretSaltFeedbackResult TryRecord(
         int currentRoundId,
         string authenticatedAccountId,
+        string authenticatedNickname,
         SecretSaltFeedbackSubmission submission)
     {
         if (submission.RoundId != currentRoundId || currentRoundId <= 0)
@@ -42,13 +59,12 @@ public sealed class SecretSaltFeedbackTracker
         if (!SecretSaltFeedbackValidator.IsValid(submission))
             return SecretSaltFeedbackResult.InvalidSubmission;
 
-        if (_roundId != currentRoundId)
-        {
-            _reviews.Clear();
-            _roundId = currentRoundId;
-        }
+        StartRound(currentRoundId);
 
-        return _reviews.TryAdd(authenticatedAccountId, submission)
+        var nickname = string.IsNullOrWhiteSpace(authenticatedNickname)
+            ? "Нікнейм невідомий" : authenticatedNickname;
+
+        return _reviews.TryAdd(authenticatedAccountId, new SecretSaltRecordedFeedback(nickname, submission))
             ? SecretSaltFeedbackResult.Accepted
             : SecretSaltFeedbackResult.AlreadySubmitted;
     }
