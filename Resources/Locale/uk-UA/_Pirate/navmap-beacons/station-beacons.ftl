@@ -1,0 +1,1 @@
+station-beacon-nuclear-reactor = Ядерний реактор

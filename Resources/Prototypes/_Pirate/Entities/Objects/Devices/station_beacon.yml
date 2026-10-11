@@ -37,6 +37,14 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-interdyne-engineering
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconNuclearReactor
+  suffix: Nuclear Reactor
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-nuclear-reactor
     
 - type: entity
   parent: DefaultStationBeaconService
