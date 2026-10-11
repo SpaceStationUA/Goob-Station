@@ -374,6 +374,18 @@ namespace Content.Server.GameTicking
             if (DummyTicker || _startingRound)
                 return;
 
+            // Re-check at the actual launch, even if a vote or preload selected
+            // SecretSalt before the previous round finished.
+            if (Preset?.ID == SecretSaltRotationTracker.PresetId &&
+                EntityManager.System<SecretSaltRotationSystem>().IsBlocked)
+            {
+                var wasPreloaded = CurrentPreset != null;
+                ClearGameRules();
+                SetGamePreset("Secret");
+                if (wasPreloaded)
+                    AddGamePresetRules();
+            }
+
             _startingRound = true;
 
             if (RoundId == 0)
