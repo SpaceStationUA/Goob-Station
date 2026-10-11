@@ -9,6 +9,7 @@
   markingLimits: MobExperimentMarkingLimits
   dollPrototype: AppearanceExperiment
   skinColoration: ExperimentColors
+  knowledge: Human # Pirate: required local skill baseline; Starlight has no knowledge system.
   defaultSkinTone: "#FFEDCCFF"
   maleFirstNames: names_experiment
   femaleFirstNames: names_experiment

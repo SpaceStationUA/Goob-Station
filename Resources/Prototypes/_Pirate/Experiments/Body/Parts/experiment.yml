@@ -2,7 +2,7 @@
 
 - type: entity
   id: PartExperiment
-  parent: [BaseItem, BasePart]
+  parent: [BaseItem, BasePart] # Pirate: native base supplies wound and bone containers.
   name: "experiment body part"
   abstract: true
   components:
@@ -10,10 +10,6 @@
     damageContainer: Biological
   - type: BodyPart
     species: Experiment
-  - type: ContainerContainer
-    containers:
-      bodypart: !type:Container
-        ents: []
   - type: StaticPrice
     price: 100
   - type: Tag

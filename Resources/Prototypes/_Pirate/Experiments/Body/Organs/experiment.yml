@@ -9,6 +9,11 @@
     solutions:
       stomach:
         maxVol: 50
+      food: # Pirate: preserve the native edible-organ solution alongside stomach capacity.
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
   - type: Metabolizer
     updateInterval: 0.75
 
