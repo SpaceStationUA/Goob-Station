@@ -24,8 +24,8 @@
     enabled: false
     relayOverlay: true
     showTiles: true
-    range: 12
-    tileAlpha: 0.2
+    tileOverlayColor: "#FFA64030"
+    scanlinesIntensity: 4
   - type: GoggleShader
     shader: Goggles
     color: "#3D859980"

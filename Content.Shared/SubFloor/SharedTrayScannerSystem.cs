@@ -107,6 +107,9 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnTrayUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedEvent args)
     {
+        if (ent.Comp.RequireWorn && args.Slot != "eyes") // Pirate: tray scanner wear checks
+            return; // Pirate: tray scanner wear checks
+
         OnUnequip(args.Equipee);
 
         // Pirate: meson vision
@@ -123,6 +126,9 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnTrayEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedEvent args)
     {
+        if (ent.Comp.RequireWorn && args.Slot != "eyes") // Pirate: tray scanner wear checks
+            return; // Pirate: tray scanner wear checks
+
         OnEquip(args.Equipee);
 
         // Pirate: meson vision

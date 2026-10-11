@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT
-// Pirate: meson vision - ported from space-wizards/space-station-14#44601 ("Mesons (XRayVision)").
-
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -25,15 +23,11 @@ public sealed partial class XRayVisionComponent : Component
     [DataField, AutoNetworkedField]
     public bool ShowTiles;
 
-    // Pirate: meson vision - revealed tiles use the goggles shader.
-
-    /// <summary>Opacity for unshaded revealed tiles.</summary>
     [DataField, AutoNetworkedField]
-    public float TileAlpha = 0.2f;
+    public Color TileOverlayColor = new(1f, 1f, 1f, 0.2f);
 
-    // Pirate: meson vision - bounds CPU occlusion checks.
     [DataField, AutoNetworkedField]
-    public float Range = 12f;
+    public float ScanlinesIntensity;
 }
 
 public sealed partial class ToggleXRayVisionEvent : InstantActionEvent;
