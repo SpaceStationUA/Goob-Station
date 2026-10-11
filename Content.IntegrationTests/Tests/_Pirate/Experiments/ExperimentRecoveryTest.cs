@@ -138,7 +138,9 @@ public sealed class ExperimentRecoveryTest
             var entMan = pair.Client.EntMan;
             var mob = entMan.SpawnEntity(softCritical ? "MobExperiment" : "MobHuman", MapCoordinates.Nullspace);
             var blunt = pair.Client.ProtoMan.Index<DamageTypePrototype>("Blunt");
-            entMan.System<DamageableSystem>().SetDamage(mob, new DamageSpecifier(blunt, damage));
+            var chest = entMan.System<SharedBodySystem>().GetBodyChildrenOfType(mob, BodyPartType.Chest).Single().Id;
+            entMan.System<DamageableSystem>().ChangeDamage(chest, new DamageSpecifier(blunt, damage),
+                ignoreResistances: true, canMiss: false);
             entMan.System<MobStateSystem>().ChangeMobState(mob, state);
 
             var overlay = new EntityHealthBarOverlay(entMan, pair.Client.ProtoMan);
