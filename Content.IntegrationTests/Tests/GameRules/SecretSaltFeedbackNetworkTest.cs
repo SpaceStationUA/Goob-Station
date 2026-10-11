@@ -165,7 +165,8 @@ public sealed class SecretSaltFeedbackNetworkTest
             Assert.That(GetFeedbackWindow(system), Is.Not.Null,
                 "The post-round scoreboard and SecretSalt offer must open the review window.");
             system.SubmitFeedback(round, 4,
-                new[] { SecretSaltFeedbackReason.TooFewEvents }, "Мало подій @everyone");
+                new[] { SecretSaltFeedbackReason.TooFewEvents, SecretSaltFeedbackReason.TooChaotic },
+                "Мало подій @everyone");
             system.SubmitFeedback(round, 1,
                 new[] { SecretSaltFeedbackReason.Other }, "Duplicate");
             system.SubmitFeedback(round, 0,
@@ -186,6 +187,9 @@ public sealed class SecretSaltFeedbackNetworkTest
             Assert.That(feedback.Count, Is.EqualTo(1),
                 "Only one valid, authenticated post-round review should be stored.");
             Assert.That(feedback.Single().Submission.Rating, Is.EqualTo(4));
+            Assert.That(feedback.Single().Submission.Reasons,
+                Is.EquivalentTo(new[] { SecretSaltFeedbackReason.TooFewEvents, SecretSaltFeedbackReason.TooChaotic }),
+                "Both reasons must survive the real network event's compact byte mask.");
             Assert.That(feedback.Single().Submission.Comment,
                 Is.EqualTo("Мало подій @everyone"));
 
