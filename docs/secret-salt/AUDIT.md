@@ -1,18 +1,15 @@
 # 🧂 Аудит сумісності «Секрет Сіль 1.4»
 
-## Додатковий аудит поточної інтеграційної гілки — 11.10.2026
+## Повторна перевірка механізму запуску midround — 11.10.2026
 
-**База перевірки:** `feature/secret-salt-1.4-upstream-integration`, код після CI [№38156842384](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38156842384) — компіляція PASS, 24/24 тести PASS. **Живе тестування пропущено за рішенням автора.**
+**Виправлення помилкового висновку попереднього аудиту.** Початкове припущення, що `StartRule(..., false)` залишає midround-події без запуску, **СПРОСТОВАНО після перевірки повного ланцюга систем**. Не вносити запропоновану раніше зміну `false → true` тільки на цій підставі.
 
-### Важлива знахідка: додавання midround-правила без його запуску
-
-- У `Content.Goobstation.Server/StationEvents/SecretPlus/SecretSaltPlusSystem.cs`, метод `ActiveTick`, вибрана подія викликається як `StartRule(..., false)` (рядок 392).
-- `StartRule` викликає `GameTicker.AddGameRule(rule)`, але `GameTicker.StartGameRule(ruleUid)` лише за `doStart == true` (рядки 551–590).
-- `Content.Server/GameTicking/GameTicker.GameRule.cs` явно розмежовує `AddGameRule` (створює правило без запуску) та `StartGameRule` (додає `ActiveGameRuleComponent` і викликає `GameRuleStartedEvent`). `UpdateGameRules` запускає лише правила з `DelayedStartRuleComponent`, який сам `AddGameRule` не додає.
-- Для Voidwalker це істотно: `AntagSelectionSystem` у середині раунду обробляє `GameRuleStartedEvent`, а не лише додавання правила. У тесті `TestSummaryOnlyGeneratedAtRoundEnd` перевіряється `TelemetryMidroundAdded`, але не активність конкретного midround-правила.
-- **Статус: ПІДТВЕРДЖЕНО КОДОМ як пропущений виклик запуску на шляху Salt; реальний наслідок у живому раунді — НЕПЕРЕВІРЕНО.** Потенційно позначає midround-події як «ADDED» без фактичного запуску. Подібний виклик `StartRule(..., false)` є і в `SecretPlusSystem.cs`, тому потрібна локальна, а не сліпа глобальна зміна.
-- **Рекомендовано після дозволу автора:** окремим мінімальним комітом виправити запуск **тільки для midround у Salt**, не змінюючи `doStart=false` для правил раундстарту; додати інтеграційний тест на `GameRuleStartedEvent`/`ActiveGameRuleComponent` (або коректний `DelayedStartRuleComponent` для відкладеного правила). Залишити таблиці, ваги й формули хаосу без змін. Перед виправленням інші статуси midround вважати НЕПЕРЕВІРЕНО.
-- **Поки що:** лише запис у документацію. Код не виправлявся, PR і злиття в `master` не виконувалися.
+- У `SecretSaltPlusSystem.ActiveTick` подія додається через `StartRule(..., false)`, що викликає `GameTicker.AddGameRule(...)`.
+- `Content.Server/StationEvents/Events/StationEventSystem.cs`, метод `Update` (рядки 100–119), проходить **всі додані правила з `StationEventComponent` та `GameRuleComponent`**. Якщо правило ще не активне й не очікує відкладеного старту (`DelayedStartRuleComponent`), викликається `GameTicker.StartGameRule(uid, ruleData)`. Це штатний автоматичний запуск події.
+- Для `VoidwalkerSpawn` також перевірено `SpaceSpawnRule`; його `SpaceSpawnRule : StationEventSystem<SpaceSpawnRuleComponent>` користується тим самим механізмом.
+- `StartRule(..., false)` у midround присутній також у `SecretPlusSystem` (Секрет ТП) та в Salt старого форка `7b1bd714`. Старий `StationEventSystem.cs` теж мав автоматичний запуск, а отже **це не регресія нашої 1.4**.
+- **Підтверджено статично:** наявний шлях автоматичної активації доданих StationEvent-правил. **НЕПЕРЕВІРЕНО:** фактичний спавн, здібності та повна поведінка нових антагоністів у реальному раунді, бо живий тест свідомо пропущений.
+- **Рішення за результатом повторного аудиту:** код запуску та баланс не змінювати. За окремого бажання автора можна додати нешкідливий інтеграційний тест автоматичного переходу `StationEvent` до `ActiveGameRuleComponent`, без зміни продукційного алгоритму. Остання перевірена CI — [№38156842384](https://github.com/The-Devils-Luck/Goob-Station/actions/runs/38156842384), 24/24 PASS.
 
 ---
 
