@@ -100,6 +100,26 @@ public sealed class SecretSaltTelemetryTest
             Assert.That(salt.TelemetryLastRoundSummary, Is.Null,
                 "Round telemetry must not be published before the round ends.");
 
+            // Trigger one midround event-selection cycle without waiting minutes.
+            salt.TimeNextEvent = TimeSpan.FromTicks(1);
+        });
+
+        await pair.RunTicksSync(2);
+
+        await server.WaitAssertion(() =>
+        {
+            var entMan = server.ResolveDependency<IEntityManager>();
+            var ticker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
+            var saltRule = ticker.GetAddedGameRules()
+                .Single(rule => entMan.HasComponent<SecretSaltPlusComponent>(rule));
+            var salt = entMan.GetComponent<SecretSaltPlusComponent>(saltRule);
+
+            Assert.That(salt.TelemetryMidroundRolls, Is.GreaterThanOrEqualTo(1));
+            Assert.That(salt.TelemetryMidroundRolls,
+                Is.EqualTo(salt.TelemetryMidroundCandidates + salt.TelemetryMidroundNoCandidates));
+            Assert.That(salt.TelemetryMidroundAdded,
+                Is.LessThanOrEqualTo(salt.TelemetryMidroundCandidates));
+
             ticker.EndRound();
 
             Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
@@ -108,6 +128,12 @@ public sealed class SecretSaltTelemetryTest
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"roundstartAttempts={salt.TelemetryRoundstartAttempts}"));
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"roundstartAdded={salt.TelemetryRoundstartAdded}"));
             Assert.That(salt.TelemetryLastRoundSummary, Does.Contain("roundstartSkips=["));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"initialPlayers={salt.TelemetryInitialPlayers}"));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"initialChaos={salt.TelemetryInitialChaos}"));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"midroundRolls={salt.TelemetryMidroundRolls}"));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"midroundCandidates={salt.TelemetryMidroundCandidates}"));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"midroundAdded={salt.TelemetryMidroundAdded}"));
+            Assert.That(salt.TelemetryLastRoundSummary, Does.Contain($"midroundNoCandidates={salt.TelemetryMidroundNoCandidates}"));
 
             ticker.RestartRound();
             server.CfgMan.SetCVar(CCVars.GridFill, CCVars.GridFill.DefaultValue);
