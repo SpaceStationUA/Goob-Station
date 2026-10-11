@@ -116,7 +116,9 @@ public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponen
             .OrderBy(pair => pair.Key)
             .Select(pair => $"{pair.Key}:{pair.Value}"));
 
-        LogMessage($"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} roundstartAttempts={scheduler.TelemetryRoundstartAttempts} roundstartAdded={scheduler.TelemetryRoundstartAdded} roundstartSkips=[{skipReasons}] chaos={scheduler.ChaosScore} duration={_ticker.RoundDuration()}", false);
+        var summary = $"ROUND SUMMARY round={_ticker.RoundId} scheduler={uid} rulesAdded={scheduler.TelemetryRules.Count} rulesStarted={scheduler.TelemetryStartedRules.Count} assignedMinds={assignedMinds} roundstartAttempts={scheduler.TelemetryRoundstartAttempts} roundstartAdded={scheduler.TelemetryRoundstartAdded} roundstartSkips=[{skipReasons}] chaos={scheduler.ChaosScore} duration={_ticker.RoundDuration()}";
+        scheduler.TelemetryLastRoundSummary = summary;
+        LogMessage(summary, false);
     }
 
     private static void RecordRoundstartSkip(SecretSaltPlusComponent scheduler, string reason)
