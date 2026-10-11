@@ -47,8 +47,6 @@ public sealed class VomitSystem : EntitySystem
 
     private static readonly ProtoId<SoundCollectionPrototype> VomitCollection = "Vomit";
 
-    private static readonly ProtoId<ReagentPrototype> VomitPrototype = "Vomit";  // TODO: Dehardcode vomit prototype
-
     private readonly SoundSpecifier _vomitSound = new SoundCollectionSpecifier(VomitCollection,
         AudioParams.Default.WithVariation(0.2f).WithVolume(-4f));
 
@@ -75,7 +73,7 @@ public sealed class VomitSystem : EntitySystem
     /// <summary>
     /// Make an entity vomit, if they have a stomach.
     /// </summary>
-    public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f, bool force = false)
+    public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f, bool force = false, string vomitProto = "Vomit") // Pirate: allow Voidwalker's nebula vomit.
     {
         // Vomit only if entity is alive
         // Ignore condition if force was set to true
@@ -131,7 +129,7 @@ public sealed class VomitSystem : EntitySystem
             }
 
             // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
-            solution.AddReagent(new ReagentId(VomitPrototype, _bloodstream.GetEntityBloodData((uid, bloodStream))), vomitAmount);
+            solution.AddReagent(new ReagentId(vomitProto, _bloodstream.GetEntityBloodData((uid, bloodStream))), vomitAmount); // Pirate
         }
 
         RaiseLocalEvent(uid, new SpilledOnEvent(uid, solution.Clone())); // Pirate: stains

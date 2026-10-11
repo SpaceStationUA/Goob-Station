@@ -188,7 +188,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         // Whether the user and the target are too far apart.
-        if (args.Target != null)
+        if (args.Target != null && !args.IgnoreObstruction) // Pirate: Voidwalker can gaze through windows.
         {
             if (args.DistanceThreshold != null)
             {
