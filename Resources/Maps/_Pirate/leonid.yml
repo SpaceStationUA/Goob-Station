@@ -112216,6 +112216,432 @@ entities:
     - type: Transform
       pos: -73.5,21.5
       parent: 2
+- proto: DrinkAtomicBombGlass
+  entities:
+  - uid: 18159
+    components:
+    - type: Transform
+      pos: 8.70632,6.015487
+      parent: 2
+- proto: DrinkBeerBottleFull
+  entities:
+  - uid: 18160
+    components:
+    - type: Transform
+      pos: -75.67887,-40.077835
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+- proto: DrinkBeerCan
+  entities:
+  - uid: 18161
+    components:
+    - type: Transform
+      pos: 20.653332,-56.411682
+      parent: 2
+  - uid: 18162
+    components:
+    - type: Transform
+      pos: 15.299165,-56.047096
+      parent: 2
+  - uid: 18163
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 25.701859,-74.421936
+      parent: 2
+  - uid: 18164
+    components:
+    - type: Transform
+      pos: 25.368526,-74.20303
+      parent: 2
+  - uid: 18165
+    components:
+    - type: Transform
+      pos: 25.374023,-74.56174
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18166
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -30.783005,-42.569042
+      parent: 2
+  - uid: 18167
+    components:
+    - type: Transform
+      pos: -31.49704,-44.741936
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18168
+    components:
+    - type: Transform
+      pos: -31.826525,-43.58592
+      parent: 2
+  - uid: 18169
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -33.02259,-44.70594
+      parent: 2
+  - uid: 18170
+    components:
+    - type: Transform
+      pos: -31.79342,-44.497463
+      parent: 2
+  - uid: 18171
+    components:
+    - type: Transform
+      pos: -29.293423,-44.24729
+      parent: 2
+  - uid: 18172
+    components:
+    - type: Transform
+      pos: -31.085089,-44.497463
+      parent: 2
+  - uid: 18173
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -30.928839,-44.6434
+      parent: 2
+  - uid: 18174
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -31.335089,-44.8623
+      parent: 2
+  - uid: 18175
+    components:
+    - type: Transform
+      pos: -10.761498,-48.53224
+      parent: 2
+  - uid: 18176
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -9.969832,-48.678177
+      parent: 2
+  - uid: 18177
+    components:
+    - type: Transform
+      pos: -9.615665,-49.157677
+      parent: 2
+  - uid: 18178
+    components:
+    - type: Transform
+      pos: -9.146915,-48.81369
+      parent: 2
+  - uid: 18179
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.344832,-49.10556
+      parent: 2
+  - uid: 18180
+    components:
+    - type: Transform
+      pos: -33.48316,-52.233963
+      parent: 2
+  - uid: 18181
+    components:
+    - type: Transform
+      pos: -33.67066,-52.338127
+      parent: 2
+  - uid: 18182
+    components:
+    - type: Transform
+      pos: -33.44149,-52.390213
+      parent: 2
+- proto: DrinkBeerglass
+  entities:
+  - uid: 18183
+    components:
+    - type: Transform
+      pos: 8.41451,6.1196537
+      parent: 2
+  - uid: 18184
+    components:
+    - type: Transform
+      pos: 8.435353,5.765487
+      parent: 2
+  - uid: 18185
+    components:
+    - type: Transform
+      pos: 8.404088,5.34882
+      parent: 2
+- proto: DrinkBeerGrowler
+  entities:
+  - uid: 18186
+    components:
+    - type: Transform
+      pos: -1.3639572,56.936615
+      parent: 2
+  - uid: 18187
+    components:
+    - type: Transform
+      pos: -1.5202848,56.780365
+      parent: 2
+  - uid: 18188
+    components:
+    - type: Transform
+      pos: -30.798124,-45.237648
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+- proto: DrinkBloodGlass
+  entities:
+  - uid: 18189
+    components:
+    - type: Transform
+      pos: 8.7167425,5.3071537
+      parent: 2
+- proto: DrinkBottleAlcoClear
+  entities:
+  - uid: 18190
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.7874694,33.086643
+      parent: 2
+- proto: DrinkBottleAle
+  entities:
+  - uid: 18191
+    components:
+    - type: Transform
+      pos: -5.8842134,33.826195
+      parent: 2
+- proto: DrinkBottleBeer
+  entities:
+  - uid: 18192
+    components:
+    - type: Transform
+      pos: -5.5404634,33.847042
+      parent: 2
+  - uid: 18193
+    components:
+    - type: Transform
+      pos: -5.2904634,33.669838
+      parent: 2
+  - uid: 18194
+    components:
+    - type: Transform
+      pos: -5.467547,33.534325
+      parent: 2
+  - uid: 18195
+    components:
+    - type: Transform
+      pos: 19.35125,-53.317932
+      parent: 2
+  - uid: 18196
+    components:
+    - type: Transform
+      pos: 19.611666,-53.286682
+      parent: 2
+  - uid: 18197
+    components:
+    - type: Transform
+      pos: 19.622082,-53.453346
+      parent: 2
+  - uid: 18198
+    components:
+    - type: Transform
+      pos: -29.923124,-41.96454
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18199
+    components:
+    - type: Transform
+      pos: -29.443958,-42.17302
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18200
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -29.3166,-41.753345
+      parent: 2
+  - uid: 18201
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -30.7541,-45.857513
+      parent: 2
+  - uid: 18202
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -32.32497,-44.82069
+      parent: 2
+  - uid: 18203
+    components:
+    - type: Transform
+      pos: -31.514254,-44.299408
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18204
+    components:
+    - type: Transform
+      pos: -32.04372,-44.414158
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18205
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -32.57774,-54.491474
+      parent: 2
+  - uid: 18206
+    components:
+    - type: Transform
+      pos: -32.95274,-54.020958
+      parent: 2
+- proto: DrinkBottleVodka
+  entities:
+  - uid: 18207
+    components:
+    - type: Transform
+      pos: -7.0690856,46.24521
+      parent: 2
+  - uid: 18208
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.412836,45.26536
+      parent: 2
+  - uid: 18209
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 18.402073,-37.624577
+      parent: 2
+  - uid: 18210
+    components:
+    - type: Transform
+      pos: 9.344225,-34.37067
+      parent: 2
+  - uid: 18211
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 9.687975,-34.90192
+      parent: 2
+- proto: DrinkBottleWine
+  entities:
+  - uid: 18212
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 9.822451,31.864056
+      parent: 2
+  - uid: 18213
+    components:
+    - type: Transform
+      pos: -61.347233,-66.129486
+      parent: 2
+- proto: DrinkCoconutWaterGlass
+  entities:
+  - uid: 18214
+    components:
+    - type: Transform
+      pos: 15.317585,-36.284283
+      parent: 2
+- proto: DrinkColaBottleFull
+  entities:
+  - uid: 18215
+    components:
+    - type: Transform
+      pos: 12.013016,56.50546
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+- proto: DrinkColaCan
+  entities:
+  - uid: 18216
+    components:
+    - type: Transform
+      pos: -29.701622,37.58812
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18217
+    components:
+    - type: Transform
+      pos: -29.511522,37.83666
+      parent: 2
+  - uid: 18218
+    components:
+    - type: Transform
+      pos: -29.282356,37.85749
+      parent: 2
+  - uid: 18219
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 19.829903,59.803196
+      parent: 2
+- proto: DrinkColaCanEmpty
+  entities:
+  - uid: 18220
+    components:
+    - type: Transform
+      pos: -107.38897,23.570848
+      parent: 2
+  - uid: 18221
+    components:
+    - type: Transform
+      rot: 12.566370614359172 rad
+      pos: -102.23423,27.887407
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18222
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -102.222305,27.538614
+      parent: 2
+  - uid: 18223
+    components:
+    - type: Transform
+      pos: -102.284805,27.45528
+      parent: 2
+- proto: DrinkDetFlask
+  entities:
+  - uid: 18224
+    components:
+    - type: Transform
+      pos: -55.5374,5.7109313
+      parent: 2
+- proto: DrinkDoctorsDelightGlass
+  entities:
+  - uid: 18225
+    components:
+    - type: Transform
+      pos: -71.62122,-17.318336
+      parent: 2
+  - uid: 18226
+    components:
+    - type: Transform
+      pos: -71.287895,-17.443424
+      parent: 2
 - proto: DrinkDrGibbCan
   entities:
   - uid: 18227
@@ -112260,6 +112686,146 @@ entities:
     components:
     - type: Transform
       pos: 8.695898,5.59882
+      parent: 2
+- proto: DrinkGlass
+  entities:
+  - uid: 18232
+    components:
+    - type: Transform
+      pos: -30.313583,-31.244787
+      parent: 2
+  - uid: 18233
+    components:
+    - type: Transform
+      pos: -79.279945,-24.361292
+      parent: 2
+  - uid: 18234
+    components:
+    - type: Transform
+      pos: -79.467445,-24.548922
+      parent: 2
+  - uid: 18235
+    components:
+    - type: Transform
+      pos: -79.22786,-24.67401
+      parent: 2
+  - uid: 18236
+    components:
+    - type: Transform
+      pos: -12.807248,-45.23439
+      parent: 2
+  - uid: 18237
+    components:
+    - type: Transform
+      pos: -12.567547,-45.23439
+      parent: 2
+  - uid: 18238
+    components:
+    - type: Transform
+      pos: -12.348688,-45.23439
+      parent: 2
+  - uid: 18239
+    components:
+    - type: Transform
+      pos: -12.734296,-45.42189
+      parent: 2
+  - uid: 18240
+    components:
+    - type: Transform
+      pos: -12.505016,-45.411476
+      parent: 2
+  - uid: 18241
+    components:
+    - type: Transform
+      pos: 7.749681,3.7785199
+      parent: 2
+  - uid: 18242
+    components:
+    - type: Transform
+      pos: 7.7288375,3.5597699
+      parent: 2
+  - uid: 18243
+    components:
+    - type: Transform
+      pos: -64.77997,-7.4142857
+      parent: 2
+  - uid: 18244
+    components:
+    - type: Transform
+      pos: -53.798557,12.888031
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18245
+    components:
+    - type: Transform
+      pos: -53.900757,12.570189
+      parent: 2
+  - uid: 18246
+    components:
+    - type: Transform
+      rot: 12.566370614359172 rad
+      pos: -58.906307,-68.23819
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18247
+    components:
+    - type: Transform
+      pos: -68.540924,-70.57942
+      parent: 2
+  - uid: 18248
+    components:
+    - type: Transform
+      pos: -68.55134,-71.19443
+      parent: 2
+  - uid: 18249
+    components:
+    - type: Transform
+      pos: -68.572174,-71.73647
+      parent: 2
+  - uid: 18250
+    components:
+    - type: Transform
+      pos: -30.29275,-31.432287
+      parent: 2
+  - uid: 18251
+    components:
+    - type: Transform
+      pos: -30.084417,-31.359371
+      parent: 2
+  - uid: 18252
+    components:
+    - type: Transform
+      pos: -75.3872,-40.202835
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18253
+    components:
+    - type: Transform
+      pos: -33.426785,-32.468693
+      parent: 2
+    - type: Physics
+      angularDamping: 0
+      linearDamping: 0
+  - uid: 18254
+    components:
+    - type: Transform
+      pos: -28.130259,49.78579
+      parent: 2
+  - uid: 18255
+    components:
+    - type: Transform
+      pos: -28.349009,49.639957
+      parent: 2
+  - uid: 18256
+    components:
+    - type: Transform
+      pos: -28.484425,49.81704
       parent: 2
 - proto: DrinkIcedBeerGlass
   entities:
