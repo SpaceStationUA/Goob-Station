@@ -53,6 +53,20 @@ public sealed partial class CriminalRecordsConsoleWindow
         _identityEditorSource = source;
     }
 
+    public event Action<string>? OnAddLogNote;
+    public event Action<uint>? OnDeleteLogEntry;
+    public event Action? OnPrintLog;
+    private RecordTabs _tabs = default!;
+
+    private void InitTabs()
+    {
+        _tabs = new RecordTabs(ProfileTabButton, HistoryTabButton, ProfileView, HistoryView);
+        _tabs.BindSearch(FilterType, FilterText, HistoryView, DeleteRecordButton, AddRecordButton);
+        HistoryView.OnAddNote += text => OnAddLogNote?.Invoke(text);
+        HistoryView.OnDeleteEntry += id => OnDeleteLogEntry?.Invoke(id);
+        HistoryView.OnPrint += () => OnPrintLog?.Invoke();
+    }
+
     private void InitFieldWidths()
     {
         _fieldWidths = new RecordFieldWidths(

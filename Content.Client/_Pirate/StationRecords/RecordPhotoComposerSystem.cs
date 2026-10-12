@@ -235,7 +235,7 @@ public sealed class RecordPhotoComposerSystem : EntitySystem
         const int lineGap = 2;
         const int kneeHeight = 192;
 
-        var number = $"\u2116{label.Number:D6}";
+        var number = $"#{label.Number:D6}";
         var year = label.BirthYear > 0
             ? label.BirthYear.ToString()
             : new string(block, 4);

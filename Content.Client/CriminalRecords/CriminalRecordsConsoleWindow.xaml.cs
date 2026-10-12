@@ -27,6 +27,7 @@ using Robust.Client.GameObjects;
 #region Pirate: records photos
 using Content.Client._Pirate.UserInterface.Controls;
 using Content.Shared._Pirate.StationRecords;
+using Content.Client._Pirate.StationRecords;
 using Content.Shared.Customization.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -121,16 +122,13 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         _spriteSystem = _entManager.System<SpriteSystem>();
 
         _maxLength = maxLength;
-        _currentFilterType = StationRecordFilterType.Name;
+        _currentFilterType = RecordFilters.Default; // Pirate: record history
 
         _currentCrewListFilter = SecurityStatus.None;
 
         OpenCentered();
 
-        foreach (var item in Enum.GetValues<StationRecordFilterType>())
-        {
-            FilterType.AddItem(GetTypeFilterLocals(item), (int)item);
-        }
+        RecordFilters.Populate(FilterType); // Pirate: record history
 
         foreach (var status in Enum.GetValues<SecurityStatus>())
         {
@@ -206,11 +204,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             SetStatus((SecurityStatus)args.Id);
         };
 
-        HistoryButton.OnPressed += _ =>
-        {
-            if (_selectedRecord is { } record)
-                OnHistoryUpdated?.Invoke(record, _access, true);
-        };
+        InitTabs(); // Pirate: record history
 
         #region Pirate: records photos
         Portrait.OnPrint += (key, image) => OnPrintPhoto?.Invoke(key, image); // Pirate: records photos
@@ -310,6 +304,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         var selected = _selectedKey != null;
 
         PersonContainer.Visible = selected;
+        _tabs.SetHasRecord(selected); // Pirate: record history
         RecordUnselected.Visible = !selected;
 
         _access = _player.LocalSession?.AttachedEntity is {} player
@@ -337,13 +332,13 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             else
                 Portrait.ClearPortrait(); // Pirate: records photos
             #endregion
-            OnHistoryUpdated?.Invoke(state.CriminalRecord, _access, false);
+            HistoryView.UpdateLog(state.SelectedKey ?? 0, state.StationRecord.Name, state.Log, _access); // Pirate: record history
             _selectedRecord = state.CriminalRecord;
         }
         else
         {
             _selectedRecord = null;
-            OnHistoryClosed?.Invoke();
+            HistoryView.CloseDialog(); // Pirate: record history
             #region Pirate: records photos
             ResetDeleteConfirmation();
             _recordProfile = null;
@@ -392,11 +387,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         StatusOptionButton.SelectId((int)criminalRecord.Status);
         if (criminalRecord.Reason is { } reason)
         {
-
-            var message = FormattedMessage.FromMarkupOrThrow(Loc.GetString($"criminal-records-console-{criminalRecord.Status.ToString().ToLower()}-reason"));
-            message.AddText($": {reason}");
-
-            WantedReason.SetMessage(message);
+            WantedReason.SetMessage(RecordStatusReason.Format("security", criminalRecord.Status.ToString(), reason)); // Pirate: record history
             WantedReason.Visible = true;
         }
         else
@@ -763,7 +754,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     }
     private string GetTypeFilterLocals(StationRecordFilterType type)
     {
-        return Loc.GetString($"criminal-records-{type.ToString().ToLower()}-filter");
+        return RecordFilters.Label(type); // Pirate: record history
     }
 
     private string GetCrewListFilterLocals(SecurityStatus type)

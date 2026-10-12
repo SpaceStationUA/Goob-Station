@@ -26,6 +26,20 @@ public sealed partial class GeneralStationRecordConsoleWindow
             });
     }
 
+    public event Action<string>? OnAddLogNote;
+    public event Action<uint>? OnDeleteLogEntry;
+    public event Action? OnPrintLog;
+    private RecordTabs _tabs = default!;
+
+    private void InitTabs()
+    {
+        _tabs = new RecordTabs(ProfileTabButton, HistoryTabButton, RecordContainer, HistoryView);
+        _tabs.BindSearch(StationRecordsFilterType, StationRecordsFiltersValue, HistoryView, DeleteRecordButton, AddRecordButton);
+        HistoryView.OnAddNote += text => OnAddLogNote?.Invoke(text);
+        HistoryView.OnDeleteEntry += id => OnDeleteLogEntry?.Invoke(id);
+        HistoryView.OnPrint += () => OnPrintLog?.Invoke();
+    }
+
     public event Action<uint, byte[]?>? OnPrintPortrait;
     public event Action? OnUploadPortrait;
     public event Action<uint, byte[]>? OnStoreGeneratedPortrait;

@@ -43,6 +43,7 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     public SecurityStatus FilterStatus = SecurityStatus.None;
     public readonly Dictionary<uint, string>? RecordListing;
     public readonly StationRecordsFilter? Filter;
+    public List<Content.Shared._Pirate.StationRecords.RecordLogEntry>? Log; // Pirate: record history
 
     public CriminalRecordsConsoleState(Dictionary<uint, string>? recordListing, StationRecordsFilter? newFilter)
     {

@@ -4,6 +4,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.CriminalRecords.Components;
 using Content.Shared.StationRecords;
+using Content.Shared._Pirate.StationRecords; // Pirate: record history
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -18,7 +19,6 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
     private readonly AccessReaderSystem _accessReader;
 
     private CriminalRecordsConsoleWindow? _window;
-    private CrimeHistoryWindow? _historyWindow;
 
     public CriminalRecordsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -58,26 +58,12 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
         _window.OnStoreGeneratedPortrait += (recordKey, imageData) =>
             SendMessage(new CriminalRecordStoreGeneratedPhoto(recordKey, imageData));
         #endregion
-        _window.OnHistoryUpdated += UpdateHistory;
-        _window.OnHistoryClosed += () => _historyWindow?.Close();
+        #region Pirate: record history
+        _window.OnAddLogNote += text => SendMessage(new RecordLogAddNoteMessage(text));
+        _window.OnDeleteLogEntry += id => SendMessage(new RecordLogDeleteMessage(id));
+        _window.OnPrintLog += () => SendMessage(new RecordLogPrintMessage());
+        #endregion
         _window.OnClose += Close;
-
-        _historyWindow = new(comp.MaxStringLength);
-        _historyWindow.OnAddHistory += line => SendMessage(new CriminalRecordAddHistory(line));
-        _historyWindow.OnDeleteHistory += index => SendMessage(new CriminalRecordDeleteHistory(index));
-
-        _historyWindow.Close(); // leave closed until user opens it
-    }
-
-    /// <summary>
-    /// Updates or opens a new history window.
-    /// </summary>
-    private void UpdateHistory(CriminalRecord record, bool access, bool open)
-    {
-        _historyWindow!.UpdateHistory(record, access);
-
-        if (open)
-            _historyWindow.OpenCentered();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -95,6 +81,5 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
         base.Dispose(disposing);
 
         _window?.Close();
-        _historyWindow?.Close();
     }
 }

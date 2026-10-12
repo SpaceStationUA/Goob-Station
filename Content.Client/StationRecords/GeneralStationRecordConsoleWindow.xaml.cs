@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.XAML;
 using Content.Shared.Access.Systems; // Pirate: records photos
 using Robust.Client.Player; // Pirate: records photos
 using Robust.Shared.Prototypes; // Pirate: records photos
+using Content.Client._Pirate.StationRecords; // Pirate: record history
 
 namespace Content.Client.StationRecords;
 
@@ -43,14 +44,12 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         _player = player; // Pirate: records photos
         _accessReader = accessReader; // Pirate: records photos
 
-        _currentFilterType = StationRecordFilterType.Name;
+        _currentFilterType = RecordFilters.Default; // Pirate: record history
 
-        foreach (var item in Enum.GetValues<StationRecordFilterType>())
-        {
-            StationRecordsFilterType.AddItem(GetTypeFilterLocals(item), (int)item);
-        }
+        RecordFilters.Populate(StationRecordsFilterType); // Pirate: record history
 
         InitRecordSelection(); // Pirate: records photos
+        InitTabs(); // Pirate: record history
 
         StationRecordsFilterType.OnItemSelected += eventArgs =>
         {
@@ -127,6 +126,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
         _selectedKey = state.SelectedKey; // Pirate: records photos
         _record = state.Record; // Pirate: evidence board
         PinBoardButton.Visible = _record != null; // Pirate: evidence board
+        TopRow.Visible = _record != null; // Pirate: record history
         if (previousSelectedKey != _selectedKey) // Pirate: records photos
             ResetDeleteConfirmation(); // Pirate: records photos
 
@@ -138,6 +138,8 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             RecordListing.Visible = false;
             RecordListingStatus.Text = Loc.GetString("general-station-record-console-empty-state");
             RecordContainer.Visible = false;
+            HistoryView.Visible = false; // Pirate: record history
+            _tabs.SetHasRecord(false); // Pirate: record history
             RecordContainerStatus.Visible = false;
             UpdateRecordActionButtons(); // Pirate: records photos
             return;
@@ -159,10 +161,15 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
                 : Loc.GetString("general-station-record-console-select-record-info");
             PopulateRecordContainer(state.Record); // Pirate: records photos
             ShowRecordPortrait(state); // Pirate: records photos
+            HistoryView.UpdateLog(state.SelectedKey ?? 0, state.Record.Name, state.Log, _access && _canManageRecords); // Pirate: record history
+            _tabs.SetHasRecord(state.SelectedKey != null); // Pirate: record history
+            _tabs.Refresh(); // Pirate: record history
         }
         else
         {
             RecordContainer.RemoveAllChildren();
+            HistoryView.Visible = false; // Pirate: record history
+            _tabs.SetHasRecord(false); // Pirate: record history
         }
     }
     private void PopulateRecordListing(Dictionary<uint, string> listing, uint? selected)
@@ -201,7 +208,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     private string GetTypeFilterLocals(StationRecordFilterType type)
     {
-        return Loc.GetString($"general-station-record-{type.ToString().ToLower()}-filter");
+        return RecordFilters.Label(type); // Pirate: record history
     }
 
     #region Pirate: evidence board

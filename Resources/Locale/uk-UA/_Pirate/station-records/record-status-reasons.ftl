@@ -1,0 +1,10 @@
+records-status-reason = Підстава
+records-status-reason-security-wanted = Підстава для розшуку
+records-status-reason-security-suspected = Підстава для підозри
+records-status-reason-security-hostile = Підстава для статусу «Ворожий»
+records-status-reason-security-search = Підстава для обшуку
+records-status-reason-security-dangerous = Підстава для статусу «Небезпечний»
+records-status-reason-security-demote = Підстава для пониження
+records-status-reason-psionics-suspected = Підстава для підозри
+records-status-reason-psionics-registered = Підстава для реєстрації
+records-status-reason-psionics-abusing = Підстава для статусу «Зловживає»

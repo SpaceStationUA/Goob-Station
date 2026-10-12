@@ -31,6 +31,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     #region Pirate: records photos
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly RecordPortraitSystem _portraits = default!; // Pirate: records photos
+    [Dependency] private readonly RecordLogSystem _logs = default!; // Pirate: record history
     private static readonly IReadOnlyDictionary<string, TimeSpan> EmptyPlayTimes = new Dictionary<string, TimeSpan>();
     #endregion
 
@@ -54,6 +55,9 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             subs.Event<RecordPortraitPrintMessage>(OnPrintPortrait);
             subs.Event<RecordPortraitUploadMessage>(OnUploadPortrait);
             subs.Event<RecordPortraitStoreGeneratedMessage>(OnStoreGeneratedPortrait);
+            subs.Event<RecordLogAddNoteMessage>(OnAddLogNote);
+            subs.Event<RecordLogDeleteMessage>(OnDeleteLogEntry);
+            subs.Event<RecordLogPrintMessage>(OnPrintLog);
             #endregion
             subs.Event<DeleteStationRecord>(OnRecordDelete);
         });
@@ -386,6 +390,28 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             UpdateUserInterface(ent);
     }
 
+    private void OnAddLogNote(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordLogAddNoteMessage msg)
+    {
+        var text = RecordLogNotes.Sanitize(msg.Text);
+        if (text.Length < 1 || text.Length > RecordLogNotes.MaxLength || !TryGetPortraitTarget(ent, msg.Actor, out var key))
+            return;
+
+        _logs.Add(key, RecordLogBook.Crew, RecordLogKind.Note, null, text, msg.Actor, ent);
+        UpdateUserInterface(ent);
+    }
+
+    private void OnDeleteLogEntry(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordLogDeleteMessage msg)
+    {
+        if (TryGetPortraitTarget(ent, msg.Actor, out var key) && _logs.TryDelete(key, RecordLogBook.Crew, msg.EntryId, out _))
+            UpdateUserInterface(ent);
+    }
+
+    private void OnPrintLog(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordLogPrintMessage msg)
+    {
+        if (TryGetPortraitTarget(ent, msg.Actor, out var key))
+            _logs.Print(ent, msg.Actor, key, RecordLogBook.Crew);
+    }
+
     private void OnStoreGeneratedPortrait(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordPortraitStoreGeneratedMessage msg)
     {
         // Pirate: records photos - Accept late render results for their original record.
@@ -445,7 +471,10 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         var newState = new GeneralStationRecordConsoleState(console.ActiveKey, record, listing, console.Filter,
             CanManageRecords(ent), ent.Comp.MaxStringLength); // Pirate: records photos
         if (record != null) // Pirate: records photos
+        {
             newState.Portrait = _portraits.GetPortrait(key); // Pirate: records photos
+            newState.Log = _logs.GetLog(key, RecordLogBook.Crew); // Pirate: record history
+        }
         #endregion
         _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }

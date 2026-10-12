@@ -30,6 +30,7 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly RecordPortraitSystem _portraits = default!;
+    [Dependency] private readonly RecordLogSystem _logs = default!;
 
 	    public override void Initialize()
 	    {
@@ -45,6 +46,9 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
 	            subs.Event<RecordPortraitPrintMessage>(OnPrintPortrait);
 	            subs.Event<RecordPortraitUploadMessage>(OnUploadPortrait);
 	            subs.Event<RecordPortraitStoreGeneratedMessage>(OnStoreGeneratedPortrait);
+	            subs.Event<RecordLogAddNoteMessage>(OnAddLogNote);
+	            subs.Event<RecordLogDeleteMessage>(OnDeleteLogEntry);
+	            subs.Event<RecordLogPrintMessage>(OnPrintLog);
 	        });
 
 	        // Pirate-PsionicsMenu-Start
@@ -109,6 +113,8 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
 
         // will probably never fail given the checks above
         _psionicsRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason);
+        _logs.Add(key.Value, RecordLogBook.Psionics, RecordLogKind.StatusChange,
+            Loc.GetString($"psionics-records-status-{msg.Status.ToString().ToLower()}"), reason ?? string.Empty, mob, ent, msg.Status.ToString());
 
         var name = RecordName(key.Value);
         var officer = Loc.GetString("psionics-records-console-unknown-officer");
@@ -174,10 +180,36 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
             _stationRecords.TryGetRecord(key, out state.StationRecord, stationRecords);
             _stationRecords.TryGetRecord(key, out state.PsionicsRecord, stationRecords);
             state.Portrait = _portraits.GetPortrait(key);
+            state.Log = _logs.GetLog(key, RecordLogBook.Psionics);
             state.SelectedKey = id;
         }
 
         _ui.SetUiState(uid, PsionicsRecordsConsoleKey.Key, state);
+    }
+
+    private void OnAddLogNote(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordLogAddNoteMessage msg)
+    {
+        if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
+            return;
+
+        var text = RecordLogNotes.Sanitize(msg.Text);
+        if (text.Length < 1 || text.Length > RecordLogNotes.MaxLength)
+            return;
+
+        _logs.Add(key.Value, RecordLogBook.Psionics, RecordLogKind.Note, null, text, mob, ent);
+        UpdateUserInterface(ent);
+    }
+
+    private void OnDeleteLogEntry(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordLogDeleteMessage msg)
+    {
+        if (CheckSelected(ent, msg.Actor, out _, out var key) && _logs.TryDelete(key.Value, RecordLogBook.Psionics, msg.EntryId, out _))
+            UpdateUserInterface(ent);
+    }
+
+    private void OnPrintLog(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordLogPrintMessage msg)
+    {
+        if (CheckSelected(ent, msg.Actor, out var mob, out var key))
+            _logs.Print(ent, mob.Value, key.Value, RecordLogBook.Psionics);
     }
 
     private void OnPrintPortrait(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordPortraitPrintMessage msg)

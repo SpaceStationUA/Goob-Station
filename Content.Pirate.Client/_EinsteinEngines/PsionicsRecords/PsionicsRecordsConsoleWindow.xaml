@@ -4,24 +4,25 @@
                MinSize="930 600"
                SetSize="930 600">
     <BoxContainer Orientation="Vertical">
-        <!-- Record search bar
-             TODO: make this into a control shared with general records -->
+        <!-- TODO: Share the search controls across records consoles. -->
         <BoxContainer Margin="5 5 5 10" HorizontalExpand="true" VerticalAlignment="Center">
-            <OptionButton Name="FilterType" MinWidth="200" Margin="0 0 10 0"/> <!-- Populated in constructor -->
+            <OptionButton Name="FilterType" MinWidth="200" Margin="0 0 10 0"/>
             <LineEdit Name="FilterText" PlaceHolder="{Loc 'psionics-records-filter-placeholder'}" HorizontalExpand="True"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-            <!-- Record listing -->
             <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
-                <Label Name="RecordListingTitle" Text="{Loc 'psionics-records-console-records-list-title'}" HorizontalExpand="True" Align="Center"/>
                 <Label Name="NoRecords" Text="{Loc 'psionics-records-console-no-records'}" HorizontalExpand="True" Align="Center" FontColorOverride="DarkGray"/>
                 <ScrollContainer VerticalExpand="True">
-                    <ItemList Name="RecordListing"/> <!-- Populated when loading state -->
+                    <ItemList Name="RecordListing"/>
                 </ScrollContainer>
             </BoxContainer>
             <Label Name="RecordUnselected" Text="{Loc 'psionics-records-console-select-record-info'}" HorizontalExpand="True" Align="Center" FontColorOverride="DarkGray"/>
-            <!-- Selected record info -->
-            <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="10 8 5 5" HorizontalExpand="True" Visible="False">
+            <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="5" HorizontalExpand="True" Visible="False">
+                <BoxContainer Orientation="Horizontal" Margin="0 0 0 4">
+                    <Button Name="ProfileTabButton" Text="{Loc 'records-console-tab-profile'}" ToggleMode="True" StyleClasses="OpenRight" MinWidth="110" />
+                    <Button Name="HistoryTabButton" Text="{Loc 'records-console-tab-history'}" ToggleMode="True" StyleClasses="OpenLeft" MinWidth="110" />
+                </BoxContainer>
+                <BoxContainer Name="ProfileView" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="5">
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 5" SeparationOverride="10">
                     <records:RecordPortraitPanel Name="Portrait" PhotoStyle="Psionics" MinWidth="240" MaxWidth="240"/>
                     <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="1" SeparationOverride="6">
@@ -62,7 +63,9 @@
                     </BoxContainer>
                 </BoxContainer>
                 <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5" />
-                <RichTextLabel Name="PsionicsList" Visible="False"/>
+                <RichTextLabel Name="PsionicsList" Visible="False" HorizontalExpand="True"/>
+                </BoxContainer>
+                <records:RecordHistoryPanel Name="HistoryView" Book="Psionics" Margin="5" Visible="False"/>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

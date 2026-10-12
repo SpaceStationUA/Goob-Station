@@ -39,6 +39,9 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
     public Action<PsionicsStatus>? OnStatusSelected;
     public Action<PsionicsStatus, string>? OnDialogConfirmed;
     public Action<uint, byte[]?>? OnPrintPortrait;
+    public Action<string>? OnAddLogNote;
+    public Action<uint>? OnDeleteLogEntry;
+    public Action? OnPrintLog;
     public Action? OnUploadPortrait;
     public Action<uint, byte[]>? OnStoreGeneratedPortrait;
 
@@ -51,6 +54,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
 
     private readonly RecordSelectionController<PsionicsRecordsConsoleState> _selection;
     private readonly RecordFieldWidths _fieldWidths;
+    private readonly RecordTabs _tabs;
     private readonly SpriteSystem _spriteSystem;
 
     private StationRecordFilterType _currentFilterType;
@@ -66,14 +70,11 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         _accessReader = accessReader;
 
         _maxLength = maxLength;
-        _currentFilterType = StationRecordFilterType.Name;
+        _currentFilterType = RecordFilters.Default;
 
         OpenCentered();
 
-        foreach (var item in Enum.GetValues<StationRecordFilterType>())
-        {
-            FilterType.AddItem(GetTypeFilterLocals(item), (int) item);
-        }
+        RecordFilters.Populate(FilterType);
 
         foreach (var status in Enum.GetValues<PsionicsStatus>())
         {
@@ -121,6 +122,12 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
             SetStatus((PsionicsStatus) args.Id);
         };
 
+        _tabs = new RecordTabs(ProfileTabButton, HistoryTabButton, ProfileView, HistoryView);
+        _tabs.BindSearch(FilterType, FilterText, HistoryView);
+        HistoryView.OnPrint += () => OnPrintLog?.Invoke();
+        HistoryView.OnAddNote += text => OnAddLogNote?.Invoke(text);
+        HistoryView.OnDeleteEntry += id => OnDeleteLogEntry?.Invoke(id);
+
         _fieldWidths = new RecordFieldWidths([StatusOptionButton],
             [SpeciesValue, NationalityValue, EmployerValue, AgeValue, GenderValue],
             [PersonJob.Parent!]);
@@ -164,6 +171,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         var selected = _selectedKey != null;
 
         PersonContainer.Visible = selected;
+        _tabs.SetHasRecord(selected);
         RecordUnselected.Visible = !selected;
 
         _access = _player.LocalSession?.AttachedEntity is {} player
@@ -177,6 +185,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         {
             PopulateRecordContainer(state.StationRecord, state.PsionicsRecord);
             Portrait.SetPortrait(key, state.Portrait, state.StationRecord.JobPrototype, state.StationRecord.Name, state.StationRecord.Age);
+            HistoryView.UpdateLog(key, state.StationRecord.Name, state.Log, editing);
             _selectedRecord = state.PsionicsRecord;
         }
         else
@@ -216,9 +225,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         StatusOptionButton.SelectId((int) psionicsRecord.Status);
         if (psionicsRecord.Reason is {} reason)
         {
-            var message = FormattedMessage.FromMarkupOrThrow(Loc.GetString("psionics-records-console-wanted-reason"));
-            message.AddText($": {reason}");
-            PsionicsList.SetMessage(message);
+            PsionicsList.SetMessage(RecordStatusReason.Format("psionics", psionicsRecord.Status.ToString(), reason));
             PsionicsList.Visible = true;
         }
         else
@@ -306,6 +313,6 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
 
     private string GetTypeFilterLocals(StationRecordFilterType type)
     {
-        return Loc.GetString($"psionics-records-{type.ToString().ToLower()}-filter");
+        return RecordFilters.Label(type);
     }
 }

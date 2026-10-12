@@ -136,6 +136,9 @@ public sealed partial class PsionicsRecordsConsoleSystem
             officer = tryGetIdentityShortInfoEvent.Title;
 
         _psionicsRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason);
+        _logs.Add(key.Value, Content.Shared._Pirate.StationRecords.RecordLogBook.Psionics,
+            Content.Shared._Pirate.StationRecords.RecordLogKind.StatusChange,
+            Loc.GetString($"psionics-records-status-{msg.Status.ToString().ToLower()}"), reason ?? string.Empty, msg.Actor, msg.Actor, msg.Status.ToString());
 
         (string, object)[] args;
         if (reason != null)
