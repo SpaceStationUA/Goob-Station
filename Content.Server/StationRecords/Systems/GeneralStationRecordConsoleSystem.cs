@@ -16,6 +16,8 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using Content.Server._Pirate.StationRecords; // Pirate: records photos
+using Content.Shared._Pirate.StationRecords; // Pirate: records photos
 #endregion
 
 namespace Content.Server.StationRecords.Systems;
@@ -28,6 +30,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     #region Pirate: records photos
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly RecordPortraitSystem _portraits = default!; // Pirate: records photos
     private static readonly IReadOnlyDictionary<string, TimeSpan> EmptyPlayTimes = new Dictionary<string, TimeSpan>();
     #endregion
 
@@ -46,6 +49,11 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             subs.Event<GeneralRecordCreateRecord>(OnCreateRecord);
             subs.Event<GeneralRecordEditIdentity>(OnEditIdentity);
             subs.Event<GeneralRecordEditForensics>(OnEditForensics);
+            #endregion
+            #region Pirate: records photos
+            subs.Event<RecordPortraitPrintMessage>(OnPrintPortrait);
+            subs.Event<RecordPortraitUploadMessage>(OnUploadPortrait);
+            subs.Event<RecordPortraitStoreGeneratedMessage>(OnStoreGeneratedPortrait);
             #endregion
             subs.Event<DeleteStationRecord>(OnRecordDelete);
         });
@@ -352,6 +360,46 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         return true;
     }
 
+    #region Pirate: records photos
+    private bool TryGetPortraitTarget(Entity<GeneralStationRecordConsoleComponent> ent, EntityUid actor, out StationRecordKey key)
+    {
+        key = default;
+        if (!CanManageRecords(ent) || !_access.IsAllowed(actor, ent))
+            return false;
+
+        if (_station.GetOwningStation(ent) is not { } station || ent.Comp.ActiveKey is not { } id)
+            return false;
+
+        key = new StationRecordKey(id, station);
+        return true;
+    }
+
+    private void OnPrintPortrait(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordPortraitPrintMessage msg)
+    {
+        if (TryGetPortraitTarget(ent, msg.Actor, out var key) && key.Id == msg.RecordKey)
+            _portraits.Print(ent, msg.Actor, key, msg.ImageData);
+    }
+
+    private void OnUploadPortrait(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordPortraitUploadMessage msg)
+    {
+        if (TryGetPortraitTarget(ent, msg.Actor, out var key) && _portraits.Upload(ent, msg.Actor, key))
+            UpdateUserInterface(ent);
+    }
+
+    private void OnStoreGeneratedPortrait(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordPortraitStoreGeneratedMessage msg)
+    {
+        // Pirate: records photos - Accept late render results for their original record.
+        if (!_access.IsAllowed(msg.Actor, ent) || _station.GetOwningStation(ent) is not { } station)
+            return;
+
+        if (_portraits.StoreGenerated(new StationRecordKey(msg.RecordKey, station), msg.ImageData)
+            && ent.Comp.ActiveKey == msg.RecordKey)
+        {
+            UpdateUserInterface(ent);
+        }
+    }
+    #endregion
+
     private bool CanManageRecords(Entity<GeneralStationRecordConsoleComponent> ent) // Pirate: records photos
     {
         return _access.GetMainAccessReader(ent.Owner, out _) || ent.Comp.CanDeleteEntries; // Pirate: records photos
@@ -396,6 +444,8 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         var newState = new GeneralStationRecordConsoleState(console.ActiveKey, record, listing, console.Filter,
             CanManageRecords(ent), ent.Comp.MaxStringLength); // Pirate: records photos
+        if (record != null) // Pirate: records photos
+            newState.Portrait = _portraits.GetPortrait(key); // Pirate: records photos
         #endregion
         _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }

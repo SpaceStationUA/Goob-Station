@@ -1,3 +1,4 @@
+using Content.Shared._Pirate.StationRecords;
 using Content.Shared.Access.Systems;
 using Content.Shared.PsionicsRecords;
 using Content.Shared.PsionicsRecords.Components;
@@ -6,10 +7,6 @@ using Content.Shared.StationRecords;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-
-/// <summary>
-/// EVERYTHING HERE IS A MODIFIED VERSION OF CRIMINAL RECORDS
-/// </summary>
 
 namespace Content.Pirate.Client._EinsteinEngines.PsionicsRecords;
 
@@ -42,6 +39,9 @@ public sealed class PsionicsRecordsConsoleBoundUserInterface : BoundUserInterfac
             SendMessage(new PsionicsRecordChangeStatus(status, null));
         _window.OnDialogConfirmed += (status, reason) =>
             SendMessage(new PsionicsRecordChangeStatus(status, reason));
+        _window.OnPrintPortrait += (key, image) => SendMessage(new RecordPortraitPrintMessage(key, image));
+        _window.OnUploadPortrait += () => SendMessage(new RecordPortraitUploadMessage());
+        _window.OnStoreGeneratedPortrait += (key, image) => SendMessage(new RecordPortraitStoreGeneratedMessage(key, image));
         _window.OnClose += Close;
     }
 

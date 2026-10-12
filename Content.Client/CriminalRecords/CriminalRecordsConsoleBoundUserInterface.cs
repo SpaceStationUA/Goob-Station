@@ -51,19 +51,8 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
             SendMessage(new CriminalRecordEditIdentity(species, nationality, employer, age, gender));
         _window.OnForensicsInfoChanged += (fingerprint, dna) =>
             SendMessage(new CriminalRecordEditForensics(fingerprint, dna));
-        _window.OnPrintPhoto += async () =>
-        {
-            try
-            {
-                var message = await _window.BuildPrintPhotoMessage();
-                if (message != null)
-                    SendMessage(message);
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorS("criminal-records", $"Failed to build print photo message: {ex}"); // Pirate: records photos
-            }
-        };
+        _window.OnPrintPhoto += (key, image) =>
+            SendMessage(new CriminalRecordPrintPhoto(key, image)); // Pirate: records photos
         _window.OnUploadPhoto += () =>
             SendMessage(new CriminalRecordUploadPhoto());
         _window.OnStoreGeneratedPortrait += (recordKey, imageData) =>

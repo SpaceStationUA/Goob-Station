@@ -60,6 +60,23 @@ public sealed partial record CriminalRecord
 
     #endregion
 
+    #region Pirate: records photos
+    // Bare renders are composed per console; uploaded photos are stored as-is.
+    [DataField]
+    public bool PortraitIsRender;
+
+    // Stable station-wide placard number; 0 means unassigned.
+    [DataField]
+    public int PortraitNumber;
+
+    // Placard values are frozen when the portrait is captured.
+    [DataField]
+    public string? PortraitName;
+
+    [DataField]
+    public int PortraitBirthYear;
+    #endregion
+
     /// <summary>
     /// Criminal history of the person.
     /// This should have charges and time served added after someone is detained.

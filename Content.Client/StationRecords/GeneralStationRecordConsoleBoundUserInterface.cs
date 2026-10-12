@@ -5,6 +5,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.GameObjects; // Pirate: records photos
 using Content.Shared.Access.Systems; // Pirate: records photos
 using Robust.Client.Player; // Pirate: records photos
+using Content.Shared._Pirate.StationRecords; // Pirate: records photos
 
 namespace Content.Client.StationRecords;
 
@@ -43,6 +44,11 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
             SendMessage(new GeneralRecordEditIdentity(species, nationality, employer, age, gender));
         _window.OnForensicsInfoChanged += (fingerprint, dna) =>
             SendMessage(new GeneralRecordEditForensics(fingerprint, dna));
+        #endregion
+        #region Pirate: records photos
+        _window.OnPrintPortrait += (key, image) => SendMessage(new RecordPortraitPrintMessage(key, image));
+        _window.OnUploadPortrait += () => SendMessage(new RecordPortraitUploadMessage());
+        _window.OnStoreGeneratedPortrait += (key, image) => SendMessage(new RecordPortraitStoreGeneratedMessage(key, image));
         #endregion
     }
 

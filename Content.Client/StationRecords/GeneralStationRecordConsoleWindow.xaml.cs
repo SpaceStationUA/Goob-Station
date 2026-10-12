@@ -33,7 +33,6 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     private uint? _deleteConfirmationKey;
     #endregion
 
-    private bool _isPopulating;
     private StationRecordFilterType _currentFilterType;
 
     public GeneralStationRecordConsoleWindow(EntityUid console, IPlayerManager player, AccessReaderSystem accessReader) // Pirate: records photos
@@ -51,24 +50,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             StationRecordsFilterType.AddItem(GetTypeFilterLocals(item), (int)item);
         }
 
-        RecordListing.OnItemSelected += args =>
-        {
-            if (_isPopulating || RecordListing[args.ItemIndex].Metadata is not uint cast)
-                return;
-
-            OnKeySelected?.Invoke(cast);
-        };
-
-        RecordListing.OnItemDeselected += _ =>
-        {
-            #region Pirate: records photos
-            if (_isPopulating)
-                return;
-
-            if (!HasSelectedRecord())
-                OnKeySelected?.Invoke(null);
-            #endregion
-        };
+        InitRecordSelection(); // Pirate: records photos
 
         StationRecordsFilterType.OnItemSelected += eventArgs =>
         {
@@ -119,6 +101,9 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     public void UpdateState(GeneralStationRecordConsoleState state)
     {
+        if (!AcceptServerState(state)) // Pirate: records photos
+            return; // Pirate: records photos
+
         var previousSelectedKey = _selectedKey; // Pirate: records photos
         _maxLength = state.MaxStringLength; // Pirate: records photos
         _canManageRecords = state.CanDeleteEntries; // Pirate: records photos
@@ -173,6 +158,7 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
                 ? Loc.GetString("general-station-record-console-no-record-found")
                 : Loc.GetString("general-station-record-console-select-record-info");
             PopulateRecordContainer(state.Record); // Pirate: records photos
+            ShowRecordPortrait(state); // Pirate: records photos
         }
         else
         {
@@ -181,24 +167,19 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     }
     private void PopulateRecordListing(Dictionary<uint, string> listing, uint? selected)
     {
-        RecordListing.Clear();
-        RecordListing.ClearSelected();
-
-        _isPopulating = true;
-
-        foreach (var (key, name) in listing)
-        {
-            var item = RecordListing.AddItem(name);
-            item.Metadata = key;
-            item.Selected = key == selected;
-        }
-        _isPopulating = false;
-
-        RecordListing.SortItemsByText();
+        _selection.SetListing(listing); // Pirate: records photos
     }
 
     private void PopulateRecordContainer(GeneralStationRecord record) // Pirate: records photos
     {
+        #region Pirate: records photos
+        if (RecordContainer.ChildCount == 1 && RecordContainer.GetChild(0) is GeneralRecord shown)
+        {
+            shown.SetRecord(record);
+            return;
+        }
+        #endregion
+
         RecordContainer.RemoveAllChildren();
         #region Pirate: records photos
         var newRecord = new GeneralRecord(record, _maxLength, _prototypeManager);
@@ -206,14 +187,16 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             OnIdentityInfoChanged?.Invoke(species, nationality, employer, age, gender);
         newRecord.OnForensicsInfoChanged += (fingerprint, dna) =>
             OnForensicsInfoChanged?.Invoke(fingerprint, dna);
+        newRecord.OnPrintPortrait += (key, image) => OnPrintPortrait?.Invoke(key, image); // Pirate: records photos
+        newRecord.OnUploadPortrait += () => OnUploadPortrait?.Invoke(); // Pirate: records photos
+        newRecord.OnStoreGeneratedPortrait += (key, image) => OnStoreGeneratedPortrait?.Invoke(key, image); // Pirate: records photos
         #endregion
         RecordContainer.AddChild(newRecord);
     }
 
     private void FilterListingOfRecords(string text = "")
     {
-        if (!_isPopulating)
-            OnFiltersChanged?.Invoke(_currentFilterType, text);
+        OnFiltersChanged?.Invoke(_currentFilterType, text); // Pirate: records photos
     }
 
     private string GetTypeFilterLocals(StationRecordFilterType type)
@@ -314,16 +297,6 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             sanitized = sanitized[..(int) _maxLength];
 
         return sanitized;
-    }
-
-    private bool HasSelectedRecord()
-    {
-        foreach (var _ in RecordListing.GetSelected())
-        {
-            return true;
-        }
-
-        return false;
     }
 
     private bool CanCreateRecordFromSearch()

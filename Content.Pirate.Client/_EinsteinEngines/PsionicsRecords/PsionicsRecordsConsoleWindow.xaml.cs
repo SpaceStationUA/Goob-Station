@@ -1,3 +1,4 @@
+using Content.Client._Pirate.StationRecords;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
@@ -12,14 +13,15 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-
-/// <summary>
-/// EVERYTHING HERE IS A MODIFIED VERSION OF CRIMINAL RECORDS
-/// </summary>
+using Content.Shared._Pirate.Contractors.Prototypes;
+using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.StatusIcon;
+using Robust.Client.GameObjects;
+using Robust.Shared.Enums;
+using System.Numerics;
 
 namespace Content.Pirate.Client._EinsteinEngines.PsionicsRecords;
 
-// TODO: dedupe shitcode from general records theres a lot
 [GenerateTypedNameReferences]
 public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
 {
@@ -36,14 +38,20 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
     public Action<StationRecordFilterType, string>? OnFiltersChanged;
     public Action<PsionicsStatus>? OnStatusSelected;
     public Action<PsionicsStatus, string>? OnDialogConfirmed;
+    public Action<uint, byte[]?>? OnPrintPortrait;
+    public Action? OnUploadPortrait;
+    public Action<uint, byte[]>? OnStoreGeneratedPortrait;
 
     private uint _maxLength;
-    private bool _isPopulating;
     private bool _access;
     private uint? _selectedKey;
     private PsionicsRecord? _selectedRecord;
 
     private DialogWindow? _reasonDialog;
+
+    private readonly RecordSelectionController<PsionicsRecordsConsoleState> _selection;
+    private readonly RecordFieldWidths _fieldWidths;
+    private readonly SpriteSystem _spriteSystem;
 
     private StationRecordFilterType _currentFilterType;
 
@@ -74,19 +82,23 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
 
         OnClose += () => _reasonDialog?.Close();
 
-        RecordListing.OnItemSelected += args =>
-        {
-            if (_isPopulating || RecordListing[args.ItemIndex].Metadata is not uint cast)
-                return;
+        // ItemList emits deselect events on switches and re-clicks.
+        _selection = new RecordSelectionController<PsionicsRecordsConsoleState>(RecordListing);
+        _selection.SelectionRequested += key => OnKeySelected?.Invoke(key);
+        _selection.ShowCached += (cached, last) =>
+            // Preserve the search text while updating the cached record state.
+            UpdateState(new PsionicsRecordsConsoleState(last.RecordListing, null)
+            {
+                SelectedKey = cached.SelectedKey,
+                StationRecord = cached.StationRecord,
+                PsionicsRecord = cached.PsionicsRecord,
+                Portrait = cached.Portrait,
+            });
 
-            OnKeySelected?.Invoke(cast);
-        };
-
-        RecordListing.OnItemDeselected += _ =>
-        {
-            if (!_isPopulating)
-                OnKeySelected?.Invoke(null);
-        };
+        _spriteSystem = IoCManager.Resolve<IEntityManager>().System<SpriteSystem>();
+        Portrait.OnPrint += (key, image) => OnPrintPortrait?.Invoke(key, image);
+        Portrait.OnUpload += () => OnUploadPortrait?.Invoke();
+        Portrait.OnStoreGenerated += (key, image) => OnStoreGeneratedPortrait?.Invoke(key, image);
 
         FilterType.OnItemSelected += eventArgs =>
         {
@@ -108,10 +120,25 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         {
             SetStatus((PsionicsStatus) args.Id);
         };
+
+        _fieldWidths = new RecordFieldWidths([StatusOptionButton],
+            [SpeciesValue, NationalityValue, EmployerValue, AgeValue, GenderValue],
+            [PersonJob.Parent!]);
+        _fieldWidths.Update();
     }
 
     public void UpdateState(PsionicsRecordsConsoleState state)
     {
+        var hasRecords = state.RecordListing != null && state.RecordListing.Count > 0;
+
+        // Ignore stale replies so the latest selection stays active.
+        if (!_selection.AcceptServerState(state, state.SelectedKey, state is { PsionicsRecord: not null, StationRecord: not null }))
+        {
+            NoRecords.Visible = !hasRecords;
+            _selection.SetListing(state.RecordListing);
+            return;
+        }
+
         if (state.Filter != null)
         {
             if (state.Filter.Type != _currentFilterType)
@@ -130,12 +157,8 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         FilterType.SelectId((int) _currentFilterType);
 
         // set up the records listing panel
-        RecordListing.Clear();
-
-        var hasRecords = state.RecordListing != null && state.RecordListing.Count > 0;
         NoRecords.Visible = !hasRecords;
-        if (hasRecords)
-            PopulateRecordListing(state.RecordListing!);
+        _selection.SetListing(state.RecordListing);
 
         // set up the selected person's record
         var selected = _selectedKey != null;
@@ -150,36 +173,45 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         var editing = _access && selected;
         StatusOptionButton.Disabled = !editing;
 
-        if (state is { PsionicsRecord: not null, StationRecord: not null })
+        if (state is { PsionicsRecord: not null, StationRecord: not null, SelectedKey: { } key })
         {
             PopulateRecordContainer(state.StationRecord, state.PsionicsRecord);
+            Portrait.SetPortrait(key, state.Portrait, state.StationRecord.JobPrototype, state.StationRecord.Name, state.StationRecord.Age);
             _selectedRecord = state.PsionicsRecord;
         }
         else
         {
             _selectedRecord = null;
+            Portrait.ClearPortrait();
         }
-    }
 
-    private void PopulateRecordListing(Dictionary<uint, string> listing)
-    {
-        _isPopulating = true;
-
-        foreach (var (key, name) in listing)
-        {
-            var item = RecordListing.AddItem(name);
-            item.Metadata = key;
-            item.Selected = key == _selectedKey;
-        }
-        _isPopulating = false;
-
-        RecordListing.SortItemsByText();
+        Portrait.SetEditable(editing);
     }
 
     private void PopulateRecordContainer(GeneralStationRecord stationRecord, PsionicsRecord psionicsRecord)
     {
         var na = Loc.GetString("generic-not-available-shorthand");
         PersonName.Text = stationRecord.Name;
+        PersonJob.Text = string.IsNullOrWhiteSpace(stationRecord.JobTitle) ? na : stationRecord.JobTitle;
+        PersonJobIcon.Texture = _proto.TryIndex<JobIconPrototype>(stationRecord.JobIcon, out var jobIcon)
+            ? _spriteSystem.Frame0(jobIcon.Icon)
+            : null;
+
+        SpeciesValue.Text = _proto.TryIndex<SpeciesPrototype>(stationRecord.Species, out var species)
+            ? Loc.GetString(species.Name)
+            : na;
+        NationalityValue.Text = _proto.TryIndex<NationalityPrototype>(stationRecord.Nationality, out var nationality)
+            ? Loc.GetString(nationality.NameKey)
+            : na;
+        EmployerValue.Text = _proto.TryIndex<EmployerPrototype>(stationRecord.Employer, out var employer)
+            ? Loc.GetString(employer.NameKey)
+            : na;
+        AgeValue.Text = stationRecord.Age > 0 ? stationRecord.Age.ToString() : na;
+
+        PersonStatusTX.SetFromSpriteSpecifier(GetStatusIcon(psionicsRecord.Status));
+        PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);
+        // Gender is unavailable when the record has no species.
+        GenderValue.Text = string.IsNullOrWhiteSpace(stationRecord.Species) ? na : GetGenderName(stationRecord.Gender);
 
         StatusOptionButton.SelectId((int) psionicsRecord.Status);
         if (psionicsRecord.Reason is {} reason)
@@ -195,6 +227,32 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         }
     }
 
+    private static SpriteSpecifier GetStatusIcon(PsionicsStatus status)
+    {
+        var state = status switch
+        {
+            PsionicsStatus.Suspected => "hud_suspected",
+            PsionicsStatus.Registered => "hud_registered",
+            PsionicsStatus.Abusing => "hud_abusing",
+            _ => null,
+        };
+
+        return state == null
+            ? new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown")
+            : new SpriteSpecifier.Rsi(new ResPath("_EinsteinEngines/Interface/Misc/psionics_icons.rsi"), state);
+    }
+
+    private static string GetGenderName(Gender gender)
+    {
+        return Loc.GetString(gender switch
+        {
+            Gender.Male => "humanoid-profile-editor-pronouns-male-text",
+            Gender.Female => "humanoid-profile-editor-pronouns-female-text",
+            Gender.Neuter => "humanoid-profile-editor-pronouns-neuter-text",
+            _ => "humanoid-profile-editor-pronouns-epicene-text",
+        });
+    }
+
     private void AddStatusSelect(PsionicsStatus status)
     {
         var name = Loc.GetString($"psionics-records-status-{status.ToString().ToLower()}");
@@ -203,10 +261,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
 
     private void FilterListingOfRecords(string text = "")
     {
-        if (!_isPopulating)
-        {
-            OnFiltersChanged?.Invoke(_currentFilterType, text);
-        }
+        OnFiltersChanged?.Invoke(_currentFilterType, text);
     }
 
     private void SetStatus(PsionicsStatus status)
