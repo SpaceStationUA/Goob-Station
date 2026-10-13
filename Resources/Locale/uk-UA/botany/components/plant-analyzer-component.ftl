@@ -12,7 +12,6 @@ plant-analyzer-warnings-none-message = ✓ Проблем не виявлено
 plant-analyzer-potency = Потужність
 plant-analyzer-yield = Урожайність
 plant-analyzer-resistances = Стійкість
-
 plant-analyzer-traits = Ознаки
 plant-analyzer-traits-none = Ознак не виявлено
 plant-analyzer-trait-seedless = Без насіння
@@ -31,7 +30,6 @@ plant-analyzer-trait-scream = Кричить
 plant-analyzer-trait-scream-desc = Видає моторошні крики.
 plant-analyzer-trait-auto-harvest = Самостійне скидання врожаю
 plant-analyzer-trait-auto-harvest-desc = Автоматично скидає плоди після дозрівання.
-
 plant-analyzer-total-reagents = Усього реагентів
 plant-analyzer-base-reagents = Природні реагенти
 plant-analyzer-additional-reagents = Додані реагенти
@@ -56,7 +54,6 @@ plant-analyzer-tab-traits = Ознаки
 plant-analyzer-tab-chemistry = Хімія
 plant-analyzer-risk-meters = Показники ризику
 plant-analyzer-warnings = Попередження
-
 plant-analyzer-warning-low-water = Замало води
 plant-analyzer-warning-high-toxin = Високий рівень токсинів
 plant-analyzer-warning-pest = Виявлено шкідників
@@ -69,7 +66,6 @@ plant-analyzer-warning-low-health = Здоров'я на критично низ
 plant-analyzer-warning-missing-gas = В атмосфері бракує необхідних газів
 plant-analyzer-ready-to-harvest = Урожай готовий до збирання
 plant-analyzer-mutating = Рослина мутує
-
 plant-analyzer-environment = Вимоги до середовища
 plant-analyzer-ideal-temperature = Температура
 plant-analyzer-ideal-pressure = Тиск
@@ -86,7 +82,6 @@ plant-analyzer-soil-reagents = Реагенти в ґрунті
 plant-analyzer-soil-empty = Непоглинених реагентів немає
 plant-analyzer-unit-moles = моль
 plant-analyzer-na = Н/Д
-
 plant-analyzer-component-no-seed = рослина не знайдена
 plant-analyzer-print = Друк
 plant-analyzer-printout-missing = Н/Д
@@ -130,5 +125,4 @@ plant-analyzer-printout = [color=#9FED58][head=2]Звіт аналізатора
     }{$nl
     }[bullet/] Хімікати: [color=gray][bold]{$chemicals}[/bold][/color]{$nl
     }[bullet/] Викиди: [bold]{$gasesOut}[/bold]
-
 plant-analyzer-printer-not-ready = Принтер ще не готовий.

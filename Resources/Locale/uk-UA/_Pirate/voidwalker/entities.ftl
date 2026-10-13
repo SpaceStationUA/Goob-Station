@@ -10,7 +10,6 @@ ent-VoidwalkerNebulaCrawlExitAction = Покинути туманність
     .desc = ПОВЕ??РНІТЬСЯ ДО Ї??ХНЬОГО ВИ??МІРУ
 ent-VoidwalkerVoidWhisperAction = Шепіт порожнечі
     .desc = ПІ??ДСВІДОМІ ПО??ВІДОМЛЕН??НЯ
-
 ent-PartVoidwalker = частина тіла мандрівника порожнечі
     .desc = { ent-BasePart.desc }
 ent-ChestVoidwalker = груди мандрівника порожнечі
@@ -29,7 +28,6 @@ ent-LeftLegVoidwalker = ліва нога мандрівника порожне�
     .desc = { ent-PartVoidwalker.desc }
 ent-RightLegVoidwalker = права нога мандрівника порожнечі
     .desc = { ent-PartVoidwalker.desc }
-
 ent-SpawnPointGhostVoidwalker = точка появи мандрівника порожнечі
     .desc = { "" }
 ent-Voidedspawner = точка появи просвітлених порожнечею
@@ -38,7 +36,6 @@ ent-PolymorphVoidCrawlJaunt = невідоме
     .desc = Ви не можете зрозуміти, що це таке.
 ent-BaseMobVoidWalker = мандрівник порожнечі
     .desc = Склоподібна істота з порожнечі між зорями. Краще не вдивлятися в неї.
-
 ent-CosmicSkull = космічний череп
     .desc = Крізь нього можна побачити й відчути пульсацію навколишнього простору...
 ent-Voideater = пожирач порожнечі
@@ -46,7 +43,6 @@ ent-Voideater = пожирач порожнечі
 ent-VoideaterUnremoveable = { ent-Voideater }
     .desc = { ent-Voideater.desc }
     .suffix = Незнімний
-
 ent-VoidwalkerSpawn = Мандрівник порожнечі
     .desc = { "" }
 ent-BaseVoidwalkerObjective = Завдання мандрівника порожнечі

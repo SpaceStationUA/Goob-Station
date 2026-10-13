@@ -216,6 +216,9 @@ public sealed partial class DevilContractSystem : EntitySystem
             paper.EditingDisabled = true;
 
         _popupSystem.PopupEntity(Loc.GetString("contract-victim-signed"), signed, signer);
+
+        var signedEv = new DevilContractSignedEvent(contract);
+        RaiseLocalEvent(signer, ref signedEv);
     }
 
     private void HandleDevilSign(Entity<DevilContractComponent> contract, EntityUid signed, EntityUid signer)

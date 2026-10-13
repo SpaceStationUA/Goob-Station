@@ -30,7 +30,7 @@ using System.Linq;
 namespace Content.Server.Materials;
 
 /// <inheritdoc/>
-public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
+public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSystem // Goob
 {
     private static readonly TimeSpan EmaggedMobStunDuration = TimeSpan.FromSeconds(10);
 
@@ -114,6 +114,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             Filter.PvsExcept(victim, entityManager: EntityManager),
             true);
 
+        GoobRaiseRecyclerGibbed(entity.Owner, victim); // Goob; Pirate: only actual gibbing grants achievements.
         _body.GibBody(victim, true);
         _appearance.SetData(entity.Owner, RecyclerVisuals.Bloody, true);
         args.Handled = true;
