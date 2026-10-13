@@ -43,7 +43,7 @@ namespace Content.IntegrationTests.Tests
 
         private static readonly string[] Grids =
         {
-            "/_Pirate/Maps/centcomm.yml",   // Pirate
+            "/Maps/_Pirate/centcomm.yml",   // Pirate
             AdminTestArenaSystem.ArenaMapPath
         };
 
@@ -92,7 +92,7 @@ namespace Content.IntegrationTests.Tests
         /// </remarks>
         private static readonly string[] DoNotMapWhitelist =
         {
-            "/_Pirate/Maps/centcomm.yml",  // Pirate
+            "/Maps/_Pirate/centcomm.yml",  // Pirate
             "/Maps/bagel.yml", // Contains mime's rubber stamp --> Either fix this, remove the category, or remove this comment if intentional.
             "/Maps/meta.yml", // Contains warden's rubber stamp
             "/Maps/reach.yml", // Contains handheld crew monitor
