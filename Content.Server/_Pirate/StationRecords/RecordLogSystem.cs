@@ -8,11 +8,13 @@ using Content.Server.StationRecords.Systems;
 using Content.Shared._Pirate;
 using Content.Shared._Pirate.StationRecords;
 using Content.Shared.Access.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Paper;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -28,6 +30,7 @@ public sealed class RecordLogSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private static readonly SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
     private static readonly TimeSpan PrintDelay = TimeSpan.FromSeconds(2.3f);
@@ -37,6 +40,50 @@ public sealed class RecordLogSystem : EntitySystem
     private const int PrintBudget = 9000;
 
     private readonly HashSet<EntityUid> _activePrintJobs = new();
+
+    private TimeZoneInfo _printZone = TimeZoneInfo.Local;
+
+    private void SetPrintZone(string id)
+    {
+        _printZone = TimeZoneInfo.Local;
+        if (string.IsNullOrWhiteSpace(id))
+            return;
+
+        // Some tz databases still use "Kiev".
+        foreach (var candidate in new[] { id.Trim(), id.Trim().Replace("Kyiv", "Kiev") })
+        {
+            if (TimeZoneInfo.TryFindSystemTimeZoneById(candidate, out var zone))
+            {
+                _printZone = zone;
+                return;
+            }
+        }
+
+        Log.Warning($"Unknown time zone '{id}' in {CCVars.RecordsPrintTimeZone.Name}, printing record histories in the server's zone ({TimeZoneInfo.Local.Id}).");
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(OnGeneralRecordCreated);
+        Subs.CVar(_cfg, CCVars.RecordsPrintTimeZone, SetPrintZone, true);
+    }
+
+    private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent args)
+    {
+        AddBackground(args.Key, RecordLogBook.Security, args.Profile.SecurityRecordBackground);
+        AddBackground(args.Key, RecordLogBook.Crew, args.Profile.CrewRecordBackground);
+        AddBackground(args.Key, RecordLogBook.Psionics, args.Profile.PsionicsRecordBackground);
+    }
+
+    private void AddBackground(StationRecordKey key, RecordLogBook book, string text)
+    {
+        text = text.Trim();
+        if (text.Length == 0)
+            return;
+
+        Add(key, book, RecordLogKind.Background, null, text, null, null);
+    }
 
     public List<RecordLogEntry> GetLog(StationRecordKey key, RecordLogBook book)
     {
@@ -187,10 +234,19 @@ public sealed class RecordLogSystem : EntitySystem
         return text.ToString();
     }
 
-    private static string FormatTime(DateTime utc)
+    private string FormatTime(DateTime utc)
     {
-        // Paper has no viewer timezone; print times explicitly in UTC.
-        return $"{utc.Day:00}/{utc.Month:00}/{PirateStationCalendar.CurrentYear:0000} {utc.Hour:00}:{utc.Minute:00} UTC";
+        // Printed paper has no viewer context; use the configured zone.
+        var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(utc, DateTimeKind.Utc), _printZone);
+        var offset = _printZone.GetUtcOffset(local);
+        var sign = offset < TimeSpan.Zero ? "-" : "+";
+        var zone = offset == TimeSpan.Zero
+            ? "UTC"
+            : offset.Minutes == 0
+                ? $"UTC{sign}{Math.Abs(offset.Hours)}"
+                : $"UTC{sign}{Math.Abs(offset.Hours)}:{Math.Abs(offset.Minutes):00}";
+
+        return $"{local.Day:00}/{local.Month:00}/{PirateStationCalendar.CurrentYear:0000} {local.Hour:00}:{local.Minute:00} ({zone})";
     }
 
     private RecordLogs EnsureLogs(StationRecordKey key)

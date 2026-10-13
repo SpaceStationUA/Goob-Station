@@ -34,7 +34,7 @@ public sealed partial class GeneralStationRecordConsoleWindow
     private void InitTabs()
     {
         _tabs = new RecordTabs(ProfileTabButton, HistoryTabButton, RecordContainer, HistoryView);
-        _tabs.BindSearch(StationRecordsFilterType, StationRecordsFiltersValue, HistoryView, DeleteRecordButton, AddRecordButton);
+        _tabs.BindSearch(StationRecordsFilterType, StationRecordsFiltersValue, HistoryView);
         HistoryView.OnAddNote += text => OnAddLogNote?.Invoke(text);
         HistoryView.OnDeleteEntry += id => OnDeleteLogEntry?.Invoke(id);
         HistoryView.OnPrint += () => OnPrintLog?.Invoke();

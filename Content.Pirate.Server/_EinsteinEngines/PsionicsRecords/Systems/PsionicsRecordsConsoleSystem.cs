@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
@@ -42,6 +43,7 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
 	            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
 	            subs.Event<SelectStationRecord>(OnKeySelected);
 	            subs.Event<SetStationRecordFilter>(OnFiltersChanged);
+	            subs.Event<PsionicsRecordSetStatusFilter>(OnStatusFilterChanged);
 	            subs.Event<PsionicsRecordChangeStatus>(OnChangeStatus);
 	            subs.Event<RecordPortraitPrintMessage>(OnPrintPortrait);
 	            subs.Event<RecordPortraitUploadMessage>(OnUploadPortrait);
@@ -73,6 +75,12 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
+        UpdateUserInterface(ent);
+    }
+
+    private void OnStatusFilterChanged(Entity<PsionicsRecordsConsoleComponent> ent, ref PsionicsRecordSetStatusFilter msg)
+    {
+        ent.Comp.FilterStatus = msg.FilterStatus;
         UpdateUserInterface(ent);
     }
 
@@ -172,7 +180,15 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
 
         var listing = _stationRecords.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
-        var state = new PsionicsRecordsConsoleState(listing, console.Filter);
+        if (console.FilterStatus != PsionicsStatus.None)
+        {
+            listing = listing
+                .Where(x => _stationRecords.TryGetRecord<PsionicsRecord>(new StationRecordKey(x.Key, owningStation.Value), out var record, stationRecords)
+                    && record.Status == console.FilterStatus)
+                .ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        var state = new PsionicsRecordsConsoleState(listing, console.Filter) { FilterStatus = console.FilterStatus };
         if (console.ActiveKey is { } id)
         {
             // get records to display when a crewmember is selected

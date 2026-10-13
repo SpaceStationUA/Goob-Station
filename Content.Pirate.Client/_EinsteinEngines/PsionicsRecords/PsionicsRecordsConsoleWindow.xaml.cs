@@ -36,6 +36,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
 
     public Action<uint?>? OnKeySelected;
     public Action<StationRecordFilterType, string>? OnFiltersChanged;
+    public Action<PsionicsStatus>? OnStatusFilterChanged;
     public Action<PsionicsStatus>? OnStatusSelected;
     public Action<PsionicsStatus, string>? OnDialogConfirmed;
     public Action<uint, byte[]?>? OnPrintPortrait;
@@ -58,6 +59,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
     private readonly SpriteSystem _spriteSystem;
 
     private StationRecordFilterType _currentFilterType;
+    private PsionicsStatus _currentStatusFilter = PsionicsStatus.None;
 
     public PsionicsRecordsConsoleWindow(EntityUid console, uint maxLength, IPlayerManager playerManager, IPrototypeManager prototypeManager, IRobustRandom robustRandom, AccessReaderSystem accessReader)
     {
@@ -79,7 +81,21 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         foreach (var status in Enum.GetValues<PsionicsStatus>())
         {
             AddStatusSelect(status);
+            StatusFilter.AddItem(status == PsionicsStatus.None
+                ? Loc.GetString("psionics-records-console-show-all")
+                : Loc.GetString($"psionics-records-status-{status.ToString().ToLower()}"), (int) status);
         }
+
+        StatusFilter.OnItemSelected += args =>
+        {
+            var status = (PsionicsStatus) args.Id;
+            if (status == _currentStatusFilter)
+                return;
+
+            _currentStatusFilter = status;
+            StatusFilter.SelectId(args.Id);
+            OnStatusFilterChanged?.Invoke(status);
+        };
 
         OnClose += () => _reasonDialog?.Close();
 
@@ -157,7 +173,12 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
             {
                 FilterText.Text = state.Filter.Value;
             }
+
+            // Cached local states omit the server's status filter.
+            _currentStatusFilter = state.FilterStatus;
         }
+
+        StatusFilter.SelectId((int) _currentStatusFilter);
 
         _selectedKey = state.SelectedKey;
 

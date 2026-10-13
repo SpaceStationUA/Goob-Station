@@ -15,6 +15,7 @@
                 <ScrollContainer VerticalExpand="True">
                     <ItemList Name="RecordListing"/>
                 </ScrollContainer>
+                <OptionButton Name="StatusFilter" Margin="0 5 0 0"/>
             </BoxContainer>
             <Label Name="RecordUnselected" Text="{Loc 'psionics-records-console-select-record-info'}" HorizontalExpand="True" Align="Center" FontColorOverride="DarkGray"/>
             <BoxContainer Name="PersonContainer" Orientation="Vertical" Margin="5" HorizontalExpand="True" Visible="False">

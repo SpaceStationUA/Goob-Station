@@ -61,7 +61,7 @@ public sealed partial class CriminalRecordsConsoleWindow
     private void InitTabs()
     {
         _tabs = new RecordTabs(ProfileTabButton, HistoryTabButton, ProfileView, HistoryView);
-        _tabs.BindSearch(FilterType, FilterText, HistoryView, DeleteRecordButton, AddRecordButton);
+        _tabs.BindSearch(FilterType, FilterText, HistoryView);
         HistoryView.OnAddNote += text => OnAddLogNote?.Invoke(text);
         HistoryView.OnDeleteEntry += id => OnDeleteLogEntry?.Invoke(id);
         HistoryView.OnPrint += () => OnPrintLog?.Invoke();

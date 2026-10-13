@@ -1,0 +1,33 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Control xmlns="https://spacestation14.io"
+         HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'record-background-editor-security-label'}" HorizontalExpand="True" />
+                <Label Name="SecurityCounter" FontColorOverride="DarkGray" />
+            </BoxContainer>
+            <TextEdit Name="SecurityInput" Access="Public" MinSize="220 140" Margin="10"
+                      HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'record-background-editor-crew-label'}" HorizontalExpand="True" />
+                <Label Name="CrewCounter" FontColorOverride="DarkGray" />
+            </BoxContainer>
+            <TextEdit Name="CrewInput" Access="Public" MinSize="220 140" Margin="10"
+                      HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'record-background-editor-psionics-label'}" HorizontalExpand="True" />
+                <Label Name="PsionicsCounter" FontColorOverride="DarkGray" />
+            </BoxContainer>
+            <TextEdit Name="PsionicsInput" Access="Public" MinSize="220 140" Margin="10"
+                      HorizontalExpand="True" />
+        </BoxContainer>
+    </BoxContainer>
+</Control>

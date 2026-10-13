@@ -35,6 +35,8 @@ public sealed class PsionicsRecordsConsoleBoundUserInterface : BoundUserInterfac
             SendMessage(new SelectStationRecord(key));
         _window.OnFiltersChanged += (type, filterValue) =>
             SendMessage(new SetStationRecordFilter(type, filterValue));
+        _window.OnStatusFilterChanged += status =>
+            SendMessage(new PsionicsRecordSetStatusFilter(status));
         _window.OnStatusSelected += status =>
             SendMessage(new PsionicsRecordChangeStatus(status, null));
         _window.OnDialogConfirmed += (status, reason) =>

@@ -223,17 +223,29 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <humanoid:MarkingPicker Name="Markings" IgnoreCategories="Hair,FacialHair" />
                     </ScrollContainer>
                 </BoxContainer>
-                <!-- Pirate: Starlight extended character descriptions. -->
-                <BoxContainer Name="ICInfoTab" Orientation="Vertical" Margin="10" Visible="False">
+                <!-- Pirate: OOC records (start) -->
+                <BoxContainer Name="BackgroundTab" Orientation="Vertical" Margin="10" Visible="False">
                     <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-                        <pirateInfo:CharacterInfoEditor Name="ICInfoEditor" />
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="10">
+                            <BoxContainer Name="ICInfoSection" Orientation="Vertical">
+                                <Label Text="{Loc 'humanoid-profile-editor-ic-info-heading'}" StyleClasses="LabelHeading" />
+                                <PanelContainer StyleClasses="LowDivider" Margin="0 2 0 4" />
+                                <pirateInfo:CharacterInfoEditor Name="ICInfoEditor" />
+                            </BoxContainer>
+                            <BoxContainer Name="OOCInfoSection" Orientation="Vertical">
+                                <Label Text="{Loc 'humanoid-profile-editor-ooc-info-heading'}" StyleClasses="LabelHeading" />
+                                <PanelContainer StyleClasses="LowDivider" Margin="0 2 0 4" />
+                                <pirateInfo:OOCInfoEditor Name="OOCInfoEditor" />
+                            </BoxContainer>
+                            <BoxContainer Name="RecordBackgroundSection" Orientation="Vertical">
+                                <Label Text="{Loc 'humanoid-profile-editor-records-heading'}" StyleClasses="LabelHeading" />
+                                <PanelContainer StyleClasses="LowDivider" Margin="0 2 0 4" />
+                                <pirateInfo:RecordBackgroundEditor Name="RecordBackgroundEditor" />
+                            </BoxContainer>
+                        </BoxContainer>
                     </ScrollContainer>
                 </BoxContainer>
-                <BoxContainer Name="OOCInfoTab" Orientation="Vertical" Margin="10" Visible="False">
-                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-                        <pirateInfo:OOCInfoEditor Name="OOCInfoEditor" />
-                    </ScrollContainer>
-                </BoxContainer>
+                <!-- Pirate: OOC records (end) -->
                 <!-- Pirate: character skills. Appended to keep existing tab indices stable. -->
                 <pirateKnowledge:KnowledgeProfileEditor Name="KnowledgeEditor" />
             </TabContainer>

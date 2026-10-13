@@ -11,6 +11,8 @@ public sealed partial class HumanoidCharacterProfile
 {
     public const int MaxCharacterInfoLength = 4096;
 
+    public const int MaxRecordBackgroundLength = 1024;
+
     /// <summary>
     /// Physical description keeps using the existing flavor text field for backwards compatibility.
     /// </summary>
@@ -34,6 +36,15 @@ public sealed partial class HumanoidCharacterProfile
 
     [DataField]
     public string ExploitableInfo { get; set; } = string.Empty;
+
+    [DataField]
+    public string SecurityRecordBackground { get; set; } = string.Empty;
+
+    [DataField]
+    public string CrewRecordBackground { get; set; } = string.Empty;
+
+    [DataField]
+    public string PsionicsRecordBackground { get; set; } = string.Empty;
 
     public HumanoidCharacterProfile WithPhysicalDescription(string description)
     {
@@ -65,6 +76,31 @@ public sealed partial class HumanoidCharacterProfile
         return new(this) { ExploitableInfo = info };
     }
 
+    public HumanoidCharacterProfile WithSecurityRecordBackground(string text)
+    {
+        return new(this) { SecurityRecordBackground = text };
+    }
+
+    public HumanoidCharacterProfile WithCrewRecordBackground(string text)
+    {
+        return new(this) { CrewRecordBackground = text };
+    }
+
+    public HumanoidCharacterProfile WithPsionicsRecordBackground(string text)
+    {
+        return new(this) { PsionicsRecordBackground = text };
+    }
+
+    public HumanoidCharacterProfile WithRecordBackgrounds(string security, string crew, string psionics)
+    {
+        return new(this)
+        {
+            SecurityRecordBackground = security,
+            CrewRecordBackground = crew,
+            PsionicsRecordBackground = psionics,
+        };
+    }
+
     public HumanoidCharacterProfile WithCharacterInfo(
         string personalityDescription,
         string personalNotes,
@@ -89,6 +125,9 @@ public sealed partial class HumanoidCharacterProfile
         OOCNotes = other.OOCNotes;
         Secrets = other.Secrets;
         ExploitableInfo = other.ExploitableInfo;
+        SecurityRecordBackground = other.SecurityRecordBackground;
+        CrewRecordBackground = other.CrewRecordBackground;
+        PsionicsRecordBackground = other.PsionicsRecordBackground;
     }
 
     private bool PirateCharacterInfoEquals(HumanoidCharacterProfile other)
@@ -97,7 +136,10 @@ public sealed partial class HumanoidCharacterProfile
             && PersonalNotes == other.PersonalNotes
             && OOCNotes == other.OOCNotes
             && Secrets == other.Secrets
-            && ExploitableInfo == other.ExploitableInfo;
+            && ExploitableInfo == other.ExploitableInfo
+            && SecurityRecordBackground == other.SecurityRecordBackground
+            && CrewRecordBackground == other.CrewRecordBackground
+            && PsionicsRecordBackground == other.PsionicsRecordBackground;
     }
 
     private void EnsurePirateCharacterInfoValid()
@@ -107,13 +149,16 @@ public sealed partial class HumanoidCharacterProfile
         OOCNotes = SanitizeCharacterInfo(OOCNotes);
         Secrets = SanitizeCharacterInfo(Secrets);
         ExploitableInfo = SanitizeCharacterInfo(ExploitableInfo);
+        SecurityRecordBackground = SanitizeCharacterInfo(SecurityRecordBackground, MaxRecordBackgroundLength);
+        CrewRecordBackground = SanitizeCharacterInfo(CrewRecordBackground, MaxRecordBackgroundLength);
+        PsionicsRecordBackground = SanitizeCharacterInfo(PsionicsRecordBackground, MaxRecordBackgroundLength);
     }
 
-    private static string SanitizeCharacterInfo(string value)
+    private static string SanitizeCharacterInfo(string value, int maxLength = MaxCharacterInfoLength)
     {
         var sanitized = FormattedMessage.RemoveMarkupOrThrow(value);
-        return sanitized.Length > MaxCharacterInfoLength
-            ? sanitized[..MaxCharacterInfoLength]
+        return sanitized.Length > maxLength
+            ? sanitized[..maxLength]
             : sanitized;
     }
 
@@ -124,5 +169,8 @@ public sealed partial class HumanoidCharacterProfile
         hashCode.Add(OOCNotes);
         hashCode.Add(Secrets);
         hashCode.Add(ExploitableInfo);
+        hashCode.Add(SecurityRecordBackground);
+        hashCode.Add(CrewRecordBackground);
+        hashCode.Add(PsionicsRecordBackground);
     }
 }

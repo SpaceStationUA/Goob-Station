@@ -243,8 +243,9 @@ public sealed class RecordPhotoComposerSystem : EntitySystem
 
         var numberWidth = handle.GetDimensions(font, number, scale).X;
         var birthWidth = handle.GetDimensions(font, birth, scale).X;
-        var minGap = handle.GetDimensions(font, "   ", scale).X;
-        var textWidth = MathF.Ceiling(numberWidth + minGap + birthWidth);
+        var plateGap = handle.GetDimensions(font, "   ", scale).X;
+        var gap = handle.GetDimensions(font, " ", scale).X;
+        var textWidth = MathF.Ceiling(numberWidth + plateGap + birthWidth);
         var lineHeight = MathF.Round(font.GetLineHeight(scale));
 
         var name = label.Name.ToUpperInvariant();
@@ -266,7 +267,8 @@ public sealed class RecordPhotoComposerSystem : EntitySystem
 
         var secondLine = top + padY + lineHeight + lineGap;
         handle.DrawString(font, new Vector2(MathF.Round((PhotoSize - nameWidth) / 2), top + padY), name, scale, Color.FromHex("#F0F0F0"));
-        handle.DrawString(font, new Vector2(left + padX, secondLine), number, scale, Color.FromHex("#C3C3C3"));
-        handle.DrawString(font, new Vector2(MathF.Round(left + width - padX - birthWidth), secondLine), birth, scale, Color.FromHex("#C3C3C3"));
+        var numberLeft = MathF.Round((PhotoSize - (numberWidth + gap + birthWidth)) / 2);
+        handle.DrawString(font, new Vector2(numberLeft, secondLine), number, scale, Color.FromHex("#C3C3C3"));
+        handle.DrawString(font, new Vector2(MathF.Round(numberLeft + numberWidth + gap), secondLine), birth, scale, Color.FromHex("#C3C3C3"));
     }
 }
