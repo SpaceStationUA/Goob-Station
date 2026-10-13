@@ -327,6 +327,7 @@ namespace Content.Server.Database
                 .HasDefaultValue(HwidType.Legacy);
 
             ModelBan.OnModelCreating(modelBuilder);
+            GoobOnModelCreating(modelBuilder); // Goob
 
             // RMC14
             modelBuilder.Entity<RMCLinkedAccount>()
@@ -689,6 +690,8 @@ namespace Content.Server.Database
         public string? GhostParticles { get; set; }
         public string? GhostHat { get; set; }
         public string? GhostMask { get; set; }
+
+        public string? OocIcon { get; set; } // Pirate: public OOC icon preference.
 
         public List<AdminNote> AdminNotesReceived { get; set; } = null!;
         public List<AdminNote> AdminNotesCreated { get; set; } = null!;

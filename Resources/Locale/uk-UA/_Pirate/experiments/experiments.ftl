@@ -2,7 +2,6 @@ species-name-experiment = Експеримент
 species-name-sawian = Савіани
 metabolizer-type-experiment = Експеримент
 namepreset-idfirst = #{ $id } { $first }
-
 chat-emote-name-arf = Гавкнути
 chat-emote-msg-arf = гавкає
 chat-speech-verb-name-experiment = Експеримент
@@ -11,12 +10,10 @@ chat-speech-verb-experiment-2 = гавкає
 chat-speech-verb-experiment-3 = каже
 chat-speech-verb-experiment-4 = дзявкає
 radio-failed-to-send-soft-critical = Ваші руки надто тремтять, щоб користуватися радіо!
-
 flavor-complex-sawian-blood = як наука та брак етики
 reagent-name-sawian-blood = кров савіана
 reagent-desc-sawian-blood = Штучна кров, створена за допомогою старих біоінженерних технологій.
 reagent-physical-desc-sawian = штучна
-
 marking-backexpiescar = Шрам на спині
 marking-backexpiescar-backscar = Шрам на спині
 marking-chestexpiescar = Шрам на грудях
@@ -33,7 +30,6 @@ marking-legexpiescar = Шрам на лівій нозі
 marking-legexpiescar-legscar = Шрам на лівій нозі
 marking-legexpiebandage = Бинти на нозі
 marking-legexpiebandage-legbandage = Бинти на нозі
-
 ent-MobExperiment = Уріст МакЕксперимент
 ent-BaseMobExperiment = Уріст МакЕксперимент
 ent-ActionHealthSelfAnalyze = Перевірити здоров'я

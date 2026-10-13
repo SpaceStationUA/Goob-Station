@@ -22,10 +22,3 @@ ent-SheetUranium = уран
     .desc = { ent-SheetOtherBase.desc }
 ent-SheetUranium1 = уран
     .desc = { ent-SheetOtherBase.desc }
-
-ent-SheetPrinter = папір
-    .suffix = Повний
-    .desc = Аркуш білого паперу.
-ent-SheetPrinter1 = { ent-SheetPrinter }
-    .suffix = Один
-    .desc = { ent-SheetPrinter.desc }
