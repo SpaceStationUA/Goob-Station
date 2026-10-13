@@ -229,6 +229,7 @@
     - !type:HasComponentCondition
       components:
       - type: HumanoidAppearance
+        species: Human # Pirate: required for serialization; the condition only checks the component type.
 
 - type: achievement
   id: Dormammu
