@@ -14,3 +14,15 @@
   id: WarpVignette
   kind: source
   path: "/Textures/_Pirate/Shaders/warp_vignette.swsl"
+
+- type: shader
+  id: WarpDriveHaze
+  kind: source
+  path: "/Textures/_Pirate/Shaders/warp_drive_haze.swsl"
+  params:
+    uIntensity: 0.5
+
+- type: shader
+  id: WarpDriveShock
+  kind: source
+  path: "/Textures/_Pirate/Shaders/warp_drive_shock.swsl"

@@ -1,0 +1,96 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# The warp drive. Unlike a bluespace drive (Resources/Prototypes/_Mono/Entities/Structures/Machines/ftldrive.yml),
+# it has to be spooled and held, heats up while held, and detonates if held too long.
+#
+# Sprite is CC-BY-SA-3.0 from NSV13, via FlagshipSS14 PR 23. See the RSI's meta.json.
+- type: entity
+  id: MachineWarpDrive
+  parent: [ConstructibleMachine]
+  name: warp drive
+  description: Experimental drive capable of crossing interstellar distance. Requires sustained
+    high-voltage power to bring the warp field up, and cannot be held longer than its core
+    tolerates.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  # The sprite is 5x4 tiles and reads as one machine, so it blocks like one.
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.8,-1.6,1.8,1.6"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  # HV, not an APC. A bluespace drive asks 3-6 kW, which an APC supplies forever. This asks 150 kW to
+  # hold the field, and an APC tops out at 10 kW, so the drive has to be wired into HV, in practice a SMES.
+  - type: PowerConsumer
+    voltage: High
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: Appearance
+  - type: AmbientSound
+    volume: -4
+    range: 14
+    sound:
+      path: /Audio/_Pirate/Effects/Shuttle/FTL_drive_hum.ogg
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/warp_drive.rsi
+    layers:
+    - state: core_idle
+    # The screen lights whenever the machine has power, even while the drive is cooling down.
+    - state: screen
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+    - state: core_active
+      map: ["enum.WarpDriveVisuals.Active"]
+      visible: false
+      shader: unshaded
+  - type: PointLight
+    enabled: false
+    color: "#7FD8EE"
+    radius: 6.0
+    energy: 2.5
+  - type: ActivatableUI
+    key: enum.WarpDriveUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.WarpDriveUiKey.Key:
+        type: WarpDriveBoundUserInterface
+  # HV consumers get no automatic Powered visual, so WarpDriveSystem.UpdatePowered sets it.
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: WarpDrive
+    spoolTime: 20
+    coolDownTime: 120
+    transitCoolDownTime: 600
+    breakdownCoolDownTime: 180
+    idlePowerDraw: 2000
+    # The spool draws twice the hold, so only a SMES on full output can feed it.
+    spoolPowerDraw: 300000
+    workingPowerDraw: 150000
+    requiredPowerRatio: 0.9
+    # Tiles of FTL radius granted while the field is up.
+    range: 20000
+    heatRiseRate: 0.00833
+    heatFallRate: 0.01667
+    explosionType: Default
+    totalIntensity: 120
+    intensitySlope: 2
+    maxTileBreak: 8

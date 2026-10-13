@@ -1,0 +1,29 @@
+light_mode unshaded;
+
+// Heat haze on the warp drive housing. Ripples the background inside the sprite quad so the
+// air around the coils visibly shimmers while the field is up, plus a faint cyan lift that
+// grows with load. Runs as the drive's PostShader (see WarpDriveHazeSystem): transparent
+// pixels show wobbling background, opaque pixels show the sprite warmed up.
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float uIntensity; // 0..1, driven by drive state and heat
+
+void fragment() {
+    highp vec4 sprite = zTexture(UV);
+
+    // Two slow sines across the face of the machine: heat shimmer, not strobe.
+    highp float t = TIME;
+    highp vec2 wob = vec2(
+        sin(UV.y * 26.0 + t * 5.0) + 0.5 * sin(UV.y * 53.0 - t * 8.0),
+        cos(UV.x * 24.0 - t * 6.0) + 0.5 * cos(UV.x * 47.0 + t * 7.0));
+
+    // Background sampled a few pixels off, so the air around the coils bends.
+    highp vec2 bgUV = (FRAGCOORD.xy + wob * (1.5 + 5.0 * uIntensity)) * SCREEN_PIXEL_SIZE;
+    highp vec3 bg = zTextureSpec(SCREEN_TEXTURE, bgUV).rgb;
+
+    // Hot core light breathing through the housing.
+    highp vec3 heat = vec3(0.30, 0.75, 0.95) * (uIntensity * uIntensity) * 0.35;
+
+    highp vec3 rgb = mix(bg, sprite.rgb + heat, sprite.a);
+    COLOR = vec4(rgb, 1.0);
+}

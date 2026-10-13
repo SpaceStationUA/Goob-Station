@@ -1,0 +1,51 @@
+light_mode unshaded;
+
+// Expanding rings around warp drives at the warp flash. One fullscreen pass, up to eight
+// pulses: each pushes the rendered screen radially inside a band that leaves the epicentre,
+// with the colour channels split at the ring so the edge flashes. Between pulses the picture
+// is untouched. Driven by WarpDriveShockOverlay, which feeds it drive positions in UV.
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp vec2[8] uCentres;
+uniform highp float[8] uAges;
+uniform highp float[8] uStrengths;
+uniform lowp int uCount;
+uniform highp float uAspect; // width / height, so rings are circles on screen
+
+const highp float Speed = 0.55; // ring radius, screen heights per second
+const highp float Duration = 2.5; // seconds per pulse
+const highp float Width = 0.09; // ring thickness, screen heights
+
+void fragment() {
+    highp vec2 push = vec2(0.0);
+    highp float glow = 0.0;
+
+    for (lowp int i = 0; i < 8; i++) {
+        if (i < uCount) {
+            highp float age = uAges[i];
+            if (age >= 0.0 && age <= Duration) {
+                highp vec2 d = vec2((UV.x - uCentres[i].x) * uAspect, UV.y - uCentres[i].y);
+                highp float dist = length(d);
+                highp vec2 dir = dist > 0.0001 ? d / dist : vec2(0.0);
+
+                highp float radius = age * Speed;
+                highp float band = exp(-pow((dist - radius) / Width, 2.0));
+                highp float fade = 1.0 - age / Duration;
+                fade *= fade;
+
+                highp float amt = band * fade * uStrengths[i];
+                push += vec2(dir.x / uAspect, dir.y) * amt * 0.05;
+                glow += band * fade * uStrengths[i];
+            }
+        }
+    }
+
+    highp vec2 split = push * 0.8;
+    highp vec3 red = texture2D(SCREEN_TEXTURE, UV + push + split).rgb;
+    highp vec3 green = texture2D(SCREEN_TEXTURE, UV + push).rgb;
+    highp vec3 blue = texture2D(SCREEN_TEXTURE, UV + push - split).rgb;
+
+    highp vec3 rgb = vec3(red.r, green.g, blue.b);
+    rgb += vec3(0.30, 0.75, 0.95) * glow * 0.12;
+    COLOR = vec4(rgb, 1.0);
+}

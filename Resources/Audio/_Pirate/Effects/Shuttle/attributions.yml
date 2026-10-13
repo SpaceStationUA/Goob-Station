@@ -11,6 +11,25 @@
   source: "https://github.com/BeeStation/NSV13/tree/ff23bf114d6c3675661add8d0e4904d6ac0002c8/nsv13/sound/effects/ship"
   via: "FlagshipSS14 PR 6"
 
+# Drive-operation sounds: the machine, not the warp.
+- files: ["main_drive_spoolup.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from NSV13"
+  source: "https://github.com/BeeStation/NSV13/tree/ff23bf114d6c3675661add8d0e4904d6ac0002c8/nsv13/sound/machines/FTL"
+  via: "FlagshipSS14"
+
+- files: ["main_drive_loop.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from NSV13"
+  source: "https://github.com/BeeStation/NSV13/tree/ff23bf114d6c3675661add8d0e4904d6ac0002c8/nsv13/sound/machines/FTL"
+  via: "FlagshipSS14"
+
+- files: ["main_drive_spooldown.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from NSV13"
+  source: "https://github.com/BeeStation/NSV13/tree/ff23bf114d6c3675661add8d0e4904d6ac0002c8/nsv13/sound/machines/FTL"
+  via: "FlagshipSS14"
+
 - files: ["FTL_drive_hum.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from gravity_gen_hum.ogg"
