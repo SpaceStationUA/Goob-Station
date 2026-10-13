@@ -4,7 +4,7 @@
   id: CentComm
   isGrid: true # Did you know that centcomm is the only "game map" that isn't actually a map? Send help.
   mapName: 'Центральне Командування'
-  mapPath: /Maps/centcomm.yml
+  mapPath: /_Pirate/Maps/centcomm.yml # Pirate: centcomm update
   minPlayers: 10
   stations:
     centcomm:
