@@ -309,7 +309,8 @@ namespace Content.Server.Database
                 profile.PersonalNotes,
                 profile.OOCNotes,
                 profile.Secrets,
-                profile.ExploitableInfo).WithKnowledge(
+                profile.ExploitableInfo).WithRecordBackgrounds( // Pirate: persistent record history
+                FromStoredRecordBackgrounds(profile.RecordBackgrounds)).WithKnowledge( // Pirate: persistent record history
                 new KnowledgeProfile(profile.KnowledgeMastery.ToDictionary(
                     pair => new EntProtoId(pair.Key),
                     pair => pair.Value))).WithCustomMarkings(
@@ -334,6 +335,7 @@ namespace Content.Server.Database
             profile.OOCNotes = humanoid.OOCNotes;
             profile.Secrets = humanoid.Secrets;
             profile.ExploitableInfo = humanoid.ExploitableInfo;
+            profile.RecordBackgrounds = ToStoredRecordBackgrounds(humanoid.RecordBackgrounds); // Pirate: persistent record history
             profile.Species = humanoid.Species;
             profile.Height = humanoid.Height; // Goobstation: port EE height/width sliders
             profile.Width = humanoid.Width; // Goobstation: port EE height/width sliders

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using System.Text;
 using Content.Server.GameTicking;
 using Content.Server.Popups;
@@ -19,7 +20,6 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server._Pirate.StationRecords;
-
 public sealed class RecordLogSystem : EntitySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
@@ -35,13 +35,12 @@ public sealed class RecordLogSystem : EntitySystem
     private static readonly SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
     private static readonly TimeSpan PrintDelay = TimeSpan.FromSeconds(2.3f);
     private const string PrintPaper = "PaperOffice";
-
-    // Leave room below the paper's 10,000-character limit for the overflow notice.
+    // Leave room under the paper's 10,000-character limit for the overflow notice.
     private const int PrintBudget = 9000;
 
     private readonly HashSet<EntityUid> _activePrintJobs = new();
-
     private TimeZoneInfo _printZone = TimeZoneInfo.Local;
+    private bool _showArchived = true;
 
     private void SetPrintZone(string id)
     {
@@ -49,7 +48,7 @@ public sealed class RecordLogSystem : EntitySystem
         if (string.IsNullOrWhiteSpace(id))
             return;
 
-        // Some tz databases still use "Kiev".
+        // Older tz databases only know Kyiv by its old spelling.
         foreach (var candidate in new[] { id.Trim(), id.Trim().Replace("Kyiv", "Kiev") })
         {
             if (TimeZoneInfo.TryFindSystemTimeZoneById(candidate, out var zone))
@@ -67,31 +66,57 @@ public sealed class RecordLogSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(OnGeneralRecordCreated);
         Subs.CVar(_cfg, CCVars.RecordsPrintTimeZone, SetPrintZone, true);
+        Subs.CVar(_cfg, CCVars.RecordsHistoryPersistence, enabled => _showArchived = enabled, true);
     }
-
     private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent args)
     {
-        AddBackground(args.Key, RecordLogBook.Security, args.Profile.SecurityRecordBackground);
-        AddBackground(args.Key, RecordLogBook.Crew, args.Profile.CrewRecordBackground);
-        AddBackground(args.Key, RecordLogBook.Psionics, args.Profile.PsionicsRecordBackground);
+        foreach (var background in args.Profile.RecordBackgrounds)
+        {
+            AddBackground(args.Key, background);
+        }
     }
 
-    private void AddBackground(StationRecordKey key, RecordLogBook book, string text)
+    private void AddBackground(StationRecordKey key, RecordBackgroundEntry background)
     {
-        text = text.Trim();
+        var text = background.Body.Trim();
         if (text.Length == 0)
             return;
 
-        Add(key, book, RecordLogKind.Background, null, text, null, null);
-    }
+        var title = background.Title.Trim();
+        if (Add(key, background.Book, RecordLogKind.Background, title.Length > 0 ? title : null, text, null, null)
+            is not { } entry)
+        {
+            return;
+        }
 
+        // An empty author shows NanoTrasen HR.
+        var author = background.Author.Trim();
+        entry.AuthorName = author.Length > 0 ? author : null;
+
+        // Dated to the shift start, also for late joiners: it opens this round's part of the history.
+        entry.Time = DateTime.UtcNow - _ticker.RoundDuration();
+        entry.RoundTime = TimeSpan.Zero;
+    }
     public List<RecordLogEntry> GetLog(StationRecordKey key, RecordLogBook book)
     {
-        return _records.TryGetRecord<RecordLogs>(key, out var logs)
-            ? new List<RecordLogEntry>(logs.Book(book))
-            : new List<RecordLogEntry>();
-    }
+        if (!_records.TryGetRecord<RecordLogs>(key, out var logs))
+            return new List<RecordLogEntry>();
 
+        return RecordLogOrder.ForDisplay(_showArchived
+            ? logs.Book(book)
+            : logs.Book(book).Where(e => !e.Archived));
+    }
+    public void AddArchived(StationRecordKey key, IEnumerable<(RecordLogBook Book, RecordLogEntry Entry)> entries)
+    {
+        if (!key.IsValid())
+            return;
+
+        var logs = EnsureLogs(key);
+        foreach (var (book, entry) in entries)
+        {
+            logs.Book(book).Add(entry with { Id = logs.NextId++, Archived = true });
+        }
+    }
     public RecordLogEntry? Add(StationRecordKey key, RecordLogBook book, RecordLogKind kind, string? topic,
         string message, EntityUid? author, EntityUid? origin, string? status = null)
     {
@@ -131,7 +156,6 @@ public sealed class RecordLogSystem : EntitySystem
         logs.Book(book).Add(entry);
         return entry;
     }
-
     public bool TryDelete(StationRecordKey key, RecordLogBook book, uint entryId, out RecordLogEntry? removed)
     {
         removed = null;
@@ -147,7 +171,6 @@ public sealed class RecordLogSystem : EntitySystem
         entries.RemoveAt(index);
         return true;
     }
-
     public void Print(EntityUid console, EntityUid user, StationRecordKey key, RecordLogBook book)
     {
         if (_activePrintJobs.Contains(console))
@@ -194,12 +217,12 @@ public sealed class RecordLogSystem : EntitySystem
         if (log.Count == 0)
             text.AppendLine(Loc.GetString("records-log-empty"));
 
-        for (var i = log.Count - 1; i >= 0; i--)
+        for (var i = 0; i < log.Count; i++)
         {
             var entry = PrintEntry(log[i]);
             if (text.Length + entry.Length > PrintBudget)
             {
-                text.AppendLine(Loc.GetString("records-log-print-more", ("count", i + 1)));
+                text.AppendLine(Loc.GetString("records-log-print-more", ("count", log.Count - i)));
                 break;
             }
 
@@ -213,7 +236,7 @@ public sealed class RecordLogSystem : EntitySystem
     {
         var title = entry.Kind switch
         {
-            RecordLogKind.Background => Loc.GetString("records-log-kind-background"),
+            RecordLogKind.Background => entry.Topic ?? Loc.GetString("records-log-kind-background"),
             RecordLogKind.StatusChange => entry.Topic ?? Loc.GetString("records-log-kind-status-change"),
             _ => Loc.GetString("records-log-kind-note"),
         };
@@ -224,7 +247,10 @@ public sealed class RecordLogSystem : EntitySystem
             author = $"{author} ({entry.AuthorTitle})";
 
         var text = new StringBuilder();
-        text.AppendLine($"[bold]{FormattedMessage.EscapeText(title)}[/bold] ({FormatTime(entry.Time)})");
+        // The shift-start timestamp positions the HR file; it isn't a date anyone wrote down.
+        text.AppendLine(entry.Kind == RecordLogKind.Background
+            ? $"[bold]{FormattedMessage.EscapeText(title)}[/bold]"
+            : $"[bold]{FormattedMessage.EscapeText(title)}[/bold] ({FormatTime(entry.Time)})");
         text.AppendLine($"[italic]{FormattedMessage.EscapeText(author)}[/italic]");
         if (!string.IsNullOrWhiteSpace(entry.StationName))
             text.AppendLine(Loc.GetString("records-log-station", ("station", FormattedMessage.EscapeText(entry.StationName))));
@@ -233,20 +259,11 @@ public sealed class RecordLogSystem : EntitySystem
         text.AppendLine();
         return text.ToString();
     }
-
     private string FormatTime(DateTime utc)
     {
-        // Printed paper has no viewer context; use the configured zone.
+        // Printed paper has no reader context; use the configured zone.
         var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(utc, DateTimeKind.Utc), _printZone);
-        var offset = _printZone.GetUtcOffset(local);
-        var sign = offset < TimeSpan.Zero ? "-" : "+";
-        var zone = offset == TimeSpan.Zero
-            ? "UTC"
-            : offset.Minutes == 0
-                ? $"UTC{sign}{Math.Abs(offset.Hours)}"
-                : $"UTC{sign}{Math.Abs(offset.Hours)}:{Math.Abs(offset.Minutes):00}";
-
-        return $"{local.Day:00}/{local.Month:00}/{PirateStationCalendar.CurrentYear:0000} {local.Hour:00}:{local.Minute:00} ({zone})";
+        return $"{local.Day:00}/{local.Month:00}/{PirateStationCalendar.CurrentYear:0000} {local.Hour:00}:{local.Minute:00}";
     }
 
     private RecordLogs EnsureLogs(StationRecordKey key)

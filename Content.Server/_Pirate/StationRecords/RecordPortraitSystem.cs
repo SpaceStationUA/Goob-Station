@@ -9,7 +9,7 @@ using System.Text;
 using Content.Shared._Pirate;
 using Content.Shared._Pirate.StationRecords;
 using Content.Shared.GameTicking;
-using Content.Shared.Inventory;
+using Content.Shared.Access.Systems;
 using Robust.Shared.Network;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Hands.Components;
@@ -25,7 +25,7 @@ public sealed class RecordPortraitSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
     [Dependency] private readonly PhotoSystem _photo = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
@@ -50,7 +50,8 @@ public sealed class RecordPortraitSystem : EntitySystem
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
-        if (!_inventory.TryGetSlotEntity(args.Mob, "id", out var idCard)
+        // The key is on the ID card itself, which usually sits inside the PDA in the ID slot.
+        if (!_idCard.TryFindIdCard(args.Mob, out var idCard)
             || !TryComp<StationRecordKeyStorageComponent>(idCard, out var keyStorage)
             || keyStorage.Key is not { } key
             || !_records.TryGetRecord<CriminalRecord>(key, out var record))

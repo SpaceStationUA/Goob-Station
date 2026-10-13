@@ -12,7 +12,6 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 
 namespace Content.Client._Pirate.StationRecords;
-
 [GenerateTypedNameReferences]
 public sealed partial class RecordHistoryPanel : BoxContainer
 {
@@ -28,7 +27,6 @@ public sealed partial class RecordHistoryPanel : BoxContainer
     private static readonly Color BackgroundColor = Color.FromHex("#EFB04A");
 
     private readonly SpriteSystem _sprite;
-
     public RecordLogBook Book { get; set; } = RecordLogBook.Crew;
     private RecordNoteDialog? _dialog;
     private uint? _recordKey;
@@ -55,11 +53,10 @@ public sealed partial class RecordHistoryPanel : BoxContainer
         PersonName.Text = name;
         AddNoteButton.Visible = canEdit;
         PrintButton.Visible = canEdit;
-        _log = log;
+        _log = log == null ? null : RecordLogOrder.ForDisplay(log);
         _canEdit = canEdit;
         Rebuild();
     }
-
     public void SetQuery(string query)
     {
         query = query.Trim();
@@ -90,9 +87,8 @@ public sealed partial class RecordHistoryPanel : BoxContainer
         var shown = 0;
         if (_log != null)
         {
-            for (var i = _log.Count - 1; i >= 0; i--)
+            foreach (var entry in _log)
             {
-                var entry = _log[i];
                 var look = Describe(entry);
                 if (!Matches(entry, look.Title))
                     continue;
@@ -116,7 +112,7 @@ public sealed partial class RecordHistoryPanel : BoxContainer
             || Contains(AuthorName(entry))
             || Contains(entry.AuthorTitle)
             || Contains(entry.StationName)
-            || Contains(FormatTime(entry.Time));
+            || entry.Kind != RecordLogKind.Background && Contains(FormatTime(entry.Time));
 
         bool Contains(string? text) => text != null && text.Contains(_query, StringComparison.CurrentCultureIgnoreCase);
     }
@@ -133,7 +129,9 @@ public sealed partial class RecordHistoryPanel : BoxContainer
             VerticalAlignment = Control.VAlignment.Center,
         });
         header.AddChild(new Label { Text = title, FontColorOverride = color, ClipText = true, HorizontalExpand = true });
-        header.AddChild(new Label { Text = FormatTime(entry.Time), FontColorOverride = Color.DarkGray });
+        // The shift-start timestamp positions the HR file; it isn't a date anyone wrote down.
+        if (entry.Kind != RecordLogKind.Background)
+            header.AddChild(new Label { Text = FormatTime(entry.Time), FontColorOverride = Color.DarkGray });
 
         if (_canEdit && entry.Kind != RecordLogKind.Background)
         {
@@ -200,13 +198,12 @@ public sealed partial class RecordHistoryPanel : BoxContainer
         return entry.AuthorName
             ?? Loc.GetString(entry.Kind == RecordLogKind.Background ? "records-log-hr-author" : "records-log-unknown-author");
     }
-
     private (string Title, Color Color, SpriteSpecifier Icon) Describe(RecordLogEntry entry)
     {
         switch (entry.Kind)
         {
             case RecordLogKind.Background:
-                return (Loc.GetString("records-log-kind-background"), BackgroundColor,
+                return (entry.Topic ?? Loc.GetString("records-log-kind-background"), BackgroundColor,
                     new SpriteSpecifier.Rsi(LogIcons, "hr_file"));
 
             case RecordLogKind.StatusChange:
@@ -220,7 +217,6 @@ public sealed partial class RecordHistoryPanel : BoxContainer
                 return (Loc.GetString("records-log-kind-note"), NoteColor, new SpriteSpecifier.Rsi(LogIcons, "note"));
         }
     }
-
     private static (Color, SpriteSpecifier) SecurityStatusLook(string? status)
     {
         var (state, color) = status switch
@@ -258,7 +254,6 @@ public sealed partial class RecordHistoryPanel : BoxContainer
             ? new SpriteSpecifier.Rsi(JobIcons, "Unknown")
             : new SpriteSpecifier.Rsi(PsionicsIcons, state));
     }
-
     private static string FormatTime(DateTime utc)
     {
         var local = DateTime.SpecifyKind(utc, DateTimeKind.Utc).ToLocalTime();

@@ -1120,6 +1120,73 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
             #endregion Pirate: temporary ranks
 
+            #region Pirate: persistent record history
+            modelBuilder.Entity("Content.Server.Database.PirateRecordHistoryEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("pirate_record_history_entries_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AuthorName")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("author_name");
+
+                    b.Property<string>("AuthorTitle")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("author_title");
+
+                    b.Property<int>("Book")
+                        .HasColumnType("integer")
+                        .HasColumnName("book");
+
+                    b.Property<int>("Kind")
+                        .HasColumnType("integer")
+                        .HasColumnName("kind");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("message");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("integer")
+                        .HasColumnName("profile_id");
+
+                    b.Property<string>("StationName")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("station_name");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("status");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("time");
+
+                    b.Property<string>("Topic")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("topic");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_record_history_entries");
+
+                    b.HasIndex("ProfileId", "Book", "Time")
+                        .HasDatabaseName("IX_pirate_record_history_entries_profile_id_book_time");
+
+                    b.ToTable("pirate_record_history_entries", (string)null);
+                });
+            #endregion
+
             modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
                 {
                     b.Property<int>("Id")
@@ -1556,6 +1623,13 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasMaxLength(4096)
                         .HasColumnType("character varying(4096)")
                         .HasColumnName("secrets");
+
+            #region Pirate: persistent record history
+                    b.Property<string>("RecordBackgrounds")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("record_backgrounds");
+            #endregion
 
                     b.Property<string>("SkinColor")
                         .IsRequired()
@@ -2576,6 +2650,20 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("AdminRank");
                 });
             #endregion Pirate: temporary ranks
+
+            #region Pirate: persistent record history
+            modelBuilder.Entity("Content.Server.Database.PirateRecordHistoryEntry", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_pirate_record_history_entries_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+            #endregion
 
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
