@@ -1,0 +1,74 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    MinSize="400 300"
+    Resizable="False"
+    Title="Warp Drive">
+
+    <BoxContainer Margin="10 8" Orientation="Horizontal" SeparationOverride="12">
+
+        <!-- Readouts -->
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2">
+
+            <!-- Field state. The headline: it is the one row a crew reads first. -->
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-state'}" StyleClasses="highlight" />
+                <Label Name="StateLabel" Text="—" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-power'}" StyleClasses="highlight" />
+                <Label Name="PowerLabel" Text="0 W" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <!-- Range: the thing the drive exists to provide. Highlighted only while live. -->
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-range'}" StyleClasses="highlight" />
+                <Label Name="RangeLabel" Text="0 m" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <customControls:HSeparator StyleClasses="LowDivider" Margin="0 4 0 4" />
+
+            <!-- Bars. Always visible so the window does not reflow between states - a row
+                 appearing and disappearing mid-crisis is worse than a stale bar. -->
+            <Label Text="{Loc 'warp-drive-window-spool'}" StyleClasses="highlight" />
+            <ProgressBar Name="SpoolBar" MaxValue="1" HorizontalExpand="True">
+                <Label Name="SpoolText" HorizontalAlignment="Center" Margin="4 0" Text="—" />
+            </ProgressBar>
+
+            <Label Text="{Loc 'warp-drive-window-heat'}" StyleClasses="highlight" />
+            <ProgressBar Name="HeatBar" MaxValue="1" HorizontalExpand="True">
+                <Label Name="HeatText" HorizontalAlignment="Center" Margin="4 0" Text="0 %" />
+            </ProgressBar>
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-stability'}" StyleClasses="highlight" />
+                <Label Name="StabilityLabel" Text="N/A" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-cooldown'}" StyleClasses="highlight" />
+                <Label Name="CoolDownLabel" Text="N/A" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <customControls:HSeparator StyleClasses="LowDivider" Margin="0 4 0 4" />
+
+            <!-- One control, always in the same place. -->
+            <Button Name="ToggleButton" Text="{Loc 'warp-drive-window-spool-up'}" />
+        </BoxContainer>
+
+        <!-- The machine, so you can see which one you are looking at. -->
+        <PanelContainer StyleClasses="Inset" VerticalAlignment="Top">
+            <BoxContainer>
+                <SpriteView Name="EntityView"
+                    SetSize="96 96"
+                    OverrideDirection="South" />
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

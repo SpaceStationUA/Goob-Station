@@ -20,7 +20,11 @@
 set -euo pipefail
 cd "$(dirname "$0")/../.."   # repo root
 
-ENGINE_PATCH="WebUIEngineDiff_v277.patch"
+# Absolute, because `git -C RobustToolbox apply` resolves a relative patch path against
+# RobustToolbox/, not against the repo root we cd'd to above. With a relative path every
+# invocation here fails to open the patch, falls through to the "no local edits" branch, and
+# reports exit 2 even when the patch would apply perfectly.
+ENGINE_PATCH="$PWD/WebUIEngineDiff_v277.patch"
 
 if ! git -C RobustToolbox rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     echo "RobustToolbox is not a git worktree here; nothing to patch." >&2

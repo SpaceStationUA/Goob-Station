@@ -1,0 +1,128 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# The warp drive.
+#
+# Not a bluespace drive with a bigger number in it. A bluespace drive
+# (Resources/Prototypes/_Mono/Entities/Structures/Machines/ftldrive.yml) widens the hull's
+# FTL radius passively and cannot fail. This one has to be spooled, has to be held, heats up
+# while it is held, and detonates if it is held past its stability window.
+#
+# Sprite is CC-BY-SA-3.0 from NSV13, via FlagshipSS14 PR 23. See the RSI's meta.json.
+- type: entity
+  id: MachineWarpDrive
+  parent: [ConstructibleMachine]
+  name: warp drive
+  description: Experimental drive capable of crossing interstellar distance. Requires sustained
+    high-voltage power to bring the warp field up, and cannot be held longer than its core
+    tolerates.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  # HV, not an APC. This is the whole power design in miniature.
+  #
+  # A bluespace drive asks 3-6 kW, which any shuttle's APC supplies forever. This asks 150 kW to
+  # hold the field, and an APC tops out at 10 kW (Resources/Prototypes/Entities/Structures/Power/apc.yml),
+  # so the drive cannot run off a shuttle's grid at all - it has to be wired into HV, in practice to
+  # a SMES. Engineering has to build something before the drive is usable. That is deliberate: it
+  # makes the drive a power problem, and power is the resource it should be a problem in.
+  #
+  # No ApcPowerReceiver and no ActivatableUIRequiresPower: both key off the APC path, which this
+  # machine is not on. The console opens regardless and the drive simply refuses to spool.
+  - type: PowerConsumer
+    voltage: High
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: Appearance
+  - type: AmbientSound
+    volume: -4
+    range: 14
+    sound:
+      path: /Audio/Ambience/Objects/engine_hum.ogg
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/warp_drive.rsi
+    layers:
+    # Cold ring assembly, always underneath.
+    - state: core_idle
+    # Console readouts on the housing, up whenever the machine has power. Driven off the power
+    # receiver's own visual layer rather than the drive's, so the screen lights when the grid is
+    # live even if the drive is sitting on cooldown - the machine is on, it just is not allowed to.
+    - state: screen
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+    # Energised coil. A fast 2-frame flicker, which reads as "live" from across a room in a way a
+    # static lit sprite does not.
+    - state: core_active
+      map: ["enum.WarpDriveVisuals.Active"]
+      visible: false
+      shader: unshaded
+  # Lights the room when the field is up, so "is this drive live" is answerable from a corridor
+  # without opening the console. Colour matches the aperture in the sprite.
+  - type: PointLight
+    enabled: false
+    color: "#7FD8EE"
+    radius: 6.0
+    energy: 2.5
+  - type: ActivatableUI
+    key: enum.WarpDriveUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.WarpDriveUiKey.Key:
+        type: WarpDriveBoundUserInterface
+  # Lights the screen layer whenever the net is actually feeding the drive. Driven by appearance
+  # rather than the sprite's own layer map because an HV consumer has no automatic Powered visual -
+  # WarpDriveSystem.UpdatePowered sets it. A cooling drive still has its screen lit; the coil is
+  # what tells you whether the field is up.
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: WarpDrive
+    spoolTime: 20
+    stableTime: 45
+    coolDownTime: 60
+    breakdownCoolDownTime: 180
+    idlePowerDraw: 2000
+    workingPowerDraw: 150000
+    requiredPowerRatio: 0.9
+    # Far enough to cross a sector, close enough that the existing shuttle map's FTL circle is
+    # still a usable thing to look at. A star system spans light years; 20 km is the smallest
+    # number that still reads as "a different place" rather than "the other end of the station".
+    range: 20000
+    # Slower than 1/45 so the stability window expires before the core cooks. See the remarks on
+    # WarpDriveComponent.HeatRiseRate - when these matched, the two readouts fired together and
+    # the heat bar had nothing to show.
+    heatRiseRate: 0.00833
+    heatFallRate: 0.01667
+    explosionType: Default
+    totalIntensity: 120
+    intensitySlope: 2
+    maxTileBreak: 8
+
+# Debug drive. Short everything, enormous range, no drama. For testing the console and the
+# grid-range plumbing without waiting out a real spool. Draw is dropped to match, so it can be
+# tested off a supply that a real drive could never run on.
+- type: entity
+  id: MachineWarpDriveDebug
+  parent: MachineWarpDrive
+  name: debug warp drive
+  description: Super-duper kool warp drive, only for testing!
+  suffix: DEBUG
+  components:
+  - type: WarpDrive
+    spoolTime: 2
+    stableTime: 20
+    coolDownTime: 1
+    breakdownCoolDownTime: 5
+    range: 200000
+    idlePowerDraw: 500
+    workingPowerDraw: 5000
