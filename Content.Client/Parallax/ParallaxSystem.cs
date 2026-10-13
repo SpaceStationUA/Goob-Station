@@ -59,6 +59,11 @@ public sealed class ParallaxSystem : SharedParallaxSystem
 
     public ParallaxLayerPrepared[] GetParallaxLayers(MapId mapId)
     {
+        // A settled transition overrides what the map's component says, so check it first.
+        var current = _parallax.GetCurrent();
+        if (current != null)
+            return _parallax.GetParallaxLayers(current);
+
         return _parallax.GetParallaxLayers(GetParallax(_map.GetMapOrInvalid(mapId)));
     }
 

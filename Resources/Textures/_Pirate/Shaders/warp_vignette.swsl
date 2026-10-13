@@ -1,0 +1,18 @@
+light_mode unshaded;
+
+// Warp vignette: darkens the edges of the frame while the ship is at speed, so the middle reads as
+// where you are going. No screen texture needed: it only writes a dark rim whose opacity grows with
+// distance from the centre.
+
+uniform highp float uStrength; // peak darkness at the edges, 0 = off
+uniform highp float uAspect;   // width / height, so the rim is a circle on screen
+
+void fragment() {
+    highp vec2 d = vec2((UV.x - 0.5) * uAspect, UV.y - 0.5);
+    highp float dist = length(d);
+
+    // Clear in the middle, closed at the corners.
+    highp float v = smoothstep(0.32, 1.05, dist) * uStrength;
+
+    COLOR = vec4(0.0, 0.015, 0.07, v);
+}

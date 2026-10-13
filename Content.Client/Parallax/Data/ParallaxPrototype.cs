@@ -39,4 +39,18 @@ public sealed partial class ParallaxPrototype : IPrototype
     /// </summary>
     [DataField]
     public MeteorParallaxConfig? Meteors { get; private set; }
+
+    // Pirate: arrival card
+    /// <summary>
+    ///     Locale key of the system this parallax depicts, shown on the warp arrival card. Empty for
+    ///     backgrounds that are not star systems.
+    /// </summary>
+    [DataField]
+    public string SectorName { get; private set; } = "";
+
+    /// <summary>
+    ///     Locale key of the one-line description the arrival card runs as a marquee.
+    /// </summary>
+    [DataField]
+    public string SectorDescription { get; private set; } = "";
 }

@@ -2,6 +2,8 @@
 
 using System.Numerics;
 using System.Threading.Tasks;
+using Content.Client.Parallax.Data;
+using Robust.Shared.Maths;
 
 namespace Content.Client.Parallax.Managers;
 
@@ -13,6 +15,73 @@ public interface IParallaxManager
     Vector2 ParallaxAnchor { get; set; }
 
     bool IsLoaded(string name);
+
+    /// <summary>
+    /// Starts a crossfade to <paramref name="target"/>, which must already be loaded.
+    /// <paramref name="delay"/> keeps the outgoing parallax at full colour for a while first.
+    /// </summary>
+    bool StartTransition(string current, string target, float duration = 8f, float delay = 0f, string? hyper = null);
+
+    /// <summary>
+    /// Like <see cref="StartTransition"/>, but waits for the target to load instead of refusing.
+    /// </summary>
+    bool RequestTransition(string current, string target, float duration, float delay, string? hyper = null);
+
+    /// <summary>
+    /// The parallax the fade passes through, or null for a plain crossfade.
+    /// </summary>
+    string? GetTransitionHyper();
+
+    /// <summary>
+    /// Fade progress, 0..1, or -1 when no fade is drawing.
+    /// </summary>
+    float GetTransitionProgress();
+
+    string? GetTransitionFrom();
+
+    string? GetTransitionTo();
+
+    /// <summary>
+    /// The parallax on screen after a fade has settled, or null if the map's component decides.
+    /// </summary>
+    string? GetCurrent();
+
+    /// <summary>
+    /// Advances the travel clock and returns what the overlay needs for this frame.
+    /// </summary>
+    /// <remarks>
+    /// Both values come from one call because sampling advances the clock. A crossfade draws two
+    /// parallaxes per frame, and they must share one clock or the outgoing one slides against the
+    /// incoming one.
+    /// </remarks>
+    (float scrollClock, float zoomAmount) SampleTravel();
+
+    /// <summary>
+    /// Advances a screen-relative layer by this frame's travel and returns its world offset.
+    /// </summary>
+    Vector2 AdvanceScreenScroll(ParallaxLayerConfig config, Vector2 scrolling, Angle rotation);
+
+    /// <summary>
+    /// Advances a layer's drift by real time and returns its world offset.
+    /// </summary>
+    Vector2 AdvanceDrift(ParallaxLayerConfig config, Vector2 drift, Angle rotation);
+
+    /// <summary>
+    /// Runs the warp curve: spool, burn, coast, brake. Returns to neutral by itself.
+    /// </summary>
+    void StartWarp(float duration = 8.5f, float peakSpeed = 3f, float peakZoom = 1.25f);
+
+    bool IsWarping { get; }
+
+    /// <summary>
+    /// Travel speed as a fraction of the warp peak, 0..1. Zero at rest.
+    /// </summary>
+    float WarpSpeedFraction { get; }
+
+    /// <summary>
+    /// How far through the warp, 0..1. Zero when not warping.
+    /// </summary>
+    float WarpProgress { get; }
 
     /// <summary>
     /// The layers of the selected parallax.
