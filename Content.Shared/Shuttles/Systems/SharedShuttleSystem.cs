@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._NF.Shuttles;
+using Content.Shared._Pirate.Shuttles.Warp; // Pirate: warp drive
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
@@ -175,10 +176,15 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// <summary>
     /// Frontier edit
     /// </summary>
+    // Pirate start: warp drive. An engaged warp drive overrides the bluespace radius.
     public float GetFTLRange(EntityUid shuttleUid, FTLDriveComponent? ftl = null)
     {
+        if (TryComp<WarpDriveGridComponent>(shuttleUid, out var warp) && warp.Active)
+            return warp.Range;
+
         return !Resolve(shuttleUid, ref ftl) ? 0f : ftl.Data.Range;
     }
+    // Pirate end
 
     public float GetFTLBufferRange(EntityUid shuttleUid, MapGridComponent? grid = null)
     {

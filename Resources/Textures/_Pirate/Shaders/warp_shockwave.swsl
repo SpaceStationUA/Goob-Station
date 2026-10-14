@@ -1,0 +1,35 @@
+light_mode unshaded;
+
+// Warp shockwave: an expanding ring that pushes the already-rendered screen outward, with the colour
+// channels split at the ring so the edge flashes red on one side and blue on the other. Outside the
+// ring the picture is untouched, so the effect never darkens or hides the screen on its own.
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float uProgress;   // 0..1 over the life of the shock
+uniform highp float uStrength;   // peak displacement, as a fraction of screen height
+uniform highp float uAberration; // how far the red and blue channels split apart
+uniform highp float uAspect;     // width / height, so the ring is a circle on screen, not an ellipse
+uniform highp vec2 uCentre;      // epicentre in UV
+
+void fragment() {
+    highp vec2 d = vec2((UV.x - uCentre.x) * uAspect, UV.y - uCentre.y);
+    highp float dist = length(d);
+    highp vec2 dir = dist > 0.0001 ? d / dist : vec2(0.0);
+
+    // The ring's radius runs past the corner as progress reaches 1, and the band around it fades
+    // out as it goes, so the shock reads as leaving rather than as stopping.
+    highp float radius = uProgress * 1.2;
+    highp float band = exp(-pow((dist - radius) / 0.14, 2.0));
+    highp float fade = (1.0 - uProgress) * (1.0 - uProgress);
+    highp float amount = band * fade * uStrength;
+
+    highp vec2 axis = vec2(dir.x / uAspect, dir.y);
+    highp vec2 push = axis * amount;
+    highp vec2 split = axis * amount * uAberration;
+
+    highp vec3 red = texture(SCREEN_TEXTURE, UV + push + split).rgb;
+    highp vec3 green = texture(SCREEN_TEXTURE, UV + push).rgb;
+    highp vec3 blue = texture(SCREEN_TEXTURE, UV + push - split).rgb;
+
+    COLOR = vec4(red.r, green.g, blue.b, 1.0);
+}

@@ -1,0 +1,7 @@
+# Journey mode rule. Started by admins with `journey start`; it holds the active sector, applies
+# that sector's event filters and broadcast jumps, and carries the round's allowed-sector gate.
+- type: entity
+  id: JourneyRule
+  parent: BaseGameRule
+  components:
+  - type: JourneyRule

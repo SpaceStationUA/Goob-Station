@@ -2,6 +2,26 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 - type: gamePreset
+  id: Journey
+  alias:
+    - journey
+    - spacejourney
+  name: journey-title
+  description: journey-description
+  showInVote: true
+  rules:
+    # The mode itself: starts in a quiet sector, jumps on warp-drive commitment.
+    - JourneyRule
+    # Roundstart crew pressure, same cast as a normal round: traitors and thieves fly here too.
+    - Traitor
+    - Thief
+    # Event pressure. Both schedulers read the sector filters, so the playlist follows jumps.
+    - RampingStationEventScheduler
+    - BasicRoundstartVariation
+    # Anomaly sectors need their own weather.
+    - GlimmerEventScheduler # Pirate
+
+- type: gamePreset
   id: SecretTP
   alias:
     - secrettp
