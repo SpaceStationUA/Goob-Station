@@ -14,6 +14,9 @@ public sealed partial class PsionicsRecordsConsoleComponent : Component
     [DataField]
     public uint? ActiveKey;
 
+    // Echoed with each state to correlate selection replies.
+    public uint SelectionRequest;
+
     [DataField]
     public StationRecordsFilter? Filter;
 

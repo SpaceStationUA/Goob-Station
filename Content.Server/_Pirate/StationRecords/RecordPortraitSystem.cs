@@ -43,9 +43,16 @@ public sealed class RecordPortraitSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(OnGeneralRecordCreated);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn, after: [typeof(StationRecordsSystem)]);
         SubscribeNetworkEvent<RecordPortraitRenderResultEvent>(OnRenderResult);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _pendingRenders.Clear());
+    }
+
+    private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
+    {
+        if (!string.IsNullOrWhiteSpace(ev.Record.Species))
+            EnsurePortrait(ev.Key).ProfileSnapshot = new(ev.Profile);
     }
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
@@ -54,15 +61,16 @@ public sealed class RecordPortraitSystem : EntitySystem
         if (!_idCard.TryFindIdCard(args.Mob, out var idCard)
             || !TryComp<StationRecordKeyStorageComponent>(idCard, out var keyStorage)
             || keyStorage.Key is not { } key
-            || !_records.TryGetRecord<CriminalRecord>(key, out var record))
+            || !_records.TryGetRecord<GeneralStationRecord>(key, out _))
         {
             return;
         }
 
+        var record = EnsurePortrait(key);
         EnsureNumber(key, record);
         FreezePlacard(key, record);
 
-        if (record.PortraitImageData is { Length: > 0 } || record.PortraitProfileSnapshot == null)
+        if (record.ImageData is { Length: > 0 } || record.ProfileSnapshot == null)
             return;
 
         _records.TryGetRecord<GeneralStationRecord>(key, out var general);
@@ -72,7 +80,7 @@ public sealed class RecordPortraitSystem : EntitySystem
         {
             Station = GetNetEntity(key.OriginStation),
             RecordId = key.Id,
-            Profile = record.PortraitProfileSnapshot,
+            Profile = record.ProfileSnapshot,
             JobPrototype = general?.JobPrototype,
         }, args.Player);
     }
@@ -89,48 +97,88 @@ public sealed class RecordPortraitSystem : EntitySystem
         StoreGenerated(new StationRecordKey(ev.RecordId, station), ev.ImageData);
     }
 
-    public void FreezePlacard(StationRecordKey key, CriminalRecord record)
+    public RecordPortrait EnsurePortrait(StationRecordKey key)
     {
-        if (record.PortraitName != null)
+        if (_records.TryGetRecord<RecordPortrait>(key, out var portrait))
+            return portrait;
+
+        portrait = new RecordPortrait();
+        _records.AddRecordEntry(key, portrait);
+        return portrait;
+    }
+
+    public HumanoidCharacterProfile? GetSnapshot(StationRecordKey key)
+    {
+        return _records.TryGetRecord<RecordPortrait>(key, out var portrait) ? portrait.ProfileSnapshot : null;
+    }
+
+    public void EnsureSnapshot(StationRecordKey key, HumanoidCharacterProfile profile)
+    {
+        var portrait = EnsurePortrait(key);
+        portrait.ProfileSnapshot ??= profile;
+    }
+
+    public void UpdateSnapshot(StationRecordKey key, HumanoidCharacterProfile profile)
+    {
+        if (_records.TryGetRecord<RecordPortrait>(key, out var portrait)
+            && (portrait.ProfileSnapshot != null || portrait.ImageData is { Length: > 0 }))
+        {
+            portrait.ProfileSnapshot = profile;
+        }
+    }
+
+    public void RenameSnapshot(StationRecordKey key, string name)
+    {
+        if (_records.TryGetRecord<RecordPortrait>(key, out var portrait) && portrait.ProfileSnapshot != null)
+            portrait.ProfileSnapshot = portrait.ProfileSnapshot.WithName(name);
+    }
+
+    private GeneralStationRecord? GetGeneral(StationRecordKey key)
+    {
+        if (_records.TryGetRecord<GeneralStationRecord>(key, out var general))
+            return general;
+
+        return _records.TryGetRecord<CriminalRecord>(key, out var criminal) ? criminal.GeneralRecordSnapshot : null;
+    }
+
+    public void FreezePlacard(StationRecordKey key, RecordPortrait record)
+    {
+        if (record.Name != null || GetGeneral(key) is not { } general)
             return;
 
-        var general = _records.TryGetRecord<GeneralStationRecord>(key, out var stationRecord)
-            ? stationRecord
-            : record.GeneralRecordSnapshot;
-
-        if (general == null)
-            return;
-
-        record.PortraitName = general.Name;
-        record.PortraitBirthYear = general.Age > 0 ? PirateStationCalendar.CurrentYear - general.Age : 0;
+        record.Name = general.Name;
+        record.BirthYear = general.Age > 0 ? PirateStationCalendar.CurrentYear - general.Age : 0;
     }
 
     public RecordPortraitData? GetPortrait(StationRecordKey key)
     {
-        if (!_records.TryGetRecord<CriminalRecord>(key, out var record))
+        if (!_records.TryGetRecord<RecordPortrait>(key, out var record))
             return null;
 
         EnsureNumber(key, record);
-        return RecordPortraitData.FromRecord(record);
+        return new RecordPortraitData
+        {
+            ImageData = record.ImageData,
+            IsRender = record.IsRender,
+            Snapshot = record.ProfileSnapshot,
+            Number = record.Number,
+            Name = record.Name,
+            BirthYear = record.BirthYear,
+        };
     }
 
-    public void EnsureNumber(StationRecordKey key, CriminalRecord? record = null)
+    public void EnsureNumber(StationRecordKey key, RecordPortrait record)
     {
-        if (record == null && !_records.TryGetRecord(key, out record))
+        if (record.Number != 0)
             return;
 
-        if (record.PortraitNumber != 0)
-            return;
-
-        var general = _records.TryGetRecord<GeneralStationRecord>(key, out var stationRecord)
-            ? stationRecord
-            : record.GeneralRecordSnapshot;
+        var general = GetGeneral(key);
 
         var taken = new HashSet<int>();
-        foreach (var (_, other) in _records.GetRecordsOfType<CriminalRecord>(key.OriginStation))
+        foreach (var (_, other) in _records.GetRecordsOfType<RecordPortrait>(key.OriginStation))
         {
-            if (other.PortraitNumber != 0)
-                taken.Add(other.PortraitNumber);
+            if (other.Number != 0)
+                taken.Add(other.Number);
         }
 
         // Hash identity for a stable placard number, then probe the rare collision.
@@ -140,7 +188,7 @@ public sealed class RecordPortraitSystem : EntitySystem
             number = number % MaxNumber + 1;
         }
 
-        record.PortraitNumber = number;
+        record.Number = number;
     }
 
     public void Print(EntityUid console, EntityUid user, StationRecordKey key, byte[]? renderedImage)
@@ -151,24 +199,24 @@ public sealed class RecordPortraitSystem : EntitySystem
             return;
         }
 
-        if (!_records.TryGetRecord<CriminalRecord>(key, out var record))
+        if (!_records.TryGetRecord<RecordPortrait>(key, out var record))
             return;
 
         byte[]? imageData = null;
         byte[]? previewData = null;
 
-        if (record.PortraitImageData is { Length: > 0 } existingImage && !record.PortraitIsRender)
+        if (record.ImageData is { Length: > 0 } existingImage && !record.IsRender)
         {
-            if (_photo.TryPreparePhotoCardData(existingImage, record.PortraitPreviewData, out var preparedImage, out var preparedPreview))
+            if (_photo.TryPreparePhotoCardData(existingImage, record.PreviewData, out var preparedImage, out var preparedPreview))
             {
                 imageData = preparedImage;
                 previewData = preparedPreview;
 
-                if (!ByteArraysEqual(record.PortraitImageData, preparedImage) ||
-                    !ByteArraysEqual(record.PortraitPreviewData, preparedPreview))
+                if (!ByteArraysEqual(record.ImageData, preparedImage) ||
+                    !ByteArraysEqual(record.PreviewData, preparedPreview))
                 {
-                    record.PortraitImageData = [.. preparedImage];
-                    record.PortraitPreviewData = preparedPreview == null ? null : [.. preparedPreview];
+                    record.ImageData = [.. preparedImage];
+                    record.PreviewData = preparedPreview == null ? null : [.. preparedPreview];
                     _records.Synchronize(key);
                 }
             }
@@ -179,8 +227,8 @@ public sealed class RecordPortraitSystem : EntitySystem
             imageData = mugshot;
             previewData = mugshotPreview;
         }
-        else if (record.PortraitImageData is { Length: > 0 } render
-                 && _photo.TryPreparePhotoCardData(render, record.PortraitPreviewData, out var bareRender, out var bareRenderPreview))
+        else if (record.ImageData is { Length: > 0 } render
+                 && _photo.TryPreparePhotoCardData(render, record.PreviewData, out var bareRender, out var bareRenderPreview))
         {
             imageData = bareRender;
             previewData = bareRenderPreview;
@@ -189,9 +237,7 @@ public sealed class RecordPortraitSystem : EntitySystem
         if (imageData is not { Length: > 0 })
             return;
 
-        var printedName = _records.TryGetRecord<GeneralStationRecord>(key, out var stationRecord)
-            ? stationRecord.Name
-            : record.GeneralRecordSnapshot?.Name;
+        var printedName = GetGeneral(key)?.Name;
 
         _activePrintJobs.Add(console);
         _audio.PlayPvs(PrintSound, console);
@@ -222,15 +268,16 @@ public sealed class RecordPortraitSystem : EntitySystem
     {
         if (!TryGetHeldPhotoCard(user, out var heldPhoto)
             || heldPhoto.ImageData is not { Length: > 0 } imageData
-            || !_records.TryGetRecord<CriminalRecord>(key, out var record)
+            || GetGeneral(key) == null
             || !_photo.TryPreparePhotoCardData(imageData, heldPhoto.PreviewData, out var preparedImage, out var preparedPreview))
         {
             return false;
         }
 
-        record.PortraitImageData = [.. preparedImage];
-        record.PortraitPreviewData = preparedPreview == null ? null : [.. preparedPreview];
-        record.PortraitIsRender = false;
+        var record = EnsurePortrait(key);
+        record.ImageData = [.. preparedImage];
+        record.PreviewData = preparedPreview == null ? null : [.. preparedPreview];
+        record.IsRender = false;
 
         _audio.PlayPvs(UploadSound, console);
         _records.Synchronize(key);
@@ -239,17 +286,17 @@ public sealed class RecordPortraitSystem : EntitySystem
 
     public bool StoreGenerated(StationRecordKey key, byte[] imageData)
     {
-        if (!_records.TryGetRecord<CriminalRecord>(key, out var record)
-            || record.PortraitProfileSnapshot == null
-            || record.PortraitImageData is { Length: > 0 }
+        if (!_records.TryGetRecord<RecordPortrait>(key, out var record)
+            || record.ProfileSnapshot == null
+            || record.ImageData is { Length: > 0 }
             || !_photo.TryPreparePhotoCardData(imageData, null, out var preparedImage, out var preparedPreview))
         {
             return false;
         }
 
-        record.PortraitImageData = [.. preparedImage];
-        record.PortraitPreviewData = preparedPreview == null ? null : [.. preparedPreview];
-        record.PortraitIsRender = true;
+        record.ImageData = [.. preparedImage];
+        record.PreviewData = preparedPreview == null ? null : [.. preparedPreview];
+        record.IsRender = true;
         EnsureNumber(key, record);
         FreezePlacard(key, record);
         _records.Synchronize(key);

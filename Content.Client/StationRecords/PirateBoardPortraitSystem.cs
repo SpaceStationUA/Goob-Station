@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.Lobby;
-using Content.Client._Pirate.StationRecords;
+using Content.Client._Pirate.StationRecords; // Pirate: records photos
 using Content.Pirate.Shared.WebUi;
 using Content.Shared.Roles;
 using Robust.Client.Graphics;
@@ -87,7 +87,7 @@ public sealed class PirateBoardPortraitSystem : EntitySystem
         {
             try
             {
-                if (await _composer.RenderEntity(puppet) is { Length: > 0 } data)
+                if (await _composer.RenderEntity(puppet) is { Length: > 0 } data) // Pirate: records photos
                     return data;
             }
             catch (Exception)

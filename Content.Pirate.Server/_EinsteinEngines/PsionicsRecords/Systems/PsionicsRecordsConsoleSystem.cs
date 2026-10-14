@@ -75,6 +75,7 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
+        ent.Comp.SelectionRequest = msg.Request;
         UpdateUserInterface(ent);
     }
 
@@ -188,7 +189,11 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
                 .ToDictionary(x => x.Key, x => x.Value);
         }
 
-        var state = new PsionicsRecordsConsoleState(listing, console.Filter) { FilterStatus = console.FilterStatus };
+        var state = new PsionicsRecordsConsoleState(listing, console.Filter)
+        {
+            FilterStatus = console.FilterStatus,
+            SelectionRequest = console.SelectionRequest,
+        };
         if (console.ActiveKey is { } id)
         {
             // get records to display when a crewmember is selected

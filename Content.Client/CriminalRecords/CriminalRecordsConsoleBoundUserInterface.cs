@@ -34,7 +34,7 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
 
         _window = new(Owner, comp.MaxStringLength, _playerManager, _proto, _random, _accessReader);
         _window.OnKeySelected += key =>
-            SendMessage(new SelectStationRecord(key));
+            SendMessage(new SelectStationRecord(key) { Request = _window?.SelectionRequest ?? 0 }); // Pirate: records select
         _window.OnFiltersChanged += (type, filterValue) =>
             SendMessage(new SetStationRecordFilter(type, filterValue));
         _window.OnStatusSelected += status =>

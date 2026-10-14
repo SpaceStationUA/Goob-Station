@@ -18,6 +18,7 @@ public sealed class PsionicsRecordsConsoleState : BoundUserInterfaceState
     public GeneralStationRecord? StationRecord = null;
     public Content.Shared._Pirate.StationRecords.RecordPortraitData? Portrait;
     public List<Content.Shared._Pirate.StationRecords.RecordLogEntry>? Log;
+    public uint SelectionRequest;
     public readonly Dictionary<uint, string>? RecordListing;
     public readonly StationRecordsFilter? Filter;
 

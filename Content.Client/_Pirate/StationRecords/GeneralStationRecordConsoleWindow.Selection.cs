@@ -9,6 +9,8 @@ public sealed partial class GeneralStationRecordConsoleWindow
 {
     private RecordSelectionController<GeneralStationRecordConsoleState> _selection = default!;
 
+    public uint SelectionRequest => _selection.LastRequest;
+
     private void InitRecordSelection()
     {
         _selection = new RecordSelectionController<GeneralStationRecordConsoleState>(RecordListing);
@@ -23,6 +25,7 @@ public sealed partial class GeneralStationRecordConsoleWindow
                 last.MaxStringLength)
             {
                 Portrait = cached.Portrait,
+                Log = cached.Log,
             });
     }
 
@@ -58,7 +61,7 @@ public sealed partial class GeneralStationRecordConsoleWindow
 
     private bool AcceptServerState(GeneralStationRecordConsoleState state)
     {
-        if (_selection.AcceptServerState(state, state.SelectedKey, state.Record != null))
+        if (_selection.AcceptServerState(state, state.SelectedKey, state.SelectionRequest, state.Record != null))
             return true;
 
         if (state.RecordListing != null)
