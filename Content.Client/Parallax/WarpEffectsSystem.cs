@@ -109,7 +109,7 @@ public sealed class WarpEffectsSystem : EntitySystem
 
     private void ShowArrivalCard()
     {
-        var target = _arrivalTarget ?? _parallax.GetTransitionTo();
+        var target = _arrivalTarget ?? _parallax.GetTransitionTo() ?? _parallax.GetCurrent();
         if (target == null
             || !_prototypeManager.TryIndex<ParallaxPrototype>(target, out var proto)
             || proto.SectorName == string.Empty)

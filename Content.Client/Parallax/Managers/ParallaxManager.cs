@@ -67,7 +67,12 @@ public sealed class ParallaxManager : IParallaxManager
     private readonly Dictionary<ParallaxLayerConfig, Vector2> _drift = new(ReferenceEqualityComparer.Instance);
     private readonly Dictionary<ParallaxLayerConfig, Vector2> _screenScroll = new(ReferenceEqualityComparer.Instance);
 
-    private void UpdateTravel()
+    /// <summary>
+    /// Advances travel state, any fade and the warp by one frame. The system calls this once per
+    /// frame, independent of drawing: with parallax disabled, or on a map whose overlay does not
+    /// draw, a warp must still finish and a fade must settle.
+    /// </summary>
+    public void AdvanceFrame()
     {
         var now = _timing.RealTime.TotalSeconds;
 
@@ -117,9 +122,12 @@ public sealed class ParallaxManager : IParallaxManager
         return offset;
     }
 
+    /// <summary>
+    /// Reads travel state for drawing, without advancing it: safe to call more than once per
+    /// frame, so two viewports cannot step the same clock twice.
+    /// </summary>
     public (float scrollClock, float zoomAmount) SampleTravel()
     {
-        UpdateTravel();
         return ((float) _scrollClock, _zoom);
     }
 
@@ -301,6 +309,33 @@ public sealed class ParallaxManager : IParallaxManager
         _transitionFrom = null;
         _transitionTo = null;
         _transitionHyper = null;
+    }
+
+    /// <summary>
+    /// Drops everything that belongs to the current round: the settled sky override, any running
+    /// or queued fade, the warp in flight and the accumulated travel offsets. The settled sky is
+    /// client-only state the server cannot clear, so without this the next round would open on
+    /// the previous round's last sector instead of its own map's parallax.
+    /// </summary>
+    public void ResetRoundState()
+    {
+        _current = null;
+        _transitionFrom = null;
+        _transitionTo = null;
+        _transitionHyper = null;
+        _pendingFrom = null;
+        _pendingTo = null;
+        _pendingHyper = null;
+        _warping = false;
+        _warpProgress = 0f;
+        _speed = 1f;
+        _zoom = 1f;
+        _scrollClock = 0;
+        _lastStep = 0f;
+        _lastDt = 0f;
+        _travelSeeded = false;
+        _drift.Clear();
+        _screenScroll.Clear();
     }
 
     /// <summary>

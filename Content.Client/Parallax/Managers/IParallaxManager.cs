@@ -47,14 +47,26 @@ public interface IParallaxManager
     string? GetCurrent();
 
     /// <summary>
-    /// Advances the travel clock and returns what the overlay needs for this frame.
+    /// Advances travel state, any fade and the warp by one frame. The parallax system calls this
+    /// once per frame, independent of drawing: with parallax disabled, or on a map whose overlay
+    /// does not draw, a warp must still finish and a fade must settle.
     /// </summary>
-    /// <remarks>
-    /// Both values come from one call because sampling advances the clock. A crossfade draws two
-    /// parallaxes per frame, and they must share one clock or the outgoing one slides against the
-    /// incoming one.
-    /// </remarks>
+    void AdvanceFrame();
+
+    /// <summary>
+    /// Reads travel state for drawing, without advancing it: safe to call more than once per
+    /// frame, and a crossfade's two parallaxes must share one clock or the outgoing one slides
+    /// against the incoming one.
+    /// </summary>
     (float scrollClock, float zoomAmount) SampleTravel();
+
+    /// <summary>
+    /// Drops everything that belongs to the current round: the settled sky override, any running
+    /// or queued fade, the warp in flight and the accumulated travel offsets. Called at round
+    /// restart so the next round opens on its own map's parallax instead of the previous round's
+    /// last sector.
+    /// </summary>
+    void ResetRoundState();
 
     /// <summary>
     /// Advances a screen-relative layer by this frame's travel and returns its world offset.

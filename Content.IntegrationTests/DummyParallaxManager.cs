@@ -77,6 +77,14 @@ namespace Content.IntegrationTests
             return (0f, 1f);
         }
 
+        public void AdvanceFrame()
+        {
+        }
+
+        public void ResetRoundState()
+        {
+        }
+
         public Vector2 AdvanceScreenScroll(ParallaxLayerConfig config, Vector2 scrolling, Angle rotation)
         {
             return Vector2.Zero;

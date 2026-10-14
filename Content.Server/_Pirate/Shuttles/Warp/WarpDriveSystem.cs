@@ -398,11 +398,12 @@ public sealed class WarpDriveSystem : EntitySystem
         var active = ent.Comp.DriveState is WarpDriveState.Engaged or WarpDriveState.InTransit;
 
         var gridComp = EnsureComp<WarpDriveGridComponent>(gridUid);
-        if (gridComp.Active == active && gridComp.Range == ent.Comp.Range)
+        var range = active ? ent.Comp.Range : 0f;
+        if (gridComp.Active == active && gridComp.Range == range)
             return;
 
         gridComp.Active = active;
-        gridComp.Range = active ? ent.Comp.Range : 0f;
+        gridComp.Range = range;
         Dirty(gridUid, gridComp);
     }
 

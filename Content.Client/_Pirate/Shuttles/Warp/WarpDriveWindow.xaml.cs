@@ -291,7 +291,7 @@ public sealed partial class WarpDriveWindow : FancyWindow
                 ToggleButton.Text = cooling
                     ? Loc.GetString("warp-drive-window-cooling")
                     : Loc.GetString("warp-drive-window-spool-up");
-                ToggleButton.Disabled = cooling || !state.Powered;
+                ToggleButton.Disabled = cooling || !state.SpoolReady;
                 break;
 
             case WarpDriveState.Spooling:

@@ -3,6 +3,7 @@
 using System.Numerics;
 using Content.Client.Parallax.Data;
 using Content.Client.Parallax.Managers;
+using Content.Shared.GameTicking;
 using Content.Shared.Parallax;
 using Robust.Client.Graphics;
 using Robust.Shared.Map;
@@ -26,6 +27,25 @@ public sealed class ParallaxSystem : SharedParallaxSystem
         _overlay.AddOverlay(new ParallaxOverlay());
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnReload);
         SubscribeLocalEvent<ParallaxComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        // One advance per frame, before anything draws. Rendering must never be what moves the
+        // travel clock: with parallax disabled, or on a map whose overlay does not draw, a warp
+        // would never finish and a fade would never settle.
+        _parallax.AdvanceFrame();
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent args)
+    {
+        // The settled sky override and any fade or warp in flight are client-only state the
+        // server cannot clear; without this the next round opens on the previous round's last
+        // sector instead of its own map's parallax.
+        _parallax.ResetRoundState();
     }
 
     private void OnReload(PrototypesReloadedEventArgs obj)

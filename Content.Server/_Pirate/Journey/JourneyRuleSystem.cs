@@ -146,9 +146,10 @@ public sealed class JourneyRuleSystem : GameRuleSystem<JourneyRuleComponent>
         var sector = _proto.Index<JourneySectorPrototype>(sectorId);
 
         // Whatever held in the previous sector stops the moment the engines fire. Nothing lands on the
-        // crew in flight: majors, the arrival call and the filters all wait for the warp to exit.
+        // crew in flight: an empty allow-list (not null) holds the schedulers shut while the
+        // destination's rules wait for the warp to exit.
         _events.SectorBlockedEvents.Clear();
-        _events.SectorAllowedEvents = null;
+        _events.SectorAllowedEvents = new HashSet<string>();
         _events.SectorMajorEvents.Clear();
 
         component.Sector = sectorId;
