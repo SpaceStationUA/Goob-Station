@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Client.Graphics;
 using Content.Shared._Pirate.Shuttles.Warp;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -15,8 +16,15 @@ namespace Content.Client._Pirate.Shuttles.Warp;
 public sealed class WarpDriveHazeSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private static readonly ProtoId<ShaderPrototype> HazeShader = "WarpDriveHaze";
+
+    /// <summary>
+    ///     Stable id for this post-shader, so it can be replaced or removed without disturbing any
+    ///     other shader the same sprite may carry.
+    /// </summary>
+    private const string PostShaderId = "warp-drive-haze";
 
     private ShaderInstance _shader = default!;
 
@@ -38,30 +46,38 @@ public sealed class WarpDriveHazeSystem : EntitySystem
         while (query.MoveNext(out var uid, out var drive, out var sprite))
         {
             var active = drive.DriveState != WarpDriveState.Idle;
-            var want = active ? _shader : null;
-
-            if (sprite.PostShader == want)
+            if (active == _sprite.HasPostShader((uid, sprite), PostShaderId))
                 continue;
 
-            sprite.PostShader = want;
-            sprite.GetScreenTexture = active;
-            sprite.RaiseShaderEvent = active;
+            if (!active)
+            {
+                _sprite.RemovePostShader((uid, sprite), PostShaderId);
+                continue;
+            }
+
+            // The screen texture flag is per-entry now: without it the fragment shader samples an
+            // unbound texture and the shimmer reads as garbage. BeforeOutlines is the same stage
+            // the other entity effects (stealth, aura) use.
+            _sprite.SetPostShader((uid, sprite), new SpriteComponent.PostShaderArgs(PostShaderId, _shader)
+            {
+                GetScreenTexture = true,
+                RaiseShaderEvent = true,
+                Before = ContentPostShaderIds.BeforeOutlines,
+            });
         }
     }
 
     private void OnShutdown(Entity<WarpDriveComponent> ent, ref ComponentShutdown args)
     {
-        if (TryComp<SpriteComponent>(ent, out var sprite) && sprite.PostShader == _shader)
-        {
-            sprite.PostShader = null;
-            sprite.GetScreenTexture = false;
-            sprite.RaiseShaderEvent = false;
-        }
+        if (Terminating(ent.Owner) || !TryComp<SpriteComponent>(ent, out var sprite))
+            return;
+
+        _sprite.RemovePostShader((ent.Owner, sprite), PostShaderId);
     }
 
     private void OnRender(Entity<WarpDriveComponent> ent, ref BeforePostShaderRenderEvent args)
     {
-        if (args.Sprite.PostShader != _shader)
+        if (args.Id != PostShaderId)
             return;
 
         _shader.SetParameter("uIntensity", Intensity(ent.Comp));

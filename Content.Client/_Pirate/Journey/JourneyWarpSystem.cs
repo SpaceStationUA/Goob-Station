@@ -5,7 +5,6 @@ using Content.Client.Parallax.Data;
 using Content.Client.Parallax.Managers;
 using Content.Shared._Pirate.Journey;
 using Content.Shared.GameTicking;
-using Content.Shared.Parallax;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -119,6 +118,9 @@ public sealed class JourneyWarpSystem : EntitySystem
 
     /// <summary>
     ///     The parallax on screen: the one the last fade settled on, or else the local player's map's.
+    ///     Most stations carry no map ParallaxComponent, and their sky is the parallax system's
+    ///     default; the fade must start from exactly what is drawn, so the sky is asked from the
+    ///     parallax system rather than the component directly.
     /// </summary>
     private string? CurrentParallax()
     {
@@ -127,12 +129,11 @@ public sealed class JourneyWarpSystem : EntitySystem
 
         if (_players.LocalEntity is not { } local
             || !_entities.TryGetComponent<TransformComponent>(local, out var xform)
-            || xform.MapUid is not { } map
-            || !_entities.TryGetComponent<ParallaxComponent>(map, out var parallax))
+            || xform.MapUid is not { } map)
         {
             return null;
         }
 
-        return parallax.Parallax;
+        return _entities.System<ParallaxSystem>().GetParallax(map);
     }
 }
