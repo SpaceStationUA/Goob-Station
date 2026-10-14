@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Record photo backgrounds made for Pirate station (Tools/_Pirate/record_photos/make_backgrounds.py); civilian uses the NT logo from /Textures/Interface/Nano/ntlogo.svg.png, height chart labels drawn with GNU Unifont (/Fonts/unifont-17.0.03.otf)",
+  "copyright": "Pirate station; NT logo from /Textures/Interface/Nano/ntlogo.svg.png, labels drawn with GNU Unifont (/Fonts/unifont-17.0.03.otf)",
   "size": {
     "x": 240,
     "y": 240
