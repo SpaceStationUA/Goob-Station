@@ -40,6 +40,7 @@ public sealed partial class RecordHistoryPanel : BoxContainer
         _sprite = IoCManager.Resolve<IEntityManager>().System<SpriteSystem>();
         AddNoteButton.OnPressed += _ => OpenAddDialog();
         PrintButton.OnPressed += _ => OnPrint?.Invoke();
+        RecordConsoleSounds.Mute(PrintButton);
     }
 
     public void UpdateLog(uint recordKey, string name, IReadOnlyList<RecordLogEntry>? log, bool canEdit)
@@ -272,5 +273,6 @@ public sealed partial class RecordHistoryPanel : BoxContainer
         _dialog.OnConfirmed += text => OnAddNote?.Invoke(text);
         _dialog.OnClose += () => { _dialog = null; };
         _dialog.OpenCentered();
+        RecordConsoleSounds.AttachDialog(this, _dialog);
     }
 }

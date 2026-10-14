@@ -319,6 +319,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         var entry = new QuickDialogEntry(field, QuickDialogEntryType.LongText, prompt, placeholder);
         var entries = new List<QuickDialogEntry>() { entry };
         _reasonDialog = new DialogWindow(title, entries);
+        RecordConsoleSounds.AttachDialog(this, _reasonDialog);
 
         _reasonDialog.OnConfirmed += responses =>
         {

@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: soundCollection
+  id: RecordsConsoleButton
+  files:
+    - /Audio/_Pirate/Machines/RecordsConsole/terminal_button01.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/terminal_button02.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/terminal_button03.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/terminal_button04.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/terminal_button05.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/terminal_button06.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/terminal_button07.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/terminal_button08.ogg
+
+- type: soundCollection
+  id: RecordsConsoleKeyboardClicks
+  files:
+    - /Audio/_Pirate/Machines/RecordsConsole/keyboard_clicks_1.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/keyboard_clicks_2.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/keyboard_clicks_3.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/keyboard_clicks_4.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/keyboard_clicks_5.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/keyboard_clicks_6.ogg
+    - /Audio/_Pirate/Machines/RecordsConsole/keyboard_clicks_7.ogg

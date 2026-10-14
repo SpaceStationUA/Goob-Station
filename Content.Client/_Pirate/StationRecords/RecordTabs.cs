@@ -49,7 +49,7 @@ public sealed class RecordTabs
             Margin = recordSearch.Margin,
             Visible = false,
         };
-        _historySearch.OnTextChanged += args => _history.SetQuery(args.Text);
+        _historySearch.OnTextEntered += args => _history.SetQuery(args.Text);
 
         var parent = recordSearch.Parent!;
         parent.AddChild(_historySearch);

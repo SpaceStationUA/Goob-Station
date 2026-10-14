@@ -61,6 +61,8 @@ public sealed partial class RecordPortraitPanel : BoxContainer
 
         PrintButton.OnPressed += _ => Print();
         UploadButton.OnPressed += _ => OnUpload?.Invoke();
+        RecordConsoleSounds.Mute(PrintButton);
+        RecordConsoleSounds.Mute(UploadButton);
     }
 
     public RecordPhotoStyle PhotoStyle

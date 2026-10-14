@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Shared._Pirate.StationRecords;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 
@@ -135,6 +136,7 @@ public sealed class RecordSelectionController<TState> where TState : class
         _pendingSelections.Add(key);
         _lastSelectionRequest = _timing.RealTime;
         SelectionRequested?.Invoke(key);
+        RecordConsoleSounds.Play(_list, RecordConsoleSound.SwitchRecord);
 
         if (LastServerState is not { } last || !_stateCache.TryGetValue(key, out var cached))
             return;

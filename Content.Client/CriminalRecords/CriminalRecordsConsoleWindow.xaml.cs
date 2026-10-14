@@ -722,6 +722,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         var entry = new QuickDialogEntry(field, QuickDialogEntryType.LongText, prompt, placeholder);
         var entries = new List<QuickDialogEntry>() { entry };
         _reasonDialog = new DialogWindow(title, entries);
+        RecordConsoleSounds.AttachDialog(this, _reasonDialog); // Pirate: records interactive sounds
 
         _reasonDialog.OnConfirmed += responses =>
         {

@@ -5,6 +5,7 @@ using Content.Shared.CriminalRecords;
 using Content.Shared.CriminalRecords.Components;
 using Content.Shared.StationRecords;
 using Content.Shared._Pirate.StationRecords; // Pirate: record history
+using Content.Client._Pirate.StationRecords; // Pirate: records interactive sounds
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -64,6 +65,7 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
         _window.OnPrintLog += () => SendMessage(new RecordLogPrintMessage());
         #endregion
         _window.OnClose += Close;
+        RecordConsoleSounds.Attach(this, _window); // Pirate: records interactive sounds
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

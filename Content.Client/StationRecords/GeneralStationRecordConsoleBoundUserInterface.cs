@@ -6,6 +6,7 @@ using Robust.Client.GameObjects; // Pirate: records photos
 using Content.Shared.Access.Systems; // Pirate: records photos
 using Robust.Client.Player; // Pirate: records photos
 using Content.Shared._Pirate.StationRecords; // Pirate: records photos
+using Content.Client._Pirate.StationRecords; // Pirate: records interactive sounds
 
 namespace Content.Client.StationRecords;
 
@@ -27,6 +28,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 
         _window = new(Owner, _playerManager, _accessReader); // Pirate: records photos
         _window.OnClose += Close; // Pirate: records photos
+        RecordConsoleSounds.Attach(this, _window); // Pirate: records interactive sounds
         var uiSystem = EntMan.System<UserInterfaceSystem>(); // Pirate: records photos
         uiSystem.RegisterControl(this, _window); // Pirate: records photos
         if (uiSystem.TryGetPosition(Owner, UiKey, out var position)) // Pirate: records photos
