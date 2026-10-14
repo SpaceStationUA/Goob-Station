@@ -100,6 +100,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
+        ent.Comp.SelectionRequest = msg.Request; // Pirate: records select
         UpdateUserInterface(ent);
     }
     private void OnStatusFilterPressed(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordSetStatusFilter msg)
@@ -175,6 +176,8 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
                 return;
 
             _records.AddRecordEntry(existingKey, CreateCriminalRecordFromGeneral(generalRecord));
+            if (!string.IsNullOrWhiteSpace(generalRecord.Species))
+                _portraits.EnsureSnapshot(existingKey, BuildProfileFromGeneralRecord(generalRecord));
             ent.Comp.ActiveKey = existingKey.Id;
             _records.Synchronize(existingKey);
             UpdateUserInterface(ent);
@@ -224,6 +227,10 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         {
             return;
         }
+
+        // Delete orphaned portrait and history entries.
+        if (!_records.TryGetRecord<GeneralStationRecord>(key, out _))
+            _records.RemoveRecord(key);
 
         var name = _records.TryGetRecord<GeneralStationRecord>(key, out var stationRecord)
             ? stationRecord.Name
@@ -464,7 +471,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         }
 
         var age = Math.Clamp(msg.Age, speciesProto.MinAge, speciesProto.MaxAge);
-        var profile = BuildEditedProfile(stationRecord, criminalRecord, speciesProto.ID, age, msg.Gender);
+        var profile = BuildEditedProfile(stationRecord, _portraits.GetSnapshot(key.Value), speciesProto.ID, age, msg.Gender);
         var nationality = NormalizeNationality(msg.Nationality, profile);
         profile = profile.WithNationality(nationality);
         var employer = NormalizeEmployer(msg.Employer, profile);
@@ -486,9 +493,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             existingGeneral.Employer = stationRecord.Employer;
         }
 
-        if (criminalRecord.PortraitProfileSnapshot != null || criminalRecord.PortraitImageData is { Length: > 0 })
-            criminalRecord.PortraitProfileSnapshot = profile;
-
+        _portraits.UpdateSnapshot(key.Value, profile);
         _records.Synchronize(key.Value);
     }
 
@@ -533,16 +538,15 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
 
     private HumanoidCharacterProfile BuildEditedProfile(
         GeneralStationRecord stationRecord,
-        CriminalRecord criminalRecord,
+        HumanoidCharacterProfile? portraitSnapshot,
         string species,
         int age,
         Gender gender)
     {
-        var sameSpeciesSnapshot = criminalRecord.PortraitProfileSnapshot != null
-            && criminalRecord.PortraitProfileSnapshot.Species == species;
+        var sameSpeciesSnapshot = portraitSnapshot != null && portraitSnapshot.Species == species;
 
         var profile = sameSpeciesSnapshot
-            ? new HumanoidCharacterProfile(criminalRecord.PortraitProfileSnapshot!)
+            ? new HumanoidCharacterProfile(portraitSnapshot!)
             : HumanoidCharacterProfile.DefaultWithSpecies(species).WithName(stationRecord.Name);
 
         return profile
@@ -691,6 +695,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         }
 
         var state = new CriminalRecordsConsoleState(listing, console.Filter);
+        state.SelectionRequest = console.SelectionRequest; // Pirate: records select
         if (console.ActiveKey is { } id)
         {
             // get records to display when a crewmember is selected
@@ -701,7 +706,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             {
                 state.StationRecord = stationRecord;
                 state.SelectedKey = id;
-                _portraits.EnsureNumber(key, state.CriminalRecord); // Pirate: records photos
+                state.Portrait = _portraits.GetPortrait(key); // Pirate: records photos
                 state.Log = _logs.GetLog(key, RecordLogBook.Security); // Pirate: record history
             }
             else
@@ -720,15 +725,10 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     #region Pirate: records photos
     private CriminalRecord CreateCriminalRecordFromGeneral(GeneralStationRecord record)
     {
-        var criminalRecord = new CriminalRecord
+        return new CriminalRecord
         {
             GeneralRecordSnapshot = record with { }
         };
-
-        if (!string.IsNullOrWhiteSpace(record.Species))
-            criminalRecord.PortraitProfileSnapshot = BuildProfileFromGeneralRecord(record);
-
-        return criminalRecord;
     }
 
     private HumanoidCharacterProfile BuildProfileFromGeneralRecord(GeneralStationRecord record)

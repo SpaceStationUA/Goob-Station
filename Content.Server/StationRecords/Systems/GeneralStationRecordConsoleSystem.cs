@@ -105,6 +105,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     private void OnKeySelected(Entity<GeneralStationRecordConsoleComponent> ent, ref SelectStationRecord msg)
     {
         ent.Comp.ActiveKey = msg.SelectedKey;
+        ent.Comp.SelectionRequest = msg.Request; // Pirate: records select
         UpdateUserInterface(ent);
     }
 
@@ -204,7 +205,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         _stationRecords.TryGetRecord<CriminalRecord>(key, out var criminalRecord);
 
         var age = Math.Clamp(msg.Age, speciesProto.MinAge, speciesProto.MaxAge);
-        var profile = BuildEditedProfile(generalRecord, criminalRecord, speciesProto.ID, age, msg.Gender);
+        var profile = BuildEditedProfile(generalRecord, _portraits.GetSnapshot(key), speciesProto.ID, age, msg.Gender);
         var nationality = NormalizeNationality(msg.Nationality, profile);
         profile = profile.WithNationality(nationality);
         var employer = NormalizeEmployer(msg.Employer, profile);
@@ -217,13 +218,9 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         generalRecord.Employer = employer;
 
         if (criminalRecord != null)
-        {
             criminalRecord.GeneralRecordSnapshot = generalRecord with { };
 
-            if (criminalRecord.PortraitProfileSnapshot != null || criminalRecord.PortraitImageData is { Length: > 0 })
-                criminalRecord.PortraitProfileSnapshot = profile;
-        }
-
+        _portraits.UpdateSnapshot(key, profile);
         _stationRecords.Synchronize(key);
     }
 
@@ -278,12 +275,11 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
     private HumanoidCharacterProfile BuildEditedProfile(
         GeneralStationRecord generalRecord,
-        CriminalRecord? criminalRecord,
+        HumanoidCharacterProfile? portraitSnapshot,
         string species,
         int age,
         Gender gender)
     {
-        var portraitSnapshot = criminalRecord?.PortraitProfileSnapshot;
         var sameSpeciesSnapshot = portraitSnapshot != null && portraitSnapshot.Species == species;
 
         var profile = sameSpeciesSnapshot
@@ -470,6 +466,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         var newState = new GeneralStationRecordConsoleState(console.ActiveKey, record, listing, console.Filter,
             CanManageRecords(ent), ent.Comp.MaxStringLength); // Pirate: records photos
+        newState.SelectionRequest = console.SelectionRequest; // Pirate: records select
         if (record != null) // Pirate: records photos
         {
             newState.Portrait = _portraits.GetPortrait(key); // Pirate: records photos

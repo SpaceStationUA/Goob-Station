@@ -3,6 +3,7 @@
 using System.Linq;
 using Content.Shared._Pirate.StationRecords;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Client._Pirate.StationRecords;
@@ -13,8 +14,9 @@ public sealed class RecordSelectionController<TState> where TState : class
 
     private readonly ItemList _list;
     private readonly IGameTiming _timing;
+    private readonly IRobustRandom _random;
 
-    private readonly List<uint> _pendingSelections = new();
+    private readonly List<(uint Key, uint Request)> _pendingSelections = new();
     private readonly Dictionary<uint, TState> _stateCache = new();
     private TimeSpan _lastSelectionRequest;
     private uint? _serverSelectedKey;
@@ -28,17 +30,21 @@ public sealed class RecordSelectionController<TState> where TState : class
 
     public bool ApplyingLocalState { get; private set; }
 
-    public uint? RequestedKey => _pendingSelections.Count > 0 ? _pendingSelections[^1] : _serverSelectedKey;
+    public uint? RequestedKey => _pendingSelections.Count > 0 ? _pendingSelections[^1].Key : _serverSelectedKey;
+
+    // The server echoes this ID to correlate selection replies.
+    public uint LastRequest { get; private set; }
 
     public RecordSelectionController(ItemList list)
     {
         _list = list;
         _timing = IoCManager.Resolve<IGameTiming>();
+        _random = IoCManager.Resolve<IRobustRandom>();
         _list.OnItemSelected += OnItemSelected;
         _list.OnItemDeselected += OnItemDeselected;
     }
 
-    public bool AcceptServerState(TState state, uint? selectedKey, bool hasRecord)
+    public bool AcceptServerState(TState state, uint? selectedKey, uint handledRequest, bool hasRecord)
     {
         if (ApplyingLocalState)
             return true;
@@ -53,10 +59,10 @@ public sealed class RecordSelectionController<TState> where TState : class
         if (_pendingSelections.Count == 0)
             return true;
 
-        var confirmed = selectedKey is { } key ? _pendingSelections.IndexOf(key) : -1;
+        // Match request IDs because one reply may confirm several queued clicks.
+        var confirmed = _pendingSelections.FindIndex(p => p.Request == handledRequest);
         if (confirmed >= 0)
         {
-            // Server replies are ordered, so this also confirms earlier clicks.
             _pendingSelections.RemoveRange(0, confirmed + 1);
         }
         else if (serverChanged || _timing.RealTime - _lastSelectionRequest > PendingSelectionTimeout)
@@ -133,7 +139,8 @@ public sealed class RecordSelectionController<TState> where TState : class
         if (key == RequestedKey)
             return;
 
-        _pendingSelections.Add(key);
+        LastRequest = (uint) _random.Next(1, int.MaxValue);
+        _pendingSelections.Add((key, LastRequest));
         _lastSelectionRequest = _timing.RealTime;
         SelectionRequested?.Invoke(key);
         RecordConsoleSounds.Play(_list, RecordConsoleSound.SwitchRecord);

@@ -2,6 +2,7 @@
 
 using Content.Client._Pirate.StationRecords;
 using Content.Shared.CriminalRecords;
+using Content.Shared.Preferences;
 using Content.Shared.StationRecords;
 using Robust.Shared.Enums;
 
@@ -10,6 +11,8 @@ namespace Content.Client.CriminalRecords;
 public sealed partial class CriminalRecordsConsoleWindow
 {
     private RecordSelectionController<CriminalRecordsConsoleState> _selection = default!;
+
+    public uint SelectionRequest => _selection.LastRequest;
     private RecordFieldWidths _fieldWidths = default!;
 
     private uint? _identityEditorKey;
@@ -25,13 +28,15 @@ public sealed partial class CriminalRecordsConsoleWindow
                 SelectedKey = cached.SelectedKey,
                 StationRecord = cached.StationRecord,
                 CriminalRecord = cached.CriminalRecord,
+                Portrait = cached.Portrait,
+                Log = cached.Log,
                 FilterStatus = last.FilterStatus,
             });
     }
 
     private bool AcceptServerState(CriminalRecordsConsoleState state)
     {
-        if (_selection.AcceptServerState(state, state.SelectedKey, state is { StationRecord: not null, CriminalRecord: not null }))
+        if (_selection.AcceptServerState(state, state.SelectedKey, state.SelectionRequest, state is { StationRecord: not null, CriminalRecord: not null }))
             return true;
 
         NoRecords.Visible = state.RecordListing == null || state.RecordListing.Count == 0;
@@ -39,9 +44,9 @@ public sealed partial class CriminalRecordsConsoleWindow
         return false;
     }
 
-    private void RefreshRecordIdentityEditor(uint key, GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
+    private void RefreshRecordIdentityEditor(uint key, GeneralStationRecord stationRecord, HumanoidCharacterProfile? snapshot)
     {
-        var profile = BuildRecordIdentityProfile(stationRecord, criminalRecord);
+        var profile = BuildRecordIdentityProfile(stationRecord, snapshot);
         var source = (profile.Species, profile.Nationality, profile.Employer, profile.Gender, profile.Age,
             stationRecord.Species, stationRecord.Nationality, stationRecord.Employer, stationRecord.Age);
 

@@ -54,6 +54,8 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
     private DialogWindow? _reasonDialog;
 
     private readonly RecordSelectionController<PsionicsRecordsConsoleState> _selection;
+
+    public uint SelectionRequest => _selection.LastRequest;
     private readonly RecordFieldWidths _fieldWidths;
     private readonly RecordTabs _tabs;
     private readonly SpriteSystem _spriteSystem;
@@ -110,6 +112,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
                 StationRecord = cached.StationRecord,
                 PsionicsRecord = cached.PsionicsRecord,
                 Portrait = cached.Portrait,
+                Log = cached.Log,
             });
 
         _spriteSystem = IoCManager.Resolve<IEntityManager>().System<SpriteSystem>();
@@ -155,7 +158,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         var hasRecords = state.RecordListing != null && state.RecordListing.Count > 0;
 
         // Ignore stale replies so the latest selection stays active.
-        if (!_selection.AcceptServerState(state, state.SelectedKey, state is { PsionicsRecord: not null, StationRecord: not null }))
+        if (!_selection.AcceptServerState(state, state.SelectedKey, state.SelectionRequest, state is { PsionicsRecord: not null, StationRecord: not null }))
         {
             NoRecords.Visible = !hasRecords;
             _selection.SetListing(state.RecordListing);

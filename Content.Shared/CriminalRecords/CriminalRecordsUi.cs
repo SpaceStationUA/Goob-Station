@@ -44,6 +44,8 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     public readonly Dictionary<uint, string>? RecordListing;
     public readonly StationRecordsFilter? Filter;
     public List<Content.Shared._Pirate.StationRecords.RecordLogEntry>? Log; // Pirate: record history
+    public Content.Shared._Pirate.StationRecords.RecordPortraitData? Portrait; // Pirate: records photos
+    public uint SelectionRequest; // Pirate: records select
 
     public CriminalRecordsConsoleState(Dictionary<uint, string>? recordListing, StationRecordsFilter? newFilter)
     {

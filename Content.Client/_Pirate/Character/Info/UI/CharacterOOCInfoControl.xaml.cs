@@ -2,6 +2,7 @@
 // SPDX-FileCopyrightText: 2026 SpaceStationUA
 // SPDX-License-Identifier: MIT
 
+using Content.Shared._Pirate.Character.Info;
 using Content.Shared._Pirate.Character.Info.Components;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
@@ -20,7 +21,7 @@ public sealed partial class CharacterOOCInfoControl : Control
         RobustXamlLoader.Load(this);
     }
 
-    public void SetCharacter(EntityUid? target, IEntityManager entityManager, EntityUid viewer)
+    public void SetCharacter(EntityUid? target, IEntityManager entityManager, EntityUid viewer, CharacterInspectInfoEvent? info = null)
     {
         if (target == null)
         {
@@ -32,13 +33,14 @@ public sealed partial class CharacterOOCInfoControl : Control
         var mind = mindSystem.GetMind(target.Value);
         CharacterView.SetCharacter(
             target,
-            entityManager.System<SharedJobSystem>().MindTryGetJobName(mind, out var jobName)
+            info?.Job ?? (entityManager.System<SharedJobSystem>().MindTryGetJobName(mind, out var jobName)
                 ? jobName
-                : string.Empty,
+                : string.Empty),
             viewer);
 
-        string? oocNotes = null;
-        if (mind != null
+        var oocNotes = string.IsNullOrEmpty(info?.OOCNotes) ? null : info?.OOCNotes;
+        if (oocNotes == null
+            && mind != null
             && entityManager.TryGetComponent(mind.Value, out RoleplayInfoComponent? roleplayInfo)
             && !string.IsNullOrEmpty(roleplayInfo.OOCNotes))
         {

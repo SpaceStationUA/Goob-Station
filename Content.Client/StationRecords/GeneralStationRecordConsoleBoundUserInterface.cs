@@ -36,7 +36,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         else
             _window.OpenCentered(); // Pirate: records photos
         _window.OnKeySelected += key =>
-            SendMessage(new SelectStationRecord(key));
+            SendMessage(new SelectStationRecord(key) { Request = _window?.SelectionRequest ?? 0 }); // Pirate: records select
         _window.OnFiltersChanged += (type, filterValue) =>
             SendMessage(new SetStationRecordFilter(type, filterValue));
         #region Pirate: records photos

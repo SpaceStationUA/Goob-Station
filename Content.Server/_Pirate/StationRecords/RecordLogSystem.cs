@@ -70,10 +70,15 @@ public sealed class RecordLogSystem : EntitySystem
     }
     private void OnGeneralRecordCreated(AfterGeneralRecordCreatedEvent args)
     {
+        if (args.Profile.RecordBackgrounds.Count == 0)
+            return;
+
         foreach (var background in args.Profile.RecordBackgrounds)
         {
             AddBackground(args.Key, background);
         }
+
+        _records.Synchronize(args.Key);
     }
 
     private void AddBackground(StationRecordKey key, RecordBackgroundEntry background)
@@ -83,7 +88,7 @@ public sealed class RecordLogSystem : EntitySystem
             return;
 
         var title = background.Title.Trim();
-        if (Add(key, background.Book, RecordLogKind.Background, title.Length > 0 ? title : null, text, null, null)
+        if (AddEntry(key, background.Book, RecordLogKind.Background, title.Length > 0 ? title : null, text, null, null)
             is not { } entry)
         {
             return;
@@ -116,8 +121,20 @@ public sealed class RecordLogSystem : EntitySystem
         {
             logs.Book(book).Add(entry with { Id = logs.NextId++, Archived = true });
         }
+
+        _records.Synchronize(key);
     }
     public RecordLogEntry? Add(StationRecordKey key, RecordLogBook book, RecordLogKind kind, string? topic,
+        string message, EntityUid? author, EntityUid? origin, string? status = null)
+    {
+        var entry = AddEntry(key, book, kind, topic, message, author, origin, status);
+        if (entry != null)
+            _records.Synchronize(key);
+
+        return entry;
+    }
+
+    private RecordLogEntry? AddEntry(StationRecordKey key, RecordLogBook book, RecordLogKind kind, string? topic,
         string message, EntityUid? author, EntityUid? origin, string? status = null)
     {
         if (!key.IsValid())
@@ -169,6 +186,7 @@ public sealed class RecordLogSystem : EntitySystem
 
         removed = entries[index];
         entries.RemoveAt(index);
+        _records.Synchronize(key);
         return true;
     }
     public void Print(EntityUid console, EntityUid user, StationRecordKey key, RecordLogBook book)

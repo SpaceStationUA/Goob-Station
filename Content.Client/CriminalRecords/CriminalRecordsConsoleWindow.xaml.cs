@@ -328,7 +328,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         {
             #region Pirate: records photos
             if (state.SelectedKey is { } selectedKey)
-                PopulateRecordContainer(selectedKey, state.StationRecord, state.CriminalRecord);
+                PopulateRecordContainer(selectedKey, state.StationRecord, state.CriminalRecord, state.Portrait);
             else
                 Portrait.ClearPortrait(); // Pirate: records photos
             #endregion
@@ -354,14 +354,14 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         _selection.SetListing(listing); // Pirate: records photos
     }
 
-    private void PopulateRecordContainer(uint key, GeneralStationRecord stationRecord, CriminalRecord criminalRecord) // Pirate: records photos
+    private void PopulateRecordContainer(uint key, GeneralStationRecord stationRecord, CriminalRecord criminalRecord, RecordPortraitData? portrait) // Pirate: records photos
     {
         var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown");
         var na = Loc.GetString("generic-not-available-shorthand");
 
         #region Pirate: records photos
-        Portrait.SetPortrait(key, RecordPortraitData.FromRecord(criminalRecord), stationRecord.JobPrototype, stationRecord.Name, stationRecord.Age); // Pirate: records photos
-        RefreshRecordIdentityEditor(key, stationRecord, criminalRecord); // Pirate: records photos
+        Portrait.SetPortrait(key, portrait, stationRecord.JobPrototype, stationRecord.Name, stationRecord.Age); // Pirate: records photos
+        RefreshRecordIdentityEditor(key, stationRecord, portrait?.Snapshot); // Pirate: records photos
         PersonJobIcon.Texture = null;
         #endregion
 
@@ -414,13 +414,13 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         GenderButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-neuter-text"), (int) Gender.Neuter);
     }
 
-    private HumanoidCharacterProfile BuildRecordIdentityProfile(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
+    private HumanoidCharacterProfile BuildRecordIdentityProfile(GeneralStationRecord stationRecord, HumanoidCharacterProfile? snapshot)
     {
         var effectiveSpecies = string.IsNullOrWhiteSpace(stationRecord.Species)
             ? (string) SharedHumanoidAppearanceSystem.DefaultSpecies
             : stationRecord.Species;
-        var profile = criminalRecord.PortraitProfileSnapshot != null
-            ? new HumanoidCharacterProfile(criminalRecord.PortraitProfileSnapshot)
+        var profile = snapshot != null
+            ? new HumanoidCharacterProfile(snapshot)
             : HumanoidCharacterProfile.DefaultWithSpecies(effectiveSpecies);
 
         return profile
