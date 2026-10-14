@@ -7,7 +7,6 @@ using NUnit.Framework;
 using Robust.Server;
 using Robust.Shared.Log;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests._Pirate.Shuttles.Warp;
@@ -61,9 +60,8 @@ public sealed class WarpDriveRangeTest : RobustIntegrationTest
         {
             var entMan = server.ResolveDependency<IEntityManager>();
             var shuttle = entMan.System<SharedShuttleSystem>();
-            var mapManager = server.ResolveDependency<IMapManager>();
 
-            var grid = SpawnGridWithBluespaceDrive(entMan, mapManager);
+            var grid = SpawnGridWithBluespaceDrive(entMan);
 
             Assert.That(shuttle.GetFTLRange(grid), Is.EqualTo(BluespaceRange));
         });
@@ -81,9 +79,8 @@ public sealed class WarpDriveRangeTest : RobustIntegrationTest
         {
             var entMan = server.ResolveDependency<IEntityManager>();
             var shuttle = entMan.System<SharedShuttleSystem>();
-            var mapManager = server.ResolveDependency<IMapManager>();
 
-            var grid = SpawnGridWithBluespaceDrive(entMan, mapManager);
+            var grid = SpawnGridWithBluespaceDrive(entMan);
             var warp = entMan.AddComponent<WarpDriveGridComponent>(grid);
 
             foreach (var (active, expected) in steps)
@@ -117,13 +114,13 @@ public sealed class WarpDriveRangeTest : RobustIntegrationTest
         return options;
     }
 
-    private static EntityUid SpawnGridWithBluespaceDrive(IEntityManager entMan, IMapManager mapManager)
+    private static EntityUid SpawnGridWithBluespaceDrive(IEntityManager entMan)
     {
         var mapSystem = entMan.System<SharedMapSystem>();
         mapSystem.CreateMap(out var mapId);
 
         // CreateGridEntity parents the grid to the map, which is all GetFTLRange needs.
-        var grid = mapManager.CreateGridEntity(mapSystem.GetMapOrInvalid(mapId));
+        var grid = mapSystem.CreateGridEntity(mapId);
 
         // CreateGridEntity already adds an FTLDriveComponent, so this sets that one up instead of adding another.
         var ftl = entMan.GetComponent<FTLDriveComponent>(grid.Owner);
