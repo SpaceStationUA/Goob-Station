@@ -143,9 +143,10 @@ public sealed class WarpEffectsSystem : EntitySystem
 
         if (warping && !_wasWarping)
         {
-            // The transition is already requested here, so its target can be captured before the
-            // fade clears it.
-            _arrivalTarget = _parallax.GetTransitionTo();
+            // The transition is already requested here. Take the requested target, not the live
+            // one: it may still be queued for loading, and by card time the fade has settled and
+            // the live value is gone. Falling back to GetCurrent() would name the old sector.
+            _arrivalTarget = _parallax.GetRequested();
             TriggerShockwave(EntryStrength);
             StopTransitHum();
             _humLoop = _audio.PlayGlobal(TransitHumSound, Filter.Local(), false, TransitHumParams)?.Entity;

@@ -47,6 +47,13 @@ public interface IParallaxManager
     string? GetCurrent();
 
     /// <summary>
+    ///     The sky the ship is heading to: the running fade's target, or a queued one still
+    ///     loading. Null when neither is live. This is the name the arrival card must use even
+    ///     before the fade starts — <see cref="GetCurrent"/> is the sky left behind.
+    /// </summary>
+    string? GetRequested();
+
+    /// <summary>
     /// Advances travel state, any fade and the warp by one frame. The parallax system calls this
     /// once per frame, independent of drawing: with parallax disabled, or on a map whose overlay
     /// does not draw, a warp must still finish and a fade must settle.

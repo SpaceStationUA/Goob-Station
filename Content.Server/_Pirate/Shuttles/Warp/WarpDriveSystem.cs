@@ -7,9 +7,11 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Shuttles.Events;
+using Content.Shared._NF.Shuttles;
 using Content.Shared._Pirate.Journey;
 using Content.Shared._Pirate.Shuttles.Warp;
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.GameTicking.Components;
@@ -18,6 +20,7 @@ using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -47,6 +50,7 @@ public sealed class WarpDriveSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly PowerNetSystem _powerNet = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private static readonly TimeSpan UiUpdateInterval = TimeSpan.FromMilliseconds(500);
 
@@ -70,6 +74,11 @@ public sealed class WarpDriveSystem : EntitySystem
 
         SubscribeLocalEvent<WarpDriveGridComponent, FTLStartedEvent>(OnFTLStarted);
         SubscribeLocalEvent<WarpDriveGridComponent, FTLCompletedEvent>(OnFTLCompleted);
+
+        // A regular console FTL is still field time when the drive is held: the core cooks
+        // through the crossing exactly as it does on a journey transit, so it is gated up
+        // front, before the jump commits.
+        SubscribeLocalEvent<WarpDriveGridComponent, ConsoleFTLAttemptEvent>(OnConsoleFTLAttempt);
     }
 
     public override void Update(float frameTime)
@@ -447,6 +456,48 @@ public sealed class WarpDriveSystem : EntitySystem
         drive.Comp.DriveState = WarpDriveState.Engaged;
         SyncGrid(drive);
         Dirty(drive);
+    }
+
+    /// <summary>
+    ///     Refuses a console FTL whose crossing the core cannot survive. The journey commit has
+    ///     the same mercy; without it here, a hot drive could detonate mid-transit on an ordinary
+    ///     bluespace hop.
+    /// </summary>
+    private void OnConsoleFTLAttempt(Entity<WarpDriveGridComponent> ent, ref ConsoleFTLAttemptEvent args)
+    {
+        if (args.Cancelled || !TryFindDriveOnGrid(ent.Owner, out var drive))
+            return;
+
+        // Only a held field cooks; a cold drive's hop is not this machine's business.
+        if (drive.Comp.DriveState != WarpDriveState.Engaged)
+            return;
+
+        var crossing = CrossingTime(ent.Owner);
+        if (drive.Comp.Heat + (float) crossing.TotalSeconds * drive.Comp.HeatRiseRate < 1f)
+            return;
+
+        args.Cancelled = true;
+        args.Reason = Loc.GetString("warp-drive-notice-too-hot");
+        SetNotice(drive, args.Reason);
+        Log.Info($"warp drive {drive.Owner} refused FTL: heat {drive.Comp.Heat:P0}, crossing {crossing.TotalSeconds:0} s");
+    }
+
+    /// <summary>
+    ///     Total field time a console FTL spends, startup through arrival: the same numbers the
+    ///     shuttle system will use, read early. Per-drive data wins over the shuttles' defaults.
+    /// </summary>
+    private TimeSpan CrossingTime(EntityUid grid)
+    {
+        var startup = _cfg.GetCVar(CCVars.FTLStartupTime);
+        var travel = _cfg.GetCVar(CCVars.FTLTravelTime);
+
+        if (TryComp<FTLDriveComponent>(grid, out var ftl))
+        {
+            startup = ftl.Data.StartupTime ?? startup;
+            travel = ftl.Data.TravelTime ?? travel;
+        }
+
+        return TimeSpan.FromSeconds(startup + travel);
     }
 
     private bool TryFindDriveOnGrid(EntityUid grid, out Entity<WarpDriveComponent> drive)

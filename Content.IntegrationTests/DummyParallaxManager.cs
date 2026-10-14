@@ -72,6 +72,11 @@ namespace Content.IntegrationTests
             return null;
         }
 
+        public string? GetRequested()
+        {
+            return null;
+        }
+
         public (float scrollClock, float zoomAmount) SampleTravel()
         {
             return (0f, 1f);

@@ -4,6 +4,7 @@ using Content.Client.Parallax;
 using Content.Client.Parallax.Data;
 using Content.Client.Parallax.Managers;
 using Content.Shared._Pirate.Journey;
+using Content.Shared.GameTicking;
 using Content.Shared.Parallax;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
@@ -39,6 +40,18 @@ public sealed class JourneyWarpSystem : EntitySystem
         base.Initialize();
         SubscribeNetworkEvent<JourneySectorJumpEvent>(OnJump);
         SubscribeNetworkEvent<JourneySectorSetEvent>(OnSet);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+    }
+
+    /// <summary>
+    ///     A jump still waiting out its run-up when the round ends must not fire into the next
+    ///     one: the manager clears its own state at restart, but this timer lives here.
+    /// </summary>
+    private void OnRoundRestart(RoundRestartCleanupEvent args)
+    {
+        _pendingParallax = null;
+        _pendingDuration = 0f;
+        _warpAt = 0;
     }
 
     /// <summary>

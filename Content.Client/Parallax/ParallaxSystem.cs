@@ -30,13 +30,15 @@ public sealed class ParallaxSystem : SharedParallaxSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
 
-    public override void Update(float frameTime)
+    public override void FrameUpdate(float frameTime)
     {
-        base.Update(frameTime);
+        base.FrameUpdate(frameTime);
 
-        // One advance per frame, before anything draws. Rendering must never be what moves the
-        // travel clock: with parallax disabled, or on a map whose overlay does not draw, a warp
-        // would never finish and a fade would never settle.
+        // One advance per rendered frame, before anything draws. Rendering must never be what
+        // moves the travel clock: with parallax disabled, or on a map whose overlay does not
+        // draw, a warp would never finish and a fade would never settle. FrameUpdate, not
+        // Update: the offsets are consumed by drawing, so they belong to render frames, and
+        // FrameUpdate runs exactly once per frame however many simulation ticks it carries.
         _parallax.AdvanceFrame();
     }
 

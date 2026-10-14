@@ -67,6 +67,12 @@ public sealed class ParallaxManager : IParallaxManager
     private readonly Dictionary<ParallaxLayerConfig, Vector2> _drift = new(ReferenceEqualityComparer.Instance);
     private readonly Dictionary<ParallaxLayerConfig, Vector2> _screenScroll = new(ReferenceEqualityComparer.Instance);
 
+    // The frame each config was last advanced on. Drawing reads offsets; when several viewports
+    // (multiz depths, camera consoles) draw the same layer in one frame, only the first call
+    // advances it — without this the sky scrolls once per viewport, not once per frame.
+    private readonly Dictionary<ParallaxLayerConfig, uint> _driftFrame = new(ReferenceEqualityComparer.Instance);
+    private readonly Dictionary<ParallaxLayerConfig, uint> _screenScrollFrame = new(ReferenceEqualityComparer.Instance);
+
     /// <summary>
     /// Advances travel state, any fade and the warp by one frame. The system calls this once per
     /// frame, independent of drawing: with parallax disabled, or on a map whose overlay does not
@@ -102,6 +108,10 @@ public sealed class ParallaxManager : IParallaxManager
     public Vector2 AdvanceDrift(ParallaxLayerConfig config, Vector2 drift, Angle rotation)
     {
         var offset = _drift.GetValueOrDefault(config);
+        if (_driftFrame.TryGetValue(config, out var frame) && frame == _timing.CurFrame)
+            return offset;
+
+        _driftFrame[config] = _timing.CurFrame;
         offset += Vector2.Transform(drift, Matrix3x2.CreateRotation((float) (double) rotation)) * _lastDt;
         _drift[config] = offset;
         return offset;
@@ -117,6 +127,10 @@ public sealed class ParallaxManager : IParallaxManager
     public Vector2 AdvanceScreenScroll(ParallaxLayerConfig config, Vector2 scrolling, Angle rotation)
     {
         var offset = _screenScroll.GetValueOrDefault(config);
+        if (_screenScrollFrame.TryGetValue(config, out var frame) && frame == _timing.CurFrame)
+            return offset;
+
+        _screenScrollFrame[config] = _timing.CurFrame;
         offset += Vector2.Transform(scrolling, Matrix3x2.CreateRotation((float) (double) rotation)) * _lastStep;
         _screenScroll[config] = offset;
         return offset;
@@ -336,6 +350,8 @@ public sealed class ParallaxManager : IParallaxManager
         _travelSeeded = false;
         _drift.Clear();
         _screenScroll.Clear();
+        _driftFrame.Clear();
+        _screenScrollFrame.Clear();
     }
 
     /// <summary>
@@ -349,6 +365,8 @@ public sealed class ParallaxManager : IParallaxManager
     public string? GetTransitionTo() => _transitionTo;
 
     public string? GetTransitionHyper() => _transitionHyper;
+
+    public string? GetRequested() => _transitionTo ?? _pendingTo;
 
     public ParallaxLayerPrepared[] GetParallaxLayers(string name)
     {
