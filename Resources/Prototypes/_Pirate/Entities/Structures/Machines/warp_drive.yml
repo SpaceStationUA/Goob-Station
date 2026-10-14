@@ -34,6 +34,9 @@
   # hold the field, and an APC tops out at 10 kW, so the drive has to be wired into HV, in practice a SMES.
   - type: PowerConsumer
     voltage: High
+    # Idle draw lives here, not in code: the save test spawns every prototype and fails any
+    # machine whose spawn mutates its components. Runtime phases set their own rates.
+    drawRate: 2000
   - type: NodeContainer
     examinable: true
     nodes:

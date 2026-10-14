@@ -152,8 +152,9 @@ public sealed class WarpDriveSystem : EntitySystem
 
     private void OnInit(Entity<WarpDriveComponent> ent, ref ComponentInit args)
     {
-        // The idle draw shows on the HV monitor even before anyone touches the drive.
-        SetDrawRate(ent, ent.Comp.IdlePowerDraw);
+        // The idle draw comes from the prototype's own drawRate: setting it here would mutate
+        // the component on spawn, which the prototype save test forbids. Runtime phases set
+        // their own rates when they start.
         UpdatePowered(ent);
         SyncGrid(ent);
     }
