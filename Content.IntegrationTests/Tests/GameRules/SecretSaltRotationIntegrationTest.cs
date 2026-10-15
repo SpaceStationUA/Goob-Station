@@ -22,6 +22,9 @@ public sealed class SecretSaltRotationIntegrationTest
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Dirty = true,
+            Fresh = true,
+            Destructive = true,
+            AsynchronousDatabase = true,
             DummyTicker = false,
             Connected = true,
             InLobby = true
@@ -31,6 +34,8 @@ public sealed class SecretSaltRotationIntegrationTest
         await server.WaitIdleAsync();
         await server.WaitAssertion(() =>
         {
+            Assert.That(server.CfgMan.GetCVar(CCVars.DatabaseSynchronous), Is.False,
+                "This test must queue unrelated background SQLite operations.");
             server.CfgMan.SetCVar(CCVars.GridFill, true);
             // Reproduce the server where Salt is the default preset:
             // the one-round Secret substitution must return to Salt.
@@ -118,6 +123,10 @@ public sealed class SecretSaltRotationIntegrationTest
         });
 
         await pair.CleanReturnAsync();
+        // Non-reusable pairs skip the pool's automatic log check on disposal,
+        // so explicitly retain the same error-log assertions.
+        Assert.That(pair.ServerLogHandler.FailingLogs, Is.Empty);
+        Assert.That(pair.ClientLogHandler.FailingLogs, Is.Empty);
     }
 
     /// <summary>
