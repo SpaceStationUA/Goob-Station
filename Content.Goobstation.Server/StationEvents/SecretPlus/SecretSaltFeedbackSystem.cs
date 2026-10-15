@@ -21,18 +21,18 @@ namespace Content.Goobstation.Server.StationEvents.SecretPlus;
 /// Receives only authenticated post-round SecretSalt feedback and delivers a
 /// second author-only Discord report after the review window closes.
 /// </summary>
-public sealed class SecretSaltFeedbackSystem : EntitySystem
+public sealed partial class SecretSaltFeedbackSystem : EntitySystem
 {
     // Clients may decline, and the server may leave PostRound before the
     // deadline; in that case close and report immediately on transition.
     private static readonly TimeSpan ReviewWindow = TimeSpan.FromSeconds(60);
     private static readonly HttpClient AuthorReportClient = new();
 
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly IPlayerManager _players = default!;
+    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ILogManager _log = default!;
+    [Dependency] private IPlayerManager _players = default!;
 
     private readonly SecretSaltFeedbackTracker _tracker = new();
 
