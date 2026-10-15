@@ -36,6 +36,16 @@
       state: "torso"
     - type: BodyPart
       partType: Chest
+    # Pirate: native wound visuals own these layers instead of the conflicting DamageVisuals.
+    - type: WoundableVisuals
+      thresholds: [ 10, 30, 50, 70, 100 ]
+      occupiedLayer: Chest
+      damageOverlayGroups:
+        Brute:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/brute_damage.rsi
+          color: "#ffbb00"
+        Burn:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/burn_damage.rsi
     - type: Extractable
       juiceSolution:
         reagents:
@@ -57,6 +67,15 @@
       state: "head"
     - type: BodyPart
       partType: Head
+    - type: WoundableVisuals
+      thresholds: [ 10, 30, 50, 70, 100 ]
+      occupiedLayer: Head
+      damageOverlayGroups:
+        Brute:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/brute_damage.rsi
+          color: "#ffbb00"
+        Burn:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/burn_damage.rsi
     - type: Input
       context: "ghost"
     - type: Tag
@@ -84,6 +103,15 @@
     - type: BodyPart
       partType: Arm
       symmetry: Left
+    - type: WoundableVisuals
+      thresholds: [ 10, 30, 50, 70, 100 ]
+      occupiedLayer: LArm
+      damageOverlayGroups:
+        Brute:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/brute_damage.rsi
+          color: "#ffbb00"
+        Burn:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/burn_damage.rsi
 
 - type: entity
   id: RightArmExperiment
@@ -99,6 +127,15 @@
     - type: BodyPart
       partType: Arm
       symmetry: Right
+    - type: WoundableVisuals
+      thresholds: [ 10, 30, 50, 70, 100 ]
+      occupiedLayer: RArm
+      damageOverlayGroups:
+        Brute:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/brute_damage.rsi
+          color: "#ffbb00"
+        Burn:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/burn_damage.rsi
 
 - type: entity
   id: LeftHandExperiment
@@ -144,6 +181,15 @@
     - type: BodyPart
       partType: Leg
       symmetry: Left
+    - type: WoundableVisuals
+      thresholds: [ 10, 30, 50, 70, 100 ]
+      occupiedLayer: LLeg
+      damageOverlayGroups:
+        Brute:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/brute_damage.rsi
+          color: "#ffbb00"
+        Burn:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/burn_damage.rsi
     - type: MovementBodyPart
       sprintSpeed : 5.625
 
@@ -161,6 +207,15 @@
     - type: BodyPart
       partType: Leg
       symmetry: Right
+    - type: WoundableVisuals
+      thresholds: [ 10, 30, 50, 70, 100 ]
+      occupiedLayer: RLeg
+      damageOverlayGroups:
+        Brute:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/brute_damage.rsi
+          color: "#ffbb00"
+        Burn:
+          sprite: _Pirate/Experiments/Mobs/Effects/Experiment/burn_damage.rsi
     - type: MovementBodyPart
       sprintSpeed : 5.625
 

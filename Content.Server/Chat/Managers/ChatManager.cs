@@ -295,23 +295,34 @@ internal sealed partial class ChatManager : IChatManager
         }
         // RMC - Heavily modified for patreon.
         if (_netConfigManager.GetClientCVar(player.Channel, CCVars.ShowOocPatronColor) &&
-            _linkAccount.GetPatron(player)?.Tier is { } tier)
+            _linkAccount.GetPatron(player)?.Tier != null) // Goob
         {
-            if (tier.Icon != null)
+            var patronColor = colorOverride?.ToHex() ?? "#aa00ff"; // Goob - admin ooc color overrides patron color
+            if (_linkAccount.GetOocIcon(player.UserId) is { } oocIcon) // Goob
             {
                 wrappedMessage = Loc.GetString("chat-manager-send-ooc-patron-wrap-message",
-                    ("tierIcon", tier.Icon),
-                    ("patronColor", "#aa00ff"),
+                    ("tierIcon", oocIcon), // Goob
+                    ("patronColor", patronColor), // Goob
                     ("playerName", player.Name),
                     ("message", FormattedMessage.EscapeText(message)));
             }
             else
             {
                 wrappedMessage = Loc.GetString("chat-manager-send-ooc-patron-wrap-message-no-icon",
-                    ("patronColor", "#aa00ff"),
+                    ("patronColor", patronColor), // Goob
                     ("playerName", player.Name),
                     ("message", FormattedMessage.EscapeText(message)));
             }
+        }
+
+        // Pirate: public OOC icons keep the player's ordinary name color.
+        else if (_netConfigManager.GetClientCVar(player.Channel, CCVars.ShowOocPatronColor) &&
+                 _linkAccount.GetOocIcon(player.UserId) is { } publicIcon)
+        {
+            wrappedMessage = Loc.GetString("pirate-chat-manager-send-ooc-icon-wrap-message",
+                ("oocIcon", publicIcon),
+                ("playerName", player.Name),
+                ("message", FormattedMessage.EscapeText(message)));
         }
 
         //TODO: player.Name color, this will need to change the structure of the MsgChatMessage

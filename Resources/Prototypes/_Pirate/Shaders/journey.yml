@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: shader
+  id: JourneyGlow
+  kind: source
+  path: "/Textures/_Pirate/Shaders/journey_glow.swsl"
+
+- type: shader
+  id: WarpShockwave
+  kind: source
+  path: "/Textures/_Pirate/Shaders/warp_shockwave.swsl"
+
+- type: shader
+  id: WarpVignette
+  kind: source
+  path: "/Textures/_Pirate/Shaders/warp_vignette.swsl"
+
+- type: shader
+  id: WarpDriveHaze
+  kind: source
+  path: "/Textures/_Pirate/Shaders/warp_drive_haze.swsl"
+  params:
+    uIntensity: 0.5
+
+- type: shader
+  id: WarpDriveShock
+  kind: source
+  path: "/Textures/_Pirate/Shaders/warp_drive_shock.swsl"

@@ -88,21 +88,6 @@
       amount: 3
   - type: Damageable
     damageContainer: Biological
-  - type: DamageVisuals
-    thresholds: [ 10, 30, 50, 70, 100]
-    targetLayers:
-      - "enum.HumanoidVisualLayers.Chest"
-      - "enum.HumanoidVisualLayers.Head"
-      - "enum.HumanoidVisualLayers.LArm"
-      - "enum.HumanoidVisualLayers.LLeg"
-      - "enum.HumanoidVisualLayers.RArm"
-      - "enum.HumanoidVisualLayers.RLeg"
-    damageOverlayGroups:
-      Brute:
-        sprite: _Pirate/Experiments/Mobs/Effects/Experiment/brute_damage.rsi
-        color: "#ffbb00"
-      Burn:
-        sprite: _Pirate/Experiments/Mobs/Effects/Experiment/burn_damage.rsi
   - type: FireVisuals
     sprite: _Pirate/Experiments/Mobs/Effects/onfire.rsi
     normalState: Resomi_minor_burning

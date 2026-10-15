@@ -20,7 +20,6 @@ names-voidwalker-dataset-19 = Дел
 names-voidwalker-dataset-20 = Бу
 names-voidwalker-dataset-21 = Ії
 names-voidwalker-dataset-22 = Дім
-
 names-voidwalker-title-dataset-1 = Космонавт
 names-voidwalker-title-dataset-2 = Астронавт
 names-voidwalker-title-dataset-3 = Астроном

@@ -1,0 +1,65 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+ent-MachineWarpDrive = варп-драйв
+    .desc = Експериментальний драйв, здатний долати міжзоряні відстані. Щоб підняти варп-поле, потрібне тривале живлення ВН, а витримає він лише стільки, скільки дозволяє ядро.
+
+warp-drive-window-title = Варп-драйв
+
+warp-drive-window-state = Поле:
+warp-drive-window-state-idle = Простій
+warp-drive-window-state-spooling = Розгін
+warp-drive-window-state-engaged = Поле тримається
+warp-drive-window-state-in-transit = Стрибок
+
+warp-drive-window-power = Споживання:
+warp-drive-window-power-value = {$draw} / {$max} Вт
+warp-drive-window-power-none = Нема живлення
+
+warp-drive-window-grid = Запас мережі:
+warp-drive-window-grid-value = вільно {$free} Вт / треба {$need} Вт
+
+warp-drive-window-system = Поточна система:
+warp-drive-window-system-none = Подорож не триває. Розгін марно витрачає час.
+
+warp-drive-window-spool = Розгін:
+warp-drive-window-spool-value = {$pct} %
+
+warp-drive-window-heat = Нагрів ядра:
+warp-drive-window-heat-value = {$pct} %
+
+warp-drive-window-stability = Стабільність:
+warp-drive-window-stability-value = {$time}
+
+warp-drive-window-cooldown = Охолодження:
+warp-drive-window-cooldown-value = {$time}
+
+warp-drive-window-none = Н/Д
+
+warp-drive-window-spool-up = Розігнати
+warp-drive-window-shut-down = Вимкнути
+warp-drive-window-cooling = Охолоджується
+warp-drive-window-in-transit = Стрибок триває
+warp-drive-window-jump = СТРИБОК
+
+warp-drive-window-course = Курс:
+warp-drive-window-course-quiet = тихо
+warp-drive-window-course-loud = гучно
+
+warp-drive-notice-no-such-system = Такої системи немає на карті.
+warp-drive-notice-no-journey = Подорож не триває.
+warp-drive-notice-already-flying = Стрибок уже летить.
+warp-drive-notice-field-down = Поле опущене. Спершу розігніть його.
+warp-drive-notice-no-course = Курс не прокладено. Спершу оберіть систему.
+warp-drive-notice-no-headroom = Мережа не потягне: вільно {$free} Вт, треба {$need} Вт. Зніміть навантаження або живіть від SMES.
+warp-drive-notice-already-there = Корабель уже там.
+warp-drive-notice-gated = Цієї системи немає на карті раунду.
+warp-drive-notice-too-hot = Ядро надто гаряче для переходу. Спершу охолодіть.
+warp-drive-notice-committed = Курс прокладено: {$sector}. Тримайте поле.
+
+# Examine lines, shown only up close.
+warp-drive-examine-ready = [i]Ядро холодне. Поле вимкнене.[/i]
+warp-drive-examine-unpowered = [i]Нема живлення. Йому потрібно значно більше, ніж дає APC, тільки ВН.[/i]
+warp-drive-examine-cooling = [i]Ядро ще гаряче. Ще довго не розжене поле.[/i]
+warp-drive-examine-spooling = [i]Поле наростає. Він жере багато потужності.[/i]
+warp-drive-examine-engaged = [i]Поле стабільне, а ядро повільно наближається до межі.[/i]
+warp-drive-examine-in-transit = [i]Поле розкрите. Корабель у стрибку.[/i]

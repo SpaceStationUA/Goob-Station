@@ -43,22 +43,22 @@ namespace Content.Goobstation.Server.StationEvents.SecretPlus;
 ///   A scheduler which keeps track of a 'chaos score' which it tries to get closer to 0.
 /// </summary>
 [UsedImplicitly]
-public sealed class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponent>
+public sealed partial class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlusComponent> // Pirate: generated dependency injection.
 {
-    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
-    [Dependency] private readonly EventManagerSystem _event = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private AntagSelectionSystem _antagSelection = default!;
+    [Dependency] private EventManagerSystem _event = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IComponentFactory _factory = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ILogManager _log = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedRoleSystem _roles = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private GameTicker _ticker = default!;
 
     // cvars
     private float _minimumTimeUntilFirstEvent;

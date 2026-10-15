@@ -1,0 +1,82 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    MinSize="400 470"
+    Resizable="False"
+    Title="{Loc 'warp-drive-window-title'}">
+    <BoxContainer Margin="10 8" Orientation="Horizontal" SeparationOverride="12">
+
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2">
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-state'}" StyleClasses="highlight" />
+                <Label Name="StateLabel" Text="—" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-power'}" StyleClasses="highlight" />
+                <Label Name="PowerLabel" Text="0 W" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-grid'}" StyleClasses="highlight" />
+                <Label Name="GridLabel" Text="0 W" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <customControls:HSeparator StyleClasses="LowDivider" Margin="0 4 0 4" />
+
+            <Label Text="{Loc 'warp-drive-window-spool'}" StyleClasses="highlight" />
+            <ProgressBar Name="SpoolBar" MaxValue="1" HorizontalExpand="True">
+                <Label Name="SpoolText" HorizontalAlignment="Center" Margin="4 0" Text="—" />
+            </ProgressBar>
+
+            <Label Text="{Loc 'warp-drive-window-heat'}" StyleClasses="highlight" />
+            <ProgressBar Name="HeatBar" MaxValue="1" HorizontalExpand="True">
+                <Label Name="HeatText" HorizontalAlignment="Center" Margin="4 0" Text="0 %" />
+            </ProgressBar>
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-stability'}" StyleClasses="highlight" />
+                <Label Name="StabilityLabel" Text="N/A" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-cooldown'}" StyleClasses="highlight" />
+                <Label Name="CoolDownLabel" Text="N/A" HorizontalExpand="True" />
+            </BoxContainer>
+
+            <customControls:HSeparator StyleClasses="LowDivider" Margin="0 4 0 4" />
+
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Label Text="{Loc 'warp-drive-window-system'}" StyleClasses="highlight" />
+                <Label Name="SystemLabel" Text="—" HorizontalExpand="True" ClipText="True" />
+            </BoxContainer>
+
+            <Label Text="{Loc 'warp-drive-window-course'}" StyleClasses="highlight" />
+            <OptionButton Name="CourseOptions" HorizontalExpand="True" />
+            <ScrollContainer Name="CourseScroll" HorizontalExpand="True" HScrollEnabled="False" MinSize="0 64">
+                <RichTextLabel Name="CourseDescription" HorizontalExpand="True" />
+            </ScrollContainer>
+            <Label Name="NoticeLabel" Text="" HorizontalExpand="True" ClipText="True" />
+
+            <Button Name="JumpButton" Text="{Loc 'warp-drive-window-jump'}" />
+
+            <customControls:HSeparator StyleClasses="LowDivider" Margin="0 4 0 4" />
+
+            <Button Name="ToggleButton" Text="{Loc 'warp-drive-window-spool-up'}" />
+        </BoxContainer>
+
+        <PanelContainer StyleClasses="Inset" VerticalAlignment="Top">
+            <BoxContainer>
+                <SpriteView Name="EntityView"
+                    SetSize="96 96"
+                    OverrideDirection="South" />
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</controls:FancyWindow>

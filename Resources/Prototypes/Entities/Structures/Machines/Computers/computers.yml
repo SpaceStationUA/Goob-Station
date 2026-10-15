@@ -399,6 +399,7 @@
   description: This can be used to check criminal records. Only security can modify them.
   components:
   - type: CriminalRecordsConsole
+  - type: RecordConsoleSounds # Pirate: records interactive sounds
   - type: UserInterface
     interfaces:
       enum.CriminalRecordsConsoleKey.Key:
@@ -438,6 +439,7 @@
   description: This can be used to check station records.
   components:
   - type: GeneralStationRecordConsole
+  - type: RecordConsoleSounds # Pirate: records interactive sounds
   - type: PirateEvidenceBoard # Pirate: evidence board tab
   - type: UserInterface
     interfaces:

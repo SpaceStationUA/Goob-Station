@@ -4,6 +4,7 @@
 
 using System.Linq;
 using Content.Client._Pirate.Character.Info.UI;
+using Content.Shared._Pirate.Character.Info;
 using Content.Shared.IdentityManagement;
 
 // ReSharper disable once CheckNamespace
@@ -47,6 +48,12 @@ public sealed partial class CharacterUIController
         _openInspectionWindows[target] = window;
         window.OnClose += () => _openInspectionWindows.Remove(target);
         window.OpenCentered();
+    }
+
+    public void ApplyInspectInfo(EntityUid target, CharacterInspectInfoEvent info)
+    {
+        if (_openInspectionWindows.TryGetValue(target, out var window))
+            window.ApplyInfo(info);
     }
 
     private void SetPirateSelfCharacterInfo(EntityUid entity)

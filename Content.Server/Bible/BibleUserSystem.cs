@@ -125,7 +125,7 @@ namespace Content.Server.Bible
             }
 
             // Goob start - Wraith
-            var ev = new BibleSmiteUsed();
+            var ev = new BibleSmiteUsed(args.User);
             RaiseLocalEvent(args.Target.Value, ref ev);
             // Goob end
 

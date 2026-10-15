@@ -26,6 +26,8 @@ using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 #region Pirate: records photos
 using Content.Client._Pirate.UserInterface.Controls;
+using Content.Shared._Pirate.StationRecords;
+using Content.Client._Pirate.StationRecords;
 using Content.Shared.Customization.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -41,9 +43,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using System.IO;
-using System.Threading.Tasks;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
 using Robust.Client.Utility;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
@@ -63,8 +62,6 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     private readonly AccessReaderSystem _accessReader;
     [Dependency] private readonly IEntityManager _entManager = default!;
     private readonly SpriteSystem _spriteSystem;
-    [Dependency] private readonly IResourceManager _resManager = default!; // Pirate: records photos
-    private readonly ContentSpriteSystem _contentSpriteSystem; // Pirate: records photos
 
     public readonly EntityUid Console;
 
@@ -91,12 +88,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     public Action<uint>? OnDeleteRecord;
     public Action<string, string, string, int, Gender>? OnIdentityInfoChanged;
     public Action<string, string>? OnForensicsInfoChanged;
-    private EntityUid _portraitDummy = EntityUid.Invalid;
-    private uint? _portraitKey;
-    private Texture? _portraitTexture;
-    private byte[]? _currentPortraitImageData;
-    private readonly HashSet<uint> _pendingGeneratedPortraitKeys = new();
-    public Func<Task>? OnPrintPhoto;
+    public Action<uint, byte[]?>? OnPrintPhoto; // Pirate: records photos
     public Action? OnUploadPhoto;
     public Action<uint, byte[]>? OnStoreGeneratedPortrait;
     private readonly List<SpeciesPrototype> _species = new();
@@ -128,21 +120,15 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         _accessReader = accessReader;
         IoCManager.InjectDependencies(this);
         _spriteSystem = _entManager.System<SpriteSystem>();
-        _contentSpriteSystem = _entManager.System<ContentSpriteSystem>(); // Pirate: records photos
 
         _maxLength = maxLength;
-        _currentFilterType = StationRecordFilterType.Name;
+        _currentFilterType = RecordFilters.Default; // Pirate: record history
 
         _currentCrewListFilter = SecurityStatus.None;
 
-        PersonPortraitBackground.Texture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Parallaxes/layer2.png"))); // Pirate: records photos
-
         OpenCentered();
 
-        foreach (var item in Enum.GetValues<StationRecordFilterType>())
-        {
-            FilterType.AddItem(GetTypeFilterLocals(item), (int)item);
-        }
+        RecordFilters.Populate(FilterType); // Pirate: record history
 
         foreach (var status in Enum.GetValues<SecurityStatus>())
         {
@@ -157,18 +143,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         OnClose += () => _reasonDialog?.Close();
 
-        RecordListing.OnItemSelected += args =>
-        {
-            if (RecordListing[args.ItemIndex].Metadata is not uint cast)
-                return;
-
-            OnKeySelected?.Invoke(cast);
-        };
-
-        RecordListing.OnItemDeselected += _ =>
-        {
-            OnKeySelected?.Invoke(null);
-        };
+        InitRecordSelection(); // Pirate: records photos
 
         FilterType.OnItemSelected += eventArgs =>
         {
@@ -229,28 +204,12 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             SetStatus((SecurityStatus)args.Id);
         };
 
-        HistoryButton.OnPressed += _ =>
-        {
-            if (_selectedRecord is { } record)
-                OnHistoryUpdated?.Invoke(record, _access, true);
-        };
+        InitTabs(); // Pirate: record history
 
         #region Pirate: records photos
-        PrintPortraitButton.OnPressed += async _ =>
-        {
-            if (OnPrintPhoto != null)
-            {
-                try
-                {
-                    await OnPrintPhoto();
-                }
-                catch (System.Exception ex)
-                {
-                    Logger.ErrorS("criminal-records", $"PrintPortraitButton.OnPressed failed while awaiting OnPrintPhoto/BuildPrintPhotoMessage: {ex}"); // Pirate: records photos
-                }
-            }
-        };
-        UploadPortraitButton.OnPressed += _ => OnUploadPhoto?.Invoke();
+        Portrait.OnPrint += (key, image) => OnPrintPhoto?.Invoke(key, image); // Pirate: records photos
+        Portrait.OnUpload += () => OnUploadPhoto?.Invoke(); // Pirate: records photos
+        Portrait.OnStoreGenerated += (key, image) => OnStoreGeneratedPortrait?.Invoke(key, image); // Pirate: records photos
         PopulateGenderOptions();
         RefreshSpeciesOptions();
         PersonPrintsEdit.IsValid = text => text.Length <= _maxLength;
@@ -297,6 +256,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         PersonPrintsEdit.OnFocusExit += args => CommitForensicsEdits(args.Text, PersonDnaEdit.Text);
         PersonDnaEdit.OnTextEntered += args => CommitForensicsEdits(PersonPrintsEdit.Text, args.Text);
         PersonDnaEdit.OnFocusExit += args => CommitForensicsEdits(PersonPrintsEdit.Text, args.Text);
+        InitFieldWidths(); // Pirate: records photos
         UpdateRecordActionButtons();
         #endregion
     }
@@ -308,6 +268,9 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     public void UpdateState(CriminalRecordsConsoleState state)
     {
+        if (!AcceptServerState(state)) // Pirate: records photos
+            return; // Pirate: records photos
+
         var previousSelectedKey = _selectedKey; // Pirate: records photos
 
         if (state.Filter != null)
@@ -341,6 +304,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         var selected = _selectedKey != null;
 
         PersonContainer.Visible = selected;
+        _tabs.SetHasRecord(selected); // Pirate: record history
         RecordUnselected.Visible = !selected;
 
         _access = _player.LocalSession?.AttachedEntity is {} player
@@ -358,59 +322,46 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         AgeEdit.Editable = editing;
         PersonPrintsEdit.Editable = editing;
         PersonDnaEdit.Editable = editing;
-        PrintPortraitButton.Disabled = !editing;
-        UploadPortraitButton.Disabled = !editing;
         #endregion
 
         if (state is { CriminalRecord: not null, StationRecord: not null })
         {
             #region Pirate: records photos
-            PrintPortraitButton.Disabled = !editing || !CanPrintPortrait(state.CriminalRecord);
             if (state.SelectedKey is { } selectedKey)
-                PopulateRecordContainer(selectedKey, state.StationRecord, state.CriminalRecord);
+                PopulateRecordContainer(selectedKey, state.StationRecord, state.CriminalRecord, state.Portrait);
             else
-                ClearPortraitDisplay();
+                Portrait.ClearPortrait(); // Pirate: records photos
             #endregion
-            OnHistoryUpdated?.Invoke(state.CriminalRecord, _access, false);
+            HistoryView.UpdateLog(state.SelectedKey ?? 0, state.StationRecord.Name, state.Log, _access); // Pirate: record history
             _selectedRecord = state.CriminalRecord;
         }
         else
         {
             _selectedRecord = null;
-            OnHistoryClosed?.Invoke();
+            HistoryView.CloseDialog(); // Pirate: record history
             #region Pirate: records photos
             ResetDeleteConfirmation();
             _recordProfile = null;
-            ClearPortraitDisplay();
+            Portrait.ClearPortrait(); // Pirate: records photos
             #endregion
         }
+
+        Portrait.SetEditable(editing); // Pirate: records photos
     }
 
     private void PopulateRecordListing(Dictionary<uint, string>? listing)
     {
-        if (listing == null)
-        {
-            RecordListing.Clear();
-            return;
-        }
-
-        var entries = listing.Select(i => new ItemList.Item(RecordListing)
-        {
-            Text = i.Value,
-            Metadata = i.Key
-        }).ToList();
-        entries.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
-        RecordListing.SetItems(entries, (a,b) => string.Compare(a.Text, b.Text));
+        _selection.SetListing(listing); // Pirate: records photos
     }
 
-    private void PopulateRecordContainer(uint key, GeneralStationRecord stationRecord, CriminalRecord criminalRecord) // Pirate: records photos
+    private void PopulateRecordContainer(uint key, GeneralStationRecord stationRecord, CriminalRecord criminalRecord, RecordPortraitData? portrait) // Pirate: records photos
     {
         var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown");
         var na = Loc.GetString("generic-not-available-shorthand");
 
         #region Pirate: records photos
-        UpdatePortraitDisplay(key, criminalRecord, stationRecord.JobPrototype);
-        UpdateRecordIdentityProfile(BuildRecordIdentityProfile(stationRecord, criminalRecord), false, stationRecord);
+        Portrait.SetPortrait(key, portrait, stationRecord.JobPrototype, stationRecord.Name, stationRecord.Age); // Pirate: records photos
+        RefreshRecordIdentityEditor(key, stationRecord, portrait?.Snapshot); // Pirate: records photos
         PersonJobIcon.Texture = null;
         #endregion
 
@@ -436,11 +387,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         StatusOptionButton.SelectId((int)criminalRecord.Status);
         if (criminalRecord.Reason is { } reason)
         {
-
-            var message = FormattedMessage.FromMarkupOrThrow(Loc.GetString($"criminal-records-console-{criminalRecord.Status.ToString().ToLower()}-reason"));
-            message.AddText($": {reason}");
-
-            WantedReason.SetMessage(message);
+            WantedReason.SetMessage(RecordStatusReason.Format("security", criminalRecord.Status.ToString(), reason)); // Pirate: record history
             WantedReason.Visible = true;
         }
         else
@@ -467,13 +414,13 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         GenderButton.AddItem(Loc.GetString("humanoid-profile-editor-pronouns-neuter-text"), (int) Gender.Neuter);
     }
 
-    private HumanoidCharacterProfile BuildRecordIdentityProfile(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
+    private HumanoidCharacterProfile BuildRecordIdentityProfile(GeneralStationRecord stationRecord, HumanoidCharacterProfile? snapshot)
     {
         var effectiveSpecies = string.IsNullOrWhiteSpace(stationRecord.Species)
             ? (string) SharedHumanoidAppearanceSystem.DefaultSpecies
             : stationRecord.Species;
-        var profile = criminalRecord.PortraitProfileSnapshot != null
-            ? new HumanoidCharacterProfile(criminalRecord.PortraitProfileSnapshot)
+        var profile = snapshot != null
+            ? new HumanoidCharacterProfile(snapshot)
             : HumanoidCharacterProfile.DefaultWithSpecies(effectiveSpecies);
 
         return profile
@@ -487,6 +434,9 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     private void UpdateRecordIdentityProfile(HumanoidCharacterProfile profile, bool sendUpdate, GeneralStationRecord? rawRecord = null)
     {
+        if (rawRecord == null) // Pirate: records photos
+            _identityEditorKey = null; // Pirate: records photos
+
         profile = NormalizeRecordIdentityProfile(profile);
         _recordProfile = profile;
 
@@ -518,6 +468,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         {
             _suppressIdentityEditorEvents = false;
         }
+
+        _fieldWidths.Update(); // Pirate: records photos
 
         if (sendUpdate)
             SendIdentityUpdate(profile);
@@ -677,334 +629,6 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     {
         OptionButtonHelpers.SetPlaceholder(button, placeholder);
     }
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-            ClearPortraitDisplay();
-
-        base.Dispose(disposing);
-    }
-
-    public async Task<CriminalRecordPrintPhoto?> BuildPrintPhotoMessage()
-    {
-        if (_selectedKey is not { } recordKey)
-            return null;
-
-        if (!CanPrintPortrait(_selectedRecord))
-            return null;
-
-        if (_currentPortraitImageData is { Length: > 0 } currentPortrait &&
-            CanLoadPortraitTexture(recordKey, currentPortrait))
-            return new CriminalRecordPrintPhoto(recordKey, currentPortrait);
-
-        var selectedRecord = _selectedRecord;
-        if (selectedRecord?.PortraitImageData is { Length: > 0 } storedPortrait &&
-            CanLoadPortraitTexture(recordKey, storedPortrait))
-            return new CriminalRecordPrintPhoto(recordKey, storedPortrait);
-
-        var portraitDummy = _portraitDummy;
-        var generatedImageData = await TryGeneratePortraitSnapshotImageDataWithRetry(portraitDummy);
-        if (generatedImageData is not { Length: > 0 })
-            return new CriminalRecordPrintPhoto(recordKey);
-
-        return new CriminalRecordPrintPhoto(recordKey, generatedImageData);
-    }
-
-    private void UpdatePortraitDisplay(uint recordKey, CriminalRecord criminalRecord, string? jobPrototype)
-    {
-        if (criminalRecord.PortraitImageData is { Length: > 0 } imageData)
-        {
-            ClearPortraitPreview();
-            SetPortraitTexture(recordKey, imageData);
-
-            if (_currentPortraitImageData is { Length: > 0 })
-                return;
-        }
-
-        ClearPortraitTexture();
-        UpdatePortraitPreview(recordKey, criminalRecord.PortraitProfileSnapshot, jobPrototype);
-        EnsureGeneratedPortraitImage(recordKey, criminalRecord.PortraitProfileSnapshot, jobPrototype);
-    }
-
-    private void UpdatePortraitPreview(uint recordKey, HumanoidCharacterProfile? profileSnapshot, string? jobPrototype)
-    {
-        if (profileSnapshot == null)
-        {
-            ClearPortraitPreview();
-            PersonPortraitBackground.Visible = true;
-            return;
-        }
-
-        if (_portraitKey == recordKey && _entManager.EntityExists(_portraitDummy))
-            return;
-
-        ClearPortraitPreview();
-
-        if (!TryCreatePortraitDummy(profileSnapshot, jobPrototype, out var portraitDummy))
-            return;
-
-        _portraitDummy = portraitDummy;
-        PersonPortrait.SetEntity(_portraitDummy);
-        PersonPortraitBackground.Visible = true;
-        PersonPortrait.Visible = true;
-        _portraitKey = recordKey;
-    }
-
-    private bool TryCreatePortraitDummy(HumanoidCharacterProfile? profileSnapshot, string? jobPrototype, out EntityUid portraitDummy)
-    {
-        portraitDummy = EntityUid.Invalid;
-        if (profileSnapshot == null)
-            return false;
-
-        JobPrototype? job = null;
-        if (!string.IsNullOrWhiteSpace(jobPrototype) && _proto.TryIndex<JobPrototype>(jobPrototype, out var indexedJob))
-            job = indexedJob;
-
-        portraitDummy = UserInterfaceManager.GetUIController<LobbyUIController>()
-            .LoadProfileEntity(profileSnapshot, job, true);
-        return portraitDummy != EntityUid.Invalid && _entManager.EntityExists(portraitDummy);
-    }
-
-    private void ClearPortraitPreview()
-    {
-        if (_portraitDummy != EntityUid.Invalid && _entManager.EntityExists(_portraitDummy))
-            _entManager.DeleteEntity(_portraitDummy);
-
-        _portraitDummy = EntityUid.Invalid;
-        _portraitKey = null;
-        PersonPortrait.SetEntity((EntityUid?) null);
-        PersonPortrait.Visible = false;
-    }
-
-    private void SetPortraitTexture(uint recordKey, byte[] imageData)
-    {
-        ClearPortraitTexture();
-
-        try
-        {
-            using var stream = new MemoryStream(imageData, writable: false);
-            _portraitTexture = Texture.LoadFromPNGStream(stream, GetPortraitTextureCacheKey(recordKey, imageData));
-            PersonPortraitTexture.Texture = _portraitTexture;
-            PersonPortraitTexture.Visible = true;
-            PersonPortraitBackground.Visible = true;
-            PersonPortrait.Visible = false;
-            _currentPortraitImageData = [.. imageData];
-        }
-        catch (Exception)
-        {
-            ClearPortraitTexture();
-            PersonPortrait.Visible = true;
-        }
-    }
-
-    private void ClearPortraitTexture()
-    {
-        _portraitTexture = null;
-        _currentPortraitImageData = null;
-        PersonPortraitTexture.Texture = null;
-        PersonPortraitTexture.Visible = false;
-    }
-
-    private void ClearPortraitDisplay()
-    {
-        ClearPortraitPreview();
-        ClearPortraitTexture();
-        PersonPortraitBackground.Visible = false;
-    }
-
-    private static bool CanPrintPortrait(CriminalRecord? criminalRecord)
-    {
-        return criminalRecord?.PortraitImageData is { Length: > 0 }
-            || criminalRecord?.PortraitProfileSnapshot != null;
-    }
-
-    private async Task<byte[]?> TryGeneratePortraitSnapshotImageData(EntityUid portraitDummy)
-    {
-        if (portraitDummy == EntityUid.Invalid || !_entManager.EntityExists(portraitDummy))
-            return null;
-
-        if (!_entManager.TryGetComponent<MetaDataComponent>(portraitDummy, out var metadata))
-            return null;
-
-        var filePath = ContentSpriteSystem.Exports / $"{metadata.EntityName}-{Direction.South}-{portraitDummy}.png";
-
-        try
-        {
-            await _contentSpriteSystem.Export(portraitDummy, Direction.South, includeId: true);
-
-            if (!_resManager.UserData.Exists(filePath))
-                return null;
-
-            await using var file = _resManager.UserData.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            using var imageData = new MemoryStream();
-            await file.CopyToAsync(imageData);
-            return imageData.ToArray(); // Pirate: records photos
-        }
-        catch (Exception)
-        {
-            return null;
-        }
-    }
-
-    private async Task<byte[]?> TryGeneratePortraitSnapshotImageDataWithRetry(EntityUid portraitDummy, int attempts = 4, int delayMs = 100)
-    {
-        for (var attempt = 0; attempt < attempts; attempt++)
-        {
-            var generatedImageData = await TryGeneratePortraitSnapshotImageData(portraitDummy);
-            if (generatedImageData is { Length: > 0 })
-                return generatedImageData;
-
-            if (attempt < attempts - 1)
-                await Task.Delay(delayMs);
-        }
-
-        return null;
-    }
-
-    private bool CanLoadPortraitTexture(uint recordKey, byte[] imageData)
-    {
-        try
-        {
-            using var stream = new MemoryStream(imageData, writable: false);
-            _ = Texture.LoadFromPNGStream(stream, GetPortraitTextureCacheKey(recordKey, imageData));
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
-
-    private byte[] NormalizeGeneratedPortraitImageData(byte[] imageData)
-    {
-        try
-        {
-            using var stream = new MemoryStream(imageData, writable: false);
-            using var image = Image.Load<Rgba32>(stream);
-            var sourcePixels = image.GetPixelSpan();
-            if (!TryFindOpaqueBounds(sourcePixels, image.Width, image.Height, out var minX, out var minY, out var maxX, out var maxY))
-                return imageData;
-
-            const int canvasSize = 250;
-            const int padding = 0;
-            var cropWidth = maxX - minX + 1;
-            var cropHeight = maxY - minY + 1;
-            var availableSize = canvasSize - padding * 2;
-            var scale = Math.Min((float) availableSize / cropWidth, (float) availableSize / cropHeight);
-
-            if (!float.IsFinite(scale) || scale <= 0f)
-                return imageData;
-
-            var drawWidth = Math.Max(1, (int) MathF.Round(cropWidth * scale));
-            var drawHeight = Math.Max(1, (int) MathF.Round(cropHeight * scale));
-            var offsetX = (canvasSize - drawWidth) / 2;
-            var offsetY = (canvasSize - drawHeight) / 2;
-
-            using var output = new Image<Rgba32>(canvasSize, canvasSize);
-            var outputPixels = output.GetPixelSpan();
-            outputPixels.Clear();
-
-            for (var y = 0; y < drawHeight; y++)
-            {
-                var sourceY = minY + Math.Min(cropHeight - 1, (int) (y / scale));
-                var outputRow = (offsetY + y) * canvasSize;
-                var sourceRow = sourceY * image.Width;
-
-                for (var x = 0; x < drawWidth; x++)
-                {
-                    var sourceX = minX + Math.Min(cropWidth - 1, (int) (x / scale));
-                    outputPixels[outputRow + offsetX + x] = sourcePixels[sourceRow + sourceX];
-                }
-            }
-
-            using var outputStream = new MemoryStream();
-            output.SaveAsPng(outputStream);
-            return outputStream.ToArray();
-        }
-        catch (Exception)
-        {
-            return imageData;
-        }
-    }
-
-    private static bool TryFindOpaqueBounds(ReadOnlySpan<Rgba32> pixels, int width, int height, out int minX, out int minY, out int maxX, out int maxY)
-    {
-        minX = width;
-        minY = height;
-        maxX = -1;
-        maxY = -1;
-
-        for (var y = 0; y < height; y++)
-        {
-            var rowOffset = y * width;
-            for (var x = 0; x < width; x++)
-            {
-                if (pixels[rowOffset + x].A == 0)
-                    continue;
-
-                if (x < minX)
-                    minX = x;
-                if (y < minY)
-                    minY = y;
-                if (x > maxX)
-                    maxX = x;
-                if (y > maxY)
-                    maxY = y;
-            }
-        }
-
-        return maxX >= minX && maxY >= minY;
-    }
-
-    private string GetPortraitTextureCacheKey(uint recordKey, byte[] imageData)
-    {
-        var signature = 17;
-        for (var i = 0; i < imageData.Length; i++)
-        {
-            signature = unchecked(signature * 31 + imageData[i]);
-        }
-
-        return $"criminal-record-portrait-{recordKey}-{imageData.Length}-{signature}";
-    }
-
-    private void EnsureGeneratedPortraitImage(uint recordKey, HumanoidCharacterProfile? profileSnapshot, string? jobPrototype)
-    {
-        if (profileSnapshot == null ||
-            !_pendingGeneratedPortraitKeys.Add(recordKey))
-        {
-            return;
-        }
-
-        if (!TryCreatePortraitDummy(profileSnapshot, jobPrototype, out var portraitDummy))
-        {
-            _pendingGeneratedPortraitKeys.Remove(recordKey);
-            return;
-        }
-
-        _ = GenerateAndStorePortraitImageAsync(recordKey, portraitDummy);
-    }
-
-    private async Task GenerateAndStorePortraitImageAsync(uint recordKey, EntityUid portraitDummy)
-    {
-        try
-        {
-            var generatedImageData = await TryGeneratePortraitSnapshotImageDataWithRetry(portraitDummy);
-            if (generatedImageData is not { Length: > 0 } || Disposed)
-                return;
-
-            if (_selectedKey == recordKey)
-                SetPortraitTexture(recordKey, generatedImageData);
-
-            OnStoreGeneratedPortrait?.Invoke(recordKey, generatedImageData);
-        }
-        finally
-        {
-            if (portraitDummy != EntityUid.Invalid && _entManager.EntityExists(portraitDummy))
-                _entManager.DeleteEntity(portraitDummy);
-
-            _pendingGeneratedPortraitKeys.Remove(recordKey);
-        }
-    }
     private void UpdateRecordActionButtons()
     {
         if (_deleteConfirmationKey != _selectedKey)
@@ -1098,6 +722,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         var entry = new QuickDialogEntry(field, QuickDialogEntryType.LongText, prompt, placeholder);
         var entries = new List<QuickDialogEntry>() { entry };
         _reasonDialog = new DialogWindow(title, entries);
+        RecordConsoleSounds.AttachDialog(this, _reasonDialog); // Pirate: records interactive sounds
 
         _reasonDialog.OnConfirmed += responses =>
         {
@@ -1130,7 +755,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     }
     private string GetTypeFilterLocals(StationRecordFilterType type)
     {
-        return Loc.GetString($"criminal-records-{type.ToString().ToLower()}-filter");
+        return RecordFilters.Label(type); // Pirate: record history
     }
 
     private string GetCrewListFilterLocals(SecurityStatus type)

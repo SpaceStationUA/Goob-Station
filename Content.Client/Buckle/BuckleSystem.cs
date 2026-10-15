@@ -43,15 +43,6 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         }
     }
 
-    protected override void AfterBuckleParentChanged(Entity<BuckleComponent> ent, ref EntParentChangedMessage args)
-    {
-        if (HasComp<StrapComponent>(args.Transform.ParentUid) ||
-            args.OldParent is { } oldParent && HasComp<StrapComponent>(oldParent))
-        {
-            _xformSystem.SnapRenderTransformAfterParentChange(ent, true);
-        }
-    }
-
     private void OnStrapMoveEvent(EntityUid uid, StrapComponent component, ref MoveEvent args)
     {
         // I'm moving this to the client-side system, but for the sake of posterity let's keep this comment:
@@ -107,8 +98,6 @@ internal sealed class BuckleSystem : SharedBuckleSystem
     /// </summary>
     private void OnBuckledEvent(Entity<BuckleComponent> ent, ref BuckledEvent args)
     {
-        _xformSystem.SnapRenderTransform(ent, true);
-
         if (!TryComp<SpriteComponent>(args.Strap, out var strapSprite))
             return;
 
@@ -150,7 +139,6 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             UpdateChairStrapDepth(args.Strap, strapSprite, isNorth, args.Strap.Comp.BuckledEntities.Count > 0);
         }
         #endregion
-        _xformSystem.SnapRenderTransform(ent, true);
 
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;

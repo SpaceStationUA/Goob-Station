@@ -1,0 +1,39 @@
+
+
+
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical"
+              HorizontalExpand="True"
+              VerticalExpand="True"
+              SeparationOverride="5">
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True">
+        <Label Name="PersonName"
+               StyleClasses="font-large"
+               HorizontalExpand="True"
+               ClipText="True" />
+        <Button Name="PrintButton"
+                Text="{Loc 'records-log-print'}"
+                StyleClasses="OpenRight"
+                VerticalAlignment="Center" />
+        <Button Name="AddNoteButton"
+                StyleClasses="OpenLeft"
+                Text="{Loc 'records-log-add-note'}"
+                VerticalAlignment="Center" />
+    </BoxContainer>
+    <PanelContainer StyleClasses="LowDivider"
+                    Margin="0 2 0 2" />
+    <Label Name="NoEntries"
+           Text="{Loc 'records-log-empty'}"
+           FontColorOverride="DarkGray"
+           HorizontalAlignment="Center"
+           Margin="0 10" />
+    <ScrollContainer VerticalExpand="True"
+                     HScrollEnabled="False">
+        <BoxContainer Name="Entries"
+                      Orientation="Vertical"
+                      HorizontalExpand="True"
+                      SeparationOverride="6" />
+    </ScrollContainer>
+</BoxContainer>
