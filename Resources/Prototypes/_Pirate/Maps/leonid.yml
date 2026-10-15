@@ -2,8 +2,9 @@
   id: LeonidTP
   mapName: 'Станція Леонід'
   mapPath: /Maps/_Pirate/leonid.yml
-  mapPreview: PirateMapPreviewLeonid
-  minPlayers: 30
+  mapIcon: /Textures/_Pirate/Interface/MapVote/pirate_flag.png
+  mapPreview: PirateMapPreviewLeonidTP
+  minPlayers: 25
   stations:
     Leonid:
       stationProto: StandardNanotrasenStation
