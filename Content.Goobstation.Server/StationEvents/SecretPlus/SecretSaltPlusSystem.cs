@@ -208,7 +208,15 @@ public sealed partial class SecretSaltPlusSystem : GameRuleSystem<SecretSaltPlus
             .Where(c => !char.IsControl(c) && c != '`')
             .Take(limit)
             .ToArray());
-        return sanitized.Replace("@", "＠").Replace("|", "¦");
+        // Prevent hidden Markdown links and formatting in player-supplied text.
+        // Escape backslashes first, then characters meaningful to Discord.
+        return sanitized.Replace("\\", "\\\\")
+            .Replace("[", "\\[").Replace("]", "\\]")
+            .Replace("(", "\\(").Replace(")", "\\)")
+            .Replace("*", "\\*").Replace("_", "\\_")
+            .Replace("~", "\\~").Replace("<", "\\<")
+            .Replace(">", "\\>").Replace("#", "\\#")
+            .Replace("@", "＠").Replace("|", "¦");
     }
 
     private async Task SendAuthorReportAsync(string url, string report)

@@ -90,6 +90,8 @@ public static class SecretSaltPlusDiscordSender
             {
                 // HttpClient reports request timeouts as TaskCanceledException.
                 // Retrying just this chunk avoids repeating earlier chunks.
+                // Delivery is at-least-once: Discord may already have accepted
+                // a timed-out POST, so a retry can deliver this chunk twice.
                 await Task.Delay(TimeSpan.FromSeconds(attempt * 2), cancellationToken);
                 continue;
             }

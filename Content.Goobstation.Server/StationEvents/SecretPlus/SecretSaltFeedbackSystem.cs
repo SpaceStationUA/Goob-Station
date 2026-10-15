@@ -65,9 +65,9 @@ public sealed partial class SecretSaltFeedbackSystem : EntitySystem
         _participants.Clear();
         _participantsRound = 0;
 
-        // Review eligibility is tracked only for explicitly selected
-        // SecretSalt rounds. No snapshots for unrelated game presets.
-        if (ev.Id <= 0 || _ticker.CurrentPreset?.ID != "SecretSalt")
+        // Capture the ready roster before preset fallback resolution. Only
+        // confirmed SecretSalt rounds are offered feedback in InRound.
+        if (ev.Id <= 0)
             return;
 
         _participantsRound = ev.Id;
