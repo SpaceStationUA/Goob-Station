@@ -20,7 +20,6 @@
     material: simple
   - type: StaticPrice
     price: 10
-  # Pirate: keep crafted frames attached to their construction graph.
   - type: Construction
     graph: PaintingFrameWoodGraph
     node: frame
@@ -36,7 +35,6 @@
     material: iron
   - type: StaticPrice
     price: 20
-  # Pirate: construction graph for crafted frames.
   - type: Construction
     graph: PaintingFrameIronGraph
     node: frame
@@ -52,7 +50,6 @@
     material: bamboo
   - type: StaticPrice
     price: 15
-  # Pirate: construction graph for crafted frames.
   - type: Construction
     graph: PaintingFrameBambooGraph
     node: frame
@@ -68,7 +65,6 @@
     material: bones
   - type: StaticPrice
     price: 30
-  # Pirate: construction graph for crafted frames.
   - type: Construction
     graph: PaintingFrameBonesGraph
     node: frame
@@ -84,7 +80,6 @@
     material: bronze
   - type: StaticPrice
     price: 50
-  # Pirate: construction graph for crafted frames.
   - type: Construction
     graph: PaintingFrameBronzeGraph
     node: frame
@@ -124,7 +119,6 @@
     material: silver
   - type: StaticPrice
     price: 100
-  # Pirate: construction graph for crafted frames.
   - type: Construction
     graph: PaintingFrameSilverGraph
     node: frame
@@ -152,7 +146,6 @@
     material: gold
   - type: StaticPrice
     price: 250
-  # Pirate: construction graph for crafted frames.
   - type: Construction
     graph: PaintingFrameGoldGraph
     node: frame
@@ -168,7 +161,6 @@
     material: diamond
   - type: StaticPrice
     price: 500
-  # Pirate: construction graph for crafted frames.
   - type: Construction
     graph: PaintingFrameDiamondGraph
     node: frame

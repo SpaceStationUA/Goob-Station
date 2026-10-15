@@ -72,3 +72,6 @@ ent-ClothingUniformOverallsSalvageSpecialist = Робочий комбінезо
     .desc = Це міцний робочий комбінезон. Дуже брудний.
 ent-ClothingUniformOverallsShaftMiner = Робочий комбінезон шахтаря
     .desc = Це міцний робочий комбінезон, трохи підгорілий на вигляд.
+
+ent-ClothingUniformJumpsuitHawaiGreen = зелена гавайська сорочка
+    .desc = Зелений колір Центрального командування™.

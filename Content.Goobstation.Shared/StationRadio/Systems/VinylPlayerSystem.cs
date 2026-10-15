@@ -12,14 +12,14 @@ using Robust.Shared.Network;
 
 namespace Content.Goobstation.Shared.StationRadio.Systems;
 
-public sealed class VinylPlayerSystem : EntitySystem
+public sealed partial class VinylPlayerSystem : EntitySystem
 {
 
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLinkSystem = default!;
-    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!; // Pirate: multiz
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLinkSystem = default!;
+    [Dependency] private CESharedZLevelsSystem _zLevels = default!; // Pirate: multiz
 
     public override void Initialize()
     {
