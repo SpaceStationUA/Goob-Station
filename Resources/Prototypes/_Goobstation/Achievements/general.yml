@@ -368,7 +368,7 @@
     prototypes:
     - Singularity
     - TeslaEnergyBall
-    - MobRatvar # Pirate: Ratvar is a ruin id; MobRatvar is the entity.
+    - MobRatvar
     - MobNarsie
 
 - type: achievement
