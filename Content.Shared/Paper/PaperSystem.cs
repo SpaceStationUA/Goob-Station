@@ -407,10 +407,9 @@ public sealed partial class PaperSystem : EntitySystem // Goob
             if (paperStatus == PaperStatus.Written)
             {
                 var written = new PaperWrittenEvent(entity.Owner);
-                RaiseLocalEvent(args.Actor, ref written);
+                RaiseLocalEvent(actor, ref written);
             }
 #endregion
-        }
 
         entity.Comp.Mode = PaperAction.Read;
         _audio.PlayPvs(entity.Comp.Sound, entity);
