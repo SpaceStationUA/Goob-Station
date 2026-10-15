@@ -6510,3 +6510,11 @@ Entries:
         за потреби
   id: 605
   time: '2026-10-15T09:21:26.0000000+00:00'
+- author: Jeleshk0
+  changes:
+    - type: Add
+      message: Добавив у deimplantWhitelist - DeathRattleLavalandImplant
+    - type: Tweak
+      message: Змінив, що тепер імплант останього подиху шахтарів - не перманентний.
+  id: 606
+  time: '2026-10-15T20:09:07.0000000+00:00'
