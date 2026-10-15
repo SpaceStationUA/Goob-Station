@@ -17,6 +17,6 @@ namespace Content.Shared._EinsteinEngines.Forensics
         ///     The time (in seconds) that it takes to sniff an entity.
         /// </summary>
         [DataField]
-        public float SniffDelay = 5.0f;
+        public float SniffDelay = 1.5f; // Pirate edit - was 5.0f
     }
 }

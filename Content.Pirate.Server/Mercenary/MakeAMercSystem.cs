@@ -26,12 +26,11 @@ namespace Content.Pirate.Server.Mercenary
     {
         private const string MapPath = "Maps/_Pirate/Shuttles/Qazmlp/st_merc.yml";
 
-        [ValidatePrototypeId<RandomHumanoidSettingsPrototype>]
-        private const string SpawnerPrototypeId = "Mercenary";
+        private static readonly ProtoId<RandomHumanoidSettingsPrototype> SpawnerPrototypeId = "Mercenary";
 
-        [ValidatePrototypeId<EntityPrototype>] private const string Disk = "CoordinatesDisk";
+        private static readonly EntProtoId Disk = "CoordinatesDisk";
 
-        [ValidatePrototypeId<TagPrototype>] private const string ShuttleTag = "Syndicate";
+        private static readonly ProtoId<TagPrototype> ShuttleTag = "Syndicate";
 
         private static readonly string[] ShuttleNames =
         {

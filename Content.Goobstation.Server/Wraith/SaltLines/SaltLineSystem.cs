@@ -10,15 +10,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Goobstation.Server.Wraith.SaltLines;
 
-public sealed class SaltLineSystem : EntitySystem
+public sealed partial class SaltLineSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     private static readonly ProtoId<TagPrototype>[] SaltLineBlockingTags = ["Wall", "Window"];
 
@@ -57,7 +57,7 @@ public sealed class SaltLineSystem : EntitySystem
         var gridUid = _transform.GetGrid(args.ClickLocation)!.Value;
         var snapPos = _map.TileIndicesFor((gridUid, grid), args.ClickLocation);
 
-        var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, snapPos);
+        var anchored = _map.GetAnchoredEntities(gridUid, grid, snapPos);
         while (anchored.MoveNext(out var entity))
         {
             // Pirate: salt lines must remain visible and reachable instead of being hidden under walls or windows.
@@ -119,7 +119,7 @@ public sealed class SaltLineSystem : EntitySystem
         foreach (var (offset, flag) in directions)
         {
             var checkTile = tile + offset;
-            var anchored = _map.GetAnchoredEntitiesEnumerator(transform.GridUid.Value, grid, checkTile);
+            var anchored = _map.GetAnchoredEntities(transform.GridUid.Value, grid, checkTile);
 
             while (anchored.MoveNext(out var entity))
             {
@@ -146,7 +146,7 @@ public sealed class SaltLineSystem : EntitySystem
         foreach (var offset in offsets)
         {
             var checkTile = tile + offset;
-            var anchored = _map.GetAnchoredEntitiesEnumerator(transform.GridUid.Value, grid, checkTile);
+            var anchored = _map.GetAnchoredEntities(transform.GridUid.Value, grid, checkTile);
 
             while (anchored.MoveNext(out var entity))
             {

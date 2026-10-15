@@ -1,0 +1,176 @@
+- type: reagent
+  id: Letoferol
+  name: reagent-name-letoferol
+  group: Special
+  desc: reagent-desc-letoferol
+  physicalDesc: reagent-physical-desc-necrotic
+  flavor: acid
+  color: "#a84387"
+  worksOnTheDead: true
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Letoferol
+          max: 10
+        - !type:MetabolizerTypeCondition
+          type:
+          - Chimera
+          inverted: true
+        damage:
+          types:
+            Cellular: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Letoferol
+          min: 10
+        - !type:MetabolizerTypeCondition
+          type:
+          - Chimera
+          inverted: true
+        damage:
+          types:
+            Poison: 3
+            Cellular: 4
+      - !type:Polymorph
+        prototype: LetoferolMutation
+        conditions:
+        # Pirate: equivalent to Omu polymorphTheLiving: false.
+        - !type:MobStateCondition
+          mobstate: Alive
+          inverted: true
+        - !type:ReagentCondition
+          reagent: Letoferol
+          min: 10
+        - !type:TagCondition
+          tag: Chimera
+          inverted: true
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Letoferol
+          min: 2
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.25
+      - !type:Drunk
+        boozePower: 15
+        conditions:
+        - !type:ReagentCondition
+          reagent: Letoferol
+          min: 8
+
+- type: reagent
+  id: NaturalLetoferol
+  name: reagent-name-nat-letoferol
+  group: Special
+  desc: reagent-desc-nat-letoferol
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: acid
+  color: "#ebba34"
+  worksOnTheDead: true
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: ChimeraFleshKudzu
+    maxOnTileWhitelist:
+      tags: [ ChimeraFloor ]
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: NaturalLetoferol
+          max: 15
+        - !type:MetabolizerTypeCondition
+          type:
+          - Chimera
+          inverted: true
+        damage:
+          types:
+            Cellular: 0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: NaturalLetoferol
+          min: 15
+        - !type:MetabolizerTypeCondition
+          type:
+          - Chimera
+          inverted: true
+        damage:
+          types:
+            Poison: 2
+      - !type:Polymorph
+        prototype: LetoferolMutationNatural
+        conditions:
+        # Pirate: equivalent to Omu polymorphTheLiving: false.
+        - !type:MobStateCondition
+          mobstate: Alive
+          inverted: true
+        - !type:ReagentCondition
+          reagent: NaturalLetoferol
+          min: 15
+        - !type:HasComponentCondition
+          components:
+          - type: HumanoidAppearance
+            species: Human # Omu this is shit but afaik never checked
+        - !type:TagCondition
+          tag: Chimera
+          inverted: true
+      - !type:Polymorph
+        prototype: LetoferolMutationBeastNatural
+        conditions:
+        # Pirate: equivalent to Omu polymorphTheLiving: false.
+        - !type:MobStateCondition
+          mobstate: Alive
+          inverted: true
+        - !type:ReagentCondition
+          reagent: NaturalLetoferol
+          min: 10 # less for non-humanoids
+        - !type:HasComponentCondition
+          components:
+          - type: HumanoidAppearance
+            species: Human # Omu this is shit but afaik never checked
+          inverted: true
+        - !type:TagCondition
+          tag: Chimera
+          inverted: true
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: NaturalLetoferol
+          min: 4
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
+      - !type:Drunk
+        boozePower: 15
+        conditions:
+        - !type:ReagentCondition
+          reagent: NaturalLetoferol
+          min: 10
+
+- type: reagent
+  id: ProtoLetoferol
+  name: reagent-name-protoletoferol
+  group: Special
+  desc: reagent-desc-protoletoferol
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: acid
+  color: "#a85832"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1

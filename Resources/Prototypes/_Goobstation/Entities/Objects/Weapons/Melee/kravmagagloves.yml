@@ -16,6 +16,8 @@
   - type: ClothingGrantComponent
     component:
     - type: KravMaga
+  - type: StealTarget # Pirate: traitor contracts
+    stealGroup: ClothingHandsGlovesKravMaga # Pirate: traitor contracts
   - type: GuideHelp
     guides:
     - KravMaga

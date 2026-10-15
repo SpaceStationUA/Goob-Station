@@ -1,9 +1,11 @@
 using System.Linq;
 using Content.Shared.Damage;
+using Content.Shared.Humanoid; // Pirate
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared._Shitmed.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Damage.Components;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -19,6 +21,10 @@ public sealed partial class MobThresholdSystem
     public FixedPoint2 CheckVitalDamage(EntityUid target, DamageableComponent damageableComponent)
     {
         var damage = damageableComponent.TotalDamage;
+
+        // Pirate: source Experiments use total damage for the 100/150/200 thresholds.
+        if (TryComp<HumanoidAppearanceComponent>(target, out var humanoid) && humanoid.Species == "Experiment")
+            return damage;
 
         if (!TryComp(target, out BodyComponent? body) ||
             body.BodyType != BodyType.Complex)

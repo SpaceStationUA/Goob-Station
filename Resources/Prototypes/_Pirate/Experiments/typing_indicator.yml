@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT
+
+- type: typingIndicator
+  id: sawian
+  spritePath: /Textures/_Pirate/Experiments/Effects/speech.rsi
+  typingState: sawian0
+  idleState: sawian3

@@ -63,7 +63,7 @@
     chips:
     - SkillChipCMO
     - SkillChipPistol
-    - SkillChipEchelonEducation
+    - SkillChipEchelonEducationPilot # Pirate: piloting skill
   # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

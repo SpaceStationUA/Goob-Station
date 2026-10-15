@@ -16,14 +16,14 @@ using Robust.Shared.Player;
 
 namespace Content.Goobstation.Shared.Interaction;
 
-public sealed class BackEquipSystem : EntitySystem
+public sealed partial class BackEquipSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!; // Pirate
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!; // Pirate
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private ItemSlotsSystem _slots = default!; // Pirate
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!; // Pirate
 
     public override void Initialize()
     {

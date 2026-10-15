@@ -35,6 +35,8 @@ uplink-skill-chip-weapons-laser-name = APTR-Chip (Laser)
 uplink-skill-chip-weapons-laser-desc = Teaches you to lead a target with a laser carbine.
 uplink-skill-chip-weapons-heavy-name = APTR-Chip (Heavy Weapons)
 uplink-skill-chip-weapons-heavy-desc = Teaches you to carry and aim something far too large.
+uplink-skill-chip-throwing-tampered-name = { ent-SkillChipThrowingTampered }
+uplink-skill-chip-throwing-tampered-desc = { ent-SkillChipThrowingTampered.desc }
 
 ### Crates
 
@@ -71,3 +73,5 @@ ent-BoxSkillChipsMed = medical skillchip box
     .desc = { ent-BoxSkillChipsBase.desc }
 ent-BoxSkillChipsSci = science skillchip box
     .desc = { ent-BoxSkillChipsBase.desc }
+
+research-technology-hormone-regulation = Hormone Regulation

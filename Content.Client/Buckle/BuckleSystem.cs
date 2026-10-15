@@ -17,7 +17,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
 {
     [Dependency] private readonly RotationVisualizerSystem _rotationVisualizerSystem = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private readonly TransformSystem _xformSystem = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly TagSystem _tag = default!; // DOWNSTREAM-TPirates: vehicle overlay fix (and chairs)
     private static readonly ProtoId<TagPrototype> ChairTag = "Chair"; // DOWNSTREAM-TPirates: vehicle overlay fix (and chairs)
@@ -139,6 +139,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             UpdateChairStrapDepth(args.Strap, strapSprite, isNorth, args.Strap.Comp.BuckledEntities.Count > 0);
         }
         #endregion
+
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
 

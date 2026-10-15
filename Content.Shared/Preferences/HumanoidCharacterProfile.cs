@@ -81,7 +81,7 @@ namespace Content.Shared.Preferences
     [Serializable, NetSerializable]
     public sealed partial class HumanoidCharacterProfile : ICharacterProfile
     {
-        private static readonly Regex RestrictedNameRegex = new(@"[^\u0030-\u0039\u0041-\u005A\u0061-\u007A\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F '\-]");
+        private static readonly Regex RestrictedNameRegex = new(@"[^\u0030-\u0039\u0041-\u005A\u0061-\u007A\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\u0100-\u017F\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F '\-#]"); // Pirate: Experiment identifiers.
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
 
         /// <summary>
@@ -299,6 +299,7 @@ namespace Content.Shared.Preferences
         {
             CopyPirateCharacterInfo(other); // Pirate: Starlight character descriptions.
             CopyPirateKnowledge(other); // Pirate: Trauma knowledge port.
+            CustomMarkings = other.CustomMarkings is { } worn ? new(worn) : new(); // Pirate: validate after copying network data.
         }
 
         /// <summary>
@@ -660,6 +661,7 @@ namespace Content.Shared.Preferences
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
             if (!PirateCharacterInfoEquals(other)) return false; // Pirate: Starlight character descriptions.
+            if (!CustomMarkingsEqual(other)) return false; // Pirate
             if (!PirateKnowledgeEquals(other)) return false; // Pirate: Trauma knowledge port.
             return Appearance.MemberwiseEquals(other.Appearance);
         }
@@ -667,6 +669,7 @@ namespace Content.Shared.Preferences
         public void EnsureValid(ICommonSession session, IDependencyCollection collection)
         {
             var configManager = collection.Resolve<IConfigurationManager>();
+            EnsureCustomMarkingsValid(configManager); // Pirate
             var prototypeManager = collection.Resolve<IPrototypeManager>();
 
             if (!prototypeManager.TryIndex(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
@@ -984,6 +987,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(_loadouts);
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
+            hashCode.Add(CustomMarkings?.Count ?? 0); // Pirate
             AddPirateCharacterInfoHash(ref hashCode); // Pirate: Starlight character descriptions.
             AddPirateKnowledgeHash(ref hashCode); // Pirate: Trauma knowledge port.
             hashCode.Add(Species);

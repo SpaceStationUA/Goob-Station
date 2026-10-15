@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Client.WebView;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;

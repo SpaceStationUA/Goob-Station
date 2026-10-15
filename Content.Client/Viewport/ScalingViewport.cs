@@ -146,6 +146,7 @@ namespace Content.Client.Viewport
 
             DebugTools.AssertNotNull(_viewport);
 
+            var uiTransform = handle.DrawingHandleScreen.GetTransform(); // Pirate: camera viewport transform
             RenderZLevels(_viewport!, handle.DrawingHandleScreen); // Pirate: multiz
 
             if (_queuedScreenshots.Count != 0)
@@ -165,7 +166,6 @@ namespace Content.Client.Viewport
 
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
-            var uiTransform = handle.DrawingHandleScreen.GetTransform(); // Pirate: camera viewport transform
             _viewport!.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal); // Pirate: multiz
             // Pirate: camera viewport transform - overlays clear it, so restore before drawing.
             handle.DrawingHandleScreen.SetTransform(uiTransform); // Pirate: camera viewport transform

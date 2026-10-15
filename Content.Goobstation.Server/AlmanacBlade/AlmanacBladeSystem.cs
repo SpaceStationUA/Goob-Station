@@ -23,17 +23,17 @@ using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Server.AlmanacBlade;
 
-public sealed class AlmanacBladeSystem : SharedAlmanacBladeSystem
+public sealed partial class AlmanacBladeSystem : SharedAlmanacBladeSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly FlammableSystem _flammable = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
+    [Dependency] private ExplosionSystem _explosion = default!;
+    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     private static readonly ProtoId<TagPrototype> OreTag = "Ore";
     private static readonly string[] CargoPresets = { "Extended", "Greenshift" };
@@ -193,11 +193,13 @@ public sealed class AlmanacBladeSystem : SharedAlmanacBladeSystem
 
     private void OnChestMapInit(Entity<AlmanacBladeChestSpawnerComponent> ent, ref MapInitEvent args)
     {
-        if (_harvests >= HarvestsForMaints || !_random.Prob(ent.Comp.Chance))
+        if (!TryComp<EntityStorageComponent>(ent, out var storage)
+            || _harvests >= HarvestsForMaints
+            || !_random.Prob(ent.Comp.Chance))
             return;
 
         var blade = Spawn(ent.Comp.Blade, Transform(ent).Coordinates);
-        _entityStorage.Insert(blade, ent);
+        _entityStorage.Insert(blade, ent, storage);
     }
 
     private void OnMaterialInserted(Entity<AlmanacOreCounterComponent> ent, ref MaterialEntityInsertedEvent args)

@@ -11,7 +11,6 @@ marking-FelinidLongEarsTall = Довгі вуха високі
 marking-FelinidLongEarsThin = Довгі вуха тонкі
 
 # Гострі вуха
-
 marking-FelinidPointyEarsStandard = Стандартні вуха
 marking-FelinidPointyEarsStandard-pointy_ears_standard = Стандартні вуха
 marking-FelinidPointyEarsWide = Широкі вуха
@@ -30,7 +29,6 @@ marking-FelinidPointyEarsLarge = Великі вуха
 marking-FelinidPointyEarsLarge-pointy_ears_large = Великі вуха
 
 # Людські носи
-
 marking-FelinidHumanNoseSchnozz = Шноц!
 marking-FelinidHumanNoseSchnozz-schnozz = Ніс
 marking-FelinidHumanNoseNubby = Вузький ніс
@@ -45,7 +43,6 @@ marking-FelinidHeadSeptum = Кільце в перегородці
 marking-FelinidHeadSeptum-septum = Кільце в перегородці
 
 # Шрами
-
 marking-FelinidScarTopSurgeryShort = Верхній Хірургічний Шрам (Короткий)
 marking-FelinidScarTopSurgeryShort-scar_top_surgery_short = Шрам від хірургічного втручання
 marking-FelinidScarTopSurgeryLong = Верхній Хірургічний Шрам (Довгий)
@@ -66,19 +63,16 @@ marking-FelinidScarFace2 = Шрам на обличчі (малий)
 marking-FelinidScarFace2-scar_face_2 = Шрам на обличчі
 
 # Татуювання
-
 marking-FelinidTattooNanotrasenChest = Татуювання на грудях (Nanotrasen)
 marking-FelinidTattooNanotrasenChest-tattoo_nanotrasen_chest = Татуювання на грудях (нанотрасен)
 marking-FelinidBuffChest = Накачаний
 marking-FelinidBuffChest-buff = Накачаний
 
 # Марля
-
 marking-FelinidGauzeHead = Марлеве обгортання для голови
 marking-FelinidGauzeHead-gauze_head = Марлеве обгортання для голови
 
 # Градієнти волосся
-
 marking-FelinidHairGradientRGB2Col = Простий градієнт (2 кольори)
 marking-FelinidHairGradientRGB2Col-col1 = 1
 marking-FelinidHairGradientRGB2Col-col2 = 2
@@ -101,7 +95,6 @@ marking-FelinidFacialHairGradientHSV-col1 = 1
 marking-FelinidFacialHairGradientHSV-col2 = 2
 
 # Маркування тіла - груди
-
 marking-FelinidChestBackstabbed = Удар в спину
 marking-FelinidChestBackstabbed-backstabbed = Удар в спину
 marking-FelinidChestCutHere = Тату «Різати тут»
@@ -145,7 +138,6 @@ marking-FelinidVitiligoChestSpots = Плями вітиліго
 marking-FelinidVitiligoChestSpots-vitiligospots = Плями вітиліго
 
 # Маркування тіла - голова
-
 marking-FelinidEyebrowsBig = Брови (Великі)
 marking-FelinidEyebrowsBig-eyebrowsthick = Брови (Великі)
 marking-FelinidEyebrowsBigger = Брови (Більші)
@@ -171,7 +163,6 @@ marking-FelinidVitiligoHeadR = Вітиліго (праве око)
 marking-FelinidVitiligoHeadR-vitiligoright = Вітиліго (праве око)
 
 # Маркування тіла - руки
-
 marking-FelinidArmDollJointsTattooRight = Тату: Лялькові суглоби (права рука)
 marking-FelinidArmDollJointsTattooRight-doll = Татуювання лялькових суглобів на руці (праве)
 marking-FelinidArmHeavyTattoosRight = Масивні татуювання на руці (праве)
@@ -204,7 +195,6 @@ marking-FelinidVitiligoArmL = Вітиліго (ліва рука)
 marking-FelinidVitiligoArmL-vitiligo = Вітиліго (ліва рука)
 
 # Маркування тіла - ноги та ступні
-
 marking-FelinidLegDollJointsTattooRight = Тату: Лялькові суглоби (права нога)
 marking-FelinidLegDollJointsTattooRight-doll = Татуювання лялькових суглобів на нозі (праве)
 marking-FelinidLegHeavyTattoosRight = Масивні татуювання на нозі (праве)
@@ -235,7 +225,6 @@ marking-FelinidFootHeavyTattoosRight-heavy1 = Масивні татуюванн�
 marking-FelinidFootHeavyTattoosRight-heavy2 = Масивні татуювання на ступні (зовнішня частина)
 
 # Маркування тіла - кисті
-
 marking-FelinidHandBraceletLeft = Браслет (лівий)
 marking-FelinidHandBraceletLeft-bracelet = Браслет (лівий)
 marking-FelinidHandDollJointsTattooLeft = Тату: Лялькові суглоби (ліва кисть)
@@ -270,7 +259,6 @@ marking-FelinidVitiligoHandR = Вітиліго (права кисть)
 marking-FelinidVitiligoHandR-vitiligo = Вітиліго (права кисть)
 
 # Маркування тіла - волосся та волосся на обличчі
-
 marking-FelinidFloralBeard = Борода (квіткова)
 marking-FelinidFloralBeard-messyfloral1 = Борода (квіткова)
 marking-FelinidFloralBeard-messyfloral2 = Борода (квіткова)
@@ -282,7 +270,6 @@ marking-FelinidNiqab = Нікаб
 marking-FelinidNiqab-niqab = Нікаб
 
 # Маркування тіла - збоку голови
-
 marking-FelinidHeadEarrings = Сережки (маленькі)
 marking-FelinidHeadEarrings-earrings1 = Права сережка
 marking-FelinidHeadEarrings-earrings2 = Ліва сережка
@@ -294,7 +281,6 @@ marking-FelinidHeadEarringsWeights-earringsweights1 = Права сережка
 marking-FelinidHeadEarringsWeights-earringsweights2 = Ліва сережка
 
 # Хвости ящірки (унаті)
-
 marking-FelinidLizardTailSmooth = Хвіст Ящірки (Гладкий)
 marking-FelinidLizardTailSmooth-tail_smooth_primary = Хвіст ящірки
 marking-FelinidLizardTailSmooth-tail_smooth_secondary = Нижній тон
@@ -310,7 +296,6 @@ marking-FelinidLizardTailAquatic = Хвіст Ящера (Водний)
 marking-FelinidLizardTailAquatic-tail_aquatic = Хвіст Ящера (Водний)
 
 # Тулуб ящірки (унаті)
-
 marking-FelinidLizardChestTiger = Тулуб Ящірки (Тигр)
 marking-FelinidLizardChestTiger-body_tiger = Тулуб ящірки (тигр)
 marking-FelinidLizardChestUnderbelly = Тулуб Ящірки (Підчерев'я)
@@ -319,3 +304,5 @@ marking-FelinidLizardChestBackspikes = Шипи на спині Ящірки (Ч
 marking-FelinidLizardChestBackspikes-body_backspikes = Шипи на спині ящірки (чотири)
 marking-FelinidLizardChestFin = Плавник Ящера
 marking-FelinidLizardChestFin-body_fin = Плавник Ящера
+markings-category-HairSpecial = Волосся (градієнт)
+markings-category-FacialHairSpecial = Волосся на обличчі (градієнт)

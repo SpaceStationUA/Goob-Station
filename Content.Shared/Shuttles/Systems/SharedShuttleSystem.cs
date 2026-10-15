@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared._NF.Shuttles;
+using Content.Shared._Pirate.Shuttles.Warp; // Pirate: warp drive
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
@@ -16,7 +17,6 @@ namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] protected readonly FixtureSystem Fixtures = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
@@ -176,10 +176,15 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// <summary>
     /// Frontier edit
     /// </summary>
+    // Pirate start: warp drive. An engaged warp drive overrides the bluespace radius.
     public float GetFTLRange(EntityUid shuttleUid, FTLDriveComponent? ftl = null)
     {
+        if (TryComp<WarpDriveGridComponent>(shuttleUid, out var warp) && warp.Active)
+            return warp.Range;
+
         return !Resolve(shuttleUid, ref ftl) ? 0f : ftl.Data.Range;
     }
+    // Pirate end
 
     public float GetFTLBufferRange(EntityUid shuttleUid, MapGridComponent? grid = null)
     {
@@ -247,7 +252,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var ourFTLBuffer = GetFTLBufferRange(shuttleUid);
         var circle = new PhysShapeCircle(ourFTLBuffer + FTLBufferRange, targetPosition);
 
-        _mapManager.FindGridsIntersecting(mapCoordinates.MapId, circle, Robust.Shared.Physics.Transform.Empty,
+        Maps.FindGridsIntersecting(mapCoordinates.MapId, circle, Robust.Shared.Physics.Transform.Empty,
             ref _grids, includeMap: false);
 
         // If any grids in range that aren't us then can't FTL.

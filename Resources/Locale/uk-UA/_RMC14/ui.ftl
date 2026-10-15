@@ -11,6 +11,7 @@ rmc-ui-link-discord-account-copied = Скопійовано!
 rmc-ui-link-discord-account-already-linked = [bold]Ваш акаунт вже прив'язано![/bold]
 rmc-ui-link-discord-account-open-channel = Відкрити канал
 rmc-ui-patron-perks = Бонуси патрона
+pirate-ui-player-cosmetics = Налаштування вигляду
 rmc-ui-lobby-message = Повідомлення в лобі
 rmc-ui-lobby-message-description = Відображається гравцям перед початком гри.
   Випадково обирається одне з усіх повідомлень патронів цього рівня.

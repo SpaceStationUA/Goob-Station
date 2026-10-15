@@ -14,6 +14,7 @@ using Content.Shared.Chat;
 using Content.Shared.Construction;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Server.Station.Systems; // Pirate: records photos
 using Content.Shared.CriminalRecords; // Pirate: records photos
@@ -25,6 +26,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Server._Pirate.StationRecords; // Pirate: records photos
 // Pirate banking start
 using Content.Server._Pirate.Banking;
 using Content.Shared._Pirate.Banking;
@@ -57,6 +59,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly JobSystem _job = default!;
     [Dependency] private readonly BankCardSystem _bankCard = default!;
     // Pirate banking end
+    [Dependency] private readonly RecordPortraitSystem _portraits = default!; // Pirate: records photos
 
     public override void Initialize()
     {
@@ -165,7 +168,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
-        if (_prototype.Resolve(newJobProto, out var job)
+        if (_prototype.TryIndex(newJobProto, out var job) // Goob - Fix (client input, no log)
             && _prototype.Resolve(job.Icon, out var jobIcon))
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
@@ -277,12 +280,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         #region Pirate: records photos
         if (_record.TryGetRecord<CriminalRecord>(key, out var criminalRecord))
-        {
             criminalRecord.GeneralRecordSnapshot = record with { };
 
-            if (criminalRecord.PortraitProfileSnapshot != null)
-                criminalRecord.PortraitProfileSnapshot = criminalRecord.PortraitProfileSnapshot.WithName(newFullName);
-        }
+        _portraits.RenameSnapshot(key, newFullName);
         #endregion
 
         _record.Synchronize(key);

@@ -464,7 +464,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Animal] # Applying damage to the mobs with lower metabolism capabilities
+          type: [Animal, Experiment] # Pirate # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
@@ -472,7 +472,7 @@
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:MetabolizerTypeCondition
-            type: [Animal]
+            type: [Animal, Experiment] # Pirate
 
 # Pirate: coffemaker
 - type: reagent
@@ -593,6 +593,7 @@
           - XenobioSlime # Goobstation - XenobioSlime
           - Hydrakin # Fuck you
           - Vampiric # Pirate
+          - Synth # Goob - Afterlight synths
           inverted: true
         type: Local
         visualType: MediumCaution
@@ -610,6 +611,7 @@
           - XenobioSlime # Goobstation - XenobioSlime
           - Hydrakin # Fuck you
           - Vampiric # Pirate
+          - Synth # Goob - Afterlight synths
           inverted: true
       - !type:HealthChange
         conditions:
@@ -622,6 +624,7 @@
           - XenobioSlime # Goobstation - XenobioSlime
           - Hydrakin # Fuck you
           - Vampiric # Pirate
+          - Synth # Goob - Afterlight synths
           inverted: true
         damage:
           types:
@@ -683,7 +686,7 @@
           reagent: Allicin
           min: 1
         - !type:MetabolizerTypeCondition
-          type: [Animal]
+          type: [Animal, Experiment] # Pirate
         damage:
           types:
             Poison: 0.1 #goobstation, was 0.06

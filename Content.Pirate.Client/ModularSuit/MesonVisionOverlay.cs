@@ -24,7 +24,6 @@ public sealed class MesonVisionOverlay : Overlay
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
 
     private readonly EntityLookupSystem _lookup;
@@ -77,7 +76,7 @@ public sealed class MesonVisionOverlay : Overlay
     {
         var handle = args.WorldHandle;
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds, ref _grids, approx: true);
+        _map.FindGridsIntersecting(args.MapId, args.WorldBounds, ref _grids, approx: true);
 
         foreach (var grid in _grids)
         {

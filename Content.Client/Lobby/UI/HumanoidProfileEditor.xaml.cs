@@ -559,9 +559,8 @@ namespace Content.Client.Lobby.UI
             #region Markings
 
             TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-markings-tab")); // Pirate: loadout
-            TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-ic-info-tab")); // Pirate: Starlight character descriptions.
-            TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-ooc-info-tab"));
-            TabContainer.SetTabTitle(8, Loc.GetString("knowledge-editor-tab")); // Pirate
+            TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-background-tab")); // Pirate: OOC records
+            TabContainer.SetTabTitle(7, Loc.GetString("knowledge-editor-tab")); // Pirate: OOC records
 
             Markings.OnMarkingAdded += OnMarkingChange;
             Markings.OnMarkingRemoved += OnMarkingChange;
@@ -609,6 +608,7 @@ namespace Content.Client.Lobby.UI
 
             UpdateSpeciesGuidebookIcon();
             InitializePirateKnowledgeEditor(); // Pirate
+            InitializeCustomMarkings(); // Pirate
             IsDirty = false;
         }
 
@@ -626,14 +626,9 @@ namespace Content.Client.Lobby.UI
             _allowRoleplayNotes = _cfgManager.GetCVar(PirateVars.OOCNotes);
 
             var showIcInfo = _allowFlavorText || _allowCharacterSecrets || _allowExploitableInfo;
-            TabContainer.SetTabVisible(6, showIcInfo); // Pirate: Keep disabled character-info tabs inaccessible.
-            TabContainer.SetTabVisible(7, _allowRoleplayNotes);
-
-            if ((!showIcInfo && TabContainer.CurrentTab == 6)
-                || (!_allowRoleplayNotes && TabContainer.CurrentTab == 7))
-            {
-                TabContainer.CurrentTab = 0;
-            }
+            // Pirate: OOC records - Keep disabled sections inaccessible; the records section has no toggle.
+            ICInfoSection.Visible = showIcInfo; // Pirate: OOC records
+            OOCInfoSection.Visible = _allowRoleplayNotes; // Pirate: OOC records
 
             ICInfoEditor.Physical.Visible = _allowFlavorText;
             ICInfoEditor.Personality.Visible = _allowFlavorText;
@@ -651,6 +646,7 @@ namespace Content.Client.Lobby.UI
             ICInfoEditor.SecretsInput.OnTextChanged += OnSecretsChanged;
             OOCInfoEditor.PersonalNotesInput.OnTextChanged += OnPersonalNotesChanged;
             OOCInfoEditor.OOCNotesInput.OnTextChanged += OnOOCNotesChanged;
+            SetupRecordBackgroundEditor(); // Pirate: OOC records
         }
 
         /// <summary>
@@ -2013,6 +2009,7 @@ namespace Content.Client.Lobby.UI
         /// </remarks>
         private void ReloadPreview()
         {
+            RefreshCustomMarkingsPreview(); // Pirate: keep an open marking library in sync with appearance edits.
             _entManager.DeleteEntity(PreviewDummy);
             PreviewDummy = EntityUid.Invalid;
 
@@ -2074,6 +2071,7 @@ namespace Content.Client.Lobby.UI
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();
+            UpdateCustomMarkings(); // Pirate
             UpdateBarkVoice(); // Goob Station - Barks
             UpdateHairPickers();
             UpdateCMarkingsHair();
@@ -2105,6 +2103,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         private void ReloadProfilePreview()
         {
+            RefreshCustomMarkingsPreview(); // Pirate: skin, hair and ordinary markings also affect library previews.
             if (Profile == null || !_entManager.EntityExists(PreviewDummy))
                 return;
 
@@ -2514,6 +2513,7 @@ namespace Content.Client.Lobby.UI
 
         protected override void Dispose(bool disposing)
         {
+            CloseCustomMarkings(); // Pirate
             base.Dispose(disposing);
             if (!disposing)
                 return;
@@ -2695,6 +2695,7 @@ namespace Content.Client.Lobby.UI
                 ICInfoEditor.SecretsInput.TextRope = new Rope.Leaf(Profile?.Secrets ?? string.Empty);
                 OOCInfoEditor.PersonalNotesInput.TextRope = new Rope.Leaf(Profile?.PersonalNotes ?? string.Empty);
                 OOCInfoEditor.OOCNotesInput.TextRope = new Rope.Leaf(Profile?.OOCNotes ?? string.Empty);
+                UpdateRecordBackgroundText(); // Pirate: OOC records
             }
             finally
             {
@@ -3055,6 +3056,7 @@ namespace Content.Client.Lobby.UI
         private void SetPreviewRotation(Direction direction)
         {
             SpriteView.OverrideDirection = (Direction) ((int) direction % 4 * 2);
+            SetCustomMarkingsDirection(SpriteView.OverrideDirection.Value); // Pirate
         }
 
         private void RandomizeEverything()

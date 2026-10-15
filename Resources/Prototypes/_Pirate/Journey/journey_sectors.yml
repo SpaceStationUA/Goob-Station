@@ -1,0 +1,439 @@
+# Journey mode sectors. A sector decides what the round is while the station is inside it: the
+# events the scheduler may run and the ones it holds back. Names and descriptions are locale keys.
+#
+# majorEvents are the sector's big threats. They wait majorDelayMinutes after arrival, and about
+# 20 minutes after a major fired anywhere else. An empty list makes the sector quiet.
+# `journey preset calm` gates the round to quiet sectors, `dynamic` to loud ones, `standard` clears it.
+#
+# blockedEvents never run in the sector. allowedEvents, when set, is the only playlist: a major
+# must be listed there to ever fire.
+
+# Starter sector: quiet, so the first hour teaches. Pressure comes from anomalies and glimmer, not bosses.
+- type: journeySector
+  id: JourneyKelTerus
+  name: journey-sector-kel-terus
+  parallax: JourneyGenBlue
+  weight: 1
+  blockedEvents:
+  # Paranormal presences cannot take root in the resonance field.
+  - GlimmerRevenantSpawn
+  - BorerSpawn
+  - SlaughterDemonMidround
+  - WraithMidround
+  - DarkPriestMidround
+  # Paranormal antagonists (sector rule-level; roundstart antags are filtered by the rule itself).
+  - Heretic
+  - Devil
+  - Shadowling
+  # Strong glimmer discharges are for later sectors; the starter keeps zap, wisps and foxfire.
+  - NoosphericFry
+  - NoosphericStorm
+  # Siege monsters and soldiers would end the tutorial early.
+  - BlobSpawn
+  - XenomorphsInfestation
+  - DragonSpawn
+  - ColossusSpawn
+  - BingleSpawn
+  - LoneOpsSpawn
+  - NinjaSpawn
+  - SpacePirates
+  - VoxRaidersMidround
+  - ZombieOutbreak
+  - TerrorSpidersSpawn
+  - LoneAbductorSpawn
+  - DuoAbductorSpawn
+  - MimeAssassinMidround
+  - TunnelClownMidround
+  - SingulothKnightsMidround
+  allowedEvents:
+  # Starter playlist: anomalies and soft glimmer over a calm ship. No paranormal, no siege,
+  # no strong glimmer discharges (those stay banned above) — phase one teaches.
+  - AnomalySpawn
+  - BluespaceArtifact
+  - BluespaceLocker
+  - MalignRiftSpawn
+  - NoosphericZap
+  - MundaneDischarge
+  - NoosphericSilence
+  - GlimmerWispSpawn
+  - GlimmerMiteSpawn
+  - GlimmerFoxfireSpawn
+  - FreeProber
+  - GlimmerRandomSentience
+  - PsionicNosebleedEvent
+  - BreakerFlip
+  - BureaucraticError
+  - ClericalError
+  - JobDistributionError
+  - ClosetSkeleton
+  - GasLeak
+  - KudzuGrowth
+  - PowerGridCheck
+  - VentClog
+  - MassHallucinations
+  - IonStorm
+  - SolarFlare
+  - MimicVendorRule
+  - MouseMigration
+  - CockroachMigration
+  - MothroachSpawn
+  - RandomSentience
+
+# Loud: pirate raiders and hungry fauna. Majors open after 15 minutes.
+- type: journeySector
+  id: JourneyGoldenVeil
+  name: journey-sector-golden-veil
+  parallax: JourneyGenGold
+  weight: 1
+  majorEvents:
+  - SpacePirates
+  - VoxRaidersMidround
+  majorDelayMinutes: 15
+  blockedEvents:
+  # Gold fields are stable: anomaly events stay out, in any form.
+  - AnomalySpawn
+  - BluespaceArtifact
+  - BluespaceLocker
+  - MalignRiftSpawn
+  - GlimmerRevenantSpawn
+  # One boss at a time: pirates are this sector's majors, siege monsters sit out.
+  - DragonSpawn
+  - ColossusSpawn
+  - BlobSpawn
+  - XenomorphsInfestation
+  - BingleSpawn
+  - LoneOpsSpawn
+  - NinjaSpawn
+  - ZombieOutbreak
+  - SlaughterDemonMidround
+  - DarkPriestMidround
+  allowedEvents:
+  # Pirate playlist: raiders and hungry fauna over a calm ship. No anomalies in any form
+  # (banned above). The majors MUST be listed here or they never fire.
+  - SpacePirates
+  - VoxRaidersMidround
+  - BountyHunterSpawn
+  - Fugitive
+  - SleeperAgents
+  - SpiderSpawn
+  - SlimesSpawn
+  - SnakeSpawn
+  - KingRatMigration
+  - ParadoxCloneSpawn
+  - BreakerFlip
+  - BureaucraticError
+  - ClericalError
+  - JobDistributionError
+  - ClosetSkeleton
+  - GasLeak
+  - KudzuGrowth
+  - PowerGridCheck
+  - VentClog
+  - MassHallucinations
+  - IonStorm
+  - SolarFlare
+  - GreytideVirus
+  - RandomVirus
+  - MimicVendorRule
+  - MouseMigration
+  - CockroachMigration
+  - RandomSentience
+
+# Quiet: the difficulty is keeping the station powered, not fighting anyone.
+- type: journeySector
+  id: JourneyHowlingChoir
+  name: journey-sector-howling-choir
+  parallax: JourneyGenStorm
+  weight: 1
+  blockedEvents:
+  - SpacePirates
+  - VoxRaidersMidround
+  - LoneOpsSpawn
+  - NinjaSpawn
+  - DragonSpawn
+  - ColossusSpawn
+  - BlobSpawn
+  - XenomorphsInfestation
+  - BingleSpawn
+  - ZombieOutbreak
+  - TerrorSpidersSpawn
+  - SpiderSpawn
+  - SlimesSpawn
+  - SnakeSpawn
+  - SlaughterDemonMidround
+  - DarkPriestMidround
+  - BorerSpawn
+  - SkiaSpawn
+  - GlimmerRevenantSpawn
+  - WraithMidround
+  - Heretic
+  - Devil
+  - Shadowling
+  - LoneAbductorSpawn
+  - DuoAbductorSpawn
+  - MimeAssassinMidround
+  - TunnelClownMidround
+  - SingulothKnightsMidround
+  allowedEvents:
+  # Storm playlist: the grid is the boss here. Power and ship-strain events only, over a
+  # thin neutral floor — nothing with teeth lives in this sky. Imps ride the surge.
+  - EeepEvent
+  - PowerGridCheck
+  - BreakerFlip
+  - SolarFlare
+  - IonStorm
+  - GasLeak
+  - VentClog
+  - BureaucraticError
+  - ClericalError
+  - JobDistributionError
+  - MassHallucinations
+  - ClosetSkeleton
+  - MimicVendorRule
+  - MouseMigration
+
+# Loud: a dead field of wrecks. Long stays wake what lives in them. Majors open after 15 minutes.
+- type: journeySector
+  id: JourneyQuietHarvest
+  name: journey-sector-quiet-harvest
+  parallax: JourneyGenRust
+  weight: 1
+  majorEvents:
+  - DragonSpawn
+  majorDelayMinutes: 15
+  blockedEvents:
+  # The dragon is this sector's boss; other siege monsters and soldiers sit out.
+  - SpacePirates
+  - VoxRaidersMidround
+  - BlobSpawn
+  - XenomorphsInfestation
+  - ColossusSpawn
+  - LoneOpsSpawn
+  - NinjaSpawn
+  - BingleSpawn
+  - ZombieOutbreak
+  - TerrorSpidersSpawn
+  - SlaughterDemonMidround
+  - DarkPriestMidround
+  - BorerSpawn
+  - SkiaSpawn
+  - GlimmerRevenantSpawn
+  - WraithMidround
+  - Heretic
+  - Devil
+  - Shadowling
+  - LoneAbductorSpawn
+  - DuoAbductorSpawn
+  allowedEvents:
+  # Wreck playlist: derelicts and bones over a calm ship, with dead-field weirdness. The
+  # dragon MUST be listed here or it never wakes.
+  - DragonSpawn
+  - DerelictEngineerCyborgSpawn
+  - DerelictGenericCyborgSpawn
+  - DerelictJanitorCyborgSpawn
+  - DerelictMedicalCyborgSpawn
+  - DerelictMiningCyborgSpawn
+  - ClosetSkeleton
+  - AnomalySpawn
+  - BluespaceArtifact
+  - BluespaceLocker
+  - BreakerFlip
+  - BureaucraticError
+  - ClericalError
+  - JobDistributionError
+  - GasLeak
+  - PowerGridCheck
+  - VentClog
+  - MassHallucinations
+  - IonStorm
+  - SolarFlare
+  - MimicVendorRule
+  - MouseMigration
+  - CockroachMigration
+
+# Quiet trap: almost nothing happens here, so a jump into it is wasted.
+- type: journeySector
+  id: JourneyGlassSermon
+  name: journey-sector-glass-sermon
+  parallax: JourneyGenPale
+  weight: 1
+  # A trap, not an opening: the start roll skips it, the crew may still fly here to learn why.
+  allowStart: false
+  blockedEvents:
+  - AnomalySpawn
+  - BluespaceArtifact
+  - BluespaceLocker
+  - MalignRiftSpawn
+  - NoosphericFry
+  - NoosphericStorm
+  - GlimmerRevenantSpawn
+  - DragonSpawn
+  - ColossusSpawn
+  - BlobSpawn
+  - XenomorphsInfestation
+  - BingleSpawn
+  - LoneOpsSpawn
+  - NinjaSpawn
+  - SpacePirates
+  - VoxRaidersMidround
+  - ZombieOutbreak
+  - TerrorSpidersSpawn
+  - SlaughterDemonMidround
+  - DarkPriestMidround
+  - BorerSpawn
+  - SkiaSpawn
+  - WraithMidround
+  - Heretic
+  - Devil
+  - Shadowling
+  - LoneAbductorSpawn
+  - DuoAbductorSpawn
+  allowedEvents:
+  # Trap playlist: almost nothing, on purpose. A jump spent here buys paperwork and static.
+  - BureaucraticError
+  - ClericalError
+  - MassHallucinations
+  - IonStorm
+  - ClosetSkeleton
+
+# Loud: the dead do not rest here. Long stays invite them aboard.
+- type: journeySector
+  id: JourneyHollowVigil
+  name: journey-sector-hollow-vigil
+  parallax: JourneyGenVigil
+  weight: 1
+  majorEvents:
+  - SlaughterDemonMidround
+  - DarkPriestMidround
+  - GlimmerRevenantSpawn
+  majorDelayMinutes: 15
+  blockedEvents:
+  # Bluespace is Kel Terus country; siege monsters and soldiers would drown the haunting out.
+  - AnomalySpawn
+  - BluespaceArtifact
+  - BluespaceLocker
+  - MalignRiftSpawn
+  - DragonSpawn
+  - ColossusSpawn
+  - BlobSpawn
+  - XenomorphsInfestation
+  - BingleSpawn
+  - LoneOpsSpawn
+  - NinjaSpawn
+  - SpacePirates
+  - VoxRaidersMidround
+  - ZombieOutbreak
+  - TerrorSpidersSpawn
+  - SpiderSpawn
+  - SlimesSpawn
+  - SnakeSpawn
+  - LoneAbductorSpawn
+  - DuoAbductorSpawn
+  - MimeAssassinMidround
+  - TunnelClownMidround
+  - SingulothKnightsMidround
+  allowedEvents:
+  # Haunting playlist: the dead and the glimmer-dark over a calm ship. The majors MUST be
+  # listed here or they never fire. (WraithMidround is deliberately absent: it is not in
+  # any scheduler table, so the scheduler could never roll it.)
+  - SlaughterDemonMidround
+  - DarkPriestMidround
+  - GlimmerRevenantSpawn
+  - BorerSpawn
+  - NoosphericZap
+  - NoosphericFry
+  - NoosphericStorm
+  - NoosphericSilence
+  - MundaneDischarge
+  - GlimmerWispSpawn
+  - PsionicNosebleedEvent
+  - MassHallucinations
+  - SleeperAgents
+  - ParadoxCloneSpawn
+  - BreakerFlip
+  - BureaucraticError
+  - ClericalError
+  - JobDistributionError
+  - ClosetSkeleton
+  - GasLeak
+  - KudzuGrowth
+  - PowerGridCheck
+  - VentClog
+  - IonStorm
+  - SolarFlare
+  - MimicVendorRule
+  - MouseMigration
+  - CockroachMigration
+  - RandomSentience
+
+# Loud: the garden is the boss. Long stays let it in.
+- type: journeySector
+  id: JourneySporefall
+  name: journey-sector-sporefall
+  parallax: JourneyGenSpore
+  weight: 1
+  majorEvents:
+  - BlobSpawn
+  - ZombieOutbreak
+  - XenomorphsInfestation
+  majorDelayMinutes: 15
+  blockedEvents:
+  # The garden is this sector's boss; other siege monsters, soldiers and the paranormal
+  # sit out. Bluespace stays in Kel Terus.
+  - AnomalySpawn
+  - BluespaceArtifact
+  - BluespaceLocker
+  - MalignRiftSpawn
+  - DragonSpawn
+  - ColossusSpawn
+  - BingleSpawn
+  - LoneOpsSpawn
+  - NinjaSpawn
+  - SpacePirates
+  - VoxRaidersMidround
+  - BorerSpawn
+  - SkiaSpawn
+  - GlimmerRevenantSpawn
+  - WraithMidround
+  - SlaughterDemonMidround
+  - DarkPriestMidround
+  - Heretic
+  - Devil
+  - Shadowling
+  - LoneAbductorSpawn
+  - DuoAbductorSpawn
+  - MimeAssassinMidround
+  - TunnelClownMidround
+  - SingulothKnightsMidround
+  allowedEvents:
+  # Garden playlist: rot, teeth and spores over a strained ship. The majors MUST be listed
+  # here or they never fire.
+  - BlobSpawn
+  - ZombieOutbreak
+  - XenomorphsInfestation
+  - RandomVirus
+  - GreytideVirus
+  - KudzuGrowth
+  - TerrorSpidersSpawn
+  - SpiderSpawn
+  - SlimesSpawn
+  - SnakeSpawn
+  - KingRatMigration
+  - MouseMigration
+  - CockroachMigration
+  - MothroachSpawn
+  - GlimmerMiteSpawn
+  - ClownGoblinMigration
+  - SleeperAgents
+  - BreakerFlip
+  - BureaucraticError
+  - ClericalError
+  - JobDistributionError
+  - ClosetSkeleton
+  - GasLeak
+  - PowerGridCheck
+  - VentClog
+  - MassHallucinations
+  - IonStorm
+  - SolarFlare
+  - MimicVendorRule

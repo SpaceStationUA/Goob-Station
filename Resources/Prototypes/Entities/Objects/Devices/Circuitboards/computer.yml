@@ -196,6 +196,8 @@
   components:
   - type: Sprite
     state: cpu_command
+  - type: StealTarget # Pirate: traitor contracts
+    stealGroup: FundingAllocationComputerCircuitboard # Pirate: traitor contracts
   - type: ComputerBoard
     prototype: ComputerFundingAllocation
   - type: StaticPrice
@@ -566,6 +568,8 @@
   components:
     - type: Sprite
       state: cpu_science
+    - type: StealTarget # Pirate: traitor contracts
+      stealGroup: RoboticsConsoleCircuitboard # Pirate: traitor contracts
     - type: ComputerBoard
       prototype: ComputerRoboticsControl
 

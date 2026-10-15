@@ -49,7 +49,6 @@ instruments-component-menu-midi-min-volume-slider-label = Мін. гучніст
 
 # SwappableInstrumentComponent
 swappable-instrument-component-style-set = Встановлено стиль: "{$style}"
-
 instruments-component-menu-midi-channel-acoustic-grand-piano = Акустичний рояль
 instruments-component-menu-midi-channel-bright-acoustic-piano = Яскраве акустичне піаніно
 instruments-component-menu-midi-channel-electric-grand-piano = Електричний рояль

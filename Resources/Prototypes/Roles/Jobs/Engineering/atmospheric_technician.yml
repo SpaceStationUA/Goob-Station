@@ -31,7 +31,7 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipEducation
+    - SkillChipEducationPilot # Pirate: piloting skill
     - SkillChipDatabase
     - SkillChipBludgeon
   # Pirate: skill chips end

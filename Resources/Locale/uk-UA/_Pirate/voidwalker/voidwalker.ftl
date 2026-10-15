@@ -1,0 +1,40 @@
+ghost-role-information-voidwalker-name = М??андрівник поро??жнечі
+ghost-role-information-voidwalker-description = Пока??жіть їм кра??су порожнечі. Затягніть ї??х у космічну безо??дню та відкри??йте їм істину поро??жнечі.
+ghost-role-information-voidwalker-rules = Ме??ртві не можуть піз??нати те, що зна??єте ви. Пове??рніть те, що втра??тили. Прагніть просві??тити, а не знищити. Приведіть своїх ді??тей у непроглядну те??мряву та поверніть ї??х до своєї па??стви!
+roles-antag-voidwalker-name = М??андрівник поро??жнечі
+roles-antag-voidwalker-description = Пока??жіть їм кра??су порожнечі. Затягніть ї??х у космічну безо??дню та відкри??йте їм істину поро??жнечі.
+role-subtype-voidwalker = Мандрівник порожнечі
+voidwalker-round-end-agent-name = м??андрівник поро??жнечі
+voidwalker-role-briefing = Пока???жіть їм кра???су ?поро??жнечі.
+    Затяг??ніть їх у космічну безодню та від??крийте їм істи???ну поро??жне?чі. С???танці?я розташо???вана {$direction}.
+    ????СТР?УСІТЬ ?ҐРАТИ????.
+objective-issuer-void = [color=#CCCCFF]Поро??жнеча[/color]
+objective-condition-voidwalker-kidnap-title = Просві??ті??ть
+objective-condition-voidwalker-kidnap-description = В??они му?сять побачити те, що ба??чили ви. Вони му??сять пройти та?м, де прой??шли ви. Приве??діть їх у порожнечу та пока??жіть їм істи??ну.
+voidwalker-nebula-jaunt-fail = Ви маєте стояти на туманному блювотинні!
+voidwalker-action-fail-require-in-space = Щоб використати цю здібність, ви маєте бути в космосі!
+voidwalker-unsettle-begin = Ви починаєте зосереджувати погляд на {$target}...
+voidwalker-unsettle-fail-incapacitated = Ви не можете збентежити недієздатну істоту!
+voidwalker-unsettle-fail-blind = Ця ціль не здатна вас бачити!
+voidwalker-unsettle-fail-looked-at = Ваш зосереджений погляд уривається, коли інша істота дивиться на вас...
+voidwalker-unsettle-victim = КР??АСА?? ЗАП??ОВНЮЄ В??АШ РОЗ??УМ
+voidwalker-kidnap-verb = ЗА?ХОПИТИ
+voidwalker-kidnap-verb-text = ПРОСВІ??ТІТЬ Ї??Х
+voidwalker-kidnap-begin = {$user} починає обвивати щупальцями {$target}...
+voidwalker-kidnap-enter = Час і простір викривляються навколо вас...
+voidwalker-kidnap-return = Простір викривляється навколо вас, коли ви повертаєтеся до реальності!
+voided-spaced-teleport = Ви не можете вийти в космос через пережиту травму!
+voidwalker-convert-wall-verb = СПО??ТВОРИТИ НЕ??ДОСКОНА?ЛУ СПОРУДУ
+voidwalker-convert-wall-text = Спотворити стіну, щоб мандрівники порожнечі могли проходити крізь неї.
+voidwalker-convert-wall-begin = {$user} починає спотворювати стіну...
+void-whisper-title = ШЕ??ПІТ ПОРО??ЖНЕЧІ?
+void-whisper-message = Повідомлення
+void-whisper-popup = К??РАСА ПОРО??ЖНЕЧІ ГОВО??РИТЬ? ДО ?ВАС
+void-whisper-whisper = В??И ШЕПОЧЕТЕ? ?ДО {$name}: {$message}
+cosmic-skull-use-start = Ви починаєте вдивлятися в {$object}...
+cosmic-skull-use-finish = І перед вами відкривається цілий світ.
+cosmic-skull-use-voidwalker = О БОЖЕ, НІІІ!!!! НАВІЩООООООО??!!! ХТО МІГ ТАКЕ ЗРОБИТИ?!!
+terror-voidwalker = У??ВАГА?, Е??КІПАЖЕ?, СХО??ЖЕ, ХТОС??Ь НА? ВАШІЙ С??ТАНЦІ?Ї НЕО??ЧІКУВА??НО ВСТАНОВИ??В ЗВ??'ЯЗОК І??З ПОРО??ЖНЕЧЕЮ??
+reagent-name-nebula-vomit = Туманне блювотиння
+reagent-desc-nebula-vomit = Що... це таке?
+guide-entry-voidwalker = Мандрівник порожнечі

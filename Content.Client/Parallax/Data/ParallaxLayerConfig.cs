@@ -67,5 +67,25 @@ public sealed partial class ParallaxLayerConfig
     /// </summary>
     [DataField("scrolling")] public Vector2 Scrolling = Vector2.Zero;
 
+    /// <summary>
+    /// Authors <see cref="Scrolling"/> in screen space, so "up" stays up on screen when the camera turns.
+    /// </summary>
+    [DataField("screenRelativeScroll")]
+    public bool ScreenRelativeScroll;
+
+    /// <summary>
+    /// Draws the tiles turned by the eye, so the texture's own up stays up on screen.
+    /// Use together with <see cref="ScreenRelativeScroll"/>.
+    /// </summary>
+    [DataField("screenAligned")]
+    public bool ScreenAligned;
+
+    /// <summary>
+    /// A slow drift, in the units of <see cref="Scrolling"/>, that does not depend on travel speed.
+    /// Screen-relative like <see cref="ScreenRelativeScroll"/>.
+    /// </summary>
+    [DataField("drift")]
+    public Vector2 Drift;
+
     [DataField("shader")] public string? Shader = "unshaded";
 }

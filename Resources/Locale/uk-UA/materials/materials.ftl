@@ -37,7 +37,6 @@ materials-raw-salt = неочищена сіль
 material-reclaimer-upgrade-process-rate = швидкість процесу
 materials-bluespace = блюспейс
 materials-normality = нормальність
-
 materials-raw-normality = сира нормальність
 
 # Утилізатор матеріалу

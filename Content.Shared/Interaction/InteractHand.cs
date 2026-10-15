@@ -33,6 +33,8 @@ public sealed class InteractHandEvent : HandledEntityEventArgs, ITargetedInterac
     /// </summary>
     public EntityUid Target { get; }
 
+    public bool InteractionParticle = true; // Goob
+
     public EntityCoordinates? ClickLocation { get; } // Pirate
 
     public InteractHandEvent(EntityUid user, EntityUid target, EntityCoordinates? clickLocation = null) // Pirate edit - add (EntityCoordinates? clickLocation = null)

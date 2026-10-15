@@ -105,8 +105,21 @@ public sealed class KnowledgeGameplayIntegrationTest
 
             var speed = new ModifyThrownSpeedEvent(holder, 10f, 20f);
             entMan.EventBus.RaiseLocalEvent(holder, ref speed);
-            var expectedSpeed = 10f * 0.75f * SharedKnowledgeSystem.SharpCurve(100, 200, 200);
+            var expectedSpeed = 10f * 2f;
             Assert.That(speed.BaseThrowSpeed, Is.EqualTo(expectedSpeed).Within(0.0001f));
+
+            Assert.That(KnowledgeGameplaySystem.ThrowSpeedMultiplier(0), Is.EqualTo(1f).Within(0.0001f));
+            Assert.That(KnowledgeGameplaySystem.ThrowSpeedMultiplier(1), Is.EqualTo(1.01f).Within(0.0001f));
+            Assert.That(KnowledgeGameplaySystem.ThrowSpeedMultiplier(74), Is.EqualTo(1.74f).Within(0.0001f));
+            Assert.That(KnowledgeGameplaySystem.ThrowSpeedMultiplier(75), Is.EqualTo(1.75f).Within(0.0001f));
+
+            Assert.That(KnowledgeGameplaySystem.ThrownDamageMultiplier(0), Is.EqualTo(0.9f).Within(0.0001f));
+            Assert.That(KnowledgeGameplaySystem.ThrownDamageMultiplier(25), Is.EqualTo(1f).Within(0.0001f));
+            Assert.That(KnowledgeGameplaySystem.ThrownDamageMultiplier(100), Is.EqualTo(1.25f).Within(0.0001f));
+            var gameplay = server.System<KnowledgeGameplaySystem>();
+            Assert.That(gameplay.GetThrownDamageMultiplier(holder), Is.EqualTo(1.25f).Within(0.0001f));
+            Assert.That(gameplay.GetThrownDamageMultiplier(null), Is.EqualTo(1f),
+                "Throws with no thrower, like explosion shrapnel, deal normal damage.");
 
             var insert = new ModifyThrowInsertChanceEvent(holder, 0.1f);
             entMan.EventBus.RaiseLocalEvent(holder, ref insert);

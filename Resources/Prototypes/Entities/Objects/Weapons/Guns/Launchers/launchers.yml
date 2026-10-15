@@ -410,6 +410,8 @@
   - type: ClothingSpeedModifier #Look at the size of this thing, absolute unit to carry on you
     walkModifier: 0.7
     sprintModifier: 0.7
+  - type: StealTarget # Pirate: traitor contracts
+    stealGroup: WeaponLauncherSingularityBuster # Pirate: traitor contracts
 
 # Admeme
 - type: entity

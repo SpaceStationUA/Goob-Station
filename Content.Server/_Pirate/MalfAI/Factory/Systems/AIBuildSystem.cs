@@ -260,6 +260,6 @@ public sealed partial class AIBuildSystem : EntitySystem
             return;
 
         // Try to anchor the entity
-        transform.Anchored = true;
+        _transform.AnchorEntity(entity, transform);
     }
 }

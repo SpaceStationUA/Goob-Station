@@ -8,6 +8,7 @@ using Content.Client.UserInterface.Systems;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Components; // Shitmed Change
 using Content.Shared.Damage;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.Damage.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -149,17 +150,21 @@ public sealed class EntityHealthBarOverlay : Overlay
             if (dmg.HealthBarThreshold != null && totalDamage < dmg.HealthBarThreshold) // GoobStation
                 return null;
 
-            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds) &&
+            // Pirate: soft critical is the first injury threshold for species that support it.
+            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.SoftCritical, out var threshold, thresholds) &&
+                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out threshold, thresholds) &&
                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholds))
                 return (1, false);
 
             var ratio = 1 - ((FixedPoint2)(totalDamage / threshold)).Float(); // GoobStation
-            return (ratio, false);
+            return (Math.Clamp(ratio, 0f, 1f), false); // Pirate
         }
 
-        if (_mobStateSystem.IsCritical(uid, component))
+        if (_mobStateSystem.IsCritical(uid, component) || _mobStateSystem.IsSoftCritical(uid, component)) // Pirate
         {
-            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold, thresholds) ||
+            // Pirate: use the full soft-critical-to-death range for critical progress.
+            if ((!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.SoftCritical, out var critThreshold, thresholds) &&
+                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out critThreshold, thresholds)) ||
                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold, thresholds))
             {
                 return (1, true);
@@ -167,7 +172,7 @@ public sealed class EntityHealthBarOverlay : Overlay
 
             var ratio = 1 - ((totalDamage - critThreshold) / (deadThreshold - critThreshold)).Value.Float(); // GoobStation
 
-            return (ratio, true);
+            return (Math.Clamp(ratio, 0f, 1f), true); // Pirate
         }
 
         return (0, true);

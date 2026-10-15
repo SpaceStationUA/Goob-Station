@@ -31,6 +31,19 @@ public sealed class EventManagerSystem : EntitySystem
     public bool EventsEnabled { get; private set; }
     private void SetEnabled(bool value) => EventsEnabled = value;
 
+    // Pirate: journey sector filters, set by the journey rule.
+    public HashSet<string> SectorBlockedEvents { get; } = new();
+    public HashSet<string>? SectorAllowedEvents { get; set; }
+
+    // Pirate: journey majors, set by the journey rule. A major waits out the sector's arrival grace, and
+    // SectorMajorCooldownMinutes after a major fired in any sector. SectorAllMajorEvents holds every
+    // sector's majors so the previous major can be found in the rule history.
+    public HashSet<string> SectorMajorEvents { get; } = new();
+    public HashSet<string> SectorAllMajorEvents { get; } = new();
+    public TimeSpan SectorEnteredAt { get; set; } = TimeSpan.Zero;
+    public float SectorMajorDelayMinutes { get; set; } = 12f;
+    public float SectorMajorCooldownMinutes { get; set; } = 20f;
+
     public float EventSpeedup = 1f; // Goobstation
     public int PlayerCountBias = 0; // Goobstation
 
@@ -218,9 +231,21 @@ public sealed class EventManagerSystem : EntitySystem
             : TimeSpan.Zero);
 
         var result = new Dictionary<EntityPrototype, StationEventComponent>();
+        var majorsSuppressed = MajorsSuppressed(currentTime);
 
         foreach (var (proto, stationEvent) in AllEvents())
         {
+            // Pirate: journey sector filters.
+            if (SectorBlockedEvents.Contains(proto.ID))
+                continue;
+
+            if (SectorAllowedEvents is { } allowed && !allowed.Contains(proto.ID))
+                continue;
+
+            // Pirate: journey majors wait out the arrival grace and the cross-sector cooldown.
+            if (majorsSuppressed && SectorMajorEvents.Contains(proto.ID))
+                continue;
+
             if (CanRun(proto, stationEvent, playerCount, currentTime, reoccurrenceMult)) // Goobstation
             {
                 result.Add(proto, stationEvent);
@@ -245,6 +270,29 @@ public sealed class EventManagerSystem : EntitySystem
         }
 
         return allEvents;
+    }
+
+    /// <summary>
+    ///     Pirate: whether the current sector's majors are held back, either by the arrival grace or by
+    ///     the cooldown after a major in any sector. A zero time is a simulation probe, not a round.
+    /// </summary>
+    private bool MajorsSuppressed(TimeSpan currentTime)
+    {
+        if (currentTime == TimeSpan.Zero)
+            return false;
+
+        if ((currentTime - SectorEnteredAt).TotalMinutes < SectorMajorDelayMinutes)
+            return true;
+
+        foreach (var (time, rule) in GameTicker.AllPreviousGameRules.Reverse())
+        {
+            if (!SectorAllMajorEvents.Contains(rule))
+                continue;
+
+            return (currentTime - time).TotalMinutes < SectorMajorCooldownMinutes;
+        }
+
+        return false;
     }
 
     private int GetOccurrences(EntityPrototype stationEvent)

@@ -51,9 +51,9 @@ public abstract partial class CESharedZLevelsSystem
             Direction.South => new Box2(-0.5f, -0.5f, 0.5f, -0.5f + thickness),
             Direction.East => new Box2(0.5f - thickness, -0.5f, 0.5f, 0.5f),
             Direction.West => new Box2(-0.5f, -0.5f, -0.5f + thickness, 0.5f),
-            _ => occluder.BoundingBox,
+            _ => occluder.LocalBounds,
         };
 
-        _occluder.SetBoundingBox(uid, box, occluder);
+        _occluder.SetPolygon(uid, [box.TopLeft, box.TopRight, box.BottomRight, box.BottomLeft], occluder);
     }
 }

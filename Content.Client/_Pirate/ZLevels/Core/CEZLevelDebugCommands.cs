@@ -86,7 +86,7 @@ public sealed class CEZDebugSelfCommand : LocalizedCommands
         shell.WriteLine($"Current tile entities at {tile}:");
 
         var found = false;
-        var enumerator = mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+        var enumerator = mapSystem.GetAnchoredEntities(gridUid, grid, tile);
         while (enumerator.MoveNext(out var anchoredNullable))
         {
             var anchored = anchoredNullable.Value;

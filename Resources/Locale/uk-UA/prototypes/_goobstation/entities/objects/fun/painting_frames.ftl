@@ -1,0 +1,14 @@
+ent-PaintingFrameBamboo = бамбукова рамка для картини
+ent-PaintingFrameBones = кістяна рамка для картини
+ent-PaintingFrameBronze = бронзова рамка для картини
+ent-PaintingFrameClown = рамка для картини клоуна
+ent-PaintingFrameDiamond = діамантова рамка для картини
+ent-PaintingFrameFrog = рамка для картини жаби
+ent-PaintingFrameGold = золота рамка для картини
+ent-PaintingFrameIron = залізна рамка для картини
+ent-PaintingFrameNecropolis = некропольська рамка для картини
+ent-PaintingFrameRainbow = райдужна рамка для картини
+ent-PaintingFrameSilver = срібна рамка для картини
+ent-PaintingFrameSupermatter = надматеріальна рамка для картини
+    .desc = Застосуйте до завершеної картини, щоб вставити її в рамку. Ледь чутно гуде.
+ent-PaintingFrameWood = дерев’яна рамка для картини

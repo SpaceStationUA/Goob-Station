@@ -7,7 +7,6 @@ using Content.Goobstation.Maths.FixedPoint; // Pirate: chem recipes
 using Content.Goobstation.Server.Chemistry.EntitySystems;
 using Content.Goobstation.Shared.Chemistry;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Goobstation.Server.Chemistry.Components
 {

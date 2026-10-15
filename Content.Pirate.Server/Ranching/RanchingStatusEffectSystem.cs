@@ -98,7 +98,7 @@ public sealed class RanchingStatusEffectSystem : EntitySystem
             return;
 
         ent.Comp.OriginalDamageModifierSet = damageable.DamageModifierSetId;
-        _damage.SetDamageModifierSetId(args.Target, ent.Comp.DamageModifierSet, damageable);
+        _damage.SetDamageModifierSetId((args.Target, damageable), ent.Comp.DamageModifierSet);
     }
 
     private void OnDamageModifierRemoved(Entity<ChangeDamageModiferSetStatusEffectComponent> ent,

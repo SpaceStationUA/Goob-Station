@@ -23,7 +23,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         HorizontalAlignment="Center"
                         Margin="0 5 0 0" />
                 <!-- Pirate: public ghost cosmetics reuse the upstream perks window. -->
-                <Button Name="PatronPerks" Access="Public" Text="{Loc 'goob-ui-ghost-cosmetics'}"
+                <Button Name="PatronPerks" Access="Public" Text="{Loc 'pirate-ui-player-cosmetics'}"
                         Margin="0 5 0 0" Visible="False" />
                 <cc:CommandButton Name="Currency"
                     Command="balanceui"

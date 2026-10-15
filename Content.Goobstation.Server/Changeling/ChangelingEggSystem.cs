@@ -4,16 +4,17 @@ using Content.Goobstation.Shared.Changeling.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Store.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Server.Changeling;
 
-public sealed class ChangelingEggSystem : EntitySystem
+public sealed partial class ChangelingEggSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly BodySystem _bodySystem = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly ChangelingSystem _changeling = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private BodySystem _bodySystem = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private ChangelingSystem _changeling = default!;
 
     public override void Update(float frameTime)
     {
@@ -59,6 +60,16 @@ public sealed class ChangelingEggSystem : EntitySystem
 
         comp.LingComponents.Clear();
         RemComp<ChangelingEggComponent>(uid);
+        // Pirate: replay purchases from the store restored onto the new body.
+        if (TryComp<StoreComponent>(newUid, out var restoredStore))
+        {
+            foreach (var listing in restoredStore.FullListingsCatalog)
+            {
+                if (listing is { PurchaseAmount: > 0, RaiseProductEventOnUser: true, ProductEvent: { } productEvent })
+                    RaiseLocalEvent(newUid, productEvent);
+            }
+        }
+
         _bodySystem.GibBody(uid);
     }
 }

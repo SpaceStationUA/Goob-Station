@@ -19,3 +19,4 @@ psionics-records-job-filter = Робота
 psionics-records-species-filter = Вид
 psionics-records-prints-filter = Відбитки пальців
 psionics-records-dna-filter = ДНК
+psionics-records-console-show-all = Усі

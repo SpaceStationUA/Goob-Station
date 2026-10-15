@@ -2,6 +2,7 @@
 
 using Content.Server.Administration.Logs;
 using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared._Pirate.Knowledge; // Pirate: skill chip expansion
 using Content.Shared.Camera;
 using Content.Shared.Coordinates;
 using Content.Shared.Damage;
@@ -17,13 +18,14 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Damage.Systems;
 
-public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
+public sealed partial class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem // Goob
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly GunSystem _guns = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly Shared.Damage.Systems.DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly KnowledgeGameplaySystem _knowledgeGameplay = default!; // Pirate: skill chip expansion
 
     public override void Initialize()
     {
@@ -37,24 +39,28 @@ public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
         if (TerminatingOrDeleted(args.Target))
             return;
 
-        if(args.Target == args.Component.Thrower) // Goobstation - Mjolnir
+        // Goob start - Mjolnir and other boomerang shit
+        if (args.Target == args.Component.Thrower)
             return;
+        // Goob end
 
-        var dmg = _damageable.TryChangeDamage(args.Target,
-            component.Damage * _damageable.UniversalThrownDamageModifier,
+        var dmg = _damageable.ChangeDamage(args.Target,
+            component.Damage * _damageable.UniversalThrownDamageModifier
+                * _knowledgeGameplay.GetThrownDamageMultiplier(args.Component.Thrower), // Pirate: skill chip expansion
             component.IgnoreResistances,
             origin: args.Component.Thrower,
             increaseOnly: component.IncreaseOnly);
 
-        // For stuff that cares about it being attacked. GOOBSTATION!!!
+        // Goob start - For stuff that cares about it being attacked. GOOBSTATION!!!
         var attackedEvent = new AttackedEvent(args.Thrown, uid, args.Target.ToCoordinates());
         RaiseLocalEvent(args.Target, attackedEvent);
+        // Goob end
 
         // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
-        if (dmg != null && HasComp<MobStateComponent>(args.Target))
+        if (HasComp<MobStateComponent>(args.Target))
             _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.GetTotal():damage} damage from collision");
 
-        if (dmg is { Empty: false })
+        if (!dmg.Empty)
         {
             _color.RaiseEffect(Color.Red, [args.Target], Filter.Pvs(args.Target, entityManager: EntityManager));
         }
@@ -63,7 +69,8 @@ public sealed class DamageOtherOnHitSystem : SharedDamageOtherOnHitSystem
         if (TryComp<PhysicsComponent>(uid, out var body) && body.LinearVelocity.LengthSquared() > 0f)
         {
             var direction = body.LinearVelocity.Normalized();
-            _sharedCameraRecoil.KickCamera(args.Target, direction);
+            _sharedCameraRecoil.KickCamera(args.Target, direction * 0.1f); // Goob
+            _shake.Screenshake(args.Target, HitShake, null); // Goob
         }
     }
 }

@@ -5,6 +5,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
@@ -170,7 +171,9 @@ public abstract partial class SharedStunSystem
         if (entity.Comp.DoAfterId == null)
             return;
 
-        DoAfter.Cancel(entity.Owner, entity.Comp.DoAfterId.Value);
+        if (DoAfter.IsRunning(entity.Owner, entity.Comp.DoAfterId.Value)) // Goob - Fix (finished do-after cancel)
+            DoAfter.Cancel(entity.Owner, entity.Comp.DoAfterId.Value);
+
         entity.Comp.DoAfterId = null;
         DirtyField(entity, entity.Comp, nameof(KnockedDownComponent.DoAfterId));
     }

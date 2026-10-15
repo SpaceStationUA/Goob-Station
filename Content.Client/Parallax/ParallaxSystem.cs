@@ -3,6 +3,7 @@
 using System.Numerics;
 using Content.Client.Parallax.Data;
 using Content.Client.Parallax.Managers;
+using Content.Shared.GameTicking;
 using Content.Shared.Parallax;
 using Robust.Client.Graphics;
 using Robust.Shared.Map;
@@ -26,6 +27,27 @@ public sealed class ParallaxSystem : SharedParallaxSystem
         _overlay.AddOverlay(new ParallaxOverlay());
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnReload);
         SubscribeLocalEvent<ParallaxComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+
+        // One advance per rendered frame, before anything draws. Rendering must never be what
+        // moves the travel clock: with parallax disabled, or on a map whose overlay does not
+        // draw, a warp would never finish and a fade would never settle. FrameUpdate, not
+        // Update: the offsets are consumed by drawing, so they belong to render frames, and
+        // FrameUpdate runs exactly once per frame however many simulation ticks it carries.
+        _parallax.AdvanceFrame();
+    }
+
+    private void OnRoundRestart(RoundRestartCleanupEvent args)
+    {
+        // The settled sky override and any fade or warp in flight are client-only state the
+        // server cannot clear; without this the next round opens on the previous round's last
+        // sector instead of its own map's parallax.
+        _parallax.ResetRoundState();
     }
 
     private void OnReload(PrototypesReloadedEventArgs obj)
@@ -59,6 +81,11 @@ public sealed class ParallaxSystem : SharedParallaxSystem
 
     public ParallaxLayerPrepared[] GetParallaxLayers(MapId mapId)
     {
+        // A settled transition overrides what the map's component says, so check it first.
+        var current = _parallax.GetCurrent();
+        if (current != null)
+            return _parallax.GetParallaxLayers(current);
+
         return _parallax.GetParallaxLayers(GetParallax(_map.GetMapOrInvalid(mapId)));
     }
 

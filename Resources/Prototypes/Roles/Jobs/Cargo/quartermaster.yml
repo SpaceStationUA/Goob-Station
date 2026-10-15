@@ -60,7 +60,7 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipEchelonEducation
+    - SkillChipEchelonEducationPilot # Pirate: piloting skill
     - SkillChipUnarmed
     - SkillChipMining
   # Pirate: skill chips end

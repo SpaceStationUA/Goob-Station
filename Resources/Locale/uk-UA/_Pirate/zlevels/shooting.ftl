@@ -1,5 +1,4 @@
 ui-options-function-ce-toggle-shoot-down-z-level = Перемкнути приціл вниз (поверх)
-
 ce-zlevel-shoot-down-enabled = Ви прицілюєтеся вниз крізь підлогу.
 ce-zlevel-shoot-down-disabled = Ви припиняєте прицілюватися вниз.
 ce-zlevel-shoot-down-disabled-unwield = Ви припиняєте прицілюватися вниз, бо більше не тримаєте зброю обома руками.

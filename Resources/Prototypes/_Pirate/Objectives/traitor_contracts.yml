@@ -83,6 +83,189 @@
     reputation: 15
     payment: 15
 
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractCargoShuttleBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Cargo
+  - type: ExtractCondition
+    stealGroup: CargoShuttleConsoleCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractMailTeleporterBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Cargo
+  - type: ExtractCondition
+    stealGroup: MailTeleporterMachineCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractCargoTechFabBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Cargo
+  - type: ExtractCondition
+    stealGroup: CargoTechFabCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractScienceTechFabBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Science
+  - type: ExtractCondition
+    stealGroup: ScienceTechFabCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractEngineeringTechFabBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Engineering
+  - type: ExtractCondition
+    stealGroup: EngineeringTechFabCircuitboard
+
+# Civilian also excludes passengers, so exclude only HoP.
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractServiceTechFabBoardObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ HeadOfPersonnel ]
+  - type: ExtractCondition
+    stealGroup: ServiceTechFabCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractMedicalTechFabBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Medical
+  - type: ExtractCondition
+    stealGroup: MedicalTechFabCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractDiagnoserBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Medical
+  - type: ExtractCondition
+    stealGroup: DiagnoserMachineCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractBiofabBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Medical
+  - type: ExtractCondition
+    stealGroup: MedicalBiofabMachineBoard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractPsionicsRecordsBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Science
+  - type: ExtractCondition
+    stealGroup: PsionicsRecordsComputerCircuitboard
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractFundingAllocationBoardObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ HeadOfPersonnel ]
+  - type: ExtractCondition
+    stealGroup: FundingAllocationComputerCircuitboard
+
+# RD can lock or detonate borgs, so this pays more than a board.
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractRoboticsConsoleBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Science
+  - type: ExtractCondition
+    stealGroup: RoboticsConsoleCircuitboard
+  - type: ContractObjective
+    reputation: 15
+    payment: 10
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractCEPowerConsoleObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ChiefEngineer ]
+  - type: ExtractCondition
+    stealGroup: HandheldStationMapPowerCe
+    owner: job-name-ce
+  - type: ContractObjective
+    reputation: 15
+    payment: 10
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractWantedListCartridgeObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Security
+  - type: ExtractCondition
+    stealGroup: WantedListCartridge
+  - type: ContractObjective
+    reputation: 15
+    payment: 10
+
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractSecurityTechFabBoardObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Security
+  - type: ExtractCondition
+    stealGroup: SecurityTechFabCircuitboard
+  - type: ReputationCondition
+    reputation: 20
+  - type: ContractObjective
+    reputation: 15
+    payment: 15
+
+# Removing a server board deconstructs its server.
+# Crew monitoring stays offline until Cargo sells a replacement board.
+- type: entity
+  parent: BasePirateTraitorMinorExtractObjective
+  id: TraitorContractCrewMonitoringServerObjective
+  components:
+  - type: ExtractCondition
+    stealGroup: CrewMonitoringServerMachineCircuitboard
+  - type: ReputationCondition
+    reputation: 40
+  - type: ContractObjective
+    reputation: 15
+    payment: 15
+
+# Removing this board wipes station research and leaves rebuilt lathes empty.
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractResearchServerObjective
+  components:
+  - type: NotDepartmentRequirement
+    department: Science
+  - type: ExtractCondition
+    stealGroup: ResearchAndDevelopmentServerMachineCircuitboard
+  - type: Objective
+    difficulty: 4
+  - type: ReputationCondition
+    reputation: 80
+  - type: ContractObjective
+    reputation: 25
+    payment: 30
+
 # Standard extraction contracts.
 - type: entity
   parent: BasePirateTraitorExtractObjective
@@ -191,6 +374,126 @@
     difficulty: 4
   - type: ReputationCondition
     reputation: 75
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractGeminiProjectorObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ResearchDirector ]
+  - type: ExtractCondition
+    stealGroup: ClothingBeltGeminiHoloProjector
+    owner: job-name-rd
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractSingularityBusterObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ChiefEngineer ]
+  - type: ExtractCondition
+    stealGroup: WeaponLauncherSingularityBuster
+    owner: job-name-ce
+  - type: ReputationCondition
+    reputation: 30
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractRapidSyringeGunObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ChiefMedicalOfficer ]
+  - type: ExtractCondition
+    stealGroup: RapidSyringeGun
+    owner: job-name-cmo
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractCMOHardsuitObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ChiefMedicalOfficer ]
+  - type: ExtractCondition
+    stealGroup: ClothingOuterHardsuitMedical
+    owner: job-name-cmo
+  - type: Objective
+    difficulty: 3
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractCMODefibrillatorObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ ChiefMedicalOfficer ]
+  - type: ExtractCondition
+    stealGroup: DefibrillatorBeltCMO
+    owner: job-name-cmo
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractHoPIDCardObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ HeadOfPersonnel ]
+  - type: ExtractCondition
+    stealGroup: HoPIDCard
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractWardenHardsuitObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ Warden ]
+  - type: ExtractCondition
+    stealGroup: ClothingOuterHardsuitWarden
+    owner: job-name-warden
+  - type: ReputationCondition
+    reputation: 30
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
+  id: TraitorContractKravMagaGlovesObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ Warden ]
+  - type: ExtractCondition
+    stealGroup: ClothingHandsGlovesKravMaga
+    owner: job-name-warden
+  - type: ReputationCondition
+    reputation: 30
+
+- type: entity
+  abstract: true
+  parent: BasePirateTraitorExtractObjective
+  id: BasePirateTraitorSecurityWeaponExtractObjective
+  components:
+  - type: Objective
+    difficulty: 3
+  - type: ReputationCondition
+    reputation: 40
+  - type: ContractObjective
+    reputation: 25
+    payment: 25
+
+- type: entity
+  parent: BasePirateTraitorSecurityWeaponExtractObjective
+  id: TraitorContractJusticeObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ HeadOfSecurity ]
+  - type: ExtractCondition
+    stealGroup: WeaponSecHeadSword
+    owner: job-name-hos
+
+- type: entity
+  parent: BasePirateTraitorSecurityWeaponExtractObjective
+  id: TraitorContractEnergyShotgunObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ Warden ]
+  - type: ExtractCondition
+    stealGroup: WeaponEnergyShotgun
+    owner: job-name-warden
 
 # Murder and execution contracts.
 - type: entity
@@ -340,6 +643,121 @@
   - type: ContractObjective
     reputation: 30
     payment: 35
+
+- type: entity
+  parent: BasePirateTraitorRansomObjective
+  id: TraitorContractRansomSecurityOfficerObjective
+  components:
+  - type: PickRandomPerson
+    filters:
+    - !type:JobMindFilter
+      job: SecurityOfficer
+      inverted: true
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - RansomCondition
+  - type: ReputationCondition
+    reputation: 50
+  - type: ContractObjective
+    reputation: 30
+    payment: 30
+
+- type: entity
+  parent: BasePirateTraitorRansomObjective
+  id: TraitorContractRansomWardenObjective
+  components:
+  - type: PickRandomPerson
+    filters:
+    - !type:JobMindFilter
+      job: Warden
+      inverted: true
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - RansomCondition
+  - type: ReputationCondition
+    reputation: 60
+  - type: ContractObjective
+    reputation: 30
+    payment: 35
+
+- type: entity
+  parent: BasePirateTraitorRansomObjective
+  id: TraitorContractRansomNanotrasenRepObjective
+  components:
+  - type: PickRandomPerson
+    filters:
+    - !type:JobMindFilter
+      job: NanotrasenRepresentative
+      inverted: true
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - RansomCondition
+  - type: ReputationCondition
+    reputation: 60
+  - type: ContractObjective
+    reputation: 30
+    payment: 35
+
+# Blueshield pays like the HoS because both are heavily armed.
+- type: entity
+  parent: BasePirateTraitorRansomObjective
+  id: TraitorContractRansomBlueshieldObjective
+  components:
+  - type: PickRandomPerson
+    filters:
+    - !type:JobMindFilter
+      job: BlueshieldOfficer
+      inverted: true
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - RansomCondition
+  - type: ReputationCondition
+    reputation: 80
+  - type: ContractObjective
+    reputation: 40
+    payment: 45
+
+- type: entity
+  parent: BasePirateTraitorRansomObjective
+  id: TraitorContractRansomHeadOfSecurityObjective
+  components:
+  - type: PickRandomPerson
+    filters:
+    - !type:JobMindFilter
+      job: HeadOfSecurity
+      inverted: true
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - RansomCondition
+  - type: ReputationCondition
+    reputation: 80
+  - type: ContractObjective
+    reputation: 40
+    payment: 45
+
+- type: entity
+  parent: BasePirateTraitorRansomObjective
+  id: TraitorContractRansomCaptainObjective
+  components:
+  - type: PickRandomPerson
+    filters:
+    - !type:JobMindFilter
+      job: Captain
+      inverted: true
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - RansomCondition
+  - type: ReputationCondition
+    reputation: 85
+  - type: ContractObjective
+    reputation: 40
+    payment: 50
 
 # Capstone contract. It is prepaid and deliberately rare.
 - type: entity

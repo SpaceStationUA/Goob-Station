@@ -8,13 +8,10 @@ vessel-category-small = Малі
 vessel-category-medium = Середні
 vessel-category-large = Великі
 vessel-category-humongous = Величезні
-
 shipyard-console-invalid-price = Ціна судна недійсна.
 shipyard-console-no-bank = Банківський рахунок станції недоступний.
 shipyard-console-purchase-failed = Не вдалося підготувати шатл. Зверніться до Центрального командування.
 shipyard-console-docking = Судно «{$vessel}» прибуде до станції через {$delay} секунд.
-
-
 shipyard-vessel-pts-name = Приватний транспортний шатл
 shipyard-vessel-pts-description = Приватне транспортне судно на шістьох пасажирів.
 shipyard-vessel-barge-name = Баржа

@@ -4,6 +4,8 @@ using Content.Shared.Forensics.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
+using Robust.Shared.Audio; // Pirate sniffing sound
+using Robust.Shared.Audio.Systems; // Pirate sniffing sound
 
 namespace Content.Shared._EinsteinEngines.Forensics.Systems;
 
@@ -11,6 +13,7 @@ public abstract class SharedScentTrackerSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!; // Pirate sniffing sound
     public override void Initialize()
     {
         SubscribeLocalEvent<ScentTrackerComponent, GetVerbsEvent<InnateVerb>>(AddVerbs);
@@ -52,6 +55,7 @@ public abstract class SharedScentTrackerSystem : EntitySystem
         };
 
         _popupSystem.PopupPredicted(Loc.GetString("start-tracking-scent", ("user", Identity.Name(user, EntityManager)), ("target", Identity.Name(target, EntityManager))), user, user);
+        _audio.PlayPredicted(new SoundCollectionSpecifier("VulpSniff"), user, user); // Pirate sniffing sound
         _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
     }
 

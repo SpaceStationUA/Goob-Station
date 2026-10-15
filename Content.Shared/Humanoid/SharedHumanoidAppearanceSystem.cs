@@ -181,6 +181,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
         SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
+        targetHumanoid.CustomMarkings = new(sourceHumanoid.CustomMarkings); // Pirate
 
         targetHumanoid.Gender = sourceHumanoid.Gender;
 
@@ -544,6 +545,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
         }
 
         EnsureDefaultMarkings(uid, humanoid);
+        humanoid.CustomMarkings = ProfileCustomMarkings(profile); // Pirate
         SetBarkVoice(uid, profile.BarkVoice, humanoid); // Goob Station - Barks
 
         humanoid.Gender = profile.Gender;

@@ -6,6 +6,7 @@
   - type: Action
     itemIconStyle: BigAction
     startDelay: true
+  - type: PsionicAction # Pirate: skill chip expansion
 
 - type: entity
   parent: BasePsionicAction
@@ -184,7 +185,7 @@
   - type: InstantAction
     event: !type:PsychokineticScreamPowerActionEvent
 
-# Pirate: Ported from upstream PR #34 (SpaceStationUA/Goob-Station)
+# Pirate: skill chip expansion
 - type: entity
   parent: BasePsionicAction
   id: ActionAnoigo

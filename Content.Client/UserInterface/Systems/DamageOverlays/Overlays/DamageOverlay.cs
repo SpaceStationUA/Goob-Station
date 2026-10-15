@@ -172,7 +172,7 @@ public sealed class DamageOverlay : Overlay
             _oldPainLevel = PainLevel;
         }
 
-        level = State != MobState.Critical ? _oldOxygenLevel : 1f;
+        level = State is not (MobState.Critical or MobState.SoftCritical) ? _oldOxygenLevel : 1f /* Pirate */;
 
         if (level > 0f)
         {

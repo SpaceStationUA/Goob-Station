@@ -17,14 +17,16 @@
       storagebase: !type:AllSelector
         children:
         - id: SkillChipEducation
-          amount: 6
+          amount: 5
         - id: SkillChipCombatEducation
-          amount: 4
+          amount: 3
         - id: SkillChipEchelonEducation
         - id: SkillChipClown
         - id: SkillChipStoner
         - id: SkillChipService
           amount: 4
+        - id: SkillChipEducationPilot
+        - id: SkillChipCombatEducationPilot
 
 - type: entity
   parent: BoxSkillChipsBase
@@ -36,6 +38,8 @@
         children:
         - id: SkillChipMining
           amount: 3
+        - id: SkillChipEducationPilot
+        - id: SkillChipCombatEducationPilot
 
 - type: entity
   parent: BoxSkillChipsBase
@@ -51,6 +55,8 @@
           amount: 6
         - id: SkillChipDatabaseBasic
           amount: 4
+        - id: SkillChipEducationPilot
+          amount: 2
 
 - type: entity
   parent: BoxSkillChipsBase
@@ -66,6 +72,7 @@
           amount: 5
         - id: SkillChipChemist
           amount: 2
+        - id: SkillChipEducationPilot
 
 - type: entity
   parent: BoxSkillChipsBase

@@ -169,7 +169,7 @@ public sealed class PreenableSystem : EntitySystem
         var vulnerabilityModifier = 1f - ent.Comp.CurrentFeathers / (float) ent.Comp.MaximumFeathers;
         var damageSpecifier = new DamageModifierSet
         {
-            Coefficients = new Dictionary<string, float>(ent.Comp.VulnerabilityModifier.Coefficients),
+            Coefficients = new(ent.Comp.VulnerabilityModifier.Coefficients),
         };
 
         foreach (var key in damageSpecifier.Coefficients.Keys)

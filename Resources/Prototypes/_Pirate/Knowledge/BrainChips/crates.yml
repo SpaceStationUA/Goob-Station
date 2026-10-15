@@ -10,6 +10,8 @@
         children:
         - id: SkillChipMining
           amount: 3
+        - id: SkillChipEducationPilot
+        - id: SkillChipCombatEducationPilot
 
 - type: entity
   parent: CrateEngineeringSecure
@@ -27,6 +29,7 @@
           amount: 3
         - id: SkillChipBludgeon
           amount: 3
+        - id: SkillChipEducationPilot
 
 - type: entity
   parent: CrateMedicalSecure
@@ -42,6 +45,7 @@
           amount: 3
         - id: SkillChipSurgeon
           amount: 3
+        - id: SkillChipEducationPilot
 
 - type: entity
   parent: CrateScienceSecure
@@ -76,6 +80,7 @@
           amount: 2
         - id: SkillChipMarksmanship
           amount: 2
+        - id: SkillChipCombatEducationPilot
 
 - type: entity
   parent: CrateEngineeringSecure
@@ -140,20 +145,20 @@
         - !type:GroupSelector
           weight: 0.5
           children:
-          - id: SkillChipUnarmed
-          - id: SkillChipBludgeon
-          - id: SkillChipShortBlade
-          - id: SkillChipLongBlade
-          - id: SkillChipPolearm
-          - id: SkillChipNonLethal
-          - id: SkillChipTool
-          - id: SkillChipEnergy
+          - id: SkillChipUnarmedSyndicate
+          - id: SkillChipBludgeonSyndicate
+          - id: SkillChipShortBladeSyndicate
+          - id: SkillChipLongBladeSyndicate
+          - id: SkillChipPolearmSyndicate
+          - id: SkillChipNonLethalSyndicate
+          - id: SkillChipToolSyndicate
+          - id: SkillChipEnergySyndicate
         - !type:GroupSelector
           children:
-          - id: SkillChipPistol
-          - id: SkillChipRifle
-          - id: SkillChipShotgun
-          - id: SkillChipSniper
-          - id: SkillChipLaser
-          - id: SkillChipHeavy
-          - id: SkillChipSMG
+          - id: SkillChipPistolSyndicate
+          - id: SkillChipRifleSyndicate
+          - id: SkillChipShotgunSyndicate
+          - id: SkillChipSniperSyndicate
+          - id: SkillChipLaserSyndicate
+          - id: SkillChipHeavySyndicate
+          - id: SkillChipSMGSyndicate

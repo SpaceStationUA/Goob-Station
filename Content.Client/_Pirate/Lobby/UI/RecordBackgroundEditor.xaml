@@ -1,0 +1,10 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Control xmlns="https://spacestation14.io"
+         HorizontalExpand="True">
+    <BoxContainer Name="Sections"
+                  Orientation="Vertical"
+                  SeparationOverride="10" />
+</Control>

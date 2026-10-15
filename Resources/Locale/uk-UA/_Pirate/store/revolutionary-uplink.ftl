@@ -4,7 +4,6 @@ store-currency-display-revcoin = RC
 revcoin = RevCoin
 store-category-revolutionary-default = Спорядження
 store-preset-name-revolutionary-uplink = VivaStore
-
 revolutionary-uplink-flash-name = Спалах для навернення
 revolutionary-uplink-flash-desc = Універсальний інструмент для навернення екіпажу, дезорієнтації охорони та створення хаосу.
 revolutionary-uplink-sunglasses-name = Сонцезахисні окуляри
@@ -21,7 +20,6 @@ revolutionary-uplink-listening-bug-name = Жучок для прослухову
 revolutionary-uplink-listening-bug-desc = Прихований пристрій без динаміка, який передає почуті поблизу розмови в канал Синдикату.
 revolutionary-uplink-trench-whistle-name = Окопний свисток
 revolutionary-uplink-trench-whistle-desc = Гучний сигнал для відкритого повстання та збору союзників.
-
 ent-RevCoin = RevCoin
     .desc = Універсальна мова революції.
 ent-RevolutionaryLieutenantImplant = імплант революційного лейтенанта

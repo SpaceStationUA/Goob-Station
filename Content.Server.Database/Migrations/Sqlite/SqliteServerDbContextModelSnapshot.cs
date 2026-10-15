@@ -17,6 +17,43 @@ namespace Content.Server.Database.Migrations.Sqlite
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
+            modelBuilder.Entity("Content.Server.Database.AchievementProgress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("achievement_progress_id");
+
+                    b.Property<string>("AchievementId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("achievement_id");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<int>("Progress")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("progress");
+
+                    b.Property<DateTime?>("UnlockedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("unlocked_at");
+
+                    b.HasKey("Id")
+                        .HasName("PK_achievement_progress");
+
+                    b.HasIndex("AchievementId")
+                        .HasDatabaseName("IX_achievement_progress_achievement_id");
+
+                    b.HasIndex("PlayerUserId", "AchievementId")
+                        .IsUnique();
+
+                    b.ToTable("achievement_progress", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -1126,6 +1163,71 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
             #endregion Pirate: temporary ranks
 
+            #region Pirate: persistent record history
+            modelBuilder.Entity("Content.Server.Database.PirateRecordHistoryEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("pirate_record_history_entries_id");
+
+                    b.Property<string>("AuthorName")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("author_name");
+
+                    b.Property<string>("AuthorTitle")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("author_title");
+
+                    b.Property<int>("Book")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("book");
+
+                    b.Property<int>("Kind")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("kind");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("message");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_id");
+
+                    b.Property<string>("StationName")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("station_name");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("status");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("time");
+
+                    b.Property<string>("Topic")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("topic");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_record_history_entries");
+
+                    b.HasIndex("ProfileId", "Book", "Time")
+                        .HasDatabaseName("IX_pirate_record_history_entries_profile_id_book_time");
+
+                    b.ToTable("pirate_record_history_entries", (string)null);
+                });
+            #endregion
+
             modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
                 {
                     b.Property<int>("Id")
@@ -1199,6 +1301,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("last_seen_user_name");
+
+                    // Pirate: public OOC icon preference.
+                    b.Property<string>("OocIcon")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ooc_icon");
 
                     b.Property<int>("ServerCurrency")
                         .HasColumnType("INTEGER")
@@ -1539,6 +1646,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("secrets");
 
+            #region Pirate: persistent record history
+                    b.Property<string>("RecordBackgrounds")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("record_backgrounds");
+            #endregion
+
                     b.Property<string>("Sex")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -1767,6 +1881,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("ghost_color");
 
+                    b.Property<string>("OocIcon")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ooc_icon");
+
                     b.Property<int>("TierId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("tier_id");
@@ -1819,7 +1937,6 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.RMCPatronTier", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasColumnName("rmc_patron_tiers_id");
 
@@ -2100,6 +2217,19 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasDatabaseName("IX_player_round_rounds_id");
 
                     b.ToTable("player_round", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AchievementProgress", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_achievement_progress_player_player_user_id");
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
@@ -2550,6 +2680,20 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("AdminRank");
                 });
             #endregion Pirate: temporary ranks
+
+            #region Pirate: persistent record history
+            modelBuilder.Entity("Content.Server.Database.PirateRecordHistoryEntry", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_pirate_record_history_entries_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+            #endregion
 
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
@@ -3052,6 +3196,110 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("ConnectionLogs");
 
                     b.Navigation("Rounds");
+                });
+            modelBuilder.Entity("Content.Server.Database.PirateCustomMarking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("pirate_custom_marking_id");
+
+                    b.Property<string>("ArtHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("art_hash");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Placement")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("placement");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_custom_marking");
+
+                    b.HasIndex("ArtHash");
+
+                    b.HasIndex("PlayerUserId");
+
+                    b.ToTable("pirate_custom_marking", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PirateCustomMarkingArt", b =>
+                {
+                    b.Property<string>("Hash")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("hash");
+
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("blocked");
+
+                    b.Property<byte[]>("Erase")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("erase");
+
+                    b.Property<byte[]>("FrameTimes")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("frame_times");
+
+                    b.Property<byte[]>("Png")
+                        .IsRequired()
+                        .HasColumnType("BLOB")
+                        .HasColumnName("png");
+
+                    b.Property<DateTime?>("UnusedSince")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("unused_since");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("uploaded_at");
+
+                    b.Property<Guid>("UploaderUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("uploader_user_id");
+
+                    b.HasKey("Hash")
+                        .HasName("PK_pirate_custom_marking_art");
+
+                    b.HasIndex("UploaderUserId", "UploadedAt");
+
+                    b.ToTable("pirate_custom_marking_art", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.PirateCustomMarking", b =>
+                {
+                    b.HasOne("Content.Server.Database.PirateCustomMarkingArt", "Art")
+                        .WithMany()
+                        .HasForeignKey("ArtHash")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_pirate_custom_marking_art");
+
+                    b.Navigation("Art");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Profile", b =>
+                {
+                    b.Property<string>("CustomMarkings")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("custom_markings");
                 });
 #pragma warning restore 612, 618
         }

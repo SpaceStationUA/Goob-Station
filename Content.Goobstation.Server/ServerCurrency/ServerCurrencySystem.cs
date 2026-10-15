@@ -21,18 +21,18 @@ namespace Content.Goobstation.Server.ServerCurrency
     /// <summary>
     /// Connects <see cref="ServerCurrencyManager"/> to the simulation state.
     /// </summary>
-    public sealed class ServerCurrencySystem : EntitySystem
+    public sealed partial class ServerCurrencySystem : EntitySystem
     {
-        [Dependency] private readonly ICommonCurrencyManager _currencyMan = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedMindSystem _mind = default!;
-        [Dependency] private readonly SharedJobSystem _jobs = default!;
-        [Dependency] private readonly IPlayerManager _players = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly LinkAccountManager _linkAccount = default!;
-        [Dependency] private readonly GameTicker _gameTicker = default!;
-        [Dependency] private readonly SandboxSystem _sandbox = default!; // Pirate
-        [Dependency] private readonly PirateGoobcoinRewardSystem _pirateGoobcoins = default!; // Pirate: roundstart bonus
+        [Dependency] private ICommonCurrencyManager _currencyMan = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private SharedMindSystem _mind = default!;
+        [Dependency] private SharedJobSystem _jobs = default!;
+        [Dependency] private IPlayerManager _players = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private LinkAccountManager _linkAccount = default!;
+        [Dependency] private GameTicker _gameTicker = default!;
+        [Dependency] private SandboxSystem _sandbox = default!; // Pirate
+        [Dependency] private PirateGoobcoinRewardSystem _pirateGoobcoins = default!; // Pirate: roundstart bonus
 
         private int _goobcoinsPerPlayer = 10;
         private int _goobcoinsNonAntagMultiplier = 1;

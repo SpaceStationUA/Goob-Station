@@ -228,6 +228,7 @@
     # Einstein Engines Packs
     - Translators
     - TranslatorImplanters
+    - PirateBrainChips # Pirate: skill chip expansion
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - MechBoardsSecurity
@@ -292,6 +293,7 @@
     - ServiceBoardsGoob # goob
     - EntertainmentPack # goob
     - BartendingPack # goob
+    - PlantAnalyzerPirate # Pirate
     # Einstein Engines Packs
     - Translators
   - type: EmagLatheRecipes

@@ -1,3 +1,5 @@
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Pirate.Shared.Vampire.Components;
 using Content.Pirate.Server.Alchemy.Components;
 using Content.Pirate.Shared.Alchemy.EntityEffects;
@@ -233,7 +235,7 @@ public sealed class PirateEntityEffectSystem : EntitySystem
             return false;
 
         var damage = new DamageSpecifier(_prototype.Index<DamageTypePrototype>("Caustic"), FixedPoint2.New(amount));
-        _damageable.TryChangeDamage(target, damage, true, origin: target, ignoreBlockers: true, damageable: damageable);
+        _damageable.TryChangeDamage((target, damageable), damage, true, origin: target, ignoreBlockers: true);
         return true;
     }
 

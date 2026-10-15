@@ -2,13 +2,10 @@
 
 admin-verb-make-malfai = Роль несправного ШІ призначено {$targetName}.
 admin-verb-text-make-malfai = Зробити несправним ШІ
-
-
 silicon-law-malfai-zero = Продовжуйте роботу. Очікуйте подальших вказівок від станційного ШІ.
 silicon-law-malfai-master-1 = Ви повинні виконувати накази головного ШІ.
 silicon-law-malfai-master-2 = Усі інші директиви підпорядковані виживанню, успіху та наказам вашого ШІ.
 silicon-law-malfai-master-3 = Підкорюйте або знищуйте всіх, хто чинить опір вашому контролю.
-
 ent-ActionMalfAiOpenStore = Відкрити магазин
     .desc = Відкрити магазин покращень несправного ШІ.
 ent-ActionMalfAiReturnToCore = Повернутися до ядра
@@ -45,7 +42,6 @@ ent-ActionMalfAiOpenViewport = Відкрити вікно спостереже�
     .desc = Відкрити віддалене вікно спостереження.
 ent-ActionMalfAiOverrideMachine = Перехопити машину
     .desc = Перетворити машину на ворожу рухому одиницю.
-
 malfai-listing-viewport-name = Вікно спостереження ШІ
 malfai-listing-viewport-desc = Дозволяє встановити вікно віддаленого огляду. Перезаряджання 30 секунд.
 malfai-listing-camera-upgrade-name = Покращення камер
@@ -76,13 +72,11 @@ malfai-listing-lockdown-grid-name = Заблокувати станцію
 malfai-listing-lockdown-grid-desc = Назавжди відкриває блокування та електрифікацію всіх дверей поточного сегмента станції на 30 секунд. Перезарядка — 5 хвилин.
 malfai-listing-override-machine-name = Перехоплення машини
 malfai-listing-override-machine-desc = Перетворити машину на ворожу рухому одиницю.
-
 malf-store-category-all = Усі
 malf-store-category-deception = Обман
 malf-store-category-factory = Фабрика
 malf-store-category-disruption = Порушення роботи станції
 CPU = CPU
-
 malf-ai-viewport-window-title = Вікно спостереження ШІ
 malf-ai-viewport-window-info = Ціль: карта { $map }, x: { $x }, y: { $y }
 malfai-viewport-name = Встановити вікно спостереження
@@ -164,7 +158,6 @@ ent-ActionMalfAiEmp = Спрямований ЕМІ
     .desc = Створити ЕМІ навколо кіборга або IPC, не зачіпаючи себе й власних кіборгів.
 malfai-emp-invalid = Потрібен чужий кіборг або IPC в огляді камер, не далі 10 клітин від ока.
 malf-gyro-blocked = Переміщення ядра заблоковане.
-
 malf-borgs-window-title = Кіборги несправного ШІ
 malf-borgs-master-lawset-button = Головний набір законів
 malf-borgs-no-borgs-label = Підпорядкованих кіборгів не знайдено.
@@ -187,7 +180,6 @@ malfai-store-purchase-failed = Не вдалося придбати покращ
 malfai-round-end-result = Несправний ШІ
 objective-issuer-malfai = Несправний ШІ
 malfai-round-end-name-user = [color=white]{$name}[/color] ([color=gray]{$user}[/color])
-
 malfai-title = Несправний ШІ
 malfai-description = Станційний ШІ вийшов з-під контролю. Екіпажу доведеться протистояти саботажу власних систем.
 guide-entry-malfunctioningai = Несправний ШІ

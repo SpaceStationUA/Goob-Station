@@ -54,7 +54,7 @@ public sealed class AlignToAdjacentWallsSystem : EntitySystem
 
     private int HasWall(EntityUid gridUid, MapGridComponent grid, Vector2i tile)
     {
-        var anchored = _maps.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+        var anchored = _maps.GetAnchoredEntities(gridUid, grid, tile);
 
         while (anchored.MoveNext(out var uid))
         {

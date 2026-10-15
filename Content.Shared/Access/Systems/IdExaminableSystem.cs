@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Access.Systems;
 
-public sealed class IdExaminableSystem : EntitySystem
+public sealed partial class IdExaminableSystem : EntitySystem // Pirate: belt ID support.
 {
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -150,20 +150,9 @@ public sealed class IdExaminableSystem : EntitySystem
 
     public string? GetInfo(EntityUid uid)
     {
-        if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
-        {
-            // PDA
-            if (TryComp(idUid, out PdaComponent? pda) &&
-                TryComp<IdCardComponent>(pda.ContainedId, out var id))
-            {
-                return GetNameAndJob(id);
-            }
-            // ID Card
-            if (TryComp(idUid, out id))
-            {
-                return GetNameAndJob(id);
-            }
-        }
+        // Pirate: source belt ID support for Experiments without a uniform.
+        if (TryGetIdFromSlot(uid, "id", out var id) || TryGetIdFromSlot(uid, "belt", out id))
+            return GetNameAndJob(id);
         return null;
     }
 

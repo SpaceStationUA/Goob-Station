@@ -17,7 +17,7 @@ using Robust.Shared.Prototypes; // Pirate - port EE contractors
 
 namespace Content.Server.Database
 {
-    public abstract class ServerDbContext : DbContext
+    public abstract partial class ServerDbContext : DbContext // Pirate: custom marking storage.
     {
         protected ServerDbContext(DbContextOptions options) : base(options)
         {
@@ -77,6 +77,7 @@ namespace Content.Server.Database
         public DbSet<PersistentPhotoAlbum> PersistentPhotoAlbums { get; set; } = default!;
         public DbSet<PersistentPhotoAlbumPhoto> PersistentPhotoAlbumPhotos { get; set; } = default!;
         public DbSet<PirateTempRankEligibility> PirateTempRankEligibility { get; set; } = default!; // Pirate: temporary ranks
+        public DbSet<PirateRecordHistoryEntry> PirateRecordHistory { get; set; } = default!; // Pirate: persistent record history
         #endregion
 
         #region Pirate: persistent text (diaries)
@@ -94,6 +95,7 @@ namespace Content.Server.Database
                 .IsUnique();
 
             KnowledgeProfileModel.Configure(modelBuilder); // Pirate
+            ProfileRecordBackgroundModel.Configure(modelBuilder); // Pirate: persistent record history
 
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new { HumanoidProfileId = p.ProfileId, p.AntagName })
@@ -331,6 +333,7 @@ namespace Content.Server.Database
                 .HasDefaultValue(HwidType.Legacy);
 
             ModelBan.OnModelCreating(modelBuilder);
+            GoobOnModelCreating(modelBuilder); // Goob
 
             // RMC14
             modelBuilder.Entity<RMCLinkedAccount>()
@@ -451,6 +454,8 @@ namespace Content.Server.Database
             PersistentPhotoAlbumModelConfiguration.Configure(modelBuilder); //Pirate: cameras (photo persistence)
             PersistentTextModelConfiguration.Configure(modelBuilder); //Pirate: persistent text (diaries)
             PirateTempRankEligibilityModelConfiguration.Configure(modelBuilder); // Pirate: temporary ranks
+            PirateRecordHistoryModelConfiguration.Configure(modelBuilder); // Pirate: persistent record history
+            ConfigureCustomMarkings(modelBuilder); // Pirate
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -693,6 +698,8 @@ namespace Content.Server.Database
         public string? GhostParticles { get; set; }
         public string? GhostHat { get; set; }
         public string? GhostMask { get; set; }
+
+        public string? OocIcon { get; set; } // Pirate: public OOC icon preference.
 
         public List<AdminNote> AdminNotesReceived { get; set; } = null!;
         public List<AdminNote> AdminNotesCreated { get; set; } = null!;

@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System;
 using System.Numerics;
 using Content.Pirate.Shared.EnergyDome;

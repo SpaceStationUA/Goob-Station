@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT
+
+- type: localizedDataset
+  id: names_experiment
+  values:
+    prefix: names-experiment-dataset-
+    count: 100

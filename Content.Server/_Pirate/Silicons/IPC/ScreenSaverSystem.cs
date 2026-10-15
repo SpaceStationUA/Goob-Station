@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared.Actions;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;

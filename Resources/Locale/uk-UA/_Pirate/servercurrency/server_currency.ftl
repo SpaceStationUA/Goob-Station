@@ -8,7 +8,6 @@ gs-balanceui-remark-major-token-antag = Куплено жетон мажорно
 gs-balanceui-remark-minor-token-antag = Куплено жетон мінорного антагоніста.
 
 ## Бонус за вихід на зміну та передчасне залишення
-
 pirate-goobcoin-signed-on = Вас записано на повну зміну. {$amount} буде виплачено після її завершення.
 pirate-goobcoin-signed-on-forfeited = Ви передчасно залишили зміну та втратили бонус за вихід на неї — {$amount}.
 pirate-goobcoin-early-cryo-penalty = З вас стягнуто {$amount} за залишення посту невдовзі після початку зміни.

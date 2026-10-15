@@ -3,16 +3,17 @@
 // Modified downstream (Pirate): added a strength uniform (0-1) so the effect
 // can be scaled from C# based on the owner's health state, plus slight
 // desaturation/flicker touches. Used for the IPC screen vision health glitch.
+// Pirate: defaults live in the shader prototype; GLES forbids uniform initializers.
 
 uniform sampler2D SCREEN_TEXTURE;
 
 uniform highp float strength; // 0.0 = off, 1.0 = full glitch
 
-uniform highp float shake_power = 0.03;
-uniform highp float shake_rate = 0.2;
-uniform highp float shake_speed = 5.0;
-uniform highp float shake_block_size = 30.5;
-uniform highp float shake_color_rate = 0.01;
+uniform highp float shake_power;
+uniform highp float shake_rate;
+uniform highp float shake_speed;
+uniform highp float shake_block_size;
+uniform highp float shake_color_rate;
 
 highp float random(highp float seed)
 {

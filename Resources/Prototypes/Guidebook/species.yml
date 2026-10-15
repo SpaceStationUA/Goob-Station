@@ -5,6 +5,7 @@
   name: guide-entry-species
   text: "/ServerInfo/Guidebook/Mobs/Species.xml"
   children:
+    - Sawians # Pirate
     - Arachnid
     - Diona
     - Dwarf
@@ -33,6 +34,7 @@
     - Shadowkin
     - Hydrakin # Monolith/Obelisk
     - Thaven # MACRO
+    - Synth # Goob - Afterlight
 
 - type: guideEntry
   id: Arachnid

@@ -30,6 +30,8 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     [DataField]
     public uint? ActiveKey;
 
+    public uint SelectionRequest; // Pirate: records select
+
     /// <summary>
     /// Currently applied filter.
     /// </summary>

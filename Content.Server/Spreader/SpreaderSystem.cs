@@ -202,7 +202,7 @@ public sealed class SpreaderSystem : EntitySystem
         var neighborTiles = new ValueList<(EntityUid entity, MapGridComponent grid, Vector2i Indices, AtmosDirection OtherDir, AtmosDirection OurDir)>();
 
         // Check if anything on our own tile blocking that direction.
-        var ourEnts = _map.GetAnchoredEntitiesEnumerator(comp.GridUid.Value, grid, tile);
+        var ourEnts = _map.GetAnchoredEntities(comp.GridUid.Value, grid, tile);
 
         while (ourEnts.MoveNext(out var ent))
         {
@@ -258,7 +258,7 @@ public sealed class SpreaderSystem : EntitySystem
             if (spreaderPrototype.PreventSpreadOnSpaced && _turf.IsSpace(tileRef))
                 continue;
 
-            var directionEnumerator = _map.GetAnchoredEntitiesEnumerator(neighborEnt, neighborGrid, neighborPos);
+            var directionEnumerator = _map.GetAnchoredEntities(neighborEnt, neighborGrid, neighborPos);
 
             // Goob edit start
             if (!spreaderPrototype.IgnoreBlockedTiles)
@@ -282,7 +282,7 @@ public sealed class SpreaderSystem : EntitySystem
                 if (occupied)
                     continue;
 
-                directionEnumerator = _map.GetAnchoredEntitiesEnumerator(neighborEnt, neighborGrid, neighborPos);
+                directionEnumerator = _map.GetAnchoredEntities(neighborEnt, neighborGrid, neighborPos);
             }
 
             var oldCount = occupiedTiles.Count;
@@ -332,7 +332,7 @@ public sealed class SpreaderSystem : EntitySystem
             (gridUid, tile) = position.Value;
         }
 
-        var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, gridComp, tile);
+        var anchored = _map.GetAnchoredEntities(gridUid, gridComp, tile);
         while (anchored.MoveNext(out var entity))
         {
             // Don't re-activate the terminating entity
@@ -349,7 +349,7 @@ public sealed class SpreaderSystem : EntitySystem
         {
             var direction = (AtmosDirection) (1 << i);
             var adjacentTile = SharedMapSystem.GetDirection(tile, direction.ToDirection());
-            anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, gridComp, adjacentTile);
+            anchored = _map.GetAnchoredEntities(gridUid, gridComp, adjacentTile);
 
             while (anchored.MoveNext(out var entity))
             {

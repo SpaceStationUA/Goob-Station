@@ -5,11 +5,16 @@ using System.Linq;
 using Content.Shared._Pirate.Body.Chips;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared._Pirate.Roles;
+using Content.Shared.Contraband;
 using Content.Shared.Roles;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Sequence;
+using Robust.Shared.Serialization.Markdown.Value;
 
 namespace Content.IntegrationTests.Tests._Pirate.Knowledge;
 
@@ -18,28 +23,28 @@ public sealed class SkillChipPrototypeIntegrityTest
 {
     private static readonly (string Job, string[] Chips)[] ExpectedJobChips =
     [
-        ("Captain", ["SkillChipEchelonEducation", "SkillChipLaser", "SkillChipLongBlade"]),
-        ("HeadOfPersonnel", ["SkillChipEchelonEducation", "SkillChipLaser"]),
-        ("Quartermaster", ["SkillChipEchelonEducation", "SkillChipUnarmed", "SkillChipMining"]),
-        ("CargoTechnician", ["SkillChipEducation"]),
-        ("SalvageSpecialist", ["SkillChipCombatEducation", "SkillChipMining", "SkillChipCloseQuarters"]),
-        ("ChiefEngineer", ["SkillChipEchelonEducation", "SkillChipDatabase", "SkillChipTool"]),
-        ("StationEngineer", ["SkillChipEducation", "SkillChipDatabase", "SkillChipTool"]),
-        ("AtmosphericTechnician", ["SkillChipEducation", "SkillChipDatabase", "SkillChipBludgeon"]),
+        ("Captain", ["SkillChipEchelonEducationPilot", "SkillChipLaser", "SkillChipLongBlade"]),
+        ("HeadOfPersonnel", ["SkillChipEchelonEducationPilot", "SkillChipLaser"]),
+        ("Quartermaster", ["SkillChipEchelonEducationPilot", "SkillChipUnarmed", "SkillChipMining"]),
+        ("CargoTechnician", ["SkillChipEducationPilot"]),
+        ("SalvageSpecialist", ["SkillChipCombatEducationPilot", "SkillChipMining", "SkillChipCloseQuarters"]),
+        ("ChiefEngineer", ["SkillChipEchelonEducationPilot", "SkillChipDatabase", "SkillChipTool"]),
+        ("StationEngineer", ["SkillChipEducationPilot", "SkillChipDatabase", "SkillChipTool"]),
+        ("AtmosphericTechnician", ["SkillChipEducationPilot", "SkillChipDatabase", "SkillChipBludgeon"]),
         ("TechnicalAssistant", ["SkillChipEducation", "SkillChipDatabaseBasic"]),
-        ("ChiefMedicalOfficer", ["SkillChipCMO", "SkillChipPistol", "SkillChipEchelonEducation"]),
+        ("ChiefMedicalOfficer", ["SkillChipCMO", "SkillChipPistol", "SkillChipEchelonEducationPilot"]),
         ("MedicalDoctor", ["SkillChipDoctor", "SkillChipEducation", "SkillChipSurgeon"]),
         ("MedicalIntern", ["SkillChipDoctor", "SkillChipEducation", "SkillChipSurgeon"]),
-        ("Paramedic", ["SkillChipDoctor", "SkillChipEducation", "SkillChipSurgeon"]),
+        ("Paramedic", ["SkillChipDoctor", "SkillChipEducationPilot", "SkillChipSurgeon"]),
         ("Chemist", ["SkillChipEducation", "SkillChipChemist"]),
         ("Psychologist", ["SkillChipEducation", "SkillChipDoctor"]),
         ("Virologist", ["SkillChipEducation", "SkillChipDoctor"]),
-        ("ResearchDirector", ["SkillChipEchelonEducation"]),
+        ("ResearchDirector", ["SkillChipEchelonEducationPilot"]),
         ("Scientist", ["SkillChipEducation", "SkillChipDatabase"]),
         ("ResearchAssistant", ["SkillChipEducation", "SkillChipDatabaseBasic"]),
         ("Roboticist", ["SkillChipEducation", "SkillChipDatabase"]),
-        ("HeadOfSecurity", ["SkillChipCombatEducation", "SkillChipCombatHOS"]),
-        ("Warden", ["SkillChipCombatEducation", "SkillChipSidearms", "SkillChipShotgun"]),
+        ("HeadOfSecurity", ["SkillChipCombatEducationPilot", "SkillChipCombatHOS"]),
+        ("Warden", ["SkillChipCombatEducationPilot", "SkillChipSidearms", "SkillChipShotgun"]),
         ("SecurityOfficer", ["SkillChipCombatEducation", "SkillChipSidearms", "SkillChipNonLethal"]),
         ("SecurityCadet", ["SkillChipCombatEducation", "SkillChipSidearms", "SkillChipNonLethal"]),
         ("Detective", ["SkillChipCombatEducation", "SkillChipSidearms", "SkillChipBludgeon"]),
@@ -59,7 +64,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("ServiceWorker", ["SkillChipEducation", "SkillChipService"]),
         ("Reporter", ["SkillChipEducation"]),
         ("RadioHost", ["SkillChipEducation"]),
-        ("NanotrasenRepresentative", ["SkillChipEchelonEducation", "SkillChipLaser"]),
+        ("NanotrasenRepresentative", ["SkillChipEchelonEducationPilot", "SkillChipLaser"]),
         ("CentralCommandOfficial", ["SkillChipERT"]),
         ("CBURN", ["SkillChipERT"]),
         ("ERTLeader", ["SkillChipERT"]),
@@ -75,7 +80,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("InterdyneMed", ["SkillChipDoctor", "SkillChipEducation", "SkillChipSurgeon"]),
         ("InterdyneEngineer", ["SkillChipEducation", "SkillChipDatabase", "SkillChipTool"]),
         ("Interdyne", ["SkillChipEducation", "SkillChipDatabase"]),
-        ("InterdynePilot", ["SkillChipEducation", "SkillChipPistol"]),
+        ("InterdynePilot", ["SkillChipEducationPilot", "SkillChipPistol"]),
         ("InterdyneService", ["SkillChipEducation", "SkillChipShortBlade"]),
         ("InterdyneShaftMiners", ["SkillChipCombatEducation", "SkillChipMining", "SkillChipShortBlade"]),
         ("SquidGameGuardCircle", ["SkillChipCombatEducation", "SkillChipPistol", "SkillChipNonLethal"]),
@@ -86,7 +91,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("NavyOfficer", ["SkillChipERT"]),
         ("NavyCaptain", ["SkillChipERT"]),
         ("SpecialOperationsOfficer", ["SkillChipERT"]),
-        ("MercenaryCaptain", ["SkillChipERT"]),
+        ("MercenaryCaptain", ["SkillChipFreelancer"]),
         ("SyndicateHighCommander", ["SkillChipERT"]),
         ("HecuOperative", ["SkillChipERT"]),
         ("NavyOfficerUndercover", ["SkillChipEchelonEducation"]),
@@ -95,9 +100,9 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("OuterCommander", ["SkillChipEchelonEducation"]),
         ("GovernmentMan", ["SkillChipEchelonEducation"]),
         ("Conquest", ["SkillChipEducation"]),
-        ("BlueshieldOfficer", ["SkillChipCombatEducation", "SkillChipSidearmsAdvanced", "SkillChipFieldMedicine"]),
+        ("BlueshieldOfficer", ["SkillChipCombatEducationPilot", "SkillChipSidearmsAdvanced", "SkillChipFieldMedicine"]),
         ("SecurityInstructor", ["SkillChipCombatEducation", "SkillChipSidearmsAdvanced", "SkillChipNonLethal"]),
-        ("ShaftMiner", ["SkillChipCombatEducation", "SkillChipMining", "SkillChipShortBlade"]),
+        ("ShaftMiner", ["SkillChipCombatEducationPilot", "SkillChipMining", "SkillChipShortBlade"]),
         ("ForensicMantis", ["SkillChipEducation", "SkillChipDatabase", "SkillChipCloseQuarters"]),
         ("AdministrativeAssistant", ["SkillChipEchelonEducation", "SkillChipService"]),
         ("NanotrasenCareerTrainer", ["SkillChipEducation"]),
@@ -121,16 +126,46 @@ public sealed class SkillChipPrototypeIntegrityTest
         "SkillChipTailor", "SkillChipTailor2", "SkillChipStoner", "SkillChipService", "SkillChipDatabase",
         "SkillChipDatabaseBasic", "SkillChipFieldMedicine",
         "SkillChipEducation", "SkillChipCombatEducation", "SkillChipEchelonEducation",
+        "SkillChipEducationPilot", "SkillChipCombatEducationPilot", "SkillChipEchelonEducationPilot",
         "SkillChipMagLit", "SkillChipJanitor", "SkillChipClown", "SkillChipDoctor",
         "SkillChipChemist", "SkillChipSurgeon", "SkillChipCMO",
         "SkillChipMagicalDampener", "SkillChipCombatDampener", "SkillChipMindPurge",
-        "SkillChipTiderDampener",
-        "SkillChipThrowing", "SkillChipThrowingTampered",
+        "SkillChipTiderDampener", "SkillChipPsionicAmplifier",
+        "SkillChipThrowing", "SkillChipThrowingTampered", "SkillChipEndorphin", "SkillChipAdrenal", "SkillChipThyroid",
+        "SkillChipProprioception",
         "SkillChipDeathSquad", "SkillChipERT", "SkillChipFreelancer",
         "SkillChipNukie", "SkillChipSyndieSoldierTeamLeader", "SkillChipSyndieSoldier",
         "SkillChipSyndieMarshal", "SkillChipSyndieVisitor", "SkillChipPirateCaptainScooner",
         "SkillChipPirateScooner", "SkillChipBlackmarketeer", "SkillChipCossack",
     ];
+
+    private static readonly (string Variant, string Original)[] SyndicateVariants =
+    [
+        ("SkillChipUnarmedSyndicate", "SkillChipUnarmed"),
+        ("SkillChipBludgeonSyndicate", "SkillChipBludgeon"),
+        ("SkillChipShortBladeSyndicate", "SkillChipShortBlade"),
+        ("SkillChipLongBladeSyndicate", "SkillChipLongBlade"),
+        ("SkillChipPolearmSyndicate", "SkillChipPolearm"),
+        ("SkillChipNonLethalSyndicate", "SkillChipNonLethal"),
+        ("SkillChipToolSyndicate", "SkillChipTool"),
+        ("SkillChipEnergySyndicate", "SkillChipEnergy"),
+        ("SkillChipSMGSyndicate", "SkillChipSMG"),
+        ("SkillChipPistolSyndicate", "SkillChipPistol"),
+        ("SkillChipRifleSyndicate", "SkillChipRifle"),
+        ("SkillChipShotgunSyndicate", "SkillChipShotgun"),
+        ("SkillChipSniperSyndicate", "SkillChipSniper"),
+        ("SkillChipLaserSyndicate", "SkillChipLaser"),
+        ("SkillChipHeavySyndicate", "SkillChipHeavy"),
+        ("SkillChipFieldMedicineSyndicate", "SkillChipFieldMedicine"),
+        ("SkillChipDatabaseSyndicate", "SkillChipDatabase"),
+    ];
+
+    private static readonly HashSet<string> StrongerSyndicateVariants = SyndicateVariants
+        .Select(v => v.Variant)
+        .Where(v => v is not ("SkillChipFieldMedicineSyndicate" or "SkillChipDatabaseSyndicate"))
+        .ToHashSet();
+
+    private static readonly string[] NanotrasenChips = ["SkillChipERT", "SkillChipDeathSquad"];
 
     private static readonly string[] ExcludedTraumaChips = ["SkillChipChef", "SkillChipLibrarian"];
 
@@ -180,13 +215,203 @@ public sealed class SkillChipPrototypeIntegrityTest
                 .Where(id => id.StartsWith("SkillChip"))
                 .ToArray();
 
-            Assert.That(found, Is.EquivalentTo(ExpectedChips),
+            Assert.That(found, Is.EquivalentTo(ExpectedChips.Concat(SyndicateVariants.Select(v => v.Variant))),
                 "The enabled chip inventory drifted from the declared set.");
 
             foreach (var excluded in ExcludedTraumaChips)
             {
                 Assert.That(server.ProtoMan.HasIndex<EntityPrototype>(excluded), Is.False,
                     $"{excluded} is deliberately unported until its unsupported payload has a target-native design.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task SyndicateVariantsCopyTheirOriginal()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var prototypes = server.ProtoMan;
+        var factory = server.EntMan.ComponentFactory;
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var (variantId, originalId) in SyndicateVariants)
+            {
+                var variant = prototypes.Index<EntityPrototype>(variantId);
+                var original = prototypes.Index<EntityPrototype>(originalId);
+
+                Assert.That(variant.TryGetComponent<KnowledgeGrantOnWearComponent>(out var variantGrant, factory), Is.True);
+                Assert.That(original.TryGetComponent<KnowledgeGrantOnWearComponent>(out var originalGrant, factory), Is.True);
+                Assert.That(variantGrant!.Skills.Keys, Is.EquivalentTo(originalGrant!.Skills.Keys),
+                    $"{variantId} must train the same skills as {originalId}.");
+
+                foreach (var (skill, level) in variantGrant.Skills)
+                {
+                    var expected = StrongerSyndicateVariants.Contains(variantId) ? 35 : originalGrant.Skills[skill];
+                    Assert.That(level, Is.EqualTo(expected), $"{variantId} grants the wrong level of {skill}.");
+                }
+            }
+        });
+
+        // Client merging uses the first parent to determine the winning sprite.
+        await pair.Client.WaitAssertion(() =>
+        {
+            var expectedStates = SyndicateVariants.Select(v => (v.Variant, "syndicate"))
+                .Append(("SkillChipFreelancer", "syndicate"))
+                .Concat(NanotrasenChips.Select(id => (id, "icon")));
+
+            foreach (var (chipId, state) in expectedStates)
+            {
+                Assert.That(pair.Client.ProtoMan.TryGetMapping(typeof(EntityPrototype), chipId, out var mapping),
+                    Is.True);
+                var sprite = ((SequenceDataNode) mapping!["components"]).Cast<MappingDataNode>()
+                    .Single(c => ((ValueDataNode) c["type"]).Value == "Sprite");
+                var firstLayer = (MappingDataNode) ((SequenceDataNode) sprite["layers"])[0];
+                Assert.That(((ValueDataNode) firstLayer["state"]).Value, Is.EqualTo(state),
+                    $"{chipId} lost its branded sprite to another parent.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task EveryChipFamilyHasAName()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var loc = server.ResolveDependency<ILocalizationManager>();
+
+        await server.WaitAssertion(() =>
+        {
+            var families = server.ProtoMan.EnumeratePrototypes<OrganChipFamilyPrototype>().ToArray();
+            Assert.That(families, Is.Not.Empty);
+
+            foreach (var family in families)
+            {
+                Assert.That(loc.HasString(family.Name), Is.True,
+                    $"Chip family {family.ID} has no localized name {family.Name}, so its examine line is broken.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    // Null severity means the chip is not contraband.
+    private static readonly (string Chip, string? Severity, string[] Departments)[] ExpectedContraband =
+    [
+        ("SkillChipUnarmed", "Restricted", ["Security"]),
+        ("SkillChipSidearmsAdvanced", "Restricted", ["Security"]),
+        ("SkillChipUnarmedSyndicate", "Syndicate", []),
+        ("SkillChipDatabaseSyndicate", "Syndicate", []),
+        ("SkillChipNukie", "Syndicate", []),
+        ("SkillChipCossack", "Syndicate", []),
+        ("SkillChipERT", "Restricted", ["CentralCommand"]),
+        ("SkillChipDeathSquad", "Restricted", ["CentralCommand"]),
+        ("SkillChipFreelancer", "Syndicate", []),
+        ("SkillChipEducation", null, []),
+        ("SkillChipCombatDampener", null, []),
+        ("SkillChipEndorphin", null, []),
+        ("SkillChipThrowingTampered", null, []),
+        ("SkillChipPsionicAmplifier", null, []),
+    ];
+
+    [Test]
+    public async Task ChipContrabandMatchesItsCategory()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var factory = server.EntMan.ComponentFactory;
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var (chipId, severity, departments) in ExpectedContraband)
+            {
+                var chip = server.ProtoMan.Index<EntityPrototype>(chipId);
+                if (severity == null)
+                {
+                    Assert.That(chip.TryGetComponent<ContrabandComponent>(out _, factory), Is.False,
+                        $"{chipId} should not be contraband.");
+                    continue;
+                }
+
+                Assert.That(chip.TryGetComponent<ContrabandComponent>(out var contraband, factory), Is.True,
+                    $"{chipId} should be {severity} contraband.");
+                Assert.That(contraband!.Severity.Id, Is.EqualTo(severity), $"{chipId} has the wrong severity.");
+                Assert.That(contraband.AllowedDepartments.Select(d => d.Id), Is.EquivalentTo(departments),
+                    $"{chipId} is allowed to the wrong departments.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    private static readonly (string Chip, bool CanRemove, bool CanSelfRemove)[] ExpectedRemoval =
+    [
+        ("SkillChipMagicalDampener", true, false),
+        ("SkillChipCombatDampener", true, false),
+        ("SkillChipMindPurge", true, false),
+        ("SkillChipTiderDampener", true, false),
+        ("SkillChipPsionicAmplifier", true, true),
+        ("SkillChipERT", true, true),
+        ("SkillChipDeathSquad", true, true),
+        ("SkillChipFreelancer", true, true),
+        ("SkillChipEducation", true, true),
+    ];
+
+    [Test]
+    public async Task ChipRemovalRulesMatchTheirCategory()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var (chipId, canRemove, canSelfRemove) in ExpectedRemoval)
+            {
+                Assert.That(server.ProtoMan.Index<EntityPrototype>(chipId)
+                    .TryGetComponent<OrganChipComponent>(out var chip, server.EntMan.ComponentFactory), Is.True);
+                Assert.That((chip!.CanRemove, chip.CanSelfRemove), Is.EqualTo((canRemove, canSelfRemove)),
+                    $"{chipId} has the wrong removal rules.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    private static readonly (string Chip, int Literacy)[] ExpectedLiteracy =
+    [
+        ("SkillChipEducation", 25),
+        ("SkillChipCombatEducation", 33),
+        ("SkillChipEchelonEducation", 50),
+        ("SkillChipEchelonEducationPilot", 50),
+        ("SkillChipCombatEducationPilot", 33),
+        ("SkillChipERT", 50),
+        ("SkillChipDeathSquad", 50),
+        ("SkillChipFreelancer", 50),
+        ("SkillChipNukie", 50),
+        ("SkillChipSyndieMarshal", 50),
+        ("SkillChipCossack", 50),
+    ];
+
+    [Test]
+    public async Task ChipLiteracyMatchesTheRole()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var factory = server.EntMan.ComponentFactory;
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var (chipId, literacy) in ExpectedLiteracy)
+            {
+                Assert.That(server.ProtoMan.Index<EntityPrototype>(chipId)
+                    .TryGetComponent<KnowledgeGrantOnWearComponent>(out var grant, factory), Is.True);
+                Assert.That(grant!.Skills.GetValueOrDefault("LiteracyKnowledge"), Is.EqualTo(literacy),
+                    $"{chipId} grants the wrong literacy; inherited chips must keep their parent's.");
             }
         });
 
@@ -234,6 +459,16 @@ public sealed class SkillChipPrototypeIntegrityTest
                     Assert.That(chips.Chips, Has.Count.LessThanOrEqualTo(3),
                         $"Job {job.ID} asks for {chips.Chips.Count} chips, but a brain holds three.");
                     Assert.That(chips.Chips, Is.Unique, $"Job {job.ID} lists the same chip twice.");
+
+                    var families = chips.Chips
+                        .Select(c => prototypes.TryIndex<EntityPrototype>(c.Id, out var p)
+                                     && p.TryGetComponent<OrganChipComponent>(out var comp, server.EntMan.ComponentFactory)
+                            ? comp.Family
+                            : null)
+                        .Where(f => f != null)
+                        .ToArray();
+                    Assert.That(families, Is.Unique,
+                        $"Job {job.ID} lists two chips of one family, so one of them can never be installed.");
 
                     foreach (var id in chips.Chips)
                     {

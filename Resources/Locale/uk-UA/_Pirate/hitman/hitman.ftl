@@ -1,17 +1,13 @@
 admin-verb-make-hitman = Зробити найманим убивцею
 admin-verb-text-make-hitman = Перетворити ціль на найманого убивцю.
-
 roles-antag-hitman-name = Найманий убивця
 roles-antag-hitman-objective = Убийте ціль так, як цього бажає клієнт.
 role-subtype-hitman = Найманий убивця
 objective-issuer-hitman = [color=#746694]Злочинець[/color]
-
-hitman-role-greeting-human =
-    Ви найманий убивця, якого найняли для ліквідації цілі.
+hitman-role-greeting-human = Ви найманий убивця, якого найняли для ліквідації цілі.
     Для цього вбивства є додаткові умови.
     Намагайтеся не зачепити сторонніх.
-hitman-briefing =
-    Ви підготували кейс для виконання контракту.
+hitman-briefing = Ви підготували кейс для виконання контракту.
     Ви взяли його із собою на цю зміну.
 hitman-round-end-name = Найманий убивця
 hitman-round-end-agent-name = Найманий убивця
@@ -20,7 +16,6 @@ ghost-role-information-hitman-description = Контрактний убивця,
 ghost-role-information-hitman-rules = Ви [color=red][bold]одноосібний антагоніст[/bold][/color].
     Ви можете вбити свою ціль, але не зобов'язані стежити, щоб вона залишалася мертвою.
     Не нападайте на інших без потреби, крім самозахисту або гарантії смерті цілі.
-
 hitman-sharpshooter-kit-name = Набір снайпера
 hitman-sharpshooter-kit-description = Набір для тих, хто воліє вбивати здалеку. Містить гвинтівку з боєприпасами, тепловізор, бінокль, коробку для непомітності та цигарки.
 hitman-bounty-hunter-kit-name = Набір мисливця за головами
@@ -35,7 +30,6 @@ hitman-saboteur-kit-name = Набір диверсанта
 hitman-saboteur-kit-description = Набір для доступу всюди: криптографічний секвенсор, відмичка повітряних шлюзів, інструменти, RCD із матеріалом і сигналізатор смертника для пасток.
 hitman-tracker-kit-name = Набір стеження
 hitman-tracker-kit-description = Набір для тих, хто хоче знати все: ключі зв'язку, шпигунський монітор, жучок камер, детектор ШІ під виглядом мультитула, замасковані окуляри та портативна карта станції.
-
 ent-HitmanCase = кейс найманого убивці
     .desc = Кейс із професійними інструментами найманого убивці.
 ent-HitmanBusinessCard = візитівка найманого убивці
@@ -87,7 +81,6 @@ ent-EncryptionKeyTraffic = ключ зв'язку диспетчерської
 ent-MindRoleHitman = Роль найманого убивці
     .desc = { ent-BaseMindRole.desc }
 chat-radio-traffic = Диспетчерська
-
 ent-HitmanTeachLessonRandomPersonObjective = Провчити ціль
     .desc = Клієнт хоче смерті цієї особи. Убийте її один раз, щоб виконати контракт.
 ent-HitmanTeachLessonRandomHeadObjective = Провчити керівника
@@ -118,5 +111,4 @@ ent-HitmanTraumaObjective = Убити близьку людину цілі
     .desc = Знайдіть близьку до цілі людину, убийте її один раз і переконайтеся, що ціль про це дізнається.
 ent-HitmanTrustObjective = Завоювати довіру цілі
     .desc = Клієнт хоче, щоб ціль відчула зраду. Проводьте з нею багато часу.
-
 paper-hitman-business-card = [color=#FFFFFF]Це просто бізнес[/color]

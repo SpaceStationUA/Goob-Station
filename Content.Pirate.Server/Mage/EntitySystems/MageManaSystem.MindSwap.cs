@@ -21,7 +21,7 @@ public sealed class MageMindSwapSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly MagicSystem _magic = default!;
     [Dependency] private readonly MageManaSystem _mana = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;

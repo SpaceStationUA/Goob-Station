@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Client.Lobby;
-using Content.Client.Sprite;
+using Content.Client._Pirate.StationRecords; // Pirate: records photos
 using Content.Pirate.Shared.WebUi;
 using Content.Shared.Roles;
 using Robust.Client.Graphics;
@@ -17,20 +17,13 @@ using System.Threading.Tasks;
 
 namespace Content.Client.StationRecords;
 
-/// <summary>
-///     Portraits for the evidence board: when the server quests a pinned
-///     character card, this renders the spawn-time profile snapshot the
-///     same way the CriminalRecords console does — LoadProfileEntity
-///     dummy, ContentSpriteSystem.Export to a PNG, upload back — and the
-///     server paints it as a data URI. Never touches a live crew mob.
-/// </summary>
+// Pirate: records photos - Render a profile dummy, never a live crew mob.
 public sealed class PirateBoardPortraitSystem : EntitySystem
 {
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
     [Dependency] private readonly IPrototypeManager _protos = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
-    [Dependency] private readonly IResourceManager _res = default!;
-    [Dependency] private readonly ContentSpriteSystem _sprites = default!;
+    [Dependency] private readonly RecordPhotoComposerSystem _composer = default!; // Pirate: records photos
 
     public override void Initialize()
     {
@@ -58,6 +51,7 @@ public sealed class PirateBoardPortraitSystem : EntitySystem
                 }
                 puppet = _ui.GetUIController<LobbyUIController>()
                     .LoadProfileEntity(profile, job, true);
+                _composer.DressForPhoto(puppet); // Pirate: records photos
             }
             catch (Exception ex)
             {
@@ -86,31 +80,15 @@ public sealed class PirateBoardPortraitSystem : EntitySystem
         }
     }
 
-    // Mirrors CriminalRecordsConsoleWindow.TryGeneratePortraitSnapshotImageData
-    // (Export -> user-data PNG -> bytes, with small retry).
+    // Pirate: records photos - Keep renders in memory; sprite export writes PNGs to the player's data folder.
     private async Task<byte[]?> TryGeneratePortraitData(EntityUid puppet, int attempts = 4)
     {
         for (var attempt = 0; attempt < attempts; attempt++)
         {
             try
             {
-                var metadata = _ent.GetComponent<MetaDataComponent>(puppet);
-                var filePath = ContentSpriteSystem.Exports /
-                    $"{metadata.EntityName}-{Direction.South}-{puppet}.png";
-
-                await _sprites.Export(puppet, Direction.South, includeId: true);
-
-                if (!_res.UserData.Exists(filePath))
-                {
-                    await Task.Delay(100);
-                    continue;
-                }
-
-                await using var file = _res.UserData.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                using var imageData = new MemoryStream();
-                await file.CopyToAsync(imageData);
-                if (imageData.Length > 0)
-                    return imageData.ToArray();
+                if (await _composer.RenderEntity(puppet) is { Length: > 0 } data) // Pirate: records photos
+                    return data;
             }
             catch (Exception)
             {

@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared.Damage;
 using Content.Shared.Trigger.Components.Effects;
 using Content.Shared.Whitelist;
@@ -22,7 +23,7 @@ public sealed class DamageOnTriggerSystem : XOnTriggerSystem<DamageOnTriggerComp
             ev.Damage,
             ent.Comp.IgnoreResistances,
             origin: ent.Owner,
-            targetPart: ent.Comp.TargetPart) is not null;
+            targetPart: ent.Comp.TargetPart);
     }
 }
 

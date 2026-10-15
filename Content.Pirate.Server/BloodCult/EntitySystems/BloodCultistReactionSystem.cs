@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Body.Components;
@@ -108,7 +109,7 @@ public sealed class BloodCultistReactionSystem : EntitySystem
 		//		{
 		//			var healSpec = new DamageSpecifier();
 		//			healSpec.DamageDict.Add("Poison", FixedPoint2.New(-healAmount));
-		//			_damageable.TryChangeDamage(uid, healSpec, false, false, damageable);
+		//			_damageable.TryChangeDamage((uid, damageable), healSpec, false, false);
 		//		}
 		//	}
 		//}
@@ -146,7 +147,7 @@ public sealed class BloodCultistReactionSystem : EntitySystem
 		// Heal the holy damage
 		var healSpec = new DamageSpecifier();
 		healSpec.DamageDict.Add("Holy", FixedPoint2.New(-healAmount));
-		_damageable.TryChangeDamage(uid, healSpec, false, false, damageable);
+		_damageable.TryChangeDamage((uid, damageable), healSpec, false, false);
 
 		// Visual and audio feedback
 		_popup.PopupEntity(

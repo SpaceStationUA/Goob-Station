@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Shared.Damage;
 using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.Damage.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -137,6 +137,7 @@ public sealed class DamageOverlayUiController : UIController
                         _overlay.DeadLevel = 0;
                         break;
                         }
+                        case MobState.SoftCritical: // Pirate
                         case MobState.Critical:
                         {
                             if (!_mobThresholdSystem.TryGetDeadPercentage(entity,
@@ -192,6 +193,7 @@ public sealed class DamageOverlayUiController : UIController
 
                         break;
                     }
+                case MobState.SoftCritical: // Pirate
                 case MobState.Critical:
                     {
                         _overlay.CritLevel = FixedPoint2.Min(1f,

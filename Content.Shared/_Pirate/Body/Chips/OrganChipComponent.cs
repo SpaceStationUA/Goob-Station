@@ -2,6 +2,8 @@
 
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._Pirate.Body.Chips;
 
@@ -25,6 +27,26 @@ public sealed partial class OrganChipComponent : Component
 
     [DataField]
     public bool CanSelfRemove = true;
+
+    // A family allows one chip per organ; unset families only block exact duplicates.
+    [DataField]
+    public ProtoId<OrganChipFamilyPrototype>? Family;
+
+    // Hidden chips stay out of health analyzer scans.
+    [DataField]
+    public bool HiddenFromScanners;
+}
+
+[Serializable, NetSerializable]
+public enum OrganChipVisuals : byte
+{
+    Disabled,
+}
+
+[Serializable, NetSerializable]
+public enum OrganChipVisualLayers : byte
+{
+    Leds,
 }
 
 [ByRefEvent]

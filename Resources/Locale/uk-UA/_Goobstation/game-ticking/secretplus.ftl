@@ -1,9 +1,9 @@
 secretplus-low-title = Турбулентність
 secretplus-low-description = Відносно спокійно. Але не завжди.
 secretplus-mid-title = Ентропія
-secretplus-mid-description = Не так багато часу на відпочинок. Може трапитися будь-що.
+secretplus-mid-description = Щось середнє між спокоєм і хаосом.
 secretplus-high-title = Хаос
-secretplus-high-description = Якщо це може статися, це станеться.
+secretplus-high-description = Невідомі, але збалансовані загрози.
 secretplus-admeme-title = Secret+ Хаос
 secretplus-admeme-description = Якщо це може статися, це станеться.
 survivalplus-title = Виживання+

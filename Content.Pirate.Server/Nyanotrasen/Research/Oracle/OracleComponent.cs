@@ -1,7 +1,6 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Random;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Research.Oracle;
 
@@ -39,8 +38,8 @@ public sealed partial class OracleComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityPrototype? LastDesiredPrototype = default!;
 
-    [DataField("rewardReagents", customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
-    public IReadOnlyList<string> RewardReagents = new[]
+    [DataField("rewardReagents")]
+    public IReadOnlyList<ProtoId<ReagentPrototype>> RewardReagents = new ProtoId<ReagentPrototype>[]
     {
         "LotophagoiOil", "LotophagoiOil", "LotophagoiOil", "Wine", "Blood", "Ichor",
     };

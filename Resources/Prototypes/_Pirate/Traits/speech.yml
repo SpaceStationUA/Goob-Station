@@ -1,0 +1,12 @@
+- type: trait
+  id: RhotacismAccent
+  name: trait-rhotacism-accent-name
+  description: trait-rhotacism-accent-desc
+  category: SpeechTraits
+  cost: 0
+  conditions:
+  - !type:IsSpeciesCondition
+    species:
+    - Vulpkanin
+  components:
+  - type: RhotacismAccent

@@ -192,7 +192,10 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         {
             if (args.DistanceThreshold != null)
             {
-                if (!_interaction.InRangeAndAccessible(args.User, args.Target.Value, args.DistanceThreshold.Value))
+                // Pirate: ignoring obstructions must still enforce distance and map checks.
+                if (args.IgnoreObstruction
+                    ? !_transform.InRange((args.User, userXform), (args.Target.Value, targetXform), args.DistanceThreshold.Value)
+                    : !_interaction.InRangeAndAccessible(args.User, args.Target.Value, args.DistanceThreshold.Value))
                     return true;
             }
         }

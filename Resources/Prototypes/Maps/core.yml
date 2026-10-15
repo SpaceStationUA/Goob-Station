@@ -4,6 +4,7 @@
   id: Core
   mapName: 'Ядро'
   mapPath: /Maps/_Goobstation/core.yml # Goobstation
+  mapPreview: PirateMapPreviewCore # Pirate - map vote preview
   minPlayers: 25
   maxPlayers: 70
   stations:

@@ -21,6 +21,7 @@
   - Xenoborgs
   - Eeeps # Harmony Eeep Port - imp
   - CorticalBorerGuide # Pirate
+  - Letoferol # Pirate: Chimera
   - MinorAntagonists
   - SpaceNinja
   - Thieves
@@ -38,6 +39,7 @@
   - Conspirators # Harmony
   - GangWars # Goob content
   - MalfunctioningAI # Pirate
+  - Voidwalker # Pirate
 
 - type: guideEntry
   id: Traitors

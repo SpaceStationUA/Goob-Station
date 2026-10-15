@@ -164,6 +164,12 @@ public sealed partial class DoAfterArgs
     /// </summary>
     [DataField]
     public bool RequireCanInteract = true;
+
+    /// <summary>
+    /// Pirate: allow abilities such as Voidwalker's gaze to pass through windows.
+    /// </summary>
+    [DataField]
+    public bool IgnoreObstruction;
     #endregion
 
     #region Duplicates
@@ -291,6 +297,7 @@ public sealed partial class DoAfterArgs
         BreakOnDamage = other.BreakOnDamage;
         DamageThreshold = other.DamageThreshold;
         RequireCanInteract = other.RequireCanInteract;
+        IgnoreObstruction = other.IgnoreObstruction; // Pirate: preserve the setting in client prediction copies.
         AttemptFrequency = other.AttemptFrequency;
         BlockDuplicate = other.BlockDuplicate;
         CancelDuplicate = other.CancelDuplicate;

@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared._DV.Psionics.Components;
 using Content.Shared._DV.Psionics.Events;

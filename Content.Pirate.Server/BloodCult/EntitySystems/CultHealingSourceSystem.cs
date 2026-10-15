@@ -5,6 +5,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Linq;
 using System.Numerics;
 using Robust.Shared.Configuration;
@@ -51,7 +53,7 @@ public sealed partial class CultHealingSourceSystem : EntitySystem
 
 	// Dependencies
 	[Dependency] private readonly SharedStackSystem _stack = default!;
-	[Dependency] private readonly IMapManager _mapManager = default!;
+	[Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 	[Dependency] private readonly DamageableSystem _damageableSystem = default!;

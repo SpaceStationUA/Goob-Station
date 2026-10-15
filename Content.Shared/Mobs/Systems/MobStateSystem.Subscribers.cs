@@ -5,6 +5,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
 using Content.Shared.Damage.ForceSay;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -79,6 +80,9 @@ public partial class MobStateSystem
 
     private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
     {
+        if (PirateOnStateExitSubscribers(target, component, state)) // Pirate
+            return;
+
         switch (state)
         {
             case MobState.Alive:
@@ -107,6 +111,8 @@ public partial class MobStateSystem
             return;
 
         _blocker.UpdateCanMove(target); //update movement anytime a state changes
+        if (PirateStateEnteredSubscribers(target, component, state)) // Pirate
+            return;
         var ev = new DropHandItemsEvent(); // Goobstation
         switch (state)
         {
@@ -153,6 +159,7 @@ public partial class MobStateSystem
 
     private void OnGettingStripped(EntityUid target, MobStateComponent component, BeforeGettingStrippedEvent args)
     {
+        PirateOnGettingStripped(target, component, args); // Pirate
         // Incapacitated or dead targets get stripped two or three times as fast. Makes stripping corpses less tedious.
         if (IsDead(target, component))
             args.Multiplier /= 3;
@@ -173,6 +180,8 @@ public partial class MobStateSystem
 
     private void CheckAct(EntityUid target, MobStateComponent component, CancellableEntityEventArgs args)
     {
+        if (PirateCheckAct(target, component, args)) // Pirate
+            return;
         switch (component.CurrentState)
         {
             case MobState.Dead:

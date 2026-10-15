@@ -7,6 +7,7 @@ using Content.Shared.Physics;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Pirate.Shared.Skia;
@@ -17,6 +18,7 @@ public abstract class SharedSkiaLightReactiveSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private EntityQuery<SkiaLightReactiveComponent> _lightReactive;
 
@@ -107,12 +109,15 @@ public abstract class SharedSkiaLightReactiveSystem : EntitySystem
             if (hits.Any())
                 continue;
 
-            if (lightComp.MaskPath == "/Textures/Effects/LightMasks/cone.png")
+            var maskPath = lightComp.LightMask is { } lightMask && _prototype.TryIndex(lightMask, out var maskPrototype)
+                ? maskPrototype.MaskPath.ToString()
+                : null;
+            if (maskPath == "/Textures/Effects/LightMasks/cone.png")
             {
                 var forward = _transform.GetWorldRotation(lightUid).RotateVec(new Vector2(0f, -1f));
                 energy *= MathF.Max(0f, Vector2.Dot((position - lightPosition).Normalized(), forward));
             }
-            else if (lightComp.MaskPath == "/Textures/Effects/LightMasks/double_cone.png")
+            else if (maskPath == "/Textures/Effects/LightMasks/double_cone.png")
             {
                 var forward = _transform.GetWorldRotation(lightUid).RotateVec(new Vector2(0f, -1f));
                 energy *= MathF.Abs(Vector2.Dot((position - lightPosition).Normalized(), forward));

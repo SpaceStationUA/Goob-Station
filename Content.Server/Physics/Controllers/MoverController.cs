@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Pirate.Knowledge; // Pirate: piloting skill
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
@@ -24,6 +25,7 @@ public sealed class MoverController : SharedMoverController
         "Amount of ActiveInputMovers being processed by MoverController");
 
     [Dependency] private readonly ThrusterSystem _thruster = default!;
+    [Dependency] private readonly PilotingSkillSystem _piloting = default!; // Pirate: piloting skill
 
     private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
 
@@ -442,9 +444,10 @@ public sealed class MoverController : SharedMoverController
             var brakeCount = 0;
             var angularCount = 0;
 
-            foreach (var (_, pilot, _, consoleXform) in pilots)
+            foreach (var (pilotUid, pilot, _, consoleXform) in pilots) // Pirate: piloting skill
             {
                 var (strafe, rotation, brakes) = GetPilotVelocityInput(pilot);
+                (strafe, rotation, brakes) = _piloting.AdjustInput(pilotUid, strafe, rotation, brakes, body.LinearVelocity); // Pirate: piloting skill
 
                 if (brakes > 0f)
                 {

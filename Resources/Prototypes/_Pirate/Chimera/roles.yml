@@ -1,0 +1,50 @@
+- type: antag
+  id: Chimera
+  name: role-subtype-Chimera
+  antagonist: true
+  setPreference: false
+  objective: roles-antag-Chimera-objective
+  guides: [ Letoferol ]
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleChimera
+  name: Chimera Role
+  components:
+  - type: MindRole
+    antagPrototype: Chimera
+    roleType: TeamAntagonist
+    subtype: role-subtype-Chimera
+  - type: MindRoleChimera
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleChimeraInitial
+  name: Initial Chimera
+  components:
+  - type: MindRole
+    antagPrototype: LetoferolSleeper
+    roleType: TeamAntagonist
+    subtype: letoinfected
+  - type: MindRoleChimera
+
+- type: antag
+  id: ChimerahostRoleSoloAntagonistOmu
+  name: role-subtype-Chimera
+  antagonist: true
+  objective: never-shown
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 50h #50 hours
+
+# todo marty move this this is garbage
+
+- type: entity
+  id: MindRoleGhostRoleChimeraOmu
+  name: Ghost Role (Solo Antagonist)
+  components:
+  - type: MindRole
+    antag: true
+    roleType: SoloAntagonist
+    antagPrototype: ChimerahostRoleSoloAntagonistOmu
+    sortWeight: 30

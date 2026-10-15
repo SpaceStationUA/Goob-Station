@@ -399,6 +399,7 @@
   description: This can be used to check criminal records. Only security can modify them.
   components:
   - type: CriminalRecordsConsole
+  - type: RecordConsoleSounds # Pirate: records interactive sounds
   - type: UserInterface
     interfaces:
       enum.CriminalRecordsConsoleKey.Key:
@@ -438,6 +439,7 @@
   description: This can be used to check station records.
   components:
   - type: GeneralStationRecordConsole
+  - type: RecordConsoleSounds # Pirate: records interactive sounds
   - type: PirateEvidenceBoard # Pirate: evidence board tab
   - type: UserInterface
     interfaces:
@@ -724,9 +726,9 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "Command" ]]
+  - type: VoiceBroadcastConsole # Goobstation
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
-  - type: VoiceBroadcastConsole # Pirate: voice broadcasts are native to communication consoles.
   - type: DeviceNetwork
     deviceNetId: Wireless
     transmitFrequencyId: ShuttleTimer
@@ -768,6 +770,7 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "NuclearOperative" ]]
+  - type: VoiceBroadcastConsole # Goobstation
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
     color: "#ff0000"
@@ -802,6 +805,7 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "Wizard" ]]
+  - type: VoiceBroadcastConsole # Goobstation
   - type: CommunicationsConsole
     title: comms-console-announcement-title-wizard
     color: "#ff00ff"
@@ -836,6 +840,7 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "CentralCommand" ]]
+  - type: VoiceBroadcastConsole # Goobstation
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
     color: "#1d8bad"

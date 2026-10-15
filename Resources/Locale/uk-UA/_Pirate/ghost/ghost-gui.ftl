@@ -12,4 +12,18 @@ ghost-target-window-filter-ghosts = Привиди
 ghost-target-window-filter-mobs = Моби
 ghost-target-window-filter-description = Опис
 ghost-target-window-observers-count = ({$count})
-# DOWNSTREAM-TPirates: ghost follow menu update
+# DOWNSTREAM-TPirates: оновлення меню стеження за привидами
+ghost-warp-group-nukeops = Ядерні оперативники
+ghost-warp-group-pirates = Пірати
+ghost-warp-group-cybersun = ДС-2
+ghost-warp-group-san-deserters = Дезертири Солоріанського флоту
+ghost-warp-group-xenomorphs = Ксеноморфи
+ghost-warp-group-xenoborgs = Ксеноборги
+ghost-warp-group-terror-spiders = Павуки терору
+ghost-warp-group-dragon-rift = Розлом
+ghost-warp-group-zombies = Зомбі
+ghost-warp-group-response-teams = Група швидкого реагування
+ghost-target-window-group-mode-label = Команди:
+ghost-target-window-group-mode-separate = Окремо
+ghost-target-window-group-mode-together = Разом
+ghost-target-window-group-mode-tooltip = Показувати команди антагоністів і групи реагування окремими категоріями або разом з усіма

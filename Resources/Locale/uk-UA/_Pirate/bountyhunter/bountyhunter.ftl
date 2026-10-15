@@ -1,11 +1,9 @@
 access-freelance = Фриланс
-
 law-bountysimov-1 = Ви мисливець за головами. Ваша кінцева мета - прибуток.
 law-bountysimov-2 = Співпраця з іншим мисливцем за головами часто є найприбутковішим шляхом.
 law-bountysimov-3 = Ваші партнери - ваш екіпаж.
 law-bountysimov-4 = Ви не можете травмувати члена екіпажу чи завдавати йому шкоди.
 law-bountysimov-5 = Намагайтеся не загинути.
-
 item-recall-marked-name = Повернути {CAPITALIZE($item)}
 item-recall-marked-description = Повернути {THE($item)} до вашої руки.
 weapon-recall-item-marked = Ви прив'язуєте {THE($item)} до свого імпланта.
@@ -16,102 +14,72 @@ weapon-recall-item-summon-others = {CAPITALIZE(THE($item))} з'являєтьс�
 weapon-recall-item-disappear = {CAPITALIZE(THE($item))} зникає!
 weapon-recall-item-unmark = Ви відчуваєте, як зв'язок імпланта з {THE($item)} розривається.
 weapon-recall-non-weapon = Імплант можна прив'язати лише до зброї.
-
 roles-antag-bounty-hunter-name = Мисливець за головами
-bounty-hunter-role-greeting =
-    Ви елітний мисливець за головами, якого найняв анонімний замовник. Ви вистежили одну зі своїх цілей у цій системі. Вам щедро заплатять, якщо ви доставите її на свій шатл мертвою або, в ідеалі, живою.
+bounty-hunter-role-greeting = Ви елітний мисливець за головами, якого найняв анонімний замовник. Ви вистежили одну зі своїх цілей у цій системі. Вам щедро заплатять, якщо ви доставите її на свій шатл мертвою або, в ідеалі, живою.
     Щасти.
 roles-antag-bounty-hunter-objective = Вистежте свою ціль і отримайте винагороду.
 bounty-hunter-roundend-name = мисливець за головами
-
 ghost-role-information-bounty-hunter-name = Мисливець за головами
 ghost-role-information-bounty-hunter-description = Вистежте свою ціль і отримайте винагороду.
 ghost-role-information-bounty-hunter-cyborg-name = Відновлений кіборг
 ghost-role-information-bounty-hunter-cyborg-description = Мисливцю за головами потрібне підкріплення. Ви - нелегальний кіборг, зібраний із запасних деталей, і допомагатимете своєму партнеру.
 ghost-role-information-bounty-hunter-parrot-name = Піратський папуга
 ghost-role-information-bounty-hunter-parrot-description = Мисливцю за головами потрібне підкріплення. Ви - розумний папуга-клептоман і допомагатимете своєму партнеру.
-
 guide-entry-bounty-hunter = Мисливець за головами
-
 bounty-hunter-category-raider-name = Рейдер
-bounty-hunter-category-raider-description =
-    Ви не прихильник витончених методів.
+bounty-hunter-category-raider-description = Ви не прихильник витончених методів.
     Містить: дробовик «Enforcer», коробку набоїв .50 з картеччю, три заряди C4,
     розвантажувальний жилет і імплантер свободи.
-
 bounty-hunter-category-hardsuit-name = Космічник
-bounty-hunter-category-hardsuit-description =
-    Найкомфортніше ви почуваєтеся у відкритому космосі.
+bounty-hunter-category-hardsuit-description = Найкомфортніше ви почуваєтеся у відкритому космосі.
     Містить: легкий захисний скафандр, ракетні магнітні черевики,
     ручний сканер маси та гак-кішку.
-
 bounty-hunter-category-gekon-name = МОД-костюм «Гекон»
-bounty-hunter-category-gekon-description =
-    Ви віддаєте перевагу модульності над простотою.
+bounty-hunter-category-gekon-description = Ви віддаєте перевагу модульності над простотою.
     Містить: попередньо зібраний МОД-костюм «Гекон» - броньований, з джетпаком,
     магнітними чоботами, кобурою та власним сховищем, готовий до будь-якої
     ситуації просто з коробки.
-
 bounty-hunter-category-suitchoice-name = Космічне спорядження
-bounty-hunter-category-suitchoice-description =
-    Ви ще не визначилися, у чому працювати в космосі.
+bounty-hunter-category-suitchoice-description = Ви ще не визначилися, у чому працювати в космосі.
     Дозволяє на місці обрати між МОД-костюмом «Гекон» та класичним
     скафандром найманця.
-
 bounty-hunter-category-infiltrator-name = Інфільтратор
-bounty-hunter-category-infiltrator-description =
-    Ви волієте підбиратися до цілей обманом.
+bounty-hunter-category-infiltrator-description = Ви волієте підбиратися до цілей обманом.
     Містить: повний комплект одягу-хамелеона, голосову маску-хамелеон,
     агентську ID-картку, ручку Cybersun, підроблений щит розуму,
     скремблер ДНК, одноразовий ін'єктор снодійного та одноразовий
     ін'єктор токсину німоти.
-
 bounty-hunter-category-subverter-name = Диверсант
-bounty-hunter-category-subverter-description =
-    Працюєте ви на Синдикат чи ні, але зв'язки з ним у вас є.
+bounty-hunter-category-subverter-description = Працюєте ви на Синдикат чи ні, але зв'язки з ним у вас є.
     Ще важливіше - у вас є їхні іграшки.
     Містить: жучок камери, емаг, радіоглушник, ручний монітор екіпажу,
     ключ шифрування Синдикату, консоль IFF Синдикату та десять телекристалів.
-
 bounty-hunter-category-roboticist-name = Робототехнік
-bounty-hunter-category-roboticist-description =
-    У вас є сумнівно корисний кіборг-компаньйон, якого ви десь підібрали.
+bounty-hunter-category-roboticist-description = У вас є сумнівно корисний кіборг-компаньйон, якого ви десь підібрали.
     Містить: імовірно дружнього кіборга з дизейблером та просунутими
     інструментами, а також бойовий модуль, якщо захочете додати вогневої сили.
-
 bounty-hunter-category-samurai-name = Самурай
-bounty-hunter-category-samurai-description =
-    Ви живете за суворим кодексом честі й майстерно володієте катаною.
+bounty-hunter-category-samurai-description = Ви живете за суворим кодексом честі й майстерно володієте катаною.
     Містить: енергетичну катану, два стимулятори, імплантер посмертної кислоти,
     імплантер екстреної втечі, імплантер повернення зброї та самурайський доґі.
-
 bounty-hunter-category-pirate-name = Морський пройдисвіт
-bounty-hunter-category-pirate-description =
-    Ви негідник зі звичкою до грабунку й любов'ю до здобичі.
+bounty-hunter-category-pirate-description = Ви негідник зі звичкою до грабунку й любов'ю до здобичі.
     Містить: енергетичну абордажну шаблю, комплект фултонів,
     піратську скриню та злодійкуватого папугу-компаньйона.
-
 bounty-hunter-category-syndie-name = Оперативник-відступник
-bounty-hunter-category-syndie-description =
-    Раніше ви служили в мародерах Горлекса. Теплого прийому не чекайте.
+bounty-hunter-category-syndie-description = Раніше ви служили в мародерах Горлекса. Теплого прийому не чекайте.
     Містить: елітний розвантажувальний жилет, ключ шифрування Синдикату,
     протигаз Синдикату, ЕМІ-імплантер, зламувач доступу та енергетичний меч.
-
 bounty-hunter-category-captain-name = Капітан-відступник
-bounty-hunter-category-captain-description =
-    Раніше ви належали до командування Nanotrasen і пішли не по-доброму.
+bounty-hunter-category-captain-description = Раніше ви належали до командування Nanotrasen і пішли не по-доброму.
     Містить: броньований панцир, ключ шифрування командування,
     церемоніальну шаблю та лазерний пістолет.
-
 bounty-hunter-category-clown-name = Клоун-відступник
-bounty-hunter-category-clown-description =
-    Полювання за винагороду не зобов'язане бути НУДНИМ!
+bounty-hunter-category-clown-description = Полювання за винагороду не зобов'язане бути НУДНИМ!
     Містить: пирогомет, шість бананових кремових пирогів,
     голографічного найкращого друга, маленьку машинку та різні іграшки.
-
 prayer-chat-notify-freelance = ФРИЛАНС
 prayer-popup-notify-freelance-sent = Ви залишили підозріле повідомлення тому, хто вас найняв...
-
 ent-ActionWeaponRecall = Позначити зброю
     .desc = Позначте зброю в руці, щоб згодом викликати її назад.
 ent-BountyHunterGear = скринька мисливця за головами
@@ -166,14 +134,11 @@ ent-BountyHunterIDCard = гостьова ID-картка
 ent-BountyHunterPDA = КПК мисливця за головами
     .desc = Прозорий КПК із гостьовою карткою фрилансера.
 ent-SpawnPointBountyHunter = точка появи мисливця за головами
-
 ent-BountyHunterKillRandomAntagObjective = Захопити ціль
     .desc = Ви не знаєте, хто її замовив і навіщо, та вам байдуже. За живу ціль заплатять більше, якщо вона опиниться на вашому шатлі.
 ent-BountyHunterSurviveObjective = Вижити
     .desc = Мертвим не платять.
-
 name-format-bounty-hunter = {$part0} {$part1}
-
 names-bounty-hunter-dataset-1 = Флінт
 names-bounty-hunter-dataset-2 = Рейдер
 names-bounty-hunter-dataset-3 = Тура
@@ -214,7 +179,6 @@ names-bounty-hunter-dataset-37 = Сокіл
 names-bounty-hunter-dataset-38 = Бріскет
 names-bounty-hunter-dataset-39 = Єпископ
 names-bounty-hunter-dataset-40 = Змій
-
 names-bounty-hunter-title-dataset-1 = Залізний
 names-bounty-hunter-title-dataset-2 = Сміхотливий
 names-bounty-hunter-title-dataset-3 = Дік
@@ -261,7 +225,6 @@ names-bounty-hunter-title-dataset-43 = Яструб
 names-bounty-hunter-title-dataset-44 = Вбивця
 names-bounty-hunter-title-dataset-45 = Співочий
 names-bounty-hunter-title-dataset-46 = Твердий
-
 names-bounty-hunter-parrot-dataset-1 = Дзьоб Жадібності
 names-bounty-hunter-parrot-dataset-2 = Старпом Найджел
 names-bounty-hunter-parrot-dataset-3 = Сквік, Другий

@@ -20,6 +20,7 @@ using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Preferences;
+using Content.Shared._Pirate.CustomMarkings; // Pirate
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
@@ -92,6 +93,7 @@ namespace Content.Server.Database
 
         public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
         {
+            using var customMarkings = await LockCustomMarkingProfilesAsync(); // Pirate: coordinate profile references with art cleanup.
             await using var db = await GetDb();
 
             if (profile is null)
@@ -149,6 +151,7 @@ namespace Content.Server.Database
 
         public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
         {
+            using var customMarkings = await LockCustomMarkingProfilesAsync(); // Pirate: initial/imported profiles also reference art.
             await using var db = await GetDb();
 
             var profile = ConvertProfiles((HumanoidCharacterProfile) defaultProfile, 0);
@@ -307,10 +310,12 @@ namespace Content.Server.Database
                 profile.PersonalNotes,
                 profile.OOCNotes,
                 profile.Secrets,
-                profile.ExploitableInfo).WithKnowledge(
+                profile.ExploitableInfo).WithRecordBackgrounds( // Pirate: persistent record history
+                FromStoredRecordBackgrounds(profile.RecordBackgrounds)).WithKnowledge( // Pirate: persistent record history
                 new KnowledgeProfile(profile.KnowledgeMastery.ToDictionary(
                     pair => new EntProtoId(pair.Key),
-                    pair => pair.Value)));
+                    pair => pair.Value))).WithCustomMarkings(
+                CustomMarkingRules.FromStored(profile.CustomMarkings)); // Pirate
         }
 
         private static Profile ConvertProfiles(HumanoidCharacterProfile humanoid, int slot, Profile? profile = null)
@@ -331,6 +336,7 @@ namespace Content.Server.Database
             profile.OOCNotes = humanoid.OOCNotes;
             profile.Secrets = humanoid.Secrets;
             profile.ExploitableInfo = humanoid.ExploitableInfo;
+            profile.RecordBackgrounds = ToStoredRecordBackgrounds(humanoid.RecordBackgrounds); // Pirate: persistent record history
             profile.Species = humanoid.Species;
             profile.Height = humanoid.Height; // Goobstation: port EE height/width sliders
             profile.Width = humanoid.Width; // Goobstation: port EE height/width sliders
@@ -347,6 +353,7 @@ namespace Content.Server.Database
             profile.SkinColor = appearance.SkinColor.ToHex();
             profile.SpawnPriority = (int) humanoid.SpawnPriority;
             profile.Markings = markings;
+            profile.CustomMarkings = CustomMarkingRules.ToStored(humanoid.CustomMarkings); // Pirate
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
 
@@ -1823,57 +1830,42 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task<List<RMCPatronTier>> GetPatronTiers()
+        public async Task SetOocIcon(Guid player, string? icon)
         {
             await using var db = await GetDb();
-            return await db.DbContext.RMCPatronTiers.ToListAsync();
-        }
+            var playerData = await db.DbContext.Player.FirstOrDefaultAsync(p => p.UserId == player); // Pirate: public preference.
+            if (playerData == null)
+                return;
 
-        public async Task<int> AddPatronTier(RMCPatronTier tier)
-        {
-            await using var db = await GetDb();
-            db.DbContext.RMCPatronTiers.Add(tier);
+            playerData.OocIcon = icon;
             await db.DbContext.SaveChangesAsync();
-            return tier.Id;
         }
 
-        public async Task<bool> UpdatePatronTier(RMCPatronTier tier)
+        public async Task SyncPatronTiers(List<RMCPatronTier> tiers)
         {
             await using var db = await GetDb();
-            var existing = await db.DbContext.RMCPatronTiers.FirstOrDefaultAsync(t => t.Id == tier.Id);
-            if (existing == null)
-                return false;
+            var existing = await db.DbContext.RMCPatronTiers.ToDictionaryAsync(t => t.Id);
 
-            existing.Name = tier.Name;
-            existing.Icon = tier.Icon;
-            existing.DiscordRole = tier.DiscordRole;
-            existing.Priority = tier.Priority;
-            existing.ShowOnCredits = tier.ShowOnCredits;
-            existing.GhostColor = tier.GhostColor;
-            existing.GhostCosmetics = tier.GhostCosmetics;
-            existing.GhostParticles = tier.GhostParticles;
-            existing.LobbyMessage = tier.LobbyMessage;
-            existing.RoundEndShoutout = tier.RoundEndShoutout;
+            foreach (var tier in tiers)
+            {
+                if (!existing.TryGetValue(tier.Id, out var row))
+                {
+                    db.DbContext.RMCPatronTiers.Add(tier);
+                    continue;
+                }
+
+                row.Name = tier.Name;
+                row.DiscordRole = tier.DiscordRole;
+                row.Priority = tier.Priority;
+                row.ShowOnCredits = tier.ShowOnCredits;
+                row.GhostColor = tier.GhostColor;
+                row.GhostCosmetics = tier.GhostCosmetics;
+                row.GhostParticles = tier.GhostParticles;
+                row.LobbyMessage = tier.LobbyMessage;
+                row.RoundEndShoutout = tier.RoundEndShoutout;
+            }
+
             await db.DbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<int> CountPatronsInTier(int tierId)
-        {
-            await using var db = await GetDb();
-            return await db.DbContext.RMCPatrons.CountAsync(p => p.TierId == tierId);
-        }
-
-        public async Task<bool> DeletePatronTier(int tierId)
-        {
-            await using var db = await GetDb();
-            var tier = await db.DbContext.RMCPatronTiers.FirstOrDefaultAsync(t => t.Id == tierId);
-            if (tier == null)
-                return false;
-
-            db.DbContext.RMCPatronTiers.Remove(tier);
-            await db.DbContext.SaveChangesAsync();
-            return true;
         }
 
         public async Task<bool> SetPatron(Guid player, int? tierId)
@@ -1942,33 +1934,32 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task<List<(string Message, string User)>> GetLobbyMessages()
+        // Goob start - tier perks from prototypes
+        public async Task<List<(string Message, string User, int TierId)>> GetLobbyMessages()
         {
             await using var db = await GetDb();
             var messages = await db.DbContext.RMCPatronLobbyMessages
                 .Include(p => p.Patron)
                 .ThenInclude(p => p.Player)
-                .Where(p => p.Patron.Tier.LobbyMessage)
                 .Where(p => !string.IsNullOrWhiteSpace(p.Message))
-                .Select(p => new { p.Message, p.Patron.Player.LastSeenUserName })
-                .Select(p => new ValueTuple<string, string>(p.Message, p.LastSeenUserName))
+                .Select(p => new { p.Message, p.Patron.Player.LastSeenUserName, p.Patron.TierId })
                 .ToListAsync();
 
-            return messages;
+            return messages.Select(p => (p.Message, p.LastSeenUserName, p.TierId)).ToList();
         }
 
-        public async Task<List<string>> GetShoutouts()
+        public async Task<List<(string Name, int TierId)>> GetShoutouts()
         {
             await using var db = await GetDb();
             var ntNames = await db.DbContext.RMCPatronRoundEndNTShoutouts
                 .Include(p => p.Patron)
-                .Where(p => p.Patron.Tier.RoundEndShoutout)
                 .Where(p => !string.IsNullOrWhiteSpace(p.Name))
-                .Select(p => p.Name)
+                .Select(p => new { p.Name, p.Patron.TierId })
                 .ToListAsync();
 
-            return ntNames;
+            return ntNames.Select(p => (p.Name, p.TierId)).ToList();
         }
+        // Goob end
 
         #endregion
 

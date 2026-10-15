@@ -1,13 +1,9 @@
 using Content.Pirate.Shared.Botany.PlantAnalyzer;
-using JetBrains.Annotations;
-using Robust.Client.UserInterface;
 
 namespace Content.Pirate.Client.Botany.PlantAnalyzer;
 
-[UsedImplicitly]
 public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
 {
-    [ViewVariables]
     private PlantAnalyzerWindow? _window;
 
     public PlantAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -17,26 +13,42 @@ public sealed class PlantAnalyzerBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _window = this.CreateWindow<PlantAnalyzerWindow>();
-        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-        _window.Print.OnPressed += _ => Print();
+
+        _window = new PlantAnalyzerWindow();
+        _window.OnClose += Close;
+        _window.PrintPressed += Print;
+        _window.OpenCenteredLeft();
     }
 
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    protected override void Dispose(bool disposing)
     {
-        if (_window is null
-            || message is not PlantAnalyzerScannedUserMessage cast)
+        base.Dispose(disposing);
+
+        if (!disposing)
             return;
 
-        _window.Populate(cast);
+        if (_window != null)
+        {
+            _window.OnClose -= Close;
+            _window.PrintPressed -= Print;
+        }
+
+        _window?.Orphan();
     }
 
     private void Print()
     {
         SendMessage(new PlantAnalyzerPrintMessage());
-        if (_window is null)
+    }
+
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+
+        if (_window == null)
             return;
 
-        _window.Print.Disabled = true;
+        if (state is PlantAnalyzerScannedState scanned)
+            _window.Populate(scanned);
     }
 }

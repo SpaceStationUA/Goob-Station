@@ -7,7 +7,6 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Client.WebView;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -65,9 +64,6 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
     private Label? _currentStatusLabel;
     private Label? _pickerQueueTitle;
     private BoxContainer? _pickerQueueBox;
-    private bool _disposed;
-
-    /// <summary>The TV entity this picker drives; far away ⇒ auto-close.</summary>
     public EntityUid? TvUid;
 
     public WebTvPickerWindow()
@@ -77,7 +73,8 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
 
         _web = new WebViewControl
         {
-            AlwaysActive = true,
+            HorizontalExpand = true,
+            VerticalExpand = true,
         };
         _ipc = new WebUiTuiIpc((_, _) => { })
         {
@@ -85,8 +82,6 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         };
         _web.AddBeforeBrowseHandler(_ipc.HandleBeforeBrowse);
 
-        _web.VerticalExpand = true;
-        _web.HorizontalExpand = true;
 
         var right = new BoxContainer
         {
@@ -170,8 +165,6 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         panel.AddChild(box);
         Contents.AddChild(panel);
 
-        // Start on YouTube's search page (whitelist keeps it inside).
-        try { _web.Url = "https://www.youtube.com/results?search_query=music&hl=uk"; } catch { /* headless dev */ }
 
         _watch.OnPressed += OnWatchPressed;
         _queueAdd.OnPressed += OnQueueAddPressed;
@@ -180,13 +173,9 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         _searchGo.OnPressed += _ => RunSearch();
         _search.OnTextEntered += _ => RunSearch();
 
-        // The engine keeps AlwaysActive browsers alive past window closes;
-        // drain the browser here so no audio keeps spilling in background.
-        OnClose += () =>
-        {
-            try { _web.AlwaysActive = false; } catch { }
-            UnregisterWindow();
-        };
+        // Disable keep-alive before BaseWindow removes the control from the UI
+        // tree, so WebViewControl closes its browser in ExitedTree.
+        OnClose += UnregisterWindow;
     }
 
     // ===== one picker per TV (client-side) =====
@@ -256,10 +245,24 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         OpenCentered();
         _confirmPanel.Visible = false;
         RefreshRoom();
+        try { _web.Url = "https://www.youtube.com/results?search_query=music&hl=uk"; } catch { /* headless dev */ }
         // Type-to-search on open; the web page keeps its own focus for
         // scrolling/clicks (handed back in RunSearch and on click).
         try { _search.GrabKeyboardFocus(); } catch { }
     }
+    public override void Close()
+    {
+        if (!IsOpen)
+        {
+            UnregisterWindow();
+            return;
+        }
+
+        try { _web.AlwaysActive = false; } catch { }
+        base.Close();
+    }
+
+    public new void Dispose() => Close();
 
     private PirateTvClientState.Entry Snapshot()
     {
@@ -473,8 +476,4 @@ public sealed class WebTvPickerWindow : DefaultWindow, IDisposable
         _here.FontColorOverride = Color.Orange;
     }
 
-    public void Dispose()
-    {
-        _disposed = true;
-    }
 }

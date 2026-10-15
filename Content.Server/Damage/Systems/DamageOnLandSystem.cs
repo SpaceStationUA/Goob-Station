@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Server.Damage.Components;
 using Content.Shared.Damage;
 using Content.Shared.Throwing;
@@ -11,7 +12,7 @@ namespace Content.Server.Damage.Systems
     /// </summary>
     public sealed class DamageOnLandSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly Shared.Damage.Systems.DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {

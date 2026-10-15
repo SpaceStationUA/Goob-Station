@@ -30,6 +30,13 @@ def main():
         "Authorization": f"Bearer {PUBLISH_TOKEN}",
     }
 
+    # Pirate: scheduled runs can revisit a commit that is already published.
+    manifest = session.get(f"{ROBUST_CDN_URL}fork/{FORK_ID}/manifest", timeout=30)
+    manifest.raise_for_status()
+    if VERSION in manifest.json()["builds"]:
+        print(f"Version {VERSION} is already published; skipping publish successfully.")
+        return
+
     print(f"Starting publish on Robust.Cdn for version {VERSION}")
 
     data = {

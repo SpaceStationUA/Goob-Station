@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+
+- type: speechVerb
+  id: Experiment
+  name: chat-speech-verb-name-experiment
+  speechVerbStrings:
+  - chat-speech-verb-experiment-1
+  - chat-speech-verb-experiment-2
+  - chat-speech-verb-experiment-3
+  - chat-speech-verb-experiment-4

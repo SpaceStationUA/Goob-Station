@@ -10,7 +10,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
     <PropertyGroup>
         <TargetFramework>$(TargetFramework)</TargetFramework>
-        <LangVersion>12</LangVersion>
         <IsPackable>false</IsPackable>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <WarningsAsErrors>nullable</WarningsAsErrors>

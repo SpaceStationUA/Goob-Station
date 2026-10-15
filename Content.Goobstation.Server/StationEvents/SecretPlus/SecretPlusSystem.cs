@@ -33,7 +33,7 @@ namespace Content.Goobstation.Server.StationEvents.SecretPlus;
 /// <summary>
 ///   Temporary class for caching data.
 /// </summary>
-public sealed class SelectedEvent
+public sealed partial class SelectedEvent
 {
     /// <summary>
     ///   The station event prototype
@@ -49,7 +49,7 @@ public sealed class SelectedEvent
         EvComp = evComp;
     }
 }
-public sealed class PlayerCount
+public sealed partial class PlayerCount
 {
     public int Players;
     public int Ghosts;
@@ -59,21 +59,21 @@ public sealed class PlayerCount
 ///   A scheduler which keeps track of a 'chaos score' which it tries to get closer to 0.
 /// </summary>
 [UsedImplicitly]
-public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
+public sealed partial class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
 {
-    [Dependency] private readonly AntagSelectionSystem _antagSelection = default!;
-    [Dependency] private readonly EventManagerSystem _event = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private AntagSelectionSystem _antagSelection = default!;
+    [Dependency] private EventManagerSystem _event = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IComponentFactory _factory = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ILogManager _log = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private GameTicker _ticker = default!;
 
     // cvars
     private float _minimumTimeUntilFirstEvent;
@@ -382,6 +382,8 @@ public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
         // Pirate end - SecretTP tweak
 
         var ruleUid = _ticker.AddGameRule(rule);
+        if (!doStart && TryComp<GameRuleComponent>(ruleUid, out var addedRule))
+            addedRule.CancelPresetOnTooFewPlayers = false;
         // Pirate start - SecretTP tweak
         var chaosScore = GetChaosScore(ruleUid, players);
         if (chaosScore is null)

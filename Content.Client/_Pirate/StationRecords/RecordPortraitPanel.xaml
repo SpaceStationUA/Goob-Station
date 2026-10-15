@@ -1,0 +1,46 @@
+
+
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical"
+              SeparationOverride="5">
+    <LayoutContainer Name="PortraitFrame"
+                     HorizontalExpand="True"
+                     MaxHeight="240"
+                     MinSize="240 240"
+                     RectClipContent="True">
+        <TextureRect Name="PortraitBackground"
+                     LayoutContainer.AnchorRight="1"
+                     LayoutContainer.AnchorBottom="1"
+                     HorizontalExpand="True"
+                     VerticalExpand="True"
+                     CanShrink="True"
+                     Stretch="KeepAspectCovered"
+                     Visible="False" />
+        <TextureRect Name="PortraitTexture"
+                     LayoutContainer.AnchorRight="1"
+                     LayoutContainer.AnchorBottom="1"
+                     HorizontalExpand="True"
+                     VerticalExpand="True"
+                     Stretch="KeepAspectCentered"
+                     Visible="False" />
+        <SpriteView Name="PortraitSprite"
+                    LayoutContainer.AnchorRight="1"
+                    LayoutContainer.AnchorBottom="1"
+                    HorizontalExpand="True"
+                    VerticalExpand="True"
+                    Stretch="Fill"
+                    Scale="5 5"
+                    OverrideDirection="South"
+                    Visible="False" />
+    </LayoutContainer>
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True">
+        <Button Name="PrintButton"
+                Text="{Loc 'records-console-photo-print'}"
+                HorizontalExpand="True" />
+        <Button Name="UploadButton"
+                Text="{Loc 'records-console-photo-upload'}"
+                HorizontalExpand="True" />
+    </BoxContainer>
+</BoxContainer>

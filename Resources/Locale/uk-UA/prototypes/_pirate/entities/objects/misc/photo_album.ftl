@@ -24,3 +24,6 @@ ent-PhotoAlbumMakeshift = саморобний фотоальбом
     .desc = Саморобна книжка зі спогадами. Покладіть туди фотографії, щоб вони потрапили у фінальне зведення раунду. Використайте ручку, щоб налаштувати назви, описи та підписи фото.
 ent-PhotoAlbumRed = червоний фотоальбом
     .desc = { ent-PhotoAlbum.desc }
+
+ent-PhotoAlbumLoadoutSigned = { ent-PhotoAlbum }
+    .desc = { ent-PhotoAlbum.desc }

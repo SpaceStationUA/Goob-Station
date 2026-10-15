@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Collections.Generic;
 using System.Linq;
 using Content.Goobstation.Maths.FixedPoint;
@@ -200,7 +201,7 @@ public sealed class ForgingRuntimeIntegrationTest
                         ignoreResistances: true,
                         origin: user,
                         canMiss: false);
-                    Assert.That(applied, Is.Not.Null, $"{context}: hammer damage was not applied");
+                    Assert.That(applied, Is.True, $"{context}: hammer damage was not applied");
 
                     var results = FindForgedResults(entMan, metalSystem, item.ID, metal.ID);
                     Assert.That(results, Has.Count.EqualTo(item.Amount),

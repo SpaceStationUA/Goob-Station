@@ -56,6 +56,9 @@ public sealed partial class NuclearMonitorSystem : EntitySystem
 
     private void OnPortDisconnected(Entity<NuclearMonitorComponent> ent, ref PortDisconnectedEvent args)
     {
+        if (TerminatingOrDeleted(ent.Owner))
+            return;
+
         if (ent.Comp.Linked != args.RemovedPortUid || args.Port != ent.Comp.LinkingPort)
             return;
 
