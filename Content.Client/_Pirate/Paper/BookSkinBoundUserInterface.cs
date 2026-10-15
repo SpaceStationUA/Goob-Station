@@ -32,7 +32,7 @@ public sealed class BookSkinBoundUserInterface : BoundUserInterface
         // The component is networked, so the window can fill itself right away; the server
         // state arriving right after only refreshes the highlight.
         if (EntMan.TryGetComponent<BookSkinComponent>(Owner, out var skinComp))
-            _window.Populate(skinComp.Skin?.Id, skinComp.SourceTag);
+            _window.Populate(skinComp.Skin?.Id, skinComp.SourceTag, Owner);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -46,6 +46,6 @@ public sealed class BookSkinBoundUserInterface : BoundUserInterface
         if (EntMan.TryGetComponent<BookSkinComponent>(Owner, out var skinComp))
             sourceTag = skinComp.SourceTag;
 
-        _window.Populate(cast.Skin?.Id, sourceTag);
+        _window.Populate(cast.Skin?.Id, sourceTag, Owner);
     }
 }

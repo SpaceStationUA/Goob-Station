@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared._Pirate.Paper;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client._Pirate.Paper;
@@ -123,6 +124,60 @@ public sealed class BookSkinSystem : EntitySystem
 
         _originalLayers[uid] = original;
         return original;
+    }
+
+    /// <summary>
+    /// Pirate: the exact layers <see cref="ApplySkin"/> would draw for this book wearing the
+    /// given cover - the book's own layers with each swappable role replaced by the cover's
+    /// state, tinted with the layer colour, resolved against the book's RSI. The cover picker
+    /// needs this because the source book's raw sprite is not what ends up on the book:
+    /// it has extra layers and no tints.
+    /// Null when the book has no previewable sprite.
+    /// </summary>
+    public List<(Texture Texture, Color Color)>? GetCoverPreview(EntityUid book, EntProtoId cover)
+    {
+        // The live sprite only supplies the RSI: the states must be resolved against the
+        // same RSI SetLayer() validates against, i.e. the book's own (books.rsi).
+        if (!TryComp<SpriteComponent>(book, out var live) || live.BaseRSI is not { } rsi)
+            return null;
+
+        var bookProto = MetaData(book).EntityPrototype;
+        if (bookProto == null ||
+            !bookProto.TryGetComponent(out SpriteComponent? baseLayers, EntityManager.ComponentFactory) ||
+            !_proto.TryIndex(cover.Id, out EntityPrototype? sourceProto) ||
+            !sourceProto.TryGetComponent(out SpriteComponent? source, EntityManager.ComponentFactory))
+            return null;
+
+        // Same "last one wins" mapping ApplySkin() uses.
+        var wanted = new Dictionary<string, LayerLook>();
+        foreach (var layer in source.AllLayers)
+        {
+            var state = layer.RsiState.Name;
+            var role = RoleOf(state);
+            if (role == null || state == null)
+                continue;
+
+            wanted[role] = new LayerLook(state, layer.Color);
+        }
+
+        var preview = new List<(Texture, Color)>();
+        foreach (var layer in baseLayers.AllLayers)
+        {
+            var state = layer.RsiState.Name ?? string.Empty;
+            var look = new LayerLook(state, layer.Color);
+
+            var role = RoleOf(state);
+            if (role != null && wanted.TryGetValue(role, out var swap) && rsi.TryGetState(swap.State, out _))
+                look = swap;
+
+            // A state missing from the book's RSI is skipped by SetLayer() in game too.
+            if (!rsi.TryGetState(look.State, out var tex))
+                continue;
+
+            preview.Add((((IDirectionalTextureProvider)tex).Default, look.Color));
+        }
+
+        return preview.Count > 0 ? preview : null;
     }
 
     /// <summary>

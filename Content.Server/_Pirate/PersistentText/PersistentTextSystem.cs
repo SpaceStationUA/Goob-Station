@@ -171,7 +171,11 @@ public sealed class PersistentTextSystem : EntitySystem
         if (snapshots.Count == 0)
             return;
 
-        _persistTask = PersistSnapshotsAsync(snapshots);
+        // Pirate: persistent text (diaries) - run the save on the thread pool so its
+        // continuations never post back to the main thread's synchronization context.
+        // Starting it on the main thread would make any later wait for it
+        // (round restart cleanup / shutdown) deadlock the game thread.
+        _persistTask = Task.Run(() => PersistSnapshotsAsync(snapshots));
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -184,7 +188,16 @@ public sealed class PersistentTextSystem : EntitySystem
         {
             var snapshots = CollectTextSnapshots();
             if (snapshots.Count > 0)
-                PersistSnapshotsAsync(snapshots).GetAwaiter().GetResult();
+            {
+                // Pirate: persistent text (diaries) - the save must run on the thread pool.
+                // Persisting directly here would capture the main thread's synchronization
+                // context, and the synchronous wait below would then block the very thread
+                // the save's continuation needs - a permanent freeze between "Restarting
+                // round!" and "Wiping all minds". Waiting on the thread-pool task is safe:
+                // it completes independently of the main thread.
+                _persistTask = Task.Run(() => PersistSnapshotsAsync(snapshots));
+                WaitForPendingPersistence();
+            }
         }
         catch (Exception ex)
         {

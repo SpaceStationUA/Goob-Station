@@ -555,7 +555,7 @@ public sealed class PaperSystem : EntitySystem
                 if (_net.IsServer) // Pirate: persistent diary pages - a predicted client must never queue-delete networked entities
                     QueueDel(material);
                 AddPage(entity, pages);
-                _audio.PlayPvs(LeafInsertSound, entity);
+                _audio.PlayPredicted(LeafInsertSound, entity, args.Actor); // Pirate: PlayPvs here played it twice for the actor (client prediction + server), making the rustle drag
 
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
                     $"{ToPrettyString(args.Actor):player} added a page to {ToPrettyString(entity):entity}");
@@ -572,7 +572,7 @@ public sealed class PaperSystem : EntitySystem
                     return;
 
                 TornOutSheet(args.Actor, torn);
-                _audio.PlayPvs(LeafRemoveSound, entity);
+                _audio.PlayPredicted(LeafRemoveSound, entity, args.Actor); // Pirate: predicted-once playback, no server echo for the actor
                 _popupSystem.PopupClient(
                     Loc.GetString("paper-page-torn-out", ("target", entity.Owner)),
                     args.Actor,
@@ -720,7 +720,7 @@ public sealed class PaperSystem : EntitySystem
             Loc.GetString("paper-page-inserted", ("target", entity.Owner)),
             actor,
             actor);
-        _audio.PlayPvs(LeafInsertSound, entity);
+        _audio.PlayPredicted(LeafInsertSound, entity, actor); // Pirate: predicted-once playback, no server echo for the actor
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low,
             $"{ToPrettyString(actor):player} tucked {sheetName} into {ToPrettyString(entity):entity}");

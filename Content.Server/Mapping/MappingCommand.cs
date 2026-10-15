@@ -31,8 +31,9 @@ namespace Content.Server.Mapping
                 case 1:
                     return CompletionResult.FromHint(Loc.GetString("cmd-hint-mapping-id"));
                 case 2:
-                    var opts = CompletionHelper.UserFilePath(args[1], _resourceMgr.UserData)
-                        .Concat(CompletionHelper.ContentFilePath(args[1], _resourceMgr));
+                    // Pirate: mappers paste Windows paths; '\\' must not reach ResPath (asserts and crashes).
+                    var opts = CompletionHelper.UserFilePath(args[1].Replace('\\', '/'), _resourceMgr.UserData)
+                        .Concat(CompletionHelper.ContentFilePath(args[1].Replace('\\', '/'), _resourceMgr));
                     return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-hint-mapping-path"));
                 case 3:
                     return CompletionResult.FromHintOptions(["false", "true"], Loc.GetString("cmd-mapping-hint-grid"));
@@ -101,7 +102,8 @@ namespace Content.Server.Mapping
                 }
                 else
                 {
-                    var path = new ResPath(args[1]);
+                    // Pirate: accept pasted Windows paths ('\' is an assert-fail inside ResPath).
+                    var path = new ResPath(args[1].Replace('\\', '/'));
                     toLoad = path.FilenameWithoutExtension;
                     var opts = new DeserializationOptions {StoreYamlUids = true};
 

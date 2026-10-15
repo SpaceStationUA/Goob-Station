@@ -44,8 +44,10 @@ public sealed class CEAddMapAboveZNetworkCommand : LocalizedEntityCommands
                 }
                 return CompletionResult.FromHintOptions(options, "zNetwork net entity");
             case 2:
-                var opts = CompletionHelper.UserFilePath(args[1], _resourceMgr.UserData)
-                    .Concat(CompletionHelper.ContentFilePath(args[1], _resourceMgr));
+                // Pirate: accept pasted Windows paths ('\' is an assert-fail inside ResPath).
+                var normalized = args[1].Replace('\\', '/');
+                var opts = CompletionHelper.UserFilePath(normalized, _resourceMgr.UserData)
+                    .Concat(CompletionHelper.ContentFilePath(normalized, _resourceMgr));
                 return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-hint-mapping-path"));
         }
         return CompletionResult.Empty;
@@ -75,8 +77,8 @@ public sealed class CEAddMapAboveZNetworkCommand : LocalizedEntityCommands
             return;
         }
 
-        // Load the map
-        var path = new ResPath(args[1]);
+        // Load the map (Pirate: accept pasted Windows paths - '\' trips ResPath's assert)
+        var path = new ResPath(args[1].Replace('\\', '/'));
         var opts = new DeserializationOptions { StoreYamlUids = true };
 
         if (!_mapLoader.TryLoadMap(path, out var mapEnt, out _, opts))
