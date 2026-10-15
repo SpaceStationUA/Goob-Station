@@ -1,3 +1,5 @@
+using Content.Client._Pirate.StationRecords;
+using Content.Shared._Pirate.StationRecords;
 using Content.Shared.Access.Systems;
 using Content.Shared.PsionicsRecords;
 using Content.Shared.PsionicsRecords.Components;
@@ -6,10 +8,6 @@ using Content.Shared.StationRecords;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-
-/// <summary>
-/// EVERYTHING HERE IS A MODIFIED VERSION OF CRIMINAL RECORDS
-/// </summary>
 
 namespace Content.Pirate.Client._EinsteinEngines.PsionicsRecords;
 
@@ -35,14 +33,23 @@ public sealed class PsionicsRecordsConsoleBoundUserInterface : BoundUserInterfac
 
         _window = new(Owner, comp.MaxStringLength, _playerManager, _proto, _random, _accessReader);
         _window.OnKeySelected += key =>
-            SendMessage(new SelectStationRecord(key));
+            SendMessage(new SelectStationRecord(key) { Request = _window?.SelectionRequest ?? 0 });
         _window.OnFiltersChanged += (type, filterValue) =>
             SendMessage(new SetStationRecordFilter(type, filterValue));
+        _window.OnStatusFilterChanged += status =>
+            SendMessage(new PsionicsRecordSetStatusFilter(status));
         _window.OnStatusSelected += status =>
             SendMessage(new PsionicsRecordChangeStatus(status, null));
         _window.OnDialogConfirmed += (status, reason) =>
             SendMessage(new PsionicsRecordChangeStatus(status, reason));
+        _window.OnPrintPortrait += (key, image) => SendMessage(new RecordPortraitPrintMessage(key, image));
+        _window.OnUploadPortrait += () => SendMessage(new RecordPortraitUploadMessage());
+        _window.OnStoreGeneratedPortrait += (key, image) => SendMessage(new RecordPortraitStoreGeneratedMessage(key, image));
+        _window.OnAddLogNote += text => SendMessage(new RecordLogAddNoteMessage(text));
+        _window.OnDeleteLogEntry += id => SendMessage(new RecordLogDeleteMessage(id));
+        _window.OnPrintLog += () => SendMessage(new RecordLogPrintMessage());
         _window.OnClose += Close;
+        RecordConsoleSounds.Attach(this, _window);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

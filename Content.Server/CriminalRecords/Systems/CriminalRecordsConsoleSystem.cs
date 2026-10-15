@@ -26,12 +26,8 @@ using Content.Shared.Roles;
 using Content.Shared._Pirate.Contractors.Prototypes;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Timing;
-using Content.Server.Hands.Systems;
-using Content.Shared.Hands.Components;
-using Content.Server._Pirate.Photo;
+using Content.Server._Pirate.StationRecords; // Pirate: records photos
+using Content.Shared._Pirate.StationRecords; // Pirate: record history
 #endregion
 
 namespace Content.Server.CriminalRecords.Systems;
@@ -50,13 +46,8 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     #region Pirate: records photos
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly PhotoSystem _photoSystem = default!;
-    private readonly HashSet<EntityUid> _activePortraitPrintJobs = new();
-    private static readonly SoundSpecifier PortraitPrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
-    private static readonly SoundSpecifier PortraitUploadSound = new SoundPathSpecifier("/Audio/_Pirate/Machines/terminal_prompt_confirm.ogg");
-    private static readonly TimeSpan PortraitPrintDelay = TimeSpan.FromSeconds(2.3f);
+    [Dependency] private readonly RecordPortraitSystem _portraits = default!; // Pirate: records photos
+    [Dependency] private readonly RecordLogSystem _logs = default!; // Pirate: record history
     private static readonly IReadOnlyDictionary<string, TimeSpan> EmptyPlayTimes = new Dictionary<string, TimeSpan>();
     #endregion
 
@@ -77,6 +68,9 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             subs.Event<CriminalRecordChangeStatus>(OnChangeStatus);
             subs.Event<CriminalRecordAddHistory>(OnAddHistory);
             subs.Event<CriminalRecordDeleteHistory>(OnDeleteHistory);
+            subs.Event<RecordLogAddNoteMessage>(OnAddLogNote); // Pirate: record history
+            subs.Event<RecordLogDeleteMessage>(OnDeleteLogEntry); // Pirate: record history
+            subs.Event<RecordLogPrintMessage>(OnPrintLog); // Pirate: record history
             subs.Event<CriminalRecordSetStatusFilter>(OnStatusFilterPressed);
             #region Pirate: records photos
             subs.Event<CriminalRecordCreateRecord>(OnCreateRecord);
@@ -106,6 +100,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
+        ent.Comp.SelectionRequest = msg.Request; // Pirate: records select
         UpdateUserInterface(ent);
     }
     private void OnStatusFilterPressed(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordSetStatusFilter msg)
@@ -138,7 +133,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
 
     private void OnConsoleShutdown(Entity<CriminalRecordsConsoleComponent> ent, ref ComponentShutdown args) // Pirate: records photos
     {
-        _activePortraitPrintJobs.Remove(ent);
+        _portraits.CancelPrintJob(ent); // Pirate: records photos
     }
 
     private void OnCreateRecord(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordCreateRecord msg)
@@ -181,6 +176,8 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
                 return;
 
             _records.AddRecordEntry(existingKey, CreateCriminalRecordFromGeneral(generalRecord));
+            if (!string.IsNullOrWhiteSpace(generalRecord.Species))
+                _portraits.EnsureSnapshot(existingKey, BuildProfileFromGeneralRecord(generalRecord));
             ent.Comp.ActiveKey = existingKey.Id;
             _records.Synchronize(existingKey);
             UpdateUserInterface(ent);
@@ -230,6 +227,10 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         {
             return;
         }
+
+        // Delete orphaned portrait and history entries.
+        if (!_records.TryGetRecord<GeneralStationRecord>(key, out _))
+            _records.RemoveRecord(key);
 
         var name = _records.TryGetRecord<GeneralStationRecord>(key, out var stationRecord)
             ? stationRecord.Name
@@ -309,6 +310,8 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             officer = tryGetIdentityShortInfoEvent.Title;
 
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
+        _logs.Add(key.Value, RecordLogBook.Security, RecordLogKind.StatusChange, // Pirate: record history
+            Loc.GetString($"criminal-records-status-{msg.Status.ToString().ToLower()}"), reason ?? string.Empty, mob, ent, msg.Status.ToString()); // Pirate: record history
 
         (string, object)[] args;
         if (reason != null)
@@ -386,6 +389,48 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         UpdateUserInterface(ent);
     }
 
+    #region Pirate: record history
+    private void OnAddLogNote(Entity<CriminalRecordsConsoleComponent> ent, ref RecordLogAddNoteMessage msg)
+    {
+        if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
+            return;
+
+        var text = RecordLogNotes.Sanitize(msg.Text);
+        if (text.Length < 1 || text.Length > RecordLogNotes.MaxLength)
+            return;
+
+        GetOfficer(mob.Value, out var officer);
+        _logs.Add(key.Value, RecordLogBook.Security, RecordLogKind.Note, null, text, mob, ent);
+        _criminalRecords.TryAddHistory(key.Value, text, officer);
+        UpdateUserInterface(ent);
+    }
+
+    private void OnDeleteLogEntry(Entity<CriminalRecordsConsoleComponent> ent, ref RecordLogDeleteMessage msg)
+    {
+        if (!CheckSelected(ent, msg.Actor, out _, out var key))
+            return;
+
+        if (!_logs.TryDelete(key.Value, RecordLogBook.Security, msg.EntryId, out var removed))
+            return;
+
+        // Pirate: record history - Keep the copy in criminal history for the PDA wanted list.
+        if (removed is { Kind: RecordLogKind.Note } && _records.TryGetRecord<CriminalRecord>(key.Value, out var record))
+        {
+            var index = record.History.FindIndex(h => h.AddTime == removed.RoundTime && h.Crime == removed.Message);
+            if (index >= 0)
+                _criminalRecords.TryDeleteHistory(key.Value, (uint) index);
+        }
+
+        UpdateUserInterface(ent);
+    }
+
+    private void OnPrintLog(Entity<CriminalRecordsConsoleComponent> ent, ref RecordLogPrintMessage msg)
+    {
+        if (CheckSelected(ent, msg.Actor, out var mob, out var key))
+            _logs.Print(ent, mob.Value, key.Value, RecordLogBook.Security);
+    }
+    #endregion
+
     private void OnDeleteHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordDeleteHistory msg)
     {
         if (!CheckSelected(ent, msg.Actor, out _, out var key))
@@ -426,7 +471,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         }
 
         var age = Math.Clamp(msg.Age, speciesProto.MinAge, speciesProto.MaxAge);
-        var profile = BuildEditedProfile(stationRecord, criminalRecord, speciesProto.ID, age, msg.Gender);
+        var profile = BuildEditedProfile(stationRecord, _portraits.GetSnapshot(key.Value), speciesProto.ID, age, msg.Gender);
         var nationality = NormalizeNationality(msg.Nationality, profile);
         profile = profile.WithNationality(nationality);
         var employer = NormalizeEmployer(msg.Employer, profile);
@@ -448,9 +493,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             existingGeneral.Employer = stationRecord.Employer;
         }
 
-        if (criminalRecord.PortraitProfileSnapshot != null || criminalRecord.PortraitImageData is { Length: > 0 })
-            criminalRecord.PortraitProfileSnapshot = profile;
-
+        _portraits.UpdateSnapshot(key.Value, profile);
         _records.Synchronize(key.Value);
     }
 
@@ -495,16 +538,15 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
 
     private HumanoidCharacterProfile BuildEditedProfile(
         GeneralStationRecord stationRecord,
-        CriminalRecord criminalRecord,
+        HumanoidCharacterProfile? portraitSnapshot,
         string species,
         int age,
         Gender gender)
     {
-        var sameSpeciesSnapshot = criminalRecord.PortraitProfileSnapshot != null
-            && criminalRecord.PortraitProfileSnapshot.Species == species;
+        var sameSpeciesSnapshot = portraitSnapshot != null && portraitSnapshot.Species == species;
 
         var profile = sameSpeciesSnapshot
-            ? new HumanoidCharacterProfile(criminalRecord.PortraitProfileSnapshot!)
+            ? new HumanoidCharacterProfile(portraitSnapshot!)
             : HumanoidCharacterProfile.DefaultWithSpecies(species).WithName(stationRecord.Name);
 
         return profile
@@ -580,6 +622,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
 
         return true;
     }
+    // Pirate: records photos
     private void OnPrintPhoto(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordPrintPhoto msg)
     {
         if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
@@ -588,80 +631,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         if (msg.RecordKey != key.Value.Id)
             return;
 
-        if (_activePortraitPrintJobs.Contains(ent))
-        {
-            _popup.PopupEntity(Loc.GetString("criminal-records-console-photo-print-busy"), ent, mob.Value);
-            return;
-        }
-
-        if (!_records.TryGetRecord<CriminalRecord>(key.Value, out var record))
-            return;
-
-        byte[]? imageData = null;
-        byte[]? previewData = null;
-        var recordChanged = false;
-
-        if (record.PortraitImageData is { Length: > 0 } existingImage &&
-            _photoSystem.TryPreparePhotoCardData(existingImage, record.PortraitPreviewData, out var preparedImageData, out var preparedPreviewData))
-        {
-            imageData = preparedImageData;
-            previewData = preparedPreviewData;
-
-            if (!ByteArraysEqual(record.PortraitImageData, preparedImageData) ||
-                !ByteArraysEqual(record.PortraitPreviewData, preparedPreviewData))
-            {
-                record.PortraitImageData = [.. preparedImageData];
-                record.PortraitPreviewData = preparedPreviewData == null ? null : [.. preparedPreviewData];
-                recordChanged = true;
-            }
-        }
-        else if (msg.GeneratedImageData is { Length: > 0 } generatedImage &&
-                 _photoSystem.TryPreparePhotoCardData(generatedImage, null, out var generatedPreparedImage, out var generatedPreparedPreview))
-        {
-            imageData = generatedPreparedImage;
-            previewData = generatedPreparedPreview;
-
-            record.PortraitImageData = [.. generatedPreparedImage];
-            record.PortraitPreviewData = generatedPreparedPreview == null ? null : [.. generatedPreparedPreview];
-            recordChanged = true;
-        }
-
-        if (recordChanged)
-            _records.Synchronize(key.Value);
-
-        if (imageData is not { Length: > 0 })
-            return;
-
-        string? printedName = null;
-        if (_records.TryGetRecord<GeneralStationRecord>(key.Value, out var stationRecord))
-            printedName = stationRecord.Name;
-        else if (record.GeneralRecordSnapshot != null)
-            printedName = record.GeneralRecordSnapshot.Name;
-
-        _activePortraitPrintJobs.Add(ent);
-        _audio.PlayPvs(PortraitPrintSound, ent);
-        _popup.PopupEntity(Loc.GetString("criminal-records-console-photo-print-start"), ent, mob.Value);
-
-        Timer.Spawn(PortraitPrintDelay, () =>
-        {
-            _activePortraitPrintJobs.Remove(ent);
-
-            if (TerminatingOrDeleted(ent))
-                return;
-
-            var printed = Spawn("PhotoCard", Transform(ent).Coordinates);
-            if (!TryComp<PhotoCardComponent>(printed, out var photo))
-            {
-                Del(printed);
-                return;
-            }
-
-            var finalImage = imageData!; // Pirate: records photos
-            _photoSystem.TrySetPhotoCardData(printed, photo, finalImage, previewData, customName: printedName); // Pirate: records photos
-
-            if (!TerminatingOrDeleted(mob.Value))
-                _popup.PopupEntity(Loc.GetString("criminal-records-console-photo-print-complete"), printed, mob.Value);
-        });
+        _portraits.Print(ent, mob.Value, key.Value, msg.GeneratedImageData);
     }
 
     private void OnUploadPhoto(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordUploadPhoto msg)
@@ -669,20 +639,8 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
             return;
 
-        if (!TryGetHeldPhotoCard(mob.Value, out var heldPhoto) ||
-            heldPhoto.ImageData is not { Length: > 0 } imageData ||
-            !_records.TryGetRecord<CriminalRecord>(key.Value, out var record))
-            return;
-
-        if (!_photoSystem.TryPreparePhotoCardData(imageData, heldPhoto.PreviewData, out var preparedImageData, out var preparedPreviewData))
-            return;
-
-        record.PortraitImageData = [.. preparedImageData];
-        record.PortraitPreviewData = preparedPreviewData == null ? null : [.. preparedPreviewData];
-
-        _audio.PlayPvs(PortraitUploadSound, ent);
-        _records.Synchronize(key.Value);
-        UpdateUserInterface(ent);
+        if (_portraits.Upload(ent, mob.Value, key.Value))
+            UpdateUserInterface(ent);
     }
 
     private void OnStoreGeneratedPhoto(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordStoreGeneratedPhoto msg)
@@ -690,63 +648,15 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         if (!_access.IsAllowed(msg.Actor, ent))
             return;
 
-        if (ent.Comp.ActiveKey != msg.RecordKey)
-            return;
-
+        // Pirate: records photos - Accept late render results for their original record.
         if (_station.GetOwningStation(ent) is not { } station)
             return;
 
-        var key = new StationRecordKey(msg.RecordKey, station);
-        if (!_records.TryGetRecord<CriminalRecord>(key, out var record) ||
-            record.PortraitProfileSnapshot == null ||
-            record.PortraitImageData is { Length: > 0 } ||
-            !_photoSystem.TryPreparePhotoCardData(msg.ImageData, null, out var preparedImageData, out var preparedPreviewData))
+        if (_portraits.StoreGenerated(new StationRecordKey(msg.RecordKey, station), msg.ImageData)
+            && ent.Comp.ActiveKey == msg.RecordKey)
         {
-            return;
-        }
-
-        record.PortraitImageData = [.. preparedImageData];
-        record.PortraitPreviewData = preparedPreviewData == null ? null : [.. preparedPreviewData];
-        _records.Synchronize(key);
-
-        UpdateUserInterface(ent);
-
-        record.PortraitImageData = [.. preparedImageData];
-        record.PortraitPreviewData = preparedPreviewData == null ? null : [.. preparedPreviewData];
-        _records.Synchronize(key);
-
-        if (ent.Comp.ActiveKey == msg.RecordKey)
             UpdateUserInterface(ent);
-    }
-
-    private bool TryGetHeldPhotoCard(EntityUid user, [NotNullWhen(true)] out PhotoCardComponent? photo)
-    {
-        photo = null;
-
-        if (!TryComp<HandsComponent>(user, out var hands))
-            return false;
-
-        foreach (var held in _hands.EnumerateHeld((user, hands)))
-        {
-            if (TryComp<PhotoCardComponent>(held, out var photoCard))
-            {
-                photo = photoCard;
-                return true;
-            }
         }
-
-        return false;
-    }
-
-    private static bool ByteArraysEqual(byte[]? left, byte[]? right)
-    {
-        if (ReferenceEquals(left, right))
-            return true;
-
-        if (left == null || right == null || left.Length != right.Length)
-            return false;
-
-        return left.AsSpan().SequenceEqual(right);
     }
     #endregion
 
@@ -785,6 +695,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         }
 
         var state = new CriminalRecordsConsoleState(listing, console.Filter);
+        state.SelectionRequest = console.SelectionRequest; // Pirate: records select
         if (console.ActiveKey is { } id)
         {
             // get records to display when a crewmember is selected
@@ -795,6 +706,8 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             {
                 state.StationRecord = stationRecord;
                 state.SelectedKey = id;
+                state.Portrait = _portraits.GetPortrait(key); // Pirate: records photos
+                state.Log = _logs.GetLog(key, RecordLogBook.Security); // Pirate: record history
             }
             else
             {
@@ -812,15 +725,10 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     #region Pirate: records photos
     private CriminalRecord CreateCriminalRecordFromGeneral(GeneralStationRecord record)
     {
-        var criminalRecord = new CriminalRecord
+        return new CriminalRecord
         {
             GeneralRecordSnapshot = record with { }
         };
-
-        if (!string.IsNullOrWhiteSpace(record.Species))
-            criminalRecord.PortraitProfileSnapshot = BuildProfileFromGeneralRecord(record);
-
-        return criminalRecord;
     }
 
     private HumanoidCharacterProfile BuildProfileFromGeneralRecord(GeneralStationRecord record)
@@ -863,10 +771,6 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
     }
     #endregion
 
-    /// <summary>
-    /// Boilerplate that most actions use, if they require that a record be selected.
-    /// Obviously shouldn't be used for selecting records.
-    /// </summary>
     private bool CheckSelected(Entity<CriminalRecordsConsoleComponent> ent, EntityUid user,
         [NotNullWhen(true)] out EntityUid? mob, [NotNullWhen(true)] out StationRecordKey? key)
     {

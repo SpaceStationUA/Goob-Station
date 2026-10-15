@@ -45,4 +45,5 @@ public enum StationRecordFilterType : byte
     Species,
     Prints,
     DNA,
+    All, // Pirate: record history
 }

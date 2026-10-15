@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
@@ -14,16 +15,11 @@ using Robust.Server.GameObjects;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Psionics.Components;
-
-/// <summary>
-/// EVERYTHING HERE IS A MODIFIED VERSION OF CRIMINAL RECORDS
-/// </summary>
+using Content.Server._Pirate.StationRecords;
+using Content.Shared._Pirate.StationRecords;
 
 namespace Content.Server.PsionicsRecords.Systems;
 
-/// <summary>
-/// Handles all UI for Psionics records console.
-/// </summary>
 public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecordsConsoleSystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
@@ -34,6 +30,8 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly RecordPortraitSystem _portraits = default!;
+    [Dependency] private readonly RecordLogSystem _logs = default!;
 
 	    public override void Initialize()
 	    {
@@ -45,7 +43,14 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
 	            subs.Event<BoundUIOpenedEvent>(UpdateUserInterface);
 	            subs.Event<SelectStationRecord>(OnKeySelected);
 	            subs.Event<SetStationRecordFilter>(OnFiltersChanged);
+	            subs.Event<PsionicsRecordSetStatusFilter>(OnStatusFilterChanged);
 	            subs.Event<PsionicsRecordChangeStatus>(OnChangeStatus);
+	            subs.Event<RecordPortraitPrintMessage>(OnPrintPortrait);
+	            subs.Event<RecordPortraitUploadMessage>(OnUploadPortrait);
+	            subs.Event<RecordPortraitStoreGeneratedMessage>(OnStoreGeneratedPortrait);
+	            subs.Event<RecordLogAddNoteMessage>(OnAddLogNote);
+	            subs.Event<RecordLogDeleteMessage>(OnDeleteLogEntry);
+	            subs.Event<RecordLogPrintMessage>(OnPrintLog);
 	        });
 
 	        // Pirate-PsionicsMenu-Start
@@ -70,6 +75,13 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
+        ent.Comp.SelectionRequest = msg.Request;
+        UpdateUserInterface(ent);
+    }
+
+    private void OnStatusFilterChanged(Entity<PsionicsRecordsConsoleComponent> ent, ref PsionicsRecordSetStatusFilter msg)
+    {
+        ent.Comp.FilterStatus = msg.FilterStatus;
         UpdateUserInterface(ent);
     }
 
@@ -110,6 +122,8 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
 
         // will probably never fail given the checks above
         _psionicsRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason);
+        _logs.Add(key.Value, RecordLogBook.Psionics, RecordLogKind.StatusChange,
+            Loc.GetString($"psionics-records-status-{msg.Status.ToString().ToLower()}"), reason ?? string.Empty, mob, ent, msg.Status.ToString());
 
         var name = RecordName(key.Value);
         var officer = Loc.GetString("psionics-records-console-unknown-officer");
@@ -167,23 +181,83 @@ public sealed partial class PsionicsRecordsConsoleSystem : SharedPsionicsRecords
 
         var listing = _stationRecords.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
-        var state = new PsionicsRecordsConsoleState(listing, console.Filter);
+        if (console.FilterStatus != PsionicsStatus.None)
+        {
+            listing = listing
+                .Where(x => _stationRecords.TryGetRecord<PsionicsRecord>(new StationRecordKey(x.Key, owningStation.Value), out var record, stationRecords)
+                    && record.Status == console.FilterStatus)
+                .ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        var state = new PsionicsRecordsConsoleState(listing, console.Filter)
+        {
+            FilterStatus = console.FilterStatus,
+            SelectionRequest = console.SelectionRequest,
+        };
         if (console.ActiveKey is { } id)
         {
             // get records to display when a crewmember is selected
             var key = new StationRecordKey(id, owningStation.Value);
             _stationRecords.TryGetRecord(key, out state.StationRecord, stationRecords);
             _stationRecords.TryGetRecord(key, out state.PsionicsRecord, stationRecords);
+            state.Portrait = _portraits.GetPortrait(key);
+            state.Log = _logs.GetLog(key, RecordLogBook.Psionics);
             state.SelectedKey = id;
         }
 
         _ui.SetUiState(uid, PsionicsRecordsConsoleKey.Key, state);
     }
 
-    /// <summary>
-    /// Boilerplate that most actions use, if they require that a record be selected.
-    /// Obviously shouldn't be used for selecting records.
-    /// </summary>
+    private void OnAddLogNote(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordLogAddNoteMessage msg)
+    {
+        if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
+            return;
+
+        var text = RecordLogNotes.Sanitize(msg.Text);
+        if (text.Length < 1 || text.Length > RecordLogNotes.MaxLength)
+            return;
+
+        _logs.Add(key.Value, RecordLogBook.Psionics, RecordLogKind.Note, null, text, mob, ent);
+        UpdateUserInterface(ent);
+    }
+
+    private void OnDeleteLogEntry(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordLogDeleteMessage msg)
+    {
+        if (CheckSelected(ent, msg.Actor, out _, out var key) && _logs.TryDelete(key.Value, RecordLogBook.Psionics, msg.EntryId, out _))
+            UpdateUserInterface(ent);
+    }
+
+    private void OnPrintLog(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordLogPrintMessage msg)
+    {
+        if (CheckSelected(ent, msg.Actor, out var mob, out var key))
+            _logs.Print(ent, mob.Value, key.Value, RecordLogBook.Psionics);
+    }
+
+    private void OnPrintPortrait(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordPortraitPrintMessage msg)
+    {
+        if (CheckSelected(ent, msg.Actor, out var mob, out var key) && key.Value.Id == msg.RecordKey)
+            _portraits.Print(ent, mob.Value, key.Value, msg.ImageData);
+    }
+
+    private void OnUploadPortrait(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordPortraitUploadMessage msg)
+    {
+        if (CheckSelected(ent, msg.Actor, out var mob, out var key) && _portraits.Upload(ent, mob.Value, key.Value))
+            UpdateUserInterface(ent);
+    }
+
+    private void OnStoreGeneratedPortrait(Entity<PsionicsRecordsConsoleComponent> ent, ref RecordPortraitStoreGeneratedMessage msg)
+    {
+        // Accept late results only for their original selection.
+        if (!_access.IsAllowed(msg.Actor, ent) || _station.GetOwningStation(ent) is not { } station)
+            return;
+
+        if (_portraits.StoreGenerated(new StationRecordKey(msg.RecordKey, station), msg.ImageData)
+            && ent.Comp.ActiveKey == msg.RecordKey)
+        {
+            UpdateUserInterface(ent);
+        }
+    }
+
     private bool CheckSelected(Entity<PsionicsRecordsConsoleComponent> ent, EntityUid user,
         [NotNullWhen(true)] out EntityUid? mob, [NotNullWhen(true)] out StationRecordKey? key)
     {

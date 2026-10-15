@@ -63,8 +63,6 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
         {
             GeneralRecordSnapshot = ev.Record with { }
         };
-        if (!string.IsNullOrWhiteSpace(ev.Record.Species))
-            record.PortraitProfileSnapshot = new(ev.Profile);
 
         _records.AddRecordEntry(ev.Key, record);
         #endregion
