@@ -159,6 +159,8 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         entity.Comp.Mode = PaperAction.Read;
         if (entity.Comp.WriteSessionIgnoresStampsActor == args.User)
             entity.Comp.WriteSessionIgnoresStampsActor = null;
+        if (entity.Comp.WriteSessionActor == args.User)
+            entity.Comp.WriteSessionActor = null;
         UpdateUserInterface(entity);
     }
 
@@ -243,6 +245,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
                     _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag) ? args.User : null;
 
                 entity.Comp.Mode = PaperAction.Write;
+                entity.Comp.WriteSessionActor = args.User;
                 _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
                 UpdateUserInterface(entity);
             }
@@ -315,6 +318,8 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         entity.Comp.Mode = PaperAction.Read;
         if (entity.Comp.WriteSessionIgnoresStampsActor == args.Actor)
             entity.Comp.WriteSessionIgnoresStampsActor = null;
+        if (entity.Comp.WriteSessionActor == args.Actor)
+            entity.Comp.WriteSessionActor = null;
         UpdateUserInterface(entity);
     }
 
@@ -391,7 +396,10 @@ public sealed partial class PaperSystem : EntitySystem // Goob
 
         var paperStatus = string.IsNullOrWhiteSpace(processedText) ? PaperStatus.Blank : PaperStatus.Written; // Pirate: paperwork tags
 
-        if (TryComp<AppearanceComponent>(entity, out var appearance))
+        // Pirate: a paginated document already got its PaperVisuals.Status from the whole
+        // document (SetPageText/SyncPages -> SetPaperContent); only a plain, unpaged write
+        // derives the status from the processed text itself.
+        if (pages == null && TryComp<AppearanceComponent>(entity, out var appearance))
             _appearance.SetData(entity, PaperVisuals.Status, paperStatus, appearance);
 
         if (TryComp(entity, out MetaDataComponent? meta))
@@ -410,9 +418,6 @@ public sealed partial class PaperSystem : EntitySystem // Goob
                 RaiseLocalEvent(actor, ref written);
             }
 #endregion
-
-        entity.Comp.Mode = PaperAction.Read;
-        _audio.PlayPvs(entity.Comp.Sound, entity);
 
         return true;
     }
@@ -536,6 +541,14 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         switch (args.Action)
         {
             case PaperPageAction.Turn:
+                // Pirate: the leaf on screen is entity-wide, so while a write session is
+                // open only the actor who opened it may turn - anyone else's flip would
+                // yank the editor to a different leaf mid-edit.
+                if (entity.Comp.Mode == PaperAction.Write &&
+                    entity.Comp.WriteSessionActor is { } sessionActor &&
+                    sessionActor != args.Actor)
+                    return;
+
                 // The flip carries the text still being typed, so the leaf being left
                 // behind keeps it instead of the window silently dropping the edit.
                 if (args.Text != null && !TryWriteText(entity, args.Actor, args.Text, args.TextPage))
@@ -568,7 +581,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
                 if (_net.IsServer) // Pirate: persistent diary pages - a predicted client must never queue-delete networked entities
                     QueueDel(material);
                 AddPage(entity, pages);
-                _audio.PlayPredicted(LeafInsertSound, entity, args.Actor); // Pirate: PlayPvs here played it twice for the actor (client prediction + server), making the rustle drag
+                _audio.PlayPvs(LeafInsertSound, entity); // Pirate: server-only BUI handler - PlayPredicted would exclude the actor and nothing predicts this locally
 
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
                     $"{ToPrettyString(args.Actor):player} added a page to {ToPrettyString(entity):entity}");
@@ -585,7 +598,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
                     return;
 
                 TornOutSheet(args.Actor, torn);
-                _audio.PlayPredicted(LeafRemoveSound, entity, args.Actor); // Pirate: predicted-once playback, no server echo for the actor
+                _audio.PlayPvs(LeafRemoveSound, entity); // Pirate: server-only BUI handler - PlayPredicted would exclude the actor entirely
                 _popupSystem.PopupClient(
                     Loc.GetString("paper-page-torn-out", ("target", entity.Owner)),
                     args.Actor,
@@ -1121,6 +1134,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
 
         entity.Comp.Mode = PaperAction.Read;
         entity.Comp.WriteSessionIgnoresStampsActor = null;
+        entity.Comp.WriteSessionActor = null;
         UpdateUserInterface(entity);
         _uiSystem.TryToggleUi(entity.Owner, PaperUiKey.Key, args.User);
         args.Handled = true;

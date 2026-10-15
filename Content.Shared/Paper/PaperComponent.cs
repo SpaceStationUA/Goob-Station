@@ -37,6 +37,15 @@ public sealed partial class PaperComponent : Component
     public EntityUid? WriteSessionIgnoresStampsActor;
 
     /// <summary>
+    /// Pirate: the actor who opened the current write session (<see cref="Mode"/> == Write),
+    /// set together with the pen like <see cref="WriteSessionIgnoresStampsActor"/>. While
+    /// the session is open only that actor may flip leaves - the current page is entity-wide,
+    /// so another viewer's turn would move the editor to a different leaf. Server-side guard
+    /// only: deliberately neither a data field nor networked.
+    /// </summary>
+    public EntityUid? WriteSessionActor;
+
+    /// <summary>
     /// Sound played after writing to the paper.
     /// </summary>
     [DataField("sound")]

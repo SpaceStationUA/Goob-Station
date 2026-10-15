@@ -278,6 +278,12 @@ public sealed class PersistentTextSystem : EntitySystem
         if (string.IsNullOrWhiteSpace(ownerId))
             return;
 
+        // What the entity looked like before the round-trip: a write landing while the
+        // snapshot loads must win over the database, both text and binding.
+        var preContent = paper.Content;
+        var preCharacterName = persistence.OwnerCharacterName;
+        var preUserId = persistence.OwnerUserId;
+
         try
         {
             var snapshot = await _db.GetPersistentTextSnapshotAsync(
@@ -288,13 +294,23 @@ public sealed class PersistentTextSystem : EntitySystem
             if (snapshot == null || Deleted(uid) || !TryComp<PaperComponent>(uid, out paper))
                 return;
 
-            // Pirate: persistent text (diaries) - restore bound owner
-            persistence.OwnerCharacterName = snapshot.OwnerCharacterName;
-            persistence.OwnerUserId = snapshot.OwnerUserId != null
-                ? new NetUserId(snapshot.OwnerUserId.Value)
-                : null;
-            if (persistence.SupportCharacterName)
-                _paper.UpdatePersistentTextName(uid, persistence);
+            // The content changed while waiting (someone wrote): keep their text and stop.
+            if (!string.Equals(paper.Content, preContent, StringComparison.Ordinal))
+                return;
+
+            // Binding changed while waiting (BindPersistentTextOwner already ran): keep it.
+            var bindingChanged = !string.Equals(persistence.OwnerCharacterName, preCharacterName, StringComparison.Ordinal)
+                || persistence.OwnerUserId != preUserId;
+            if (!bindingChanged)
+            {
+                // Pirate: persistent text (diaries) - restore bound owner
+                persistence.OwnerCharacterName = snapshot.OwnerCharacterName;
+                persistence.OwnerUserId = snapshot.OwnerUserId != null
+                    ? new NetUserId(snapshot.OwnerUserId.Value)
+                    : null;
+                if (persistence.SupportCharacterName)
+                    _paper.UpdatePersistentTextName(uid, persistence);
+            }
 
             if (string.IsNullOrEmpty(snapshot.Content))
                 return;

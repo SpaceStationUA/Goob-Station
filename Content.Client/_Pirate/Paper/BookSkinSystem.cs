@@ -88,8 +88,10 @@ public sealed class BookSkinSystem : EntitySystem
             if (role == null)
                 continue;
 
-            // A cover without this kind of layer falls back to the item's own look.
-            if (!wanted.TryGetValue(role, out var look))
+            // A cover without this kind of layer - or whose state this book's RSI doesn't
+            // know - falls back to the item's own look; without an original to fall back
+            // to, the layer is left as it is.
+            if (!wanted.TryGetValue(role, out var look) || !HasLayerState(sprite, i, look.State))
             {
                 if (i >= original.Length)
                     continue;
@@ -103,13 +105,21 @@ public sealed class BookSkinSystem : EntitySystem
 
     private void SetLayer(Entity<BookSkinComponent> ent, SpriteComponent sprite, int index, LayerLook look)
     {
-        // Same RSI only: the book covers all live in books.rsi, and an unknown state
-        // would just spam errors instead of changing anything.
-        if (sprite[index].ActualRsi is not { } rsi || !rsi.TryGetState(look.State, out _))
+        if (!HasLayerState(sprite, index, look.State))
             return;
 
         _sprite.LayerSetRsiState((ent.Owner, sprite), index, look.State);
         _sprite.LayerSetColor((ent.Owner, sprite), index, look.Color);
+    }
+
+    /// <summary>
+    /// Whether the layer's own RSI carries this state - same RSI only: the book covers
+    /// all live in books.rsi, and an unknown state would just spam errors instead of
+    /// changing anything.
+    /// </summary>
+    private static bool HasLayerState(SpriteComponent sprite, int index, string state)
+    {
+        return sprite[index].ActualRsi is { } rsi && rsi.TryGetState(state, out _);
     }
 
     private LayerLook[] CaptureOriginal(EntityUid uid, SpriteComponent sprite)
