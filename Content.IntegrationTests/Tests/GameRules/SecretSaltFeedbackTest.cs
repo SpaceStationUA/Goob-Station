@@ -131,6 +131,33 @@ public sealed class SecretSaltFeedbackTest
     }
 
     [Test]
+    public void TestPrivateFeedbackReportEscapesMarkdownLinks()
+    {
+        var tracker = new SecretSaltFeedbackTracker();
+        var comment = "\\[already escaped](https://example.com)";
+        Assert.That(tracker.TryRecord(123, "private-account", "[admin](https://example.com)",
+            Review(comment: comment)), Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+
+        var report = SecretSaltFeedbackReport.Format(123, tracker.GetReviews(123));
+        Assert.That(report, Does.Contain(@"Гравець: \[admin\]\(https://example.com\)"));
+        Assert.That(report, Does.Contain(@"Коментар: \\\[already escaped\]\(https://example.com\)"));
+        Assert.That(report, Does.Not.Contain("Гравець: [admin](https://example.com)"));
+        Assert.That(report, Does.Not.Contain("private-account"));
+    }
+
+    [Test]
+    public void TestPrivateFeedbackReportPreservesMaximumLengthAfterEscaping()
+    {
+        var tracker = new SecretSaltFeedbackTracker();
+        var comment = new string('[', SecretSaltFeedbackValidator.MaxCommentLength);
+        Assert.That(tracker.TryRecord(123, "private-account", "Player",
+            Review(comment: comment)), Is.EqualTo(SecretSaltFeedbackResult.Accepted));
+
+        var report = SecretSaltFeedbackReport.Format(123, tracker.GetReviews(123));
+        Assert.That(report, Does.Contain("Коментар: " + comment.Replace("[", "\\[")));
+    }
+
+    [Test]
     public void TestFeedbackSummaryAverageAndMostCommonReasons()
     {
         var tracker = new SecretSaltFeedbackTracker();

@@ -78,9 +78,11 @@ public static class SecretSaltFeedbackReport
     private static string SafeText(string value, int limit)
     {
         var result = new StringBuilder();
+        var originalCharacters = 0;
         foreach (var character in value)
         {
-            if (result.Length >= limit)
+            // Limit input characters, not the longer escaped representation.
+            if (originalCharacters++ >= limit)
                 break;
 
             // Flatten line breaks to prevent report-header impersonation. Discord
@@ -89,6 +91,14 @@ public static class SecretSaltFeedbackReport
             {
                 if (character is '\r' or '\n' or '\t')
                     result.Append(' ');
+                continue;
+            }
+
+            // Escape user-controlled Discord Markdown, including leading
+            // backslashes that could otherwise cancel an inserted escape.
+            if (character is '\\' or '[' or ']' or '(' or ')')
+            {
+                result.Append('\\').Append(character);
                 continue;
             }
 
