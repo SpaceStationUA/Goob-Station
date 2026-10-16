@@ -776,6 +776,7 @@
       components:
       - EscapeShuttleCondition
       - ExtractCondition
+      - MassCasualtyCondition
   - type: DieCondition
   - type: ReputationCondition
     reputation: 90
