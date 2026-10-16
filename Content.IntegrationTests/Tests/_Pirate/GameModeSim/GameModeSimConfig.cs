@@ -10,9 +10,11 @@ namespace Content.IntegrationTests.Tests._Pirate.GameModeSim;
 // Population and death rates are assumptions, not measurements.
 public sealed class GameModeSimConfig
 {
-    public List<string> Presets { get; set; } = ["SecretPlusMid", "SecretPlusLow", "SecretSalt", "SecretTP", "Blueshift"];
+    public List<string> Presets { get; set; } = ["SecretPlusMid", "SecretSalt", "SecretTP", "Blueshift"];
 
     public List<GameModeSimScenario> Scenarios { get; set; } = [new()];
+
+    public List<string> ExtraPrototypes { get; set; } = [];
 
     public int Rounds { get; set; } = 1000;
     public int Seed { get; set; } = 1337;
@@ -209,8 +211,10 @@ public sealed class GameModeSimScenario
 
     public int RoundstartPlayers { get; set; } = 15;
 
+    // Randomize["joinWindowMinutes"] overrides this value, including in the default config.
     public double JoinWindowMinutes { get; set; } = 60;
 
+    // Randomize["joinCurve"] overrides this value, including in the default config.
     public double JoinCurve { get; set; } = 1.5;
 }
 

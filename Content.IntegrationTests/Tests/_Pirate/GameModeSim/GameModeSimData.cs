@@ -225,6 +225,8 @@ public sealed class GameModeSimData
         if (proto.TryComp<TagComponent>(out var tags, factory))
             rule.LoneRun = tags.Tags.Any(t => t.Id == "LoneRunRule");
 
+        rule.MalfAi = proto.Components.ContainsKey("MalfAiRule");
+
         if (proto.TryComp<StationEventComponent>(out var ev, factory))
         {
             rule.Event = new SimStationEvent
@@ -309,6 +311,9 @@ public sealed class SimRule
     public int? DelayMin;
     public int? DelayMax;
     public bool LoneRun;
+
+    public bool MalfAi;
+
     public SimStationEvent? Event;
     public SimGlimmerBand? Glimmer;
     public List<SimAntagDef>? Antags;

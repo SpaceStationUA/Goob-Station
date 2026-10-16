@@ -212,8 +212,9 @@
     - blueshift
   name: blueshift-title
   description: blueshift-description
-  showInVote: false
+  showInVote: true
   rules:
     - BlueshiftScheduler
+    - BlueshiftAntagScheduler
     - MeteorSwarmScheduler
     - GlimmerEventScheduler

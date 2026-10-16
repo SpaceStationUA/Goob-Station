@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared._Pirate.EntityTable.Conditions;
+using Content.Shared._Pirate.MalfAI;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.EntitySelectors;
 
@@ -574,21 +574,11 @@ public sealed class GameModeSimulator
                 return rule != string.Empty
                     && _history.Any(p => p.Id == rule && p.Time + reoccurrence.Delay.TotalSeconds <= _now);
             }
-            case RulesCooldownCondition cooldown:
-            {
-                // Pending rules use their added time; started rules use their start time.
-                var limit = cooldown.Cooldown.TotalSeconds;
-                foreach (var instance in _rules)
-                {
-                    var at = instance.Started ? instance.StartedAt : instance.AddedAt;
-                    if (_now - at < limit && cooldown.Rules.Any(r => r.Id == instance.Rule.Id))
-                        return false;
-                }
-
-                return true;
-            }
             case HasBudgetCondition:
                 // Scheduler calls supply no budget in the table context.
+                return false;
+            case MalfAiAvailableCondition when _history.Any(h => _data.Rules.TryGetValue(h.Id, out var r) && r.MalfAi):
+                // An existing MalfAiMarker prevents another candidate for the rest of the round.
                 return false;
             default:
                 var name = condition.GetType().Name;
@@ -1280,9 +1270,13 @@ public sealed class GameModeSimulator
                 s.RoundstartRules.Add(instance.Rule.Id);
                 s.RoundstartAntags += instance.AntagSpawned;
             }
-            else if (instance.Source == "midround")
+            else
             {
-                s.MidroundEvents++;
+                if (instance.Source == "midround")
+                    s.MidroundEvents++;
+                else
+                    s.SideEvents++;
+
                 if (isAntag)
                 {
                     s.MidroundAntagEvents++;
@@ -1294,10 +1288,6 @@ public sealed class GameModeSimulator
                             s.FirstMidroundAntagMinute = arrival / 60;
                     }
                 }
-            }
-            else
-            {
-                s.SideEvents++;
             }
 
             s.AntagBlocked += instance.AntagBlocked;
