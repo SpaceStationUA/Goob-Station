@@ -724,9 +724,9 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "Command" ]]
+  - type: VoiceBroadcastConsole # Goobstation
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station
-  - type: VoiceBroadcastConsole # Pirate: voice broadcasts are native to communication consoles.
   - type: DeviceNetwork
     deviceNetId: Wireless
     transmitFrequencyId: ShuttleTimer
@@ -768,6 +768,7 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "NuclearOperative" ]]
+  - type: VoiceBroadcastConsole # Goobstation
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
     color: "#ff0000"
@@ -802,6 +803,7 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "Wizard" ]]
+  - type: VoiceBroadcastConsole # Goobstation
   - type: CommunicationsConsole
     title: comms-console-announcement-title-wizard
     color: "#ff00ff"
@@ -836,6 +838,7 @@
       state: generic_panel_open
   - type: AccessReader
     access: [[ "CentralCommand" ]]
+  - type: VoiceBroadcastConsole # Goobstation
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
     color: "#1d8bad"

@@ -178,7 +178,7 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipERT
+    - SkillChipFreelancer # Pirate: piloting skill
   # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ FreedomImplant, ScramImplant, NutrimentPumpImplant, StypticStimulatorImplant, UplinkImplant, MindShieldImplant, BluespaceLifelineImplant, KravMagaImplant ]

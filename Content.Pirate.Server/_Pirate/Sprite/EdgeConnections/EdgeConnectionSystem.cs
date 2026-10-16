@@ -104,7 +104,7 @@ public sealed class EdgeConnectionSystem : EntitySystem
 
     private bool HasMatchingNeighbor(EntityUid self, Angle selfLocalRotation, EntityUid gridUid, MapGridComponent grid, Vector2i tile, string key, EdgeConnectionDirections requiredDirection)
     {
-        var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+        var anchored = _map.GetAnchoredEntities(gridUid, grid, tile);
         var selfQuarterTurns = GetQuarterTurns(selfLocalRotation);
 
         while (anchored.MoveNext(out var otherNullable))
@@ -142,7 +142,7 @@ public sealed class EdgeConnectionSystem : EntitySystem
 
         foreach (var (offset, _, _) in CardinalOffsets)
         {
-            var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile + offset);
+            var anchored = _map.GetAnchoredEntities(gridUid, grid, tile + offset);
             while (anchored.MoveNext(out var otherNullable))
             {
                 if (otherNullable is not { } other)
@@ -166,7 +166,7 @@ public sealed class EdgeConnectionSystem : EntitySystem
 
         foreach (var (offset, _, _) in CardinalOffsets)
         {
-            var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile + offset);
+            var anchored = _map.GetAnchoredEntities(gridUid, grid, tile + offset);
             while (anchored.MoveNext(out var otherNullable))
             {
                 if (otherNullable is not { } other)

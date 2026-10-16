@@ -34,7 +34,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Bed.Cryostorage;
 
 /// <inheritdoc/>
-public sealed class CryostorageSystem : SharedCryostorageSystem
+public sealed partial class CryostorageSystem : SharedCryostorageSystem // Goob - partial
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -217,6 +217,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
         }
 
         comp.AllowReEnteringBody = false;
+        EjectContainedMobs(ent, cryostorageEnt.Value); // Goob
         _transform.SetParent(ent, PausedMap.Value);
         cryostorageComponent.StoredPlayers.Add(ent);
         Dirty(ent, comp);

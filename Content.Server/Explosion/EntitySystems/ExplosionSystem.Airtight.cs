@@ -6,7 +6,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Destructible;
 using Content.Shared.Atmos;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Robust.Shared.Collections;
 using Content.Goobstation.Maths.FixedPoint;
@@ -89,7 +89,7 @@ public sealed partial class ExplosionSystem
         var tolerance = new FixedPoint2[_explosionTypes.Count];
         var blockedDirections = AtmosDirection.Invalid;
 
-        var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
+        var anchoredEnumerator = _map.GetAnchoredEntities(gridId, grid, tile);
 
         while (anchoredEnumerator.MoveNext(out var uid))
         {

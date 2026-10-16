@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared.Administration.Logs;
 using Content.Shared.Damage;
 using Content.Pirate.Shared.Damage.Components;
@@ -60,9 +61,9 @@ public sealed class DamageOnShootSystem : EntitySystem
             }
         }
 
-        totalDamage = _damageableSystem.TryChangeDamage(args.User, totalDamage);
+        totalDamage = _damageableSystem.ChangeDamage(args.User, totalDamage);
 
-        if (totalDamage != null && totalDamage.AnyPositive())
+        if (totalDamage.AnyPositive())
         {
             _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} shot {ToPrettyString(entity):gun} and took {totalDamage.GetTotal():damage} recoil damage");
             _audioSystem.PlayPredicted(entity.Comp.DamageSound, entity, args.User);

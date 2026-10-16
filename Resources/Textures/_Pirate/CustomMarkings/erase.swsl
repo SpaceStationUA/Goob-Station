@@ -1,0 +1,17 @@
+// Draws a body sprite without the pixels a custom marking erases. The mask is the frame, for the facing shown, of
+// a layer that is not drawn itself: the sprite system hands its texture and where that frame lies in it to this
+// shader each time the body is drawn.
+
+uniform sampler2D eraseMask;
+uniform highp vec4 eraseUV;
+
+varying highp vec2 eraseUVOut;
+
+void vertex() {
+    eraseUVOut = mix(eraseUV.xy, eraseUV.zw, tCoord2);
+}
+
+void fragment() {
+    COLOR = zTexture(UV);
+    COLOR.a *= 1.0 - texture2D(eraseMask, eraseUVOut).a;
+}

@@ -96,6 +96,21 @@ namespace Content.Client.Clickable
             return SampleClickMap(rsiData.ClickMap, pos, rsi.Size, offset);
         }
 
+        // Pirate: exact pixel opacity splits custom marking art along the body's outlines.
+        public bool IsOpaque(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos)
+        {
+            if (pos.X < 0 || pos.Y < 0 || pos.X >= rsi.Size.X || pos.Y >= rsi.Size.Y
+                || !_rsiMaps.TryGetValue(rsi, out var rsiData)
+                || !rsiData.Offsets.TryGetValue(state, out var stateDat)
+                || stateDat.Length <= (int) dir
+                || stateDat[(int) dir].Length <= frame)
+                return false;
+
+            var (x, y) = pos + stateDat[(int) dir][frame];
+            return x >= 0 && y >= 0 && x < rsiData.ClickMap.Width && y < rsiData.ClickMap.Height
+                   && rsiData.ClickMap.IsOccluded(x, y);
+        }
+
         private static bool SampleClickMap(ClickMap map, Vector2i pos, Vector2i bounds, Vector2i offset)
         {
             var (width, height) = bounds;
@@ -214,5 +229,7 @@ namespace Content.Client.Clickable
         public bool IsOccluding(Texture texture, Vector2i pos);
 
         public bool IsOccluding(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos);
+        // Pirate: samples only this pixel, without the normal click radius.
+        public bool IsOpaque(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos);
     }
 }

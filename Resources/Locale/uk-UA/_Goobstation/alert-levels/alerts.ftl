@@ -24,5 +24,5 @@ alerts-severe-pain-name = [color=red]Сильний біль[/color]
 alerts-severe-pain-desc = [color=red]Біль дуже сильний і його важко ігнорувати.[/color]
 alerts-excruciating-pain-name = [color=red]Нестерпний біль[/color]
 alerts-excruciating-pain-desc = [color=red]Біль нестерпний, важко зосередитися на чомусь іншому.[/color]
-alerts-disgust-name = [color=yellow]Огида[/color]
-alerts-disgust-desc = Вам щось не по собі...
+alerts-disgust-name = Огида
+alerts-disgust-desc = Вас нудить. Це може минути, а може закінчитися блюванням.

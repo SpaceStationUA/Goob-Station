@@ -4,6 +4,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared._Shitmed.Medical.Surgery;
 using Content.Shared._Shitmed.Medical.Surgery.Conditions;
 using Content.Shared._Shitmed.Medical.Surgery.Steps;
@@ -98,7 +100,7 @@ public abstract partial class SharedCorticalBorerSystem : EntitySystem
         }
 
         if (TryComp<DamageableComponent>(uid, out var damageable))
-            _damage.SetAllDamage(uid, damageable, 0);
+            _damage.SetAllDamage((uid, damageable), 0);
     }
 
     public bool TryEjectBorer(Entity<CorticalBorerComponent> ent)

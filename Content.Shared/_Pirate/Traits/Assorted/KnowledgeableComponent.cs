@@ -11,7 +11,22 @@ public sealed partial class KnowledgeableComponent : Component
     [DataField]
     public int BonusPoints = 10;
 
+    [DataField]
+    public HashSet<ProtoId<TraitPrototype>> RequiredTraits = new();
+
+    [DataField]
+    public Dictionary<EntProtoId, int> MasteryGrants = new();
     public static int GetBonusPoints(
+        IPrototypeManager prototypes,
+        IReadOnlySet<ProtoId<TraitPrototype>> traits)
+        => Find(prototypes, traits)?.BonusPoints ?? 0;
+
+    public static IReadOnlyDictionary<EntProtoId, int>? GetMasteryGrants(
+        IPrototypeManager prototypes,
+        IReadOnlySet<ProtoId<TraitPrototype>> traits)
+        => Find(prototypes, traits)?.MasteryGrants;
+
+    private static KnowledgeableComponent? Find(
         IPrototypeManager prototypes,
         IReadOnlySet<ProtoId<TraitPrototype>> traits)
     {
@@ -22,9 +37,9 @@ public sealed partial class KnowledgeableComponent : Component
                 entry.Component is not KnowledgeableComponent component)
                 continue;
 
-            return component.BonusPoints;
+            return component;
         }
 
-        return 0;
+        return null;
     }
 }

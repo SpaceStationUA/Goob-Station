@@ -4,6 +4,7 @@ using Content.Goobstation.Common.Actions;
 using Content.Goobstation.Common.Body;
 using Content.Goobstation.Common.Changeling;
 using Content.Goobstation.Common.Conversion;
+using Content.Goobstation.Common.Gibbing;
 using Content.Goobstation.Common.Magic;
 using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Common.Medical;
@@ -197,7 +198,12 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
         => _polymorph.CopyPolymorphComponent<ChangelingIdentityComponent>(ent, args.NewEntity);
 
     private void OnPolymorphedTakeTwo(Entity<ChangelingComponent> ent, ref PolymorphedEvent args)
-        => _polymorph.CopyPolymorphComponent<ChangelingComponent>(ent, args.NewEntity);
+    {
+        _polymorph.CopyPolymorphComponent<ChangelingComponent>(ent, args.NewEntity);
+
+        if (HasComp<DamageGibImmuneComponent>(ent))
+            EnsureComp<DamageGibImmuneComponent>(args.NewEntity);
+    }
 
     private void OnLimbAmputation(Entity<ChangelingComponent> ent, ref BeforeAmputationDamageEvent args)
     {
@@ -311,7 +317,7 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
 
     private void UpdateChemicals(Entity<ChangelingIdentityComponent> ent, float amount, ChangelingChemicalComponent? chemComp = null)
     {
-        if (!Resolve(ent, ref chemComp)
+        if (!Resolve(ent, ref chemComp, false)
             || chemComp.ResourceData == null)
             return;
 
@@ -661,7 +667,7 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
             typeof(Shared.Overlays.ThermalVisionComponent)
         };
         foreach (var type in types)
-            _polymorph.CopyPolymorphComponent(uid, newEnt, nameof(type));
+            _polymorph.CopyPolymorphComponent(uid, newEnt, type);
 
         // CopyPolymorphComponent fails to copy the HumanoidAppearanceComponent in TransformData
         // outside of the first list item so this has to be done manually unfortunately

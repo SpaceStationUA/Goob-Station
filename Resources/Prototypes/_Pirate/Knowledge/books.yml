@@ -36,6 +36,7 @@
     - id: PirateBookWalls
     - id: PirateBookWindows
     - id: PirateBookSmokeables
+    - id: PirateBookPiloting
 
 - type: entity
   parent: BaseItem
@@ -301,3 +302,14 @@
   - type: Sprite
     layers:
     - state: smokeables
+
+- type: entity
+  parent: PirateBookSkillbook
+  id: PirateBookPiloting
+  components:
+  - type: KnowledgeGrantOnUse
+    skills:
+      PilotingKnowledge: 25
+    experience:
+      PilotingKnowledge: 3
+    doAfter: 2

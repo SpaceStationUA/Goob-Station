@@ -1,0 +1,90 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipePack
+  id: PirateBrainChips
+  recipes:
+  - SkillChipThrowing
+  - SkillChipEndorphin
+  - SkillChipAdrenal
+  - SkillChipThyroid
+  - SkillChipProprioception
+  - SkillChipPsionicAmplifier
+
+- type: latheRecipe
+  id: SkillChipThrowing
+  result: SkillChipThrowing
+  categories:
+  - Medical
+  completetime: 5
+  materials:
+    Steel: 200
+    Glass: 300
+    Plastic: 200
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  id: SkillChipEndorphin
+  result: SkillChipEndorphin
+  categories:
+  - Medical
+  completetime: 5
+  materials:
+    Steel: 200
+    Glass: 300
+    Plastic: 200
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  id: SkillChipAdrenal
+  result: SkillChipAdrenal
+  categories:
+  - Medical
+  completetime: 5
+  materials:
+    Steel: 200
+    Glass: 300
+    Plastic: 200
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  id: SkillChipThyroid
+  result: SkillChipThyroid
+  categories:
+  - Medical
+  completetime: 5
+  materials:
+    Steel: 200
+    Glass: 300
+    Plastic: 200
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  id: SkillChipProprioception
+  result: SkillChipProprioception
+  categories:
+  - Medical
+  completetime: 5
+  materials:
+    Steel: 200
+    Glass: 300
+    Plastic: 200
+    Gold: 100
+    Silver: 100
+
+- type: latheRecipe
+  id: SkillChipPsionicAmplifier
+  result: SkillChipPsionicAmplifier
+  categories:
+  - Medical
+  completetime: 5
+  materials:
+    Steel: 200
+    Glass: 300
+    Plastic: 200
+    Gold: 100
+    Silver: 100
+    Plasma: 200

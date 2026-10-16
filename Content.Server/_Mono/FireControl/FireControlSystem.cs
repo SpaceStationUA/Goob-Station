@@ -33,7 +33,7 @@ public sealed partial class FireControlSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly RotateToFaceSystem _rotateToFace = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!; // Pirate: multiz
+    [Dependency] private readonly SharedMapSystem _mapManager = default!; // Pirate: multiz
     // _zLevels declared in FireControlSystem.Console.cs partial (Pirate: multiz)
 
     /// <summary>
@@ -400,7 +400,7 @@ public sealed partial class FireControlSystem : EntitySystem
         if (targetMap.MapId == MapId.Nullspace)
             return;
 
-        var targetMapUid = _mapManager.GetMapEntityId(targetMap.MapId);
+        var targetMapUid = _mapManager.GetMapOrInvalid(targetMap.MapId);
         // Null means the target map is outside this console z-network.
         var targetDepth = ResolveLayerDepthForMap(targetMap.MapId, component);
         if (targetDepth is null)
@@ -437,7 +437,7 @@ public sealed partial class FireControlSystem : EntitySystem
             // Use target xy on each gun's map; z-synced decks share local footprint.
             var weaponXform = Transform(localWeapon);
             var gunMapId = weaponXform.MapID;
-            var gunMapUid = _mapManager.GetMapEntityId(gunMapId);
+            var gunMapUid = _mapManager.GetMapOrInvalid(gunMapId);
 
             if (gunMapId == MapId.Nullspace || gunMapUid == EntityUid.Invalid)
                 continue;
@@ -536,7 +536,7 @@ public sealed partial class FireControlSystem : EntitySystem
         if (hostMapUid is not { } hostMap)
             return null;
 
-        var targetMapUid = _mapManager.GetMapEntityId(mapId);
+        var targetMapUid = _mapManager.GetMapOrInvalid(mapId);
         const int probeRange = 16;
 
         for (var offset = 1; offset <= probeRange; offset++)

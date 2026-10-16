@@ -81,6 +81,7 @@ public sealed class HealthAnalyzerBodyMessage : HealthAnalyzerBaseMessage
 public sealed class HealthAnalyzerOrgansMessage : HealthAnalyzerBaseMessage
 {
     public readonly Dictionary<NetEntity, OrganTraumaData> Organs;
+    public readonly Dictionary<NetEntity, List<NetEntity>>? Chips; // Pirate: skill chips
 
     public HealthAnalyzerOrgansMessage(
         NetEntity? targetEntity,
@@ -90,10 +91,12 @@ public sealed class HealthAnalyzerOrgansMessage : HealthAnalyzerBaseMessage
         Dictionary<TargetBodyPart, bool> bleeding,
         FixedPoint2 vitalDamage, // Goobstation
         Dictionary<TargetBodyPart, WoundableSeverity>? body,
-        Dictionary<NetEntity, OrganTraumaData> organs)
+        Dictionary<NetEntity, OrganTraumaData> organs,
+        Dictionary<NetEntity, List<NetEntity>>? chips = null) // Pirate: skill chips
         : base(targetEntity, temperature, bloodLevel, scanMode, HealthAnalyzerMode.Organs, body, bleeding, vitalDamage) // Goobstation
     {
         Organs = organs;
+        Chips = chips; // Pirate: skill chips
     }
 }
 

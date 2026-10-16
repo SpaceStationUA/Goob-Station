@@ -13,6 +13,7 @@ using Content.Shared.Access.Systems;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Emp;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction; // Pirate banking

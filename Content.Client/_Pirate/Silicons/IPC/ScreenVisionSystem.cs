@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using Content.Shared._DV.CCVars;
 using Content.Shared._Pirate.Silicons.IPC;
 using Content.Shared.Damage;

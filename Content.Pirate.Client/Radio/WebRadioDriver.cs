@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Pirate.Client._Pirate.WebUI;
-using Robust.Client.WebView;
 
 namespace Content.Pirate.Client.Radio;
 

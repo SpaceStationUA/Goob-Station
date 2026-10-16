@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System;
 using System.Linq;
 using Content.Server._Pirate.Photo;

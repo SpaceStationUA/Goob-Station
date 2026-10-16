@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared._Pirate.Knowledge; // Pirate: literacy training
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -263,6 +264,14 @@ public sealed class PaperSystem : EntitySystem
                 $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(entity):entity} the following text: {processedText}"); // Pirate: paperwork tags
 
             _audio.PlayPvs(entity.Comp.Sound, entity);
+
+#region Pirate: literacy training
+            if (paperStatus == PaperStatus.Written)
+            {
+                var written = new PaperWrittenEvent(entity.Owner);
+                RaiseLocalEvent(args.Actor, ref written);
+            }
+#endregion
         }
 
         entity.Comp.Mode = PaperAction.Read;

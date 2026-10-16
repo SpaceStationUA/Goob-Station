@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using Robust.Client.WebView;
 using Robust.Shared.Log;
 
 namespace Content.Pirate.Client._Pirate.WebUI;

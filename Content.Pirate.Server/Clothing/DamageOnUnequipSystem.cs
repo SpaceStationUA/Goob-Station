@@ -48,6 +48,6 @@ public sealed class DamageOnUnequipSystem : SharedDamageOnUnequipSystem
         }
 
         if (ent.Comp.UnequipDamage != null && TryComp<DamageableComponent>(args.Wearer, out var damageable))
-            _damageable.TryChangeDamage(args.Wearer, ent.Comp.UnequipDamage, true, true, damageable);
+            _damageable.TryChangeDamage((args.Wearer, damageable), ent.Comp.UnequipDamage, true, true);
     }
 }

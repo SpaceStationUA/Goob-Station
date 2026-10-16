@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using Content.Pirate.Shared.Yautja.Components;
 using Content.Shared.Damage;
 using Content.Shared.Weapons.Melee.Events;

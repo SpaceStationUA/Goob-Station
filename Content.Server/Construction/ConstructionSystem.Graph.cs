@@ -366,15 +366,17 @@ namespace Content.Server.Construction
 
             // Transform transferring.
             var newTransform = Transform(newUid);
-            TransformSystem.AttachToGridOrMap(newUid, newTransform); // in case in hands or a container
-            newTransform.LocalRotation = transform.LocalRotation;
-            // Pirate: secret door - route unanchoring through the system so the physics body drops back to
-            // Dynamic and the snap-grid cell is released. The raw setter leaves an entity whose prototype is
-            // bodyType: Static (e.g. Girder) unanchored but unpullable until it's wrench-cycled by hand.
+
+            // Pirate: release static prototype physics when replacing an unanchored construction.
             if (!transform.Anchored)
                 TransformSystem.Unanchor(newUid, newTransform);
-            else
-                newTransform.Anchored = transform.Anchored;
+
+            TransformSystem.SetLocalRotationNoLerp(newUid, transform.LocalRotation);
+
+            // Prefer anchoring directly. If anchoring fails, attach to the grid or map only as a fallback.
+            // This avoids doing AttachToGridOrMap followed by TryAnchor, which can raise two transform updates.
+            if (!transform.Anchored || !TransformSystem.AnchorEntity((newUid, newTransform, null)))
+                TransformSystem.AttachToGridOrMap(newUid, newTransform);
 
             // Container transferring.
             if (containerManager != null)

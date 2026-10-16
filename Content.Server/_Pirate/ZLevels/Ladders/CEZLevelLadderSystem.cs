@@ -346,7 +346,7 @@ public sealed class CEZLevelLadderSystem : EntitySystem
         where T : IComponent
     {
         var tile = _map.WorldToTile(gridUid, grid, worldPos);
-        var anchored = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+        var anchored = _map.GetAnchoredEntities(gridUid, grid, tile);
         while (anchored.MoveNext(out var uid))
         {
             if (HasComp<T>(uid.Value))

@@ -660,7 +660,7 @@ public sealed class GhostRoleSystem : EntitySystem
 
         foreach (var (id, (uid, role)) in _ghostRoles)
         {
-            if (metaQuery.GetComponent(uid).EntityPaused)
+            if (metaQuery.CompOrNull(uid)?.EntityPaused != false)
                 continue;
 
 

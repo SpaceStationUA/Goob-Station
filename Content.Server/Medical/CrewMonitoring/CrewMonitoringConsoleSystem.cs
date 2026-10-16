@@ -51,7 +51,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private const float ScanDuration = 5f;

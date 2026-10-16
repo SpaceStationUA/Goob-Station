@@ -57,8 +57,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     private static readonly ProtoId<TagPrototype> NukeOpsUplinkTagPrototype = "NukeOpsUplink";
     private const int NukieStartingBalance = 1000; // Pirate: nukie starting balance
 
-    [ValidatePrototypeId<TagPrototype>]
-    private const string NukeOpsReinforcementUplinkTagPrototype = "NukeOpsReinforcementUplink"; // Goobstation
+    private static readonly ProtoId<TagPrototype> NukeOpsReinforcementUplinkTagPrototype = "NukeOpsReinforcementUplink"; // Goobstation
 
     public override void Initialize()
     {

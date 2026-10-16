@@ -21,7 +21,7 @@ public sealed class CEZShuttleRoofSystem : EntitySystem
     [Dependency] private readonly CEZLevelsSystem _zLevels = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
 

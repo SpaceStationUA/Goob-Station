@@ -123,7 +123,7 @@ public sealed partial class AtmosphereSystem
 
             air.Clear();
             var mixtureId = 0;
-            var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(grid, grid, indices);
+            var enumerator = _mapSystem.GetAnchoredEntities(grid, grid, indices);
             while (enumerator.MoveNext(out var entUid))
             {
                 if (query.TryComp(entUid, out var marker))
@@ -185,7 +185,7 @@ public sealed partial class AtmosphereSystem
         if (playerMap == null)
             return CompletionResult.FromOptions(options);
 
-        foreach (var grid in _mapManager.GetAllGrids(playerMap.Value).OrderBy(o => o.Owner))
+        foreach (var grid in _mapSystem.GetAllGrids(playerMap.Value).OrderBy(o => o.Owner))
         {
             var uid = grid.Owner;
             if (!TryComp(uid, out TransformComponent? gridXform))

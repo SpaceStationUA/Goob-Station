@@ -94,12 +94,11 @@ public abstract class SharedStationSpawningSystem : EntitySystem
         if (string.IsNullOrEmpty(tint))
             return;
 
-        var parsed = Color.TryFromHex(tint);
-        if (!parsed.HasValue)
+        if (!Color.TryFromHex(tint, out var parsed))
             return;
 
         var component = EnsureComp<LoadoutTintComponent>(entity);
-        component.Color = parsed.Value;
+        component.Color = parsed;
         Dirty(entity, component);
     }
 

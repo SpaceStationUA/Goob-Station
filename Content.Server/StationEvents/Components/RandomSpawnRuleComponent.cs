@@ -16,8 +16,8 @@ public sealed partial class RandomSpawnRuleComponent : Component
     /// <summary>
     /// The entity to be spawned.
     /// </summary>
-    [DataField("prototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype = string.Empty;
+    [DataField("prototype", required: true)]
+    public EntProtoId Prototype = string.Empty;
 
     /// <summary>
     /// The radio message to send when spawning the entity. The entity is used as the sender of the radio message.

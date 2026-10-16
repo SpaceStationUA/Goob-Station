@@ -51,7 +51,6 @@ public sealed class StatusIconOverlay : Overlay
 
         var eyeRot = args.Viewport.Eye?.Rotation ?? default;
 
-        var xformQuery = _entity.GetEntityQuery<TransformComponent>();
         var scaleMatrix = Matrix3Helpers.CreateScale(new Vector2(1, 1));
         var rotationMatrix = Matrix3Helpers.CreateRotation(-eyeRot);
 
@@ -66,7 +65,7 @@ public sealed class StatusIconOverlay : Overlay
             var elevationOffset = _zLevels.GetRenderScreenOffset(uid); // Pirate: multiz
             Angle elevationRotation = eyeRot * -1; // Pirate: multiz
             var elevationWorldOffset = elevationRotation.RotateVec(elevationOffset); // Pirate: multiz
-            var worldPos = _transform.GetWorldPosition(xform, xformQuery) + elevationWorldOffset; // Pirate: multiz
+            var worldPos = _transform.GetRenderWorldPosition((uid, xform)) + elevationWorldOffset; // Pirate: multiz
             var layoutOffset = sprite.Offset - elevationOffset; // Pirate: multiz
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))

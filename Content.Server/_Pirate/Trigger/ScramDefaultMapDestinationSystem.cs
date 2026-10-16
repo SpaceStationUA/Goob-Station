@@ -17,7 +17,6 @@ namespace Content.Server._Pirate.Trigger;
 public sealed class ScramDefaultMapDestinationSystem : EntitySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly SharedStationSystem _station = default!;
     [Dependency] private readonly CEZLevelFloorGridsSystem _zFloors = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -33,7 +32,7 @@ public sealed class ScramDefaultMapDestinationSystem : EntitySystem
     private void OnDestinationQuery(Entity<ScramOnTriggerComponent> ent, ref ScramDefaultMapDestinationEvent args)
     {
         var mapId = _ticker.DefaultMap;
-        if (mapId == MapId.Nullspace || !_mapManager.MapExists(mapId) ||
+        if (mapId == MapId.Nullspace || !_map.MapExists(mapId) ||
             _station.GetStationInMap(mapId) is not { } station ||
             !TryComp<StationDataComponent>(station, out var stationData) ||
             !TryComp<PhysicsComponent>(args.Target, out var physics))

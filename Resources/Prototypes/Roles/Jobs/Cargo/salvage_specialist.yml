@@ -30,7 +30,7 @@
   special:
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipCombatEducation
+    - SkillChipCombatEducationPilot # Pirate: piloting skill
     - SkillChipMining
     - SkillChipCloseQuarters
   # Pirate: skill chips end

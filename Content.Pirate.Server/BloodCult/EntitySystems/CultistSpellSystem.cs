@@ -5,6 +5,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Audio;
@@ -77,7 +78,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 	[Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 	[Dependency] private readonly SharedTransformSystem _transform = default!;
 	[Dependency] private readonly MapSystem _mapSystem = default!;
-	[Dependency] private readonly IMapManager _mapManager = default!;
+	[Dependency] private readonly SharedMapSystem _mapManager = default!;
 	//[Dependency] private readonly IEntityManager _entMan = default!;
 	[Dependency] private readonly SharedStunSystem _stun = default!;
 	//[Dependency] private readonly ConstructionSystem _construction = default!;
@@ -141,7 +142,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 				appliedDamageSpecifier = new DamageSpecifier(_proto.Index(IonDamageType), FixedPoint2.New(actionComp.HealthCost));
 			else
 				appliedDamageSpecifier = new DamageSpecifier(_proto.Index(SlashDamageType), FixedPoint2.New(actionComp.HealthCost));
-			_damageableSystem.TryChangeDamage(ent, appliedDamageSpecifier, true, origin: ent);
+			_damageableSystem.TryChangeDamage(ent.Owner, appliedDamageSpecifier, true, origin: ent);
 		}
 
 		// verbalize invocation - generate random 2-word chant (skip for StudyVeil and Commune abilities)
@@ -237,7 +238,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 			if (args.RecordKnownSpell)
 				ent.Comp.KnownSpells.Add(args.CultAbility);
 			
-			_damageableSystem.TryChangeDamage(ent, appliedDamageSpecifier, true, origin: ent);
+			_damageableSystem.TryChangeDamage(ent.Owner, appliedDamageSpecifier, true, origin: ent);
 			_audioSystem.PlayPvs(args.CultAbility.CarveSound, ent);
 		if (args.StandingOnRune)
 		{
@@ -273,7 +274,7 @@ public sealed partial class CultistSpellSystem : EntitySystem
 	private bool IsStandingOnEmpoweringRune(EntityUid uid)
 	{
 		var coords = new EntityCoordinates(uid, default);
-		var location = coords.AlignWithClosestGridTile(entityManager: EntityManager, mapManager: _mapManager);
+		var location = coords.AlignWithClosestGridTile(entityManager: EntityManager);
 		var gridUid = _transform.GetGrid(location);
 		if (!TryComp<MapGridComponent>(gridUid, out var grid))
 			return false;

@@ -506,7 +506,7 @@
   - type: MultipleTool
     statusShowBehavior: true
     entries:
-    - behavior: Screwing
+    - behavior: [ Screwing ]
       sprite:
         sprite: _ShitChap/Objects/Weapons/Nullrod/uristhand.rsi
         state: icon
@@ -514,7 +514,7 @@
         path: /Audio/Effects/Emotes/snap3.ogg
       changeSound:
         path: /Audio/Effects/Emotes/snap2.ogg
-    - behavior: Prying
+    - behavior: [ Prying ]
       sprite:
         sprite: _ShitChap/Objects/Weapons/Nullrod/uristhand.rsi
         state: icon
@@ -522,7 +522,7 @@
         path: /Audio/Effects/Emotes/snap3.ogg
       changeSound:
         path: /Audio/Effects/Emotes/snap2.ogg
-    - behavior: Anchoring
+    - behavior: [ Anchoring ]
       sprite:
         sprite: _ShitChap/Objects/Weapons/Nullrod/uristhand.rsi
         state: icon
@@ -530,7 +530,7 @@
         path: /Audio/Effects/Emotes/snap3.ogg
       changeSound:
         path: /Audio/Effects/Emotes/snap2.ogg
-    - behavior: Cutting
+    - behavior: [ Cutting ]
       sprite:
         sprite: _ShitChap/Objects/Weapons/Nullrod/uristhand.rsi
         state: icon
@@ -538,13 +538,13 @@
         path: /Audio/Effects/Emotes/snap3.ogg
       changeSound:
         path: /Audio/Effects/Emotes/snap2.ogg
-    - behavior: Pulsing
+    - behavior: [ Pulsing ]
       sprite:
         sprite: _ShitChap/Objects/Weapons/Nullrod/uristhand.rsi
         state: icon
       changeSound:
         path: /Audio/Effects/Emotes/snap2.ogg
-    - behavior: Welding
+    - behavior: [ Welding ]
       sprite:
         sprite: _ShitChap/Objects/Weapons/Nullrod/uristhand.rsi
         state: icon

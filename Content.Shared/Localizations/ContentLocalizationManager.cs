@@ -34,7 +34,7 @@ namespace Content.Shared.Localizations
 
             _loc.LoadCulture(culture);
             _loc.LoadCulture(fallbackCulture); // Ukrainian translation
-            _loc.SetFallbackCluture(fallbackCulture); // Ukrainian translation
+            _loc.SetFallbackCulture(fallbackCulture); // Pirate: Ukrainian translation
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
             _loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
             _loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);

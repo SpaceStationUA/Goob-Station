@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared._Shitmed.Body;
 using Content.Shared.Body.Components;
@@ -99,11 +101,10 @@ public sealed class SoulDamageRegenerationSystem : EntitySystem
     {
         var healing = new DamageSpecifier(_prototypes.Index(SoulDamageType), -amount);
         _damageable.TryChangeDamage(
-            uid,
+            (uid, damageable),
             healing,
             ignoreResistances: true,
             interruptsDoAfters: false,
-            damageable: damageable,
             canMiss: false,
             ignoreBlockers: true);
     }
@@ -122,7 +123,7 @@ public sealed class SoulDamageRegenerationSystem : EntitySystem
         _storedSoulHealing.Add(uid);
         try
         {
-            _damageable.SetDamage(uid, damageable, updatedDamage);
+            _damageable.SetDamage((uid, damageable), updatedDamage);
         }
         finally
         {

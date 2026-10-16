@@ -29,7 +29,6 @@ namespace Content.Client.Shuttles.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ShuttleNavControl : BaseShuttleControl
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     private readonly SharedShuttleSystem _shuttles;
     private readonly SharedTransformSystem _transform;
@@ -309,7 +308,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         var viewAABB = viewBounds.CalcBoundingBox();
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
+        Maps.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
 
         #region Pirate: multiz - query adjacent Z-level grids
         _zLevelGrids.Clear();
@@ -325,7 +324,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 if (!EntManager.TryGetComponent<MapComponent>(adjMap.Value, out var adjMapComp))
                     continue;
                 var adjGrids = new List<Entity<MapGridComponent>>();
-                _mapManager.FindGridsIntersecting(adjMapComp.MapId, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref adjGrids, approx: true, includeMap: false);
+                Maps.FindGridsIntersecting(adjMapComp.MapId, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref adjGrids, approx: true, includeMap: false);
                 foreach (var g in adjGrids)
                 {
                     _zLevelGrids.Add(g.Owner);

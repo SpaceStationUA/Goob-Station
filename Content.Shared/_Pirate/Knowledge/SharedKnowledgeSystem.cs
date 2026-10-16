@@ -58,6 +58,10 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
     private const float LearnChance = 0.2f;
 
+    public static readonly EntProtoId LiteracyKnowledge = "LiteracyKnowledge";
+
+    public const float MaxLearningBonus = 1f;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -585,7 +589,8 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
             if (!AllKnowledges.TryGetValue(id, out var prototype) || prototype.Complex)
                 return;
 
-            if (PredictedRandom(store.Owner).NextDouble() < LearnChance)
+            var learnChance = LearnChance * (store.Comp.Holder is { } learner ? GetLearningMultiplier(learner) : 1f);
+            if (PredictedRandom(store.Owner).NextDouble() < learnChance)
                 EnsureKnowledge(store, id, popup: popup);
             return;
         }
@@ -604,13 +609,26 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
             return;
 
         knowledge.Comp.TimeToNextExperience = _timing.CurTime + knowledge.Comp.TimeBetweenExperience;
-        knowledge.Comp.Experience += amount + knowledge.Comp.BonusExperience;
+        // Literacy cannot boost its own gains.
+        var multiplier = Prototype(knowledge.Owner)?.ID == LiteracyKnowledge.Id ? 1f : GetLearningMultiplier(holder);
+        var gained = (amount + knowledge.Comp.BonusExperience) * multiplier;
+        var experience = (int) gained;
+        if (PredictedRandom(knowledge.Owner).NextDouble() < gained - experience)
+            experience++;
+
+        knowledge.Comp.Experience += experience;
         RollForLevelUp(knowledge, holder, cap);
         Dirty(knowledge);
 
         var changed = new KnowledgeExperienceChangedEvent();
         RaiseLocalEvent(holder, ref changed);
     }
+
+    public static float LearningMultiplier(int literacy)
+        => 1f + MaxLearningBonus * Math.Clamp(literacy, 0, 100) / 100f;
+
+    public float GetLearningMultiplier(EntityUid holder)
+        => GetKnowledge(holder, LiteracyKnowledge) is { } literacy ? LearningMultiplier(literacy.Comp.NetLevel) : 1f;
 
     public bool RollForLevelUp(Entity<KnowledgeComponent> knowledge, EntityUid holder, int levelCap = 100)
     {
@@ -759,7 +777,12 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         }
     }
 
-    public void ApplyProfile(EntityUid holder, ProtoId<KnowledgeProfilePrototype> parentId, KnowledgeProfile profile, int pointsBonus = 0) // knowledgeable trait: (int pointsBonus = 0)
+    public void ApplyProfile(
+        EntityUid holder,
+        ProtoId<KnowledgeProfilePrototype> parentId,
+        KnowledgeProfile profile,
+        int pointsBonus = 0,
+        IReadOnlyDictionary<EntProtoId, int>? masteryGrants = null)
     {
         var store = EnsureKnowledgeContainer(holder);
         ClearKnowledge(store.Owner);
@@ -769,6 +792,12 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
         EnsureProfileValid(parentId, ref profile, pointsBonus); // knowledgeable trait: (pointsBonus)
         ApplyProfile(store, profile, parent.PointsLimit + pointsBonus); // knowledgeable trait: (+ pointsBonus)
+
+        if (masteryGrants != null)
+        {
+            foreach (var (id, mastery) in masteryGrants)
+                RaiseMastery(store, id, mastery, popup: false);
+        }
 
         store.Comp.ProfileApplied = true;
         Dirty(store);

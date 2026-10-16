@@ -24,7 +24,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipEchelonEducation
+      - SkillChipEchelonEducationPilot # Pirate: piloting skill
       - SkillChipLaser
       - SkillChipLongBlade
     # Pirate: skill chips end
@@ -42,7 +42,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipEchelonEducation
+      - SkillChipEchelonEducationPilot # Pirate: piloting skill
       - SkillChipDatabase
       - SkillChipTool
     # Pirate: skill chips end
@@ -62,7 +62,7 @@
       chips:
       - SkillChipCMO
       - SkillChipPistol
-      - SkillChipEchelonEducation
+      - SkillChipEchelonEducationPilot # Pirate: piloting skill
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-cmo
@@ -78,7 +78,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipEchelonEducation
+      - SkillChipEchelonEducationPilot # Pirate: piloting skill
       - SkillChipLaser
     # Pirate: skill chips end
     - type: GhostRole
@@ -95,7 +95,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipCombatEducation
+      - SkillChipCombatEducationPilot # Pirate: piloting skill
       - SkillChipCombatHOS
     # Pirate: skill chips end
     - type: GhostRole
@@ -112,7 +112,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipEchelonEducation
+      - SkillChipEchelonEducationPilot # Pirate: piloting skill
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-rd
@@ -128,7 +128,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipEchelonEducation
+      - SkillChipEchelonEducationPilot # Pirate: piloting skill
       - SkillChipUnarmed
       - SkillChipMining
     # Pirate: skill chips end
@@ -211,7 +211,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipCombatEducation
+      - SkillChipCombatEducationPilot # Pirate: piloting skill
       - SkillChipSidearms
       - SkillChipShotgun
     # Pirate: skill chips end
@@ -241,7 +241,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipEducation
+      - SkillChipEducationPilot # Pirate: piloting skill
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-cargotech
@@ -256,7 +256,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipCombatEducation
+      - SkillChipCombatEducationPilot # Pirate: piloting skill
       - SkillChipMining
       - SkillChipCloseQuarters
     # Pirate: skill chips end
@@ -286,7 +286,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipEducation
+      - SkillChipEducationPilot # Pirate: piloting skill
       - SkillChipDatabase
       - SkillChipBludgeon
     # Pirate: skill chips end
@@ -319,7 +319,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipEducation
+      - SkillChipEducationPilot # Pirate: piloting skill
       - SkillChipDatabase
       - SkillChipTool
     # Pirate: skill chips end
@@ -384,7 +384,7 @@
     - type: OrganChipsOnSpawn
       chips:
       - SkillChipDoctor
-      - SkillChipEducation
+      - SkillChipEducationPilot # Pirate: piloting skill
       - SkillChipSurgeon
     # Pirate: skill chips end
     - type: GhostRole

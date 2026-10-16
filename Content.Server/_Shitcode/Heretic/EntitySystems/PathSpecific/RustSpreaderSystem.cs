@@ -12,7 +12,6 @@ namespace Content.Server._Shitcode.Heretic.EntitySystems.PathSpecific;
 
 public sealed class RustSpreaderSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -43,7 +42,7 @@ public sealed class RustSpreaderSystem : EntitySystem
     private void OnInit(Entity<RustSpreaderComponent> ent, ref MapInitEvent args)
     {
         var coords = _xform.GetMapCoordinates(ent.Owner);
-        if (!_mapManager.TryFindGridAt(coords, out var gridUid, out var grid))
+        if (!_map.TryFindGridAt(coords, out var gridUid, out var grid))
         {
             QueueDel(ent);
             return;
@@ -120,7 +119,7 @@ public sealed class RustSpreaderSystem : EntitySystem
                 tile = _map.GetTileRef(tile.GridUid, mapGrid, tile.GridIndices);
                 spreader.ProcessedTiles.Add(tile);
 
-                var ourEnts = _map.GetAnchoredEntitiesEnumerator(tile.GridUid, mapGrid, tile.GridIndices);
+                var ourEnts = _map.GetAnchoredEntities(tile.GridUid, mapGrid, tile.GridIndices);
                 List<EntityUid> toRust = new();
                 while (ourEnts.MoveNext(out var ent))
                 {

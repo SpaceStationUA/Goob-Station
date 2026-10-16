@@ -47,7 +47,7 @@ public sealed class AlternativeJobSelector : OptionButton
         _alternatives.Clear();
 
         // Add the original job as the first option
-        if (_prototypeManager.TryIndex(_parentJobId, out var jobProto, false))
+        if (_prototypeManager.TryIndex(_parentJobId, out var jobProto))
         {
             AddItem(jobProto.LocalizedName, 0); // Try to find localized name
         }

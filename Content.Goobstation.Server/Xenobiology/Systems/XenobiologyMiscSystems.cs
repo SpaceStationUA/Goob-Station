@@ -70,7 +70,7 @@ public sealed class XenobiologyMiscSystems : EntitySystem
     public void OnSmoke(EntityUid uid, ReactiveComponent component, ref DoSmokeEntityEffect args)
     {
 
-        var mapMan = IoCManager.Resolve<IMapManager>();
+        var mapSys = IoCManager.Resolve<IEntityManager>().System<SharedMapSystem>();
         var transformSys = EntityManager.System<SharedTransformSystem>();
         var spreaderSys = EntityManager.System<SpreaderSystem>();
         var smokeSys = EntityManager.System<SmokeSystem>();
@@ -81,17 +81,15 @@ public sealed class XenobiologyMiscSystems : EntitySystem
         var mapCoords = transformSys.GetMapCoordinates(uid, xform);
 
 
-        var mapSystem = EntityManager.System<SharedMapSystem>();
-
-        if (!mapMan.TryFindGridAt(mapCoords, out var gridUid, out var grid)
-            || !mapSystem.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef)
+        if (!mapSys.TryFindGridAt(mapCoords, out var gridUid, out var grid)
+            || !mapSys.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef)
             || tileRef.Tile.IsEmpty)
             return;
 
         if (spreaderSys.RequiresFloorToSpread(args.SmokePrototype.ToString()) && tileRef.Tile.IsEmpty)
             return;
 
-        var coords = mapSystem.MapToGrid(gridUid, mapCoords);
+        var coords = mapSys.MapToGrid(gridUid, mapCoords);
         var ent = EntityManager.SpawnAtPosition(args.SmokePrototype, coords.SnapToGrid());
         if (!EntityManager.TryGetComponent<SmokeComponent>(ent, out var smoke))
         {

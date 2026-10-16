@@ -1,81 +1,89 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "icon, icon-up, equipped-MASK and up-equipped-MASK taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f27682c7e4b8accb88eea49f62042014fd312fd9 (Pirate: welding visor toggle - replaced with a direct tgstation port, was previously a custom redraw). Inhands and vox sprites created by EmoGarbage404 (github), -Reptilian sprite by Zethine / @synthetic_086 (discord) at Goobstation, equipped-MASK-feroxi by RedTerror. hydrakin sprite by Zethine / @synthetic_086 (discord).",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "icon, icon-up, equipped-MASK and up-equipped-MASK taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f27682c7e4b8accb88eea49f62042014fd312fd9 (Pirate: welding visor toggle - replaced with a direct tgstation port, was previously a custom redraw). Inhands and vox sprites created by EmoGarbage404 (github), -Reptilian sprite by Zethine / @synthetic_086 (discord) at Goobstation, equipped-MASK-feroxi by RedTerror. hydrakin sprite by Zethine / @synthetic_086 (discord). Synth states from Afterlight.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "icon-up"
-        },
-        {
-            "name": "equipped-MASK",
-            "directions": 4
-        },
-        {
-            "name": "up-equipped-MASK",
-            "directions": 4
-        },
-        {
-            "name": "equipped-MASK-vox",
-            "directions": 4
-        },
-        {
-            "name": "up-equipped-MASK-vox",
-            "directions": 4
-        },
-        {
-            "name": "equipped-MASK-reptilian",
-            "directions": 4
-        },
-        {
-            "name": "up-equipped-MASK-reptilian",
-            "directions": 4
-        },
-        {
-            "name": "inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "up-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "up-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "up-equipped-MASK-vulpkanin",
-            "directions": 4
-        },
-        {
-            "name": "equipped-MASK-vulpkanin",
-            "directions": 4
-        },
-        {
-            "name": "up-equipped-MASK-feroxi",
-            "directions": 4
-        },
-        {
-            "name": "equipped-MASK-feroxi",
-            "directions": 4
-        },
-        {
-            "name": "equipped-MASK-hydrakin",
-            "directions": 4
-        },
-        {
-            "name": "up-equipped-MASK-hydrakin",
-            "directions": 4
-        }
-    ]
+    {
+      "name": "icon-up"
+    },
+    {
+      "name": "equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vox",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "up-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "up-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK-feroxi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-feroxi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-hydrakin",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK-hydrakin",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-synth",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK-synth",
+      "directions": 4
+    }
+  ]
 }

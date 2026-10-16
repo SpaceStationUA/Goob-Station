@@ -54,8 +54,8 @@
   - type: OrganChipsOnSpawn
     chips:
     - SkillChipSyndieSoldier
-    - SkillChipFieldMedicine
-    - SkillChipDatabase
+    - SkillChipFieldMedicineSyndicate
+    - SkillChipDatabaseSyndicate
   - type: Loadout
     prototypes: [ LavalandSyndicateFootsoldierGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]
@@ -75,8 +75,8 @@
   - type: OrganChipsOnSpawn
     chips:
     - SkillChipSyndieSoldierTeamLeader
-    - SkillChipFieldMedicine
-    - SkillChipDatabase
+    - SkillChipFieldMedicineSyndicate
+    - SkillChipDatabaseSyndicate
   - type: Loadout
     prototypes: [ LavalandSyndicateFootsoldierTeamLeaderGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]
@@ -96,8 +96,8 @@
   - type: OrganChipsOnSpawn
     chips:
     - SkillChipSyndieMarshal
-    - SkillChipFieldMedicine
-    - SkillChipDatabase
+    - SkillChipFieldMedicineSyndicate
+    - SkillChipDatabaseSyndicate
   - type: Loadout
     prototypes: [ LavalandSyndicateMarshalGear ]
     roleLoadout: [ RoleSurvivalSyndicate ]

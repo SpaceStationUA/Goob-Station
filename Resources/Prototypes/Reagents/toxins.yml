@@ -593,6 +593,7 @@
           - XenobioSlime # Goobstation - XenobioSlime
           - Hydrakin # Fuck you
           - Vampiric # Pirate
+          - Synth # Goob - Afterlight synths
           inverted: true
         type: Local
         visualType: MediumCaution
@@ -610,6 +611,7 @@
           - XenobioSlime # Goobstation - XenobioSlime
           - Hydrakin # Fuck you
           - Vampiric # Pirate
+          - Synth # Goob - Afterlight synths
           inverted: true
       - !type:HealthChange
         conditions:
@@ -622,6 +624,7 @@
           - XenobioSlime # Goobstation - XenobioSlime
           - Hydrakin # Fuck you
           - Vampiric # Pirate
+          - Synth # Goob - Afterlight synths
           inverted: true
         damage:
           types:

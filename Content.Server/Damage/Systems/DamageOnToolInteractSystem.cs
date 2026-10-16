@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
 using Content.Shared.Damage;
@@ -13,7 +14,7 @@ namespace Content.Server.Damage.Systems
 {
     public sealed class DamageOnToolInteractSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly Shared.Damage.Systems.DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
@@ -37,22 +38,22 @@ namespace Content.Server.Damage.Systems
             && itemToggle.Activated
             && !welder.TankSafe)
             {
-                var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage, origin: args.User);
-
-                if (dmg != null)
+                if (_damageableSystem.TryChangeDamage(args.Target, weldingDamage, out var dmg, origin: args.User))
+                {
                     _adminLogger.Add(LogType.Damaged,
                         $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a welder to deal {dmg.GetTotal():damage} damage to {ToPrettyString(args.Target):target}");
+                }
 
                 args.Handled = true;
             }
             else if (component.DefaultDamage is {} damage
                 && _toolSystem.HasQuality(args.Used, component.Tools))
             {
-                var dmg = _damageableSystem.TryChangeDamage(args.Target, damage, origin: args.User);
-
-                if (dmg != null)
+                if (_damageableSystem.TryChangeDamage(args.Target, damage, out var dmg, origin: args.User))
+                {
                     _adminLogger.Add(LogType.Damaged,
                         $"{ToPrettyString(args.User):user} used {ToPrettyString(args.Used):used} as a tool to deal {dmg.GetTotal():damage} damage to {ToPrettyString(args.Target):target}");
+                }
 
                 args.Handled = true;
             }

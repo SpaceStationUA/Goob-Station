@@ -125,19 +125,19 @@ entity-effect-guidebook-status-effect = { $type ->
     [update]{ $chance ->
     [1] Спричиняє
     *[other] спричинити
-                     } {LOC($key)} щонайменше на {NATURALFIXED($time, 3)} сек. без накопичення
+                     } {$key} щонайменше на {NATURALFIXED($time, 3)} сек. без накопичення
     [add]   { $chance ->
     [1] Спричиняє
     *[other] спричинити
-                    } {LOC($key)} щонайменше на {NATURALFIXED($time, 3)} сек. з накопиченням
+                    } {$key} щонайменше на {NATURALFIXED($time, 3)} сек. з накопиченням
     [set]  { $chance ->
     [1] Спричиняє
     *[other] спричинити
-                    } {LOC($key)} щонайменше на {NATURALFIXED($time, 3)} сек. без накопичення
+                    } {$key} щонайменше на {NATURALFIXED($time, 3)} сек. без накопичення
     *[remove]{ $chance ->
-    [1] Видаляє
-    *[other] видалити
-                    } {NATURALFIXED($time, 3)} сек. {LOC($key)}
+    [1] Знімає
+    *[other] зняти
+                    } {NATURALFIXED($time, 3)} сек. ефекту {$key}
         } { $delay ->
     [0] негайно
     *[other] після затримки {NATURALFIXED($delay, 3)} секунди
@@ -160,19 +160,19 @@ entity-effect-guidebook-status-effect-indef = { $type ->
     [update]{ $chance ->
     [1] Спричиняє
     *[other] спричинити
-                     } постійний {LOC($key)}
+                     } постійний {$key}
     [add]   { $chance ->
     [1] Спричиняє
     *[other] спричинити
-                    } постійний {LOC($key)}
+                    } постійний {$key}
     [set]  { $chance ->
     [1] Спричиняє
     *[other] спричинити
-                    } постійний {LOC($key)}
+                    } постійний {$key}
     *[remove]{ $chance ->
-    [1] Видаляє
-    *[other] видалити
-                    } {LOC($key)}
+    [1] Знімає
+    *[other] зняти
+                    } {$key}
         } { $delay ->
     [0] негайно
     *[other] після затримки {NATURALFIXED($delay, 3)} секунди
@@ -454,3 +454,22 @@ reagent-effect-guidebook-chem-roll-psionic = { $chance ->
         [1] Дає
         *[other] дає
     } шанс отримати псіонічну силу з множником x{$multiplier}
+
+entity-effect-guidebook-knockdown = { $type ->
+        [update]{ $chance ->
+                    [1] Спричиняє
+                    *[other] спричинити
+                } збивання з ніг щонайменше на {NATURALFIXED($time, 3)} сек. без накопичення
+        [add]   { $chance ->
+                    [1] Спричиняє
+                    *[other] спричинити
+                } збивання з ніг щонайменше на {NATURALFIXED($time, 3)} сек. з накопиченням
+        *[set]  { $chance ->
+                    [1] Спричиняє
+                    *[other] спричинити
+                } збивання з ніг щонайменше на {NATURALFIXED($time, 3)} сек. без накопичення
+        [remove]{ $chance ->
+                    [1] Прибирає
+                    *[other] прибрати
+                } {NATURALFIXED($time, 3)} сек. збивання з ніг
+    }

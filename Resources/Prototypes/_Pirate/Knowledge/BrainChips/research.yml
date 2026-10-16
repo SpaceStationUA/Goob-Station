@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: technology
+  id: PirateHormoneRegulation
+  name: research-technology-hormone-regulation
+  icon:
+    sprite: _Pirate/Objects/Specific/brain_chips.rsi
+    state: hpys
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - SkillChipThrowing
+  - SkillChipEndorphin
+  - SkillChipAdrenal
+  - SkillChipThyroid
+  - SkillChipProprioception
+  - SkillChipPsionicAmplifier
+  # Basic Augmentation requires Basic Cybernetics.
+  technologyPrerequisites:
+  - BasicAugmentation
+  # Keep this position so the prerequisite line avoids other technologies.
+  position: -6,6

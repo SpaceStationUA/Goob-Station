@@ -74,7 +74,7 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipCombatEducation
+    - SkillChipCombatEducationPilot # Pirate: piloting skill
     - SkillChipCombatHOS
   # Pirate: skill chips end
   - !type:AddImplantSpecial

@@ -3,7 +3,6 @@
 using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Spider;
 
@@ -12,12 +11,12 @@ namespace Content.Shared.Spider;
 public sealed partial class SpiderComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WebPrototype = "SpiderWeb";
+    [DataField("webPrototype")]
+    public EntProtoId WebPrototype = "SpiderWeb";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WebAction = "ActionSpiderWeb";
+    [DataField("webAction")]
+    public EntProtoId WebAction = "ActionSpiderWeb";
 
     [DataField] public EntityUid? Action;
 
@@ -27,8 +26,8 @@ public sealed partial class SpiderComponent : Component
     public bool HasBuilding;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("buildingActionProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string BuildingActionProto = "ActionSpiderBuildingPole";
+    [DataField("buildingActionProto")]
+    public EntProtoId BuildingActionProto = "ActionSpiderBuildingPole";
 
     [DataField]
     public EntityUid? BuildingAction;

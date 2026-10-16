@@ -11,6 +11,7 @@ namespace Content.Pirate.Client.Ranching;
 public sealed class AddShaderStatusEffectSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -25,9 +26,13 @@ public sealed class AddShaderStatusEffectSystem : EntitySystem
         if (!TryComp<SpriteComponent>(args.Target, out var sprite))
             return;
 
-        sprite.PostShader = _prototypes.Index<ShaderPrototype>(ent.Comp.Shader).Instance();
-        sprite.GetScreenTexture = true;
-        sprite.RaiseShaderEvent = true;
+        _sprite.SetPostShader((args.Target, sprite),
+            new SpriteComponent.PostShaderArgs($"pirate-ranching:{ent.Owner}",
+                _prototypes.Index<ShaderPrototype>(ent.Comp.Shader).InstanceUnique())
+            {
+                GetScreenTexture = true,
+                RaiseShaderEvent = true,
+            });
     }
 
     private void OnRemoved(Entity<AddShaderStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
@@ -35,8 +40,6 @@ public sealed class AddShaderStatusEffectSystem : EntitySystem
         if (TerminatingOrDeleted(args.Target) || !TryComp<SpriteComponent>(args.Target, out var sprite))
             return;
 
-        sprite.PostShader = null;
-        sprite.GetScreenTexture = false;
-        sprite.RaiseShaderEvent = false;
+        _sprite.RemovePostShader((args.Target, sprite), $"pirate-ranching:{ent.Owner}");
     }
 }

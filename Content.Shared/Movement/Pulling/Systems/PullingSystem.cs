@@ -2,6 +2,7 @@
 
 using Content.Goobstation.Common.Grab;
 using Content.Shared._Shitcode.Heretic.Components;
+using Content.Shared._ST.Interaction; // Goob
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
@@ -603,7 +604,7 @@ public sealed partial class PullingSystem : EntitySystem // DOWNSTREAM-TPirates:
 
         // Pulling confirmed
 
-        _interaction.DoContactInteraction(pullableUid, pullerUid);
+        _interaction.DoContactInteraction(pullerUid, pullableUid, null, true, interactionParticleType: StellarInteractionParticleType.Pull); // Goob
 
         // Use net entity so it's consistent across client and server.
         pullableComp.PullJointId = $"pull-joint-{GetNetEntity(pullableUid)}";

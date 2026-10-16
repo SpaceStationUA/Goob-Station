@@ -7,6 +7,8 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
     <PackageReference Include="YamlDotNet" />
+    <!-- Pirate: encodes custom marking art on the server and in the editor. -->
+    <PackageReference Include="SixLabors.ImageSharp" />
   </ItemGroup>
 
   <Import Project="..\RobustToolbox\Imports\Lidgren.props" />

@@ -382,6 +382,8 @@ public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
         // Pirate end - SecretTP tweak
 
         var ruleUid = _ticker.AddGameRule(rule);
+        if (!doStart && TryComp<GameRuleComponent>(ruleUid, out var addedRule))
+            addedRule.CancelPresetOnTooFewPlayers = false;
         // Pirate start - SecretTP tweak
         var chaosScore = GetChaosScore(ruleUid, players);
         if (chaosScore is null)

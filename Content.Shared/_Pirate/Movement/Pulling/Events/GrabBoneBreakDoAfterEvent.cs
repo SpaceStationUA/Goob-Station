@@ -5,9 +5,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Pirate.Movement.Pulling.Events;
 
 [Serializable, NetSerializable]
-public sealed partial class BoneCrushDoAfterEvent(TargetBodyPart targetPart) : SimpleDoAfterEvent
+public sealed partial class BoneCrushDoAfterEvent : SimpleDoAfterEvent
 {
-    public TargetBodyPart TargetPart = targetPart;
+    public TargetBodyPart TargetPart;
+
+    public BoneCrushDoAfterEvent(TargetBodyPart targetPart)
+    {
+        TargetPart = targetPart;
+    }
 
     public BoneCrushDoAfterEvent() : this(TargetBodyPart.LeftLeg)
     {

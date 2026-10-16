@@ -228,6 +228,7 @@
     # Einstein Engines Packs
     - Translators
     - TranslatorImplanters
+    - PirateBrainChips # Pirate: skill chip expansion
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - MechBoardsSecurity

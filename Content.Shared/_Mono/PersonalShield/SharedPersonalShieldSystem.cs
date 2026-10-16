@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Shared.Armor;
 using Content.Shared.Damage;
 using Content.Shared.Examine;

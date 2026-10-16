@@ -42,7 +42,7 @@ public sealed partial class Loadout : IEquatable<Loadout>
     public bool IsValidColorTint()
     {
         return string.IsNullOrEmpty(CustomColorTint) ||
-               CustomColorTint.Length <= 16 && Color.TryFromHex(CustomColorTint) != null;
+               CustomColorTint.Length <= 16 && Color.TryFromHex(CustomColorTint, out _);
     }
 
     public Loadout Clone()
