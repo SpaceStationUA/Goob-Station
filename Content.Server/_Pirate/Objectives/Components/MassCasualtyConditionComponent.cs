@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server._Pirate.Objectives.Systems;
-using Robust.Shared.Map;
 
 namespace Content.Server._Pirate.Objectives.Components;
 
@@ -21,7 +20,7 @@ public sealed partial class MassCasualtyConditionComponent : Component
     public bool Active;
 
     [DataField]
-    public MapId Map;
+    public EntityUid? Map;
 
     [DataField]
     public EntityUid? OwnerMind;

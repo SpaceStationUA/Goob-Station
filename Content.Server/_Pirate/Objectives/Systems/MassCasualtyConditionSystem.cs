@@ -6,7 +6,6 @@ using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
-using Robust.Shared.Map;
 
 namespace Content.Server._Pirate.Objectives.Systems;
 
@@ -40,8 +39,8 @@ public sealed class MassCasualtyConditionSystem : EntitySystem
         var query = EntityQueryEnumerator<MassCasualtyConditionComponent>();
         while (query.MoveNext(out _, out var condition))
         {
-            if (condition.Active && condition.OwnerMind is { } owner)
-                condition.Targets.UnionWith(GetTargets(owner, condition.Map));
+            if (condition.Active && condition.OwnerMind is { } owner && condition.Map is { } map)
+                condition.Targets.UnionWith(GetTargets(owner, map));
         }
     }
 
@@ -52,7 +51,8 @@ public sealed class MassCasualtyConditionSystem : EntitySystem
 
         if (ent.Comp.Target <= 0 ||
             args.Mind.OwnedEntity is not { } body ||
-            GetTargets(args.MindId, Transform(body).MapID).Count < Math.Max(ent.Comp.MinimumCrew, ent.Comp.Target))
+            Transform(body).MapUid is not { } map ||
+            GetTargets(args.MindId, map).Count < Math.Max(ent.Comp.MinimumCrew, ent.Comp.Target))
         {
             args.Cancelled = true;
         }
@@ -66,24 +66,24 @@ public sealed class MassCasualtyConditionSystem : EntitySystem
 
     private void OnTaken(Entity<MassCasualtyConditionComponent> ent, ref ContractTakenEvent args)
     {
-        if (args.Mind.Comp.OwnedEntity is not { } body)
+        if (args.Mind.Comp.OwnedEntity is not { } body || Transform(body).MapUid is not { } map)
             return;
 
         // Offers may sit in the uplink for a while. Start counting only when the agent accepts one.
-        ent.Comp.Map = Transform(body).MapID;
+        ent.Comp.Map = map;
         ent.Comp.OwnerMind = args.Mind.Owner;
-        ent.Comp.Targets = GetTargets(args.Mind.Owner, ent.Comp.Map);
+        ent.Comp.Targets = GetTargets(args.Mind.Owner, map);
         ent.Comp.Active = true;
     }
 
     private void OnGetProgress(Entity<MassCasualtyConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = 0f;
-        if (!ent.Comp.Active || ent.Comp.Target <= 0)
+        if (!ent.Comp.Active || ent.Comp.Target <= 0 || ent.Comp.Map is not { } map)
             return;
 
         // Include late arrivals, but never add an already-dead mind to the victim pool.
-        ent.Comp.Targets.UnionWith(GetTargets(args.MindId, ent.Comp.Map));
+        ent.Comp.Targets.UnionWith(GetTargets(args.MindId, map));
 
         var dead = 0;
         foreach (var target in ent.Comp.Targets)
@@ -101,7 +101,7 @@ public sealed class MassCasualtyConditionSystem : EntitySystem
         args.Progress = MathF.Min(dead / (float) ent.Comp.Target, 1f);
     }
 
-    private HashSet<EntityUid> GetTargets(EntityUid owner, MapId map)
+    private HashSet<EntityUid> GetTargets(EntityUid owner, EntityUid map)
     {
         var targets = new HashSet<EntityUid>();
         foreach (var candidate in _mind.GetAliveHumans(owner))
@@ -109,7 +109,7 @@ public sealed class MassCasualtyConditionSystem : EntitySystem
             var mindId = candidate.Owner;
             var mind = candidate.Comp;
             if (mind.OwnedEntity is not { } body ||
-                Transform(body).MapID != map ||
+                Transform(body).MapUid != map ||
                 !_roles.MindHasRole<JobRoleComponent>(mindId) ||
                 IsProtected(mindId, mind))
             {
