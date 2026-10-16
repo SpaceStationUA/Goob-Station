@@ -334,18 +334,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, component, restockQuality);
         AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, component, restockQuality);
 
-        // Pirate start: add categories
-        foreach (var categoryId in packPrototype.Categories)
-        {
-            if (!PrototypeManager.TryIndex<VendingMachineCategoryPrototype>(categoryId, out var category))
-                continue;
-
-            AddInventoryFromPrototype(uid, category.StartingInventory, InventoryType.Regular, component, restockQuality, categoryId);
-            AddInventoryFromPrototype(uid, category.EmaggedInventory, InventoryType.Emagged, component, restockQuality, categoryId);
-            AddInventoryFromPrototype(uid, category.ContrabandInventory, InventoryType.Contraband, component, restockQuality, categoryId);
-        }
-        // Pirate end
-
         Dirty(uid, component);
     }
 
@@ -395,7 +383,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
     private void AddInventoryFromPrototype(EntityUid uid, Dictionary<EntProtoId, uint>? entries,
         InventoryType type,
-        VendingMachineComponent? component = null, float restockQuality = 1.0f, string? categoryId = null) // Pirate: add categories
+        VendingMachineComponent? component = null, float restockQuality = 1.0f)
     {
         if (!Resolve(uid, ref component) || entries == null)
         {
@@ -441,13 +429,11 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     // all the items just to restock one empty slot without
                     // losing the rest of the restock.
                     entry.Amount = Math.Min(entry.Amount + amount, 3 * restock);
-                    entry.Category = categoryId ?? entry.Category; // Pirate: add categories
                 }
                 else
     // Pirate banking start
                 {
                     var newEntry = new VendingMachineInventoryEntry(type, id, restock, price);
-                    newEntry.Category = categoryId;
                     inventory.Add(id, newEntry);
                 }
             }

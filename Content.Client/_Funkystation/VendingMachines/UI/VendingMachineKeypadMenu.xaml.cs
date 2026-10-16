@@ -32,14 +32,10 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
     public event Func<int, VendingMachineCodeResult>? OnCodeEntered;
     public event Action<VendingMachineKeypadSound, float>? OnAudioPlayed;
 
-    // Pirate start: add categories
     private readonly List<VendingMachineGridSlot> _slots = new();
     private readonly List<int> _slotInventoryIndices = new();
-    private readonly List<string?> _categories = new();
     private List<VendingMachineInventoryEntry> _inventory = new();
-    private string? _selectedCategory;
     private string _searchText = string.Empty;
-    // Pirate end
 
     public EntityUid VendingMachineOwner;
     public EntityUid? User;
@@ -88,9 +84,7 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
         UpdateBufferLabel();
         UpdateCreditsLabel();
 
-    // Pirate start: add categories
         WithdrawButton.OnPressed += OnWithdrawPressed;
-        CategoryOptionButton.OnItemSelected += OnCategorySelected;
         SearchBar.OnTextChanged += OnSearchTextChanged;
     }
 
@@ -107,10 +101,8 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
             return;
 
         WithdrawButton.OnPressed -= OnWithdrawPressed;
-        CategoryOptionButton.OnItemSelected -= OnCategorySelected;
         SearchBar.OnTextChanged -= OnSearchTextChanged;
     }
-    // Pirate end
 
     private void BuildNumpad()
     {
@@ -166,58 +158,11 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
     }
 
     public void Populate(List<VendingMachineInventoryEntry> inventory, bool enabled)
-    // Pirate start: add categories
     {
         _inventory = inventory;
-        RefreshCategories(inventory);
-
-        var largestCategorySize = inventory
-            .GroupBy(entry => entry.Category)
-            .Select(group => group.Count())
-            .DefaultIfEmpty(0)
-            .Max();
-        _rowCount = (largestCategorySize + 9) / 10;
+        _rowCount = (inventory.Count + 9) / 10;
 
         BuildLetterGrid();
-        PopulateVisibleItems();
-        ClearBuffer();
-    }
-
-    private void RefreshCategories(List<VendingMachineInventoryEntry> inventory)
-    {
-        var previousCategory = _selectedCategory;
-        _categories.Clear();
-        _categories.AddRange(inventory
-            .Select(entry => entry.Category)
-            .Distinct()
-            .OrderBy(GetCategoryName, StringComparer.CurrentCulture));
-
-        CategoryOptionButton.Clear();
-        for (var i = 0; i < _categories.Count; i++)
-            CategoryOptionButton.AddItem(GetCategoryName(_categories[i]), i);
-
-        CategoryOptionButton.Visible = _categories.Any(category => category != null);
-        var selectedIndex = _categories.IndexOf(previousCategory);
-        if (selectedIndex < 0 && _categories.Count > 0)
-            selectedIndex = 0;
-
-        _selectedCategory = selectedIndex >= 0 ? _categories[selectedIndex] : null;
-        if (selectedIndex >= 0)
-            CategoryOptionButton.SelectId(selectedIndex);
-    }
-
-    private static string GetCategoryName(string? category)
-    {
-        return Loc.GetString(category ?? "vending-machine-category-general");
-    }
-
-    private void OnCategorySelected(OptionButton.ItemSelectedEventArgs args)
-    {
-        if (args.Id < 0 || args.Id >= _categories.Count)
-            return;
-
-        args.Button.SelectId(args.Id);
-        _selectedCategory = _categories[args.Id];
         PopulateVisibleItems();
         ClearBuffer();
     }
@@ -238,7 +183,7 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
         for (var inventoryIndex = 0; inventoryIndex < _inventory.Count; inventoryIndex++)
         {
             var entry = _inventory[inventoryIndex];
-            if ((_categories.Count > 0 && entry.Category != _selectedCategory) || !MatchesSearch(entry))
+            if (!MatchesSearch(entry))
                 continue;
 
             var displayIndex = _slots.Count;
@@ -269,7 +214,7 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
     public void UpdateAmounts(List<VendingMachineInventoryEntry> inventory, bool enabled)
     {
         if (inventory.Count != _inventory.Count || inventory.Where((entry, index) =>
-                entry.ID != _inventory[index].ID || entry.Category != _inventory[index].Category).Any())
+                entry.ID != _inventory[index].ID).Any())
         {
             Populate(inventory, enabled);
             return;
@@ -281,7 +226,6 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
             var entry = inventory[_slotInventoryIndices[i]];
             _slots[i].SetAmount(entry.Amount, entry.Amount == 0);
         }
-    // Pirate end
     }
 
     public void SetCredits(int credits, double priceMultiplier)
