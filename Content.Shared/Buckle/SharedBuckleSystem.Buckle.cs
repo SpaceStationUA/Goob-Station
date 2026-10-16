@@ -139,14 +139,6 @@ public abstract partial class SharedBuckleSystem
     private void OnParentChanged(Entity<BuckleComponent> ent, ref EntParentChangedMessage args)
     {
         BuckleTransformCheck(ent, args.Transform);
-        AfterBuckleParentChanged(ent, ref args);
-    }
-
-    /// <summary>
-    /// Allows sided buckle systems to handle completed parent changes.
-    /// </summary>
-    protected virtual void AfterBuckleParentChanged(Entity<BuckleComponent> ent, ref EntParentChangedMessage args)
-    {
     }
 
     private void OnInserted(Entity<BuckleComponent> ent, ref EntGotInsertedIntoContainerMessage args)
@@ -558,6 +550,7 @@ public abstract partial class SharedBuckleSystem
             else
                 _transform.SetCoordinates(buckle, buckleXform, _transform.GetMoverCoordinates(strap, oldBuckledXform));
             // Goobstation end
+            buckleXform.ActivelyLerping = false;
 
             var oldBuckledToWorldRot = _transform.GetWorldRotation(strap);
             _transform.SetWorldRotationNoLerp((buckle, buckleXform), oldBuckledToWorldRot);
@@ -659,7 +652,7 @@ public abstract partial class SharedBuckleSystem
             return;
 
         if (TryComp<CuffableComponent>(args.Target, out var targetCuffableComp) && targetCuffableComp.CuffedHandCount > 0
-            || _mobState.IsIncapacitated(args.Target.Value))
+            || _mobState.IsIncapacitated(args.Target.Value) || _mobState.IsSoftCritical(args.Target.Value)) // Pirate
         {
             ev.Cancel();
             TryBuckle(args.Target.Value, args.User, args.Used.Value, popup: false);

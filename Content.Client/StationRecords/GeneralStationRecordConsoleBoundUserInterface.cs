@@ -5,6 +5,8 @@ using Robust.Client.UserInterface;
 using Robust.Client.GameObjects; // Pirate: records photos
 using Content.Shared.Access.Systems; // Pirate: records photos
 using Robust.Client.Player; // Pirate: records photos
+using Content.Shared._Pirate.StationRecords; // Pirate: records photos
+using Content.Client._Pirate.StationRecords; // Pirate: records interactive sounds
 
 namespace Content.Client.StationRecords;
 
@@ -26,6 +28,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 
         _window = new(Owner, _playerManager, _accessReader); // Pirate: records photos
         _window.OnClose += Close; // Pirate: records photos
+        RecordConsoleSounds.Attach(this, _window); // Pirate: records interactive sounds
         var uiSystem = EntMan.System<UserInterfaceSystem>(); // Pirate: records photos
         uiSystem.RegisterControl(this, _window); // Pirate: records photos
         if (uiSystem.TryGetPosition(Owner, UiKey, out var position)) // Pirate: records photos
@@ -33,7 +36,7 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         else
             _window.OpenCentered(); // Pirate: records photos
         _window.OnKeySelected += key =>
-            SendMessage(new SelectStationRecord(key));
+            SendMessage(new SelectStationRecord(key) { Request = _window?.SelectionRequest ?? 0 }); // Pirate: records select
         _window.OnFiltersChanged += (type, filterValue) =>
             SendMessage(new SetStationRecordFilter(type, filterValue));
         #region Pirate: records photos
@@ -43,6 +46,14 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
             SendMessage(new GeneralRecordEditIdentity(species, citizenship, employer, age, gender));
         _window.OnForensicsInfoChanged += (fingerprint, dna) =>
             SendMessage(new GeneralRecordEditForensics(fingerprint, dna));
+        #endregion
+        #region Pirate: records photos
+        _window.OnPrintPortrait += (key, image) => SendMessage(new RecordPortraitPrintMessage(key, image));
+        _window.OnUploadPortrait += () => SendMessage(new RecordPortraitUploadMessage());
+        _window.OnStoreGeneratedPortrait += (key, image) => SendMessage(new RecordPortraitStoreGeneratedMessage(key, image));
+        _window.OnAddLogNote += text => SendMessage(new RecordLogAddNoteMessage(text));
+        _window.OnDeleteLogEntry += id => SendMessage(new RecordLogDeleteMessage(id));
+        _window.OnPrintLog += () => SendMessage(new RecordLogPrintMessage());
         #endregion
     }
 

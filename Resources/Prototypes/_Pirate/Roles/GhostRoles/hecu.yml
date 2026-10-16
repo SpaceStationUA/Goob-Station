@@ -206,6 +206,7 @@
     rules: ghost-role-information-Hecu-rules
     raffle:
       settings: short
+    job: HecuOperative
   - type: Loadout
     prototypes: [HECUOperativeGearIPC]
   - type: RandomMetadata

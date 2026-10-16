@@ -1,0 +1,127 @@
+# SPDX-License-Identifier: MIT
+
+- type: entity
+  parent: [BaseMobSpeciesOrganic, BaseInventoryExperiment] # Pirate: organic base already supplies carrying.
+  id: BaseMobExperiment
+  abstract: true
+  components:
+  - type: Absorbable
+  - type: Speech
+    speechVerb: Experiment
+    speechSounds: AllExpi
+    allowedEmotes: ['Arf', 'Whine']
+  - type: Vocal
+    sounds:
+      Unsexed: Experiment
+      Male: Experiment
+      Female: Experiment
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic # Pirate: local common language.
+    understands:
+    - TauCetiBasic # Pirate: local common language.
+  - type: TypingIndicator
+    proto: sawian
+  - type: InventorySlotMovementSpeedModifier # Wearing all six pieces of hindering clothing will drop the speed to 95% of normal species
+    slotData:
+      - flags: OUTERCLOTHING, HEAD
+        speedMod: 0.937
+      - flags: INNERCLOTHING, GLOVES, FEET, MASK
+        speedMod: 0.965
+  - type: Hunger # while starving bonus healing is haulted. while in a critical state and starving they die faster than others.
+    baseDecayRate: 0.050
+    starvationDamage:
+      types:
+        Caustic: 0.5
+    passiveDamage:
+      types:
+        Heat: -0.07
+        Blunt: -0.05
+        Slash: -0.05
+        Piercing: -0.05
+    passiveThreshold: Peckish
+    passiveCap: 150
+  - type: PassiveDamage # while fed and above and below 100 damage they heal brute at three times the normal rate and heal heat at double.
+    allowedStates:
+    - Alive
+    damageCap: 0 # Pirate: preserve source regeneration above the local default cap.
+    damage:
+      types:
+        Heat: -0.07
+        Blunt: -0.05
+        Slash: -0.05
+        Piercing: -0.05
+  - type: Thirst
+    baseDecayRate: 0.3
+  - type: Icon
+    sprite: _Pirate/Experiments/Mobs/Species/Experiment/parts.rsi
+    state: full
+  - type: Body
+    prototype: Experiment
+    requiredLegs: 2
+  - type:  HumanoidAppearance
+    species: Experiment
+  - type: MobState
+    allowedStates:
+      - Alive
+      - SoftCritical
+      - Critical
+      - Dead
+  - type: MobThresholds
+    stateAlertDict:
+      Alive: "HumanHealth"
+      SoftCritical: "HumanCrit"
+      Critical: "HumanCrit"
+      Dead: "HumanDead"
+    thresholds:
+      0: Alive
+      100: SoftCritical
+      150: Critical
+      200: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      45: 0.7
+      60: 0.5
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatHuman
+      amount: 3
+  - type: Damageable
+    damageContainer: Biological
+  - type: FireVisuals
+    sprite: _Pirate/Experiments/Mobs/Effects/onfire.rsi
+    normalState: Resomi_minor_burning
+    alternateState: Experiment_burning
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: SawianBlood
+        Quantity: 300
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 4
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - Experiment
+    - VulpEmotes # Pirate: local Whine emote whitelist.
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 110
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer

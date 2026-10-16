@@ -1,0 +1,47 @@
+- type: polymorph
+  id: LetoferolMutation
+  configuration:
+    entity: MobLetoferolHorror
+    forced: true
+    inventory: Drop
+    transferName: true
+    # Pirate: life-state restrictions use MobStateCondition in the reagent effects.
+    transferDamage: false
+    revertOnCrit: false
+    revertOnDeath: false  # Omu changed to false from true
+    cooldown: 60
+    polymorphSound: /Audio/Effects/Fluids/splat.ogg
+    exitPolymorphSound: /Audio/Effects/Fluids/glug.ogg
+    allowRepeatedMorphs: true
+
+- type: polymorph
+  id: LetoferolMutationNatural
+  configuration:
+    entity: MobLetoferolHorror
+    forced: true
+    inventory: Drop
+    transferName: true
+    # Pirate: life-state restrictions use MobStateCondition in the reagent effects.
+    transferDamage: false
+    revertOnCrit: false
+    revertOnDeath: false
+    cooldown: 60
+    polymorphSound: /Audio/Effects/Fluids/splat.ogg
+    exitPolymorphSound: /Audio/Effects/Fluids/glug.ogg
+    allowRepeatedMorphs: true
+
+- type: polymorph
+  id: LetoferolMutationBeastNatural
+  configuration:
+    entity: MobLetoferolBeast
+    forced: true
+    inventory: Drop
+    transferName: true
+    # Pirate: life-state restrictions use MobStateCondition in the reagent effects.
+    transferDamage: false
+    revertOnCrit: false
+    revertOnDeath: false
+    cooldown: 60
+    polymorphSound: /Audio/Effects/Fluids/splat.ogg
+    exitPolymorphSound: /Audio/Effects/Fluids/glug.ogg
+    allowRepeatedMorphs: true

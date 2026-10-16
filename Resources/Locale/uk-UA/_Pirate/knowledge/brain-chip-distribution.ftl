@@ -1,10 +1,8 @@
 ### Постачання мозкових чипів: ящики, коробки та категорія аплінка.
 
 store-category-skills = Навички
-
 uplink-skill-chip-bundle-name = Ящик бойових чипів
 uplink-skill-chip-bundle-desc = Вісім різних бойових чипів, витягнутих зі звалища та перестерилізованих. Вистачить, щоб зробити загін боєздатним.
-
 uplink-skill-chip-weapons-unarmed-name = ГАРТ-чип (рукопашний бій)
 uplink-skill-chip-weapons-unarmed-desc = Вчить ваші руки бити як слід.
 uplink-skill-chip-weapons-bludgeon-name = ГАРТ-чип (дрючки)
@@ -39,7 +37,6 @@ uplink-skill-chip-throwing-tampered-name = { ent-SkillChipThrowingTampered }
 uplink-skill-chip-throwing-tampered-desc = { ent-SkillChipThrowingTampered.desc }
 
 ### Ящики
-
 ent-CrateSkillChipsCargo = ящик чипів карго
     .desc = Ящик із чипами карго. Схоже, утилізаторські чипи звідси вже хтось забрав.
 ent-CrateSkillChipsEngi = ящик інженерних чипів
@@ -60,7 +57,6 @@ ent-CrateSyndicateCombatSkillChips = ящик бойових чипів
     .desc = Лиховісний ящик із найкращими чипами, які тільки можна знайти на звалищі.
 
 ### Коробки
-
 ent-BoxSkillChipsBase = коробка чипів
     .desc = Велика коробка для запасних чипів. Може, навіть стерильна. Хтозна.
 ent-BoxSkillChipsService = коробка сервісних чипів
@@ -73,5 +69,4 @@ ent-BoxSkillChipsMed = коробка медичних чипів
     .desc = { ent-BoxSkillChipsBase.desc }
 ent-BoxSkillChipsSci = коробка наукових чипів
     .desc = { ent-BoxSkillChipsBase.desc }
-
 research-technology-hormone-regulation = Гормональна регуляція

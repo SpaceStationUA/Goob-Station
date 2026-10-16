@@ -8,13 +8,11 @@ contracts-accept = Прийняти
 contracts-reject = Відхилити
 contracts-abandon = Відмовитися
 contracts-abandon-confirm = Підтвердити
-
 contract-slot-empty = <немає активного контракту>
 contract-unavailable = <немає доступного контракту>
 contract-next-unlock = Заблоковано ще на {$time}
 contracts-reputation = Репутація: {$reputation}
 contract-reward-format = {$title} — нагорода: {$payment} телекристалів, {$reputation} репутації
-
 ent-ActionOpenContractsImplant = Відкрити центр контрактів
     .desc = Відкриває центр контрактів Синдикату.
 ent-SyndieFulton = фултон

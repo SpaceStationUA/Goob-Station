@@ -420,6 +420,7 @@ public sealed partial class StationRecordsSystem : SharedStationRecordsSystem
                 && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
             StationRecordFilterType.DNA => someRecord.DNA != null
                 && IsFilterWithSomeCodeValue(someRecord.DNA, filterLowerCaseValue),
+            StationRecordFilterType.All => !MatchesAnyField(someRecord, filterLowerCaseValue), // Pirate: record history
             _ => throw new IndexOutOfRangeException(nameof(filter.Type)),
         };
     }

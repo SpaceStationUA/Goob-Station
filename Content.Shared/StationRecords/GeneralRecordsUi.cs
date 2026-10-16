@@ -42,6 +42,10 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
     public readonly bool CanDeleteEntries;
     public readonly uint MaxStringLength; // Pirate: records photos
 
+    public Content.Shared._Pirate.StationRecords.RecordPortraitData? Portrait; // Pirate: records photos
+    public List<Content.Shared._Pirate.StationRecords.RecordLogEntry>? Log; // Pirate: record history
+    public uint SelectionRequest; // Pirate: records select
+
     public GeneralStationRecordConsoleState(uint? key,
         GeneralStationRecord? record,
         Dictionary<uint, string>? recordListing,
@@ -73,6 +77,7 @@ public sealed class GeneralStationRecordConsoleState : BoundUserInterfaceState
 public sealed class SelectStationRecord : BoundUserInterfaceMessage
 {
     public readonly uint? SelectedKey;
+    public uint Request; // Pirate: records select
 
     public SelectStationRecord(uint? selectedKey)
     {

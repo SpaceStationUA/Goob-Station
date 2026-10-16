@@ -4,6 +4,8 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.CriminalRecords.Components;
 using Content.Shared.StationRecords;
+using Content.Shared._Pirate.StationRecords; // Pirate: record history
+using Content.Client._Pirate.StationRecords; // Pirate: records interactive sounds
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -18,7 +20,6 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
     private readonly AccessReaderSystem _accessReader;
 
     private CriminalRecordsConsoleWindow? _window;
-    private CrimeHistoryWindow? _historyWindow;
 
     public CriminalRecordsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -33,7 +34,7 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
 
         _window = new(Owner, comp.MaxStringLength, _playerManager, _proto, _random, _accessReader);
         _window.OnKeySelected += key =>
-            SendMessage(new SelectStationRecord(key));
+            SendMessage(new SelectStationRecord(key) { Request = _window?.SelectionRequest ?? 0 }); // Pirate: records select
         _window.OnFiltersChanged += (type, filterValue) =>
             SendMessage(new SetStationRecordFilter(type, filterValue));
         _window.OnStatusSelected += status =>
@@ -51,44 +52,20 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
             SendMessage(new CriminalRecordEditIdentity(species, citizenship, employer, age, gender));
         _window.OnForensicsInfoChanged += (fingerprint, dna) =>
             SendMessage(new CriminalRecordEditForensics(fingerprint, dna));
-        _window.OnPrintPhoto += async () =>
-        {
-            try
-            {
-                var message = await _window.BuildPrintPhotoMessage();
-                if (message != null)
-                    SendMessage(message);
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorS("criminal-records", $"Failed to build print photo message: {ex}"); // Pirate: records photos
-            }
-        };
+        _window.OnPrintPhoto += (key, image) =>
+            SendMessage(new CriminalRecordPrintPhoto(key, image)); // Pirate: records photos
         _window.OnUploadPhoto += () =>
             SendMessage(new CriminalRecordUploadPhoto());
         _window.OnStoreGeneratedPortrait += (recordKey, imageData) =>
             SendMessage(new CriminalRecordStoreGeneratedPhoto(recordKey, imageData));
         #endregion
-        _window.OnHistoryUpdated += UpdateHistory;
-        _window.OnHistoryClosed += () => _historyWindow?.Close();
+        #region Pirate: record history
+        _window.OnAddLogNote += text => SendMessage(new RecordLogAddNoteMessage(text));
+        _window.OnDeleteLogEntry += id => SendMessage(new RecordLogDeleteMessage(id));
+        _window.OnPrintLog += () => SendMessage(new RecordLogPrintMessage());
+        #endregion
         _window.OnClose += Close;
-
-        _historyWindow = new(comp.MaxStringLength);
-        _historyWindow.OnAddHistory += line => SendMessage(new CriminalRecordAddHistory(line));
-        _historyWindow.OnDeleteHistory += index => SendMessage(new CriminalRecordDeleteHistory(index));
-
-        _historyWindow.Close(); // leave closed until user opens it
-    }
-
-    /// <summary>
-    /// Updates or opens a new history window.
-    /// </summary>
-    private void UpdateHistory(CriminalRecord record, bool access, bool open)
-    {
-        _historyWindow!.UpdateHistory(record, access);
-
-        if (open)
-            _historyWindow.OpenCentered();
+        RecordConsoleSounds.Attach(this, _window); // Pirate: records interactive sounds
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -106,6 +83,5 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
         base.Dispose(disposing);
 
         _window?.Close();
-        _historyWindow?.Close();
     }
 }

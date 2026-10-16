@@ -32,7 +32,7 @@
   - type: PhotoAlbum
   - type: Storage
     grid:
-    - 0,0,3,1
+    - 0,0,3,2
     maxItemSize: Small
     whitelist:
       tags:
@@ -197,7 +197,7 @@
     state: icon
   - type: Storage
     grid:
-    - 0,0,1,1
+    - 0,0,1,2
   - type: Construction
     graph: PhotoAlbum
     node: album

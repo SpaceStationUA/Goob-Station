@@ -8,6 +8,8 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="4" Margin="0 2" VerticalAlignment="Center">
             <Label Name="ViewModeLabel" Text="{Loc 'ghost-target-window-color-mode-label'}" VerticalAlignment="Center" />
             <Button Name="ViewModeButton" MinSize="100 24" />
+            <Label Name="GroupModeLabel" Text="{Loc 'ghost-target-window-group-mode-label'}" VerticalAlignment="Center" Margin="8 0 0 0" />
+            <Button Name="GroupModeButton" MinSize="100 24" />
         </BoxContainer>
         <LineEdit Name="SearchBar" PlaceHolder="{Loc 'ghost-target-window-search-placeholder'}" HorizontalExpand="True" Margin="0 4" />
         <ScrollContainer Name="GhostScroll" VerticalExpand="True" HorizontalExpand="True" HScrollEnabled="False">

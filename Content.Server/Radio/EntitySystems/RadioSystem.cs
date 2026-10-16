@@ -31,6 +31,9 @@ using Content.Server._Pirate.Radio.Components; // Pirate - Handheld Radios port
 using Content.Shared._Pirate.Radio; // Pirate: radio sounds
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 
+using Content.Shared.Mobs.Systems; // Pirate
+using Content.Shared.Popups; // Pirate
+
 namespace Content.Server.Radio.EntitySystems;
 
 /// <summary>
@@ -53,6 +56,9 @@ public sealed partial class RadioSystem : EntitySystem
     private readonly HashSet<string> _messages = new();
 
     private EntityQuery<TelecomExemptComponent> _exemptQuery;
+
+    [Dependency] private readonly MobStateSystem _experimentMobState = default!; // Pirate
+    [Dependency] private readonly SharedPopupSystem _experimentPopup = default!; // Pirate
 
     public override void Initialize()
     {
@@ -146,6 +152,12 @@ public sealed partial class RadioSystem : EntitySystem
         if (!language.SpeechOverride.AllowRadio)
             return;
         // Einstein Engines - Language end
+
+        if (_experimentMobState.IsSoftCritical(messageSource)) // Pirate: soft critical prevents radio use.
+        {
+            _experimentPopup.PopupEntity(Loc.GetString("radio-failed-to-send-soft-critical"), messageSource, messageSource, PopupType.Medium);
+            return;
+        }
 
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))

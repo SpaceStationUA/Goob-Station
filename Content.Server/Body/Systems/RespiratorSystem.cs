@@ -93,7 +93,7 @@ public sealed partial class RespiratorSystem : EntitySystem // Goob - made parti
             var multiplier = ShitmedGetSaturationLossMultiplier((uid, respirator));
             UpdateSaturation(uid, multiplier * (float) respirator.UpdateInterval.TotalSeconds, respirator); // Goob - use multiplier instead of just negating. from deltaV
 
-            if (!_mobState.IsIncapacitated(uid) && !HasComp<DebrainedComponent>(uid)) // Goob - Cannot breathe when no brain. shitmed
+            if (!_mobState.IsIncapacitated(uid) && !_mobState.IsSoftCritical(uid) /* Pirate */ && !HasComp<DebrainedComponent>(uid)) // Goob - Cannot breathe when no brain. shitmed
             {
                 switch (respirator.Status)
                 {
@@ -191,7 +191,7 @@ public sealed partial class RespiratorSystem : EntitySystem // Goob - made parti
     /// </summary>
     public bool IsBreathing(Entity<RespiratorComponent?> ent)
     {
-        if (_mobState.IsIncapacitated(ent))
+        if (_mobState.IsIncapacitated(ent) || _mobState.IsSoftCritical(ent)) // Pirate
             return false;
 
         if (!Resolve(ent, ref ent.Comp))

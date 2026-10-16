@@ -500,6 +500,21 @@
   metabolisms:
     Medicine:
       effects:
+      # Pirate: source soft-critical stabilization.
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: SoftCritical
+        - !type:ReagentCondition
+          reagent: Epinephrine
+          max: 20
+        damage:
+          types:
+            Asphyxiation: -3
+            Poison: -0.5
+          groups:
+            Brute: -0.5
+            Burn: -0.5
       - !type:SuppressPain
         conditions:
         - !type:MobStateCondition
@@ -665,6 +680,14 @@
     Medicine:
       metabolismRate: 0.1 # Smaller doses stabilize critical people for longer. Gives it a specific usecase as to not be entirely outclassed by dex+
       effects:
+      # Pirate: source soft-critical stabilization.
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: SoftCritical
+        damage:
+          types:
+            Asphyxiation: -2
       - !type:HealthChange
         conditions:
           # they gotta be in crit first

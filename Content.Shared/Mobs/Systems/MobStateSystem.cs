@@ -31,6 +31,7 @@ public partial class MobStateSystem : EntitySystem
         _mobStateQuery = GetEntityQuery<MobStateComponent>();
         base.Initialize();
         SubscribeEvents();
+        InitializeSoftCritical(); // Pirate: Experiment soft critical state.
     }
 
     #region Public API

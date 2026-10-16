@@ -19,10 +19,8 @@ billiard-table-popup-surface-occupied = Спочатку приберіть ус
 billiard-table-popup-not-enough-balls = У сховищі лише {$count} куль. Потрібно {$required}.
 billiard-table-popup-rack-failed = Не вдалося забрати кулі зі сховища. Спробуйте ще раз.
 billiard-table-popup-racked = Розставлено: {$mode}.
-
 construction-condition-billiard-table-storage-not-empty = Сховище не порожнє!
 construction-step-billiard-table-empty-storage = Спорожніть сховище столу!
-
 ent-TableBilliard = більярдний стіл
     .desc = Стандартний більярдний стіл із зеленим сукном. Ідеальне місце для відпочинку після зміни.
 ent-BilliardBall = більярдна куля

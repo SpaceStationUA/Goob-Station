@@ -1,6 +1,5 @@
 ent-AACTablet = AAC-планшет
     .desc = Пристрій альтернативної й додаткової комунікації, що дає змогу спілкуватися людям із порушеннями мовлення.
-
 aac-tablet-title = AAC-планшет
 aac-tablet-combine = Поєднувати
 aac-tablet-backspace = Видалити
@@ -10,14 +9,12 @@ aac-tablet-search-placeholder = Пошук фраз...
 aac-tablet-local-channel = Локально
 aac-tablet-footer-hint = Натискайте кнопки, щоб говорити
 aac-tablet-footer-info = NT-AAC v2.0
-
 aac-quick-tab-common = Загальні фрази
 aac-quick-tab-jobs = Професії
 aac-quick-tab-locations = Місця
 aac-quick-tab-subjects = Предмети
 aac-quick-tab-safety = Безпека
 aac-quick-tab-species = Види
-
 aac-quick-group-civilian = Цивільний відділ
 aac-quick-group-command = Командування
 aac-quick-group-engineering = Інженерний відділ

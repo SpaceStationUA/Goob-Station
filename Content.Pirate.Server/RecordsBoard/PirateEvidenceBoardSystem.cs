@@ -12,6 +12,7 @@ using Content.Shared.Verbs;
 using Content.Server.Forensics;
 using Robust.Server.GameObjects;
 using Content.Server._Pirate.Photo;
+using Content.Server._Pirate.StationRecords;
 using Content.Shared.Interaction;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Server.Player;
@@ -547,10 +548,6 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
             Text = Trim(text),
         });
 
-        // Portrait hunt: the criminal-records copy of the crew record
-        // stores the spawn-time HumanoidCharacterProfile + job. If the
-        // criminal console already rendered a photo, reuse it; otherwise
-        // quest the pinning client to render the profile (dummy + Export).
         TryAttachPortrait(board, msg, caseData.Cards[^1].Id, channel);
     }
 
@@ -623,26 +620,30 @@ public sealed class PirateEvidenceBoardSystem : EntitySystem
                 return;
             }
 
-            if (!_stationRecords.TryGetRecord(key, out CriminalRecord? cr) || cr == null)
+            if (!_stationRecords.TryGetRecord(key, out RecordPortrait? portrait) || portrait == null)
                 return;
 
-            if (cr.PortraitPreviewData is { Length: > 400 })
+            if (portrait.PreviewData is { Length: > 400 })
             {
-                var uri = "data:image/png;base64," + Convert.ToBase64String(cr.PortraitPreviewData);
+                var uri = "data:image/png;base64," + Convert.ToBase64String(portrait.PreviewData);
                 PaintPortrait(board, cardId, uri);
                 return;
             }
 
-            if (cr.PortraitProfileSnapshot == null)
+            if (portrait.ProfileSnapshot == null)
                 return;
+
+            var jobProto = _stationRecords.TryGetRecord(key, out GeneralStationRecord? general) && general != null
+                ? general.JobPrototype
+                : _stationRecords.TryGetRecord(key, out CriminalRecord? cr) ? cr?.GeneralRecordSnapshot?.JobPrototype : null;
 
             RaiseNetworkEvent(new EvidenceBoardPortraitQuestEvent
             {
                 Console = msg.Console,
                 CardId = cardId,
                 RecordKey = msg.RecordKey,
-                Profile = cr.PortraitProfileSnapshot,
-                JobProto = cr.GeneralRecordSnapshot?.JobPrototype ?? "",
+                Profile = portrait.ProfileSnapshot,
+                JobProto = jobProto ?? "",
             }, questTo);
         }
         catch (Exception ex)

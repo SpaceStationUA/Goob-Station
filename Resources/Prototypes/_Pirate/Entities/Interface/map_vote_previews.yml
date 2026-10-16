@@ -218,6 +218,14 @@
 
 - type: entity
   parent: BasePirateMapPreview
+  id: PirateMapPreviewZPerdition
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: zperdition
+
+- type: entity
+  parent: BasePirateMapPreview
   id: PirateMapPreviewCore
   categories: [ HideSpawnMenu ]
   components:

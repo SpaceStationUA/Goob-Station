@@ -1,122 +1,447 @@
-<controls:FancyWindow x:Class="Content.Pirate.Client.Botany.PlantAnalyzer.PlantAnalyzerWindow"
-    xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls;assembly=Content.Client"
-    MinWidth="320"
-    MaxWidth="320">
-    <ScrollContainer
-        Margin="5 5 5 5"
-        ReturnMeasure="True"
-        VerticalExpand="True"
-        HorizontalExpand="False">
-        <BoxContainer
-            Name="RootContainer"
-            VerticalExpand="True"
-            Orientation="Vertical">
-            <BoxContainer
-                Name="DataContainer"
-                Margin="0 0 0 5"
-                Orientation="Vertical">
-                <BoxContainer Orientation="Horizontal" Margin="0 0 0 5">
-                    <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64" />
-                    <TextureRect Name="NoDataIcon" Access="Public" SetSize="64 64" Visible="false" Stretch="KeepAspectCentered" TexturePath="/Textures/Interface/Misc/health_analyzer_out_of_range.png"/>
-                    <BoxContainer Margin="5 0 0 0" Orientation="Vertical" VerticalAlignment="Top">
-                        <RichTextLabel Name="SeedLabel" SetWidth="150"
-                             Text="{Loc 'generic-unknown'}"/>
-                        <Label Name="ContainerLabel" VerticalAlignment="Top" StyleClasses="LabelSubText"
-                             Text="{Loc 'generic-unknown'}"/>
-                    </BoxContainer>
-                    <Label Margin="0 0 5 0" HorizontalExpand="True" HorizontalAlignment="Right" VerticalExpand="True"
-                           VerticalAlignment="Top" Name="ScanModeLabel"
-                           Text="{Loc 'health-analyzer-window-entity-unknown-text'}" />
-                </BoxContainer>
-                <PanelContainer StyleClasses="LowDivider" />
-                <BoxContainer Name="PlantDataTags" Margin="5 5 0 0" Orientation="Horizontal" Visible="false">
-                    <RichTextLabel Margin="0 0 8 0" Name="Alive" Visible="false" Text="{Loc 'plant-analyzer-component-alive'}" />
-                    <RichTextLabel Margin="0 0 8 0" Name="Dead" Visible="false" Text="{Loc 'plant-analyzer-component-dead'}" />
-                    <RichTextLabel Margin="0 0 8 0" Name="Unviable" Visible="false" Text="{Loc 'plant-analyzer-component-unviable'}" />
-                    <RichTextLabel Margin="0 0 8 0" Name="Kudzu" Visible="false" Text="{Loc 'plant-analyzer-component-kudzu'}" />
-                    <RichTextLabel Margin="0 0 8 0" Name="Mutating" Visible="false" Text="{Loc 'plant-analyzer-component-mutating'}" />
-                </BoxContainer>
-                <GridContainer Name="PlantDataGrid" Margin="0 0 0 5" Columns="6" Visible="false">
-                    <Label Text=" · " />
-                    <Label Text="{Loc 'plant-analyzer-component-health'}" />
-                    <Label SetWidth="8" />
-                    <Label HorizontalAlignment="Right" Name="Health" />
-                    <Label Text=" / " />
-                    <Label HorizontalAlignment="Right" Name="Endurance" />
-                    <Label Text=" · " />
-                    <Label Text="{Loc 'plant-analyzer-component-age'}" />
-                    <Label SetWidth="8" />
-                    <Label HorizontalAlignment="Right" Name="Age" />
-                    <Label Text=" / " />
-                    <Label HorizontalAlignment="Right" Name="Lifespan" />
-                </GridContainer>
-                <PanelContainer Name="PlantDataDivider" Visible="false" StyleClasses="LowDivider" />
-                <GridContainer Name="ContainerGrid" Margin="0 5" Columns="8" Visible="false">
-                    <!-- Max values from `PlantHolderSystem.CheckLevelSanity` -->
-                    <Label Text=" · " />
-                    <Label Text="{Loc 'plant-analyzer-component-water'}" />
-                    <Label SetWidth="8" />
-                    <Label FontColorOverride="cyan" HorizontalAlignment="Right" Name="WaterLevelLabel" />
-                    <Label Text=" / " />
-                    <Label HorizontalAlignment="Right" Text="100.00" />
-                    <Label Margin="12 0 0 0" Name="GtFieldIfTolerances1" />
-                    <Label HorizontalAlignment="Right" Name="WaterConsumptionLabel" />
-                    <Label Text=" · " />
-                    <Label Text="{Loc 'plant-analyzer-component-nutrition'}" />
-                    <Label SetWidth="8" />
-                    <Label FontColorOverride="orange" HorizontalAlignment="Right" Name="NutritionLevelLabel" />
-                    <Label Text=" / " />
-                    <Label HorizontalAlignment="Right" Text="100.00" />
-                    <Label Margin="12 0 0 0" Name="GtFieldIfTolerances2" />
-                    <Label HorizontalAlignment="Right" Name="NutritionConsumptionLabel" />
-                    <Label Text=" · " />
-                    <Label Text="{Loc 'plant-analyzer-component-toxins'}" />
-                    <Label SetWidth="8" />
-                    <Label FontColorOverride="yellowgreen" HorizontalAlignment="Right" Name="ToxinsLabel" />
-                    <Label Text=" / " />
-                    <Label HorizontalAlignment="Right" Text="100.00" />
-                    <Label Margin="12 0 0 0" Name="LtFieldIfTolerances1" />
-                    <Label HorizontalAlignment="Right" Name="ToxinsResistanceLabel" />
-                    <Label Text=" · " />
-                    <Label Text="{Loc 'plant-analyzer-component-pests'}" />
-                    <Label SetWidth="8" />
-                    <Label FontColorOverride="magenta" HorizontalAlignment="Right" Name="PestLevelLabel" />
-                    <Label Text=" / " />
-                    <Label HorizontalAlignment="Right" Text="10.00" />
-                    <Label Margin="12 0 0 0" Name="LtFieldIfTolerances2" />
-                    <Label HorizontalAlignment="Right" Name="PestResistanceLabel" />
-                    <Label Text=" · " />
-                    <Label Text="{Loc 'plant-analyzer-component-weeds'}" />
-                    <Label SetWidth="8" />
-                    <Label FontColorOverride="red" HorizontalAlignment="Right" Name="WeedLevelLabel" />
-                    <Label Text=" / " />
-                    <Label HorizontalAlignment="Right" Text="10.00" />
-                    <Label Margin="12 0 0 0" Name="LtFieldIfTolerances3" />
-                    <Label HorizontalAlignment="Right" Name="WeedResistanceLabel" />
-                </GridContainer>
-                <PanelContainer Name="ContainerDivider" Visible="false" StyleClasses="LowDivider" />
-                <BoxContainer Name="ChemicalsInWaterBox" Visible="false" Orientation="Horizontal" Margin="5">
-                    <RichTextLabel Name="ChemicalsInWaterLabel" SetWidth="290" />
-                </BoxContainer>
-                <PanelContainer Name="ChemicalsInWaterDivider" Visible="false" StyleClasses="LowDivider" />
-                <BoxContainer Name="EnvironmentBox" Visible="false" Orientation="Horizontal" Margin="5">
-                    <RichTextLabel Name="EnvironmentLabel" SetWidth="290" />
-                </BoxContainer>
-                <PanelContainer Name="EnvironmentDivider" Visible="false" StyleClasses="LowDivider" />
-                <BoxContainer Name="ProduceBox" Visible="false" Orientation="Horizontal" Margin="5">
-                    <RichTextLabel Name="ProduceLabel" SetWidth="290" />
-                </BoxContainer>
-                <PanelContainer Name="ProduceDivider" Visible="false" StyleClasses="LowDivider" />
-                <Button Name="Print"
-                    TextAlign="Center"
-                    HorizontalExpand="True"
-                    Access="Public"
-                    Disabled="True"
-                    Margin="0 5 0 0"
-                    Text="{Loc 'plant-analyzer-print'}" />
+    xmlns:controls="using:Content.Client.UserInterface.Controls"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    x:Class="Content.Pirate.Client.Botany.PlantAnalyzer.PlantAnalyzerWindow"
+    Title="{Loc 'plant-analyzer-interface-title'}"
+    MinSize="360 560"
+    MaxSize="360 1000"
+    Resizable="True">
+
+    <BoxContainer Orientation="Vertical" Margin="8" VerticalExpand="True" HorizontalExpand="True">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <PanelContainer MinSize="96 96" SetSize="96 96">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#181818" />
+                </PanelContainer.PanelOverride>
+                <SpriteView Name="SeedSprite" SetSize="96 96" Scale="3 3" OverrideDirection="South" />
+                <TextureRect Name="OutOfRangeSprite" SetSize="96 96" Visible="False" Stretch="KeepAspectCentered" TexturePath="/Textures/Interface/Misc/health_analyzer_out_of_range.png" />
+            </PanelContainer>
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8 0 0 0">
+                <Label Name="StatusLabel" Text="" />
+                <Label Name="SeedNameLabel" HorizontalExpand="True" Text="{Loc 'plant-analyzer-na'}" />
+                <Label Name="WarningIndicator" Text="" FontColorOverride="#F7D117" Visible="False" />
+                <Label Name="HarvestReadyIndicator" Text="" FontColorOverride="#7CFC00" Visible="False" />
+                <Label Name="MutatingIndicator" Text="{Loc 'plant-analyzer-mutating'}" FontColorOverride="#00FF5F" Visible="False" />
             </BoxContainer>
         </BoxContainer>
-    </ScrollContainer>
+
+        <PanelContainer StyleClasses="LowDivider" Margin="0 4 0 4" />
+
+        <GridContainer Columns="3" HorizontalExpand="True" VSeparationOverride="4">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 4 0">
+                <Label Text="{Loc 'plant-analyzer-health'}" Align="Center" VAlign="Center" />
+                <PanelContainer HorizontalExpand="True" SetHeight="20">
+                    <ProgressBar Name="HealthBar"
+                        MinValue="0"
+                        HorizontalExpand="True"
+                        VerticalExpand="True" />
+                    <Label Name="HealthBarLabel"
+                        Text="{Loc 'plant-analyzer-na'}"
+                        Align="Center"
+                        VAlign="Center"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        FontColorOverride="#FFFFFF"
+                        FontColorShadowOverride="#000000"
+                        ShadowOffsetXOverride="1"
+                        ShadowOffsetYOverride="1" />
+                </PanelContainer>
+            </BoxContainer>
+
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 4 0">
+                <Label Text="{Loc 'plant-analyzer-water'}" Align="Center" VAlign="Center" />
+                <PanelContainer HorizontalExpand="True" SetHeight="20">
+                    <ProgressBar Name="WaterBar"
+                        MinValue="0"
+                        MaxValue="100"
+                        HorizontalExpand="True"
+                        VerticalExpand="True" />
+                    <Label Name="WaterBarLabel"
+                        Text="{Loc 'plant-analyzer-na'}"
+                        Align="Center"
+                        VAlign="Center"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        FontColorOverride="#FFFFFF" />
+                </PanelContainer>
+            </BoxContainer>
+
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label Text="{Loc 'plant-analyzer-nutrition'}" Align="Center" VAlign="Center" />
+                <PanelContainer HorizontalExpand="True" SetHeight="20">
+                    <ProgressBar Name="NutritionBar"
+                        MinValue="0"
+                        MaxValue="100"
+                        HorizontalExpand="True"
+                        VerticalExpand="True" />
+                    <Label Name="NutritionBarLabel"
+                        Text="{Loc 'plant-analyzer-na'}"
+                        Align="Center"
+                        VAlign="Center"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        FontColorOverride="#FFFFFF" />
+                </PanelContainer>
+            </BoxContainer>
+        </GridContainer>
+
+        <PanelContainer StyleClasses="LowDivider" Margin="0 4 0 4" />
+
+        <GridContainer Columns="4" HorizontalExpand="True" VSeparationOverride="2">
+            <Button
+                Name="ConditionButton"
+                Text="{Loc 'plant-analyzer-tab-condition'}"
+                MinWidth="60"
+                MinHeight="30"
+                HorizontalExpand="True"
+                StyleClasses="OpenRight" />
+            <Button
+                Name="GeneticsButton"
+                Text="{Loc 'plant-analyzer-tab-genetics'}"
+                MinWidth="60"
+                MinHeight="30"
+                HorizontalExpand="True"
+                StyleClasses="OpenBoth" />
+            <Button
+                Name="TraitsButton"
+                Text="{Loc 'plant-analyzer-tab-traits'}"
+                MinWidth="60"
+                MinHeight="30"
+                HorizontalExpand="True"
+                StyleClasses="OpenBoth" />
+            <Button
+                Name="ChemistryButton"
+                Text="{Loc 'plant-analyzer-tab-chemistry'}"
+                MinWidth="60"
+                MinHeight="30"
+                HorizontalExpand="True"
+                StyleClasses="OpenLeft" />
+        </GridContainer>
+
+        <PanelContainer StyleClasses="LowDivider" Margin="0 4 0 4" />
+
+        <BoxContainer Name="ModeTabs" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" >
+            <ScrollContainer Name="ConditionContainer" VerticalExpand="True" HorizontalExpand="True" ReserveScrollbarSpace="True" HScrollEnabled="False">
+                <BoxContainer Orientation="Vertical" Margin="8" VerticalExpand="True" HorizontalExpand="True">
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" >
+                            <PanelContainer HorizontalExpand="True" >
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#3e221f" />
+                                </PanelContainer.PanelOverride>
+                                <Label Text="{Loc 'plant-analyzer-risk-meters'}" FontColorOverride="#CCCCCC" Margin="8 6 8 6" />
+                            </PanelContainer>
+                            <GridContainer Columns="2" HorizontalExpand="True" VSeparationOverride="4" Margin="8 8 8 8">
+                                <Label Text="{Loc 'plant-analyzer-pests'}" HorizontalExpand="True" />
+                                <PanelContainer HorizontalExpand="True" SetHeight="20">
+                                    <ProgressBar Name="PestBar" MinValue="0" MaxValue="10" HorizontalExpand="True" VerticalExpand="True" />
+                                    <Label Name="PestBarLabel" Text="{Loc 'plant-analyzer-na'}" Align="Center" VAlign="Center" HorizontalExpand="True" VerticalExpand="True" FontColorOverride="#FFFFFF" />
+                                </PanelContainer>
+
+                                <Label Text="{Loc 'plant-analyzer-toxin'}" HorizontalExpand="True" />
+                                <PanelContainer HorizontalExpand="True" SetHeight="20">
+                                    <ProgressBar Name="ToxinBar" MinValue="0" MaxValue="100" HorizontalExpand="True" VerticalExpand="True" />
+                                    <Label Name="ToxinBarLabel" Text="{Loc 'plant-analyzer-na'}" Align="Center" VAlign="Center" HorizontalExpand="True" VerticalExpand="True" FontColorOverride="#FFFFFF" />
+                                </PanelContainer>
+
+                                <Label Text="{Loc 'plant-analyzer-weeds'}" HorizontalExpand="True" />
+                                <PanelContainer HorizontalExpand="True" SetHeight="20">
+                                    <ProgressBar Name="WeedBar" MinValue="0" MaxValue="10" HorizontalExpand="True" VerticalExpand="True" />
+                                    <Label Name="WeedBarLabel" Text="{Loc 'plant-analyzer-na'}" Align="Center" VAlign="Center" HorizontalExpand="True" VerticalExpand="True" FontColorOverride="#FFFFFF" />
+                                </PanelContainer>
+                            </GridContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                            <PanelContainer HorizontalExpand="True">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#806c38" />
+                                </PanelContainer.PanelOverride>
+                                <Label Text="{Loc 'plant-analyzer-warnings'}" FontColorOverride="#CCCCCC" Margin="8 6 8 6" />
+                            </PanelContainer>
+                            <PanelContainer HorizontalExpand="True" Margin="8 8 8 8">
+                                <BoxContainer Name="WarningsList" Orientation="Vertical" HorizontalExpand="True" />
+                            </PanelContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </ScrollContainer>
+            <ScrollContainer Name="GeneticsContainer" VerticalExpand="True" HorizontalExpand="True" Visible="False" ReserveScrollbarSpace="True" HScrollEnabled="False">
+                <BoxContainer Orientation="Vertical" Margin="8" VerticalExpand="True" HorizontalExpand="True">
+
+                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer HorizontalExpand="True" Margin="0 0 2 0">
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                            </PanelContainer.PanelOverride>
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8 8 8 8">
+                                <GridContainer Columns="2" HorizontalExpand="True" VSeparationOverride="4">
+                                    <Label Text="{Loc 'plant-analyzer-potency'}" HorizontalExpand="True" />
+                                    <Label Name="PotencyLabel" Text="{Loc 'plant-analyzer-na'}" Align="Right" />
+                                    <Label Text="{Loc 'plant-analyzer-yield'}" HorizontalExpand="True" />
+                                    <Label Name="YieldMultiplierLabel" Text="{Loc 'plant-analyzer-na'}" Align="Right" />
+                                </GridContainer>
+                            </BoxContainer>
+                        </PanelContainer>
+
+                        <PanelContainer HorizontalExpand="True">
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                            </PanelContainer.PanelOverride>
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8 8 8 8">
+                                <GridContainer Columns="2" HorizontalExpand="True" VSeparationOverride="4">
+                                    <Label Text="{Loc 'plant-analyzer-maturation'}" HorizontalExpand="True" />
+                                    <Label Name="MaturationLabel" Text="{Loc 'plant-analyzer-na'}" Align="Right" />
+                                    <Label Text="{Loc 'plant-analyzer-production'}" HorizontalExpand="True" />
+                                    <Label Name="ProductionLabel" Text="{Loc 'plant-analyzer-na'}" Align="Right" />
+                                </GridContainer>
+                            </BoxContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+
+                    <!-- Pirate: retain growth and environmental details. -->
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8">
+                            <GridContainer Columns="2" HorizontalExpand="True" VSeparationOverride="4">
+                                <Label Text="{Loc 'plant-analyzer-age'}" HorizontalExpand="True" />
+                                <Label Name="AgeLabel" Align="Right" />
+                                <Label Text="{Loc 'plant-analyzer-lifespan'}" HorizontalExpand="True" />
+                                <Label Name="LifespanLabel" Align="Right" />
+                                <Label Text="{Loc 'plant-analyzer-endurance'}" HorizontalExpand="True" />
+                                <Label Name="EnduranceLabel" Align="Right" />
+                                <Label Text="{Loc 'plant-analyzer-water-consumption'}" HorizontalExpand="True" />
+                                <Label Name="WaterConsumptionLabel" Align="Right" />
+                                <Label Text="{Loc 'plant-analyzer-nutrient-consumption'}" HorizontalExpand="True" />
+                                <Label Name="NutrientConsumptionLabel" Align="Right" />
+                                <Label Text="{Loc 'plant-analyzer-ideal-light'}" HorizontalExpand="True" />
+                                <Label Name="IdealLightLabel" Align="Right" />
+                            </GridContainer>
+                            <Label Text="{Loc 'plant-analyzer-products'}" Margin="0 6 0 0" />
+                            <RichTextLabel Name="ProductsLabel" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <!-- Resistances -->
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                            <PanelContainer HorizontalExpand="True">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#2b223d" />
+                                </PanelContainer.PanelOverride>
+                                <Label Text="{Loc 'plant-analyzer-resistances'}" FontColorOverride="#CCCCCC" Margin="8 6 8 6" />
+                            </PanelContainer>
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8 8 8 8">
+                                <GridContainer Columns="2" HorizontalExpand="True" VSeparationOverride="4">
+                                    <Label Text="{Loc 'plant-analyzer-resist-pest'}" HorizontalExpand="True" />
+                                    <Label Name="PestResistanceLabel" Text="{Loc 'plant-analyzer-na'}" Align="Right" />
+                                    <Label Text="{Loc 'plant-analyzer-resist-toxin'}" HorizontalExpand="True" />
+                                    <Label Name="ToxinResistanceLabel" Text="{Loc 'plant-analyzer-na'}" Align="Right" />
+                                    <Label Text="{Loc 'plant-analyzer-resist-weed'}" HorizontalExpand="True" />
+                                    <Label Name="WeedResistanceLabel" Text="{Loc 'plant-analyzer-na'}" Align="Right" />
+                                </GridContainer>
+                            </BoxContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <!-- Environment Requirements -->
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                            <PanelContainer HorizontalExpand="True">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#27272b" />
+                                </PanelContainer.PanelOverride>
+                                <Label Text="{Loc 'plant-analyzer-environment'}" FontColorOverride="#CCCCCC" Margin="8 6 8 6" />
+                            </PanelContainer>
+                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8 8 8 8">
+                                <GridContainer Columns="2" HorizontalExpand="True" VSeparationOverride="4">
+                                    <Label Text="{Loc 'plant-analyzer-ideal-temperature'}" HorizontalExpand="True" />
+                                    <Label Name="IdealTemperatureLabel" Text="{Loc 'plant-analyzer-na'}" Align="Right" />
+                                    <Label Text="{Loc 'plant-analyzer-ideal-pressure'}" HorizontalExpand="True" />
+                                    <Label Name="IdealPressureLabel" Text="{Loc 'plant-analyzer-na'}" Align="Right" />
+                                </GridContainer>
+                            </BoxContainer>
+                            <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                                </PanelContainer.PanelOverride>
+                                <BoxContainer Orientation="Vertical" HorizontalExpand="True" >
+                                    <PanelContainer HorizontalExpand="True">
+                                        <PanelContainer.PanelOverride>
+                                            <gfx:StyleBoxFlat BackgroundColor="#27272b" />
+                                        </PanelContainer.PanelOverride>
+                                        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 6 8 6">
+                                            <Label Text="{Loc 'plant-analyzer-consumed-gases'}" FontColorOverride="#CCCCCC" HorizontalExpand="True" />
+                                            <Label Name="GeneticsConsumedGasesTotalLabel" Text="0" FontColorOverride="#CCCCCC" Align="Right" />
+                                        </BoxContainer>
+                                    </PanelContainer>
+                                    <BoxContainer Name="GeneticsConsumedGasesList" Orientation="Vertical" HorizontalExpand="True" />
+                                </BoxContainer>
+                            </PanelContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <!-- Species Mutation -->
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                            <PanelContainer HorizontalExpand="True">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#2b223d" />
+                                </PanelContainer.PanelOverride>
+                                <Label Text="{Loc 'plant-analyzer-species-mutation'}" FontColorOverride="#CCCCCC" Margin="8 6 8 6" />
+                            </PanelContainer>
+                            <PanelContainer HorizontalExpand="True" Margin="8 8 8 8">
+                                <RichTextLabel Name="MutationTargetsLabel" Text="{Loc 'plant-analyzer-na'}" HorizontalExpand="True" />
+                            </PanelContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+
+                </BoxContainer>
+            </ScrollContainer>
+            <ScrollContainer Name="TraitsContainer" VerticalExpand="True" HorizontalExpand="True" Visible="False" ReserveScrollbarSpace="True" HScrollEnabled="False">
+                <BoxContainer Orientation="Vertical" Margin="8" VerticalExpand="True" HorizontalExpand="True">
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                            <PanelContainer HorizontalExpand="True">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#27272b" />
+                                </PanelContainer.PanelOverride>
+                                <Label Text="{Loc 'plant-analyzer-traits'}" FontColorOverride="#CCCCCC" Margin="8 6 8 6" />
+                            </PanelContainer>
+                            <BoxContainer Name="TraitsList" Orientation="Vertical" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </ScrollContainer>
+            <ScrollContainer Name="ChemistryContainer" VerticalExpand="True" HorizontalExpand="True" Visible="False" ReserveScrollbarSpace="True" HScrollEnabled="False">
+                <BoxContainer Orientation="Vertical" Margin="8" VerticalExpand="True" HorizontalExpand="True">
+                    <!-- Pirate: retain the tray's unabsorbed reagents. -->
+                    <PanelContainer Name="SoilReagentsPanel" HorizontalExpand="True" Margin="0 2 0 0" Visible="False">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="8">
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                <Label Text="{Loc 'plant-analyzer-soil-reagents'}" HorizontalExpand="True" />
+                                <Label Name="SoilReagentsTotalLabel" Align="Right" />
+                            </BoxContainer>
+                            <BoxContainer Name="SoilReagentsList" Orientation="Vertical" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </PanelContainer>
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="2">
+                            <PanelContainer HorizontalExpand="True">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#27272b" />
+                                </PanelContainer.PanelOverride>
+                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 6 8 6">
+                                    <Label Text="{Loc 'plant-analyzer-total-reagents'}" FontColorOverride="#CCCCCC" HorizontalExpand="True" />
+                                    <Label Name="TotalReagentsLabel" Text="0u" FontColorOverride="#CCCCCC" Align="Right" />
+                                </BoxContainer>
+                            </PanelContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="2">
+                            <PanelContainer HorizontalExpand="True" Margin="0 0 0 2">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#223022" />
+                                </PanelContainer.PanelOverride>
+                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 6 8 6">
+                                    <Label Text="{Loc 'plant-analyzer-base-reagents'}" FontColorOverride="#CCCCCC" HorizontalExpand="True" />
+                                    <Label Name="InherentReagentsTotalLabel" Text="0u" FontColorOverride="#CCCCCC" Align="Right" />
+                                </BoxContainer>
+                            </PanelContainer>
+                            <BoxContainer Name="InherentReagentsList" Orientation="Vertical" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="2">
+                            <PanelContainer HorizontalExpand="True" Margin="0 0 0 2">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#2b223d" />
+                                </PanelContainer.PanelOverride>
+                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 6 8 6">
+                                    <Label Text="{Loc 'plant-analyzer-additional-reagents'}" FontColorOverride="#CCCCCC" HorizontalExpand="True" />
+                                    <Label Name="MutatedReagentsTotalLabel" Text="0u" FontColorOverride="#CCCCCC" Align="Right" />
+                                </BoxContainer>
+                            </PanelContainer>
+                            <BoxContainer Name="MutatedReagentsList" Orientation="Vertical" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="2">
+                            <PanelContainer HorizontalExpand="True" Margin="0 0 0 2">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#1f323e" />
+                                </PanelContainer.PanelOverride>
+                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 6 8 6">
+                                    <Label Text="{Loc 'plant-analyzer-consumed-gases'}" FontColorOverride="#CCCCCC" HorizontalExpand="True" />
+                                    <Label Name="ConsumedGasesTotalLabel" Text="0" FontColorOverride="#CCCCCC" Align="Right" />
+                                </BoxContainer>
+                            </PanelContainer>
+                            <BoxContainer Name="ConsumedGasesList" Orientation="Vertical" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <PanelContainer HorizontalExpand="True" Margin="0 2 0 0">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#1f1f22" BorderColor="#2f2f33" BorderThickness="1" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="2">
+                            <PanelContainer HorizontalExpand="True" Margin="0 0 0 2">
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#3e221f" />
+                                </PanelContainer.PanelOverride>
+                                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="8 6 8 6">
+                                    <Label Text="{Loc 'plant-analyzer-exuded-gases'}" FontColorOverride="#CCCCCC" HorizontalExpand="True" />
+                                    <Label Name="ExudedGasesTotalLabel" Text="0" FontColorOverride="#CCCCCC" Align="Right" />
+                                </BoxContainer>
+                            </PanelContainer>
+                            <BoxContainer Name="ExudedGasesList" Orientation="Vertical" HorizontalExpand="True" />
+                        </BoxContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </ScrollContainer>
+        </BoxContainer>
+        <Button Name="PrintButton" Text="{Loc 'plant-analyzer-print'}" Disabled="True" HorizontalExpand="True" Margin="0 4 0 0" />
+    </BoxContainer>
 </controls:FancyWindow>

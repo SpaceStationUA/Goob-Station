@@ -580,6 +580,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
             return;
 
+        // Pirate: Experiments can whisper, but cannot speak normally in soft critical.
+        if (_mobStateSystem.IsSoftCritical(source))
+        {
+            SendEntityWhisper(source, originalMessage, range, null, nameOverride, language, hideLog, ignoreActionBlocker, colorOverride);
+            return;
+        }
+
         // The Original Message [-] Einstein Engines - Language
         // Goob - Fix (malformed markup throws)
         var message = FormattedMessage.RemoveMarkupPermissive(originalMessage);  // Remove markup before transforming.

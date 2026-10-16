@@ -146,31 +146,18 @@ marking-AntennaShort-nub = Вусики
 
 # Хвіст
 marking-LunaWings = Крила (Місячний метелик)
-
 marking-MothBee = Крила (Джміль)
-
 marking-MothBeetleTail = Крила (Хрущ)
-
 marking-MothFirefly = Крила (підкладка світлячка)
-
 marking-MothFireflyOverlay = Світлячок (накладення)
-
 marking-MothGlasswing = Крила (Склянокрилі)
-
 marking-MothRhinoBeetle = Крила (Жук-носоріг)
-
 marking-MothSnoth = Крила (Снот)
-
 marking-MothTrueButterfly = Крила (Райдужні)
-
 marking-WingsBackstabbed = Крила (удар в спину)
-
 marking-WingsFly = Крила (Муха)
-
 marking-WingsDragonfly = Крила (Бабка)
-
 marking-WingsLanternfly = Крила (Ліхтарниця)
-
 marking-LunaWings-luna_neck = Шия
 marking-LunaWings-luna_primary_front = Крила
 marking-LunaWings-luna_secondary_front = Плями
@@ -216,7 +203,6 @@ marking-WingsPyrausta-pyr_inner_front = Внутрішнє крило
 marking-WingsPyrausta-pyr_stripes_front = Смуги
 
 # Варіації хвоста з upstream
-
 marking-MothWingsDefault-default_neck = Шия
 marking-MothWingsDefault-default_primary_front = Крило
 marking-MothWingsDefault-default_secondary_front = Плями

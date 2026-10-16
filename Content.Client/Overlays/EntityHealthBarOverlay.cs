@@ -30,7 +30,7 @@ public sealed class EntityHealthBarOverlay : Overlay
     private readonly IEntityManager _entManager;
     private readonly IPrototypeManager _prototype;
 
-    private readonly TransformSystem _transform;
+    private readonly SharedTransformSystem _transform;
     private readonly MobStateSystem _mobStateSystem;
     private readonly MobThresholdSystem _mobThresholdSystem;
     private readonly StatusIconSystem _statusIconSystem;
@@ -48,7 +48,7 @@ public sealed class EntityHealthBarOverlay : Overlay
     {
         _entManager = entManager;
         _prototype = prototype;
-        _transform = _entManager.System<TransformSystem>();
+        _transform = _entManager.System<SharedTransformSystem>();
         _mobStateSystem = _entManager.System<MobStateSystem>();
         _mobThresholdSystem = _entManager.System<MobThresholdSystem>();
         _statusIconSystem = _entManager.System<StatusIconSystem>();
@@ -94,7 +94,7 @@ public sealed class EntityHealthBarOverlay : Overlay
             var bounds = _entManager.GetComponentOrNull<StatusIconComponent>(uid)?.Bounds ?? _spriteSystem.GetLocalBounds((uid, spriteComponent));
             var elevationOffset = _zLevels.GetRenderScreenOffset(uid); // Pirate: multiz
             Angle elevationRotation = rotation * -1; // Pirate: multiz
-            var worldPos = _transform.GetRenderWorldPosition((uid, xform)) + elevationRotation.RotateVec(elevationOffset); // Pirate: multiz
+            var worldPos = _transform.GetWorldPosition(xform, xformQuery) + elevationRotation.RotateVec(elevationOffset); // Pirate: multiz
 
             if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
                 continue;
@@ -150,17 +150,21 @@ public sealed class EntityHealthBarOverlay : Overlay
             if (dmg.HealthBarThreshold != null && totalDamage < dmg.HealthBarThreshold) // GoobStation
                 return null;
 
-            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds) &&
+            // Pirate: soft critical is the first injury threshold for species that support it.
+            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.SoftCritical, out var threshold, thresholds) &&
+                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out threshold, thresholds) &&
                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholds))
                 return (1, false);
 
             var ratio = 1 - ((FixedPoint2)(totalDamage / threshold)).Float(); // GoobStation
-            return (ratio, false);
+            return (Math.Clamp(ratio, 0f, 1f), false); // Pirate
         }
 
-        if (_mobStateSystem.IsCritical(uid, component))
+        if (_mobStateSystem.IsCritical(uid, component) || _mobStateSystem.IsSoftCritical(uid, component)) // Pirate
         {
-            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold, thresholds) ||
+            // Pirate: use the full soft-critical-to-death range for critical progress.
+            if ((!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.SoftCritical, out var critThreshold, thresholds) &&
+                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out critThreshold, thresholds)) ||
                 !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold, thresholds))
             {
                 return (1, true);
@@ -168,7 +172,7 @@ public sealed class EntityHealthBarOverlay : Overlay
 
             var ratio = 1 - ((totalDamage - critThreshold) / (deadThreshold - critThreshold)).Value.Float(); // GoobStation
 
-            return (ratio, true);
+            return (Math.Clamp(ratio, 0f, 1f), true); // Pirate
         }
 
         return (0, true);

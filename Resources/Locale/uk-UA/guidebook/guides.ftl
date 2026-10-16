@@ -68,7 +68,6 @@ guide-entry-foods = Продукти харчування
 guide-entry-biological = Біологічний
 guide-entry-others = Інше
 guide-entry-botanical = Ботанічні препарати
-
 guide-entry-reverse-engineering = Реінжиніринг
 guide-entry-rules = Правила сервера
 guide-entry-rules-core-only = Тільки основний набір правил

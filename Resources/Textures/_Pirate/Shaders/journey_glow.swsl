@@ -1,0 +1,19 @@
+light_mode unshaded;
+blend_mode add;
+
+// Gold crystals on the near layers. Additive, so the dark background contributes nothing and
+// the bright facets light up over whatever is behind them. A small halo is taken from the
+// neighbouring texels, which is what turns a sharp facet into something that seems to glow
+// rather than just be bright.
+void fragment() {
+    highp vec4 c = texture(TEXTURE, UV) * COLOR;
+    highp vec2 px = TEXTURE_PIXEL_SIZE * 2.0;
+    highp vec3 halo = vec3(0.0);
+    halo += texture(TEXTURE, UV + vec2( px.x, 0.0)).rgb;
+    halo += texture(TEXTURE, UV + vec2(-px.x, 0.0)).rgb;
+    halo += texture(TEXTURE, UV + vec2(0.0,  px.y)).rgb;
+    halo += texture(TEXTURE, UV + vec2(0.0, -px.y)).rgb;
+    halo *= 0.25;
+    highp vec3 rgb = (c.rgb + halo * 0.6) * 1.35;
+    COLOR = vec4(rgb * c.a, c.a);
+}

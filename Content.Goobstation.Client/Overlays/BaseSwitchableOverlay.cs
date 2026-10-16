@@ -9,11 +9,11 @@ using Content.Client._Pirate.Photo; // Pirate: camera
 
 namespace Content.Goobstation.Client.Overlays;
 
-public sealed class BaseSwitchableOverlay<TComp> : Overlay where TComp : SwitchableVisionOverlayComponent
+public sealed partial class BaseSwitchableOverlay<TComp> : Overlay where TComp : SwitchableVisionOverlayComponent
 {
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!; // Pirate: camera
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IEntityManager _entityManager = default!; // Pirate: camera
 
     public override bool RequestScreenTexture => true;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;

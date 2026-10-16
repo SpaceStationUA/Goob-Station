@@ -4,7 +4,6 @@ barbed-contact-damage = Колючий дріт ріже вас.
 burned-popup-text = Ви обпеклися!
 ingot-heated-popup-text = Злиток нагрівається.
 ingot-cooled-popup-text = Злиток охолонув.
-
 materials-unit-use = одиниця
 stack-barbwire = колючий дріт
 stack-bracing = кріплення
@@ -17,7 +16,6 @@ stack-rev-engine-parts = деталі двигуна
 stack-rev-ball-bearings = кулькові підшипники
 pirate-durability-repair-stack = тестовий стос ремонту міцності
 pirate-quality-integration-stack = тестовий стос якості
-
 construction-graph-tag-egg-sack = яйцевий мішок
 construction-graph-tag-part-metal-container = металева ємність
 construction-graph-tag-recharging-board = плата зарядника

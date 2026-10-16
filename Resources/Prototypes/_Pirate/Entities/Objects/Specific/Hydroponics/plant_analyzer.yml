@@ -1,38 +1,72 @@
 - type: entity
   id: PlantAnalyzer
-  parent: [BaseItem, PowerCellSlotSmallItem]
+  parent: [ BaseHandheldComputer ]
   name: plant analyzer
-  description: A scanner used to evaluate a plant's various areas of growth, genetic traits and chemicals.
+  description: A hand-held plant scanner capable of analyzing plants and seeds.
   components:
-  - type: PowerCellDraw
-    drawRate: 0.8
-  - type: ToggleCellDraw
-  - type: ActivatableUIRequiresPowerCell
   - type: Sprite
-    sprite: _Pirate/Objects/Specific/Hydroponics/plant_analyzer.rsi
+    sprite: _Pirate/Objects/Devices/plantanalyzer.rsi
+    state: icon
     layers:
     - state: icon
     - state: analyzer
       shader: unshaded
+      visible: true
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Item
-    storedRotation: -90
-  - type: Tag
-    tags:
-    - PlantAnalyzer
+    heldPrefix: analyzer
   - type: ActivatableUI
     key: enum.PlantAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
       enum.PlantAnalyzerUiKey.Key:
         type: PlantAnalyzerBoundUserInterface
-  - type: ItemToggle
-    onUse: false
   - type: PlantAnalyzer
-  - type: GuideHelp
-    guides:
-    - Botany
-    - Chemicals
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: PowerCellDraw
+    drawRate: 1.2
+  - type: ToggleCellDraw
+  - type: ActivatableUIRequiresPowerCell
+  - type: Appearance
+  - type: Tag
+    tags:
+    - PlantAnalyzer
 
+- type: entity
+  id: PlantAnalyzerDebug
+  # Pirate: the handheld-computer base requires a battery even for debug scans.
+  parent: [ BaseItem ]
+  name: plant analyzer (debug)
+  description: A debug plant scanner that does not draw power and scans instantly.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Devices/plantanalyzer.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: analyzer
+      shader: unshaded
+      visible: true
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Item
+    heldPrefix: analyzer
+  - type: ActivatableUI
+    key: enum.PlantAnalyzerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.PlantAnalyzerUiKey.Key:
+        type: PlantAnalyzerBoundUserInterface
+  - type: PlantAnalyzer
+    settings:
+      scanDelay: 0
+      maxScanRange: 999
+  - type: Appearance
+  - type: Tag
+    tags:
+    - PlantAnalyzer
+
+# Pirate: retain the report paper.
 - type: entity
   name: plant analyzer report
   parent: Paper

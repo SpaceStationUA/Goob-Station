@@ -85,6 +85,7 @@
   description: This can be used to check psionics registry records. Only epistemics can modify them.
   components:
   - type: PsionicsRecordsConsole
+  - type: RecordConsoleSounds
   - type: UserInterface
     interfaces:
       enum.PsionicsRecordsConsoleKey.Key:

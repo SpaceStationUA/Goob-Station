@@ -125,6 +125,9 @@ public sealed partial class CriminalRecordsConsoleSystem
             officer = tryGetIdentityShortInfoEvent.Title;
 
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
+        _logs.Add(key.Value, Content.Shared._Pirate.StationRecords.RecordLogBook.Security, // Pirate: record history
+            Content.Shared._Pirate.StationRecords.RecordLogKind.StatusChange, // Pirate: record history
+            Loc.GetString($"criminal-records-status-{msg.Status.ToString().ToLower()}"), reason ?? string.Empty, msg.Actor, msg.Actor, msg.Status.ToString()); // Pirate: record history
 
         (string, object)[] args;
         if (reason != null)

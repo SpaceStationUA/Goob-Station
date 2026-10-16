@@ -9,23 +9,24 @@
 //   VHS noise and static specks, drawn over the surveillance camera feed in
 //   alpha-blend mode. The feed remains visible through the clear parts.
 // - All "intensity" uniforms control artifact opacity/darkness, 0 = off.
+// Pirate: defaults live in the shader prototype; GLES forbids uniform initializers.
 
-uniform highp float scanlines_opacity = 0.35;
-uniform highp float scanlines_width = 0.25;
-uniform highp float grille_opacity = 0.15;
-uniform highp vec2 resolution = vec2(180.0, 160.0);
+uniform highp float scanlines_opacity;
+uniform highp float scanlines_width;
+uniform highp float grille_opacity;
+uniform highp vec2 resolution;
 
-uniform highp float roll_speed = 8.0;
-uniform highp float roll_size = 15.0;
-uniform highp float roll_variation = 1.8;
-uniform highp float roll_intensity = 0.10;
+uniform highp float roll_speed;
+uniform highp float roll_size;
+uniform highp float roll_variation;
+uniform highp float roll_intensity;
 
-uniform highp float noise_opacity = 0.25;
-uniform highp float noise_speed = 5.0;
-uniform highp float static_noise_intensity = 0.05;
+uniform highp float noise_opacity;
+uniform highp float noise_speed;
+uniform highp float static_noise_intensity;
 
-uniform highp float vignette_intensity = 0.4;
-uniform highp float vignette_opacity = 0.5;
+uniform highp float vignette_intensity;
+uniform highp float vignette_opacity;
 
 highp vec2 rnd(highp vec2 uv)
 {

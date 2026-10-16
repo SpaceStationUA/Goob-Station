@@ -81,6 +81,7 @@ public sealed class KnowledgePrototypeIntegrityTest
             ["Cyborg"] = "Human",
             ["Diona"] = "Diona",
             ["Dwarf"] = "Dwarf",
+            ["Experiment"] = "Human",
             ["Felinid"] = "Human",
             ["Feroxi"] = "Human",
             ["Gingerbread"] = "Human",

@@ -11,44 +11,33 @@
 marking-VulpEar-vulp = Вуха
 marking-VulpEar-vulp-inner = Внутрішня частина
 marking-VulpEar = Стандартні
-
 marking-VulpEarFade-vulp = Вуха
 marking-VulpEarFade-vulp-fade = Градієнт
 marking-VulpEarFade = Стандартні (градієнт)
-
 marking-VulpEarJackal-jackal = Вуха
 marking-VulpEarJackal-jackal-inner = Внутрішня частина
 marking-VulpEarJackal = Шакал
-
 marking-VulpEarTerrier-terrier = Вуха
 marking-VulpEarTerrier-terrier-inner = Внутрішня частина
 marking-VulpEarTerrier = Тер'єр
-
 marking-VulpEarWolf-wolf = Вуха
 marking-VulpEarWolf-wolf-inner = Внутрішня частина
 marking-VulpEarWolf = Вовчі
-
 marking-VulpEarFennec-fennec = Вуха
 marking-VulpEarFennec-fennec-inner = Внутрішня частина
 marking-VulpEarFennec = Фенек
-
 marking-VulpEarFox-fox = Вуха
 marking-VulpEarFox = Лисячі
-
 marking-VulpEarOtie-otie = Вуха
 marking-VulpEarOtie-otie-inner = Внутрішня частина
 marking-VulpEarOtie = Оті
-
 marking-VulpEarTajaran-msai = Вуха
 marking-VulpEarTajaran-msai-inner = Внутрішня частина
 marking-VulpEarTajaran = Таджаранські
-
 marking-VulpEarShock-shock = Вуха
 marking-VulpEarShock = Шок
-
 marking-VulpEarCoyote-coyote = Вуха
 marking-VulpEarCoyote = Койот
-
 marking-VulpEarDalmatian-dalmatian = Вуха
 marking-VulpEarDalmatian = Далматинські
 
@@ -56,46 +45,35 @@ marking-VulpEarDalmatian = Далматинські
 marking-VulpSnoutAlt-muzzle_alt = Морда
 marking-VulpSnoutAlt-nose = Ніс
 marking-VulpSnoutAlt = Морда (альтернативна)
-
 marking-VulpSnout-muzzle = Морда
 marking-VulpSnout-nose = Ніс
 marking-VulpSnout = Морда
-
 marking-VulpSnoutSharp-muzzle_sharp = Морда
 marking-VulpSnoutSharp-nose = Ніс
 marking-VulpSnoutSharp = Морда (гостра)
-
 marking-VulpSnoutFade-muzzle_fade = Морда
 marking-VulpSnoutFade-nose = Ніс
 marking-VulpSnoutFade = Морда (градієнт)
-
 marking-VulpSnoutNose-nose = Ніс
 marking-VulpSnoutNose = Ніс
-
 marking-VulpSnoutMask-mask = Маска
 marking-VulpSnoutMask-nose = Ніс
 marking-VulpSnoutMask = Маска
-
 marking-VulpSnoutVulpine-vulpine = Забарвлення
 marking-VulpSnoutVulpine-vulpine-lines = Лінії
 marking-VulpSnoutVulpine = Лисяча морда
-
 marking-VulpSnoutSwift-vulpine-lines = Лінії
 marking-VulpSnoutSwift = Свіфт
-
 marking-VulpSnoutBlaze-blaze = Блейз
 marking-VulpSnoutBlaze = Блейз
-
 marking-VulpSnoutPatch-patch = Пляма
 marking-VulpSnoutPatch = Патч
 
 ### Голова
 marking-VulpHeadTiger-tiger_head = Смуги
 marking-VulpHeadTiger = Тигрові смуги (голова)
-
 marking-VulpHeadTigerFace-tiger_face = Смуги
 marking-VulpHeadTigerFace = Тигрові смуги (морда)
-
 marking-VulpHeadSlash-slash = Слеш
 marking-VulpHeadSlash = Слеш
 
@@ -127,7 +105,6 @@ marking-VulpFacialHairRuff = Комір
 marking-VulpFacialHairElder = Старій
 marking-VulpFacialHairElderChin = Підборіддя старій
 marking-VulpFacialHairKita = Кіта
-
 marking-VulpEarSharp-vulp = Вуха вульпканіна (основа)
 marking-VulpEarSharp-vulp-sharp = Вуха вульпканіна (гострі)
 marking-VulpTail-vulp-fade = Хвіст вульпканіна (градієнт)
@@ -198,3 +175,25 @@ marking-VulpPointsFadeArms-points_fade-arms = Поінти (градієнт)
 marking-VulpPointsFadeArms = Поінти рук вульпканіна (градієнт)
 marking-VulpPointsSharpArms-points_sharp-arms = Поінти (гострі)
 marking-VulpPointsSharpArms = Поінти рук вульпканіна (гострі)
+marking-VulpEarSharp = Вульпканін (гострі)
+marking-VulpTail-vulp = Хвіст вульпканіна (основа)
+marking-VulpTail = Вульпканін
+marking-VulpTailLong-long = Довгий хвіст (основа)
+marking-VulpTailLong-long-tip = Довгий хвіст (кінчик)
+marking-VulpTailLong = Вульпканін довгий
+marking-VulpTailFox-fox = Хвіст лисиці (основа)
+marking-VulpTailFox = Вульпканін лисиця
+marking-VulpTailCoyote-coyote = Хвіст койота
+marking-VulpTailCoyote = Вульпканін койот
+marking-VulpTailHusky-husky-inner = Хвіст хаскі (внутрішній)
+marking-VulpTailHusky-husky-outer = Хвіст хаскі (зовнішній)
+marking-VulpTailHusky = Вульпканін хаскі
+marking-VulpTailFennec-fennec = Хвіст фенека
+marking-VulpTailFennec = Вульпканін фенек
+marking-VulpTailFluffy-fluffy = Пухнастий хвіст
+marking-VulpTailFluffy = Вульпканін пухнастий
+marking-VulpBellyCrest-belly_crest = Живіт
+marking-VulpBellyCrest = Гребінь живота вульпканіна
+marking-VulpBellyFull-belly_full = Живіт
+marking-VulpBellyFull = Живіт Вульпканіна 1
+marking-VulpBellyFox = Живіт Вульпканіна 2

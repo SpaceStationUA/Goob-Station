@@ -2,6 +2,7 @@
 // SPDX-FileCopyrightText: 2026 SpaceStationUA
 // SPDX-License-Identifier: MIT
 
+using System.Linq;
 using Content.Shared._Pirate.Character.Info;
 using Content.Shared._Pirate.Character.Info.Components;
 using Content.Shared.Mind;
@@ -21,7 +22,7 @@ public sealed partial class CharacterICInfoControl : Control
         RobustXamlLoader.Load(this);
     }
 
-    public void SetCharacter(EntityUid? target, IEntityManager entityManager, EntityUid viewer)
+    public void SetCharacter(EntityUid? target, IEntityManager entityManager, EntityUid viewer, CharacterInspectInfoEvent? info = null)
     {
         if (target == null)
         {
@@ -33,13 +34,16 @@ public sealed partial class CharacterICInfoControl : Control
         var mind = mindSystem.GetMind(target.Value);
         CharacterView.SetCharacter(
             target,
-            entityManager.System<SharedJobSystem>().MindTryGetJobName(mind, out var jobName)
+            info?.Job ?? (entityManager.System<SharedJobSystem>().MindTryGetJobName(mind, out var jobName)
                 ? jobName
-                : string.Empty,
+                : string.Empty),
             viewer);
 
         var characterInfo = entityManager.System<PirateSharedCharacterInfoSystem>();
-        var description = characterInfo.GetPublicDescription(target.Value);
+        var description = info == null
+            ? characterInfo.GetPublicDescription(target.Value)
+            : string.Join("\n", new[] { characterInfo.GetPhysicalDescription(target.Value), info.Personality }
+                .Where(text => !string.IsNullOrEmpty(text)));
         DescriptionSection.Visible = !string.IsNullOrEmpty(description);
         CharacterDescription.SetMessage(FormattedMessage.RemoveMarkupPermissive(description));
 

@@ -89,6 +89,10 @@
     - type: AnimationPlayer
     - type: Penetratable # Goobstation - Better snipers
       penetrateDamage: 10
+    - type: Tag # Pirate: allow Voidwalkers to pass through grilles.
+      tags:
+      - Structure
+      - Grille
 
 - type: entity
   id: ClockworkGrille

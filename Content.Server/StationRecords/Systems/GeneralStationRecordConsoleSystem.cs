@@ -16,6 +16,8 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using Content.Server._Pirate.StationRecords; // Pirate: records photos
+using Content.Shared._Pirate.StationRecords; // Pirate: records photos
 #endregion
 
 namespace Content.Server.StationRecords.Systems;
@@ -28,6 +30,9 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
     #region Pirate: records photos
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly RecordPortraitSystem _portraits = default!; // Pirate: records photos
+    [Dependency] private readonly RecordLogSystem _logs = default!; // Pirate: record history
+    private static readonly IReadOnlyDictionary<string, TimeSpan> EmptyPlayTimes = new Dictionary<string, TimeSpan>();
     #endregion
 
     public override void Initialize()
@@ -45,6 +50,14 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             subs.Event<GeneralRecordCreateRecord>(OnCreateRecord);
             subs.Event<GeneralRecordEditIdentity>(OnEditIdentity);
             subs.Event<GeneralRecordEditForensics>(OnEditForensics);
+            #endregion
+            #region Pirate: records photos
+            subs.Event<RecordPortraitPrintMessage>(OnPrintPortrait);
+            subs.Event<RecordPortraitUploadMessage>(OnUploadPortrait);
+            subs.Event<RecordPortraitStoreGeneratedMessage>(OnStoreGeneratedPortrait);
+            subs.Event<RecordLogAddNoteMessage>(OnAddLogNote);
+            subs.Event<RecordLogDeleteMessage>(OnDeleteLogEntry);
+            subs.Event<RecordLogPrintMessage>(OnPrintLog);
             #endregion
             subs.Event<DeleteStationRecord>(OnRecordDelete);
         });
@@ -92,6 +105,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
     private void OnKeySelected(Entity<GeneralStationRecordConsoleComponent> ent, ref SelectStationRecord msg)
     {
         ent.Comp.ActiveKey = msg.SelectedKey;
+        ent.Comp.SelectionRequest = msg.Request; // Pirate: records select
         UpdateUserInterface(ent);
     }
 
@@ -191,16 +205,11 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         _stationRecords.TryGetRecord<CriminalRecord>(key, out var criminalRecord);
 
         var age = Math.Clamp(msg.Age, speciesProto.MinAge, speciesProto.MaxAge);
-        var profile = BuildEditedProfile(generalRecord, criminalRecord, speciesProto.ID, age, msg.Gender);
-        var citizenship = !string.IsNullOrWhiteSpace(msg.Citizenship)
-                          && _prototypeManager.HasIndex<CitizenshipPrototype>(msg.Citizenship)
-            ? msg.Citizenship
-            : string.Empty;
-        var employer = !string.IsNullOrWhiteSpace(msg.Employer)
-                       && _prototypeManager.HasIndex<EmployerPrototype>(msg.Employer)
-            ? msg.Employer
-            : string.Empty;
-        profile = profile.WithCitizenship(citizenship).WithEmployer(employer);
+        var profile = BuildEditedProfile(generalRecord, _portraits.GetSnapshot(key), speciesProto.ID, age, msg.Gender);
+        var citizenship = NormalizeCitizenship(msg.Citizenship, profile);
+        profile = profile.WithCitizenship(citizenship);
+        var employer = NormalizeEmployer(msg.Employer, profile);
+        profile = profile.WithEmployer(employer);
 
         generalRecord.Species = speciesProto.ID;
         generalRecord.Age = age;
@@ -209,13 +218,9 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
         generalRecord.Employer = employer;
 
         if (criminalRecord != null)
-        {
             criminalRecord.GeneralRecordSnapshot = generalRecord with { };
 
-            if (criminalRecord.PortraitProfileSnapshot != null || criminalRecord.PortraitImageData is { Length: > 0 })
-                criminalRecord.PortraitProfileSnapshot = profile;
-        }
-
+        _portraits.UpdateSnapshot(key, profile);
         _stationRecords.Synchronize(key);
     }
 
@@ -270,12 +275,11 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
     private HumanoidCharacterProfile BuildEditedProfile(
         GeneralStationRecord generalRecord,
-        CriminalRecord? criminalRecord,
+        HumanoidCharacterProfile? portraitSnapshot,
         string species,
         int age,
         Gender gender)
     {
-        var portraitSnapshot = criminalRecord?.PortraitProfileSnapshot;
         var sameSpeciesSnapshot = portraitSnapshot != null && portraitSnapshot.Species == species;
 
         var profile = sameSpeciesSnapshot
@@ -289,6 +293,134 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             .WithCitizenship(generalRecord.Citizenship)
             .WithEmployer(generalRecord.Employer);
     }
+
+    private string NormalizeCitizenship(string requestedCitizenship, HumanoidCharacterProfile profile)
+    {
+        if (string.IsNullOrWhiteSpace(requestedCitizenship))
+            return string.Empty;
+
+        if (_prototypeManager.TryIndex<CitizenshipPrototype>(requestedCitizenship, out var citizenship)
+            && RequirementsMet(citizenship.Requirements, profile.WithCitizenship(requestedCitizenship)))
+        {
+            return requestedCitizenship;
+        }
+
+        if (_prototypeManager.TryIndex<CitizenshipPrototype>(SharedHumanoidAppearanceSystem.DefaultCitizenship, out var defaultCitizenship)
+            && RequirementsMet(defaultCitizenship.Requirements, profile.WithCitizenship(defaultCitizenship.ID)))
+        {
+            return defaultCitizenship.ID;
+        }
+
+        foreach (var prototype in _prototypeManager.EnumeratePrototypes<CitizenshipPrototype>())
+        {
+            if (RequirementsMet(prototype.Requirements, profile.WithCitizenship(prototype.ID)))
+                return prototype.ID;
+        }
+
+        return SharedHumanoidAppearanceSystem.DefaultCitizenship;
+    }
+
+    private string NormalizeEmployer(string requestedEmployer, HumanoidCharacterProfile profile)
+    {
+        if (string.IsNullOrWhiteSpace(requestedEmployer))
+            return string.Empty;
+
+        if (_prototypeManager.TryIndex<EmployerPrototype>(requestedEmployer, out var employer)
+            && RequirementsMet(employer.Requirements, profile.WithEmployer(requestedEmployer)))
+        {
+            return requestedEmployer;
+        }
+
+        if (_prototypeManager.TryIndex<EmployerPrototype>(SharedHumanoidAppearanceSystem.DefaultEmployer, out var defaultEmployer)
+            && RequirementsMet(defaultEmployer.Requirements, profile.WithEmployer(defaultEmployer.ID)))
+        {
+            return defaultEmployer.ID;
+        }
+
+        foreach (var prototype in _prototypeManager.EnumeratePrototypes<EmployerPrototype>())
+        {
+            if (RequirementsMet(prototype.Requirements, profile.WithEmployer(prototype.ID)))
+                return prototype.ID;
+        }
+
+        return SharedHumanoidAppearanceSystem.DefaultEmployer;
+    }
+
+    private bool RequirementsMet(IReadOnlyCollection<JobRequirement>? requirements, HumanoidCharacterProfile profile)
+    {
+        if (requirements == null || requirements.Count == 0)
+            return true;
+
+        foreach (var requirement in requirements)
+        {
+            if (!requirement.Check(EntityManager, _prototypeManager, profile, EmptyPlayTimes, out _))
+                return false;
+        }
+
+        return true;
+    }
+
+    #region Pirate: records photos
+    private bool TryGetPortraitTarget(Entity<GeneralStationRecordConsoleComponent> ent, EntityUid actor, out StationRecordKey key)
+    {
+        key = default;
+        if (!CanManageRecords(ent) || !_access.IsAllowed(actor, ent))
+            return false;
+
+        if (_station.GetOwningStation(ent) is not { } station || ent.Comp.ActiveKey is not { } id)
+            return false;
+
+        key = new StationRecordKey(id, station);
+        return true;
+    }
+
+    private void OnPrintPortrait(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordPortraitPrintMessage msg)
+    {
+        if (TryGetPortraitTarget(ent, msg.Actor, out var key) && key.Id == msg.RecordKey)
+            _portraits.Print(ent, msg.Actor, key, msg.ImageData);
+    }
+
+    private void OnUploadPortrait(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordPortraitUploadMessage msg)
+    {
+        if (TryGetPortraitTarget(ent, msg.Actor, out var key) && _portraits.Upload(ent, msg.Actor, key))
+            UpdateUserInterface(ent);
+    }
+
+    private void OnAddLogNote(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordLogAddNoteMessage msg)
+    {
+        var text = RecordLogNotes.Sanitize(msg.Text);
+        if (text.Length < 1 || text.Length > RecordLogNotes.MaxLength || !TryGetPortraitTarget(ent, msg.Actor, out var key))
+            return;
+
+        _logs.Add(key, RecordLogBook.Crew, RecordLogKind.Note, null, text, msg.Actor, ent);
+        UpdateUserInterface(ent);
+    }
+
+    private void OnDeleteLogEntry(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordLogDeleteMessage msg)
+    {
+        if (TryGetPortraitTarget(ent, msg.Actor, out var key) && _logs.TryDelete(key, RecordLogBook.Crew, msg.EntryId, out _))
+            UpdateUserInterface(ent);
+    }
+
+    private void OnPrintLog(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordLogPrintMessage msg)
+    {
+        if (TryGetPortraitTarget(ent, msg.Actor, out var key))
+            _logs.Print(ent, msg.Actor, key, RecordLogBook.Crew);
+    }
+
+    private void OnStoreGeneratedPortrait(Entity<GeneralStationRecordConsoleComponent> ent, ref RecordPortraitStoreGeneratedMessage msg)
+    {
+        // Pirate: records photos - Accept late render results for their original record.
+        if (!_access.IsAllowed(msg.Actor, ent) || _station.GetOwningStation(ent) is not { } station)
+            return;
+
+        if (_portraits.StoreGenerated(new StationRecordKey(msg.RecordKey, station), msg.ImageData)
+            && ent.Comp.ActiveKey == msg.RecordKey)
+        {
+            UpdateUserInterface(ent);
+        }
+    }
+    #endregion
 
     private bool CanManageRecords(Entity<GeneralStationRecordConsoleComponent> ent) // Pirate: records photos
     {
@@ -334,6 +466,12 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         var newState = new GeneralStationRecordConsoleState(console.ActiveKey, record, listing, console.Filter,
             CanManageRecords(ent), ent.Comp.MaxStringLength); // Pirate: records photos
+        newState.SelectionRequest = console.SelectionRequest; // Pirate: records select
+        if (record != null) // Pirate: records photos
+        {
+            newState.Portrait = _portraits.GetPortrait(key); // Pirate: records photos
+            newState.Log = _logs.GetLog(key, RecordLogBook.Crew); // Pirate: record history
+        }
         #endregion
         _ui.SetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }

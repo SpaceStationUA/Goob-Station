@@ -293,6 +293,7 @@
     - ServiceBoardsGoob # goob
     - EntertainmentPack # goob
     - BartendingPack # goob
+    - PlantAnalyzerPirate # Pirate
     # Einstein Engines Packs
     - Translators
   - type: EmagLatheRecipes

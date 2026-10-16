@@ -26,13 +26,11 @@ crew-monitoring-ui-scan-searching = Пошук серверів монітори
 crew-monitoring-ui-scan-verifying = Перевірка адрес серверів
 crew-monitoring-ui-scan-finalizing = Завершення сканування
 crew-monitoring-ui-scan-waiting = Очікування відповіді сервера
-
 crew-monitoring-ui-start-scan = Сканувати сервери
 crew-monitoring-ui-scan-title = Сканування серверів моніторингу
 crew-monitoring-ui-select-server-label = Виберіть сервер, щоб продовжити
 crew-monitoring-ui-wounded-only = Показувати лише поранених
 crew-monitoring-ui-reset-sensors = Скинути історію сенсорів
-
 crew-monitoring-tab-sensors = Сенсори
 crew-monitoring-tab-servers = Сервери
 crew-monitoring-rescan = Сканувати знову

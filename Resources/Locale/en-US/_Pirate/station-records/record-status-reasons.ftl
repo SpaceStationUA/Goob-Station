@@ -1,0 +1,10 @@
+records-status-reason = Reason
+records-status-reason-security-wanted = Wanted for
+records-status-reason-security-suspected = Suspected of
+records-status-reason-security-hostile = Hostile because of
+records-status-reason-security-search = Search reason
+records-status-reason-security-dangerous = Dangerous because of
+records-status-reason-security-demote = Demotion reason
+records-status-reason-psionics-suspected = Suspected of
+records-status-reason-psionics-registered = Registration reason
+records-status-reason-psionics-abusing = Abuse reason

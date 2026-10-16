@@ -1,10 +1,42 @@
 // SPDX-License-Identifier: MIT
-// Pirate: meson vision - ported from space-wizards/space-station-14#44601 ("Mesons (XRayVision)").
-// CPU visibility checks run in XRayVisionOverlay because this engine lacks upstream's FOV shadow map.
-// This shader only forces unshaded drawing; TileAlpha supplies brightness.
 light_mode unshaded;
+
+uniform highp vec4 OVERLAY_COLOR;
+uniform highp float SCANLINES;
+uniform sampler2D FOV_TEXTURE;
+uniform highp vec2 FOV_CENTER;
+
+varying highp vec2 worldSpaceDiff;
+
+const highp float FOV_PI = 3.14159265;
+const highp float FOV_MAP_OFFSET_Y = 0.75;
+const highp float FOV_BIAS = -0.75 / 32.0;
+
+highp float xRayOccludeDepth(highp vec2 rel)
+{
+    highp float deflect = atan(rel.y, -rel.x) / FOV_PI;
+    highp float mapOffsetX = (deflect + 1.0) / 2.0;
+    return zClydeShadowDepthUnpack(texture2D(FOV_TEXTURE, vec2(mapOffsetX, FOV_MAP_OFFSET_Y))).x;
+}
+
+void vertex()
+{
+    highp vec3 worldPos = modelMatrix * vec3(aPos, 1.0);
+    worldSpaceDiff = worldPos.xy - FOV_CENTER;
+}
 
 void fragment()
 {
-    COLOR = zTexture(UV);
+    highp vec4 tex = zTexture(UV);
+
+    highp float ourDist = length(worldSpaceDiff);
+    if (xRayOccludeDepth(worldSpaceDiff) + FOV_BIAS >= ourDist)
+        discard;
+
+    // Avoid modulo by zero when scanlines are disabled.
+    highp float scanline = 1.0;
+    if (SCANLINES > 0.0)
+        scanline = max(mod(FRAGCOORD.y, SCANLINES), 1.0);
+
+    COLOR = vec4(tex.rgb * OVERLAY_COLOR.rgb, tex.a * OVERLAY_COLOR.a * scanline);
 }

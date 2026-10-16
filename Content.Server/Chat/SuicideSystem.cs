@@ -3,22 +3,17 @@
 using Content.Server.Ghost;
 using Content.Server.Hands.Systems;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Chat;
-using Content.Shared.Damage.Components;
 using Content.Shared.Database;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared._White.Xenomorphs.Infection;
-using Content.Shared._EinsteinEngines.Silicon.Components;
 using Content.Shared._Shitmed.Medical.Surgery.Consciousness.Components; // Shitmed Change
 
 namespace Content.Server.Chat;
@@ -30,9 +25,7 @@ public sealed class SuicideSystem : EntitySystem
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
-    [Dependency] private readonly SharedSuicideSystem _suicide = default!;
 
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
 
@@ -40,7 +33,7 @@ public sealed class SuicideSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DamageableComponent, SuicideEvent>(OnDamageableSuicide);
+        // Pirate: PirateSuicideFallbackSystem applies default damage after environmental handlers.
         SubscribeLocalEvent<MobStateComponent, SuicideEvent>(OnEnvironmentalSuicide);
         SubscribeLocalEvent<MindContainerComponent, SuicideGhostEvent>(OnSuicideGhost);
     }
@@ -155,35 +148,4 @@ public sealed class SuicideSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Default suicide behavior for any kind of entity that can take damage
-    /// </summary>
-    private void OnDamageableSuicide(Entity<DamageableComponent> victim, ref SuicideEvent args)
-    {
-        if (args.Handled
-            || HasComp<XenomorphPreventSuicideComponent>(victim)) // Goob station - Xenomorphs
-            return;
-
-        var othersMessage = Loc.GetString("suicide-command-default-text-others", ("name", Identity.Entity(victim, EntityManager)));
-        _popup.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
-
-        var selfMessage = Loc.GetString("suicide-command-default-text-self");
-        _popup.PopupEntity(selfMessage, victim, victim);
-
-        if (args.DamageSpecifier != null)
-        {
-            _suicide.ApplyLethalDamage(victim, args.DamageSpecifier);
-            args.Handled = true;
-            return;
-        }
-
-        if (HasComp<SiliconComponent>(victim)) // Goobstation
-            args.DamageType ??= "Shock";
-        else
-            args.DamageType ??= "Slash";
-
-        _suicide.ApplyLethalDamage(victim, args.DamageType);
-
-        args.Handled = true;
-    }
 }
