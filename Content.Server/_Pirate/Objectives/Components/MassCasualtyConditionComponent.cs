@@ -23,6 +23,9 @@ public sealed partial class MassCasualtyConditionComponent : Component
     [DataField]
     public MapId Map;
 
+    [DataField]
+    public EntityUid? OwnerMind;
+
     /// <summary>
     /// Minds observed alive since the contract was accepted. Reviving a victim removes their progress.
     /// </summary>

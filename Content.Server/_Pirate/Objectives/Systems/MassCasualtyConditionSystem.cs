@@ -16,6 +16,8 @@ public sealed class MassCasualtyConditionSystem : EntitySystem
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
+    private float _updateDelay;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -24,6 +26,23 @@ public sealed class MassCasualtyConditionSystem : EntitySystem
         SubscribeLocalEvent<MassCasualtyConditionComponent, ObjectiveAfterAssignEvent>(OnAfterAssign);
         SubscribeLocalEvent<MassCasualtyConditionComponent, ContractTakenEvent>(OnTaken);
         SubscribeLocalEvent<MassCasualtyConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        _updateDelay -= frameTime;
+        if (_updateDelay > 0f)
+            return;
+
+        _updateDelay = 1f;
+        var query = EntityQueryEnumerator<MassCasualtyConditionComponent>();
+        while (query.MoveNext(out _, out var condition))
+        {
+            if (condition.Active && condition.OwnerMind is { } owner)
+                condition.Targets.UnionWith(GetTargets(owner, condition.Map));
+        }
     }
 
     private void OnCheck(Entity<MassCasualtyConditionComponent> ent, ref RequirementCheckEvent args)
@@ -52,6 +71,7 @@ public sealed class MassCasualtyConditionSystem : EntitySystem
 
         // Offers may sit in the uplink for a while. Start counting only when the agent accepts one.
         ent.Comp.Map = Transform(body).MapID;
+        ent.Comp.OwnerMind = args.Mind.Owner;
         ent.Comp.Targets = GetTargets(args.Mind.Owner, ent.Comp.Map);
         ent.Comp.Active = true;
     }

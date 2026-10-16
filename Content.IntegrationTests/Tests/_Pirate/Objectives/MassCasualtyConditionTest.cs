@@ -9,14 +9,12 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles;
-using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests._Pirate.Objectives;
 
 [TestFixture]
-[FriendOf(typeof(MassCasualtyConditionComponent))]
 public sealed class MassCasualtyConditionTest
 {
     [TestPrototypes]
@@ -172,6 +170,45 @@ public sealed class MassCasualtyConditionTest
         await pair.CleanReturnAsync();
     }
 
+    [Test]
+    public async Task LateArrivalsAreTrackedWithoutOpeningTheUplink()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var maps = entMan.System<SharedMapSystem>();
+        EntityUid map = default;
+        EntityUid objective = default;
+        EntityUid lateArrival = default;
+        Entity<MindComponent> owner = default;
+
+        await server.WaitAssertion(() =>
+        {
+            map = maps.CreateMap();
+            var coords = new EntityCoordinates(map, Vector2.Zero);
+            owner = SpawnCrew(entMan, coords, traitor: true).Mind;
+            SpawnCrew(entMan, coords);
+            SpawnCrew(entMan, coords);
+            objective = SpawnObjective(entMan);
+            var contracts = entMan.AddComponent<ContractsComponent>(owner.Owner);
+            var taken = new ContractTakenEvent((owner.Owner, contracts), owner);
+            entMan.EventBus.RaiseLocalEvent(objective, ref taken);
+            lateArrival = SpawnCrew(entMan, coords).Body;
+        });
+
+        // No progress/UI requests occur before the new crew member dies.
+        await server.WaitRunTicks(120);
+        await server.WaitAssertion(() =>
+        {
+            entMan.System<MobStateSystem>().ChangeMobState(lateArrival, MobState.Dead);
+            Assert.That(GetProgress(entMan, objective, owner), Is.EqualTo(0.5f));
+            entMan.DeleteEntity(objective);
+            entMan.DeleteEntity(map);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     private static (EntityUid Body, Entity<MindComponent> Mind) SpawnCrew(
         IEntityManager entMan,
         EntityCoordinates coordinates,
@@ -192,11 +229,7 @@ public sealed class MassCasualtyConditionTest
 
     private static EntityUid SpawnObjective(IEntityManager entMan)
     {
-        var objective = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
-        var condition = entMan.AddComponent<MassCasualtyConditionComponent>(objective);
-        condition.Target = 2;
-        condition.MinimumCrew = 2;
-        return objective;
+        return entMan.SpawnEntity("PirateMassCasualtyTestContract", MapCoordinates.Nullspace);
     }
 
     private static float GetProgress(IEntityManager entMan, EntityUid objective, Entity<MindComponent> owner)
