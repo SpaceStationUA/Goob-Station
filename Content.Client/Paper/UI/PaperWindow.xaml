@@ -44,6 +44,15 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 </PanelContainer>
             </ScrollContainer>
         </PanelContainer>
+        <!-- Pirate: persistent diary pages: flip / add / tear out / sign leaves -->
+        <BoxContainer Name="PageBar" Orientation="Horizontal" HorizontalAlignment="Center" Margin="6" Visible="False">
+            <Button Name="PrevPageButton" />
+            <Label Name="PageLabel" MinWidth="96" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Button Name="NextPageButton" />
+            <Control MinWidth="16" />
+            <Button Name="AddPageButton" />
+            <Button Name="RemovePageButton" />
+        </BoxContainer>
         <!-- Bottom buttons for editing -->
         <BoxContainer Name="EditButtons" Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
             <Button Name="SaveButton" />
