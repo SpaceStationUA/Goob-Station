@@ -56,7 +56,7 @@ public class AlternativeJobSelector : OptionButton
         Clear();
         _optionIds.Clear();
 
-        if (_prototypeManager.TryIndex(_parentJobId, out var jobProto, false))
+        if (_prototypeManager.TryIndex<JobPrototype>(_parentJobId, out var jobProto))
             AddItem(jobProto.LocalizedName, 0);
         else
             AddItem(_parentJobId, 0);

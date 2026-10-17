@@ -54,8 +54,8 @@ employment-employer-roleplay-idris-3 = Граючи за сервіс - стар
 employment-employer-roleplay-idris-4 = Граючи за службу безпеки - будьте стриманими та професійними, навіть якщо порушник поводиться агресивно. Не переходьте межу, навіть якщо вас провокують.
 employment-employer-roleplay-idris-5 = Звільнення для вас - це дуже погані наслідки, намагайтесь зробити все, аби не втратити свій контракт.
 
-# Interdyne
-employment-employer-name-interdyne = Interdyne Pharmaceuticals
+# ZengHu
+employment-employer-name-zenghu = Zeng-Hu Pharmaceuticals
 
 # Zavod
 employment-employer-name-zavod = Zavodskiy Interstellar

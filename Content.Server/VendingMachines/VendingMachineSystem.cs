@@ -259,20 +259,10 @@ namespace Content.Server.VendingMachines
 
                 if (PrototypeManager.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
                 {
-                    AddInventoryPrice(inventoryPrototype.StartingInventory);
-                    AddInventoryPrice(inventoryPrototype.EmaggedInventory);
-                    AddInventoryPrice(inventoryPrototype.ContrabandInventory);
-
-                    void AddInventoryPrice(Dictionary<string, uint>? inventory)
+                    foreach (var (item, amount) in inventoryPrototype.StartingInventory)
                     {
-                        if (inventory == null)
-                            return;
-
-                        foreach (var (item, amount) in inventory)
-                        {
-                            if (PrototypeManager.TryIndex(item, out EntityPrototype? entity))
-                                total += _pricing.GetEstimatedPrice(entity) * amount;
-                        }
+                        if (PrototypeManager.TryIndex(item, out EntityPrototype? entity))
+                            total += _pricing.GetEstimatedPrice(entity) * amount;
                     }
                 }
 

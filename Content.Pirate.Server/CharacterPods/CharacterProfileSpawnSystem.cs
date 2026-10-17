@@ -9,6 +9,7 @@ using Content.Server.CharacterAppearance.Components;
 using Content.Server.Preferences.Managers;
 using Content.Shared._Pirate.Body.Chips;
 using Content.Shared._Pirate.Knowledge;
+using Content.Shared._Pirate.Traits.Assorted;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -133,7 +134,6 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
         var pointsBonus = KnowledgeableComponent.GetBonusPoints(_prototype, profile.TraitPreferences);
         var masteryGrants = KnowledgeableComponent.GetMasteryGrants(_prototype, profile.TraitPreferences);
         _knowledge.ApplyProfile(mob, species.Knowledge, profile.Knowledge, pointsBonus, masteryGrants);
-        _knowledge.ApplyEmployerBonuses(mob, profile.Employer);
 
         // Rebuild after queued knowledge deletions have run.
         _pendingRestore.Add(mob);

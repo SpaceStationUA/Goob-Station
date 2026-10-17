@@ -65,6 +65,7 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
     private readonly Color _redOnColor = Color.FromHex("#ff3333");
     private readonly Color _greenOffColor = Color.FromHex("#004400");
     private readonly Color _greenOnColor = Color.FromHex("#33ff33");
+    private readonly Color _withdrawDisabledColor = Color.FromHex("#1a551a");
 
     public int Credits { get; private set; }
     public event Action<VendingMachineWithdrawMessage>? OnWithdraw;
@@ -77,7 +78,6 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
         IoCManager.InjectDependencies(this);
 
         _audio = _entManager.System<SharedAudioSystem>();
-        WithdrawButton.Label.FontColorOverride = Color.FromHex("#33ff33"); // Pirate
 
         BuildNumpad();
         ResetLedIndicators();
@@ -241,6 +241,9 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
             ? Loc.GetString("vending-machine-keypad-credits", ("credits", Credits))
             : Loc.GetString("vending-machine-keypad-insert-credits");
         WithdrawButton.Disabled = Credits <= 0; // Pirate
+        WithdrawButton.Label.FontColorOverride = Credits > 0
+            ? _greenOnColor
+            : _withdrawDisabledColor;
     }
 
     public void PlayVendAnimation(int slotIndex)
