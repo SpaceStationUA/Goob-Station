@@ -11,6 +11,8 @@
       tableId: CalmPestEventsTable
     - !type:NestedSelector
       tableId: CargoGiftsTable
+    # Schedule paradox clones through Secret+ (~40% of rounds) to free timed antag slots.
+    - id: BlueshiftParadoxCloneSpawn
 
 # Keep this copy in sync with BasicCalmEventsTable; ghost-role antags use the antag pool.
 - type: entityTable
@@ -49,7 +51,7 @@
     - id: EeepEvent
     - id: SnailMigration
 
-# Target rounds: traitor/bounty hunter ~70%, vampire ~50%, most extras ~30%, pirates ~25%, assassins ~10%.
+# Target rounds: traitor/bounty ~70%, vampire ~50%, extras ~30%, pirates ~25%, clown/mime/priest ~20%.
 # Use TraitorMidround rather than SleeperAgents to respect the Traitor preference and ban.
 - type: entityTable
   id: BlueshiftAntagEventsTable
@@ -73,7 +75,6 @@
     - id: BlueshiftMimeAssassinMidround
     - id: BlueshiftDarkPriestMidround
     - id: BorerSpawn
-    - id: BlueshiftParadoxCloneSpawn
     # VentCrittersRule ignores specialEntry probability, so this belongs in the antag pool.
     - id: BlueshiftKingRatMigration
 
@@ -133,7 +134,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 1.9
+    weight: 4.0
 
 - type: entity
   id: BlueshiftMimeAssassinMidround
@@ -141,7 +142,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 2.25
+    weight: 4.35
 
 - type: entity
   id: BlueshiftDarkPriestMidround
@@ -149,7 +150,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 2.2
+    weight: 4.3
 
 - type: entity
   id: BlueshiftParadoxCloneSpawn
@@ -157,7 +158,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 6.3
+    weight: 3.4
 
 - type: entity
   id: BlueshiftHitmanShuttle
@@ -249,9 +250,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 4.6
+    weight: 5.0
     maxOccurrences: 1
 
+# Target malign rifts in about 20% of rounds.
 - type: entity
   id: BlueshiftMalignRiftSpawn
   parent: MalignRiftSpawn
@@ -260,7 +262,7 @@
   - type: StationEvent
     earliestStart: 15
     minimumPlayers: 15
-    weight: 0.8
+    weight: 1.75
     eventType: Neutral
     startAnnouncement: cosmiccult-announce-tier2-warning
     startAnnouncementColor: "#cae8e8"
