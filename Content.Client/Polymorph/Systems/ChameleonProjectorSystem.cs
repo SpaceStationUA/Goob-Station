@@ -33,7 +33,10 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
 
     private void OnHandleState(Entity<ChameleonDisguiseComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        CopyComp<SpriteComponent>(ent);
+        // Pirate: serialization does not copy the sprite's initialized layers or render tree state.
+        if (GetSrcComp<SpriteComponent>(ent.Comp, out var source))
+            _sprite.CopySprite((source.Owner, source), (ent.Owner, EnsureComp<SpriteComponent>(ent)));
+
         CopyComp<GenericVisualizerComponent>(ent);
         CopyComp<SolutionContainerVisualsComponent>(ent);
         CopyComp<BurnStateVisualsComponent>(ent);
