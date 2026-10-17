@@ -174,10 +174,10 @@ public sealed class SurgeryRegressionTest
         await pair.CleanReturnAsync();
     }
 
-    [TestCase("MobHuman", BodyPartType.Groin, "SurgeryAttachLeftLeg", "left leg", BodyPartSymmetry.Left)]
-    [TestCase("MobExperiment", BodyPartType.Chest, "SurgeryAttachLeftLeg", "left leg", BodyPartSymmetry.Left)]
-    [TestCase("MobExperiment", BodyPartType.Chest, "SurgeryAttachRightLeg", "right leg", BodyPartSymmetry.Right)]
-    public async Task MissingLegCanBeReattachedToItsActualParent(string prototype, BodyPartType parentType,
+    [TestCase("MobHuman", "SurgeryAttachLeftLeg", "left leg", BodyPartSymmetry.Left)]
+    [TestCase("MobExperiment", "SurgeryAttachLeftLeg", "left leg", BodyPartSymmetry.Left)]
+    [TestCase("MobExperiment", "SurgeryAttachRightLeg", "right leg", BodyPartSymmetry.Right)]
+    public async Task MissingLegCanBeReattachedToItsActualParent(string prototype,
         string surgeryId, string slot, BodyPartSymmetry symmetry)
     {
         await using var pair = await PoolManager.GetServerClient();
@@ -189,8 +189,8 @@ public sealed class SurgeryRegressionTest
             var body = server.System<SharedBodySystem>();
             var surgery = server.System<SurgerySystem>();
             var patient = entMan.SpawnEntity(prototype, MapCoordinates.Nullspace);
-            var parent = body.GetBodyChildrenOfType(patient, parentType).Single().Id;
             var leg = body.GetBodyChildrenOfType(patient, BodyPartType.Leg, symmetry: symmetry).Single().Id;
+            var parent = body.GetParentPartOrNull(leg)!.Value;
             var procedure = surgery.GetSingleton(surgeryId)!.Value;
 
             var attached = new SurgeryValidEvent(patient, parent);
