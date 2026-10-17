@@ -5,6 +5,7 @@
   productEntity: BeastBloodGourd
   cost:
    Telecrystal: 15
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkChemicals
   conditions:

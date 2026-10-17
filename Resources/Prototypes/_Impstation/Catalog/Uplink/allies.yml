@@ -6,5 +6,6 @@
   productEntity: TippyTrumpMysteryPackSyndicate
   cost:
     Telecrystal: 50
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkAllies

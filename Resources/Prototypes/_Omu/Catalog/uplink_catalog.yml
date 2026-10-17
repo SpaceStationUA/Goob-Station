@@ -6,6 +6,7 @@
   productEntity: WeaponDislippler
   cost:
     Telecrystal: 20
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkWeaponry
   conditions:

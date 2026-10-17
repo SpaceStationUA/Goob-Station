@@ -34,6 +34,7 @@
   productEntity: EmergencyMedipenMute
   cost:
     Telecrystal: 10
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -62,6 +63,7 @@
   productEntity: UtilityKnifeReagent
   cost:
     Telecrystal: 10
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -93,7 +95,7 @@
     Telecrystal: 20
   categories:
   - UplinkJob
-  reputation: 40 # Pirate: sidearms reputation
+  reputation: 20 # Pirate: entry-level reputation tier
   conditions:
   - !type:BuyerDepartmentCondition
     whitelist:
@@ -106,6 +108,7 @@
   productEntity: AppraisalToolRadioJammer
   cost:
     Telecrystal: 20
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -136,7 +139,7 @@
     Telecrystal: 50
   categories:
   - UplinkJob
-  reputation: 30 # Pirate: melee weapons reputation
+  reputation: 40 # Pirate: specialist reputation tier
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -152,7 +155,7 @@
     Telecrystal: 100
   categories:
   - UplinkJob
-  reputation: 50 # Pirate: allies reputation
+  reputation: 80 # Pirate: elite reputation tier
   conditions:
   - !type:BuyerJobCondition
     whitelist:
