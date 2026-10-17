@@ -33,27 +33,31 @@ public sealed class RevolutionaryBootsTest : MovementTest
             await PlaceInHands(bootsPrototype);
         }
 
-        await Server.WaitAssertion(() =>
-        {
-            Assert.That(SEntMan.GetComponent<DamageableComponent>(SPlayer).TotalDamage.Float(), Is.Zero);
-        });
+        var initialPiercingDamage = 0f;
+        await Server.WaitPost(() => initialPiercingDamage = GetPiercingDamage());
 
         await Move(DirectionFlag.East, 1f);
 
         await Server.WaitAssertion(() =>
         {
-            var damage = SEntMan.GetComponent<DamageableComponent>(SPlayer).TotalDamage.Float();
+            var damage = GetPiercingDamage();
             if (protectedFromCaltrops)
             {
                 Assert.That(Delta(), Is.LessThan(0), "The wearer must actually cross the caltrops.");
-                Assert.That(damage, Is.Zero, "Steel-toed workboots must prevent caltrop damage.");
+                Assert.That(damage, Is.EqualTo(initialPiercingDamage), "Steel-toed workboots must prevent caltrop damage.");
             }
             else
             {
-                Assert.That(damage, Is.GreaterThan(0), "Ordinary or unworn workboots must not protect against caltrops.");
+                Assert.That(damage, Is.GreaterThan(initialPiercingDamage), "Ordinary or unworn workboots must not protect against caltrops.");
             }
 
             Assert.That(SEntMan.HasComponent<KnockedDownComponent>(SPlayer), Is.EqualTo(!protectedFromCaltrops));
         });
+    }
+
+    private float GetPiercingDamage()
+    {
+        var damage = SEntMan.GetComponent<DamageableComponent>(SPlayer).Damage.DamageDict;
+        return damage.TryGetValue("Piercing", out var piercing) ? piercing.Float() : 0f;
     }
 }
