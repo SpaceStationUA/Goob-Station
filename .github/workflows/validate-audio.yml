@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: "CI: Validate Audio"
+
+on:
+  push:
+    branches: [ master, staging, stable ]
+  merge_group:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  audio:
+    name: Audio budget
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.2.2
+      with:
+        # Tools/audio_optimize.py --changed diffs against the base ref, so the
+        # history has to be there.
+        fetch-depth: 0
+
+    - name: Install audio tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends vorbis-tools
+        ffmpeg -version | head -1
+        oggenc --version | head -1
+
+    - name: Check changed audio files
+      if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.draft == false }}
+      run: |
+        python3 Tools/audio_optimize.py \
+          --changed \
+          --base "origin/${{ github.base_ref }}"
+
+    - name: Audit whole audio tree
+      # Catches drift that predates this workflow, and runs on pushes where there
+      # is no pull_request context to diff against.
+      if: ${{ !cancelled() && (github.event_name != 'pull_request' || github.event.pull_request.draft == true) }}
+      run: python3 Tools/audio_optimize.py
