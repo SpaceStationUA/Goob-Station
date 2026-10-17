@@ -52,6 +52,7 @@
   <Project Path="Content.Pirate.Client/Content.Pirate.Client.csproj" />
   <Project Path="Content.Pirate.Common/Content.Pirate.Common.csproj" />
   <Project Path="Content.Pirate.UIKit/Content.Pirate.UIKit.csproj" />
+  <Project Path="Tools/_Pirate/GameModeSim/Content.Pirate.GameModeSim.csproj" /> <!-- Pirate: gamemode sim -->
   <!-- </Pirate End> -->
   <Project Path="Content.Tests/Content.Tests.csproj" />
   <Project Path="Content.Tools/Content.Tools.csproj" />

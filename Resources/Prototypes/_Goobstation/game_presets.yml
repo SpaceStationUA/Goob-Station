@@ -137,7 +137,7 @@
     - calmdynamic
   name: sleeper-title
   description: sleeper-description
-  showInVote: true
+  showInVote: false # Pirate: blueshift
   minPlayers: 5
   rules:
     - CalmDynamic
@@ -153,7 +153,7 @@
     - combatdynamic
   name: guide-title
   description: guide-description
-  showInVote: true
+  showInVote: false # Pirate: blueshift
   minPlayers: 25
   rules:
     - CombatDynamic
@@ -170,7 +170,7 @@
     - turbulence
   name: secretplus-low-title
   description: secretplus-low-description
-  showInVote: true
+  showInVote: false # Pirate: blueshift
   rules:
     - SecretPlusLow
     - MeteorSwarmMildScheduler
@@ -184,7 +184,7 @@
     - entropy
   name: secretplus-mid-title
   description: secretplus-mid-description
-  showInVote: true
+  showInVote: false # Pirate: blueshift
   rules:
     - SecretPlusMid
     - MeteorSwarmScheduler

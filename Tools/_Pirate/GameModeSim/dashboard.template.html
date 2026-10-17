@@ -1,0 +1,944 @@
+<title>Gamemode Round Sim</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+
+:root {
+  --bg: #111418; --panel: #181c21; --ink: #eef0f3; --ink-2: #b4bbc5; --ink-3: #848c97;
+  --line: #2a3038; --grid: #222830; --chip: #232931; --focus: #7aa2ff;
+  --m1: #3987e5; --m2: #d95926; --m3: #199e70; --m4: #c98500; --m5: #d55181; --m6: #008300; --m7: #9085e9; --m8: #d93a3a; --m9: #a82626; --warn: #e0a24a;
+  --font-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f5f6f8; --panel: #ffffff; --ink: #15191f; --ink-2: #4a525e; --ink-3: #7a828e;
+  --line: #dde1e7; --grid: #eceff3; --chip: #e9ecf1; --focus: #2a5bd7;
+  --m1: #2a78d6; --m2: #eb6834; --m3: #1baf7a; --m4: #eda100; --m5: #e87ba4; --m6: #008300; --m7: #6250d6; --m8: #d63c3c; --m9: #922020; --warn: #b25e00;
+  color-scheme: light;
+}
+.themebtn { justify-self: start; font: 500 12px var(--font-body); color: var(--ink-2); background: var(--chip); border: 0; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.themebtn:hover { color: var(--ink); }
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+}
+.wrap {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+  display: grid; gap: 28px;
+}
+header { display: grid; gap: 6px; }
+h1 { font-family: var(--font-display); font-weight: 600; font-size: 30px; letter-spacing: .01em; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--font-display); font-weight: 600; font-size: 19px; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+h3 { font-size: 14px; font-weight: 600; margin: 0; }
+.sub { color: var(--ink-2); max-width: 70ch; margin: 0; }
+.runline { font-family: var(--font-data); font-size: 12px; color: var(--ink-3); }
+.eyebrow { font-family: var(--font-data); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+
+.controls {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  padding: 10px max(16px, env(safe-area-inset-left, 0px));
+  display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center;
+}
+.ctl { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.seg { display: inline-flex; background: var(--chip); border-radius: 8px; padding: 3px; gap: 2px; }
+.seg button, .chip {
+  font: 500 13px var(--font-body); color: var(--ink-2); background: transparent; border: 0;
+  padding: 5px 11px; border-radius: 6px; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .12); }
+.chip { display: inline-flex; align-items: center; gap: 7px; background: var(--chip); color: var(--ink); }
+.chip[aria-pressed="false"] { color: var(--ink-3); }
+.chip[aria-pressed="false"] .swatch { background: transparent !important; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; border: 2px solid var(--c); background: var(--c); flex: none; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+section { display: grid; gap: 14px; }
+.sechead { display: grid; gap: 4px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 14px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 14px; }
+.chart { width: 100%; min-height: 220px; position: relative; }
+.chart svg { display: block; width: 100%; overflow: visible; }
+.note { color: var(--ink-2); font-size: 13px; margin: 0; max-width: 75ch; }
+.panel .note { margin-top: 2px; }
+
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.verdict th, .verdict td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.verdict thead th { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.verdict tbody th { font-weight: 500; color: var(--ink); min-width: 220px; }
+.verdict tbody th small { display: block; font-weight: 400; color: var(--ink-3); font-size: 12px; }
+.verdict td { min-width: 150px; }
+.val { font-family: var(--font-data); font-size: 17px; font-weight: 500; }
+.rng { font-family: var(--font-data); font-size: 11.5px; color: var(--ink-3); }
+.meter { height: 4px; border-radius: 2px; background: var(--grid); margin-top: 6px; overflow: hidden; }
+.meter i { display: block; height: 100%; border-radius: 2px; background: var(--c); }
+
+.ledger-tools { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.ledger-tools label { font-size: 13px; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; }
+select, input[type="search"] {
+  font: 13px var(--font-body); color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; padding: 5px 8px;
+}
+.ledger { font-size: 13px; }
+.ledger th, .ledger td { padding: 6px 10px; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+.ledger thead th { position: sticky; top: 0; z-index: 2; background: var(--panel); font-weight: 600; text-align: right; cursor: pointer; user-select: none; }
+.ledger thead th:first-child, .ledger td:first-child { text-align: left; }
+.ledger thead th.l, .ledger td.l { text-align: left; }
+.ledger td { text-align: right; font-family: var(--font-data); }
+.ledger td.name { font-family: var(--font-body); font-weight: 500; }
+.ledger tbody tr:hover { background: var(--grid); }
+.ledger .cellbar { display: inline-block; height: 6px; border-radius: 3px; background: var(--c); vertical-align: middle; margin-right: 6px; opacity: .85; }
+.ledger-box { max-height: 560px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }
+.tag { font-family: var(--font-data); font-size: 11px; padding: 1px 6px; border-radius: 4px; background: var(--chip); color: var(--ink-2); }
+.tag.major { color: var(--warn); }
+
+.bars { display: grid; gap: 7px; }
+.barrow { display: grid; grid-template-columns: minmax(0, 150px) 1fr auto; gap: 10px; align-items: center; font-size: 13px; }
+.barrow .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-2); }
+.barrow .track { height: 10px; position: relative; }
+.barrow .fill { position: absolute; inset: 0 auto 0 0; border-radius: 0 4px 4px 0; background: var(--c); }
+.barrow .num { font-family: var(--font-data); font-size: 12px; color: var(--ink); min-width: 44px; text-align: right; }
+.famgroup { display: grid; gap: 4px; }
+.famgroup + .famgroup { margin-top: 8px; }
+.famgroup .barrow { grid-template-columns: minmax(0, 84px) 1fr auto; }
+
+.tooltip {
+  position: absolute; pointer-events: none; z-index: 4; background: var(--panel); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 12px;
+  box-shadow: 0 4px 14px rgb(0 0 0 / .14); min-width: 140px; font-variant-numeric: tabular-nums;
+}
+.tooltip .t { font-family: var(--font-data); color: var(--ink-3); margin-bottom: 4px; }
+.tooltip .r { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+.tooltip .r span:first-child { display: inline-flex; gap: 6px; align-items: center; }
+.tooltip b { font-family: var(--font-data); font-weight: 500; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ink-2); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.legend .ln { width: 16px; height: 0; border-top: 2px solid var(--c); }
+.legend .ln.dash { border-top-style: dashed; }
+
+.seg.small button { padding: 3px 9px; font-size: 12px; }
+.seg.small { margin-top: 8px; flex-wrap: wrap; }
+.bars-stack { display: grid; gap: 14px; margin-top: 4px; }
+.levers { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 18px 16px; }
+.lever { min-width: 0; display: grid; gap: 2px; }
+.lever h4 { margin: 0; font-size: 13px; font-weight: 600; }
+.lever .swing { font-family: var(--font-data); font-size: 11.5px; color: var(--ink-3); }
+.lever .chart { min-height: 150px; }
+.reach { font-family: var(--font-data); font-size: 12px; color: var(--ink-3); }
+.rb { display: grid; gap: 14px; }
+.rb-grid { display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .rb-grid { grid-template-columns: minmax(0, 1fr); } .rb-list { max-height: 240px; } }
+.rb-list { max-height: 640px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }
+.rb-item { display: grid; grid-template-columns: auto 1fr auto; gap: 2px 10px; align-items: baseline; width: 100%; text-align: left;
+  font: 13px var(--font-body); color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid var(--grid); padding: 7px 10px; cursor: pointer; }
+.rb-item:hover { background: var(--grid); }
+.rb-item[aria-selected="true"] { background: var(--chip); box-shadow: inset 3px 0 0 var(--c); }
+.rb-item .n { font-family: var(--font-data); color: var(--ink-3); font-size: 12px; }
+.rb-item .a { font-family: var(--font-data); font-size: 12px; }
+.rb-item .sub { grid-column: 2 / 4; color: var(--ink-3); font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rb-detail { min-width: 0; display: grid; gap: 12px; }
+.rb-head { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; }
+.rb-head h3 { font-family: var(--font-display); font-size: 17px; }
+.rb-stats { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
+.rb-stats b { font-family: var(--font-data); font-weight: 500; color: var(--ink); }
+.rb-params { display: flex; flex-wrap: wrap; gap: 6px; }
+.rb-params span { font-family: var(--font-data); font-size: 11px; padding: 2px 7px; border-radius: 4px; background: var(--chip); color: var(--ink-2); }
+.rb-strip { position: relative; }
+.rb-strip svg { display: block; width: 100%; }
+.rb-events td.src { font-family: var(--font-body); }
+.rb-events tr.antag td.name { font-weight: 600; }
+.rb-events tr.side td { color: var(--ink-3); }
+.rb-nav { display: flex; gap: 8px; }
+.rb-nav button { font: 500 12px var(--font-body); color: var(--ink); background: var(--chip); border: 0; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 14px; }
+.facts ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--ink-2); font-size: 13.5px; }
+code, .mono { font-family: var(--font-data); font-size: 12.5px; }
+pre { background: var(--chip); padding: 10px 12px; border-radius: 6px; overflow-x: auto; font-size: 12.5px; margin: 0; }
+.warnbox { border-left: 3px solid var(--warn); padding-left: 10px; }
+@media (prefers-reduced-motion: no-preference) { .fill, .meter i { transition: width .25s ease; } }
+@media (max-width: 520px) { h1 { font-size: 24px; } .barrow { grid-template-columns: minmax(0, 110px) 1fr auto; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Моделювання режимів гри методом Монте-Карло</span>
+    <h1>Симулятор раундів</h1>
+    <p class="sub" id="lede"></p>
+    <span class="runline" id="runline"></span>
+    <button type="button" class="themebtn" id="themebtn">Світла тема</button>
+  </header>
+
+  <div class="controls" role="toolbar" aria-label="Filters">
+    <div class="ctl"><span class="eyebrow">Екіпаж на початку раунду</span><div class="seg" id="scenarios"></div></div>
+    <div class="ctl"><span class="eyebrow">Режими</span><div class="ctl" id="modes"></div></div>
+  </div>
+
+  <section>
+    <div class="sechead">
+      <h2>Підсумок за раунд</h2>
+      <p class="note">Кожне значення — середнє або медіана для всіх змодельованих раундів вибраного налаштування. Дрібний текст показує діапазон від 10-го до 90-го перцентиля. Смуги порівнюють режими в кожному рядку.</p>
+    </div>
+    <div class="panel scroll"><table class="verdict" id="verdict"></table></div>
+  </section>
+
+  <section>
+    <div class="sechead"><h2>Зміни протягом раунду</h2></div>
+    <div class="grid2">
+      <div class="panel"><h3>Живі антагоністи</h3><p class="note">Лінія показує середнє. Затінена область показує середні 50% раундів.</p><div class="chart" id="c-alive"></div></div>
+      <div class="panel"><h3>Нові антагоністи за кожні 10 хвилин</h3><p class="note">Графік показує лише антагоністів посеред раунду. Антагоністи з початку раунду з’являються на хвилині 0.</p><div class="chart" id="c-arrivals"></div></div>
+      <div class="panel"><h3>Бюджет хаосу</h3><p class="note">Бюджет — це від’ємний рахунок хаосу планувальника. Живі гравці збільшують бюджет. Привиди та кожне нове правило зменшують його.</p><div class="chart" id="c-budget"></div></div>
+      <div class="panel"><h3>Події планувальника хаосу за кожні 10 хвилин</h3><p class="note">Графік показує всі події від планувальника хаосу. Планувальник запускає одну подію кожні 3–7,5 хвилини.</p><div class="chart" id="c-events"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead"><h2>Типи антагоністів</h2></div>
+    <div class="grid3">
+      <div class="panel"><h3>Антагоністів за раунд</h3><p class="note">Відсоток раундів для кожної загальної кількості антагоністів.</p><div class="chart" id="c-hist"></div></div>
+      <div class="panel"><h3>Антагоністи за типом загрози</h3><p class="note">Середня кількість антагоністів за раунд. Типи ті самі, що й у дослідженні логів сервера.</p><div id="c-family"></div></div>
+      <div class="panel"><h3>Правила на початку раунду</h3>
+        <div class="seg small" id="rs-order" role="group" aria-label="Roundstart pick"></div>
+        <p class="note" id="rs-order-note"></p>
+        <div id="c-primary" class="bars-stack"></div></div>
+    </div>
+    <div class="panel"><h3>Ролі антагоністів за раунд</h3><p class="note">Середня кількість кожної ролі за раунд. Підрахунок включає антагоністів на початку та посеред раунду.</p><div id="c-labels" style="margin-top:10px"></div></div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Антагоністи посеред раунду</h2>
+      <p class="note">Розділ показує події з антагоністами посеред раунду в порядку їх запуску. Подія може не додати антагоніста. Так буває, якщо жоден гравець не погоджується на роль, жоден привид її не бере або в Секрет ТП немає очок.</p>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>Кількість подій посеред раунду</h3><p class="note">Відсоток раундів, що отримують 1-шу, 2-гу, 3-тю чи наступну подію з антагоністом.</p><div class="chart" id="c-reach"></div></div>
+      <div class="panel"><h3>Час кожної події посеред раунду</h3><p class="note">Точка показує медіанну хвилину кожної події з антагоністом. Лінія показує діапазон від 10-го до 90-го перцентиля.</p><div class="chart" id="c-when"></div></div>
+    </div>
+    <div class="panel">
+      <h3>Правила для кожної події посеред раунду</h3>
+      <div class="seg small" id="mid-order" role="group" aria-label="Midround pick"></div>
+      <p class="note" id="mid-order-note"></p>
+      <div id="c-midorder" class="grid3" style="margin-top:6px"></div>
+    </div>
+    <div class="panel" style="display:grid;gap:12px">
+      <h3>Усі події з антагоністами посеред раунду</h3>
+      <div class="ledger-tools">
+        <label for="mr-metric">Показати
+          <select id="mr-metric">
+            <option value="rounds">% раундів із цим правилом</option>
+            <option value="runs">Запусків за раунд</option>
+            <option value="median">Медіанна хвилина</option>
+            <option value="antagsPerRun">Антагоністів за запуск</option>
+            <option value="empty">% запусків без антагоніста</option>
+          </select>
+        </label>
+      </div>
+      <div class="ledger-box" style="max-height:440px"><table class="ledger" id="midrules"></table></div>
+    </div>
+  </section>
+
+  <section id="tp-section">
+    <div class="sechead">
+      <h2>Бюджет очок Секрет ТП</h2>
+      <p class="note">Очки дають лише живі співробітники СБ: ГСБ 5, наглядач 4, офіцери та детектив 3, кадети та бригмедик 2. Кожен антагоніст використовує очки, поки живий, і ще 15 хвилин після смерті. Революція, ядерні оперативники, блоб, ксеноморфи та банди також потребують мінімальної кількості живих співробітників СБ.</p>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>Очки</h3><div class="legend" id="tp-legend"></div><div class="chart" id="c-tp"></div></div>
+      <div class="panel"><h3>Живі співробітники СБ</h3><p class="note">Усі режими мають однаковий розподіл посад.</p><div class="chart" id="c-sec"></div></div>
+    </div>
+  </section>
+
+  <section id="levers-section">
+    <div class="sechead">
+      <h2>Вплив налаштувань населення</h2>
+      <p class="note" id="levers-note"></p>
+    </div>
+    <div class="panel" style="display:grid;gap:14px">
+      <div class="ledger-tools">
+        <label for="lv-metric">Результат <select id="lv-metric"></select></label>
+      </div>
+      <div class="levers" id="levers"></div>
+    </div>
+  </section>
+
+  <section id="browser-section">
+    <div class="sechead">
+      <h2>Перегляд раундів</h2>
+      <p class="note" id="rb-note"></p>
+    </div>
+    <div class="panel rb">
+      <div class="ledger-tools">
+        <label for="rb-mode">Режим <select id="rb-mode"></select></label>
+        <label for="rb-sort">Сортувати
+          <select id="rb-sort">
+            <option value="round">За номером раунду</option>
+            <option value="most">Найбільше антагоністів</option>
+            <option value="fewest">Найменше антагоністів</option>
+            <option value="first">Найпізніший перший антагоніст посеред раунду</option>
+          </select>
+        </label>
+        <label for="rb-rule">Правило <input type="search" id="rb-rule" placeholder="Наприклад: Nukeops" list="rb-rules"></label>
+        <datalist id="rb-rules"></datalist>
+        <label for="rb-major"><input type="checkbox" id="rb-major"> Лише раунди з великою загрозою</label>
+      </div>
+      <div class="rb-grid">
+        <div class="rb-list" id="rb-list" role="listbox" aria-label="Simulated rounds" tabindex="0"></div>
+        <div class="rb-detail" id="rb-detail"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Усі правила</h2>
+      <p class="note">Таблиця показує всі правила, що запускалися у вибраному налаштуванні. Натисніть заголовок стовпця, щоб відсортувати таблицю. Копію правила в режимі зараховано до рядка оригінального правила: наприклад, BlueshiftChangeling — у рядку Changeling. Точні назви показує перегляд раундів.</p>
+    </div>
+    <div class="panel" style="display:grid;gap:12px">
+      <div class="ledger-tools">
+        <label for="lg-metric">Показати
+          <select id="lg-metric">
+            <option value="rounds">% раундів із цим правилом</option>
+            <option value="count">Запусків за раунд</option>
+            <option value="antags">Антагоністів за раунд</option>
+            <option value="first">Медіанна хвилина першого запуску</option>
+            <option value="cost">Середня вартість хаосу</option>
+          </select>
+        </label>
+        <label for="lg-source">Джерело
+          <select id="lg-source">
+            <option value="all">Усі</option>
+            <option value="roundstart">Початок раунду</option>
+            <option value="midround">Посеред раунду (планувальник хаосу)</option>
+            <option value="side">Інші планувальники</option>
+          </select>
+        </label>
+        <label for="lg-antag"><input type="checkbox" id="lg-antag"> Лише правила з антагоністами</label>
+        <label for="lg-search">Пошук <input type="search" id="lg-search" placeholder="Назва правила"></label>
+      </div>
+      <div class="ledger-box"><table class="ledger" id="ledger"></table></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead"><h2>Модель і обмеження</h2></div>
+    <div class="facts">
+      <div class="panel"><h3>Логіка, перенесена з коду гри</h3><ul id="ported"></ul></div>
+      <div class="panel"><h3>Припущення (задано в config.json)</h3><ul id="assumed"></ul></div>
+      <div class="panel"><h3>Повторний запуск</h3>
+        <p class="note">Змініть <code>Tools/_Pirate/GameModeSim/config.json</code> (пресети, сценарії та модель населення). Потім виконайте ці команди:</p>
+        <pre>dotnet run --project Tools/_Pirate/GameModeSim
+python Tools/_Pirate/GameModeSim/build_dashboard.py</pre>
+        <p class="note" style="margin-top:8px">Симулятор приймає будь-який пресет, що використовує SecretPlus, SecretSaltPlus або базовий планувальник подій, зокрема нові пресети.</p>
+        <div id="warnings"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+(function () {
+  if (!DATA) { document.querySelector('#lede').textContent = 'Сторінка не містить даних. Запустіть build_dashboard.py.'; return; }
+  const $ = s => document.querySelector(s);
+  const el = (tag, attrs = {}, ...kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'style' && typeof v === 'object') for (const [sk, sv2] of Object.entries(v)) n.style.setProperty(sk.startsWith('--') ? sk : sk.replace(/[A-Z]/g, c => '-' + c.toLowerCase()), sv2);
+      else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+      else if (v !== null && v !== undefined && v !== false) n.setAttribute(k, v);
+    }
+    for (const k of kids.flat()) if (k !== null && k !== undefined) n.append(k.nodeType ? k : String(k));
+    return n;
+  };
+  const SVG = 'http://www.w3.org/2000/svg';
+  const sv = (tag, attrs = {}) => { const n = document.createElementNS(SVG, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); return n; };
+  const fmt = (v, d = 1) => v === null || v === undefined || Number.isNaN(v) ? '–' : (Math.abs(v) >= 100 ? Math.round(v).toString() : (+v).toFixed(d).replace(/\.0+$/, ''));
+
+  const SRC_NAMES = { roundstart: 'початок', midround: 'хаос', side: 'інше', MeteorSwarmScheduler: 'метеори', GlimmerEventScheduler: 'мерехтіння', BlueshiftAntagScheduler: 'антагоністи' };
+  const srcName = s => SRC_NAMES[s] || s;
+
+  const themeBtn = document.querySelector('#themebtn');
+  const applyTheme = t => {
+    if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    else document.documentElement.removeAttribute('data-theme');
+    themeBtn.textContent = t === 'light' ? 'Темна тема' : 'Світла тема';
+  };
+  let theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  try { theme = localStorage.getItem('gms-theme') || theme; } catch (e) {}
+  applyTheme(theme);
+  themeBtn.addEventListener('click', () => {
+    theme = theme === 'light' ? 'dark' : 'light';
+    applyTheme(theme);
+    try { localStorage.setItem('gms-theme', theme); } catch (e) {}
+    renderCharts(); renderMidCharts(); renderLevers(); renderBrowser();
+  });
+
+  const presets = DATA.presets;
+  const colorOf = id => { const p = presets.find(q => q.id === id); return `var(--m${p && p.slot ? p.slot : presets.indexOf(p) + 1})`; };
+  const labelOf = id => (presets.find(p => p.id === id) || { label: id }).label;
+  const state = { scenario: DATA.scenarios[Math.min(1, DATA.scenarios.length - 1)].name, hidden: new Set() };
+  try { const s = JSON.parse(localStorage.getItem('gms-state') || '{}'); if (DATA.groups[s.scenario]) state.scenario = s.scenario; (s.hidden || []).forEach(h => state.hidden.add(h)); } catch (e) {}
+  const save = () => { try { localStorage.setItem('gms-state', JSON.stringify({ scenario: state.scenario, hidden: [...state.hidden] })); } catch (e) {} };
+  const visible = () => presets.filter(p => !state.hidden.has(p.id) && DATA.groups[state.scenario][p.id]);
+  const scen = () => DATA.scenarios.find(s => s.name === state.scenario);
+  const G = id => DATA.groups[state.scenario][id];
+
+  const s0 = scen();
+  $('#lede').textContent = `${DATA.rounds.toLocaleString('uk-UA')} змодельованих раундів для кожного режиму та налаштування. Симулятор використовує код планувальників і прототипи гри. Кожен раунд триває ${s0.roundMinutes} хвилин. На початку раунду підключено ${s0.population} гравців. Частина з них починає раунд одразу. Решта чекає в лобі й приєднується пізніше.`;
+  $('#runline').textContent = `Створено ${DATA.generated.slice(0, 16).replace('T', ' ')} UTC · ${(DATA.rounds * DATA.presets.length * DATA.scenarios.length).toLocaleString('uk-UA')} раундів за ${DATA.seconds.toFixed(0)} с · seed ${DATA.config.seed}`;
+
+  for (const s of DATA.scenarios) {
+    const b = el('button', { type: 'button', id: `sc-${s.name}`, 'aria-pressed': String(s.name === state.scenario), onclick: () => { state.scenario = s.name; save(); renderAll(); } },
+      `${s.roundstartPlayers} з ${s.population}`);
+    $('#scenarios').append(b);
+  }
+  for (const p of presets) {
+    const b = el('button', { type: 'button', class: 'chip', id: `md-${p.id}`, 'aria-pressed': String(!state.hidden.has(p.id)), style: { '--c': colorOf(p.id) },
+      onclick: () => { state.hidden.has(p.id) ? state.hidden.delete(p.id) : state.hidden.add(p.id); if (visible().length === 0) state.hidden.delete(p.id); save(); renderAll(); } },
+      el('span', { class: 'swatch', style: { '--c': colorOf(p.id) } }), p.label);
+    $('#modes').append(b);
+  }
+
+  function tooltip(host) {
+    let t = host.querySelector('.tooltip');
+    if (!t) { t = el('div', { class: 'tooltip', hidden: true }); host.append(t); }
+    return t;
+  }
+  function placeTip(t, host, x, y) {
+    const w = t.offsetWidth, hw = host.clientWidth;
+    t.style.left = Math.max(0, Math.min(hw - w, x + 14 > hw - w ? x - w - 14 : x + 14)) + 'px';
+    t.style.top = Math.max(0, y - 10) + 'px';
+  }
+
+  const niceMax = v => { if (v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); const m = v / p; return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p; };
+
+  function lineChart(host, { x, series, xLabel = 'хв', yFmt = v => fmt(v), height = 230, xStep = 30, xTicks = null, xFmt = v => v, endLabels = true }) {
+    host.querySelectorAll('svg').forEach(n => n.remove());
+    const W = Math.max(220, host.clientWidth), H = height;
+    const m = { l: 40, r: endLabels ? 74 : 14, t: 10, b: 26 };
+    const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    let lo = 0;
+    for (const s of series) s.values.forEach((v, i) => { if (v !== null) lo = Math.min(lo, v, s.band && s.band[i] ? s.band[i][0] : v); });
+    const yMin = lo < 0 ? -niceMax(-lo) : 0;
+    let hi = 0;
+    for (const s of series) s.values.forEach((v, i) => { if (v !== null) hi = Math.max(hi, v, s.band && s.band[i] ? s.band[i][1] : v); });
+    const top = niceMax(hi || 1);
+    const x0 = x[0], x1 = x[x.length - 1];
+    const X = v => m.l + (x1 === x0 ? 0 : (v - x0) / (x1 - x0) * iw);
+    const Y = v => m.t + ih - (v - yMin) / (top - yMin) * ih;
+    const svg = sv('svg', { viewBox: `0 0 ${W} ${H}`, height: H, role: 'img' });
+    const ticks = 4;
+    for (let i = 0; i <= ticks; i++) {
+      const v = yMin + (top - yMin) * i / ticks, y = Y(v);
+      svg.append(sv('line', { x1: m.l, x2: m.l + iw, y1: y, y2: y, stroke: 'var(--grid)', 'stroke-width': 1 }));
+      const t = sv('text', { x: m.l - 6, y: y + 4, 'text-anchor': 'end', fill: 'var(--ink-3)', 'font-size': 11, 'font-family': 'var(--font-data)' }); t.textContent = yFmt(v); svg.append(t);
+    }
+    const tickVals = xTicks || (() => { const a = []; for (let v = Math.ceil(x0 / xStep) * xStep; v <= x1; v += xStep) a.push(v); return a; })();
+    tickVals.forEach((v, i) => {
+      const anchor = xTicks && i === 0 ? 'start' : xTicks && i === tickVals.length - 1 ? 'end' : 'middle';
+      const t = sv('text', { x: X(v), y: H - 6, 'text-anchor': anchor, fill: 'var(--ink-3)', 'font-size': 11, 'font-family': 'var(--font-data)' }); t.textContent = xFmt(v); svg.append(t);
+    });
+    if (endLabels) { const ax = sv('text', { x: m.l + iw, y: H - 6, 'text-anchor': 'start', dx: 6, fill: 'var(--ink-3)', 'font-size': 11, 'font-family': 'var(--font-data)' }); ax.textContent = xLabel; svg.append(ax); }
+    svg.append(sv('line', { x1: m.l, x2: m.l + iw, y1: Y(yMin), y2: Y(yMin), stroke: 'var(--line)', 'stroke-width': 1 }));
+
+    for (const s of series) if (s.band) {
+      const pts = s.band.map((b, i) => b && [X(x[i]), Y(b[1]), Y(b[0])]).filter(Boolean);
+      if (pts.length) {
+        const d = 'M' + pts.map(p => `${p[0]},${p[1]}`).join('L') + 'L' + pts.slice().reverse().map(p => `${p[0]},${p[2]}`).join('L') + 'Z';
+        svg.append(sv('path', { d, fill: s.color, 'fill-opacity': .13, stroke: 'none' }));
+      }
+    }
+    const ends = [];
+    for (const s of series) {
+      const pts = s.values.map((v, i) => v === null ? null : [X(x[i]), Y(v)]);
+      let d = '', pen = false;
+      for (const p of pts) { if (!p) { pen = false; continue; } d += (pen ? 'L' : 'M') + p[0] + ',' + p[1]; pen = true; }
+      svg.append(sv('path', { d, fill: 'none', stroke: s.color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'stroke-dasharray': s.dash ? '5 4' : 'none' }));
+      const last = pts.filter(Boolean).pop();
+      if (last) ends.push({ y: last[1], s, x: last[0] });
+    }
+    ends.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 14) ends[i].y = ends[i - 1].y + 14;
+    for (const e of ends) {
+      if (!endLabels) { svg.append(sv('circle', { cx: e.x, cy: Y(e.s.values.filter(v => v !== null).pop()), r: 3, fill: e.s.color, stroke: 'var(--panel)', 'stroke-width': 2 })); continue; }
+      svg.append(sv('circle', { cx: e.x, cy: Y(e.s.values.filter(v => v !== null).pop()), r: 3.5, fill: e.s.color, stroke: 'var(--panel)', 'stroke-width': 2 }));
+      const t = sv('text', { x: m.l + iw + 8, y: e.y + 4, fill: 'var(--ink-2)', 'font-size': 11.5 }); t.textContent = e.s.name; svg.append(t);
+    }
+    const cross = sv('line', { y1: m.t, y2: m.t + ih, stroke: 'var(--ink-3)', 'stroke-width': 1, 'stroke-dasharray': '3 3', visibility: 'hidden' });
+    svg.append(cross);
+    const dots = series.map(s => { const c = sv('circle', { r: 4, fill: s.color, stroke: 'var(--panel)', 'stroke-width': 2, visibility: 'hidden' }); svg.append(c); return c; });
+    const hit = sv('rect', { x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent' });
+    svg.append(hit);
+    const tip = tooltip(host);
+    const move = ev => {
+      const r = svg.getBoundingClientRect(); const px = (ev.clientX - r.left) * W / r.width;
+      let i = 0, best = Infinity; x.forEach((v, j) => { const d = Math.abs(X(v) - px); if (d < best) { best = d; i = j; } });
+      cross.setAttribute('x1', X(x[i])); cross.setAttribute('x2', X(x[i])); cross.setAttribute('visibility', 'visible');
+      series.forEach((s, k) => { const v = s.values[i]; if (v === null) { dots[k].setAttribute('visibility', 'hidden'); return; } dots[k].setAttribute('cx', X(x[i])); dots[k].setAttribute('cy', Y(v)); dots[k].setAttribute('visibility', 'visible'); });
+      tip.replaceChildren(el('div', { class: 't' }, `${xFmt(x[i])} ${xLabel}`), ...series.map(s => el('div', { class: 'r' },
+        el('span', {}, el('span', { class: 'swatch', style: { '--c': s.color } }), s.name),
+        el('b', {}, s.values[i] === null ? '–' : yFmt(s.values[i]) + (s.band && s.band[i] ? `  (${yFmt(s.band[i][0])}–${yFmt(s.band[i][1])})` : '')))));
+      tip.hidden = false; placeTip(tip, host, X(x[i]) * r.width / W, ev.clientY - host.getBoundingClientRect().top);
+    };
+    hit.addEventListener('mousemove', move);
+    hit.addEventListener('mouseleave', () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); dots.forEach(d => d.setAttribute('visibility', 'hidden')); });
+    host.prepend(svg);
+  }
+
+  function barChart(host, { cats, groups, yFmt = v => fmt(v, 0) + '%', height = 220, xLabel = '', rotate = false }) {
+    host.querySelectorAll('svg').forEach(n => n.remove());
+    const W = Math.max(260, host.clientWidth), H = height;
+    const m = { l: 36, r: 8, t: 10, b: rotate ? 96 : 30 };
+    const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const top = niceMax(Math.max(1, ...groups.flatMap(g => g.values.map(v => v || 0))));
+    const Y = v => m.t + ih - v / top * ih;
+    const svg = sv('svg', { viewBox: `0 0 ${W} ${H}`, height: H, role: 'img' });
+    for (let i = 0; i <= 4; i++) {
+      const v = top * i / 4, y = Y(v);
+      svg.append(sv('line', { x1: m.l, x2: m.l + iw, y1: y, y2: y, stroke: 'var(--grid)' }));
+      const t = sv('text', { x: m.l - 6, y: y + 4, 'text-anchor': 'end', fill: 'var(--ink-3)', 'font-size': 11, 'font-family': 'var(--font-data)' }); t.textContent = yFmt(v); svg.append(t);
+    }
+    const cw = iw / cats.length, gap = 2, bw = Math.max(2, (cw - 6) / groups.length - gap);
+    const tip = tooltip(host);
+    cats.forEach((c, i) => {
+      if (rotate) {
+        const lx = m.l + cw * i + cw / 2, ly = Y(0) + 12;
+        const t = sv('text', { x: lx, y: ly, 'text-anchor': 'end', transform: `rotate(-40 ${lx} ${ly})`, fill: 'var(--ink-2)', 'font-size': 11 }); t.textContent = c.length > 16 ? c.slice(0, 15) + '…' : c; svg.append(t);
+      } else if (cats.length <= 16 || i % 2 === 0) { const t = sv('text', { x: m.l + cw * i + cw / 2, y: H - 12, 'text-anchor': 'middle', fill: 'var(--ink-3)', 'font-size': 11, 'font-family': 'var(--font-data)' }); t.textContent = c; svg.append(t); }
+      groups.forEach((g, k) => {
+        const v = g.values[i] || 0; if (!v) return;
+        const x = m.l + cw * i + 3 + k * (bw + gap), y = Y(v), h = Y(0) - y;
+        const r = Math.min(4, bw / 2, h);
+        const d = `M${x},${Y(0)}V${y + r}Q${x},${y} ${x + r},${y}H${x + bw - r}Q${x + bw},${y} ${x + bw},${y + r}V${Y(0)}Z`;
+        const p = sv('path', { d, fill: g.color });
+        p.addEventListener('mousemove', ev => {
+          tip.replaceChildren(el('div', { class: 't' }, `${c} ${xLabel}`), el('div', { class: 'r' }, el('span', {}, el('span', { class: 'swatch', style: { '--c': g.color } }), g.name), el('b', {}, yFmt(v))));
+          tip.hidden = false; const hr = host.getBoundingClientRect(); placeTip(tip, host, ev.clientX - hr.left, ev.clientY - hr.top);
+        });
+        p.addEventListener('mouseleave', () => tip.hidden = true);
+        svg.append(p);
+      });
+    });
+    if (xLabel) { const t = sv('text', { x: m.l + iw, y: H - 0, 'text-anchor': 'end', fill: 'var(--ink-3)', 'font-size': 11 }); t.textContent = xLabel; svg.append(t); }
+    svg.append(sv('line', { x1: m.l, x2: m.l + iw, y1: Y(0), y2: Y(0), stroke: 'var(--line)' }));
+    host.prepend(svg);
+  }
+
+  const ROWS = [
+    ['totalAntags', 'Антагоністів за раунд', 'на початку та посеред раунду', 'mean'],
+    ['roundstartAntags', 'Антагоністів на початку раунду', '', 'mean'],
+    ['midroundAntagEvents', 'Подій з антагоністами посеред раунду', 'події, що додають антагоністів', 'mean'],
+    ['midroundAntags', 'Антагоністів посеред раунду', '', 'mean'],
+    ['peakAliveAntags', 'Найбільше живих антагоністів одночасно', '', 'mean'],
+    ['firstMidroundAntag', 'Перший антагоніст посеред раунду', 'медіанна хвилина', 'p50', ' хв'],
+    ['quietMax', 'Найдовший час без нового антагоніста', 'медіана в хвилинах, разом із часом до кінця раунду', 'p50', ' хв'],
+    ['closeArrivals', 'Раунди з антагоністами менше ніж за 10 хв один від одного', 'з різних подій посеред раунду, за часом входу гравців', 'pct'],
+    ['majorRounds', 'Раунди з великою загрозою', 'наприклад ядерні оперативники, революція, блоб, дракон', 'pct'],
+    ['noRoundstartAntag', 'Раунди без антагоніста на початку', '', 'pct'],
+    ['midroundEvents', 'Події посеред раунду', 'усі події від планувальника хаосу', 'mean'],
+    ['startBudget', 'Бюджет хаосу на початку раунду', '', 'mean'],
+    ['secAtStart', 'Співробітників СБ на початку раунду', '', 'mean'],
+    ['tpStartPoints', 'Очки ТП на початку раунду', 'лише Секрет ТП', 'mean'],
+    ['tpGreenshiftRoll', 'Перше правило ТП скасоване кидком зеленої зміни', 'лише Секрет ТП', 'pct'],
+  ];
+  function renderVerdict() {
+    const vis = visible();
+    const t = $('#verdict'); t.replaceChildren();
+    t.append(el('thead', {}, el('tr', {}, el('th', {}, ''), vis.map(p => el('th', {}, el('span', { class: 'chip', style: { '--c': colorOf(p.id), background: 'transparent', padding: 0 } }, el('span', { class: 'swatch', style: { '--c': colorOf(p.id) } }), p.label))))));
+    const body = el('tbody');
+    for (const [key, label, small, kind, unit = ''] of ROWS) {
+      const vals = vis.map(p => { const k = G(p.id).kpi[key]; return kind === 'pct' ? k : k ? k[kind === 'p50' ? 'p50' : 'mean'] : null; });
+      if (key.startsWith('tp') && vis.every(p => !G(p.id).kpi.tpStartPoints.mean)) continue;
+      const max = Math.max(...vals.filter(v => v !== null).map(Math.abs), 0.0001);
+      body.append(el('tr', {}, el('th', {}, label, small ? el('small', {}, small) : null), vis.map((p, i) => {
+        const k = G(p.id).kpi[key]; const v = vals[i];
+        const range = kind === 'pct' || !k ? '' : `${fmt(k.p10)}–${fmt(k.p90)}${unit}`;
+        return el('td', {}, el('div', { class: 'val' }, v === null ? '–' : fmt(v) + (kind === 'pct' ? '%' : unit)), range ? el('div', { class: 'rng' }, range) : null,
+          el('div', { class: 'meter' }, el('i', { style: { width: `${v === null ? 0 : Math.abs(v) / max * 100}%`, '--c': colorOf(p.id) } })));
+      })));
+    }
+    t.append(body);
+  }
+
+  function renderCharts() {
+    const vis = visible();
+    const tl = id => G(id).timeline;
+    const x = tl(vis[0].id).minutes;
+    lineChart($('#c-alive'), { x, series: vis.map(p => ({ name: p.label, color: colorOf(p.id), values: tl(p.id).aliveAntags.map(v => v && v[0]), band: tl(p.id).aliveAntags.map(v => v && [v[1], v[2]]) })) });
+    lineChart($('#c-budget'), { x, series: vis.map(p => ({ name: p.label, color: colorOf(p.id), values: tl(p.id).budget.map(v => v && v[0]), band: tl(p.id).budget.map(v => v && [v[1], v[2]]) })), yFmt: v => fmt(v, 0) });
+    const bx = G(vis[0].id).arrivals.antags.map((_, i) => i * 10);
+    lineChart($('#c-arrivals'), { x: bx, series: vis.map(p => ({ name: p.label, color: colorOf(p.id), values: G(p.id).arrivals.antags })), yFmt: v => fmt(v, 2) });
+    lineChart($('#c-events'), { x: bx, series: vis.map(p => ({ name: p.label, color: colorOf(p.id), values: G(p.id).arrivals.events })), yFmt: v => fmt(v, 2) });
+
+    const maxN = Math.max(...vis.flatMap(p => Object.keys(G(p.id).hist).map(Number)));
+    const cats = Array.from({ length: maxN + 1 }, (_, i) => String(i));
+    barChart($('#c-hist'), { cats, groups: vis.map(p => ({ name: p.label, color: colorOf(p.id), values: cats.map(c => G(p.id).hist[c] || 0) })), xLabel: 'антагоністів' });
+
+    const fam = $('#c-family'); fam.replaceChildren();
+    const fmax = Math.max(...vis.flatMap(p => Object.values(G(p.id).families)), 0.01);
+    for (const f of DATA.families) {
+      fam.append(el('div', { class: 'famgroup' }, el('div', { class: 'eyebrow' }, f), vis.map(p => {
+        const v = G(p.id).families[f] || 0;
+        return el('div', { class: 'barrow', title: `${p.label}: ${fmt(v, 2)} за раунд` }, el('span', { class: 'lbl' }, p.label), el('div', { class: 'track' }, el('div', { class: 'fill', style: { width: `${v / fmax * 100}%`, '--c': colorOf(p.id) } })), el('span', { class: 'num' }, fmt(v, 2)));
+      })));
+    }
+
+    renderPicks();
+
+    const labs = new Map();
+    for (const p of vis) for (const [k, v] of Object.entries(G(p.id).labels)) labs.set(k, Math.max(labs.get(k) || 0, v));
+    const topLabs = [...labs.entries()].sort((a, b) => b[1] - a[1]).slice(0, 18).map(e => e[0]);
+    barChart($('#c-labels'), { cats: topLabs, groups: vis.map(p => ({ name: p.label, color: colorOf(p.id), values: topLabs.map(l => G(p.id).labels[l] || 0) })), yFmt: v => fmt(v, 2), height: 320, rotate: true });
+
+    const tp = presets.find(p => G(p.id) && G(p.id).timeline.tpTotal.some(v => v !== null));
+    $('#tp-section').hidden = !tp;
+    if (tp) {
+      const t = G(tp.id).timeline, c = colorOf(tp.id);
+      const tpSeries = [
+        { name: 'Усього', color: 'var(--ink-2)', values: t.tpTotal },
+        { name: 'Використано', color: 'var(--ink-3)', values: t.tpUsed, dash: true },
+        { name: 'Доступно', color: c, values: t.tpAvailable.map(v => v && v[0]), band: t.tpAvailable.map(v => v && [v[1], v[2]]) },
+      ];
+      $('#tp-legend').replaceChildren(...tpSeries.map(s => el('span', {}, el('i', { class: 'ln' + (s.dash ? ' dash' : ''), style: { '--c': s.color } }), s.name)));
+      lineChart($('#c-tp'), { x: t.minutes, series: tpSeries });
+      lineChart($('#c-sec'), { x: t.minutes, series: vis.map(p => ({ name: p.label, color: colorOf(p.id), values: G(p.id).timeline.secAlive.map(v => v && v[0]), band: G(p.id).timeline.secAlive.map(v => v && [v[1], v[2]]) })) });
+    }
+  }
+
+  // Ukrainian ordinals agree with the noun: правило (neuter), подія (feminine).
+  const ORD = ['1-ше', '2-ге', '3-тє', '4-те', '5-те', '6-те', '7-ме', '8-ме'];
+  const ORD_F = ['1-ша', '2-га', '3-тя', '4-та', '5-та', '6-та', '7-ма', '8-ма'];
+  const pk = { rs: 0, mid: 0 };
+  const barList = (rows, color, valFmt) => {
+    const mx = Math.max(...rows.map(r => r[1]), 0.0001);
+    return rows.map(([name, v, extra]) => el('div', { class: 'barrow' }, el('span', { class: 'lbl', title: name }, name),
+      el('div', { class: 'track' }, el('div', { class: 'fill', style: { width: `${v / mx * 100}%`, '--c': color } })),
+      el('span', { class: 'num' }, valFmt(v, extra))));
+  };
+  function orderButtons(host, count, key, render, labels = ORD) {
+    host.replaceChildren(...labels.slice(0, count).map((o, i) => el('button', { type: 'button', id: `${host.id}-${i}`, 'aria-pressed': String(pk[key] === i), onclick: () => { pk[key] = i; render(); } }, o)));
+  }
+  function renderPicks() {
+    const vis = visible();
+    orderButtons($('#rs-order'), 4, 'rs', renderPicks);
+    $('#rs-order-note').textContent = `Список показує ${ORD[pk.rs]} правило на початку раунду у відсотках від усіх раундів. Планувальник додає нові правила, лише поки є бюджет хаосу.`;
+    const pr = $('#c-primary'); pr.replaceChildren();
+    for (const p of vis) {
+      const o = G(p.id).rsOrder[pk.rs];
+      pr.append(el('div', { class: 'bars' }, el('div', { class: 'eyebrow' }, `${p.label} · у ${fmt(o.reached, 1)}% раундів`),
+        o.rules.length ? barList(o.rules.slice(0, 7), colorOf(p.id), v => fmt(v, 1) + '%') : el('span', { class: 'reach' }, 'Жоден раунд не доходить до цього кроку.')));
+    }
+  }
+  function whiskerChart(host, { cats, groups, height = 220, yFmt = v => fmt(v, 0) }) {
+    host.querySelectorAll('svg').forEach(n => n.remove());
+    const W = Math.max(260, host.clientWidth), H = height, m = { l: 36, r: 8, t: 10, b: 26 };
+    const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const top = niceMax(Math.max(1, ...groups.flatMap(g => g.values.filter(Boolean).map(v => v[2] || 0))));
+    const Y = v => m.t + ih - v / top * ih;
+    const svg = sv('svg', { viewBox: `0 0 ${W} ${H}`, height: H, role: 'img' });
+    for (let i = 0; i <= 4; i++) {
+      const v = top * i / 4, y = Y(v);
+      svg.append(sv('line', { x1: m.l, x2: m.l + iw, y1: y, y2: y, stroke: 'var(--grid)' }));
+      const t = sv('text', { x: m.l - 6, y: y + 4, 'text-anchor': 'end', fill: 'var(--ink-3)', 'font-size': 11, 'font-family': 'var(--font-data)' }); t.textContent = yFmt(v); svg.append(t);
+    }
+    const cw = iw / cats.length, tip = tooltip(host);
+    cats.forEach((c, i) => {
+      const t = sv('text', { x: m.l + cw * i + cw / 2, y: H - 8, 'text-anchor': 'middle', fill: 'var(--ink-3)', 'font-size': 11, 'font-family': 'var(--font-data)' }); t.textContent = c; svg.append(t);
+      groups.forEach((g, k) => {
+        const v = g.values[i]; if (!v || v[1] === null) return;
+        const x = m.l + cw * i + cw * (k + 1) / (groups.length + 1);
+        const gEl = sv('g', {});
+        gEl.append(sv('line', { x1: x, x2: x, y1: Y(v[0]), y2: Y(v[2]), stroke: g.color, 'stroke-width': 2, 'stroke-linecap': 'round' }));
+        gEl.append(sv('circle', { cx: x, cy: Y(v[1]), r: 4.5, fill: g.color, stroke: 'var(--panel)', 'stroke-width': 2 }));
+        gEl.append(sv('rect', { x: x - 9, y: Y(v[2]) - 6, width: 18, height: Y(v[0]) - Y(v[2]) + 12, fill: 'transparent' }));
+        gEl.addEventListener('mousemove', ev => {
+          tip.replaceChildren(el('div', { class: 't' }, `${c} подія з антагоністом`), el('div', { class: 'r' }, el('span', {}, el('span', { class: 'swatch', style: { '--c': g.color } }), g.name), el('b', {}, `хвилина ${yFmt(v[1])} (${yFmt(v[0])}–${yFmt(v[2])})`)));
+          tip.hidden = false; const hr = host.getBoundingClientRect(); placeTip(tip, host, ev.clientX - hr.left, ev.clientY - hr.top);
+        });
+        gEl.addEventListener('mouseleave', () => tip.hidden = true);
+        svg.append(gEl);
+      });
+    });
+    svg.append(sv('line', { x1: m.l, x2: m.l + iw, y1: Y(0), y2: Y(0), stroke: 'var(--line)' }));
+    host.prepend(svg);
+  }
+  function renderMidOrder() {
+    const vis = visible();
+    orderButtons($('#mid-order'), 8, 'mid', renderMidOrder, ORD_F);
+    $('#mid-order-note').textContent = `Список показує правило для ${pk.mid + 1}-ї події з антагоністом у відсотках від усіх раундів, а також медіанну хвилину.`;
+    const host = $('#c-midorder'); host.replaceChildren();
+    for (const p of vis) {
+      const o = G(p.id).midOrder[pk.mid];
+      host.append(el('div', { class: 'bars' },
+        el('div', { class: 'eyebrow' }, p.label),
+        el('div', { class: 'reach' }, `у ${fmt(o.reached, 1)}% раундів${o.minute[1] !== null ? ` · медіанна хвилина ${fmt(o.minute[1], 0)}` : ''}`),
+        o.rules.length ? barList(o.rules.map(r => [r[0], r[1], r]), colorOf(p.id), (v, r) => `${fmt(v, 1)}% · ${fmt(r[2], 0)} хв`) : el('span', { class: 'reach' }, 'Жоден раунд не доходить до цього кроку.')));
+    }
+  }
+  const mr = { sort: null, dir: -1 };
+  function renderMidRules() {
+    const vis = visible(), metric = $('#mr-metric').value;
+    const names = new Set(); vis.forEach(p => Object.keys(G(p.id).midRules).forEach(r => names.add(r)));
+    const key = mr.sort || vis[0].id;
+    const val = (r, id) => { const v = (G(id).midRules[r] || {})[metric]; return v === undefined ? null : v; };
+    const rows = [...names].sort((a, b) => {
+      if (key === 'rule') return -mr.dir * a.localeCompare(b);
+      const va = val(a, key), vb = val(b, key);
+      if (va === null && vb === null) return 0; if (va === null) return 1; if (vb === null) return -1;
+      return mr.dir * (va - vb);
+    });
+    const mx = {}; vis.forEach(p => mx[p.id] = Math.max(...rows.map(r => val(r, p.id) || 0), 0.0001));
+    const unit = { rounds: '%', runs: '', median: ' хв', antagsPerRun: '', empty: '%' }[metric];
+    const th = (k, label, cls) => el('th', { class: cls, onclick: () => { mr.dir = mr.sort === k ? -mr.dir : -1; mr.sort = k; renderMidRules(); } }, label + (key === k ? (mr.dir < 0 ? ' ↓' : ' ↑') : ''));
+    const info = r => DATA.ruleInfo[r] || { family: '' };
+    $('#midrules').replaceChildren(
+      el('thead', {}, el('tr', {}, th('rule', 'Подія', 'l'), el('th', { class: 'l' }, 'Тип загрози'), vis.map(p => th(p.id, p.label)))),
+      el('tbody', {}, rows.map(r => el('tr', {}, el('td', { class: 'name' }, r),
+        el('td', { class: 'l' }, el('span', { class: 'tag' + (isMajorRule(r) ? ' major' : '') }, info(r).family)),
+        vis.map(p => { const v = val(r, p.id); return el('td', {}, v === null ? '–' : [el('span', { class: 'cellbar', style: { width: `${v / mx[p.id] * 46}px`, '--c': colorOf(p.id) } }), fmt(v, metric === 'runs' || metric === 'antagsPerRun' ? 2 : 1) + unit]); })))));
+  }
+  $('#mr-metric').addEventListener('change', renderMidRules);
+  function renderMidCharts() {
+    const vis = visible();
+    const cats = ORD_F;
+    barChart($('#c-reach'), { cats, groups: vis.map(p => ({ name: p.label, color: colorOf(p.id), values: G(p.id).midOrder.map(o => o.reached) })), xLabel: 'подія' });
+    whiskerChart($('#c-when'), { cats, groups: vis.map(p => ({ name: p.label, color: colorOf(p.id), values: G(p.id).midOrder.map(o => o.minute[1] === null ? null : [o.minute[0], o.minute[1], o.minute[2]]) })) });
+  }
+
+  const L = DATA.levers || { params: [], metrics: [] };
+  $('#levers-section').hidden = !L.params.length;
+  $('#lv-metric').replaceChildren(...L.metrics.map(m => el('option', { value: m.id }, m.label)));
+  $('#lv-metric').addEventListener('change', renderLevers);
+  const pfmt = v => Math.abs(v) < 0.1 && v !== 0 ? (+v).toPrecision(2) : fmt(v, 2);
+  function renderLevers() {
+    if (!L.params.length) return;
+    const vis = visible(), metric = $('#lv-metric').value || L.metrics[0].id;
+    const meta = L.metrics.find(m => m.id === metric);
+    $('#levers-note').textContent = `Кожен раунд задає ці ${L.params.length} значень випадково. Для того самого раунду всі режими мають однакові значення. Кожен графік ділить раунди на ${L.params[0].bins.length} рівних груп за одним значенням і показує середній результат групи. Графіки впорядковано за силою впливу.`;
+    const swingOf = p => Math.max(...vis.map(m => { const v = (G(m.id).levers[p.id] || {})[metric] || []; const a = v.find(x => x !== null), b = [...v].reverse().find(x => x !== null); return a === undefined ? 0 : Math.abs(b - a); }));
+    const params = [...L.params].sort((a, b) => swingOf(b) - swingOf(a));
+    const host = $('#levers'); host.replaceChildren();
+    for (const p of params) {
+      const chart = el('div', { class: 'chart' });
+      const swing = vis.map(m => { const v = (G(m.id).levers[p.id] || {})[metric] || []; const a = v.find(x => x !== null), b = [...v].reverse().find(x => x !== null); return a === undefined ? null : `${m.label} ${b - a >= 0 ? '+' : '−'}${fmt(Math.abs(b - a), 2)}`; }).filter(Boolean).join(' · ');
+      host.append(el('div', { class: 'lever' }, el('h4', {}, p.label), el('span', { class: 'swing' }, `${pfmt(p.range[0])}–${pfmt(p.range[1])} ${p.unit} · зміна від низького до високого: ${swing}`), chart));
+      lineChart(chart, { x: p.bins, xTicks: [p.bins[0], p.bins[Math.floor(p.bins.length / 2)], p.bins[p.bins.length - 1]], xFmt: pfmt, xLabel: p.unit, height: 160, endLabels: false,
+        yFmt: v => fmt(v, 1) + (meta.unit === '%' ? '%' : ''),
+        series: vis.map(m => ({ name: m.label, color: colorOf(m.id), values: (G(m.id).levers[p.id] || {})[metric] || [] })) });
+    }
+  }
+
+  const B = DATA.browser;
+  $('#browser-section').hidden = !B;
+  const rf = B ? Object.fromEntries(B.roundFields.map((f, i) => [f, i])) : {};
+  const ef = B ? Object.fromEntries(B.eventFields.map((f, i) => [f, i])) : {};
+  const rb = { mode: null, round: 0 };
+  try { const s = JSON.parse(localStorage.getItem('gms-rb') || '{}'); if (s.mode) rb.mode = s.mode; } catch (e) {}
+  // Family names are translated; identify the major family by FAMILIES order.
+  const isMajorRule = r => (DATA.ruleInfo[r] || {}).family === DATA.families[0];
+  const ruleOf = ev => B.rules[ev[ef.rule]];
+  const srcOf = ev => B.sources[ev[ef.source]];
+  const roundHasMajor = rd => rd.e.some(ev => ev[ef.spawned] > 0 && isMajorRule(ruleOf(ev)));
+  const plabel = name => (DATA.paramLabels || {})[name] || name;
+  if (B) {
+    $('#rb-rules').replaceChildren(...[...B.rules].sort().map(r => el('option', { value: r })));
+    ['#rb-sort', '#rb-major'].forEach(s => $(s).addEventListener('change', renderBrowser));
+    $('#rb-rule').addEventListener('input', renderBrowser);
+    $('#rb-mode').addEventListener('change', () => { rb.mode = $('#rb-mode').value; try { localStorage.setItem('gms-rb', JSON.stringify({ mode: rb.mode })); } catch (e) {} renderBrowser(); });
+  }
+  function rbRounds() { return ((B.rounds[state.scenario] || {})[rb.mode]) || []; }
+  function rbFiltered() {
+    const q = $('#rb-rule').value.trim().toLowerCase(), major = $('#rb-major').checked, sort = $('#rb-sort').value;
+    let list = rbRounds().filter(rd => (!q || rd.e.some(ev => ruleOf(ev).toLowerCase().includes(q))) && (!major || roundHasMajor(rd)));
+    const tot = rd => rd.r[rf.totalAntags], fm = rd => rd.r[rf.firstMidroundAntagMin] ?? 999;
+    if (sort === 'most') list = list.sort((a, b) => tot(b) - tot(a));
+    else if (sort === 'fewest') list = list.sort((a, b) => tot(a) - tot(b));
+    else if (sort === 'first') list = list.sort((a, b) => fm(b) - fm(a));
+    return list;
+  }
+  function renderBrowser() {
+    if (!B) return;
+    const modes = presets.filter(p => (B.rounds[state.scenario] || {})[p.id]);
+    if (!modes.some(p => p.id === rb.mode)) rb.mode = (modes.find(p => p.id === 'Blueshift') || modes[0]).id;
+    $('#rb-mode').replaceChildren(...modes.map(p => el('option', { value: p.id, selected: p.id === rb.mode ? '' : null }, p.label)));
+    $('#rb-mode').value = rb.mode;
+    $('#rb-note').textContent = `Розділ показує перші ${B.sample} змодельованих раундів кожного режиму з усіма правилами по порядку. Раунд з тим самим номером має той самий екіпаж у всіх режимах: тих самих гравців, посади, час входу та бажання грати антагоністом. Смерті використовують ті самі випадкові значення, але змінюються, коли антагоністи різні.`;
+    const list = rbFiltered(), host = $('#rb-list');
+    if (!list.some(rd => rd.r[rf.round] === rb.round)) rb.round = list.length ? list[0].r[rf.round] : -1;
+    const c = colorOf(rb.mode);
+    host.replaceChildren(...(list.length ? list.map(rd => {
+      const n = rd.r[rf.round];
+      const rs = rd.e.filter(ev => srcOf(ev) === 'roundstart').map(ruleOf);
+      return el('button', { type: 'button', class: 'rb-item', role: 'option', id: `rb-r-${n}`, 'aria-selected': String(n === rb.round), style: { '--c': c },
+        onclick: () => { rb.round = n; renderBrowser(); } },
+        el('span', { class: 'n' }, `#${n}`), el('span', {}, `антагоністів: ${fmt(rd.r[rf.totalAntags], 0)}${roundHasMajor(rd) ? ' · велика загроза' : ''}`),
+        el('span', { class: 'a' }, rd.r[rf.firstMidroundAntagMin] !== null ? `${fmt(rd.r[rf.firstMidroundAntagMin], 0)} хв` : '–'),
+        el('span', { class: 'sub' }, rs.length ? rs.join(' + ') : 'без антагоністів на початку'));
+    }) : [el('p', { class: 'note', style: { padding: '10px' } }, 'За цими фільтрами раундів немає.')]));
+    const cur = list.find(rd => rd.r[rf.round] === rb.round);
+    renderRound(cur, list);
+  }
+  function renderRound(rd, list) {
+    const host = $('#rb-detail');
+    if (!rd) { host.replaceChildren(); return; }
+    const n = rd.r[rf.round], i = list.indexOf(rd), mins = scen().roundMinutes, c = colorOf(rb.mode);
+    const R = f => rd.r[rf[f]];
+    const nav = el('div', { class: 'rb-nav' },
+      el('button', { type: 'button', disabled: i <= 0 ? '' : null, onclick: () => { rb.round = list[i - 1].r[rf.round]; renderBrowser(); } }, '← Попередній'),
+      el('button', { type: 'button', disabled: i >= list.length - 1 ? '' : null, onclick: () => { rb.round = list[i + 1].r[rf.round]; renderBrowser(); } }, 'Наступний →'));
+    const others = presets.filter(p => p.id !== rb.mode && (B.rounds[state.scenario] || {})[p.id]);
+    const same = el('div', { class: 'rb-nav' }, el('span', { class: 'note' }, 'Цей раунд у режимі:'), others.map(p => el('button', { type: 'button', onclick: () => { rb.mode = p.id; renderBrowser(); } }, p.label)));
+    const stats = el('div', { class: 'rb-stats' },
+      el('span', {}, 'Антагоністів ', el('b', {}, fmt(R('totalAntags'), 0)), ` (${fmt(R('roundstartAntags'), 0)} на початку, ${fmt(R('midroundAntags'), 0)} посеред раунду)`),
+      el('span', {}, 'Найбільше живих ', el('b', {}, fmt(R('peakAliveAntags'), 0))),
+      el('span', {}, 'Смертей ', el('b', {}, fmt(R('deaths'), 0))),
+      el('span', {}, 'Бюджет ', el('b', {}, `${fmt(R('startBudget'), 0)} → ${fmt(R('endBudget'), 0)}`)),
+      el('span', {}, 'Швидкість хаосу ', el('b', {}, `${fmt(R('chaosVariation'), 2)}×`)),
+      el('span', {}, 'СБ на початку ', el('b', {}, fmt(R('secAtStart'), 0))),
+      R('tpStartPoints') ? el('span', {}, 'Очки ТП ', el('b', {}, fmt(R('tpStartPoints'), 0))) : null);
+    const params = el('div', { class: 'rb-params' }, B.params.map((p, k) => rd.p[k] === null ? null : el('span', { title: p }, `${plabel(p)} ${pfmt(rd.p[k])}`)));
+
+    const strip = el('div', { class: 'rb-strip' });
+    const tipHost = strip;
+    const draw = () => {
+      strip.querySelectorAll('svg').forEach(s => s.remove());
+      const W = Math.max(260, strip.clientWidth), H = 70, ml = 8, mr = 8, X = t => ml + Math.min(mins, Math.max(0, t)) / mins * (W - ml - mr);
+      const svg = sv('svg', { viewBox: `0 0 ${W} ${H}`, height: H, role: 'img' });
+      svg.append(sv('line', { x1: ml, x2: W - mr, y1: 46, y2: 46, stroke: 'var(--line)' }));
+      for (let t = 0; t <= mins; t += 30) {
+        svg.append(sv('line', { x1: X(t), x2: X(t), y1: 44, y2: 50, stroke: 'var(--line)' }));
+        const tx = sv('text', { x: X(t), y: 64, 'text-anchor': t === 0 ? 'start' : t >= mins ? 'end' : 'middle', fill: 'var(--ink-3)', 'font-size': 11, 'font-family': 'var(--font-data)' }); tx.textContent = t + (t >= mins - 1 ? ' min' : ''); svg.append(tx);
+      }
+      const tip = tooltip(tipHost);
+      const hover = (m, lines) => {
+        m.addEventListener('mousemove', e2 => { tip.replaceChildren(...lines()); tip.hidden = false; const hr = tipHost.getBoundingClientRect(); placeTip(tip, tipHost, e2.clientX - hr.left, e2.clientY - hr.top); });
+        m.addEventListener('mouseleave', () => tip.hidden = true);
+      };
+      for (const ev of rd.e) {
+        const t = ev[ef.started] ?? ev[ef.added]; if (t === null) continue;
+        const side = !['roundstart', 'midround'].includes(srcOf(ev));
+        const arr = ev[ef.arrivals] || [];
+        const tick = sv('line', { x1: X(t), x2: X(t), y1: side ? 40 : 36, y2: 46, stroke: side ? 'var(--line)' : 'var(--ink-3)', 'stroke-width': 1.5 });
+        hover(tick, () => [el('div', { class: 't' }, `${fmt(t, 0)} хв · ${srcName(srcOf(ev))}`), el('div', {}, el('b', {}, ruleOf(ev)))]);
+        svg.append(tick);
+        for (const a of arr) {
+          const late = a - t >= 1;
+          const dot = sv('circle', { cx: X(a), cy: 24, r: 5, fill: isMajorRule(ruleOf(ev)) ? 'var(--warn)' : c, stroke: 'var(--panel)', 'stroke-width': 2 });
+          if (late) svg.append(sv('line', { x1: X(t), x2: X(a), y1: 30, y2: 30, stroke: c, 'stroke-width': 1, 'stroke-dasharray': '2 2' }));
+          hover(dot, () => [el('div', { class: 't' }, late ? `роль запропоновано на ${fmt(t, 0)} хв · гравець увійшов на ${fmt(a, 0)} хв` : `${fmt(a, 0)} хв`), el('div', {}, el('b', {}, ruleOf(ev))), ev[ef.antags] ? el('div', {}, ev[ef.antags].replaceAll(';', ', ')) : null]);
+          svg.append(dot);
+        }
+      }
+      strip.prepend(svg);
+    };
+
+    const rows = rd.e.map(ev => {
+      const rule = ruleOf(ev), src = srcOf(ev), info = DATA.ruleInfo[rule] || {};
+      const t = ev[ef.started] ?? ev[ef.added], target = ev[ef.target], spawned = ev[ef.spawned];
+      let antags = '';
+      if (target > 0 || spawned > 0) {
+        antags = ev[ef.antags] ? ev[ef.antags].split(';').map(x => { const [l, k] = x.split(':'); return k === '1' ? l : `${l} ×${k}`; }).join(', ') : 'без антагоніста';
+        const extra = [ev[ef.blocked] ? `${ev[ef.blocked]} зупинено очками ТП` : '', ev[ef.unfilled] ? `${ev[ef.unfilled]} не заповнено` : ''].filter(Boolean).join(', ');
+        if (extra) antags += ` (${extra})`;
+        const late = (ev[ef.arrivals] || []).filter(a => a - t >= 1);
+        if (late.length) antags += ` · гравець увійшов на ${late.map(a => fmt(a, 0)).join(', ')} хв`;
+      }
+      const isSide = !['roundstart', 'midround'].includes(src);
+      return el('tr', { class: (spawned > 0 ? 'antag' : '') + (isSide ? ' side' : '') },
+        el('td', {}, t === null ? '–' : fmt(t, 0)),
+        el('td', { class: 'l src' }, el('span', { class: 'tag' + (isMajorRule(rule) && spawned > 0 ? ' major' : '') }, srcName(src))),
+        el('td', { class: 'name' }, rule),
+        el('td', { class: 'l' }, spawned > 0 || target > 0 ? (info.family || '') : (info.type || '')),
+        el('td', { class: 'l', style: { whiteSpace: 'normal', minWidth: '140px' } }, antags),
+        el('td', {}, ev[ef.cost] === null ? '–' : fmt(ev[ef.cost], 0)),
+        el('td', {}, ev[ef.budgetAfter] === null ? '–' : fmt(ev[ef.budgetAfter], 0)),
+        el('td', {}, `${ev[ef.alive]} / ${ev[ef.ghosts]}`));
+    });
+    const table = el('div', { class: 'ledger-box', style: { maxHeight: '520px' } }, el('table', { class: 'ledger rb-events' },
+      el('thead', {}, el('tr', {}, el('th', {}, 'Хвилина'), el('th', { class: 'l' }, 'Джерело'), el('th', { class: 'l' }, 'Правило'), el('th', { class: 'l' }, 'Тип'), el('th', { class: 'l' }, 'Антагоністи'), el('th', {}, 'Хаос'), el('th', {}, 'Бюджет після'), el('th', {}, 'Екіпаж / привиди'))),
+      el('tbody', {}, rows)));
+    host.replaceChildren(
+      el('div', { class: 'rb-head' }, el('h3', {}, `Round #${n} · ${labelOf(rb.mode)}`), nav),
+      stats, params, strip,
+      el('p', { class: 'note' }, `Правил: ${rd.e.length}. Риска позначає запуск правила. Коротка риска — подія метеорів або мерехтіння. Точка позначає вхід гравця-антагоніста. Помаранчева точка — велика загроза. Пунктир показує, скільки роль привида чекала на гравця.`),
+      table, same);
+    draw();
+  }
+
+  const lg = { sort: null, dir: -1 };
+  function renderLedger() {
+    const vis = visible();
+    const metric = $('#lg-metric').value, src = $('#lg-source').value, onlyAntag = $('#lg-antag').checked, q = $('#lg-search').value.trim().toLowerCase();
+    const names = new Set(); for (const p of vis) Object.keys(G(p.id).rules).forEach(r => names.add(r));
+    const info = r => DATA.ruleInfo[r] || { sources: [], type: '', family: '' };
+    const srcOf = r => { const s = info(r).sources; return s.includes('roundstart') ? 'roundstart' : s.includes('midround') ? 'midround' : 'side'; };
+    const has = (r, s) => s === 'all' || (s === 'side' ? info(r).sources.some(x => x !== 'roundstart' && x !== 'midround') : info(r).sources.includes(s));
+    let rows = [...names].filter(r => has(r, src) && (!q || r.toLowerCase().includes(q)));
+    if (onlyAntag) rows = rows.filter(r => vis.some(p => ((G(p.id).rules[r] || {}).antags || 0) > 0));
+    const key = lg.sort || vis[0].id;
+    const val = (r, id) => { const v = (G(id).rules[r] || {})[metric]; return v === undefined ? null : v; };
+    rows.sort((a, b) => {
+      if (key === 'rule') return lg.dir * a.localeCompare(b) * -1;
+      const va = val(a, key), vb = val(b, key);
+      if (va === null && vb === null) return 0; if (va === null) return 1; if (vb === null) return -1;
+      return lg.dir * (va - vb);
+    });
+    const mx = {}; for (const p of vis) mx[p.id] = Math.max(...rows.map(r => Math.abs(val(r, p.id) || 0)), 0.0001);
+    const unit = { rounds: '%', count: '', antags: '', first: ' хв', cost: '' }[metric];
+    const th = (k, label, cls) => el('th', { class: cls, onclick: () => { lg.dir = lg.sort === k ? -lg.dir : -1; lg.sort = k; renderLedger(); }, 'aria-sort': lg.sort === k ? (lg.dir < 0 ? 'descending' : 'ascending') : null }, label + (key === k ? (lg.dir < 0 ? ' ↓' : ' ↑') : ''));
+    const t = $('#ledger'); t.replaceChildren(
+      el('thead', {}, el('tr', {}, th('rule', 'Правило', 'l'), el('th', { class: 'l' }, 'Тип загрози'), el('th', { class: 'l' }, 'Джерело'), vis.map(p => th(p.id, p.label)))),
+      el('tbody', {}, rows.slice(0, 400).map(r => el('tr', {},
+        el('td', { class: 'name' }, r),
+        el('td', { class: 'l' }, vis.some(p => ((G(p.id).rules[r] || {}).antags || 0) > 0) ? el('span', { class: 'tag' + (isMajorRule(r) ? ' major' : '') }, info(r).family) : el('span', { class: 'tag' }, info(r).type || 'подія')),
+        el('td', { class: 'l' }, el('span', { class: 'tag' }, srcName(srcOf(r)))),
+        vis.map(p => { const v = val(r, p.id); return el('td', {}, v === null ? '–' : [el('span', { class: 'cellbar', style: { width: `${Math.abs(v) / mx[p.id] * 46}px`, '--c': colorOf(p.id) } }), fmt(v, metric === 'count' || metric === 'antags' ? 2 : 1) + unit]); })
+      ))));
+  }
+  ['#lg-metric', '#lg-source', '#lg-antag'].forEach(s => $(s).addEventListener('change', renderLedger));
+  $('#lg-search').addEventListener('input', renderLedger);
+
+  const c = DATA.config;
+  $('#ported').replaceChildren(...[
+    'SecretPlus і SecretSaltPlus: хаос на початку раунду та зміна хаосу. Перше й наступні правила на початку раунду, несумісні режими та правила, що йдуть самі. Інтервал подій і вибір події за хаосом.',
+    'Секрет ТП: кидок зеленої чи червоної зміни для першого правила та чорний список правил. Мінімальна кількість живих співробітників відділів. Оцінка очок, резервування очок і перевірка очок для кожного антагоніста. 15 хвилин після смерті до звільнення очок.',
+    'EventManager CanRun: активні правила, найбільша кількість запусків, мінімум гравців, найраніший запуск, затримка повтору, кінець раунду та межі мерехтіння.',
+    'Таблиці сутностей з імовірностями, групами та умовами. Кількість антагоністів з GetTargetAntagCount з випадковими мінімумом і максимумом. Затримки запуску й тривалість правил.',
+    'Планувальники метеорів і мерехтіння кожного пресету.',
+  ].map(t => el('li', {}, t)));
+  const rnd = c.randomize || {};
+  const pv = (name, fixed, f = v => v) => rnd[name] ? `${f(rnd[name][0])}–${f(rnd[name][1])} (випадково)` : f(fixed);
+  const pc = v => Math.round(v * 100) + '%';
+  const join = s => `${pv('joinWindowMinutes', s.joinWindowMinutes)} хв, крива ${pv('joinCurve', s.joinCurve)}`;
+  const secShare = Math.round((DATA.jobs || []).filter(j => /Secur|Warden|Detective|Brigmedic|HeadOfSecurity/.test(j.job)).reduce((a, j) => a + j.weight, 0));
+  $('#assumed').replaceChildren(...[
+    `Населення: на початку раунду підключено ${DATA.scenarios[0].population} гравців. У налаштуваннях раунд одразу починають ${DATA.scenarios.map(s => s.roundstartPlayers).join(', ')} з них. Гравці в лобі враховуються для мінімуму гравців, кількості антагоністів і хаосу на початку раунду. Вони входять протягом ${join(DATA.scenarios[0])}. Спостерігачі не входять: ${pv('observers', c.observers)} з ${DATA.scenarios[0].population} гравців.`,
+    `Смерті: екіпаж ${pv('crewDeathPerMinute', c.crewDeathPerMinute)}/хв, плюс ${pv('crewDeathPerAntagPerMinute', c.crewDeathPerAntagPerMinute)}/хв за кожного живого антагоніста. Антагоністи ${pv('antagDeathPerMinute', c.antagDeathPerMinute)}/хв, плюс ${pv('antagDeathPerSecPerMinute', c.antagDeathPerSecPerMinute)}/хв за кожного живого співробітника СБ. Шанс воскресіння ${pv('revivalChance', c.revivalChance, pc)}, через ${c.revivalMinMinutes}–${c.revivalMaxMinutes} хв.`,
+    `Посади: при множнику 1× приблизно ${secShare}% гравців отримують посаду в СБ. Множник: ${pv('securityWeightMultiplier', c.securityWeightMultiplier ?? 1, v => v + '×')}. Максимум задають слоти посад.`,
+    `Вибір антагоністів: ${pv('antagOptInChance', c.antagOptInChance, pc)} членів екіпажу погоджуються на роль антагоніста. Симулятор ніколи не обирає СБ чи командування. Привид або спостерігач бере ${pv('ghostRoleTakeChance', c.ghostRoleTakeChance, pc)} ролей привидів. Медіанне очікування ролі привида: ${pv('ghostRoleTakeMedianMinutes', c.ghostRoleTakeMedianMinutes)} хв.`,
+    `Мерехтіння починається з ${pv('glimmerStart', c.glimmerStart)} і зростає на ${pv('glimmerPerMinute', c.glimmerPerMinute)} щохвилини. Події мерехтіння його зменшують.`,
+    'Деякі умови таблиць залежать від стану ігрового світу. Симулятор використовує фіксовані шанси: збійний ШІ доступний у 50%, ціль для мисливця за головами — у 100%.',
+    `Деякі правила додають мобів під керуванням гравців без вибору антагоністів. Симулятор рахує таких мобів антагоністами-ролями привидів: ${Object.keys(c.ghostRoleSpawnRules || {}).join(', ') || 'немає'}.`,
+    'Калібрування: попередня модель підключала лише гравців, що починають раунд. Вона збігалася з логами сервера за серпень–вересень 2026 щодо правил на початку раунду. Частота подій з антагоністами посеред раунду була приблизно в 1,5 раза вищою за логи. Цю модель з логами ще не порівнювали. Порівнюйте режими між собою, а не як точні значення.',
+  ].map(t => el('li', {}, t)));
+  if (DATA.warnings && DATA.warnings.length) $('#warnings').replaceChildren(el('div', { class: 'warnbox note', style: { marginTop: '10px' } }, el('b', {}, 'Попередження симулятора: '), DATA.warnings.join('; ')));
+
+  function renderAll() {
+    document.querySelectorAll('#scenarios button').forEach(b => b.setAttribute('aria-pressed', String(b.id === `sc-${state.scenario}`)));
+    document.querySelectorAll('#modes .chip').forEach(b => b.setAttribute('aria-pressed', String(!state.hidden.has(b.id.slice(3)))));
+    renderVerdict(); renderCharts(); renderMidCharts(); renderMidOrder(); renderMidRules(); renderLevers(); renderBrowser(); renderLedger();
+  }
+  renderAll();
+  let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { renderCharts(); renderMidCharts(); renderLevers(); }, 120); }).observe(document.querySelector('.wrap'));
+})();
+</script>

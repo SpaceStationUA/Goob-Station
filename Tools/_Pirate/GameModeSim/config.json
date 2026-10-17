@@ -1,0 +1,46 @@
+{
+  "presets": ["SecretPlusMid", "SecretSalt", "SecretSalt14", "SecretTP", "Blueshift"],
+  "extraPrototypes": ["Tools/_Pirate/GameModeSim/extra/redshift-1.4.yml"],
+  "rounds": 1000,
+  "seed": 1337,
+  "outputDir": "Tools/_Pirate/GameModeSim/output",
+
+  "scenarios": [
+    { "name": "40pop-10start", "roundMinutes": 150, "population": 40, "roundstartPlayers": 10, "joinWindowMinutes": 60, "joinCurve": 1.5 },
+    { "name": "40pop-15start", "roundMinutes": 150, "population": 40, "roundstartPlayers": 15, "joinWindowMinutes": 60, "joinCurve": 1.5 },
+    { "name": "40pop-20start", "roundMinutes": 150, "population": 40, "roundstartPlayers": 20, "joinWindowMinutes": 60, "joinCurve": 1.5 }
+  ],
+
+  // All presets share each round's rolls; these keys override fixed and scenario values.
+  // Use "randomize": {} to disable randomization.
+  "randomize": {
+    "joinWindowMinutes": [30, 90],
+    "joinCurve": [0.8, 2.5],
+    "observers": [0, 5],
+    "crewDeathPerMinute": [0.001, 0.005],
+    "antagDeathPerMinute": [0.0015, 0.006],
+    "revivalChance": [0.1, 0.6],
+    "antagOptInChance": [0.6, 1.0],
+    "ghostRoleTakeChance": [0.5, 1.0],
+    "ghostRoleTakeMedianMinutes": [1, 10],
+    "securityWeightMultiplier": [0.5, 2.0],
+    "glimmerPerMinute": [0, 6]
+  },
+
+  // VentCrittersRule always offers a rat king, ignoring specialEntry probability.
+  // Assume cargo never pays the pirate ransom.
+  "ghostRoleSpawnRules": { "BorerSpawn": 1, "KingRatMigration": 1, "BlueshiftKingRatMigration": 1, "SpacePirates": 5, "BlueshiftSpacePirates": 5 },
+
+  "securityWeightMultiplier": 1,
+  "observers": 2,
+  "crewDeathPerMinute": 0.0025,
+  "crewDeathPerAntagPerMinute": 0.0002,
+  "antagDeathPerMinute": 0.003,
+  "antagDeathPerSecPerMinute": 0.0006,
+  "revivalChance": 0.35,
+  "antagOptInChance": 0.85,
+  "ghostRoleTakeChance": 0.85,
+  "ghostRoleTakeMedianMinutes": 3,
+  "glimmerStart": 0,
+  "glimmerPerMinute": 3
+}
