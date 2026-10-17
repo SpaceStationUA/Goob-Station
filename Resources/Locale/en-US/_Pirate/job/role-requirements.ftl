@@ -1,0 +1,2 @@
+role-timer-flavor-text-too-short = Your character's physical description must be at least [color=yellow]{$required}[/color] characters long to choose this role (currently [color=yellow]{$current}[/color]).
+role-timer-flavor-text-too-long = Your character's physical description must be shorter than [color=yellow]{$required}[/color] characters to choose this role (currently [color=yellow]{$current}[/color]).

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 using System.Numerics;
+using Content.Client.Chat.UI; // Pirate: runechat cyrillic
 using Content.Client.Gameplay;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
@@ -28,9 +29,9 @@ public sealed class PopupUIController : UIController, IOnStateEntered<GameplaySt
         base.Initialize();
         var cache = IoCManager.Resolve<IResourceCache>();
 
-        // Pirate: keep Ukrainian popup text readable with the upstream pixel font.
+        // Pirate: runechat cyrillic - Grand9K lacks Ukrainian glyphs.
         var font = cache.GetResource<FontResource>("/Fonts/_ES/Grand9KPixelRegular.ttf");
-        var fallback = cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf");
+        var fallback = cache.GetResource<FontResource>(RunechatSheetlet.FallbackFontPath); // Pirate: runechat cyrillic
         _smallFont = new StackedFont(new VectorFont(font, 10), new VectorFont(fallback, 10));
         _mediumFont = new StackedFont(new VectorFont(font, 12), new VectorFont(fallback, 12));
         _largeFont = new StackedFont(new VectorFont(font, 14), new VectorFont(fallback, 14));

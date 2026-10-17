@@ -33,6 +33,7 @@
       - ZavodskiyInterstellar
       - HephaestusIndustries
     # Pirate contractor end
+    - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "JobIconChiefEngineer"

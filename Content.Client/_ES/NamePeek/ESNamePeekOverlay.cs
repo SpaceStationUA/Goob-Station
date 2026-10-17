@@ -54,10 +54,11 @@ public sealed class ESNamePeekOverlay : Overlay
         _sprite = _entityManager.System<SpriteSystem>();
 
         _shader = _prototypeManager.Index(UnshadedShader).Instance();
-        // Pirate: names and pronouns can contain Ukrainian characters.
-        var fallback = _cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf");
-        _font = new StackedFont(new VectorFont(_cache.GetResource<FontResource>(RunechatSheetlet.FontPath), FontSize), new VectorFont(fallback, FontSize));
-        _smallFont = new StackedFont(new VectorFont(_cache.GetResource<FontResource>(RunechatSheetlet.WhisperFontPath), FontSize), new VectorFont(fallback, FontSize));
+        // Pirate: runechat cyrillic - Grand9K and Wormtown lack Ukrainian glyphs.
+        var fallback = _cache.GetResource<FontResource>(RunechatSheetlet.FallbackFontPath); // Pirate: runechat cyrillic
+        var smallFallback = _cache.GetResource<FontResource>(RunechatSheetlet.WhisperFallbackFontPath); // Pirate: runechat cyrillic
+        _font = new StackedFont(new VectorFont(_cache.GetResource<FontResource>(RunechatSheetlet.FontPath), FontSize), new VectorFont(fallback, FontSize)); // Pirate: runechat cyrillic
+        _smallFont = new StackedFont(new VectorFont(_cache.GetResource<FontResource>(RunechatSheetlet.WhisperFontPath), FontSize), new VectorFont(smallFallback, FontSize)); // Pirate: runechat cyrillic
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)

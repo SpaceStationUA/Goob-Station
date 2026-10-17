@@ -10,3 +10,13 @@
   canBeAntag: false
   whitelisted: true
   icon: JobIconSyndicate
+
+- type: job
+  id: CybersunCommand
+  name: job-name-cybersun-command
+  playTimeTracker: JobCybersunCommand
+  setPreference: false
+  canBeAntag: false
+  icon: JobIconSyndicate
+  requirements:
+  - !type:FlavorTextLengthRequirement
