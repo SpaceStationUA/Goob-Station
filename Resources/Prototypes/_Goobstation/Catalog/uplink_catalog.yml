@@ -24,6 +24,7 @@
   productEntity: CarpCaller
   cost:
     Telecrystal: 40 # you can't really do much with it
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
     -  UplinkDisruption
   conditions:
@@ -59,6 +60,7 @@
   productEntity: SarinGasGrenade
   cost:
     Telecrystal: 10
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkExplosives
   conditions:
@@ -271,6 +273,7 @@
   productEntity: ContractorBaton
   cost:
     Telecrystal: 35
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -301,6 +304,7 @@
   productEntity: WeaponRifleM90
   cost:
     Telecrystal: 50
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkWeaponry
 
@@ -312,6 +316,7 @@
   productEntity: WeaponDisablerSyndicate
   cost:
     Telecrystal: 20
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkWeaponry
 
@@ -322,6 +327,7 @@
   productEntity: FireAxeFlaming
   cost:
     Telecrystal: 60
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -338,6 +344,7 @@
   productEntity: MiniatureEnergyCrossbow
   cost:
     Telecrystal: 50
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -353,6 +360,7 @@
   productEntity: WeaponRifleWSPR
   cost:
     Telecrystal: 65 # fire
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -369,6 +377,7 @@
   productEntity: WeaponRifleBurner
   cost:
     Telecrystal: 100 # don't kill me piras
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -385,6 +394,7 @@
   productEntity: WeaponShotgunHeavy
   cost:
     Telecrystal: 175
+  reputation: 100 # Pirate: strategic reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -401,6 +411,7 @@
   productEntity: BowHardlight
   cost:
     Telecrystal: 60
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -417,6 +428,7 @@
   productEntity: BriefcaseSyndieDualettaBundleFilled
   cost:
     Telecrystal: 50
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -432,6 +444,7 @@
   productEntity: WeaponPistolAnaconda
   cost:
     Telecrystal: 38 # This + esword = 75 TC
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -448,6 +461,7 @@
   productEntity: CrateSyndicateBulkMosin
   cost:
     Telecrystal: 25
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
     - UplinkWeaponry
   conditions:
@@ -463,6 +477,7 @@
   productEntity: WeaponSubMachineGunM7S
   cost:
     Telecrystal: 60
+  reputation: 60 # Pirate: military reputation tier
   categories:
     -  UplinkWeaponry
   conditions:
@@ -479,6 +494,7 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledHE1SG8
   cost:
     Telecrystal: 130
+  reputation: 100 # Pirate: strategic reputation tier
   categories:
     - UplinkWeaponry
   conditions:
@@ -494,6 +510,7 @@
   productEntity: WeaponShotgunCombat
   cost:
     Telecrystal: 50
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
     -  UplinkWeaponry
   conditions:
@@ -512,6 +529,7 @@
   productEntity: CrateSyndicateDreadnought
   cost:
     Telecrystal: 150
+  reputation: 100 # Pirate: strategic reputation tier
   categories:
   - UplinkWearables
   conditions:
@@ -592,6 +610,7 @@
   productEntity: ClothingBackpackDuffelSyndicateStealthHardsuitBundle
   cost:
     Telecrystal: 75
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkWearables
 
@@ -603,6 +622,7 @@
   productEntity: BoxReverseBearTrap
   cost:
     Telecrystal: 23 # novelty item for rp
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWearables
   conditions:
@@ -620,6 +640,7 @@
   productEntity: ClothingHandsGlovesGuerrilla
   cost:
     Telecrystal: 30
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkWearables
   conditions:
@@ -637,6 +658,7 @@
   productEntity: LauncherCreamPieRegenerating
   cost:
     Telecrystal: 40
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -651,6 +673,7 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledWhimsy
   cost:
     Telecrystal: 65
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -666,6 +689,7 @@
   productEntity: HisGrace
   cost:
     Telecrystal: 100
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -713,6 +737,7 @@
   productEntity: CrateFunClownCarUplink
   cost:
     Telecrystal: 25
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -744,6 +769,7 @@
   productEntity: ReinforcementRadioSyndicateSyndiRoach
   cost:
     Telecrystal: 30
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
     - UplinkAllies
   conditions:
@@ -759,6 +785,7 @@
   productEntity: BeeGrenade
   cost:
     Telecrystal: 16
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -773,6 +800,7 @@
   productEntity: DartGun
   cost:
     Telecrystal: 20
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -801,6 +829,7 @@
   productEntity: PKAUpgradePressure
   cost:
     Telecrystal: 30
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -817,6 +846,7 @@
   productEntity: SpearGreyTide
   cost:
     Telecrystal: 50
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -834,6 +864,7 @@
   productEntity: BoxAdvMimery
   cost:
     Telecrystal: 50
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -852,6 +883,7 @@
   productEntity: AdvancedCombatMedipen
   cost:
     Telecrystal: 24
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkChemicals
 
@@ -862,6 +894,7 @@
   productEntity: SyndicateLollypopBundle
   cost:
     Telecrystal: 15
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkChemicals
 
@@ -872,6 +905,7 @@
   productEntity: SyringePistol
   cost:
     Telecrystal: 15
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkChemicals
 
@@ -882,6 +916,7 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledCandy
   cost:
     Telecrystal: 100
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkChemicals
 
@@ -909,6 +944,7 @@
   productEntity: MedkitCombatBlueFilled
   cost:
     Telecrystal: 25
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkChemicals
 
@@ -932,6 +968,7 @@
   productEntity: MindcontrolImplanter
   cost:
     Telecrystal: 25 # Half the budget #bounty someone want it cheaper.
+  reputation: 80 # Pirate: elite reputation tier
   categories:
     - UplinkImplants
   conditions:
@@ -950,6 +987,7 @@
   productEntity: SmokeImplanter
   cost:
     Telecrystal: 10
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
     - UplinkImplants
 
@@ -985,6 +1023,7 @@
   productEntity: KravMagaImplanter
   cost:
     Telecrystal: 40
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
     - UplinkImplants
 
@@ -1007,6 +1046,7 @@
   productEntity: AutosurgeonRightMantisBlade
   cost:
     Telecrystal: 17
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkImplants
   conditions:
@@ -1023,6 +1063,7 @@
   productEntity: AutosurgeonLeftMantisBlade
   cost:
     Telecrystal: 17
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkImplants
   conditions:
@@ -1039,6 +1080,7 @@
   productEntity: AutosurgeonSandevistan
   cost:
     Telecrystal: 66 # The urge to make it 65...
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkImplants
   conditions:
@@ -1055,6 +1097,7 @@
   productEntity: AutosurgeonStatvekaSandevistan
   cost:
     Telecrystal: 66
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkImplants
   conditions:
@@ -1126,6 +1169,7 @@
   productEntity: AutosurgeonSmartLink
   cost:
     Telecrystal: 30
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkImplants
 
@@ -1137,6 +1181,7 @@
   productEntity: AutosurgeonRecoilAbsorber
   cost:
     Telecrystal: 40
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkImplants
   conditions:
@@ -1153,6 +1198,7 @@
   productEntity: AutosurgeonBerserker
   cost:
     Telecrystal: 66
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkImplants
   conditions:
@@ -1169,6 +1215,7 @@
   productEntity: AutosurgeonJumpstarter
   cost:
     Telecrystal: 60
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkImplants
   conditions:
@@ -1186,6 +1233,7 @@
   productEntity: ClothingHandsGlovesExplosiveShock
   cost:
     Telecrystal: 10 # goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkDeception
   conditions:
@@ -1408,6 +1456,7 @@
   productEntity: CrateFunSyndicateSegway
   cost:
     Telecrystal: 25 # Same as what it was before being removed
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkDisruption
   conditions:
@@ -1423,6 +1472,7 @@
   productEntity: BorgModuleSyndicateWeaponAdvanced
   cost:
     Telecrystal: 40 # goob
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkDisruption
   conditions:
@@ -1567,6 +1617,7 @@
   productEntity: CrateCybersunDarkGygaxBundle
   cost:
     Telecrystal: 400
+  reputation: 100 # Pirate: strategic reputation tier
   categories:
   - UplinkAllies
   conditions:
@@ -1616,6 +1667,7 @@
   productEntity: CQCManual
   cost:
     Telecrystal: 60
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -1632,6 +1684,7 @@
   productEntity: CapoeiraManual
   cost:
     Telecrystal: 35
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWeaponry
 
@@ -1642,6 +1695,7 @@
   productEntity: SleepingCarpScroll
   cost:
     Telecrystal: 70
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -1660,6 +1714,7 @@
   productEntity: FoodBoxPizzaBomb
   cost:
     Telecrystal: 10  # Goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkExplosives
   conditions:
@@ -1675,6 +1730,7 @@
   productEntity: CratePizzaParty
   cost:
     Telecrystal: 50  # Goob Bundle, get 8 pizza bombs and 7 regular pizzas. Bundle + Pizza boxes not telling the dangerous ones justifies the discount.
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkExplosives
   conditions:
@@ -1710,6 +1766,7 @@
   icon: { sprite: _Goobstation/Objects/Devices/payload.rsi, state: icon }
   cost:
     Telecrystal: 40 #Should be alot, its an investment item
+  reputation: 100 # Pirate: strategic reputation tier
   categories:
   - UplinkExplosives
   conditions:
@@ -1742,6 +1799,7 @@
   productEntity: DimensionPot
   cost:
     Telecrystal: 40
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkDeception
 
@@ -1752,6 +1810,7 @@
   productEntity: HoloCigar
   cost:
     Telecrystal: 75 # Pirate edit
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWearables
   conditions:
@@ -1773,6 +1832,7 @@
   productEntity: CrateSyndicateUndetermined
   cost:
     Telecrystal: 99 # :trollface:
+  reputation: 100 # Pirate: strategic reputation tier
   categories:
   - UplinkDisruption
   conditions:
@@ -1794,6 +1854,7 @@
   productEntity: NFEnergyPickaxe
   cost:
     Telecrystal: 32 # Worse than esword for combat, better for breaching
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -1853,6 +1914,7 @@
   productEntity: SyndicateCustomLawboard
   cost:
     Telecrystal: 50 # Same price as what Antimov was. Might be worth increasing the price for nukies as they can do some BAD things with this.
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkDisruption
   conditions:
@@ -1881,6 +1943,7 @@
   productEntity: JVNECdDiskNumber
   cost:
     Telecrystal: 30
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkJob
   conditions:
