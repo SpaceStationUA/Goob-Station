@@ -6,10 +6,12 @@
   description: job-description-cargotech
   playTimeTracker: JobCargoTechnician
   # Pirate Employment start
-  requirements: 
+  requirements:
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Hephaest
+      - Orion
   # Pirate Employment end
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"

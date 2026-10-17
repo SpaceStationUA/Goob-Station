@@ -11,6 +11,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Zavod
+      - ZengHu
     # Pirate Employment end
   startingGear: RoboticistGear
   icon: "JobIconRoboticist"

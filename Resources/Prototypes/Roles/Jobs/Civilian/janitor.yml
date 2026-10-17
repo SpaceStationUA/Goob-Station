@@ -6,10 +6,12 @@
   description: job-description-janitor
   playTimeTracker: JobJanitor
   # Pirate Employment start
-  requirements: 
+  requirements:
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - Orion
   # Pirate Employment end
   startingGear: JanitorGear
   icon: "JobIconJanitor"

@@ -16,6 +16,9 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - Zavod
+      - PMCG
   startingGear: SecurityInstructorGear
   icon: "JobIconSecurityInstructor"
   supervisors: job-supervisors-hos

@@ -6,10 +6,12 @@
   description: job-description-reporter
   playTimeTracker: JobReporter
   # Pirate Employment start
-  requirements: 
+  requirements:
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - Orion
   # Pirate Employment end
   startingGear: ReporterGear
   icon: "JobIconReporter"

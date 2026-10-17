@@ -42,6 +42,9 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - Zavod
+      - PMCG
     # Pirate Employment end
     - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 10

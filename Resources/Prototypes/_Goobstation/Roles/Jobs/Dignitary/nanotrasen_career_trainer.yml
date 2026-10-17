@@ -5,6 +5,11 @@
   playTimeTracker: JobNanotrasenCareerTrainer
   requirements: # Pirate: command flavor gate
   - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
+  # Pirate Employment start
+  - !type:CharacterEmployerRequirement
+    employers:
+    - NanoTrasen
+  # Pirate Employment end
   goobcoins: 45
   weight: 20
   startingGear: NanotrasenCareerTrainerGear

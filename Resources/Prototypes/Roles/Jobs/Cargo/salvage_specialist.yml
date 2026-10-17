@@ -13,6 +13,9 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Hephaest
+      - Orion
+      - PMCG
     # Pirate Employment end
   icon: "JobIconShaftMiner"
   startingGear: SalvageSpecialistGear

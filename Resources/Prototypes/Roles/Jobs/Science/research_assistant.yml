@@ -14,6 +14,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Zavod
+      - ZengHu
     # Pirate Employment end
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"

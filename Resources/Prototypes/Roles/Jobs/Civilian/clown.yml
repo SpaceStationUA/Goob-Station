@@ -10,6 +10,7 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Orion
     # Pirate Employment end
   startingGear: ClownGear
   icon: "JobIconClown"

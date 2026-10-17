@@ -12,6 +12,7 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
     # Pirate Employment end
   startingGear: LawyerGear
   icon: "JobIconLawyer"

@@ -36,6 +36,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - PMCG
   # Pirate Employment end
     - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   guides:

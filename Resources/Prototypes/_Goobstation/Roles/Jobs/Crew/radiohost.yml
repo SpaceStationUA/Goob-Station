@@ -8,6 +8,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - Orion
     # Pirate Employment end
   startingGear: RadioHostGear
   icon: "JobIconRadioHost"

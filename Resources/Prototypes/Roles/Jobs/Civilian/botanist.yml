@@ -18,10 +18,12 @@
   - Kitchen
   - Bar
   # Pirate Employment start
-  requirements: 
+  requirements:
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - Orion
   # Pirate Employment end
   special:
   # Pirate: skill chips start

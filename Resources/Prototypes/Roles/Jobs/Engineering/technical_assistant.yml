@@ -16,6 +16,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Zavod
+      - Hephaest
     # Pirate Employment end
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"

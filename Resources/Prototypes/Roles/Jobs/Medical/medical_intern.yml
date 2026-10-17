@@ -14,6 +14,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - ZengHu
+      - PMCG
     # Pirate Employment end
   startingGear: MedicalInternGear
   icon: "JobIconMedicalIntern"

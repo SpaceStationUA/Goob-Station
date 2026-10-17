@@ -20,6 +20,8 @@
   - !type:CharacterEmployerRequirement
     employers:
     - NanoTrasen
+    - Hephaest
+    - Orion
   # Pirate Employment end
   icon: "JobIconLavaShaftMiner" # Wizden's icon is already called shaft miner for whatever reason.
   startingGear: ShaftMinerGear

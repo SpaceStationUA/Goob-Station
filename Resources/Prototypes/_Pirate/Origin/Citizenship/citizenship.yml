@@ -29,10 +29,11 @@
   id: Eridanian
   nameKey: citizenship_name_eridanian
   requirements:
-    #- !type:CharacterEmployerRequirement
-    #  inverted: true
-    #  employers:
-    #  -
+    - !type:CharacterEmployerRequirement
+      inverted: true
+      employers:
+        - NanoTrasen
+        - Unaffiliated
     - !type:SpeciesRequirement
       inverted: true
       species:

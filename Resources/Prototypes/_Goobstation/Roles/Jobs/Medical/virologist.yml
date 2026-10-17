@@ -11,6 +11,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - ZengHu
+      - PMCG
     # Pirate Employment end
   startingGear: VirologistGear
   icon: "JobIconVirologist"

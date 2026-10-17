@@ -34,6 +34,9 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - Zavod
+      - PMCG
     # Pirate Employment end
   weight: 5
   startingGear: WardenGear

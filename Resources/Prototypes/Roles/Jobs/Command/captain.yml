@@ -41,8 +41,9 @@
     #   hairColorSaturation: 0.30
     # Pirate Employment start
     - !type:CharacterEmployerRequirement
+      inverted: true
       employers:
-      - NanoTrasen
+        - Unaffiliated
     # Pirate Employment end
     - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   guides: # goobstation

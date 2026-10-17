@@ -16,6 +16,8 @@
   - !type:CharacterEmployerRequirement
     employers:
     - NanoTrasen
+    - Idris
+    - PMCG
   # Pirate Employment end
   startingGear: BrigmedicGear
   icon: "JobIconBrigmedic"

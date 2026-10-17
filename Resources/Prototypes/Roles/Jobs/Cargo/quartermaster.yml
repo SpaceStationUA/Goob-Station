@@ -31,6 +31,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Hephaest
+      - Orion
     # Pirate Employment end
     - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 10

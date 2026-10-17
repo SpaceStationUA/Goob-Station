@@ -5,6 +5,7 @@
     CentralCommandOfficial: 1440
     NanotrasenRepresentative: 1080
     BlueshieldOfficer: 810
+    NanotrasenCareerTrainer: 810
     # Командування
     Captain: 1080
     HeadOfSecurity: 810
@@ -45,6 +46,8 @@
     Chef: 400
     Botanist: 330
     Bartender: 320
+    Lawyer: 400
+    Chaplain: 270
     Janitor: 270
     RadioHost: 270
     Reporter: 270

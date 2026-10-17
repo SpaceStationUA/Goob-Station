@@ -18,6 +18,7 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - ZengHu
     # Pirate Employment end
   startingGear: ForensicMantisGear
   icon: "JobIconForensicMantis"

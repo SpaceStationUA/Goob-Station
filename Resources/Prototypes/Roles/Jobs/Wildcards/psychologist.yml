@@ -6,10 +6,13 @@
   description: job-description-psychologist
   playTimeTracker: JobPsychologist
   # Pirate Employment start
-  requirements: 
+  requirements:
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - ZengHu
+      - PMCG
   # Pirate Employment end
   startingGear: PsychologistGear
   icon: "JobIconPsychologist"

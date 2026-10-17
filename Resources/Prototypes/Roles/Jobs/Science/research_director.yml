@@ -28,6 +28,8 @@
   - !type:CharacterEmployerRequirement
     employers:
     - NanoTrasen
+    - Zavod
+    - ZengHu
   # Pirate Employment end
   - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 10

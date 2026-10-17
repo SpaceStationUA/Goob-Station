@@ -10,6 +10,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
+      - Idris
+      - Orion
   # Pirate Employment end
   startingGear: LibrarianGear
   icon: "JobIconLibrarian"
