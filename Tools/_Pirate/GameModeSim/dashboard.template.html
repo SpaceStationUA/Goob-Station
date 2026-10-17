@@ -704,7 +704,7 @@ const DATA = /*__DATA__*/null;
     $('#midrules').replaceChildren(
       el('thead', {}, el('tr', {}, th('rule', 'Подія', 'l'), el('th', { class: 'l' }, 'Тип загрози'), vis.map(p => th(p.id, p.label)))),
       el('tbody', {}, rows.map(r => el('tr', {}, el('td', { class: 'name' }, r),
-        el('td', { class: 'l' }, el('span', { class: 'tag' + (info(r).family.startsWith('Major') ? ' major' : '') }, info(r).family)),
+        el('td', { class: 'l' }, el('span', { class: 'tag' + (isMajorRule(r) ? ' major' : '') }, info(r).family)),
         vis.map(p => { const v = val(r, p.id); return el('td', {}, v === null ? '–' : [el('span', { class: 'cellbar', style: { width: `${v / mx[p.id] * 46}px`, '--c': colorOf(p.id) } }), fmt(v, metric === 'runs' || metric === 'antagsPerRun' ? 2 : 1) + unit]); })))));
   }
   $('#mr-metric').addEventListener('change', renderMidRules);
@@ -744,7 +744,8 @@ const DATA = /*__DATA__*/null;
   const ef = B ? Object.fromEntries(B.eventFields.map((f, i) => [f, i])) : {};
   const rb = { mode: null, round: 0 };
   try { const s = JSON.parse(localStorage.getItem('gms-rb') || '{}'); if (s.mode) rb.mode = s.mode; } catch (e) {}
-  const isMajorRule = r => ((DATA.ruleInfo[r] || {}).family || '').startsWith('Major');
+  // Family names are translated; identify the major family by FAMILIES order.
+  const isMajorRule = r => (DATA.ruleInfo[r] || {}).family === DATA.families[0];
   const ruleOf = ev => B.rules[ev[ef.rule]];
   const srcOf = ev => B.sources[ev[ef.source]];
   const roundHasMajor = rd => rd.e.some(ev => ev[ef.spawned] > 0 && isMajorRule(ruleOf(ev)));
@@ -899,7 +900,7 @@ const DATA = /*__DATA__*/null;
       el('thead', {}, el('tr', {}, th('rule', 'Правило', 'l'), el('th', { class: 'l' }, 'Тип загрози'), el('th', { class: 'l' }, 'Джерело'), vis.map(p => th(p.id, p.label)))),
       el('tbody', {}, rows.slice(0, 400).map(r => el('tr', {},
         el('td', { class: 'name' }, r),
-        el('td', { class: 'l' }, vis.some(p => ((G(p.id).rules[r] || {}).antags || 0) > 0) ? el('span', { class: 'tag' + (info(r).family.startsWith('Major') ? ' major' : '') }, info(r).family) : el('span', { class: 'tag' }, info(r).type || 'подія')),
+        el('td', { class: 'l' }, vis.some(p => ((G(p.id).rules[r] || {}).antags || 0) > 0) ? el('span', { class: 'tag' + (isMajorRule(r) ? ' major' : '') }, info(r).family) : el('span', { class: 'tag' }, info(r).type || 'подія')),
         el('td', { class: 'l' }, el('span', { class: 'tag' }, srcName(srcOf(r)))),
         vis.map(p => { const v = val(r, p.id); return el('td', {}, v === null ? '–' : [el('span', { class: 'cellbar', style: { width: `${Math.abs(v) / mx[p.id] * 46}px`, '--c': colorOf(p.id) } }), fmt(v, metric === 'count' || metric === 'antags' ? 2 : 1) + unit]); })
       ))));
