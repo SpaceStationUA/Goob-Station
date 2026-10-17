@@ -36,7 +36,7 @@ public sealed class NoviceExplosiveProtectionSystem : EntitySystem
         if (args.Cancelled || !HasComp<PowerCellComponent>(args.TargetGettingInjected) || !IsNovice(ent.Comp))
             return;
 
-        args.OverrideMessage = Loc.GetString("novice-protection-power-cell-injection");
+        _popup.PopupEntity(Loc.GetString("novice-protection-power-cell-injection"), ent, ent);
         args.Cancel();
     }
 
