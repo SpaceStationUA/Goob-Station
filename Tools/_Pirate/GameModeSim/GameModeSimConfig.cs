@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-namespace Content.IntegrationTests.Tests._Pirate.GameModeSim;
+namespace Content.Pirate.GameModeSim;
 
 // Population and death rates are assumptions, not measurements.
 public sealed class GameModeSimConfig

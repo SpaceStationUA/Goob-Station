@@ -6,7 +6,7 @@ using Content.Shared._Pirate.MalfAI;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.EntitySelectors;
 
-namespace Content.IntegrationTests.Tests._Pirate.GameModeSim;
+namespace Content.Pirate.GameModeSim;
 
 public sealed class GameModeSimulator
 {

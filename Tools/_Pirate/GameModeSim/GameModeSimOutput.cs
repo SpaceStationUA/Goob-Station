@@ -5,7 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace Content.IntegrationTests.Tests._Pirate.GameModeSim;
+namespace Content.Pirate.GameModeSim;
 
 public sealed class GameModeSimOutput : IDisposable
 {

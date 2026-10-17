@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 #nullable enable
 using System;
 using System.Collections.Generic;
@@ -5,31 +7,76 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Content.IntegrationTests;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.UnitTesting.Pool;
 
-namespace Content.IntegrationTests.Tests._Pirate.GameModeSim;
+namespace Content.Pirate.GameModeSim;
 
-[TestFixture]
-[Explicit]
-public sealed class GameModeSimTest
+internal static class Program
 {
-    [Test]
-    public async Task SimulateGamePresets()
+    private const string Usage = """
+        Usage: dotnet run --project Tools/_Pirate/GameModeSim -- [options]
+
+          --config PATH      config file (default Tools/_Pirate/GameModeSim/config.json)
+          --presets A,B      simulate only these presets (ids or aliases), instead of the config's list
+          --out DIR          output folder, relative to the repository root (default: the config's outputDir)
+          --rounds N         rounds per preset and scenario (default: the config's rounds)
+          -h, --help         show this help
+        """;
+
+    private static async Task<int> Main(string[] args)
     {
         var root = FindRepoRoot();
-        var configPath = Environment.GetEnvironmentVariable("GAMEMODE_SIM_CONFIG")
-                         ?? Path.Combine(root, "Tools", "_Pirate", "GameModeSim", "config.json");
-        var config = GameModeSimConfig.Load(configPath);
+        string? configPath = null, presets = null, outputDir = null;
+        int? rounds = null;
+        for (var i = 0; i < args.Length; i++)
+        {
+            string Next() => i + 1 < args.Length ? args[++i] : throw new ArgumentException($"{args[i]} needs a value");
+            switch (args[i])
+            {
+                case "--config": configPath = Next(); break;
+                case "--presets": presets = Next(); break;
+                case "--out": outputDir = Next(); break;
+                case "--rounds": rounds = int.Parse(Next()); break;
+                case "-h" or "--help":
+                    Console.WriteLine(Usage);
+                    return 0;
+                default:
+                    Console.Error.WriteLine($"Unknown option {args[i]}");
+                    Console.Error.WriteLine(Usage);
+                    return 1;
+            }
+        }
 
-        if (Environment.GetEnvironmentVariable("GAMEMODE_SIM_PRESETS") is { Length: > 0 } presets)
+        var config = GameModeSimConfig.Load(configPath ?? Path.Combine(root, "Tools", "_Pirate", "GameModeSim", "config.json"));
+        if (presets != null)
             config.Presets = presets.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
-        if (Environment.GetEnvironmentVariable("GAMEMODE_SIM_OUTPUT") is { Length: > 0 } outputOverride)
-            config.OutputDir = outputOverride;
+        if (outputDir != null)
+            config.OutputDir = outputDir;
+        if (rounds != null)
+            config.Rounds = rounds.Value;
 
+        PoolManager.Startup();
+        try
+        {
+            await Simulate(root, config);
+            return 0;
+        }
+        finally
+        {
+            PoolManager.Shutdown();
+        }
+    }
+
+    private static async Task Simulate(string root, GameModeSimConfig config)
+    {
         // Extra prototypes mutate the server; do not return it to the pool.
         var extra = config.ExtraPrototypes.Count > 0;
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = extra });
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = extra },
+            new ExternalTestContext("Game mode sim", TextWriter.Null));
         var server = pair.Server;
         var protos = server.ResolveDependency<IPrototypeManager>();
         var factory = server.ResolveDependency<IComponentFactory>();
@@ -93,9 +140,9 @@ public sealed class GameModeSimTest
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             }));
 
-        TestContext.Out.WriteLine($"Simulated {config.Presets.Count * config.Scenarios.Count * config.Rounds} rounds in {watch.Elapsed.TotalSeconds:0.0}s -> {outputDir}");
+        Console.WriteLine($"Simulated {config.Presets.Count * config.Scenarios.Count * config.Rounds} rounds in {watch.Elapsed.TotalSeconds:0.0}s -> {outputDir}");
         foreach (var warning in output.Warnings)
-            TestContext.Out.WriteLine($"warning: {warning}");
+            Console.WriteLine($"warning: {warning}");
     }
 
     // HashCode.Combine is salted per process.

@@ -20,7 +20,7 @@ using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests._Pirate.GameModeSim;
+namespace Content.Pirate.GameModeSim;
 
 public sealed class GameModeSimData
 {
