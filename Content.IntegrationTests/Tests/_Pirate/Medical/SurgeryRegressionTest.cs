@@ -249,7 +249,7 @@ public sealed class SurgeryRegressionTest
         EntityUid surgeon = default;
         EntityUid patient = default;
         EntityUid chest = default;
-        DoAfter action = default;
+        Content.Shared.DoAfter.DoAfter action = default;
         var ticks = 0;
 
         await server.WaitAssertion(() =>
