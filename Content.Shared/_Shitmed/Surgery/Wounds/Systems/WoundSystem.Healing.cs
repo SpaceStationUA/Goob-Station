@@ -63,12 +63,13 @@ public sealed partial class WoundSystem
             {
                 // For wounds like scars. Temporary for now
                 wound.Comp.CanBeHealed = true;
-                Dirty(wound, wound.Comp);
+                Dirty(wound, wound.Comp); // Pirate: synchronize forced healing eligibility.
             }
 
             if (!TryComp<BleedInflicterComponent>(wound, out var bleeds))
                 continue;
 
+            // Pirate: clear and synchronize the entire stopped bleeding state.
             bleeds.IsBleeding = false;
             bleeds.BleedingAmountRaw = FixedPoint2.Zero;
             bleeds.Scaling = FixedPoint2.Zero;

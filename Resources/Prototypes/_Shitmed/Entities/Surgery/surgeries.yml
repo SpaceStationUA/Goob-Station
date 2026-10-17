@@ -323,7 +323,7 @@
     - SurgeryStepInsertFeature
     - SurgeryStepSealWounds
   - type: SurgeryPartCondition
-    parts: [ Groin, Chest ] # Experiments attach legs directly to the torso; the slot condition checks compatibility.
+    parts: [ Groin, Chest ] # Pirate: torso-mounted legs still require a compatible slot.
   - type: SurgeryTraumaPresentCondition
     inverted: true
     trauma: Dismemberment
@@ -343,7 +343,7 @@
     - SurgeryStepInsertFeature
     - SurgeryStepSealWounds
   - type: SurgeryPartCondition
-    parts: [ Groin, Chest ]
+    parts: [ Groin, Chest ] # Pirate: support torso-mounted legs with compatible slots.
   - type: SurgeryTraumaPresentCondition
     inverted: true
     trauma: Dismemberment

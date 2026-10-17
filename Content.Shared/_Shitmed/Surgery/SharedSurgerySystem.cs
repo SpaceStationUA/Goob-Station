@@ -141,6 +141,7 @@ public abstract partial class SharedSurgerySystem : EntitySystem
         _ui.SetUi(ent.Owner, SurgeryUIKey.Key, data);
     }
 
+    // Pirate: resolve the operated part separately from the patient do-after target.
     private void OnBeforeTargetDoAfter(Entity<SurgeryTargetComponent> ent,
         ref DoAfterAttemptEvent<SurgeryDoAfterEvent> args)
     {
@@ -181,6 +182,7 @@ public abstract partial class SharedSurgerySystem : EntitySystem
         var ev = new SurgeryStepEvent(args.User, ent, part, tool, surgery, step, complete);
         RaiseLocalEvent(step, ref ev);
         RaiseLocalEvent(args.User, ref ev);
+        // Pirate: determine repetition after applying the treatment.
         args.Handled = true;
         args.Repeat = HasComp<SurgeryRepeatableStepComponent>(step) && !IsStepComplete(ent, part, args.Step, surgery);
 

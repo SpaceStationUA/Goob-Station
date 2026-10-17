@@ -236,6 +236,7 @@ public sealed class SurgeryBui : BoundUserInterface
         var stepName = new FormattedMessage();
         stepName.AddText(_entities.GetComponent<MetaDataComponent>(step).EntityName);
         var stepButton = new SurgeryStepButton { Step = step };
+        // Pirate: observers and unopened windows still need labelled, disabled steps.
         var texture = _entities.GetComponentOrNull<SpriteComponent>(step)?.Icon?.Default;
         stepButton.Set(stepName, texture);
         stepButton.Button.Disabled = true;
@@ -391,6 +392,7 @@ public sealed class SurgeryBui : BoundUserInterface
     }
     // Pirate end
 
+    // Pirate: refresh before opening the window and keep observer steps disabled.
     private void RefreshUI()
     {
         if (_window == null

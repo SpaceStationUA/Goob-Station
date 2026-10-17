@@ -74,7 +74,7 @@ public abstract partial class SharedSurgerySystem
         SubSurgery<SurgeryTraumaTreatmentStepComponent>(OnTraumaTreatmentStep, OnTraumaTreatmentCheck);
         SubSurgery<SurgeryTraumaExtractStepComponent>(OnExtractTraumaStep, OnExtractTraumaCheck);
         SubSurgery<SurgeryBleedsTreatmentStepComponent>(OnBleedsTreatmentStep, OnBleedsTreatmentCheck);
-        // Pain is a temporary side effect, not evidence that a surgical step is complete.
+        // Pirate: temporary pain does not determine whether a surgical step is complete.
         SubscribeLocalEvent<SurgeryStepPainInflicterComponent, SurgeryStepEvent>(OnPainInflicterStep);
         Subs.BuiEvents<SurgeryTargetComponent>(SurgeryUIKey.Key, subs =>
         {
@@ -217,6 +217,7 @@ public abstract partial class SharedSurgerySystem
         RaiseLocalEvent(args.Body, ref ev);
     }
 
+    // Pirate: use the same healable severity as treatment, including trauma floors.
     private void OnTendWoundsCheck(Entity<SurgeryTendWoundsEffectComponent> ent, ref SurgeryStepCompleteCheckEvent args)
     {
         if (_wounds.GetWoundableSeverityPoint(args.Part, damageGroup: ent.Comp.MainGroup, healable: true) > 0)
@@ -892,7 +893,7 @@ public abstract partial class SharedSurgerySystem
         var ev = new SurgeryDoAfterEvent(surgeryId, stepId, toolUsed, GetNetEntity(part));
         var duration = GetSurgeryDuration(step, user, body, speed);
 
-        // Target the patient so clients can track the action without resolving a contained limb.
+        // Pirate: target the patient so clients can track actions on contained limbs.
         var doAfter = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(duration), ev, body, body)
         {
             BreakOnMove = true,

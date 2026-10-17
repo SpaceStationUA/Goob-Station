@@ -159,6 +159,7 @@ public sealed partial class WoundSystem
             if (damageGroup != null && (string?) wound.Comp.DamageGroup != damageGroup)
                 continue;
 
+            // Pirate: only severity above a trauma floor can still be healed.
             var severity = wound.Comp.WoundSeverityPoint;
             if (healable)
             {
@@ -286,7 +287,7 @@ public sealed partial class WoundSystem
                 break;
             }
 
-            // Residual wounds can remain after stored damage has been healed.
+            // Pirate: residual wounds can remain after stored damage has been healed.
             // Show them on scanners and targeting dolls as well as on the body itself.
             if (woundable.WoundableSeverity > nearestSeverity)
                 nearestSeverity = woundable.WoundableSeverity;
