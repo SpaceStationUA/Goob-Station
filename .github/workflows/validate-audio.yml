@@ -2,12 +2,38 @@
 
 name: "CI: Validate Audio"
 
+# Only worth running when audio actually changes. The tool's own files are
+# listed too, so editing the policy re-validates the tree instead of going
+# unchecked until the next sound happens to be added.
 on:
   push:
     branches: [ master, staging, stable ]
+    paths:
+      - "Resources/Audio/**/*.ogg"
+      - "Tools/audio_optimize.py"
+      - "Tools/audio_allowlist.txt"
+      - ".github/workflows/validate-audio.yml"
   merge_group:
+    paths:
+      - "Resources/Audio/**/*.ogg"
+      - "Tools/audio_optimize.py"
+      - "Tools/audio_allowlist.txt"
+      - ".github/workflows/validate-audio.yml"
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
+    paths:
+      - "Resources/Audio/**/*.ogg"
+      - "Tools/audio_optimize.py"
+      - "Tools/audio_allowlist.txt"
+      - ".github/workflows/validate-audio.yml"
+  # Full-tree audit on demand. The tree is expected to be clean, so doing this
+  # automatically on every push would burn CI minutes re-proving it.
+  workflow_dispatch:
+    inputs:
+      full-audit:
+        description: "Audit all of Resources/Audio, not just this change"
+        type: boolean
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -23,26 +49,29 @@ jobs:
     steps:
     - uses: actions/checkout@v4.2.2
       with:
-        # Tools/audio_optimize.py --changed diffs against the base ref, so the
-        # history has to be there.
+        # --changed diffs against another ref, so history has to be present.
         fetch-depth: 0
 
     - name: Install audio tools
+      # ubuntu-latest ships neither ffmpeg nor oggenc.
       run: |
         sudo apt-get update
-        sudo apt-get install -y --no-install-recommends vorbis-tools
+        sudo apt-get install -y --no-install-recommends ffmpeg vorbis-tools
         ffmpeg -version | head -1
         oggenc --version | head -1
 
-    - name: Check changed audio files
-      if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.draft == false }}
+    - name: Audit
       run: |
-        python3 Tools/audio_optimize.py \
-          --changed \
-          --base "origin/${{ github.base_ref }}"
-
-    - name: Audit whole audio tree
-      # Catches drift that predates this workflow, and runs on pushes where there
-      # is no pull_request context to diff against.
-      if: ${{ !cancelled() && (github.event_name != 'pull_request' || github.event.pull_request.draft == true) }}
-      run: python3 Tools/audio_optimize.py
+        set -euo pipefail
+        event="${{ github.event_name }}"
+        if [ "$event" = "pull_request" ]; then
+          # Only what this PR touched, which is the actionable set.
+          python3 Tools/audio_optimize.py --changed --base "origin/${{ github.base_ref }}"
+        elif [ "$event" = "merge_group" ] || [ "${{ inputs.full-audit }}" = "true" ]; then
+          python3 Tools/audio_optimize.py
+        else
+          # Direct push: the checkout is already at the new tip, so diff against
+          # the commit that was there before rather than against origin/<branch>,
+          # which now points at the same commit and would yield nothing.
+          python3 Tools/audio_optimize.py --changed --base "${{ github.event.before }}"
+        fi

@@ -38,6 +38,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -108,6 +109,16 @@ def git(*args: str, check: bool = False) -> str:
     if check and proc.returncode != 0:
         raise RuntimeError(f"git {' '.join(args)} failed: {proc.stderr.strip()}")
     return proc.stdout
+
+
+def preflight() -> list[str]:
+    """The external tools we shell out to. Checked once, up front, so a missing
+    one is a clear message instead of a traceback from inside a worker thread."""
+    missing = []
+    for tool, hint in (("ffprobe", "ffmpeg"), ("ffmpeg", "ffmpeg"), ("oggenc", "vorbis-tools")):
+        if shutil.which(tool) is None:
+            missing.append(f"{tool} (from package: {hint})")
+    return missing
 
 
 def annotate(level: str, rel: str, title: str, message: str) -> None:
@@ -260,6 +271,11 @@ def main() -> int:
     args = parser.parse_args()
 
     MIN_DURATION, MIN_BITRATE, MIN_SAVING = args.min_duration, args.min_bitrate, args.min_saving
+
+    missing = preflight()
+    if missing:
+        log("error: missing required tools: " + ", ".join(missing))
+        return 2
 
     if not AUDIO_ROOT.exists():
         log("Resources/Audio not found; nothing to do.")
