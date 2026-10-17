@@ -4,7 +4,6 @@ using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Flash.Components;
 using Content.Shared.Inventory;
-using Content.Shared._Pirate.Clothing.WeldingVisor;
 
 namespace Content.Shared._Pirate.Experiments.Light;
 
@@ -64,6 +63,6 @@ public sealed class SharedFlashImmunityTogglePointLightSystem : EntitySystem
             return false;
         if (TryComp<MaskComponent>(uid, out var mask) && mask.IsToggled)
             return false;
-        return !TryComp<WeldingVisorComponent>(uid, out var visor) || visor.Lowered;
+        return true; // Pirate: upstream clothing toggles remove FlashImmunity while raised.
     }
 }

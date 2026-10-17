@@ -63,6 +63,7 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: ESForcedFacingUi # Goob
   - type: ActivatableUI
     key: enum.ChemMasterUiKey.Key
   - type: ActivatableUIRequiresPower

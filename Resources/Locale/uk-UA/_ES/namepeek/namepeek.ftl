@@ -1,0 +1,1 @@
+ui-options-function-name-peek = Показати імена

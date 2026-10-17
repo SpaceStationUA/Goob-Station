@@ -888,6 +888,7 @@
   physicalDesc: reagent-physical-desc-pulpy
   flavor: strange
   color: "#ffbebe"
+  puddleSpriteSet: Blood # Goob
   plantMetabolism:
     - !type:PlantAdjustWeeds
       amount: 10
@@ -974,6 +975,7 @@
   physicalDesc: reagent-physical-desc-pungent
   flavor: medicine
   color: "#e8cb4e"
+  puddleSpriteSet: Acid # Goob
   plantMetabolism:
     - !type:PlantAdjustWeeds
       amount: -4
@@ -1027,6 +1029,7 @@
   physicalDesc: reagent-physical-desc-sticky
   flavor: medicine
   color: "#cac6bf"
+  puddleSpriteSet: Shiny # Goob
   plantMetabolism:
     - !type:PlantAdjustHealth
       amount: -8
