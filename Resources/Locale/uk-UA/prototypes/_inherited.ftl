@@ -12837,6 +12837,7 @@ ent-WallRockSnowTitanium = { ent-WallRockSnow }
     .desc = { ent-BaseWall.desc }
 ent-WallRockTitanium = { ent-WallRock }
     .desc = { ent-BaseWall.desc }
+ent-WallStainSparkle = { ent-PuddleSparkle }
 ent-WardrobeAtmosphericsFilled = { ent-WardrobeAtmospherics }
     .desc = У цій шафці зберігається уніформа для атмосферних техніків.
 ent-WardrobeBlackFilled = { ent-WardrobeBlack }
