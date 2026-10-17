@@ -16,7 +16,7 @@ public sealed class CableVisualsTest
     [TestCase("CableApcExtension", "lvcable_")]
     public async Task HiddenCablesKeepTheirConnectionSpritesCurrent(string prototype, string prefix)
     {
-        await using var pair = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var client = pair.Client;
 
         await client.WaitAssertion(() =>
