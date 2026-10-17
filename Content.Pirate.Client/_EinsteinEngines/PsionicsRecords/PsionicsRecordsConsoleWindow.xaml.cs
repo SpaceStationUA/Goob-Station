@@ -13,7 +13,8 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Shared._Pirate.Contractors.Prototypes;
+using Content.Shared._Pirate.Employment;
+using Content.Shared._Pirate.Origin;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
@@ -148,7 +149,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         HistoryView.OnDeleteEntry += id => OnDeleteLogEntry?.Invoke(id);
 
         _fieldWidths = new RecordFieldWidths([StatusOptionButton],
-            [SpeciesValue, NationalityValue, EmployerValue, AgeValue, GenderValue],
+            [SpeciesValue, CitizenshipValue, EmployerValue, AgeValue, GenderValue],
             [PersonJob.Parent!]);
         _fieldWidths.Update();
     }
@@ -233,8 +234,8 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
         SpeciesValue.Text = _proto.TryIndex<SpeciesPrototype>(stationRecord.Species, out var species)
             ? Loc.GetString(species.Name)
             : na;
-        NationalityValue.Text = _proto.TryIndex<NationalityPrototype>(stationRecord.Nationality, out var nationality)
-            ? Loc.GetString(nationality.NameKey)
+        CitizenshipValue.Text = _proto.TryIndex<CitizenshipPrototype>(stationRecord.Citizenship, out var citizenship)
+            ? Loc.GetString(citizenship.NameKey)
             : na;
         EmployerValue.Text = _proto.TryIndex<EmployerPrototype>(stationRecord.Employer, out var employer)
             ? Loc.GetString(employer.NameKey)

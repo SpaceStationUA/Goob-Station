@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared._Pirate.Knowledge;
@@ -20,7 +18,7 @@ public sealed class KnowledgeTraitIntegrationTest
     private static readonly ProtoId<TraitPrototype> ExperiencedAlt = new("ExperiencedAlt");
 
     [Test]
-    public async Task KnowledgeTraitsHaveIntendedCostsBonusesAndCompatibility()
+    public async Task KnowledgeTraitsHaveCostsBonusesAndTraitConditions()
     {
         await using var pair = await PoolManager.GetServerClient();
         var prototypes = pair.Server.ProtoMan;
@@ -30,17 +28,22 @@ public sealed class KnowledgeTraitIntegrationTest
             var unchipped = prototypes.Index(Unchipped);
             var experienced = prototypes.Index(Experienced);
             var experiencedAlt = prototypes.Index(ExperiencedAlt);
-            var unchippedRequirement = experiencedAlt.Conditions.OfType<HasTraitsCondition>().Single();
+            var experiencedCondition = experienced.Conditions.OfType<HasTraitsCondition>().Single();
+            var alternativeConditions = experiencedAlt.Conditions.OfType<HasTraitsCondition>().ToArray();
 
             Assert.Multiple(() =>
             {
                 Assert.That(unchipped.Cost, Is.EqualTo(-3));
                 Assert.That(experienced.Cost, Is.EqualTo(2));
-                Assert.That(experienced.Conflicts, Does.Contain(ExperiencedAlt));
-                Assert.That(experiencedAlt.Conflicts, Does.Contain(Experienced));
-                Assert.That(unchippedRequirement.Traits, Does.Contain(Unchipped));
+                Assert.That(experiencedAlt.Cost, Is.EqualTo(3));
+                Assert.That(experiencedCondition.Invert, Is.True);
+                Assert.That(experiencedCondition.Traits, Does.Contain(ExperiencedAlt));
+                Assert.That(alternativeConditions, Has.Length.EqualTo(2));
+                Assert.That(alternativeConditions.Single(condition => condition.Invert).Traits,
+                    Does.Contain(Experienced));
+                Assert.That(alternativeConditions.Single(condition => !condition.Invert).Traits,
+                    Does.Contain(Unchipped));
                 Assert.That(KnowledgeableComponent.GetBonusPoints(prototypes, Traits(Experienced)), Is.EqualTo(6));
-                Assert.That(KnowledgeableComponent.GetBonusPoints(prototypes, Traits(ExperiencedAlt)), Is.Zero);
                 Assert.That(
                     KnowledgeableComponent.GetBonusPoints(prototypes, Traits(Unchipped, ExperiencedAlt)),
                     Is.EqualTo(10));
@@ -49,8 +52,6 @@ public sealed class KnowledgeTraitIntegrationTest
                     Is.EquivalentTo(new Dictionary<EntProtoId, int> { ["LiteracyKnowledge"] = 2 }));
                 Assert.That(KnowledgeableComponent.GetMasteryGrants(prototypes, Traits(Unchipped, ExperiencedAlt)),
                     Is.EquivalentTo(new Dictionary<EntProtoId, int> { ["LiteracyKnowledge"] = 3 }));
-                Assert.That(KnowledgeableComponent.GetMasteryGrants(prototypes, Traits(ExperiencedAlt)), Is.Null,
-                    "Without its required trait, the alternative grants nothing.");
             });
         });
 

@@ -63,7 +63,8 @@ public sealed class AlternativeJobSystem : EntitySystem, IAlternativeJobSystem
     {
         if (profile.JobAlternatives.TryGetValue(parentJobId, out var alternativeJobId))
         {
-            if (_prototypeManager.TryIndex(alternativeJobId, out var altJobPrototype))
+            if (_prototypeManager.TryIndex(alternativeJobId, out var altJobPrototype)
+                && altJobPrototype.ParentJobId == parentJobId)
             {
                 alternativeJobPrototype = altJobPrototype;
                 return true;

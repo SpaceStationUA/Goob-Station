@@ -285,8 +285,10 @@ namespace Content.Server.VendingMachines
 
         private void UpdateVendingMachineInterfaceState(EntityUid uid, VendingMachineComponent component)
         {
-            var state = new VendingMachineInterfaceState(GetAllInventory(uid, component), GetPriceMultiplier(component),
-                component.Credits);
+            var inventory = GetAllInventory(uid, component)
+                .Select(entry => new VendingMachineInventoryEntry(entry))
+                .ToList();
+            var state = new VendingMachineInterfaceState(inventory, GetPriceMultiplier(component), component.Credits);
 
             UISystem.SetUiState(uid, VendingMachineUiKey.Key, state);
         }
@@ -388,7 +390,7 @@ namespace Content.Server.VendingMachines
         protected override int GetEntryPrice(EntityPrototype proto)
         {
             var price = (int) _pricing.GetEstimatedPrice(proto);
-            return price; 
+            return price;
         }
 
         private int GetPrice(VendingMachineInventoryEntry entry, VendingMachineComponent comp)
@@ -408,7 +410,7 @@ namespace Content.Server.VendingMachines
 
             if (!IsAuthorized(uid, args.Actor, component))
                 return;
-                
+
             _stackSystem.SpawnAtPosition(component.Credits, PrototypeManager.Index(component.CreditStackPrototype),
                 Transform(uid).Coordinates);
             component.Credits = 0;

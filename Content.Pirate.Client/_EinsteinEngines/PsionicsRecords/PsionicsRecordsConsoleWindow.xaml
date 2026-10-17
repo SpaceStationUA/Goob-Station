@@ -38,8 +38,8 @@
                             <Label Name="SpeciesValue" ClipText="True" HorizontalExpand="True"/>
                         </BoxContainer>
                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="8">
-                            <Label Text="{Loc 'humanoid-profile-editor-nationality-label'}" FontColorOverride="DarkGray"/>
-                            <Label Name="NationalityValue" ClipText="True" HorizontalExpand="True"/>
+                            <Label Text="{Loc 'humanoid-profile-editor-citizenship-label'}" FontColorOverride="DarkGray"/>
+                            <Label Name="CitizenshipValue" ClipText="True" HorizontalExpand="True"/>
                         </BoxContainer>
                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="8">
                             <Label Text="{Loc 'humanoid-profile-editor-employer-label'}" FontColorOverride="DarkGray"/>

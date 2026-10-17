@@ -5,14 +5,15 @@
   name: job-name-psychologist
   description: job-description-psychologist
   playTimeTracker: JobPsychologist
-  # Pirate contractor start
-  requirements: 
+  # Pirate Employment start
+  requirements:
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZengHuPharmaceuticals
+      - Idris
+      - ZengHu
       - PMCG
-  # Pirate contractor end
+  # Pirate Employment end
   startingGear: PsychologistGear
   icon: "JobIconPsychologist"
   supervisors: job-supervisors-cmo

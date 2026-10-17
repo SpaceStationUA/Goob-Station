@@ -32,13 +32,13 @@
     #  inverted: true
     #  species:
     #  - Felinid
-  # Pirate contractor start
+  # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-      - ZavodskiyInterstellar
+      - NanoTrasen
+      - Idris
       - PMCG
-  # Pirate contractor end
+  # Pirate Employment end
     - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   guides:
   - BlueshieldOfficerSOP

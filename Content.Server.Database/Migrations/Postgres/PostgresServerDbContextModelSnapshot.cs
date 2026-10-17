@@ -1626,7 +1626,8 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
 
-                    b.Property<string>("Nationality")
+                    // Pirate: persist citizenship using the existing nationality column.
+                    b.Property<string>("Citizenship")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("nationality");

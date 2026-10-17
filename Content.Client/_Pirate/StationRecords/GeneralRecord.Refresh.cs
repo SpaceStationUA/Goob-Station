@@ -17,7 +17,7 @@ public sealed partial class GeneralRecord
     public event Action<uint, byte[]>? OnStoreGeneratedPortrait;
 
     private RecordFieldWidths FieldWidths => _fieldWidths ??= new RecordFieldWidths(
-        [SpeciesButton, NationalityButton, EmployerButton, GenderButton],
+        [SpeciesButton, CitizenshipButton, EmployerButton, GenderButton],
         [AgeEdit],
         [PersonJob.Parent!]);
 

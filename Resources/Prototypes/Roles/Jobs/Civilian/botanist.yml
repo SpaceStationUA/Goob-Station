@@ -17,14 +17,14 @@
   extendedAccess:
   - Kitchen
   - Bar
-  # Pirate contractor start
-  requirements: 
+  # Pirate Employment start
+  requirements:
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - IdrisIncorporated
-      - OrionExpress
-  # Pirate contractor end
+      - Idris
+      - Orion
+  # Pirate Employment end
   special:
   # Pirate: skill chips start
   - !type:OrganChipsSpecial

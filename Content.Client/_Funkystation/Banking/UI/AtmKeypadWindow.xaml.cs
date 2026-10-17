@@ -301,7 +301,7 @@ public sealed partial class AtmKeypadWindow : FancyWindow
             }
 
             var amount = ParseBuffer(_amountBuffer);
-            var text = $"{amount}¥";
+            var text = $"{amount}电";
             if (_cursorVisible)
                 text += "_";
             BufferLabel.Text = text;
