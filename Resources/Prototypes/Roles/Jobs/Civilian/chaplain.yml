@@ -17,12 +17,12 @@
       traits:
       - Vampirism # Pirate end
   # Pirate Employment start
-  - !type:CharacterEmployerRequirement
-    employers:
-    - NanoTrasen
-    - Idris
-    - Orion
-    - ZengHu
+    - !type:CharacterEmployerRequirement
+      employers:
+        - NanoTrasen
+        - Idris
+        - Orion
+        - ZengHu
   # Pirate Employment end
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
