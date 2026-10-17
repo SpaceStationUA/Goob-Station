@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 using System.Numerics;
+using Content.Client.Chat.UI; // Pirate: runechat cyrillic
 using Content.Client.Gameplay;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
@@ -28,9 +29,12 @@ public sealed class PopupUIController : UIController, IOnStateEntered<GameplaySt
         base.Initialize();
         var cache = IoCManager.Resolve<IResourceCache>();
 
-        _smallFont = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Italic.ttf"), 10);
-        _mediumFont = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Italic.ttf"), 12);
-        _largeFont = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-BoldItalic.ttf"), 14);
+        // Pirate: runechat cyrillic - Grand9K lacks Ukrainian glyphs.
+        var font = cache.GetResource<FontResource>("/Fonts/_ES/Grand9KPixelRegular.ttf");
+        var fallback = cache.GetResource<FontResource>(RunechatSheetlet.FallbackFontPath); // Pirate: runechat cyrillic
+        _smallFont = new StackedFont(new VectorFont(font, 10), new VectorFont(fallback, 10));
+        _mediumFont = new StackedFont(new VectorFont(font, 12), new VectorFont(fallback, 12));
+        _largeFont = new StackedFont(new VectorFont(font, 14), new VectorFont(fallback, 14));
     }
 
     public void OnStateEntered(GameplayState state)
@@ -59,6 +63,7 @@ public sealed class PopupUIController : UIController, IOnStateEntered<GameplaySt
         var updatedPosition = position - new Vector2(0f, MathF.Min(8f, 12f * (popup.TotalTime * popup.TotalTime + popup.TotalTime)));
         var font = _smallFont;
         var color = Color.White.WithAlpha(alpha);
+        var outline = new TextOutline(2f, Color.Black.WithAlpha(alpha)); // Goob
 
         switch (popup.Type)
         {
@@ -84,7 +89,7 @@ public sealed class PopupUIController : UIController, IOnStateEntered<GameplaySt
         }
 
         var dimensions = handle.GetDimensions(font, popup.Text, scale);
-        handle.DrawString(font, updatedPosition - dimensions / 2f, popup.Text, scale, color.WithAlpha(alpha));
+        handle.DrawString(font, updatedPosition - dimensions / 2f + popup.RandomOffset, popup.Text, scale, color.WithAlpha(alpha), outline); // Goob
     }
 
     /// <summary>

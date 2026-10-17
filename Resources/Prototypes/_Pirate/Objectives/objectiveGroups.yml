@@ -69,6 +69,7 @@
   id: PirateTraitorContractGroupSpecial
   weights:
     TraitorContractDieObjective: 1
+    TraitorContractMassCasualtyObjective: 0.1
 
 - type: weightedRandom
   id: PirateTraitorContractGroupRansom

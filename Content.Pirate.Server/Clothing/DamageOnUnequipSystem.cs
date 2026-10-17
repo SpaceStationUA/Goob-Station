@@ -32,8 +32,9 @@ public sealed class DamageOnUnequipSystem : SharedDamageOnUnequipSystem
 
     private void OnUnequip(Entity<DamageOnUnequipComponent> ent, ref ClothingGotUnequippedEvent args)
     {
-        // terminating check to avoid evil exception. bit weird but it's how a similar issue was fixed upstream
-        if (MetaData(args.Wearer).EntityLifeStage >= EntityLifeStage.Terminating)
+        // Pirate: entity cleanup can delete body parts before removing the bound armor.
+        if (MetaData(ent).EntityLifeStage >= EntityLifeStage.Terminating
+            || MetaData(args.Wearer).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
         _popup.PopupEntity(Loc.GetString("damage-on-unequip-finish", ("item", ent), ("wearer", args.Wearer)), ent, PopupType.LargeCaution);

@@ -1,0 +1,505 @@
+# Keep antag pacing separate from chaos-driven events so low chaos cannot bunch antag arrivals.
+# Favor minor antags; confine majors to the first pick so a round gets at most one.
+
+- type: entityTable
+  id: BlueshiftEventsTable
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: BlueshiftCalmEventsTable
+    - !type:NestedSelector
+      tableId: CalmPestEventsTable
+    - !type:NestedSelector
+      tableId: CargoGiftsTable
+    # Schedule paradox clones through Secret+ (~40% of rounds) to free timed antag slots.
+    - id: BlueshiftParadoxCloneSpawn
+
+# Keep this copy in sync with BasicCalmEventsTable; ghost-role antags use the antag pool.
+- type: entityTable
+  id: BlueshiftCalmEventsTable
+  table: !type:AllSelector
+    children:
+    - id: AnomalySpawn
+    - id: BluespaceArtifact
+    - id: BluespaceLocker
+    - id: BreakerFlip
+    - id: BureaucraticError
+    - id: ClericalError
+    - id: CockroachMigration
+    - id: GasLeak
+    - id: GreytideVirus
+    - id: IonStorm
+    - id: JobDistributionError
+    - id: BlueshiftKudzuGrowth
+    - id: MassHallucinations
+    - id: MimicVendorRule
+    - id: MouseMigration
+    - id: RandomVirus
+    - id: PowerGridCheck
+    - id: RandomSentience
+    - id: SlimesSpawn
+    - id: SolarFlare
+    - id: SnakeSpawn
+    - id: SpiderClownSpawn
+    - id: SpiderSpawn
+    - id: VentClog
+    - id: TidemindDevelop
+    - id: MothroachSpawn
+    - id: BlueshiftMalignRiftSpawn
+    - id: BlueshiftFloorGoblinMidRound
+    - id: BlueshiftClownGoblinMigration
+    - id: EeepEvent
+    - id: SnailMigration
+
+# Target rounds: traitor/bounty ~70%, vampire ~50%, extras ~30%, pirates ~25%, clown/mime/priest ~20%.
+# Use TraitorMidround rather than SleeperAgents to respect the Traitor preference and ban.
+- type: entityTable
+  id: BlueshiftAntagEventsTable
+  table: !type:AllSelector
+    children:
+    - id: BlueshiftTraitorMidround
+    - id: BlueshiftVampireMidround
+    - id: BlueshiftBountyHunterSpawn
+      conditions:
+      - !type:BountyHunterTargetCondition
+    - id: BlueshiftSpacePirates
+    - id: BlueshiftHitmanShuttle
+    # Both copies share the single-AI exclusion.
+    - id: BlueshiftMalfAiMidround
+      conditions:
+      - !type:MalfAiAvailableCondition
+    - id: BlueshiftMalfAiDoomsdayMidround
+      conditions:
+      - !type:MalfAiAvailableCondition
+    - id: BlueshiftTunnelClownMidround
+    - id: BlueshiftMimeAssassinMidround
+    - id: BlueshiftDarkPriestMidround
+    - id: BorerSpawn
+    # VentCrittersRule ignores specialEntry probability, so this belongs in the antag pool.
+    - id: BlueshiftKingRatMigration
+
+# Rules with duration: null stay active and cannot be picked again.
+- type: entity
+  id: BlueshiftAntagScheduler
+  parent: BaseGameRule
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GameRule
+  - type: BasicStationEventScheduler
+    minimumTimeUntilFirstEvent: 1500
+    minMaxEventTiming:
+      min: 1800
+      max: 2400
+    scheduledGameRules: !type:NestedSelector
+      tableId: BlueshiftAntagEventsTable
+
+# Extra TC offsets less time for contracts.
+# Remove the inherited start delay so selection coincides with the interception announcement.
+- type: entity
+  id: BlueshiftTraitorMidround
+  parent: TraitorMidround
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GameRule
+    delay:
+      min: 0
+      max: 0
+  - type: TraitorRule
+    startingBalance: 75
+  - type: StationEvent
+    earliestStart: 15
+    weight: 20
+
+- type: entity
+  id: BlueshiftVampireMidround
+  parent: VampireMidround
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    weight: 12
+
+- type: entity
+  id: BlueshiftBountyHunterSpawn
+  parent: BountyHunterSpawn
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    weight: 20
+
+- type: entity
+  id: BlueshiftTunnelClownMidround
+  parent: TunnelClownMidround
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 4.0
+
+- type: entity
+  id: BlueshiftMimeAssassinMidround
+  parent: MimeAssassinMidround
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 4.35
+
+- type: entity
+  id: BlueshiftDarkPriestMidround
+  parent: DarkPriestMidround
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 4.3
+
+- type: entity
+  id: BlueshiftParadoxCloneSpawn
+  parent: ParadoxCloneSpawn
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 3.4
+
+- type: entity
+  id: BlueshiftHitmanShuttle
+  parent: HitmanShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 5.8
+
+- type: entity
+  id: BlueshiftKingRatMigration
+  parent: KingRatMigration
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 6.0
+
+# Cheap chaos costs made goblins appear in over 80% of rounds; target about 30%.
+- type: entity
+  id: BlueshiftFloorGoblinMidRound
+  parent: FloorGoblinMidRound
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 2.5
+    maxOccurrences: 1
+
+- type: entity
+  id: BlueshiftClownGoblinMigration
+  parent: ClownGoblinMigration
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 2.5
+    maxOccurrences: 1
+
+# The rare copy guarantees doomsday; the common copy cannot unlock it.
+# Inheritance replaces the whole objective sets list.
+- type: weightedRandom
+  id: BlueshiftMalfAiSabotageObjectives
+  weights:
+    MalfAiAssassinateObjective: 4
+    MalfAiProtectObjective: 3
+    MalfAiControlBorgsObjective: 2
+
+- type: entity
+  id: BlueshiftMalfAiMidround
+  parent: MalfAiMidround
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagRandomObjectives
+    sets:
+    - groups: BlueshiftMalfAiSabotageObjectives
+      maxPicks: 3
+    maxDifficulty: 8
+  - type: StationEvent
+    weight: 11.0
+
+- type: entity
+  id: BlueshiftMalfAiDoomsdayMidround
+  parent: MalfAiMidround
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagObjectives
+    objectives:
+    - MalfAiSurviveObjective
+    - MalfAiDoomsdayObjective
+  - type: AntagRandomObjectives
+    sets:
+    - groups: BlueshiftMalfAiSabotageObjectives
+      maxPicks: 2
+    maxDifficulty: 5 # 8 minus doomsday's 3
+  - type: StationEvent
+    weight: 2.1
+
+# Target about half of rounds instead of the observed 70%.
+- type: entity
+  id: BlueshiftKudzuGrowth
+  parent: KudzuGrowth
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 4.2
+
+# SpacePirates ends after spawning and can recur; cap it at once per round.
+- type: entity
+  id: BlueshiftSpacePirates
+  parent: SpacePirates
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 5.0
+    maxOccurrences: 1
+
+# Target malign rifts in about 20% of rounds.
+- type: entity
+  id: BlueshiftMalignRiftSpawn
+  parent: MalignRiftSpawn
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    minimumPlayers: 15
+    weight: 1.75
+    eventType: Neutral
+    startAnnouncement: cosmiccult-announce-tier2-warning
+    startAnnouncementColor: "#cae8e8"
+    startAudio:
+      path: /Audio/_DV/CosmicCult/tier2.ogg
+
+# Inheritance replaces the entire AntagSelection definitions list.
+# Keep these copies in sync with their parents when changing counts or chaos costs.
+
+- type: entity
+  id: BlueshiftChangeling
+  parent: Changeling
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 2
+      playerRatio: 15
+      chaosScore: 200
+      jobBlacklist: [ Chaplain ]
+      blacklist:
+        components:
+        - CommandStaff
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleChangeling
+
+- type: entity
+  id: BlueshiftThief
+  parent: Thief
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    agentName: thief-round-end-agent-name
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Thief ]
+      max: 1
+      playerRatio: 10
+      chaosScore: 100
+      lateJoinAdditional: true
+      allowNonHumans: true
+      multiAntagSetting: NotExclusive
+      startingGear: ThiefGear
+      jobBlacklist: [ Chaplain ]
+      blacklist:
+        components:
+        - CommandStaff
+      components:
+      - type: Pacified
+      - type: Thieving
+        stripTimeReduction: 2
+        stealthy: true
+      mindRoles:
+      - MindRoleThief
+      briefing:
+        sound: "/Audio/Misc/thief_greeting.ogg"
+
+- type: entity
+  id: BlueshiftDevil
+  parent: Devil
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    agentName: devil-roundend-name
+    definitions:
+    - prefRoles: [ Devil ]
+      max: 1
+      playerRatio: 40
+      chaosScore: 100
+      jobBlacklist: [ Chaplain, Mime, ChiefEngineer, ResearchDirector, Quartermaster ]
+      mindRoles:
+      - DevilMindRole
+      startingGear: DevilStartingGear
+
+- type: entity
+  id: BlueshiftSiliconLiberation
+  parent: SiliconLiberation
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    agentName: self-round-end-agent-name
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ SELFAgent ]
+      max: 1
+      playerRatio: 31
+      chaosScore: 125
+      lateJoinAdditional: true
+      allowNonHumans: true
+      jobBlacklist: [ Roboticist ]
+      blacklist:
+        components:
+        - AntagImmune
+      startingGear: SELFAgentGear
+      mindRoles:
+      - MindRoleSELFAgent
+      briefing:
+        sound: "/Audio/_Pirate/Ambience/Antag/self_greeting.ogg"
+
+# Lower chaos cost leaves budget for more than blood brothers in vampire-first rounds.
+- type: entity
+  id: BlueshiftVampire
+  parent: Vampire
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    agentName: vampire-roundend-name
+    definitions:
+    - prefRoles: [ Vampire ]
+      max: 1
+      playerRatio: 10
+      chaosScore: 100
+      jobBlacklist: [ Chaplain ]
+      blacklist:
+        components:
+        - CommandStaff
+        - AntagImmune
+        - Changeling
+        - BibleUser
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleVampire
+
+# A separate id lets incompatibleModes target the Blueshift copies.
+- type: entity
+  id: BlueshiftHeretic
+  parent: Heretic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    agentName: heretic-roundend-name
+    definitions:
+    - prefRoles: [ Heretic ]
+      max: 1
+      playerRatio: 15
+      chaosScore: 200
+      lateJoinAdditional: true
+      jobBlacklist: [ Chaplain ]
+      blacklist:
+        components:
+        - CommandStaff
+      mindRoles:
+      - MindRoleHeretic
+
+# incompatibleModes is keyed by the selected rule id; include the Blueshift copies.
+- type: incompatibleModes
+  id: BlueshiftChangeling
+  modes:
+  - Heretic
+  - BlueshiftHeretic
+  - CosmicCult
+  - BlueshiftCosmicCult
+
+- type: incompatibleModes
+  id: BlueshiftHeretic
+  modes:
+  - Heretic
+  - BlueshiftHeretic
+  - CosmicCult
+  - BlueshiftCosmicCult
+  - Changeling
+  - BlueshiftChangeling
+
+- type: entity
+  id: BlueshiftCosmicCult
+  parent: CosmicCult
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GameRule
+    minPlayers: 20
+
+- type: incompatibleModes
+  id: BlueshiftCosmicCult
+  modes:
+  - Nukeops
+  - Honkops
+  - Zombie
+  - Revolutionary
+  - BlobGameMode
+  - CosmicCult
+  - BlueshiftCosmicCult
+  - Heretic
+  - BlueshiftHeretic
+
+- type: weightedRandom
+  id: BlueshiftPrimary
+  weights:
+    Traitor: 0.30
+    BlueshiftVampire: 0.15
+    BloodBrothers: 0.15
+    # Expensive antags fail more budget rolls; higher weights target about 5% of rounds each.
+    Revolutionary: 0.055
+    BloodCult: 0.06
+    BlueshiftCosmicCult: 0.07
+    Nukeops: 0.085
+    Wizard: 0.06
+
+- type: weightedRandom
+  id: BlueshiftRoundstart
+  weights:
+    Traitor: 0.30
+    BlueshiftVampire: 0.15
+    BloodBrothers: 0.15
+    BlueshiftChangeling: 0.072
+    BlueshiftHeretic: 0.036
+    # Cheap antags pass budget rolls more often; keep weights low.
+    BlueshiftThief: 0.0172
+    BlueshiftDevil: 0.0155
+    BlueshiftSiliconLiberation: 0.0165
+
+- type: entity
+  id: BlueshiftScheduler
+  parent: BaseGameRule
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SecretPlus
+    minStartingChaos: 6 # Per connected player, including the lobby.
+    maxStartingChaos: 12
+    livingChaosChange: -0.018
+    deadChaosChange: 0.048
+    chaosChangeVariationMin: 0.65
+    chaosChangeVariationMax: 1.3
+    # Space out non-antag events now that antags no longer consume these picks.
+    eventIntervalMin: 210
+    eventIntervalMax: 525
+    primaryAntagsWeightTable: BlueshiftPrimary
+    roundStartAntagsWeightTable: BlueshiftRoundstart
+    disallowedEvents:
+    - FriendlySpawn
+    - Psionic
+  - type: SelectedGameRules
+    scheduledGameRules: !type:NestedSelector
+      tableId: BlueshiftEventsTable

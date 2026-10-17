@@ -40,6 +40,7 @@
       employers:
       - NanoTrasen
     # Pirate Employment end
+    - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   guides: # goobstation
   - Command
   - Succession

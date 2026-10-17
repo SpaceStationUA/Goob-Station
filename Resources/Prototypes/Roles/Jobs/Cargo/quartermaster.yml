@@ -31,7 +31,8 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-  # Pirate Employment end
+    # Pirate Employment end
+    - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"

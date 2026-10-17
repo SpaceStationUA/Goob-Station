@@ -1,7 +1,7 @@
 # Chat window radio wrap (prefix and postfix)
-chat-radio-message-wrap = [color={$color}]{$channel} [bold]{$name}[/bold] {$verb}, "[/color][font="{$fontType}" size={$fontSize}][color={$languageColor}]{$message}[/color][/font][color={$color}]"[/color]
-chat-radio-message-wrap-bold = [color={$color}]{$channel} [bold]{$name}[/bold] {$verb}, "[/color][color={$languageColor}][font="{$fontType}" size={$fontSize}][bold]{$message}[/bold][/font][/color][color={$color}]"[/color]
-examine-headset-default-channel = Використовуйте {$prefix} для загального каналу ([color={$color}]{$channel}[/color]).
+chat-radio-message-wrap = [radiochannel="{$channelId}"]{$channel} [bold]{$name}[/bold] {$verb}, "[/radiochannel][font="{$fontType}" size={$fontSize}][radiochannel="{$channelId}" lang="{$languageOverride}"]{$message}[/radiochannel][/font][radiochannel="{$channelId}"]"[/radiochannel]
+chat-radio-message-wrap-bold = [radiochannel="{$channelId}"]{$channel} [bold]{$name}[/bold] {$verb}, "[/radiochannel][radiochannel="{$channelId}" lang="{$languageOverride}"][font="{$fontType}" size={$fontSize}][bold]{$message}[/bold][/font][/radiochannel][radiochannel="{$channelId}"]"[/radiochannel]
+examine-headset-default-channel = Використовуйте {$prefix} для каналу за замовчуванням ([radiochannel="{$channelId}"]{$channel}[/radiochannel]).
 chat-radio-common = Загальний
 chat-radio-centcom = ЦентКом
 chat-radio-command = Керівництво

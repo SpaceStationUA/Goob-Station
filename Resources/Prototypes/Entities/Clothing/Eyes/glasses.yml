@@ -58,35 +58,13 @@
   parent: ClothingEyesBase # goobstation - tider nation - no longer contra
   id: ClothingEyesGlassesMeson
   name: meson goggles # goobstation - they're called MESONS!!!!
-  description: Green-tinted goggles that use mesons to reveal sub-floor infrastructure. # Pirate: meson vision
+  description: Green-tinted engineering goggles that use THz radiation and mesons to reveal sub-floor infrastructure. # Goob
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/meson.rsi
-    layers: # Pirate: meson vision
-    - state: icon-on
-      map: ["base"]
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
-  - type: Appearance # Pirate: meson vision
-  - type: GenericVisualizer # Pirate: meson vision
-    visuals:
-      enum.TrayScannerVisual.Visual:
-        base:
-          On: { state: icon-on }
-          Off: { state: icon }
-  # Pirate: meson vision
-  - type: TrayScanner
-    range: 10
-    enabled: true
-    toggleOnActivate: false # Pirate: meson vision
-    requireWorn: true # Pirate: meson vision
-    toggleAction: ActionToggleTrayScanner # Pirate: meson vision
-  - type: GoggleShader
-    shader: Goggles
-    color: "#5AB43C80" # Pirate: meson vision
-    enabled: true
-  - type: StaticPrice # Pirate: meson vision
-    price: 50
+  # Goob - EyeProtection removed, mesons are T-ray scanners now
   - type: IdentityBlocker
     coverage: EYES
   - type: Tag
@@ -95,7 +73,15 @@
     - MesonGoggles
     - WhitelistChameleon
     - PetWearable # Goobstation?
-    - SecDogWearable # Pirate: K9 units may wear these goggles
+    - SecDogWearable # Pirate: K9 goggles equipment
+  - type: TrayScanner # Goob
+  - type: TrayScannerToggle # Goob
+    soundOn: # Goob
+      path: /Audio/Items/flashlight_on.ogg # Goob
+    soundOff: # Goob
+      path: /Audio/Items/flashlight_off.ogg # Goob
+  - type: GoggleShader # Goob
+    color: '#5AB43CCC' # Goob
 
 - type: entity
   parent: ClothingEyesBase

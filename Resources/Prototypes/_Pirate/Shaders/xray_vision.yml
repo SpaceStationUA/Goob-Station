@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT
+
+# Pirate: retained X-ray mode, independent of the upstream goggle shader.
+- type: shader
+  id: XRayVision
+  kind: source
+  path: "/Textures/_Pirate/Shaders/xrayvision.swsl"

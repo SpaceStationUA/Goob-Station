@@ -11,3 +11,7 @@ vending-machine-keypad-success-enjoy = [ СМАЧНОГО ]
 vending-machine-keypad-success-thx = [ ДЯКУЮ ]
 vending-machine-keypad-success-yum = [ НЯМ! ]
 vending-machine-keypad-success-vend = [ ВИДАЧА ]
+vending-machine-keypad-dispense = ВИДАЧА
+vending-machine-keypad-target = КОД
+vending-machine-keypad-row = РЯДОК
+vending-machine-keypad-column = СТОВПЕЦЬ

@@ -1,0 +1,9 @@
+# Ghost-role jobs bypass this whitelist.
+
+- type: speciesJobWhitelist
+  id: Experiment
+  species: Experiment
+  jobs:
+  - Passenger
+  - SalvageSpecialist
+  - ShaftMiner

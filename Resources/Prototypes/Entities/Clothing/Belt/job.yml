@@ -330,7 +330,7 @@
   parent: ClothingBeltStorageBase
   id: ClothingBeltChef
   name: chef belt
-  description: A belt used to hold kitchen knives and condiments for quick access.
+  description: A belt used to hold kitchen knives, condiments, and cooking ingredients for quick access. # Pirate
   components:
   - type: Sprite
     sprite: Clothing/Belt/chef.rsi
@@ -367,6 +367,7 @@
       - Mousetrap
       - Smokable
       - Utensil
+      - Edible # Pirate: allow food and packaged cooking ingredients.
   - type: ItemMapper
     sprite: *BeltOverlay
     mapLayers:

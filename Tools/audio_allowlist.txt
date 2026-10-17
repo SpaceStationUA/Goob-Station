@@ -1,0 +1,8 @@
+# Audio files exempt from the Vorbis budget in Tools/audio_optimize.py.
+#
+# One repo-relative path per line. Lines may be commented with '#'.
+# Add a file here only if it genuinely needs a higher bitrate than q4 can
+# deliver, and say why in a comment next to it.
+#
+# Example:
+# Resources/Audio/SomeModule/References/critical_reference_tone.ogg  # archival master, not a game sound

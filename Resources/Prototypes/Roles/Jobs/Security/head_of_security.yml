@@ -43,6 +43,7 @@
       employers:
       - NanoTrasen
     # Pirate Employment end
+    - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
