@@ -126,7 +126,7 @@
   id: Security
   name: department-Security
   description: department-Security-description
-  color: "#DE3A3A"
+  color: "#121212" # Pirate
   weight: 20
   roles:
   - HeadOfSecurity

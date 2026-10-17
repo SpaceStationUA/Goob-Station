@@ -57,7 +57,7 @@ public sealed class VendingMachineKeypadBoundUserInterface(EntityUid owner, Enum
     {
         var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
 
-        _menu?.SetCredits(_credits, _priceMultiplier);
+        _menu?.SetCredits(_credits, _priceMultiplier); // Pirate banking: refresh the balance before rebuilding item slots.
         _menu?.Populate(_cachedInventory, enabled);
     }
 
@@ -65,7 +65,7 @@ public sealed class VendingMachineKeypadBoundUserInterface(EntityUid owner, Enum
     {
         var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
 
-        _menu?.SetCredits(_credits, _priceMultiplier);
+        _menu?.SetCredits(_credits, _priceMultiplier); // Pirate banking: refresh the balance before updating item slots.
         _menu?.UpdateAmounts(_cachedInventory, enabled);
     }
 

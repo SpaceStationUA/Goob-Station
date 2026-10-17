@@ -433,6 +433,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                 else
     // Pirate banking start
                 {
+                    // Pirate banking: keep the calculated item price on new inventory entries.
                     var newEntry = new VendingMachineInventoryEntry(type, id, restock, price);
                     inventory.Add(id, newEntry);
                 }

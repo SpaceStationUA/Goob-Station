@@ -40,7 +40,7 @@
   id: ZengHu
   priority: 3
   nameKey: employment-employer-name-zenghu
-  accentColor: "#4f8f56"
+  accentColor: "#b08fc8"
   logoPath: /Textures/_Pirate/Interface/Employers/ZengHu.png
   departments: [department-Science, department-Medical]
 

@@ -67,7 +67,6 @@
   components:
     - type: Unchipped
 
-### Experienced і ExperiencedAlt видалити після переробки / адаптації навичок під Аврору VVV
 - type: trait
   id: Experienced
   name: trait-experienced-name
