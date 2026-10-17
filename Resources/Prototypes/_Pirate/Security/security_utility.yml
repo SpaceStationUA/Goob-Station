@@ -143,6 +143,15 @@
   - type: CrewMonitoringDepartmentFilter
     shownDepartments:
     - Security
+    includeTrackingImplants: true
+    sensorPrototypes:
+    - ClothingUniformJumpsuitPrisoner
+    - ClothingUniformJumpskirtPrisoner
+    - ClothingUniformEnvirosuitPrisoner
+    jobIcons:
+    - JobIconPrisoner
+    extraJobTitles:
+    - job-name-prisoner
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
