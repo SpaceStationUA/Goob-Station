@@ -29,10 +29,12 @@ public sealed class HumanoidAppearanceScaleTest
             var sprite = client.EntMan.GetComponent<SpriteComponent>(dummy);
 
             appearance.LoadProfile(dummy, profile);
-            Assert.That(sprite.Scale, Is.EqualTo(new Vector2(width, height)));
+            Assert.That(humanoid.Height, Is.EqualTo(height));
+            Assert.That(humanoid.Width, Is.EqualTo(width));
+            Assert.That(sprite.Scale, Is.EqualTo(Vector2.One));
 
             appearance.UpdateSprite((dummy, humanoid, sprite));
-            Assert.That(sprite.Scale, Is.EqualTo(new Vector2(width, height)), "Refreshing appearance preserves the chosen dimensions.");
+            Assert.That(sprite.Scale, Is.EqualTo(Vector2.One), "Refreshing appearance keeps the sprite from shimmering during movement.");
 
             appearance.LoadProfile(dummy, profile.WithHeight(1f).WithWidth(1f));
             Assert.That(sprite.Scale, Is.EqualTo(Vector2.One), "Resetting the profile restores the default size.");
@@ -69,7 +71,7 @@ public sealed class HumanoidAppearanceScaleTest
             var sprite = client.EntMan.GetComponent<SpriteComponent>(clientBody);
             Assert.That(humanoid.Height, Is.EqualTo(1.15f));
             Assert.That(humanoid.Width, Is.EqualTo(0.95f));
-            Assert.That(sprite.Scale, Is.EqualTo(new Vector2(0.95f, 1.15f)));
+            Assert.That(sprite.Scale, Is.EqualTo(Vector2.One));
         });
 
         await server.WaitPost(() => appearance.SetHeight(body, 0.92f));
@@ -77,8 +79,10 @@ public sealed class HumanoidAppearanceScaleTest
 
         await client.WaitAssertion(() =>
         {
+            var humanoid = client.EntMan.GetComponent<HumanoidAppearanceComponent>(clientBody);
             var sprite = client.EntMan.GetComponent<SpriteComponent>(clientBody);
-            Assert.That(sprite.Scale, Is.EqualTo(new Vector2(0.95f, 0.92f)), "Later appearance updates apply the new height.");
+            Assert.That(humanoid.Height, Is.EqualTo(0.92f));
+            Assert.That(sprite.Scale, Is.EqualTo(Vector2.One), "Later appearance updates keep the sprite from shimmering during movement.");
         });
 
         await pair.CleanReturnAsync();

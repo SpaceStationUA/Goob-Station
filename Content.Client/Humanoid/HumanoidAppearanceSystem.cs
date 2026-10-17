@@ -81,8 +81,8 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         humanoidAppearance.Height = height;
         humanoidAppearance.Width = width;
 
-        // Pirate: apply the saved dimensions to both lobby previews and networked characters.
-        _sprite.SetScale((entity, sprite), new Vector2(width, height));
+        // Pirate: keep unit scale until RobustToolbox#7129 fixes shimmering during movement.
+        _sprite.SetScale((entity, sprite), Vector2.One);
         // end Goobstation: port EE height/width sliders
 
         sprite[_sprite.LayerMapReserve((entity.Owner, sprite), HumanoidVisualLayers.Eyes)].Color = humanoidAppearance.EyeColor;
