@@ -38,6 +38,7 @@ ent-BrainImplantExpiScan = імплант сканування здоров'я
     .desc = Хірургічний мозковий імплант, який показує ваш поточний стан здоров'я.
 ent-PartExperiment = частина тіла експеримента
 ent-TorsoExperiment = тулуб експеримента
+ent-GroinExperiment = пах експеримента
 ent-HeadExperiment = голова експеримента
 ent-LeftArmExperiment = ліва рука експеримента
 ent-RightArmExperiment = права рука експеримента

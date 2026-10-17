@@ -55,6 +55,19 @@
           Quantity: 5
 
 - type: entity
+  id: GroinExperiment
+  name: "experiment groin"
+  parent: [PartExperiment, BaseGroin]
+  components:
+    # Pirate: the source species has a single torso sprite, also used for the groin.
+    - type: Sprite
+      sprite: _Pirate/Experiments/Mobs/Species/Experiment/parts.rsi
+      state: "torso"
+    - type: Icon
+      sprite: _Pirate/Experiments/Mobs/Species/Experiment/parts.rsi
+      state: "torso"
+
+- type: entity
   id: HeadExperiment
   name: "experiment head"
   parent: [PartExperiment, BaseHead]
