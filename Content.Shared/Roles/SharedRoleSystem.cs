@@ -2,6 +2,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared._Pirate.Roles; // Pirate: species job whitelist
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -28,6 +29,7 @@ public abstract class SharedRoleSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private SpeciesJobWhitelistSystem _speciesJobWhitelist = default!; // Pirate: species job whitelist
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
@@ -676,9 +678,9 @@ public abstract class SharedRoleSystem : EntitySystem
     public HashSet<JobRequirement>? GetRoleRequirements(JobPrototype job)
     {
         if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job.ID, out var req))
-            return req;
+            return _speciesJobWhitelist.AddRequirement(job, req); // Pirate: species job whitelist
 
-        return job.Requirements;
+        return _speciesJobWhitelist.AddRequirement(job, job.Requirements); // Pirate: species job whitelist
     }
 
     // TODO ROLES Change to readonly?
