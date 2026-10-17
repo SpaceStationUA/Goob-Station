@@ -28,6 +28,13 @@ public sealed class PoolSettings : PairSettings
     }
 
     /// <summary>
+    /// Use an asynchronous SQLite semaphore for tests that deliberately run
+    /// several real rounds and trigger unrelated background persistence.
+    /// Requires a fresh, non-reusable test pair.
+    /// </summary>
+    public bool AsynchronousDatabase { get; init; }
+
+    /// <summary>
     /// If true, this enables the creation of admin logs during the test.
     /// </summary>
     public bool AdminLogsEnabled { get; init; }

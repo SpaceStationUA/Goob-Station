@@ -116,6 +116,17 @@ public sealed partial class TestPair : RobustIntegrationTest.TestPair
             LoadConfigAndUserData = false,
         };
 
+        // Test-only database option. With an in-memory SQLite connection,
+        // async access queues overlapping persistence work instead of throwing.
+        var settings = (PoolSettings) Settings;
+        if (settings.AsynchronousDatabase)
+        {
+            if (!settings.MustBeNew || !settings.MustNotBeReused)
+                throw new InvalidOperationException("Asynchronous database tests require a fresh, non-reusable pair.");
+
+            opts.CVarOverrides[CCVars.DatabaseSynchronous.Name] = "false";
+        }
+
         opts.BeforeStart += () =>
         {
             // Server-only systems (i.e., systems that subscribe to events with server-only components)
