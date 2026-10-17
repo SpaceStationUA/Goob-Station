@@ -15,7 +15,7 @@ namespace Content.Goobstation.Server.ServerCurrency.Commands
     {
         [Dependency] private ICommonCurrencyManager _currencyMan = default!;
         [Dependency] private IChatManager _chatManager = default!;
-        public string Command => Loc.GetString("server-currency-balance-command");
+        public string Command => "balance";
         public string Description => Loc.GetString("server-currency-balance-command-description");
         public string Help => Loc.GetString("server-currency-balance-command-help");
 
@@ -46,7 +46,7 @@ namespace Content.Goobstation.Server.ServerCurrency.Commands
         [Dependency] private ICommonCurrencyManager _currencyMan = default!;
         [Dependency] private IChatManager _chatManager = default!;
 
-        public string Command => Loc.GetString("server-currency-gift-command");
+        public string Command => "gift";
         public string Description => Loc.GetString("server-currency-gift-command-description");
         public string Help => Loc.GetString("server-currency-gift-command-help");
 
@@ -118,7 +118,7 @@ namespace Content.Goobstation.Server.ServerCurrency.Commands
     {
         [Dependency] private ICommonCurrencyManager _currencyMan = default!;
 
-        public string Command => Loc.GetString("server-currency-add-command");
+        public string Command => "balance:add";
         public string Description => Loc.GetString("server-currency-add-command-description");
         public string Help => Loc.GetString("server-currency-add-command-help");
 
@@ -163,7 +163,7 @@ namespace Content.Goobstation.Server.ServerCurrency.Commands
     {
         [Dependency] private ICommonCurrencyManager _currencyMan = default!;
 
-        public string Command => Loc.GetString("server-currency-remove-command");
+        public string Command => "balance:rem";
         public string Description => Loc.GetString("server-currency-remove-command-description");
         public string Help => Loc.GetString("server-currency-remove-command-help");
 
@@ -208,7 +208,7 @@ namespace Content.Goobstation.Server.ServerCurrency.Commands
     {
         [Dependency] private ICommonCurrencyManager _currencyMan = default!;
 
-        public string Command => Loc.GetString("server-currency-set-command");
+        public string Command => "balance:set";
         public string Description => Loc.GetString("server-currency-set-command-description");
         public string Help => Loc.GetString("server-currency-set-command-help");
 
@@ -254,7 +254,7 @@ namespace Content.Goobstation.Server.ServerCurrency.Commands
     {
         [Dependency] private ICommonCurrencyManager _currencyMan = default!;
 
-        public string Command => Loc.GetString("server-currency-get-command");
+        public string Command => "balance:get";
         public string Description => Loc.GetString("server-currency-get-command-description");
         public string Help => Loc.GetString("server-currency-get-command-help");
 
