@@ -159,10 +159,16 @@ public sealed partial class WoundSystem
             if (damageGroup != null && (string?) wound.Comp.DamageGroup != damageGroup)
                 continue;
 
-            if (healable && !CanHealWound(wound, wound.Comp, ignoreBlockers))
-                continue;
+            var severity = wound.Comp.WoundSeverityPoint;
+            if (healable)
+            {
+                if (!CanHealWound(wound, out var floor, wound.Comp, ignoreBlockers))
+                    continue;
 
-            total += wound.Comp.WoundSeverityPoint;
+                severity = FixedPoint2.Max(severity - floor, FixedPoint2.Zero);
+            }
+
+            total += severity;
         }
 
         return total;
@@ -279,6 +285,11 @@ public sealed partial class WoundSystem
                 nearestSeverity = severity;
                 break;
             }
+
+            // Residual wounds can remain after stored damage has been healed.
+            // Show them on scanners and targeting dolls as well as on the body itself.
+            if (woundable.WoundableSeverity > nearestSeverity)
+                nearestSeverity = woundable.WoundableSeverity;
 
             result[target] = GetDisplayedWoundableSeverity(id, nearestSeverity);
         }

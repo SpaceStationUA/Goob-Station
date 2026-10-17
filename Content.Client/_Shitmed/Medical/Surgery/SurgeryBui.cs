@@ -236,6 +236,9 @@ public sealed class SurgeryBui : BoundUserInterface
         var stepName = new FormattedMessage();
         stepName.AddText(_entities.GetComponent<MetaDataComponent>(step).EntityName);
         var stepButton = new SurgeryStepButton { Step = step };
+        var texture = _entities.GetComponentOrNull<SpriteComponent>(step)?.Icon?.Default;
+        stepButton.Set(stepName, texture);
+        stepButton.Button.Disabled = true;
         stepButton.Button.OnPressed += _ => SendPredictedMessage(new SurgeryStepChosenBuiMsg(netPart, surgeryId, stepId, _isBody));
 
         _window.Steps.AddChild(stepButton);
@@ -391,14 +394,15 @@ public sealed class SurgeryBui : BoundUserInterface
     private void RefreshUI()
     {
         if (_window == null
-            || !_window.IsOpen
             || _part == null
-            || !_entities.HasComponent<SurgeryComponent>(_surgery?.Ent)
-            || !_entities.TryGetComponent(_player.LocalEntity, out SurgeryTargetComponent? surgeryComp)
-            || !surgeryComp.CanOperate)
+            || !_entities.HasComponent<SurgeryComponent>(_surgery?.Ent))
             return;
 
-        var next = _system.GetNextStep(Owner, _part.Value, _surgery.Value.Ent, _player.LocalEntity.Value);
+        var canOperate = _entities.TryGetComponent(_player.LocalEntity, out SurgeryTargetComponent? surgeryComp)
+                         && surgeryComp.CanOperate;
+        var next = canOperate
+            ? _system.GetNextStep(Owner, _part.Value, _surgery.Value.Ent, _player.LocalEntity!.Value)
+            : null;
         var i = 0;
         foreach (var child in _window.Steps.Children)
         {
@@ -406,7 +410,9 @@ public sealed class SurgeryBui : BoundUserInterface
                 continue;
 
             var status = StepStatus.Incomplete;
-            if (next == null)
+            if (!canOperate)
+                status = StepStatus.Incomplete;
+            else if (next == null)
                 status = StepStatus.Complete;
             else if (next.Value.Step < 0 && i > -next.Value.Step - 1)
                 status = StepStatus.Complete;
@@ -430,7 +436,7 @@ public sealed class SurgeryBui : BoundUserInterface
             {
                 stepButton.Button.Modulate = Color.White;
                 if (status == StepStatus.Next
-                    && !_system.CanPerformStepWithHeld(_player.LocalEntity.Value, Owner, _part.Value, stepButton.Step, false, out var popup))
+                    && !_system.CanPerformStepWithHeld(_player.LocalEntity!.Value, Owner, _part.Value, stepButton.Step, false, out var popup))
                     stepButton.ToolTip = popup;
             }
 

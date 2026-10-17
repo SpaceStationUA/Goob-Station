@@ -74,7 +74,8 @@ public abstract partial class SharedSurgerySystem
         SubSurgery<SurgeryTraumaTreatmentStepComponent>(OnTraumaTreatmentStep, OnTraumaTreatmentCheck);
         SubSurgery<SurgeryTraumaExtractStepComponent>(OnExtractTraumaStep, OnExtractTraumaCheck);
         SubSurgery<SurgeryBleedsTreatmentStepComponent>(OnBleedsTreatmentStep, OnBleedsTreatmentCheck);
-        SubSurgery<SurgeryStepPainInflicterComponent>(OnPainInflicterStep, OnPainInflicterCheck);
+        // Pain is a temporary side effect, not evidence that a surgical step is complete.
+        SubscribeLocalEvent<SurgeryStepPainInflicterComponent, SurgeryStepEvent>(OnPainInflicterStep);
         Subs.BuiEvents<SurgeryTargetComponent>(SurgeryUIKey.Key, subs =>
         {
             subs.Event<SurgeryStepChosenBuiMsg>(OnSurgeryTargetStepChosen);
@@ -218,7 +219,7 @@ public abstract partial class SharedSurgerySystem
 
     private void OnTendWoundsCheck(Entity<SurgeryTendWoundsEffectComponent> ent, ref SurgeryStepCompleteCheckEvent args)
     {
-        if (_wounds.HasDamageOfGroup(args.Part, ent.Comp.MainGroup))
+        if (_wounds.GetWoundableSeverityPoint(args.Part, damageGroup: ent.Comp.MainGroup, healable: true) > 0)
             args.Cancelled = true;
     }
 
@@ -682,16 +683,6 @@ public abstract partial class SharedSurgerySystem
         }
     }
 
-    private void OnPainInflicterCheck(Entity<SurgeryStepPainInflicterComponent> ent, ref SurgeryStepCompleteCheckEvent args)
-    {
-        if (!_consciousness.TryGetNerveSystem(args.Body, out var nerveSys))
-            return;
-
-        if (!_pain.TryGetPainModifier(nerveSys.Value.Owner, args.Part, "SurgeryPain", out _, nerveSys))
-            args.Cancelled = true;
-    }
-
-
     private void OnSurgeryTargetStepChosen(Entity<SurgeryTargetComponent> ent, ref SurgeryStepChosenBuiMsg args)
     {
         if (!_timing.IsFirstTimePredicted)
@@ -898,10 +889,11 @@ public abstract partial class SharedSurgerySystem
         // We need to check for nullability because of surgeries that dont require a tool, like Cavity Implants
         var speed = data?.Speed ?? 1f;
         var toolUsed = data?.Used ?? false; // if no tool is being used you can't consume it
-        var ev = new SurgeryDoAfterEvent(surgeryId, stepId, toolUsed);
+        var ev = new SurgeryDoAfterEvent(surgeryId, stepId, toolUsed, GetNetEntity(part));
         var duration = GetSurgeryDuration(step, user, body, speed);
 
-        var doAfter = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(duration), ev, body, part)
+        // Target the patient so clients can track the action without resolving a contained limb.
+        var doAfter = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(duration), ev, body, body)
         {
             BreakOnMove = true,
             //BreakOnTargetMove = true, I fucking hate wizden dude.

@@ -63,12 +63,16 @@ public sealed partial class WoundSystem
             {
                 // For wounds like scars. Temporary for now
                 wound.Comp.CanBeHealed = true;
+                Dirty(wound, wound.Comp);
             }
 
             if (!TryComp<BleedInflicterComponent>(wound, out var bleeds))
                 continue;
 
             bleeds.IsBleeding = false;
+            bleeds.BleedingAmountRaw = FixedPoint2.Zero;
+            bleeds.Scaling = FixedPoint2.Zero;
+            Dirty(wound, bleeds);
         }
 
         return true;

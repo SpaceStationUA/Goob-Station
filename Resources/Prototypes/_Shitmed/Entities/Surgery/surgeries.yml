@@ -323,7 +323,7 @@
     - SurgeryStepInsertFeature
     - SurgeryStepSealWounds
   - type: SurgeryPartCondition
-    parts: [ Groin ]
+    parts: [ Groin, Chest ] # Experiments attach legs directly to the torso; the slot condition checks compatibility.
   - type: SurgeryTraumaPresentCondition
     inverted: true
     trauma: Dismemberment
@@ -343,7 +343,7 @@
     - SurgeryStepInsertFeature
     - SurgeryStepSealWounds
   - type: SurgeryPartCondition
-    parts: [ Groin ]
+    parts: [ Groin, Chest ]
   - type: SurgeryTraumaPresentCondition
     inverted: true
     trauma: Dismemberment
