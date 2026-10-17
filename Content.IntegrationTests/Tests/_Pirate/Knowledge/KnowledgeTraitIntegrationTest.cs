@@ -44,7 +44,6 @@ public sealed class KnowledgeTraitIntegrationTest
                 Assert.That(alternativeConditions.Single(condition => !condition.Invert).Traits,
                     Does.Contain(Unchipped));
                 Assert.That(KnowledgeableComponent.GetBonusPoints(prototypes, Traits(Experienced)), Is.EqualTo(6));
-                Assert.That(KnowledgeableComponent.GetBonusPoints(prototypes, Traits(ExperiencedAlt)), Is.Zero);
                 Assert.That(
                     KnowledgeableComponent.GetBonusPoints(prototypes, Traits(Unchipped, ExperiencedAlt)),
                     Is.EqualTo(10));
@@ -53,8 +52,6 @@ public sealed class KnowledgeTraitIntegrationTest
                     Is.EquivalentTo(new Dictionary<EntProtoId, int> { ["LiteracyKnowledge"] = 2 }));
                 Assert.That(KnowledgeableComponent.GetMasteryGrants(prototypes, Traits(Unchipped, ExperiencedAlt)),
                     Is.EquivalentTo(new Dictionary<EntProtoId, int> { ["LiteracyKnowledge"] = 3 }));
-                Assert.That(KnowledgeableComponent.GetMasteryGrants(prototypes, Traits(ExperiencedAlt)), Is.Null,
-                    "Without its required trait, the alternative grants nothing.");
             });
         });
 

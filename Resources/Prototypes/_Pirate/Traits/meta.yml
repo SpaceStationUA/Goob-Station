@@ -103,6 +103,4 @@
       bonusPoints: 10
       masteryGrants:
         LiteracyKnowledge: 3 # literacy 75: learns x1.75
-      requiredTraits:
-        - Unchipped
 #endregion

@@ -12,9 +12,6 @@ public sealed partial class KnowledgeableComponent : Component
     public int BonusPoints = 10;
 
     [DataField]
-    public HashSet<ProtoId<TraitPrototype>> RequiredTraits = new();
-
-    [DataField]
     public Dictionary<EntProtoId, int> MasteryGrants = new();
     public static int GetBonusPoints(
         IPrototypeManager prototypes,
