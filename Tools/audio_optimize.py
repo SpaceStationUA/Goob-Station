@@ -48,6 +48,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 AUDIO_ROOT = REPO_ROOT / "Resources" / "Audio"
+AUDIO_REL = "Resources/Audio"
 ALLOWLIST = REPO_ROOT / "Tools" / "audio_allowlist.txt"
 
 # q4 on libvorbis lands near 160 kbps stereo / 80 kbps mono.
@@ -164,17 +165,22 @@ def allowlisted() -> set[str]:
 
 def candidate_files(mode: str, base: str) -> list[str]:
     """Paths under Resources/Audio to consider, repo-relative."""
+    # -z throughout: paths are split on NUL rather than whitespace, because this
+    # repo really does contain audio with spaces and non-ASCII characters in the
+    # name, and a plain split() would mangle them.
     if mode == "changed":
         # Two-dot on purpose: diffs base against the working tree, so this covers
         # committed work, staged work and loose files alike. CI checks out the PR
-        # head, so the two forms agree there; locally they do not.
-        names = git("diff", "--name-only", "--diff-filter=AMR", base, check=True)
+        # head, so the two forms agree there; locally they do not. The pathspec
+        # keeps git from walking the entire worktree.
+        names = git("diff", "-z", "--name-only", "--diff-filter=AMR",
+                    base, "--", AUDIO_REL, check=True)
     else:
-        names = git("ls-files", "Resources/Audio", check=True)
+        names = git("ls-files", "-z", "--", AUDIO_REL, check=True)
     skip = allowlisted()
     return [
-        n for n in names.split()
-        if n.lower().endswith(".ogg") and n not in skip
+        n for n in names.split("\0")
+        if n and n.lower().endswith(".ogg") and n not in skip
     ]
 
 
@@ -246,6 +252,15 @@ def process(rel: str, workdir: Path, apply: bool) -> Result:
         return Result(rel, path, size_before, size_before, before, after, "skip",
                       "q4 would not be smaller")
 
+    saving = size_before - size_after
+    if saving < MIN_SAVING:
+        # Technically compressible, but too marginal to be worth somebody's time
+        # or a second lossy generation. Reporting it would only train people to
+        # ignore this check.
+        dest.unlink(missing_ok=True)
+        return Result(rel, path, size_before, size_before, before, after, "skip",
+                      f"saves only {saving / 1024:.0f} KiB, under the {MIN_SAVING / 1024:.0f} KiB bar")
+
     if apply:
         os.replace(dest, path)
     else:
@@ -292,7 +307,11 @@ def main() -> int:
     log(f"scanning {len(files)} .ogg files under Resources/Audio "
         f"({'changed only' if args.changed else 'whole tree'}, {args.jobs} jobs)\n")
 
-    with tempfile.TemporaryDirectory(prefix="audio-opt-") as tmp:
+    # The staging directory has to live on the same filesystem as the files it
+    # will replace, otherwise os.replace() fails with EXDEV. TMPDIR is often a
+    # separate mount on Linux (tmpfs), so put it inside the repo and rely on the
+    # context manager to clean up.
+    with tempfile.TemporaryDirectory(prefix=".audio-opt-", dir=REPO_ROOT) as tmp:
         with ThreadPoolExecutor(max_workers=args.jobs) as pool:
             results = list(pool.map(lambda rel: process(rel, Path(tmp), args.fix), files))
 
@@ -316,20 +335,26 @@ def main() -> int:
         log(f"{len(violators)} files, {total / MIB:.1f} MB wasted"
             f"{'' if args.fix else '  (run with --fix to reclaim it)'}\n")
 
-    for r in violators:
-        annotate("error", r.rel, "Audio over Vorbis budget",
-                 f"{r.before.bitrate:.0f} kbps for {r.before.duration:.0f}s; "
-                 f"q{QUALITY} would give {r.after.bitrate:.0f} kbps and save "
-                 f"{r.saving / MIB:.2f} MB. Run: python3 Tools/audio_optimize.py --fix")
+    if args.fix:
+        # Nothing is left to complain about, so annotating the files we just
+        # repaired as errors would be actively misleading.
+        if violators:
+            log(f"repaired {len(violators)} file(s), "
+                f"{sum(r.saving for r in violators) / MIB:.1f} MB reclaimed.")
+    else:
+        for r in violators:
+            annotate("error", r.rel, "Audio over Vorbis budget",
+                     f"{r.before.bitrate:.0f} kbps for {r.before.duration:.0f}s; "
+                     f"q{QUALITY} would give {r.after.bitrate:.0f} kbps and save "
+                     f"{r.saving / MIB:.2f} MB. Run: python3 Tools/audio_optimize.py --fix")
+
     for r in errors:
         annotate("error", r.rel, "Audio could not be processed", r.detail)
-
     if errors:
         log(f"{len(errors)} file(s) could not be processed; see annotations above.")
-    if violators and args.fix:
-        log("done: all violations re-encoded in place.")
-        return 0
-    return 1 if violators or errors else 0
+
+    # Errors are a real failure whether or not --fix was passed; never mask them.
+    return 1 if errors or (violators and not args.fix) else 0
 
 
 if __name__ == "__main__":

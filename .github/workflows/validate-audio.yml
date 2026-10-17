@@ -58,6 +58,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y --no-install-recommends ffmpeg vorbis-tools
         ffmpeg -version | head -1
+        ffprobe -version | head -1
         oggenc --version | head -1
 
     - name: Audit
