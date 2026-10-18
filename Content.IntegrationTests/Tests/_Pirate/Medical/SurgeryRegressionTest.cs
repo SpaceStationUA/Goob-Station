@@ -267,6 +267,8 @@ public sealed class SurgeryRegressionTest
             var tool = entMan.SpawnEntity("OmnimedTool", map.GridCoords);
             Assert.That(server.System<HandsSystem>().TryPickupAnyHand(surgeon, tool), Is.True);
             var wounds = server.System<WoundSystem>();
+            // Only the surgical treatment should change wound severity during this do-after test.
+            entMan.GetComponent<WoundableComponent>(chest).HealAbility = FixedPoint2.Zero;
             Assert.That(wounds.TryInduceWound(chest, damageType, 1, out _), Is.True);
             wounds.TryHaltAllBleeding(chest);
             entMan.EnsureComponent<IncisionOpenComponent>(chest);
@@ -287,7 +289,9 @@ public sealed class SurgeryRegressionTest
             Assert.That(action.Cancelled, Is.False);
             Assert.That(action.Completed, Is.True, "Tending must finish without starting another cycle.");
             Assert.That(server.System<WoundSystem>().GetWoundableSeverityPoint(chest, damageGroup: damageGroup, healable: true),
-                Is.EqualTo(FixedPoint2.Zero));
+                Is.EqualTo(FixedPoint2.Zero),
+                string.Join(", ", server.System<WoundSystem>().GetWoundableWounds(chest)
+                    .Select(wound => $"{wound.Comp.DamageType}: {wound.Comp.WoundSeverityPoint}")));
             Assert.That(server.EntMan.GetComponent<DoAfterComponent>(surgeon).DoAfters.Values
                 .Any(action => !action.Completed && !action.Cancelled), Is.False);
             server.EntMan.DeleteEntity(patient);
