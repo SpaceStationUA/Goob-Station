@@ -198,6 +198,7 @@
   - AdvMopItem
   - MegaSprayBottle
   - BorgModuleAdvancedCleaning
+  - ClothingEyesHudJanitorial # Pirate: Omu clean HUD
   # Goobstation R&D Console rework start
   position: -1,4
   technologyPrerequisites:

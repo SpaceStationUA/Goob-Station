@@ -2614,6 +2614,7 @@ ent-BlueShieldShieldFilled = { ent-BlueShieldShield }
     .desc = { ent-BlueShieldShield.desc }
 ent-BlueshieldRandomCommandAliveObjective =
     .desc = Захищайте призначеного члена командування.
+ent-BlueshiftSiliconLiberation = { ent-SiliconLiberation }
 ent-BluespaceTeleportationEffect = { ent-BluespaceLifeline }
     .desc = { ent-BluespaceLifeline.desc }
 ent-BoarTippyTrumpcard = { ent-CardBaseTippyTrump }

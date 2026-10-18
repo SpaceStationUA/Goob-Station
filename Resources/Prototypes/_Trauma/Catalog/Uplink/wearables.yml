@@ -24,7 +24,7 @@
     Telecrystal: 20
   categories:
   - UplinkWearables
-  reputation: 50 # Pirate: explosives reputation
+  reputation: 60 # Pirate: military reputation tier
 
 - type: listing
   id: UplinkChameleonArmor

@@ -12,11 +12,14 @@ public sealed partial class SurgeryDoAfterEvent : SimpleDoAfterEvent
     public readonly EntProtoId Surgery;
     public readonly EntProtoId Step;
     public readonly bool ToolUsed;
+    // Pirate: keep the operated part while the do-after targets the patient.
+    public readonly NetEntity Part;
 
-    public SurgeryDoAfterEvent(EntProtoId surgery, EntProtoId step, bool toolUsed)
+    public SurgeryDoAfterEvent(EntProtoId surgery, EntProtoId step, bool toolUsed, NetEntity part)
     {
         Surgery = surgery;
         Step = step;
         ToolUsed = toolUsed;
+        Part = part;
     }
 }
