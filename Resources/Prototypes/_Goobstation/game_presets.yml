@@ -196,7 +196,7 @@
     - secretplushigh
   name: secretplus-high-title
   description: secretplus-high-description
-  showInVote: true
+  showInVote: false # Pirate: game mode voting
   rules:
     - SecretPlusHigh
     - MeteorSwarmScheduler
@@ -223,7 +223,7 @@
     - survivalnew
   name: survivalplus-title
   description: survivalplus-description
-  showInVote: true
+  showInVote: false # Pirate: game mode voting
   minPlayers: 100 # Pirate
   rules:
     - SecretPlusRampingMid
