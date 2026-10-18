@@ -287,10 +287,12 @@ public sealed partial class DamageableSystem
                 */
                 foreach (var (type, requested) in modifiedDamage.DamageDict)
                 {
-                    if (requested >= 0
-                        || partDamageResult is null
-                        || !partDamageResult.DamageDict.TryGetValue(type, out var result)
-                        || result > 0)
+                    if (requested >= 0 || partDamageResult is null)
+                        continue;
+
+                    // Pirate: a healthy part applies no healing; carry its allocation to the next part.
+                    var result = partDamageResult.DamageDict.GetValueOrDefault(type);
+                    if (result > 0)
                         continue;
 
                     surplusHealing.DamageDict[type] = FixedPoint2.Min(requested - result, FixedPoint2.Zero);
