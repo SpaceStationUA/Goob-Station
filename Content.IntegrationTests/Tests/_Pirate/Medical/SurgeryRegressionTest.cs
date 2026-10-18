@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Server._Shitmed.Medical.Surgery;
+using Content.Server.Atmos.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared._Shitmed.Medical.Surgery;
 using Content.Shared._Shitmed.Medical.Surgery.Conditions;
@@ -258,6 +259,9 @@ public sealed class SurgeryRegressionTest
             // Keep the surgeon clear of the patient so collision movement cannot cancel the action.
             surgeon = entMan.SpawnEntity("MobHuman", map.GridCoords.Offset(Vector2.UnitX));
             patient = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            // Keep the vacuum test map from adding new wounds while the surgery finishes.
+            entMan.RemoveComponent<AtmosExposedComponent>(surgeon);
+            entMan.RemoveComponent<AtmosExposedComponent>(patient);
             chest = server.System<SharedBodySystem>().GetBodyChildrenOfType(patient, BodyPartType.Chest).Single().Id;
             server.System<StandingStateSystem>().Down(patient, playSound: false, dropHeldItems: false);
             var tool = entMan.SpawnEntity("OmnimedTool", map.GridCoords);
