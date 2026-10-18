@@ -109,7 +109,7 @@ public sealed class ESNamePeekOverlay : Overlay
                 && lightLevel <= MinLightLevel)
                 continue;
 
-            if (eye.DrawFov && !_examine.InRangeUnOccluded(playerEnt, ent))
+            if (!_examine.CanExamine(playerEnt, ent)) // Pirate: respect stealth and other examine restrictions.
                 continue;
 
             var text = Identity.Name(ent, _entityManager, playerEnt);
