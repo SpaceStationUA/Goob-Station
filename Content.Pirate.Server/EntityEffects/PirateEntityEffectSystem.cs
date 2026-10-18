@@ -397,6 +397,7 @@ public sealed class PirateEntityEffectSystem : EntitySystem
 
         if (memory.OriginalMarkings != null)
             humanoid.MarkingSet = new MarkingSet(memory.OriginalMarkings);
+        _humanoid.SanitizeAppearance(target, humanoid); // Pirate ckey for restricted players
 
         humanoid.CustomBaseLayers = memory.OriginalCustomBaseLayers != null
             ? new Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>(memory.OriginalCustomBaseLayers)

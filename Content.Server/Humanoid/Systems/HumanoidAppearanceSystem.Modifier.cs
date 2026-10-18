@@ -87,6 +87,8 @@ public sealed partial class HumanoidAppearanceSystem
             return;
         }
 
+        var ckey = TryComp<ActorComponent>(uid, out var actor) ? actor.PlayerSession.Name : null;
+        _markingManager.FilterPlayerRestrictedMarkings(message.MarkingSet, ckey); // Pirate ckey for restricted players
         component.MarkingSet = message.MarkingSet;
         Dirty(uid, component);
 

@@ -66,7 +66,7 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
     }
 
     public EntityUid SpawnFromProfile(RandomHumanoidSettingsPrototype settings, HumanoidCharacterProfile profile,
-        EntityCoordinates coordinates, string? nameOverride = null)
+        EntityCoordinates coordinates, string? nameOverride = null, string? ckey = null) // Pirate ckey for restricted players
     {
         var species = _prototype.Index<SpeciesPrototype>(profile.Species);
         var body = EntityManager.CreateEntityUninitialized(species.Prototype, coordinates);
@@ -87,7 +87,7 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
 
         EntityManager.InitializeAndStartEntity(body);
 
-        _humanoid.LoadProfile(body, profile);
+        _humanoid.LoadProfileForPlayer(body, profile, ckey);
 
         return body;
     }

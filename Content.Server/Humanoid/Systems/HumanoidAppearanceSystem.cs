@@ -4,6 +4,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Player; // Pirate ckey for restricted players
 
 namespace Content.Server.Humanoid;
 
@@ -18,6 +19,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         SubscribeLocalEvent<HumanoidAppearanceComponent, HumanoidMarkingModifierMarkingSetMessage>(OnMarkingsSet);
         SubscribeLocalEvent<HumanoidAppearanceComponent, HumanoidMarkingModifierBaseLayersSetMessage>(OnBaseLayersSet);
         SubscribeLocalEvent<HumanoidAppearanceComponent, GetVerbsEvent<Verb>>(OnVerbsRequest);
+        SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentStartup>(OnAppearanceStartup); // Pirate ckey for restricted players
     }
 
     /// <summary>
@@ -72,11 +74,22 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
     /// <param name="humanoid">Humanoid component of the entity</param>
     public void SetMarkingId(EntityUid uid, MarkingCategories category, int index, string markingId, HumanoidAppearanceComponent? humanoid = null)
     {
+        if (!Resolve(uid, ref humanoid))
+            return;
+
+        SanitizeAppearance(uid, humanoid);
+
         if (index < 0
-            || !_markingManager.MarkingsByCategory(category).TryGetValue(markingId, out var markingPrototype)
-            || !Resolve(uid, ref humanoid)
             || !humanoid.MarkingSet.TryGetCategory(category, out var markings)
-            || index >= markings.Count)
+            || index >= markings.Count
+            || !_markingManager.MarkingsByCategory(category).TryGetValue(markingId, out var markingPrototype))
+        {
+            return;
+        }
+
+        var ckey = TryComp<ActorComponent>(uid, out var actor) ? actor.PlayerSession.Name : null;
+        // Pirate ckey for restricted players
+        if (!MarkingManager.CanPlayerUseMarking(markingPrototype, ckey))
         {
             return;
         }

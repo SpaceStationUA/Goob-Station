@@ -77,7 +77,8 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
             baseCoords,
             args.Job,
             args.HumanoidCharacterProfile,
-            args.Station);
+            args.Station,
+            ckey: args.Ckey); // Pirate ckey for restricted players
 
         _random.Shuffle(possibleContainers);
         foreach (var (uid, spawnPoint, manager, xform) in possibleContainers)
