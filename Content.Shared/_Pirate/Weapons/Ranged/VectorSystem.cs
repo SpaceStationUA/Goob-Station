@@ -29,7 +29,7 @@ public sealed partial class VectorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<VectorComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<VectorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VectorComponent, AfterAutoHandleStateEvent>(OnState);
         SubscribeLocalEvent<VectorComponent, GetVerbsEvent<AlternativeVerb>>(OnVerbs);
         SubscribeLocalEvent<VectorComponent, ExaminedEvent>(OnExamine);
@@ -42,7 +42,8 @@ public sealed partial class VectorSystem : EntitySystem
             after: [typeof(SharedGunSystem)]);
     }
 
-    private void OnStartup(Entity<VectorComponent> ent, ref ComponentStartup args) => UpdateStock(ent);
+    // MapInit, not startup: refreshing gun modifiers before MapInit dirties prototype data.
+    private void OnMapInit(Entity<VectorComponent> ent, ref MapInitEvent args) => UpdateStock(ent);
 
     private void OnState(Entity<VectorComponent> ent, ref AfterAutoHandleStateEvent args) => UpdateStock(ent);
 
@@ -83,7 +84,8 @@ public sealed partial class VectorSystem : EntitySystem
         // A collection expression emits CollectionsMarshal.SetCount, which the client sandbox forbids.
         var shape = new List<Box2i> { new(0, 0, ent.Comp.StockFolded ? 1 : 3, 1) };
         _item.SetShape(ent, shape);
-        _gun.RefreshModifiers(ent.Owner);
+        if (TryComp<GunComponent>(ent, out var gun))
+            _gun.RefreshModifiers((ent.Owner, gun));
     }
 
     private void OnModifiers(Entity<VectorComponent> ent, ref GunRefreshModifiersEvent args)

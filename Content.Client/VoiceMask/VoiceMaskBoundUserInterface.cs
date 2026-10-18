@@ -75,7 +75,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
 
         _window.SetCurrentJobIcon(cast.JobIcon); // GabyStation -> Radio icons
         _window.ModesControl.UpdateState(cast.Modes); // Pirate: voice mask modes
-        _window.AltToggleHint.Visible = cast.Modes != null; // Pirate: voice mask modes
+        _window.AltToggleHint.Visible = EntMan.HasComponent<VoiceMaskToggleComponent>(Owner); // Pirate: voice mask modes
     }
 
     protected override void Dispose(bool disposing)
