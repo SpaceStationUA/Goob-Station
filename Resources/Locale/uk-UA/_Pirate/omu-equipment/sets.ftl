@@ -1,0 +1,155 @@
+selectable-set-warden-eshotty-name = Енергетична рушниця
+
+selectable-set-warden-eshotty-description = Класика. Швидко перемикається між нелетальним і летальним вогнем.
+
+selectable-set-warden-r6-name = Траншейний R6
+
+selectable-set-warden-r6-description = Проста відповідь на загрози арсеналу. Бриг — ваша територія.
+
+selectable-set-warden-snub-name = Парні револьвери R2
+
+selectable-set-warden-snub-description = Два безкуркові револьвери для швидкого вихоплення та ще швидшого спорожнення барабанів.
+
+selectable-set-warden-henrietta-name = Генрієтта
+
+selectable-set-warden-henrietta-description = Надійна важільна рушниця 8 калібру з багнетом. У комплекті патронташ і запас набоїв.
+
+selectable-set-brigmed-crossbow-name = Шприцевий арбалет
+
+selectable-set-brigmed-crossbow-description = Переносний арбалет для лікування на відстані.
+
+selectable-set-brigmed-shotgun-name = Пневматичний дробовик
+
+selectable-set-brigmed-shotgun-description = Малопотужний, неточний однозарядний дробовик, який також стріляє шприцами. Пекельно неточний.
+
+selectable-set-brigmed-disabler-name = Енергетичний пістолет-кулемет
+
+selectable-set-brigmed-disabler-description = Саме те, що написано на коробці. Нудно. Зате працює.
+
+selectable-set-hos-belt-name = Ква Нар’Вульна
+
+selectable-set-hos-belt-description = Наслідування стародавнього мистецтва, збереженого в пам'яті й руках нашого народу.
+
+selectable-set-hos-Justice-name = Багатофункціональний енергомеч Джастіс
+
+selectable-set-hos-Justice-description = Класичний клинок із кількома бойовими режимами.
+
+selectable-set-hos-lawbringer-name = Багатофункціональний енергопістолет Лоубрінґер
+
+selectable-set-hos-lawbringer-description = Класичний пістолет із кількома бойовими режимами.
+
+selectable-set-hos-brdi-name = Антикварний BRDI R-25
+
+selectable-set-hos-brdi-description = Улюблена гвинтівка невідомого бійця Іноземного легіону Бізелю, що бачила бої проти Солу по всіх колоніях.
+
+selectable-set-sarge-magnum-name = Енергетичний магнум
+
+selectable-set-sarge-magnum-description = Самозарядний енергетичний магнум із летальним режимом і режимом дизейблера.
+
+selectable-set-mk58-name = Пістолет Mk58
+
+selectable-set-mk58-description = Стандартний службовий пістолет охорони Нанотрейзен.
+
+selectable-set-t8-name = Револьвер T8 «Сталість»
+
+selectable-set-t8-description = Альтернатива Mk58, що обмінює темп вогню на кращу здатність ламати кістки.
+
+selectable-set-eg1-name = Енергетичний револьвер EG-1 Таро
+
+selectable-set-eg1-description = Енергетична альтернатива звичайній короткоствольній зброї, що обмінює вогневу міць на універсальність лазерів.
+
+selectable-set-ceremonial-rifle-name = M1 «Ґаранд»
+
+selectable-set-ceremonial-rifle-description = Реліквія давньої піхоти й десантників Солу, подарована інструктору СБ. Використовує .30 довгий гвинтівковий магнум.
+
+selectable-set-sergeant-belt-name = Дисциплінарний ремінь інструктора
+
+selectable-set-sergeant-belt-description = Міцний ремінь інструктора, яким виховують як неслухняних курсантів, так і офіцерів.
+
+selectable-set-security-tackle-name = Посилені рукавиці для затримань
+
+selectable-set-security-tackle-description = Рукавиці для стрибків у злочинців, які тікають. Намагайтеся не врізатися головою у стіну.
+
+selectable-set-antiquelaser-name = Антикварний лазерний пістолет
+
+selectable-set-antiquelaser-description = Класика. Найгірший кошмар оперативника.
+
+selectable-set-vc8-name = Револьвер VC-8 «Рукостискання»
+
+selectable-set-vc8-description = Відтворення давніх технологій Солу. Ця ручна гармата завдає неземної сили удару.
+
+selectable-set-irelander-name = О'Коннабурр, Ірландець
+
+selectable-set-irelander-description = Стародавній мідний клинок, що кладе край смуті та легко пробиває стіни.
+
+selectable-set-warden-rapier-name = Плащ і рапіра
+
+selectable-set-warden-rapier-description = Витончена зброя для культурного наглядача або того, хто воліє забруднити руки особисто.
+
+selectable-set-hosoniblade-name = Вітер степів
+
+selectable-set-hosoniblade-description = Велетенська реліквія, якою можуть орудувати лише оні. Розміри цього клинка дозволяють здолати будь-якого ворога за лічені секунди.
+
+selectable-set-MobSpiderShiva-name = Шіва, перша захисниця
+
+selectable-set-MobSpiderShiva-description = Ветеранка служби безпеки. Шіва бореться з ядерними загрозами та зрадниками Синдикату від початку часів!
+
+selectable-set-MobSecDogLaika-name = Лайка, бойова одиниця K9
+
+selectable-set-MobSecDogLaika-description = Гав-гав! Лайка жартів не розуміє: кусає кур'єрів за ноги й не відходить від ГСБ. Найвідданіша захисниця служби безпеки!
+
+selectable-set-trevor-name = Тревор, «величний» жеребець
+
+selectable-set-trevor-description = Шляхетний скакун служби безпеки. Мчіть у бій або приклейте чоботи до його клею...
+
+selectable-set-ert-shotgun-name = Штурмовий комплект
+
+selectable-set-ert-shotgun-description = Дробовик Бойович 8 калібру, дві коробки набоїв і пістолет Анаконда, який сам виготовляє боєприпаси. Для тісних коридорів станції.
+
+selectable-set-ert-smg-name = Комплект L.U.I.G.I.
+
+selectable-set-ert-smg-description = «Пропорційна» й «етична» відповідь від відділу зв'язків із громадськістю: C-20r, чотири запасні магазини, великий щит і коробки нелетального спорядження.
+
+selectable-set-ert-light-energy-name = Комплект M.A.R.I.O.
+
+selectable-set-ert-light-energy-description = Енергетична гвинтівка CR-9 та револьвер EG-4, із трьома самозарядними магазинами для кожного. Менша залежність від справної електромережі та зарядних станцій.
+
+selectable-set-corpsman-lighthardsuit-name = Скафандр бригмедика
+
+selectable-set-corpsman-lighthardsuit-desc = Стандартний скафандр бригмедика. Легший за варіанти СБ, але жертвує захистом заради мобільності.
+
+selectable-set-corpsman-combathardsuit-name = Бойовий скафандр бригмедика
+
+selectable-set-corpsman-combathardsuit-desc = Старіша модель за кресленнями із сектора Регаліс. Забезпечує значно кращий захист, ніж новіші скафандри.
+
+selectable-set-bso-brdi-name = BRDI R-25
+
+selectable-set-bso-brdi-description = Знакова зброя Іноземного легіону Республіки Бізель, перефарбована для синього щита.
+
+selectable-set-bso-typewriter-name = Пістолет-кулемет Тайпрайтер
+
+selectable-set-bso-typewriter-desc = Копія пістолета-кулемета Томпсон під .35 із зарядженим барабаном, коробчастим магазином і барабаном із гумовими набоями. Для знавців історії та гангстерів.
+
+selectable-set-bso-extraction-name = Евакуаційний комплект
+
+selectable-set-bso-extraction-description = Містка розвантажувальна система з 20 блюспейс-системами Фултон, маяком зі сповіщенням у медичному радіоканалі та бойовою аптечкою з препаратами в таблетках.
+
+selectable-set-bso-medical-name = Медичний комплект
+
+selectable-set-bso-medical-description = Містка розвантажувальна система з компактним дефібрилятором, двома бойовими аптечками та блюспейс-мішком для кількох тіл, органів і кінцівок.
+
+selectable-set-bso-chemical-name = Хімічний комплект
+
+selectable-set-bso-chemical-description = Міцна сумка з флаконами передових препаратів і бойовим ін'єктором, який миттєво вводить вміст під час уколу. Для лікування союзників або отруєння ворогів.
+
+selectable-set-ntr-cane-name = Вишукана тростина
+
+selectable-set-ntr-cane-desc = Елегантна тростина з електрошоковим режимом. Допоможе відігнати асистентів, які не бажають заповнювати документи.
+
+selectable-set-ntr-blade-name = Тростина-клинок
+
+selectable-set-ntr-blade-desc = Міцніша тростина з клинком, але без електрошокера. Лише для надзвичайних ситуацій. Записка ЦК: ВИКОРИСТОВУВАТИ ЛИШЕ НА ЧЕРВОНОМУ КОДІ!
+
+selectable-set-ntr-brella-name = Парасоля «Марлен»
+
+selectable-set-ntr-brella-desc = Стильний сувенір зі щільно сплетеної дюратканини від НаноФешн для заможних працівників ЦК. Дорогий вигляд і несподівана міцність. Записка ЦК: ЛИШЕ НА ЧЕРВОНОМУ КОДІ!

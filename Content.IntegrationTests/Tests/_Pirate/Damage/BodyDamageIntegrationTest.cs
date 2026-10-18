@@ -141,6 +141,86 @@ public sealed class BodyDamageIntegrationTest
         await pair.CleanReturnAsync();
     }
 
+    [TestCase(SplitDamageBehavior.None, 22, 22, 242)]
+    [TestCase(SplitDamageBehavior.Split, 2, 2, 22)]
+    [TestCase(SplitDamageBehavior.SplitExplosion, 2, 3, 25)]
+    public async Task BodyDamageSplitPreservesAmounts(
+        SplitDamageBehavior split, int limbDamage, int vitalDamage, int totalDamage)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            var entMan = server.EntMan;
+            var body = server.System<SharedBodySystem>();
+            var damageable = server.System<DamageableSystem>();
+            var blunt = server.ProtoMan.Index<DamageTypePrototype>("Blunt");
+            var mob = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+
+            var applied = damageable.ChangeDamage(mob,
+                new DamageSpecifier(blunt, 22),
+                ignoreResistances: true,
+                targetPart: TargetBodyPart.All,
+                splitDamage: split,
+                canMiss: false);
+
+            Assert.That(applied.DamageDict[blunt.ID], Is.EqualTo(FixedPoint2.New(totalDamage)));
+            Assert.That(entMan.GetComponent<DamageableComponent>(mob).TotalDamage,
+                Is.EqualTo(FixedPoint2.New(totalDamage)));
+
+            foreach (var (_, part, damage) in body.GetBodyChildrenWithComponent<DamageableComponent>(mob))
+            {
+                var expected = part.PartType is BodyPartType.Head or BodyPartType.Chest or BodyPartType.Groin
+                    ? vitalDamage
+                    : limbDamage;
+                Assert.That(damage.Damage.DamageDict[blunt.ID], Is.EqualTo(FixedPoint2.New(expected)),
+                    $"Unexpected damage to {part.PartType} with {split}.");
+            }
+
+            entMan.DeleteEntity(mob);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task SplitHealingReachesLastDamagedLimb()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            var entMan = server.EntMan;
+            var damageable = server.System<DamageableSystem>();
+            var blunt = server.ProtoMan.Index<DamageTypePrototype>("Blunt");
+            var mob = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+
+            // RightFoot is visited last when distributing damage across TargetBodyPart.All.
+            damageable.ChangeDamage(mob,
+                new DamageSpecifier(blunt, 44),
+                ignoreResistances: true,
+                targetPart: TargetBodyPart.RightFoot,
+                canMiss: false);
+
+            var applied = damageable.ChangeDamage(mob,
+                new DamageSpecifier(blunt, -22),
+                ignoreResistances: true,
+                targetPart: TargetBodyPart.All,
+                splitDamage: SplitDamageBehavior.Split,
+                canMiss: false);
+
+            Assert.That(applied.DamageDict[blunt.ID], Is.EqualTo(FixedPoint2.New(-22)));
+            Assert.That(entMan.GetComponent<DamageableComponent>(mob).TotalDamage,
+                Is.EqualTo(FixedPoint2.New(22)));
+
+            entMan.DeleteEntity(mob);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     [TestCase(SplitDamageBehavior.SplitEnsureAll, true)]
     [TestCase(SplitDamageBehavior.SplitEnsureAll, false)]
     [TestCase(SplitDamageBehavior.SplitEnsureAllDamaged, true)]

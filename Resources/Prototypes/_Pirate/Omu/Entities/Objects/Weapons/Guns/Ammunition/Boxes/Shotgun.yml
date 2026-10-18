@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  parent: AmmoProviderShotgunShell
+  id: BoxAPDS
+  name: ammunition box (12 Gauge APDS)
+  description: A cardboard box of hubris and bad ideas. God help you if you need this.
+  components:
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunAPDS
+    - type: Sprite
+      sprite: _Pirate/Omu/Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi # Pirate: Omu APDS label is absent from the local base RSI.
+      layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-1
+        map: ["enum.GunVisualLayers.Mag"]
+      - state: APDS

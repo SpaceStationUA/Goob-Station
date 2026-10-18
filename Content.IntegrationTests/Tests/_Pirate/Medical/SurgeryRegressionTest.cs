@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Server._Shitmed.Medical.Surgery;
+using Content.Server.Atmos.Components;
 using Content.Server.Hands.Systems;
 using Content.Shared._Shitmed.Medical.Surgery;
 using Content.Shared._Shitmed.Medical.Surgery.Conditions;
@@ -258,11 +259,16 @@ public sealed class SurgeryRegressionTest
             // Keep the surgeon clear of the patient so collision movement cannot cancel the action.
             surgeon = entMan.SpawnEntity("MobHuman", map.GridCoords.Offset(Vector2.UnitX));
             patient = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            // Keep the vacuum test map from adding new wounds while the surgery finishes.
+            entMan.RemoveComponent<AtmosExposedComponent>(surgeon);
+            entMan.RemoveComponent<AtmosExposedComponent>(patient);
             chest = server.System<SharedBodySystem>().GetBodyChildrenOfType(patient, BodyPartType.Chest).Single().Id;
             server.System<StandingStateSystem>().Down(patient, playSound: false, dropHeldItems: false);
             var tool = entMan.SpawnEntity("OmnimedTool", map.GridCoords);
             Assert.That(server.System<HandsSystem>().TryPickupAnyHand(surgeon, tool), Is.True);
             var wounds = server.System<WoundSystem>();
+            // Only the surgical treatment should change wound severity during this do-after test.
+            entMan.GetComponent<WoundableComponent>(chest).HealAbility = FixedPoint2.Zero;
             Assert.That(wounds.TryInduceWound(chest, damageType, 1, out _), Is.True);
             wounds.TryHaltAllBleeding(chest);
             entMan.EnsureComponent<IncisionOpenComponent>(chest);
@@ -283,7 +289,9 @@ public sealed class SurgeryRegressionTest
             Assert.That(action.Cancelled, Is.False);
             Assert.That(action.Completed, Is.True, "Tending must finish without starting another cycle.");
             Assert.That(server.System<WoundSystem>().GetWoundableSeverityPoint(chest, damageGroup: damageGroup, healable: true),
-                Is.EqualTo(FixedPoint2.Zero));
+                Is.EqualTo(FixedPoint2.Zero),
+                string.Join(", ", server.System<WoundSystem>().GetWoundableWounds(chest)
+                    .Select(wound => $"{wound.Comp.DamageType}: {wound.Comp.WoundSeverityPoint}")));
             Assert.That(server.EntMan.GetComponent<DoAfterComponent>(surgeon).DoAfters.Values
                 .Any(action => !action.Completed && !action.Cancelled), Is.False);
             server.EntMan.DeleteEntity(patient);

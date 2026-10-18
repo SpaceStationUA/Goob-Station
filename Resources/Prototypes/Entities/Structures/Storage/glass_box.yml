@@ -135,6 +135,7 @@
         whitelist:
           tags:
           - WeaponAntiqueLaser
+          - PirateCaptainDutyCase # Pirate
         ejectSound: /Audio/Machines/machine_switch.ogg
 
 - type: entity
@@ -155,7 +156,7 @@
   - type: ContainerFill
     containers:
       ItemCabinet:
-      - WeaponAntiqueLaser
+      - CaptainGunCase # Pirate: Omu duty case on display-case maps
 
 - type: entity
   parent: [GlassBoxLaserFilled, GlassBoxLaserOpen]

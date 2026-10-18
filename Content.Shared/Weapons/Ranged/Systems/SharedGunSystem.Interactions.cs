@@ -23,6 +23,11 @@ public abstract partial class SharedGunSystem
             args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor),
                 ("fireRate", $"{(int) (component.FireRate * 60)}"))); // Pirate edit start
 
+            // Pirate: Omu's Chester exposes its per-projectile damage multiplier.
+            if (component.DamageModifier != 1f)
+                args.PushMarkup(Loc.GetString("gun-damage-modifier-examine", ("color", FireRateExamineColor),
+                    ("damage", component.DamageModifier.ToString("#.##"))));
+
             if (!component.AvailableModes.HasFlag(SelectiveFire.Burst))
                 return; // Pirate
 

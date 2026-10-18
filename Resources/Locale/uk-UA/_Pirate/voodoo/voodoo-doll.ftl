@@ -1,0 +1,53 @@
+voodoo-base-message = [textshader="{$text}" font="DefaultBold" size={$size} shader="VoodooShader"]
+
+voodoo-victim-bound = Холод пробігає вздовж вашого хребта.
+voodoo-victim-unbound = Ви відчуваєте полегшення.
+voodoo-victim-hint-direction = Ви відчуваєте темну присутність у напрямку: { $direction }.
+voodoo-victim-hint-beacon = Ви відчуваєте темну присутність поблизу позначки «{ $beacon }».
+voodoo-victim-heat = Вам раптово стає гаряче!
+voodoo-victim-heat-ignite = Пече!
+voodoo-victim-cut = Щось неймовірно гостре розтинає ваше тіло!
+voodoo-victim-thrown = Незримий могутній поштовх відкидає вас!
+voodoo-victim-trip = Ви раптово падаєте!
+voodoo-victim-fling = Ваша рука різко смикається!
+voodoo-victim-hug = Ви відчуваєте, як щось огортає вас теплими обіймами.
+voodoo-victim-soap = Усе стає неймовірно слизьким!
+voodoo-victim-soap-end = Ви знову впевнено стоїте на ногах.
+voodoo-victim-flash = За вашими очима спалахує сліпуче світло!
+voodoo-victim-blindfold = Ваш зір огортає непроглядна темрява...
+voodoo-victim-mute = Ви раптово втрачаєте здатність говорити!
+voodoo-victim-destroyed = Ваше тіло розриває на шматки!
+
+voodoo-user-bound = Лялька смикається: тепер вона пов’язана з { $target }.
+voodoo-user-read = Лялька ворушиться поблизу предмета «{ $item }».
+voodoo-user-read-empty = На предметі «{ $item }» немає нічиїх слідів.
+voodoo-user-unbind = Розірвати зв’язок
+voodoo-user-unbound = Лялька здригається, коли її зв’язок розривається.
+voodoo-user-not-bound = Лялька не подає ознак життя.
+voodoo-user-hug = Ви ніжно обіймаєте ляльку.
+voodoo-user-attack = Ви замахуєтеся рукою ляльки.
+voodoo-user-fling = Ви смикаєте ляльку за кисть.
+voodoo-user-trip = Ви викручуєте ноги ляльки.
+voodoo-user-shock = Ви б’єте ляльку струмом.
+voodoo-user-flash = Ви спрямовуєте спалах в очі ляльки.
+voodoo-user-blindfold = Ви прикладаєте пов’язку до очей ляльки.
+voodoo-user-soap = Ви намилюєте ляльку.
+voodoo-user-heat = Ви обпалюєте ляльку полум’ям.
+voodoo-user-cut = Ви ріжете ляльку.
+voodoo-user-poke = Ви тицяєте ляльці в рот.
+voodoo-user-weh = Ви змушуєте ляльку векати.
+voodoo-user-honk = Ви змушуєте ляльку гудіти.
+voodoo-user-yawn = Ви вкриваєте ляльку простирадлом.
+voodoo-user-cooldown = Лялька відновлює свою силу.
+voodoo-user-out-of-range = { $target } надто далеко.
+voodoo-user-stowed = Там надто тісно, щоб скористатися лялькою.
+voodoo-user-shielded = Схоже, { $target } перебуває під святим захистом.
+voodoo-user-doll-bound = Ця лялька вже пов’язана з { $target }.
+voodoo-user-already-bound = На { $target } уже накладено прокляття.
+voodoo-user-rebind-cooldown = Лялька ще не може повторно проклясти { $target }.
+voodoo-user-eyes-start = Ви дивитеся очима { $target }.
+voodoo-user-eyes-end = Ваш власний зір повертається.
+voodoo-user-disguise = Маскування
+
+uplink-voodoo-doll-name = Плетена лялька вуду
+uplink-voodoo-doll-desc = Проклята плетена лялька. Прив’яжіть до неї жертву, застосувавши ляльку до її ДНК, відбитків пальців або безпосередньо до неї. Подальша доля жертви залежатиме від обраної частини тіла ляльки та предметів, якими ви на неї впливаєте...

@@ -1475,6 +1475,7 @@
   id: SecurityBelt
   name: loadout-group-security-belt
   loadouts:
+  - SecuritySwordBelt # Pirate: Omu Grognard with the source senior-officer gate
   - SecurityBelt
   - SecurityWebbing
   - SecurityJudoBelt # Goobstation - Martial Arts
