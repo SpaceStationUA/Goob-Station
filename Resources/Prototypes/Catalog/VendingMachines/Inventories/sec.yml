@@ -3,6 +3,7 @@
 - type: vendingMachineInventory
   id: SecTechInventory
   startingInventory:
+    secarang: 3 # Pirate: Omu secarang
     SecurityWhistle: 5
     Handcuffs: 8
     GrenadeFlashBang: 4
@@ -50,5 +51,7 @@
     FoodBoxDonut: 2
     #box evidence
   emaggedInventory: # Goobstation
+    ClothingHandsGlovesSecurity: 2 # Pirate: Omu tackling gloves
+    ClothingHandsGlovesSecurityBlue: 1 # Pirate: Omu tackling gloves
     SarinGasGrenade: 1
     WeaponFlareGunSecurity: 2

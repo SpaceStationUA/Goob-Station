@@ -44,6 +44,7 @@
     - SkillChipCombatEducation
     - SkillChipSidearmsAdvanced
     - SkillChipNonLethal
+    - SkillChipRifle # Pirate: M1 Garand from the instructor duty case
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
@@ -55,11 +56,10 @@
   equipment:
     id: SecurityInstructorPDA
     ears: ClothingHeadsetAltSecurityRegular
-    pocket1: WeaponPistolUniversalSecurity
   storage:
     back:
-    - MagazineUniversalMagnum
     - SecurityInstructorWhistle
+    - SergeantMeleeCase # Pirate: Omu sergeant equipment for our instructor
     - BaseSeclinkRadio
 
 - type: chameleonOutfit

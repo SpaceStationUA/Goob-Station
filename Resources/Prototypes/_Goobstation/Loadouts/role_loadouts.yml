@@ -42,6 +42,7 @@
   - BlueshieldOfficerEnvirosuit
   - BlueshieldOfficerEnvirogloves
   - BlueshieldOfficerGloves
+  - PirateBlueshieldBelt # Pirate: optional Grognard sheath
 
 - type: roleLoadout
   id: JobNanotrasenCareerTrainer
@@ -102,6 +103,7 @@
   - BrigmedicGloves
   - BrigmedicBackpack
   - SecurityMelee # EE parity, make corpsman able to carry weapons like the rest of security
+  - PirateBrigmedicWeapon # Pirate: Omu frontline case
   - SecurityShoes
   - SecurityNeck
   - SurvivalSecurity

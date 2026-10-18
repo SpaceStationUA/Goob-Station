@@ -2,10 +2,12 @@
 
 using Content.Goobstation.Common.Weapons.MeleeDash;
 using Content.Shared.Emoting;
+using Content.Shared.Gravity; // Pirate: Omu rapier gravity restriction
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
+using Content.Shared.Popups; // Pirate: Omu rapier gravity restriction
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
@@ -30,6 +32,8 @@ public sealed class MeleeDashSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!; // Pirate
+    [Dependency] private readonly SharedPopupSystem _popup = default!; // Pirate
 
     private const int DashCollisionLayer = (int) CollisionGroup.MidImpassable;
 
@@ -110,6 +114,13 @@ public sealed class MeleeDashSystem : EntitySystem
         if (!TryComp(weapon, out MeleeDashComponent? dash) ||
             !TryComp(weapon, out UseDelayComponent? delay) || _useDelay.IsDelayed((weapon, delay)))
             return;
+
+        // Pirate: preserve Omu's gravity restriction on the warden rapier.
+        if (!dash.CanDashWhileWeightless && _gravity.IsWeightless(user))
+        {
+            _popup.PopupClient(Loc.GetString("no-dash-while-weightless"), user, user, PopupType.Medium);
+            return;
+        }
 
         var length = MathF.Min(msg.Direction.Length(), dash.MaxDashLength);
         if (length <= 0f)

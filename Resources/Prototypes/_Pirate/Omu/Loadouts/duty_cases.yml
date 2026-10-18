@@ -1,0 +1,156 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: Omu equipment; sergeant choices serve the existing security instructor.
+
+- type: loadoutEffectGroup
+  id: SeniorDetective
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobDetective
+      time: 360000 #100 hours
+
+# Blah Blah Blah CopyRight Blah Blah Blah
+# Head
+
+- type: loadout
+  id: SecurityOfficerGunCase
+  equipment:
+    pocket1: OfficerGunCase
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: SecurityOfficerSecurityDutyRevolver
+  dummyEntity: SecurityDutyRevolver
+  equipment:
+    pocket1: SecurityDutyRevolver
+  storage:
+    back:
+    - SpeedLoaderRevolverLightRifle
+    - SpeedLoaderRevolverLightRifle
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: SecuritySwordBelt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorOfficer
+  equipment:
+    belt: ClothingBeltSheathStunswordFilled
+
+# Hat
+
+- type: loadout
+  id: BsoSwordBelt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorOfficer
+  equipment:
+    belt: ClothingBeltSheathStunswordFilled
+
+# boots
+
+- type: loadout
+  id: BrigMedCase
+  equipment:
+    pocket1: BrigMedCase
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: BrigmedWeaponCrossbowSyringe
+  equipment:
+    suitstorage: WeaponCrossbowSyringe
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: WeaponPneumaticShotgun
+  equipment:
+    suitstorage: WeaponPneumaticShotgun
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: BrigmedWeaponDisablerSMG
+  equipment:
+    back: WeaponDisablerSMG
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: DetectiveWeaponRevolverInspector
+  dummyEntity: WeaponRevolverInspector
+  equipment:
+    belt: ClothingBeltHolsterFilled # Has revolver + ammo inside
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: DetectiveWeaponRevolverR3Compleat
+  dummyEntity: WeaponRevolverR3Compleat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorDetective
+  equipment:
+    belt: ClothingBeltHolsterFilledR3Compleat # Has revolver + ammo inside
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: SecuritySergeantGunCase
+  equipment:
+    pocket1: SergeantGunCase
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: SecuritySergeantMosin
+  dummyEntity: WeaponSniperM1Garand
+  equipment:
+    suitstorage: WeaponSniperM1Garand
+  storage:
+    back:
+    - MagazineClipM1Garand
+    - MagazineClipM1Garand
+  groupBy: "Основна зброя"
+
+- type: loadout
+  id: SecuritySergeantEnergyMagnum
+  dummyEntity: WeaponEnergyMagnum
+  equipment:
+    pocket1: WeaponEnergyMagnum
+  groupBy: "Основна зброя"
+
+- type: loadoutGroup
+  id: PirateInstructorWeapon
+  name: loadout-group-instructor-duty-weapon
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - SecuritySergeantGunCase
+  - SecuritySergeantMosin
+  - SecuritySergeantEnergyMagnum
+  - SecurityOfficerGunCase
+
+- type: loadoutGroup
+  id: PirateBrigmedicWeapon
+  name: loadout-group-brigmedic-duty-weapon
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - BrigMedCase
+  - BrigmedWeaponCrossbowSyringe
+  - WeaponPneumaticShotgun
+  - BrigmedWeaponDisablerSMG
+
+- type: loadoutGroup
+  id: PirateDetectiveWeapon
+  name: loadout-group-detective-duty-weapon
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - DetectiveWeaponRevolverInspector
+  - DetectiveWeaponRevolverR3Compleat
+
+- type: loadoutGroup
+  id: PirateBlueshieldBelt
+  name: loadout-group-bso-duty-belt
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - BsoSwordBelt

@@ -374,34 +374,9 @@
   content:
     - BSOManual
 
-- type: selectableSet
-  id: BSOChesterSet
-  name: selectable-set-blueshield-chester-name
-  description: selectable-set-blueshield-chester-description
-  sprite:
-    sprite: _Goobstation/Objects/Weapons/Guns/Lever/chester_icon_48x.rsi
-    state: base
-  content:
-  # Guaranteed items
-  - WeaponLeverChester
-  - MagazineShotgunLeverRifleEmpty
-  - MagazineShotgunLeverRifleEmpty
-  - MagazineBoxShotgunHighCaliberEMP
-  - MagazineBoxShotgunHighCaliberEnsnaring
-#  tables:
-#  - ChesterRandomAmmoTable
+# Pirate: BSOChesterSet is defined in the Pirate Omu equipment port.
 
-- type: selectableSet
-  id: BSOSyringeSet
-  name: selectable-set-blueshield-syringe-name
-  description: selectable-set-blueshield-syringe-description
-  sprite:
-    sprite: _Goobstation/Objects/Weapons/Melee/blueshield_knife.rsi
-    state: icon
-  content:
-    - ClothingBeltMilitaryWebbingBSOFilled
-
-# Blueshield hardsuits
+# Pirate: BSOSyringeSet is replaced by the Omu duty-case sets.
 
 - type: selectableSet
   id: BSOHardsuitLightSet
