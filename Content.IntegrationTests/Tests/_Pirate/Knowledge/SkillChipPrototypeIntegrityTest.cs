@@ -129,7 +129,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         "SkillChipEducationPilot", "SkillChipCombatEducationPilot", "SkillChipEchelonEducationPilot",
         "SkillChipMagLit", "SkillChipJanitor", "SkillChipClown", "SkillChipDoctor",
         "SkillChipChemist", "SkillChipSurgeon", "SkillChipCMO",
-        "SkillChipMagicalDampener", "SkillChipCombatDampener", "SkillChipMindPurge",
+        "SkillChipMagicalDampener", "SkillChipCombatDampener",
         "SkillChipTiderDampener", "SkillChipPsionicAmplifier",
         "SkillChipThrowing", "SkillChipThrowingTampered", "SkillChipEndorphin", "SkillChipAdrenal", "SkillChipThyroid",
         "SkillChipProprioception",
@@ -353,7 +353,6 @@ public sealed class SkillChipPrototypeIntegrityTest
     [
         ("SkillChipMagicalDampener", true, false),
         ("SkillChipCombatDampener", true, false),
-        ("SkillChipMindPurge", true, false),
         ("SkillChipTiderDampener", true, false),
         ("SkillChipPsionicAmplifier", true, true),
         ("SkillChipERT", true, true),
