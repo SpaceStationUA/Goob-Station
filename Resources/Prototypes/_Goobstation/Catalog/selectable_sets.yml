@@ -603,8 +603,6 @@
   content:
   - ClothingModularControllerResearchPreassembled # Pirate: use the new modular suit system.
 
-  - ClothingModsuitResearchDirectorPowerCell
-
 # Brigmedic
 
 - type: selectableSet

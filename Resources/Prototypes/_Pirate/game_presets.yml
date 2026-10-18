@@ -205,3 +205,16 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
+
+- type: gamePreset
+  id: Blueshift
+  alias:
+    - blueshift
+  name: blueshift-title
+  description: blueshift-description
+  showInVote: true
+  rules:
+    - BlueshiftScheduler
+    - BlueshiftAntagScheduler
+    - MeteorSwarmScheduler
+    - GlimmerEventScheduler

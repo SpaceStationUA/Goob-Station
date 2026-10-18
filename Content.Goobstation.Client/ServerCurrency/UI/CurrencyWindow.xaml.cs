@@ -19,10 +19,10 @@ namespace Content.Goobstation.Client.ServerCurrency.UI
     [GenerateTypedNameReferences]
     public sealed partial class CurrencyWindow : DefaultWindow
     {
-        [Dependency] private readonly ICommonCurrencyManager _serverCur = default!;
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private ICommonCurrencyManager _serverCur = default!;
+        [Dependency] private IClientAdminManager _adminManager = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IPrototypeManager _protoManager = default!;
         public event Action<ProtoId<TokenListingPrototype>>? OnBuy;
         private bool isAdmin = false;
         private Dictionary<Button, (DateTime LastClick, TokenListingPrototype Listing)> _buttonClickTimes = new();
@@ -35,7 +35,7 @@ namespace Content.Goobstation.Client.ServerCurrency.UI
 
             UpdatePlayerBalance();
 
-            isAdmin = _adminManager.CanCommand("balance:add");
+            isAdmin = _adminManager.CanCommand(Loc.GetString("server-currency-add-command"));
 
             if (!isAdmin)
                 Admin.Visible = false;
@@ -109,7 +109,7 @@ namespace Content.Goobstation.Client.ServerCurrency.UI
             if (player == null || value == 0)
                 return;
 
-            _consoleHost.ExecuteCommand("gift " + player + " " + value);
+            _consoleHost.ExecuteCommand(Loc.GetString("server-currency-gift-command") + " " + player + " " + value);
 
             UpdatePlayerBalance();
         }
@@ -119,7 +119,7 @@ namespace Content.Goobstation.Client.ServerCurrency.UI
             if (!isAdmin || player == null || value == 0)
                 return;
 
-            _consoleHost.ExecuteCommand("balance:add " + player + " " + value);
+            _consoleHost.ExecuteCommand(Loc.GetString("server-currency-add-command") + " " + player + " " + value);
 
             UpdatePlayerBalance();
         }

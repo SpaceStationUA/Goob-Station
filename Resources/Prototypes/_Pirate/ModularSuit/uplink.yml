@@ -16,6 +16,7 @@
   description: uplink-syndie-plate-compression-desc
   icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: plate_compression }
   productEntity: PlateCompressionSuitModule
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkJob
   cost:
@@ -161,6 +162,7 @@
   description: uplink-syndie-energy-shield-module-desc
   icon: { sprite: _Pirate/Objects/Specific/Robotics/modules.rsi, state: energy_shield_syndie }
   productEntity: EnergyShieldSyndicateSuitModule
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkWearables
   cost:

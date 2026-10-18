@@ -13,12 +13,12 @@ using Content.Server.Chat.Systems;
 
 namespace Content.Pirate.Server.Security.EmoteOnMeleeHit.Systems;
 
-public sealed class EmoteOnMeleeHitSystem : EntitySystem
+public sealed partial class EmoteOnMeleeHitSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ChatSystem _chatSystem = default!;
 
     public override void Initialize()
     {

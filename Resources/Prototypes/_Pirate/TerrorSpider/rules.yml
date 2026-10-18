@@ -33,7 +33,7 @@
   - spider
   name: terrorspiders-gamemode-title
   description: terrorspiders-gamemode-description
-  showInVote: true
+  showInVote: false
   minPlayers: 50
   rules:
   - TerrorSpidersSpawn

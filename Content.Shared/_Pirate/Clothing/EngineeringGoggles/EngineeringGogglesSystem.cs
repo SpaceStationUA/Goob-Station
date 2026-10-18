@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-using Content.Shared._Pirate.Clothing.MesonGoggles;
+using Content.Shared._Funkystation.Clothing.Components; // Pirate: use the upstream shader component.
 using Content.Shared._Pirate.Xray;
 using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;

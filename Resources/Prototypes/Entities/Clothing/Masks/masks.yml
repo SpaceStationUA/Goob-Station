@@ -992,13 +992,8 @@
   - type: IdentityBlocker
   - type: FlashImmunity
   - type: EyeProtection
-  - type: WeldingVisor # Pirate: welding visor toggle - spawns with the visor raised (not protecting)
-    lowered: false
-    soundLower:
-      collection: PirateWeldingVisorDown
-    soundRaise:
-      collection: PirateWeldingVisorUp
-  # Pirate: welding visor toggle - the face shield only controls flash and eye protection.
+  - type: WeldingMaskOverlay # Goob
+    texture: /Textures/_Funkystation/Clothing/Head/Welding/weldingOverlayWeak.png # Goob
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Steel: 150

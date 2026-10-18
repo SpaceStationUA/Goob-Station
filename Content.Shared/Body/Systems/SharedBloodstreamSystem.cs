@@ -292,6 +292,8 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
         if (TryComp<BodyComponent>(ent, out var body) && body.BodyType == BodyType.Simple) // Goobstation
             TryModifyBleedAmount(ent.AsNullable(), totalFloat); // Goobstation - do not apply base bleed to woundmed supported bodies
 
+        SplatterBloodOnWalls(ent, totalFloat); // Goob
+
         /// Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
         /// The crit chance is currently the bleed rate modifier divided by 25.
         /// Higher damage weapons have a higher chance to crit!
@@ -652,7 +654,8 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
             SolutionContainer.RemoveAllSolution(ent.Comp.TemporarySolution.Value);
         }
 
-        // Gibbing only spills blood to the floor; bystanders get bloody from the puddle. // Pirate: stains
+        // Pirate: bystanders get bloody from the puddle; upstream also stains nearby walls.
+        RaiseSplashOnWall(Transform(ent).Coordinates, tempSol.Clone()); // Goob
         _puddle.TrySpillAt(ent, tempSol, out _);
     }
 

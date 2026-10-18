@@ -14,7 +14,7 @@ namespace Content.Goobstation.Shared.Teleportation.Systems;
 
 public sealed partial class SharedRandomTeleportSystem
 {
-    [Dependency] private readonly SharedStationSystem _stationSystem = default!;
+    [Dependency] private SharedStationSystem _stationSystem = default!; // Pirate: generated dependency injection.
 
     /// <summary>
     /// Teleports an entity to a random location on the station.

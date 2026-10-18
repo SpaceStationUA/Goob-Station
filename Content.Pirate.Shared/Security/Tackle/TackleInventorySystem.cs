@@ -5,9 +5,9 @@ using Content.Pirate.Shared.Security.Tackle;
 
 namespace Content.Pirate.Shared.Security.Tackle;
 
-public sealed class TackleInventorySystem : EntitySystem
+public sealed partial class TackleInventorySystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     public override void Initialize()
     {

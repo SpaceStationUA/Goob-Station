@@ -15,6 +15,8 @@ public sealed partial class GeneralStationRecordConsoleComponent : Component
     [DataField]
     public uint? ActiveKey;
 
+    public uint SelectionRequest; // Pirate: records select
+
     /// <summary>
     /// Qualities to filter a search by.
     /// </summary>

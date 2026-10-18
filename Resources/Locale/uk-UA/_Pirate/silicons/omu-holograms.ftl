@@ -1,0 +1,9 @@
+station-ai-hologram-algalone = Водоростевий єдиний
+station-ai-hologram-fractalsnowflake = Фрактальна сніжинка
+station-ai-hologram-hensonsnode = Вузол Генсона
+station-ai-hologram-longrun = Довгий забіг
+station-ai-hologram-ntpaint = NTpaint
+station-ai-hologram-puredata = Чисті дані
+station-ai-hologram-rorschach = Роршах
+station-ai-hologram-seraphim = Серафим
+station-ai-hologram-tripleaffirmative = Потрійне ствердження

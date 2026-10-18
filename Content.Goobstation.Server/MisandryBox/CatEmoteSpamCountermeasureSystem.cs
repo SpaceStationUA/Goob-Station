@@ -12,11 +12,11 @@ using Robust.Shared.Random;
 namespace Content.Goobstation.Server.MisandryBox;
 
 // Now that's a mouthful
-public sealed class CatEmoteSpamCountermeasureSystem : EntitySystem
+public sealed partial class CatEmoteSpamCountermeasureSystem : EntitySystem
 {
-    [Dependency] private readonly ThunderstrikeSystem _thunderstrike = default!;
-    [Dependency] private readonly IRobustRandom _rand = default!;
-    [Dependency] private readonly PirateAudibleEmoteSystem _pirateAudibleEmote = default!; // Pirate: emote cooldown
+    [Dependency] private ThunderstrikeSystem _thunderstrike = default!;
+    [Dependency] private IRobustRandom _rand = default!;
+    [Dependency] private PirateAudibleEmoteSystem _pirateAudibleEmote = default!; // Pirate: emote cooldown
 
     private const float ClearInterval = 20.0f;
     private const float PitchModulo = 0.08f;

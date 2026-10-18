@@ -2,6 +2,8 @@
 // SPDX-FileCopyrightText: 2026 SpaceStationUA
 // SPDX-License-Identifier: MIT
 
+using System.Linq;
+using Content.Shared._Pirate.StationRecords;
 using Robust.Shared.Utility;
 
 // ReSharper disable once CheckNamespace
@@ -11,9 +13,7 @@ public sealed partial class HumanoidCharacterProfile
 {
     public const int MaxCharacterInfoLength = 4096;
 
-    /// <summary>
-    /// Physical description keeps using the existing flavor text field for backwards compatibility.
-    /// </summary>
+    // Keep the legacy FlavorText backing for serialized profile compatibility.
     public string PhysicalDescription
     {
         get => FlavorText;
@@ -34,6 +34,9 @@ public sealed partial class HumanoidCharacterProfile
 
     [DataField]
     public string ExploitableInfo { get; set; } = string.Empty;
+
+    [DataField]
+    public List<RecordBackgroundEntry> RecordBackgrounds { get; set; } = new();
 
     public HumanoidCharacterProfile WithPhysicalDescription(string description)
     {
@@ -65,6 +68,11 @@ public sealed partial class HumanoidCharacterProfile
         return new(this) { ExploitableInfo = info };
     }
 
+    public HumanoidCharacterProfile WithRecordBackgrounds(IEnumerable<RecordBackgroundEntry> entries)
+    {
+        return new(this) { RecordBackgrounds = new List<RecordBackgroundEntry>(entries) };
+    }
+
     public HumanoidCharacterProfile WithCharacterInfo(
         string personalityDescription,
         string personalNotes,
@@ -89,6 +97,7 @@ public sealed partial class HumanoidCharacterProfile
         OOCNotes = other.OOCNotes;
         Secrets = other.Secrets;
         ExploitableInfo = other.ExploitableInfo;
+        RecordBackgrounds = new List<RecordBackgroundEntry>(other.RecordBackgrounds);
     }
 
     private bool PirateCharacterInfoEquals(HumanoidCharacterProfile other)
@@ -97,7 +106,8 @@ public sealed partial class HumanoidCharacterProfile
             && PersonalNotes == other.PersonalNotes
             && OOCNotes == other.OOCNotes
             && Secrets == other.Secrets
-            && ExploitableInfo == other.ExploitableInfo;
+            && ExploitableInfo == other.ExploitableInfo
+            && RecordBackgrounds.SequenceEqual(other.RecordBackgrounds);
     }
 
     private void EnsurePirateCharacterInfoValid()
@@ -107,13 +117,46 @@ public sealed partial class HumanoidCharacterProfile
         OOCNotes = SanitizeCharacterInfo(OOCNotes);
         Secrets = SanitizeCharacterInfo(Secrets);
         ExploitableInfo = SanitizeCharacterInfo(ExploitableInfo);
+        RecordBackgrounds = SanitizeRecordBackgrounds(RecordBackgrounds);
     }
 
-    private static string SanitizeCharacterInfo(string value)
+    private static List<RecordBackgroundEntry> SanitizeRecordBackgrounds(List<RecordBackgroundEntry> entries)
+    {
+        var result = new List<RecordBackgroundEntry>();
+        var perBook = new Dictionary<RecordLogBook, int>();
+        foreach (var entry in entries)
+        {
+            if (entry.Book is not (RecordLogBook.Security or RecordLogBook.Psionics or RecordLogBook.Crew))
+                continue;
+
+            var body = SanitizeCharacterInfo(entry.Body.Trim(), RecordBackgroundEntry.MaxBodyLength);
+            var count = perBook.GetValueOrDefault(entry.Book);
+            if (body.Length == 0 || count >= RecordBackgroundEntry.MaxPerBook)
+                continue;
+
+            perBook[entry.Book] = count + 1;
+            result.Add(new RecordBackgroundEntry
+            {
+                Book = entry.Book,
+                Title = SanitizeLine(entry.Title, RecordBackgroundEntry.MaxTitleLength),
+                Author = SanitizeLine(entry.Author, RecordBackgroundEntry.MaxAuthorLength),
+                Body = body,
+            });
+        }
+
+        return result;
+    }
+
+    private static string SanitizeLine(string value, int maxLength)
+    {
+        return SanitizeCharacterInfo(value.Replace('\r', ' ').Replace('\n', ' ').Trim(), maxLength);
+    }
+
+    private static string SanitizeCharacterInfo(string value, int maxLength = MaxCharacterInfoLength)
     {
         var sanitized = FormattedMessage.RemoveMarkupOrThrow(value);
-        return sanitized.Length > MaxCharacterInfoLength
-            ? sanitized[..MaxCharacterInfoLength]
+        return sanitized.Length > maxLength
+            ? sanitized[..maxLength]
             : sanitized;
     }
 
@@ -124,5 +167,9 @@ public sealed partial class HumanoidCharacterProfile
         hashCode.Add(OOCNotes);
         hashCode.Add(Secrets);
         hashCode.Add(ExploitableInfo);
+        foreach (var entry in RecordBackgrounds)
+        {
+            hashCode.Add(entry);
+        }
     }
 }

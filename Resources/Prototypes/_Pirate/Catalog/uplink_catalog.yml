@@ -6,6 +6,7 @@
   productEntity: ClothingBackpackDuffelSyndicateFpvDroneBundle
   cost:
     Telecrystal: 15
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
     - UplinkDisruption
   conditions:
@@ -22,6 +23,7 @@
   productEntity: AdderBox
   cost:
     Telecrystal: 30
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
     - UplinkWeaponry
 
@@ -33,6 +35,7 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledAkurra
   cost:
     Telecrystal: 50
+  reputation: 60 # Pirate: military reputation tier
   categories:
     - UplinkWeaponry
 
@@ -44,6 +47,7 @@
   icon: { sprite: /Textures/_Pirate/Objects/Weapons/Guns/Rifles/bandit.rsi, state: icon }
   cost:
     Telecrystal: 18
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
     - UplinkWeaponry
 
@@ -55,6 +59,7 @@
   productEntity: WeaponRifleSol
   cost:
     Telecrystal: 55
+  reputation: 60 # Pirate: military reputation tier
   categories:
     - UplinkWeaponry
 
@@ -66,6 +71,7 @@
   productEntity: WeaponShotgunSol
   cost:
     Telecrystal: 40
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
     - UplinkWeaponry
 
@@ -77,6 +83,7 @@
   productEntity: WeaponSubMachineGunSol
   cost:
     Telecrystal: 45
+  reputation: 60 # Pirate: military reputation tier
   categories:
     - UplinkWeaponry
 
@@ -87,6 +94,7 @@
   productEntity: WeaponFlamerXiuhcoatl
   cost:
     Telecrystal: 80
+  reputation: 80 # Pirate: elite reputation tier
   categories:
     - UplinkWeaponry
 
@@ -97,6 +105,7 @@
   productEntity: WeaponSpecialOuroboros
   cost:
     Telecrystal: 40
+  reputation: 60 # Pirate: military reputation tier
   categories:
     - UplinkWeaponry
 
@@ -107,6 +116,7 @@
   productEntity: WeaponLauncherBazooka
   cost:
     Telecrystal: 120
+  reputation: 100 # Pirate: strategic reputation tier
   categories:
     - UplinkWeaponry
 
@@ -194,6 +204,7 @@
   icon: { sprite: _Pirate/Clothing/Head/Misc/tony.rsi, state: icon }
   cost:
     Telecrystal: 50
+  reputation: 60 # Pirate: military reputation tier
   categories:
     - UplinkDeception
   conditions:
@@ -233,6 +244,7 @@
   productEntity: ReinforcementRadioSyndicateMothroachSyndicate
   cost:
     Telecrystal: 4
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkAllies
   conditions:
@@ -253,6 +265,7 @@
   productEntity: AutosurgeonCyberdeck
   cost:
     Telecrystal: 66
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkImplants
   conditions:
@@ -284,6 +297,7 @@
   icon: { sprite: _Pirate/Objects/Devices/cartridge_detomatix.rsi, state: cart-detomatix }
   cost:
     Telecrystal: 6
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkExplosives
   conditions:
@@ -298,8 +312,11 @@
   productEntity: DefibrillatorBeltCombat
   cost:
     Telecrystal: 30
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkWearables
+
+# Pirate: Omu UplinkGuerrillaGloves also serves nuclear operatives.
 
 - type: listing
   id: UplinkDeathRattleImplanterCybersun

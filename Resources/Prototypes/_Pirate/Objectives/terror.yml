@@ -1,0 +1,24 @@
+- type: entity
+  parent: BaseTraitorObjective
+  id: TraitorContractMassCasualtyObjective
+  components:
+  - type: Objective
+    difficulty: 5
+    icon:
+      sprite: Objects/Weapons/Bombs/c4.rsi
+      state: icon
+  - type: ObjectiveLimit
+    limit: 1
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - DieCondition
+  - type: MassCasualtyCondition
+    target: 8
+    minimumCrew: 20
+  - type: ReputationCondition
+    reputation: 90
+  - type: ContractObjective
+    reputation: 50
+    payment: 100
+    prepaid: true

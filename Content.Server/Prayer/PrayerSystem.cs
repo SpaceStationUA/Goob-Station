@@ -116,6 +116,11 @@ public sealed class PrayerSystem : EntitySystem
         // Goobstation - Admin Notifications
         if (comp.NotificationSound != null) // estas [Err404]
             foreach (var admin in _admin.ActiveAdmins)
+            { // Pirate: staff chats
+                if (!_admin.HasAdminFlag(admin, Content.Shared.Administration.AdminFlags.Adminchat)) // Pirate: staff chats - match the announcement's audience
+                    continue; // Pirate: staff chats
+
                 RaiseNetworkEvent(new AdminNotificationEvent(comp.NotificationSound), admin);
+            } // Pirate: staff chats
     }
 }

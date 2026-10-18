@@ -6,6 +6,7 @@
   productEntity: ClothingHandsGlovesGuerrilla
   cost:
     Telecrystal: 10 # Omu no hardgrab so made 20 -> 10
+  reputation: 20 # Pirate: preserve the existing gloves' entry-level uplink tier.
   categories:
   - UplinkWearables
   conditions:

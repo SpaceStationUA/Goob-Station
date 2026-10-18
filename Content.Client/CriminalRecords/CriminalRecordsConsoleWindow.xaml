@@ -5,9 +5,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 <!-- Pirate: records photos (start) -->
 <controls:FancyWindow xmlns="https://spacestation14.io"
                        xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                       xmlns:records="clr-namespace:Content.Client._Pirate.StationRecords"
                        Title="{Loc 'criminal-records-console-window-title'}"
-                       MinSize="890 600"
-                       SetSize="890 600">
+                       MinSize="930 600"
+                       SetSize="930 600">
+<!-- Pirate: records photos -->
 <!-- Pirate: records photos (end) -->
     <BoxContainer Orientation="Vertical">
         <BoxContainer Name="AllList"
@@ -53,14 +55,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <BoxContainer Orientation="Horizontal"
                           VerticalExpand="True">
                 <!-- Record listing -->
+                <!-- Pirate: record history -->
                 <BoxContainer Orientation="Vertical"
-                              Margin="10 10"
+                              Margin="5"
                               MinWidth="250"
                               MaxWidth="250">
-                    <Label Name="RecordListingTitle"
-                           Text="{Loc 'criminal-records-console-records-list-title'}"
-                           HorizontalExpand="True"
-                           Align="Center" />
                     <Label Name="NoRecords"
                            Text="{Loc 'criminal-records-console-no-records'}"
                            HorizontalExpand="True"
@@ -70,6 +69,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         <ItemList Name="RecordListing" />
                         <!-- Populated when loading state -->
                     </ScrollContainer>
+                    <!-- Pirate: record history (start) -->
+                    <OptionButton Name="CrewListFilter"
+                                  Margin="0 5 0 0" />
+                    <!-- Pirate: record history (end) -->
                 </BoxContainer>
                 <Label Name="RecordUnselected"
                        Text="{Loc 'criminal-records-console-select-record-info'}"
@@ -83,57 +86,36 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                         HorizontalExpand="True"
                         Margin="5"
                         Visible="False">
+                    <!-- Pirate: record history (start) -->
+                    <BoxContainer Orientation="Horizontal"
+                                  Margin="0 0 0 4">
+                        <Button Name="ProfileTabButton"
+                                Text="{Loc 'records-console-tab-profile'}"
+                                ToggleMode="True"
+                                StyleClasses="OpenRight"
+                                MinWidth="110" />
+                        <Button Name="HistoryTabButton"
+                                Text="{Loc 'records-console-tab-history'}"
+                                ToggleMode="True"
+                                StyleClasses="OpenLeft"
+                                MinWidth="110" />
+                    </BoxContainer>
+                    <BoxContainer Name="ProfileView"
+                                  Orientation="Vertical"
+                                  VerticalExpand="True"
+                                  HorizontalExpand="True"
+                                  Margin="5">
+                    <!-- Pirate: record history (end) -->
                     <!-- Pirate: records photos (start) -->
                     <BoxContainer Orientation="Horizontal"
                                   Margin="0 0 0 5"
                                   HorizontalExpand="True"
                                   SeparationOverride="10">
-                        <BoxContainer Orientation="Vertical"
-                                      HorizontalExpand="True"
-                                      MaxWidth="250"
-                                      SizeFlagsStretchRatio="1"
-                                      SeparationOverride="5">
-                            <LayoutContainer Name="PersonPortraitFrame"
-                                             HorizontalExpand="True"
-                                             MaxHeight="240"
-                                             MinSize="240 240"
-                                             RectClipContent="True">
-                                <TextureRect Name="PersonPortraitBackground"
-                                             LayoutContainer.AnchorRight="1"
-                                             LayoutContainer.AnchorBottom="1"
-                                             HorizontalExpand="True"
-                                             VerticalExpand="True"
-                                             CanShrink="True"
-                                             Stretch="KeepAspectCovered"
-                                             Visible="False" />
-                                <TextureRect Name="PersonPortraitTexture"
-                                             LayoutContainer.AnchorRight="1"
-                                             LayoutContainer.AnchorBottom="1"
-                                             HorizontalExpand="True"
-                                             VerticalExpand="True"
-                                             Stretch="KeepAspectCentered"
-                                             Visible="False" />
-                                <SpriteView Name="PersonPortrait"
-                                            LayoutContainer.AnchorRight="1"
-                                            LayoutContainer.AnchorBottom="1"
-                                            HorizontalExpand="True"
-                                            VerticalExpand="True"
-                                            Stretch="Fill"
-                                            Scale="5 5"
-                                            OverrideDirection="South" />
-                            </LayoutContainer>
-                            <BoxContainer Orientation="Horizontal"
-                                          HorizontalExpand="True">
-                                <Button Name="PrintPortraitButton"
-                                        Text="{Loc 'criminal-records-console-print'}"
-                                        HorizontalExpand="True"
-                                        SizeFlagsStretchRatio="1" />
-                                <Button Name="UploadPortraitButton"
-                                        Text="{Loc 'criminal-records-console-upload'}"
-                                        HorizontalExpand="True"
-                                        SizeFlagsStretchRatio="1" />
-                            </BoxContainer>
-                        </BoxContainer>
+                        <!-- Pirate: records photos -->
+                        <records:RecordPortraitPanel Name="Portrait"
+                                                     PhotoStyle="Security"
+                                                     MinWidth="240"
+                                                     MaxWidth="240" />
                         <BoxContainer Orientation="Vertical"
                                       HorizontalExpand="True"
                                       SizeFlagsStretchRatio="1"
@@ -154,52 +136,59 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                           SeparationOverride="8">
                                 <Label Text="{Loc 'humanoid-profile-editor-species-label'}"
                                        FontColorOverride="DarkGray" />
-                                <Control HorizontalExpand="True" />
                                 <OptionButton Name="SpeciesButton"
-                                              MinWidth="180"
-                                              HorizontalAlignment="Right" />
+                                              HorizontalExpand="True" />
                             </BoxContainer>
                             <BoxContainer Orientation="Horizontal"
                                           HorizontalExpand="True"
                                           SeparationOverride="8">
                                 <Label Text="{Loc 'humanoid-profile-editor-nationality-label'}"
                                        FontColorOverride="DarkGray" />
-                                <Control HorizontalExpand="True" />
                                 <OptionButton Name="NationalityButton"
-                                              MinWidth="180"
-                                              HorizontalAlignment="Right" />
+                                              HorizontalExpand="True" />
                             </BoxContainer>
                             <BoxContainer Orientation="Horizontal"
                                           HorizontalExpand="True"
                                           SeparationOverride="8">
                                 <Label Text="{Loc 'humanoid-profile-editor-employer-label'}"
                                        FontColorOverride="DarkGray" />
-                                <Control HorizontalExpand="True" />
                                 <OptionButton Name="EmployerButton"
-                                               MinWidth="180"
-                                               MaxWidth="180"
-                                               HorizontalAlignment="Right" />
+                                               HorizontalExpand="True" />
                             </BoxContainer>
                             <BoxContainer Orientation="Horizontal"
                                           HorizontalExpand="True"
                                           SeparationOverride="8">
                                 <Label Text="{Loc 'humanoid-profile-editor-age-label'}"
                                        FontColorOverride="DarkGray" />
-                                <Control HorizontalExpand="True" />
                                 <LineEdit Name="AgeEdit"
-                                          MinWidth="180"
-                                          HorizontalAlignment="Right" />
+                                          HorizontalExpand="True" />
                             </BoxContainer>
                             <BoxContainer Orientation="Horizontal"
                                           HorizontalExpand="True"
                                           SeparationOverride="8">
                                 <Label Text="{Loc 'humanoid-profile-editor-sex-label'}"
                                        FontColorOverride="DarkGray" />
-                                <Control HorizontalExpand="True" />
                                 <OptionButton Name="GenderButton"
-                                              MinWidth="180"
-                                              HorizontalAlignment="Right" />
+                                              HorizontalExpand="True" />
                             </BoxContainer>
+                            <!-- Pirate: records photos (start) -->
+                            <BoxContainer Orientation="Horizontal"
+                                          HorizontalExpand="True"
+                                          SeparationOverride="8">
+                                <BoxContainer Orientation="Horizontal">
+                                    <Label Name="StatusLabel"
+                                           Text="{Loc 'criminal-records-console-status'}"
+                                           FontColorOverride="DarkGray" />
+                                    <Label Text=":"
+                                           FontColorOverride="DarkGray" />
+                                    <AnimatedTextureRect Name="PersonStatusTX"
+                                                         Margin="8 0 0 0"
+                                                         VerticalAlignment="Center" />
+                                </BoxContainer>
+                                <OptionButton Name="StatusOptionButton"
+                                              HorizontalExpand="True" />
+                            </BoxContainer>
+                            <!-- Pirate: records photos (end) -->
                         </BoxContainer>
                     </BoxContainer>
                     <BoxContainer Orientation="Horizontal"
@@ -221,36 +210,20 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <!-- Pirate: records photos (end) -->
                     <PanelContainer StyleClasses="LowDivider"
                                     Margin="0 5 0 5" />
-                    <BoxContainer Orientation="Horizontal"
-                                  Margin="0 5 0 5">
-                        <Label Name="StatusLabel"
-                               Text="{Loc 'criminal-records-console-status'}"
-                               FontColorOverride="DarkGray" />
-                        <Label Text=":"
-                               FontColorOverride="DarkGray" />
-                        <Label Name="PersonStatus"
-                               FontColorOverride="DarkGray" />
-                        <AnimatedTextureRect Name="PersonStatusTX"
-                                             Margin="8 0" />
-                        <OptionButton Name="StatusOptionButton"
-                                      MinWidth="130" />
-                        <!-- Populated in constructor -->
-                    </BoxContainer>
+                    <!-- Pirate: records photos -->
                     <RichTextLabel Name="WantedReason"
                                    Visible="False"
-                                   MaxWidth="425" />
-                    <Button Name="HistoryButton"
-                            Text="{Loc 'criminal-records-console-crime-history'}"
-                            Margin="0 5" />
+                                   HorizontalExpand="True" />
+                     <!-- Pirate: record history (start) -->
+                    </BoxContainer>
+                    <records:RecordHistoryPanel Name="HistoryView"
+                                                Book="Security"
+                                                Margin="5"
+                                                Visible="False" />
+                     <!-- Pirate: record history (end) -->
                 </BoxContainer>
             </BoxContainer>
-            <BoxContainer Orientation="Horizontal"
-                          Margin="0 0 0 5">
-                <OptionButton
-                    Name="CrewListFilter"
-                    MinWidth="250"
-                    Margin="10 0 10 0" />
-            </BoxContainer>
+             <!-- Pirate: record history -->
         </BoxContainer>
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">

@@ -1,0 +1,13 @@
+humanoid-profile-editor-background-tab = Background
+humanoid-profile-editor-records-heading = Station records
+record-background-editor-security-label = Criminal records (security console):
+record-background-editor-crew-label = Personnel records (crew console):
+record-background-editor-psionics-label = Psionics records (Mantis console):
+record-background-editor-security-placeholder = Convictions, offences, reprimands from previous postings...
+record-background-editor-crew-placeholder = Education, previous employers, qualifications, commendations...
+record-background-editor-psionics-placeholder = Known psionic abilities, registration, test results...
+record-background-editor-add = Add
+record-background-editor-remove = Remove
+record-background-editor-title = Title:
+record-background-editor-author = Author:
+record-background-editor-empty = No entries.

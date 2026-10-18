@@ -115378,43 +115378,6 @@ entities:
         name: uplink-cameraBug-name
       - restockAfterPurchase: null
         productEvent: null
-        description: uplink-guerrilla-desc
-        categories:
-        - UplinkWearables
-        cost:
-          Telecrystal: 10
-        conditions:
-        - !type:StoreWhitelistCondition
-          blacklist: null
-          whitelist:
-            requireAll: False
-            tags:
-            - NukeOpsUplink
-            sizes: null
-            components: null
-        icon:
-          sprite: /Textures/_Pirate/Trauma/Clothing/Hands/Gloves/guerrilla.rsi
-          state: icon
-        priority: 0
-        productEntity: ClothingHandsGlovesGuerrilla
-        productAction: null
-        productUpgradeId: null
-        productActionEntity: null
-        productHereticKnowledge: null
-        id: UplinkClothingHandsGlovesGuerrillaNukeops
-        raiseProductEventOnUser: False
-        purchaseAmount: 0
-        restockTime: 0
-        saleLimit: 1
-        saleBlacklist: False
-        components: []
-        disableRefund: False
-        blockRefundListings: []
-        resetRestockOnPurchase: False
-        restockDuration: 600
-        name: uplink-guerrilla-name
-      - restockAfterPurchase: null
-        productEvent: null
         description: uplink-energy-pickaxe-desc
         categories:
         - UplinkWeaponry
@@ -123675,43 +123638,6 @@ entities:
         resetRestockOnPurchase: False
         restockDuration: 600
         name: uplink-outlaw-glasses-name
-      - restockAfterPurchase: null
-        productEvent: null
-        description: uplink-guerrilla-desc
-        categories:
-        - UplinkWearables
-        cost:
-          Telecrystal: 10
-        conditions:
-        - !type:StoreWhitelistCondition
-          blacklist:
-            requireAll: False
-            tags:
-            - NukeOpsUplink
-            sizes: null
-            components: null
-          whitelist: null
-        icon:
-          sprite: /Textures/_Pirate/Trauma/Clothing/Hands/Gloves/guerrilla.rsi
-          state: icon
-        priority: 0
-        productEntity: ClothingHandsGlovesGuerrilla
-        productAction: null
-        productUpgradeId: null
-        productActionEntity: null
-        productHereticKnowledge: null
-        id: UplinkClothingHandsGlovesGuerrilla
-        raiseProductEventOnUser: False
-        purchaseAmount: 0
-        restockTime: 0
-        saleLimit: 1
-        saleBlacklist: False
-        components: []
-        disableRefund: False
-        blockRefundListings: []
-        resetRestockOnPurchase: False
-        restockDuration: 600
-        name: uplink-guerrilla-name
       - restockAfterPurchase: null
         productEvent: null
         description: uplink-magazine-echion-desc

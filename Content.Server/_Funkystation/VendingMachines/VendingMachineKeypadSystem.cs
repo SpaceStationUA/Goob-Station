@@ -30,7 +30,7 @@ public sealed partial class VendingMachineKeypadSystem : EntitySystem
             return;
 
         var volume = args.SoundType == VendingMachineKeypadSound.Timeout ? -6f : -4f;
-        var audioParams = new AudioParams().WithVolume(volume).WithPitchScale(args.Pitch);
+        var audioParams = new AudioParams().WithVolume(volume).WithPitchScale(Math.Clamp(args.Pitch, 0.25f, 4f));
 
         _audio.PlayPredicted(new SoundPathSpecifier(soundPath), uid, args.Actor, audioParams);
     }

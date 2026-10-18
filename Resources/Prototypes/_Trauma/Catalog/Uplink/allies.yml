@@ -5,6 +5,7 @@
   productEntity: DehydratedMagicCarp
   cost:
     Telecrystal: 7
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkAllies
   conditions:
@@ -20,6 +21,7 @@
   productEntity: DehydratedHolocarp
   cost:
     Telecrystal: 7
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkAllies
   conditions:
@@ -38,7 +40,7 @@
     Telecrystal: 15
   categories:
   - UplinkAllies
-  reputation: 30 # Pirate: allies reputation
+  reputation: 20 # Pirate: entry-level reputation tier
 
 - type: listing
   id: CarpOperativeReinforcement
@@ -50,7 +52,7 @@
     Telecrystal: 30
   categories:
   - UplinkAllies
-  reputation: 45 # Pirate: allies reputation
+  reputation: 40 # Pirate: specialist reputation tier
 
 - type: listing
   id: SpiderOperativeReinforcement
@@ -62,7 +64,7 @@
     Telecrystal: 50
   categories:
   - UplinkAllies
-  reputation: 50 # Pirate: allies reputation
+  reputation: 60 # Pirate: military reputation tier
 
 - type: listing
   id: UplinkReinforcementRadioSyndicateCyborgSaboteur

@@ -26,6 +26,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Server._Pirate.StationRecords; // Pirate: records photos
 // Pirate banking start
 using Content.Server._Pirate.Banking;
 using Content.Shared._Pirate.Banking;
@@ -58,6 +59,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly JobSystem _job = default!;
     [Dependency] private readonly BankCardSystem _bankCard = default!;
     // Pirate banking end
+    [Dependency] private readonly RecordPortraitSystem _portraits = default!; // Pirate: records photos
 
     public override void Initialize()
     {
@@ -278,12 +280,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         #region Pirate: records photos
         if (_record.TryGetRecord<CriminalRecord>(key, out var criminalRecord))
-        {
             criminalRecord.GeneralRecordSnapshot = record with { };
 
-            if (criminalRecord.PortraitProfileSnapshot != null)
-                criminalRecord.PortraitProfileSnapshot = criminalRecord.PortraitProfileSnapshot.WithName(newFullName);
-        }
+        _portraits.RenameSnapshot(key, newFullName);
         #endregion
 
         _record.Synchronize(key);

@@ -340,7 +340,7 @@ public sealed partial class DamageableSystem
                 uncappedDamage: damageDoneHypotheticalUncapped); // Woundmed
 
             if (isWoundable && !damageDone.Empty) // Pirate: only stored damage changes affect the parent body.
-                UpdateParentBodyDamage(ent, interruptsDoAfters, origin, ignoreBlockers);
+                TryUpdateParentBodyDamage(ent, interruptsDoAfters, origin, ignoreBlockers);
         }
 
         return damageDone;

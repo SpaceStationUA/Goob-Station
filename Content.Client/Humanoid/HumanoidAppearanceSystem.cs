@@ -81,7 +81,8 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         humanoidAppearance.Height = height;
         humanoidAppearance.Width = width;
 
-        _sprite.SetScale((entity, sprite), Vector2.One); // TODO: undo when engine PR gets merged to fix shimmering
+        // Pirate: keep unit scale until RobustToolbox#7129 fixes shimmering during movement.
+        _sprite.SetScale((entity, sprite), Vector2.One);
         // end Goobstation: port EE height/width sliders
 
         sprite[_sprite.LayerMapReserve((entity.Owner, sprite), HumanoidVisualLayers.Eyes)].Color = humanoidAppearance.EyeColor;

@@ -1,7 +1,7 @@
 # Extended character descriptions ported from Starlight.
 
-humanoid-profile-editor-ic-info-tab = IC-інфо
-humanoid-profile-editor-ooc-info-tab = OOC-інфо
+humanoid-profile-editor-ic-info-heading = IC-інформація
+humanoid-profile-editor-ooc-info-heading = OOC-інформація
 character-info-editor-physical-label = Фізичний опис:
 character-info-editor-personality-label = Опис особистості:
 character-info-editor-exploitable-label = Вразлива інформація:
