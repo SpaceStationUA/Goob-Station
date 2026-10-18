@@ -4,6 +4,7 @@
 using Content.Goobstation.Shared.IntrinsicVoiceModulator.VoiceMask; // Goobstation
 using Content.Shared.StatusIcon; // Goobstation
 using Content.Shared.VoiceMask;
+using Content.Shared._Pirate.VoiceMask; // Pirate: voice mask modes
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
@@ -38,6 +39,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
         _window.OnToggle += OnToggle;
         _window.OnAccentToggle += OnAccentToggle;
         _window.OnJobIconChanged += OnJobIconChanged; // GabyStation -> Radio icons
+        _window.ModesControl.OnModeChanged += (mode, channel, enabled) => SendMessage(new VoiceMaskSetModeMessage(mode, channel, enabled)); // Pirate: voice mask modes
     }
 
     private void OnNameSelected(string name)
@@ -72,6 +74,8 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
         _window.UpdateState(cast.Name, cast.Verb, cast.Active, cast.AccentHide);
 
         _window.SetCurrentJobIcon(cast.JobIcon); // GabyStation -> Radio icons
+        _window.ModesControl.UpdateState(cast.Modes); // Pirate: voice mask modes
+        _window.AltToggleHint.Visible = cast.Modes != null; // Pirate: voice mask modes
     }
 
     protected override void Dispose(bool disposing)

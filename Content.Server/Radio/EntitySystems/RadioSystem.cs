@@ -163,7 +163,7 @@ public sealed partial class RadioSystem : EntitySystem
         if (!_messages.Add(message))
             return;
 
-        var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
+        var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName) { Context = Content.Shared._Pirate.VoiceMask.SpeakerNameContext.Radio, RadioChannel = channel.ID }; // Pirate: voice mask modes
         RaiseLocalEvent(messageSource, evt);
 
         // Goob - Job icons
