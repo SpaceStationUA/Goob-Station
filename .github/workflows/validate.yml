@@ -51,4 +51,4 @@ jobs:
       if: ${{ !cancelled() && steps.engine.outcome == 'success' }}
       run: |
         pip3 install --ignore-installed --user pillow jsonschema
-        python3 RobustToolbox/Schemas/validate_rsis.py Resources/
+        python3 .github/Schemas/_Pirate/validate_rsis.py Resources/ # Pirate: allow AGPL RSIs
