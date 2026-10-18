@@ -114,6 +114,7 @@ public sealed class NoviceExplosiveProtectionTest
         EntityUid wideWelder = default;
         EntityUid wideTank = default;
         EntityUid wideWaterTank = default;
+        var heavyAttackDelayTicks = 1;
 
         EntityCoordinates Coordinates(float x, float y) =>
             new(map.GridCoords.EntityId, map.GridCoords.Position + new Vector2(x, y));
@@ -177,6 +178,18 @@ public sealed class NoviceExplosiveProtectionTest
             server.PlayerMan.SetAttachedEntity(session, wideUser);
             server.System<SharedCombatModeSystem>().SetInCombatMode(wideUser, true);
             Assert.That(server.System<ItemToggleSystem>().TryActivate(wideWelder, wideUser), Is.True);
+            var wideWeapon = entMan.GetComponent<MeleeWeaponComponent>(wideWelder);
+            // Selecting a melee weapon starts its attack cooldown.
+            var remaining = wideWeapon.NextAttack - server.Timing.CurTime;
+            heavyAttackDelayTicks = Math.Max(1,
+                (int) Math.Ceiling(remaining.TotalSeconds / server.Timing.TickPeriod.TotalSeconds) + 1);
+        });
+
+        await pair.RunTicksSync(heavyAttackDelayTicks);
+
+        await server.WaitAssertion(() =>
+        {
+            var melee = server.System<MeleeWeaponSystem>();
             var wideWeapon = entMan.GetComponent<MeleeWeaponComponent>(wideWelder);
             var wideTankDamage = entMan.GetComponent<DamageableComponent>(wideTank);
             Assert.That(melee.AttemptHeavyAttack(wideUser, wideWelder, wideWeapon, [wideWaterTank, wideTank],
