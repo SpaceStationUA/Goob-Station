@@ -1,0 +1,440 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: selectableSet
+  id: VoidsuitSelectorCorpsmanLightHardsuit
+  name: selectable-set-corpsman-lighthardsuit-name
+  description: selectable-set-corpsman-lighthardsuit-desc
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
+    state: icon
+  content:
+  - ClothingOuterHardsuitBrigmedic
+
+- type: selectableSet
+  id: VoidsuitSelectorCorpsmanCombatHardsuit
+  name: selectable-set-corpsman-combathardsuit-name
+  description: selectable-set-corpsman-combathardsuit-desc
+  sprite:
+    sprite: _Pirate/DV/Clothing/OuterClothing/Hardsuits/corpsman.rsi
+    state: icon
+  content:
+  - ClothingOuterHardsuitCorpsman
+
+# Blueshield Officer
+
+- type: selectableSet
+  id: BSOBRDISet # Yes I moved it because it bothered me that it was in some random ass place above
+  name: selectable-set-bso-brdi-name
+  description: selectable-set-bso-brdi-description
+  sprite:
+    sprite: _Pirate/DEN/Objects/Weapons/Guns/SMGs/BRDI_R25_blue.rsi
+    state: icon
+  content:
+  - WeaponSubMachineGunBRDIR25BSO
+  - MagazineCaselessRifleFMJ
+  - MagazineCaselessRifleFMJ
+
+- type: selectableSet
+  id: BSOTypewriterSet
+  name: selectable-set-bso-typewriter-name
+  description: selectable-set-bso-typewriter-desc
+  sprite:
+    sprite: _Pirate/DV/Objects/Weapons/Guns/SMGs/typewriter.rsi
+    state: icon
+  content:
+  - WeaponSubMachineGunTypewriter
+  - MagazinePistolSubMachineGunDrumRubber
+  - MagazinePistolSubMachineGun
+
+- type: selectableSet
+  id: BSOExtractionSet
+  name: selectable-set-bso-extraction-name
+  description: selectable-set-bso-extraction-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Tools/bluespace_fulton.rsi
+    state: extraction_pack
+  content:
+  - ClothingBeltExtractionRigBSOFilled
+
+- type: selectableSet
+  id: BSOMedicalSet
+  name: selectable-set-bso-medical-name
+  description: selectable-set-bso-medical-description
+  sprite:
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medicated-suture
+  content:
+  - ClothingBeltMilitaryWebbingBSOFilledMed
+
+- type: selectableSet
+  id: BSOChemicalSet
+  name: selectable-set-bso-chemical-name
+  description: selectable-set-bso-chemical-description
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Melee/blueshield_knife.rsi
+    state: icon
+  content:
+  - ClothingBeltChemBagBSOFilled
+
+# NTR
+
+- type: selectableSet
+  id: HosLawbringerSet
+  name: selectable-set-hos-lawbringer-name
+  description: selectable-set-hos-lawbringer-description
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Guns/Battery/lawbringer.rsi
+    state: icon
+  content:
+  - WeaponEnergyGunLawbringer
+
+- type: selectableSet
+  id: HosBRDISet
+  name: selectable-set-hos-brdi-name
+  description: selectable-set-hos-brdi-description
+  sprite:
+    sprite: _Pirate/DEN/Objects/Weapons/Guns/SMGs/BRDI_R25_decorated.rsi
+    state: icon
+  content:
+  - WeaponSubMachineGunBRDIR25HoS
+  - MagazineCaselessRifleFMJ
+  - MagazineCaselessRifleFMJ
+
+- type: selectableSet
+  id: HosJusticeSet
+  name: selectable-set-hos-Justice-name
+  description: selectable-set-hos-Justice-description
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi
+    state: icon
+  content:
+  - ClothingBeltSheathHeadOfSecurityFilled
+
+- type: selectableSet
+  id: HosIrelanderSet
+  name: selectable-set-irelander-name
+  description: selectable-set-irelander-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Melee/irelander.rsi
+    state: base
+  content:
+  - HosIreLander
+
+- type: selectableSet
+  id: HosCQCSet
+  name: selectable-set-hos-belt-name
+  description: selectable-set-hos-belt-description
+  sprite:
+    sprite: _Pirate/Omu/Clothing/Belt/clothingbelthoscqc.rsi
+    state: icon
+  content:
+  - ClothingBeltHOSCQC
+
+- type: selectableSet
+  id: HosOniGlaiveSet
+  name: selectable-set-hosoniblade-name
+  description: selectable-set-hosoniblade-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Melee/oniglaive.rsi
+    state: base
+  content:
+  - HosOniBlade
+
+- type: selectableSet
+  id: WeaponEnergyShotgunSet
+  name: selectable-set-warden-eshotty-name
+  description: selectable-set-warden-eshotty-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    state: icon
+  content:
+  - WeaponEnergyShotgun
+
+- type: selectableSet
+  id: WeaponWardenRevolverShotgunSet
+  name: selectable-set-warden-r6-name
+  description: selectable-set-warden-r6-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Revolvers/R6.rsi
+    state: base
+  content:
+  - WeaponWardenRevolverShotgun
+
+- type: selectableSet
+  id: WardenRapierSet
+  name: selectable-set-warden-rapier-name
+  description: selectable-set-warden-rapier-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Melee/wardenrapier.rsi
+    state: icon
+  content:
+  - ClothingNeckWardenParryCloakFilled
+
+- type: selectableSet
+  id: WardenSnubSet
+  name: selectable-set-warden-snub-name
+  description: selectable-set-warden-snub-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Revolvers/WardenSnub.rsi
+    state: base
+  content:
+  - WardenSnubRevolver
+  - WardenSnubRevolver
+  - SpeedLoaderRevolverLightRifleMini
+  - SpeedLoaderRevolverLightRifleMini
+
+- type: selectableSet
+  id: WardenHenriettaSet
+  name: selectable-set-warden-henrietta-name
+  description: selectable-set-warden-henrietta-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Lever/henrietta_icon_48x.rsi
+    state: base
+  content:
+  - WeaponLeverHenrietta
+  - ClothingBeltBandolierHighCaliberFilled
+  - MagazineBoxShotgunHighCaliberFlash
+  - MagazineBoxShotgunHighCaliberEnsnaring
+
+- type: selectableSet
+  id: WeaponMk58Set
+  name: selectable-set-mk58-name
+  description: selectable-set-mk58-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: base
+  content:
+  - WeaponPistolMk58
+  - MagazinePistol
+  - MagazinePistol
+
+- type: selectableSet
+  id: WeaponT8Set
+  name: selectable-set-t8-name
+  description: selectable-set-t8-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Revolvers/T8.rsi
+    state: base
+  content:
+  - SecurityDutyRevolver
+  - SpeedLoaderRevolverLightRifle
+  - SpeedLoaderRevolverLightRifle
+
+- type: selectableSet
+  id: WeaponEG1Set
+  name: selectable-set-eg1-name
+  description: selectable-set-eg1-description
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Guns/Battery/cell_revolver.rsi
+    state: icon
+  content:
+  - WeaponLaserCellRevolver
+  - PowerCellIRRevolver
+  - PowerCellIRRevolver
+  - PowerCellIRRevolver
+
+- type: selectableSet
+  id: BrigmedWeaponCrossbowSyringeSet
+  name: selectable-set-brigmed-crossbow-name
+  description: selectable-set-brigmed-crossbow-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Misc/syringecrossbow.rsi
+    state: icon
+  content:
+  - WeaponCrossbowSyringe
+  - SyringePax
+
+- type: selectableSet
+  id: BrigmedWeaponDisablerSMGSet
+  name: selectable-set-brigmed-disabler-name
+  description: selectable-set-brigmed-disabler-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
+    state: base
+  content:
+  - WeaponDisablerSMG
+
+- type: selectableSet
+  id: BrigmedWeaponPneumaticShotgunSet
+  name: selectable-set-brigmed-shotgun-name
+  description: selectable-set-brigmed-shotgun-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Shotguns/PneumaticShotty.rsi
+    state: base
+  content:
+  - WeaponPneumaticShotgun
+  - BoxBeanbag
+
+- type: selectableSet
+  id: HoSPetLaikaSet
+  name: selectable-set-MobSecDogLaika-name
+  description: selectable-set-MobSecDogLaika-description
+  sprite:
+    sprite: _Pirate/Mobs/Pets/secdog.rsi # Pirate: reuse our existing K9 and its sprites.
+    state: secdog
+  content:
+  - MobSecDogLaika
+
+- type: selectableSet
+  id: HoSPetShivaSet
+  name: selectable-set-MobSpiderShiva-name
+  description: selectable-set-MobSpiderShiva-description
+  sprite:
+    sprite: Mobs/Pets/shiva.rsi
+    state: shiva
+  content:
+  - MobSpiderShiva
+
+- type: selectableSet
+  id: HoSPetTrevorSet
+  name: selectable-set-trevor-name
+  description: selectable-set-trevor-description
+  sprite:
+    sprite: _Goobstation/Mobs/Trevor/trevor.rsi
+    state: trevor
+  content:
+  - MobTrevor
+
+# ERT
+
+- type: selectableSet
+  id: WeaponCeremonialRifleSet
+  name: selectable-set-ceremonial-rifle-name
+  description: selectable-set-ceremonial-rifle-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Snipers/ceremonial_rifle.rsi
+    state: base
+  content:
+  - WeaponSniperM1Garand
+  - MagazineClipM1Garand
+  - MagazineClipM1Garand
+
+- type: selectableSet
+  id: SargeMagnumSet
+  name: selectable-set-sarge-magnum-name
+  description: selectable-set-sarge-magnum-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
+    state: icon
+  content:
+  - WeaponEnergyMagnum
+
+- type: selectableSet
+  id: SergeantBeltSet
+  name: selectable-set-sergeant-belt-name
+  description: selectable-set-sergeant-belt-description
+  sprite:
+    sprite: _Pirate/Omu/Clothing/Belt/sergeantdisciplinary.rsi
+    state: icon
+  content:
+  - WaistBeltSergeantBelt
+
+- type: selectableSet
+  id: SecurityTackleSet
+  name: selectable-set-security-tackle-name
+  description: selectable-set-security-tackle-description
+  sprite:
+    sprite: _Pirate/Trauma/Clothing/Hands/Gloves/securitygloves.rsi
+    state: icon
+  content:
+  - ClothingHandsGlovesSecurity
+
+- type: selectableSet
+  id: WeaponAntiqueLaserSet
+  name: selectable-set-antiquelaser-name
+  description: selectable-set-antiquelaser-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
+    state: base
+  content:
+  - WeaponAntiqueLaser
+
+- type: selectableSet
+  id: WeaponVC8Set
+  name: selectable-set-vc8-name
+  description: selectable-set-vc8-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Revolvers/VC-8.rsi
+    state: base
+  content:
+  - VulcanEightRevolver
+
+- type: selectableSet
+  id: CaneNTSet
+  name: selectable-set-ntr-cane-name
+  description: selectable-set-ntr-cane-desc
+  sprite:
+    sprite: _Pirate/Starlight/Objects/Weapons/Melee/cane_nt.rsi
+    state: icon
+  content:
+  - CaneNT
+
+- type: selectableSet
+  id: BladeNTSet
+  name: selectable-set-ntr-blade-name
+  description: selectable-set-ntr-blade-desc
+  sprite:
+    sprite: Objects/Weapons/Melee/cane_blade.rsi
+    state: icon
+  content:
+  - CaneSheathFilledNanotrasen
+
+- type: selectableSet
+  id: BrellaNTSet
+  name: selectable-set-ntr-brella-name
+  description: selectable-set-ntr-brella-desc
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Melee/marlen.rsi
+    state: icon
+  content:
+  - Marlen
+
+- type: selectableSet
+  id: ERTShotgunSet
+  name: selectable-set-ert-shotgun-name
+  description: selectable-set-ert-shotgun-description
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Guns/Lever/combatshotgun_icon_48x.rsi
+    state: icon
+  content:
+  - WeaponShotgunCombatCentComm
+  - MagazineBoxShotgunHighCaliber
+  - MagazineBoxShotgunHighCaliber
+  - WeaponPistolAnacondaCentComm
+
+- type: selectableSet
+  id: ERTLightEnergySet
+  name: selectable-set-ert-light-energy-name
+  description: selectable-set-ert-light-energy-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Battery/ert_energy_rifle.rsi
+    state: icon
+  content:
+  - WeaponAdvancedEnergyRifle
+  - ClothingBeltHolsterFilledBlueshield
+  - AdvancedEnergyMagRifleLethal
+  - AdvancedEnergyMagRifleOverchargeLethal
+  - AdvancedEnergyMagRifleDisabler
+
+#corpsman
+
+- type: selectableSet
+  id: ERTSMGSet
+  name: selectable-set-ert-smg-name
+  description: selectable-set-ert-smg-description
+  sprite:
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    state: icon
+  content:
+  - WeaponSubMachineGunC20rCentComm
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGun
+  - MagazinePistolSubMachineGun
+  - BlueShieldShieldMarginallyLessEvilFilled
+  - BoxFlashbang
+  - BoxStinger
+  - BoxTearGas
+  - BoxHandcuff

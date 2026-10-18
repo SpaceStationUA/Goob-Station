@@ -632,24 +632,8 @@
       - ContractorUplink
 
 
-- type: listing
-  id: UplinkClothingHandsGlovesGuerrilla
-  name: uplink-guerrilla-gloves-name
-  description: uplink-guerrilla-gloves-desc
-  icon: { sprite: /Textures/_Goobstation/Clothing/Hands/Gloves/guerrilla.rsi, state: icon }
-  productEntity: ClothingHandsGlovesGuerrilla
-  cost:
-    Telecrystal: 30
-  reputation: 20 # Pirate: entry-level reputation tier
-  categories:
-  - UplinkWearables
-  conditions:
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
+# Pirate: Omu tackling gloves use UplinkGuerrillaGloves in the Pirate catalog.
 
-# Job specific
 - type: listing
   id: UplinkPieCannon
   name: uplink-pie-cannon-name

@@ -74,7 +74,7 @@
     children:
     - !type:NestedSelector
       tableId: LockerFillCaptainNoLaser
-    - id: WeaponAntiqueLaser
+    - id: CaptainGunCase # Pirate: Omu duty case
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -413,7 +413,10 @@
     - id: ComputerCargoRequestSecurityFlatpack # Goobstation
     - id: WantedListCartridge
     - id: DrinkHosFlask
-    - id: ClothingBeltSheathHeadOfSecurityFilled # Goobstation - security revamp
+    - id: HeadOfSecurityMeleeCase # Pirate: Omu melee choice
+    - id: HeadOfSecurityGunCase # Pirate: issue the ranged case on every map
+    - id: HoSPetKennel # Pirate
+    - id: ClothingHandsGlovesGorilla # Pirate
     - id: PrinterDocFlatpack  # Pirate document printer
     - id: PhotoAlbumDepartmentSecurity
     - id: MaterialSiloFlatpack # Goob

@@ -691,3 +691,9 @@ binds:
   key: Z
   mod1: Shift
   mod2: Control
+
+# Pirate: Omu tackling gloves
+- function: Tackle
+  type: State
+  key: Q
+  mod1: Alt

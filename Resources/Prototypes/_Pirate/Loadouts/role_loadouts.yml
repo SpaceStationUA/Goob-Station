@@ -57,6 +57,7 @@
   - SecurityGloves
   - InstructorNeck
   - InstructorBelt
+  - PirateInstructorWeapon # Pirate: Omu sergeant duty choices
   - SurvivalSecurity
   - Trinkets
   - SecurityJobTrinkets
@@ -91,7 +92,7 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobInterdyneDeputy
   groups:
@@ -164,7 +165,7 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobInterdyneEngineer
   groups:
@@ -181,7 +182,7 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobInterdyneSecure
   groups:
@@ -198,7 +199,7 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobInterdyneService
   groups:
@@ -215,7 +216,7 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
-  
+
 - type: roleLoadout
   id: JobInterdyneShaftMiners
   groups:
@@ -232,5 +233,5 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
-  
+
 # Other

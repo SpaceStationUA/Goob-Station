@@ -121,4 +121,8 @@ public sealed partial class ProjectileComponent : Component
     [DataField]
     public Vector2 TargetCoordinates;
     // Goobstation end
+
+    // Pirate: Omu's .30 long rifle ammunition carries its own speed multiplier.
+    [DataField]
+    public FixedPoint2 ProjectileSpeedModifier = 1f;
 }

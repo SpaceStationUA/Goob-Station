@@ -302,7 +302,7 @@ public sealed partial class GunSystem : SharedGunSystem
         }
 
         // Do a throw
-        if (!HasComp<ProjectileComponent>(uid))
+        if (!TryComp<ProjectileComponent>(uid, out var projectile)) // Pirate: Omu gun damage multiplier
         {
             RemoveShootable(uid);
             // TODO: Someone can probably yeet this a billion miles so need to pre-validate input somewhere up the call stack.
@@ -310,6 +310,7 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
         }
 
+        projectile.Damage *= gun.Comp.DamageModifier; // Pirate: Omu .45 Chester
         ShootProjectile(uid, mapDirection, gunVelocity, gun, user, gun.Comp.ProjectileSpeedModified,
         targetCoordinates); // Goobstation
     }

@@ -39,6 +39,18 @@
     skills:
       KnowledgeWeaponsLaser: 28
 
+# Pirate: the Omu instructor's rifle training must fit the existing three brain slots.
+- type: entity
+  parent: SkillChipSidearmsAdvanced
+  id: SkillChipSecurityInstructor
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsPistol: 50
+      KnowledgeWeaponsLaser: 50
+      ShootingKnowledge: 50
+      KnowledgeWeaponsRifle: 28
+
 - type: entity
   parent: BaseSkillChipAPTR
   id: SkillChipMarksmanship
