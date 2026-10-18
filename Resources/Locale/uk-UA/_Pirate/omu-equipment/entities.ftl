@@ -52,13 +52,13 @@ ent-ClothingHandsGlovesDolphin = рукавиці «Дельфін»
 ent-ClothingHandsGlovesGripper = саморобні рукавиці для стрибків
     .desc = Пошарпані рукавиці, обмотані липкою стрічкою. Стережіться їхнього власника: йому вже нічого втрачати, навіть сорому.
 
-ent-Stunsword = NY-6 «Grognard»
+ent-Stunsword = NY-6 «Ґроґнард»
     .desc = Серійний міцний клинок із плазсталі для найбільш досвідчених і загартованих офіцерів служби безпеки.
 
-ent-WeaponRevolverR3Compleat = R3 Compleat
-    .desc = Важкий шестизарядний револьвер Celtek під .45 Magnum. Перші надважкі набої давно загублені в історії, а сама зброя стала колекційною рідкістю.
+ent-WeaponRevolverR3Compleat = револьвер R3 «Компліт»
+    .desc = Важкий шестизарядний револьвер Селтек під .45 магнум. Перші надважкі набої давно загублені в історії, а сама зброя стала колекційною рідкістю.
 
-ent-MagazineBoxLongRifle = коробка набоїв (.30 long rifle magnum)
+ent-MagazineBoxLongRifle = коробка набоїв (.30 довгий гвинтівковий магнум)
 
 ent-BoxAPDS = коробка набоїв (12 калібр, APDS)
     .desc = Картонна коробка пихи та поганих ідей. Нехай Бог допоможе, якщо вона вам знадобилася.
@@ -66,15 +66,15 @@ ent-BoxAPDS = коробка набоїв (12 калібр, APDS)
 ent-MagazineBoxCaselessRifleFMJ = коробка набоїв (9,5 мм, суцільнометалева оболонка)
     .desc = Картонна коробка безгільзових набоїв 9,5 мм загального призначення.
 
-ent-WeaponLeverChesterRifle = Chester
+ent-WeaponLeverChesterRifle = Честер
     .desc = Удосконалена важільна гвинтівка під спеціалізовані набої .45 для швидкого усунення загроз.
 
 ent-ClothingBeltSheathStunsword = піхви меча СБ
     .desc = Прості чорні піхви для електромеча NY-6.
 
-ent-CartridgeLongRifle = набій (.30 long rifle magnum)
+ent-CartridgeLongRifle = набій (.30 довгий гвинтівковий магнум)
 
-ent-MagazineClipM1Garand = обойма M1 Garand (.30 long rifle magnum)
+ent-MagazineClipM1Garand = обойма M1 «Ґаранд» (.30 довгий гвинтівковий магнум)
 
 ent-ShellShotgunAPDS = набій (12 калібр, APDS)
     .desc = Вівіан особисто наказала забезпечити станції НТ бронебійними підкаліберними набоями. На запитання «навіщо?» вона відповіла одним словом: «Смішно».
@@ -89,10 +89,10 @@ ent-WeaponSubMachineGunBRDIR25BSO = BRDI R-25
 
 ent-MagazineCaselessRifleFMJ = магазин (9,5 мм, суцільнометалева оболонка)
 
-ent-WeaponSubMachineGunTypewriter = Typewriter
+ent-WeaponSubMachineGunTypewriter = Тайпрайтер
     .desc = Копія знаменитого пістолета-кулемета зі старого Солу, відома війнами між гангстерами. Використовує .35 та приймає коробчасті й барабанні магазини.
 
-ent-MagazinePistolSubMachineGunDrumRubber = барабанний магазин (.35 auto, гумові)
+ent-MagazinePistolSubMachineGunDrumRubber = барабанний магазин (.35 авто, гумові)
     .desc = Барабанний магазин пістолета-кулемета на 50 нелетальних гумових набоїв.
 
 ent-WeaponSubMachineGunBRDIR25HoS = антикварний BRDI R-25
@@ -101,53 +101,53 @@ ent-WeaponSubMachineGunBRDIR25HoS = антикварний BRDI R-25
 ent-HosIreLander = О'Коннабурр, Ірландець
     .desc = Старовинний мідний дворучний меч, яким, за переказами, колись поклали край великій смуті.
 
-ent-ClothingBeltHOSCQC = Qua Nar'Vulna
+ent-ClothingBeltHOSCQC = Ква Нар’Вульна
     .desc = Церемоніальний пояс стародавнього бойового мистецтва, що наділяє власника страхітливою силою.
 
 ent-HosOniBlade = Вітер степів
     .desc = Як вітри високогір'я розтинають землю й стирають її на порох, так і клинок нашого народу.
 
-ent-WeaponWardenRevolverShotgun = траншейний револьвер R6 «Slammer»
+ent-WeaponWardenRevolverShotgun = траншейний револьвер R6 «Слемер»
     .desc = Напівавтоматичний траншейний R6 для зачистки кутів. Потужність дробовика 12 калібру в розмірі, який вміщується у чоботі!
 
-ent-WardenSnubRevolver = револьвер R2 «Greeting»
-    .desc = Ранній прототип Celtek, який завжди продавали парами. Стрижень із чорного заліза в руків'ї забезпечує надзвичайну стабільність і темп вогню.
+ent-WardenSnubRevolver = револьвер R2 «Привітання»
+    .desc = Ранній прототип Селтек, який завжди продавали парами. Стрижень із чорного заліза в руків'ї забезпечує надзвичайну стабільність і темп вогню.
 
-ent-SpeedLoaderRevolverLightRifleMini = малий прискорювач заряджання (.30 rifle)
+ent-SpeedLoaderRevolverLightRifleMini = малий прискорювач заряджання (.30 гвинтівкові)
     .desc = Прискорювач заряджання для револьвера R2.
 
-ent-WeaponLeverHenrietta = Henrietta
+ent-WeaponLeverHenrietta = Генрієтта
     .desc = Казнозарядна рушниця 8 калібру невідомого походження, яку наглядачі традиційно передають своїм наступникам. Ви впевнені: ця зброя ніколи не підведе.
 
-ent-SecurityDutyRevolver = револьвер T8 «Consistency»
-    .desc = Місткий службовий револьвер для вибагливого офіцера, навіть пофарбований у червоний колір СБ. Поступається Mk58 темпом вогню заради зупинної дії. Використовує .30 rifle.
+ent-SecurityDutyRevolver = револьвер T8 «Сталість»
+    .desc = Місткий службовий револьвер для вибагливого офіцера, навіть пофарбований у червоний колір СБ. Поступається Mk58 темпом вогню заради зупинної дії. Використовує .30 гвинтівкові.
 
-ent-SpeedLoaderRevolverLightRifle = прискорювач заряджання (.30 rifle)
+ent-SpeedLoaderRevolverLightRifle = прискорювач заряджання (.30 гвинтівкові)
     .desc = Прискорювач заряджання для револьвера T8.
 
 ent-WeaponCrossbowSyringe = шприцевий арбалет
     .desc = Сильно модифікований арбалет, який запускає шприци для дистанційного лікування офіцерів. Попри переробки, схвалений НТ, на відміну від ДЕЯКИХ інших варіантів.
 
-ent-WeaponPneumaticShotgun = дробовик S1 «Pnuey»
+ent-WeaponPneumaticShotgun = дробовик S1 «Пнюї»
     .desc = Модифікований мисливський дробовик, який також запускає шприци завдяки пневматиці. Попит вивів цей польовий винахід на сірий ринок. НЕ СХВАЛЕНО НТ.
 
-ent-WeaponSniperM1Garand = M1 Garand
+ent-WeaponSniperM1Garand = M1 «Ґаранд»
     .desc = Давня улюблена зброя піхотинців Солу. Цей екземпляр подарували інструктору служби безпеки.
 
 ent-WaistBeltSergeantBelt = дисциплінарний ремінь інструктора
     .desc = Дуже важкий ремінь. «Подивись, що ти наробив! Курсанте, негайно п'ять відтискань!»
 
-ent-VulcanEightRevolver = револьвер VC-8 «Handshake»
-    .desc = Копія легендарного Vulcan Eight під 12 калібр. Гіроскоп із вольфрамового сплаву дозволяє напрочуд легко стріляти з цієї ручної гармати. Клеймо CelTek засвідчує, що це репліка.
+ent-VulcanEightRevolver = револьвер VC-8 «Рукостискання»
+    .desc = Копія легендарного Вулкан Вісім під 12 калібр. Гіроскоп із вольфрамового сплаву дозволяє напрочуд легко стріляти з цієї ручної гармати. Клеймо Селтек засвідчує, що це репліка.
 
 ent-CaneNT = вишукана тростина
     .desc = Тростина з особливим гравіюванням. Схоже, непогано підходить для відбивання нападів...
 
 ent-MagazineMagnumLeverRifle = магазин важільної гвинтівки (.45)
 
-ent-MagazineBoxMagnumEnsnaring = коробка набоїв (.45 magnum, сковувальні)
+ent-MagazineBoxMagnumEnsnaring = коробка набоїв (.45 магнум, сковувальні)
 
-ent-MagazineBoxMagnumFlash = коробка набоїв (.45 magnum, світлошумові)
+ent-MagazineBoxMagnumFlash = коробка набоїв (.45 магнум, світлошумові)
 
 ent-WeaponShotgunCombatCentComm = бойовий дробовик
     .desc = Стара конструкція з посиленим корпусом для відбиття абордажів. Цього разу абордажна команда — ви. На стволі логотип Нанотрейзен.
@@ -168,37 +168,40 @@ ent-AdvancedEnergyMagRifleDisabler = удосконалений магазин �
     .desc = Мікрореактор із випромінювачем, що формує виснажливі енергетичні заряди.
 
 ent-WeaponSubMachineGunC20rCentComm = C-20r
-    .desc = Класичний поширений пістолет-кулемет, одна з перших власних розробок Waffle Corp. Використовує магазини .35. На корпусі логотип Нанотрейзен.
+    .desc = Класичний поширений пістолет-кулемет, одна з перших власних розробок Вафл Корп. Використовує магазини .35. На корпусі логотип Нанотрейзен.
 
 ent-BlueShieldShieldMarginallyLessEvilFilled = щит синього щита
     .desc = Відомий тим, що приймає постріли, призначені високопосадовцям. На корпусі логотип Нанотрейзен.
 
-ent-BulletLongRifle = куля (.30 long rifle magnum)
+ent-BulletLongRifle = куля (.30 довгий гвинтівковий магнум)
+    .desc = { ent-BaseBullet.desc }
 
-ent-BaseMagazineClipM1Garand = обойма M1 Garand (.30 long rifle magnum)
+ent-BaseMagazineClipM1Garand = обойма M1 «Ґаранд» (.30 довгий гвинтівковий магнум)
 
 ent-PelletShotgunAPDS = снаряд (12 калібр, APDS)
+    .desc = { ent-BaseBullet.desc }
 
 ent-BulletCaselessRifleFMJ = куля (9,5 мм, суцільнометалева оболонка)
+    .desc = { ent-BaseBullet.desc }
 
 ent-ClothingHeadHelmetHardsuitCorpsman = шолом бойового скафандра бригмедика
     .desc = Легкий броньований шолом із суцільним синім забралом і ліхтарем.
 
-ent-MagazinePistolSubMachineGunDrum = барабанний магазин (.35 auto)
+ent-MagazinePistolSubMachineGunDrum = барабанний магазин (.35 авто)
     .desc = Барабанний магазин пістолета-кулемета на 50 звичайних набоїв.
 
-ent-BaseMagazinePistolSubMachineGunDrum = барабанний магазин (.35 auto)
+ent-BaseMagazinePistolSubMachineGunDrum = барабанний магазин (.35 авто)
 
-ent-CartridgePistolRubber = набій (.35 auto, гумовий)
+ent-CartridgePistolRubber = набій (.35 авто, гумовий)
 
 ent-ClothingBeltExtractionRigBSO = евакуаційна розвантажувальна система синього щита
     .desc = Сучасніша версія розвантажувальної системи шахтарів із додатковими кишенями. Для офіцерів синього щита, які цінують швидку евакуацію.
 
-ent-FultonBeaconBlueshield = блюспейс-маяк Fulton
-    .desc = Приймальний маяк евакуаційної системи Fulton зі значно потужнішим блюспейс-сигналом.
+ent-FultonBeaconBlueshield = блюспейс-маяк Фултон
+    .desc = Приймальний маяк евакуаційної системи Фултон зі значно потужнішим блюспейс-сигналом.
 
-ent-FultonBlueshield = блюспейс-система Fulton
-    .desc = Блюспейс-посилений Fulton для майже миттєвої евакуації. Кріпиться до каталки або іншого предмета та швидко знаходить сигнал маяка.
+ent-FultonBlueshield = блюспейс-система Фултон
+    .desc = Блюспейс-посилений Фултон для майже миттєвої евакуації. Кріпиться до каталки або іншого предмета та швидко знаходить сигнал маяка.
 
 ent-FultonBlueshield1 = { ent-FultonBlueshield }
     .desc = { ent-FultonBlueshield.desc }
@@ -218,22 +221,26 @@ ent-ClothingNeckWardenParryCloak = дуельний плащ наглядача
 ent-WardenRapier = рапіра наглядача
     .desc = Тонкий витончений меч для випадів через бананову шкірку.
 
-ent-BaseMagazineMagnumLeverRifle = магазин (.45 rifle)
+ent-BaseMagazineMagnumLeverRifle = магазин (.45 гвинтівкові)
 
-ent-CartridgeMagnumEnsnaring = набій (.45 magnum, сковувальний)
+ent-CartridgeMagnumEnsnaring = набій (.45 магнум, сковувальний)
 
-ent-CartridgeMagnumFlash = набій (.45 magnum, світлошумовий)
+ent-CartridgeMagnumFlash = набій (.45 магнум, світлошумовий)
 
-ent-BulletPistolRubber = куля (.35 auto, гумова)
+ent-BulletPistolRubber = куля (.35 авто, гумова)
+    .desc = { ent-BaseBullet.desc }
 
 ent-BodyBagBluespaceBSO = блюспейс-мішок для тіл
     .desc = Синтетичний блюспейс-мішок для офіцера синього щита. Вміщує одразу кількох загиблих високопосадовців, їхні кінцівки та органи.
 
-ent-BulletMagnumEnsnaring = куля (.45 magnum, сковувальна)
+ent-BulletMagnumEnsnaring = куля (.45 магнум, сковувальна)
+    .desc = { ent-BaseBullet.desc }
 
-ent-BulletMagnumFlash = куля (.45 magnum, світлошумова)
+ent-BulletMagnumFlash = куля (.45 магнум, світлошумова)
+    .desc = { ent-BaseBullet.desc }
 
 ent-BaseBulletRubber = гумова куля
+    .desc = { ent-BaseBullet.desc }
 
 ent-secarang = секоранг
     .desc = Електробумеранг служби безпеки. Перед кидком переконайтеся, що зможете його зловити.

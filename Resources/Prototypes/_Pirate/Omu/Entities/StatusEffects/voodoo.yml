@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectVoodooBlindness
+  name: voodoo blindness
+  components:
+  - type: VoodooBlindnessStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectVoodooRebindCooldown
+  name: voodoo rebind cooldown
