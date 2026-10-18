@@ -13,9 +13,11 @@
     MagazineBoxMagnumPractice: 3
 
     MagazineBoxPistol: 6
+    MagazineBoxPistolBig: 6 # Pirate: large ammo boxes
     MagazineBoxPistolPractice: 3
 
     MagazineBoxRifle: 6
+    MagazineBoxRifleBig: 6 # Pirate: large ammo boxes
     MagazineBoxRiflePractice: 3
 
     BoxLethalshot: 6

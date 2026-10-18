@@ -43,20 +43,16 @@ ent-ClothingBackpackMercenaryAssaultFilled = mercenary bag
     .suffix = Assault, Filled
 
 selectable-set-merc-assault-name = Assault
-selectable-set-merc-assault-description = Includes a mercenary backpack with two C4 charges and webbing containing primary weapon and sidearm requisitions. Weapon packages prioritize placing ammunition into the webbing before weapons, where space allows.
+selectable-set-merc-assault-description = Frontline rifleman. Choose a primary and a sidearm from the requisitions in your webbing. The two C4 charges are for breaching.
 
 selectable-set-merc-medic-name = Medic
-selectable-set-merc-medic-description = Keep your squad alive with a mercenary backpack containing a syndicate hypospray, compact defibrillator, roller bed and epinephrine. Advanced surgical tools and four combat medipens are packed into medical webbing with ERT storage; a health analyzer is packed into the medical kit.
-    Includes jugs of salicylic acid, oxandrolone, dexalin plus/saline and dylovene, an autosurgeon for medical cybernetic eyes, insulated nitrile combat gloves, a sterile mask, a combat medical kit, two explosive grenades, and a Vector SMG with four spare magazines in total and an ammunition box. Gloves and mask are supplied separately.
+selectable-set-merc-medic-description = Squad medic. Refill the hypospray from the jugs. The webbing holds medical gear only. The autosurgeon installs eyes with a built-in medical HUD.
 
 selectable-set-merc-recon-name = Recon
-selectable-set-merc-recon-description = Includes a mercenary bag and webbing. Gather intelligence with a voice-changing chameleon mask, receive-only station master encryption key, camera bug, syndicate crew monitor, chameleon projector and syndicate jaws of life.
-    The key covers all eight station channels, excluding Syndicate and Cybersun. Includes a suppressed Hushpup shotgun, syndicate thermal goggles and webbing containing two buckshot boxes and one slug box.
+selectable-set-merc-recon-description = Infiltrator. Carries a receive-only listening key and a suppressed shotgun for silent eliminations.
 
 selectable-set-merc-augment-name = Augment
-selectable-set-merc-augment-description = Includes a mercenary bag and webbing. Upgrade yourself with autosurgeons for a right mantis blade, Sandevistan and cyberdeck eyes. Install the augmentations before combat.
-    Includes an Mk32 "Universal" pistol with three spare .45 magnum magazines and three ammunition boxes. All spare magazines and ammunition boxes are packed into the webbing.
+selectable-set-merc-augment-description = Cyber-enhanced close-quarters fighter. Install the mantis blade, Sandevistan and cyberdeck before contact.
 
 selectable-set-merc-vanguard-name = Vanguard
-selectable-set-merc-vanguard-description = Includes an energy katana in a belt sheath and a mercenary backpack packed with a CQC manual, mercenary boots, two energy bolas, two smoke grenades, two flashbangs and two combat medipens.
-    The katana provides dashes and deflection; wield it with both hands to parry. Your MODsuit provides magnetic traction when deployed. A solid headband, regular eyepatch and olive eyepatch are supplied separately.
+selectable-set-merc-vanguard-description = Melee breacher. No-slip boots. Wield the katana with both hands to deflect blows and bullets.
