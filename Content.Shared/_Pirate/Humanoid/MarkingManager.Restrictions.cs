@@ -11,10 +11,27 @@ public sealed partial class MarkingManager
     public bool FilterPlayerRestrictedMarkings(MarkingSet markings, string? ckey)
     {
         var changed = false;
-        foreach (var list in markings.Markings.Values)
-            changed |= list.RemoveAll(marking => Markings.TryGetValue(marking.MarkingId, out var proto) && !CanPlayerUseMarking(proto, ckey)) > 0;
+        foreach (var (category, list) in markings.Markings.ToArray())
+        {
+            for (var i = list.Count - 1; i >= 0; i--)
+            {
+                if (!Markings.TryGetValue(list[i].MarkingId, out var proto) || CanPlayerUseMarking(proto, ckey))
+                    continue;
+
+                markings.Remove(category, i);
+                changed = true;
+            }
+
+            if (list.Count == 0)
+                markings.Markings.Remove(category);
+        }
 
         return changed;
+    }
+
+    public List<Marking> FilterPlayerRestrictedMarkings(List<Marking> markings, string? ckey)
+    {
+        return markings.Where(marking => !Markings.TryGetValue(marking.MarkingId, out var proto) || CanPlayerUseMarking(proto, ckey)).ToList();
     }
 
     public List<Marking> FilterValidMarkings(List<Marking> markings, string species, Sex sex, string? ckey)

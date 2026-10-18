@@ -87,7 +87,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             return;
         }
 
-        var ckey = TryComp<ActorComponent>(uid, out var actor) ? actor.PlayerSession.Name : null;
+        var ckey = GetOwnerCkey(uid); // Pirate ckey for restricted players
         // Pirate ckey for restricted players
         if (!MarkingManager.CanPlayerUseMarking(markingPrototype, ckey))
         {
