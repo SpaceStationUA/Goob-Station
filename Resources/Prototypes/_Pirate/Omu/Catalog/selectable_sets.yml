@@ -272,7 +272,7 @@
   name: selectable-set-MobSecDogLaika-name
   description: selectable-set-MobSecDogLaika-description
   sprite:
-    sprite: _Pirate/DV/Mobs/Pets/secdog.rsi
+    sprite: _Pirate/Mobs/Pets/secdog.rsi # Pirate: reuse our existing K9 and its sprites.
     state: secdog
   content:
   - MobSecDogLaika

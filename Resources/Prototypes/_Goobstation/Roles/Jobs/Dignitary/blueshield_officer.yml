@@ -89,7 +89,7 @@
     #gloves: ClothingHandsGlovesCombat - Goobstation, moved to loadouts
     id: BlueshieldPDA
     ears: ClothingHeadsetAltBlueshield
-    belt: ClothingBeltMilitaryWebbingFilled
+    # Pirate: belt is selected through PirateBlueshieldBelt, including the default webbing.
     pocket1: UniqueBlueshieldOfficerLockerTeleporter
   storage:
     back:

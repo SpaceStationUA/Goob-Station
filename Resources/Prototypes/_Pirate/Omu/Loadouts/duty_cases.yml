@@ -72,7 +72,7 @@
 - type: loadout
   id: BrigmedWeaponDisablerSMG
   equipment:
-    back: WeaponDisablerSMG
+    suitstorage: WeaponDisablerSMG # Pirate: keep the brigmedic's selected backpack equipped.
   groupBy: "Основна зброя"
 
 - type: loadout
@@ -150,7 +150,13 @@
 - type: loadoutGroup
   id: PirateBlueshieldBelt
   name: loadout-group-bso-duty-belt
-  minLimit: 0
+  minLimit: 1
   maxLimit: 1
   loadouts:
+  - PirateBlueshieldWebbing
   - BsoSwordBelt
+
+- type: loadout
+  id: PirateBlueshieldWebbing
+  equipment:
+    belt: ClothingBeltMilitaryWebbingFilled

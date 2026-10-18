@@ -64,6 +64,8 @@
   components:
     - type: Sprite
       sprite: _Pirate/Trauma/Clothing/Hands/Gloves/gorilla.rsi
+    - type: Clothing # Pirate: override the inherited security glove sprite when worn.
+      sprite: _Pirate/Trauma/Clothing/Hands/Gloves/gorilla.rsi
 #    - type: Insulated # Omu - one or the other buddy
     - type: Fiber
       fiberMaterial: fibers-red-and-black-woven

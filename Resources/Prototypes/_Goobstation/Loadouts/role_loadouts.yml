@@ -42,7 +42,7 @@
   - BlueshieldOfficerEnvirosuit
   - BlueshieldOfficerEnvirogloves
   - BlueshieldOfficerGloves
-  - PirateBlueshieldBelt # Pirate: optional Grognard sheath
+  - PirateBlueshieldBelt # Pirate: webbing or Grognard sheath
 
 - type: roleLoadout
   id: JobNanotrasenCareerTrainer
