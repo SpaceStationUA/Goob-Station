@@ -1,0 +1,11 @@
+# Pirate: ported from OmuStation master d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: inventoryTemplate
+  id: borgNoOffset
+  slots:
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    uiWindowPos: 1,0
+    strippingWindowPos: 0,0
+    displayName: Head
