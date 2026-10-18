@@ -424,7 +424,7 @@
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     state: icon
   content:
-    - WeaponPulseCarbineAdvanced
+    - WeaponPulseCarbine # Pirate: preserve the Omu ERT case contents.
     - WeaponEnergyRevolver
     - EnergySpeedloaderPulse
     - EnergySpeedloaderPulse
