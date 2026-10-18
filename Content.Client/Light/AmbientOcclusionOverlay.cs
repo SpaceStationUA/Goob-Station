@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.InteropServices; // Pirate
 using Content.Client.Graphics;
 using Content.Shared.CCVar;
 using Content.Shared.Maps;
@@ -25,6 +26,11 @@ public sealed class AmbientOcclusionOverlay : Overlay
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     private List<Entity<MapGridComponent>> _cachedGrids = new();
+    // Pirate start - Update Content for Polygon Occluders
+    private readonly List<Entity<OccluderComponent, TransformComponent>> _cachedOccluders = new();
+    private readonly List<Vector2> _aoVertices = new(4096);
+    private readonly List<ushort> _aoIndices = new(6144);
+    // Pirate end
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
@@ -55,7 +61,6 @@ public sealed class AmbientOcclusionOverlay : Overlay
         var worldBounds = args.WorldBounds;
         var worldHandle = args.WorldHandle;
         var color = Color.FromHex(_cfgManager.GetCVar(CCVars.AmbientOcclusionColor));
-        var distance = _cfgManager.GetCVar(CCVars.AmbientOcclusionDistance);
         //var color = Color.Red;
         var target = viewport.RenderTarget;
         var lightScale = target.Size / (Vector2) viewport.Size;
@@ -92,18 +97,22 @@ public sealed class AmbientOcclusionOverlay : Overlay
             () =>
             {
                 worldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
-                var invMatrix = res.AOTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
+                // Pirate start - Update Content for Polygon Occluders
+                worldHandle.SetTransform(Matrix3x2.Identity);
+                var worldToTargetMatrix = res.AOTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
 
-                foreach (var entry in query.QueryAabb(mapId, worldBounds))
+                _cachedOccluders.Clear();
+                query.QueryAabb(_cachedOccluders, mapId, worldBounds);
+                foreach (var entry in _cachedOccluders)
                 {
-                    DebugTools.Assert(entry.Component.Enabled);
-                    var matrix = xformSystem.GetWorldMatrix(entry.Transform);
-                    var localMatrix = Matrix3x2.Multiply(matrix, invMatrix);
-
-                    worldHandle.SetTransform(localMatrix);
-                    // 4 pixels
-                    worldHandle.DrawRect(Box2.UnitCentered.Enlarged(distance / EyeManager.PixelsPerMeter), Color.White);
+                    DebugTools.Assert(entry.Comp1.Enabled);
+                    var matrix = xformSystem.GetWorldMatrix(entry.Comp2);
+                    var localToTargetMatrix = Matrix3x2.Multiply(matrix, worldToTargetMatrix);
+                    AppendAmbientOcclusionPolygon(worldHandle, entry.Comp1.Polygon, localToTargetMatrix);
                 }
+
+                FlushAmbientOcclusionPolygons(worldHandle);
+                // Pirate end
             }, Color.Transparent);
 
         _clyde.BlurRenderTarget(viewport, res.AOTarget, res.AOBlurBuffer, viewport.Eye!, 14f);
@@ -147,6 +156,39 @@ public sealed class AmbientOcclusionOverlay : Overlay
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
         args.WorldHandle.UseShader(null);
     }
+
+    // Pirate start - Update Content for Polygon Occluders
+    private void AppendAmbientOcclusionPolygon(DrawingHandleWorld worldHandle, ReadOnlySpan<Vector2> polygon, Matrix3x2 localToTargetMatrix)
+    {
+        if (polygon.Length < 3)
+            return;
+
+        if (_aoVertices.Count + polygon.Length > ushort.MaxValue)
+            FlushAmbientOcclusionPolygons(worldHandle);
+
+        var indexBase = (ushort) _aoVertices.Count;
+        for (var i = 0; i < polygon.Length; i++)
+            _aoVertices.Add(Vector2.Transform(polygon[i], localToTargetMatrix));
+
+        for (var i = 1; i < polygon.Length - 1; i++)
+        {
+            _aoIndices.Add(indexBase);
+            _aoIndices.Add((ushort) (indexBase + i));
+            _aoIndices.Add((ushort) (indexBase + i + 1));
+        }
+    }
+
+    private void FlushAmbientOcclusionPolygons(DrawingHandleWorld worldHandle)
+    {
+        if (_aoVertices.Count == 0)
+            return;
+
+        worldHandle.DrawPrimitives(DrawPrimitiveTopology.TriangleList,
+            CollectionsMarshal.AsSpan(_aoIndices), CollectionsMarshal.AsSpan(_aoVertices), Color.White);
+        _aoVertices.Clear();
+        _aoIndices.Clear();
+    }
+    // Pirate end
 
     protected override void DisposeBehavior()
     {

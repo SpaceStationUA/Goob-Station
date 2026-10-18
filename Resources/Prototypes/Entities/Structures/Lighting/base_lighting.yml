@@ -37,7 +37,7 @@
     energy: 0.8
     radius: 10
     softness: 1
-    offset: "0, -0.5"
+    offset: "0, -0.495" # Pirate: port Triad Update Content for Polygon Occluders.
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -329,7 +329,7 @@
     enabled: false
   - type: PointLight
     enabled: false
-    offset: "0, -0.5"
+    offset: "0, -0.495" # Pirate: port Triad Update Content for Polygon Occluders.
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot

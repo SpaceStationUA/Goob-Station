@@ -91,6 +91,13 @@
     airBlockedDirection:
     - South
     - East
+  # Pirate start - Update Content for Polygon Occluders
+  - type: Occluder
+    polygon:
+    - "-0.5,-0.5"
+    - "0.5,0.5"
+    - "0.5,-0.5"
+  # Pirate end
   - type: Fixtures
     fixtures:
       fix1:
@@ -944,6 +951,13 @@
     airBlockedDirection:
     - South
     - East
+  # Pirate start - Update Content for Polygon Occluders
+  - type: Occluder
+    polygon:
+    - "-0.5,-0.5"
+    - "0.5,0.5"
+    - "0.5,-0.5"
+  # Pirate end
   - type: Fixtures
     fixtures:
       fix1:
