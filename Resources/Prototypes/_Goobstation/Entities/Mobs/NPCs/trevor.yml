@@ -6,6 +6,8 @@
   id: MobTrevor
   description: A thousand years of space evolution and this is the best we could come up with.
   components:
+  - type: StealTarget # Pirate: the kennel's third pet shares our security-pet objective.
+    stealGroup: AnimalSecurity
   - type: Sprite
     drawdepth: Mobs
     sprite: _Goobstation/Mobs/Trevor/trevor.rsi

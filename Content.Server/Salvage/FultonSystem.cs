@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Server.Radio.EntitySystems; // Pirate: Omu medical evacuation announcements
 using Content.Shared._Pirate.Traitor; // Pirate
 using Content.Shared.Salvage.Fulton;
 using Robust.Shared.Map;
@@ -11,9 +12,10 @@ namespace Content.Server.Salvage;
 /// <summary>
 /// Transports attached entities to the linked beacon after a timer has elapsed.
 /// </summary>
-public sealed class FultonSystem : SharedFultonSystem
+public sealed partial class FultonSystem : SharedFultonSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private RadioSystem _radio = default!; // Pirate
 
     public override void Initialize()
     {
@@ -79,6 +81,13 @@ public sealed class FultonSystem : SharedFultonSystem
 
             delivered = true; // Pirate: extraction announcements
         }
+        // Pirate: announce successful Omu medical extractions without changing traitor delivery events.
+        if (delivered && TryComp<FultonBeaconComponent>(component.Beacon, out var beacon) && beacon.AnnounceOnFulton)
+        {
+            _radio.SendRadioMessage(component.Beacon!.Value, Loc.GetString(beacon.AnnouncementMessage),
+                beacon.AnnouncementChannel, uid, escapeMarkup: false);
+        }
+
         // Pirate: syndicate fultons use this event.
         var ev = new FultonedEvent(delivered); // Pirate: extraction announcements
         RaiseLocalEvent(uid, ref ev);

@@ -316,22 +316,7 @@
   categories:
   - UplinkWearables
 
-# Pirate: Restore the former nuclear operative listing at its original price.
-- type: listing
-  id: UplinkClothingHandsGlovesGuerrillaNukeops
-  name: uplink-guerrilla-gloves-name
-  description: uplink-guerrilla-gloves-desc
-  icon: { sprite: /Textures/_Goobstation/Clothing/Hands/Gloves/guerrilla.rsi, state: icon }
-  productEntity: ClothingHandsGlovesGuerrilla
-  cost:
-    Telecrystal: 60
-  categories:
-  - UplinkWearables
-  conditions:
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - NukeOpsUplink
+# Pirate: Omu UplinkGuerrillaGloves also serves nuclear operatives.
 
 - type: listing
   id: UplinkDeathRattleImplanterCybersun

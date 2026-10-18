@@ -4,6 +4,7 @@
   id: LockerFillNanorep
   table: !type:AllSelector
     children:
+    - id: NTRDutyCase # Pirate: Omu duty case
     - id: BoxFolderCentCom
     - id: BriefcaseBrownFilled
     - id: WeaponDisablerAdvanced
@@ -33,7 +34,6 @@
   id: LockerFillBlueshieldOfficer
   table: !type:AllSelector
     children:
-    - id: DefibrillatorCompact
     - id: ParamedHypo
     - id: MedkitBSOFilled
     - id: MedkitBSOIPCFilled
@@ -42,7 +42,8 @@
     - id: OxygenTankFilled
     - id: NitrogenTankFilled
     - id: HandheldCrewMonitorBSO
-    - id: BlueshieldUndeterminedWeapon
+    - id: BlueshieldUndeterminedOffensive # Pirate: Omu split loadout
+    - id: BlueshieldUndeterminedSupport # Pirate
     - id: BlueshieldUndeterminedHardsuit
     - id: FlashlightSeclite
 
