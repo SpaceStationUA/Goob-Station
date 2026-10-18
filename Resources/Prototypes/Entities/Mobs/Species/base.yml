@@ -172,6 +172,7 @@
   - type: Identity
   - type: IdExaminable
   - type: Hands
+  - type: Tackler # Pirate: Omu tackling gloves
   - type: ComplexInteraction
   - type: Internals
   - type: FloatingVisuals

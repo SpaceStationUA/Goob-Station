@@ -122,6 +122,7 @@
         - id: ClothingNeckCloakPan
       - id: ToyFigurineSkeleton
       - id: MysteryFigureBox
+      - id: ClothingHandsGlovesGripper # Trauma # Pirate: Omu tackling gloves
       - id: FoodSnackLollypopWrappedMysteryNeutral # Goobstation - Lollypops!
       - id: RevolutionaryManifesto # Einstein Engines - Revolutionary Manifesto
       # Cult
@@ -193,6 +194,7 @@
       - id: ClothingShoesWizardSkates #GoobStation - Wizard Skates
       - id: FoodSnackLollypopWrappedMysteryEvil # Goobstation - Lollypops!
       - id: MysteryLighterBox
+      - id: ClothingHandsGlovesRocket # Trauma # Pirate: Omu tackling gloves
       - id: GoldenPersonalAI # Goobstation
       - id: SkullBalaclava # Pirate
 

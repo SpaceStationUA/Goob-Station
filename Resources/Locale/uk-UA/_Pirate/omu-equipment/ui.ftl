@@ -1,0 +1,29 @@
+guide-entry-tackle = Силове затримання стрибком
+
+ui-options-function-tackle = Силове затримання стрибком
+
+fibers-red-and-black-woven = червоні та чорні плетені
+
+fibers-blue-and-black-woven = сині та чорні плетені
+
+no-dash-while-weightless = Для випаду потрібна опора під ногами!
+
+loadout-group-instructor-duty-weapon = Службова зброя інструктора
+
+loadout-group-brigmedic-duty-weapon = Службова зброя бригмедика
+
+loadout-group-detective-duty-weapon = Револьвер детектива
+
+loadout-group-bso-duty-belt = Піхви синього щита
+
+research-technology-APDS = Бронебійні підкаліберні боєприпаси
+
+uplink-guerrilla-name = Партизанські рукавиці
+
+uplink-guerrilla-desc = Особливі рукавиці для силових затримань стрибком із покращеним показником майстерності.
+
+stack-fulton-blueshield = блюспейс-системи Fulton
+
+fulton-radio-message = Евакуйований об'єкт прибуває.
+
+fulton-blueshield-radio-message = Прибуває важливий поранений.

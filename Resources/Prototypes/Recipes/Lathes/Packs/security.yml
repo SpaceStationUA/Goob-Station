@@ -16,6 +16,7 @@
 - type: latheRecipePack
   id: SecurityPracticeStatic
   recipes:
+  - SpeedLoaderRevolverLightRifle # Pirate: Omu equipment
   - BoxShotgunPractice
   # - MagazineBoxLightRiflePractice # Goobstation - remove light rifle
   - MagazineBoxMagnumPractice
@@ -34,6 +35,13 @@
 - type: latheRecipePack
   id: SecurityAmmoStatic
   recipes:
+  - MagazineBoxCaselessRifleFMJ # Pirate: Omu equipment
+  - MagazineBoxLongRifle # Pirate: Omu equipment
+  - MagazineCaselessRifleFMJ # Pirate: Omu equipment
+  - MagazineClipM1Garand # Pirate: Omu equipment
+  - MagazineClipM1GarandEmpty # Pirate: Omu equipment
+  - MagazineMagnumLeverRifle # Pirate: Omu equipment
+  - MagazineMagnumLeverRifleEmpty # Pirate: Omu equipment
   - BoxLethalshot
   - BoxShotgunSlug
   # - MagazineBoxLightRifle # Goobstation - remove light rifle
@@ -57,6 +65,7 @@
 - type: latheRecipePack
   id: SecurityWeaponsStatic
   recipes:
+  - Secarang # Pirate: Omu equipment
   - Flash
   - Stunbaton
   - CombatKnife
@@ -106,6 +115,7 @@
 - type: latheRecipePack
   id: SecurityAmmo
   recipes:
+  - ShellShotgunAPDS # Pirate: Omu equipment
   - BoxBeanbag
   - BoxShotgunIncendiary
   - BoxShotgunUranium

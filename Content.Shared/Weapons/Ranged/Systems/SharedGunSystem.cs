@@ -544,12 +544,15 @@ public abstract partial class SharedGunSystem : EntitySystem
         var physics = EnsureComp<PhysicsComponent>(uid);
         Physics.SetBodyStatus(uid, physics, BodyStatus.InAir);
 
+        // Pirate: preserve Omu projectile-specific velocity, including .30 long rifle.
+        var projectile = EnsureComp<ProjectileComponent>(uid);
+        speed *= (float) projectile.ProjectileSpeedModifier;
+
         var targetMapVelocity = gunVelocity + direction.Normalized() * speed;
         var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
         var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
-        var projectile = EnsureComp<ProjectileComponent>(uid);
         projectile.Weapon = gunUid;
         var shooter = user ?? gunUid;
         if (shooter != null)

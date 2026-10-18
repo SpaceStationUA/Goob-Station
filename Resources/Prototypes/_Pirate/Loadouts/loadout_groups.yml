@@ -1030,6 +1030,8 @@
   id: SecurityWeapon
   name: loadout-group-security-weapon
   loadouts:
+  - SecurityOfficerGunCase # Pirate: Omu duty case
+  - SecurityOfficerSecurityDutyRevolver # Pirate
   - LoadoutSecurityWeaponMk58
   - LoadoutSecurityEnergyGunPistol
 

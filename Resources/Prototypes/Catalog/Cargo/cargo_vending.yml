@@ -163,7 +163,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockSecTechFilled
-  cost: 2700 # Pirate: SecTech utility stock must not create cargo arbitrage.
+  cost: 2750 # Pirate: include Omu secarangs without creating restock resale arbitrage.
   category: cargoproduct-category-name-security
   group: market
 
