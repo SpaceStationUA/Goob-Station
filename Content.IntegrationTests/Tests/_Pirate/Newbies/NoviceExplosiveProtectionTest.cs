@@ -9,6 +9,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Events;
 using Content.Shared.Chemistry.Prototypes;
+using Content.Shared.CombatMode;
 using Content.Shared.Damage.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -105,24 +106,60 @@ public sealed class NoviceExplosiveProtectionTest
         var entMan = server.EntMan;
         var map = await pair.CreateTestMap();
         var session = pair.Player!;
+        EntityUid user = default;
+        EntityUid welder = default;
+        EntityUid unlitTank = default;
+        EntityUid tank = default;
+        EntityUid waterTank = default;
+        EntityUid wideUser = default;
+        EntityUid wideWelder = default;
+        EntityUid wideTank = default;
+        EntityUid wideWaterTank = default;
+
+        EntityCoordinates Coordinates(float x, float y) =>
+            new(map.GridCoords.EntityId, map.GridCoords.Position + new Vector2(x, y));
 
         await server.WaitAssertion(() =>
         {
-            var user = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            // CreateTestMap supplies one tile; both melee scenes need a proper floor and physics update.
+            var maps = server.System<SharedMapSystem>();
+            for (var x = -2; x <= 6; x++)
+            for (var y = -2; y <= 3; y++)
+            {
+                maps.SetTile(map.Grid.Owner, map.Grid.Comp, Coordinates(x, y), map.Tile.Tile);
+            }
+
+            user = entMan.SpawnEntity("MobHuman", map.GridCoords);
             server.PlayerMan.SetAttachedEntity(session, user);
             server.ResolveDependency<PlayTimeTrackingManager>()
                 .GetTrackerTimes(session)[PlayTimeTrackingShared.TrackerOverall] = TimeSpan.FromHours(hours);
 
-            var welder = entMan.SpawnEntity(welderPrototype, map.GridCoords);
-            Assert.That(server.System<SharedHandsSystem>().TryPickupAnyHand(user, welder), Is.True);
+            var hands = server.System<SharedHandsSystem>();
+            welder = entMan.SpawnEntity(welderPrototype, map.GridCoords);
+            Assert.That(hands.TryPickupAnyHand(user, welder), Is.True);
+            unlitTank = entMan.SpawnEntity("WeldingFuelTankFull", Coordinates(1, 0));
+            tank = entMan.SpawnEntity("WeldingFuelTankFull", Coordinates(0, 1));
+            waterTank = entMan.SpawnEntity("WaterTank", Coordinates(-1, 0));
+
+            wideUser = entMan.SpawnEntity("MobHuman", Coordinates(4, 0));
+            wideWelder = entMan.SpawnEntity(welderPrototype, Coordinates(4, 0));
+            Assert.That(hands.TryPickupAnyHand(wideUser, wideWelder), Is.True);
+            wideTank = entMan.SpawnEntity("WeldingFuelTankFull", Coordinates(3.5f, 1));
+            wideWaterTank = entMan.SpawnEntity("WaterTank", Coordinates(4.5f, 1));
+        });
+
+        await pair.RunTicksSync(1);
+
+        await server.WaitAssertion(() =>
+        {
             var melee = server.System<MeleeWeaponSystem>();
             var weapon = entMan.GetComponent<MeleeWeaponComponent>(welder);
-            var unlitTank = entMan.SpawnEntity("WeldingFuelTankFull",
-                new EntityCoordinates(map.GridCoords.EntityId, map.GridCoords.Position + Vector2.UnitX));
             var unlitDamage = entMan.GetComponent<DamageableComponent>(unlitTank);
 
             void Hit(EntityUid target)
             {
+                Assert.That(melee.InRange(user, target, weapon.Range, null), Is.True,
+                    "The melee target must be reachable in the test scene.");
                 var attack = new LightAttackEvent(entMan.GetNetEntity(target), entMan.GetNetEntity(welder),
                     entMan.GetNetCoordinates(entMan.GetComponent<TransformComponent>(target).Coordinates));
                 melee.DoLightAttack(user, attack, welder, weapon, null);
@@ -132,19 +169,9 @@ public sealed class NoviceExplosiveProtectionTest
             Assert.That(unlitDamage.TotalDamage, Is.GreaterThan(FixedPoint2.Zero),
                 "An unlit welder must remain usable as an ordinary melee weapon.");
 
-            var tank = entMan.SpawnEntity("WeldingFuelTankFull",
-                new EntityCoordinates(map.GridCoords.EntityId, map.GridCoords.Position + Vector2.UnitY));
             var tankDamage = entMan.GetComponent<DamageableComponent>(tank);
-            var waterTank = entMan.SpawnEntity("WaterTank",
-                new EntityCoordinates(map.GridCoords.EntityId, map.GridCoords.Position - Vector2.UnitX));
             var waterDamage = entMan.GetComponent<DamageableComponent>(waterTank);
             Assert.That(server.System<ItemToggleSystem>().TryActivate(welder, user), Is.True);
-
-            var wideHit = new MeleeHitEvent([waterTank, tank], user, welder, melee.GetDamage(welder, user, weapon),
-                Vector2.UnitY, map.GridCoords);
-            entMan.EventBus.RaiseLocalEvent(welder, wideHit, true);
-            Assert.That(wideHit.Handled, Is.EqualTo(restricted),
-                "Wide attacks must also be blocked when a fuel tank is among the targets.");
 
             Hit(waterTank);
             Assert.That(waterDamage.Damage.DamageDict["Heat"], Is.GreaterThan(FixedPoint2.Zero),
@@ -153,6 +180,16 @@ public sealed class NoviceExplosiveProtectionTest
             Hit(tank);
             Assert.That(tankDamage.TotalDamage > FixedPoint2.Zero, Is.EqualTo(!restricted),
                 "A novice's lit welder attack must be cancelled before any fuel tank damage is applied.");
+
+            server.PlayerMan.SetAttachedEntity(session, wideUser);
+            server.System<SharedCombatModeSystem>().SetInCombatMode(wideUser, true);
+            Assert.That(server.System<ItemToggleSystem>().TryActivate(wideWelder, wideUser), Is.True);
+            var wideWeapon = entMan.GetComponent<MeleeWeaponComponent>(wideWelder);
+            var wideTankDamage = entMan.GetComponent<DamageableComponent>(wideTank);
+            Assert.That(melee.AttemptHeavyAttack(wideUser, wideWelder, wideWeapon, [wideWaterTank, wideTank],
+                Coordinates(4, wideWeapon.Range)), Is.True);
+            Assert.That(wideTankDamage.TotalDamage > FixedPoint2.Zero, Is.EqualTo(!restricted),
+                "A wide attack must be cancelled before it damages a fuel tank.");
         });
 
         await pair.CleanReturnAsync();
