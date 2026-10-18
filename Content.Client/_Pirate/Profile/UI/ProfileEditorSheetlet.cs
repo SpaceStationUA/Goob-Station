@@ -28,6 +28,12 @@ public sealed class ProfileEditorSheetlet : Sheetlet<PalettedStylesheet>
             E<PanelContainer>().Class("ProfileDepartmentAccent").Panel(new StyleBoxFlat(Color.FromHex("#4ADE80"))),
             E<PanelContainer>().Class("ProfileCategoryContent").Panel(ProfileEditorStyles.CreateCategoryContent()),
             E<PanelContainer>().Class("ProfileEntryPanel").Panel(ProfileEditorStyles.CreateEntryPanel()),
+            E<PanelContainer>().Class("ProfileEntryPanelAlternate").Panel(new StyleBoxFlat
+            {
+                BackgroundColor = Color.FromHex("#30303B"),
+                BorderColor = ProfileEditorStyles.Border,
+                BorderThickness = new Thickness(1),
+            }),
             E<Label>().Class("ProfileEntryNameLabel").Font(font11).FontColor(ProfileEditorStyles.TextPrimary),
         ];
     }

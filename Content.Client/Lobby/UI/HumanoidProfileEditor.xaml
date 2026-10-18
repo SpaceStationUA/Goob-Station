@@ -154,24 +154,26 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical">
                     <!-- start Pirate: employer selector -->
-                    <PanelContainer StyleClasses="ProfileEntryPanel" Margin="0 0 0 4">
-                        <BoxContainer Orientation="Horizontal" Margin="10 8">
-                            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                                <Label Text="{Loc 'humanoid-profile-editor-employer-label'}" StyleClasses="ProfileEmployerLabel" />
-                                <Label Text="{Loc 'humanoid-profile-editor-employer-hint'}" StyleClasses="ProfileEmployerHint" />
-                            </BoxContainer>
-                            <Button Name="EmployerButton" MinWidth="220" HorizontalAlignment="Right" />
+                    <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                            <PanelContainer StyleClasses="ProfileEntryPanel" Margin="0 0 0 4">
+                                <BoxContainer Orientation="Horizontal" Margin="10 8">
+                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+                                        <Label Text="{Loc 'humanoid-profile-editor-employer-label'}" StyleClasses="ProfileEmployerLabel" />
+                                        <Label Text="{Loc 'humanoid-profile-editor-employer-hint'}" StyleClasses="ProfileEmployerHint" />
+                                    </BoxContainer>
+                                    <Button Name="EmployerButton" MinWidth="300" HorizontalAlignment="Right" />
+                                </BoxContainer>
+                            </PanelContainer>
+                            <PanelContainer StyleClasses="ProfileEntryPanel" Margin="0 0 0 4">
+                                <BoxContainer Orientation="Horizontal" Margin="10 8">
+                                    <Label Text="{Loc 'humanoid-profile-editor-preference-unavailable-label'}" StyleClasses="ProfileUnavailableLabel" VerticalAlignment="Center" />
+                                    <Control HorizontalExpand="True" />
+                                    <OptionButton Name="PreferenceUnavailableButton" MinWidth="300" />
+                                </BoxContainer>
+                            </PanelContainer>
+                            <BoxContainer Name="JobList" Orientation="Vertical" Margin="0 0 2 0" />
                         </BoxContainer>
-                    </PanelContainer>
-                    <PanelContainer StyleClasses="ProfileEntryPanel" Margin="0 0 0 4">
-                        <BoxContainer Orientation="Horizontal" Margin="10 8">
-                            <Label Text="{Loc 'humanoid-profile-editor-preference-unavailable-label'}" StyleClasses="ProfileUnavailableLabel" />
-                            <Control HorizontalExpand="True" />
-                            <OptionButton Name="PreferenceUnavailableButton" MinWidth="220" />
-                        </BoxContainer>
-                    </PanelContainer>
-                    <ScrollContainer VerticalExpand="True">
-                        <BoxContainer Name="JobList" Orientation="Vertical" Margin="0 0 4 0" />
                     </ScrollContainer>
                     <!-- end Pirate: employer selector -->
                 </BoxContainer>

@@ -46,8 +46,9 @@ public sealed partial class HumanoidProfileEditor
                 .Where(job => job.SetPreference)
                 .OrderBy(job => job, JobUIComparer.Instance);
 
+            var jobIndex = 0;
             foreach (var job in jobs)
-                CreateJobEntry(job, content);
+                CreateJobEntry(job, content, jobIndex++ % 2 != 0);
         }
 
         UpdateJobPriorities();
@@ -61,14 +62,14 @@ public sealed partial class HumanoidProfileEditor
         {
             Orientation = LayoutOrientation.Vertical,
             HorizontalExpand = true,
-            Margin = new Thickness(10, 8),
+            Margin = new Thickness(5, 4),
         };
         var category = new BoxContainer
         {
             Orientation = LayoutOrientation.Vertical,
             Name = department.ID,
             ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip", ("departmentName", departmentName)),
-            Margin = new Thickness(0, 0, 0, 8),
+            Margin = new Thickness(0, 0, 0, 4),
         };
         var expandIcon = new Label
         {
@@ -79,7 +80,7 @@ public sealed partial class HumanoidProfileEditor
         var headerContent = new BoxContainer
         {
             Orientation = LayoutOrientation.Horizontal,
-            Margin = new Thickness(8, 6),
+            Margin = new Thickness(6, 3),
             Children =
             {
                 expandIcon,
@@ -118,7 +119,7 @@ public sealed partial class HumanoidProfileEditor
         return content;
     }
 
-    private void CreateJobEntry(JobPrototype job, BoxContainer departmentContent)
+    private void CreateJobEntry(JobPrototype job, BoxContainer departmentContent, bool alternateBackground)
     {
         var selector = new RequirementsSelector
         {
@@ -127,7 +128,7 @@ public sealed partial class HumanoidProfileEditor
         };
         selector.OnOpenGuidebook += OnOpenGuidebook;
         selector.UseFlexibleOptionsWidth(50f);
-        selector.SetOptionsMinHeight(28f);
+        selector.SetOptionsMinHeight(24f);
         selector.Setup(JobPriorityOptions, string.Empty, 0, job.LocalizedDescription, null, job.Guides);
 
         if (_requirements.IsAllowed(job, Profile, out var reason))
@@ -155,9 +156,10 @@ public sealed partial class HumanoidProfileEditor
         var icon = new TextureRect
         {
             Texture = _sprite.Frame0(jobIcon.Icon),
-            TextureScale = new Vector2(3, 3),
-            MinSize = new Vector2(40, 40),
-            Margin = new Thickness(0, 3, 0, -3),
+            TextureScale = new Vector2(2.5f, 2.5f),
+            MinSize = new Vector2(28, 28),
+            Margin = new Thickness(-12, -3, 0, 0),
+            Stretch = TextureRect.StretchMode.KeepCentered,
             VerticalAlignment = VAlignment.Center,
         };
         _jobIcons[job.ID] = (icon, icon.Texture);
@@ -178,7 +180,7 @@ public sealed partial class HumanoidProfileEditor
             {
                 new CenterContainer
                 {
-                    MinSize = new Vector2(48, 48),
+                    MinSize = new Vector2(32, 32),
                     VerticalAlignment = VAlignment.Center,
                     Children = { icon },
                 },
@@ -199,16 +201,19 @@ public sealed partial class HumanoidProfileEditor
             HorizontalExpand = true,
             VerticalAlignment = VAlignment.Center,
             SeparationOverride = 0,
-            Margin = new Thickness(10, 0),
+            Margin = new Thickness(6, 0),
             Children = { nameContainer, priority },
         };
         var card = new PanelContainer
         {
             HorizontalExpand = true,
-            Margin = new Thickness(0, 0, 0, 4),
+            Margin = new Thickness(0, 0, 0, 2),
             StyleClasses = { "ProfileEntryPanel" },
             Children = { row },
         };
+        if (alternateBackground)
+            card.StyleClasses.Add("ProfileEntryPanelAlternate");
+
         departmentContent.AddChild(card);
     }
 

@@ -12,7 +12,7 @@ public sealed class JobsSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var jobNameFont = sheet.BaseFont.GetFont(12);
+        var jobNameFont = sheet.BaseFont.GetFont(11);
         var unavailableFont = sheet.BaseFont.GetFont(12, FontKind.Bold);
 
         return
