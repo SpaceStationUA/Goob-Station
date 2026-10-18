@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.UserInterface.Systems.Ghost.Widgets;
+using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Common.Cloning;
 using Content.Goobstation.Server.MisandryBox.Mind;
 using Content.Goobstation.Shared.MisandryBox.Thunderdome;
@@ -863,6 +864,9 @@ public sealed class GhostRespawnLobbyTests
             InLobby = true
         });
 
+        // Pirate: respawn UI checks require entering gameplay before the cosmetic intro delay.
+        await pair.Client.WaitPost(() => pair.Client.CfgMan.SetCVar(GoobCVars.RoundIntroEnabled, false));
+
         var ticker = pair.Server.System<GameTicker>();
         await pair.Server.WaitPost(() =>
         {
@@ -885,6 +889,9 @@ public sealed class GhostRespawnLobbyTests
             Dirty = true,
             InLobby = true
         });
+
+        // Pirate: keep observer respawn timing independent of the cosmetic round intro.
+        await pair.Client.WaitPost(() => pair.Client.CfgMan.SetCVar(GoobCVars.RoundIntroEnabled, false));
 
         var ticker = pair.Server.System<GameTicker>();
         var mapSystem = pair.Server.System<SharedMapSystem>();

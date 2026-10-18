@@ -32,6 +32,7 @@
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     Chest: MobExperimentTorso
+    Groin: MobExperimentGroin
     Eyes: MobExperimentEyes
     LArm: MobExperimentLArm
     RArm: MobExperimentRArm
@@ -110,6 +111,24 @@
 
 - type: humanoidBaseSprite
   id: MobExperimentTorsoFemale
+  baseSprite:
+    sprite: _Pirate/Experiments/Mobs/Species/Experiment/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobExperimentGroin
+  baseSprite:
+    sprite: _Pirate/Experiments/Mobs/Species/Experiment/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobExperimentGroinMale
+  baseSprite:
+    sprite: _Pirate/Experiments/Mobs/Species/Experiment/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobExperimentGroinFemale
   baseSprite:
     sprite: _Pirate/Experiments/Mobs/Species/Experiment/parts.rsi
     state: torso

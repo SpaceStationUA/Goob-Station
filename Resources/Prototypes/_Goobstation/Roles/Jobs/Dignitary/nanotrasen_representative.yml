@@ -30,6 +30,7 @@
       employers:
       - NanoTrasen
     # Pirate contractor end
+    - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 20
   startingGear: NanotrasenRepresentativeGear
   icon: "JobIconNanotrasenRepresentative"

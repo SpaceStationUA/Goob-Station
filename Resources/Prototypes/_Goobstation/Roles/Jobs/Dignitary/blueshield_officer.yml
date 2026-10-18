@@ -39,6 +39,7 @@
       - ZavodskiyInterstellar
       - PMCG
   # Pirate contractor end
+    - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   guides:
   - BlueshieldOfficerSOP
   - Command

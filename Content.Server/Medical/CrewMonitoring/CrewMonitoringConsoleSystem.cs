@@ -39,6 +39,7 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
     [Dependency] private readonly CrewMonitoringServerSystem _crewServers = default!;
     [Dependency] private readonly SuitSensorSystem _suitSensors = default!;
     // Pirate End
+    [Dependency] private readonly CrewMonitoringDepartmentFilterSystem _departmentFilter = default!; // Pirate: sec monitor loose filter
 
 
     // Pirate -Start
@@ -826,8 +827,17 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
             return source is List<SuitSensorStatus> list ? list : source.ToList();
 
         var filtered = new List<SuitSensorStatus>();
+        TryComp<CrewMonitoringDepartmentFilterComponent>(consoleUid, out var looseFilter); // Pirate: sec monitor loose filter
         foreach (var sensor in source)
         {
+            #region Pirate: sec monitor loose filter
+            if (looseFilter != null && _departmentFilter.IsExtraMatch((consoleUid, looseFilter), sensor))
+            {
+                filtered.Add(sensor);
+                continue;
+            }
+            #endregion
+
             foreach (var dept in sensor.JobDepartments)
             {
                 if (component.CachedDepartmentNames.Contains(dept))
