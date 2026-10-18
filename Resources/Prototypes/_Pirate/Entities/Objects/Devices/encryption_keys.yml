@@ -1,4 +1,12 @@
 - type: entity
+  parent: EncryptionKeyStationMaster
+  id: EncryptionKeyStationMasterReceiveOnly
+  name: station listening encryption key
+  description: An encryption key that receives all eight station channels but cannot transmit on them.
+  components:
+  - type: ReceiveOnlyEncryptionKey
+
+- type: entity
   parent: EncryptionKey
   id: EncryptionKeyInterdyne
   name: Криптографічний ключ інтердайну

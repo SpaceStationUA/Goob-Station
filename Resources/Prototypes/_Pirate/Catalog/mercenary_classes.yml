@@ -1,0 +1,81 @@
+- type: selectableSet
+  id: MercAssaultSet
+  name: selectable-set-merc-assault-name
+  description: selectable-set-merc-assault-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+    state: icon
+  content:
+  - ClothingBackpackMercenaryAssaultFilled
+  - ClothingBeltMercWebbingAssaultFilled
+
+- type: selectableSet
+  id: MercMedicSet
+  name: selectable-set-merc-medic-name
+  description: selectable-set-merc-medic-description
+  sprite:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: blackkit
+  content:
+  - WeaponSubMachineGunVector
+  - MagazineVector
+  - MagazineVector
+  - MagazineVector
+  - MagazineVector
+  - MagazineBoxPistol
+  - ClothingBeltMercenaryMedical
+  - ClothingBackpackMercenaryMedicFilled
+  - AutosurgeonMedicalCyberneticEyes
+  - MedkitCombatMercenaryMedicFilled
+  - ExGrenade
+  - ExGrenade
+  - ClothingHandsMercGlovesMedical
+  - ClothingMaskSterile
+
+- type: selectableSet
+  id: MercReconSet
+  name: selectable-set-merc-recon-name
+  description: selectable-set-merc-recon-description
+  sprite:
+    sprite: Objects/Devices/chameleon_projector.rsi
+    state: icon
+  content:
+  - ClothingBackpackMercenaryFilled
+  - ClothingBeltMercWebbingReconFilled
+  - ClothingMaskGasVoiceChameleon
+  - EncryptionKeyStationMasterReceiveOnly
+  - CameraBug
+  - SyndiCrewMonitor
+  - ChameleonProjector
+  - SyndicateJawsOfLife
+  - WeaponShotgunHushpup
+  - ClothingEyesThermalVisionGogglesSyndie
+
+- type: selectableSet
+  id: MercAugmentSet
+  name: selectable-set-merc-augment-name
+  description: selectable-set-merc-augment-description
+  sprite:
+    sprite: _Goobstation/Objects/Weapons/Melee/mantis_blade.rsi
+    state: icon
+  content:
+  - ClothingBackpackMercenaryFilled
+  - ClothingBeltMercWebbingAugmentFilled
+  - AutosurgeonRightMantisBlade
+  - AutosurgeonSandevistan
+  - AutosurgeonCyberdeck
+  - WeaponPistolUniversal
+
+- type: selectableSet
+  id: MercVanguardSet
+  name: selectable-set-merc-vanguard-name
+  description: selectable-set-merc-vanguard-description
+  sprite:
+    sprite: Objects/Weapons/Melee/energykatana.rsi
+    state: icon
+  content:
+  - ClothingBackpackMercenaryVanguardFilled
+  - ClothingBeltEnergyKatanaSheathMercenaryFilled
+  - ClothingHeadHatSolidHeadband
+  - ClothingEyesEyepatch
+  - ClothingEyesEyepatchOlive

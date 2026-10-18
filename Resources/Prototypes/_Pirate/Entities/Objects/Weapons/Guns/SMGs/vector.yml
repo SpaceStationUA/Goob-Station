@@ -4,7 +4,7 @@
   id: WeaponSubMachineGunVector
   name: '"Trajectory" Magnum SMG'
   parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
-  description: A compact Scarborough Arms submachine gun with a recoil control system and folding stock. Accepts .35 Auto pistol and Vector magazines.
+  description: A compact Scarborough Arms submachine gun with a recoil control system and folding stock. Accepts .35 Auto pistol magazines.
   components:
   - type: Vector
   - type: Sprite

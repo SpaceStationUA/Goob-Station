@@ -1,3 +1,6 @@
+ent-HelldiverUndeterminedWeapon = helldiver weapon requisition
+    .desc = A small remote utilizing bluespace technology to drop in a weapon loadout directly to you. Choose wisely.
+
 # Mercenary primaries
 
 selectable-set-merc-wspr-name = WSPR
@@ -29,6 +32,10 @@ selectable-set-merc-vulkan-m-name = Vulkan-M
 selectable-set-merc-vulkan-m-description =
     A compact bullpup that never stops. Less recoil, tighter groups, full auto.
     Includes: the Vulkan-M rifle (.30 rifle), 2 magazines and a large ammo box.
+
+selectable-set-merc-m16-modern-name = AR-25T
+selectable-set-merc-m16-modern-description = A modernized M16-pattern rifle with a burst-fire trigger group.
+    Includes: the AR-25T rifle (.20 rifle), two spare 30-round M16 magazines and a large ammunition box.
 
 # Mercenary sidearms
 
