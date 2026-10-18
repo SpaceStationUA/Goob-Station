@@ -1,0 +1,20 @@
+vector-stock-extend = Extend stock
+vector-stock-fold = Fold stock
+vector-stock-folded = The stock is folded. Extend it using the context menu while holding the gun to improve recoil control and ballistic performance.
+vector-stock-extended = The stock is extended, improving recoil control and ballistic performance at the cost of a larger storage footprint.
+
+ent-WeaponSubMachineGunVector = "Trajectory" Magnum SMG
+    .desc = A compact Scarborough Arms submachine gun with a recoil control system and folding stock. Accepts .35 Auto pistol and Vector magazines.
+ent-MagazineVector = Vector magazine (.35 auto)
+    .desc = A 30-round .35 Auto magazine for the Vector.
+ent-MagazineVectorEmpty = Vector magazine (.35 auto any)
+    .desc = A 30-round .35 Auto magazine for the Vector.
+    .suffix = Empty
+ent-MagazineVectorPractice = Vector magazine (.35 auto practice)
+    .desc = A 30-round Vector magazine loaded with practice ammunition.
+ent-MagazineVectorIncendiary = Vector magazine (.35 auto incendiary)
+    .desc = A 30-round Vector magazine loaded with incendiary ammunition.
+ent-MagazineVectorUranium = Vector magazine (.35 auto uranium)
+    .desc = A 30-round Vector magazine loaded with uranium-core ammunition.
+ent-MagazineVectorCryptobiolin = Vector magazine (.35 auto Cryptobiolin)
+    .desc = A 30-round Vector magazine loaded with Cryptobiolin ammunition.

@@ -7,6 +7,9 @@
 - type: latheRecipePack
   id: SecurityAmmoStaticPirate
   recipes:
+  - MagazineVectorEmpty
+  - MagazineVector
+  - MagazineVectorPractice
   - MagazineUniversalMagnumEmpty
   - MagazineUniversalMagnum
   - MagazineUniversalMagnumRubber
@@ -41,6 +44,9 @@
 - type: latheRecipePack
   id: SecurityAmmoPirate
   recipes:
+  - MagazineVectorIncendiary
+  - MagazineVectorUranium
+  - MagazineVectorCryptobiolin
   # 45. Mk 32
   - MagazineUniversalMagnumUranium
   - MagazineUniversalMagnumIncendiary

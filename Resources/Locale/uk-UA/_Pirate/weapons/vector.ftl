@@ -1,0 +1,20 @@
+vector-stock-extend = Розкласти приклад
+vector-stock-fold = Скласти приклад
+vector-stock-folded = Приклад складений. Розкладіть його через контекстне меню, тримаючи зброю в руці, щоб покращити контроль віддачі та балістичні характеристики.
+vector-stock-extended = Приклад розкладений: контроль віддачі та балістичні характеристики покращено, але зброя займає більше місця.
+
+ent-WeaponSubMachineGunVector = Пістолет-кулемет «Траєкторія» Магнум
+    .desc = Компактний пістолет-кулемет Scarborough Arms із системою компенсації віддачі та складаним прикладом. Приймає пістолетні магазини та магазини Vector калібру .35 Auto.
+ent-MagazineVector = магазин Vector (.35 auto)
+    .desc = Магазин на 30 набоїв калібру .35 Auto для Vector.
+ent-MagazineVectorEmpty = магазин Vector (.35 auto, будь-які)
+    .desc = Магазин на 30 набоїв калібру .35 Auto для Vector.
+    .suffix = Порожній
+ent-MagazineVectorPractice = магазин Vector (.35 auto, тренувальні)
+    .desc = Магазин Vector на 30 тренувальних набоїв.
+ent-MagazineVectorIncendiary = магазин Vector (.35 auto, запалювальні)
+    .desc = Магазин Vector на 30 запалювальних набоїв.
+ent-MagazineVectorUranium = магазин Vector (.35 auto, уранові)
+    .desc = Магазин Vector на 30 набоїв з урановим осердям.
+ent-MagazineVectorCryptobiolin = магазин Vector (.35 auto, криптобіолін)
+    .desc = Магазин Vector на 30 набоїв із криптобіоліном.

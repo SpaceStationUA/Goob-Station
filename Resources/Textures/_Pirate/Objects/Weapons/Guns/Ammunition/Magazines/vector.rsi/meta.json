@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "license": "AGPL-3.0-or-later",
+  "copyright": "Vector by GeneralPantsu, based on Toriate, from Sojourn PR #2310. Magazines from Sojourn/CEV-Eris contributors. Converted to RSI for Lanos. Source license: sojourn-station/COPYING. https://github.com/sojourn-13/sojourn-station/pull/2310",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "standard-0"
+    },
+    {
+      "name": "standard-1"
+    },
+    {
+      "name": "standard-2"
+    },
+    {
+      "name": "standard-3"
+    },
+    {
+      "name": "standard-4"
+    },
+    {
+      "name": "standard-5"
+    },
+    {
+      "name": "practice-0"
+    },
+    {
+      "name": "practice-1"
+    },
+    {
+      "name": "practice-2"
+    },
+    {
+      "name": "practice-3"
+    },
+    {
+      "name": "practice-4"
+    },
+    {
+      "name": "practice-5"
+    },
+    {
+      "name": "incendiary-0"
+    },
+    {
+      "name": "incendiary-1"
+    },
+    {
+      "name": "incendiary-2"
+    },
+    {
+      "name": "incendiary-3"
+    },
+    {
+      "name": "incendiary-4"
+    },
+    {
+      "name": "incendiary-5"
+    },
+    {
+      "name": "uranium-0"
+    },
+    {
+      "name": "uranium-1"
+    },
+    {
+      "name": "uranium-2"
+    },
+    {
+      "name": "uranium-3"
+    },
+    {
+      "name": "uranium-4"
+    },
+    {
+      "name": "uranium-5"
+    },
+    {
+      "name": "cryptobiolin-0"
+    },
+    {
+      "name": "cryptobiolin-1"
+    },
+    {
+      "name": "cryptobiolin-2"
+    },
+    {
+      "name": "cryptobiolin-3"
+    },
+    {
+      "name": "cryptobiolin-4"
+    },
+    {
+      "name": "cryptobiolin-5"
+    }
+  ]
+}

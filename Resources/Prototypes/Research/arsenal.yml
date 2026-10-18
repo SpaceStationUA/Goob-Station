@@ -36,6 +36,7 @@
   - MagazineRifleIncendiary
   - MagazinePistolIncendiary
   - MagazinePistolSubMachineGunIncendiary
+  - MagazineVectorIncendiary # Pirate: Vector SMG
   - MagazineBoxShotgunIncendiaryHighCaliber # Goobstation
   # - MagazineLightRifleIncendiary # Goobstation - remove light rifle
   - SpeedLoaderMagnumIncendiary
@@ -107,6 +108,7 @@
   - MagazineRifleUranium
   - MagazinePistolUranium
   - MagazinePistolSubMachineGunUranium
+  - MagazineVectorUranium # Pirate: Vector SMG
   # - MagazineLightRifleUranium # Goobstation - remove light rifle
   - SpeedLoaderMagnumUranium
   - MagazineBoxPistolUranium
