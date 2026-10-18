@@ -3,7 +3,7 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
-  #- AspidTP # Pirate - щож, ви просили аспід - ви отримали аспід # Pirate: Aspid rotation
+  - AspidTP # Pirate - щож, ви просили аспід - ви отримали аспід # Pirate: Aspid rotation
   - Atlas
   - Bagel
   - BoxTP # Pirate
