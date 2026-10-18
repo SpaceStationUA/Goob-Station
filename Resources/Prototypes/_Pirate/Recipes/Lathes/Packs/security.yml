@@ -7,6 +7,10 @@
 - type: latheRecipePack
   id: SecurityAmmoStaticPirate
   recipes:
+  # .30 rifle: resupply for the R2 and T8 duty revolvers.
+  - MagazineBoxLightRifle
+  - SpeedLoaderRevolverLightRifle
+  - SpeedLoaderRevolverLightRifleMini
   - MagazineUniversalMagnumEmpty
   - MagazineUniversalMagnum
   - MagazineUniversalMagnumRubber
