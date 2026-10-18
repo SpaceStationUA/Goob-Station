@@ -7,6 +7,9 @@
 - type: latheRecipePack
   id: SecurityAmmoStaticPirate
   recipes:
+  - MagazineVectorEmpty
+  - MagazineVector
+  - MagazineVectorPractice
   # .30 rifle: resupply for the R2 and T8 duty revolvers.
   - MagazineBoxLightRifle
   - SpeedLoaderRevolverLightRifle
@@ -45,6 +48,9 @@
 - type: latheRecipePack
   id: SecurityAmmoPirate
   recipes:
+  - MagazineVectorIncendiary
+  - MagazineVectorUranium
+  - MagazineVectorCryptobiolin
   # 45. Mk 32
   - MagazineUniversalMagnumUranium
   - MagazineUniversalMagnumIncendiary

@@ -1,0 +1,13 @@
+- type: entity
+  parent: MercUndeterminedAssaultWeapon
+  id: HelldiverUndeterminedWeapon
+  name: helldiver weapon requisition
+  components:
+  - type: SetSelector
+    possibleSets:
+    - MercWSPRSet
+    - MercEstocSet
+    - MercBanditSet
+    - MercAKMSet
+    - MercEnforcerSet
+    - MercVulkanMSet

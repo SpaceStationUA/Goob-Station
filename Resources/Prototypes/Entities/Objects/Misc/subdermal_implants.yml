@@ -258,6 +258,7 @@
     implantAction: ActionChangeVoiceMaskImplant
   - type: VoiceMask
     overrideIdentity: true
+    altToggle: false # Pirate: voice mask modes
   - type: UserInterface
     interfaces:
       enum.VoiceMaskUIKey.Key:

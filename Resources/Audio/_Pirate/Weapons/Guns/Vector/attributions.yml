@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- files: ["fire.ogg", "rack.ogg", "eject.ogg", "empty.ogg", "wield.ogg"]
+  license: "Custom"
+  copyright: "AGPL-3.0-or-later. Taken from Sojourn; imported in PR #2310 by Trilbyspaceclone; rack and alarm edited in a8af75da7b71. Source license in COPYING."
+  source: "https://github.com/sojourn-13/sojourn-station/pull/2310"

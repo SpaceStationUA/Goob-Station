@@ -321,8 +321,22 @@
   - type: Tag
     tags:
     - Rifle
+  #region Pirate: ERT weapon balance
+  - type: Gun
+    fireRate: 2.5
+  - type: Battery
+    maxCharge: 4000
+    startingCharge: 4000
+  - type: BatteryAmmoProvider
+    proto: PirateAdvancedCarbinePulse
+    fireCost: 300
+  - type: AmmoSelector
+    prototypes:
+    - PirateAdvancedCarbinePulse
+    - PirateAdvancedCarbineStunPulse
+  #endregion Pirate: ERT weapon balance
   - type: BatterySelfRecharger
-    autoRechargeRate: 80
+    autoRechargeRate: 60 # Pirate: ERT weapon balance
 
 - type: entity
   name: CR-2 Hera

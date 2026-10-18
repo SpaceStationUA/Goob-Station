@@ -1,0 +1,55 @@
+- type: entity
+  parent: ClothingBeltMercWebbing
+  id: ClothingBeltMercWebbingAssaultFilled
+  suffix: Assault, Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: MercUndeterminedAssaultWeapon
+        - id: MercUndeterminedSidearm
+
+- type: entity
+  parent: ClothingBeltSecurityWebbingMedical
+  id: ClothingBeltMercenaryMedical
+  name: mercenary medical webbing
+  description: A mercenary chest rig with deep medical pouches, adapted from an ERT doctor's webbing.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Belt/merc_medical_webbing.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Belt/merc_medical_webbing.rsi
+  - type: StorageFill
+    contents:
+    - id: ScalpelAdvanced
+    - id: SawAdvanced
+    - id: Drill
+    - id: AdvancedRetractor
+    - id: EnergyCautery
+    - id: AdvancedBoneGel
+    - id: CombatMedipen
+      amount: 4
+
+- type: entity
+  parent: ClothingBeltMercWebbing
+  id: ClothingBeltMercWebbingReconFilled
+  suffix: Recon, Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxLethalshot
+      amount: 2
+    - id: BoxShotgunSlug
+
+- type: entity
+  parent: ClothingBeltMercWebbing
+  id: ClothingBeltMercWebbingAugmentFilled
+  suffix: Augment, Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: MagazineUniversalMagnum
+      amount: 3
+    - id: MagazineBoxMagnum
+      amount: 3

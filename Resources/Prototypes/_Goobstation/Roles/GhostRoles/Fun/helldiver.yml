@@ -32,7 +32,7 @@
   id: HelldiverBeltFillTable
   table: !type:AllSelector
     children:
-    - id: MercUndeterminedWeapon # Pirate: merc weapon selector
+    - id: HelldiverUndeterminedWeapon # Pirate: merc weapon selector; Pirate: mercenary loadouts
     - id: MercUndeterminedSidearm # Pirate: merc sidearm selector
     - id: ExGrenade
       amount: !type:ConstantNumberSelector

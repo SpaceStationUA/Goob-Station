@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: latheRecipe
+  id: MagazineVectorEmpty
+  parent: BaseEmptyAmmoRecipe
+  result: MagazineVectorEmpty
+  materials:
+    Steel: 30
+
+- type: latheRecipe
+  id: MagazineVector
+  parent: BaseAmmoRecipe
+  result: MagazineVector
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: MagazineVectorPractice
+  parent: BaseAmmoRecipe
+  result: MagazineVectorPractice
+  materials:
+    Steel: 150
+
+- type: latheRecipe
+  id: MagazineVectorIncendiary
+  parent: BaseAmmoRecipe
+  result: MagazineVectorIncendiary
+  materials:
+    Steel: 25
+    Plastic: 275
+
+- type: latheRecipe
+  id: MagazineVectorUranium
+  parent: BaseAmmoRecipe
+  result: MagazineVectorUranium
+  materials:
+    Steel: 25
+    Plastic: 250
+    Uranium: 250
+
+- type: latheRecipe
+  id: MagazineVectorCryptobiolin
+  parent: BaseAmmoRecipe
+  result: MagazineVectorCryptobiolin
+  completetime: 4
+  materials:
+    Steel: 1000
+    BSCrystal: 50

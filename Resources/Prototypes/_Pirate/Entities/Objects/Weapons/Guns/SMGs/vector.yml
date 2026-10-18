@@ -1,0 +1,91 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: WeaponSubMachineGunVector
+  name: '"Trajectory" Magnum SMG'
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
+  description: A compact Scarborough Arms submachine gun with a recoil control system and folding stock. Accepts .35 Auto pistol magazines.
+  components:
+  - type: Vector
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/vector.rsi
+    layers:
+    - state: vector_longmag
+      offset: 0.28125, 0
+      map: ["enum.VectorVisuals.Base"]
+  - type: Item
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/vector.rsi
+    size: Normal
+    shape:
+    - 0,0,1,1
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Clothing
+    sprite: _Pirate/Objects/Weapons/Guns/SMGs/vector.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
+  - type: Wieldable
+    unwieldOnUse: false
+    wieldSound:
+      path: /Audio/_Pirate/Weapons/Guns/Vector/wield.ogg
+  - type: UseDelay
+    delay: 0.4
+  - type: GunWieldBonus
+    minAngle: -0.8
+    maxAngle: -8
+    angleIncrease: -0.2
+  - type: Gun
+    fireRate: 10
+    burstFireRate: 10
+    shotsPerBurst: 3
+    burstCooldown: 0.1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - Burst
+    - FullAuto
+    minAngle: 1
+    maxAngle: 12
+    angleIncrease: 1
+    angleDecay: 12
+    cameraRecoilScalar: 0.6
+    soundGunshot:
+      path: /Audio/_Pirate/Weapons/Guns/Vector/fire.ogg
+    soundEmpty:
+      path: /Audio/_Pirate/Weapons/Guns/Vector/empty.ogg
+    soundMode:
+      path: /Audio/Weapons/Guns/Misc/selector.ogg
+  - type: ChamberMagazineAmmoProvider
+    autoEject: false
+    soundRack:
+      path: /Audio/_Pirate/Weapons/Guns/Vector/rack.ogg
+    soundBoltClosed:
+      path: /Audio/_Pirate/Weapons/Guns/Vector/rack.ogg
+    soundBoltOpened: null
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineVector
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/_Pirate/Weapons/Guns/Vector/eject.ogg
+        priority: 2
+        swap: true
+        whitelist:
+          tags:
+          - MagazineVector
+          - MagazinePistol
+          - MagazinePistolHighCapacity
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgePistol
+  - type: Appearance
+  - type: StaticPrice
+    price: 1000
