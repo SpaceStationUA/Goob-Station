@@ -101,7 +101,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("GovernmentMan", ["SkillChipEchelonEducation"]),
         ("Conquest", ["SkillChipEducation"]),
         ("BlueshieldOfficer", ["SkillChipCombatEducationPilot", "SkillChipSidearmsAdvanced", "SkillChipFieldMedicine"]),
-        ("SecurityInstructor", ["SkillChipCombatEducation", "SkillChipSidearmsAdvanced", "SkillChipNonLethal"]),
+        ("SecurityInstructor", ["SkillChipCombatEducation", "SkillChipSecurityInstructor", "SkillChipNonLethal"]), // Pirate: Omu rifle training shares the sidearm chip.
         ("ShaftMiner", ["SkillChipCombatEducationPilot", "SkillChipMining", "SkillChipShortBlade"]),
         ("ForensicMantis", ["SkillChipEducation", "SkillChipDatabase", "SkillChipCloseQuarters"]),
         ("AdministrativeAssistant", ["SkillChipEchelonEducation", "SkillChipService"]),
@@ -116,7 +116,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         "SkillChipHeavy", "SkillChipLaser", "SkillChipMarksmanship", "SkillChipMining",
         "SkillChipTool", "SkillChipPistol", "SkillChipRifle", "SkillChipSMG", "SkillChipShotgun",
         "SkillChipSniper", "SkillChipEnergy", "SkillChipBludgeon", "SkillChipShortBlade",
-        "SkillChipSidearms", "SkillChipSidearmsAdvanced",
+        "SkillChipSidearms", "SkillChipSidearmsAdvanced", "SkillChipSecurityInstructor",
         "SkillChipLongBlade", "SkillChipNonLethal", "SkillChipPolearm", "SkillChipUnarmed",
         "SkillChipShield", "SkillChipCombatHOS", "SkillChipCloseQuarters",
         "SkillChipArmorsmithing", "SkillChipArmorsmithing2", "SkillChipWeaponsmithing",

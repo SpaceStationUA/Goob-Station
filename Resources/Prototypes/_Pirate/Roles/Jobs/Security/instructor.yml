@@ -42,9 +42,8 @@
   - !type:OrganChipsSpecial
     chips:
     - SkillChipCombatEducation
-    - SkillChipSidearmsAdvanced
+    - SkillChipSecurityInstructor # Pirate: sidearm and M1 Garand training in one slot.
     - SkillChipNonLethal
-    - SkillChipRifle # Pirate: M1 Garand from the instructor duty case
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
