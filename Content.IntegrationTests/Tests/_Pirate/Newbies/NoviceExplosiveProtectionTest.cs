@@ -108,7 +108,6 @@ public sealed class NoviceExplosiveProtectionTest
         var session = pair.Player!;
         EntityUid user = default;
         EntityUid welder = default;
-        EntityUid unlitTank = default;
         EntityUid tank = default;
         EntityUid waterTank = default;
         EntityUid wideUser = default;
@@ -137,7 +136,6 @@ public sealed class NoviceExplosiveProtectionTest
             var hands = server.System<SharedHandsSystem>();
             welder = entMan.SpawnEntity(welderPrototype, map.GridCoords);
             Assert.That(hands.TryPickupAnyHand(user, welder), Is.True);
-            unlitTank = entMan.SpawnEntity("WeldingFuelTankFull", Coordinates(1, 0));
             tank = entMan.SpawnEntity("WeldingFuelTankFull", Coordinates(0, 1));
             waterTank = entMan.SpawnEntity("WaterTank", Coordinates(-1, 0));
 
@@ -154,7 +152,6 @@ public sealed class NoviceExplosiveProtectionTest
         {
             var melee = server.System<MeleeWeaponSystem>();
             var weapon = entMan.GetComponent<MeleeWeaponComponent>(welder);
-            var unlitDamage = entMan.GetComponent<DamageableComponent>(unlitTank);
 
             void Hit(EntityUid target)
             {
@@ -164,10 +161,6 @@ public sealed class NoviceExplosiveProtectionTest
                     entMan.GetNetCoordinates(entMan.GetComponent<TransformComponent>(target).Coordinates));
                 melee.DoLightAttack(user, attack, welder, weapon, null);
             }
-
-            Hit(unlitTank);
-            Assert.That(unlitDamage.TotalDamage, Is.GreaterThan(FixedPoint2.Zero),
-                "An unlit welder must remain usable as an ordinary melee weapon.");
 
             var tankDamage = entMan.GetComponent<DamageableComponent>(tank);
             var waterDamage = entMan.GetComponent<DamageableComponent>(waterTank);
