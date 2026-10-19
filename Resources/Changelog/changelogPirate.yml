@@ -6869,3 +6869,9 @@ Entries:
       message: найманців можна забанити в антагбанах
   id: 637
   time: '2026-10-19T17:18:02.0000000+00:00'
+- author: AgentMaper, Adam_White
+  changes:
+    - type: Add
+      message: Додана нова мапа - LeonidTP
+  id: 638
+  time: '2026-10-19T17:28:31.0000000+00:00'
