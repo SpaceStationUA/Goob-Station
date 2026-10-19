@@ -41,6 +41,9 @@ public sealed class JourneyRuleSystem : GameRuleSystem<JourneyRuleComponent>
 
         // Players who spawn after the round starts need the sky that is already up.
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
+
+        // Restart cleanup bypasses Ended for deleted rule entities.
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => ClearFilters());
     }
 
     private void OnSpawnComplete(PlayerSpawnCompleteEvent ev)
@@ -106,15 +109,19 @@ public sealed class JourneyRuleSystem : GameRuleSystem<JourneyRuleComponent>
     protected override void Ended(EntityUid uid, JourneyRuleComponent component, GameRuleComponent gameRule,
         GameRuleEndedEvent args)
     {
-        // The filters live on the event manager, so they must not outlive the rule.
+        ClearFilters();
+        component.Sector = string.Empty;
+        component.PendingSector = string.Empty;
+        component.ApplyAt = TimeSpan.Zero;
+    }
+
+    private void ClearFilters()
+    {
         _events.SectorBlockedEvents.Clear();
         _events.SectorAllowedEvents = null;
         _events.SectorMajorEvents.Clear();
         _events.SectorAllMajorEvents.Clear();
         _events.SectorEnteredAt = TimeSpan.Zero;
-        component.Sector = string.Empty;
-        component.PendingSector = string.Empty;
-        component.ApplyAt = TimeSpan.Zero;
     }
 
     /// <summary>
