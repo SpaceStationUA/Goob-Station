@@ -9,6 +9,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/hoscasegun.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - HosLawbringerSet
@@ -30,6 +33,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/hoscasemelee.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - HosJusticeSet
@@ -49,6 +55,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/wardencase.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - WeaponEnergyShotgunSet
@@ -69,6 +78,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/officercase.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - WeaponMk58Set
@@ -85,6 +97,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/corpsmancase.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - WeaponMk58Set
@@ -120,6 +135,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/sergeantcase.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - WeaponMk58Set
@@ -138,6 +156,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/sergeantcasemelee.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - SergeantBeltSet
@@ -157,6 +178,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/captaincase.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - WeaponAntiqueLaserSet
@@ -174,6 +198,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/nanorepcase.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - CaneNTSet
