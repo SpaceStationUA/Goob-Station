@@ -77,7 +77,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         if (!Resolve(uid, ref humanoid)) // Pirate ckey for restricted players
             return;
 
-        SanitizeAppearance(uid, humanoid);
+        SanitizeAppearance(uid, humanoid); // Pirate ckey for restricted players
 
         if (index < 0
             || !humanoid.MarkingSet.TryGetCategory(category, out var markings)
