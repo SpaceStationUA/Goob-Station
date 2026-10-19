@@ -44,3 +44,8 @@ selectable-set-chief-engineer-voidsuit-desc = Важко екранований 
 selectable-set-chief-engineer-modsuit-name = «Просунутий» МОДсют головного інженера
 selectable-set-chief-engineer-modsuit-desc = Зібраний командний МОДсют з тим самим екрануванням, що й хардсют, а також
     модулі зварювання та радіації, джетпак, просунуті магнітні черевики, розширене сховище та плазмове ядро.
+
+selectable-set-warden-hardsuit-name = Скафандр наглядача
+selectable-set-warden-hardsuit-desc = Броньований скафандр наглядача для придушення заворушень. Міцний, герметичний і напрочуд зручний.
+selectable-set-warden-modsuit-name = MOD-костюм наглядача
+selectable-set-warden-modsuit-desc = Броня наглядача на модульній рамі з охоронним HUD, магнітними чоботами та підсилювачем броні.

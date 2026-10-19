@@ -553,3 +553,23 @@
     state: icon
   content:
   - ClothingModularControllerAdvancedPreassembled
+
+- type: selectableSet
+  id: VoidsuitSelectorWardenHardsuit
+  name: selectable-set-warden-hardsuit-name
+  description: selectable-set-warden-hardsuit-desc
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+    state: icon
+  content:
+  - ClothingOuterHardsuitWarden
+
+- type: selectableSet
+  id: VoidsuitSelectorWardenModsuit
+  name: selectable-set-warden-modsuit-name
+  description: selectable-set-warden-modsuit-desc
+  sprite:
+    sprite: _Pirate/Clothing/Modular/Warden/control.rsi
+    state: icon
+  content:
+  - ClothingModularControllerWardenPreassembled
