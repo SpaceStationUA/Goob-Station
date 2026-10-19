@@ -161,7 +161,7 @@
   - WeaponWardenRevolverShotgun
 
 - type: selectableSet
-  id: WardenRapierSet # Warden case rapier remains a steal target.
+  id: WardenRapierSet
   name: selectable-set-security-rapier-name
   description: selectable-set-security-rapier-description
   sprite:
