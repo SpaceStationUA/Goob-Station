@@ -388,7 +388,7 @@ namespace Content.Server.GameTicking
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
-            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character);
+            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character, ckey: player.Name); // Pirate ckey for restricted players
             DebugTools.AssertNotNull(mobMaybe);
             mob = mobMaybe!.Value;
 
