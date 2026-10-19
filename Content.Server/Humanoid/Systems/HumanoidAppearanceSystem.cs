@@ -74,7 +74,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
     /// <param name="humanoid">Humanoid component of the entity</param>
     public void SetMarkingId(EntityUid uid, MarkingCategories category, int index, string markingId, HumanoidAppearanceComponent? humanoid = null)
     {
-        if (!Resolve(uid, ref humanoid))
+        if (!Resolve(uid, ref humanoid)) // Pirate ckey for restricted players
             return;
 
         SanitizeAppearance(uid, humanoid);
