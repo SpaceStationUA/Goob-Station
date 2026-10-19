@@ -171,7 +171,7 @@
   - ClothingNeckWardenParryCloakFilled
 
 - type: selectableSet
-  id: SecurityRapierSet # Instructor kit has no steal target.
+  id: SecurityRapierSet
   name: selectable-set-security-rapier-name
   description: selectable-set-security-rapier-description
   sprite:

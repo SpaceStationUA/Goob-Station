@@ -13,3 +13,6 @@
     possibleSets:
     - VoidsuitSelectorWardenHardsuit
     - VoidsuitSelectorWardenModsuit
+  # Keeps the steal target available before the warden picks a suit.
+  - type: StealTarget
+    stealGroup: ClothingOuterHardsuitWarden

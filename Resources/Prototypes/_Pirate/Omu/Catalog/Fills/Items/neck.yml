@@ -8,7 +8,7 @@
   - type: ContainerFill
     containers:
       item:
-      - WardenRapier
+      - SecurityRapier
 
 - type: entity
   id: ClothingNeckSecurityParryCloakFilled

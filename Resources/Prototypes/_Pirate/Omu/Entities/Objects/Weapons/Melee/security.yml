@@ -95,7 +95,7 @@
   - type: StealTarget
     stealGroup: WeaponSecHeadSword
 
-# Instructor kit version; not a steal target.
+# Security contraband keeps it usable by instructors; the warden case still needs the steal target.
 - type: entity
   name: security rapier
   parent: [ BaseSword, BaseSecurityContraband ]
@@ -127,19 +127,9 @@
   - type: Tag
     tags:
     - WardenRapier
+  - type: StealTarget
+    stealGroup: WeaponEnergyShotgun
   - type: DisarmMalus
   - type: Reflect
     reflectProb: 0.3
     spread: 30
-
-# Warden version retains the grand-theft and steal-target behavior.
-- type: entity
-  parent: SecurityRapier
-  id: WardenRapier
-  components:
-  - type: Contraband
-    severity: GrandTheft
-    allowedDepartments: [ Command ]
-    allowedJobs: [ Warden ]
-  - type: StealTarget
-    stealGroup: WeaponEnergyShotgun

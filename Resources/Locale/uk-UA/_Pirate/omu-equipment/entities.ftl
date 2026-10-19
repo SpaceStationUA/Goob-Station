@@ -227,9 +227,6 @@ ent-ClothingNeckSecurityParryCloakFilled = { ent-ClothingNeckWardenParryCloak }
 ent-SecurityRapier = рапіра охорони
     .desc = Тонкий витончений меч для випадів через бананову шкірку.
 
-ent-WardenRapier = { ent-SecurityRapier }
-    .desc = { ent-SecurityRapier.desc }
-
 ent-BaseMagazineMagnumLeverRifle = магазин (.45 гвинтівкові)
 
 ent-CartridgeMagnumEnsnaring = набій (.45 магнум, сковувальний)
