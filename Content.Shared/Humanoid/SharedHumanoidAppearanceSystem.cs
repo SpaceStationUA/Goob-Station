@@ -181,7 +181,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
         SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
-        if (_netManager.IsServer)
+        if (_netManager.IsServer) // Pirate ckey for restricted players
         {
             var ckey = TryComp<ActorComponent>(target, out var actor) ? actor.PlayerSession.Name : null;
             _markingManager.FilterPlayerRestrictedMarkings(targetHumanoid.MarkingSet, ckey); // Pirate ckey for restricted players
