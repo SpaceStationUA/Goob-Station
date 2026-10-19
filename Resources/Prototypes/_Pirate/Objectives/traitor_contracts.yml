@@ -452,6 +452,18 @@
 
 - type: entity
   parent: BasePirateTraitorExtractObjective
+  id: TraitorContractBrigmedicSuitObjective
+  components:
+  - type: NotJobRequirement
+    jobs: [ Brigmedic ]
+  - type: ExtractCondition
+    stealGroup: ClothingOuterHardsuitBrigmedic
+    owner: job-name-brigmedic
+  - type: ReputationCondition
+    reputation: 20
+
+- type: entity
+  parent: BasePirateTraitorExtractObjective
   id: TraitorContractKravMagaGlovesObjective
   components:
   - type: NotJobRequirement

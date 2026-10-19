@@ -151,6 +151,9 @@
         - ClothingModularChestPlateBrigmedic
         - ClothingModularGauntletsBrigmedic
         - ClothingModularBootsBrigmedic
+  # Keep the target on brigmedic-only suits; the selector also offers shared security gear.
+  - type: StealTarget
+    stealGroup: ClothingOuterHardsuitBrigmedic
 
 - type: entity
   parent: ClothingModularHelmetSecurity

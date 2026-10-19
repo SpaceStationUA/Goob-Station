@@ -21,5 +21,6 @@ steal-target-groups-singularity-buster = ракетна установка "Ру
 steal-target-groups-cmo-hardsuit = ЖП-25м - захисний костюм "Окунінуші"
 steal-target-groups-cmo-belt-defibrillator = поясний дефібрилятор головного лікаря
 steal-target-groups-warden-hardsuit = FPA-92s - тактичний костюм "Сульде"
+steal-target-groups-brigmedic-suit = скафандр бригмедика
 steal-target-groups-krav-maga-gloves = рукавички Крав Мага
 steal-target-groups-hop-id-card = ID-карта голови персоналу
