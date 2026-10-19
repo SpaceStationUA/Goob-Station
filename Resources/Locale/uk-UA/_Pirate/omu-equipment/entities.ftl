@@ -215,10 +215,16 @@ ent-BodyBagBluespaceBSOFolded = блюспейс-мішок для тіл
 ent-ClothingBeltChemBagBSO = медична сумка синього щита
     .desc = Міцна медична сумка для офіцерів синього щита, які віддають перевагу хімічним засобам лікування.
 
-ent-ClothingNeckWardenParryCloak = дуельний плащ наглядача
-    .desc = Червоний плащ із вбудованими піхвами. Чудово підходить для театральних жестів перед ув'язненими.
+ent-ClothingNeckWardenParryCloak = дуельний плащ охорони
+    .desc = Темно-синій плащ із вбудованими піхвами. Чудово підходить для театральних жестів перед ув'язненими.
 
-ent-WardenRapier = рапіра наглядача
+ent-ClothingNeckSecurityParryCloak = { ent-ClothingNeckWardenParryCloak }
+    .desc = { ent-ClothingNeckWardenParryCloak.desc }
+
+ent-ClothingNeckSecurityParryCloakFilled = { ent-ClothingNeckWardenParryCloak }
+    .desc = { ent-ClothingNeckWardenParryCloak.desc }
+
+ent-SecurityRapier = рапіра охорони
     .desc = Тонкий витончений меч для випадів через бананову шкірку.
 
 ent-BaseMagazineMagnumLeverRifle = магазин (.45 гвинтівкові)

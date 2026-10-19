@@ -43,6 +43,7 @@
     TraitorContractCMODefibrillatorObjective: 1
     TraitorContractHoPIDCardObjective: 1
     TraitorContractWardenHardsuitObjective: 0.5
+    TraitorContractBrigmedicSuitObjective: 0.5
     TraitorContractKravMagaGlovesObjective: 0.5
     TraitorContractJusticeObjective: 0.5
     TraitorContractEnergyShotgunObjective: 0.5

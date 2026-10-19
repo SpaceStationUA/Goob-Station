@@ -18,7 +18,8 @@
     maxDifficulty: 7.5
   - type: AntagSelection
     agentName: blood-brothers-round-end-agent-name
-    selectionTime: PrePlayerSpawn
+    # PrePlayerSpawn skips selection when this delayed rule starts mid-round.
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ BloodBrother ]
       min: 1

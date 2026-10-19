@@ -620,8 +620,7 @@
   name: selectable-set-brigmedic-modsuit-name
   description: selectable-set-brigmedic-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/brigmed.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Brigmedic/control.rsi # Pirate: security specialist modsuits
+    state: icon # Pirate: security specialist modsuits
   content:
-
-  - ClothingModsuitBrigMedPowerCell
+  - ClothingModularControllerBrigmedicPreassembled # Pirate: security specialist modsuits

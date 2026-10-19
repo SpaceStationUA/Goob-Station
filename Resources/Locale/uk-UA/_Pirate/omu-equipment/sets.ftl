@@ -82,9 +82,9 @@ selectable-set-irelander-name = О'Коннабурр, Ірландець
 
 selectable-set-irelander-description = Стародавній мідний клинок, що кладе край смуті та легко пробиває стіни.
 
-selectable-set-warden-rapier-name = Плащ і рапіра
+selectable-set-security-rapier-name = Плащ і рапіра
 
-selectable-set-warden-rapier-description = Витончена зброя для культурного наглядача або того, хто воліє забруднити руки особисто.
+selectable-set-security-rapier-description = Витончена зброя для культурного охоронця або того, хто воліє забруднити руки особисто.
 
 selectable-set-hosoniblade-name = Вітер степів
 

@@ -304,7 +304,7 @@
     definitions:
     - prefRoles: [ Thief ]
       max: 1
-      playerRatio: 10
+      playerRatio: 3 # max 1 limits this to late joins (1 per 3 eligible players)
       chaosScore: 100
       lateJoinAdditional: true
       allowNonHumans: true
@@ -335,8 +335,9 @@
     definitions:
     - prefRoles: [ Devil ]
       max: 1
-      playerRatio: 40
+      playerRatio: 3 # max 1 limits this to late joins (1 per 3 eligible players)
       chaosScore: 100
+      lateJoinAdditional: true
       jobBlacklist: [ Chaplain, Mime, ChiefEngineer, ResearchDirector, Quartermaster ]
       mindRoles:
       - DevilMindRole
@@ -353,7 +354,7 @@
     definitions:
     - prefRoles: [ SELFAgent ]
       max: 1
-      playerRatio: 31
+      playerRatio: 3 # max 1 limits this to late joins (1 per 3 eligible players)
       chaosScore: 125
       lateJoinAdditional: true
       allowNonHumans: true
@@ -379,7 +380,7 @@
     definitions:
     - prefRoles: [ Vampire ]
       max: 1
-      playerRatio: 10
+      playerRatio: 3 # max 1 limits this to late joins (1 per 3 eligible players)
       chaosScore: 100
       jobBlacklist: [ Chaplain ]
       blacklist:
@@ -404,7 +405,7 @@
     definitions:
     - prefRoles: [ Heretic ]
       max: 1
-      playerRatio: 15
+      playerRatio: 3 # max 1 limits this to late joins (1 per 3 eligible players)
       chaosScore: 200
       lateJoinAdditional: true
       jobBlacklist: [ Chaplain ]

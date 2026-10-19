@@ -68,3 +68,8 @@ selectable-set-chief-engineer-modsuit-name = Chief Engineer's 'advanced' MODsuit
 selectable-set-chief-engineer-modsuit-desc =
     A preassembled command MODsuit with the same shielding as the hardsuit, plus welding
     and radiation modules, a jetpack, advanced magnetic boots, expanded storage and a plasma core.
+
+selectable-set-warden-hardsuit-name = warden hardsuit
+selectable-set-warden-hardsuit-desc = The warden's riot hardsuit. Sturdy, sealed and oddly comfortable.
+selectable-set-warden-modsuit-name = warden MODsuit
+selectable-set-warden-modsuit-desc = The warden's riot plating on a modular frame, with a security HUD, magnetic boots and an armor booster.
