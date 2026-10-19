@@ -175,8 +175,8 @@ public sealed class SecretSaltTelemetryTest
             var prototypes = server.ResolveDependency<IPrototypeManager>();
             var primary = prototypes.Index<WeightedRandomPrototype>("SecretSaltPrimary");
             var additional = prototypes.Index<WeightedRandomPrototype>("SecretSaltRoundstart");
-            Assert.That(primary.Weights["Letoferol"], Is.EqualTo(0.4f));
-            Assert.That(additional.Weights["Letoferol"], Is.EqualTo(0.4f));
+            Assert.That(primary.Weights["Letoferol"], Is.EqualTo(0.04f));
+            Assert.That(additional.Weights["Letoferol"], Is.EqualTo(0.04f));
 
             var ticker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
             var entityManager = server.ResolveDependency<IEntityManager>();
