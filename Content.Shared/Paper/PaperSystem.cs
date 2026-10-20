@@ -310,6 +310,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         };
     }
 
+    #region Pirate: persistent diary pages
     private void OnInputTextMessage(Entity<PaperComponent> entity, ref PaperInputTextMessage args)
     {
         if (!TryWriteText(entity, args.Actor, args.Text, args.Page))
@@ -322,6 +323,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
             entity.Comp.WriteSessionActor = null;
         UpdateUserInterface(entity);
     }
+    #endregion
 
     /// <summary>
     /// Checks the write permission and applies the text to the item - to the whole document,

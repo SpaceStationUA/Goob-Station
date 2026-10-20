@@ -466,7 +466,7 @@ namespace Content.Client.Paper.UI
             // For premade documents, we want to be able to edit them rather than
             // replace them.
             var shouldCopyText = 0 == Input.TextLength && 0 != state.Text.Length;
-            if (!wasEditing || shouldCopyText || leafChanged) # Pirate: persistent diary
+            if (!wasEditing || shouldCopyText || leafChanged) // Pirate: persistent diary
             {
                 // We can get repeated messages with state.Mode == Write if another
                 // player opens the UI for reading. In this case, don't update the
@@ -477,8 +477,8 @@ namespace Content.Client.Paper.UI
                 Input.InsertAtCursor(state.Text);
 
                 // Start reading a freshly turned leaf from its top.
-                if (leafChanged) # Pirate: persistent diary
-                    ScrollingContents.VScroll = 0f; # Pirate: persistent diary
+                if (leafChanged) // Pirate: persistent diary
+                    ScrollingContents.VScroll = 0f; // Pirate: persistent diary
             }
 
             // Starlight start, paperwork tag shit
