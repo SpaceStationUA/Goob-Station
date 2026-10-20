@@ -157,7 +157,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
     private void BeforeUIOpen(Entity<PaperComponent> entity, ref BeforeActivatableUIOpenEvent args)
     {
         entity.Comp.Mode = PaperAction.Read;
-        if (entity.Comp.WriteSessionIgnoresStampsActor == args.User)
+        if (entity.Comp.WriteSessionIgnoresStampsActor == args.User) // Pirate: persistent diary pages
             entity.Comp.WriteSessionIgnoresStampsActor = null;
         if (entity.Comp.WriteSessionActor == args.User)
             entity.Comp.WriteSessionActor = null;
