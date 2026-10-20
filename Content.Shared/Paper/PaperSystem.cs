@@ -207,7 +207,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         }
 
         // only allow editing if there are no stamps or when using a cyberpen
-        var editable = !IsWriteLocked(entity) || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
+        var editable = !IsWriteLocked(entity) || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag); // Pirate: persistent diary pages
         if (_tagSystem.HasTag(args.Used, WriteTag))
         {
             // Pirate: stamped/signed documents are final - remember whether this write
