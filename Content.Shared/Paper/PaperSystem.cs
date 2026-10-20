@@ -415,7 +415,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
             if (paperStatus == PaperStatus.Written)
             {
                 var written = new PaperWrittenEvent(entity.Owner);
-                RaiseLocalEvent(actor, ref written);
+                RaiseLocalEvent(actor, ref written); // Pirate: persistent diary pages
             }
 #endregion
 
