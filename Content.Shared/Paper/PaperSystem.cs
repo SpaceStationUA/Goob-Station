@@ -159,7 +159,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         entity.Comp.Mode = PaperAction.Read;
         if (entity.Comp.WriteSessionIgnoresStampsActor == args.User) // Pirate: persistent diary pages
             entity.Comp.WriteSessionIgnoresStampsActor = null;
-        if (entity.Comp.WriteSessionActor == args.User)
+        if (entity.Comp.WriteSessionActor == args.User) // Pirate: persistent diary pages
             entity.Comp.WriteSessionActor = null;
         UpdateUserInterface(entity);
     }
