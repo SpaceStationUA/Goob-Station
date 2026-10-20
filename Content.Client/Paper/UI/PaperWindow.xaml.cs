@@ -477,7 +477,7 @@ namespace Content.Client.Paper.UI
                 Input.InsertAtCursor(state.Text);
 
                 // Start reading a freshly turned leaf from its top.
-                if (leafChanged)
+                if (leafChanged) # Pirate: persistent diary
                     ScrollingContents.VScroll = 0f;
             }
 
