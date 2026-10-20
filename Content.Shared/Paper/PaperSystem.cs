@@ -245,7 +245,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
                     _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag) ? args.User : null; // Pirate: persistent diary pages
 
                 entity.Comp.Mode = PaperAction.Write;
-                entity.Comp.WriteSessionActor = args.User;
+                entity.Comp.WriteSessionActor = args.User; // Pirate: persistent diary pages
                 _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
                 UpdateUserInterface(entity);
             }
