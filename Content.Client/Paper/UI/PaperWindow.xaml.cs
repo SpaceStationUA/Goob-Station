@@ -478,7 +478,7 @@ namespace Content.Client.Paper.UI
 
                 // Start reading a freshly turned leaf from its top.
                 if (leafChanged) # Pirate: persistent diary
-                    ScrollingContents.VScroll = 0f;
+                    ScrollingContents.VScroll = 0f; # Pirate: persistent diary
             }
 
             // Starlight start, paperwork tag shit
