@@ -1134,7 +1134,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
 
         entity.Comp.Mode = PaperAction.Read;
         entity.Comp.WriteSessionIgnoresStampsActor = null; // Pirate: persistent diary pages
-        entity.Comp.WriteSessionActor = null;
+        entity.Comp.WriteSessionActor = null; // Pirate: persistent diary pages
         UpdateUserInterface(entity);
         _uiSystem.TryToggleUi(entity.Owner, PaperUiKey.Key, args.User);
         args.Handled = true;
