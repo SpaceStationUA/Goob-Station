@@ -41,6 +41,7 @@
   name: secretsalt-title
   description: secretsalt-description
   showInVote: true
+  minPlayers: 20
   rules:
     - SecretSalt
     - GlimmerEventScheduler # Pirate
