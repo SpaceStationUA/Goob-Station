@@ -331,7 +331,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
     private bool TryWriteText(Entity<PaperComponent> entity, EntityUid actor, string rawText, int? page = null)
     {
         var ev = new PaperWriteAttemptEvent(entity.Owner);
-        RaiseLocalEvent(actor, ref ev);
+        RaiseLocalEvent(actor, ref ev); // Pirate: persistent diary pages
         if (ev.Cancelled)
             return false;
 
