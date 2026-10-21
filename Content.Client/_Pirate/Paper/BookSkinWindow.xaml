@@ -1,0 +1,15 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'book-skin-menu-title'}"
+               MinSize="300 340"
+               SetSize="340 420">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4">
+        <LineEdit Name="Search" PlaceHolder="{Loc 'book-skin-search'}" />
+        <ScrollContainer VerticalExpand="True">
+            <GridContainer Name="CoverGrid" Columns="3" Margin="0 4" />
+        </ScrollContainer>
+    </BoxContainer>
+</DefaultWindow>
