@@ -436,4 +436,29 @@
   alpha: 1
   ghostName: polygon
 
+- type: customGhost
+  id: ranquill-ghost
+  ckey: ranquill
+  sprite:
+    - _Pirate/Ghosts/ranquill.rsi
+  alpha: 1
+  ghostName: Лускатик
+  ghostDescription: Weh weh weh
 
+- type: customGhost
+  id: Adam_White-ghost
+  ckey: Adam_White
+  sprite:
+    - _Pirate/Ghosts/Adam_White.rsi
+  alpha: 1
+  ghostName: Adam_White
+  ghostDescription: А ви знали, що Адам найпригодніший для ^@! [Data encrypted]
+
+- type: customGhost
+  id: amuletfish-ghost
+  ckey: amuletfish
+  sprite:
+    - _Pirate/Ghosts/amuletfish.rsi
+  alpha: 1
+  ghostName: amuletfish
+  ghostDescription: хтось рибний.. а може ні..
