@@ -48,7 +48,7 @@ public sealed partial class VoteManager
                 var ranked = handle.VotesPerOption.Select(pair => (Option: pair.Key, Votes: pair.Value)).ToList();
                 _random.Shuffle(ranked);
                 var finalists = PirateVoteRules.SelectFinalists(ranked, finalistCount);
-                if (finalists.Length > 1)
+                if (finalists.Length > 1 && finalists.Length < options.Options.Count)
                 {
                     var runoff = new VoteOptions
                     {

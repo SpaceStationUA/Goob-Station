@@ -11,6 +11,8 @@ using Content.Shared.GameTicking;
 using Moq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests._Pirate.Voting;
 
@@ -20,6 +22,7 @@ public sealed class PirateSelectionVoteTest
     [TestCase(0, 0)]
     [TestCase(1, 0)]
     [TestCase(2, 2)]
+    [TestCase(3, 3)]
     [TestCase(4, 3)]
     public async Task SelectionBallotsUseOnlySupportedFinalistsAndFreshVotes(int supported, int expectedFinalists)
     {
@@ -59,6 +62,42 @@ public sealed class PirateSelectionVoteTest
             manager.Update();
             Assert.That(resolved, Is.True);
             Assert.That(manager.ActiveVotes, Is.Empty, "There must not be a third ballot.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase(2)]
+    [TestCase(3)]
+    public async Task SelectionSkipsRunoffWhenAllOptionsAreFinalists(int optionCount)
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            var manager = (VoteManager) server.ResolveDependency<IVoteManager>();
+            var options = Options();
+            options.Options = options.Options.Take(optionCount).ToList();
+            var resolved = 0;
+            VoteFinishedEventArgs result = null;
+            StartSelection(manager, options, (_, args) =>
+            {
+                resolved++;
+                result = args;
+            });
+            var vote = manager.ActiveVotes.Single();
+            for (var i = 0; i < optionCount; i++)
+                Cast(vote, i, optionCount - i);
+
+            manager.Update();
+
+            Assert.That(vote.Finished, Is.True);
+            Assert.That(resolved, Is.EqualTo(1));
+            Assert.That(result.Winner, Is.EqualTo("A"));
+            Assert.That(result.Votes, Is.EqualTo(Enumerable.Range(1, optionCount).Reverse()));
+            Assert.That(manager.ActiveVotes, Is.Empty);
+            Assert.That(manager.PirateSelectionTimeLeft, Is.EqualTo(TimeSpan.Zero));
         });
 
         await pair.CleanReturnAsync();
@@ -131,8 +170,21 @@ public sealed class PirateSelectionVoteTest
             var config = pair.Server.System<PirateVotingSystem>().Configuration;
             Assert.That(config.FinalistCount, Is.EqualTo(3));
             Assert.That(CCVars.VoteMinimumPlayedMinutes.DefaultValue, Is.EqualTo(10f));
-            Assert.That(config.ModePenalties["SecretSalt"], Is.EqualTo(new[] { 0.50f, 0.25f }));
-            Assert.That(config.ModePenalties["PirateGreenshift"], Is.EqualTo(new[] { 0.50f, 0.40f, 0.30f }));
+            Assert.That(config.ModePenalties["SecretSalt"], Is.EqualTo(new[] { 0.75f, 0.50f, 0.25f }));
+            Assert.That(config.ModePenalties["PirateGreenshift"], Is.EqualTo(new[] { 0.50f, 0.25f }));
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task ClientCanValidateServerOnlyVotingConfiguration()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        await pair.Client.WaitAssertion(() =>
+        {
+            var prototypes = pair.Client.ResolveDependency<IPrototypeManager>();
+            var errors = prototypes.ValidateDirectory(new ResPath("/Prototypes/_Pirate/Voting"));
+            Assert.That(errors, Is.Empty);
         });
         await pair.CleanReturnAsync();
     }
