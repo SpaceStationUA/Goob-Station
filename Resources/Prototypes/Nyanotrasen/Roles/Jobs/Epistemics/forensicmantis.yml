@@ -20,6 +20,8 @@
       - NanoTrasen
       - ZengHuPharmaceuticals
     # Pirate contractor end
+    - !type:FlavorTextLengthRequirement # Pirate: whitelist flavor minimum
+      minLength: 500 # Pirate: whitelist flavor minimum
   startingGear: ForensicMantisGear
   icon: "JobIconForensicMantis"
   supervisors: job-supervisors-rd
