@@ -114,8 +114,8 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: CircuitImprinterMachineCircuitboard
-        - id: ProtolatheMachineCircuitboard
+        #- id: CircuitImprinterMachineCircuitboard # Pirate
+        #- id: ProtolatheMachineCircuitboard # Pirate
         - id: ResearchComputerCircuitboard
         - id: CargoRequestScienceComputerCircuitboard
         - id: RoboticsConsoleCircuitboard

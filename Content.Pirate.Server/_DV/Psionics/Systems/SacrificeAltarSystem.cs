@@ -52,7 +52,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
             return;
 
         // Only psionics or people with clerical training (Chaplain) can sacrifice.
-        if (!HasComp<PotentialPsionicComponent>(args.User)
+        if (!HasComp<PsionicComponent>(args.User)
             && !HasComp<BibleUserComponent>(args.User))
             return;
 
@@ -64,7 +64,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
             if (buckleComp.BuckledTo != uid)
                 continue;
 
-            if (HasComp<PotentialPsionicComponent>(buckledUid) || HasComp<PsionicComponent>(buckledUid))
+            if (HasComp<PsionicComponent>(buckledUid))
             {
                 target = buckledUid;
                 break;
@@ -127,7 +127,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
             return;
         }
 
-        if (!HasComp<PotentialPsionicComponent>(target) && !HasComp<PsionicComponent>(target))
+        if (!HasComp<PsionicComponent>(target))
         {
             _popup.PopupClient(Loc.GetString("sacrifice-altar-target-not-psionic"), user, user);
             return;

@@ -214,7 +214,9 @@ public abstract class BasePsionicPowerSystem<T, T1> : EntitySystem where T : Bas
         _adminLogger.Add(Database.LogType.Psionics, Database.LogImpact.Medium, $"{ToPrettyString(psionicSource):player} used {power}");
 
         var ev = new PsionicPowerUsedEvent(performer, psionicSource, power, psionicSource.Comp.ActionEntity);
-        RaiseLocalEvent(psionicSource, ev);
+        // broadcast: true so that both directed subscribers (SharedPsionicSystem metapsionic detection)
+        // and broadcast subscribers (ForceSpeechSystem, XATPsionicUsageSystem) all receive this event.
+        RaiseLocalEvent(psionicSource, ev, broadcast: true);
 
         _glimmer.Glimmer += Random.Next(psionicSource.Comp.MinGlimmerChanged, psionicSource.Comp.MaxGlimmerChanged);
     }

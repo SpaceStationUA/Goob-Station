@@ -8,7 +8,7 @@
       # Tools
       - id: MantisCaseTools # TheDen - Contains their lantern, folder, and hand labeler
       - id: MantisCaseChemicals # TheDen - Contains their syringe, chemistry bottle, and pill canisters
-      - id: BoxZiptie # DeltaV - Give the mantis some zipties
+      - id: MantisCaseRestraints # Contains zipties
       - id: ClothingHeadCage
         amount: 2
       - id: ClothingEyesGlassesEthereal

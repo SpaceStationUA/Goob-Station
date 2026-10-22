@@ -155,3 +155,5 @@
     - AnomalyHost
     - SiliconEmotes
     - Synth
+  # Pirate: Synth are psionically insulated and cannot receive psionic powers.
+  - type: PsionicallyInsulative

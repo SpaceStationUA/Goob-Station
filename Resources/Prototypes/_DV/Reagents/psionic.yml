@@ -29,17 +29,22 @@
     Narcotic:
       metabolismRate: 0.5
       effects:
-      - !type:RollPsionicAbility
-        bonusMultiplier: 1
-        conditions:
-        - !type:ReagentCondition
-          reagent: Claridisol
-          min: 40
-      - !type:ModifyStatusEffect # Pirate
+      - !type:ModifyStatusEffect
         effectProto: StatusEffectShieldedFromPsionics
         type: Remove
         time: 10
-      - !type:ModifyStatusEffect # Pirate
+      - !type:ModifyStatusEffect
         effectProto: StatusEffectPsionicsDisabled
         type: Remove
         time: 10
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        type: Remove
+        time: 2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDreamy # the lotus: slow dream-wash
+        type: Remove
+        time: 2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectTelepathicRepeater
+        type: Remove
