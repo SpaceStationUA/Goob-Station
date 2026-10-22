@@ -184,6 +184,22 @@
   reactants:
     PureOil:
       amount: 25
+    Blood:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalAssay
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateAssayCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
     Cognizine:
       amount: 25
   effects:

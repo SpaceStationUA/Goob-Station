@@ -139,7 +139,6 @@
     componentsToAdd:
     - type: PyrokinesisPower
 
-# Pirate: Ported from upstream PR #34 (SpaceStationUA/Goob-Station)
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalAnoigo
@@ -280,3 +279,15 @@
     componentsToAdd:
     - type: SummonFamiliarPower
       prototype: MobBatRemilia
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalXenoglossy
+  name: xenoglossy crystal
+  description: A small psionic crystal. You can almost feel the knowledge radiating from it.
+  components:
+  - type: Sprite
+    color: "#8a00c2"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: AssayPower

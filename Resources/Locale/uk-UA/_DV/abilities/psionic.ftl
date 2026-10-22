@@ -17,6 +17,7 @@ psionic-power-name-assay = Аналіз
 psionic-power-name-shadeskip = Тіньовий Крок
 psionic-power-name-telekinetic-pulse = Телекінетичний Імпульс
 psionic-power-name-psionic-flash = Псіонічний спалах
+psionic-power-name-xenoglossy = Ксеноглосія
 psionic-roll-failed = Ноосферний вплив не залишає сліду у вашій свідомості...
 psionic-partly-mindbroken = Псіонічний вплив на вашу свідомість слабшає...
 psionic-mindbroken = Ваша свідомість відступає від абстракції до реальності
@@ -158,3 +159,8 @@ mantis-pendulum-hot-message = Маятник стає неприємно гар�
 assay-body = Виявлено псіонічні здібності у {$entity}:
 assay-response-refuse = Я тобі нічого не скажу!
 assay-response-why-scan = Чому ви мене скануєте?
+# Ксеноглосія
+xenoglossy-power-description = Ви розумієте всі мови.
+xenoglossy-power-initialization-feedback = Я відчуваю емпатію з усім творінням, щоб розуміти його і бути зрозумілим.
+    Бар'єр між думкою і вираженням для мене проникний.
+psionic-language-power-metapsionic-feedback = Ноосфера вільно протікає крізь {CAPITALIZE($entity)}, який, здається, перетравлює її і видає назад непорушно
