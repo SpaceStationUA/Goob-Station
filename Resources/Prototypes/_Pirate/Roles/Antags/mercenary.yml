@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: antag
+  id: Mercenary
+  name: roles-antag-mercenary-name
+  antagonist: true
+  setPreference: false
+  objective: roles-antag-mercenary-objective

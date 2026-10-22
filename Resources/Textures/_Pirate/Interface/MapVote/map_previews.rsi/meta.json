@@ -90,6 +90,9 @@
     },
     {
       "name": "core"
+    },
+    {
+      "name": "leonid_tp"
     }
   ]
 }

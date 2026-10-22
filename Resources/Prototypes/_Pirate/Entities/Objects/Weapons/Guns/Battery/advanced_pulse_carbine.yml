@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: Pulse
+  id: PirateAdvancedCarbinePulse
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 15
+        Blunt: 5
+
+- type: entity
+  parent: StunPulse
+  id: PirateAdvancedCarbineStunPulse
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanStaminaDamage
+    staminaDamage: 40
+
+- type: selectableAmmo
+  id: PirateAdvancedCarbinePulse
+  desc: Terminate.
+  icon:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    state: omnilaser
+  color: "#00B2FF"
+  protoId: PirateAdvancedCarbinePulse
+  fireCost: 300
+
+- type: selectableAmmo
+  id: PirateAdvancedCarbineStunPulse
+  desc: Stun.
+  icon:
+    sprite: _Goobstation/Objects/Weapons/Guns/Projectiles/selectable_ammo.rsi
+    state: omnilaser-blue
+  color: blue
+  protoId: PirateAdvancedCarbineStunPulse
+  fireCost: 20

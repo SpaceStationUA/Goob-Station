@@ -8,10 +8,10 @@
     sprite: _Goobstation/Objects/Weapons/Guns/Rifles/wspr.rsi
     state: icon
   content:
-  - WeaponRifleWSPR
   - MagazineCaselessRifle
   - MagazineCaselessRifle
   - MagazineBoxCaselessRifleBig
+  - WeaponRifleWSPR
 
 - type: selectableSet
   id: MercEstocSet
@@ -21,10 +21,10 @@
     sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
     state: icon
   content:
-  - WeaponRifleEstoc
   - MagazineLightRifle
   - MagazineLightRifle
   - MagazineBoxLightRifleBig
+  - WeaponRifleEstoc
 
 - type: selectableSet
   id: MercBanditSet
@@ -34,12 +34,12 @@
     sprite: _Pirate/Objects/Weapons/Guns/Rifles/bandit.rsi
     state: icon
   content:
-  - WeaponRifleBandit
   - MagazineLightRifleCaseless
   - MagazineLightRifleCaseless
   - MagazineLightRifleCaseless
   - MagazineLightRifleCaseless
   - MagazineBoxLightRifleCaselessBig
+  - WeaponRifleBandit
 
 - type: selectableSet
   id: MercAKMSet
@@ -49,10 +49,10 @@
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     state: icon
   content:
-  - WeaponRifleAk
   - MagazineLightRifle
   - MagazineLightRifle
   - MagazineBoxLightRifleBig
+  - WeaponRifleAk
 
 - type: selectableSet
   id: MercEnforcerSet
@@ -62,10 +62,10 @@
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
     state: icon
   content:
-  - WeaponShotgunEnforcer
   - BoxLethalshot
   - BoxLethalshot
   - BoxShotgunIncendiary
+  - WeaponShotgunEnforcer
 
 - type: selectableSet
   id: MercVulkanMSet
@@ -75,10 +75,23 @@
     sprite: _Pirate/Objects/Weapons/Guns/Rifles/vulcan.rsi
     state: icon
   content:
-  - WeaponRifleVulcanM
   - MagazineLightRifle
   - MagazineLightRifle
   - MagazineBoxLightRifleBig
+  - WeaponRifleVulcanM
+
+- type: selectableSet
+  id: MercM16ModernSet
+  name: selectable-set-merc-m16-modern-name
+  description: selectable-set-merc-m16-modern-description
+  sprite:
+    sprite: _Pirate/Objects/Weapons/Guns/Rifles/M16/m16_modern_icon_48x.rsi
+    state: icon
+  content:
+  - MagazineRifleM16Extended
+  - MagazineRifleM16Extended
+  - MagazineBoxRifleBig
+  - WeaponRifleM16Modern
 
 # Mercenary sidearms
 
@@ -110,10 +123,10 @@
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
     state: icon
   content:
-  - WeaponPistolCobra
   - MagazinePistolCaselessRifle
   - MagazinePistolCaselessRifle
   - MagazineBoxCaselessRifle
+  - WeaponPistolCobra
 
 - type: selectableSet
   id: MercViperSet
@@ -123,10 +136,10 @@
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
     state: icon
   content:
-  - WeaponPistolViper
   - MagazinePistol
   - MagazinePistol
   - MagazineBoxPistol
+  - WeaponPistolViper
 
 ## Command - Командування
 # Captain - Капітан
@@ -540,3 +553,23 @@
     state: icon
   content:
   - ClothingModularControllerAdvancedPreassembled
+
+- type: selectableSet
+  id: VoidsuitSelectorWardenHardsuit
+  name: selectable-set-warden-hardsuit-name
+  description: selectable-set-warden-hardsuit-desc
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+    state: icon
+  content:
+  - ClothingOuterHardsuitWarden
+
+- type: selectableSet
+  id: VoidsuitSelectorWardenModsuit
+  name: selectable-set-warden-modsuit-name
+  description: selectable-set-warden-modsuit-desc
+  sprite:
+    sprite: _Pirate/Clothing/Modular/Warden/control.rsi
+    state: icon
+  content:
+  - ClothingModularControllerWardenPreassembled

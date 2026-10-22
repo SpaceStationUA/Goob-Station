@@ -3,13 +3,14 @@
   name: job-name-nct
   description: job-description-nct
   playTimeTracker: JobNanotrasenCareerTrainer
-  requirements: # Pirate: command flavor gate
-  - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
+  requirements: # Pirate
   # Pirate Employment start
   - !type:CharacterEmployerRequirement
     employers:
     - NanoTrasen
   # Pirate Employment end
+  - !type:FlavorTextLengthRequirement # Pirate: command flavor
+    minLength: 500 # Pirate: whitelist flavor minimum
   goobcoins: 45
   weight: 20
   startingGear: NanotrasenCareerTrainerGear

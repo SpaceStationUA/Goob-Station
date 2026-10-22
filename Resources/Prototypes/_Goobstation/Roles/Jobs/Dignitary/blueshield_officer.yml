@@ -40,6 +40,7 @@
       - PMCG
   # Pirate Employment end
     - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
+      minLength: 500 # Pirate: whitelist flavor minimum
   guides:
   - BlueshieldOfficerSOP
   - Command

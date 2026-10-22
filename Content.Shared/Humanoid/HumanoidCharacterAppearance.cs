@@ -201,7 +201,6 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         if (proto.TryIndex(species, out SpeciesPrototype? speciesProto))
         {
             markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
-            MarkingColoration.Clamp(markingSet, proto); // Pirate - Marking coloration clamp
             markingSet.EnsureValid(markingManager);
 
             var strategy = proto.Index(speciesProto.SkinColoration).Strategy;

@@ -10,7 +10,7 @@ selectable-set-warden-snub-name = Парні револьвери R2
 
 selectable-set-warden-snub-description = Два безкуркові револьвери для швидкого вихоплення та ще швидшого спорожнення барабанів.
 
-selectable-set-warden-henrietta-name = Henrietta
+selectable-set-warden-henrietta-name = Генрієтта
 
 selectable-set-warden-henrietta-description = Надійна важільна рушниця 8 калібру з багнетом. У комплекті патронташ і запас набоїв.
 
@@ -26,15 +26,15 @@ selectable-set-brigmed-disabler-name = Енергетичний пістолет
 
 selectable-set-brigmed-disabler-description = Саме те, що написано на коробці. Нудно. Зате працює.
 
-selectable-set-hos-belt-name = Qua Nar'Vulna
+selectable-set-hos-belt-name = Ква Нар’Вульна
 
 selectable-set-hos-belt-description = Наслідування стародавнього мистецтва, збереженого в пам'яті й руках нашого народу.
 
-selectable-set-hos-Justice-name = Багатофункціональний енергомеч Justice
+selectable-set-hos-Justice-name = Багатофункціональний енергомеч Джастіс
 
 selectable-set-hos-Justice-description = Класичний клинок із кількома бойовими режимами.
 
-selectable-set-hos-lawbringer-name = Багатофункціональний енергопістолет Lawbringer
+selectable-set-hos-lawbringer-name = Багатофункціональний енергопістолет Лоубрінґер
 
 selectable-set-hos-lawbringer-description = Класичний пістолет із кількома бойовими режимами.
 
@@ -50,17 +50,17 @@ selectable-set-mk58-name = Пістолет Mk58
 
 selectable-set-mk58-description = Стандартний службовий пістолет охорони Нанотрейзен.
 
-selectable-set-t8-name = Револьвер T8 «Consistency»
+selectable-set-t8-name = Револьвер T8 «Сталість»
 
 selectable-set-t8-description = Альтернатива Mk58, що обмінює темп вогню на кращу здатність ламати кістки.
 
-selectable-set-eg1-name = Енергетичний револьвер EG-1 Taro
+selectable-set-eg1-name = Енергетичний револьвер EG-1 Таро
 
 selectable-set-eg1-description = Енергетична альтернатива звичайній короткоствольній зброї, що обмінює вогневу міць на універсальність лазерів.
 
-selectable-set-ceremonial-rifle-name = M1 Garand
+selectable-set-ceremonial-rifle-name = M1 «Ґаранд»
 
-selectable-set-ceremonial-rifle-description = Реліквія давньої піхоти й десантників Солу, подарована інструктору СБ. Використовує .30 long rifle magnum.
+selectable-set-ceremonial-rifle-description = Реліквія давньої піхоти й десантників Солу, подарована інструктору СБ. Використовує .30 довгий гвинтівковий магнум.
 
 selectable-set-sergeant-belt-name = Дисциплінарний ремінь інструктора
 
@@ -74,7 +74,7 @@ selectable-set-antiquelaser-name = Антикварний лазерний пі�
 
 selectable-set-antiquelaser-description = Класика. Найгірший кошмар оперативника.
 
-selectable-set-vc8-name = Револьвер VC-8 «Handshake»
+selectable-set-vc8-name = Револьвер VC-8 «Рукостискання»
 
 selectable-set-vc8-description = Відтворення давніх технологій Солу. Ця ручна гармата завдає неземної сили удару.
 
@@ -82,9 +82,9 @@ selectable-set-irelander-name = О'Коннабурр, Ірландець
 
 selectable-set-irelander-description = Стародавній мідний клинок, що кладе край смуті та легко пробиває стіни.
 
-selectable-set-warden-rapier-name = Плащ і рапіра
+selectable-set-security-rapier-name = Плащ і рапіра
 
-selectable-set-warden-rapier-description = Витончена зброя для культурного наглядача або того, хто воліє забруднити руки особисто.
+selectable-set-security-rapier-description = Витончена зброя для культурного охоронця або того, хто воліє забруднити руки особисто.
 
 selectable-set-hosoniblade-name = Вітер степів
 
@@ -104,7 +104,7 @@ selectable-set-trevor-description = Шляхетний скакун служби
 
 selectable-set-ert-shotgun-name = Штурмовий комплект
 
-selectable-set-ert-shotgun-description = Дробовик Bojevic 8 калібру, дві коробки набоїв і пістолет Anaconda, який сам виготовляє боєприпаси. Для тісних коридорів станції.
+selectable-set-ert-shotgun-description = Дробовик Бойович 8 калібру, дві коробки набоїв і пістолет Анаконда, який сам виготовляє боєприпаси. Для тісних коридорів станції.
 
 selectable-set-ert-smg-name = Комплект L.U.I.G.I.
 
@@ -126,13 +126,13 @@ selectable-set-bso-brdi-name = BRDI R-25
 
 selectable-set-bso-brdi-description = Знакова зброя Іноземного легіону Республіки Бізель, перефарбована для синього щита.
 
-selectable-set-bso-typewriter-name = Пістолет-кулемет Typewriter
+selectable-set-bso-typewriter-name = Пістолет-кулемет Тайпрайтер
 
-selectable-set-bso-typewriter-desc = Копія пістолета-кулемета Thompson під .35 із зарядженим барабаном, коробчастим магазином і барабаном із гумовими набоями. Для знавців історії та гангстерів.
+selectable-set-bso-typewriter-desc = Копія пістолета-кулемета Томпсон під .35 із зарядженим барабаном, коробчастим магазином і барабаном із гумовими набоями. Для знавців історії та гангстерів.
 
 selectable-set-bso-extraction-name = Евакуаційний комплект
 
-selectable-set-bso-extraction-description = Містка розвантажувальна система з 20 блюспейс-системами Fulton, маяком зі сповіщенням у медичному радіоканалі та бойовою аптечкою з препаратами в таблетках.
+selectable-set-bso-extraction-description = Містка розвантажувальна система з 20 блюспейс-системами Фултон, маяком зі сповіщенням у медичному радіоканалі та бойовою аптечкою з препаратами в таблетках.
 
 selectable-set-bso-medical-name = Медичний комплект
 
@@ -150,6 +150,6 @@ selectable-set-ntr-blade-name = Тростина-клинок
 
 selectable-set-ntr-blade-desc = Міцніша тростина з клинком, але без електрошокера. Лише для надзвичайних ситуацій. Записка ЦК: ВИКОРИСТОВУВАТИ ЛИШЕ НА ЧЕРВОНОМУ КОДІ!
 
-selectable-set-ntr-brella-name = Парасоля «Marlen»
+selectable-set-ntr-brella-name = Парасоля «Марлен»
 
-selectable-set-ntr-brella-desc = Стильний сувенір зі щільно сплетеної дюратканини від NanoFashion для заможних працівників ЦК. Дорогий вигляд і несподівана міцність. Записка ЦК: ЛИШЕ НА ЧЕРВОНОМУ КОДІ!
+selectable-set-ntr-brella-desc = Стильний сувенір зі щільно сплетеної дюратканини від НаноФешн для заможних працівників ЦК. Дорогий вигляд і несподівана міцність. Записка ЦК: ЛИШЕ НА ЧЕРВОНОМУ КОДІ!

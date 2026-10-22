@@ -11,6 +11,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/blueshieldoffensivecase.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - BSOBRDISet
@@ -30,6 +33,9 @@
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Misc/GunCases/blueshieldsupportcase.rsi
     state: icon
+  - type: Item
+    shape:
+    - 0,0,1,1
   - type: SetSelector
     possibleSets:
     - BSOExtractionSet

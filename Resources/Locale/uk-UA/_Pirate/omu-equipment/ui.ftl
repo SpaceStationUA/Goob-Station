@@ -22,7 +22,7 @@ uplink-guerrilla-name = Партизанські рукавиці
 
 uplink-guerrilla-desc = Особливі рукавиці для силових затримань стрибком із покращеним показником майстерності.
 
-stack-fulton-blueshield = блюспейс-системи Fulton
+stack-fulton-blueshield = блюспейс-системи Фултон
 
 fulton-radio-message = Евакуйований об'єкт прибуває.
 

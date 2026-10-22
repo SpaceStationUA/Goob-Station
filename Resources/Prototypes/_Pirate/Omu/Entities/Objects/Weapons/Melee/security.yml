@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
-
 - type: entity
   name: O'Connaburr, the Irelander
   parent: [BaseItem, BaseGrandTheftContraband]
@@ -98,9 +96,9 @@
     stealGroup: WeaponSecHeadSword
 
 - type: entity
-  name: warden's rapier
-  parent: [ BaseSword, BaseGrandTheftContraband ]
-  id: WardenRapier
+  name: security rapier
+  parent: [ BaseSword, BaseSecurityContraband ]
+  id: SecurityRapier
   description: A thin, elegant sword made for lunging over banana peels.
   components:
   - type: Sprite

@@ -89,6 +89,11 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
         clone = coords == null ? Spawn(proto) : Spawn(proto, coords.Value); // Goob edit
         _humanoidSystem.CloneAppearance(original, clone.Value);
+        if (TryComp<HumanoidAppearanceComponent>(clone.Value, out var cloneAppearance))
+        {
+            cloneAppearance.MarkingSet = new(humanoid.MarkingSet); // Pirate: preserve copied markings
+            Dirty(clone.Value, cloneAppearance);
+        }
 
         CloneComponents(original, clone.Value, settings);
 

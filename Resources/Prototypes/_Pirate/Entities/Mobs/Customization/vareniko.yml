@@ -9,13 +9,25 @@
   - sprite: _Pirate/Mobs/Customization/Vareniko/hair.rsi
     state: hair
 
-# Хвостик
+# Вушка
+- type: marking
+  id: VulpkaninEarsVareniko
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [ Vulpkanin ]
+  playerRestriction: [ Vareniko ]
+  sprites:
+  - sprite: _Pirate/Mobs/Customization/Vareniko/ears.rsi
+    state: ears
+
+### Хвостик
+# Статичний
 - type: marking
   id: VulpTailVareniko
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]
-  playerRestriction: [ Vareniko, v0id_ ]
+  playerRestriction: [ Vareniko ]
   layering:
     tail_BACK: TailBehind
     tail-tip_BACK: TailBehind
@@ -34,13 +46,13 @@
     - sprite: _Pirate/Mobs/Customization/Vareniko/tail.rsi
       state: tail-tip
 
-# Анімація
+# Анімований
 - type: marking
   id: VulpTailVarenikoAnimated
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: []
-  playerRestriction: [ Vareniko, v0id_ ]
+  playerRestriction: [ Vareniko ]
   layering:
     tail_wag_BACK: TailBehind
     tail_wag-tip_BACK: TailBehind

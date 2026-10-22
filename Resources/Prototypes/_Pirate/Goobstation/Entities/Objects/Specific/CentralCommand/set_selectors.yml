@@ -9,7 +9,7 @@
   parent: [ BaseItem, BaseSetSelector, BaseCentcommContraband ]
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Security/ertundetermined.rsi
+    sprite: _Pirate/Objects/Specific/Security/ert_requisition.rsi
     state: icon
   - type: SetSelector
     possibleSets:

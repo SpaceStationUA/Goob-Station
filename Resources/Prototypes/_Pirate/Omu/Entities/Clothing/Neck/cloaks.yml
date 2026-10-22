@@ -1,12 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
-
 - type: entity
-  parent: [ClothingNeckBase, BaseWardenContraband, ClothingSlotBase]
+  parent: [ClothingNeckBase, BaseSecurityContraband, ClothingSlotBase] # Shared by warden and instructor.
   id: ClothingNeckWardenParryCloak
-  name: warden's dueling cloak
-  description: A red cloak with an integrated scabbard, useful for dramatically swishing at prisoners.
+  name: security dueling cloak
+  description: A navy cloak with an integrated scabbard, useful for dramatically swishing at prisoners.
   components:
   - type: Sprite
     sprite: _Pirate/Omu/Clothing/Neck/Cloaks/parryingcloak.rsi
@@ -21,3 +19,10 @@
         whitelist:
           tags:
           - WardenRapier
+
+- type: entity
+  parent: ClothingNeckWardenParryCloak
+  id: ClothingNeckSecurityParryCloak
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Clothing/Neck/Cloaks/parryingcloak_gold.rsi

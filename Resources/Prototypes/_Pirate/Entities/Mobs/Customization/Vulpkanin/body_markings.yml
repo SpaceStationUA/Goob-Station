@@ -237,7 +237,6 @@
   bodyPart: LFoot
   markingCategory: LeftFoot
   speciesRestriction: [Vulpkanin]
-  coloration: PawPads
   sprites:
     - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/foot.rsi
       state: l_pads
@@ -247,7 +246,6 @@
   bodyPart: RFoot
   markingCategory: RightFoot
   speciesRestriction: [Vulpkanin]
-  coloration: PawPads
   sprites:
     - sprite: _Pirate/Mobs/Customization/Vulpkanin/Body/foot.rsi
       state: r_pads

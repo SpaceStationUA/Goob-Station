@@ -121,12 +121,7 @@ public sealed class SelectableAmmoSystem : EntitySystem
             if (!ShouldSetFireCost(proto))
                 return true;
 
-            var oldFireCost = hitscanBattery.FireCost;
-            hitscanBattery.FireCost = proto.FireCost;
-            var fireCostDiff = proto.FireCost / oldFireCost;
-            hitscanBattery.Shots = (int) Math.Round(hitscanBattery.Shots / fireCostDiff);
-            hitscanBattery.Capacity = (int) Math.Round(hitscanBattery.Capacity / fireCostDiff);
-            Dirty(uid, hitscanBattery);
+            _gun.SetBatteryFireCost((uid, hitscanBattery), proto.FireCost); // Pirate: ERT weapon balance
             return true;
         }
 

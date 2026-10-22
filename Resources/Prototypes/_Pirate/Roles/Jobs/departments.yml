@@ -20,6 +20,7 @@
 
 - type: department
   id: Interdyne
+  editorHidden: true
   name: department-Interdyne
   description: department-Interdyne-description
   color: "#2d650e"

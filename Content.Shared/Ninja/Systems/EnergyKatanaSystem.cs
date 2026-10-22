@@ -31,7 +31,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
     private void OnCheckDash(Entity<EnergyKatanaComponent> ent, ref CheckDashEvent args)
     {
         // Just use a whitelist fam
-        if (!_ninja.IsNinja(args.User))
+        if (ent.Comp.RequiresNinja && !_ninja.IsNinja(args.User)) // Pirate: mercenary loadouts
             args.Cancelled = true;
     }
 }

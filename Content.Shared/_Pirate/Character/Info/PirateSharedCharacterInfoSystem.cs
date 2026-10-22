@@ -30,6 +30,8 @@ namespace Content.Shared._Pirate.Character.Info;
 /// </summary>
 public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
 {
+    public const string PublicDescriptionSeparator = "\n\n";
+
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
@@ -289,7 +291,7 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
             descriptions.Add(personality.Description);
         }
 
-        return string.Join("\n", descriptions);
+        return string.Join(PublicDescriptionSeparator, descriptions);
     }
 
     public string? GetPhysicalDescription(EntityUid target)

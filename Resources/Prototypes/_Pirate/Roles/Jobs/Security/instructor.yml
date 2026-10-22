@@ -4,6 +4,8 @@
   description: job-description-security-instructor
   playTimeTracker: JobSecurityInstructor
   requirements:
+    - !type:FlavorTextLengthRequirement
+      minLength: 500
     - !type:RoleTimeRequirement
       role: JobWarden
       time: 10h

@@ -1,3 +1,6 @@
+ent-HelldiverUndeterminedWeapon = helldiver weapon requisition
+    .desc = A small remote utilizing bluespace technology to drop in a weapon loadout directly to you. Choose wisely.
+
 # Mercenary primaries
 
 selectable-set-merc-wspr-name = WSPR
@@ -30,6 +33,10 @@ selectable-set-merc-vulkan-m-description =
     A compact bullpup that never stops. Less recoil, tighter groups, full auto.
     Includes: the Vulkan-M rifle (.30 rifle), 2 magazines and a large ammo box.
 
+selectable-set-merc-m16-modern-name = AR-25T
+selectable-set-merc-m16-modern-description = A modernized M16-pattern rifle with a burst-fire trigger group.
+    Includes: the AR-25T rifle (.20 rifle), two spare 30-round M16 magazines and a large ammunition box.
+
 # Mercenary sidearms
 
 selectable-set-merc-svalinn-name = Svalinn
@@ -61,3 +68,8 @@ selectable-set-chief-engineer-modsuit-name = Chief Engineer's 'advanced' MODsuit
 selectable-set-chief-engineer-modsuit-desc =
     A preassembled command MODsuit with the same shielding as the hardsuit, plus welding
     and radiation modules, a jetpack, advanced magnetic boots, expanded storage and a plasma core.
+
+selectable-set-warden-hardsuit-name = warden hardsuit
+selectable-set-warden-hardsuit-desc = The warden's riot hardsuit. Sturdy, sealed and oddly comfortable.
+selectable-set-warden-modsuit-name = warden MODsuit
+selectable-set-warden-modsuit-desc = The warden's riot plating on a modular frame, with a security HUD, magnetic boots and an armor booster.

@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
-
 - type: selectableSet
   id: VoidsuitSelectorCorpsmanLightHardsuit
   name: selectable-set-corpsman-lighthardsuit-name
@@ -164,13 +162,23 @@
 
 - type: selectableSet
   id: WardenRapierSet
-  name: selectable-set-warden-rapier-name
-  description: selectable-set-warden-rapier-description
+  name: selectable-set-security-rapier-name
+  description: selectable-set-security-rapier-description
   sprite:
     sprite: _Pirate/Omu/Objects/Weapons/Melee/wardenrapier.rsi
     state: icon
   content:
   - ClothingNeckWardenParryCloakFilled
+
+- type: selectableSet
+  id: SecurityRapierSet
+  name: selectable-set-security-rapier-name
+  description: selectable-set-security-rapier-description
+  sprite:
+    sprite: _Pirate/Omu/Objects/Weapons/Melee/wardenrapier.rsi
+    state: icon
+  content:
+  - ClothingNeckSecurityParryCloakFilled
 
 - type: selectableSet
   id: WardenSnubSet

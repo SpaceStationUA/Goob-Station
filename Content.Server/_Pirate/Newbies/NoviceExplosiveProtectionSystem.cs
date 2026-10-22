@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Events;
@@ -9,6 +10,7 @@ using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Tools.Components;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Player;
 
 namespace Content.Server._Pirate.Newbies;
@@ -29,6 +31,7 @@ public sealed class NoviceExplosiveProtectionSystem : EntitySystem
 
         SubscribeLocalEvent<ActorComponent, SelfBeforeInjectEvent>(OnBeforeInject, after: new[] { typeof(ClumsySystem) });
         SubscribeLocalEvent<WelderComponent, BeforeRangedInteractEvent>(OnBeforeWelderInteract);
+        SubscribeLocalEvent<WelderComponent, MeleeHitEvent>(OnWelderMeleeHit);
     }
 
     private void OnBeforeInject(Entity<ActorComponent> ent, ref SelfBeforeInjectEvent args)
@@ -44,13 +47,33 @@ public sealed class NoviceExplosiveProtectionSystem : EntitySystem
     {
         if (args.Handled || !args.CanReach || ent.Comp.TankSafe ||
             args.Target is not { } target ||
-            !TryComp<ReagentTankComponent>(target, out var tank) || tank.TankType != ReagentTankType.Fuel ||
-            !TryComp<ItemToggleComponent>(ent, out var toggle) || !toggle.Activated ||
-            !TryComp<ActorComponent>(args.User, out var actor) || !IsNovice(actor))
+            !IsFuelTank(target) || !IsRestrictedWelderUser(ent.Owner, args.User))
             return;
 
         _popup.PopupEntity(Loc.GetString("novice-protection-fuel-tank-ignition"), args.User, args.User);
         args.Handled = true;
+    }
+
+    private void OnWelderMeleeHit(Entity<WelderComponent> ent, ref MeleeHitEvent args)
+    {
+        // TankSafe only protects refuelling: lit welders still deal heat damage in melee.
+        if (args.Handled || !args.IsHit || !args.HitEntities.Any(IsFuelTank) ||
+            !IsRestrictedWelderUser(ent.Owner, args.User))
+            return;
+
+        _popup.PopupEntity(Loc.GetString("novice-protection-fuel-tank-ignition"), args.User, args.User);
+        args.Handled = true;
+    }
+
+    private bool IsFuelTank(EntityUid target)
+    {
+        return TryComp<ReagentTankComponent>(target, out var tank) && tank.TankType == ReagentTankType.Fuel;
+    }
+
+    private bool IsRestrictedWelderUser(EntityUid welder, EntityUid user)
+    {
+        return TryComp<ItemToggleComponent>(welder, out var toggle) && toggle.Activated &&
+            TryComp<ActorComponent>(user, out var actor) && IsNovice(actor);
     }
 
     private bool IsNovice(ActorComponent actor)
