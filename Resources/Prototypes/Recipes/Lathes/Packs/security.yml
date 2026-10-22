@@ -115,13 +115,11 @@
   - MagazineBoxMagnumIncendiary
   - MagazineBoxMagnumUranium
   - MagazineBoxPistolIncendiary
-  - MagazineBoxPistolCryptobiolin # PIRATE psionic
   - MagazineBoxPistolUranium
   - MagazineBoxRifleIncendiary
   - MagazineBoxRifleUranium
   # - MagazineLightRifleIncendiary # Goobstation - remove light rifle
   # - MagazineLightRifleUranium # Goobstation - remove light rifle
-  - MagazinePistolCryptobiolin # PIRATE psionic
   - MagazinePistolIncendiary
   - MagazinePistolUranium
   - MagazinePistolSubMachineGunIncendiary
