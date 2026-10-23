@@ -27,14 +27,12 @@ public sealed class ActionGunSystem : EntitySystem
         if (string.IsNullOrEmpty(ent.Comp.Action))
             return;
 
-        // <Trauma> - parent the gun to the action so it gets networked and shooting can be predicted
         if (!_actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action))
             return;
 
-        var coords = new EntityCoordinates(ent.Comp.ActionEntity.Value, Vector2.Zero);
-        ent.Comp.Gun = Spawn(ent.Comp.GunProto, coords);
+        // Pirate: keep firing and recharge sounds attached to the owner; Gun is networked for prediction.
+        ent.Comp.Gun = SpawnAttachedTo(ent.Comp.GunProto, new EntityCoordinates(ent, Vector2.Zero));
         Dirty(ent);
-        // </Trauma>
     }
 
     private void OnShutdown(Entity<ActionGunComponent> ent, ref ComponentShutdown args)
