@@ -54,6 +54,7 @@
           #science
             ForensicMantis: [ 1, 1 ]
             Scientist: [ 4, 4 ]
+            Geneticist: [ 1, 1 ] # Pirate: Trauma genetics
             ResearchAssistant: [ 3, 3 ]
           #security
             Warden: [ 1, 1 ]

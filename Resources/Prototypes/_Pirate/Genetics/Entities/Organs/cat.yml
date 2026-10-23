@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: donor organs adapted to our organ-slot schema; their visuals stay unchanged.
+- type: entity
+  parent: BaseHumanOrgan
+  id: OrganCatEars
+  name: cat ears
+  components:
+  - type: Sprite
+    sprite: _Pirate/Genetics/Mobs/Species/Cat/parts.rsi
+    state: ears
+  - type: Organ
+    slotId: ears
+  - type: Unremoveable
+
+- type: entity
+  parent: BaseHumanOrgan
+  id: OrganCatTail
+  name: cat tail
+  components:
+  - type: Sprite
+    sprite: _Pirate/Genetics/Mobs/Species/Cat/parts.rsi
+    state: tail
+  - type: Organ
+    slotId: tail
+  - type: Unremoveable
+
+- type: marking
+  id: GeneticsCatEars
+  bodyPart: Special
+  markingCategory: Special
+  speciesRestriction: []
+  sprites:
+  - sprite: _Pirate/Genetics/Mobs/Species/Cat/parts.rsi
+    state: ears
+
+- type: marking
+  id: GeneticsCatTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: _Pirate/Genetics/Mobs/Species/Cat/parts.rsi
+    state: tail

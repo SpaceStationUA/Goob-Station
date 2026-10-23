@@ -175,6 +175,7 @@
     idleState: icon
     runningState: icon
     staticPacks:
+    - GeneticsStatic # Pirate: genetics console, disks and scanners
     #- SharedBoardsStatic Pirate removed
     - EngineeringBoardsStatic
     - CircuitFloorsStatic

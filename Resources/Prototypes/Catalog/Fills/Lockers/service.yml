@@ -86,6 +86,7 @@
     children:
     - id: WetFloorSign
       amount: 3
+    - id: RCDRechargingJanitor # Pirate
     - id: LightReplacer
     - id: BoxLightMixed
     - id: Holoprojector

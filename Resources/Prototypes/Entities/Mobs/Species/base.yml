@@ -309,6 +309,8 @@
   id: BaseMobSpeciesOrganic
   abstract: true
   components:
+  # Pirate: Trauma genetics species defaults.
+  - type: Mutatable # Pirate: Trauma genetics
   - type: Absorbable # Goobstation - changelings
   - type: WraithAbsorbable # Goobstation - wraith
   - type: Barotrauma

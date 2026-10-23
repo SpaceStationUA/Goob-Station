@@ -47,6 +47,7 @@
   goobcoins: 40 #Goob content
   access:
   - Research
+  - Genetics # Pirate
   - Command
   - Maintenance
   - ResearchDirector

@@ -17,6 +17,7 @@
   components:
   - type: ShowHealthBars
   - type: ShowHealthIcons
+  - type: ShowTriageIcons # Pirate: Delta-V medical triage
   - type: ShowDiseaseIcons # Goobstation
 
 - type: entity
