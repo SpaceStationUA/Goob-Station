@@ -10,9 +10,9 @@ namespace Content.Pirate.Shared.Genetics.Trigger;
 /// <summary>
 /// Pirate: genetics effects are fixed prototype data on both client and server.
 /// The local EntityEffect hierarchy cannot be sent through NetSerializer, so only
-/// component presence is networked; clients read the same effects from their prototypes.
+/// component presence and trigger routing are networked; clients read effects from their prototypes.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GeneticsEffectsOnTriggerComponent : BaseXOnTriggerComponent
 {
     [DataField]
