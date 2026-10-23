@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
 
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Pirate.Shared.Genetics.Abilities;
 using Content.Pirate.Shared.Genetics.Mutations;
 
@@ -17,6 +18,7 @@ namespace Content.Pirate.Server.Genetics.Abilities;
 public sealed partial class ThermalRegulatorMutationSystem : EntitySystem
 {
     [Dependency] private EntityQuery<ThermalRegulatorComponent> _query = default!;
+    [Dependency] private ThermalRegulatorSystem _thermal = default!;
 
     public override void Initialize()
     {
@@ -31,10 +33,11 @@ public sealed partial class ThermalRegulatorMutationSystem : EntitySystem
         if (!_query.TryComp(args.Target, out var comp))
             return;
 
-        comp.ShiveringHeatRegulation *= ent.Comp.Shivering;
-        comp.SweatHeatRegulation *= ent.Comp.Sweating;
-        comp.MetabolismHeat *= ent.Comp.Metabolism;
-        comp.ImplicitHeatRegulation *= ent.Comp.Regulation;
+        _thermal.SetHeatRegulation((args.Target, comp),
+            comp.ShiveringHeatRegulation * ent.Comp.Shivering,
+            comp.SweatHeatRegulation * ent.Comp.Sweating,
+            comp.MetabolismHeat * ent.Comp.Metabolism,
+            comp.ImplicitHeatRegulation * ent.Comp.Regulation);
     }
 
     private void OnRemoved(Entity<ThermalRegulatorMutationComponent> ent, ref MutationRemovedEvent args)
@@ -42,9 +45,10 @@ public sealed partial class ThermalRegulatorMutationSystem : EntitySystem
         if (!_query.TryComp(args.Target, out var comp))
             return;
 
-        comp.ShiveringHeatRegulation /= ent.Comp.Shivering;
-        comp.SweatHeatRegulation /= ent.Comp.Sweating;
-        comp.MetabolismHeat /= ent.Comp.Metabolism;
-        comp.ImplicitHeatRegulation /= ent.Comp.Regulation;
+        _thermal.SetHeatRegulation((args.Target, comp),
+            comp.ShiveringHeatRegulation / ent.Comp.Shivering,
+            comp.SweatHeatRegulation / ent.Comp.Sweating,
+            comp.MetabolismHeat / ent.Comp.Metabolism,
+            comp.ImplicitHeatRegulation / ent.Comp.Regulation);
     }
 }

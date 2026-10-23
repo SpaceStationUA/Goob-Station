@@ -10,6 +10,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Temperature.Components;
 using Content.Shared.StatusEffectNew;
 using Content.Pirate.Common.Bloodstream;
+using Content.Server.Body.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -19,6 +20,35 @@ namespace Content.IntegrationTests.Tests._Pirate.Genetics;
 [TestFixture]
 public sealed class GeneticsMutationIntegrationTest
 {
+    [TestCase("MutationColdWeakness")]
+    [TestCase("MutationHeatWeakness")]
+    [TestCase("MutationThermalWeakness")]
+    public async Task RemovingThermalMutationsRestoresNormalRegulation(string mutation)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var mutations = server.System<MutationSystem>();
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var human = entities.SpawnEntity("MobHuman", map.GridCoords);
+            var regulator = entities.GetComponent<ThermalRegulatorComponent>(human);
+            var original = Values();
+            Assert.That(mutations.AddMutation(human, mutation), Is.True);
+            Assert.That(Values(), Is.Not.EqualTo(original));
+            Assert.That(mutations.RemoveMutation(human, mutation), Is.True);
+            var restored = Values();
+            for (var i = 0; i < original.Length; i++)
+                Assert.That(restored[i], Is.EqualTo(original[i]).Within(0.001f));
+            entities.DeleteEntity(human);
+
+            float[] Values() => [regulator.ShiveringHeatRegulation, regulator.SweatHeatRegulation,
+                regulator.MetabolismHeat, regulator.ImplicitHeatRegulation];
+        });
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task HypermetabolicBloodModifiersApplyOnlyWhileTheMutationIsPresent()
     {
