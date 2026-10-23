@@ -11,6 +11,8 @@ using Content.Shared.Trigger.Systems;
 using Content.Shared.Standing;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Server.Gravity;
+using Content.Shared.Gravity;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
@@ -109,8 +111,9 @@ public sealed class GeneticsMutationIntegrationTest
         await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task PrototypeDefinedMutationTriggersApplyTheirEffectToTheBody()
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task PrototypeDefinedMutationTriggersApplyTheirEffectToTheBody(bool gravityEnabled)
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -118,15 +121,22 @@ public sealed class GeneticsMutationIntegrationTest
         var map = await pair.CreateTestMap();
         await server.WaitAssertion(() =>
         {
+            // Test maps are weightless by default; normal knockdown requires gravity.
+            if (gravityEnabled)
+            {
+                var gravity = entities.EnsureComponent<GravityComponent>(map.Grid);
+                server.System<GravitySystem>().EnableGravity(map.Grid, gravity);
+            }
             var human = entities.SpawnEntity("MobHuman", map.GridCoords);
+            Assert.That(server.System<SharedGravitySystem>().IsWeightless(human), Is.EqualTo(!gravityEnabled));
             var mutations = server.System<MutationSystem>();
             Assert.That(mutations.AddMutation(human, "MutationTwoLeftFeet"), Is.True);
             var mutation = mutations.GetMutation((human, entities.GetComponent<MutatableComponent>(human)), "MutationTwoLeftFeet")!.Value;
             var trigger = entities.GetComponent<GeneticsEffectsOnTriggerComponent>(mutation.Owner);
             trigger.Effects.Single().Probability = 1; // Deterministically exercise the actual trigger path.
             Assert.That(entities.GetComponent<StandingStateComponent>(human).Standing, Is.True);
-            server.System<TriggerSystem>().Trigger(mutation.Owner);
-            Assert.That(entities.GetComponent<StandingStateComponent>(human).Standing, Is.False);
+            Assert.That(server.System<TriggerSystem>().Trigger(mutation.Owner, human, TriggerSystem.DefaultTriggerKey), Is.True);
+            Assert.That(entities.GetComponent<StandingStateComponent>(human).Standing, Is.EqualTo(!gravityEnabled));
             entities.DeleteEntity(human);
         });
         await pair.CleanReturnAsync();
