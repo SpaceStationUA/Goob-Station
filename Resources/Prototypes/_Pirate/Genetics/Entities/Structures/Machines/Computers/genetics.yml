@@ -28,6 +28,14 @@
   - type: MaterialStorage
     materialWhiteList: [ Biomass ]
   - type: GeneticsConsole
+    scrambleDamage:
+      types:
+        Radiation: 40
+        Cellular: 8
+    sequenceFailDamage:
+      types:
+        Cellular: 16
+        Radiation: 12
     sequenceFailSound: /Audio/Effects/smoke.ogg
     writeSound: /Audio/Machines/printer.ogg
     printSound: /Audio/Machines/printer.ogg

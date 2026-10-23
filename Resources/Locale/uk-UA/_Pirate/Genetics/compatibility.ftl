@@ -1,4 +1,6 @@
 loadout-group-assistive-items = Допоміжні засоби
+ent-OrganReptilianTongue = { ent-OrganHumanTongue }
+    .desc = { ent-OrganHumanTongue.desc }
 ent-VoidMagnetPocket = діра в реальності
     .desc = Її обриси підозріло нагадують людину.
 ent-OrganCatEars = котячі вуха
