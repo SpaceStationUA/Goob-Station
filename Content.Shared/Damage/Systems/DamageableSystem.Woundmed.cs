@@ -113,6 +113,21 @@ public sealed partial class DamageableSystem
         return true;
     }
 
+    private static bool IsNoOpHeal(DamageableComponent damageable, DamageSpecifier damage)
+    {
+        var current = damageable.Damage.DamageDict;
+        foreach (var (type, value) in damage.DamageDict)
+        {
+            if (value > 0)
+                return false;
+
+            if (value < 0 && current.TryGetValue(type, out var existing) && existing > 0)
+                return false;
+        }
+
+        return true;
+    }
+
     /// <summary>
     ///     [Woundmed]
     ///     Tries to update the parent body of a body part if it can find it.
@@ -494,9 +509,9 @@ public sealed partial class DamageableSystem
         switch (splitDamageBehavior)
         {
             case SplitDamageBehavior.None: // No split, damage is the same for all
-                return MakeGenericDamageSplit(parts, newDamage); // Pirate: preserve the unsplit amount per part.
+                return MakeGenericDamageSplit(parts, newDamage);
             case SplitDamageBehavior.Split:
-                return MakeGenericDamageSplit(parts, newDamage / parts.Count); // Pirate: divide the total between parts.
+                return MakeGenericDamageSplit(parts, newDamage / parts.Count); // Split evenly between all parts
             case SplitDamageBehavior.SplitExplosion:
                 List<EntityUid> vitalParts = [];
 

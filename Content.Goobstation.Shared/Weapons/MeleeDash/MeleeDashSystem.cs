@@ -25,6 +25,7 @@ namespace Content.Goobstation.Shared.Weapons.MeleeDash;
 public sealed partial class MeleeDashSystem : EntitySystem
 {
     [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private Emoting.SharedAnimatedEmotesSystem _emotes = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private SharedMeleeWeaponSystem _melee = default!;
@@ -153,10 +154,7 @@ public sealed partial class MeleeDashSystem : EntitySystem
         _throwing.TryThrow(user, dir, dash.DashForce, null, 0f, null, false, false, false, false, false);
         _audio.PlayPredicted(dash.DashSound, user, user);
 
-        if (dash.EmoteOnDash == null || !TryComp(user, out Emoting.AnimatedEmotesComponent? emotes))
-            return;
-
-        emotes.Emote = dash.EmoteOnDash;
-        Dirty(user, emotes);
+        if (dash.EmoteOnDash != null)
+            _emotes.SetEmote(user, dash.EmoteOnDash);
     }
 }
