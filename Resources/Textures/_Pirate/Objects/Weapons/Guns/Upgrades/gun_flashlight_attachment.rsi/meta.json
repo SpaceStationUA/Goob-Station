@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "flashlight sprites copied from Resources/Textures/Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi (Monkestation-derived, see source RSI metadata)",
+  "copyright": "flashlight sprites copied from Resources/Textures/Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi (Monkestation-derived, see source RSI metadata); flight-compact and flight-compact-on by CyberLanos (GitHub), shortened from flight",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,12 @@
     },
     {
       "name": "flight-on"
+    },
+    {
+      "name": "flight-compact"
+    },
+    {
+      "name": "flight-compact-on"
     }
   ]
 }

@@ -689,7 +689,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: GunFlashlightAttachment # DOWNSTREAM-TPirates: gun flashlights
-    offset: "0.03125, 0.0625"
+    offset: "0, 0" # Pirate: gun flashlights
   - type: Item
     storedOffset: -1,-5
   - type: Clothing
@@ -809,6 +809,24 @@
     price: 260
   - type: PacifismAllowedGun
   - type: GunExecutionBlacklist # Goobstation
+  #region Pirate: gun flashlights
+  - type: GunFlashlightAttachment
+    offset: "0.125, 0.09375" # in front of the magazine
+  - type: ItemUpgradeable
+  - type: ItemSlots
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 0
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ContainerContainer
+    containers:
+      flashlight: !type:ContainerSlot
+  #endregion Pirate: gun flashlights
 
 - type: entity
   name: Taser # Goobstation
@@ -1143,6 +1161,24 @@
   - type: Appearance
   - type: Clothing
     sprite: _Pirate/Objects/Weapons/Guns/Battery/energy_magnum.rsi # Pirate: bluesec equipment resprites
+  #region Pirate: gun flashlights
+  - type: GunFlashlightAttachment
+    offset: "0.15625, 0.125"
+  - type: ItemUpgradeable
+  - type: ItemSlots
+    slots:
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: 0
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+  - type: ContainerContainer
+    containers:
+      flashlight: !type:ContainerSlot
+  #endregion Pirate: gun flashlights
   - type: Tag
     tags:
     - HighRiskItem
