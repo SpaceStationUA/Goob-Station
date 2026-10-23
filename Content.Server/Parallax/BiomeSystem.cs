@@ -78,6 +78,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private readonly Dictionary<BiomeComponent,
         Dictionary<string, HashSet<Vector2i>>> _markerChunks = new();
 
+    private readonly List<Vector2i> _pendingMarkerChunks = new(); // Pirate: performance
+
     public override void Initialize()
     {
         base.Initialize();
@@ -475,10 +477,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    /// <summary>
-    /// Goes through all marker chunks that haven't been calculated, then calculates what spawns there are and
-    /// allocates them to the relevant actual chunks in the biome (marker chunks may be many times larger than biome chunks).
-    /// </summary>
     private void BuildMarkerChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, int seed)
     {
         var markers = _markerChunks[component];
@@ -491,7 +489,20 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             idx++;
             var localIdx = idx;
 
-            Parallel.ForEach(chunks, new ParallelOptions() { MaxDegreeOfParallelism = _parallel.ParallelProcessCount }, chunk =>
+            #region Pirate: performance
+            _pendingMarkerChunks.Clear();
+            loadedMarkers.TryGetValue(layer, out var builtChunks);
+            foreach (var chunk in chunks)
+            {
+                if (builtChunks == null || !builtChunks.Contains(chunk))
+                    _pendingMarkerChunks.Add(chunk);
+            }
+
+            if (_pendingMarkerChunks.Count == 0)
+                continue;
+            #endregion
+
+            Parallel.ForEach(_pendingMarkerChunks, new ParallelOptions() { MaxDegreeOfParallelism = _parallel.ParallelProcessCount }, chunk => // Pirate: performance
             {
                 if (loadedMarkers.TryGetValue(layer, out var mobChunks) && mobChunks.Contains(chunk))
                     return;
@@ -900,12 +911,19 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         var active = _activeChunks[component];
         List<(Vector2i, Tile)>? tiles = null;
+        TryComp<_Lavaland.Biome.BiomeOptimizeComponent>(gridUid, out var optimize); // Pirate: performance
 
         foreach (var chunk in component.LoadedChunks)
         {
             // Pirate: Active chunks cannot unload, so skip the lifecycle event as well.
             if (active.Contains(chunk))
                 continue;
+
+            #region Pirate: performance
+            // BiomeOptimize cancels unloads for its preloaded chunks.
+            if (optimize != null && optimize.LoadedChunks.Contains(chunk))
+                continue;
+            #endregion
 
             // Lavaland Change start: optimization real
             var ev = new _Lavaland.Procedural.UnLoadChunkEvent(chunk);

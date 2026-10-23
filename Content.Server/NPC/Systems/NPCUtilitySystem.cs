@@ -195,23 +195,21 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case FoodValueCon:
             {
-                // do we have a mouth available? Is the food item opened?
                 if (!_ingestion.CanConsume(owner, targetUid))
                     return 0f;
 
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
 
-                // only eat when hungry or if it will eat anything
                 if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay &&
                     avoidBadFood)
                     return 0f;
 
-                // no mouse don't eat the uranium-235
+                FoodUtilityParams? food = null; // Pirate: performance
                 if (avoidBadFood && (HasComp<BadFoodComponent>(targetUid) ||
-                                     TotalFoodUtilityConditioned(targetUid, owner).IsToxic)) // Goobstation edit
+                                     (food ??= TotalFoodUtilityConditioned(targetUid, owner)).IsToxic)) // Goobstation edit // Pirate: performance
                     return 0f;
 
-                var nutrition = TotalFoodUtilityConditioned(targetUid, owner).TotalNutrition; // Goobstation edit
+                var nutrition = (food ??= TotalFoodUtilityConditioned(targetUid, owner)).TotalNutrition; // Goobstation edit // Pirate: performance
                 if (nutrition <= 0.0f)
                     return 0f;
 
@@ -219,24 +217,20 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case DrinkValueCon:
             {
-                // can't drink closed drinks and can't drink with a mask on...
                 if (!_ingestion.CanConsume(owner, targetUid))
                     return 0f;
 
-                // only drink when thirsty
                 if (TryComp<ThirstComponent>(owner, out var thirst) &&
                     thirst.CurrentThirstThreshold > ThirstThreshold.Okay)
                     return 0f;
 
-                // no janicow don't drink the blood puddle
+                FoodUtilityParams? drink = null; // Pirate: performance
                 if (HasComp<BadDrinkComponent>(targetUid) ||
-                    TotalFoodUtilityConditioned(targetUid, owner).IsToxic) // Goobstation edit
+                    (drink ??= TotalFoodUtilityConditioned(targetUid, owner)).IsToxic) // Goobstation edit // Pirate: performance
                     return 0f;
 
-                // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
-                // We don't check if the solution is metabolizable cause all drinks should be currently.
-                // If that changes then simply use the other overflow.
-                var hydration = TotalFoodUtilityConditioned(targetUid, owner).TotalHydration; // Goobstation edit
+                // Pirate: performance - All current drinks are expected to be metabolizable.
+                var hydration = (drink ??= TotalFoodUtilityConditioned(targetUid, owner)).TotalHydration; // Goobstation edit // Pirate: performance
                 if (hydration <= 1.0f)
                     return 0f;
 
@@ -638,12 +632,6 @@ public sealed class NPCUtilitySystem : EntitySystem
     }
 
     // Goobstation start
-    /// <summary>
-    /// Gets the total metabolizable nutrition, hydration and toxicity from an ingested entity recursively, may return lesser numbers with cyclic metabolism graphs.
-    /// </summary>
-    /// <param name="consumer">The consumer entity</param>
-    /// <param name="ingestable">The consumed entity</param>
-    /// <returns>The amount of nutrition the consumable is worth</returns>
     private FoodUtilityParams TotalFoodUtilityConditioned(Entity<EdibleComponent?> ingestable, EntityUid consumer)
     {
         var utilityParams = new FoodUtilityParams(0f, 0f, false);
@@ -659,7 +647,15 @@ public sealed class NPCUtilitySystem : EntitySystem
         foreach (var quantity in solution.Contents)
             queue.Enqueue(quantity);
 
-        while (queue.Any())
+        #region Pirate: performance
+        // Cache organs; this check does not change them.
+        var metabolizers = HasComp<BodyComponent>(consumer)
+                           && _body.TryGetBodyOrganEntityComps<MetabolizerComponent>(consumer, out var organs)
+            ? organs
+            : null;
+        #endregion
+
+        while (queue.Count > 0) // Pirate: performance
         {
             var quantity = queue.Dequeue();
             var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
@@ -672,23 +668,25 @@ public sealed class NPCUtilitySystem : EntitySystem
 
             foreach (var (metabolism, entry) in reagent.Metabolisms)
             {
+                #region Pirate: performance
+                // Resolve one organ per metabolism group.
+                Entity<MetabolizerComponent>? metabolizingOrgan = null;
+                if (metabolizers != null)
+                {
+                    // Goob - Fix (no matching organ throws)
+                    foreach (var met in metabolizers)
+                    {
+                        if (!HasMetabolismGroup(met.Comp1, metabolism))
+                            continue;
+
+                        metabolizingOrgan = met;
+                        break;
+                    }
+                }
+                #endregion
+
                 foreach (var effect in entry.Effects)
                 {
-                    Entity<MetabolizerComponent>? metabolizingOrgan = null;
-                    if (HasComp<BodyComponent>(consumer)
-                        && _body.TryGetBodyOrganEntityComps<MetabolizerComponent>(consumer, out var metabolizers))
-                    {
-                        // Goob - Fix (no matching organ throws)
-                        foreach (var met in metabolizers)
-                        {
-                            if (!(met.Comp1.MetabolismGroups ?? []).Any(group => group.Id == metabolism))
-                                continue;
-
-                            metabolizingOrgan = met;
-                            break;
-                        }
-                    }
-
                     if (effect.Conditions != null
                         && metabolizingOrgan != null
                         && solutionComp != null
@@ -719,6 +717,22 @@ public sealed class NPCUtilitySystem : EntitySystem
 
         return utilityParams;
     } // Goobstation end
+
+    #region Pirate: performance
+    private static bool HasMetabolismGroup(MetabolizerComponent metabolizer, ProtoId<Content.Shared.Body.Prototypes.MetabolismGroupPrototype> group)
+    {
+        if (metabolizer.MetabolismGroups == null)
+            return false;
+
+        foreach (var entry in metabolizer.MetabolismGroups)
+        {
+            if (entry.Id == group)
+                return true;
+        }
+
+        return false;
+    }
+    #endregion
 }
 
 public readonly record struct UtilityResult(Dictionary<EntityUid, float> Entities)
