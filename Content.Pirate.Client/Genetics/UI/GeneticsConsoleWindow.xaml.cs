@@ -159,6 +159,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         if (scanned != _scanned)
         {
             _scanned = scanned;
+            UpdateScrambleDisabled();
             Sequencer.UpdateScanButton();
             Combiner.UpdateScanButton();
             Enzymes.UpdateScanned(scanned);

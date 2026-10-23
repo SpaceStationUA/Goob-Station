@@ -80,7 +80,7 @@ public sealed partial class GeneticsConsoleSystem
             BreakOnDamage = true,
             AttemptFrequency = AttemptFrequency.EveryTick
         };
-        SetBusy(ent.AsNullable(), _doAfter.TryStartDoAfter(doAfterArgs));
+        SetBusy(ent.AsNullable(), doAfterArgs);
 
         Speak(ent, "scanning");
     }
@@ -179,7 +179,8 @@ public sealed partial class GeneticsConsoleSystem
         _sequences.Clear();
         if (ent.Comp.ScannedMob is {} mob)
             _genome.AddSequenceStates(mob, _sequences);
-        var state = new GeneticsConsoleState(_sequences);
+        // UI states outlive this update and must not share the printout/scanner scratch list.
+        var state = new GeneticsConsoleState(new List<SequenceState>(_sequences));
         _ui.SetUiState(ent.Owner, GeneticsConsoleUiKey.Key, state);
     }
 

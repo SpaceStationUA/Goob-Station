@@ -26,9 +26,15 @@ public sealed class RadioMutationSystem : EntitySystem
     private void OnAdded(Entity<RadioMutationComponent> ent, ref MutationAddedEvent args)
     {
         var mob = args.Target;
+        ent.Comp.CreatedReceiver = !HasComp<IntrinsicRadioReceiverComponent>(mob);
+        ent.Comp.CreatedActive = !HasComp<ActiveRadioComponent>(mob);
+        ent.Comp.CreatedTransmitter = !HasComp<IntrinsicRadioTransmitterComponent>(mob);
         EnsureComp<IntrinsicRadioReceiverComponent>(mob);
         var active = EnsureComp<ActiveRadioComponent>(mob);
         var transmitter = EnsureComp<IntrinsicRadioTransmitterComponent>(mob);
+        // Pirate: a new local transmitter defaults to Common. Grant and track only mutation channels.
+        if (ent.Comp.CreatedTransmitter)
+            transmitter.Channels.Clear();
         foreach (var channel in ent.Comp.Channels)
         {
             if (active.Channels.Add(channel))
@@ -42,32 +48,32 @@ public sealed class RadioMutationSystem : EntitySystem
     private void OnRemoved(Entity<RadioMutationComponent> ent, ref MutationRemovedEvent args)
     {
         var mob = args.Target;
-        if (!TryComp<ActiveRadioComponent>(mob, out var active) ||
-            !TryComp<IntrinsicRadioTransmitterComponent>(mob, out var transmitter))
-            return;
-
-        // remove the channels
-        foreach (var channel in ent.Comp.AddedActive)
+        if (TryComp<ActiveRadioComponent>(mob, out var active))
         {
-            active.Channels.Remove(channel);
+            foreach (var channel in ent.Comp.AddedActive)
+                active.Channels.Remove(channel);
+
+            if (active.Channels.Count == 0 && ent.Comp.CreatedActive)
+                RemComp(mob, active);
         }
 
-        foreach (var channel in ent.Comp.AddedTransmitters)
+        if (TryComp<IntrinsicRadioTransmitterComponent>(mob, out var transmitter))
         {
-            transmitter.Channels.Remove(channel);
+            foreach (var channel in ent.Comp.AddedTransmitters)
+                transmitter.Channels.Remove(channel);
+
+            if (transmitter.Channels.Count == 0 && ent.Comp.CreatedTransmitter)
+                RemComp(mob, transmitter);
         }
+
+        if (ent.Comp.CreatedReceiver && (active == null || active.Channels.Count == 0))
+            RemComp<IntrinsicRadioReceiverComponent>(mob);
 
         ent.Comp.AddedActive.Clear();
         ent.Comp.AddedTransmitters.Clear();
+        ent.Comp.CreatedReceiver = false;
+        ent.Comp.CreatedActive = false;
+        ent.Comp.CreatedTransmitter = false;
         Dirty(ent);
-
-        // clean up unused components now
-        if (active.Channels.Count == 0)
-        {
-            RemComp(mob, active);
-            RemComp<IntrinsicRadioReceiverComponent>(mob);
-        }
-        if (transmitter.Channels.Count == 0)
-            RemComp(mob, transmitter);
     }
 }

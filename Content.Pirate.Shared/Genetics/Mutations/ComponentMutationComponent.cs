@@ -19,15 +19,22 @@ public sealed partial class ComponentMutationComponent : Component
 {
     /// <summary>
     /// Components added to the mutated entity when active.
-    /// WARNING: If these already exist before being added the old data is forgotten and will be removed if it gets deactivated.
+    /// Existing components are preserved.
     /// </summary>
     [DataField]
     public ComponentRegistry? Added;
 
     /// <summary>
     /// Components removed from the mutated entity when active.
-    /// WARNING: These do not have their data re-added, only the default component!
+    /// Existing component data is saved and restored on removal.
     /// </summary>
     [DataField]
     public ComponentRegistry? Removed;
+
+    // Pirate: remember only changes made to the current host, including removed component data.
+    [DataField]
+    public ComponentRegistry AddedComponents = new();
+
+    [DataField]
+    public ComponentRegistry RemovedComponents = new();
 }

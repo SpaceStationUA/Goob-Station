@@ -33,4 +33,13 @@ public sealed partial class RadioMutationComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<ProtoId<RadioChannelPrototype>> AddedTransmitters = new();
+
+    [DataField, AutoNetworkedField]
+    public bool CreatedReceiver;
+
+    [DataField, AutoNetworkedField]
+    public bool CreatedActive;
+
+    [DataField, AutoNetworkedField]
+    public bool CreatedTransmitter;
 }

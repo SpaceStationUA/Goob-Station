@@ -7,11 +7,14 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Pirate.Shared.Genetics.Mutations;
 
 public sealed class ComponentMutationSystem : EntitySystem
 {
+    [Dependency] private readonly ISerializationManager _serialization = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -23,17 +26,34 @@ public sealed class ComponentMutationSystem : EntitySystem
     private void OnAdded(Entity<ComponentMutationComponent> ent, ref MutationAddedEvent args)
     {
         if (ent.Comp.Added is {} added)
-            EntityManager.AddComponents(args.Target, added);
+        {
+            foreach (var (name, entry) in added)
+            {
+                if (!EntityManager.HasComponent(args.Target, entry.Component.GetType()))
+                    ent.Comp.AddedComponents.Add(name, entry);
+            }
+            EntityManager.AddComponents(args.Target, ent.Comp.AddedComponents, removeExisting: false);
+        }
         if (ent.Comp.Removed is {} removed)
-            EntityManager.RemoveComponents(args.Target, removed);
+        {
+            foreach (var (name, entry) in removed)
+            {
+                if (EntityManager.TryGetComponent(args.Target, entry.Component.GetType(), out var component))
+                {
+                    var copy = _serialization.CreateCopy(component, notNullableOverride: true);
+                    ent.Comp.RemovedComponents.Add(name, new EntityPrototype.ComponentRegistryEntry(copy));
+                }
+            }
+            EntityManager.RemoveComponents(args.Target, ent.Comp.RemovedComponents);
+        }
     }
 
     private void OnRemoved(Entity<ComponentMutationComponent> ent, ref MutationRemovedEvent args)
     {
-        // removed components get readded first incase that mattered
-        if (ent.Comp.Removed is {} removed)
-            EntityManager.AddComponents(args.Target, removed);
-        if (ent.Comp.Added is {} added)
-            EntityManager.RemoveComponents(args.Target, added);
+        // Restore only components this mutation removed, without overwriting later additions.
+        EntityManager.AddComponents(args.Target, ent.Comp.RemovedComponents, removeExisting: false);
+        EntityManager.RemoveComponents(args.Target, ent.Comp.AddedComponents);
+        ent.Comp.RemovedComponents.Clear();
+        ent.Comp.AddedComponents.Clear();
     }
 }

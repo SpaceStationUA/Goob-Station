@@ -72,7 +72,7 @@ public sealed partial class GeneticsConsoleSystem
             BreakOnDamage = true,
             AttemptFrequency = AttemptFrequency.EveryTick
         };
-        SetBusy(ent.Owner, _doAfter.TryStartDoAfter(doAfterArgs));
+        SetBusy(ent.Owner, doAfterArgs);
         Speak(ent, "applying-enzymes");
     }
 

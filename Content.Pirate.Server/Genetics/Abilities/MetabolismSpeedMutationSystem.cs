@@ -30,20 +30,21 @@ public sealed partial class MetabolismSpeedMutationSystem : EntitySystem
 
     private void OnAdded(Entity<MetabolismSpeedMutationComponent> ent, ref MutationAddedEvent args)
     {
-        Modify(args.Target, ent.Comp.Bonus);
+        Modify(args.Target, 1f / (1f + ent.Comp.Bonus));
     }
 
     private void OnRemoved(Entity<MetabolismSpeedMutationComponent> ent, ref MutationRemovedEvent args)
     {
-        Modify(args.Target, -ent.Comp.Bonus);
+        Modify(args.Target, 1f + ent.Comp.Bonus);
     }
 
-    private void Modify(EntityUid uid, float add)
+    private void Modify(EntityUid uid, float multiplier)
     {
+        // Pirate: local metabolism uses an interval, so increased speed divides that interval.
         // some shitcode mobs like dragon have metabolizer on the mob itself not organs, check edge case
         if (_query.TryComp(uid, out var mobComp))
         {
-            mobComp.UpdateIntervalMultiplier += add;
+            mobComp.UpdateIntervalMultiplier *= multiplier;
             Dirty(uid, mobComp);
         }
 
@@ -51,7 +52,7 @@ public sealed partial class MetabolismSpeedMutationSystem : EntitySystem
         foreach (var (organ, _) in _body.GetBodyOrgans(uid))
         {
             if (_query.TryComp(organ, out var metabolizer))
-                metabolizer.UpdateIntervalMultiplier += add;
+                metabolizer.UpdateIntervalMultiplier *= multiplier;
         }
     }
 }

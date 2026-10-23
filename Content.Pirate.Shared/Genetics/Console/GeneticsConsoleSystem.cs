@@ -250,7 +250,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.Actor,
-            ent.Comp.SequenceDelay,
+            ent.Comp.CombineDelay,
             new CombineDoAfterEvent(GetNetEntity(mob), args.Index),
             eventTarget: ent,
             target: mob,
