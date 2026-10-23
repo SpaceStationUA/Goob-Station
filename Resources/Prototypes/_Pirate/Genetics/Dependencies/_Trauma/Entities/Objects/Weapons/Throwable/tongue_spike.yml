@@ -27,6 +27,7 @@
   - type: EntityEffectOnTrigger
     effects:
     - !type:RevertPolymorph
+      prototype: TongueSpike # Pirate: local effect needs the polymorph for guidebook text.
 
 - type: entity
   parent: TongueSpike

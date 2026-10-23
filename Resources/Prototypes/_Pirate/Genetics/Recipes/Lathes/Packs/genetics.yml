@@ -4,6 +4,6 @@
   id: GeneticsStatic
   recipes:
   - GeneticsConsoleCircuitboard
-  - MedicalScannerMachineCircuitboard
+  - MedicalScannerMachineCircuitboardRecipe # Pirate: local recipe ID differs from its entity ID.
   - GeneticsDisk
   - HandheldGeneticsScanner

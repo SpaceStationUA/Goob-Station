@@ -1,0 +1,58 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: adapt Trauma's split status handlers to the local component-based mechanics.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPressureImmunityMutation
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: PressureImmunity
+    - type: SpecialPressureImmunity # Pirate: local barotrauma immunity.
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectMutedMutation
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: Muted
+  - type: StatusEffectAlert
+    alert: Muted
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectClumsyMutation
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: Clumsy
+      catchingFailDamage:
+        types:
+          Blunt: 1
+      gunShootFailDamage:
+        types:
+          Blunt: 5
+          Piercing: 4
+          Heat: 3
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectBlurryVision
+  components:
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: BlurryVision
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectBlindness
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - Blindable
+      requireAll: true
+  - type: GrantComponentsStatusEffect
+    components:
+    - type: TemporaryBlindness

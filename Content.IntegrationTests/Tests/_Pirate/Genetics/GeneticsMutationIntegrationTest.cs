@@ -2,11 +2,20 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Pirate.Shared.Genetics;
+using Content.Pirate.Shared.Genetics.Actions;
 using Content.Pirate.Shared.Genetics.Mutations;
 using Content.Server.Polymorph.Systems;
+using Content.Server.Polymorph.Components;
+using Content.Shared.Actions;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
+using Content.Shared.Clumsy;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
+using Content.Shared.Polymorph;
+using Content.Shared.Speech.Muting;
 using Content.Shared.Temperature.Components;
 using Content.Shared.StatusEffectNew;
 using Content.Pirate.Common.Bloodstream;
@@ -14,12 +23,111 @@ using Content.Server.Body.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.IntegrationTests.Tests._Pirate.Genetics;
 
 [TestFixture]
 public sealed class GeneticsMutationIntegrationTest
 {
+    [Test]
+    public async Task TongueSpikeActionReachesItsHandlerAndKeepsTheProjectilePhysical()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var mutations = server.System<MutationSystem>();
+        var body = server.System<GeneticsBodySystem>();
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var human = entities.SpawnEntity("MobHuman", map.GridCoords);
+            var tongue = body.GetOrgan(human, "Tongue");
+            Assert.That(tongue, Is.Not.Null);
+            Assert.That(mutations.AddMutation(human, "MutationTongueSpike"), Is.True);
+            var mutation = mutations.GetMutation((human, entities.GetComponent<MutatableComponent>(human)), "MutationTongueSpike")!.Value;
+            var action = server.System<ActionMutationSystem>().GetAction((mutation.Owner, null))!.Value;
+            var ev = new ShootOrganActionEvent { Target = map.GridCoords.Offset(new Vector2(3, 0)) };
+            server.System<SharedActionsSystem>().PerformAction((human, null), action, ev, predicted: false);
+            Assert.That(ev.Handled, Is.True);
+            Assert.That(body.GetOrgan(human, "Tongue"), Is.Null);
+            EntityUid? projectile = null;
+            var query = entities.EntityQueryEnumerator<PolymorphedEntityComponent>();
+            while (query.MoveNext(out var uid, out var polymorphed))
+            {
+                if (polymorphed.Parent == tongue)
+                    projectile = uid;
+            }
+            Assert.That(projectile, Is.Not.Null);
+            Assert.That(entities.GetComponent<PhysicsComponent>(projectile!.Value).BodyType, Is.EqualTo(BodyType.Dynamic));
+            Assert.That(server.System<PolymorphSystem>().Revert(projectile.Value), Is.EqualTo(tongue));
+            Assert.That(entities.EntityExists(tongue!.Value), Is.True);
+            entities.DeleteEntity(tongue.Value);
+            entities.DeleteEntity(human);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task FelinizedMutationChangesOrgansAppearanceAndMetabolismThenRemovesItsChanges()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var mutations = server.System<MutationSystem>();
+        var body = server.System<GeneticsBodySystem>();
+        var anatomy = server.System<SharedBodySystem>();
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var human = entities.SpawnEntity("MobHuman", map.GridCoords);
+            Assert.That(mutations.AddMutation(human, "MutationFelinized"), Is.True);
+            Assert.That(body.GetOrgan(human, "Ears"), Is.Not.Null);
+            Assert.That(body.GetOrgan(human, "Tail"), Is.Not.Null);
+            var appearance = entities.GetComponent<HumanoidAppearanceComponent>(human);
+            Assert.That(appearance.MarkingSet.Markings[MarkingCategories.Tail].Any(m => m.MarkingId == "GeneticsCatTail"), Is.True);
+            foreach (var (organ, _) in anatomy.GetBodyOrgans(human))
+            {
+                if (entities.TryGetComponent<MetabolizerComponent>(organ, out var metabolizer))
+                {
+                    Assert.That(metabolizer.MetabolizerTypes!.Any(t => t == "Animal"), Is.True);
+                    Assert.That(metabolizer.MetabolizerTypes.Any(t => t == "Human"), Is.False);
+                }
+            }
+            Assert.That(mutations.RemoveMutation(human, "MutationFelinized"), Is.True);
+            Assert.That(body.GetOrgan(human, "Ears"), Is.Null);
+            Assert.That(body.GetOrgan(human, "Tail"), Is.Null);
+            Assert.That(appearance.MarkingSet.Markings.Values.SelectMany(m => m).Any(m => m.MarkingId == "GeneticsCatTail"), Is.False);
+            entities.DeleteEntity(human);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase("MutationMute", "Muted")]
+    [TestCase("MutationClumsiness", "Clumsy")]
+    [TestCase("MutationPressureAdaptation", "SpecialPressureImmunity")]
+    public async Task StatusMutationsApplyAndRemoveTheirGameplayComponents(string mutation, string componentName)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var human = entities.SpawnEntity("MobHuman", map.GridCoords);
+            var mutations = server.System<MutationSystem>();
+            var registration = server.ResolveDependency<IComponentFactory>().GetRegistration(componentName);
+            Assert.That(entities.HasComponent(human, registration), Is.False);
+            Assert.That(mutations.AddMutation(human, mutation), Is.True);
+            Assert.That(entities.HasComponent(human, registration), Is.True);
+            Assert.That(mutations.RemoveMutation(human, mutation), Is.True);
+            Assert.That(entities.HasComponent(human, registration), Is.False);
+            entities.DeleteEntity(human);
+        });
+        await pair.CleanReturnAsync();
+    }
+
     [TestCase("MutationColdWeakness")]
     [TestCase("MutationHeatWeakness")]
     [TestCase("MutationThermalWeakness")]

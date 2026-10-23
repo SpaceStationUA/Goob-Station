@@ -87,6 +87,13 @@ public sealed partial record PolymorphConfiguration
     [DataField(serverOnly: true)]
     public bool TransferName;
 
+    // Pirate: donor genetics preserves modified names and can polymorph organs without a mind.
+    [DataField(serverOnly: true)]
+    public bool StripNameModifier = true;
+
+    [DataField(serverOnly: true)]
+    public bool MakeSentient = true;
+
     /// <summary>
     /// Whether or not the entity transfers its hair, skin color, hair color, etc.
     /// </summary>

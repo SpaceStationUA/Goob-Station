@@ -276,12 +276,14 @@
   - !type:SpawnEntity # flash instead of an explosion
     entity: ReactionFlash
   - !type:RelayNearby # blind and stun people
-    compName: AwakeMob
+    compName: MobState # Pirate: AwakeMob is represented by the nested condition below.
     range: 2
     blacklist: # never double dip, borgs get their own thing
       components:
       - BorgChassis
     effect: !type:NestedEffect
+      conditions:
+      - !type:AwakeCondition
       proto: StunBlindMob
   - !type:RelayNearby # paralyze borgs
     compName: BorgChassis
