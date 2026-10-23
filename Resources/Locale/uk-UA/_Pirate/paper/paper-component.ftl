@@ -1,4 +1,4 @@
-paper-ui-macro-hint = ПКМ: вставити теги
+paper-ui-macro-hint = Натисніть правою кнопкою миші, щоб вставити теги
 
 # Pirate: persistent diary pages
 paper-ui-page-prev = ◀
