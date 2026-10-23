@@ -1,5 +1,4 @@
 humanoid-profile-editor-employer-label = Роботодавець:
-humanoid-profile-editor-employer-hint = Наразі впливає тільки на доступ до професій, які ви можете обрати
 
 # Вибір роботодавця
 employment-employer-selector-choose = Обрати роботодавця

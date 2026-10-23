@@ -11,13 +11,11 @@ public sealed class EmployerSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var font10 = sheet.BaseFont.GetFont(10);
-        var font14Bold = sheet.BaseFont.GetFont(14, FontKind.Bold);
+        var employerLabelFont = sheet.BaseFont.GetFont(12, FontKind.Bold);
 
         return
         [
-            E<Label>().Class("ProfileEmployerLabel").Font(font14Bold).FontColor(Color.FromHex("#E0E0E0")),
-            E<Label>().Class("ProfileEmployerHint").Font(font10).FontColor(Color.FromHex("#A0A0A0")),
+            E<Label>().Class("ProfileEmployerLabel").Font(employerLabelFont).FontColor(Color.FromHex("#E0E0E0")),
         ];
     }
 }

@@ -18,7 +18,7 @@
   color: "#808080" # Pirate
   weight: -10
   roles:
-  # Pirate start: civilian jobs are grouped under the Pirate Service department.
+  # Pirate start: add Service department.
   # - Bartender
   # - Botanist
   # - Chaplain
@@ -26,8 +26,8 @@
   # - HeadOfPersonnel
   # - Janitor
   # - Librarian
-  - Mime
-  - Musician
+  # - Mime
+  # - Musician
   - Passenger
   - Visitor
   # - ServiceWorker

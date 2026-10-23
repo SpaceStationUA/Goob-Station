@@ -13,6 +13,7 @@ namespace Content.Shared.Preferences;
 
 public sealed partial class HumanoidCharacterProfile
 {
+    // Замінити nationality на citizenship після рефорку громадянства і походження*
     [DataField("nationality")]
     public string Citizenship { get; set; } = SharedHumanoidAppearanceSystem.DefaultCitizenship;
 

@@ -107,7 +107,7 @@ public sealed partial class RequirementsSelector : BoxContainer
         OptionsContainer.AddChild(_options);
         OptionsContainer.AddChild(_lockStripe);
 
-    // Pirate start
+    #region Pirate: flexible job-priority layout
         _options.Measure(new Vector2(float.PositiveInfinity));
         _lockStripe.MinWidth = _options.DesiredSize.X;
     }
@@ -124,7 +124,7 @@ public sealed partial class RequirementsSelector : BoxContainer
         _options.MinHeight = height;
         _lockStripe.MinHeight = height;
     }
-    // Pirate end
+    #endregion
 
     public void LockRequirements(FormattedMessage requirements)
     {

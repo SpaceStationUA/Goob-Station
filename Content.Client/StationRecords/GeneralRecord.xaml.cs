@@ -10,8 +10,8 @@ using Content.Client._Pirate.UserInterface.Controls;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
-using Content.Shared._Pirate.Origin;
-using Content.Shared._Pirate.Employment;
+using Content.Shared._Pirate.Origin; // Pirate
+using Content.Shared._Pirate.Employment; // Pirate
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Enums;
@@ -33,13 +33,13 @@ public sealed partial class GeneralRecord : Control
     private readonly IPrototypeManager _proto;
     private readonly SpriteSystem _spriteSystem;
     private readonly List<SpeciesPrototype> _species = new();
-    private readonly List<CitizenshipPrototype> _citizenships = new();
+    private readonly List<CitizenshipPrototype> _citizenships = new(); // Pirate
     private readonly List<EmployerPrototype> _employers = new();
     private HumanoidCharacterProfile? _recordProfile;
     private readonly uint _maxLength;
     private bool _suppressEvents;
     private bool _speciesUnset;
-    private bool _citizenshipUnset;
+    private bool _citizenshipUnset; // Pirate
     private bool _employerUnset;
     private bool _genderUnset;
 
@@ -68,6 +68,7 @@ public sealed partial class GeneralRecord : Control
             UpdateRecordIdentityProfile(_recordProfile.WithSpecies(_species[args.Id].ID), true);
         };
 
+        // Pirate edit - start
         CitizenshipButton.OnItemSelected += args =>
         {
             if (_suppressEvents || _recordProfile == null)
@@ -77,6 +78,7 @@ public sealed partial class GeneralRecord : Control
             CitizenshipButton.SelectId(args.Id);
             UpdateRecordIdentityProfile(_recordProfile.WithCitizenship(_citizenships[args.Id].ID), true);
         };
+        // Pirate edit - end
 
         EmployerButton.OnItemSelected += args =>
         {
@@ -149,7 +151,7 @@ public sealed partial class GeneralRecord : Control
         var profile = new HumanoidCharacterProfile
         {
             Species = string.Empty,
-            Citizenship = string.Empty,
+            Citizenship = string.Empty, // Pirate
             Employer = string.Empty,
             Age = 0,
         }
@@ -159,8 +161,10 @@ public sealed partial class GeneralRecord : Control
         if (!string.IsNullOrWhiteSpace(record.Species))
             profile = profile.WithSpecies(record.Species);
 
+        // Pirate edit - start
         if (!string.IsNullOrWhiteSpace(record.Citizenship))
             profile = profile.WithCitizenship(record.Citizenship);
+        // Pirate edit - end
 
         if (!string.IsNullOrWhiteSpace(record.Employer))
             profile = profile.WithEmployer(record.Employer);

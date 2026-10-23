@@ -157,16 +157,14 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
                         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                             <PanelContainer StyleClasses="ProfileEntryPanel" Margin="0 0 0 4">
-                                <BoxContainer Orientation="Horizontal" Margin="10 8">
-                                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
-                                        <Label Text="{Loc 'humanoid-profile-editor-employer-label'}" StyleClasses="ProfileEmployerLabel" />
-                                        <Label Text="{Loc 'humanoid-profile-editor-employer-hint'}" StyleClasses="ProfileEmployerHint" />
-                                    </BoxContainer>
+                                <BoxContainer Orientation="Horizontal" Margin="10 6">
+                                    <Label Text="{Loc 'humanoid-profile-editor-employer-label'}" StyleClasses="ProfileEmployerLabel" VerticalAlignment="Center" />
+                                    <Control HorizontalExpand="True" />
                                     <Button Name="EmployerButton" MinWidth="300" HorizontalAlignment="Right" />
                                 </BoxContainer>
                             </PanelContainer>
                             <PanelContainer StyleClasses="ProfileEntryPanel" Margin="0 0 0 4">
-                                <BoxContainer Orientation="Horizontal" Margin="10 8">
+                                <BoxContainer Orientation="Horizontal" Margin="10 6">
                                     <Label Text="{Loc 'humanoid-profile-editor-preference-unavailable-label'}" StyleClasses="ProfileUnavailableLabel" VerticalAlignment="Center" />
                                     <Control HorizontalExpand="True" />
                                     <OptionButton Name="PreferenceUnavailableButton" MinWidth="300" />

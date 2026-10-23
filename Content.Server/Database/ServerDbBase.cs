@@ -216,12 +216,14 @@ namespace Content.Server.Database
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)
         {
+            // Pirate edit - start
             var jobs = profile.Jobs
                 .Where(j => j.Priority != DbJobPriority.Never)
                 .ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
             var jobAlternatives = profile.Jobs
                 .Where(j => !string.IsNullOrWhiteSpace(j.ActiveAlternativeJobId))
-                .ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => new ProtoId<AlternativeJobPrototype>(j.ActiveAlternativeJobId!)); // Pirate - Alternative Jobs
+                .ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => new ProtoId<AlternativeJobPrototype>(j.ActiveAlternativeJobId!));
+            // Pirate edit - end
             var antags = profile.Antags.Select(a => new ProtoId<AntagPrototype>(a.AntagName));
             var traits = profile.Traits.Select(t => new ProtoId<TraitPrototype>(t.TraitName));
 
@@ -362,6 +364,7 @@ namespace Content.Server.Database
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
 
             profile.Jobs.Clear();
+            // Pirate edit - start
             var savedJobs = humanoid.JobPriorities
                 .Where(job => job.Value != JobPriority.Never)
                 .ToDictionary(
@@ -380,6 +383,7 @@ namespace Content.Server.Database
             }
 
             profile.Jobs.AddRange(savedJobs.Values);
+            // Pirate edit - end
 
             profile.Antags.Clear();
             profile.Antags.AddRange(
