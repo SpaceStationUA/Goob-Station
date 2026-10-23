@@ -38,6 +38,7 @@ public sealed class GeneticsConsoleIntegrationTest
             var console = entities.SpawnEntity("ComputerGeneticsConsole", map.GridCoords);
             var comp = entities.GetComponent<GeneticsConsoleComponent>(console);
             entities.GetComponent<ApcPowerReceiverComponent>(console).NeedsPower = false;
+            entities.GetComponent<ApcPowerReceiverComponent>(console).Powered = true; // Fixture skips the power-network tick.
             var scanner = entities.SpawnEntity("MedicalScanner", map.GridCoords);
             var scannerComp = entities.GetComponent<MedicalScannerComponent>(scanner);
             var human = entities.SpawnEntity("MobHuman", map.GridCoords);

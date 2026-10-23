@@ -87,9 +87,11 @@ public sealed class MedicalRecordsSystem : SharedMedicalRecordsSystem
     {
         if (!Enum.IsDefined(status)) // Pirate: reject invalid client enum values.
             return;
-        if (_records.TryGetRecord<MedicalRecord>(patient, out var record) && status != TriageStatus.None)
+        if (status != TriageStatus.None)
         {
-            SetStatus(patient, record with { Status = status, LastUpdated = _timing.CurTime });
+            // Records may be created lazily; the first status assignment must still be saved.
+            _records.TryGetRecord<MedicalRecord>(patient, out var record);
+            SetStatus(patient, (record ?? new MedicalRecord()) with { Status = status, LastUpdated = _timing.CurTime });
         }
         else
         {

@@ -92,7 +92,7 @@
     accent: Elvis
   - type: RandomTrigger
     prob: 0.075 # 7.5%
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RelayMutated
       effect: !type:NestedEffect

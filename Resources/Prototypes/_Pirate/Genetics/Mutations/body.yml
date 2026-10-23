@@ -14,7 +14,7 @@
     prob: 0.005 # 0.5%
   - type: TriggerOnFlashed # get flashed nerd
     prob: 0.7 # 70%
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RelayMutated
       effect: !type:NestedEffect
@@ -33,7 +33,7 @@
     instability: -30
   - type: RandomTrigger
     prob: 0.025 # 2.5%
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RelayMutated
       effect: !type:NestedEffect
@@ -52,7 +52,7 @@
     instability: -30
   - type: RandomTrigger
     prob: 0.025 # 2.5%
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RelayMutated
       effect: !type:NestedEffect
@@ -148,7 +148,7 @@
   components:
   - type: RandomTrigger
     prob: 0.05
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RelayMutated
       effect: !type:WeightedRandomEffect
@@ -288,7 +288,7 @@
     # TG does not have it incompatible with thermal adaptation :) have fun
   - type: RandomTrigger
     prob: 0.0005 # 0.05%
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RelayMutated
       effect: !type:NestedEffect
@@ -333,7 +333,7 @@
     prob: 0.13 # 13%
   - type: UseDelay # for the popup
     delay: 20
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:NestedEffect
       conditions:
@@ -355,7 +355,7 @@
     difficulty: 16
   - type: RandomTrigger
     prob: 0.15 # 15%
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RelayMutated
       effect: !type:NestedEffect
@@ -371,7 +371,7 @@
     instability: -30
     difficulty: 16
   - type: TriggerOnWalk
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RelayMutated
       probability: 0.03 # 3% per tile walked - tg is 0.5% but its too rare for -30, so free
@@ -390,7 +390,7 @@
     instability: -40
   - type: TriggerOnMobstateChange
     mobState: [ Dead ] # TODO: add hardcrit when implemented
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RelayMutated
       effect: !type:NestedEffect

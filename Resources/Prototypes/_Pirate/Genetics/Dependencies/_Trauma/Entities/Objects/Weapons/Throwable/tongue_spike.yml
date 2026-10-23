@@ -24,7 +24,7 @@
       types:
         Piercing: 30 # Pirate: local ballistic damage type; donor damage preserved.
   - type: TriggerOnLand
-  - type: EntityEffectOnTrigger
+  - type: GeneticsEffectsOnTrigger
     effects:
     - !type:RevertPolymorph
       prototype: TongueSpike # Pirate: local effect needs the polymorph for guidebook text.

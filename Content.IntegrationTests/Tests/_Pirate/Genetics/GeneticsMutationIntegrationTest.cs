@@ -6,6 +6,11 @@ using System.Numerics;
 using Content.Pirate.Shared.Genetics;
 using Content.Pirate.Shared.Genetics.Actions;
 using Content.Pirate.Shared.Genetics.Mutations;
+using Content.Pirate.Shared.Genetics.Trigger;
+using Content.Shared.Trigger.Systems;
+using Content.Shared.Standing;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
@@ -104,10 +109,8 @@ public sealed class GeneticsMutationIntegrationTest
         await pair.CleanReturnAsync();
     }
 
-    [TestCase("MutationMute", "Muted")]
-    [TestCase("MutationClumsiness", "Clumsy")]
-    [TestCase("MutationPressureAdaptation", "SpecialPressureImmunity")]
-    public async Task StatusMutationsApplyAndRemoveTheirGameplayComponents(string mutation, string componentName)
+    [Test]
+    public async Task PrototypeDefinedMutationTriggersApplyTheirEffectToTheBody()
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -117,11 +120,41 @@ public sealed class GeneticsMutationIntegrationTest
         {
             var human = entities.SpawnEntity("MobHuman", map.GridCoords);
             var mutations = server.System<MutationSystem>();
-            var registration = server.ResolveDependency<IComponentFactory>().GetRegistration(componentName);
+            Assert.That(mutations.AddMutation(human, "MutationTwoLeftFeet"), Is.True);
+            var mutation = mutations.GetMutation((human, entities.GetComponent<MutatableComponent>(human)), "MutationTwoLeftFeet")!.Value;
+            var trigger = entities.GetComponent<GeneticsEffectsOnTriggerComponent>(mutation.Owner);
+            trigger.Effects.Single().Probability = 1; // Deterministically exercise the actual trigger path.
+            Assert.That(entities.GetComponent<StandingStateComponent>(human).Standing, Is.True);
+            server.System<TriggerSystem>().Trigger(mutation.Owner);
+            Assert.That(entities.GetComponent<StandingStateComponent>(human).Standing, Is.False);
+            entities.DeleteEntity(human);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase("MutationMute", "Muted")]
+    [TestCase("MutationClumsiness", "Clumsy")]
+    [TestCase("MutationPressureAdaptation", "SpecialPressureImmunity")]
+    public async Task StatusMutationsApplyAndRemoveTheirGameplayComponents(string mutation, string componentName)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+        var registration = server.ResolveDependency<IComponentFactory>().GetRegistration(componentName);
+        EntityUid human = default;
+        await server.WaitAssertion(() =>
+        {
+            human = entities.SpawnEntity("MobHuman", map.GridCoords);
+            var mutations = server.System<MutationSystem>();
             Assert.That(entities.HasComponent(human, registration), Is.False);
             Assert.That(mutations.AddMutation(human, mutation), Is.True);
             Assert.That(entities.HasComponent(human, registration), Is.True);
             Assert.That(mutations.RemoveMutation(human, mutation), Is.True);
+        });
+        await pair.RunTicksSync(1); // Status effects use deferred entity deletion.
+        await server.WaitAssertion(() =>
+        {
             Assert.That(entities.HasComponent(human, registration), Is.False);
             entities.DeleteEntity(human);
         });
@@ -168,10 +201,16 @@ public sealed class GeneticsMutationIntegrationTest
         await server.WaitAssertion(() =>
         {
             var human = entities.SpawnEntity("MobHuman", map.GridCoords);
+            // Local blood regeneration correctly does nothing while the bloodstream is full.
+            Assert.That(server.System<SharedBloodstreamSystem>().TryModifyBloodLevel(human, -50), Is.True);
             Assert.That(mutations.AddMutation(human, "MutationHypermetabolicBlood"), Is.True);
+            var hunger = entities.GetComponent<HungerComponent>(human);
+            var hungerSystem = server.System<HungerSystem>();
+            var before = hungerSystem.GetHunger(hunger);
             var regeneration = new BloodRegenerationModifierEvent(2);
             entities.EventBus.RaiseLocalEvent(human, ref regeneration);
             Assert.That(regeneration.Amount, Is.EqualTo(12));
+            Assert.That(before - hungerSystem.GetHunger(hunger), Is.EqualTo(1.2f).Within(0.0001f));
             Assert.That(mutations.RemoveMutation(human, "MutationHypermetabolicBlood"), Is.True);
             regeneration = new BloodRegenerationModifierEvent(2);
             entities.EventBus.RaiseLocalEvent(human, ref regeneration);
@@ -190,10 +229,12 @@ public sealed class GeneticsMutationIntegrationTest
         var mutations = server.System<MutationSystem>();
         var status = server.System<StatusEffectsSystem>();
         var map = await pair.CreateTestMap();
+        EntityUid human = default;
+        MutatableComponent comp = default!;
         await server.WaitAssertion(() =>
         {
-            var human = entities.SpawnEntity("MobHuman", map.GridCoords);
-            var comp = entities.GetComponent<MutatableComponent>(human);
+            human = entities.SpawnEntity("MobHuman", map.GridCoords);
+            comp = entities.GetComponent<MutatableComponent>(human);
             Assert.That(comp.MaxInstability, Is.EqualTo(100));
             Assert.That(comp.MeltDuration, Is.EqualTo(TimeSpan.FromMinutes(3)));
             mutations.AddInstability((human, comp), 99, automatic: true, predicted: false);
@@ -201,6 +242,10 @@ public sealed class GeneticsMutationIntegrationTest
             mutations.AddInstability((human, comp), 1, automatic: true, predicted: false);
             Assert.That(status.HasStatusEffect(human, comp.MeltingEffect), Is.True);
             mutations.AddInstability((human, comp), -1, automatic: true, predicted: false);
+        });
+        await pair.RunTicksSync(1); // Wait for the removed effect and its guarded outcome callback.
+        await server.WaitAssertion(() =>
+        {
             Assert.That(status.HasStatusEffect(human, comp.MeltingEffect), Is.False);
             Assert.That(entities.EntityExists(human), Is.True, "Stabilization must prevent the lethal mutation outcome.");
             Assert.That(entities.GetComponent<MetaDataComponent>(human).EntityPrototype!.ID, Is.EqualTo("MobHuman"));
