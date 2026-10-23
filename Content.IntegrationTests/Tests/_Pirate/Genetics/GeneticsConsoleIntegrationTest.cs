@@ -44,7 +44,9 @@ public sealed class GeneticsConsoleIntegrationTest
             var other = entities.SpawnEntity("MobHuman", map.GridCoords);
             var mutatable = entities.GetComponent<MutatableComponent>(human);
             mutations.ClearDormant(human);
+#pragma warning disable RA0002 // Deterministic fixture setup for protected timing/genome state.
             mutatable.Dormant.Add("MutationDwarfism");
+#pragma warning restore RA0002
             var data = mutations.GetRoundData(mutatable.Dormant[0])!;
             var discovered = data.Discovered;
             try
@@ -124,7 +126,9 @@ public sealed class GeneticsConsoleIntegrationTest
             for (uint index = 0; index < comp.Prints.Count; index++)
             {
                 var print = comp.Prints[(int) index];
+#pragma warning disable RA0002 // Deterministic fixture setup for protected timing/genome state.
                 comp.NextPrint = timing.CurTime;
+#pragma warning restore RA0002
                 materials.TrySetMaterialAmount(console, "Biomass", print.Cost - 1);
                 Send(index);
                 Assert.That(materials.GetMaterialAmount(console, "Biomass"), Is.EqualTo(print.Cost - 1));
@@ -146,7 +150,9 @@ public sealed class GeneticsConsoleIntegrationTest
                 entities.DeleteEntity(injector.Item2.Owner);
             }
             disks.SetMutation((disk, diskComp), null);
+#pragma warning disable RA0002 // Deterministic fixture setup for protected timing/genome state.
             comp.NextPrint = timing.CurTime;
+#pragma warning restore RA0002
             var before = materials.GetMaterialAmount(console, "Biomass");
             Send(0);
             Assert.That(materials.GetMaterialAmount(console, "Biomass"), Is.EqualTo(before));
@@ -187,7 +193,7 @@ public sealed class GeneticsConsoleIntegrationTest
             disks.SetMutation((disk, comp), "MutationDwarfism");
             Assert.That(comp.Enzymes, Is.Null);
             var microwaved = new Content.Shared.Kitchen.BeingMicrowavedEvent(disk, null);
-            entities.EventBus.RaiseLocalEvent(disk, ref microwaved);
+            entities.EventBus.RaiseLocalEvent(disk, microwaved);
             Assert.That(comp.Mutation, Is.Null);
             Assert.That(comp.Enzymes, Is.Null);
             entities.DeleteEntity(disk);
@@ -215,12 +221,16 @@ public sealed class GeneticsConsoleIntegrationTest
             var human = entities.SpawnEntity("MobHuman", map.GridCoords);
             mutations.ClearDormant(human);
             if (dormant)
+#pragma warning disable RA0002 // Deterministic fixture setup for protected timing/genome state.
                 entities.GetComponent<MutatableComponent>(human).Dormant.Add("MutationDwarfism");
+#pragma warning restore RA0002
             if (prototype == "GeneticsCleanser")
                 Assert.That(mutations.AddMutation(human, "MutationDwarfism"), Is.True);
             var injector = entities.SpawnEntity(prototype, map.GridCoords);
             var comp = entities.GetComponent<MutatorComponent>(injector);
+#pragma warning disable RA0002 // Deterministic fixture setup for protected timing/genome state.
             comp.InjectTime = TimeSpan.Zero;
+#pragma warning restore RA0002
             injectors.AddMutation(injector, "MutationDwarfism");
             injectors.StartInject((injector, comp), human, human);
             Assert.That(mutations.HasMutation(human, "MutationDwarfism"), Is.EqualTo(expected));

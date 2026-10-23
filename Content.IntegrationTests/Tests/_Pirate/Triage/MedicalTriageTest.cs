@@ -136,14 +136,22 @@ public sealed class MedicalTriageTest
             Assert.That(server.System<InventorySystem>().TryEquip(human, card, "id", force: true), Is.True);
             var analyzer = entities.SpawnEntity("HandheldHealthAnalyzer", map.GridCoords);
             var comp = entities.GetComponent<HealthAnalyzerComponent>(analyzer);
+#pragma warning disable RA0002 // Fixture sets the scan lifecycle state under test.
             comp.ScannedEntity = human;
+#pragma warning restore RA0002
+#pragma warning disable RA0002 // Fixture sets the scan lifecycle state under test.
             comp.IsAnalyzerActive = true;
+#pragma warning restore RA0002
             Assert.That(analyzerSystem.TryGetTriagePatient((analyzer, comp), out var patient, out var found), Is.True);
             Assert.That(patient, Is.EqualTo(human));
             Assert.That(found, Is.EqualTo(key));
+#pragma warning disable RA0002 // Fixture sets the scan lifecycle state under test.
             comp.IsAnalyzerActive = false;
+#pragma warning restore RA0002
             Assert.That(analyzerSystem.TryGetTriagePatient((analyzer, comp), out _, out _), Is.False);
+#pragma warning disable RA0002 // Fixture sets the scan lifecycle state under test.
             comp.IsAnalyzerActive = true;
+#pragma warning restore RA0002
             var transform = server.System<SharedTransformSystem>();
             transform.SetCoordinates(human, map.GridCoords.Offset(new System.Numerics.Vector2(10, 0)));
             Assert.That(analyzerSystem.TryGetTriagePatient((analyzer, comp), out _, out _), Is.False);
@@ -152,7 +160,9 @@ public sealed class MedicalTriageTest
             Assert.That(analyzerSystem.TryGetTriagePatient((analyzer, comp), out _, out _), Is.False);
             entities.DeleteEntity(human);
             Assert.That(analyzerSystem.TryGetTriagePatient((analyzer, comp), out _, out _), Is.False);
+#pragma warning disable RA0002 // Fixture sets the scan lifecycle state under test.
             comp.ScannedEntity = null;
+#pragma warning restore RA0002
             Assert.That(analyzerSystem.TryGetTriagePatient((analyzer, comp), out _, out _), Is.False);
             entities.DeleteEntity(analyzer);
             entities.DeleteEntity(station);

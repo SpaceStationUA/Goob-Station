@@ -8,6 +8,7 @@ using Content.Shared.Charges.Systems;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests._Pirate;
@@ -32,7 +33,7 @@ public sealed class JanitorialRcdTest : InteractionTest
         Assert.That(IsUiOpen(RcdUiKey.Key), Is.True);
         await SendBui(RcdUiKey.Key, new RCDSystemMessage(recipe), rcd);
         await CloseBui(RcdUiKey.Key, rcd);
-        Assert.That(SEntMan.GetComponent<RCDComponent>(ToServer(rcd)).ProtoId.ToString(), Is.EqualTo(recipe));
+        Assert.That(SEntMan.GetComponent<RCDComponent>(ToServer(rcd)).ProtoId, Is.EqualTo((ProtoId<RCDPrototype>) recipe));
         Assert.That(charges.GetCurrentCharges(ToServer(rcd)), Is.EqualTo(20));
 
         await Interact(null, location);
@@ -66,20 +67,28 @@ public sealed class JanitorialRcdTest : InteractionTest
         await Server.WaitAssertion(() =>
         {
             var uid = ToServer(rcd);
-            Assert.That(SEntMan.GetComponent<RCDComponent>(uid).ProtoId.ToString(), Is.EqualTo("RCDFloorSteel"));
+            Assert.That(SEntMan.GetComponent<RCDComponent>(uid).ProtoId, Is.EqualTo((ProtoId<RCDPrototype>) "RCDFloorSteel"));
             var charges = Server.System<SharedChargesSystem>();
             var limited = SEntMan.GetComponent<LimitedChargesComponent>(uid);
             var recharge = SEntMan.GetComponent<AutoRechargeComponent>(uid);
             var timing = Server.ResolveDependency<IGameTiming>();
             Assert.That(recharge.RechargeDuration, Is.EqualTo(TimeSpan.FromSeconds(15)));
             charges.SetCharges(uid, 0);
+#pragma warning disable RA0002 // Simulate elapsed recharge time without waiting five real minutes.
             limited.LastUpdate = timing.CurTime - TimeSpan.FromSeconds(14.99);
+#pragma warning restore RA0002
             Assert.That(charges.GetCurrentCharges(uid), Is.Zero);
+#pragma warning disable RA0002 // Simulate elapsed recharge time without waiting five real minutes.
             limited.LastUpdate = timing.CurTime - TimeSpan.FromSeconds(15);
+#pragma warning restore RA0002
             Assert.That(charges.GetCurrentCharges(uid), Is.EqualTo(1));
+#pragma warning disable RA0002 // Simulate elapsed recharge time without waiting five real minutes.
             limited.LastUpdate = timing.CurTime - TimeSpan.FromMinutes(5);
+#pragma warning restore RA0002
             Assert.That(charges.GetCurrentCharges(uid), Is.EqualTo(20));
+#pragma warning disable RA0002 // Simulate elapsed recharge time without waiting five real minutes.
             limited.LastUpdate = timing.CurTime - TimeSpan.FromMinutes(10);
+#pragma warning restore RA0002
             Assert.That(charges.GetCurrentCharges(uid), Is.EqualTo(20));
         });
     }

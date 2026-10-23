@@ -114,7 +114,9 @@ public sealed class GeneticsMutationIntegrationTest
             var human = entities.SpawnEntity("MobHuman", map.GridCoords);
             var comp = entities.GetComponent<MutatableComponent>(human);
             mutations.ClearDormant(human);
+#pragma warning disable RA0002 // Fixture explicitly selects a native mutation.
             comp.Dormant.Add("MutationColdAdaptation");
+#pragma warning restore RA0002
             Assert.That(mutations.AddMutation(human, "MutationColdAdaptation"), Is.True);
             Assert.That(comp.TotalInstability, Is.Zero);
             Assert.That(mutations.AddMutation(human, "MutationHeatAdaptation"), Is.True);
@@ -211,7 +213,7 @@ public sealed class GeneticsMutationIntegrationTest
                 Assert.That(states.All(state => state.Bases.Contains('X')), Is.True);
                 Assert.That(genome.GetSequence(mob, uint.MaxValue), Is.Null);
 
-                var foreign = mutations.UnlockedMutations.First(id => !comp.Dormant.Contains(id) &&
+                var foreign = mutations.UnlockedMutations.First(id => !Enumerable.Contains(comp.Dormant, id) &&
                     !server.ProtoMan.Index(id).Components.ContainsKey("PolymorphMutation") &&
                     mutations.AllMutations[id].Required.Count == 0);
                 Assert.That(mutations.AddMutation(mob, foreign), Is.True);
@@ -247,7 +249,7 @@ public sealed class GeneticsMutationIntegrationTest
             genome.ScanGenome(human);
             var original = entities.GetComponent<ScannedGenomeComponent>(human).Sequences
                 .Select(s => (s.Mutation, s.Bases, s.OriginalBases)).ToArray();
-            var dormant = entities.GetComponent<MutatableComponent>(human).Dormant.ToArray();
+            var dormant = Enumerable.ToArray(entities.GetComponent<MutatableComponent>(human).Dormant);
             var monkey = polymorph.PolymorphEntity(human, "MutationMonkey");
             Assert.That(monkey, Is.Not.Null);
             Assert.That(mutations.HasMutation(monkey!.Value, "MutationDwarfism"), Is.True);
