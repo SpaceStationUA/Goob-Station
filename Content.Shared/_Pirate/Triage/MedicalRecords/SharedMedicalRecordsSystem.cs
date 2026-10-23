@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using Content.Shared.IdentityManagement;
+using Content.Shared.IdentityManagement.Components;
+
+namespace Content.Shared._Pirate.Triage.MedicalRecords;
+
+public abstract class SharedMedicalRecordsSystem : EntitySystem
+{
+    public void UpdateMedicalRecords(string name, MedicalRecord status)
+    {
+        var query = EntityQueryEnumerator<IdentityComponent>();
+
+        while (query.MoveNext(out var uid, out var identity))
+        {
+            if (!Identity.Name(uid, EntityManager).Equals(name))
+                continue;
+
+            // Only remove the component if both status is None AND patient is unclaimed
+            if (status is { Status: TriageStatus.None, ClaimedName: null })
+            {
+                RemComp<MedicalRecordComponent>(uid);
+            }
+            else
+            {
+                EnsureComp<MedicalRecordComponent>(uid, out var record);
+                record.Record = status;
+                Dirty(uid, record);
+            }
+        }
+    }
+}

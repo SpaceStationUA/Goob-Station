@@ -47,6 +47,7 @@
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 2, 2 ]
+            Geneticist: [ 1, 1 ] # Pirate: Trauma genetics
             ResearchAssistant: [ 1, 3 ]
             Borg: [ 2, 2 ]
             #security

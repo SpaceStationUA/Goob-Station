@@ -248,7 +248,8 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         Dirty(gunUid, component);
     }
 
-    protected virtual void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
+    // Pirate: genetics telekinesis releases tethers through the existing API.
+    public virtual void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
     {
         if (component.Tethered == null)
             return;
