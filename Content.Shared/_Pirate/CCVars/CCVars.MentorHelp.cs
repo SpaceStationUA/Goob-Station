@@ -14,6 +14,9 @@ public static class MentorHelpCVars
     public static readonly CVarDef<string> DiscordOnCallWebhook =
         CVarDef.Create("pirate.discord_mentorhelp_on_call_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
+    /// <summary>
+    ///     Comma-separated role IDs to mention when a mentorhelp has no available responders.
+    /// </summary>
     public static readonly CVarDef<string> DiscordOnCallPing =
         CVarDef.Create("pirate.discord_mentorhelp_on_call_ping", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 }

@@ -10,7 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems;
 
-public sealed class ThermalRegulatorSystem : EntitySystem
+public sealed partial class ThermalRegulatorSystem : EntitySystem // Pirate: genetics regulation API
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly TemperatureSystem _tempSys = default!;

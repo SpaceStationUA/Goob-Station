@@ -1593,6 +1593,12 @@
   parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  # Pirate: Trauma genetics species defaults.
+  - type: Mutatable
+    defaultMutations:
+      MutationMonkified: 1.0 # always monkey...
+    dormant:
+    - MutationMonkified
   - type: NameIdentifier
     group: Monkey
   - type: Speech
@@ -1695,6 +1701,13 @@
   description: Cousins to the sentient race of lizard people, kobolds blend in with their natural habitat and are as nasty as monkeys; ready to pull out your hair and stab you to death.
   abstract: true
   components:
+  # Pirate: Trauma genetics species defaults.
+  - type: Mutatable
+    defaultMutations:
+      MutationMonkified: 1.0 # free lizardmen...
+    dormant:
+    - MutationMonkified
+  # </Trauma>
   - type: NameIdentifier
     group: Kobold
   - type: LizardAccent

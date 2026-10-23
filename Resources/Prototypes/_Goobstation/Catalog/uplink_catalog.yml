@@ -1156,6 +1156,14 @@
   reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkImplants
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+      - LoneOpsUplink
+      - ContractorUplink
+      - ContravendUplink
 
 - type: listing
   id: UplinkAutosurgeonRecoilAbsorber

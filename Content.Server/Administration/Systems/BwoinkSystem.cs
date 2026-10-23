@@ -8,6 +8,7 @@ using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
+using Content.Server._Pirate.Discord; // Pirate: multiple on-call roles.
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Database;
@@ -547,12 +548,12 @@ namespace Content.Server.Administration.Systems
                 _onCallData != null)
             {
                 existingEmbed.OnCall = true;
-                var roleMention = _config.GetCVar(CCVars.DiscordAhelpMention);
+                // Pirate: accept comma-separated role IDs while preserving single-role configs.
+                var roleMention = DiscordRoleMentions.Format(_config.GetCVar(CCVars.DiscordAhelpMention));
 
                 if (!string.IsNullOrEmpty(roleMention))
                 {
                     var message = new StringBuilder();
-                    message.AppendLine($"<@&{roleMention}>");
                     message.AppendLine("Unanswered SOS");
 
                     // Need webhook data to get the correct link for that channel rather than on-call data.
@@ -563,6 +564,12 @@ namespace Content.Server.Administration.Systems
                     }
 
                     payload = GeneratePayload(message.ToString(), existingEmbed.Username, userId, existingEmbed.CharacterName);
+
+                    // Pirate: Discord role notifications require mentions in the message content.
+                    payload.Content = roleMention;
+                    var mentions = payload.AllowedMentions;
+                    mentions.AllowRoleMentions();
+                    payload.AllowedMentions = mentions;
 
                     var request = await _httpClient.PostAsync($"{_onCallUrl}?wait=true",
                         new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));

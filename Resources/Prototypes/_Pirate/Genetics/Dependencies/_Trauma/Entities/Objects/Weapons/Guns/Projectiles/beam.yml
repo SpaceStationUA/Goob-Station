@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BulletTemperatureCold
+  id: BulletTemperatureCryo
+  name: cryo beam
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Cold: 5
+  - type: ChangeTemperatureOnCollide
+    heat: -70000
+
+- type: entity
+  parent: BulletTemperatureHot
+  id: BulletTemperaturePyro
+  name: hot beam
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Heat: 8
+  - type: ChangeTemperatureOnCollide
+    heat: 80000

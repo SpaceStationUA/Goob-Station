@@ -7,6 +7,12 @@
   id: BaseMobReptilian
   abstract: true
   components:
+  # Pirate: Trauma genetics species defaults.
+  - type: Mutatable
+    dormant:
+    - MutationFireBreath
+    - MutationMonkified # return to kobold
+  # </Trauma>
   - type: HumanoidAppearance
     species: Reptilian
     hideLayersOnEquip:

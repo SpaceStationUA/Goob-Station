@@ -45,7 +45,7 @@ using Content.Shared._Pirate.Body.Chips; // Pirate: skill chips
 
 namespace Content.Server.Medical;
 
-public sealed class HealthAnalyzerSystem : EntitySystem
+public sealed partial class HealthAnalyzerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PowerCellSystem _cell = default!;
@@ -78,6 +78,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             subs.Event<HealthAnalyzerModeSelectedMessage>(OnHealthAnalyzerModeSelected);
         });
         // Shitmed Change End
+        InitializeTriage(); // Pirate
     }
 
     public override void Update(float frameTime)
@@ -299,6 +300,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             || !TryComp<BodyComponent>(target, out var body)
             || !TryComp(healthAnalyzer, out HealthAnalyzerComponent? analyzerComp))
             return;
+
+        SendTriageUpdate(healthAnalyzer, target, scanMode); // Pirate
 
         var bodyTemperature = float.NaN;
 

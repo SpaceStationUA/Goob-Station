@@ -49,6 +49,7 @@
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 6, 6 ]
+            Geneticist: [ 1, 1 ] # Pirate: Trauma genetics
             ResearchAssistant: [ 6, 6 ]
             #security
             HeadOfSecurity: [ 1, 1 ]

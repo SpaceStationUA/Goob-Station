@@ -41,6 +41,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("Virologist", ["SkillChipEducation", "SkillChipDoctor"]),
         ("ResearchDirector", ["SkillChipEchelonEducationPilot"]),
         ("Scientist", ["SkillChipEducation", "SkillChipDatabase"]),
+        ("Geneticist", ["SkillChipEducation"]), // Pirate: genetics now provides the donor job.
         ("ResearchAssistant", ["SkillChipEducation", "SkillChipDatabaseBasic"]),
         ("Roboticist", ["SkillChipEducation", "SkillChipDatabase"]),
         ("HeadOfSecurity", ["SkillChipCombatEducationPilot", "SkillChipCombatHOS"]),
@@ -169,7 +170,7 @@ public sealed class SkillChipPrototypeIntegrityTest
 
     private static readonly string[] ExcludedTraumaChips = ["SkillChipChef", "SkillChipLibrarian"];
 
-    private static readonly string[] AbsentJobs = ["DClass", "Geneticist"];
+    private static readonly string[] AbsentJobs = ["DClass"];
 
     [Test]
     public async Task EveryChipGrantsOnlyRealSkills()

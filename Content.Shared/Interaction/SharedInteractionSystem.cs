@@ -768,7 +768,7 @@ namespace Content.Shared.Interaction
             if (!Resolve(other, ref other.Comp))
                 return false;
 
-            var ev = new InRangeOverrideEvent(origin, other);
+            var ev = new InRangeOverrideEvent(origin, other) { Range = range }; // Pirate: mutation reach
             RaiseLocalEvent(origin, ref ev);
 
             if (ev.Handled)
@@ -780,7 +780,7 @@ namespace Content.Shared.Interaction
                 other,
                 other.Comp.Coordinates,
                 other.Comp.LocalRotation,
-                range,
+                ev.Range, // Pirate: mutation reach
                 collisionMask,
                 predicate,
                 popup,
@@ -1637,6 +1637,7 @@ namespace Content.Shared.Interaction
     [ByRefEvent]
     public record struct InRangeOverrideEvent(EntityUid User, EntityUid Target)
     {
+        public float Range = SharedInteractionSystem.InteractionRange; // Pirate: mutation reach
         public readonly EntityUid User = User;
         public readonly EntityUid Target = Target;
 

@@ -1,0 +1,12 @@
+health-analyzer-window-triage-claim = Взяти пацієнта під опіку
+health-analyzer-window-triage-unclaim = Лікар: { $claimedBy }
+health-analyzer-window-triage-status-None = Без позначки
+    .ToolTip = Немає травм або статус ще не визначено.
+health-analyzer-window-triage-status-Minor = Легкий
+    .ToolTip = Незначні травми; пацієнт може допомагати в наданні допомоги.
+health-analyzer-window-triage-status-Delayed = Відкладений
+    .ToolTip = Серйозні травми, але допомогу можна ненадовго відкласти.
+health-analyzer-window-triage-status-Immediate = Негайний
+    .ToolTip = Потрібні негайна допомога та евакуація для порятунку життя.
+health-analyzer-window-triage-status-Expectant = Безнадійний
+    .ToolTip = Пацієнт має дуже низькі шанси вижити або вже помер.

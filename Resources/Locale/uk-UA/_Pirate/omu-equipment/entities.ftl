@@ -215,9 +215,6 @@ ent-BodyBagBluespaceBSOFolded = блюспейс-мішок для тіл
 ent-ClothingBeltChemBagBSO = медична сумка синього щита
     .desc = Міцна медична сумка для офіцерів синього щита, які віддають перевагу хімічним засобам лікування.
 
-ent-ClothingNeckWardenParryCloak = дуельний плащ охорони
-    .desc = Темно-синій плащ із вбудованими піхвами. Чудово підходить для театральних жестів перед ув'язненими.
-
 ent-ClothingNeckSecurityParryCloak = { ent-ClothingNeckWardenParryCloak }
     .desc = { ent-ClothingNeckWardenParryCloak.desc }
 

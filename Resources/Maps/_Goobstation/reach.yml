@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 05/10/2025 18:05:18
-  entityCount: 2525
+  entityCount: 2526
 maps:
 - 1
 grids:
@@ -14058,6 +14058,14 @@ entities:
     components:
     - type: Transform
       pos: -2.5,15.5
+      parent: 2
+# Pirate: genetics joins the existing science spawn area.
+- proto: SpawnPointGeneticist
+  entities:
+  - uid: 2526
+    components:
+    - type: Transform
+      pos: -2.5,8.5
       parent: 2
 - proto: SpawnPointScientist
   entities:
