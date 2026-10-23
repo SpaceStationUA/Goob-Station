@@ -258,12 +258,13 @@ public sealed partial class PolymorphSystem : EntitySystem
         }
         var child = Spawn(proto, _transform.GetMapCoordinates(uid, targetTransformComp), rotation: _transform.GetWorldRotation(uid));
 
-        if (configuration.AllowMovement
+        if (configuration.MakeSentient && configuration.AllowMovement // Pirate: keep thrown organs dynamic.
             && TryComp<PhysicsComponent>(child, out var childPhysics)
             && childPhysics.BodyType is not (Robust.Shared.Physics.BodyType.KinematicController or Robust.Shared.Physics.BodyType.Kinematic))
             _physics.SetBodyType(child, Robust.Shared.Physics.BodyType.KinematicController, body: childPhysics);
 
-        _mindSystem.MakeSentient(child, configuration.AllowMovement);
+        if (configuration.MakeSentient) // Pirate: tongue projectiles are organs, not sentient mobs.
+            _mindSystem.MakeSentient(child, configuration.AllowMovement);
         // Goob edit end
 
         var polymorphedComp = Factory.GetComponent<PolymorphedEntityComponent>();
@@ -375,7 +376,8 @@ public sealed partial class PolymorphSystem : EntitySystem
         {
             // Goob edit start
             _metaData.SetEntityName(child,
-                TryComp(uid, out NameModifierComponent? modifier) ? modifier.BaseName : targetMeta.EntityName);
+                configuration.StripNameModifier && TryComp(uid, out NameModifierComponent? modifier)
+                    ? modifier.BaseName : targetMeta.EntityName); // Pirate: preserve genetics name modifiers.
             // Goob edit end
         }
 

@@ -5,6 +5,7 @@
   playTimeTracker: JobNanotrasenCareerTrainer
   requirements: # Pirate: command flavor gate
   - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
+    minLength: 500 # Pirate: whitelist flavor minimum
   goobcoins: 45
   weight: 20
   startingGear: NanotrasenCareerTrainerGear

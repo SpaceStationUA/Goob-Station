@@ -4,6 +4,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 <controls:FancyWindow
     xmlns="https://spacestation14.io"
+    xmlns:triage="clr-namespace:Content.Client._Pirate.Triage"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
     MinWidth="800"
@@ -34,6 +35,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 HorizontalExpand="True"
                 StyleClasses="OpenLeft"/>
         </BoxContainer>
+        <triage:MedicalTriageControl Name="Triage" Access="Public"/> <!-- Pirate: Delta-V medical triage -->
         <PanelContainer StyleClasses="LowDivider"/>
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <ScrollContainer

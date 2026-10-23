@@ -45,7 +45,7 @@
 - type: loadout
   id: AtmosphericTechnicianUtilityBelt
   equipment:
-    belt: ClothingBeltUtilityEngineering # Pirate: atmos belt loadout fix
+    belt: ClothingBeltUtilityEngineering
 
 - type: loadout
   id: AtmosphericTechnicianAtmosBelt
@@ -53,4 +53,4 @@
   - !type:GroupLoadoutEffect
     proto: SeniorAtmos
   equipment:
-    belt: ClothingBeltUtilityAtmosFilled # Pirate: atmos belt loadout fix
+    belt: ClothingBeltUtilityAtmosFilled

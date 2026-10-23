@@ -50,6 +50,7 @@
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 5 ]
+            Geneticist: [ 1, 1 ] # Pirate: Trauma genetics
             ForensicMantis: [ 1, 1 ]
             ResearchAssistant: [ 4, 4 ]
             Roboticist: [ 2, 2 ]

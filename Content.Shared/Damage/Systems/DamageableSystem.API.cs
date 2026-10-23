@@ -172,6 +172,12 @@ public sealed partial class DamageableSystem
         if (damage.Empty)
             return damageDone;
 
+        // Pirate: wounds can remain after stored damage reaches zero, including on a body's limbs.
+        if (IsNoOpHeal(ent.Comp, damage)
+            && !_woundableQuery.HasComp(ent)
+            && (!_bodyQuery.TryComp(ent, out var healBody) || healBody.BodyType != BodyType.Complex))
+            return damageDone;
+
         var before = new BeforeDamageChangedEvent(damage, origin, canBeCancelled, targetPart, OriginFlag: originFlag); // Pirate
         RaiseLocalEvent(ent, ref before);
 

@@ -516,4 +516,5 @@ public enum LogType
     SiliconLaws = 10005, // Goobstation
 
     Paint = 10006, // Goobstation
+    Genetics = 11000, // Pirate: genetics console and injector interactions.
 }

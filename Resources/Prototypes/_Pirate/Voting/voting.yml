@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: pirateVoting
+  id: Default
+  # Maximum number of options in ballot 2. Set to 1 to use one ballot.
+  finalistCount: 3
+  # Vote fractions subtracted for valid rounds, from the most recent to the oldest.
+  # If a mode occurs twice, only its most recent occurrence applies.
+  modePenalties:
+    SecretSalt: [0.75, 0.50, 0.25] # Redshift
+    PirateGreenshift: [0.50, 0.25]

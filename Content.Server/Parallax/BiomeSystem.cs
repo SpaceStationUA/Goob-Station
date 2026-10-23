@@ -477,6 +477,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
     }
 
+    /// <summary>
+    /// Goes through all marker chunks that haven't been calculated, then calculates what spawns there are and
+    /// allocates them to the relevant actual chunks in the biome (marker chunks may be many times larger than biome chunks).
+    /// </summary>
     private void BuildMarkerChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, int seed)
     {
         var markers = _markerChunks[component];
@@ -490,6 +494,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             var localIdx = idx;
 
             #region Pirate: performance
+            // Start the parallel loop only for the chunks that still need markers.
             _pendingMarkerChunks.Clear();
             loadedMarkers.TryGetValue(layer, out var builtChunks);
             foreach (var chunk in chunks)
@@ -911,25 +916,15 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     {
         var active = _activeChunks[component];
         List<(Vector2i, Tile)>? tiles = null;
-        TryComp<_Lavaland.Biome.BiomeOptimizeComponent>(gridUid, out var optimize); // Pirate: performance
+        TryComp<_Lavaland.Biome.BiomeOptimizeComponent>(gridUid, out var optimize); // Lavaland Change
 
         foreach (var chunk in component.LoadedChunks)
         {
-            // Pirate: Active chunks cannot unload, so skip the lifecycle event as well.
             if (active.Contains(chunk))
                 continue;
 
-            #region Pirate: performance
-            // BiomeOptimize cancels unloads for its preloaded chunks.
+            // Lavaland Change start: preloaded chunks never unload
             if (optimize != null && optimize.LoadedChunks.Contains(chunk))
-                continue;
-            #endregion
-
-            // Lavaland Change start: optimization real
-            var ev = new _Lavaland.Procedural.UnLoadChunkEvent(chunk);
-            RaiseLocalEvent(gridUid, ref ev);
-
-            if (ev.Cancelled)
                 continue;
             // Lavaland Change end
 

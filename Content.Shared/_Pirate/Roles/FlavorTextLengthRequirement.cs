@@ -17,6 +17,9 @@ namespace Content.Shared._Pirate.Roles;
 [Serializable, NetSerializable]
 public sealed partial class FlavorTextLengthRequirement : JobRequirement
 {
+    [DataField]
+    public int? MinLength;
+
     public override bool Check(IEntityManager entManager,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
@@ -26,7 +29,7 @@ public sealed partial class FlavorTextLengthRequirement : JobRequirement
         reason = null;
 
         var cfg = IoCManager.Resolve<IConfigurationManager>();
-        var minLength = cfg.GetCVar(PirateVars.CommandFlavorTextMinLength);
+        var minLength = MinLength ?? cfg.GetCVar(PirateVars.CommandFlavorTextMinLength);
 
         // Flavor text must be enabled before players can write a description.
         if (minLength <= 0 || !cfg.GetCVar(UpstreamCVars.FlavorText))

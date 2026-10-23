@@ -43,6 +43,7 @@ using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Body.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ; // Goobstation
 using Content.Shared.Chemistry.Components;
 using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.EntityEffects.Effects.Solution;
@@ -195,21 +196,26 @@ public sealed class NPCUtilitySystem : EntitySystem
         {
             case FoodValueCon:
             {
+                // do we have a mouth available? Is the food item opened?
                 if (!_ingestion.CanConsume(owner, targetUid))
                     return 0f;
 
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
 
+                // only eat when hungry or if it will eat anything
                 if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay &&
                     avoidBadFood)
                     return 0f;
 
-                FoodUtilityParams? food = null; // Pirate: performance
-                if (avoidBadFood && (HasComp<BadFoodComponent>(targetUid) ||
-                                     (food ??= TotalFoodUtilityConditioned(targetUid, owner)).IsToxic)) // Goobstation edit // Pirate: performance
+                // no mouse don't eat the uranium-235
+                if (avoidBadFood && HasComp<BadFoodComponent>(targetUid)) // Goobstation edit
                     return 0f;
 
-                var nutrition = (food ??= TotalFoodUtilityConditioned(targetUid, owner)).TotalNutrition; // Goobstation edit // Pirate: performance
+                var foodUtility = TotalFoodUtilityConditioned(targetUid, owner); // Goobstation edit
+                if (avoidBadFood && foodUtility.IsToxic) // Goobstation edit
+                    return 0f;
+
+                var nutrition = foodUtility.TotalNutrition; // Goobstation edit
                 if (nutrition <= 0.0f)
                     return 0f;
 
@@ -217,20 +223,27 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case DrinkValueCon:
             {
+                // can't drink closed drinks and can't drink with a mask on...
                 if (!_ingestion.CanConsume(owner, targetUid))
                     return 0f;
 
+                // only drink when thirsty
                 if (TryComp<ThirstComponent>(owner, out var thirst) &&
                     thirst.CurrentThirstThreshold > ThirstThreshold.Okay)
                     return 0f;
 
-                FoodUtilityParams? drink = null; // Pirate: performance
-                if (HasComp<BadDrinkComponent>(targetUid) ||
-                    (drink ??= TotalFoodUtilityConditioned(targetUid, owner)).IsToxic) // Goobstation edit // Pirate: performance
+                // no janicow don't drink the blood puddle
+                if (HasComp<BadDrinkComponent>(targetUid)) // Goobstation edit
                     return 0f;
 
-                // Pirate: performance - All current drinks are expected to be metabolizable.
-                var hydration = (drink ??= TotalFoodUtilityConditioned(targetUid, owner)).TotalHydration; // Goobstation edit // Pirate: performance
+                var drinkUtility = TotalFoodUtilityConditioned(targetUid, owner); // Goobstation edit
+                if (drinkUtility.IsToxic) // Goobstation edit
+                    return 0f;
+
+                // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
+                // We don't check if the solution is metabolizable cause all drinks should be currently.
+                // If that changes then simply use the other overflow.
+                var hydration = drinkUtility.TotalHydration; // Goobstation edit
                 if (hydration <= 1.0f)
                     return 0f;
 
@@ -632,6 +645,12 @@ public sealed class NPCUtilitySystem : EntitySystem
     }
 
     // Goobstation start
+    /// <summary>
+    /// Gets the total metabolizable nutrition, hydration and toxicity from an ingested entity recursively, may return lesser numbers with cyclic metabolism graphs.
+    /// </summary>
+    /// <param name="consumer">The consumer entity</param>
+    /// <param name="ingestable">The consumed entity</param>
+    /// <returns>The amount of nutrition the consumable is worth</returns>
     private FoodUtilityParams TotalFoodUtilityConditioned(Entity<EdibleComponent?> ingestable, EntityUid consumer)
     {
         var utilityParams = new FoodUtilityParams(0f, 0f, false);
@@ -644,16 +663,12 @@ public sealed class NPCUtilitySystem : EntitySystem
         Queue<ReagentQuantity> queue = [];
         HashSet<ReagentPrototype> alreadychecked = [];
 
+        List<Entity<MetabolizerComponent, OrganComponent>>? metabolizers = null;
+        if (HasComp<BodyComponent>(consumer))
+            _body.TryGetBodyOrganEntityComps(consumer, out metabolizers);
+
         foreach (var quantity in solution.Contents)
             queue.Enqueue(quantity);
-
-        #region Pirate: performance
-        // Cache organs; this check does not change them.
-        var metabolizers = HasComp<BodyComponent>(consumer)
-                           && _body.TryGetBodyOrganEntityComps<MetabolizerComponent>(consumer, out var organs)
-            ? organs
-            : null;
-        #endregion
 
         while (queue.Count > 0) // Pirate: performance
         {
@@ -669,7 +684,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             foreach (var (metabolism, entry) in reagent.Metabolisms)
             {
                 #region Pirate: performance
-                // Resolve one organ per metabolism group.
+                // The metabolizing organ depends only on the metabolism group, so find it once for all effects.
                 Entity<MetabolizerComponent>? metabolizingOrgan = null;
                 if (metabolizers != null)
                 {

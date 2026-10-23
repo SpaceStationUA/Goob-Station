@@ -166,6 +166,10 @@ public sealed partial class ActionComponent : Component
     [DataField, AutoNetworkedField]
     public bool RaiseOnUser;
 
+    // Pirate: Trauma mutations keep their ability components on the action entity.
+    [DataField, AutoNetworkedField]
+    public bool RaiseOnAction;
+
     /// <summary>
     ///     Whether or not to automatically add this action to the action bar when it becomes available.
     /// </summary>

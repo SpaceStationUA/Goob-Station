@@ -454,7 +454,7 @@
   dummyEntity: PirateLoadoutDummyRandomBook
   storage:
     back:
-    - BookRandom
+    - BookRandomPersistent # Pirate: persistent text (diary)
 
 - type: loadout
   id: LoadoutHandLabeler

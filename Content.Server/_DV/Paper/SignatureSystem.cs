@@ -5,6 +5,7 @@ using Content.Goobstation.Shared.Devil;
 using Content.Server.Access.Systems;
 using Content.Server.Popups;
 using Content.Shared.Paper;
+using Content.Shared._Pirate.Paper; // Pirate: persistent diary pages
 using Content.Server.Paper;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
@@ -77,7 +78,14 @@ public sealed class SignatureSystem : EntitySystem
             StampedColor = Color.DarkSlateGray, //TODO Make this configurable depending on the pen.
         };
 
-        if (!comp.StampedBy.Contains(stampInfo) && _paper.TryStamp(paper, stampInfo, SignatureStampState))
+        // Pirate: persistent diary pages - a paginated document only signs the leaf the reader
+        // is looking at. Those signatures never fill Paper.StampedBy, so unlike a stamp they
+        // cannot lock the diary forever (and signing a leaf twice counts as a failure).
+        var signed = TryComp<PaperPagesComponent>(paper, out var pages)
+            ? _paper.SignPage(paper, pages, signatureName)
+            : !comp.StampedBy.Contains(stampInfo) && _paper.TryStamp(paper, stampInfo, SignatureStampState);
+
+        if (signed)
         {
             // Show popups and play a paper writing sound
             if (!HasComp<DevilComponent>(signer)) // Goobstation - Don't display popups for devils, it covers the others.

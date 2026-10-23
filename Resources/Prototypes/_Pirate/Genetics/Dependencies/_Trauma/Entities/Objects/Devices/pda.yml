@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BasePDA
+  id: GeneticistPDA
+  name: geneticist PDA
+  description: Unfortunately, this PDA does not come with a free sample of Hulk DNA.
+  components:
+  - type: Icon
+    state: pda-genetics
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType: !type:String
+       pda-genetics
+  - type: Pda
+    id: GeneticistIDCard
+  - type: PdaBorderColor
+    borderColor: "#FAFAFA"
+    accentVColor: "#0097CA"

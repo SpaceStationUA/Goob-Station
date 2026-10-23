@@ -27,9 +27,12 @@ public sealed class ActionGunSystem : EntitySystem
         if (string.IsNullOrEmpty(ent.Comp.Action))
             return;
 
-        _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
-        // Pirate: keep firing and recharge sounds at the owner's position.
+        if (!_actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action))
+            return;
+
+        // Pirate: keep firing and recharge sounds attached to the owner; Gun is networked for prediction.
         ent.Comp.Gun = SpawnAttachedTo(ent.Comp.GunProto, new EntityCoordinates(ent, Vector2.Zero));
+        Dirty(ent);
     }
 
     private void OnShutdown(Entity<ActionGunComponent> ent, ref ComponentShutdown args)
@@ -37,13 +40,13 @@ public sealed class ActionGunSystem : EntitySystem
         if (ent.Comp.ActionEntity is { } action)
         {
             _actions.RemoveAction(action);
-            QueueDel(action);
+            PredictedQueueDel(action);
             ent.Comp.ActionEntity = null;
         }
 
         if (ent.Comp.Gun is { } gun)
         {
-            QueueDel(gun);
+            PredictedQueueDel(gun); // Trauma - predicted
             ent.Comp.Gun = null;
         }
     }
