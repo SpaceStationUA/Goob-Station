@@ -31,6 +31,13 @@ public sealed partial class EffectsMutationComponent : Component
     public EntityEffect[] Removed = [];
 
     /// <summary>
+    /// Optional cleanup for transfers and other automatic removals, without a manual cure's side effects.
+    /// Local polymorphs restore the old anatomy before applying the mutation to a new body.
+    /// </summary>
+    [DataField]
+    public EntityEffect[]? AutomaticRemoved;
+
+    /// <summary>
     /// If true, doesn't run effects for automatic mutation adding/removing (polymorph).
     /// </summary>
     [DataField]

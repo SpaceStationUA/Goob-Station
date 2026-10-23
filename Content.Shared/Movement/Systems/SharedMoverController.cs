@@ -597,10 +597,6 @@ public abstract partial class SharedMoverController : VirtualController
     {
         sound = null;
 
-        // Pirate: mutation walking effects use the same step cadence as movement.
-        var geneticsStep = new Content.Pirate.Common.Genetics.Movement.FootStepEvent(uid, _transform.GetWorldRotation(uid));
-        RaiseLocalEvent(uid, ref geneticsStep);
-
         if (!CanSound() || !_tags.HasTag(uid, FootstepSoundTag))
             return false;
 
@@ -638,6 +634,10 @@ public abstract partial class SharedMoverController : VirtualController
         RaiseLocalEvent(uid, ref movementSoundEv); // Pirate: gear step sounds
 
         mobMover.StepSoundDistance -= distanceNeeded;
+
+        // Pirate: mutation walking effects run once per completed step, including silent footsteps.
+        var geneticsStep = new Content.Pirate.Common.Genetics.Movement.FootStepEvent(uid, _transform.GetWorldRotation(uid));
+        RaiseLocalEvent(uid, ref geneticsStep);
 
         // Pirate: wetness - worn wet shoes replace the footstep sound, routed through this same path
         // so it plays at the normal step cadence/volume instead of as an extra overlapping sound.

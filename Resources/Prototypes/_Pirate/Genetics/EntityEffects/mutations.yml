@@ -194,6 +194,35 @@
 - type: entityEffect
   id: MutationAddHead
   effects:
+  - !type:NestedEffect
+    proto: MutationRegrowHead
+  - !type:RelayBodyParts
+    partType: Head
+    effects:
+    - !type:HealthChange
+      damage:
+        types:
+          Blunt: 50
+  - !type:NestedEffect
+    proto: MutationRestoreHeadOrgans
+  - !type:PopupMessage
+    type: Pvs
+    visualType: Medium
+    messages:
+    - entity-effect-popup-head-regrown
+
+# Pirate: automatic transfers restore anatomy without applying the manual cure's damage.
+- type: entityEffect
+  id: MutationRestoreHead
+  effects:
+  - !type:NestedEffect
+    proto: MutationRegrowHead
+  - !type:NestedEffect
+    proto: MutationRestoreHeadOrgans
+
+- type: entityEffect
+  id: MutationRegrowHead
+  effects:
   - !type:RelayBodyParts
     partType: Chest # Pirate: local body-part type
     effects:
@@ -202,13 +231,10 @@
     - !type:RegenerateOrgan
       slot: Head
       recursive: false # don't spawn new organs for it, they're being moved back in
-  - !type:RelayBodyParts
-    partType: Head
-    effects:
-    - !type:HealthChange
-      damage:
-        types:
-          Blunt: 50
+
+- type: entityEffect
+  id: MutationRestoreHeadOrgans
+  effects:
   - !type:MoveOrgan
     organ: Brain
     dest: Head
@@ -233,11 +259,6 @@
     - !type:RemoveOrganSlot
       slot: Ears
   - !type:SetStanding # Debrained gets added for a moment which downs them, undo that
-  - !type:PopupMessage
-    type: Pvs
-    visualType: Medium
-    messages:
-    - entity-effect-popup-head-regrown
 
 - type: entityEffect
   id: MutationElvisDance

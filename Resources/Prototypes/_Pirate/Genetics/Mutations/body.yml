@@ -406,7 +406,7 @@
     instability: -40
     difficulty: 12
   - type: EffectsMutation
-    ignoreAutomatic: true # shapeshift system will handle the organs and parts being mirrored
+    # Pirate: local polymorphs create default anatomy. Restore the old body and mutate the new one.
     added:
     - !type:NestedEffect
       conditions:
@@ -421,6 +421,13 @@
         organ: Brain
         partType: Chest # Pirate: local body-part type
       proto: MutationAddHead
+    automaticRemoved:
+    - !type:NestedEffect
+      conditions:
+      - !type:HasOrganSlot
+        organ: Brain
+        partType: Chest
+      proto: MutationRestoreHead
 
 # Peak of powergaming technology
 

@@ -4,7 +4,7 @@
   parent: MobStatusEffectBase
   id: StatusEffectPressureImmunityMutation
   components:
-  - type: GrantComponentsStatusEffect
+  - type: GeneticsComponentStatusEffect
     components:
     - type: PressureImmunity
     - type: SpecialPressureImmunity # Pirate: local barotrauma immunity.
@@ -13,7 +13,7 @@
   parent: MobStatusEffectBase
   id: StatusEffectMutedMutation
   components:
-  - type: GrantComponentsStatusEffect
+  - type: GeneticsComponentStatusEffect
     components:
     - type: Muted
   - type: StatusEffectAlert
@@ -23,7 +23,7 @@
   parent: MobStatusEffectBase
   id: StatusEffectClumsyMutation
   components:
-  - type: GrantComponentsStatusEffect
+  - type: GeneticsComponentStatusEffect
     components:
     - type: Clumsy
       catchingFailDamage:
@@ -39,7 +39,7 @@
   parent: MobStatusEffectBase
   id: StatusEffectBlurryVision
   components:
-  - type: GrantComponentsStatusEffect
+  - type: GeneticsComponentStatusEffect
     components:
     - type: BlurryVision
 
@@ -53,6 +53,6 @@
       - MobState
       - Blindable
       requireAll: true
-  - type: GrantComponentsStatusEffect
+  - type: GeneticsComponentStatusEffect
     components:
     - type: TemporaryBlindness

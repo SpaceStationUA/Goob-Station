@@ -35,6 +35,7 @@ public sealed partial class EffectsMutationSystem : EntitySystem
         if (args.Automatic && ent.Comp.IgnoreAutomatic)
             return;
 
-        _effects.ApplyEffects(args.Target, ent.Comp.Removed, user: args.User);
+        var effects = args.Automatic ? ent.Comp.AutomaticRemoved ?? ent.Comp.Removed : ent.Comp.Removed;
+        _effects.ApplyEffects(args.Target, effects, user: args.User);
     }
 }

@@ -19,7 +19,9 @@ public sealed class ComponentMutationSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ComponentMutationComponent, MutationAddedEvent>(OnAdded);
+        // Upgrades must release the old mutation's components before taking ownership of replacements.
+        SubscribeLocalEvent<ComponentMutationComponent, MutationAddedEvent>(OnAdded,
+            after: new[] { typeof(RemovesMutationSystem) });
         SubscribeLocalEvent<ComponentMutationComponent, MutationRemovedEvent>(OnRemoved);
     }
 

@@ -40,7 +40,8 @@ public sealed partial class ScannedGenomeSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnMutationAdded(Entity<ScannedGenomeComponent> ent, ref MutationAddedEvent args)
     {
-        if (ent.Owner != args.Target.Owner || args.Automatic)
+        // A mutation can polymorph its host before the original body's notification is raised.
+        if (ent.Owner != args.Target.Owner || args.Automatic || args.Mutation.Comp.Target != ent.Owner)
             return;
 
         // new mutation added to an already scanned subject, create a sequence for it
@@ -143,20 +144,21 @@ public sealed partial class ScannedGenomeSystem : EntitySystem
         while (difficulty > 0)
         {
             var pair = _random.Next(0, MutationData.PairCount);
-            var i = pair * 2;
+            // The two strands are concatenated, so complements are PairCount bases apart.
+            var complement = pair + MutationData.PairCount;
             // cant X out a whole pair if theres only 1 difficulty left
             if (difficulty >= 2 && _random.Prob(pairChance))
             {
-                TryX(i);
-                TryX(i + 1);
+                TryX(pair);
+                TryX(complement);
             }
             else if (_random.Prob(0.5f))
             {
-                TryX(i);
+                TryX(pair);
             }
             else
             {
-                TryX(i + 1);
+                TryX(complement);
             }
         }
         var bases = _builder.ToString();
