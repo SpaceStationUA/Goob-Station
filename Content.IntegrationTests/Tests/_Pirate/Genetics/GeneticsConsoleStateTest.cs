@@ -11,6 +11,7 @@ using Content.Pirate.Shared.Genetics.Mutations;
 using Content.Server.Medical;
 using Content.Server.Medical.Components;
 using Content.Server.Power.Components;
+using Content.Shared._Shitmed.DoAfter;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Tag;
@@ -153,9 +154,13 @@ public sealed class GeneticsConsoleStateTest
                     : new GeneticsConsoleSequenceMessage(0);
                 message.Actor = user;
                 message.UiKey = GeneticsConsoleUiKey.Key;
+                // Body and skill modifiers also scale the configured console duration.
+                var modifier = new GetDoAfterDelayMultiplierEvent();
+                entities.EventBus.RaiseLocalEvent(user, modifier);
+                var expectedDelay = (combine ? comp.CombineDelay : comp.SequenceDelay) * modifier.Multiplier;
                 entities.EventBus.RaiseLocalEvent(scanner.Console, (object) message);
                 pending = entities.GetComponent<DoAfterComponent>(user).DoAfters.Values.Single();
-                Assert.That(pending.Args.Delay, Is.EqualTo(combine ? comp.CombineDelay : comp.SequenceDelay));
+                Assert.That(pending.Args.Delay, Is.EqualTo(expectedDelay));
                 Assert.That(pending.Args.Target, Is.EqualTo(scanner.Console));
                 Assert.That(entities.GetComponent<GeneticsScannerComponent>(scanner.Console).Busy, Is.True);
                 server.System<MedicalScannerSystem>().EjectBody(scanner.Scanner,
