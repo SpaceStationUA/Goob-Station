@@ -2,8 +2,4 @@
 
 - type: entityCondition
   id: IsAwake
-  condition: !type:WhitelistCondition
-    whitelist:
-      components:
-      - AwakeMob
-    guidebookText: entity-condition-guidebook-is-awake
+  condition: !type:AwakeCondition # Pirate: local mob state and sleeping component replace AwakeMob.

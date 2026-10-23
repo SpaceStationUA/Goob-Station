@@ -22,7 +22,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: # Pirate: local ballistic damage type 30 # bit stronger than a spear considering the reload process
+        Piercing: 30 # Pirate: local ballistic damage type; donor damage preserved.
   - type: TriggerOnLand
   - type: EntityEffectOnTrigger
     effects:
@@ -39,5 +39,5 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Piercing: # Pirate: local ballistic damage type 5 # it's more of a utility
+        Piercing: 5 # Pirate: local ballistic damage type; donor damage preserved.
   - type: ChemTransferProjectile

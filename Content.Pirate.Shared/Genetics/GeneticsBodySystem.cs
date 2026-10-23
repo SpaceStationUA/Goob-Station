@@ -6,8 +6,6 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
 using Content.Shared.Humanoid;
-using Content.Pirate.Shared.Genetics.Mutations;
-using Robust.Shared.Network;
 using Robust.Shared.Containers;
 
 namespace Content.Pirate.Shared.Genetics;
@@ -20,14 +18,12 @@ public sealed partial class GeneticsBodySystem : EntitySystem
 {
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     // Pirate: local bodies have no tongue slots. Supply the donor organ for genetics,
     // before default mutations are activated, without replacing the body implementation.
-    [SubscribeLocalEvent(after: [typeof(SharedBodySystem)], before: [typeof(MutationSystem)])]
-    private void OnMapInit(Entity<MutatableComponent> ent, ref MapInitEvent args)
+    public void InitializeTongue(EntityUid ent)
     {
-        if (_net.IsClient || GetOrgan(ent, "Head") is not {} head || GetOrgan(ent, "Tongue") != null)
+        if (GetOrgan(ent, "Head") is not {} head || GetOrgan(ent, "Tongue") != null)
             return;
         _body.TryCreateOrganSlot(head, "tongue", out _);
         var reptilian = TryComp<HumanoidAppearanceComponent>(ent, out var appearance) &&

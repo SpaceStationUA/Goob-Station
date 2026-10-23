@@ -32,6 +32,7 @@ namespace Content.Pirate.Shared.Genetics.Mutations;
 public sealed partial class MutationSystem : CommonMutationSystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private GeneticsBodySystem _geneticsBody = default!; // Pirate: local tongue slots.
     [Dependency] private INetManager _net = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MobStateSystem _mob = default!;
@@ -95,6 +96,7 @@ public sealed partial class MutationSystem : CommonMutationSystem
         if (_net.IsClient) // no rolling stuff
             return;
 
+        _geneticsBody.InitializeTongue(ent); // Pirate: initialize organs before default mutations.
         AddRandomDormant(ent); // give random dormant mutations
 
         if (ent.Comp.Mutations.Count == 0)
