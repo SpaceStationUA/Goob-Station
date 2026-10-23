@@ -153,7 +153,7 @@ public sealed class MedicalTriageTest
             triage.SetStatus(expiredKey, new MedicalRecord
             {
                 Status = status, ClaimedName = "Doctor Ada",
-                LastUpdated = timing.CurTime - TimeSpan.FromMinutes(5) + TimeSpan.FromMilliseconds(1)
+                LastUpdated = timing.CurTime - TimeSpan.FromMinutes(5) + TimeSpan.FromSeconds(1)
             });
             triage.SetStatus(freshKey, new MedicalRecord
             {
@@ -161,6 +161,8 @@ public sealed class MedicalTriageTest
             });
             Assert.That(entities.HasComponent<MedicalRecordComponent>(expiredPatient), Is.True);
             Assert.That(entities.HasComponent<MedicalRecordComponent>(freshPatient), Is.True);
+            // The HUD must also expire after a patient's visible identity stops matching the record.
+            server.System<MetaDataSystem>().SetEntityName(expiredPatient, "Renamed triage patient");
         });
 
         await pair.RunTicksSync(60); // Let the server expire the record without accessing it through an analyzer.

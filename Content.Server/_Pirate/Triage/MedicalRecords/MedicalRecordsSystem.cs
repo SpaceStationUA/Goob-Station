@@ -49,6 +49,14 @@ public sealed class MedicalRecordsSystem : SharedMedicalRecordsSystem
         // Update the station records and HUD together, after enumerating the record tables.
         foreach (var (key, record) in _expiredRecords)
             SetStatus(key, ClearExpired(record));
+
+        // A renamed or disguised patient may no longer match the station record's identity.
+        var hudQuery = EntityQueryEnumerator<MedicalRecordComponent>();
+        while (hudQuery.MoveNext(out var uid, out var hud))
+        {
+            if (IsExpired(hud.Record))
+                RemComp<MedicalRecordComponent>(uid);
+        }
     }
 
     private bool IsExpired(MedicalRecord record)
