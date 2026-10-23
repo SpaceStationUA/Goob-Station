@@ -165,7 +165,8 @@ public sealed class MedicalTriageTest
             server.System<MetaDataSystem>().SetEntityName(expiredPatient, "Renamed triage patient");
         });
 
-        await pair.RunTicksSync(60); // Let the server expire the record without accessing it through an analyzer.
+        // Cross the one-second deadline and the following periodic check at any configured tick rate.
+        await pair.RunSeconds(3); // No analyzer access may be needed to expire the record.
         await server.WaitAssertion(() =>
         {
             Assert.That(records.TryGetRecord<MedicalRecord>(expiredKey, out var expired), Is.True);
