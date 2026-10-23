@@ -125,19 +125,24 @@ public sealed class GeneticsConsoleStateTest
         var server = pair.Server;
         var entities = server.EntMan;
         var map = await pair.CreateTestMap();
-        await server.WaitAssertion(() =>
+        (EntityUid Console, EntityUid Patient, EntityUid Scanner) scanner = default;
+        EntityUid user = default;
+        MutationData data = null;
+        var discovered = false;
+        Content.Shared.DoAfter.DoAfter pending = null;
+        try
         {
-            var scanner = CreateScanner(entities, map.GridCoords, "MutationDwarfism");
-            var user = entities.SpawnEntity("MobHuman", map.GridCoords);
-            var comp = entities.GetComponent<GeneticsConsoleComponent>(scanner.Console);
-#pragma warning disable RA0002 // Set deliberately different configured operation durations.
-            comp.SequenceDelay = TimeSpan.FromSeconds(7);
-            comp.CombineDelay = TimeSpan.FromSeconds(13);
-#pragma warning restore RA0002
-            var data = server.System<MutationSystem>().GetRoundData("MutationDwarfism")!;
-            var discovered = data.Discovered;
-            try
+            await server.WaitAssertion(() =>
             {
+                scanner = CreateScanner(entities, map.GridCoords, "MutationDwarfism");
+                user = entities.SpawnEntity("MobHuman", map.GridCoords);
+                var comp = entities.GetComponent<GeneticsConsoleComponent>(scanner.Console);
+#pragma warning disable RA0002 // Set deliberately different configured operation durations.
+                comp.SequenceDelay = TimeSpan.FromSeconds(7);
+                comp.CombineDelay = TimeSpan.FromSeconds(13);
+#pragma warning restore RA0002
+                data = server.System<MutationSystem>().GetRoundData("MutationDwarfism")!;
+                discovered = data.Discovered;
                 data.Discovered = false;
                 var disk = entities.SpawnEntity("GeneticsDisk", map.GridCoords);
                 server.System<GeneticsDiskSystem>().SetMutation((disk, entities.GetComponent<GeneticsDiskComponent>(disk)), "MutationStimmed");
@@ -149,18 +154,34 @@ public sealed class GeneticsConsoleStateTest
                 message.Actor = user;
                 message.UiKey = GeneticsConsoleUiKey.Key;
                 entities.EventBus.RaiseLocalEvent(scanner.Console, (object) message);
-                var pending = entities.GetComponent<DoAfterComponent>(user).DoAfters.Values.Single();
+                pending = entities.GetComponent<DoAfterComponent>(user).DoAfters.Values.Single();
                 Assert.That(pending.Args.Delay, Is.EqualTo(combine ? comp.CombineDelay : comp.SequenceDelay));
+                Assert.That(pending.Args.Target, Is.EqualTo(scanner.Console));
                 Assert.That(entities.GetComponent<GeneticsScannerComponent>(scanner.Console).Busy, Is.True);
-                server.System<SharedDoAfterSystem>().Cancel(pending.Id);
-            }
-            finally
+                server.System<MedicalScannerSystem>().EjectBody(scanner.Scanner,
+                    entities.GetComponent<MedicalScannerComponent>(scanner.Scanner));
+            });
+            await pair.RunTicksSync(2);
+            await server.WaitAssertion(() =>
             {
-                data.Discovered = discovered;
+                Assert.That(pending.Cancelled, Is.True, "Removing the patient must cancel console operations.");
+                Assert.That(entities.GetComponent<GeneticsScannerComponent>(scanner.Console).Busy, Is.False);
+                Assert.That(data.Discovered, Is.False);
+            });
+        }
+        finally
+        {
+            await server.WaitAssertion(() =>
+            {
+                if (data != null)
+                    data.Discovered = discovered;
                 foreach (var uid in new[] { scanner.Console, scanner.Scanner, scanner.Patient, user })
-                    entities.DeleteEntity(uid);
-            }
-        });
+                {
+                    if (entities.EntityExists(uid))
+                        entities.DeleteEntity(uid);
+                }
+            });
+        }
         await pair.CleanReturnAsync();
     }
 

@@ -73,7 +73,8 @@ public sealed partial class GeneticsConsoleSystem
             ent.Comp.ScanDelay,
             new ScanDoAfterEvent(GetNetEntity(mob)),
             eventTarget: ent,
-            target: mob,
+            // Pirate: a console operator cannot directly access the patient inside a closed scanner.
+            target: HasComp<GeneticsConsoleComponent>(ent) ? ent.Owner : mob,
             used: ent)
         {
             BreakOnMove = true,

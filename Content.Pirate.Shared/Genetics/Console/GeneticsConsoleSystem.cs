@@ -154,7 +154,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
             ent.Comp.SequenceDelay,
             new SequenceDoAfterEvent(GetNetEntity(mob), args.Index),
             eventTarget: ent,
-            target: mob,
+            target: ent, // Pirate: interact with the console, not its enclosed patient.
             used: ent)
         {
             BreakOnMove = true,
@@ -253,7 +253,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
             ent.Comp.CombineDelay,
             new CombineDoAfterEvent(GetNetEntity(mob), args.Index),
             eventTarget: ent,
-            target: mob,
+            target: ent, // Pirate: interact with the console, not its enclosed patient.
             used: ent)
         {
             BreakOnMove = true,

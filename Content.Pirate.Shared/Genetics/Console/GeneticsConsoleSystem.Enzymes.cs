@@ -65,7 +65,7 @@ public sealed partial class GeneticsConsoleSystem
             ent.Comp.ApplyDuration,
             new ApplyEnzymesDoAfterEvent(GetNetEntity(mob)),
             eventTarget: ent,
-            target: mob,
+            target: ent, // Pirate: interact with the console, not its enclosed patient.
             used: ent)
         {
             BreakOnMove = true,
