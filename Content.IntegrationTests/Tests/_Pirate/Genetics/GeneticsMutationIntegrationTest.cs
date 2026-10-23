@@ -9,6 +9,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Temperature.Components;
 using Content.Shared.StatusEffectNew;
+using Content.Pirate.Common.Bloodstream;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -18,6 +19,30 @@ namespace Content.IntegrationTests.Tests._Pirate.Genetics;
 [TestFixture]
 public sealed class GeneticsMutationIntegrationTest
 {
+    [Test]
+    public async Task HypermetabolicBloodModifiersApplyOnlyWhileTheMutationIsPresent()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var mutations = server.System<MutationSystem>();
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var human = entities.SpawnEntity("MobHuman", map.GridCoords);
+            Assert.That(mutations.AddMutation(human, "MutationHypermetabolicBlood"), Is.True);
+            var regeneration = new BloodRegenerationModifierEvent(2);
+            entities.EventBus.RaiseLocalEvent(human, ref regeneration);
+            Assert.That(regeneration.Amount, Is.EqualTo(12));
+            Assert.That(mutations.RemoveMutation(human, "MutationHypermetabolicBlood"), Is.True);
+            regeneration = new BloodRegenerationModifierEvent(2);
+            entities.EventBus.RaiseLocalEvent(human, ref regeneration);
+            Assert.That(regeneration.Amount, Is.EqualTo(2));
+            entities.DeleteEntity(human);
+        });
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task InstabilityStartsMeltingAtTheThresholdAndStabilizingPreventsTheOutcome()
     {
@@ -228,10 +253,12 @@ public sealed class GeneticsMutationIntegrationTest
             Assert.That(eyes, Is.Not.Null);
             Assert.That(mutations.AddMutation(human, "MutationHeadless"), Is.True);
             Assert.That(body.GetOrgan(human, "Head"), Is.Null);
+            Assert.That(server.System<Content.Shared.Mobs.Systems.MobStateSystem>().IsAlive(human), Is.True);
             Assert.That(body.GetOrgan(human, "Brain"), Is.EqualTo(brain));
             Assert.That(body.GetOrgan(human, "Eyes"), Is.EqualTo(eyes));
             Assert.That(mutations.RemoveMutation(human, "MutationHeadless"), Is.True);
             Assert.That(body.GetOrgan(human, "Head"), Is.Not.Null);
+            Assert.That(server.System<Content.Shared.Mobs.Systems.MobStateSystem>().IsAlive(human), Is.True);
             Assert.That(body.GetOrgan(human, "Brain"), Is.EqualTo(brain));
             Assert.That(body.GetOrgan(human, "Eyes"), Is.EqualTo(eyes));
             entities.DeleteEntity(human);

@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
 
 using Content.Shared.Body.Events;
+using Content.Pirate.Common.Bloodstream;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Flash;
 using Content.Shared.Mobs;
@@ -32,6 +33,7 @@ public sealed class MutationRelaySystem : EntitySystem
         SubscribeLocalEvent<MutatableComponent, FootStepEvent>(RelayEvent);
         SubscribeLocalEvent<MutatableComponent, MobStateChangedEvent>(RelayEvent);
         SubscribeLocalEvent<MutatableComponent, BleedModifierEvent>(RelayEvent);
+        SubscribeLocalEvent<MutatableComponent, BloodRegenerationModifierEvent>(RelayEvent); // Pirate
         SubscribeLocalEvent<MutatableComponent, DamageModifyEvent>(RelayEvent);
         SubscribeLocalEvent<MutatableComponent, GetUserMeleeDamageEvent>(RelayEvent);
         SubscribeLocalEvent<MutatableComponent, AccentGetEvent>(RelayEvent);

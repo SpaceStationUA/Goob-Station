@@ -16,7 +16,7 @@ namespace Content.Pirate.Shared.Genetics;
 /// Pirate: maps Trauma's organ categories onto our separate body-part and organ slots.
 /// Keeps genetics effects independent of Trauma's replacement body implementation.
 /// </summary>
-public sealed class GeneticsBodySystem : EntitySystem
+public sealed partial class GeneticsBodySystem : EntitySystem
 {
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
