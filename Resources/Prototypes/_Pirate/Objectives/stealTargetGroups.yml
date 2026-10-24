@@ -172,7 +172,7 @@
   id: ClothingHandsGlovesKravMaga
   name: steal-target-groups-krav-maga-gloves
   sprite:
-    sprite: _Goobstation/Clothing/Hands/Gloves/kravgloves.rsi
+    sprite: _Pirate/Clothing/Hands/Gloves/kravgloves.rsi
     state: icon
 
 - type: stealTargetGroup

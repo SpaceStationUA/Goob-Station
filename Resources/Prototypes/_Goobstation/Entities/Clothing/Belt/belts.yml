@@ -87,9 +87,9 @@
   description: Teaches the wearer NT Corporate Judo.
   components:
   - type: Sprite
-    sprite: _Goobstation/Clothing/Belt/judobelt.rsi
+    sprite: _Pirate/Clothing/Belt/judobelt.rsi # Pirate: bluesec equipment resprites
   - type: Clothing
-    sprite: _Goobstation/Clothing/Belt/judobelt.rsi
+    sprite: _Pirate/Clothing/Belt/judobelt.rsi # Pirate: bluesec equipment resprites
   - type: GrantCorporateJudo
   - type: Storage
     grid:

@@ -324,7 +324,7 @@
   name: selectable-set-sarge-magnum-name
   description: selectable-set-sarge-magnum-description
   sprite:
-    sprite: Objects/Weapons/Guns/Battery/energy_magnum.rsi
+    sprite: _Pirate/Objects/Weapons/Guns/Battery/energy_magnum.rsi
     state: icon
   content:
   - WeaponEnergyMagnum

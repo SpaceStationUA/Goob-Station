@@ -14,11 +14,4 @@ public sealed partial class FloorWaterComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 ImmersionFlow = FixedPoint2.New(200);
-
-    /// <summary>How often, in seconds, it absorbs puddles sitting on its tile.</summary>
-    [DataField]
-    public float AbsorbInterval = 1f;
-
-    [ViewVariables]
-    public float AbsorbAccumulator;
 }

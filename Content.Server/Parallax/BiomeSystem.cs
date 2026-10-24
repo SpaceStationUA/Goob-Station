@@ -78,6 +78,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     private readonly Dictionary<BiomeComponent,
         Dictionary<string, HashSet<Vector2i>>> _markerChunks = new();
 
+    private readonly List<Vector2i> _pendingMarkerChunks = new(); // Pirate: performance
+
     public override void Initialize()
     {
         base.Initialize();
@@ -491,7 +493,21 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             idx++;
             var localIdx = idx;
 
-            Parallel.ForEach(chunks, new ParallelOptions() { MaxDegreeOfParallelism = _parallel.ParallelProcessCount }, chunk =>
+            #region Pirate: performance
+            // Start the parallel loop only for the chunks that still need markers.
+            _pendingMarkerChunks.Clear();
+            loadedMarkers.TryGetValue(layer, out var builtChunks);
+            foreach (var chunk in chunks)
+            {
+                if (builtChunks == null || !builtChunks.Contains(chunk))
+                    _pendingMarkerChunks.Add(chunk);
+            }
+
+            if (_pendingMarkerChunks.Count == 0)
+                continue;
+            #endregion
+
+            Parallel.ForEach(_pendingMarkerChunks, new ParallelOptions() { MaxDegreeOfParallelism = _parallel.ParallelProcessCount }, chunk => // Pirate: performance
             {
                 if (loadedMarkers.TryGetValue(layer, out var mobChunks) && mobChunks.Contains(chunk))
                     return;

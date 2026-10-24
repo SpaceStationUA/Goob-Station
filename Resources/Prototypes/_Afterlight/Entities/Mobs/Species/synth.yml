@@ -111,7 +111,7 @@
     fullEfficiencyBloodLevel: 0.9
     minBloodEfficiency: 0.1
     minHunger: 50
-    hungerCostPerRepair: 1.5
+    hungerCostPerRepair: 0.5 # Pirate: synth fixes - repairing 100 HP drained the whole 50-200 hunger range
     hungerCostPerBleed: 2
     bleedReductionAmount: 0.25
     damage:
@@ -127,7 +127,7 @@
       hungerCostPerUnit: 0.5
   - type: SynthBattery
     drawRate: 0.4
-    nutrimentChargeMultiplier: 2.4
+    nutrimentChargeMultiplier: 9.6 # Pirate: synth fixes - 1u nutriment now powers ~72 s, same as it feeds a human
     batteryLowText: synth-battery-low
     batteryDeadText: synth-battery-dead
     warningPercentages: [ 20, 10 ]
@@ -147,6 +147,11 @@
     batteryChargeMultiplier: 10.8
     cellularDamageMultiplier: 0.2
   - type: ZombieImmune
+  #region Pirate: synth fixes - explain why injectors fail on synths
+  - type: InjectionRefusalMessage
+    message: injector-component-no-injection-port-synth
+    selfMessage: injector-component-no-injection-port-synth-self
+  #endregion Pirate: synth fixes
   - type: Tag
     tags:
     - CanPilot

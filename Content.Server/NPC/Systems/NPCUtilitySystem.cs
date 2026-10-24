@@ -670,7 +670,7 @@ public sealed class NPCUtilitySystem : EntitySystem
         foreach (var quantity in solution.Contents)
             queue.Enqueue(quantity);
 
-        while (queue.Any())
+        while (queue.Count > 0) // Pirate: performance
         {
             var quantity = queue.Dequeue();
             var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
@@ -683,22 +683,25 @@ public sealed class NPCUtilitySystem : EntitySystem
 
             foreach (var (metabolism, entry) in reagent.Metabolisms)
             {
+                #region Pirate: performance
+                // The metabolizing organ depends only on the metabolism group, so find it once for all effects.
+                Entity<MetabolizerComponent>? metabolizingOrgan = null;
+                if (metabolizers != null)
+                {
+                    // Goob - Fix (no matching organ throws)
+                    foreach (var met in metabolizers)
+                    {
+                        if (!HasMetabolismGroup(met.Comp1, metabolism))
+                            continue;
+
+                        metabolizingOrgan = met;
+                        break;
+                    }
+                }
+                #endregion
+
                 foreach (var effect in entry.Effects)
                 {
-                    Entity<MetabolizerComponent>? metabolizingOrgan = null;
-                    if (metabolizers != null)
-                    {
-                        // Goob - Fix (no matching organ throws)
-                        foreach (var met in metabolizers)
-                        {
-                            if (!(met.Comp1.MetabolismGroups ?? []).Any(group => group.Id == metabolism))
-                                continue;
-
-                            metabolizingOrgan = met;
-                            break;
-                        }
-                    }
-
                     if (effect.Conditions != null
                         && metabolizingOrgan != null
                         && solutionComp != null
@@ -729,6 +732,22 @@ public sealed class NPCUtilitySystem : EntitySystem
 
         return utilityParams;
     } // Goobstation end
+
+    #region Pirate: performance
+    private static bool HasMetabolismGroup(MetabolizerComponent metabolizer, ProtoId<Content.Shared.Body.Prototypes.MetabolismGroupPrototype> group)
+    {
+        if (metabolizer.MetabolismGroups == null)
+            return false;
+
+        foreach (var entry in metabolizer.MetabolismGroups)
+        {
+            if (entry.Id == group)
+                return true;
+        }
+
+        return false;
+    }
+    #endregion
 }
 
 public readonly record struct UtilityResult(Dictionary<EntityUid, float> Entities)

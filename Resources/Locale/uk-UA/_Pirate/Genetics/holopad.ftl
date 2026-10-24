@@ -1,0 +1,1 @@
+holopad-science-genetics = Наука - Генетика

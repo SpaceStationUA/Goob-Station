@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceGenetics
+  suffix: Genetics
+  components:
+  - type: Label
+    currentLabel: holopad-science-genetics

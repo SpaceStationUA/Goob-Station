@@ -1,0 +1,89 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: synths do not breathe and cannot take injections, so their box drops the tank, mask and medipens for oral repair supplies.
+
+- type: entity
+  parent: BoxSurvivalSlots
+  id: BoxSurvivalSlotsSynth
+  name: synth survival box
+  description: It's a box with basic supplies for synth upkeep inside.
+  components:
+  - type: Sprite
+    state: box_silicon
+  - type: ContainerContainer
+    containers:
+      water: !type:ContainerSlot
+      nutriblock: !type:ContainerSlot
+      flare: !type:ContainerSlot
+      fullerene: !type:ContainerSlot
+      nanites: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      water:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - DrinkBottle
+      nutriblock:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - FoodSnack
+          - BreadEmergency
+          - FoodTinMRE
+      flare:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - Flare
+      fullerene:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - Bloodpack
+      nanites:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - Pill
+  - type: ContainerFill
+    containers:
+      water:
+      - DrinkWaterBottleFull
+      nutriblock:
+      - FoodSnackNutribrick
+      flare:
+      - Flare
+      fullerene:
+      - SynthBloodpack3
+      nanites:
+      - PillNanites
+
+- type: entity
+  parent: SynthBloodpack
+  id: SynthBloodpack3
+  suffix: 3
+  components:
+  - type: Stack
+    stackType: SynthBloodpack
+    count: 3
+
+# Kept under the 10.5u nanite overdose threshold.
+- type: entity
+  name: pill
+  parent: Pill
+  id: PillNanites
+  description: It's not a suppository. Synths only, it shreds organic bodies.
+  components:
+  - type: Pill
+    pillType: 2
+  - type: Sprite
+    state: pill3
+  - type: Label
+    currentLabel: nanites 5u
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nanites
+          Quantity: 5
