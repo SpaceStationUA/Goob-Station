@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
-using Content.Shared._Pirate.Contractors.Prototypes;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared._Pirate.Traits.Assorted;
 using Content.Shared.GameTicking;
@@ -32,7 +31,6 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
     private SpriteSystem _sprites = default!;
     private KnowledgeProfilePrototype? _speciesProfile;
     private KnowledgeProfile _profile = new();
-    private string _employerId = string.Empty;
     private string _jobId = SharedGameTicker.FallbackOverflowJob;
     private bool _modified;
     private bool _unchipped;
@@ -40,7 +38,6 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
 
     private static readonly Color ProfileColor = Color.FromHex("#6EA8FE");
     private static readonly Color JobColor = Color.FromHex("#55D6BE");
-    private static readonly Color EmployerColor = Color.FromHex("#F2C14E");
     private static readonly Color PenaltyColor = Color.FromHex("#E36D6D");
     private static readonly Color PotentialColor = Color.FromHex("#5B606B");
 
@@ -65,8 +62,7 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
             .FirstOrDefault(priority => priority.Value == JobPriority.High)
             .Key;
         _jobId = highPriorityJob.Id ?? SharedGameTicker.FallbackOverflowJob;
-        _employerId = profile.Employer;
-        _unchipped = profile.TraitPreferences.Contains("Unchipped");
+        _unchipped = profile.TraitPreferences.Any(trait => trait.Id == "Unchipped");
         _skillPointsBonus = KnowledgeableComponent.GetBonusPoints(_prototypes, profile.TraitPreferences);
         SetProfile(profile.Species, profile.Knowledge, preserveContext: true);
     }
@@ -84,7 +80,6 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         if (!preserveContext)
         {
             _jobId = SharedGameTicker.FallbackOverflowJob;
-            _employerId = string.Empty;
             _unchipped = false;
             _skillPointsBonus = 0;
         }
@@ -178,7 +173,6 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
     {
         AddLegendItem(ProfileColor, "knowledge-editor-source-profile");
         AddLegendItem(JobColor, "knowledge-editor-source-job");
-        AddLegendItem(EmployerColor, "knowledge-editor-source-employer");
         AddLegendItem(PenaltyColor, "knowledge-editor-source-penalty");
         AddLegendItem(PotentialColor, "knowledge-editor-source-potential");
     }
@@ -294,13 +288,8 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
             profileMastery = racialBase + selected;
             var cost = selected >= 0 && selected < costs.Length ? costs[selected] : 0;
             var jobLevel = GetJobLevel(id);
-            var employerMastery = GetEmployerMastery(id);
-            var finalLevel = SharedKnowledgeSystem.GetProfilePreviewLevel(
-                profileMastery,
-                jobLevel,
-                employerMastery,
-                out var profileLevel,
-                out var employerLevel);
+            var profileLevel = SharedKnowledgeSystem.GetInverseMastery(profileMastery);
+            var finalLevel = Math.Clamp(profileLevel + jobLevel, 0, 100);
             masteryLabel.Text = Loc.GetString(
                 "knowledge-editor-level-mastery",
                 ("mastery", SharedKnowledgeSystem.GetMasteryString(
@@ -313,7 +302,6 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
                 "knowledge-editor-breakdown",
                 ("profile", profileLevel),
                 ("job", Signed(jobLevel)),
-                ("employer", Signed(employerLevel)),
                 ("total", finalLevel));
             var tooltip = string.IsNullOrWhiteSpace(prototype.Description)
                 ? breakdown
@@ -328,7 +316,7 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
             bar.Frame.ToolTip = tooltip;
             bar.Segments.ToolTip = tooltip;
 
-            RebuildSkillBar(bar.Segments, profileLevel, jobLevel, employerLevel, finalLevel);
+            RebuildSkillBar(bar.Segments, profileLevel, jobLevel, finalLevel);
             decrease.Disabled = selected <= 0;
             increase.Disabled = profileMastery >= costs.Length - 1 || selected >= costs.Length - 1;
             var color = finalLevel <= 0 ? Color.Gray : Color.White;
@@ -394,7 +382,6 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         BoxContainer segments,
         int profileLevel,
         int jobLevel,
-        int employerLevel,
         int finalLevel)
     {
         segments.RemoveAllChildren();
@@ -403,19 +390,15 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         var afterJob = Math.Clamp(profileLevel + jobLevel, 0, 100);
         var visibleProfile = Math.Min(profileBeforeJob, afterJob);
         var visibleJob = Math.Max(afterJob - visibleProfile, 0);
-        var visibleEmployer = Math.Min(
-            Math.Max(employerLevel, 0),
-            Math.Max(finalLevel - afterJob, 0));
         var visiblePenalty = jobLevel < 0
             ? Math.Min(-jobLevel, 100 - finalLevel)
             : 0;
         var visiblePotential = Math.Max(
-            100 - visibleProfile - visibleJob - visibleEmployer - visiblePenalty,
+            100 - visibleProfile - visibleJob - visiblePenalty,
             0);
 
         AddSegment(segments, visibleProfile, ProfileColor);
         AddSegment(segments, visibleJob, JobColor);
-        AddSegment(segments, visibleEmployer, EmployerColor);
         AddSegment(segments, visiblePenalty, PenaltyColor);
         AddSegment(segments, visiblePotential, PotentialColor);
     }
@@ -453,13 +436,6 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         }
 
         return total;
-    }
-
-    private int GetEmployerMastery(EntProtoId id)
-    {
-        return _prototypes.TryIndex<EmployerPrototype>(_employerId, out var employer)
-            ? employer.KnowledgeBonuses.GetValueOrDefault(id)
-            : 0;
     }
 
     private static string Signed(int value)

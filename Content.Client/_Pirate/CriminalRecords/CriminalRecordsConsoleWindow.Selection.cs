@@ -16,7 +16,7 @@ public sealed partial class CriminalRecordsConsoleWindow
     private RecordFieldWidths _fieldWidths = default!;
 
     private uint? _identityEditorKey;
-    private (string Species, string Nationality, string Employer, Gender Gender, int Age, string? RawSpecies, string? RawNationality, string? RawEmployer, int RawAge) _identityEditorSource;
+    private (string Species, string Citizenship, string Employer, Gender Gender, int Age, string? RawSpecies, string? RawCitizenship, string? RawEmployer, int RawAge) _identityEditorSource;
 
     private void InitRecordSelection()
     {
@@ -47,8 +47,8 @@ public sealed partial class CriminalRecordsConsoleWindow
     private void RefreshRecordIdentityEditor(uint key, GeneralStationRecord stationRecord, HumanoidCharacterProfile? snapshot)
     {
         var profile = BuildRecordIdentityProfile(stationRecord, snapshot);
-        var source = (profile.Species, profile.Nationality, profile.Employer, profile.Gender, profile.Age,
-            stationRecord.Species, stationRecord.Nationality, stationRecord.Employer, stationRecord.Age);
+        var source = (profile.Species, profile.Citizenship, profile.Employer, profile.Gender, profile.Age,
+            stationRecord.Species, stationRecord.Citizenship, stationRecord.Employer, stationRecord.Age);
 
         if (_identityEditorKey == key && _identityEditorSource == source)
             return;
@@ -75,7 +75,7 @@ public sealed partial class CriminalRecordsConsoleWindow
     private void InitFieldWidths()
     {
         _fieldWidths = new RecordFieldWidths(
-            [SpeciesButton, NationalityButton, EmployerButton, GenderButton, StatusOptionButton],
+            [SpeciesButton, CitizenshipButton, EmployerButton, GenderButton, StatusOptionButton],
             [AgeEdit],
             [PersonJob.Parent!]);
         _fieldWidths.Update();

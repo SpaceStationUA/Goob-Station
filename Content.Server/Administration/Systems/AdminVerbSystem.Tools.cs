@@ -13,7 +13,7 @@ using Content.Server.Mind; // Pirate - Allow Admins to Spawn a Passport for Play
 using Content.Server.Stack;
 using Content.Server.Station.Systems;
 using Content.Server.Weapons.Ranged.Systems;
-using Content.Shared._Pirate.Contractors.Systems; // Pirate - Allow Admins to Spawn a Passport for Players
+using Content.Shared._Pirate.Origin.Systems; // Pirate - Allow Admins to Spawn a Passport for Players
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;

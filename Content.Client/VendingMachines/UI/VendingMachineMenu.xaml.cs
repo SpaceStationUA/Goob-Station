@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using System.Linq;
 using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Shared.VendingMachines;
@@ -26,7 +25,6 @@ namespace Content.Client.VendingMachines.UI
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
         private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
         private readonly Dictionary<EntProtoId, uint> _amounts = new();
-
         /// <summary>
         /// Whether the vending machine is able to be interacted with or not.
         /// </summary>
@@ -46,7 +44,6 @@ namespace Content.Client.VendingMachines.UI
             VendingContents.DataFilterCondition += DataFilterCondition;
             VendingContents.GenerateItem += GenerateButton;
             VendingContents.ItemKeyBindDown += (args, data) => OnItemSelected?.Invoke(args, data);
-
             WithdrawButton.OnPressed += OnWithdrawPressed; // Pirate banking
         }
 
@@ -155,7 +152,7 @@ namespace Content.Client.VendingMachines.UI
 
                 var price = (int)(entry.Price * priceMultiplier); // Pirate banking
                 var itemName = Identity.Name(dummy, _entityManager);
-                var itemText = $"[{price}¥] {itemName} [{entry.Amount}]"; // Pirate banking
+                var itemText = $"[{price}电] {itemName} [{entry.Amount}]"; // Pirate banking
                 _amounts[entry.ID] = entry.Amount;
 
                 if (itemText.Length > longestEntry.Length)
@@ -207,7 +204,7 @@ namespace Content.Client.VendingMachines.UI
         private string GetItemText(EntityUid dummy, uint amount, int price) // Pirate banking
         {
             var itemName = Identity.Name(dummy, _entityManager);
-            return $"[{price}¥] {itemName} [{amount}]"; // Pirate banking
+            return $"[{price}电] {itemName} [{amount}]"; // Pirate banking
         }
 
         private void SetSizeAfterUpdate(int longestEntryLength, int contentCount)

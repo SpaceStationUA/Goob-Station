@@ -14,12 +14,12 @@
       species:
         - IPC
         - Plasmaman
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZengHuPharmaceuticals
-    # Pirate contractor end
+      - ZengHu
+    # Pirate Employment end
     - !type:FlavorTextLengthRequirement # Pirate: whitelist flavor minimum
       minLength: 500 # Pirate: whitelist flavor minimum
   startingGear: ForensicMantisGear

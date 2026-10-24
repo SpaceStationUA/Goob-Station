@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ComputerComms, SolAllianceInfo]
+  parent: [ComputerComms]
   id: SANComputerComms
   name: "консоль зв'язку солоріанського флоту"
   suffix: SAN

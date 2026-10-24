@@ -77,7 +77,6 @@ public sealed class KnowledgeProfileSystem : EntitySystem
         _knowledge.ReplayCompetency(args.Mob);
         _chips.ReconcileInstalledChipModifiers(args.Mob);
         // Pirate: skill chips end
-        _knowledge.ApplyEmployerBonuses(args.Mob, args.Profile.Employer);
     }
 
     private void OnJobChipsRequest(KnowledgeJobChipsRequest args, EntitySessionEventArgs session)
