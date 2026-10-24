@@ -16611,9 +16611,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
 - proto: AlertLevelHolotableNS
   entities:
   - uid: 28194
@@ -83734,9 +83731,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
   - uid: 29951
     components:
     - type: Transform
@@ -83746,9 +83740,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
   - uid: 29956
     components:
     - type: Transform
@@ -83758,9 +83749,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
   - uid: 29957
     components:
     - type: Transform
@@ -83770,9 +83758,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
   - uid: 29958
     components:
     - type: Transform
@@ -83782,9 +83767,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
   - uid: 29959
     components:
     - type: Transform
@@ -83794,9 +83776,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
 - proto: FirelockEdge
   entities:
   - uid: 12286
@@ -84137,9 +84116,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
 - proto: FirelockGlass
   entities:
   - uid: 12322
@@ -85365,9 +85341,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
   - uid: 12540
     components:
     - type: Transform
@@ -123769,9 +123742,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 20117
@@ -123807,9 +123777,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 22966
@@ -125426,9 +125393,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 5720
@@ -125584,9 +125548,6 @@ entities:
       deviceLists:
       - 29966
       - 29978
-      configurators:
-      - invalid
-      - invalid
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 27343
