@@ -48,10 +48,12 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         <BoxContainer Orientation="Horizontal"
                       HorizontalExpand="True"
                       SeparationOverride="8">
-            <Label Text="{Loc 'humanoid-profile-editor-nationality-label'}"
+            <!-- Pirate start: Citizenship -->
+            <Label Text="{Loc 'humanoid-profile-editor-citizenship-label'}"
                    FontColorOverride="DarkGray" />
-            <OptionButton Name="NationalityButton"
+            <OptionButton Name="CitizenshipButton"
                           HorizontalExpand="True" />
+            <!-- Pirate end -->
         </BoxContainer>
         <BoxContainer Orientation="Horizontal"
                       HorizontalExpand="True"

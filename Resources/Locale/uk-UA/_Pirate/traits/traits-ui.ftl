@@ -1,10 +1,3 @@
-## Trait Categories
-trait-category-mental = Ментальні
-trait-category-medical = Медичні
-trait-category-physical = Фізичні
-trait-category-meta = Мета
-trait-category-accents = Акценти
-
 ## Traits Editor UI
 trait-editor-title = Особливості
 trait-editor-points-label = Доступні Очки
@@ -38,23 +31,27 @@ trait-conditions-tooltip = [bold]Вимоги:[/bold]
     {$requirements}
 trait-conditions-not-met-tooltip = Вимоги не виконані:
     {$requirements}
-trait-conditions-conflict-tooltip = Конфлікт із: [color=yellow]{$traits}[/color]
 trait-conditions-points-tooltip = [color=yellow]Недостатньо очок для вибору.[/color]
 
 
 ## Composite conditions
 trait-condition-any-of = Будь-що з наступного має бути істинним:
+trait-condition-none-of = Жодна з цих умов не має бути істинною:
     • {$requirements}
 
 ## Species conditions
 trait-condition-species-is = Ви повинні бути [color=yellow]{$species}[/color].
 trait-condition-species-not = Ви не повинні бути [color=yellow]{$species}[/color]
-trait-condition-nationality-is = Ви повинні мати національність [color=yellow]{$nationalities}[/color].
-trait-condition-nationality-not = Ви не повинні мати національність [color=yellow]{$nationalities}[/color].
+trait-condition-citizenship-is = Ви повинні мати громадянство [color=yellow]{$citizenships}[/color].
+trait-condition-citizenship-not = Ви не повинні мати громадянство [color=yellow]{$citizenships}[/color].
 
 ## Job conditions
 trait-condition-job-is = Ваша посада має бути [color={$color}]{$job}[/color].
 trait-condition-job-not = Ваша посада не повинна бути [color={$color}]{$job}[/color].
+
+## Employer conditions
+trait-condition-employer-is = Ви повинні бути працевлаштовані в [color=yellow]{$employers}[/color].
+trait-condition-employer-not = Ви не повинні бути працевлаштовані в [color=yellow]{$employers}[/color].
 
 ## Department conditions
 trait-condition-department-is = Ви повинні бути у відділі [color={$color}]{$department}[/color].

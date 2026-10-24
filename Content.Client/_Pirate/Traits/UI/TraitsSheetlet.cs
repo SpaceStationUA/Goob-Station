@@ -3,6 +3,7 @@ using Content.Client.Stylesheets.Fonts;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Content.Client._Pirate.Profile.UI;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client._Pirate.Traits.UI;
@@ -26,25 +27,15 @@ public sealed class TraitsSheetlet : Sheetlet<PalettedStylesheet>
             BorderColor = Color.FromHex("#32323e"),
             BorderThickness = new Thickness(1),
         };
-        var categoryHeader = new StyleBoxFlat
-        {
-            BackgroundColor = Color.FromHex("#2a2a35"),
-            BorderColor = Color.FromHex("#32323e"),
-            BorderThickness = new Thickness(0, 0, 0, 1),
-        };
-        var categoryContent = new StyleBoxFlat { BackgroundColor = Color.FromHex("#22222a") };
+        var categoryHeader = ProfileEditorStyles.CreateCategoryHeader();
+        var categoryContent = ProfileEditorStyles.CreateCategoryContent();
         var entryDisabled = new StyleBoxFlat
         {
             BackgroundColor = Color.FromHex("#1a1a22"),
             BorderColor = Color.FromHex("#2a2a2a"),
             BorderThickness = new Thickness(1),
         };
-        var entryPanel = new StyleBoxFlat
-        {
-            BackgroundColor = Color.FromHex("#2a2a35"),
-            BorderColor = Color.FromHex("#32323e"),
-            BorderThickness = new Thickness(1),
-        };
+        var entryPanel = ProfileEditorStyles.CreateEntryPanel();
         var entrySelected = new StyleBoxFlat
         {
             BackgroundColor = Color.FromHex("#2a3a4a"),
@@ -66,14 +57,9 @@ public sealed class TraitsSheetlet : Sheetlet<PalettedStylesheet>
 
         return
         [
-            E<PanelContainer>().Class("TraitsHeaderPanel").Panel(new StyleBoxFlat
-            {
-                BackgroundColor = Color.FromHex("#2a2a35"),
-                BorderColor = Color.FromHex("#32323e"),
-                BorderThickness = new Thickness(0, 0, 0, 1),
-            }),
-            E<Label>().Class("TraitsTitleLabel").Font(displayBold14).FontColor(Color.FromHex("#e0e0e0")),
-            E<Label>().Class("TraitsSubtitleLabel").Font(font11).FontColor(Color.FromHex("#a0a0a0")),
+            E<PanelContainer>().Class("TraitsHeaderPanel").Panel(ProfileEditorStyles.CreateCategoryHeader()),
+            E<Label>().Class("TraitsTitleLabel").Font(displayBold14).FontColor(ProfileEditorStyles.TextPrimary),
+            E<Label>().Class("TraitsSubtitleLabel").Font(font11).FontColor(ProfileEditorStyles.TextSecondary),
             E<Label>().Class("TraitsStatLabel").Font(font12).FontColor(Color.FromHex("#60a5fa")),
 
             E<PanelContainer>().Class("TraitsProgressBarBg").Panel(progressBarBackground),
@@ -101,11 +87,11 @@ public sealed class TraitsSheetlet : Sheetlet<PalettedStylesheet>
 
             E<PanelContainer>().Class("TraitsCategoryHeader").Panel(categoryHeader),
             E<Button>().Class("TraitsCategoryHeaderButton").Box(new StyleBoxFlat { BackgroundColor = Color.Transparent }),
-            E<Label>().Class("TraitsCategoryExpandIcon").Font(font10).FontColor(Color.FromHex("#a0a0a0")),
-            E<Label>().Class("TraitsCategoryNameLabel").Font(font12).FontColor(Color.FromHex("#e0e0e0")),
-            E<Label>().Class("TraitsCategoryStatsLabel").Font(font10).FontColor(Color.FromHex("#a0a0a0")),
+            E<Label>().Class("TraitsCategoryExpandIcon").Font(font10).FontColor(ProfileEditorStyles.TextSecondary),
+            E<Label>().Class("TraitsCategoryNameLabel").Font(font12).FontColor(ProfileEditorStyles.TextPrimary),
+            E<Label>().Class("TraitsCategoryStatsLabel").Font(font10).FontColor(ProfileEditorStyles.TextSecondary),
             E<Label>().Class("TraitsCategoryPointsLabel").Font(font10).FontColor(Color.FromHex("#707070")),
-            E<PanelContainer>().Class("TraitsCategoryAccent").Panel(new StyleBoxFlat(Color.FromHex("#60a5fa"))),
+            E<PanelContainer>().Class("TraitsCategoryAccent").Panel(new StyleBoxFlat(ProfileEditorStyles.Accent)),
             E<PanelContainer>().Class("TraitsCategoryContent").Panel(categoryContent),
 
             E<PanelContainer>().Class("TraitsEntryPanel").Panel(entryPanel),
@@ -116,7 +102,7 @@ public sealed class TraitsSheetlet : Sheetlet<PalettedStylesheet>
                 .Modulate(new Color(1f, 1f, 1f, 0.5f)),
             E<PanelContainer>().Class("TraitsEntryPanel", "TraitsEntryUnavailable").Panel(entryUnavailable),
             E<PanelContainer>().Class("TraitsEntryPanel", "TraitsEntryUnaffordable").Panel(entryUnaffordable),
-            E<Label>().Class("TraitsEntryNameLabel").Font(font11).FontColor(Color.FromHex("#e0e0e0")),
+            E<Label>().Class("TraitsEntryNameLabel").Font(font11).FontColor(ProfileEditorStyles.TextPrimary),
 
             E().Class("TraitsEntryUnavailable")
                 .ParentOf(E<Label>().Class("TraitsEntryNameLabel"))
@@ -135,7 +121,7 @@ public sealed class TraitsSheetlet : Sheetlet<PalettedStylesheet>
             E<RichTextLabel>()
                 .Class("TraitsEntryDescriptionLabel")
                 .Font(font10)
-                .FontColor(Color.FromHex("#a0a0a0")),
+                .FontColor(ProfileEditorStyles.TextSecondary),
         ];
     }
 }

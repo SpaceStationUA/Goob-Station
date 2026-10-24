@@ -1,7 +1,7 @@
 atm-ui-enter-pin = Enter PIN
 atm-ui-select-withdraw-amount = Select withdraw amount.
 atm-ui-insert-card = Insert card.
-atm-ui-balance = Balance: { $balance }¥
+atm-ui-balance = Balance: { $balance }电
 atm-keypad-clear = CLR
 atm-keypad-enter = ENT
 atm-keypad-insert-card = INSERT CARD

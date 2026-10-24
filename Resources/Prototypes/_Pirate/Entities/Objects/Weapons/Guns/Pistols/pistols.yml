@@ -69,7 +69,7 @@
 # M8
 - type: entity
   name: M8
-  parent: [BaseWeaponPistol, BaseSecurityContraband, SolAllianceInfo]
+  parent: [BaseWeaponPistol, BaseSecurityContraband]
   id: WeaponPistolSol
   suffix: SAN
   description: Виготовлений Zavodskiy Interstellar, M8 є стандартним службовим пістолетом збройних сил Соларіанського Альянсу.

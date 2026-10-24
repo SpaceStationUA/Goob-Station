@@ -24,13 +24,13 @@
   #  inverted: true
   #  species:
   #  - Felinid
-  # Pirate contractor start
+  # Pirate Employment start
   - !type:CharacterEmployerRequirement
     employers:
     - NanoTrasen
-    - ZengHuPharmaceuticals
-    - ZavodskiyInterstellar
-  # Pirate contractor end
+    - Zavod
+    - ZengHu
+  # Pirate Employment end
   - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 10
   startingGear: ResearchDirectorGear

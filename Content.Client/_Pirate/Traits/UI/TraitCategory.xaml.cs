@@ -102,12 +102,13 @@ public sealed partial class TraitCategory : BoxContainer
                 ("selected", SelectedCount));
         }
 
-        if (_category.MaxPoints.HasValue)
+        var maxPoints = _category.MaxPoints ?? _category.MaxTraitPoints;
+        if (maxPoints is >= 0)
         {
             CategoryPointsLabel.Visible = true;
             CategoryPointsLabel.Text = Loc.GetString("trait-category-points",
                 ("selected", PointsSpent),
-                ("max", _category.MaxPoints.Value));
+                ("max", maxPoints.Value));
         }
         else
         {
@@ -155,9 +156,11 @@ public sealed partial class TraitCategory : BoxContainer
     {
         var hasVisibleTraits = false;
 
-        foreach (var (traitId, entry) in _traitEntries)
+        foreach (var trait in _allTraits)
         {
-            var trait = _allTraits.First(t => t.ID == traitId);
+            if (!_traitEntries.TryGetValue(trait.ID, out var entry))
+                continue;
+
             var name = Loc.GetString(trait.Name);
             var description = trait.Description != null ? Loc.GetString(trait.Description) : string.Empty;
 
