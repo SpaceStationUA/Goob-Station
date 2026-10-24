@@ -9,7 +9,13 @@ using Content.Shared.Silicons.StationAi;
 using Content.Server.Power.Components;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
+using Content.Server.Destructible;
+using Content.Server.Ghost;
 using Content.Shared.Containers;
+using Content.Shared.Mind;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
@@ -28,6 +34,10 @@ public sealed class MalfAiShuntSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly Content.Server.Silicons.StationAi.StationAiSystem _stationAi = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly GhostSystem _ghost = default!;
 
     public override void Initialize()
     {
@@ -35,6 +45,39 @@ public sealed class MalfAiShuntSystem : EntitySystem
         // Subscribe on the AI performer entity.
         SubscribeLocalEvent<StationAiHeldComponent, MalfAiShuntToApcActionEvent>(OnShuntToApc);
         SubscribeLocalEvent<StationAiHeldComponent, MalfAiReturnToCoreActionEvent>(OnReturnToCore);
+        SubscribeLocalEvent<ApcComponent, EntityTerminatingEvent>(OnApcTerminating);
+    }
+
+    private void OnApcTerminating(Entity<ApcComponent> apc, ref EntityTerminatingEvent args)
+    {
+        if (!TryComp<StationAiCoreComponent>(apc, out var apcCore) ||
+            !_stationAi.TryGetHeld((apc.Owner, apcCore), out var ai) ||
+            !TryComp<MalfAiShuntedComponent>(ai, out var shunted))
+            return;
+
+        // Recover the brain before recursive deletion reaches the APC's contents.
+        // Insert validates the destination before removing the brain from the dying APC.
+        if (shunted.CoreHolder is { } coreHolder &&
+            !TerminatingOrDeleted(coreHolder) &&
+            !EntityManager.IsQueuedForDeletion(coreHolder) &&
+            HasComp<StationAiCoreComponent>(coreHolder) &&
+            (!TryComp<DestructibleComponent>(coreHolder, out var destructible) || !destructible.IsBroken) &&
+            _powerReceiver.IsPowered(coreHolder) &&
+            _containers.TryGetContainer(coreHolder, StationAiHolderComponent.Container, out var coreContainer) &&
+            _containers.Insert(ai.Value, coreContainer))
+        {
+            EnsureComp<StationAiHeldComponent>(ai.Value);
+            CleanupShuntAction(shunted);
+            shunted.CoreHolder = null;
+            RemCompDeferred<MalfAiShuntedComponent>(ai.Value);
+            _popup.PopupEntity(Loc.GetString("malfai-return-success"), GetAiEyeForPopup(ai.Value) ?? ai.Value, ai.Value);
+            return;
+        }
+
+        // Spawn on the map/grid, outside the APC's terminating transform hierarchy.
+        _mobState.ChangeMobState(ai.Value, MobState.Dead);
+        if (_mind.TryGetMind(ai.Value, out var mindId, out var mind))
+            _ghost.SpawnGhost((mindId, mind), ai.Value);
     }
 
     private void OnShuntToApc(Entity<StationAiHeldComponent> ai, ref MalfAiShuntToApcActionEvent args)
