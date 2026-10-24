@@ -260,7 +260,7 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
         if (displayIndex < 0)
             return;
 
-        _slots[displayIndex].PlayVendAnimation();
+        _slots[displayIndex].PlayVendAnimation(); // Pirate
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
