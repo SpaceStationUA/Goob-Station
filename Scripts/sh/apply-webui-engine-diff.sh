@@ -20,11 +20,28 @@
 set -euo pipefail
 cd "$(dirname "$0")/../.."   # repo root
 
-ENGINE_PATCH="WebUIEngineDiff_v277.patch"
+# ABSOLUTE, and it has to be.
+#
+# `git -C RobustToolbox` changes git's working directory to the SUBMODULE, so a
+# relative patch path is resolved from there -- and the patch lives at the repo root.
+# The relative form therefore always failed with "can't open patch", which the script
+# reported as "Patch no longer applies cleanly AND no local edits present", i.e. it
+# blamed the engine for its own path bug. It could not ever have worked on a checkout
+# where the submodule is present.
+ENGINE_PATCH="$(cd "$(dirname "$0")/../.." && pwd)/WebUIEngineDiff_v277.patch"
 
 if ! git -C RobustToolbox rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     echo "RobustToolbox is not a git worktree here; nothing to patch." >&2
     exit 1
+fi
+
+if [ ! -f "$ENGINE_PATCH" ]; then
+    echo "No engine patch at $ENGINE_PATCH." >&2
+    echo "  -> it is excluded by .git/info/exclude, so it must be copied in from a" >&2
+    echo "     worktree that has it (or reconstructed). Without it the WebView" >&2
+    echo "     module is never loaded and every WebViewControl throws" >&2
+    echo "     FileNotFoundException at construction." >&2
+    exit 3
 fi
 
 if git -C RobustToolbox apply --check "$ENGINE_PATCH" 2>/dev/null; then

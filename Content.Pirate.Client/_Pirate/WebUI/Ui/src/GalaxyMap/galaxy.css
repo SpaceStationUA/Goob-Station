@@ -1,0 +1,745 @@
+/* Reset contract — PLAN.md gotcha #1. A page without this renders a
+   "lonely titlebar" collapse that looks exactly like state never arrived. */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  background: #04060b;
+  color: #c8d3e0;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  overflow: hidden;
+
+  /**
+   * THE TYPE UNIT. Every size in this file is a multiple of it, and nothing else.
+   *
+   * The sizes were all absolute pixels -- 10px labels, a 12px panel heading, an 11px
+   * territory floor -- which is the right answer for a browser tab at a known size and
+   * the wrong answer everywhere else. In the game this page is a CEF surface inside a
+   * DefaultWindow, and the first screenshot of that showed the window title rendering at
+   * a readable ~16px next to chart labels at 9-11px. Nothing was wrong with either; they
+   * were simply not in the same units.
+   *
+   * So the unit is viewport-relative and clamped, which makes the chart's type track the
+   * WINDOW rather than the stylesheet:
+   *
+   *     760px window   ->  11.2px   (the floor, and still legible)
+   *    1180px window   ->  13.5px   (what the screenshot showed as too small)
+   *    1600px window   ->  15.8px   (the dev server's size, where it always looked fine)
+   *
+   * The clamp matters more than the slope. `vw` alone makes the type tiny in a small
+   * window and the point of a floor is that there is one.
+   *
+   * It is declared on #root and not on .chart-host so the side panel, the overlay and
+   * the toolbar all inherit the same unit -- they are one interface, and a panel whose
+   * heading is a different size from the chart it describes reads as two interfaces.
+   */
+  --ui: clamp(13px, 0.45vw + 7.4px, 18px);
+}
+
+.chart-shell {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.chart-host {
+  position: absolute;
+  inset: 0;
+}
+
+svg.chart {
+  display: block;
+  cursor: crosshair;
+}
+svg.chart.painting {
+  cursor: cell;
+}
+
+/* Chart frame furniture — all values in px now, not light-years. */
+.frame-line {
+  fill: none;
+  stroke: rgba(140, 175, 210, 0.28);
+  stroke-width: 1;
+  pointer-events: none;
+}
+
+.graticule {
+  fill: none;
+  stroke: rgba(130, 165, 200, 0.09);
+  stroke-width: 0.7;
+  pointer-events: none;
+}
+
+/* The hover polygon is permanently in the DOM and carries no geometry when the
+   pointer is off the map, so it is hidden rather than removed — see the note on
+   hoverPts in Chart.tsx. */
+.cell-hover {
+  fill: rgba(255, 255, 255, 0.14);
+  stroke: rgba(255, 255, 255, 0.6);
+  stroke-width: 1;
+  pointer-events: none;
+}
+.cell-hover.off {
+  display: none;
+}
+
+/* Territory naming — the big letterspaced tier.
+   Sits under the place names (see Chart.tsx z-order), so it carries a halo
+   rather than competing: enough to read against a hatched fill, not so much
+   that it shouts over Sol. */
+.terr-name {
+  text-anchor: middle;
+  pointer-events: none;
+  paint-order: stroke fill;
+  stroke: rgba(0, 0, 0, 0.85);
+  stroke-width: 4px;
+
+  /**
+   * A WATERMARK, and 0.82 was not dim enough once the type got bigger.
+   *
+   * Making the type readable solved the accessibility problem and created a legibility
+   * one: at 0.82 the territory names sat on top of the place names at a size where both
+   * were competing, and the chart became a wall. "SOLARIAN ALLIANCE" ran through Epsilon
+   * Eridani, Sol and Cygnus X-1; "PEOPLE'S REPUBLIC OF ADHOMAI" buried Adhomai.
+   *
+   * The territory name is the LOWER tier of two -- the code that draws it says so
+   * outright ("place names are the ones you actually look up") -- and it was being drawn
+   * at the higher tier's weight. So it drops below the place names in size AND in
+   * opacity, which is what makes it read as the watermark it was always meant to be.
+   *
+   * The dark stroke stays at full strength: it is what keeps the name legible where it
+   * crosses a bright territory fill, and dropping the opacity is enough separation
+   * without that.
+   */
+  opacity: 0.5;
+}
+.terr-name.dim {
+  opacity: 0.16;
+}
+.terr-name.hot {
+  opacity: 1;
+}
+/* Unclaimed space is a hole in the map, not a nation. It gets a small, dim,
+   un-letterspaced watermark — its centroid is the centre of the chart, which is
+   the worst possible place for a headline. */
+.terr-name.faint {
+  opacity: 0.22;
+  stroke-width: 3px;
+}
+
+.system-label {
+  font-size: calc(var(--ui) * 1.0);
+  letter-spacing: 0.6px;
+  fill: #e6eef7;
+  paint-order: stroke fill;
+  stroke: rgba(0, 0, 0, 0.85);
+  stroke-width: 2.6px;
+  pointer-events: none;
+}
+.system-label.capital {
+  fill: #fff;
+  font-size: calc(var(--ui) * 1.2);
+  letter-spacing: 1.4px;
+}
+
+/* Side panel */
+/**
+ * The nebula, behind the chart and under every label.
+ *
+ * `pointer-events: none` because it sits under the SVG, which handles all the
+ * pointer work, and a canvas that swallowed clicks would make the whole chart
+ * unresponsive in a way that looks like a hang rather than a bug.
+ *
+ * It is positioned rather than in flow so it can be pulled out of the layout
+ * entirely: the chart-shell's own box is what everything else measures against, and
+ * a full-bleed background in flow would change the chart's size and therefore its
+ * scale.
+ */
+.nebula-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.nebula-canvas {
+  display: block;
+  width: 100%;
+}
+
+/**
+ * The nebula ramp picker. Three swatches, one per palette, and the active one is
+ * ringed.
+ *
+ * The swatches are gradients of each palette's own middle stops rather than flat
+ * fills, because a ramp is what the choice is about -- a single flat chip cannot
+ * show whether a palette is warm or cool, which is the only thing anyone needs to
+ * know when picking one.
+ */
+.sky-pick {
+  display: flex;
+  gap: 3px;
+  padding: 2px 3px;
+  background: rgba(14, 18, 28, 0.9);
+  border: 1px solid rgba(120, 160, 200, 0.28);
+  cursor: pointer;
+}
+.sky-swatch {
+  width: 16px;
+  height: 10px;
+  display: block;
+  border: 1px solid transparent;
+}
+.sky-swatch.on {
+  border-color: #cfe3ff;
+}
+
+/**
+ * Remnants: pulsars and quasars.
+ *
+ * The pulsar is a canvas and the quasar is the black hole's own output with an SVG
+ * of jets over it. Neither is a shader, which is worth noting given the two that
+ * are: those are shaders because their shapes are CARVED BY NOISE, not because
+ * drawing them fast needs one. A pulsar is gradients.
+ */
+.pulsar {
+  display: block;
+}
+
+/* Chart marks.  does not apply — these are paths, not rasters. */
+.remnant-mark {
+  pointer-events: none;
+}
+.remnant-pulsar {
+  filter: drop-shadow(0 0 3px rgba(170, 210, 255, 0.9));
+}
+.remnant-quasar {
+  filter: drop-shadow(0 0 2px rgba(200, 160, 80, 0.4));
+}
+
+.quasar {
+  position: relative;
+}
+
+/**
+ * The overlay jets pulse rather than sweep.
+ *
+ * The complaint that produced this was that the quasar sat in the same position and
+ * looked inert. The obvious fix is to rotate something, and that would be wrong: a
+ * jet is a steady plume leaving a pole, and a plume that swings is a clock hand. What
+ * makes a quasar look alive is that its OUTPUT VARIES, so opacity is animated and
+ * position is not. The chart's marks do the same thing in SMIL.
+ *
+ * Two beats rather than a smooth loop, because a real quasar is variable on a scale
+ * of days and anything sinusoidal reads as a machine.
+ */
+.quasar-jets {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Additive, so where the near jet crosses the disc the two brighten. That is
+     what gives the object depth: the jet is optically thin, so you see it over
+     the disc rather than under it. */
+  mix-blend-mode: screen;
+}
+
+.panel {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 262px;
+  padding: 12px 14px;
+  background: rgba(8, 13, 22, 0.9);
+  border: 1px solid rgba(120, 160, 200, 0.22);
+  font-size: calc(var(--ui) * 0.9);
+  line-height: 1.55;
+  backdrop-filter: blur(3px);
+}
+.panel h2 {
+  margin: 0 0 2px;
+  font-size: calc(var(--ui) * 0.95);
+  letter-spacing: 1.6px;
+  font-weight: 600;
+}
+.panel .sub {
+  color: rgba(170, 195, 220, 0.6);
+  font-size: calc(var(--ui) * 0.85);
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+}
+.panel .blurb {
+  color: rgba(200, 215, 232, 0.82);
+  margin-bottom: 10px;
+}
+.panel .stat {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(170, 195, 220, 0.72);
+  font-size: calc(var(--ui) * 0.85);
+  border-top: 1px solid rgba(120, 160, 200, 0.12);
+  padding: 3px 0;
+}
+
+/* ------------------------------------------------------------------ *
+ * System overlay
+ *
+ * Wider than the territory panel, because it has to hold a world big
+ * enough to be worth looking at. That size is the whole reason this
+ * panel exists: a marker is 16-40px on the chart and no amount of
+ * generator work makes that readable.
+ * ------------------------------------------------------------------ */
+.overlay {
+  width: 268px;
+}
+
+/**
+ * A ringed system gets a wider panel.
+ *
+ * The reference's ring reaches 3.16 planet radii — around a 200px planet that is
+ * 632px across, and the panel is 268px. So the ring cannot be drawn at the
+ * reference's size in a panel this width, and it was being drawn small enough to
+ * fit, which is most of why it read as a hoop: a ring squeezed to 1.28 radii is a
+ * collar, not a ring system.
+ *
+ * Widening the panel for the ringed case buys real width instead. Saturn's A ring
+ * reaches about 2.3 planetary radii, so 2.3 is both affordable here and closer to
+ * the solar system's own than the reference's 3.16 is — the compromise costs less
+ * than it looks.
+ */
+.overlay.ringed {
+  width: 460px;
+}
+.overlay .overlay-art {
+  display: flex;
+  justify-content: center;
+  /* Room for the corona, which is part of the sprite's box but not of
+     the disc, plus a little air so the glow is not clipped by the
+     panel edge. */
+  padding: 6px 0 10px;
+}
+
+/**
+ * A ringed system needs a taller art box, and the reason is the rotation.
+ *
+ * The scene's `rotation` is 0.7 radians, so the ring's major axis is 40 degrees off
+ * horizontal. A 2.2-radii ring at 40 degrees has a bounding box roughly 340 wide and
+ * 285 tall, where the planet itself is 200 square. In a box sized to the planet the
+ * ring runs off the top and the bottom, and being clipped by its own panel reads as
+ * a fault rather than as a crop.
+ *
+ * So the art box grows for the ringed case instead of the ring shrinking to fit it.
+ * Shrinking would have been the easier fix and would have put the ring back to being
+ * a collar, which is the thing this replaced.
+ */
+.overlay.ringed .overlay-art {
+  min-height: 300px;
+  align-items: center;
+}
+.overlay .capital-tag {
+  margin: 2px 0 8px;
+  font-size: calc(var(--ui) * 0.85);
+  letter-spacing: 1.2px;
+  color: rgba(190, 210, 230, 0.66);
+}
+.overlay .stat em {
+  font-style: normal;
+  color: rgba(150, 170, 195, 0.5);
+}
+.overlay .stat .mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.4px;
+}
+.overlay-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+}
+
+/* A link that reads as navigation rather than as an action: the
+   sovereign's name opens that territory's panel. */
+.link {
+  font: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.28);
+}
+.link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* The invisible click target on a marker. Visible on hover so a
+   target you cannot see is not a mystery. */
+.sys-hit {
+  cursor: pointer;
+}
+.sys-hit.hot {
+  fill: rgba(150, 200, 255, 0.1);
+  stroke: rgba(150, 200, 255, 0.35);
+  stroke-width: 1;
+}
+
+/* The still and the turning strip occupy the same cell, so the strip
+   can fade in over a finished still instead of replacing it. */
+.world {
+  position: relative;
+  line-height: 0;
+}
+/* A ringed system draws outside its own box: the ring is 1.64x the planet's
+   diameter. Without this the overlay panel would need padding to fit it, and the
+   sprite's square box is deliberately exactly the disc. */
+.world.ringed {
+  overflow: visible;
+}
+.world-ring {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* The overlay's ring: one canvas, behind the sprite. It carries its own cut-out
+   for the planet, so nothing has to be layered in front. */
+/**
+ * IN FRONT of the sprite, which is the opposite of what this first did.
+ *
+ * In `GasPlanetLayers.tscn` the `Ring` ColorRect is node index 1 and `GasLayers` is
+ * index 0, and Godot draws later siblings on top. So the reference's ring is drawn
+ * OVER the planet and does its own occlusion: the shader cuts the far arm out with
+ * `if (uv.y < 0.5) ring *= step(...)`, and the near arm is left alone so it can lie
+ * across the planet's face. Both halves of the depth cue come from that one rule.
+ *
+ * This canvas was put BEHIND the sprite, on the reasoning that the sprite is opaque
+ * across its disc so the ring would be occluded for free. That is true and it is
+ * wrong: it hides the near arm too, so the ring stops dead at the planet's edge on
+ * both sides and reads as two stubs rather than a ring passing round a planet. The
+ * hole in the shader is not a substitute for painting the ring on top — it is only
+ * the far half of the arrangement.
+ */
+.world-ring-gl-host {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  z-index: 3;
+}
+.world-ring-gl {
+  display: block;
+}
+
+/* Only when the canvas ring could not be built. Two SVGs, far half and near half,
+   which is the arrangement the canvas replaced. */
+.world-ring-fallback {
+  position: absolute;
+  pointer-events: none;
+}
+/**
+ * Four layers, and ALL of them positioned.
+ *
+ * The layering used to rely on DOM order: far ring, sprite, near ring. That is
+ * correct in SVG, where document order IS paint order, and it is why the chart's
+ * rings were always right while the overlay's were not.
+ *
+ * CSS paints positioned descendants in a later pass than static ones, whatever the
+ * DOM says. `.world-ring-back` is `position: absolute` and `.world-still` was a
+ * static `<img>`, so the far half painted ON TOP of the planet, and its `z-index: 0`
+ * had nothing to contradict it. The ring crossed the planet's face and the system
+ * read as a hoop drawn over a disc.
+ *
+ * So the sprite is positioned too, and the four layers are stated rather than
+ * implied:
+ *
+ *     0  far half of the ring    behind the planet
+ *     1  the still               the planet
+ *     2  the filmstrip           fades in over the still
+ *     3  near half of the ring   in front of both
+ *
+ * z-index 0 is not the absence of layering. It is a level, and it was the wrong one.
+ */
+.world-ring-back {
+  z-index: 0;
+}
+.world-still {
+  z-index: 1;
+}
+.world-turn {
+  z-index: 2;
+}
+.world-ring-front {
+  z-index: 3;
+}
+
+/* A black hole's disc is the preimage of an ellipse under a non-linear warp, so
+   it cannot be a path. It is a shader when there is a context for one, and the
+   baked sprite otherwise; both sit over the still, which is always there. */
+.blackhole {
+  position: relative;
+  line-height: 0;
+  overflow: visible;
+}
+/* Above the still, so the live canvas replaces it rather than blending with it. */
+.world-gl {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+/* The `hidden` attribute has to be able to win.
+   `.world-still` sets `display: block`, and an author rule beats the user agent's
+   `[hidden] { display: none }` -- so hiding the still by attribute did nothing at
+   all, and the baked sprite stayed visible under a transparent canvas. Since the
+   two renders disagree about where the singularity is, that showed up as two black
+   holes: a large dark ellipse from the still and a small ringed circle from the
+   shader. Worth stating because it is invisible in review and total in effect. */
+[hidden] {
+  display: none !important;
+}
+.world-gl canvas {
+  display: block;
+}
+.blackhole .world-turn {
+  position: absolute;
+  inset: 0;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.world-still,
+.world-turn {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.world-turn {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.world-still {
+  /* Positioned so the ring's z-index has something to be relative to. This is the
+     whole fix for the ring crossing the planet's face; see the layer note above
+     `.world-ring-back`. A static `<img>` paints in an earlier pass than any
+     positioned sibling, whatever the DOM order says. */
+  position: absolute;
+  inset: 0;
+}
+.world.turning .world-turn {
+  opacity: 1;
+}
+
+.toolbar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+/* The chrome buttons: toolbar and panel alike.
+   `.panel-close` used to be styled only as `.toolbar .panel-close`, which never
+   matched it in a panel — so the dismiss button on the territory panel had been
+   rendering as an unstyled browser default. Shared here rather than duplicated,
+   so the two cannot drift. */
+.toolbar button,
+.panel-close {
+  font: inherit;
+  font-size: calc(var(--ui) * 0.85);
+  letter-spacing: 0.8px;
+  color: #b8c8da;
+  background: rgba(10, 16, 26, 0.85);
+  border: 1px solid rgba(120, 160, 200, 0.25);
+  padding: 4px 9px;
+  cursor: pointer;
+}
+.toolbar button:hover,
+.panel-close:hover {
+  color: #eaf2fa;
+  border-color: rgba(140, 190, 240, 0.55);
+}
+.toolbar button.on {
+  background: rgba(60, 120, 190, 0.5);
+  color: #eaf2fa;
+  border-color: rgba(140, 190, 240, 0.6);
+}
+.toolbar .paintpick {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-left: 8px;
+}
+.toolbar .paintlabel {
+  font-size: calc(var(--ui) * 0.85);
+  letter-spacing: 0.8px;
+  color: #6d8299;
+}
+.toolbar .swatch {
+  width: 13px;
+  height: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+}
+.toolbar .swatch.on {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+}
+
+/* The three non-nation brushes. None can be a flat colour, because none of them
+   names an owner: "unclaimed" is the absence of a colour, and contest/uncontest
+   are two positions on the same question. Uncontest is drawn as the contest
+   swatch with the hatch knocked out, so the pair reads as one control. */
+.toolbar .swatch-unclaim {
+  background:
+    repeating-linear-gradient(45deg, #2a3140 0 3px, transparent 3px 6px),
+    #141a24;
+}
+.toolbar .swatch-contest {
+  background: repeating-linear-gradient(45deg, #ffb454 0 2px, #3a2a12 2px 5px);
+}
+.toolbar .swatch-uncontest {
+  background:
+    repeating-linear-gradient(45deg, #6b5a3a 0 2px, transparent 2px 5px),
+    #241d12;
+}
+.toolbar .swatch-unclaim.on,
+.toolbar .swatch-contest.on,
+.toolbar .swatch-uncontest.on {
+  outline-color: #ffb454;
+}
+.toolbar .swatch-uncontest.on {
+  outline-color: #d9c9a8;
+}
+
+/* Drag-to-paint. The cursor has to change when the button is actually down,
+   otherwise a drag looks identical to a click until the preview appears. */
+svg.chart.painting {
+  cursor: cell;
+}
+svg.chart.stroking {
+  cursor: crosshair;
+}
+.stroke-pending {
+  pointer-events: none;
+}
+
+/* Contested ground on the chart itself, and its count in the legend. */
+.contested-layer {
+  pointer-events: none;
+}
+.legend-contested {
+  color: #ffb454;
+}
+
+/* Armed state. Painting has to be obvious, because with a swatch held down a
+   click means something completely different to what it meant a moment ago. */
+.toolbar .paintpick.armed .paintlabel {
+  color: #ffd479;
+}
+.toolbar .armed-note {
+  font-size: calc(var(--ui) * 0.85);
+  letter-spacing: 0.8px;
+  color: #ffd479;
+  background: rgba(10, 16, 26, 0.85);
+  border: 1px solid rgba(255, 212, 121, 0.4);
+  padding: 4px 9px;
+}
+.toolbar .locpick {
+  display: flex;
+  gap: 2px;
+}
+.toolbar .panel-close {
+  margin-top: 10px;
+}
+
+.legend {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  font-size: calc(var(--ui) * 0.85);
+  color: rgba(160, 185, 210, 0.62);
+  letter-spacing: 0.5px;
+  line-height: 1.7;
+}
+.legend b {
+  color: rgba(215, 230, 245, 0.9);
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* Generated world sprites inside the chart. The chart is otherwise pure geometry,
+   so a raster here is the one thing that is not resolution independent, and this is
+   what keeps it from being smoothed into a smudge. */
+.planet-mark,
+img.pl {
+  image-rendering: pixelated;
+}
+
+/* Rotating sprite: a pre-rendered strip stepped through with an integer
+   `steps()`, so the frames stay pixel-crisp. A fractional step count or a
+   smoothed scale is exactly what turns pixel art back into mush. */
+.spin,
+.world-turn {
+  image-rendering: pixelated;
+  background-repeat: no-repeat;
+  animation-name: planet-spin;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  will-change: background-position;
+}
+@keyframes planet-spin {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: var(--spin-end, var(--world-end, 0)) 0;
+  }
+}
+
+/* A still world. Pixelated for the same reason: a generated sprite scaled by
+   anything other than 1:1 is mush. */
+.world-still {
+  image-rendering: pixelated;
+  display: block;
+}
+
+/**
+ * The disc terms: Doppler beaming, photon ring, spiral wave.
+ *
+ * Deliberately unlabelled dots. Each names a physical effect that means nothing to
+ * anyone who has not read the shader, so a word would be a label that has to be
+ * translated and would still not say what the switch does. The `title` carries the
+ * name for anyone who hovers; the lit state carries the answer.
+ */
+.fx-pick {
+  display: flex;
+  gap: 3px;
+  padding: 2px 3px;
+  background: rgba(14, 18, 28, 0.9);
+  border: 1px solid rgba(120, 160, 200, 0.28);
+}
+.fx-toggle {
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  border: 1px solid rgba(120, 160, 200, 0.4);
+  background: rgba(10, 14, 22, 0.9);
+  cursor: pointer;
+}
+.fx-toggle.on {
+  background: #ffb457;
+  border-color: #ffd9a0;
+}
