@@ -10,7 +10,6 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Ghost;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
-using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Containers;
@@ -153,8 +152,7 @@ public sealed class MalfAiShuntTest
                     Assert.That(entMan.GetComponent<DestructibleComponent>(core).IsBroken, Is.True);
                     break;
                 case "unpowered":
-                    server.System<SharedBatterySystem>().SetCharge(
-                        (core, entMan.GetComponent<BatteryComponent>(core)), 0);
+                    server.System<SharedPowerReceiverSystem>().SetPowerDisabled(core, true);
                     break;
                 case "occupied":
                     var otherAi = entMan.SpawnEntity("StationAiBrain", map.GridCoords);
