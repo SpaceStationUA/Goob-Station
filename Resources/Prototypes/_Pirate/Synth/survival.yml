@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: loadoutEffectGroup
+  id: EffectSpeciesSynth
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Synth
+
+# Pirate: one box for every survival group, like EmergencySilicon.
+- type: loadout
+  id: EmergencySynth
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesSynth
+  storage:
+    back:
+    - BoxSurvivalSlotsSynth

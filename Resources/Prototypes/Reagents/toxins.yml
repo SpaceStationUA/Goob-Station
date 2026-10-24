@@ -784,7 +784,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition # Goobstation - Yowie
-          type: [ Yowie ]
+          type: [ Yowie, Synth ] # Pirate: synth fixes - synths eat steel, which carries 1u lead per sheet
           inverted: true
         damage:
           types:
