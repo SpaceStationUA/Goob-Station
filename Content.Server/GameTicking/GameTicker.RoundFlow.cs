@@ -375,6 +375,27 @@ namespace Content.Server.GameTicking
             if (DummyTicker || _startingRound)
                 return;
 
+            // Re-check at the actual launch, even if a vote or preload selected
+            // SecretSalt before the previous round finished.
+            if (Preset?.ID == SecretSaltRotationTracker.PresetId &&
+                EntityManager.System<SecretSaltRotationSystem>().IsBlocked)
+            {
+                var fallback = FindGamePreset("Secret");
+                if (fallback == null || IsPresetDisabled(fallback))
+                {
+                    _sawmill.Error("Secret Salt rotation: fallback preset 'Secret' is missing or disabled.");
+                    return;
+                }
+
+                var wasPreloaded = CurrentPreset != null;
+                ClearGameRules();
+                // This fallback starts now, not after another completed round.
+                // Preloaded rules need no extra countdown tick.
+                SetGamePreset(fallback, resetDelay: wasPreloaded ? 0 : 1);
+                if (wasPreloaded)
+                    AddGamePresetRules();
+            }
+
             _startingRound = true;
 
             if (RoundId == 0)

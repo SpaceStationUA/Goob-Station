@@ -601,6 +601,11 @@ namespace Content.Server.Voting.Managers
                 if (ticker.IsPresetDisabled(preset))
                     continue;
 
+                // A Salt vote must not offer a third consecutive played Salt round.
+                if (preset.ID == SecretSaltRotationTracker.PresetId &&
+                    _entityManager.System<SecretSaltRotationSystem>().IsBlocked)
+                    continue;
+
                 if(_playerManager.PlayerCount < (preset.MinPlayers ?? int.MinValue))
                     continue;
 

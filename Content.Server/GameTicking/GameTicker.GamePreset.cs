@@ -140,6 +140,27 @@ public sealed partial class GameTicker
             return;
         }
 
+        // Secret Salt rotation applies to all preset-selection paths.
+        // The third consecutive played SecretSalt round is forbidden.
+        if (preset?.ID == SecretSaltRotationTracker.PresetId &&
+            EntityManager.System<SecretSaltRotationSystem>().IsBlocked)
+        {
+            _sawmill.Warning("Секрет Сіль: два зіграні раунди поспіль, обрано інший режим.");
+            SendServerMessage("Секрет Сіль уже був двічі поспіль. Наступний раунд буде в іншому режимі.");
+            preset = FindGamePreset("Secret");
+            if (preset == null || IsPresetDisabled(preset))
+            {
+                _sawmill.Error("Secret Salt rotation: fallback preset 'Secret' is missing or disabled.");
+                return;
+            }
+
+            // The fallback must last just one played round, even when the
+            // requested Salt preset supplied a longer reset delay.
+            // In the lobby, a previously preloaded round must not consume
+            // an extra countdown tick; in an active round it still must.
+            resetDelay = RunLevel == GameRunLevel.InRound || CurrentPreset == null ? 1 : 0;
+        }
+
         if (resetDelay is not null)
         {
             ResetCountdown = resetDelay.Value;
