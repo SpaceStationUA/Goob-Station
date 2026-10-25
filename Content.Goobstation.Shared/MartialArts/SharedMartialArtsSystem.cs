@@ -540,11 +540,12 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             || !_proto.HasIndex<MartialArtPrototype>(grant.MartialArtsForm.ToString()))
             return false;
 
-        if (!string.IsNullOrEmpty(knowledge.OriginalFistDamageType))
+        if (knowledge.OriginalFistDamage.Count != 0)
         {
             var original = new DamageSpecifier();
-            original.DamageDict[knowledge.OriginalFistDamageType] =
-                Content.Goobstation.Maths.FixedPoint.FixedPoint2.New(knowledge.OriginalFistDamage);
+            foreach (var (type, amount) in knowledge.OriginalFistDamage)
+                original.DamageDict[type] = Content.Goobstation.Maths.FixedPoint.FixedPoint2.New(amount);
+
             melee.Damage = original;
         }
 
@@ -607,13 +608,11 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         LoadCombos(martialArtsPrototype.RoundstartCombos, canPerformComboComponent);
         martialArtsKnowledgeComponent.Blocked = false;
 
-        if (meleeWeaponComponent.Damage.DamageDict.Count != 0)
-        {
-            martialArtsKnowledgeComponent.OriginalFistDamage =
-                meleeWeaponComponent.Damage.DamageDict.Values.ElementAt(0).Float();
-            martialArtsKnowledgeComponent.OriginalFistDamageType =
-                meleeWeaponComponent.Damage.DamageDict.Keys.ElementAt(0);
-        }
+        // Pirate edit start: preserve every original fist damage type
+        martialArtsKnowledgeComponent.OriginalFistDamage.Clear();
+        foreach (var (type, amount) in meleeWeaponComponent.Damage.DamageDict)
+            martialArtsKnowledgeComponent.OriginalFistDamage[type] = amount.Float();
+        // Pirate edit end
 
         var newDamage = new DamageSpecifier();
         newDamage.DamageDict.Add(martialArtsPrototype.DamageModifierType, martialArtsPrototype.BaseDamageModifier);

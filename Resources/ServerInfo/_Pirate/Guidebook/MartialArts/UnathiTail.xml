@@ -11,7 +11,7 @@
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
   </Box>
-  Повалює ціль на 0,5 секунди. Не завдає шкоди витривалості й не вибиває речі з рук.
+  Збиває супротивника з ніг.
 
   ### Задушення хвостом
   <Box>
@@ -20,7 +20,7 @@
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
   </Box>
-  Повалює ціль на 1 секунду й переводить захват у стан «душить». Не завдає шкоди витривалості й не вибиває речі з рук.
+  Повалює супротивника й переводить захват у стан «душить».
 
   ### Кидок хвостом
   <Box>
@@ -29,6 +29,6 @@
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
   </Box>
-  Валить і відкидає ціль на невелику відстань завдаючи 5 шкоди витривалості. Не вибиває речі з рук.
+  Відкидає супротивника назад і трохи виснажує його.
 
 </Document>

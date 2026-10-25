@@ -48,7 +48,7 @@ public sealed class UnathiTailSystem : EntitySystem
         if (TryComp<PullableComponent>(target, out var pullable))
             _pulling.TryStopPull(target, pullable, ent, true);
 
-        _stun.TryKnockdown(target, proto.ParalyzeTime, true, true, false);
+        _stun.TryKnockdown(target, null, true, true, false);
         PlayCombo(ent, target, proto.Name, "/Audio/Weapons/genhit3.ogg");
     }
 
@@ -64,7 +64,7 @@ public sealed class UnathiTailSystem : EntitySystem
         if (!_grab.TrySetGrabStages((ent, puller, grabIntent), (target, pullable, grabbable), GrabStage.Suffocate))
             return;
 
-        _stun.TryKnockdown(target, proto.ParalyzeTime, true, true, false);
+        _stun.TryKnockdown(target, null, true, true, false);
         PlayCombo(ent, target, proto.Name, "/Audio/Weapons/genhit3.ogg");
     }
 
@@ -79,7 +79,7 @@ public sealed class UnathiTailSystem : EntitySystem
         if (TryComp<PullableComponent>(target, out var pullable))
             _pulling.TryStopPull(target, pullable, ent, true);
 
-        _stun.TryKnockdown(target, proto.ParalyzeTime, true, true, false);
+        _stun.TryKnockdown(target, null, true, true, false);
         _stamina.TakeStaminaDamage(target, proto.StaminaDamage, source: ent);
         _grabThrowing.Throw(target, ent, direction, proto.ThrownSpeed, behavior: false);
         PlayCombo(ent, target, proto.Name, "/Audio/Weapons/genhit2.ogg");

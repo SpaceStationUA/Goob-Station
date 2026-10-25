@@ -33,13 +33,9 @@ public sealed partial class MartialArtsKnowledgeComponent : GrabStagesOverrideCo
     [AutoNetworkedField]
     public bool Blocked;
 
-    [DataField]
+    [DataField] // Pirate: preserve all original damage types when switching martial arts
     [AutoNetworkedField]
-    public float OriginalFistDamage;
-
-    [DataField]
-    [AutoNetworkedField]
-    public string OriginalFistDamageType;
+    public Dictionary<string, float> OriginalFistDamage = new();
 
     // Pirate start - martial art switching
     [DataField]

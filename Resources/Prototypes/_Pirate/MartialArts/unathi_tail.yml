@@ -16,7 +16,6 @@
   martialArtsForm: UnathiTailArts
   attacks: [Harm, Grab]
   event: !type:UnathiTailTripPerformedEvent { }
-  paralyzeTime: 0.5
   dropItems: false
 
 - type: combo
@@ -25,7 +24,6 @@
   martialArtsForm: UnathiTailArts
   attacks: [Disarm, Grab, Disarm, Grab]
   event: !type:UnathiTailChokePerformedEvent { }
-  paralyzeTime: 1
   dropItems: false
 
 - type: combo
@@ -35,6 +33,5 @@
   attacks: [Harm, Harm, Harm, Disarm]
   event: !type:UnathiTailThrowPerformedEvent { }
   thrownSpeed: 4
-  paralyzeTime: 0.5
   staminaDamage: 5
   dropItems: false
