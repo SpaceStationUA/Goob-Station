@@ -118,7 +118,7 @@ public sealed class PirateChatFilterTest
                     Actor = user,
                     LoaderUid = entities.GetNetEntity(pda),
                 };
-                entities.EventBus.RaiseLocalEvent(cartridge, ref message);
+                entities.EventBus.RaiseLocalEvent(cartridge, message);
             }
 
             Send("текстЫ");

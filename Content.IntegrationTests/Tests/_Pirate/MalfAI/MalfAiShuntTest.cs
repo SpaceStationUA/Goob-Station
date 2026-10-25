@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Destructible;
+using Content.Server.Ghost;
 using Content.Server.Mind;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared._Pirate.MalfAI.Actions;
@@ -101,11 +102,15 @@ public sealed class MalfAiShuntTest
         await pair.CleanReturnAsync();
     }
 
-    [TestCase("missing")]
-    [TestCase("broken")]
-    [TestCase("unpowered")]
-    [TestCase("occupied")]
-    public async Task DestroyedApcWithUnavailableCoreGhostsAi(string coreState)
+    [TestCase("missing", null)]
+    [TestCase("broken", null)]
+    [TestCase("unpowered", null)]
+    [TestCase("occupied", null)]
+    [TestCase("missing", "MobObserver")]
+    [TestCase("occupied", "MobObserver")]
+    [TestCase("missing", "AdminObserver")]
+    [TestCase("occupied", "AdminObserver")]
+    public async Task DestroyedApcWithUnavailableCoreGhostsAi(string coreState, string? visitingPrototype)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
@@ -122,6 +127,17 @@ public sealed class MalfAiShuntTest
         EntityUid core = default;
         EntityUid ai = default;
         EntityUid apc = default;
+        EntityUid? visitedGhost = null;
+        var ghostsBeforeDestruction = 0;
+
+        int CountGhosts()
+        {
+            var count = 0;
+            var ghosts = entMan.EntityQueryEnumerator<GhostComponent>();
+            while (ghosts.MoveNext(out _, out _))
+                count++;
+            return count;
+        }
 
         await server.WaitAssertion(() =>
         {
@@ -160,6 +176,16 @@ public sealed class MalfAiShuntTest
                         containers.GetContainer(core, StationAiHolderComponent.Container)), Is.True);
                     break;
             }
+
+            if (visitingPrototype != null)
+            {
+                visitedGhost = entMan.SpawnEntity(visitingPrototype, map.GridCoords);
+                server.System<GhostSystem>().SetCanReturnToBody(visitedGhost.Value, true);
+                mindSystem.Visit(mind, visitedGhost.Value, mind.Comp);
+                Assert.That(mind.Comp.VisitingEntity, Is.EqualTo(visitedGhost));
+                Assert.That(mind.Comp.OwnedEntity, Is.EqualTo(ai));
+                Assert.That(session.AttachedEntity, Is.EqualTo(visitedGhost));
+            }
         });
         await pair.RunTicksSync(5);
 
@@ -167,6 +193,8 @@ public sealed class MalfAiShuntTest
         {
             if (coreState == "unpowered")
                 Assert.That(server.System<SharedPowerReceiverSystem>().IsPowered(core), Is.False);
+
+            ghostsBeforeDestruction = CountGhosts();
 
             server.System<DamageableSystem>().ChangeDamage(apc,
                 new DamageSpecifier(server.ProtoMan.Index<DamageTypePrototype>("Blunt"), 60),
@@ -184,6 +212,13 @@ public sealed class MalfAiShuntTest
             Assert.That(mindSystem.TryGetMind(session.UserId, out _, out var mind), Is.True);
             Assert.That(mind!.OwnedEntity, Is.EqualTo(session.AttachedEntity));
             Assert.That(mind.IsVisitingEntity, Is.False);
+            if (visitedGhost != null)
+            {
+                Assert.That(session.AttachedEntity, Is.EqualTo(visitedGhost), "The existing ghost must be reused.");
+                Assert.That(CountGhosts(), Is.EqualTo(ghostsBeforeDestruction), "Destroying the APC must not create a second ghost.");
+                mindSystem.UnVisit(mind.Owner, mind);
+                Assert.That(session.AttachedEntity, Is.EqualTo(visitedGhost), "There must be no body or second ghost to return to.");
+            }
         });
 
         await pair.CleanReturnAsync();
