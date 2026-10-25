@@ -195,17 +195,10 @@ public partial class SharedMartialArtsSystem
 
         if (downed)
         {
-            // Pirate edit start: Unathi tail martial art
-            if (proto.ProneStaminaDamage > 0)
-                _stamina.TakeStaminaDamage(target, proto.StaminaDamage + proto.ProneStaminaDamage, source: ent); // Pirate
-            else
-            {
-                if (TryComp<StaminaComponent>(target, out var stamina) && stamina.Critical)
-                    _newStatus.TryAddStatusEffectDuration(target, "StatusEffectForcedSleeping", out _, TimeSpan.FromSeconds(10));
-                DoDamage(ent, target, proto.DamageType, proto.ExtraDamage, out _, TargetBodyPart.Head);
-                _stamina.TakeStaminaDamage(target, proto.StaminaDamage * 2 + 5, source: ent);
-            }
-            // Pirate edit end
+            if (TryComp<StaminaComponent>(target, out var stamina) && stamina.Critical)
+                _newStatus.TryAddStatusEffectDuration(target, "StatusEffectForcedSleeping", out _, TimeSpan.FromSeconds(10));
+            DoDamage(ent, target, proto.DamageType, proto.ExtraDamage, out _, TargetBodyPart.Head);
+            _stamina.TakeStaminaDamage(target, proto.StaminaDamage * 2 + 5, source: ent);
         }
         else
         {

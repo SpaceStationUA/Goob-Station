@@ -438,7 +438,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         args.Cancel();
     }
 
-    private void ComboPopup(EntityUid user, EntityUid target, string comboName)
+    public void ComboPopup(EntityUid user, EntityUid target, string comboName) // Pirate
     {
         if (!_netManager.IsServer)
             return;
@@ -635,7 +635,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         }
     }
 
-    private bool TryUseMartialArt(Entity<CanPerformComboComponent> ent,
+    public bool TryUseMartialArt(Entity<CanPerformComboComponent> ent, // Pirate
         ComboPrototype proto,
         out EntityUid target,
         out bool downed)

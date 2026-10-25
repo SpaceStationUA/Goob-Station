@@ -151,7 +151,7 @@ public partial class SharedMartialArtsSystem
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !TryUseMartialArt(ent, proto, out var target, out var downed)
-            || (!downed && proto.MartialArtsForm != MartialArtsForms.UnathiTailArts) // Pirate: Unathi tail martial art
+            || !downed
             || !TryComp<PullerComponent>(ent, out var puller)
             || !TryComp<GrabIntentComponent>(ent, out var grabIntent)
             || !TryComp<PullableComponent>(target, out var pullable)

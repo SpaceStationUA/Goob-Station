@@ -15,7 +15,7 @@
   name: підсікання хвостом
   martialArtsForm: UnathiTailArts
   attacks: [Harm, Grab]
-  event: !type:CqcSlamPerformedEvent { }
+  event: !type:UnathiTailTripPerformedEvent { }
   paralyzeTime: 0.5
   dropItems: false
 
@@ -24,17 +24,17 @@
   name: задушення хвостом
   martialArtsForm: UnathiTailArts
   attacks: [Disarm, Grab, Disarm, Grab]
-  event: !type:JudoArmbarPerformedEvent { }
+  event: !type:UnathiTailChokePerformedEvent { }
   paralyzeTime: 1
-  staminaDamage: 5
+  dropItems: false
 
 - type: combo
   id: TailThrow
   name: кидок хвостом
   martialArtsForm: UnathiTailArts
   attacks: [Harm, Harm, Harm, Disarm]
-  event: !type:CqcKickPerformedEvent { }
+  event: !type:UnathiTailThrowPerformedEvent { }
   thrownSpeed: 4
-  staminaDamage: 10
-  proneStaminaDamage: 10
+  paralyzeTime: 0.5
+  staminaDamage: 5
   dropItems: false
