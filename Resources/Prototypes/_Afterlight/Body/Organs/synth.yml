@@ -188,6 +188,7 @@
       - RawMaterial
       - ConstructionMaterial
       - Ore
+      - SynthFood # Pirate: synth survival kit update
     isSpecialDigestibleExclusive: false
   - type: Metabolizer
     maxPoisonsProcessable: 5
