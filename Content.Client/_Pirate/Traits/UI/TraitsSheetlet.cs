@@ -122,6 +122,7 @@ public sealed class TraitsSheetlet : Sheetlet<PalettedStylesheet>
                 .Class("TraitsEntryDescriptionLabel")
                 .Font(font10)
                 .FontColor(ProfileEditorStyles.TextSecondary),
+            E<Label>().Class("TraitsEntryDescriptionLink").Font(font10),
         ];
     }
 }

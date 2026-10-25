@@ -1,7 +1,13 @@
 - type: traitCategory
+  id: RaceSpecific
+  name: trait-category-race-specific
+  priority: 0
+  accentColor: "#06b6d4"
+
+- type: traitCategory
   id: Physical
   name: trait-category-physical
-  priority: 0
+  priority: 1
   accentColor: "#f97316"
 
 - type: traitCategory

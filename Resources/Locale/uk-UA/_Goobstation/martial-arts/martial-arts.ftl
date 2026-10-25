@@ -9,6 +9,15 @@ cqc-fail-notself = Ви не можете нікого навчити за до�
 cqc-fail-changeling = Ми вище цього.
 cqc-fail-knowanother = Ви вже знаєте інше бойове мистецтво.
 cqc-fail-already = Ви вже володієте бойовим мистецтвом.
+martial-arts-confirm-swap = Ви впевнені, що хочете змінити бойовий стиль з «{$old}» на «{$new}»? Використайте ще раз для підтвердження.
+martial-art-CorporateJudo = корпоративне дзюдо
+martial-art-CloseQuartersCombat = CQC
+martial-art-SleepingCarp = сплячий короп
+martial-art-Capoeira = капоейра
+martial-art-KungFuDragon = кунг-фу дракона
+martial-art-Ninjutsu = ніндзюцу
+martial-art-HellRip = пекельний розрив
+martial-art-LegendaryCloseQuartersCombat = легендарне CQC
 cqc-success-unblocked = Ваші навички Ближнього Бою більше не прив'язані до кухні.
 cqc-success-learned = Ви вивчили Ближній Бій.
 cqc-manual-used = [color=white]{CAPITALIZE(THE($manual))} схоже, вже використаний.[/color]

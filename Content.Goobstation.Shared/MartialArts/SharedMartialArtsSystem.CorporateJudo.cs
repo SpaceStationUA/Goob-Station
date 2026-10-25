@@ -61,10 +61,15 @@ public partial class SharedMartialArtsSystem
         if (!TryComp<MeleeWeaponComponent>(args.Wearer, out var meleeWeaponComponent))
             return;
 
-        var originalDamage = new DamageSpecifier();
-        originalDamage.DamageDict[martialArtsKnowledge.OriginalFistDamageType]
-            = FixedPoint2.New(martialArtsKnowledge.OriginalFistDamage);
-        meleeWeaponComponent.Damage = originalDamage;
+        // Pirate start - martial art switching
+        if (!string.IsNullOrEmpty(martialArtsKnowledge.OriginalFistDamageType))
+        {
+            var originalDamage = new DamageSpecifier();
+            originalDamage.DamageDict[martialArtsKnowledge.OriginalFistDamageType]
+                = FixedPoint2.New(martialArtsKnowledge.OriginalFistDamage);
+            meleeWeaponComponent.Damage = originalDamage;
+        }
+        // Pirate end
 
         RemComp<MartialArtsKnowledgeComponent>(user);
         RemComp<CanPerformComboComponent>(user);
@@ -146,7 +151,7 @@ public partial class SharedMartialArtsSystem
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !TryUseMartialArt(ent, proto, out var target, out var downed)
-            || !downed
+            || (!downed && proto.MartialArtsForm != MartialArtsForms.UnathiTailArts) // Pirate: Unathi tail martial art
             || !TryComp<PullerComponent>(ent, out var puller)
             || !TryComp<GrabIntentComponent>(ent, out var grabIntent)
             || !TryComp<PullableComponent>(target, out var pullable)

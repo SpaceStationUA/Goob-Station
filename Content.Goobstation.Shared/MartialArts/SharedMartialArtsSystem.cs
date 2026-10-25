@@ -5,6 +5,7 @@ using Content.Goobstation.Common.Grab;
 using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Shared.Emoting;
 using Content.Goobstation.Shared.Changeling.Components;
+using Content.Goobstation.Shared.CustomFactionIcons; // Pirate: martial art switching
 using Content.Goobstation.Shared.GrabIntent;
 using Content.Goobstation.Shared.MartialArts.Components;
 using Content.Goobstation.Shared.Sprinting;
@@ -32,6 +33,7 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NPC.Systems;
+using Content.Goobstation.Shared.Projectiles; // Pirate: martial art switching
 using Content.Shared.Popups;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
@@ -395,7 +397,22 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         if(TryComp<CanPerformComboComponent>(ent, out var comboComponent))
             comboComponent.AllowedCombos.Clear();
 
-        RemCompDeferred<DragonKungFuTimerComponent>(ent);
+        // Pirate start: martial art switching
+        RemComp<DragonKungFuTimerComponent>(ent);
+        RemComp<NinjutsuSneakAttackComponent>(ent);
+        RemComp<MartialArtModifiersComponent>(ent);
+        _status.TryRemoveStatusEffect(ent, "DragonPower");
+        _status.TryRemoveStatusEffect(ent, "LossOfSurprise");
+
+        if (ent.Comp.MartialArtsForm != MartialArtsForms.SleepingCarp)
+            return;
+
+        _faction.RemoveFaction(ent.Owner, "Dragon");
+        if (TryComp<CustomFactionIconsComponent>(ent, out var icons)
+            && icons.FactionIcons.Remove("SleepingCarpFaction"))
+            Dirty(ent.Owner, icons);
+        RemComp<AutoDodgeComponent>(ent);
+        // Pirate end
     }
 
     private void CheckGrabStageOverride<T>(EntityUid uid, T component, CheckGrabOverridesEvent args)
@@ -449,7 +466,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     /// <param name="user"></param>
     /// <param name="comp"></param>
     /// <returns></returns>
-    private bool TryGrantMartialArt(EntityUid user, GrantMartialArtKnowledgeComponent comp)
+    public bool TryGrantMartialArt(EntityUid user, GrantMartialArtKnowledgeComponent comp) // Pirate: martial art switching
     {
         if (!_netManager.IsServer || MetaData(user).EntityLifeStage >= EntityLifeStage.Terminating)
             return false;
@@ -477,15 +494,62 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             return false;
         }
 
-        if (cqc.Blocked && comp.MartialArtsForm == MartialArtsForms.CloseQuartersCombat)
+        // Pirate start: martial art switching
+        if (cqc.MartialArtsForm == comp.MartialArtsForm)
         {
-            _popupSystem.PopupEntity(Loc.GetString("cqc-success-unblocked"), user, user);
-            cqc.Blocked = false;
-            return true;
+            if (cqc.Blocked && comp.MartialArtsForm == MartialArtsForms.CloseQuartersCombat)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("cqc-success-unblocked"), user, user);
+                cqc.Blocked = false;
+                Dirty(user, cqc);
+                return true;
+            }
+
+            _popupSystem.PopupEntity(Loc.GetString("cqc-fail-already"), user, user);
+            return false;
         }
 
-        _popupSystem.PopupEntity(Loc.GetString("cqc-fail-already"), user, user);
-        return false;
+        if (cqc.PendingForm != comp.MartialArtsForm || _timing.CurTime > cqc.PendingFormExpiry)
+        {
+            cqc.PendingForm = comp.MartialArtsForm;
+            cqc.PendingFormExpiry = _timing.CurTime + TimeSpan.FromSeconds(3);
+            Dirty(user, cqc);
+            _popupSystem.PopupEntity(Loc.GetString("martial-arts-confirm-swap",
+                ("old", Loc.GetString($"martial-art-{cqc.MartialArtsForm}")),
+                ("new", Loc.GetString($"martial-art-{comp.MartialArtsForm}"))), user, user);
+            return false;
+        }
+
+        cqc.PendingForm = null;
+        cqc.PendingFormExpiry = TimeSpan.Zero;
+
+        return ReplaceMartialArt(comp, user, cqc);
+    }
+
+    private bool ReplaceMartialArt(GrantMartialArtKnowledgeComponent grant, EntityUid user,
+        MartialArtsKnowledgeComponent knowledge)
+    {
+        if (!TryComp<MeleeWeaponComponent>(user, out var melee)
+            || !_proto.HasIndex<MartialArtPrototype>(grant.MartialArtsForm.ToString()))
+            return false;
+
+        if (!string.IsNullOrEmpty(knowledge.OriginalFistDamageType))
+        {
+            var original = new DamageSpecifier();
+            original.DamageDict[knowledge.OriginalFistDamageType] =
+                Content.Goobstation.Maths.FixedPoint.FixedPoint2.New(knowledge.OriginalFistDamage);
+            melee.Damage = original;
+        }
+
+        if (TryComp<CanPerformComboComponent>(user, out var combos))
+        {
+            combos.CurrentTarget = null;
+            combos.LastAttacks.Clear();
+            combos.ConsecutiveGnashes = 0;
+        }
+        RemComp<MartialArtsKnowledgeComponent>(user);
+        return GrantMartialArt(grant, user);
+        // Pirate end: martial art switching
     }
 
     private bool GrantMartialArt(GrantMartialArtKnowledgeComponent comp, EntityUid user)
