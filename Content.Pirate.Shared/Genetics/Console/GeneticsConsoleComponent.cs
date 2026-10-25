@@ -270,11 +270,8 @@ public sealed partial class GeneticsConsoleCombineMessage(uint index) : BoundUse
     public readonly uint Index = index;
 }
 
-/// <summary>
-/// BUI state containing the target mob's sequences client state.
-/// </summary>
 [Serializable, NetSerializable]
-public sealed class GeneticsConsoleState(List<SequenceState> sequences) : BoundUserInterfaceState
+public sealed partial class GeneticsConsoleState(List<SequenceState> sequences) : BoundUserInterfaceState
 {
     public readonly List<SequenceState> Sequences = sequences;
 }

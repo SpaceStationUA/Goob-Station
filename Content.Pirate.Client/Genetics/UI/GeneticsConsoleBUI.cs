@@ -37,10 +37,10 @@ public sealed partial class GeneticsConsoleBUI : BoundUserInterface
         _window.OnSelectServer += () => SendPredictedMessage(new ConsoleServerSelectionMessage());
         _window.OnScan += () => SendPredictedMessage(new GeneticsConsoleScanMessage());
         _window.OnScramble += () => SendPredictedMessage(new GeneticsConsoleScrambleMessage());
-        _window.OnSetBase += (s, i, c) => SendPredictedMessage(new GeneticsConsoleSetBaseMessage(s, i, c));
+        _window.OnSetBase += message => SendPredictedMessage(message);
         _window.OnWriteMutation += i => SendPredictedMessage(new GeneticsConsoleWriteMutationMessage(i));
         _window.OnSequence += i => SendPredictedMessage(new GeneticsConsoleSequenceMessage(i));
-        _window.OnResetSequence += i => SendPredictedMessage(new GeneticsConsoleResetSequenceMessage(i));
+        _window.OnResetSequence += message => SendPredictedMessage(message);
         _window.OnPrint += p => SendPredictedMessage(new GeneticsConsolePrintMessage(p));
         _window.OnCombine += i => SendPredictedMessage(new GeneticsConsoleCombineMessage(i));
         _window.OnSaveEnzymes += () => SendPredictedMessage(new GeneticsConsoleSaveEnzymesMessage());
@@ -52,6 +52,6 @@ public sealed partial class GeneticsConsoleBUI : BoundUserInterface
         if (state is not GeneticsConsoleState cast)
             return;
 
-        _window?.UpdateState(cast);
+        _window?.UpdateState(cast, EntMan.GetNetEntity(PlayerManager.LocalEntity));
     }
 }

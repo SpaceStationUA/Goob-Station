@@ -25,7 +25,7 @@ public sealed partial class SequenceButtons : ScrollContainer
 
     private uint? _selected;
     private List<SequenceState> _sequences = new();
-    private List<BaseButton> _buttons = new();
+    private List<Button> _buttons = new();
 
     public uint? Index => _selected;
 
@@ -51,33 +51,49 @@ public sealed partial class SequenceButtons : ScrollContainer
 
     public void SetStates(List<SequenceState> states)
     {
+        var selectedNumber = Sequence?.Number;
         _sequences = states;
+        if (_selected == null)
+            return;
+
+        _selected = null;
+        for (var i = 0; i < states.Count; i++)
+        {
+            if (states[i].Number != selectedNumber)
+                continue;
+
+            _selected = (uint) i;
+            break;
+        }
     }
 
     public void UpdateSequences()
     {
-        _buttons.Clear();
-        Buttons.RemoveAllChildren();
+        if (_buttons.Count != _sequences.Count)
+        {
+            _buttons.Clear();
+            Buttons.RemoveAllChildren();
+        }
         for (int i = 0; i < _sequences.Count; i++)
         {
             var sequence = _sequences[i];
             var index = (uint) i;
             var rarity = sequence.Rarity.RarityChar();
             var text = Loc.GetString("genetics-console-sequence-text", ("rarity", rarity), ("number", sequence.Number));
+            if (i < _buttons.Count)
+            {
+                _buttons[i].Text = text;
+                _buttons[i].Pressed = i == _selected;
+                continue;
+            }
             var button = new Button()
             {
-                // TODO: use a wrapping shader or something to do helix animated button
                 Text = text,
                 ToggleMode = true,
                 HorizontalExpand = true
             };
             button.Pressed = i == _selected;
             button.OnPressed += _ => OnSelected?.Invoke(index);
-            /*button.AddChild(new Label()
-            {
-                Text = text,
-                HorizontalAlignment = HAlignment.Center
-            });*/
             _buttons.Add(button);
             Buttons.AddChild(button);
         }

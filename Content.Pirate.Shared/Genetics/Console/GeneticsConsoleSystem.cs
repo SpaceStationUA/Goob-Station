@@ -54,6 +54,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         SubscribeLocalEvent<GeneticsConsoleComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<GeneticsConsoleComponent, GetMaterialWhitelistEvent>(OnGetMaterialWhitelist);
         SubscribeLocalEvent<GeneticsConsoleComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<GeneticsConsoleComponent, BoundUIClosedEvent>(OnSequenceUiClosed);
         SubscribeLocalEvent<GeneticsConsoleComponent, SequenceDoAfterEvent>(OnSequenceDoAfter);
         SubscribeLocalEvent<GeneticsConsoleComponent, DoAfterAttemptEvent<SequenceDoAfterEvent>>(OnSequenceCheck);
         SubscribeLocalEvent<GeneticsConsoleComponent, CombineDoAfterEvent>(OnCombineDoAfter);
@@ -126,22 +127,6 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         UpdateUI(ent.Owner);
     }
 
-    private void OnSetBase(Entity<GeneticsConsoleComponent> ent, ref GeneticsConsoleSetBaseMessage args)
-    {
-        if (GetWorkableMob(ent.Owner) is not {} mob ||
-            _genome.GetSequence(mob, args.Sequence) is not {} sequence ||
-            args.Index >= sequence.Bases.Length)
-            return;
-
-        // chud language can't just set a char directly
-        _builder.Clear();
-        _builder.Append(sequence.Bases);
-        var i = (int) args.Index;
-        _builder[i] = CycleBase(sequence.Bases[i], args.Cycle);
-        sequence.Bases = _builder.ToString();
-        UpdateUI(ent.Owner);
-    }
-
     private void OnSequence(Entity<GeneticsConsoleComponent> ent, ref GeneticsConsoleSequenceMessage args)
     {
         if (GetWorkableMob(ent.Owner) is not {} mob ||
@@ -163,20 +148,6 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         };
         SetBusy(ent.Owner, doAfterArgs);
         Speak(ent, "sequencing");
-    }
-
-    private void OnResetSequence(Entity<GeneticsConsoleComponent> ent, ref GeneticsConsoleResetSequenceMessage args)
-    {
-        if (GetWorkableMob(ent.Owner) is not {} mob ||
-            _genome.GetSequence(mob, args.Index) is not {} sequence ||
-            sequence.Bases == sequence.OriginalBases) // was already reset
-            return;
-
-        // incase some shitter runs in and erases all your progress on your monkey idk
-        _adminLog.Add(LogType.Genetics, LogImpact.Low, $"{mob:target} sequence {args.Index} was reset by {args.Actor:user} using console {ent.Owner:console}");
-
-        sequence.Bases = sequence.OriginalBases;
-        UpdateUI(ent.Owner);
     }
 
     private void OnSequenceDoAfter(Entity<GeneticsConsoleComponent> ent, ref SequenceDoAfterEvent args)
@@ -368,17 +339,17 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         => (b, cycle) switch
         {
             (_, GeneticsCycle.Reset) => 'X',
-            ('A', GeneticsCycle.Next) => 'C',
-            ('C', GeneticsCycle.Next) => 'G',
-            ('G', GeneticsCycle.Next) => 'T',
-            ('T', GeneticsCycle.Next) => 'X',
+            ('A', GeneticsCycle.Next) => 'T',
+            ('C', GeneticsCycle.Next) => 'X',
+            ('G', GeneticsCycle.Next) => 'C',
+            ('T', GeneticsCycle.Next) => 'G',
             ('X', GeneticsCycle.Next) => 'A',
             ('A', GeneticsCycle.Last) => 'X',
-            ('C', GeneticsCycle.Last) => 'A',
-            ('G', GeneticsCycle.Last) => 'C',
-            ('T', GeneticsCycle.Last) => 'G',
-            ('X', GeneticsCycle.Last) => 'T',
-            _ => b // how
+            ('C', GeneticsCycle.Last) => 'G',
+            ('G', GeneticsCycle.Last) => 'T',
+            ('T', GeneticsCycle.Last) => 'A',
+            ('X', GeneticsCycle.Last) => 'C',
+            _ => b
         };
 
     public bool TryUseBiomass(Entity<GeneticsConsoleComponent> ent, int cost)

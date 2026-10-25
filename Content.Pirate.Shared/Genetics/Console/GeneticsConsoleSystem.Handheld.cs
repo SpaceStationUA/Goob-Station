@@ -97,9 +97,10 @@ public sealed partial class GeneticsConsoleSystem
 
     private void OnLinkDoAfter(Entity<HandheldGeneticsScannerComponent> ent, ref LinkDoAfterEvent args)
     {
-        if (args.Cancelled || args.Target is not {} target)
+        if (_net.IsClient || args.Handled || args.Cancelled || args.Target is not {} target)
             return;
 
+        args.Handled = true;
         if (GetScannedMob(ent.Owner) is {} oldMob)
             Unlink(oldMob, ent.Owner);
 
