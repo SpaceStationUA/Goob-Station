@@ -1,0 +1,19 @@
+# Ported from https://github.com/Space-station-14-UA/SS14_UA/tree/0b02cd57eda7cfba754dabea97aed077c18a5490
+
+- type: entity
+  parent: BaseBarSign
+  id: BarSignDrunkCherry
+  name: П'яна вишня
+  description: Фірмова космічна наливка, зроблена з найсолодших вишеньок в усій галактиці!
+  components:
+  - type: BarSign
+    current: DrunkCherry
+
+- type: barSign
+  id: DrunkCherry
+  name: barsign-prototype-name-drunk-cherry
+  # Pirate: the RSI also includes the standard empty state for power loss.
+  icon:
+    sprite: _Pirate/Structures/Wallmounts/barsign.rsi
+    state: drunkcherry
+  description: barsign-prototype-description-cherry
