@@ -9,11 +9,15 @@
   components:
   - type: ContainerFill
     containers:
-      item:
+      storagebase:
+      - Handcuffs
+      - Handcuffs
+      - HoloprojectorSecurity
+      - RadioHandheldSecurity
       - Stunsword
 
 - type: entity
-  parent: [ClothingBeltBase, ClothingSlotBase, BaseSecurityContraband]
+  parent: [ClothingBeltStorageBase, BaseSecurityContraband]
   id: ClothingBeltSheathStunsword
   name: security sword sheath
   description: A plain black sheath, made to hold the NY-6 stunsword.
@@ -25,18 +29,51 @@
     sprite: _Pirate/Omu/Clothing/Belt/stunswordsheath.rsi
   - type: Item
     size: Ginormous
-  - type: ItemSlots
-    slots:
-      item:
-        name: Sabre
-        insertVerbText: sheath-insert-verb
-        ejectVerbText: sheath-eject-verb
-        insertSound: /Audio/Items/sheath.ogg
-        ejectSound: /Audio/Items/unsheath.ogg
-        whitelist:
-          tags:
-          - Stunsword
+  - type: SwordSheath
+    swordTag: Stunsword
+  - type: Storage
+    maxItemSize: Ginormous
+    defaultStorageOrientation: Vertical
+    grid:
+    - 0,0,3,1
+    - 5,0,5,5
+    storageInsertSound: /Audio/Items/sheath.ogg
+    storageRemoveSound: /Audio/Items/unsheath.ogg
+    whitelist:
+      tags:
+      - Stunsword
+      - CigPack
+      - Taser
+      - SecBeltEquip
+      - Radio
+      - Sidearm
+      - MagazinePistol
+      - MagazineMagnum
+      - CombatKnife
+      - Truncheon
+      - BolaEnergy
+      - EnergySpeedloader
+      - MilitaryPowerCell
+      - EnergyMagAmmo
+      - HandGrenade
+      components:
+      - Stunbaton
+      - FlashOnTrigger
+      - SmokeOnTrigger
+      - Flash
+      - Handcuff
+      - BallisticAmmoProvider
+      - CartridgeAmmo
+      - DoorRemote
+      - Whistle
+      - BalloonPopper
+      - ScatteringGrenade
+    blacklist:
+      tags:
+      - Justice
   - type: ItemMapper
+    containerWhitelist:
+    - storagebase
     mapLayers:
       sheath-sabre:
         whitelist:

@@ -26,16 +26,17 @@ public sealed partial class GeneticSequencer : BoxContainer
     private readonly ScannedGenomeSystem _genome;
 
     public event Action? OnScan;
-    public event Action<uint, uint, GeneticsCycle>? OnSetBase;
+    public event Action<GeneticsConsoleSetBaseMessage>? OnSetBase;
     public event Action<uint>? OnWriteMutation;
     public event Action<uint>? OnSequence;
-    public event Action<uint>? OnResetSequence;
+    public event Action<GeneticsConsoleResetSequenceMessage>? OnResetSequence;
     public event Action? OnPrintScan;
     public event Action<uint>? OnPrintSequence;
 
     private EntityUid? _mob;
     private Entity<GeneticsDiskComponent>? _disk;
     private bool _writeCooldown;
+    private readonly GeneticsSequenceEditor _editor = new();
 
     public GeneticSequencer()
     {
@@ -52,8 +53,11 @@ public sealed partial class GeneticSequencer : BoxContainer
 
         Puzzle.OnSetBase += (i, c) =>
         {
-            if (SequenceButtons.Index is {} s)
-                OnSetBase?.Invoke(s, i, c);
+            if (SequenceButtons.Index is not {} s || _editor.SetBase(s, i, c) is not {} message)
+                return;
+
+            UpdateEdits();
+            OnSetBase?.Invoke(message);
         };
         Puzzle.OnSequence += () =>
         {
@@ -62,8 +66,11 @@ public sealed partial class GeneticSequencer : BoxContainer
         };
         Puzzle.OnResetSequence += () =>
         {
-            if (SequenceButtons.Index is {} s)
-                OnResetSequence?.Invoke(s);
+            if (SequenceButtons.Index is not {} s || _editor.ResetSequence(s) is not {} message)
+                return;
+
+            UpdateEdits();
+            OnResetSequence?.Invoke(message);
         };
 
         WriteButton.OnPressed += _ =>
@@ -124,6 +131,16 @@ public sealed partial class GeneticSequencer : BoxContainer
         SequenceButtons.UpdateSequences();
         UpdateSequence();
         UpdateWriteButton();
+    }
+    public void SetState(GeneticsConsoleState state, NetEntity? actor)
+    {
+        if (_editor.SetState(state, actor))
+            UpdateEdits();
+    }
+
+    private void UpdateEdits()
+    {
+        SetState(_editor.Sequences);
     }
 
     public void UpdateScanButton()

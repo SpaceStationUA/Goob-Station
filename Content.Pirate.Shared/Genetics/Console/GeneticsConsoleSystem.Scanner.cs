@@ -61,6 +61,9 @@ public sealed partial class GeneticsConsoleSystem
 
     private void OnScan(Entity<GeneticsScannerComponent> ent, ref GeneticsConsoleScanMessage args)
     {
+        if (HasComp<HandheldGeneticsScannerComponent>(ent))
+            return;
+
         if (ent.Comp.ScannedMob is not {} mob)
             return;
 
@@ -174,14 +177,19 @@ public sealed partial class GeneticsConsoleSystem
 
     private void UpdateUI(Entity<GeneticsScannerComponent?> ent)
     {
-        if (!_scannerQuery.Resolve(ent, ref ent.Comp))
+        if (_net.IsClient || !_scannerQuery.Resolve(ent, ref ent.Comp))
             return;
 
         _sequences.Clear();
         if (ent.Comp.ScannedMob is {} mob)
             _genome.AddSequenceStates(mob, _sequences);
+        var history = UpdateHandheldHistory((ent.Owner, ent.Comp), _sequences);
         // UI states outlive this update and must not share the printout/scanner scratch list.
-        var state = new GeneticsConsoleState(new List<SequenceState>(_sequences));
+        var edits = EnsureComp<GeneticsSequenceEditComponent>(ent.Owner);
+        var state = new GeneticsConsoleState(new List<SequenceState>(_sequences),
+            GetNetEntity(ent.Comp.ScannedMob), ++edits.Revision,
+            new Dictionary<NetEntity, Guid>(edits.AcknowledgedEdits));
+        state.HandheldHistory = history;
         _ui.SetUiState(ent.Owner, GeneticsConsoleUiKey.Key, state);
     }
 

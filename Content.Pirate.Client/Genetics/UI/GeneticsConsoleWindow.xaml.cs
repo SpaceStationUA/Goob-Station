@@ -34,10 +34,10 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
     public event Action? OnSelectServer;
     public event Action? OnScan;
     public event Action? OnScramble;
-    public event Action<uint, uint, GeneticsCycle>? OnSetBase;
+    public event Action<GeneticsConsoleSetBaseMessage>? OnSetBase;
     public event Action<uint>? OnWriteMutation;
     public event Action<uint>? OnSequence;
-    public event Action<uint>? OnResetSequence;
+    public event Action<GeneticsConsoleResetSequenceMessage>? OnResetSequence;
     public event Action<uint>? OnPrint;
     public event Action<uint>? OnCombine;
     public event Action? OnSaveEnzymes;
@@ -85,10 +85,10 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
 
         Sequencer.OnScan += () => OnScan?.Invoke();
         ScrambleButton.OnPressed += _ => OnScramble?.Invoke();
-        Sequencer.OnSetBase += (s, i, c) => OnSetBase?.Invoke(s, i, c);
+        Sequencer.OnSetBase += message => OnSetBase?.Invoke(message);
         Sequencer.OnWriteMutation += i => OnWriteMutation?.Invoke(i);
         Sequencer.OnSequence += i => OnSequence?.Invoke(i);
-        Sequencer.OnResetSequence += i => OnResetSequence?.Invoke(i);
+        Sequencer.OnResetSequence += message => OnResetSequence?.Invoke(message);
 
         Storage.OnPrint += p => OnPrint?.Invoke(p);
 
@@ -124,9 +124,9 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         Storage.SetConsole(comp);
     }
 
-    public void UpdateState(GeneticsConsoleState state)
+    public void UpdateState(GeneticsConsoleState state, NetEntity? actor = null)
     {
-        Sequencer.SetState(state.Sequences);
+        Sequencer.SetState(state, actor);
         Combiner.SetState(state.Sequences);
     }
 

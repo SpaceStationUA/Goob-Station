@@ -32,6 +32,9 @@ public sealed partial class GeneticsConsoleSystem
 
     private void OnPrintScan(Entity<GeneticsPrintoutComponent> ent, ref GeneticsPrintScanMessage args)
     {
+        if (TryPrintHandheldScan(ent, args))
+            return;
+
         if (GetWorkableMob(ent.Owner) is not {} mob ||
             !_genome.IsScanned(mob) ||
             !ResetPrintout(ent))
@@ -74,12 +77,17 @@ public sealed partial class GeneticsConsoleSystem
     {
         _sequences.Clear();
         _genome.AddSequenceStates(mob, _sequences);
+        return GetScanText(name, _sequences);
+    }
+
+    private string GetScanText(string name, List<SequenceState> sequences)
+    {
         _builder.Clear();
         _builder.AppendLine(Loc.GetString("genetics-printout-title"));
         _builder.AppendLine(Loc.GetString("genetics-printout-subject", ("name", name)));
-        _builder.AppendLine(Loc.GetString("genetics-printout-sequences", ("count", _sequences.Count)));
+        _builder.AppendLine(Loc.GetString("genetics-printout-sequences", ("count", sequences.Count)));
 
-        foreach (var s in _sequences)
+        foreach (var s in sequences)
         {
             var rarity = s.Rarity.RarityChar();
             _builder.AppendLine(Loc.GetString("genetics-printout-sequence", ("rarity", rarity), ("number", s.Number)));
@@ -91,11 +99,15 @@ public sealed partial class GeneticsConsoleSystem
     private string GetSequenceText(Sequence sequence, MutationData data)
     {
         var rarity = _mutation.GetRarity(sequence.Mutation);
+        return GetSequenceText(sequence.Bases, data.Number, rarity);
+    }
+
+    private string GetSequenceText(string bases, int number, MutationRarity rarity)
+    {
         _builder.Clear();
         _builder.AppendLine(Loc.GetString("genetics-printout-title"));
-        _builder.AppendLine(Loc.GetString("genetics-printout-sequence-title", ("number", data.Number)));
+        _builder.AppendLine(Loc.GetString("genetics-printout-sequence-title", ("number", number)));
         _builder.AppendLine(Loc.GetString("genetics-printout-sequence-rarity", ("rarity", rarity)));
-        // format it similar to the UI, 2 rows split on 4 bases per group
         var n = MutationData.PairCount;
         for (int o = 0; o <= n; o += n)
         {
@@ -104,7 +116,7 @@ public sealed partial class GeneticsConsoleSystem
             {
                 var first = o + i;
                 var last = first + 4;
-                _builder.Append(sequence.Bases[first..last]);
+                _builder.Append(bases[first..last]);
                 _builder.Append(' ');
             }
             _builder.AppendLine("|");

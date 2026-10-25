@@ -42,14 +42,14 @@ public sealed partial class GenePuzzle : Control
 
         SequenceButton.OnPressed += _ => OnSequence?.Invoke();
         ResetSequenceButton.OnPressed += _ => OnResetSequence?.Invoke();
-        OnSetBase += (_, _) => UpdateSequenceButton();
     }
 
     public void MakeReadonly()
     {
         _writable = false;
-        Tip.Visible = false; // clicking won't do anything
+        Tip.Visible = false;
         SequenceButtonContainer.Visible = false;
+        UpdateBaseButtons();
     }
 
     private void UpdateSequenceButton()
@@ -71,6 +71,7 @@ public sealed partial class GenePuzzle : Control
     public void SetBusy(bool busy)
     {
         _busy = busy;
+        UpdateBaseButtons();
         UpdateSequenceButton();
     }
 
@@ -85,32 +86,51 @@ public sealed partial class GenePuzzle : Control
         Visible = true;
         _bases = bases;
         _originalBases = originalBases;
-        BaseButtons.RemoveAllChildren();
-        for (int i = 0; i < bases.Length; i++)
+        if (BaseButtons.ChildCount != bases.Length)
         {
-            AddBase((uint) i, bases[i]);
+            BaseButtons.RemoveAllChildren();
+            for (var i = 0; i < bases.Length; i++)
+                AddBase((uint) i);
         }
+        UpdateBaseButtons();
         UpdateSequenceButton();
     }
-
-    private void AddBase(uint i, char b)
+    private void UpdateBaseButtons()
     {
-        var button = new Button();
+        var i = 0;
+        foreach (var child in BaseButtons.Children)
+        {
+            var button = (Button) child;
+            var b = _bases[i];
+            button.Text = b.ToString();
+            button.ModulateSelfOverride = GetColor(b);
+            button.Disabled = _busy || !_writable || _originalBases[i] != 'X';
+            i++;
+        }
+    }
+
+    private void AddBase(uint i)
+    {
+        var button = new Button
+        {
+            SetSize = new Vector2(40, 32),
+            TextAlign = Label.AlignMode.Center
+        };
         void Cycle(GeneticsCycle cycle)
         {
             if (_busy || !_writable || button.Disabled)
                 return;
-
-            b = GeneticsConsoleSystem.CycleBase(b, cycle);
+            var bases = _bases.ToCharArray();
+            var b = GeneticsConsoleSystem.CycleBase(bases[i], cycle);
+            bases[i] = b;
+            _bases = new string(bases);
             button.ModulateSelfOverride = GetColor(b);
 
             button.Text = b.ToString();
+            UpdateSequenceButton();
             OnSetBase?.Invoke(i, cycle);
         }
 
-        button.Text = b.ToString();
-        button.ModulateSelfOverride = GetColor(b);
-        button.Disabled = _originalBases[(int) i] != 'X'; // can't cycle bases that are guaranteed known
         button.OnKeyBindDown += args =>
         {
             if (args.Function == EngineKeyFunctions.UIRightClick)

@@ -39,6 +39,7 @@
     sequenceFailSound: /Audio/Effects/smoke.ogg
     writeSound: /Audio/Machines/printer.ogg
     printSound: /Audio/Machines/printer.ogg
+  - type: RecordConsoleSounds
   - type: GeneticsConsoleEnzymes
   - type: GeneticsScanner
   - type: DoAfter # to start the doafters

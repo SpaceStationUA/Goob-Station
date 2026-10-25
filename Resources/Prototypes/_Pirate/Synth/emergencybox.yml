@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# Pirate: synths do not breathe and cannot take injections, so their box drops the tank, mask and medipens for oral repair supplies.
+# Synths need oral repair supplies because they cannot breathe or take injections.
 
 - type: entity
   parent: BoxSurvivalSlots
@@ -9,6 +9,24 @@
   components:
   - type: Sprite
     state: box_silicon
+  # mapLayers keys must match layers in the selected RSI.
+  - type: ItemMapper
+    sprite: _Pirate/Objects/Misc/synth_survival_box.rsi
+    mapLayers:
+      ferrobrick:
+        whitelist:
+          tags:
+          - FoodSnack
+          - BreadEmergency
+          - FoodTinMRE
+      flare:
+        whitelist:
+          tags:
+          - Flare
+      water:
+        whitelist:
+          tags:
+          - DrinkBottle
   - type: ContainerContainer
     containers:
       water: !type:ContainerSlot
@@ -44,19 +62,20 @@
         ejectOnInteract: false
         whitelist:
           tags:
+          - SynthFood
           - Pill
   - type: ContainerFill
     containers:
       water:
       - DrinkWaterBottleFull
       nutriblock:
-      - FoodSnackNutribrick
+      - FoodSnackFerrobrick
       flare:
       - Flare
       fullerene:
       - SynthBloodpack3
       nanites:
-      - PillNanites
+      - FoodNanitePaste
 
 - type: entity
   parent: SynthBloodpack
@@ -66,24 +85,3 @@
   - type: Stack
     stackType: SynthBloodpack
     count: 3
-
-# Kept under the 10.5u nanite overdose threshold.
-- type: entity
-  name: pill
-  parent: Pill
-  id: PillNanites
-  description: It's not a suppository. Synths only, it shreds organic bodies.
-  components:
-  - type: Pill
-    pillType: 2
-  - type: Sprite
-    state: pill3
-  - type: Label
-    currentLabel: nanites 5u
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nanites
-          Quantity: 5

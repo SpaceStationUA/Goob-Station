@@ -111,7 +111,7 @@
     fullEfficiencyBloodLevel: 0.9
     minBloodEfficiency: 0.1
     minHunger: 50
-    hungerCostPerRepair: 0.5 # Pirate: synth fixes - repairing 100 HP drained the whole 50-200 hunger range
+    hungerCostPerRepair: 1.5 # Pirate: synth survival kit update
     hungerCostPerBleed: 2
     bleedReductionAmount: 0.25
     damage:

@@ -1,0 +1,108 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SynthFood and special digestion keep these rations out of organic stomachs.
+
+- type: entity
+  parent: BaseItem
+  id: FoodSnackFerrobrick
+  name: ferro-brick
+  description: A sealed brick of iron filings, carbon and nutrient paste, pressed for synth bioreactors.
+  components:
+  - type: Item
+    sprite: _Pirate/Objects/Consumable/Food/ferrobrick.rsi
+    size: Small
+    storedOffset: -1,0
+    heldPrefix: ferrobrick
+  - type: Tag
+    tags:
+    - FoodSnack
+  - type: Sprite
+    sprite: _Pirate/Objects/Consumable/Food/ferrobrick.rsi
+    state: ferrobrick
+  - type: SpawnItemsOnUse
+    items:
+    - id: FoodPacketFerrobrickTrash
+    - id: FoodSnackFerrobrickOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  parent: FoodBase
+  id: FoodSnackFerrobrickOpen
+  name: ferro-brick
+  description: A brick of iron filings, carbon and nutrient paste, pressed for synth bioreactors. Organic teeth would not survive it.
+  components:
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+    - metallic
+  - type: Item
+    sprite: _Pirate/Objects/Consumable/Food/ferrobrick.rsi
+    size: Small
+    storedOffset: -1,0
+    heldPrefix: ferrobrick-open
+  - type: Tag
+    tags:
+    - SynthFood
+  - type: Sprite
+    sprite: _Pirate/Objects/Consumable/Food/ferrobrick.rsi
+    state: ferrobrick-open
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Iron
+          Quantity: 10
+        - ReagentId: Carbon
+          Quantity: 5
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketMRETrash
+  id: FoodPacketFerrobrickTrash
+  name: ferro-brick wrapper
+  description: A steel foil wrapper from a synth ferro-brick.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Consumable/Food/ferrobrick.rsi
+    state: wrapper
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: trash-inhand-left
+        color: "#9AA0AA"
+      right:
+      - state: trash-inhand-right
+        color: "#9AA0AA"
+
+# Two 5u bites keep the full dose below the 10.5u overdose threshold.
+- type: entity
+  parent: FoodBase
+  id: FoodNanitePaste
+  name: nanite paste
+  description: A squeeze tube of repair nanites for synths. Sealed against organics, the nanites would shred them.
+  components:
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+    - metallic
+  - type: Item
+    sprite: _Pirate/Objects/Consumable/Food/nanite_paste.rsi
+    size: Tiny
+  - type: Tag
+    tags:
+    - SynthFood
+  - type: Sprite
+    sprite: _Pirate/Objects/Consumable/Food/nanite_paste.rsi
+    state: paste
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nanites
+          Quantity: 10

@@ -26,9 +26,7 @@ public sealed partial class GeneticsScannerWindow : FancyWindow
 {
     [Dependency] private IEntityManager _entMan = default!;
     [Dependency] private IGameTiming _timing = default!;
-    private readonly ScannedGenomeSystem _genome;
 
-    public event Action? OnScan;
     public event Action<uint?>? OnPrint;
 
     private EntityQuery<GeneticsScannerComponent> _query;
@@ -38,24 +36,21 @@ public sealed partial class GeneticsScannerWindow : FancyWindow
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
-
-        _genome = _entMan.System<ScannedGenomeSystem>();
+        InitializeHistory();
 
         _query = _entMan.GetEntityQuery<GeneticsScannerComponent>();
         _printQuery = _entMan.GetEntityQuery<GeneticsPrintoutComponent>();
 
         Sequencer.MakeReadonly();
-        Sequencer.OnScan += () => OnScan?.Invoke();
         Sequencer.OnPrintScan += () => OnPrint?.Invoke(null);
         Sequencer.OnPrintSequence += i => OnPrint?.Invoke(i);
 
-        Sequencer.UpdateHasScanner(true); // this is the scanner
+        Sequencer.UpdateHasScanner(true);
+        UpdateHistoryView();
     }
 
     private EntityUid _uid;
-    private EntityUid? _mob;
     private bool _busy;
-    private bool _scanned;
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
@@ -65,6 +60,7 @@ public sealed partial class GeneticsScannerWindow : FancyWindow
             Update(comp);
         if (_printQuery.TryComp(_uid, out var print))
             UpdatePrint(print);
+        UpdateHistoryView();
     }
 
     public void SetEntity(EntityUid uid)
@@ -80,12 +76,11 @@ public sealed partial class GeneticsScannerWindow : FancyWindow
     public void UpdateState(GeneticsConsoleState state)
     {
         Sequencer.SetState(state.Sequences);
+        UpdateHistoryState(state);
     }
 
     private void Update(GeneticsScannerComponent comp)
     {
-        if (comp.ScannedMob != _mob)
-            UpdateMob(_mob = comp.ScannedMob);
         if (comp.Busy != _busy)
             Sequencer.SetBusy(_busy = comp.Busy);
     }
@@ -95,17 +90,4 @@ public sealed partial class GeneticsScannerWindow : FancyWindow
         Sequencer.UpdatePrintCooldown(_timing.CurTime < comp.NextPrint);
     }
 
-    private void UpdateMob(EntityUid? mob)
-    {
-        Sequencer.SetMob(mob);
-        if (mob is not {} uid)
-            return;
-
-        var scanned = _genome.IsScanned(uid);
-        if (scanned != _scanned)
-        {
-            _scanned = scanned;
-            Sequencer.UpdateScanButton();
-        }
-    }
 }
