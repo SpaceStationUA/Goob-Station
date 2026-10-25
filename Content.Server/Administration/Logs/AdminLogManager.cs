@@ -467,8 +467,9 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             {
                 if (_highImpactLogPlaytime >= 0 && _player.TryGetSessionById(new NetUserId(id), out var session))
                 {
-                    var playtimes = _playtime.GetPlayTimes(session);
-                    if (playtimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var overallTime) &&
+                    // Pirate: high-impact actions can happen before playtime finishes loading.
+                    if (!_playtime.TryGetTrackerTimes(session, out var playtimes) ||
+                        playtimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var overallTime) &&
                         overallTime <= TimeSpan.FromHours(_highImpactLogPlaytime))
                     {
                         adminLog = true;

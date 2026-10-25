@@ -228,6 +228,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         ignoreActionBlocker = CheckIgnoreSpeechBlocker(source, ignoreActionBlocker);
+        // Pirate: reject before speech transforms, radio, emotes and TTS; generated speech has no player.
+        if (EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(player, message))
+            return;
 
         // this method is a disaster
         // every second i have to spend working with this code is fucking agony
@@ -364,6 +367,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
         // in-game IC messages.
         if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
+            return;
+
+        // Pirate: LOOC and dead chat share the same player-input filter.
+        if (EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(player, message))
             return;
 
         message = SanitizeInGameOOCMessage(message);

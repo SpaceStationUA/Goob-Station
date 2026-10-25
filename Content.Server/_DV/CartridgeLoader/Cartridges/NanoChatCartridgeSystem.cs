@@ -335,6 +335,10 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
         Entity<NanoChatCardComponent> card,
         NanoChatUiMessageEvent msg)
     {
+        // Pirate: check the original text before creating a recipient or storing/delivering a message.
+        if (EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(msg.Actor, msg.Content ?? string.Empty))
+            return;
+
         if (msg.RecipientNumber == null || card.Comp.Number == null)  // Pirate: camera (nanochat gallery)
             return;
 

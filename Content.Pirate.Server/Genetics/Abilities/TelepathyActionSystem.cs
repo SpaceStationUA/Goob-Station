@@ -63,6 +63,9 @@ public sealed partial class TelepathyActionSystem : EntitySystem
     private void OnTelepathyChosen(Entity<MutationTelepathyActionComponent> ent, ref TelepathyChosenMessage args)
     {
         var user = args.Actor;
+        if (EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(user, args.Message))
+            return;
+
         if (ent.Comp.Target is not {} target)
             return;
 
