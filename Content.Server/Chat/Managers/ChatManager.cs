@@ -241,6 +241,10 @@ internal sealed partial class ChatManager : IChatManager
         if (HandleRateLimit(player) != RateLimitStatus.Allowed)
             return;
 
+        // Pirate: filter player input before any public or staff chat delivery.
+        if (_entityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(player, message))
+            return;
+
         // Check if message exceeds the character limit
         if (message.Length > MaxMessageLength)
         {

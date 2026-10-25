@@ -12,6 +12,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Destructible;
 using Content.Server.Ghost;
 using Content.Shared.Containers;
+using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
@@ -76,8 +77,22 @@ public sealed class MalfAiShuntSystem : EntitySystem
 
         // Spawn on the map/grid, outside the APC's terminating transform hierarchy.
         _mobState.ChangeMobState(ai.Value, MobState.Dead);
-        if (_mind.TryGetMind(ai.Value, out var mindId, out var mind))
-            _ghost.SpawnGhost((mindId, mind), ai.Value);
+        if (!_mind.TryGetMind(ai.Value, out var mindId, out var mind))
+            return;
+
+        // Match normal mind-container termination: finalize an existing visit instead of duplicating its ghost.
+        if (mind.VisitingEntity is { Valid: true } visiting && visiting != ai.Value &&
+            !TerminatingOrDeleted(visiting) && !EntityManager.IsQueuedForDeletion(visiting))
+        {
+            _mind.TransferTo(mindId, visiting, mind: mind);
+            if (TryComp<GhostComponent>(visiting, out var ghost))
+                _ghost.SetCanReturnToBody((visiting, ghost), false);
+            return;
+        }
+
+        // An unusable visit must not survive TransferTo inside SpawnGhost either.
+        _mind.UnVisit(mindId, mind);
+        _ghost.SpawnGhost((mindId, mind), ai.Value);
     }
 
     private void OnShuntToApc(Entity<StationAiHeldComponent> ai, ref MalfAiShuntToApcActionEvent args)

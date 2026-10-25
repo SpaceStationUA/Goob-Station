@@ -335,10 +335,12 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
         Entity<NanoChatCardComponent> card,
         NanoChatUiMessageEvent msg)
     {
-        if (msg.RecipientNumber == null || card.Comp.Number == null)  // Pirate: camera (nanochat gallery)
+        // Pirate: check the original text before creating a recipient or storing/delivering a message.
+        var filter = EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>(); // Pirate
+        if (filter.Reject(msg.Actor, msg.Content ?? string.Empty))
             return;
 
-        if (!EnsureRecipientExists(card, msg.RecipientNumber.Value)) // Pirate: pda fix
+        if (msg.RecipientNumber == null || card.Comp.Number == null)  // Pirate: camera (nanochat gallery)
             return;
 
         #region
@@ -348,10 +350,17 @@ public sealed partial class NanoChatCartridgeSystem : EntitySystem
             if (!_nanoChat.TryGetStoredPhoto((card, card.Comp), msg.PhotoFileName, out var storedPhoto))
                 return;
 
+            // Pirate: photo names are shown in the recipient's message notification.
+            if (filter.Reject(msg.Actor, storedPhoto.FileName))
+                return;
+
             attachment = storedPhoto;
         }
         var content = msg.Content ?? string.Empty;
         #endregion
+
+        if (!EnsureRecipientExists(card, msg.RecipientNumber.Value)) // Pirate: pda fix
+            return;
 
         if (!string.IsNullOrWhiteSpace(content))
         {

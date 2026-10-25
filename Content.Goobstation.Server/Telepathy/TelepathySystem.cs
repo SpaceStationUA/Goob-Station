@@ -44,6 +44,10 @@ public sealed partial class TelepathySystem : SharedTelepathySystem
 
         _quickDialog.OpenDialog(actor.PlayerSession, Loc.GetString(telepathy.DialogueTitle), "Message", (string message) =>
         {
+            // Pirate: apply the same input rule to direct telepathic messages.
+            if (EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(actor.PlayerSession, message))
+                return;
+
             // Suddenly, a voice resonates in your head...
             // blah blah
             if (telepathy.PopupWhisperFlavor is not null)
