@@ -27,6 +27,12 @@ public sealed class NotesControlTest : InteractionTest
         // Damn, if only I had an excuse to use bwoink.Bwoink.BwoinkArea
         var players = bwoink.Bwoink.ChannelSelector.PlayerListContainer;
 
+        // Pirate: refresh the pooled UI from this test's current player session before selecting a notes target.
+        await Server.WaitPost(() => Server.System<Content.Server.Administration.Systems.AdminSystem>().UpdatePlayerList(ServerSession));
+        await RunTicks(5);
+        await Client.WaitPost(() => bwoink.Bwoink.ChannelSelector.PopulateList(
+            Client.System<Content.Client.Administration.Systems.AdminSystem>().PlayerList));
+
         // Check that the player is in the menu, and make sure it is selected
         var entry = players.Data.Cast<PlayerListData>().Single(x => x.Info.SessionId == ServerSession.UserId);
         await Client.WaitPost(() => players.Select(entry));

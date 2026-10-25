@@ -32,6 +32,8 @@
   - type: Tag
     tags:
     - PlantAnalyzer
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   id: PlantAnalyzerDebug
