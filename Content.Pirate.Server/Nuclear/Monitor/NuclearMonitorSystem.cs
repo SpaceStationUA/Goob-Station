@@ -30,6 +30,7 @@ public sealed partial class NuclearMonitorSystem : EntitySystem
         SubscribeLocalEvent<NuclearMonitorComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<NuclearMonitorComponent, PortDisconnectedEvent>(OnPortDisconnected);
         SubscribeLocalEvent<NuclearMonitorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        InitializeUi();
     }
 
     private void OnMapInit(Entity<NuclearMonitorComponent> ent, ref MapInitEvent args)
@@ -153,7 +154,7 @@ public sealed partial class NuclearMonitorSystem : EntitySystem
         if (comp.Linked is { } linked && IsLinked((uid, comp), linked))
         {
             args.Monitor = uid;
-            RaiseLocalEvent(linked, args);
+            RaiseLocalEvent(linked, (object) args);
         }
     }
 }
