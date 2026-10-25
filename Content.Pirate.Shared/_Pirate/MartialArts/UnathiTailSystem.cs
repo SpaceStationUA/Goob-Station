@@ -45,6 +45,9 @@ public sealed class UnathiTailSystem : EntitySystem
         if (!TryGetCombo(ent, out var proto, out var target, out var downed) || downed)
             return;
 
+        if (TryComp<PullableComponent>(target, out var pullable))
+            _pulling.TryStopPull(target, pullable, ent, true);
+
         _stun.TryKnockdown(target, proto.ParalyzeTime, true, true, false);
         PlayCombo(ent, target, proto.Name, "/Audio/Weapons/genhit3.ogg");
     }
