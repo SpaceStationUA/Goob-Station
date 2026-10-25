@@ -179,6 +179,8 @@
   - type: Item
     size: Ginormous
   # Pirate: keep limited security storage so carrying Justice does not replace the whole duty belt.
+  - type: SwordSheath # Pirate: security sheath sword limits
+    swordTag: Justice # Pirate: security sheath sword limits
   - type: Storage
     maxItemSize: Ginormous
     defaultStorageOrientation: Vertical
@@ -216,6 +218,9 @@
       - Whistle
       - BalloonPopper
       - ScatteringGrenade
+    blacklist: # Pirate: security sheath sword limits
+      tags: # Pirate: security sheath sword limits
+      - Stunsword # Pirate: security sheath sword limits
   - type: ItemMapper
     containerWhitelist:
     - storagebase

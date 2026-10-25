@@ -11,6 +11,8 @@
   - type: Item
     sprite: _Pirate/Omu/Objects/Weapons/Melee/stunsword.rsi
     size: Ginormous # Use your sheath.
+    shape:
+    - 0,0,0,5
     heldPrefix: off
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Weapons/Melee/stunsword.rsi
