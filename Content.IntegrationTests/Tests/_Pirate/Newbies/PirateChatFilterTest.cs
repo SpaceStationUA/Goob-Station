@@ -6,8 +6,12 @@ using Content.Server._Pirate.Chat.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Mind;
+using Content.Shared._DV.CartridgeLoader.Cartridges;
+using Content.Shared._DV.NanoChat;
+using Content.Shared.CartridgeLoader;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.PDA;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using ClientBwoink = Content.Client.Administration.Systems.BwoinkSystem;
@@ -79,6 +83,53 @@ public sealed class PirateChatFilterTest
                 "Every rejected ingress must return a server warning to the sender.");
             Assert.That(messages.Any(msg => msg.Channel == ChatChannel.OOC && msg.Message.Contains(accepted)), Is.True);
             Assert.That(messages.Any(msg => msg.Channel == ChatChannel.Local && msg.Message.Contains(accepted)), Is.True);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task NanoChatRejectsTextAndPhotoNamesBeforeCreatingMessages()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var user = entities.SpawnEntity("MobHuman", map.GridCoords);
+            server.PlayerMan.SetAttachedEntity(pair.Player!, user);
+            var pda = entities.SpawnEntity("PDA", map.GridCoords);
+            var card = entities.SpawnEntity("IDCardStandard", map.GridCoords);
+            var receiver = entities.SpawnEntity("IDCardStandard", map.GridCoords);
+            var cartridge = entities.SpawnEntity("NanoChatCartridge", map.GridCoords);
+            entities.GetComponent<PdaComponent>(pda).ContainedId = card;
+            var sender = entities.EnsureComponent<NanoChatCardComponent>(card);
+            var recipient = entities.EnsureComponent<NanoChatCardComponent>(receiver);
+            var nanoChat = server.System<SharedNanoChatSystem>();
+            nanoChat.SetNumber((card, sender), 100);
+            nanoChat.SetNumber((receiver, recipient), 200);
+            Assert.That(nanoChat.TryStorePhoto((card, sender), new NanoChatPhotoData("фотоъ.png", null)), Is.True);
+
+            void Send(string content, string? photo = null)
+            {
+                CartridgeMessageEvent message = new NanoChatUiMessageEvent(NanoChatUiMessageType.SendMessage,
+                    recipientNumber: 200, content: content, photoFileName: photo)
+                {
+                    Actor = user,
+                    LoaderUid = entities.GetNetEntity(pda),
+                };
+                entities.EventBus.RaiseLocalEvent(cartridge, ref message);
+            }
+
+            Send("текстЫ");
+            Send(string.Empty, "фотоъ.png");
+            Assert.That(nanoChat.GetRecipients((card, sender)), Is.Empty);
+            Assert.That(nanoChat.GetMessagesForRecipient((card, sender), 200), Is.Null.Or.Empty);
+            Assert.That(nanoChat.GetMessagesForRecipient((receiver, recipient), 100), Is.Null.Or.Empty);
+
+            Send("Привіт");
+            Assert.That(nanoChat.GetMessagesForRecipient((card, sender), 200), Has.Count.EqualTo(1),
+                "Valid Ukrainian text must still enter the sender's conversation, even with no network coverage.");
         });
         await pair.CleanReturnAsync();
     }

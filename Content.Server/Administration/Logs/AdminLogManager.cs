@@ -37,7 +37,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     [Dependency] private readonly IReflectionManager _reflection = default!;
     [Dependency] private readonly IDependencyCollection _dependencies = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly ISharedPlaytimeManager _playtime = default!;
+    [Dependency] private readonly Content.Server.Players.PlayTimeTracking.PlayTimeTrackingManager _playtime = default!; // Pirate: safe loaded-state lookup.
     [Dependency] private readonly ISharedChatManager _chat = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -469,7 +469,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 {
                     // Pirate: high-impact actions can happen before playtime finishes loading.
                     if (!_playtime.TryGetTrackerTimes(session, out var playtimes) ||
-                        playtimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var overallTime) &&
+                        !playtimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var overallTime) ||
                         overallTime <= TimeSpan.FromHours(_highImpactLogPlaytime))
                     {
                         adminLog = true;

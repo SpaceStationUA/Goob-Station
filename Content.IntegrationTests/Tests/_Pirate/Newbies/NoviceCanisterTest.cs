@@ -21,7 +21,7 @@ public sealed class NoviceCanisterTest
     [TestCase(25, false, "PlasmaCanister")]
     public async Task RoomReleaseRequires24Hours(double hours, bool restricted, string prototype)
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true, AdminLogsEnabled = true });
         var server = pair.Server;
         var entities = server.EntMan;
         var map = await pair.CreateTestMap();
@@ -43,6 +43,8 @@ public sealed class NoviceCanisterTest
             {
                 SetValve(entities, canister, user, true);
                 Assert.That(gas.ReleaseValve, Is.False, "Unknown playtime must not bypass the restriction.");
+                // Allowed high-impact log entries must also be safe while playtime is unavailable.
+                Assert.DoesNotThrow(() => SetValve(entities, canister, user, false));
             }
             finally
             {

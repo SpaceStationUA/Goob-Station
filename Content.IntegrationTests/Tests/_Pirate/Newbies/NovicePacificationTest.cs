@@ -4,6 +4,7 @@ using Content.Pirate.Server.Pacification.Systems;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Shared._Pirate.CCVars;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Preferences;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Configuration;
@@ -110,6 +111,43 @@ public sealed class NovicePacificationTest
         await server.WaitAssertion(() =>
         {
             Assert.That(entities.GetComponent<PacifiedComponent>(user), Is.SameAs(independent));
+            Assert.That(entities.HasComponent<NovicePacificationComponent>(user), Is.False);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task TraitAppliedAfterAttachmentKeepsPacifismWhenTimeLoads()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+        var session = pair.Player!;
+        var tracking = server.ResolveDependency<PlayTimeTrackingManager>();
+        EntityUid user = default;
+        await server.WaitAssertion(() =>
+        {
+            server.CfgMan.SetCVar(NoviceProtectionCVars.PacificationEnabled, true);
+            NoviceTestPlaytime.Set(tracking, session, 100);
+            user = entities.SpawnEntity("MobHuman", map.GridCoords);
+            NoviceTestPlaytime.SetLoaded(tracking, session, false);
+            try
+            {
+                server.PlayerMan.SetAttachedEntity(session, user);
+                server.System<Content.Server._Pirate.Traits.TraitSystem>().ApplyProfileTraits(user,
+                    HumanoidCharacterProfile.DefaultWithSpecies().WithTraitPreferences(["Pacifist"]), session, "Passenger");
+            }
+            finally
+            {
+                NoviceTestPlaytime.SetLoaded(tracking, session, true);
+            }
+            tracking.QueueSendTimers(session);
+        });
+        await pair.RunTicksSync(5);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(entities.HasComponent<PacifiedComponent>(user), Is.True);
             Assert.That(entities.HasComponent<NovicePacificationComponent>(user), Is.False);
         });
         await pair.CleanReturnAsync();

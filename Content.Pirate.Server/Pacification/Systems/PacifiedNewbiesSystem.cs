@@ -4,9 +4,12 @@ using Content.Pirate.Server.Pacification.Managers;
 using Content.Server._Pirate.Newbies;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Shared._Pirate.CCVars;
+using Content.Shared._Pirate.Traits;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.Traits;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.Pacification.Systems;
@@ -21,6 +24,7 @@ public sealed class PacifiedNewbiesSystem : EntitySystem
     [Dependency] private readonly PacifyManager _pacifyManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private readonly HashSet<ICommonSession> _pending = new();
     private readonly List<(EntityUid Entity, ICommonSession Session)> _rechecks = new();
@@ -97,9 +101,25 @@ public sealed class PacifiedNewbiesSystem : EntitySystem
             return;
 
         if (previous.AppliedPacification != null &&
-            TryComp<PacifiedComponent>(uid, out var current) && current == previous.AppliedPacification)
+            TryComp<PacifiedComponent>(uid, out var current) && current == previous.AppliedPacification &&
+            !HasPacifistTrait(uid))
             RemComp<PacifiedComponent>(uid);
 
         RemComp<NovicePacificationComponent>(uid);
+    }
+
+    private bool HasPacifistTrait(EntityUid uid)
+    {
+        if (!TryComp<TraitComponent>(uid, out var traits))
+            return false;
+
+        // Traits applied after attachment reuse existing components instead of replacing them.
+        foreach (var id in traits.ActiveTraits)
+        {
+            if (_prototypes.TryIndex<TraitPrototype>(id, out var trait) && trait.Components.ContainsKey("Pacified"))
+                return true;
+        }
+
+        return false;
     }
 }
