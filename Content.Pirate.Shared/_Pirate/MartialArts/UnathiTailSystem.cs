@@ -14,6 +14,6 @@ public sealed class UnathiTailSystem : EntitySystem
 
     private void OnGrantInit(Entity<GrantUnathiTailComponent> ent, ref ComponentInit args)
     {
-        _martialArts.TryGrantMartialArt(ent.Owner, ent.Comp);
+        _martialArts.TryGrantMartialArt(ent.Owner, ent.Comp, confirmSwap: false);
     }
 }

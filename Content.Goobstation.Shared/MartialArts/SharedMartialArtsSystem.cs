@@ -466,7 +466,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     /// <param name="user"></param>
     /// <param name="comp"></param>
     /// <returns></returns>
-    public bool TryGrantMartialArt(EntityUid user, GrantMartialArtKnowledgeComponent comp) // Pirate: martial art switching
+    public bool TryGrantMartialArt(EntityUid user, GrantMartialArtKnowledgeComponent comp, bool confirmSwap = true) // Pirate: martial art switching
     {
         if (!_netManager.IsServer || MetaData(user).EntityLifeStage >= EntityLifeStage.Terminating)
             return false;
@@ -507,6 +507,13 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
 
             _popupSystem.PopupEntity(Loc.GetString("cqc-fail-already"), user, user);
             return false;
+        }
+
+        if (!confirmSwap)
+        {
+            cqc.PendingForm = null;
+            cqc.PendingFormExpiry = TimeSpan.Zero;
+            return ReplaceMartialArt(comp, user, cqc);
         }
 
         if (cqc.PendingForm != comp.MartialArtsForm || _timing.CurTime > cqc.PendingFormExpiry)

@@ -36,4 +36,5 @@
   event: !type:CqcKickPerformedEvent { }
   thrownSpeed: 4
   staminaDamage: 10
+  proneStaminaDamage: 10
   dropItems: false

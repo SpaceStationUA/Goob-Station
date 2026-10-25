@@ -50,6 +50,9 @@ public sealed partial class ComboPrototype : IPrototype
     [DataField]
     public float StaminaDamage;
 
+    [DataField] // Pirate: Unathi tail martial art
+    public float ProneStaminaDamage;
+
     /// <summary>
     /// Blunt, Slash, etc.
     /// </summary>
