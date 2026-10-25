@@ -99,8 +99,8 @@ public sealed class PirateChatFilterTest
             var user = entities.SpawnEntity("MobHuman", map.GridCoords);
             server.PlayerMan.SetAttachedEntity(pair.Player!, user);
             var pda = entities.SpawnEntity("PassengerPDA", map.GridCoords);
-            var card = entities.SpawnEntity("IDCardStandard", map.GridCoords);
-            var receiver = entities.SpawnEntity("IDCardStandard", map.GridCoords);
+            var card = entities.SpawnEntity("PassengerIDCard", map.GridCoords);
+            var receiver = entities.SpawnEntity("PassengerIDCard", map.GridCoords);
             var cartridge = entities.SpawnEntity("NanoChatCartridge", map.GridCoords);
             entities.GetComponent<PdaComponent>(pda).ContainedId = card;
             var sender = entities.EnsureComponent<NanoChatCardComponent>(card);
