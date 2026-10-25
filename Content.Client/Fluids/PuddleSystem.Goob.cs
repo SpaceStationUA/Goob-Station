@@ -38,7 +38,7 @@ public sealed partial class PuddleSystem
         {
             _puddleRandom.SetSeed(SharedRandomExtensions.HashCodeCombine(GetNetEntity(ent).Id, size));
             _sprite.LayerSetSprite(ent.AsNullable(), 0, _puddleRandom.Pick(sprites));
-            _sprite.LayerSetRotation(ent.AsNullable(), 0, _puddleRandom.NextAngle().RoundToCardinalAngle());
+            // _sprite.LayerSetRotation(ent.AsNullable(), 0, _puddleRandom.NextAngle().RoundToCardinalAngle()); // Pirate edit
         }
 
         var baseColor = spriteSet.BaseColor;
