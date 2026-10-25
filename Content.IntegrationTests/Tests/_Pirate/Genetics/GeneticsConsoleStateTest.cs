@@ -14,6 +14,7 @@ using Content.Server.Power.Components;
 using Content.Shared._Shitmed.DoAfter;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -53,7 +54,8 @@ public sealed class GeneticsConsoleStateTest
                 entities.GetComponent<MedicalScannerComponent>(first.Scanner));
             var handheldUser = entities.SpawnEntity("MobHuman", map.GridCoords);
             entities.System<TagSystem>().AddTag(handheldUser, "InstantDoAfters");
-            GeneticsHandheldHistoryTest.Scan(entities, handheldUser, first.Patient, handheld);
+            entities.EventBus.RaiseLocalEvent(handheld,
+                new AfterInteractEvent(handheldUser, handheld, first.Patient, map.GridCoords, true));
             Assert.That(ui.TryGetUiState<GeneticsConsoleState>(handheld, GeneticsConsoleUiKey.Key, out var handheldState), Is.True);
             Assert.That(handheldState!.Sequences, Is.EqualTo(expectedFirst));
             entities.EventBus.RaiseLocalEvent(handheld, new GeneticsPrintScanMessage
