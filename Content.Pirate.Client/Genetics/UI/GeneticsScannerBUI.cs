@@ -29,8 +29,8 @@ public sealed partial class GeneticsScannerBUI(EntityUid owner, Enum key) : Boun
 
         _window = this.CreateWindow<GeneticsScannerWindow>();
         _window.SetEntity(Owner);
-        _window.OnScan += () => SendPredictedMessage(new GeneticsConsoleScanMessage());
         _window.OnPrint += i => SendPredictedMessage(new GeneticsPrintScanMessage(i));
+        _window.OnSelectScan += i => SendMessage(new HandheldGeneticsSelectScanMessage(i));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

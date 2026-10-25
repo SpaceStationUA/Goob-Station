@@ -32,6 +32,7 @@ public sealed partial class GeneticsConsoleBUI : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<GeneticsConsoleWindow>();
+        _window.AttachInteractionSounds(this);
         _window.SetEntity(Owner);
         _window.OpenCentered();
         _window.OnSelectServer += () => SendPredictedMessage(new ConsoleServerSelectionMessage());

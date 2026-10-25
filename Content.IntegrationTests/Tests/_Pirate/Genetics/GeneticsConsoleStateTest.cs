@@ -49,8 +49,11 @@ public sealed class GeneticsConsoleStateTest
             Assert.That(firstState.Sequences, Is.EqualTo(expectedFirst));
 
             var handheld = entities.SpawnEntity("HandheldGeneticsScanner", map.GridCoords);
-            var inserted = new ScannerInsertedEvent(handheld, first.Patient);
-            entities.EventBus.RaiseLocalEvent(handheld, ref inserted);
+            server.System<MedicalScannerSystem>().EjectBody(first.Scanner,
+                entities.GetComponent<MedicalScannerComponent>(first.Scanner));
+            var handheldUser = entities.SpawnEntity("MobHuman", map.GridCoords);
+            entities.System<TagSystem>().AddTag(handheldUser, "InstantDoAfters");
+            GeneticsHandheldHistoryTest.Scan(entities, handheldUser, first.Patient, handheld);
             Assert.That(ui.TryGetUiState<GeneticsConsoleState>(handheld, GeneticsConsoleUiKey.Key, out var handheldState), Is.True);
             Assert.That(handheldState!.Sequences, Is.EqualTo(expectedFirst));
             entities.EventBus.RaiseLocalEvent(handheld, new GeneticsPrintScanMessage
@@ -69,7 +72,7 @@ public sealed class GeneticsConsoleStateTest
             Assert.That(secondState.Sequences, Is.EqualTo(expectedSecond));
             Assert.That(handheldState.Sequences, Is.EqualTo(expectedFirst));
 
-            foreach (var uid in new[] { first.Console, second.Console, first.Scanner, second.Scanner, first.Patient, second.Patient, handheld })
+            foreach (var uid in new[] { first.Console, second.Console, first.Scanner, second.Scanner, first.Patient, second.Patient, handheld, handheldUser })
                 entities.DeleteEntity(uid);
         });
         await pair.CleanReturnAsync();
