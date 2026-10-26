@@ -6,11 +6,16 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         xmlns:controls="using:Content.Client.UserInterface.Controls"
         xmlns:genetics="clr-namespace:Content.Pirate.Client.Genetics.UI"
         Title="{Loc 'genetics-scanner-window-title'}"
-        MinSize="700 350">
-    <BoxContainer Orientation="Vertical">
-        <BoxContainer Name="HistoryContainer" Visible="False" Margin="0 0 0 6">
-            <Label Text="{Loc 'genetics-scanner-saved-targets'}" Margin="0 0 8 0"/>
-            <OptionButton Name="HistoryTarget" HorizontalExpand="True"/>
+        MinSize="880 520"
+        SetSize="880 545">
+    <BoxContainer Orientation="Horizontal" Margin="10">
+        <BoxContainer Name="HistoryContainer" Orientation="Vertical" SetWidth="190" Margin="0 0 16 0" Visible="False">
+            <Label Text="{Loc 'genetics-scanner-targets'}"/>
+            <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 4"/>
+            <OptionButton Name="SearchMode" Margin="0 0 0 4"/>
+            <LineEdit Name="SearchText" PlaceHolder="{Loc 'genetics-scanner-search-placeholder'}" Margin="0 0 0 4"/>
+            <Label Name="NoTargets" Text="{Loc 'genetics-scanner-no-targets'}" StyleClasses="LabelSubText" Margin="0 4" Visible="False"/>
+            <ItemList Name="HistoryTarget" VerticalExpand="True"/>
         </BoxContainer>
         <genetics:GeneticSequencer Name="Sequencer"/>
     </BoxContainer>

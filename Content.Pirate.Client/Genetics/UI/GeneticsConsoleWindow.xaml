@@ -6,35 +6,46 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         xmlns:controls="using:Content.Client.UserInterface.Controls"
         xmlns:genetics="clr-namespace:Content.Pirate.Client.Genetics.UI"
         Title="{Loc 'genetics-console-window-title'}"
-        MinSize="800 600">
-    <BoxContainer Orientation="Vertical">
-        <BoxContainer>
-            <controls:NanoHeading Text="{Loc 'genetics-console-heading-scanner'}"/>
-            <Button Name="ServerButton" Text="{Loc 'lathe-menu-server-list'}" HorizontalAlignment="Right" HorizontalExpand="True"/>
+        MinSize="700 640"
+        SetSize="720 790">
+    <BoxContainer Orientation="Vertical" Margin="10">
+        <BoxContainer Orientation="Horizontal" Margin="0 0 0 5">
+            <Label Name="MobName" StyleClasses="LabelBig" VerticalAlignment="Center" ClipText="True" HorizontalExpand="True"/>
+            <Button Name="ServerButton" Text="{Loc 'lathe-menu-server-list'}" MinSize="120 0" Margin="4 0 0 0"/>
+            <Button Name="ScrambleButton" Text="{Loc 'genetics-console-scramble'}" Disabled="True" MinSize="160 0" Margin="4 0 0 0"/>
         </BoxContainer>
-        <!-- Patient info -->
-        <BoxContainer Orientation="Horizontal">
-            <SpriteView Name="MobView" SetSize="64 64" OverrideDirection="South" Stretch="Fill"/>
-            <GridContainer Columns="4" HorizontalExpand="True">
-                <Label Text="{Loc 'genetics-console-name'}" MinWidth="150"/>
-                <Label Name="MobName" MinWidth="200"/>
-                <Label Text="{Loc 'genetics-console-status'}"/>
-                <Label Name="MobStatus" MinWidth="300"/>
-                <Label Text="{Loc 'genetics-console-integrity'}" MinWidth="150"/>
+        <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 10"/>
+        <BoxContainer Orientation="Horizontal" Margin="0 0 0 10">
+            <SpriteView Name="MobView" SetSize="64 64" OverrideDirection="South" Stretch="Fill" Margin="0 0 10 0"/>
+            <GridContainer Columns="2" VerticalAlignment="Center">
+                <Label Text="{Loc 'genetics-console-status'}" Margin="0 0 10 0"/>
+                <Label Name="MobStatus"/>
+                <Label Text="{Loc 'genetics-console-integrity'}" Margin="0 0 10 0"/>
                 <Label Name="MobIntegrity"/>
-                <Label Text="{Loc 'genetics-console-instability'}" MinWidth="150"/>
+                <Label Text="{Loc 'genetics-console-instability'}" Margin="0 0 10 0"/>
                 <Label Name="MobInstability"/>
             </GridContainer>
         </BoxContainer>
-        <controls:StripeBack Name="ScrambleContainer" Margin="125 5" Visible="False">
-            <Button Name="ScrambleButton" Text="{Loc 'genetics-console-scramble'}" Disabled="True" SetWidth="400" Margin="5"/>
-        </controls:StripeBack>
-        <!-- Console tabs -->
-        <TabContainer Name="Tabs">
+
+        <BoxContainer Name="TabButtons" Orientation="Horizontal" Margin="0 10 0 0"/>
+        <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 20"/>
+
+        <BoxContainer Name="Tabs" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 10">
             <genetics:GeneticSequencer Name="Sequencer"/>
             <genetics:GeneticStorage Name="Storage"/>
             <genetics:GeneticCombiner Name="Combiner"/>
             <genetics:GeneticEnzymes Name="Enzymes"/>
-        </TabContainer>
+        </BoxContainer>
+
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider"/>
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label StyleClasses="WindowFooterText" Text="{Loc 'genetics-console-footer-flavor-left'}"/>
+                <Label StyleClasses="WindowFooterText" Text="{Loc 'genetics-console-footer-flavor-right'}"
+                       HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0"/>
+                <TextureRect StyleClasses="NTLogoDark" SetSize="19 19" Stretch="KeepAspectCentered"
+                             HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

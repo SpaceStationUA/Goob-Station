@@ -36,6 +36,7 @@ public sealed partial class GeneticSequencer : BoxContainer
     private EntityUid? _mob;
     private Entity<GeneticsDiskComponent>? _disk;
     private bool _writeCooldown;
+    private bool _printCooldown;
     private readonly GeneticsSequenceEditor _editor = new();
 
     public GeneticSequencer()
@@ -114,11 +115,13 @@ public sealed partial class GeneticSequencer : BoxContainer
     private void UpdateSequence()
     {
         Info.Update(SequenceButtons);
-        NoSequence.Visible = !Info.Visible;
-        Puzzle.Visible = Info.Visible;
+        UpdatePrintSequenceButton();
 
         if (SequenceButtons.Sequence is not {} sequence)
+        {
+            Puzzle.ClearBases();
             return;
+        }
 
         Puzzle.SetSequenced(sequence.Mutation != null);
         Puzzle.SetBases(sequence.Bases, sequence.OriginalBases);
@@ -173,8 +176,14 @@ public sealed partial class GeneticSequencer : BoxContainer
 
     public void UpdatePrintCooldown(bool cooldown)
     {
+        _printCooldown = cooldown;
         PrintScanButton.Disabled = cooldown;
-        PrintSequenceButton.Disabled = cooldown;
+        UpdatePrintSequenceButton();
+    }
+
+    private void UpdatePrintSequenceButton()
+    {
+        PrintSequenceButton.Disabled = _printCooldown || SequenceButtons.Index == null;
     }
 
     private void UpdateWriteButton()

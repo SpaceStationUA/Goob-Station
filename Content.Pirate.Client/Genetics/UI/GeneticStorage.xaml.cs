@@ -49,8 +49,7 @@ public sealed partial class GeneticStorage : BoxContainer
             var button = new Button()
             {
                 Text = Loc.GetString("genetics-console-print-item", ("item", _proto.Index(proto).Name), ("cost", cost)),
-                MaxWidth = 160f,
-                Margin = new Thickness(4),
+                Margin = new Thickness(i == 0 ? 0 : 2, 0, i == comp.Prints.Count - 1 ? 0 : 2, 0),
                 HorizontalExpand = true
             };
             button.Disabled = true;

@@ -58,10 +58,15 @@ public sealed partial class GeneticsConsoleSystem
             sequences.AddRange(selected.Sequences);
         }
 
-        var dnaIds = new List<string>();
+        var targets = new List<HandheldGeneticsTarget>();
         foreach (var scan in handheld.Scans)
-            dnaIds.Add(scan.DnaId);
-        return new HandheldGeneticsHistoryState(dnaIds, handheld.SelectedScan);
+        {
+            var numbers = new List<int>();
+            foreach (var sequence in scan.Sequences)
+                numbers.Add(sequence.Number);
+            targets.Add(new HandheldGeneticsTarget(scan.Name, numbers));
+        }
+        return new HandheldGeneticsHistoryState(targets, handheld.SelectedScan);
     }
 
     private static HandheldGeneticsScan? GetSelectedHandheldScan(HandheldGeneticsScannerComponent handheld)

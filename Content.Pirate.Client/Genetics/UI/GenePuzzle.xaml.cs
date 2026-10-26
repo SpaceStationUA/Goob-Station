@@ -16,6 +16,7 @@ using Robust.Client.UserInterface.XAML;
 
 using Content.Shared.Input;
 using Content.Pirate.Shared.Genetics.Console;
+using Content.Pirate.Shared.Genetics.Mutations;
 using Robust.Shared.Input;
 
 namespace Content.Pirate.Client.Genetics.UI;
@@ -32,9 +33,13 @@ public sealed partial class GenePuzzle : Control
     private bool _writable = true;
     private string _bases = string.Empty;
     private string _originalBases = string.Empty;
+    private readonly List<Button> _buttons = new();
 
-    public static readonly Color Blue = Color.FromHex("#1c71b1");
-    public static readonly Color Green = Color.FromHex("#1b9638");
+    public static readonly Color Green = new(110, 255, 110);
+    public static readonly Color Blue = new(130, 200, 255);
+    public static readonly Color GroupBorder = Color.FromHex("#50AAFF");
+
+    private const int PairsPerGroup = 4;
 
     public GenePuzzle()
     {
@@ -42,6 +47,8 @@ public sealed partial class GenePuzzle : Control
 
         SequenceButton.OnPressed += _ => OnSequence?.Invoke();
         ResetSequenceButton.OnPressed += _ => OnResetSequence?.Invoke();
+        CreateBaseButtons(MutationData.BaseCount);
+        ClearBases();
     }
 
     public void MakeReadonly()
@@ -60,6 +67,9 @@ public sealed partial class GenePuzzle : Control
 
     private bool IsComplete()
     {
+        if (_bases.Length == 0)
+            return false;
+
         foreach (var c in _bases)
         {
             if (c == 'X') return false;
@@ -81,40 +91,92 @@ public sealed partial class GenePuzzle : Control
         UpdateSequenceButton();
     }
 
+    public void ClearBases()
+    {
+        _bases = string.Empty;
+        _originalBases = string.Empty;
+        NoSequence.Visible = true;
+        BaseButtons.Modulate = Color.Transparent;
+        foreach (var button in _buttons)
+        {
+            button.Disabled = true;
+        }
+        UpdateSequenceButton();
+    }
+
     public void SetBases(string bases, string originalBases)
     {
-        Visible = true;
         _bases = bases;
         _originalBases = originalBases;
-        if (BaseButtons.ChildCount != bases.Length)
-        {
-            BaseButtons.RemoveAllChildren();
-            for (var i = 0; i < bases.Length; i++)
-                AddBase((uint) i);
-        }
+        NoSequence.Visible = false;
+        BaseButtons.Modulate = Color.White;
+        if (_buttons.Count != bases.Length)
+            CreateBaseButtons(bases.Length);
         UpdateBaseButtons();
         UpdateSequenceButton();
     }
-    private void UpdateBaseButtons()
+
+    private void CreateBaseButtons(int count)
     {
-        var i = 0;
-        foreach (var child in BaseButtons.Children)
+        _buttons.Clear();
+        BaseButtons.RemoveAllChildren();
+        for (var i = 0; i < count; i++)
+            _buttons.Add(CreateBase((uint) i));
+
+        var pairs = count / 2;
+        BoxContainer? group = null;
+        for (var p = 0; p < pairs; p++)
         {
-            var button = (Button) child;
-            var b = _bases[i];
-            button.Text = b.ToString();
-            button.ModulateSelfOverride = GetColor(b);
-            button.Disabled = _busy || !_writable || _originalBases[i] != 'X';
-            i++;
+            if (p % PairsPerGroup == 0)
+            {
+                group = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    Margin = new Thickness(4)
+                };
+                BaseButtons.AddChild(new PanelContainer
+                {
+                    PanelOverride = new StyleBoxFlat { BorderColor = GroupBorder, BorderThickness = new Thickness(1) },
+                    Margin = new Thickness(2, 0),
+                    Children = { group }
+                });
+            }
+
+            var column = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical,
+                Margin = new Thickness(1, 0)
+            };
+            column.AddChild(_buttons[p]);
+            column.AddChild(new Label
+            {
+                Text = "|",
+                HorizontalAlignment = HAlignment.Center
+            });
+            column.AddChild(_buttons[p + pairs]);
+            group!.AddChild(column);
         }
     }
 
-    private void AddBase(uint i)
+    private void UpdateBaseButtons()
+    {
+        for (var i = 0; i < _buttons.Count && i < _bases.Length; i++)
+        {
+            var button = _buttons[i];
+            var b = _bases[i];
+            button.Text = b.ToString();
+            button.Modulate = GetColor(b);
+            button.Disabled = _busy || !_writable || _originalBases[i] != 'X';
+        }
+    }
+
+    private Button CreateBase(uint i)
     {
         var button = new Button
         {
-            SetSize = new Vector2(40, 32),
-            TextAlign = Label.AlignMode.Center
+            MinSize = new Vector2(34, 30),
+            TextAlign = Label.AlignMode.Center,
+            StyleClasses = { "ButtonSquare" }
         };
         void Cycle(GeneticsCycle cycle)
         {
@@ -124,7 +186,7 @@ public sealed partial class GenePuzzle : Control
             var b = GeneticsConsoleSystem.CycleBase(bases[i], cycle);
             bases[i] = b;
             _bases = new string(bases);
-            button.ModulateSelfOverride = GetColor(b);
+            button.Modulate = GetColor(b);
 
             button.Text = b.ToString();
             UpdateSequenceButton();
@@ -142,16 +204,16 @@ public sealed partial class GenePuzzle : Control
         {
             Cycle(GeneticsCycle.Next);
         };
-        BaseButtons.AddChild(button);
+        return button;
     }
 
-    private Color? GetColor(char b)
+    private Color GetColor(char b)
         => b switch
         {
             'A' => Green,
             'T' => Green,
             'G' => Blue,
             'C' => Blue,
-            _ => null
+            _ => Color.White
         };
 }

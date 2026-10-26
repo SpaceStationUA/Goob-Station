@@ -1,4 +1,8 @@
-genetics-scanner-saved-targets = Saved DNA:
-genetics-scanner-dna-title = DNA: {$dna}
+genetics-scanner-targets = Targets
+genetics-scanner-no-targets = No saved targets
+genetics-scanner-search-placeholder = Search...
+genetics-scanner-search-all = All
+genetics-scanner-search-name = Name
+genetics-scanner-search-sequence = Sequence
 genetics-scanner-use-on-subject = Use the scanner on a subject to scan its DNA.
 genetics-scanner-scanning = Scanning DNA...

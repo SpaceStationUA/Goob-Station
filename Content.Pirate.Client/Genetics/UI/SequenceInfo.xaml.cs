@@ -33,13 +33,18 @@ public sealed partial class SequenceInfo : BoxContainer
         _mutation = _entMan.System<MutationSystem>();
     }
 
+    public bool HasSequence { get; private set; }
+
     public void Update(SequenceButtons buttons)
     {
-        Visible = buttons.Index != null;
+        HasSequence = buttons.Index != null;
+        Details.Visible = HasSequence;
+        NoSequence.Visible = !HasSequence;
 
         if (buttons.Sequence is not {} sequence)
             return;
 
+        MutationRarity.Text = Loc.GetString($"genetics-console-rarity-{sequence.Rarity.ToString().ToLowerInvariant()}");
         if (sequence.Mutation is {} id)
         {
             var proto = _proto.Index<EntityPrototype>(id);
@@ -51,7 +56,7 @@ public sealed partial class SequenceInfo : BoxContainer
         else
         {
             MutationName.Text = Loc.GetString("genetics-console-mutation-name-placeholder", ("number", sequence.Number));
-            MutationDesc.Text = Loc.GetString("generic-unknown-title");
+            MutationDesc.Text = Loc.GetString("genetics-console-mutation-undiscovered");
             MutationInstability.Text = Loc.GetString("generic-unknown-title");
         }
     }

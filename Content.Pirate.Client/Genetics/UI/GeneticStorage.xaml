@@ -3,16 +3,24 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <BoxContainer xmlns="https://spacestation14.io"
-        xmlns:controls="using:Content.Client.UserInterface.Controls"
+        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
         Orientation="Vertical"
-        Align="Center">
-    <GridContainer Columns="2" HorizontalExpand="True" Margin="4">
-        <Label Text="{Loc 'genetics-console-inserted-disk'}" Margin="4" MinWidth="220"/> <!-- curse of 220 -->
-        <Label Name="DiskName" Text="{Loc 'genetics-console-no-disk'}"/>
-        <Label Text="{Loc 'genetics-console-loaded-mutation'}" Margin="4" MinWidth="220"/>
-        <Label Name="MutationName" Text="{Loc 'genetics-console-disk-empty'}"/>
-    </GridContainer>
-    <controls:StripeBack>
-        <BoxContainer Name="PrintButtons" Orientation="Horizontal" Margin="8"/>
-    </controls:StripeBack>
+        HorizontalExpand="True"
+        VerticalExpand="True">
+    <Label Text="{Loc 'genetics-console-disk-heading'}"/>
+    <PanelContainer StyleClasses="LowDivider"/>
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
+        </PanelContainer.PanelOverride>
+        <GridContainer Columns="2" Margin="10">
+            <Label Text="{Loc 'genetics-console-inserted-disk'}" MinWidth="220" Margin="0 0 10 4"/>
+            <Label Name="DiskName" Text="{Loc 'genetics-console-no-disk'}"/>
+            <Label Text="{Loc 'genetics-console-loaded-mutation'}" MinWidth="220" Margin="0 0 10 0"/>
+            <Label Name="MutationName" Text="{Loc 'genetics-console-disk-empty'}"/>
+        </GridContainer>
+    </PanelContainer>
+    <Label Text="{Loc 'genetics-console-print-heading'}" Margin="0 20 0 0"/>
+    <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 8"/>
+    <BoxContainer Name="PrintButtons" Orientation="Horizontal"/>
 </BoxContainer>

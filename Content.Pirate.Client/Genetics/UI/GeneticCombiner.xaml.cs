@@ -120,7 +120,6 @@ public sealed partial class GeneticCombiner : BoxContainer
     {
         UpdateButton();
         Info.Update(SequenceButtons);
-        NoSequence.Visible = !Info.Visible;
     }
 
     private void UpdateButton()

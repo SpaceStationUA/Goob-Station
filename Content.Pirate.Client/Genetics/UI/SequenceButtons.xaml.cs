@@ -19,13 +19,23 @@ using Content.Pirate.Shared.Genetics.Mutations;
 namespace Content.Pirate.Client.Genetics.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class SequenceButtons : ScrollContainer
+public sealed partial class SequenceButtons : BoxContainer
 {
     public event Action<uint>? OnSelected;
 
+    private static readonly ResPath DnaRsi = new("/Textures/_Pirate/Interface/Genetics/dna_seq.rsi");
+    private static readonly SpriteSpecifier DiscoveredIcon = new SpriteSpecifier.Rsi(DnaRsi, "dna_discovered");
+    private static readonly SpriteSpecifier UndiscoveredIcon = new SpriteSpecifier.Rsi(DnaRsi, "dna_undiscovered");
+
+    public const int MinRows = 4;
+
+    private const int RowSeparation = 4;
+
     private uint? _selected;
     private List<SequenceState> _sequences = new();
-    private List<Button> _buttons = new();
+    private List<SequenceIconButton> _buttons = new();
+
+    private readonly List<uint> _order = new();
 
     public uint? Index => _selected;
 
@@ -38,15 +48,17 @@ public sealed partial class SequenceButtons : ScrollContainer
 
         OnSelected += sel =>
         {
-            for (int i = 0; i < _buttons.Count; i++)
-            {
-                var index = (uint) i;
-                _buttons[i].Pressed = sel == index;
-            }
             _selected = _selected == sel
                 ? null
                 : sel;
+            for (int i = 0; i < _buttons.Count; i++)
+            {
+                _buttons[i].Pressed = _selected == _order[i];
+            }
         };
+
+        Buttons.VSeparationOverride = RowSeparation;
+        Buttons.MinHeight = MinRows * (SequenceIconButton.ButtonHeight + 2) + (MinRows - 1) * RowSeparation;
     }
 
     public void SetStates(List<SequenceState> states)
@@ -69,33 +81,86 @@ public sealed partial class SequenceButtons : ScrollContainer
 
     public void UpdateSequences()
     {
+        NoSequencesLabel.Visible = _sequences.Count == 0;
         if (_buttons.Count != _sequences.Count)
         {
             _buttons.Clear();
             Buttons.RemoveAllChildren();
         }
-        for (int i = 0; i < _sequences.Count; i++)
+        _order.Clear();
+        for (var i = 0; i < _sequences.Count; i++)
         {
-            var sequence = _sequences[i];
-            var index = (uint) i;
+            _order.Add((uint) i);
+        }
+        _order.Sort((a, b) => _sequences[(int) a].Number.CompareTo(_sequences[(int) b].Number));
+
+        for (int i = 0; i < _order.Count; i++)
+        {
+            var index = _order[i];
+            var sequence = _sequences[(int) index];
             var rarity = sequence.Rarity.RarityChar();
             var text = Loc.GetString("genetics-console-sequence-text", ("rarity", rarity), ("number", sequence.Number));
+            var icon = sequence.Mutation != null ? DiscoveredIcon : UndiscoveredIcon;
             if (i < _buttons.Count)
             {
-                _buttons[i].Text = text;
-                _buttons[i].Pressed = i == _selected;
+                _buttons[i].Update(text, icon);
+                _buttons[i].Pressed = index == _selected;
                 continue;
             }
-            var button = new Button()
-            {
-                Text = text,
-                ToggleMode = true,
-                HorizontalExpand = true
-            };
-            button.Pressed = i == _selected;
-            button.OnPressed += _ => OnSelected?.Invoke(index);
+            var button = new SequenceIconButton();
+            button.Update(text, icon);
+            button.Pressed = index == _selected;
+            var position = i;
+            // Buttons are reused when the order changes, so look the sequence up at press time.
+            button.OnPressed += _ => OnSelected?.Invoke(_order[position]);
             _buttons.Add(button);
             Buttons.AddChild(button);
         }
+    }
+}
+
+public sealed class SequenceIconButton : Button
+{
+    public const float ButtonHeight = 66;
+
+    private readonly AnimatedTextureRect _icon;
+    private readonly Label _number;
+    private SpriteSpecifier? _iconSpecifier;
+
+    public SequenceIconButton()
+    {
+        ToggleMode = true;
+        Margin = new Thickness(1);
+        SetHeight = ButtonHeight;
+        MinWidth = 80;
+        StyleClasses.Add("ButtonSquare");
+
+        _icon = new AnimatedTextureRect
+        {
+            HorizontalAlignment = HAlignment.Center
+        };
+        _number = new Label
+        {
+            HorizontalAlignment = HAlignment.Center,
+            StyleClasses = { "LabelSubText" }
+        };
+
+        AddChild(new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            Margin = new Thickness(0, 3, 0, 0),
+            Children = { _icon, _number }
+        });
+    }
+
+    public void Update(string text, SpriteSpecifier icon)
+    {
+        _number.Text = text;
+        ToolTip = text;
+        if (_iconSpecifier == icon)
+            return;
+
+        _iconSpecifier = icon;
+        _icon.SetFromSpriteSpecifier(icon);
     }
 }
