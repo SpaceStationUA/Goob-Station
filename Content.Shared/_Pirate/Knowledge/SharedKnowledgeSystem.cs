@@ -293,6 +293,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         Dirty(holder, holderComponent);
         store.Comp.Holder = holder;
         DirtyField(store, store.Comp, nameof(KnowledgeContainerComponent.Holder));
+        SyncHolderFloor(store);
     }
 
     private void UnlinkStore(EntityUid holder, Entity<KnowledgeContainerComponent> store)
@@ -307,6 +308,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         {
             store.Comp.Holder = null;
             DirtyField(store, store.Comp, nameof(KnowledgeContainerComponent.Holder));
+            ClearFloor(store);
         }
     }
 
@@ -459,7 +461,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
             : null;
 
     public int GetKnowledgeLevel(EntityUid holder, EntProtoId id)
-        => GetKnowledge(holder, id)?.Comp.NetLevel ?? 0;
+        => GetKnowledge(holder, id)?.Comp.NetLevel ?? GetFloorLevel(holder, id);
 
     /// <summary>
     /// Sets persistent progress for one skill without changing temporary bonuses.
@@ -801,6 +803,8 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
         store.Comp.ProfileApplied = true;
         Dirty(store);
+        // Profile rebuild replaces floored skills.
+        SyncHolderFloor(store);
     }
 
     public void ApplyProfile(Entity<KnowledgeContainerComponent> store, KnowledgeProfile profile)

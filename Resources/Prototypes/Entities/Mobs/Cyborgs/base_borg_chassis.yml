@@ -10,6 +10,13 @@
   components:
   - type: VoiceChatEffect # Goobstation - Voice chat
     effect: Robot
+  #region Pirate: silicon skills
+  - type: KnowledgeFloor
+    level: 50
+    exclude:
+    - RevolutionaryKnowledge
+    - SpiderCraftKnowledge
+  #endregion Pirate: silicon skills
   - type: Reactive
     groups:
       Acidic: [Touch]
