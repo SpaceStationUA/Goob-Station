@@ -2,3 +2,33 @@
   license: "CC-BY-NC-SA-4.0"
   copyright: "Voice made by @lillian_industries (Discord) and edited by Huaqas (Discord)."
   source: "https://discord.com/channels/1322447119252062260/1380861162362503371/1381604298735095921"
+
+- files: ["avali_whistle_1.ogg", "avali_scream_2.ogg", "avali_laugh_2.ogg", "avali_laugh_3.ogg", "avali_cry_1.ogg", "avali_cry_2.ogg", "avali_cough_1.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Found and added by sunsetsensei (Discord). Ported from RMC-14-UA (Resources/Audio/_Mriya/Voice/Avali, commit 1d0782443830b2b2dcc7a88abb5a2cab7c835ab6)."
+  source: "https://www.reddit.com/r/avali/s/UauWrFSU8r"
+
+- files: ["avali_gasp.ogg"]
+  license: "CC0-1.0"
+  copyright: "From Freesound.org, edited by @lillian_industries (Discord). Originally from MoffStation, ported via RMC-14-UA (commit 1d0782443830b2b2dcc7a88abb5a2cab7c835ab6)."
+  source: "https://freesound.org/people/uwesoundboiz/sounds/109840/"
+
+- files: ["avali_hiss.ogg", "avali_yawn.ogg"]
+  license: "CC0-1.0"
+  copyright: "From Freesound.org, edited by @lillian_industries (Discord). Originally from MoffStation, ported via RMC-14-UA (commit 1d0782443830b2b2dcc7a88abb5a2cab7c835ab6)."
+  source: "https://freesound.org/people/designerschoice/sounds/805091/"
+
+- files: ["avali_cough_2.ogg"]
+  license: "CC0-1.0"
+  copyright: "From Freesound.org, edited by @lillian_industries (Discord). Originally from MoffStation, ported via RMC-14-UA (commit 1d0782443830b2b2dcc7a88abb5a2cab7c835ab6)."
+  source: "https://freesound.org/people/Vrymaa/sounds/737756/"
+
+- files: ["avali_deathgasp.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "From Freesound.org by xpoki, edited by @lillian_industries (Discord). Originally from MoffStation, ported via RMC-14-UA (commit 1d0782443830b2b2dcc7a88abb5a2cab7c835ab6)."
+  source: "https://freesound.org/people/xpoki/sounds/432735/"
+
+- files: ["avali_whistle_2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from public wildlife sound library xeno-canto.org. Originally from Starlight (as avali_whistle), ported via RMC-14-UA (commit 1d0782443830b2b2dcc7a88abb5a2cab7c835ab6)."
+  source: "https://xeno-canto.org"

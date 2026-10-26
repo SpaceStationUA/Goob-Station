@@ -16,3 +16,42 @@
   id: ResomiSquawk
   files:
   - /Audio/_Pirate/Voice/Resomi/resomi_squawk_1.ogg
+
+- type: soundCollection
+  id: AvaliCries
+  files:
+  - /Audio/_Pirate/Voice/Avali/avali_cry.ogg
+  - /Audio/_Pirate/Voice/Avali/avali_cry_1.ogg
+  - /Audio/_Pirate/Voice/Avali/avali_cry_2.ogg
+
+- type: soundCollection
+  id: AvaliCoughs
+  files:
+  - /Audio/_Pirate/Voice/Avali/avali_cough_1.ogg
+  - /Audio/_Pirate/Voice/Avali/avali_cough_2.ogg
+
+- type: soundCollection
+  id: AvaliWhistles
+  files:
+  - /Audio/_Pirate/Voice/Avali/avali_whistle_1.ogg
+  - /Audio/_Pirate/Voice/Avali/avali_whistle_2.ogg
+
+- type: soundCollection
+  id: AvaliGasps
+  files:
+  - /Audio/_Pirate/Voice/Avali/avali_gasp.ogg
+
+- type: soundCollection
+  id: AvaliDeathgasps
+  files:
+  - /Audio/_Pirate/Voice/Avali/avali_deathgasp.ogg
+
+- type: soundCollection
+  id: AvaliHisses
+  files:
+  - /Audio/_Pirate/Voice/Avali/avali_hiss.ogg
+
+- type: soundCollection
+  id: AvaliYawns
+  files:
+  - /Audio/_Pirate/Voice/Avali/avali_yawn.ogg
