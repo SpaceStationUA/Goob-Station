@@ -35,7 +35,6 @@ public sealed class GeneticsSequenceAndMovementTest
             var human = entities.SpawnEntity("MobHuman", map.GridCoords);
             var scanned = entities.AddComponent<ScannedGenomeComponent>(human);
             var data = mutations.GetRoundData("MutationDwarfism")!;
-            var discovered = data.Discovered;
             var randomField = typeof(ScannedGenomeSystem).GetField("_random", BindingFlags.Instance | BindingFlags.NonPublic)!;
             var originalRandom = randomField.GetValue(genome);
             var random = new Mock<IRobustRandom>(MockBehavior.Strict);
@@ -47,7 +46,6 @@ public sealed class GeneticsSequenceAndMovementTest
                 random.SetupSequence(r => r.NextDouble()).Returns(0.9).Returns(0.1).Returns(0.9);
             try
             {
-                data.Discovered = false;
                 randomField.SetValue(genome, random.Object);
 #pragma warning disable RA0002 // Exercise fixed masking difficulties without changing any mutation prototype.
                 var definition = new MutationComponent { Difficulty = wholePairs ? 4 : 2 };
@@ -63,7 +61,6 @@ public sealed class GeneticsSequenceAndMovementTest
             finally
             {
                 randomField.SetValue(genome, originalRandom);
-                data.Discovered = discovered;
                 entities.DeleteEntity(human);
             }
         });

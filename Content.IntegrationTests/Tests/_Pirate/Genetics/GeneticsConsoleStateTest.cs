@@ -133,8 +133,6 @@ public sealed class GeneticsConsoleStateTest
         var map = await pair.CreateTestMap();
         (EntityUid Console, EntityUid Patient, EntityUid Scanner) scanner = default;
         EntityUid user = default;
-        MutationData data = null;
-        var discovered = false;
         Content.Shared.DoAfter.DoAfter pending = null;
         try
         {
@@ -147,9 +145,6 @@ public sealed class GeneticsConsoleStateTest
                 comp.SequenceDelay = TimeSpan.FromSeconds(7);
                 comp.CombineDelay = TimeSpan.FromSeconds(13);
 #pragma warning restore RA0002
-                data = server.System<MutationSystem>().GetRoundData("MutationDwarfism")!;
-                discovered = data.Discovered;
-                data.Discovered = false;
                 var disk = entities.SpawnEntity("GeneticsDisk", map.GridCoords);
                 server.System<GeneticsDiskSystem>().SetMutation((disk, entities.GetComponent<GeneticsDiskComponent>(disk)), "MutationStimmed");
                 var slot = entities.GetComponent<GeneticsDiskSlotComponent>(scanner.Console).DiskSlot;
@@ -176,15 +171,13 @@ public sealed class GeneticsConsoleStateTest
             {
                 Assert.That(pending.Cancelled, Is.True, "Removing the patient must cancel console operations.");
                 Assert.That(entities.GetComponent<GeneticsScannerComponent>(scanner.Console).Busy, Is.False);
-                Assert.That(data.Discovered, Is.False);
+                Assert.That(server.System<MutationSystem>().IsDiscovered(scanner.Console, "MutationDwarfism"), Is.False);
             });
         }
         finally
         {
             await server.WaitAssertion(() =>
             {
-                if (data != null)
-                    data.Discovered = discovered;
                 foreach (var uid in new[] { scanner.Console, scanner.Scanner, scanner.Patient, user })
                 {
                     if (entities.EntityExists(uid))

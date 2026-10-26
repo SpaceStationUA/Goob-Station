@@ -29,12 +29,6 @@ public sealed partial class MutationData
     public string Bases = string.Empty;
 
     /// <summary>
-    /// Once a mutation is discovered via activation in the genetics console,
-    /// it will always be recognized when scanned in the future.
-    /// </summary>
-    public bool Discovered;
-
-    /// <summary>
     /// Mutation number assigned at roundstart.
     /// This is unique to each mutation so you can identify which ones are the
     /// same across different subjects before you discover the actual mutation.

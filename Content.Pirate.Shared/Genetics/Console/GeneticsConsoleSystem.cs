@@ -131,7 +131,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
     {
         if (GetWorkableMob(ent.Owner) is not {} mob ||
             _genome.GetSequence(mob, args.Index) is not {} sequence ||
-            _mutation.GetRoundData(sequence.Mutation)?.Discovered == true)
+            _mutation.IsDiscovered(ent, sequence.Mutation))
             return;
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
@@ -199,7 +199,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
             return;
 
         var mutation = sequence.Mutation;
-        if (_mutation.GetRoundData(mutation)?.Discovered != true ||
+        if (!_mutation.IsDiscovered(ent, mutation) ||
             _disk.GetDisk(ent.Owner) is not {} disk ||
             disk.Comp.Mutation == mutation)
             return;
@@ -373,7 +373,8 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         if (_mutation.GetRoundData(mutation) is not {} data)
             return false;
 
-        if (data.Discovered) // no
+        // Discovery is kept on the console's research server, each server discovers mutations on its own.
+        if (_mutation.IsDiscovered(ent, mutation))
             return false;
 
         if (sequence.Bases != data.Bases)
@@ -390,7 +391,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
         RaiseLocalEvent(ent, ref ev);
 
         _audio.PlayPvs(ent.Comp.SequenceSound, ent);
-        data.Discovered = true;
+        _mutation.Discover(ent, mutation);
         _mutation.AddMutation(mob, sequence.Mutation, user: user, predicted: false); // not predicted because of round data
         UpdateUI(ent.Owner); // it's now discovered
         return true;

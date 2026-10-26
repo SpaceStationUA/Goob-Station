@@ -65,7 +65,7 @@ public sealed partial class GeneticsConsoleSystem
         }
 
         if (!_genome.IsScanned(target))
-            _genome.ScanGenome(target);
+            _genome.ScanGenome(target, ent);
         SaveHandheldScan(ent, target);
         UpdateUI(ent.Owner);
         _audio.PlayPvs(scanner.ScanSound, ent.Owner);

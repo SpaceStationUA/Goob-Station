@@ -68,24 +68,21 @@ public sealed partial class ScannedGenomeSystem : EntitySystem
     /// </summary>
     public bool IsScanned(EntityUid mob) => _query.HasComp(mob);
 
-    /// <summary>
-    /// Scans a mob's genome, adding sequences for every dormant and active mutation it has.
-    /// </summary>
-    public void ScanGenome(EntityUid mob)
+    public void ScanGenome(EntityUid mob, EntityUid? device = null)
     {
         var scanned = EnsureComp<ScannedGenomeComponent>(mob);
         var mutatable = _mutatableQuery.Comp(mob);
         var ent = (mob, scanned);
         foreach (var id in mutatable.Dormant)
         {
-            TryAddSequence(ent, id);
+            TryAddSequence(ent, id, device: device);
         }
 
         foreach (var (id, uid) in mutatable.Mutations)
         {
             // only add non-dormant so they aren't duplicated
             if (_mutation.IsForeign(mutatable, id))
-                TryAddSequence(ent, id, _mutationQuery.CompOrNull(uid)); // use the entity's data incase it changed the difficulty
+                TryAddSequence(ent, id, _mutationQuery.CompOrNull(uid), device); // Entity data may use a different difficulty.
         }
     }
 
@@ -99,10 +96,7 @@ public sealed partial class ScannedGenomeSystem : EntitySystem
             ? scanned.Sequences[(int) index]
             : null;
 
-    /// <summary>
-    /// Adds a randomly generated sequence for a given mutation to the given genome.
-    /// </summary>
-    public void TryAddSequence(Entity<ScannedGenomeComponent?> ent, EntProtoId<MutationComponent> id, MutationComponent? mutation = null)
+    public void TryAddSequence(Entity<ScannedGenomeComponent?> ent, EntProtoId<MutationComponent> id, MutationComponent? mutation = null, EntityUid? device = null)
     {
         if (!_query.Resolve(ent, ref ent.Comp) ||
             _mutation.GetRoundData(id) is not {} data ||
@@ -114,8 +108,7 @@ public sealed partial class ScannedGenomeSystem : EntitySystem
         if (mutation == null && !_mutation.AllMutations.TryGetValue(id, out mutation))
             return; // bad id
 
-        // discovered sequences have no missing bases
-        if (data.Discovered)
+        if (device is {} scanner && _mutation.IsDiscovered(scanner, id))
         {
             ent.Comp.Sequences.Add(new Sequence
             {
@@ -179,10 +172,7 @@ public sealed partial class ScannedGenomeSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// Adds all client-facing sequence data for a mob to a list, if it is scanned.
-    /// </summary>
-    public void AddSequenceStates(EntityUid mob, List<SequenceState> sequences)
+    public void AddSequenceStates(EntityUid mob, List<SequenceState> sequences, EntityUid? device = null)
     {
         if (!_query.TryComp(mob, out var scanned))
             return;
@@ -197,7 +187,8 @@ public sealed partial class ScannedGenomeSystem : EntitySystem
             }
 
             var rarity = _mutation.GetRarity(id);
-            sequences.Add(new SequenceState(sequence.Bases, sequence.OriginalBases, data.Number, rarity, data.Discovered ? id.ToString() : null));
+            sequences.Add(new SequenceState(sequence.Bases, sequence.OriginalBases, data.Number, rarity,
+                device is {} viewer && _mutation.IsDiscovered(viewer, id) ? id.ToString() : null));
         }
     }
 

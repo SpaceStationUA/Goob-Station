@@ -28,7 +28,7 @@ public sealed partial class GeneticsConsoleSystem
     private void SaveHandheldScan(Entity<HandheldGeneticsScannerComponent> ent, EntityUid subject)
     {
         var sequences = new List<SequenceState>();
-        _genome.AddSequenceStates(subject, sequences);
+        _genome.AddSequenceStates(subject, sequences, ent);
         var scan = new HandheldGeneticsScan
         {
             Target = subject,

@@ -14,6 +14,8 @@
     scanDelay: 3
   - type: HandheldGeneticsScanner
   - type: GeneticsPrintout
+  # Uses the mutation discoveries of the research server on the grid it was made on.
+  - type: ResearchClient
   - type: DoAfter
   - type: ActivatableUI
     key: enum.GeneticsConsoleUiKey.Key

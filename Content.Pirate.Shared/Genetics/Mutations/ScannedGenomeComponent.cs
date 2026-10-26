@@ -26,10 +26,6 @@ public sealed partial class ScannedGenomeComponent : Component
     public List<Sequence> Sequences = new();
 }
 
-/// <summary>
-/// A possible mutation which can be sequenced to unlock a mutation.
-/// It will also activate it in the scanned mob, after which it is discovered globally.
-/// </summary>
 [DataRecord]
 public sealed partial class Sequence
 {
