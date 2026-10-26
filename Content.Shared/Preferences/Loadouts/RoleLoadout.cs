@@ -174,7 +174,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             // Technically it's possible for someone to game themselves into loadouts they shouldn't have
             // If you put invalid ones first but that's your fault for not using sensible defaults
             var pirateHasLoadoutForGroupSlot = PirateHasLoadoutForGroupSlot(group, groupProto, loadouts, profile, session, collection, protoManager); // Pirate: loadout
-            var intentionallyEmptyGroup = explicitGroups.Contains(group) && groupLoadouts.Count == 0; // Pirate: loadout
+            var intentionallyEmptyGroup = !groupProto.Hidden && explicitGroups.Contains(group) && groupLoadouts.Count == 0; // Pirate: synth survival loadout - Hidden groups cannot be emptied by players; older synth profiles saved an empty Survival group.
             if (loadouts.Count < groupProto.MinLimit && !pirateHasLoadoutForGroupSlot && !intentionallyEmptyGroup) // Pirate: loadout
             {
                 //foreach (var protoId in groupProto.Loadouts)
