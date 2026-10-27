@@ -61,10 +61,11 @@ public sealed partial class GeneticsConsoleSystem
         var targets = new List<HandheldGeneticsTarget>();
         foreach (var scan in handheld.Scans)
         {
-            var numbers = new List<int>();
+            var entries = new List<HandheldGeneticsTargetSequence>();
             foreach (var sequence in scan.Sequences)
-                numbers.Add(sequence.Number);
-            targets.Add(new HandheldGeneticsTarget(scan.Name, numbers));
+                entries.Add(new HandheldGeneticsTargetSequence(sequence.Number, sequence.Rarity));
+            entries.Sort((a, b) => a.Number.CompareTo(b.Number));
+            targets.Add(new HandheldGeneticsTarget(scan.Name, entries));
         }
         return new HandheldGeneticsHistoryState(targets, handheld.SelectedScan);
     }

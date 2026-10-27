@@ -6,3 +6,8 @@ genetics-scanner-search-name = Ім’я
 genetics-scanner-search-sequence = Послідовність
 genetics-scanner-use-on-subject = Використайте сканер на піддослідному, щоб відсканувати його ДНК.
 genetics-scanner-scanning = Сканування ДНК...
+genetics-scanner-carriers = Носії:
+genetics-scanner-carriers-count = {$count} з {$total} {$total ->
+    [one] збереженої цілі
+   *[other] збережених цілей
+}

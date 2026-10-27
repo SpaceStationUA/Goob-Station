@@ -39,7 +39,10 @@ public sealed class HandheldGeneticsHistoryState(List<HandheldGeneticsTarget> ta
 }
 
 [Serializable, NetSerializable]
-public readonly record struct HandheldGeneticsTarget(string Name, List<int> Numbers);
+public readonly record struct HandheldGeneticsTarget(string Name, List<HandheldGeneticsTargetSequence> Sequences);
+
+[Serializable, NetSerializable]
+public readonly record struct HandheldGeneticsTargetSequence(int Number, MutationRarity Rarity);
 
 [Serializable, NetSerializable]
 public sealed class HandheldGeneticsSelectScanMessage(int? index) : BoundUserInterfaceMessage

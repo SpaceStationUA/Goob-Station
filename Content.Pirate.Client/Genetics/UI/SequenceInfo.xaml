@@ -26,6 +26,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <RichTextLabel Name="MutationInstability" HorizontalExpand="True"/>
                     <Label Text="{Loc 'genetics-console-mutation-rarity'}" VerticalAlignment="Top"/>
                     <RichTextLabel Name="MutationRarity" HorizontalExpand="True"/>
+                    <Label Name="CarriersLabel" Text="{Loc 'genetics-scanner-carriers'}" VerticalAlignment="Top" Visible="False"/>
+                    <BoxContainer Name="Carriers" Orientation="Vertical" HorizontalExpand="True" Visible="False">
+                        <Label Name="CarriersCount" StyleClasses="LabelSubText"/>
+                        <OptionButton Name="CarriersSelect" HorizontalExpand="True" Margin="0 2 0 0"/>
+                    </BoxContainer>
                 </GridContainer>
             </BoxContainer>
         </ScrollContainer>
