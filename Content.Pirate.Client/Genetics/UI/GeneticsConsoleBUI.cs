@@ -46,6 +46,7 @@ public sealed partial class GeneticsConsoleBUI : BoundUserInterface
         _window.OnCombine += i => SendPredictedMessage(new GeneticsConsoleCombineMessage(i));
         _window.OnSaveEnzymes += () => SendPredictedMessage(new GeneticsConsoleSaveEnzymesMessage());
         _window.OnApplyEnzymes += () => SendPredictedMessage(new GeneticsConsoleApplyEnzymesMessage());
+        _window.OnJoker += message => SendPredictedMessage(message);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

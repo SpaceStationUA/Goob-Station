@@ -32,6 +32,7 @@ public sealed partial class GeneticSequencer : BoxContainer
     public event Action<GeneticsConsoleResetSequenceMessage>? OnResetSequence;
     public event Action? OnPrintScan;
     public event Action<uint>? OnPrintSequence;
+    public event Action<GeneticsConsoleJokerMessage>? OnJoker;
 
     private EntityUid? _mob;
     private Entity<GeneticsDiskComponent>? _disk;
@@ -64,6 +65,11 @@ public sealed partial class GeneticSequencer : BoxContainer
         {
             if (SequenceButtons.Index is {} s)
                 OnSequence?.Invoke(s);
+        };
+        Puzzle.OnJoker += i =>
+        {
+            if (SequenceButtons.Index is {} s && SequenceButtons.Sequence is {} sequence)
+                OnJoker?.Invoke(new GeneticsConsoleJokerMessage(s, i) { Number = sequence.Number });
         };
         Puzzle.OnResetSequence += () =>
         {
@@ -166,6 +172,11 @@ public sealed partial class GeneticSequencer : BoxContainer
     {
         _disk = disk;
         UpdateWriteButton();
+    }
+
+    public void UpdateJokerCooldown(int? seconds)
+    {
+        Puzzle.SetJokerCooldown(seconds);
     }
 
     public void UpdateWriteCooldown(bool cooldown)

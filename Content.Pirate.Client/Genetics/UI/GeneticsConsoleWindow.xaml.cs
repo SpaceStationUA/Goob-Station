@@ -42,6 +42,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
     public event Action<uint>? OnCombine;
     public event Action? OnSaveEnzymes;
     public event Action? OnApplyEnzymes;
+    public event Action<GeneticsConsoleJokerMessage>? OnJoker;
 
     private EntityQuery<GeneticsConsoleComponent> _query;
     private EntityQuery<GeneticsConsoleEnzymesComponent> _enzymesQuery;
@@ -91,6 +92,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         Sequencer.OnWriteMutation += i => OnWriteMutation?.Invoke(i);
         Sequencer.OnSequence += i => OnSequence?.Invoke(i);
         Sequencer.OnResetSequence += message => OnResetSequence?.Invoke(message);
+        Sequencer.OnJoker += message => OnJoker?.Invoke(message);
 
         Storage.OnPrint += p => OnPrint?.Invoke(p);
 
@@ -135,6 +137,19 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
 
         Update(comp, scanner, enzymes);
         UpdateDisk(_disk.GetDisk(_uid));
+        UpdateJokerCooldown();
+    }
+
+    private void UpdateJokerCooldown()
+    {
+        if (!_entMan.TryGetComponent<GeneticsJokerComponent>(_uid, out var joker))
+        {
+            Sequencer.UpdateJokerCooldown(null);
+            return;
+        }
+
+        var seconds = (int) Math.Ceiling((joker.NextUse - _timing.CurTime).TotalSeconds);
+        Sequencer.UpdateJokerCooldown(Math.Max(seconds, 0));
     }
 
     public void SetEntity(EntityUid uid)

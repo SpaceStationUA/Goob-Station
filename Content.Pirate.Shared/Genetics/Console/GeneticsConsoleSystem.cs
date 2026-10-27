@@ -73,6 +73,7 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
 
         InitializeEnzymes();
         InitializeHandheld();
+        InitializeJoker();
         InitializePrintout();
         InitializeScanner();
     }

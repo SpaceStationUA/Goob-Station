@@ -9,6 +9,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <Label Text="{Loc 'genetics-console-genome-sequencer'}" VerticalAlignment="Bottom"/>
             <Control HorizontalExpand="True"/>
             <BoxContainer Name="SequenceButtonContainer" Orientation="Horizontal">
+                <Button Name="JokerButton" Text="{Loc 'genetics-console-joker'}" ToggleMode="True" Disabled="True" MinSize="120 0" Margin="4 0 0 1"/>
                 <Button Name="ResetSequenceButton" Text="{Loc 'genetics-console-reset-sequence'}" MinSize="120 0" Margin="4 0 0 1"/>
                 <Button Name="SequenceButton" Text="{Loc 'genetics-console-begin-sequencing'}" StyleClasses="negative" MinSize="120 0" Margin="4 0 0 1"/>
             </BoxContainer>

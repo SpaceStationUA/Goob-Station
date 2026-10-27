@@ -28,8 +28,12 @@ public sealed partial class GenePuzzle : Control
     public event Action? OnSequence;
     public event Action? OnResetSequence;
 
+    public event Action<uint>? OnJoker;
+
     private bool _busy;
     private bool _sequenced;
+    private bool _jokerMode;
+    private int _jokerCooldown;
     private bool _writable = true;
     private string _bases = string.Empty;
     private string _originalBases = string.Empty;
@@ -47,6 +51,7 @@ public sealed partial class GenePuzzle : Control
 
         SequenceButton.OnPressed += _ => OnSequence?.Invoke();
         ResetSequenceButton.OnPressed += _ => OnResetSequence?.Invoke();
+        JokerButton.OnPressed += _ => SetJokerMode(JokerButton.Pressed);
         CreateBaseButtons(MutationData.BaseCount);
         ClearBases();
     }
@@ -59,8 +64,36 @@ public sealed partial class GenePuzzle : Control
         UpdateBaseButtons();
     }
 
+    public void SetJokerCooldown(int? cooldown)
+    {
+        JokerButton.Visible = cooldown != null;
+        var seconds = cooldown ?? 0;
+        if (seconds == _jokerCooldown)
+            return;
+
+        _jokerCooldown = seconds;
+        JokerButton.Text = seconds > 0
+            ? Loc.GetString("genetics-console-joker-cooldown", ("seconds", seconds))
+            : Loc.GetString("genetics-console-joker");
+        UpdateJokerButton();
+    }
+
+    private void SetJokerMode(bool on)
+    {
+        _jokerMode = on && !JokerButton.Disabled;
+        JokerButton.Pressed = _jokerMode;
+    }
+
+    private void UpdateJokerButton()
+    {
+        JokerButton.Disabled = _busy || !_writable || _sequenced || _jokerCooldown > 0 || !_originalBases.Contains('X');
+        if (JokerButton.Disabled)
+            SetJokerMode(false);
+    }
+
     private void UpdateSequenceButton()
     {
+        UpdateJokerButton();
         SequenceButton.Disabled = _busy || _sequenced || !IsComplete();
         ResetSequenceButton.Disabled = _busy || _bases == _originalBases;
     }
@@ -202,6 +235,14 @@ public sealed partial class GenePuzzle : Control
         };
         button.OnPressed += _ =>
         {
+            if (_jokerMode)
+            {
+                if (!_busy && _writable && !button.Disabled && _originalBases[(int) i] == 'X')
+                    OnJoker?.Invoke(i);
+                SetJokerMode(false);
+                return;
+            }
+
             Cycle(GeneticsCycle.Next);
         };
         return button;
