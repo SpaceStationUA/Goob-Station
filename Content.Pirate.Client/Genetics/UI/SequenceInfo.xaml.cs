@@ -13,6 +13,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Timing;
 
 using Content.Pirate.Shared.Genetics.Mutations;
 
@@ -34,6 +35,46 @@ public sealed partial class SequenceInfo : BoxContainer
     }
 
     public bool HasSequence { get; private set; }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+        if (!Details.Visible)
+            return;
+
+        AlignKeys();
+        LimitValueWidths();
+    }
+
+    private void AlignKeys()
+    {
+        var keys = new[] { KeyName, KeyDesc, KeyInstability, KeyRarity, CarriersLabel };
+        var width = 0f;
+        foreach (var key in keys)
+        {
+            width = Math.Max(width, key.DesiredSize.X);
+        }
+
+        foreach (var key in keys)
+        {
+            if (key.MinWidth < width)
+                key.MinWidth = width;
+        }
+    }
+
+    private void LimitValueWidths()
+    {
+        foreach (var value in new Control[] { MutationName, MutationDesc, MutationInstability, MutationRarity, Carriers })
+        {
+            if (value.Parent is not BoxContainer row || row.ChildCount < 2)
+                continue;
+
+            var key = row.GetChild(0);
+            var width = row.Width - key.Width - (row.SeparationOverride ?? 0);
+            if (width > 0 && Math.Abs(value.MaxWidth - width) > 0.5f)
+                value.MaxWidth = width;
+        }
+    }
 
     public void Update(SequenceButtons buttons)
     {

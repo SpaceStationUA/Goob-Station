@@ -17,21 +17,31 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         <ScrollContainer HScrollEnabled="False" VerticalExpand="True" ReserveScrollbarSpace="True">
             <BoxContainer Orientation="Vertical" Margin="10">
                 <Label Name="NoSequence" Text="{Loc 'genetics-console-sequencer-no-sequence-selected'}" StyleClasses="LabelSubText"/>
-                <GridContainer Name="Details" Columns="2" HSeparationOverride="10" VSeparationOverride="4" Visible="False">
-                    <Label Text="{Loc 'genetics-console-mutation-name'}" VerticalAlignment="Top"/>
-                    <RichTextLabel Name="MutationName" HorizontalExpand="True"/>
-                    <Label Text="{Loc 'genetics-console-mutation-desc'}" VerticalAlignment="Top"/>
-                    <RichTextLabel Name="MutationDesc" HorizontalExpand="True"/>
-                    <Label Text="{Loc 'genetics-console-mutation-instability'}" VerticalAlignment="Top"/>
-                    <RichTextLabel Name="MutationInstability" HorizontalExpand="True"/>
-                    <Label Text="{Loc 'genetics-console-mutation-rarity'}" VerticalAlignment="Top"/>
-                    <RichTextLabel Name="MutationRarity" HorizontalExpand="True"/>
-                    <Label Name="CarriersLabel" Text="{Loc 'genetics-scanner-carriers'}" VerticalAlignment="Top" Visible="False"/>
-                    <BoxContainer Name="Carriers" Orientation="Vertical" HorizontalExpand="True" Visible="False">
-                        <Label Name="CarriersCount" StyleClasses="LabelSubText"/>
-                        <OptionButton Name="CarriersSelect" HorizontalExpand="True" Margin="0 2 0 0"/>
+                <BoxContainer Name="Details" Orientation="Vertical" Visible="False">
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="10" Margin="0 0 0 4">
+                        <Label Name="KeyName" Text="{Loc 'genetics-console-mutation-name'}" VerticalAlignment="Top"/>
+                        <RichTextLabel Name="MutationName" HorizontalExpand="True"/>
                     </BoxContainer>
-                </GridContainer>
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="10" Margin="0 0 0 4">
+                        <Label Name="KeyDesc" Text="{Loc 'genetics-console-mutation-desc'}" VerticalAlignment="Top"/>
+                        <RichTextLabel Name="MutationDesc" HorizontalExpand="True"/>
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="10" Margin="0 0 0 4">
+                        <Label Name="KeyInstability" Text="{Loc 'genetics-console-mutation-instability'}" VerticalAlignment="Top"/>
+                        <RichTextLabel Name="MutationInstability" HorizontalExpand="True"/>
+                    </BoxContainer>
+                    <BoxContainer Orientation="Horizontal" SeparationOverride="10" Margin="0 0 0 4">
+                        <Label Name="KeyRarity" Text="{Loc 'genetics-console-mutation-rarity'}" VerticalAlignment="Top"/>
+                        <RichTextLabel Name="MutationRarity" HorizontalExpand="True"/>
+                    </BoxContainer>
+                    <BoxContainer Name="CarriersRow" Orientation="Horizontal" SeparationOverride="10" Margin="0 0 0 4" Visible="False">
+                        <Label Name="CarriersLabel" Text="{Loc 'genetics-scanner-carriers'}" VerticalAlignment="Top"/>
+                        <BoxContainer Name="Carriers" Orientation="Vertical" HorizontalExpand="True">
+                            <Label Name="CarriersCount" StyleClasses="LabelSubText"/>
+                            <OptionButton Name="CarriersSelect" HorizontalExpand="True" Margin="0 2 0 0"/>
+                        </BoxContainer>
+                    </BoxContainer>
+                </BoxContainer>
             </BoxContainer>
         </ScrollContainer>
     </PanelContainer>

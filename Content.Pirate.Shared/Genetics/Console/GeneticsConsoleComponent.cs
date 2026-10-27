@@ -67,7 +67,7 @@ public sealed partial class GeneticsConsoleComponent : Component
     /// How long it takes to try to sequence a mutation.
     /// </summary>
     [DataField]
-    public TimeSpan SequenceDelay = TimeSpan.FromSeconds(5);
+    public TimeSpan SequenceDelay = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// Damage dealt to the mob is sequencing a mutation fails.

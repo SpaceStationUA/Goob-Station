@@ -298,8 +298,7 @@ public sealed partial class SequenceInfo
         }
 
         _selectCarrier = select;
-        CarriersLabel.Visible = carriers != null;
-        Carriers.Visible = carriers != null;
+        CarriersRow.Visible = carriers != null;
         CarriersSelect.Clear();
         if (carriers == null)
             return;
