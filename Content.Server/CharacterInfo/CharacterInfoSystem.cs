@@ -92,7 +92,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         if (args.SenderSession.AttachedEntity is not { } entity)
             return;
 
-        var newContent = FormattedMessage.RemoveMarkupOrThrow(msg.Content);
+        var newContent = HumanoidCharacterProfile.NormalizeWhitespace(FormattedMessage.RemoveMarkupOrThrow(msg.Content)); // Pirate: whitespace normalization
         var maxFlavorTextLength = _cfg.GetCVar(CCVars.MaxFlavorTextLength);
         if (newContent.Length > maxFlavorTextLength)
             newContent = newContent[..maxFlavorTextLength];
