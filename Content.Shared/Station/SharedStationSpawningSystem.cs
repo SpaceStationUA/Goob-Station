@@ -17,7 +17,7 @@ using Content.Shared.Whitelist; // Goobstation
 
 namespace Content.Shared.Station;
 
-public abstract class SharedStationSpawningSystem : EntitySystem
+public abstract partial class SharedStationSpawningSystem : EntitySystem // Pirate: ghost role loadouts
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -259,6 +259,14 @@ public abstract class SharedStationSpawningSystem : EntitySystem
             {
                 if (entProtos == null || entProtos.Count == 0)
                     continue;
+
+                #region Pirate: ghost role loadouts
+                if (pirateFromSelectedLoadout)
+                {
+                    EquipSelectedLoadoutStorage(entity, slotName, entProtos, pirateLoadoutTint, pirateLoadoutName, pirateLoadoutDescription);
+                    continue;
+                }
+                #endregion Pirate: ghost role loadouts
 
                 if (inventoryComp != null &&
                     InventorySystem.TryGetSlotEntity(entity, slotName, out var slotEnt, inventoryComponent: inventoryComp) &&
