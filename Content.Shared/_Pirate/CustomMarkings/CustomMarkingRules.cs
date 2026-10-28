@@ -48,6 +48,7 @@ public static class CustomMarkingRules
 
     private const char WornSeparator = ',';
     private const char PlacementSeparator = ':';
+    private const string GlowFlag = "g";
 
     /// <summary>Whether <paramref name="hash"/> has the form of an art hash: lowercase hex of the right length.</summary>
     public static bool IsValidHash(string? hash)
@@ -131,7 +132,7 @@ public static class CustomMarkingRules
     /// <param name="before">The entry as it was, or null when it is new.</param>
     public static bool ApplySaved(List<CustomMarking> worn, CustomMarkingEntry? before, CustomMarkingEntry saved, int max)
     {
-        var marking = new CustomMarking(saved.Hash, saved.Placement);
+        var marking = saved.Marking;
         if (before is not { } old)
         {
             if (worn.Count >= max || worn.Contains(marking))
@@ -141,7 +142,7 @@ public static class CustomMarkingRules
             return true;
         }
 
-        var at = worn.IndexOf(new CustomMarking(old.Hash, old.Placement));
+        var at = worn.IndexOf(old.Marking);
         if (at < 0 || worn[at] == marking)
             return false;
 
@@ -186,16 +187,18 @@ public static class CustomMarkingRules
         return times;
     }
 
-    /// <summary>A worn list as the text saved with a character: <c>hash:placement</c> pairs, comma separated.</summary>
+    /// <summary>Glowing entries add <c>:g</c> after placement; other entries keep the legacy format.</summary>
     public static string ToStored(IReadOnlyList<CustomMarking> worn)
     {
-        var builder = new StringBuilder(worn.Count * (HashLength + 3));
+        var builder = new StringBuilder(worn.Count * (HashLength + 5));
         foreach (var marking in worn)
         {
             if (builder.Length > 0)
                 builder.Append(WornSeparator);
 
             builder.Append(marking.Hash).Append(PlacementSeparator).Append((int) marking.Placement);
+            if (marking.Glow)
+                builder.Append(PlacementSeparator).Append(GlowFlag);
         }
 
         return builder.ToString();
@@ -210,11 +213,15 @@ public static class CustomMarkingRules
 
         foreach (var pair in stored.Split(WornSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
         {
-            var split = pair.IndexOf(PlacementSeparator);
-            if (split < 0 || !int.TryParse(pair.AsSpan(split + 1), out var placement))
+            var parts = pair.Split(PlacementSeparator);
+            if (parts.Length is < 2 or > 3 || !int.TryParse(parts[1], out var placement))
                 continue;
 
-            worn.Add(new CustomMarking(pair[..split], (CustomMarkingPlacement) placement));
+            var glow = parts.Length == 3;
+            if (glow && parts[2] != GlowFlag)
+                continue;
+
+            worn.Add(new CustomMarking(parts[0], (CustomMarkingPlacement) placement, glow));
         }
 
         return Clean(worn, int.MaxValue);

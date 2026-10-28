@@ -579,10 +579,10 @@ public sealed class CustomMarkingLibraryTest
         var releaseRead = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var delayed = new Mock<IServerDbManager>();
         delayed.Setup(db => db.SaveCustomMarkingAsync(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(),
-                It.IsAny<string>(), It.IsAny<StoredArt>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .Returns(async (Guid user, int id, string name, int placement, string hash, StoredArt art, int limit, int daily, CancellationToken cancel) =>
+                It.IsAny<string>(), It.IsAny<StoredArt>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+            .Returns(async (Guid user, int id, string name, int placement, string hash, StoredArt art, int limit, int daily, bool glow, CancellationToken cancel) =>
             {
-                var result = await original.SaveCustomMarkingAsync(user, id, name, placement, hash, art, limit, daily, cancel);
+                var result = await original.SaveCustomMarkingAsync(user, id, name, placement, hash, art, limit, daily, glow, cancel);
                 databaseSaved.TrySetResult(result);
                 await release.Task;
                 return result;

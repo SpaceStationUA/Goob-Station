@@ -119,14 +119,14 @@ public sealed partial class CustomMarkingQuickList : BoxContainer
         {
             foreach (var entry in library)
             {
-                AddTile(new CustomMarking(entry.Hash, entry.Placement), entry.Name);
+                AddTile(entry.Marking, entry.Name);
             }
         }
 
         // Worn markings with no library entry behind them still get a tile, so they can come off.
         foreach (var marking in _worn)
         {
-            if (library == null || !library.Any(entry => entry.Hash == marking.Hash && entry.Placement == marking.Placement))
+            if (library == null || !library.Any(entry => entry.Marking == marking))
                 AddTile(marking, Loc.GetString("wf-custom-marking-library-stray"));
         }
 
@@ -148,7 +148,7 @@ public sealed partial class CustomMarkingQuickList : BoxContainer
         };
         tile.ToolTip = Loc.GetString("wf-custom-marking-tile-tooltip",
             ("name", name),
-            ("placement", Loc.GetString(CustomMarkingEditorWindow.PlacementName(marking.Placement))));
+            ("placement", CustomMarkingEditorWindow.Describe(marking)));
         tile.OnPressed += _ => Toggle(marking);
         _grid.AddChild(tile);
     }
