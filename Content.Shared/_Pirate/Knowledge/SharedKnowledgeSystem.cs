@@ -380,7 +380,10 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
         var destinationStore = EnsureKnowledgeContainer(destinationHolder);
         if (sourceStore.Owner != destinationStore.Owner)
+        {
             MergeStores(sourceStore, destinationStore);
+            SyncHolderFloor(destinationStore);
+        }
     }
 
     public Entity<KnowledgeComponent>? EnsureKnowledge(

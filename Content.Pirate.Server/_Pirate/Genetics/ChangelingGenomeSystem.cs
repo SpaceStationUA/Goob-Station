@@ -13,7 +13,7 @@ public sealed class ChangelingGenomeSystem : EntitySystem
 {
     [Dependency] private readonly ScannedGenomeSystem _genome = default!;
 
-    private readonly Dictionary<string, GenomeSnapshot> _genomes = new();
+    private readonly Dictionary<TransformData, GenomeSnapshot> _genomes = new();
 
     public override void Initialize()
     {
@@ -31,7 +31,7 @@ public sealed class ChangelingGenomeSystem : EntitySystem
             return;
 
         if (_genome.GetGenome(args.Victim) is {} genome)
-            _genomes[args.Data.DNA] = genome;
+            _genomes[args.Data] = genome;
     }
 
     private void OnFormApplied(Entity<DnaComponent> ent, ref ChangelingFormAppliedEvent args)
@@ -44,7 +44,7 @@ public sealed class ChangelingGenomeSystem : EntitySystem
             RaiseLocalEvent(ent, ref ev);
         }
 
-        if (_genomes.TryGetValue(args.Data.DNA, out var genome))
+        if (_genomes.TryGetValue(args.Data, out var genome))
             _genome.SetGenome(ent, genome);
     }
 }

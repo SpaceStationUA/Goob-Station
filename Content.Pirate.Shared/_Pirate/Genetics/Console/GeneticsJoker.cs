@@ -12,7 +12,7 @@ namespace Content.Pirate.Shared.Genetics.Console;
 public sealed partial class GeneticsJokerComponent : Component
 {
     [DataField]
-    public TimeSpan Cooldown = TimeSpan.FromMinutes(10);
+    public TimeSpan Cooldown = TimeSpan.FromMinutes(5);
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextUse;

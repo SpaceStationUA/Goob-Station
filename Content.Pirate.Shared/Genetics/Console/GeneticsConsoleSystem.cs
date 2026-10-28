@@ -388,11 +388,13 @@ public sealed partial class GeneticsConsoleSystem : EntitySystem
             return false;
         }
 
+        if (!_mutation.Discover(ent, mutation))
+            return false;
+
         var ev = new MutationSequencedEvent(mutation, data);
         RaiseLocalEvent(ent, ref ev);
 
         _audio.PlayPvs(ent.Comp.SequenceSound, ent);
-        _mutation.Discover(ent, mutation);
         _mutation.AddMutation(mob, sequence.Mutation, user: user, predicted: false); // not predicted because of round data
         UpdateUI(ent.Owner); // it's now discovered
         return true;

@@ -268,8 +268,9 @@ public sealed class CustomMarkingLibraryTest
         await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task SavedMarkingIsDrawnTest()
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SavedMarkingIsDrawnTest(bool glow)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
         var server = pair.Server;
@@ -278,7 +279,7 @@ public sealed class CustomMarkingLibraryTest
         var sSystem = server.System<ServerCustomMarkingSystem>();
 
         var art = new CustomMarkingArt();
-        art.SetPixel(0, CustomMarkingArt.South, 15, 10, new Rgba32(200, 30, 30, 255));
+        art.SetPixel(0, CustomMarkingArt.South, 15, 10, new Rgba32((byte) (glow ? 201 : 200), 30, 30, 255));
         art.SetPixel(0, CustomMarkingArt.West, 2, 3, new Rgba32(0, 0, 0, 90));
         var hash = ServerCustomMarkingSystem.Hash(art);
 
@@ -295,7 +296,7 @@ public sealed class CustomMarkingLibraryTest
         // The client saves a drawing to its library.
         answer = null;
         var request = 0;
-        await client.WaitPost(() => request = cSystem.Save(0, "  My mark  ", CustomMarkingPlacement.Skin, art));
+        await client.WaitPost(() => request = cSystem.Save(0, "  My mark  ", CustomMarkingPlacement.Skin, art, glow));
         await WaitFor(pair, () => answer != null, "the server to answer the save");
         Assert.Multiple(() =>
         {
@@ -304,7 +305,10 @@ public sealed class CustomMarkingLibraryTest
             Assert.That(answer.Entry?.Name, Is.EqualTo("My mark"));
             Assert.That(answer.Entry?.Hash, Is.EqualTo(hash));
             Assert.That(answer.Entry?.Placement, Is.EqualTo(CustomMarkingPlacement.Skin));
+            Assert.That(answer.Entry?.Glow, Is.EqualTo(glow));
         });
+        var stored = await server.ResolveDependency<IServerDbManager>().GetCustomMarkingsAsync(pair.Player!.UserId.UserId);
+        Assert.That(stored.Single(entry => entry.Id == answer.Entry!.Value.Id).Glow, Is.EqualTo(glow));
         await WaitFor(pair, () => cSystem.Library is { Count: 1 }, "the library to reach the client");
         Assert.That(cSystem.Library![0], Is.EqualTo(answer.Entry));
 
@@ -323,7 +327,7 @@ public sealed class CustomMarkingLibraryTest
         {
             body = server.EntMan.SpawnEntity("MobHuman", testMap.GridCoords);
             var profile = HumanoidCharacterProfile.DefaultWithSpecies("Human")
-                .WithCustomMarkings(new List<CustomMarking> { new(hash, CustomMarkingPlacement.Skin) });
+                .WithCustomMarkings(new List<CustomMarking> { new(hash, CustomMarkingPlacement.Skin, glow) });
             server.EntMan.System<SharedHumanoidAppearanceSystem>().LoadProfile(body, profile);
             server.PlayerMan.SetAttachedEntity(pair.Player!, body);
         });
@@ -336,6 +340,13 @@ public sealed class CustomMarkingLibraryTest
         {
             Assert.That(cSystem.TryGetPng(hash, out var png), Is.True);
             Assert.That(Content.Client._Pirate.CustomMarkings.CustomMarkingPng.Read(png).SamePixels(art), Is.True, "the art arrives as it was drawn");
+            var sprite = client.EntMan.GetComponent<SpriteComponent>(clientBody);
+            Assert.That(sprites.LayerMapTryGet((clientBody, sprite), ClientCustomMarkingSystem.LayerKey(0), out var layer, false), Is.True);
+            var shader = ((SpriteComponent.Layer) sprite[layer]).ShaderPrototype;
+            if (glow)
+                Assert.That(shader, Is.EqualTo(SpriteSystem.UnshadedId));
+            else
+                Assert.That(shader, Is.Null);
         });
 
         // An admin blocks the art: it comes off the body and the client forgets it.

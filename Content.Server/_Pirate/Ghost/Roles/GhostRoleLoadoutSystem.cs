@@ -45,7 +45,7 @@ public sealed class GhostRoleLoadoutSystem : EntitySystem
         if (loadout.SelectedLoadouts.Values.All(selected => selected.Count == 0))
             return;
 
-        _spawning.EquipRoleLoadout(mob, loadout, prototype);
+        _spawning.EquipReplacingRoleLoadout(mob, loadout, prototype);
         _loadouts.GearEquipped(mob);
     }
 }

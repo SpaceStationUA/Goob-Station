@@ -59,6 +59,7 @@ public sealed partial class SequenceButtons : BoxContainer
 
         Buttons.VSeparationOverride = RowSeparation;
         Buttons.MinHeight = MinRows * (SequenceIconButton.ButtonHeight + 2) + (MinRows - 1) * RowSeparation;
+        Scroll.SetHeight = Buttons.MinHeight + 16;
     }
 
     public void SetStates(List<SequenceState> states)

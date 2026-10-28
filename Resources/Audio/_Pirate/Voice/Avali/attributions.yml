@@ -14,8 +14,8 @@
   source: "https://freesound.org/people/uwesoundboiz/sounds/109840/"
 
 - files: ["avali_hiss.ogg", "avali_yawn.ogg"]
-  license: "CC0-1.0"
-  copyright: "From Freesound.org, edited by @lillian_industries (Discord). Originally from MoffStation, ported via RMC-14-UA (commit 1d0782443830b2b2dcc7a88abb5a2cab7c835ab6)."
+  license: "CC-BY-4.0"
+  copyright: "From Freesound.org by designerschoice, edited by @lillian_industries (Discord). Originally from MoffStation, ported via RMC-14-UA (commit 1d0782443830b2b2dcc7a88abb5a2cab7c835ab6)."
   source: "https://freesound.org/people/designerschoice/sounds/805091/"
 
 - files: ["avali_cough_2.ogg"]

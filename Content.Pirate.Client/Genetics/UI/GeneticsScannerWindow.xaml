@@ -25,6 +25,8 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 </ScrollContainer>
             </PanelContainer>
         </BoxContainer>
+        <ScrollContainer HScrollEnabled="False" ReserveScrollbarSpace="True" HorizontalExpand="True">
         <genetics:GeneticSequencer Name="Sequencer"/>
+        </ScrollContainer>
     </BoxContainer>
 </controls:FancyWindow>

@@ -187,8 +187,10 @@ public sealed partial class ScannedGenomeSystem : EntitySystem
             }
 
             var rarity = _mutation.GetRarity(id);
-            sequences.Add(new SequenceState(sequence.Bases, sequence.OriginalBases, data.Number, rarity,
-                device is {} viewer && _mutation.IsDiscovered(viewer, id) ? id.ToString() : null));
+            var discovered = device is {} viewer && _mutation.IsDiscovered(viewer, id);
+            sequences.Add(new SequenceState(discovered ? data.Bases : sequence.Bases,
+                discovered ? data.Bases : sequence.OriginalBases, data.Number, rarity,
+                discovered ? id.ToString() : null));
         }
     }
 

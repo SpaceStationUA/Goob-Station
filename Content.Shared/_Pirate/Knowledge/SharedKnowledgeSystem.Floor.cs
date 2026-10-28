@@ -61,7 +61,7 @@ public sealed partial class SharedKnowledgeSystem
                 continue;
 
             // Preserve skills learned while the floor was active.
-            if (knowledge.FloorGranted && knowledge.LearnedLevel == 0 && knowledge.TemporaryLevel == 0)
+            if (knowledge.FloorGranted && knowledge.LearnedLevel == 0 && knowledge.TemporaryLevel == 0 && knowledge.Experience == 0)
             {
                 store.Comp.Knowledge.Remove(id);
                 PredictedQueueDel(uid);
