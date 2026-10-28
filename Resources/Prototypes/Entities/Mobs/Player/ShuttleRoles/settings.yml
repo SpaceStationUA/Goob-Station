@@ -95,7 +95,7 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipCombatEducationPilot # Pirate: piloting skill
+      - SkillChipSecurityEducationPilot # Pirate: piloting skill # Pirate: security combat chips
       - SkillChipCombatHOS
     # Pirate: skill chips end
     - type: GhostRole
@@ -160,9 +160,8 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipCombatEducation
-      - SkillChipSidearms
-      - SkillChipNonLethal
+      - SkillChipSecurityEducation # Pirate: security combat chips
+      - SkillChipSecurityCadet # Pirate: security combat chips
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-cadet
@@ -177,9 +176,8 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipCombatEducation
-      - SkillChipSidearms
-      - SkillChipNonLethal
+      - SkillChipSecurityEducation # Pirate: security combat chips
+      - SkillChipSecurityOfficer # Pirate: security combat chips
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-security
@@ -194,9 +192,8 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipCombatEducation
-      - SkillChipSidearms
-      - SkillChipBludgeon
+      - SkillChipSecurityEducation # Pirate: security combat chips
+      - SkillChipDetective # Pirate: security combat chips
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-detective
@@ -211,9 +208,8 @@
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:
-      - SkillChipCombatEducationPilot # Pirate: piloting skill
-      - SkillChipSidearms
-      - SkillChipShotgun
+      - SkillChipSecurityEducationPilot # Pirate: piloting skill # Pirate: security combat chips
+      - SkillChipWarden # Pirate: security combat chips
     # Pirate: skill chips end
     - type: GhostRole
       name: job-name-warden

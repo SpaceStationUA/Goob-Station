@@ -429,6 +429,23 @@
     skills:
       PilotingKnowledge: 50
 
+# MarksmanshipSpreadSkillCurve starts basic training at 26; 25 retains almost double spread.
+- type: entity
+  parent: SkillChipCombatEducation
+  id: SkillChipSecurityEducation
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ShootingKnowledge: 26
+
+- type: entity
+  parent: SkillChipSecurityEducation
+  id: SkillChipSecurityEducationPilot
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      PilotingKnowledge: 50
+
 - type: entity
   parent: SkillChipEchelonEducation
   id: SkillChipEchelonEducationPilot

@@ -7,7 +7,7 @@
   description: An expensive & self-recharging energy sword, designed specifically for the Head of Security. If it were not for injustice, man would not know justice.
   components:
   - type: WeaponClass # Pirate: weapon skills
-    class: Energy # Pirate: weapon skills
+    class: Sword # Pirate: weapon skills # Pirate: security combat chips
   - type: Item
     sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi
     size: Ginormous # Use your sheath.
@@ -84,6 +84,8 @@
           sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi
           state: icon
         components:
+        - type: WeaponClass # Pirate: security combat chips
+          class: Sword # Pirate: security combat chips
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 1.5
@@ -105,6 +107,8 @@
           sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi
           state: stun-icon
         components:
+        - type: WeaponClass # Pirate: security combat chips
+          class: Energy # Pirate: security combat chips
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 1.5
@@ -132,6 +136,8 @@
           sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi
           state: ion-icon
         components:
+        - type: WeaponClass # Pirate: security combat chips
+          class: Energy # Pirate: security combat chips
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 1.5
@@ -155,6 +161,8 @@
           sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi
           state: lethal-icon
         components:
+        - type: WeaponClass # Pirate: security combat chips
+          class: Energy # Pirate: security combat chips
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 1.5
@@ -181,6 +189,8 @@
           sprite: _Goobstation/Objects/Weapons/Melee/justice.rsi
           state: empowered-icon
         components:
+        - type: WeaponClass # Pirate: security combat chips
+          class: Energy # Pirate: security combat chips
         - type: Explosive
           explosionType: Default
           totalIntensity: 16
