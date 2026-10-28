@@ -197,6 +197,9 @@ public sealed partial class PaperSystem : EntitySystem // Goob
 
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
+        if (args.Handled) // Pirate: diary cover
+            return; // Pirate: diary cover
+
         // Pirate: persistent diary pages - a loose sheet tucked into the book becomes a leaf,
         // carrying its text and its stamps over as that leaf's signatures.
         if (TryComp<PaperPagesComponent>(entity, out var insertedPages) && IsLooseSheet(args.Used))
@@ -1089,6 +1092,9 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         entity.Comp.Content = content;
         Dirty(entity);
         UpdateUserInterface(entity);
+
+        var changed = new PaperContentChangedEvent(); // Pirate: diary cover
+        RaiseLocalEvent(entity, ref changed); // Pirate: diary cover
 
         if (!TryComp<AppearanceComponent>(entity, out var appearance))
             return;
