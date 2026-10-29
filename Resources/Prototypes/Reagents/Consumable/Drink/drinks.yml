@@ -606,7 +606,7 @@
   flavor: water
   color: "#75b1f0"
   puddleSpriteSet: Water # Goob
-  puddleColor: "#ffffff" # Goob
+  #puddleColor: "#ffffff" # Goob # Pirate disable
   recognizable: true
   boilingPoint: 100.0
   meltingPoint: 0.0

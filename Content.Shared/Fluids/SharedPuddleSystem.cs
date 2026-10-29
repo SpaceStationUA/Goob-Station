@@ -211,7 +211,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             // Kinda EH
             // Could potentially do alpha per-solution but future problem.
 
-            color = solution.GetPuddleColorWithout(_prototypeManager, _standoutReagents); // Goob
+            color = solution.GetPuddleColorWithout(_prototypeManager, _standoutReagents).WithAlpha(0.7f); // Pirate
 
             foreach (var standout in _standoutReagents)
             {
