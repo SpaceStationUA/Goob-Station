@@ -3,7 +3,6 @@ using Content.Client.Gameplay;
 using Content.Goobstation.Common.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 
@@ -11,7 +10,6 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    [Dependency] private readonly IConfigurationManager _predictedTargetConfiguration = default!;
     [Dependency] private readonly EntityLookupSystem _predictedTargetLookup = default!;
 
     private readonly HashSet<Entity<RequireProjectileTargetComponent>> _predictedProneTargets = new();
@@ -27,7 +25,7 @@ public sealed partial class GunSystem
         if (screen.GetDamageableClickedEntity(mousePosition) is { } clicked)
             return clicked;
 
-        var hitZone = _predictedTargetConfiguration.GetCVar(GoobCVars.CrawlHitzoneSize);
+        var hitZone = _cfg.GetCVar(GoobCVars.CrawlHitzoneSize);
         _predictedProneTargets.Clear();
         _predictedTargetLookup.GetEntitiesInRange(
             mousePosition,
