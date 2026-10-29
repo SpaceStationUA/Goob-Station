@@ -27,14 +27,14 @@
     - id: ClericalError
     - id: CockroachMigration
     - id: GasLeak
-    - id: GreytideVirus
+    - id: BlueshiftGreytideVirus
     - id: IonStorm
     - id: JobDistributionError
     - id: BlueshiftKudzuGrowth
     - id: MassHallucinations
     - id: MimicVendorRule
     - id: MouseMigration
-    - id: RandomVirus
+    - id: BlueshiftRandomVirus
     - id: PowerGridCheck
     - id: RandomSentience
     - id: SlimesSpawn
@@ -176,14 +176,31 @@
   - type: StationEvent
     weight: 6.0
 
-# Cheap chaos costs made goblins appear in over 80% of rounds; target about 30%.
+# Viruses toned down for Blueshift: greytide in about 50% of rounds, random virus in about 30%.
+- type: entity
+  id: BlueshiftGreytideVirus
+  parent: GreytideVirus
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 3.3 # GreytideVirus: 5
+
+- type: entity
+  id: BlueshiftRandomVirus
+  parent: RandomVirus
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 2.4 # RandomVirus: 4
+
+# Cheap chaos costs made goblins appear in over 80% of rounds; target about 7% each.
 - type: entity
   id: BlueshiftFloorGoblinMidRound
   parent: FloorGoblinMidRound
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 2.5
+    weight: 0.52
     maxOccurrences: 1
 
 - type: entity
@@ -192,7 +209,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 2.5
+    weight: 0.5
     maxOccurrences: 1
 
 # The rare copy guarantees doomsday; the common copy cannot unlock it.
@@ -215,7 +232,7 @@
       maxPicks: 3
     maxDifficulty: 8
   - type: StationEvent
-    weight: 11.0
+    weight: 3.8
 
 - type: entity
   id: BlueshiftMalfAiDoomsdayMidround
@@ -232,7 +249,7 @@
       maxPicks: 2
     maxDifficulty: 5 # 8 minus doomsday's 3
   - type: StationEvent
-    weight: 2.1
+    weight: 2.0
 
 # Target about half of rounds instead of the observed 70%.
 - type: entity
@@ -272,6 +289,71 @@
 # Inheritance replaces the entire AntagSelection definitions list.
 # Keep these copies in sync with their parents when changing counts or chaos costs.
 
+# Guaranteed traitors at 1 per 15 instead of 1 per 10; the Extra copies can add 0-2 more.
+# All copies share the round's traitor codewords.
+- type: entity
+  id: BlueshiftTraitor
+  parent: Traitor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 8
+      playerRatio: 15
+      chaosScore: 100 # Traitor: 150
+      blacklist:
+        components:
+        - CommandStaff
+        - AntagImmune
+        - Changeling
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleTraitor
+
+- type: entity
+  id: BlueshiftTraitorExtra1
+  parent: Traitor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 1
+      playerRatio: 3 # max 1 keeps this at one traitor; 3 sets the late-join backup to 1 in 3
+      chaosScore: 100 # Traitor: 150
+      blacklist:
+        components:
+        - CommandStaff
+        - AntagImmune
+        - Changeling
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleTraitor
+
+- type: entity
+  id: BlueshiftTraitorExtra2
+  parent: Traitor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 1
+      playerRatio: 3 # max 1 keeps this at one traitor; 3 sets the late-join backup to 1 in 3
+      chaosScore: 100 # Traitor: 150
+      blacklist:
+        components:
+        - CommandStaff
+        - AntagImmune
+        - Changeling
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleTraitor
+
 - type: entity
   id: BlueshiftChangeling
   parent: Changeling
@@ -284,7 +366,7 @@
     - prefRoles: [ Changeling ]
       max: 2
       playerRatio: 15
-      chaosScore: 200
+      chaosScore: 150
       jobBlacklist: [ Chaplain ]
       blacklist:
         components:
@@ -406,7 +488,7 @@
     - prefRoles: [ Heretic ]
       max: 1
       playerRatio: 3 # max 1 limits this to late joins (1 per 3 eligible players)
-      chaosScore: 200
+      chaosScore: 150
       lateJoinAdditional: true
       jobBlacklist: [ Chaplain ]
       blacklist:
@@ -458,7 +540,7 @@
 - type: weightedRandom
   id: BlueshiftPrimary
   weights:
-    Traitor: 0.30
+    BlueshiftTraitor: 0.30
     BlueshiftVampire: 0.15
     BloodBrothers: 0.15
     # Expensive antags fail more budget rolls; higher weights target about 5% of rounds each.
@@ -471,15 +553,18 @@
 - type: weightedRandom
   id: BlueshiftRoundstart
   weights:
-    Traitor: 0.30
-    BlueshiftVampire: 0.15
-    BloodBrothers: 0.15
-    BlueshiftChangeling: 0.072
-    BlueshiftHeretic: 0.036
+    BlueshiftTraitor: 0.30
+    # One traitor each: a round can get 0-2 traitors more than the guaranteed ones.
+    BlueshiftTraitorExtra1: 0.15
+    BlueshiftTraitorExtra2: 0.15
+    BlueshiftVampire: 0.11
+    BloodBrothers: 0.12
+    BlueshiftChangeling: 0.135
+    BlueshiftHeretic: 0.086
     # Cheap antags pass budget rolls more often; keep weights low.
     BlueshiftThief: 0.0172
-    BlueshiftDevil: 0.0155
-    BlueshiftSiliconLiberation: 0.0165
+    BlueshiftDevil: 0.0185
+    BlueshiftSiliconLiberation: 0.022
 
 - type: entity
   id: BlueshiftScheduler
