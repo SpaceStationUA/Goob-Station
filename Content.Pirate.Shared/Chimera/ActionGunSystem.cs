@@ -49,6 +49,7 @@ public sealed class ActionGunSystem : EntitySystem
             PredictedQueueDel(gun); // Trauma - predicted
             ent.Comp.Gun = null;
         }
+        _actions.RemoveAction(ent.Comp.ActionEntity); // Pirate: remove the granted action with its gun.
     }
 
     private void OnShoot(Entity<ActionGunComponent> ent, ref ActionGunShootEvent args)

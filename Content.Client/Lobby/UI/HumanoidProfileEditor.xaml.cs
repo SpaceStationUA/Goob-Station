@@ -47,6 +47,7 @@ using Direction = Robust.Shared.Maths.Direction;
 using Content.Goobstation.Common.CCVar; // Goob Station - Barks
 using Content.Goobstation.Common.Barks; // Goob Station - Barks
 using Content.Shared._Pirate.CCVars; // Pirate: Starlight character descriptions.
+using Content.Goobstation.UIKit.UserInterface.Lobby; // Goob
 namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
@@ -240,7 +241,8 @@ namespace Content.Client.Lobby.UI
 
             #region Appearance
 
-            TabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
+            TabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-identity-tab")); // Goob
+            TabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-appearance-tab")); // Goob
 
             #region Sex
 
@@ -337,6 +339,7 @@ namespace Content.Client.Lobby.UI
             };
 
             RgbSkinColorContainer.AddChild(_rgbSkinColorSelector = new ColorSelectorSliders());
+            HullStyler.Apply(_rgbSkinColorSelector); // Goob
             _rgbSkinColorSelector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV
             _rgbSkinColorSelector.OnColorChanged += _ =>
             {
@@ -363,7 +366,7 @@ namespace Content.Client.Lobby.UI
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairColor(newColor.marking.MarkingColors[0]));
                 UpdateCMarkingsHair();
-                ReloadPreview();
+                ReloadProfilePreview(); // Goob
             };
 
             FacialHairPicker.OnMarkingSelect += newStyle =>
@@ -382,7 +385,7 @@ namespace Content.Client.Lobby.UI
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithFacialHairColor(newColor.marking.MarkingColors[0]));
                 UpdateCMarkingsFacialHair();
-                ReloadPreview();
+                ReloadProfilePreview(); // Goob
             };
 
             HairStylePicker.OnSlotRemove += _ =>
@@ -453,6 +456,10 @@ namespace Content.Client.Lobby.UI
 
             #endregion Hair
 
+            InitializeHairGoob(); // Goob
+            InitializeAgeGoob(); // Goob
+            InitializeColorsGoob(); // Goob
+
             #region SpawnPriority
 
             foreach (var value in Enum.GetValues<SpawnPriorityPreference>())
@@ -486,14 +493,14 @@ namespace Content.Client.Lobby.UI
 
             #region Jobs
 
-            TabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-jobs-tab"));
+            TabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-jobs-tab")); // Goob
 
             PreferenceUnavailableButton.AddItem(
-                Loc.GetString("humanoid-profile-editor-preference-unavailable-stay-in-lobby-button"),
+                Loc.GetString("humanoid-profile-editor-unavailable-stay"), // Goob
                 (int) PreferenceUnavailableMode.StayInLobby);
             PreferenceUnavailableButton.AddItem(
-                Loc.GetString("humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button",
-                    ("overflowJob", Loc.GetString(SharedGameTicker.FallbackOverflowJobName))),
+                Loc.GetString("humanoid-profile-editor-unavailable-overflow", // Goob
+                              ("overflowJob", Loc.GetString(SharedGameTicker.FallbackOverflowJobName))),
                 (int) PreferenceUnavailableMode.SpawnAsOverflow);
 
             PreferenceUnavailableButton.OnItemSelected += args =>
@@ -508,17 +515,17 @@ namespace Content.Client.Lobby.UI
 
             #endregion Jobs
 
-            TabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
-            TabContainer.SetTabTitle(3, Loc.GetString("trait-editor-title")); // Pirate: port and modified DV traits UI
-            TabContainer.SetTabTitle(4, Loc.GetString("loadout-window")); // Pirate: loadout
+            TabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-antags-tab"));
+            TabContainer.SetTabTitle(4, Loc.GetString("trait-editor-title")); // Pirate: port and modified DV traits UI
+            TabContainer.SetTabTitle(5, Loc.GetString("loadout-window")); // Pirate: loadout
 
             RefreshTraits();
 
             #region Markings
 
-            TabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-editor-markings-tab")); // Pirate: loadout
-            TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-background-tab")); // Pirate: OOC records
-            TabContainer.SetTabTitle(7, Loc.GetString("knowledge-editor-tab")); // Pirate: OOC records
+            TabContainer.SetTabTitle(6, Loc.GetString("humanoid-profile-editor-markings-tab")); // Pirate: loadout
+            TabContainer.SetTabTitle(7, Loc.GetString("humanoid-profile-editor-background-tab")); // Pirate: OOC records
+            TabContainer.SetTabTitle(8, Loc.GetString("knowledge-editor-tab")); // Pirate: OOC records
 
             Markings.OnMarkingAdded += OnMarkingChange;
             Markings.OnMarkingRemoved += OnMarkingChange;
@@ -631,6 +638,7 @@ namespace Content.Client.Lobby.UI
 
             _species.AddRange(_prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart));
             _species.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.CurrentCultureIgnoreCase));
+            SpeciesButton.SetSpeciesList(_species); // Goob
             var speciesIds = _species.Select(o => o.ID).ToList();
 
             for (var i = 0; i < _species.Count; i++)
@@ -662,7 +670,7 @@ namespace Content.Client.Lobby.UI
                 ("humanoid-profile-editor-antag-preference-no-button", 1)
             };
 
-            AntagList.AddChild(new Label { Text = Loc.GetString("humanoid-profile-editor-antag-roll-before-jobs") }); // Goobstation
+            AntagList.AddChild(new Label { Text = Loc.GetString("humanoid-profile-editor-antag-roll-before-jobs"), StyleClasses = { "HullFieldLabel" } }); // Goobstation
 
             foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
             {
@@ -713,6 +721,7 @@ namespace Content.Client.Lobby.UI
                     Text = Loc.GetString("loadout-window"),
                     HorizontalAlignment = HAlignment.Right,
                     Margin = new Thickness(3f, 0f, 0f, 0f),
+                    StyleClasses = { "HullPlate" }, // Goob
                 };
 
                 // Goob start
@@ -750,6 +759,7 @@ namespace Content.Client.Lobby.UI
 
         private void SetDirty()
         {
+            UpdateMarkingTileColors(); // Goob
             // If it equals default then reset the button.
             if (Profile == null || _preferencesManager.Preferences?.SelectedCharacter.MemberwiseEquals(Profile) == true)
             {
@@ -2282,6 +2292,7 @@ namespace Content.Client.Lobby.UI
         private void UpdateAgeEdit()
         {
             AgeEdit.Text = Profile?.Age.ToString() ?? "";
+            UpdateAgeSlider(); // Goob
         }
 
         /// <summary>
@@ -2334,6 +2345,8 @@ namespace Content.Client.Lobby.UI
         {
             if (Profile == null)
                 return;
+
+            UpdateSkinTrack(); // Goob
 
             var skin = _prototypeManager.Index<SpeciesPrototype>(Profile.Species).SkinColoration;
             var strategy = _prototypeManager.Index(skin).Strategy;
@@ -2541,6 +2554,7 @@ namespace Content.Client.Lobby.UI
                 facialHairMarking,
                 Profile.Species,
                 1);
+            UpdateHairTabs(); // Goob
         }
 
         private void UpdateCMarkingsHair()

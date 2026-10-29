@@ -75,3 +75,14 @@ ent-ClothingUniformOverallsShaftMiner = Робочий комбінезон ша
 
 ent-ClothingUniformJumpsuitHawaiGreen = зелена гавайська сорочка
     .desc = Зелений колір Центрального командування™.
+
+ent-ClothingUniformJumpsuitChara = сорочка важливої особи
+    .desc = Їхня любов стане вашою.
+ent-ClothingUniformJumpsuitFrisk = сорочка рішучості
+    .desc = Ця сорочка наповнює вас силою рішучості.
+ent-ClothingUniformJumpsuitGoku = вбрання драконячого бійця
+    .desc = Я з цим розберуся!
+ent-ClothingUniformJumpsuitKris = сорочка іншої важливої особи
+    .desc = Ваша любов стане їхньою.
+ent-ClothingUniformJumpsuitLash = вбрання Леша
+    .desc = Змушує почуватися мудаком.

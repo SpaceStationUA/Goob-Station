@@ -26,6 +26,8 @@ public sealed partial class HumanoidProfileEditor
 
     private readonly Dictionary<string, AlternativeJobSelector> _jobAlternatives = new();
     private readonly Dictionary<string, (TextureRect Control, Texture Default)> _jobIcons = new();
+    private readonly List<(RequirementsSelector Selector, PanelContainer Card)> _jobCards = new();
+    private readonly List<(BoxContainer Section, BoxContainer Content)> _jobSections = new();
 
     public void RefreshJobs()
     {
@@ -33,6 +35,8 @@ public sealed partial class HumanoidProfileEditor
         _jobPriorities.Clear();
         _jobAlternatives.Clear();
         _jobIcons.Clear();
+        _jobCards.Clear();
+        _jobSections.Clear();
 
         var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>()
             .Where(department => !department.EditorHidden)
@@ -53,6 +57,17 @@ public sealed partial class HumanoidProfileEditor
 
         UpdateJobPriorities();
         UpdateAlternativeJobs();
+        ApplyJobFilter();
+    }
+
+    private void ApplyJobFilter()
+    {
+        var hide = HideLockedJobsCheck.Pressed;
+        foreach (var (selector, card) in _jobCards)
+            card.Visible = !hide || !selector.Locked;
+
+        foreach (var (section, content) in _jobSections)
+            section.Visible = !hide || content.Children.Any(child => child.Visible);
     }
 
     private BoxContainer CreateDepartmentSection(DepartmentPrototype department)
@@ -116,6 +131,7 @@ public sealed partial class HumanoidProfileEditor
             expandIcon.Text = content.Visible ? "\u25BC" : "\u25B6";
         };
         JobList.AddChild(category);
+        _jobSections.Add((category, content));
         return content;
     }
 
@@ -130,6 +146,7 @@ public sealed partial class HumanoidProfileEditor
         selector.UseFlexibleOptionsWidth(50f);
         selector.SetOptionsMinHeight(24f);
         selector.Setup(JobPriorityOptions, string.Empty, 0, job.LocalizedDescription, null, job.Guides);
+        selector.SelectedColors = JobPriorityColors;
 
         if (_requirements.IsAllowed(job, Profile, out var reason))
             selector.UnlockRequirements();
@@ -215,6 +232,7 @@ public sealed partial class HumanoidProfileEditor
             card.StyleClasses.Add("ProfileEntryPanelAlternate");
 
         departmentContent.AddChild(card);
+        _jobCards.Add((selector, card));
     }
 
     private void OnJobPrioritySelected(string selectedJobId, int selectedPriority)

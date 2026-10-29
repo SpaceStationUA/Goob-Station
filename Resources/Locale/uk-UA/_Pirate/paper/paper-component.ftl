@@ -11,7 +11,6 @@ paper-ui-page-remove = Вирвати
 paper-page-add-need-paper = Щоб додати сторінку, потрібен аркуш паперу.
 paper-page-torn-out = Ви вириваєте сторінку з {THE($target)}.
 paper-page-inserted = Ви вкладаєте аркуш у {THE($target)}.
-
 diary-cover-verb-open = Відкрити
 diary-cover-verb-close = Закрити
 diary-cover-closed = Спершу відкрийте {THE($target)}.

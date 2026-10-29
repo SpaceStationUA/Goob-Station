@@ -49,7 +49,6 @@ gun-speedloader-empty = Швидкозарядник пустий
 gun-burst-fire-rate-examine = Скорострільність - [color={$color}]{$fireRate}[/color] пострілів на хвилину.
 gun-burst-fire-burst-count = Стріляє серіями по [color={$color}]{$burstcount}[/color] куль.
 gun-damage-modifier-examine = Множник шкоди снарядів: [color={$color}]{$damage}×[/color].
-
 gun-magazine-whitelist-fail = Це не підходить до зброї!
 gun-magazine-fired-empty = Набоїв не залишилося!
 

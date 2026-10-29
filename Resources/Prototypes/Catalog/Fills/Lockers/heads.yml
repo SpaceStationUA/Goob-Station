@@ -26,6 +26,11 @@
     - id: SlotMachineHighRollerFlatPack # Goob - gambling
     - id: Eftpos #Pirate banking
     - id: PhotoAlbumDepartmentSupply
+    - id: CandyBowlFilledLollypopsMystery # Goob - Happy Halloween!
+    - !type:NestedSelector # Goob - Happy Halloween!
+      tableId: RandomSnackTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 4
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -66,6 +71,11 @@
       - !type:PlayerCountCondition
         max: 15
     - id: PhotoAlbumDepartmentCommand
+    - id: CandyBowlFilledLollypopsMystery # Goob - Happy Halloween!
+    - !type:NestedSelector # Goob - Happy Halloween!
+      tableId: RandomSnackTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 4
 
 # No laser table + Laser table
 - type: entityTable
@@ -158,6 +168,11 @@
     - id: Eftpos #Pirate banking
     - id: WalletCartridge #Pirate banking
     - id: PhotoAlbumDepartmentService
+    - id: CandyBowlFilledLollypopsMystery # Goob - Happy Halloween!
+    - !type:NestedSelector # Goob - Happy Halloween!
+      tableId: RandomSnackTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 4
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -204,6 +219,11 @@
     - id: PrinterDocFlatpack  # Pirate document printer
     - id: PhotoAlbumDepartmentEngineering
     - id: MaterialSiloFlatpack # Goob
+    - id: CandyBowlFilledLollypopsMystery # Goob - Happy Halloween!
+    - !type:NestedSelector # Goob - Happy Halloween!
+      tableId: RandomSnackTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 4
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -282,6 +302,11 @@
     # Virology
     - id: DiseaseDiagnoserFlatPack
     - id: VaccinatorFlatPack
+    - id: CandyBowlFilledLollypopsMystery # Happy Halloween!
+    - !type:NestedSelector # Happy Halloween!
+      tableId: RandomSnackTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 4
     # Goobstation End
     - id: PrinterDocFlatpack  # Pirate document printer
     - id: ClothingHandsGlovesCombatNitrile #Pirate
@@ -351,6 +376,11 @@
     - id: PhotoAlbumDepartmentScience
     - id: ClothingEyesHudEpistemics # Pirate
     - id: GlimmerMonitorCartridge # Pirate
+    - id: CandyBowlFilledLollypopsMystery # Goob - Happy Halloween!
+    - !type:NestedSelector # Goob - Happy Halloween!
+      tableId: RandomSnackTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 4
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -421,6 +451,7 @@
     - id: PrinterDocFlatpack  # Pirate document printer
     - id: PhotoAlbumDepartmentSecurity
     - id: MaterialSiloFlatpack # Goob
+    - id: FoodPacketLollypopTrash # Goob - ...happy halloween?
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -470,6 +501,11 @@
     - id: BikeHorn
     - id: FoodMango #Goobstation
       prob: 0.65
+    - !type:NestedSelector # Goob - Happy Halloween!
+      tableId: RandomSnackTable
+      prob: 0.9
+      rolls: !type:RangeNumberSelector
+        range: 2, 6
 
 - type: entity
   id: LockerFreezerVaultFilled

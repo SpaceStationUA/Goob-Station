@@ -33,12 +33,12 @@ public sealed partial class RepairableSystem
         if (!UsesBodyPartRepair(ent))
             return true;
 
-        if (ent.Comp.Damage != null)
+        if (ent.Comp.Damage is { } damage)
         {
             // here we create a fake healing comp
             var repairHealing = new HealingComponent
             {
-                Damage = ent.Comp.Damage,
+                Damage = damage,
                 BloodlossModifier = -100
             };
 

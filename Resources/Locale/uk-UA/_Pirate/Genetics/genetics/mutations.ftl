@@ -14,8 +14,7 @@ MutationMindReader-mutated = На краю свідомості лунають �
 MutationMindReader-removed = Далекі голоси затихають.
 MutationMindReader-popup-target-mindless = У {$target} немає розуму, який можна прочитати!
 MutationMindReader-popup-target-dead = {CAPITALIZE($target)} вже мертвий!
-MutationMindReader-popup-mind-protected =
-    Намагаючись проникнути у свідомість {$target}, ви натрапляєте на ментальний бар’єр.
+MutationMindReader-popup-mind-protected = Намагаючись проникнути у свідомість {$target}, ви натрапляєте на ментальний бар’єр.
     Схоже, вам завадили.
 MutationMindReader-popup-self = Ви занурюєтеся у власну свідомість... Ага, це справді вона.
 MutationMindReader-popup-target-evil = Проникаючи у свідомість {$target}, ви відчуваєте безмежну порожнечу. Справжнє втілення зла.

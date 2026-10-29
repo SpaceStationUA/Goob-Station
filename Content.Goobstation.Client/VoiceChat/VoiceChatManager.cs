@@ -28,6 +28,8 @@ public sealed partial class VoiceChatManager
     public event Action? LinkChanged;
     public event Action<bool>? AccessChanged; // Pirate
 
+    public const string NewsEntry = "VoiceChat";
+
     public bool WebConnected { get; private set; }
     public bool AccessAllowed { get; private set; } // Pirate: unknown is denied until server replies.
 

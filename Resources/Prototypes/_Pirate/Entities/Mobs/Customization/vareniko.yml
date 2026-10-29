@@ -24,6 +24,7 @@
 # Статичний
 - type: marking
   id: VulpTailVareniko
+  wagging: VulpTailVarenikoAnimated # Pirate: upstream wagging lookup
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]

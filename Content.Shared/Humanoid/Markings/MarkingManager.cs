@@ -41,6 +41,7 @@ namespace Content.Shared.Humanoid.Markings
             CategorizedMarkings = markingDict.ToFrozenDictionary(
                 x => x.Key,
                 x => x.Value.ToFrozenDictionary());
+            CacheWagging(); // Goob
         }
 
         public FrozenDictionary<string, MarkingPrototype> MarkingsByCategory(MarkingCategories category)

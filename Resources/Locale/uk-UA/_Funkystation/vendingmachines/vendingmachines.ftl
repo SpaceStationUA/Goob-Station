@@ -1,8 +1,7 @@
 vending-machine-keypad-sold-out = НЕМАЄ
 vending-machine-keypad-clear = CLR
-vending-machine-keypad-enter = ENT
-# Pirate: display the custom currency symbol.
-vending-machine-keypad-credits = КР: { $credits }电
+vending-machine-keypad-enter = ВВІД
+vending-machine-keypad-credits = КР: {$credits}电
 vending-machine-keypad-insert-credits = ВНЕСІТЬ КОШТИ
 vending-machine-keypad-error = [ ПОМИЛКА ]
 vending-machine-keypad-sold = [ НЕМАЄ ]
