@@ -33,14 +33,18 @@ public sealed partial class MartialArtsKnowledgeComponent : GrabStagesOverrideCo
     [AutoNetworkedField]
     public bool Blocked;
 
-    [DataField]
+    [DataField] // Pirate: preserve all original damage types when switching martial arts
     [AutoNetworkedField]
-    public float OriginalFistDamage;
+    public Dictionary<string, float> OriginalFistDamage = new();
+
+    // Pirate start - martial art switching
+    [DataField]
+    public MartialArtsForms? PendingForm;
 
     [DataField]
-    [AutoNetworkedField]
-    public string OriginalFistDamageType;
+    public TimeSpan PendingFormExpiry;
 
+    // Pirate end
 }
 
 public enum MartialArtsForms
@@ -52,5 +56,8 @@ public enum MartialArtsForms
     KungFuDragon,
     Ninjutsu,
     HellRip,
-    LegendaryCloseQuartersCombat, //Pirate Changes
+    // Pirate martial arts start
+    LegendaryCloseQuartersCombat,
+    UnathiTailArts,
+    // Pirate end
 }

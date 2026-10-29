@@ -61,10 +61,16 @@ public partial class SharedMartialArtsSystem
         if (!TryComp<MeleeWeaponComponent>(args.Wearer, out var meleeWeaponComponent))
             return;
 
-        var originalDamage = new DamageSpecifier();
-        originalDamage.DamageDict[martialArtsKnowledge.OriginalFistDamageType]
-            = FixedPoint2.New(martialArtsKnowledge.OriginalFistDamage);
-        meleeWeaponComponent.Damage = originalDamage;
+        // Pirate start - martial art switching
+        if (martialArtsKnowledge.OriginalFistDamage.Count != 0)
+        {
+            var originalDamage = new DamageSpecifier();
+            foreach (var (type, amount) in martialArtsKnowledge.OriginalFistDamage)
+                originalDamage.DamageDict[type] = FixedPoint2.New(amount);
+
+            meleeWeaponComponent.Damage = originalDamage;
+        }
+        // Pirate end
 
         RemComp<MartialArtsKnowledgeComponent>(user);
         RemComp<CanPerformComboComponent>(user);

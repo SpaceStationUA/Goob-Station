@@ -1,4 +1,7 @@
 using System.Linq;
+using Content.Client.Guidebook.RichText;
+using Content.Client.UserInterface.Systems.Guidebook;
+using Content.Shared.Guidebook;
 using Content.Shared.Traits;
 using Content.Shared._Pirate.Traits;
 using Content.Shared.Preferences;
@@ -15,8 +18,13 @@ using Robust.Shared.Utility;
 namespace Content.Client._Pirate.Traits.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class TraitEntry : PanelContainer
+public sealed partial class TraitEntry : PanelContainer, ILinkClickHandler
 {
+    private static readonly Type[] TraitDescriptionMarkupTags =
+    [
+        typeof(TextLinkTag),
+    ];
+
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -33,6 +41,12 @@ public sealed partial class TraitEntry : PanelContainer
     private bool _isUpdating;
     private readonly List<string> _failedConditionTooltips = new();
 
+    public void HandleClick(string link)
+    {
+        UserInterfaceManager.GetUIController<GuidebookUIController>()
+            .OpenGuidebook(selected: new ProtoId<GuideEntryPrototype>(link));
+    }
+
     public TraitEntry(TraitPrototype trait)
     {
         RobustXamlLoader.Load(this);
@@ -45,7 +59,13 @@ public sealed partial class TraitEntry : PanelContainer
 
         TraitNameLabel.Text = Loc.GetString(trait.Name);
         if (trait.Description != null)
-            TraitDescriptionLabel.SetMessage(Loc.GetString(trait.Description));
+        {
+            TraitDescriptionLabel.SetMessage(
+                FormattedMessage.FromMarkupPermissive(Loc.GetString(trait.Description)),
+                TraitDescriptionMarkupTags);
+            foreach (var link in TraitDescriptionLabel.Controls.OfType<Label>())
+                link.AddStyleClass("TraitsEntryDescriptionLink");
+        }
 
         var displayCost = -trait.Cost;
         var costPrefix = displayCost > 0 ? "+" : "";

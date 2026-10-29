@@ -148,8 +148,8 @@
   id: PainNumbness
   name: trait-painnumbness-name
   description: trait-painnumbness-desc
-  category: Physical 
-  cost: -2 
+  category: Physical
+  cost: -2
   components:
   - type: PainNumbnessStatusEffect
 #endregion
@@ -197,6 +197,22 @@
 #region Weight
 
 - type: trait
+  id: TraitUnathiTailArt
+  name: trait-unathi-tail-art-name
+  description: trait-unathi-tail-art-desc
+  category: RaceSpecific
+  cost: 3
+  includedSpecies:
+  - Reptilian
+  conditions:
+  - !type:HasTraitsCondition
+    invert: true
+    traits:
+    - TraitLightweight
+  components:
+  - type: GrantUnathiTail
+
+- type: trait
   id: TraitLightweight
   name: trait-pirate-lightweight-name
   description: trait-pirate-lightweight-desc
@@ -233,8 +249,8 @@
   id: ScreenVision
   name: trait-screenvision-name
   description: trait-screenvision-desc
-  category: Physical
-  cost: 1
+  category: RaceSpecific
+  cost: -1
   conditions:
     - !type:IsSpeciesCondition
       species:

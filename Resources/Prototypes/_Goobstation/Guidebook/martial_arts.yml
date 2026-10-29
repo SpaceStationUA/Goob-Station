@@ -4,7 +4,6 @@
   text: "/ServerInfo/_Goobstation/Guidebook/MartialArts/MartialArts.xml"
   children:
   - CQC
-  - LegendaryCQC #Pirate changes
   - SleepingCarp
   - KravMaga
   - CorporateJudo
@@ -12,6 +11,10 @@
   - Ninjutsu
   - DragonKungFu
   - HellRip
+  # Pirate martial arts start
+  - LegendaryCQC
+  - UnathiTailArts
+  # Pirate end
 
 - type: guideEntry
   id: CQC

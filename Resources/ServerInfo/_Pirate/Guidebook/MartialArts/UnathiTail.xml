@@ -1,0 +1,34 @@
+<Document>
+
+  # Мистецтво хвостового бою
+
+  Для багатьох унаті бойова майстерність є невіддільною частиною життя, честі та відданості клану. Знання передають від наставника до учня, а в різних кланах і школах навчають по-своєму. Один із найпоширеніших стилів - хвостовий бій: хвостом підсікають супротивника, збивають його з рівноваги або відкидають, залишаючи руки вільними.
+
+  ## Комбо-атаки
+
+  ### Підсікання хвостом
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+  Збиває супротивника з ніг.
+
+  ### Задушення хвостом
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+  Повалює супротивника й переводить захват у стан «душить».
+
+  ### Кидок хвостом
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+  Відкидає супротивника назад і трохи виснажує його.
+
+</Document>

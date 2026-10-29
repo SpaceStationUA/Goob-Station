@@ -75,6 +75,7 @@ public partial class SharedMartialArtsSystem
                 _faction.AddFaction(args.User, ent.Comp.FactionToAdd);
                 var userFactionIcons = EnsureComp<CustomFactionIconsComponent>(args.User);
                 userFactionIcons.FactionIcons.Add(ent.Comp.IconToAdd);
+                Dirty(args.User, userFactionIcons); // Pirate: martial art switching
                 var dodge = EnsureComp<AutoDodgeComponent>(args.User);
                 dodge.DodgeMelee = false;
                 Dirty(args.User, dodge);

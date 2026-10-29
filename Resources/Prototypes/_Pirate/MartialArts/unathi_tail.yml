@@ -1,0 +1,37 @@
+- type: martialArt
+  id: UnathiTailArts
+  martialArtsForm: UnathiTailArts
+  roundstartCombos: UnathiTailArtsMoves
+
+- type: comboList
+  id: UnathiTailArtsMoves
+  combos:
+  - TailTrip
+  - TailChoke
+  - TailThrow
+
+- type: combo
+  id: TailTrip
+  name: підсікання хвостом
+  martialArtsForm: UnathiTailArts
+  attacks: [Harm, Grab]
+  event: !type:UnathiTailTripPerformedEvent { }
+  dropItems: false
+
+- type: combo
+  id: TailChoke
+  name: задушення хвостом
+  martialArtsForm: UnathiTailArts
+  attacks: [Disarm, Grab, Disarm, Grab]
+  event: !type:UnathiTailChokePerformedEvent { }
+  dropItems: false
+
+- type: combo
+  id: TailThrow
+  name: кидок хвостом
+  martialArtsForm: UnathiTailArts
+  attacks: [Harm, Harm, Harm, Disarm]
+  event: !type:UnathiTailThrowPerformedEvent { }
+  thrownSpeed: 4
+  staminaDamage: 5
+  dropItems: false

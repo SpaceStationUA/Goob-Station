@@ -128,22 +128,4 @@
       minDurationOfIncident: 10
       maxDurationOfIncident: 30
 
-- type: trait
-  id: SmokeSensitivity
-  name: trait-smoke-sensitivity-name
-  description: trait-smoke-sensitivity-desc
-  category: Medical
-  conditions:
-    - !type:IsSpeciesCondition
-      invert: true
-      species:
-        - IPC
-        - Shadowkin
-        - Plasmaman
-        - Vox
-        - Yowie
-        - Feroxi
-        - SlimePerson
-  components:
-  - type: SmokeSensitivity
 #endregion
