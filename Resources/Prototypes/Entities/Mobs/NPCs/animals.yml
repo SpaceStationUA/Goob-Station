@@ -2132,7 +2132,7 @@
     - ActionMouseCall
     - ActionMouseSwarm
   - type: MouseSwarm
-  - type: LimbGnawer
+  # - type: LimbGnawer # Goobstation # Pirate remove
   - type: MobCallSource
     whitelist:
       tags:

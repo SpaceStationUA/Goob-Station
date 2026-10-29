@@ -36,9 +36,10 @@
     - tasks:
         - !type:HTNCompoundTask
           task: FoodCompound
-    - tasks:
-        - !type:HTNCompoundTask
-          task: GnawCorpseCompound # Goobstation - gnaw limbs off corpses
+    ### Pirate disable
+    #- tasks:
+    #    - !type:HTNCompoundTask
+    #      task: GnawCorpseCompound # Goobstation - gnaw limbs off corpses
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
