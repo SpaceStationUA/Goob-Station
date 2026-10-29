@@ -117,6 +117,8 @@
   components:
   # Pirate: skill chips start - ContractorSpawnMidround and TokenContractorSpawn inherit this.
   - type: AntagPlayerEffects
+    packages: # Pirate: antagonist skill packages
+    - TraitorSkills # Pirate: antagonist skill packages
     effects:
     - !type:InstallOrganChip
       chip: SkillChipSyndieSoldier

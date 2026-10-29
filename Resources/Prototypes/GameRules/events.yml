@@ -308,6 +308,9 @@
   parent: BaseGameRule
   id: NinjaSpawn
   components:
+  - type: AntagPlayerEffects # Pirate: antagonist skill packages
+    packages: # Pirate: antagonist skill packages
+    - TraitorSkills # Pirate: antagonist skill packages
   - type: StationEvent
     weight: 3 # Goobstation - was 6
     duration: null
