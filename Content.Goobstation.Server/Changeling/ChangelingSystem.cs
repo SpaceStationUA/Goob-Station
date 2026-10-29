@@ -598,6 +598,9 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
 
             comp.AbsorbedDNA.Add(data);
             comp.TotalStolenDNA++;
+
+            var stolenEv = new ChangelingDnaStolenEvent(target, data); // Pirate: changeling genome
+            RaiseLocalEvent(uid, ref stolenEv); // Pirate: changeling genome
         }
 
         return true;
@@ -652,6 +655,9 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
             _metaData.SetEntityName(newEnt, data.Name);
             var message = Loc.GetString("changeling-transform-finish", ("target", data.Name));
             _popup.PopupEntity(message, newEnt, newEnt);
+
+            var appliedEv = new ChangelingFormAppliedEvent(data); // Pirate: changeling genome
+            RaiseLocalEvent(newEnt, ref appliedEv); // Pirate: changeling genome
         }
 
         // otherwise we can only transform once

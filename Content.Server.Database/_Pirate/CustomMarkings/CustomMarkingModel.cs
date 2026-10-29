@@ -31,7 +31,7 @@ public abstract partial class ServerDbContext
 
 public partial class Profile
 {
-    /// <summary>The custom markings worn as hash:placement pairs.</summary>
+    /// <summary>Stored as <c>hash:placement</c>, with <c>:g</c> after a glowing marking.</summary>
     [Column("custom_markings")]
     public string CustomMarkings { get; set; } = "";
 }
@@ -93,6 +93,8 @@ public class PirateCustomMarking
 
     /// <summary>Where the marking is drawn on a body (CustomMarkingPlacement).</summary>
     public int Placement { get; set; }
+
+    public bool Glow { get; set; }
 
     public DateTime UpdatedAt { get; set; }
 }

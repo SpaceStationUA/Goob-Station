@@ -2,7 +2,9 @@
 // SPDX-FileCopyrightText: 2026 SpaceStationUA
 // SPDX-License-Identifier: MIT
 
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using Content.Shared._Pirate.StationRecords;
 using Robust.Shared.Utility;
 
@@ -112,6 +114,7 @@ public sealed partial class HumanoidCharacterProfile
 
     private void EnsurePirateCharacterInfoValid()
     {
+        PhysicalDescription = NormalizeWhitespace(PhysicalDescription);
         PersonalityDescription = SanitizeCharacterInfo(PersonalityDescription);
         PersonalNotes = SanitizeCharacterInfo(PersonalNotes);
         OOCNotes = SanitizeCharacterInfo(OOCNotes);
@@ -154,10 +157,53 @@ public sealed partial class HumanoidCharacterProfile
 
     private static string SanitizeCharacterInfo(string value, int maxLength = MaxCharacterInfoLength)
     {
-        var sanitized = FormattedMessage.RemoveMarkupOrThrow(value);
+        var sanitized = NormalizeWhitespace(FormattedMessage.RemoveMarkupOrThrow(value));
         return sanitized.Length > maxLength
-            ? sanitized[..maxLength]
+            ? sanitized[..maxLength].TrimEnd()
             : sanitized;
+    }
+
+    public static string NormalizeWhitespace(string value)
+    {
+        const int maxNewLines = 2;
+
+        var builder = new StringBuilder(value.Length);
+        var pending = false;
+        var pendingNewLines = 0;
+        foreach (var c in value)
+        {
+            if (char.GetUnicodeCategory(c) == UnicodeCategory.Format)
+                continue;
+
+            if (char.IsWhiteSpace(c) || IsBlankFiller(c))
+            {
+                pending = true;
+                if (c == '\n')
+                    pendingNewLines++;
+                continue;
+            }
+
+            if (pending && builder.Length > 0)
+            {
+                if (pendingNewLines > 0)
+                    builder.Append('\n', Math.Min(pendingNewLines, maxNewLines));
+                else
+                    builder.Append(' ');
+            }
+
+            pending = false;
+            pendingNewLines = 0;
+            builder.Append(c);
+        }
+
+        return builder.ToString();
+    }
+
+    // .NET does not treat these blank characters as whitespace.
+    private static bool IsBlankFiller(char c)
+    {
+        return c is 'ᅟ' or 'ᅠ' or 'ㅤ' or 'ﾠ' // Hangul fillers
+            or '⠀'; // Braille blank
     }
 
     private void AddPirateCharacterInfoHash(ref HashCode hashCode)

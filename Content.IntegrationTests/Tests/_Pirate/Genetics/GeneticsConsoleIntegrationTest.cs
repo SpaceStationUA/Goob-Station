@@ -35,6 +35,7 @@ public sealed class GeneticsConsoleIntegrationTest
         var map = await pair.CreateTestMap();
         await server.WaitAssertion(() =>
         {
+            var researchServer = entities.SpawnEntity("ResearchAndDevelopmentServer", map.GridCoords);
             var console = entities.SpawnEntity("ComputerGeneticsConsole", map.GridCoords);
             var comp = entities.GetComponent<GeneticsConsoleComponent>(console);
             entities.GetComponent<ApcPowerReceiverComponent>(console).NeedsPower = false;
@@ -49,10 +50,9 @@ public sealed class GeneticsConsoleIntegrationTest
             mutatable.Dormant.Add("MutationDwarfism");
 #pragma warning restore RA0002
             var data = mutations.GetRoundData(mutatable.Dormant[0])!;
-            var discovered = data.Discovered;
             try
             {
-                data.Discovered = false;
+                Assert.That(mutations.GetDiscoveryServer(console), Is.EqualTo(researchServer));
                 links.Connect((console, entities.GetComponent<GeneticsScannerComponent>(console)), scanner);
                 scannerSystem.InsertBody(scanner, human, scannerComp);
                 Assert.That(consoleSystem.GetScannedMob(console), Is.EqualTo(human));
@@ -79,10 +79,10 @@ public sealed class GeneticsConsoleIntegrationTest
                 var damage = mutations.GetGeneticDamage(human);
                 Assert.That(consoleSystem.SequenceMutation((console, comp), human, 0), Is.False);
                 Assert.That(mutations.GetGeneticDamage(human), Is.GreaterThan(damage));
-                Assert.That(data.Discovered, Is.False);
+                Assert.That(mutations.IsDiscovered(console, sequence.Mutation), Is.False);
                 sequence.Bases = data.Bases;
                 Assert.That(consoleSystem.SequenceMutation((console, comp), human, 0), Is.True);
-                Assert.That(data.Discovered, Is.True);
+                Assert.That(mutations.IsDiscovered(console, sequence.Mutation), Is.True);
                 Assert.That(mutations.HasMutation(human, sequence.Mutation), Is.True);
                 Assert.That(consoleSystem.SequenceMutation((console, comp), human, 0), Is.False,
                     "A discovered sequence must not award research a second time.");
@@ -92,8 +92,8 @@ public sealed class GeneticsConsoleIntegrationTest
             }
             finally
             {
-                data.Discovered = discovered;
                 entities.DeleteEntity(console);
+                entities.DeleteEntity(researchServer);
                 entities.DeleteEntity(scanner);
                 entities.DeleteEntity(human);
                 entities.DeleteEntity(other);

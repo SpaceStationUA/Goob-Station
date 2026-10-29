@@ -437,6 +437,13 @@
     laws: NTDefault # Goobstation - AI/borg law changes - set AI to NTDefault
   - type: IonStormTarget # Goobstation - AI/borg law changes - ion stormable AI
   - type: SiliconLawBound
+  #region Pirate: silicon skills
+  - type: KnowledgeFloor
+    level: 50
+    exclude:
+    - RevolutionaryKnowledge
+    - SpiderCraftKnowledge
+  #endregion Pirate: silicon skills
   - type: ActionGrant
     actions:
     - ActionViewLaws

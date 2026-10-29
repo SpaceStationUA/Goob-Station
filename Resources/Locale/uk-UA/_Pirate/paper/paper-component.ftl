@@ -12,8 +12,6 @@ paper-page-add-need-paper = Щоб додати сторінку, потрібе
 paper-page-torn-out = Ви вириваєте сторінку з {THE($target)}.
 paper-page-inserted = Ви вкладаєте аркуш у {THE($target)}.
 
-# Pirate: chameleon-style cover
-book-skin-menu-title = Обкладинка
-book-skin-search = Пошук обкладинки...
-book-skin-verb = Змінити обкладинку
-book-skin-changed = Обкладинку змінено.
+diary-cover-verb-open = Відкрити
+diary-cover-verb-close = Закрити
+diary-cover-closed = Спершу відкрийте {THE($target)}.

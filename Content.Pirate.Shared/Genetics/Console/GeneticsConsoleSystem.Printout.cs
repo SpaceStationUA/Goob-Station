@@ -54,7 +54,7 @@ public sealed partial class GeneticsConsoleSystem
         else
         {
             label = Identity.Name(mob, EntityManager);
-            text = GetScanText(mob, label);
+            text = GetScanText(ent, mob, label);
         }
         _paper.SetContent(paper, text);
         _label.Label(paper, label);
@@ -73,10 +73,10 @@ public sealed partial class GeneticsConsoleSystem
         return true;
     }
 
-    private string GetScanText(EntityUid mob, string name)
+    private string GetScanText(EntityUid printer, EntityUid mob, string name)
     {
         _sequences.Clear();
-        _genome.AddSequenceStates(mob, _sequences);
+        _genome.AddSequenceStates(mob, _sequences, printer);
         return GetScanText(name, _sequences);
     }
 

@@ -41,9 +41,11 @@
     size: Small
     storedOffset: -1,0
     heldPrefix: ferrobrick-open
+  # Routes opened bricks to their own slot instead of swapping out the nanite paste.
   - type: Tag
     tags:
     - SynthFood
+    - FoodSnack
   - type: Sprite
     sprite: _Pirate/Objects/Consumable/Food/ferrobrick.rsi
     state: ferrobrick-open

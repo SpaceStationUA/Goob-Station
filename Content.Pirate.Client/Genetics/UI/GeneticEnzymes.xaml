@@ -3,36 +3,38 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <BoxContainer xmlns="https://spacestation14.io"
-        xmlns:genetics="clr-namespace:Content.Pirate.Client.Genetics.UI"
-        xmlns:admin="using:Content.Client.Administration.UI.CustomControls"
-        xmlns:controls="using:Content.Client.UserInterface.Controls"
-        Orientation="Vertical">
-    <controls:NanoHeading Text="{Loc 'genetics-console-scanned-mob'}"/>
-    <BoxContainer Orientation="Horizontal" Align="Center">
-        <Label Name="MobNameLabel" Text="{Loc 'generic-not-available-shorthand'}" Margin="4"/>
-        <Button Name="SaveButton" Text="{Loc 'genetics-console-save-enzymes'}" Margin="4" Disabled="True"/>
-    </BoxContainer>
+        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+        Orientation="Vertical"
+        HorizontalExpand="True"
+        VerticalExpand="True">
+    <Label Text="{Loc 'genetics-console-scanned-mob'}"/>
+    <PanelContainer StyleClasses="LowDivider"/>
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
+        </PanelContainer.PanelOverride>
+        <Label Name="MobNameLabel" Text="{Loc 'generic-not-available-shorthand'}" Margin="10"/>
+    </PanelContainer>
+    <Button Name="SaveButton" Text="{Loc 'genetics-console-save-enzymes'}" HorizontalExpand="True" Margin="0 8 0 0" Disabled="True"/>
 
-    <admin:HSeparator Margin="10" HorizontalExpand="True"/>
-
-    <controls:NanoHeading Text="{Loc 'genetics-console-disk-enzymes'}"/>
-    <BoxContainer Orientation="Horizontal" Align="Center">
-        <BoxContainer Orientation="Vertical" Align="Center">
-            <GridContainer Columns="2">
-                <Label Text="{Loc 'genetics-console-current-disk'}" MinWidth="250"/>
-                <Label Name="DiskLabel" Text="{Loc 'genetics-console-no-disk'}"/>
-                <Label Text="{Loc 'genetics-console-stored-enzymes'}"/>
-                <Label Name="DiskNameLabel" Text="{Loc 'generic-not-available-shorthand'}"/>
-                <Label Text="{Loc 'genetics-console-sex'}"/>
-                <Label Name="DiskSexLabel" Text="{Loc 'generic-not-available-shorthand'}"/>
-                <Label Text="{Loc 'genetics-console-eye-color'}"/>
-                <Label Name="DiskEyeLabel" Text="{Loc 'generic-not-available-shorthand'}"/>
-                <Label Text="{Loc 'genetics-console-skin-color'}"/>
-                <Label Name="DiskSkinLabel" Text="{Loc 'generic-not-available-shorthand'}"/>
-            </GridContainer>
-            <controls:StripeBack MaxWidth="250"> <!-- sanabi -->
-                <Button Name="ApplyButton" Margin="4" Text="{Loc 'genetics-console-apply-enzymes'}" MaxWidth="220" Disabled="True"/>
-            </controls:StripeBack>
-        </BoxContainer>
-    </BoxContainer>
+    <Label Text="{Loc 'genetics-console-disk-enzymes'}" Margin="0 20 0 0"/>
+    <PanelContainer StyleClasses="LowDivider"/>
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
+        </PanelContainer.PanelOverride>
+        <GridContainer Columns="2" Margin="10">
+            <Label Text="{Loc 'genetics-console-current-disk'}" MinWidth="220" Margin="0 0 10 4"/>
+            <Label Name="DiskLabel" Text="{Loc 'genetics-console-no-disk'}"/>
+            <Label Text="{Loc 'genetics-console-stored-enzymes'}" Margin="0 0 10 4"/>
+            <Label Name="DiskNameLabel" Text="{Loc 'generic-not-available-shorthand'}"/>
+            <Label Text="{Loc 'genetics-console-sex'}" Margin="0 0 10 4"/>
+            <Label Name="DiskSexLabel" Text="{Loc 'generic-not-available-shorthand'}"/>
+            <Label Text="{Loc 'genetics-console-eye-color'}" Margin="0 0 10 4"/>
+            <Label Name="DiskEyeLabel" Text="{Loc 'generic-not-available-shorthand'}"/>
+            <Label Text="{Loc 'genetics-console-skin-color'}" Margin="0 0 10 0"/>
+            <Label Name="DiskSkinLabel" Text="{Loc 'generic-not-available-shorthand'}"/>
+        </GridContainer>
+    </PanelContainer>
+    <Button Name="ApplyButton" Text="{Loc 'genetics-console-apply-enzymes'}" HorizontalExpand="True" Margin="0 8 0 0" Disabled="True"/>
 </BoxContainer>

@@ -3,19 +3,23 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
 <genetics:GenePuzzle xmlns="https://spacestation14.io"
-        xmlns:controls="using:Content.Client.UserInterface.Controls"
         xmlns:genetics="using:Content.Pirate.Client.Genetics.UI">
-    <BoxContainer Orientation="Vertical">
-        <controls:NanoHeading Text="{Loc 'genetics-console-genome-sequencer'}" HorizontalExpand="True"/>
-        <GridContainer Name="BaseButtons" Columns="16"/> <!-- Populated at runtime -->
-        <Label Name="Tip" Text="{Loc 'genetics-console-sequencer-tip'}"/>
-        <BoxContainer Name="SequenceButtonContainer" Orientation="Horizontal" Align="Center">
-            <controls:StripeBack>
-                <BoxContainer Orientation="Horizontal">
-                    <Button Name="SequenceButton" Text="{Loc 'genetics-console-begin-sequencing'}" StyleClasses="negative" Margin="4"/>
-                    <Button Name="ResetSequenceButton" Text="{Loc 'genetics-console-reset-sequence'}" StyleClasses="negative" Margin="4"/>
-                </BoxContainer>
-            </controls:StripeBack>
+    <BoxContainer Orientation="Vertical" MinHeight="140">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'genetics-console-genome-sequencer'}" VerticalAlignment="Bottom"/>
+            <Control HorizontalExpand="True"/>
+            <BoxContainer Name="SequenceButtonContainer" Orientation="Horizontal">
+                <Button Name="JokerButton" Text="{Loc 'genetics-console-joker'}" ToggleMode="True" Disabled="True" MinSize="120 0" Margin="4 0 0 1"/>
+                <Button Name="ResetSequenceButton" Text="{Loc 'genetics-console-reset-sequence'}" MinSize="120 0" Margin="4 0 0 1"/>
+                <Button Name="SequenceButton" Text="{Loc 'genetics-console-begin-sequencing'}" StyleClasses="negative" MinSize="120 0" Margin="4 0 0 1"/>
+            </BoxContainer>
         </BoxContainer>
+        <PanelContainer StyleClasses="LowDivider" Margin="0 0 0 10"/>
+        <Control HorizontalAlignment="Center">
+            <BoxContainer Name="BaseButtons" Orientation="Horizontal"/>
+            <Label Name="NoSequence" Text="{Loc 'genetics-console-sequencer-no-sequence-selected'}" StyleClasses="LabelSubText"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Control>
+        <Label Name="Tip" Text="{Loc 'genetics-console-sequencer-tip'}" StyleClasses="LabelSubText" HorizontalAlignment="Center" Margin="0 6 0 0"/>
     </BoxContainer>
 </genetics:GenePuzzle>

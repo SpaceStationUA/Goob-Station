@@ -4,22 +4,28 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 <BoxContainer xmlns="https://spacestation14.io"
         xmlns:genetics="clr-namespace:Content.Pirate.Client.Genetics.UI"
-        xmlns:controls="using:Content.Client.UserInterface.Controls"
+        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
         Orientation="Vertical"
-        Align="Center">
+        HorizontalExpand="True"
+        VerticalExpand="True">
     <genetics:GeneticScanner Name="Scanner"/>
     <BoxContainer Name="MobContainer" Orientation="Vertical" Visible="False">
-        <controls:NanoHeading Text="{Loc 'genetics-console-sequences'}"/>
-        <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <genetics:SequenceButtons Name="SequenceButtons"/>
             <genetics:SequenceInfo Name="Info">
-                <Button Name="CombineButton" Text="{Loc 'genetics-console-combine-button'}" Disabled="True" MaxWidth="120"/>
+                <Button Name="CombineButton" Text="{Loc 'genetics-console-combine-button'}" Disabled="True" HorizontalExpand="True" Margin="0 8 0 0"/>
             </genetics:SequenceInfo>
-            <BoxContainer Name="NoSequence" Align="Center" HorizontalExpand="True">
-                <Label Text="{Loc 'genetics-console-sequencer-no-sequence-selected'}"/>
-            </BoxContainer>
         </BoxContainer>
-        <Label Name="DiskMutation" Text="{Loc 'genetics-console-disk-empty'}" Align="Center"/>
-        <Label Name="DiskRecipes" Visible="False" Align="Center"/>
+        <Label Text="{Loc 'genetics-console-combine-catalyst-heading'}" Margin="0 20 0 0"/>
+        <PanelContainer StyleClasses="LowDivider"/>
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Vertical" Margin="10">
+                <Label Name="DiskMutation" Text="{Loc 'genetics-console-disk-empty'}"/>
+                <RichTextLabel Name="DiskRecipes" Visible="False" Margin="0 4 0 0"/>
+            </BoxContainer>
+        </PanelContainer>
     </BoxContainer>
 </BoxContainer>

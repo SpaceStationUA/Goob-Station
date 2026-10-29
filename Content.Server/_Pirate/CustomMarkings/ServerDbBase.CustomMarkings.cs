@@ -48,6 +48,7 @@ public abstract partial class ServerDbBase
         CustomMarkingStoredArt? art,
         int limit,
         int dailyArtLimit = 0,
+        bool glow = false,
         CancellationToken cancel = default)
     {
         var gate = _customMarkingSaveLocks[(int) ((uint) userId.GetHashCode() % _customMarkingSaveLocks.Length)];
@@ -127,6 +128,7 @@ public abstract partial class ServerDbBase
 
         entry.Name = name;
         entry.Placement = placement;
+        entry.Glow = glow;
         entry.UpdatedAt = DateTime.UtcNow;
         await ctx.SaveChangesAsync(cancel);
         await transaction.CommitAsync(cancel);

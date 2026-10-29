@@ -27,6 +27,7 @@
     color: "#1f8c28"
   - type: MaterialStorage
     materialWhiteList: [ Biomass ]
+  - type: GeneticsJoker
   - type: GeneticsConsole
     scrambleDamage:
       types:

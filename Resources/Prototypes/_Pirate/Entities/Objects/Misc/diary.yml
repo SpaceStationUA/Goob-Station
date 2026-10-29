@@ -9,15 +9,25 @@
   description: Особистий щоденник для записів, думок та спогадів. Написане в ньому зберігається між змінами.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
+    sprite: _Pirate/Objects/Misc/diary.rsi
     layers:
-    - state: paper
-    - state: cover_base
-      color: "#4a1f3d"
-    - state: decor_wingette_circle
-      color: "#8a5a7a"
-    - state: icon_text
-    - state: overlay_null
+    - state: closed
+      map: [ "enum.DiaryCoverLayers.Cover" ]
+    - state: open_page_left
+      map: [ "enum.DiaryCoverLayers.PageLeft" ]
+      visible: false
+    - state: open_page_right
+      map: [ "enum.DiaryCoverLayers.PageRight" ]
+      visible: false
+  - type: DiaryCover
+    openSound:
+      path: /Audio/_Goobstation/Items/handling/book_pickup.ogg
+      params:
+        volume: -4
+    closeSound:
+      path: /Audio/_Goobstation/Items/handling/book_drop.ogg
+      params:
+        volume: -4
   # Pirate: persistent text (diaries) - a stamp would make the diary unwritable forever
   - type: NoStamping
   - type: Paper
@@ -25,16 +35,6 @@
   # Pirate: persistent diary pages - the diary reads like a book: flip it leaf by leaf,
   # add or tear out leaves and sign each one separately
   - type: PaperPages
-  # Pirate: chameleon-style cover - right-click to pick a look from ordinary books
-  - type: BookSkin
-  # Redeclared: prototype inheritance replaces the whole interface list, so the paper UI
-  # has to be listed again next to the cover menu.
-  - type: UserInterface
-    interfaces:
-      enum.PaperUiKey.Key:
-        type: PaperBoundUserInterface
-      enum.BookSkinUiKey.Key:
-        type: BookSkinBoundUserInterface
 
 - type: entity
   id: DiaryLoadout

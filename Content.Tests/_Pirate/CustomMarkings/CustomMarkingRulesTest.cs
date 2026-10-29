@@ -83,12 +83,16 @@ public sealed class CustomMarkingRulesTest
         {
             new(HashB, CustomMarkingPlacement.Behind),
             new(HashA, CustomMarkingPlacement.Front),
+            new(HashA, CustomMarkingPlacement.Skin, true),
         };
 
         var stored = CustomMarkingRules.ToStored(worn);
         Assert.Multiple(() =>
         {
             Assert.That(CustomMarkingRules.FromStored(stored), Is.EqualTo(worn));
+            Assert.That(stored, Does.StartWith($"{HashB}:0,{HashA}:4,"), "markings that don't glow keep the old form");
+            Assert.That(CustomMarkingRules.FromStored($"{HashA}:1:x,{HashA}:1:g:g,{HashB}:2:g"),
+                Is.EqualTo(new[] { new CustomMarking(HashB, CustomMarkingPlacement.Hands, true) }), "unknown flags are dropped");
             Assert.That(CustomMarkingRules.ToStored(new List<CustomMarking>()), Is.Empty);
             Assert.That(CustomMarkingRules.FromStored(null), Is.Empty);
             Assert.That(CustomMarkingRules.FromStored(string.Empty), Is.Empty);
@@ -141,6 +145,10 @@ public sealed class CustomMarkingRulesTest
         Assert.That(CustomMarkingRules.ApplySaved(worn, redrawn, redrawn with { Name = "Renamed" }, 2), Is.False, "a rename changes nothing worn");
         Assert.That(CustomMarkingRules.ApplySaved(worn, redrawn, redrawn with { Placement = CustomMarkingPlacement.Hair }, 2), Is.True);
         Assert.That(worn[0], Is.EqualTo(new CustomMarking(HashB, CustomMarkingPlacement.Hair)));
+        var lit = redrawn with { Placement = CustomMarkingPlacement.Hair };
+        Assert.That(CustomMarkingRules.ApplySaved(worn, lit, lit with { Glow = true }, 2), Is.True, "turning glow on swaps the worn one");
+        Assert.That(worn[0], Is.EqualTo(new CustomMarking(HashB, CustomMarkingPlacement.Hair, true)));
+        Assert.That(CustomMarkingRules.ApplySaved(worn, lit with { Glow = true }, lit, 2), Is.True);
 
         // An entry that isn't worn stays off.
         Assert.That(CustomMarkingRules.ApplySaved(worn, a, moved, 2), Is.False);

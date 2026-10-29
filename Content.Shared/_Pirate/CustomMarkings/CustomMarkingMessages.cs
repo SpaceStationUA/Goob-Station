@@ -27,7 +27,8 @@ public sealed class CustomMarkingSaveEvent(
     CustomMarkingPlacement placement,
     byte[]? pixels,
     int[]? frameTimes = null,
-    byte[]? erase = null)
+    byte[]? erase = null,
+    bool glow = false)
     : EntityEventArgs
 {
     /// <summary>Echoed in the result, so the editor can tell which save it answers.</summary>
@@ -45,6 +46,8 @@ public sealed class CustomMarkingSaveEvent(
 
     /// <summary>The body pixels the marking erases, as a <see cref="CustomMarkingErase"/> mask. Null for none.</summary>
     public readonly byte[]? Erase = erase;
+
+    public readonly bool Glow = glow;
 }
 
 /// <summary>Server to client: the saved entry, or a loc id saying why it wasn't saved.</summary>

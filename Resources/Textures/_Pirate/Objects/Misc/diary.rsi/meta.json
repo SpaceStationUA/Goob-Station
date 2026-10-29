@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Traveler's notebook diary created by CyberLanos (github) for Pirate Station, page writing follows the paper_words palette from tgstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "closed"
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "open_page_left"
+        },
+        {
+            "name": "open_page_right"
+        }
+    ]
+}

@@ -358,11 +358,8 @@ public sealed class GeneticsMutationIntegrationTest
         {
             var mob = entities.SpawnEntity("MobHuman", map.GridCoords);
             var comp = entities.GetComponent<MutatableComponent>(mob);
-            var previous = mutations.RoundData.ToDictionary(p => p.Key, p => p.Value.Discovered);
             try
             {
-                foreach (var data in mutations.RoundData.Values)
-                    data.Discovered = false;
                 genome.ScanGenome(mob);
                 var scanned = entities.GetComponent<ScannedGenomeComponent>(mob);
                 var count = scanned.Sequences.Count;
@@ -387,8 +384,6 @@ public sealed class GeneticsMutationIntegrationTest
             }
             finally
             {
-                foreach (var (id, discovered) in previous)
-                    mutations.RoundData[id].Discovered = discovered;
                 entities.DeleteEntity(mob);
             }
         });

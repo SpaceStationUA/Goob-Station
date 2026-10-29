@@ -293,6 +293,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         Dirty(holder, holderComponent);
         store.Comp.Holder = holder;
         DirtyField(store, store.Comp, nameof(KnowledgeContainerComponent.Holder));
+        SyncHolderFloor(store);
     }
 
     private void UnlinkStore(EntityUid holder, Entity<KnowledgeContainerComponent> store)
@@ -307,6 +308,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         {
             store.Comp.Holder = null;
             DirtyField(store, store.Comp, nameof(KnowledgeContainerComponent.Holder));
+            ClearFloor(store);
         }
     }
 
@@ -378,7 +380,10 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
         var destinationStore = EnsureKnowledgeContainer(destinationHolder);
         if (sourceStore.Owner != destinationStore.Owner)
+        {
             MergeStores(sourceStore, destinationStore);
+            SyncHolderFloor(destinationStore);
+        }
     }
 
     public Entity<KnowledgeComponent>? EnsureKnowledge(
@@ -459,7 +464,7 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
             : null;
 
     public int GetKnowledgeLevel(EntityUid holder, EntProtoId id)
-        => GetKnowledge(holder, id)?.Comp.NetLevel ?? 0;
+        => GetKnowledge(holder, id)?.Comp.NetLevel ?? GetFloorLevel(holder, id);
 
     /// <summary>
     /// Sets persistent progress for one skill without changing temporary bonuses.
@@ -743,34 +748,71 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
             ? costs[mastery]
             : null;
 
-    public int ProfileCost(KnowledgeProfile profile)
+    public int? SkillCost(EntProtoId id, int start, int steps)
+        => SkillCosts(id) is { } costs && start >= 0 && steps >= 0 && start + steps < costs.Length
+            ? costs[start + steps] - costs[start]
+            : null;
+
+    // Chip levels add to purchases at runtime, so pricing starts above the species base and chips.
+    public static int StartMastery(KnowledgeProfilePrototype? parent, EntProtoId id,
+        IReadOnlyDictionary<EntProtoId, int>? chipLevels)
+        => (parent?.Profile.Mastery?.GetValueOrDefault(id) ?? 0)
+           + GetMastery(Math.Max(chipLevels?.GetValueOrDefault(id) ?? 0, 0));
+
+    public Dictionary<EntProtoId, int> GetChipLevels(IEnumerable<EntProtoId> chips)
+    {
+        var levels = new Dictionary<EntProtoId, int>();
+        foreach (var chipId in chips)
+        {
+            if (!_prototypes.TryIndex<EntityPrototype>(chipId, out var chip) ||
+                !chip.TryGetComponent<KnowledgeGrantOnWearComponent>(out var grant, EntityManager.ComponentFactory))
+                continue;
+
+            foreach (var (id, level) in grant.Skills)
+                levels[id] = levels.GetValueOrDefault(id) + level;
+        }
+
+        return levels;
+    }
+
+    public int ProfileCost(KnowledgeProfile profile, KnowledgeProfilePrototype? parent = null,
+        IReadOnlyDictionary<EntProtoId, int>? chipLevels = null)
     {
         if (profile.Mastery is null)
             return 0;
 
         var total = 0;
-        foreach (var (id, mastery) in profile.Mastery)
-            total += SkillCost(id, mastery) ?? 0;
+        foreach (var (id, steps) in profile.Mastery)
+            total += SkillCost(id, StartMastery(parent, id, chipLevels), steps) ?? 0;
         return total;
     }
 
-    public void EnsureProfileValid(ProtoId<KnowledgeProfilePrototype> parentId, ref KnowledgeProfile profile, int pointsBonus = 0) // knowledgeable trait: (int pointsBonus = 0)
+    public void EnsureProfileValid(ProtoId<KnowledgeProfilePrototype> parentId, ref KnowledgeProfile profile, int pointsBonus = 0,
+        IReadOnlyDictionary<EntProtoId, int>? chipLevels = null)
     {
         var parent = _prototypes.Index<KnowledgeProfilePrototype>(parentId);
         profile.Mastery ??= new Dictionary<EntProtoId, int>();
 
-        foreach (var (id, increase) in profile.Mastery.ToArray())
+        foreach (var (id, steps) in profile.Mastery.ToArray())
         {
-            var racialBase = parent.Profile.Mastery?.GetValueOrDefault(id) ?? 0;
-            if (increase < 0 || SkillCost(id, increase) is null ||
-                SkillCosts(id) is not { } costs || racialBase + increase >= costs.Length)
+            var start = StartMastery(parent, id, chipLevels);
+            if (steps < 0 || SkillCosts(id) is not { } costs)
+            {
                 profile.Mastery.Remove(id);
+                continue;
+            }
+
+            var fitting = Math.Min(steps, costs.Length - 1 - start);
+            if (fitting <= 0)
+                profile.Mastery.Remove(id);
+            else
+                profile.Mastery[id] = fitting;
         }
 
-        while (ProfileCost(profile) > parent.PointsLimit + pointsBonus && profile.Mastery.Count > 0) // knowledgeable trait: (+ pointsBonus)
+        while (ProfileCost(profile, parent, chipLevels) > parent.PointsLimit + pointsBonus && profile.Mastery.Count > 0)
         {
             var remove = profile.Mastery
-                .OrderByDescending(pair => SkillCost(pair.Key, pair.Value) ?? 0)
+                .OrderByDescending(pair => SkillCost(pair.Key, StartMastery(parent, pair.Key, chipLevels), pair.Value) ?? 0)
                 .ThenByDescending(pair => pair.Key.Id)
                 .First().Key;
             profile.Mastery.Remove(remove);
@@ -782,7 +824,8 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         ProtoId<KnowledgeProfilePrototype> parentId,
         KnowledgeProfile profile,
         int pointsBonus = 0,
-        IReadOnlyDictionary<EntProtoId, int>? masteryGrants = null)
+        IReadOnlyDictionary<EntProtoId, int>? masteryGrants = null,
+        IReadOnlyDictionary<EntProtoId, int>? chipLevels = null)
     {
         var store = EnsureKnowledgeContainer(holder);
         ClearKnowledge(store.Owner);
@@ -790,8 +833,10 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
         var parent = _prototypes.Index<KnowledgeProfilePrototype>(parentId);
         ApplyProfile(store, parent.Profile);
 
-        EnsureProfileValid(parentId, ref profile, pointsBonus); // knowledgeable trait: (pointsBonus)
-        ApplyProfile(store, profile, parent.PointsLimit + pointsBonus); // knowledgeable trait: (+ pointsBonus)
+        // Validation must not change the saved profile.
+        profile = new KnowledgeProfile(profile);
+        EnsureProfileValid(parentId, ref profile, pointsBonus, chipLevels);
+        ApplyProfile(store, profile, parent.PointsLimit + pointsBonus, parent, chipLevels);
 
         if (masteryGrants != null)
         {
@@ -801,6 +846,8 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
 
         store.Comp.ProfileApplied = true;
         Dirty(store);
+        // Profile rebuild replaces floored skills.
+        SyncHolderFloor(store);
     }
 
     public void ApplyProfile(Entity<KnowledgeContainerComponent> store, KnowledgeProfile profile)
@@ -812,14 +859,15 @@ public sealed partial class SharedKnowledgeSystem : EntitySystem
             RaiseMastery(store, id, mastery, popup: false);
     }
 
-    public void ApplyProfile(Entity<KnowledgeContainerComponent> store, KnowledgeProfile profile, int points)
+    public void ApplyProfile(Entity<KnowledgeContainerComponent> store, KnowledgeProfile profile, int points,
+        KnowledgeProfilePrototype? parent = null, IReadOnlyDictionary<EntProtoId, int>? chipLevels = null)
     {
         if (profile.Mastery is null)
             return;
 
         foreach (var (id, mastery) in profile.Mastery.OrderBy(pair => pair.Key.Id))
         {
-            if (SkillCost(id, mastery) is not { } cost || cost > points)
+            if (SkillCost(id, StartMastery(parent, id, chipLevels), mastery) is not { } cost || cost > points)
                 continue;
 
             if (RaiseMastery(store, id, mastery, popup: false) is not null)

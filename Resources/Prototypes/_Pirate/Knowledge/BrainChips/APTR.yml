@@ -32,6 +32,23 @@
       ShootingKnowledge: 50
 
 - type: entity
+  parent: SkillChipSidearms
+  id: SkillChipSecurityCadet
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsNonLethal: 28
+
+- type: entity
+  parent: SkillChipSidearms
+  id: SkillChipDetective
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      KnowledgeWeaponsBludgeon: 28
+      KnowledgeWeaponsEnergy: 26 # Powered NY-6 and DT-2 modes.
+
+- type: entity
   parent: BaseSkillChipAPTR
   id: SkillChipLaser
   components:
@@ -39,7 +56,6 @@
     skills:
       KnowledgeWeaponsLaser: 28
 
-# Pirate: the Omu instructor's rifle training must fit the existing three brain slots.
 - type: entity
   parent: SkillChipSidearmsAdvanced
   id: SkillChipSecurityInstructor
@@ -48,8 +64,61 @@
     skills:
       KnowledgeWeaponsPistol: 50
       KnowledgeWeaponsLaser: 50
-      ShootingKnowledge: 50
+      ShootingKnowledge: 34 # Security Education adds 26 for a total of 60.
+      KnowledgeWeaponsRifle: 50
+      KnowledgeWeaponsShotgun: 50
+      KnowledgeWeaponsShield: 50
+      KnowledgeWeaponsLongBlade: 50
+      KnowledgeWeaponsShortBlade: 50
+      KnowledgeWeaponsPolearm: 50
+      KnowledgeWeaponsSniper: 50
+      KnowledgeWeaponsHeavy: 50
+      KnowledgeWeaponsSMG: 50
+      KnowledgeWeaponsNonLethal: 28
+      KnowledgeWeaponsEnergy: 60 # Powered NY-6 and DT-2 modes.
+
+- type: entity
+  parent: SkillChipSidearms
+  id: SkillChipSecurityOfficer
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
       KnowledgeWeaponsRifle: 28
+      KnowledgeWeaponsShotgun: 28
+      KnowledgeWeaponsShield: 28
+      KnowledgeWeaponsLongBlade: 28
+      KnowledgeWeaponsShortBlade: 28
+      KnowledgeWeaponsPolearm: 28
+      KnowledgeWeaponsSniper: 28
+      KnowledgeWeaponsHeavy: 28
+      KnowledgeWeaponsSMG: 28
+      KnowledgeWeaponsNonLethal: 28
+      KnowledgeWeaponsEnergy: 26 # Powered NY-6 and DT-2 modes.
+
+- type: entity
+  parent: SkillChipSecurityOfficer
+  id: SkillChipWarden
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ShootingKnowledge: 34 # Security Education adds 26 for a total of 60.
+
+- type: entity
+  parent: SkillChipSidearmsAdvanced
+  id: SkillChipBlueshield
+  components:
+  - type: KnowledgeGrantOnWear
+    skills:
+      ShootingKnowledge: 2 # Security Education adds 26 for a total of 28.
+      KnowledgeWeaponsRifle: 28
+      KnowledgeWeaponsShotgun: 28
+      KnowledgeWeaponsLongBlade: 28
+      KnowledgeWeaponsShortBlade: 28
+      KnowledgeWeaponsSniper: 28
+      KnowledgeWeaponsHeavy: 28
+      KnowledgeWeaponsSMG: 28
+      KnowledgeWeaponsNonLethal: 28 # The default BSO webbing carries a stun baton.
+      KnowledgeWeaponsEnergy: 26 # Powered NY-6 and DT-2 modes.
 
 - type: entity
   parent: BaseSkillChipAPTR
@@ -200,17 +269,24 @@
   parent: BaseSkillChipMRAM
   id: SkillChipCombatHOS
   components:
+  # Shares the security weapon family to prevent stacking.
+  - type: OrganChip
+    family: ChipFamilySidearms
   - type: KnowledgeGrantOnWear
     skills:
-      KnowledgeWeaponsLaser: 28
-      ShootingKnowledge: 28
-      KnowledgeWeaponsPistol: 28
-      KnowledgeWeaponsRifle: 28
-      KnowledgeWeaponsShotgun: 28
-      KnowledgeWeaponsShield: 28
+      ShootingKnowledge: 34 # Security Education adds 26 for a total of 60.
+      KnowledgeWeaponsPistol: 50
+      KnowledgeWeaponsLaser: 50
+      KnowledgeWeaponsRifle: 50
+      KnowledgeWeaponsShotgun: 50
+      KnowledgeWeaponsSMG: 50
+      KnowledgeWeaponsSniper: 50
+      KnowledgeWeaponsHeavy: 50
+      KnowledgeWeaponsShield: 50
+      KnowledgeWeaponsLongBlade: 50
+      KnowledgeWeaponsShortBlade: 50
+      KnowledgeWeaponsPolearm: 50
       KnowledgeWeaponsBludgeon: 28
-      KnowledgeWeaponsShortBlade: 28
-      KnowledgeWeaponsLongBlade: 28
       KnowledgeWeaponsNonLethal: 28
-      KnowledgeWeaponsPolearm: 28
       MeleeKnowledge: 28
+      KnowledgeWeaponsEnergy: 60 # Powered NY-6 and DT-2 modes.

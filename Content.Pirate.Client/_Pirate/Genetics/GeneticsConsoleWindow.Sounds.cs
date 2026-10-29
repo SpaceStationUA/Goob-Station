@@ -12,7 +12,6 @@ public sealed partial class GeneticsConsoleWindow
     public void AttachInteractionSounds(BoundUserInterface bui)
     {
         RecordConsoleSounds.Attach(bui, this);
-        Tabs.OnTabChanged += _ => RecordConsoleSounds.Play(Tabs, RecordConsoleSound.Button);
         Sequencer.OnSetBase += message =>
         {
             // Shared hooks cover left clicks; include right and Ctrl clicks.

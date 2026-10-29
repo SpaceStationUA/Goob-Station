@@ -42,6 +42,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
     public event Action<uint>? OnCombine;
     public event Action? OnSaveEnzymes;
     public event Action? OnApplyEnzymes;
+    public event Action<GeneticsConsoleJokerMessage>? OnJoker;
 
     private EntityQuery<GeneticsConsoleComponent> _query;
     private EntityQuery<GeneticsConsoleEnzymesComponent> _enzymesQuery;
@@ -61,16 +62,18 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
     private bool _writeCooldown;
     private bool _printCooldown;
     private bool _enzymesCooldown;
+    private readonly List<(Button Button, Control View)> _tabs = new();
 
     public GeneticsConsoleWindow()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
-        Tabs.SetTabTitle(0, Loc.GetString("genetics-console-tab-sequencer"));
-        Tabs.SetTabTitle(1, Loc.GetString("genetics-console-tab-storage"));
-        Tabs.SetTabTitle(2, Loc.GetString("genetics-console-tab-combiner"));
-        Tabs.SetTabTitle(3, Loc.GetString("genetics-console-tab-enzymes"));
+        AddTab(Sequencer, "genetics-console-tab-sequencer");
+        AddTab(Storage, "genetics-console-tab-storage");
+        AddTab(Combiner, "genetics-console-tab-combiner");
+        AddTab(Enzymes, "genetics-console-tab-enzymes");
+        SelectTab(Sequencer);
 
         _disk = _entMan.System<GeneticsDiskSystem>();
         _mutation = _entMan.System<MutationSystem>();
@@ -89,6 +92,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         Sequencer.OnWriteMutation += i => OnWriteMutation?.Invoke(i);
         Sequencer.OnSequence += i => OnSequence?.Invoke(i);
         Sequencer.OnResetSequence += message => OnResetSequence?.Invoke(message);
+        Sequencer.OnJoker += message => OnJoker?.Invoke(message);
 
         Storage.OnPrint += p => OnPrint?.Invoke(p);
 
@@ -97,6 +101,29 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
 
         Enzymes.OnSave += () => OnSaveEnzymes?.Invoke();
         Enzymes.OnApply += () => OnApplyEnzymes?.Invoke();
+    }
+
+    private void AddTab(Control view, LocId title)
+    {
+        var button = new Button
+        {
+            Text = Loc.GetString(title),
+            ToggleMode = true,
+            HorizontalExpand = true,
+            StyleClasses = { "ButtonSquare" }
+        };
+        button.OnPressed += _ => SelectTab(view);
+        _tabs.Add((button, view));
+        TabButtons.AddChild(button);
+    }
+
+    private void SelectTab(Control view)
+    {
+        foreach (var (button, tab) in _tabs)
+        {
+            button.Pressed = tab == view;
+            tab.Visible = tab == view;
+        }
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -110,6 +137,19 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
 
         Update(comp, scanner, enzymes);
         UpdateDisk(_disk.GetDisk(_uid));
+        UpdateJokerCooldown();
+    }
+
+    private void UpdateJokerCooldown()
+    {
+        if (!_entMan.TryGetComponent<GeneticsJokerComponent>(_uid, out var joker))
+        {
+            Sequencer.UpdateJokerCooldown(null);
+            return;
+        }
+
+        var seconds = (int) Math.Ceiling((joker.NextUse - _timing.CurTime).TotalSeconds);
+        Sequencer.UpdateJokerCooldown(Math.Max(seconds, 0));
     }
 
     public void SetEntity(EntityUid uid)
@@ -224,7 +264,6 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
 
     private void UpdateScrambleDisabled()
     {
-        ScrambleContainer.Visible = _mob != null;
         ScrambleButton.Disabled = _mob is not {} mob ||
             !_genome.IsScanned(mob) ||
             _scrambleCooldown > 0;

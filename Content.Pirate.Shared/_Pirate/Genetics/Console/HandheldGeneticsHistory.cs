@@ -31,11 +31,18 @@ public sealed partial class HandheldGeneticsScan
 }
 
 [Serializable, NetSerializable]
-public sealed class HandheldGeneticsHistoryState(List<string> dnaIds, int? selectedScan)
+public sealed class HandheldGeneticsHistoryState(List<HandheldGeneticsTarget> targets, int? selectedScan)
 {
-    public readonly List<string> DnaIds = dnaIds;
+    /// <summary>Targets are ordered by scan index.</summary>
+    public readonly List<HandheldGeneticsTarget> Targets = targets;
     public readonly int? SelectedScan = selectedScan;
 }
+
+[Serializable, NetSerializable]
+public readonly record struct HandheldGeneticsTarget(string Name, List<HandheldGeneticsTargetSequence> Sequences);
+
+[Serializable, NetSerializable]
+public readonly record struct HandheldGeneticsTargetSequence(int Number, MutationRarity Rarity);
 
 [Serializable, NetSerializable]
 public sealed class HandheldGeneticsSelectScanMessage(int? index) : BoundUserInterfaceMessage

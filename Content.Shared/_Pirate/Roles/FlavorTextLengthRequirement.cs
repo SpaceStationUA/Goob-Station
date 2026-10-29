@@ -36,7 +36,8 @@ public sealed partial class FlavorTextLengthRequirement : JobRequirement
             return true;
 
         // Character pods can reach this check without a profile.
-        var length = profile?.PhysicalDescription.Trim().Length ?? 0;
+        // Normalize old profiles too, so blank characters cannot satisfy the length requirement.
+        var length = profile == null ? 0 : HumanoidCharacterProfile.NormalizeWhitespace(profile.PhysicalDescription).Length;
         var met = length >= minLength;
         if (Inverted)
             met = !met;

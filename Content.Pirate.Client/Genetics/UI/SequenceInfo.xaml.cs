@@ -13,6 +13,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Timing;
 
 using Content.Pirate.Shared.Genetics.Mutations;
 
@@ -33,13 +34,58 @@ public sealed partial class SequenceInfo : BoxContainer
         _mutation = _entMan.System<MutationSystem>();
     }
 
+    public bool HasSequence { get; private set; }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+        if (!Details.Visible)
+            return;
+
+        AlignKeys();
+        LimitValueWidths();
+    }
+
+    private void AlignKeys()
+    {
+        var keys = new[] { KeyName, KeyDesc, KeyInstability, KeyRarity, CarriersLabel };
+        var width = 0f;
+        foreach (var key in keys)
+        {
+            width = Math.Max(width, key.DesiredSize.X);
+        }
+
+        foreach (var key in keys)
+        {
+            if (key.MinWidth < width)
+                key.MinWidth = width;
+        }
+    }
+
+    private void LimitValueWidths()
+    {
+        foreach (var value in new Control[] { MutationName, MutationDesc, MutationInstability, MutationRarity, Carriers })
+        {
+            if (value.Parent is not BoxContainer row || row.ChildCount < 2)
+                continue;
+
+            var key = row.GetChild(0);
+            var width = row.Width - key.Width - (row.SeparationOverride ?? 0);
+            if (width > 0 && Math.Abs(value.MaxWidth - width) > 0.5f)
+                value.MaxWidth = width;
+        }
+    }
+
     public void Update(SequenceButtons buttons)
     {
-        Visible = buttons.Index != null;
+        HasSequence = buttons.Index != null;
+        Details.Visible = HasSequence;
+        NoSequence.Visible = !HasSequence;
 
         if (buttons.Sequence is not {} sequence)
             return;
 
+        MutationRarity.Text = Loc.GetString($"genetics-console-rarity-{sequence.Rarity.ToString().ToLowerInvariant()}");
         if (sequence.Mutation is {} id)
         {
             var proto = _proto.Index<EntityPrototype>(id);
@@ -51,7 +97,7 @@ public sealed partial class SequenceInfo : BoxContainer
         else
         {
             MutationName.Text = Loc.GetString("genetics-console-mutation-name-placeholder", ("number", sequence.Number));
-            MutationDesc.Text = Loc.GetString("generic-unknown-title");
+            MutationDesc.Text = Loc.GetString("genetics-console-mutation-undiscovered");
             MutationInstability.Text = Loc.GetString("generic-unknown-title");
         }
     }

@@ -3211,6 +3211,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("art_hash");
 
+                    b.Property<bool>("Glow")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("glow");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)

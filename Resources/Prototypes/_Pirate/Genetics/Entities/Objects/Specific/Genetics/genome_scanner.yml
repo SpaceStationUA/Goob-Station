@@ -7,13 +7,20 @@
   description: A combined DNA sampler and readout device that can show all sequences in a subject outside of the lab.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Research/anomalyscanner.rsi
+    sprite: _Pirate/Genetics/Objects/Specific/Genetics/genome_scanner.rsi
     layers:
-    - state: icon # TODO: custom sprite
+    - state: icon
+    - state: analyzer
+      shader: unshaded
+  - type: Item
+    heldPrefix: analyzer
+    storedRotation: -90
   - type: GeneticsScanner
     scanDelay: 3
   - type: HandheldGeneticsScanner
   - type: GeneticsPrintout
+  # Uses the mutation discoveries of the research server on the grid it was made on.
+  - type: ResearchClient
   - type: DoAfter
   - type: ActivatableUI
     key: enum.GeneticsConsoleUiKey.Key

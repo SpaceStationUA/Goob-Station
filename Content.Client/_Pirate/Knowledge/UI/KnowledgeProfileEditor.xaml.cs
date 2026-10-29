@@ -21,7 +21,6 @@ namespace Content.Client._Pirate.Knowledge.UI;
 public sealed partial class KnowledgeProfileEditor : BoxContainer
 {
     [Dependency] private readonly IEntitySystemManager _systems = default!;
-    [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     public event Action<KnowledgeProfile>? OnApply;
@@ -189,7 +188,6 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
 
     private void AddSkillRow(BoxContainer categorySkills, EntProtoId id, KnowledgeComponent component)
     {
-        var costs = component.Costs!;
         var prototype = _prototypes.Index<EntityPrototype>(id);
         var racialBase = _speciesProfile!.Profile.Mastery?.GetValueOrDefault(id) ?? 0;
         var selected = _profile.Mastery?.GetValueOrDefault(id) ?? 0;
@@ -286,8 +284,9 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         {
             selected = _profile.Mastery?.GetValueOrDefault(id) ?? 0;
             profileMastery = racialBase + selected;
-            var cost = selected >= 0 && selected < costs.Length ? costs[selected] : 0;
             var jobLevel = GetJobLevel(id);
+            var start = SharedKnowledgeSystem.StartMastery(_speciesProfile, id, GetJobChipLevels());
+            var cost = _knowledge.SkillCost(id, start, selected) ?? 0;
             var profileLevel = SharedKnowledgeSystem.GetInverseMastery(profileMastery);
             var finalLevel = Math.Clamp(profileLevel + jobLevel, 0, 100);
             masteryLabel.Text = Loc.GetString(
@@ -318,7 +317,7 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
 
             RebuildSkillBar(bar.Segments, profileLevel, jobLevel, finalLevel);
             decrease.Disabled = selected <= 0;
-            increase.Disabled = profileMastery >= costs.Length - 1 || selected >= costs.Length - 1;
+            increase.Disabled = _knowledge.SkillCost(id, start, selected + 1) is null;
             var color = finalLevel <= 0 ? Color.Gray : Color.White;
             name.Modulate = color;
         }
@@ -326,8 +325,9 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         void Change(int difference)
         {
             var nextSelected = selected + difference;
-            var nextMastery = racialBase + nextSelected;
-            if (nextSelected < 0 || nextSelected >= costs.Length || nextMastery >= costs.Length)
+            var start = SharedKnowledgeSystem.StartMastery(_speciesProfile, id, GetJobChipLevels());
+            // Allow decreases after a job change puts the selection above the cap.
+            if (nextSelected < 0 || difference > 0 && _knowledge.SkillCost(id, start, nextSelected) is null)
                 return;
 
             _profile.Mastery ??= new Dictionary<EntProtoId, int>();
@@ -417,26 +417,19 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         });
     }
 
-    private int GetJobLevel(EntProtoId id)
+    private Dictionary<EntProtoId, int> GetJobChipLevels()
     {
-        if (_unchipped)
-            return 0;
+        if (_unchipped || !_clientKnowledge.JobChips.TryGetValue(_jobId, out var chips))
+            return new Dictionary<EntProtoId, int>();
 
-        if (!_clientKnowledge.JobChips.TryGetValue(_jobId, out var chips))
-            return 0;
-
-        var total = 0;
-        foreach (var chipId in chips)
-        {
-            if (!_prototypes.TryIndex<EntityPrototype>(chipId, out var chip) ||
-                !chip.TryGetComponent<KnowledgeGrantOnWearComponent>(out var grant, _entities.ComponentFactory))
-                continue;
-
-            total += grant.Skills.GetValueOrDefault(id);
-        }
-
-        return total;
+        return _knowledge.GetChipLevels(chips.Select(chip => new EntProtoId(chip)));
     }
+
+    private int GetJobLevel(EntProtoId id)
+        => GetJobChipLevels().GetValueOrDefault(id);
+
+    private int ProfileCost()
+        => _knowledge.ProfileCost(_profile, _speciesProfile, GetJobChipLevels());
 
     private static string Signed(int value)
         => value > 0 ? $"+{value}" : value.ToString();
@@ -446,7 +439,7 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
         if (_speciesProfile is null)
             return;
 
-        var remaining = _speciesProfile.PointsLimit + _skillPointsBonus - _knowledge.ProfileCost(_profile);
+        var remaining = _speciesProfile.PointsLimit + _skillPointsBonus - ProfileCost();
         PointsLabel.Text = Loc.GetString("knowledge-editor-points", ("points", remaining));
         PointsLabel.FontColorOverride = remaining < 0 ? Color.Red : Color.White;
     }
@@ -454,7 +447,7 @@ public sealed partial class KnowledgeProfileEditor : BoxContainer
     private void SetButtons()
     {
         var valid = _speciesProfile is not null &&
-                    _speciesProfile.PointsLimit + _skillPointsBonus - _knowledge.ProfileCost(_profile) >= 0;
+                    _speciesProfile.PointsLimit + _skillPointsBonus - ProfileCost() >= 0;
         SaveButton.Disabled = !_modified || !valid;
         ResetButton.Disabled = _speciesProfile is null ||
                                (!_modified && (_profile.Mastery is null || _profile.Mastery.Count == 0));

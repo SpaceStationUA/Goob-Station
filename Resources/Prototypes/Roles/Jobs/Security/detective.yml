@@ -49,9 +49,8 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipCombatEducation
-    - SkillChipSidearms
-    - SkillChipBludgeon
+    - SkillChipSecurityEducation # Pirate: security combat chips
+    - SkillChipDetective # Pirate: security combat chips
   # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

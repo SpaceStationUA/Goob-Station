@@ -8,6 +8,8 @@
   id: Stunsword
   description: A mass produced, durable plasteel blade made for only the most experienced and seasoned security officers.
   components:
+  - type: WeaponClass
+    class: Sword
   - type: Item
     sprite: _Pirate/Omu/Objects/Weapons/Melee/stunsword.rsi
     size: Ginormous # Use your sheath.
@@ -53,6 +55,8 @@
           sprite: _Pirate/Omu/Objects/Weapons/Melee/stunsword.rsi
           state: icon
         components:
+        - type: WeaponClass
+          class: Sword
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 1.5
@@ -71,6 +75,8 @@
           sprite: _Pirate/Omu/Objects/Weapons/Melee/stunsword.rsi
           state: stun-icon
         components:
+        - type: WeaponClass
+          class: Energy
         - type: MeleeWeapon
           wideAnimationRotation: -135
           attackRate: 1.5
@@ -98,6 +104,8 @@
           sprite: _Pirate/Omu/Objects/Weapons/Melee/stunsword.rsi
           state: shock-icon
         components:
+        - type: WeaponClass
+          class: Energy
         - type: IgnitionSource
           temperature: 700
         - type: Tool

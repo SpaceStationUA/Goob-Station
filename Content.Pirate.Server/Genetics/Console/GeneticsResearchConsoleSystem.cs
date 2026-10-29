@@ -33,8 +33,8 @@ public sealed partial class GeneticsResearchConsoleSystem : EntitySystem
 
     private void OnSequenced(Entity<GeneticsResearchConsoleComponent> ent, ref MutationSequencedEvent args)
     {
-        if (args.Data.Discovered || // no infinite point farming chud
-            _clientQuery.CompOrNull(ent)?.Server is not {} server)
+        // Prevent repeat point awards for known mutations.
+        if (_clientQuery.CompOrNull(ent)?.Server is not {} server)
             return;
 
         var difficulty = _mutation.AllMutations[args.Mutation].Difficulty;

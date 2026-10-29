@@ -28,7 +28,7 @@ public sealed partial class GeneticsConsoleSystem
     private void SaveHandheldScan(Entity<HandheldGeneticsScannerComponent> ent, EntityUid subject)
     {
         var sequences = new List<SequenceState>();
-        _genome.AddSequenceStates(subject, sequences);
+        _genome.AddSequenceStates(subject, sequences, ent);
         var scan = new HandheldGeneticsScan
         {
             Target = subject,
@@ -58,10 +58,16 @@ public sealed partial class GeneticsConsoleSystem
             sequences.AddRange(selected.Sequences);
         }
 
-        var dnaIds = new List<string>();
+        var targets = new List<HandheldGeneticsTarget>();
         foreach (var scan in handheld.Scans)
-            dnaIds.Add(scan.DnaId);
-        return new HandheldGeneticsHistoryState(dnaIds, handheld.SelectedScan);
+        {
+            var entries = new List<HandheldGeneticsTargetSequence>();
+            foreach (var sequence in scan.Sequences)
+                entries.Add(new HandheldGeneticsTargetSequence(sequence.Number, sequence.Rarity));
+            entries.Sort((a, b) => a.Number.CompareTo(b.Number));
+            targets.Add(new HandheldGeneticsTarget(scan.Name, entries));
+        }
+        return new HandheldGeneticsHistoryState(targets, handheld.SelectedScan);
     }
 
     private static HandheldGeneticsScan? GetSelectedHandheldScan(HandheldGeneticsScannerComponent handheld)

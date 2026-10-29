@@ -4,6 +4,8 @@
   parent: MobHuman
   id: MobHumanMage
   components:
+  - type: GhostRoleLoadout
+    role: GhostRoleFriendlyWizard
   - type: Tag
     tags:
     - CanPilot

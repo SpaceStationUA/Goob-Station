@@ -15,6 +15,7 @@
   - type: AntagPlayerEffects
     packages:
     - BloodCultSkills
+    - HereticSkills # Each skill takes the higher of the two packages.
   - type: GameRule
     minPlayers: 20
     chaosScore: 1000

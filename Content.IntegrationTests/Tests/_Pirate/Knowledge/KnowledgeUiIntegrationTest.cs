@@ -138,11 +138,13 @@ public sealed class KnowledgeUiIntegrationTest
             Assert.That(applyCount, Is.EqualTo(3));
         });
 
-        await Click(pair, firstAidIncrease);
-        await Click(pair, firstAidIncrease);
-        await Click(pair, firstAidIncrease);
+        // Mastery 3 spends 6 points for the budget checks below.
+        for (var i = 0; i < 5; i++)
+            await Click(pair, firstAidIncrease);
         await client.WaitAssertion(() => Assert.That(firstAidIncrease.Disabled, Is.True,
             "The editor must stop at the skill's maximum selectable mastery."));
+        await Click(pair, firstAidDecrease);
+        await Click(pair, firstAidDecrease);
 
         await Click(pair, chemistryIncrease);
         await Click(pair, chemistryIncrease);

@@ -3316,6 +3316,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("character varying(64)")
                         .HasColumnName("art_hash");
 
+                    b.Property<bool>("Glow")
+                        .HasColumnType("boolean")
+                        .HasColumnName("glow");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32)

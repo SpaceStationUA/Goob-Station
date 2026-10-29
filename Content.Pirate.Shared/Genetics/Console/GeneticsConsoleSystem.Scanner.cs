@@ -118,7 +118,7 @@ public sealed partial class GeneticsConsoleSystem
 
         Speak(ent, "scanned");
         if (_net.IsServer)
-            _genome.ScanGenome(mob);
+            _genome.ScanGenome(mob, ent);
         UpdateUI(ent.AsNullable());
     }
 
@@ -182,7 +182,7 @@ public sealed partial class GeneticsConsoleSystem
 
         _sequences.Clear();
         if (ent.Comp.ScannedMob is {} mob)
-            _genome.AddSequenceStates(mob, _sequences);
+            _genome.AddSequenceStates(mob, _sequences, ent);
         var history = UpdateHandheldHistory((ent.Owner, ent.Comp), _sequences);
         // UI states outlive this update and must not share the printout/scanner scratch list.
         var edits = EnsureComp<GeneticsSequenceEditComponent>(ent.Owner);

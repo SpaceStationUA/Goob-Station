@@ -744,6 +744,8 @@ namespace Content.Client.Lobby.UI
 
                 AntagList.AddChild(antagContainer);
             }
+
+            RefreshGhostRoleLoadouts(); // Pirate: ghost role loadouts
         }
 
         private void SetDirty()
@@ -895,6 +897,11 @@ namespace Content.Client.Lobby.UI
 
         private HashSet<string> GetActiveLoadoutRoleIds()
         {
+            #region Pirate: ghost role loadouts
+            if (_ghostRoleLoadoutRole is { } ghostRole)
+                return new HashSet<string> { ghostRole.Id };
+            #endregion Pirate: ghost role loadouts
+
             if (Profile == null)
                 return new HashSet<string>();
 
@@ -1855,7 +1862,7 @@ namespace Content.Client.Lobby.UI
             if (Profile == null || !_prototypeManager.HasIndex(Profile.Species))
                 return;
 
-            PreviewDummy = _controller.LoadProfileEntity(Profile, null, ShowClothes.Pressed); // Pirate: job-specific preview override is no longer used.
+            PreviewDummy = LoadGhostRoleLoadoutPreview() ?? _controller.LoadProfileEntity(Profile, null, ShowClothes.Pressed); // Pirate: ghost role loadouts - preview the open role; keep the normal job preview otherwise.
             SpriteView.SetEntity(PreviewDummy);
             _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, Profile.Name);
 
@@ -1878,6 +1885,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void SetProfile(HumanoidCharacterProfile? profile, int? slot)
         {
+            ResetGhostRoleLoadoutEditor(); // Pirate: ghost role loadouts
             // Pirate changes start
             if (profile != null)
             {

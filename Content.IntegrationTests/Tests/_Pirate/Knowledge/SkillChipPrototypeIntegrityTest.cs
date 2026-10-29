@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared._Pirate.Body.Chips;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared._Pirate.Roles;
+using Content.Shared._Shitmed.ItemSwitch.Components;
 using Content.Shared.Contraband;
 using Content.Shared.Roles;
 using Content.Shared.Store;
@@ -15,6 +16,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Value;
+using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests._Pirate.Knowledge;
 
@@ -44,11 +46,11 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("Geneticist", ["SkillChipEducation"]), // Pirate: genetics now provides the donor job.
         ("ResearchAssistant", ["SkillChipEducation", "SkillChipDatabaseBasic"]),
         ("Roboticist", ["SkillChipEducation", "SkillChipDatabase"]),
-        ("HeadOfSecurity", ["SkillChipCombatEducationPilot", "SkillChipCombatHOS"]),
-        ("Warden", ["SkillChipCombatEducationPilot", "SkillChipSidearms", "SkillChipShotgun"]),
-        ("SecurityOfficer", ["SkillChipCombatEducation", "SkillChipSidearms", "SkillChipNonLethal"]),
-        ("SecurityCadet", ["SkillChipCombatEducation", "SkillChipSidearms", "SkillChipNonLethal"]),
-        ("Detective", ["SkillChipCombatEducation", "SkillChipSidearms", "SkillChipBludgeon"]),
+        ("HeadOfSecurity", ["SkillChipSecurityEducationPilot", "SkillChipCombatHOS"]),
+        ("Warden", ["SkillChipSecurityEducationPilot", "SkillChipWarden"]),
+        ("SecurityOfficer", ["SkillChipSecurityEducation", "SkillChipSecurityOfficer"]),
+        ("SecurityCadet", ["SkillChipSecurityEducation", "SkillChipSecurityCadet"]),
+        ("Detective", ["SkillChipSecurityEducation", "SkillChipDetective"]),
         ("Brigmedic", ["SkillChipCombatEducation", "SkillChipDoctor", "SkillChipSurgeon"]),
         ("SecurityClown", ["SkillChipCombatEducation", "SkillChipClown", "SkillChipUnarmed"]),
         ("Passenger", ["SkillChipTiderDampener", "SkillChipEducation"]),
@@ -101,8 +103,8 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("OuterCommander", ["SkillChipEchelonEducation"]),
         ("GovernmentMan", ["SkillChipEchelonEducation"]),
         ("Conquest", ["SkillChipEducation"]),
-        ("BlueshieldOfficer", ["SkillChipCombatEducationPilot", "SkillChipSidearmsAdvanced", "SkillChipFieldMedicine"]),
-        ("SecurityInstructor", ["SkillChipCombatEducation", "SkillChipSecurityInstructor", "SkillChipNonLethal"]), // Pirate: Omu rifle training shares the sidearm chip.
+        ("BlueshieldOfficer", ["SkillChipSecurityEducationPilot", "SkillChipBlueshield", "SkillChipFieldMedicine"]),
+        ("SecurityInstructor", ["SkillChipSecurityEducation", "SkillChipSecurityInstructor"]),
         ("ShaftMiner", ["SkillChipCombatEducationPilot", "SkillChipMining", "SkillChipShortBlade"]),
         ("ForensicMantis", ["SkillChipEducation", "SkillChipDatabase", "SkillChipCloseQuarters"]),
         ("AdministrativeAssistant", ["SkillChipEchelonEducation", "SkillChipService"]),
@@ -118,6 +120,8 @@ public sealed class SkillChipPrototypeIntegrityTest
         "SkillChipTool", "SkillChipPistol", "SkillChipRifle", "SkillChipSMG", "SkillChipShotgun",
         "SkillChipSniper", "SkillChipEnergy", "SkillChipBludgeon", "SkillChipShortBlade",
         "SkillChipSidearms", "SkillChipSidearmsAdvanced", "SkillChipSecurityInstructor",
+        "SkillChipSecurityCadet", "SkillChipDetective",
+        "SkillChipSecurityOfficer", "SkillChipWarden", "SkillChipBlueshield",
         "SkillChipLongBlade", "SkillChipNonLethal", "SkillChipPolearm", "SkillChipUnarmed",
         "SkillChipShield", "SkillChipCombatHOS", "SkillChipCloseQuarters",
         "SkillChipArmorsmithing", "SkillChipArmorsmithing2", "SkillChipWeaponsmithing",
@@ -128,6 +132,7 @@ public sealed class SkillChipPrototypeIntegrityTest
         "SkillChipDatabaseBasic", "SkillChipFieldMedicine",
         "SkillChipEducation", "SkillChipCombatEducation", "SkillChipEchelonEducation",
         "SkillChipEducationPilot", "SkillChipCombatEducationPilot", "SkillChipEchelonEducationPilot",
+        "SkillChipSecurityEducation", "SkillChipSecurityEducationPilot",
         "SkillChipMagLit", "SkillChipJanitor", "SkillChipClown", "SkillChipDoctor",
         "SkillChipChemist", "SkillChipSurgeon", "SkillChipCMO",
         "SkillChipMagicalDampener", "SkillChipCombatDampener",
@@ -389,6 +394,8 @@ public sealed class SkillChipPrototypeIntegrityTest
         ("SkillChipEchelonEducation", 50),
         ("SkillChipEchelonEducationPilot", 50),
         ("SkillChipCombatEducationPilot", 33),
+        ("SkillChipSecurityEducation", 33),
+        ("SkillChipSecurityEducationPilot", 33),
         ("SkillChipERT", 50),
         ("SkillChipDeathSquad", 50),
         ("SkillChipFreelancer", 50),
@@ -447,6 +454,7 @@ public sealed class SkillChipPrototypeIntegrityTest
 
         await server.WaitAssertion(() =>
         {
+            var limit = BrainChipLimit(server);
             var mapped = 0;
             foreach (var job in prototypes.EnumeratePrototypes<JobPrototype>())
             {
@@ -456,8 +464,8 @@ public sealed class SkillChipPrototypeIntegrityTest
                         continue;
 
                     mapped++;
-                    Assert.That(chips.Chips, Has.Count.LessThanOrEqualTo(3),
-                        $"Job {job.ID} asks for {chips.Chips.Count} chips, but a brain holds three.");
+                    Assert.That(chips.Chips, Has.Count.LessThanOrEqualTo(limit),
+                        $"Job {job.ID} asks for {chips.Chips.Count} chips, but a brain holds {limit}.");
                     Assert.That(chips.Chips, Is.Unique, $"Job {job.ID} lists the same chip twice.");
 
                     var families = chips.Chips
@@ -505,6 +513,155 @@ public sealed class SkillChipPrototypeIntegrityTest
                 var chips = job!.Special.OfType<OrganChipsSpecial>().SelectMany(s => s.Chips).Select(c => c.Id);
                 Assert.That(chips, Is.EquivalentTo(expected), $"Job {jobId} has the wrong chips.");
             }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    private static int SumJobChipSkill(RobustIntegrationTest.ServerIntegrationInstance server, string jobId,
+        string skill)
+    {
+        var job = server.ProtoMan.Index<JobPrototype>(jobId);
+        var total = 0;
+        foreach (var chipId in job.Special.OfType<OrganChipsSpecial>().SelectMany(s => s.Chips))
+        {
+            var chip = server.ProtoMan.Index<EntityPrototype>(chipId.Id);
+            Assert.That(chip.TryGetComponent<KnowledgeGrantOnWearComponent>(out var grant,
+                server.EntMan.ComponentFactory), Is.True, $"{chipId} grants no skills.");
+            total += grant!.Skills.GetValueOrDefault(skill);
+        }
+
+        return total;
+    }
+
+    // 26 is basic training; the spread only falls again above 50, so the expert group sits at 60.
+    [TestCase("SecurityCadet", 26)]
+    [TestCase("SecurityOfficer", 26)]
+    [TestCase("Detective", 26)]
+    [TestCase("BlueshieldOfficer", 28)]
+    [TestCase("Warden", 60)]
+    [TestCase("HeadOfSecurity", 60)]
+    [TestCase("SecurityInstructor", 60)]
+    [TestCase("SalvageSpecialist", 0)]
+    [TestCase("ShaftMiner", 0)]
+    public async Task OnlySecurityEducationAddsMarksmanship(string jobId, int expected)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(SumJobChipSkill(server, jobId, "ShootingKnowledge"), Is.EqualTo(expected),
+                $"Job {jobId} stacks the wrong Marksmanship bonus. Security weapon chips add to "
+                + "SkillChipSecurityEducation, so change their values together.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    private static readonly string[] ArmoryWeaponSkills =
+    [
+        "KnowledgeWeaponsPistol", "KnowledgeWeaponsLaser", "KnowledgeWeaponsRifle", "KnowledgeWeaponsSMG",
+        "KnowledgeWeaponsShotgun", "KnowledgeWeaponsShield", "KnowledgeWeaponsNonLethal",
+    ];
+
+    [TestCase("SecurityOfficer")]
+    [TestCase("Warden")]
+    [TestCase("HeadOfSecurity")]
+    [TestCase("SecurityInstructor")]
+    public async Task ArmoryJobsAreTrainedForTheArmory(string jobId)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var skill in ArmoryWeaponSkills)
+            {
+                Assert.That(SumJobChipSkill(server, jobId, skill), Is.GreaterThanOrEqualTo(28),
+                    $"Job {jobId} has no starting training for armory skill {skill}.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase("Stunsword")]
+    [TestCase("Justice")]
+    public async Task SecuritySwordModesUseBladeAndEnergySkills(string swordId)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var factory = server.EntMan.ComponentFactory;
+
+        await server.WaitAssertion(() =>
+        {
+            var sword = server.ProtoMan.Index<EntityPrototype>(swordId);
+            Assert.That(sword.TryGetComponent<WeaponClassComponent>(out var baseClass, factory), Is.True);
+            Assert.That(baseClass!.Class.Id, Is.EqualTo("Sword"), $"{swordId} must start in its off mode class.");
+            Assert.That(sword.TryGetComponent<ItemSwitchComponent>(out var modes, factory), Is.True);
+
+            foreach (var (mode, state) in modes!.States)
+            {
+                Assert.That(state.Components?.TryGetValue("WeaponClass", out var entry), Is.True,
+                    $"{swordId} mode {mode} keeps the class of the previous mode.");
+                var expected = mode == modes.DefaultState ? "Sword" : "Energy";
+                Assert.That(((WeaponClassComponent) entry!.Component).Class.Id, Is.EqualTo(expected),
+                    $"{swordId} mode {mode} uses the wrong weapon skill.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    private static int BrainChipLimit(RobustIntegrationTest.ServerIntegrationInstance server)
+    {
+        // Without a YAML override, map initialization uses the component's default limit.
+        var factory = server.EntMan.ComponentFactory;
+        return server.ProtoMan.Index<EntityPrototype>("OrganHumanBrain")
+            .TryGetComponent<OrganChipContainerComponent>(out var container, factory)
+            ? container.Limit
+            : factory.GetComponent<OrganChipContainerComponent>().Limit;
+    }
+
+    private static int JobChipCount(RobustIntegrationTest.ServerIntegrationInstance server, string jobId)
+    {
+        var job = server.ProtoMan.Index<JobPrototype>(jobId);
+        return job.Special?.OfType<OrganChipsSpecial>().SelectMany(s => s.Chips).Count() ?? 0;
+    }
+
+    [TestCase("SecurityCadet", 1)]
+    [TestCase("SecurityOfficer", 1)]
+    [TestCase("Detective", 1)]
+    [TestCase("Warden", 1)]
+    [TestCase("HeadOfSecurity", 1)]
+    [TestCase("SecurityInstructor", 1)]
+    [TestCase("BlueshieldOfficer", 0)]
+    [TestCase("Brigmedic", 0)]
+    [TestCase("SecurityClown", 0)]
+    public async Task SecurityJobsKeepFreeChipSlots(string jobId, int freeSlots)
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(JobChipCount(server, jobId), Is.LessThanOrEqualTo(BrainChipLimit(server) - freeSlots),
+                $"Job {jobId} does not leave {freeSlots} free chip slot(s).");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task K9OfficerStartsWithoutChips()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(JobChipCount(server, "RoleK9Officer"), Is.Zero, "The K9 officer must not start with chips.");
         });
 
         await pair.CleanReturnAsync();
@@ -573,7 +730,7 @@ public sealed class SkillChipPrototypeIntegrityTest
             foreach (var box in new[]
                      {
                          "BoxSkillChipsService", "BoxSkillChipsCargo", "BoxSkillChipsEngi",
-                         "BoxSkillChipsMed", "BoxSkillChipsSci",
+                         "BoxSkillChipsMed", "BoxSkillChipsSci", "BoxSkillChipsSec",
                      })
             {
                 Assert.That(prototypes.HasIndex<EntityPrototype>(box), Is.True, $"Missing box {box}.");

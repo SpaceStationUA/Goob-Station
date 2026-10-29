@@ -636,6 +636,7 @@ public sealed class GhostRoleSystem : EntitySystem
         _mindSystem.TransferTo(newMind, mob);
 
         _roleSystem.MindAddRoles(newMind.Owner, role.MindRoles, newMind.Comp);
+        EntityManager.System<GhostRoleLoadoutSystem>().EquipLoadout(mob, player, roleUid); // Pirate: ghost role loadouts
     }
 
     /// <summary>

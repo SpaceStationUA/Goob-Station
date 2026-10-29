@@ -32,10 +32,12 @@ public sealed partial class GeneticSequencer : BoxContainer
     public event Action<GeneticsConsoleResetSequenceMessage>? OnResetSequence;
     public event Action? OnPrintScan;
     public event Action<uint>? OnPrintSequence;
+    public event Action<GeneticsConsoleJokerMessage>? OnJoker;
 
     private EntityUid? _mob;
     private Entity<GeneticsDiskComponent>? _disk;
     private bool _writeCooldown;
+    private bool _printCooldown;
     private readonly GeneticsSequenceEditor _editor = new();
 
     public GeneticSequencer()
@@ -63,6 +65,11 @@ public sealed partial class GeneticSequencer : BoxContainer
         {
             if (SequenceButtons.Index is {} s)
                 OnSequence?.Invoke(s);
+        };
+        Puzzle.OnJoker += i =>
+        {
+            if (SequenceButtons.Index is {} s && SequenceButtons.Sequence is {} sequence)
+                OnJoker?.Invoke(new GeneticsConsoleJokerMessage(s, i) { Number = sequence.Number });
         };
         Puzzle.OnResetSequence += () =>
         {
@@ -114,11 +121,13 @@ public sealed partial class GeneticSequencer : BoxContainer
     private void UpdateSequence()
     {
         Info.Update(SequenceButtons);
-        NoSequence.Visible = !Info.Visible;
-        Puzzle.Visible = Info.Visible;
+        UpdatePrintSequenceButton();
 
         if (SequenceButtons.Sequence is not {} sequence)
+        {
+            Puzzle.ClearBases();
             return;
+        }
 
         Puzzle.SetSequenced(sequence.Mutation != null);
         Puzzle.SetBases(sequence.Bases, sequence.OriginalBases);
@@ -165,6 +174,11 @@ public sealed partial class GeneticSequencer : BoxContainer
         UpdateWriteButton();
     }
 
+    public void UpdateJokerCooldown(int? seconds)
+    {
+        Puzzle.SetJokerCooldown(seconds);
+    }
+
     public void UpdateWriteCooldown(bool cooldown)
     {
         _writeCooldown = cooldown;
@@ -173,8 +187,14 @@ public sealed partial class GeneticSequencer : BoxContainer
 
     public void UpdatePrintCooldown(bool cooldown)
     {
+        _printCooldown = cooldown;
         PrintScanButton.Disabled = cooldown;
-        PrintSequenceButton.Disabled = cooldown;
+        UpdatePrintSequenceButton();
+    }
+
+    private void UpdatePrintSequenceButton()
+    {
+        PrintSequenceButton.Disabled = _printCooldown || SequenceButtons.Index == null;
     }
 
     private void UpdateWriteButton()

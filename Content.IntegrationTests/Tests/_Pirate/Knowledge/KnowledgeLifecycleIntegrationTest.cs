@@ -180,6 +180,60 @@ public sealed class KnowledgeLifecycleIntegrationTest
     }
 
     [Test]
+    public async Task ProfileStepsArePricedOnTopOfSpeciesBaseAndChips()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var knowledge = server.System<SharedKnowledgeSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var human = server.ProtoMan.Index<KnowledgeProfilePrototype>("Human");
+            var chips = knowledge.GetChipLevels(["SkillChipEducation"]);
+            Assert.That(chips.GetValueOrDefault("FabricationKnowledge"), Is.EqualTo(50));
+
+            var start = SharedKnowledgeSystem.StartMastery(human, "FabricationKnowledge", chips);
+            Assert.Multiple(() =>
+            {
+                Assert.That(start, Is.EqualTo(2));
+                Assert.That(knowledge.SkillCost("FabricationKnowledge", start, 1), Is.EqualTo(3),
+                    "50 to 75 must cost what the 50 to 75 step costs without the chip.");
+                Assert.That(knowledge.SkillCost("FabricationKnowledge", start, 3), Is.EqualTo(12));
+                Assert.That(knowledge.SkillCost("FabricationKnowledge", start, 4), Is.Null,
+                    "Steps past mastery 5 must not be buyable on top of a chip.");
+                // Human's base mastery makes this step cost 3 - 1.
+                Assert.That(knowledge.SkillCost("DoorsKnowledge",
+                    SharedKnowledgeSystem.StartMastery(human, "DoorsKnowledge", null), 1), Is.EqualTo(2));
+                Assert.That(knowledge.SkillCost("FabricationKnowledge",
+                    SharedKnowledgeSystem.StartMastery(human, "FabricationKnowledge", null), 2), Is.EqualTo(3),
+                    "Without chips the price is unchanged.");
+            });
+
+            var saved = new KnowledgeProfile(new Dictionary<EntProtoId, int>
+            {
+                ["FabricationKnowledge"] = 5,
+            });
+            var clamped = new KnowledgeProfile(saved);
+            knowledge.EnsureProfileValid("Human", ref clamped, pointsBonus: 10, chipLevels: chips);
+            Assert.That(clamped.Mastery["FabricationKnowledge"], Is.EqualTo(3),
+                "Steps over the cap must be cut to what fits above the chip, not dropped.");
+
+            var holder = entMan.SpawnEntity("PirateKnowledgeLifecycleHolder", MapCoordinates.Nullspace);
+            knowledge.ApplyProfile(holder, "Human", saved, chipLevels: chips);
+            Assert.Multiple(() =>
+            {
+                Assert.That(saved.Mastery["FabricationKnowledge"], Is.EqualTo(5),
+                    "Applying a profile must not trim the caller's saved profile.");
+                Assert.That(knowledge.GetKnowledge(holder, "FabricationKnowledge")?.Comp.LearnedLevel ?? 0, Is.Zero,
+                    "50 to 100 on top of the chip costs 12, which a 10-point budget cannot pay.");
+            });
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task ProfilesExperienceCooldownAndCapsAreEnforced()
     {
         await using var pair = await PoolManager.GetServerClient();
@@ -196,7 +250,7 @@ public sealed class KnowledgeLifecycleIntegrationTest
                 ["ChemistryKnowledge"] = 2,
                 ["FabricationKnowledge"] = 1,
                 ["KnowledgeWeaponsEnergy"] = 1,
-                ["DoorsKnowledge"] = 3,
+                ["DoorsKnowledge"] = 5,
                 ["CookingKnowledge"] = -1,
             });
 
@@ -207,7 +261,8 @@ public sealed class KnowledgeLifecycleIntegrationTest
                 ["ChemistryKnowledge"] = 2,
                 ["FabricationKnowledge"] = 1,
             }), "Invalid, unavailable, over-racial, and over-budget profile entries must be removed deterministically.");
-            Assert.That(knowledge.ProfileCost(invalid), Is.EqualTo(10));
+            Assert.That(knowledge.ProfileCost(invalid, server.ProtoMan.Index<KnowledgeProfilePrototype>("Human")),
+                Is.EqualTo(10));
 
             var holder = entMan.SpawnEntity("PirateKnowledgeLifecycleHolder", MapCoordinates.Nullspace);
             knowledge.ApplyProfile(holder, "Human", invalid);
