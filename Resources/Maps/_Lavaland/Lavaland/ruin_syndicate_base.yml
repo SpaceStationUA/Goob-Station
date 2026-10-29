@@ -153499,7 +153499,6 @@ entities:
       containers:
         entity_storage: !type:Container
           ents:
-          - invalid
           - 7440
           showEnts: False
           occludes: True
@@ -153537,7 +153536,6 @@ entities:
           - 7452
           - 7454
           - 7455
-          - invalid
           - 7456
           - 7457
           - 7458
@@ -153587,7 +153585,6 @@ entities:
           - 7516
           - 7518
           - 7519
-          - invalid
           - 7520
           - 7521
           - 7522
@@ -156392,7 +156389,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -182261,7 +182258,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -208130,7 +208127,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -331155,7 +331152,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -357022,7 +357019,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -382889,7 +382886,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -408748,10 +408745,9 @@ entities:
       parent: 1
       pos: -20.5,5.5
     - type: ArtifactAnalyzer
-      currentArtifact: invalid
+      currentArtifact: null
     - type: ItemPlacer
-      placedEntities:
-      - invalid
+      placedEntities: []
     - type: DeviceNetwork
       receiveFrequency: 1280
       address: 63AF-26D9
@@ -427322,7 +427318,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -453188,7 +453184,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -479054,7 +479050,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -504921,7 +504917,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -530788,7 +530784,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -556655,7 +556651,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -582522,7 +582518,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -608389,7 +608385,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -634256,7 +634252,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -660123,7 +660119,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -685989,7 +685985,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -747306,7 +747302,7 @@ entities:
       actionEntities:
       - 1522
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -773184,7 +773180,7 @@ entities:
       actionEntities:
       - 6774
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -799063,7 +799059,7 @@ entities:
       actionEntities:
       - 16125
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
@@ -825069,7 +825065,7 @@ entities:
     - type: EmitSoundOnCollide
       nextSound: -2571.2554024
     - type: Store
-      startingMap: invalid
+      startingMap: null
       fullListingsCatalog:
       - costModifiersBySourceId: {}
         restockTime: 0
