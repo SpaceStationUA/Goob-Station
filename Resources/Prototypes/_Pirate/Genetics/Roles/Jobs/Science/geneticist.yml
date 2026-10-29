@@ -9,6 +9,10 @@
   - !type:DepartmentTimeRequirement
     department: Science
     time: 5400 # Pirate: local playtime requirements use seconds.
+  - !type:CharacterEmployerRequirement
+    employers:
+    - NanoTrasen
+    - ZengHu
   startingGear: GeneticistGear
   icon: JobIconGeneticist
   supervisors: job-supervisors-rd

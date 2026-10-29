@@ -471,6 +471,7 @@
 - type: reagent
   id: Nothing
   puddleSpriteSet: Water # Goob
+  #puddleColor: "#ffffff" # Goob # Pirate disable
   name: reagent-name-nothing
   desc: reagent-desc-nothing
   #group: Drinks - Goob: Drinks guidebook split
@@ -606,7 +607,6 @@
   flavor: water
   color: "#75b1f0"
   puddleSpriteSet: Water # Goob
-  puddleColor: "#ffffff" # Goob
   recognizable: true
   boilingPoint: 100.0
   meltingPoint: 0.0
