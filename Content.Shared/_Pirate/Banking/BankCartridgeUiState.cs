@@ -11,6 +11,7 @@ public sealed class BankCartridgeUiState : BoundUserInterfaceState
     public string OwnerName = string.Empty;
     public string AccountLinkMessage = string.Empty;
     public string AccountLinkResult = string.Empty;
+    public BankTransaction[] Transactions = Array.Empty<BankTransaction>();
 }
 
 [Serializable, NetSerializable]

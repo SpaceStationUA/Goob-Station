@@ -21,16 +21,11 @@ public sealed partial class BankUiFragment : BoxContainer
     {
         RobustXamlLoader.Load(this);
 
-        AccountLinkButton.OnPressed += _ =>
+        HeaderActionButton.OnPressed += _ =>
         {
-            _accountLinkActive = true;
-            AccountLinkResultLabel.Visible = false;
-            UpdateAccountLinkUi();
-        };
-
-        LinkCancelButton.OnPressed += _ =>
-        {
-            _accountLinkActive = false;
+            _accountLinkActive = !_accountLinkActive;
+            if (_accountLinkActive)
+                AccountLinkResultLabel.Visible = false;
             UpdateAccountLinkUi();
         };
 
@@ -59,17 +54,19 @@ public sealed partial class BankUiFragment : BoxContainer
     public void UpdateState(BankCartridgeUiState state)
     {
         var accountLinked = state.AccountId != null;
+        LinkedAccountNumberLabel.Visible = accountLinked;
+        LinkedAccountNumberLabel.Text = accountLinked ? $"#{state.AccountId!.Value}" : string.Empty;
 
         RichTextLabelExt.SetMarkup(AccountLinkMessageLabel, state.AccountLinkMessage);
         RichTextLabelExt.SetMarkup(AccountLinkResultLabel, state.AccountLinkResult);
 
         LinkedAccount.Visible = accountLinked;
         NoLinkedAccountLabel.Visible = !accountLinked;
+        TransactionHistory.Visible = accountLinked;
+        UpdateTransactionHistory(state.Transactions);
 
         if (accountLinked)
         {
-            RichTextLabelExt.SetMarkup(LinkedAccountNumberLabel, Loc.GetString("bank-program-ui-account-number-text",
-                ("account", state.AccountId!.Value)));
             RichTextLabelExt.SetMarkup(LinkedAccountNameLabel, Loc.GetString("bank-program-ui-account-owner-text",
                 ("owner", state.OwnerName)));
             RichTextLabelExt.SetMarkup(LinkedAccountBalanceLabel, Loc.GetString("atm-ui-balance", ("balance", state.Balance)));
@@ -83,7 +80,12 @@ public sealed partial class BankUiFragment : BoxContainer
 
     private void UpdateAccountLinkUi()
     {
-        AccountLinkButton.Visible = !_accountLinkActive;
+        LinkAccountIcon.Visible = !_accountLinkActive;
+        LinkBackIcon.Visible = _accountLinkActive;
+        HeaderActionButton.ToolTip = Loc.GetString(_accountLinkActive
+            ? "bank-program-ui-back"
+            : "bank-program-ui-link-account");
+        AccountOverview.Visible = !_accountLinkActive;
         AccountLink.Visible = _accountLinkActive;
     }
 

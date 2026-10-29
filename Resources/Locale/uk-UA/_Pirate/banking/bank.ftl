@@ -1,10 +1,20 @@
 bank-program-ui-no-account = [color=red]Обліковий запис не привʼязаний.[/color]
 bank-program-name = Віртуальний гаманець
+bank-program-ui-title = NanoBank
+bank-program-ui-back = Назад
+bank-program-ui-history-empty = Операції відсутні
+bank-program-ui-history-amount = { $amount }电
+bank-program-ui-history-account = Рахунок: { $account }
+bank-transaction-salary = Зарплата
+bank-transaction-deposit = Внесення готівки
+bank-transaction-withdrawal = Зняття готівки
+bank-transaction-purchase = Покупка
+bank-transaction-transfer = Переказ
+bank-transaction-adjustment = Зміна балансу
 bank-program-ui-link-account = Привʼязати облік. запис
 bank-program-ui-account-number = Номер облік. запису
 bank-program-ui-link-confirm = Привʼязати
 bank-program-ui-link-cancel = Відмінити
-bank-program-ui-account-number-text = Облік. запис №{ $account }
 bank-program-ui-account-owner-text = Власник облік. запису: { $owner }
 bank-program-ui-link-error = [color=red]Помилка привʼязки облік. запису.[/color]
 bank-program-ui-link-success = [color=green]Облік. запис успішно привʼязано.[/color]

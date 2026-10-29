@@ -338,7 +338,7 @@ namespace Content.Server.VendingMachines
                 {
                     component.Credits -= price;
                 }
-                else if (TryPayWithBankCard(sender, price))
+                else if (TryPayWithBankCard(sender, price, uid)) // Pirate: bank transaction history
                 {
                     Audio.PlayPvs(component.SoundInsertCurrency, uid);
                 }
@@ -354,7 +354,7 @@ namespace Content.Server.VendingMachines
             UpdateVendingMachineInterfaceState(uid, component);
         }
 
-        private bool TryPayWithBankCard(EntityUid user, int amount)
+        private bool TryPayWithBankCard(EntityUid user, int amount, EntityUid vendor) // Pirate: bank transaction history
         {
             if (!_idCard.TryFindIdCard(user, out var idCard))
                 return false;
@@ -362,7 +362,7 @@ namespace Content.Server.VendingMachines
             if (!TryComp<BankCardComponent>(idCard.Owner, out var bankCard) || bankCard.AccountId == null)
                 return false;
 
-            return _bankCard.TryChangeBalance(bankCard.AccountId.Value, -amount);
+            return _bankCard.TryChangeBalance(bankCard.AccountId.Value, -amount, BankTransactionType.Purchase, Name(vendor)); // Pirate: bank transaction history
         }
 
 

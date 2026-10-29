@@ -49,7 +49,11 @@ public sealed class BankCartridgeSystem : EntitySystem
                 oldAccount.CartridgeUid = null;
 
             if (account.CartridgeUid != null)
-                Comp<BankCartridgeComponent>(GetEntity(account.CartridgeUid.Value)).AccountId = null;
+            {
+                var previousCartridge = GetEntity(account.CartridgeUid.Value);
+                Comp<BankCartridgeComponent>(previousCartridge).AccountId = null;
+                UpdateUiState(previousCartridge);
+            }
 
             account.CartridgeUid = GetNetEntity(uid);
             component.AccountId = args.AccountId;
@@ -104,6 +108,7 @@ public sealed class BankCartridgeSystem : EntitySystem
             state.Balance = account.Balance;
             state.AccountId = account.AccountId;
             state.OwnerName = account.Name;
+            state.Transactions = account.Transactions.ToArray();
         }
         _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
     }
