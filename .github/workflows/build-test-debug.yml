@@ -178,10 +178,16 @@ jobs:
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4.3.1 # Pirate: fix .NET download redirects
+    - name: Update Engine Submodules
+      run: |
+        cd RobustToolbox/
+        git submodule update --init --recursive
+
+    - &dotnet
+      name: Setup .NET Core
+      uses: actions/setup-dotnet@v6.0.0
       with:
-        dotnet-version: 10.0.x
+        dotnet-version: 10.0.403
 
     - name: Download build artifacts
       uses: actions/download-artifact@v4

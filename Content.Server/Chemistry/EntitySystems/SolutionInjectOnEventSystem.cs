@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Armor; // Goobstation - Armor resisting syringe gun
+using Content.Shared._DV.Chemistry.Components; // Goob
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components;
@@ -182,7 +183,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
                 continue;
 
             // Pirate - allow injectors to protect specific targets from their chemical payload.
-            if (_whitelist.IsWhitelistPass(injector.Comp.TargetBlacklist, target))
+            if (HasComp<BlockInjectionComponent>(target) || _whitelist.IsWhitelistPass(injector.Comp.TargetBlacklist, target))
                 continue;
 
             // Goobstation - Armor resisting syringe gun

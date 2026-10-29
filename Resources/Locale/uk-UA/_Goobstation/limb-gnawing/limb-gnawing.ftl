@@ -1,0 +1,3 @@
+limb-gnaw-verb = Відгризти кінцівку
+limb-gnaw-start = Ви починаєте гризти {THE($target)}...
+limb-gnaw-finish = {CAPITALIZE(THE($user))} відгризає {THE($part)}!

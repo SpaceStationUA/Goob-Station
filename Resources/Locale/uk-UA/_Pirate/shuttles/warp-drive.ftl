@@ -2,49 +2,36 @@
 
 ent-MachineWarpDrive = варп-драйв
     .desc = Експериментальний драйв, здатний долати міжзоряні відстані. Щоб підняти варп-поле, потрібне тривале живлення ВН, а витримає він лише стільки, скільки дозволяє ядро.
-
 warp-drive-window-title = Варп-драйв
-
 warp-drive-window-state = Поле:
 warp-drive-window-state-idle = Простій
 warp-drive-window-state-spooling = Розгін
 warp-drive-window-state-engaged = Поле тримається
 warp-drive-window-state-in-transit = Стрибок
-
 warp-drive-window-power = Споживання:
 warp-drive-window-power-value = {$draw} / {$max} Вт
 warp-drive-window-power-none = Нема живлення
-
 warp-drive-window-grid = Запас мережі:
 warp-drive-window-grid-value = вільно {$free} Вт / треба {$need} Вт
-
 warp-drive-window-system = Поточна система:
 warp-drive-window-system-none = Подорож не триває. Розгін марно витрачає час.
-
 warp-drive-window-spool = Розгін:
 warp-drive-window-spool-value = {$pct} %
-
 warp-drive-window-heat = Нагрів ядра:
 warp-drive-window-heat-value = {$pct} %
-
 warp-drive-window-stability = Стабільність:
 warp-drive-window-stability-value = {$time}
-
 warp-drive-window-cooldown = Охолодження:
 warp-drive-window-cooldown-value = {$time}
-
 warp-drive-window-none = Н/Д
-
 warp-drive-window-spool-up = Розігнати
 warp-drive-window-shut-down = Вимкнути
 warp-drive-window-cooling = Охолоджується
 warp-drive-window-in-transit = Стрибок триває
 warp-drive-window-jump = СТРИБОК
-
 warp-drive-window-course = Курс:
 warp-drive-window-course-quiet = тихо
 warp-drive-window-course-loud = гучно
-
 warp-drive-notice-no-such-system = Такої системи немає на карті.
 warp-drive-notice-no-journey = Подорож не триває.
 warp-drive-notice-already-flying = Стрибок уже летить.

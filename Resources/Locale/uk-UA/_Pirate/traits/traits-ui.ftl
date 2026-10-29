@@ -35,7 +35,7 @@ trait-conditions-points-tooltip = [color=yellow]Недостатньо очок 
 
 
 ## Composite conditions
-trait-condition-any-of = Будь-що з наступного має бути істинним:
+trait-condition-any-of = Принаймні одна з цих умов має виконуватися:
 trait-condition-none-of = Жодна з цих умов не має бути істинною:
     • {$requirements}
 
@@ -47,9 +47,7 @@ trait-condition-citizenship-not = Ви не повинні мати громад
 
 ## Job conditions
 trait-condition-job-is = Ваша посада має бути [color={$color}]{$job}[/color].
-trait-condition-job-not = Ваша посада не повинна бути [color={$color}]{$job}[/color].
-
-## Employer conditions
+trait-condition-job-not = Ваша посада не повинна бути [color={$color}]{$job}[/color]
 trait-condition-employer-is = Ви повинні бути працевлаштовані в [color=yellow]{$employers}[/color].
 trait-condition-employer-not = Ви не повинні бути працевлаштовані в [color=yellow]{$employers}[/color].
 

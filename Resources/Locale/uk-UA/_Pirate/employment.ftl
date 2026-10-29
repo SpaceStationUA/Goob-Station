@@ -1,6 +1,4 @@
 humanoid-profile-editor-employer-label = Роботодавець:
-
-# Вибір роботодавця
 employment-employer-selector-choose = Обрати роботодавця
 employment-employer-selector-selected = Обрано
 employment-employer-selector-blocked = Заблоковано
@@ -17,8 +15,6 @@ character-employer-requirement = Ви повинні{$inverted ->
     [true]{" "}{" "}не
     *[other]{""}
 } бути працевлаштовані в одній із цих корпорацій: {$employers}
-
-# Інформація про роботодавця
 employment-employer-info-description-title = Опис
 employment-employer-info-relations-title = Ставлення до працівників
 employment-employer-info-roleplay-title = Рекомендації до відіграшу
@@ -30,7 +26,7 @@ employment-employer-name-unaffiliated = Безробітний
 
 ## НАЗВИ КОРПОРАЦІЙ ПИСАТИ НА АНГЛІЙСЬКІЙ!!!
 # NanoTrasen
-employment-employer-name-nanotrasen = NanoTrasen
+employment-employer-name-nanotrasen = НаноТрейзен
 employment-employer-description-nanotrasen = NanoTrasen - найбільша й найвпливовіша корпорація в Рукаві Оріона. На початку своєї кар'єри вона була простою біотехнологічною компанією, а врешті, після відкриття форону, перетворилася на гіганта, що контролює його видобуток, переробку й більшість ключових застосувань (зокрема виготовлення форонових двигунів, які дали змогу подорожувати крізь сонячні системи швидше і набагато безпечніше) що дає змогу тиснути на інші корпорації і держави.
 
     Від форону залежить енергетика, більшість сучасного обладнання та значна частина міжзоряної економіки, тож вплив NanoTrasen виходить далеко за межі її власних станцій. Однак час від часу спливають новини про дефіцит форону, що ставить під сумнів колишню впевненість і велич корпорації.
@@ -38,7 +34,7 @@ employment-employer-relations-nanotrasen = Навчання у NanoTrasen дає
 employment-employer-roleplay-nanotrasen-1 = Якщо ваш персонаж вчився у NT - виявляйте лояльність. Працівник може захищати NanoTrasen перед конкурентами, сперечатися з начальством інших корпорацій через рішення, що можуть призвести до втрат активів NT, але не перетворюйте конфлікт на саботаж.
 
 # Idris
-employment-employer-name-idris = Idris Incorporated
+employment-employer-name-idris = Ідріс Інкорпорейтед
 employment-employer-description-idris = Починаючи свій шлях як перший міжзоряний банк, Idris перетворилася на найбільший банк і одну з провідних фінансових установ у Рукаві Оріона. Займаючись кредитуванням, страхуванням та контролюючи весь міжзоряний потік грошей, її фінансові установи присутні майже в кожному куточку людського космосу, а сама корпорація має доступ до величезного обсягу особистої інформації своїх клієнтів і працівників та володіє значним впливом на уряди й інші корпорації.
 
     Окрім фінансів, Idris також займається наданням преміального сервісу, контролюючи численні готелі, туристичні компанії, ресторани, ювелірні та інші бренди.
@@ -54,16 +50,8 @@ employment-employer-roleplay-idris-4 = Граючи за службу безпе
 employment-employer-roleplay-idris-5 = Звільнення для вас - це дуже погані наслідки, намагайтесь зробити все, аби не втратити свій контракт.
 
 # ZengHu
-employment-employer-name-zenghu = Zeng-Hu Pharmaceuticals
-
-# Zavod
-employment-employer-name-zavod = Zavodskiy Interstellar
-
-# Hephaest
-employment-employer-name-hephaest = Hephaestus Industries
-
-# PMCG
-employment-employer-name-pmcg = Private Military Contracting Group
-
-# Orion
-employment-employer-name-orion = Orion Express
+employment-employer-name-zenghu = Зен-Ху Фармасьютикалс
+employment-employer-name-zavod = Заводський Інтерстеллар
+employment-employer-name-hephaest = Гефест Індастріз
+employment-employer-name-pmcg = Приватна військова контрактна група
+employment-employer-name-orion = Оріон Експрес

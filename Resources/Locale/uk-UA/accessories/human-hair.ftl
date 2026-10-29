@@ -158,7 +158,6 @@ marking-HumanHairShorthairg = Коротке Волосся 7
 marking-HumanHair80s = Коротке Волосся 80-х
 marking-HumanHairRosa = Коротке Волосся (Роза)
 marking-HumanHairB = Волосся до Плечей
-marking-HumanHairShoulderLengthOverEye = Волосся до Плечей (Над Очима)
 marking-HumanHairSidecut = Сайдкат
 marking-HumanHairSkinhead = Скінхед
 marking-HumanHairProtagonist = Злегка Довге
