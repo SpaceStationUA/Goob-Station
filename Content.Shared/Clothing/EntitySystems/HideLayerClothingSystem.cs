@@ -2,7 +2,6 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle.Components;
-using Robust.Shared.Containers; // Pirate: modsuit hidden layer restore
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -12,7 +11,6 @@ public sealed partial class HideLayerClothingSystem : EntitySystem // Goob
 {
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!; // Pirate: modsuit hidden layer restore
 
     public override void Initialize()
     {
