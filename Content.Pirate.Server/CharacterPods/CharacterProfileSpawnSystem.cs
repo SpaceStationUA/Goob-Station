@@ -133,7 +133,9 @@ public sealed class CharacterProfileSpawnSystem : EntitySystem
 
         var pointsBonus = KnowledgeableComponent.GetBonusPoints(_prototype, profile.TraitPreferences);
         var masteryGrants = KnowledgeableComponent.GetMasteryGrants(_prototype, profile.TraitPreferences);
-        _knowledge.ApplyProfile(mob, species.Knowledge, profile.Knowledge, pointsBonus, masteryGrants);
+        // Spawn chips must be installed before profile pricing.
+        var chipLevels = _knowledge.GetChipLevels(_chips.GetInstalledChipPrototypes(mob));
+        _knowledge.ApplyProfile(mob, species.Knowledge, profile.Knowledge, pointsBonus, masteryGrants, chipLevels);
 
         // Rebuild after queued knowledge deletions have run.
         _pendingRestore.Add(mob);
