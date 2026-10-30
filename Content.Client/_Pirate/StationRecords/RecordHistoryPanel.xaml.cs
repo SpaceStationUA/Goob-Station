@@ -33,6 +33,21 @@ public sealed partial class RecordHistoryPanel : BoxContainer
     private IReadOnlyList<RecordLogEntry>? _log;
     private bool _canEdit;
     private string _query = string.Empty;
+    private bool _pdaLayout;
+
+    public bool PdaLayout
+    {
+        get => _pdaLayout;
+        set
+        {
+            _pdaLayout = value;
+            PrintButton.Visible = !value;
+            if (value)
+                AddNoteButton.StyleClasses.Remove("OpenLeft");
+            else if (!AddNoteButton.StyleClasses.Contains("OpenLeft"))
+                AddNoteButton.StyleClasses.Add("OpenLeft");
+        }
+    }
 
     public RecordHistoryPanel()
     {
@@ -52,8 +67,9 @@ public sealed partial class RecordHistoryPanel : BoxContainer
         }
 
         PersonName.Text = name;
-        AddNoteButton.Visible = canEdit;
-        PrintButton.Visible = canEdit;
+        AddNoteButton.Visible = canEdit || _pdaLayout;
+        AddNoteButton.Disabled = !canEdit;
+        PrintButton.Visible = canEdit && !_pdaLayout;
         _log = log == null ? null : RecordLogOrder.ForDisplay(log);
         _canEdit = canEdit;
         Rebuild();
