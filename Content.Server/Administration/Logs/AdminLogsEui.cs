@@ -154,7 +154,6 @@ public sealed class AdminLogsEui : BaseEui
         SendMessage(message);
     }
 
-    // Pirate: keep canceled admin log searches isolated from newer filters.
     private async void SendLogs(bool replace, LogFilter filter)
     {
         var stopwatch = new Stopwatch();

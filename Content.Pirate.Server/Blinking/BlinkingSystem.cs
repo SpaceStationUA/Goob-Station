@@ -1,5 +1,4 @@
 using Content.Pirate.Shared.Blinking;
-using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -15,7 +14,7 @@ public sealed class BlinkingSystem : EntitySystem
     public const string BlinkEmote = "Blink";
     public const string BlinkRapidEmote = "BlinkRapid";
 
-    private static readonly SoundSpecifier BlinkSound = new SoundPathSpecifier("/Audio/_Pirate/Effects/Emotes/blink.ogg");
+    private static readonly SoundSpecifier BlinkSound = new SoundPathSpecifier("/Audio/_Starlight/Effects/Emotes/blink.ogg");
 
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -33,7 +32,7 @@ public sealed class BlinkingSystem : EntitySystem
         switch (args.Emote.ID)
         {
             case BlinkEmote:
-                _audio.PlayPvs(BlinkSound, ent.Owner);
+                // BodyEmotesSystem plays the upstream blink sound.
                 Blink(ent.Owner);
                 break;
             case BlinkRapidEmote:

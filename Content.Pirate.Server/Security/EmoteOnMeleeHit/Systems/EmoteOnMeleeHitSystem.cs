@@ -51,7 +51,7 @@ public sealed partial class EmoteOnMeleeHitSystem : EntitySystem
             if (emoteOnMeleeHit.WithChat)
                 _chatSystem.TryEmoteWithChat(hit, emote, emoteOnMeleeHit.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
             else
-                _chatSystem.TryEmoteWithoutChat(hit, emote, voluntary: false);
+                _chatSystem.TryEmoteWithoutChat(hit, emote);
 
             emoteOnMeleeHit.LastEmoteTime = _gameTiming.CurTime;
         }

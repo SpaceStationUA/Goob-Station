@@ -18,13 +18,6 @@
   params:
     variation: 0.125
   sounds:
-    # Pirate: Resomi bird-call emote mappings.
-    Scree:
-      collection: ResomiScrees
-    Call:
-      collection: ResomiCalls
-    Squawk:
-      collection: ResomiSquawk
     Scream:
       collection: AvaliScreams
     Laugh:
@@ -73,19 +66,24 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Belch: # Frontier
       collection: Belch # Frontier
+    Scree: # Goob
+      collection: ResomiScrees
+    Call: # Goob
+      collection: ResomiCalls
+    Squawk: # Goob
+      collection: ResomiSquawks
+    Coo: # Goob
+      collection: HarpyCoos
+    Growl: # Goob
+      collection: CatGrowls
+    Hew: # Goob
+      collection: Hew
 
 - type: emoteSounds
   id: FemaleAvaliEmote
   params:
     variation: 0.125
   sounds:
-    # Pirate: Resomi bird-call emote mappings.
-    Scree:
-      collection: ResomiScrees
-    Call:
-      collection: ResomiCalls
-    Squawk:
-      collection: ResomiSquawk
     Scream:
       collection: AvaliScreams
     Laugh:
@@ -134,3 +132,15 @@
       path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Belch: # Frontier
       collection: Belch # Frontier
+    Scree: # Goob
+      collection: ResomiScrees
+    Call: # Goob
+      collection: ResomiCalls
+    Squawk: # Goob
+      collection: ResomiSquawks
+    Coo: # Goob
+      collection: HarpyCoos
+    Growl: # Goob
+      collection: CatGrowls
+    Hew: # Goob
+      collection: Hew
