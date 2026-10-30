@@ -12,6 +12,15 @@
     },
     {
       "name": "hr_file"
+    },
+    {
+      "name": "citation_active"
+    },
+    {
+      "name": "citation_paid"
+    },
+    {
+      "name": "citation_voided"
     }
   ]
 }

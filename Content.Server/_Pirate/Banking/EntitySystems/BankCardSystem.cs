@@ -4,7 +4,6 @@ using Content.Server.Access.Systems;
 using Content.Shared._Pirate.Banking.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.CartridgeLoader;
-using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Roles.Jobs;
 using Content.Server.Station.Systems;
@@ -20,7 +19,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server._Pirate.Banking;
 
-public sealed class BankCardSystem : EntitySystem
+public sealed partial class BankCardSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -28,7 +27,6 @@ public sealed class BankCardSystem : EntitySystem
     [Dependency] private readonly IdCardSystem _idCardSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly CargoSystem _cargo = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly BankCartridgeSystem _bankCartridge = default!;
@@ -36,7 +34,7 @@ public sealed class BankCardSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
 
-    private const int SalaryDelay = 1800; //30 min
+    private const int SalaryDelay = 1200; // Preserve the 30-minute salary rate.
 
     private SalaryPrototype _salaries = default!;
     private readonly List<BankAccount> _accounts = new();
@@ -85,15 +83,16 @@ public sealed class BankCardSystem : EntitySystem
 
         _salaryTimer += frameTime;
 
-        if (_salaryTimer <= SalaryDelay)
+        if (_salaryTimer < SalaryDelay)
             return;
 
-        _salaryTimer = 0f;
+        _salaryTimer %= SalaryDelay;
         PaySalary();
     }
 
     private void PaySalary()
     {
+        var paidAccounts = new HashSet<int>();
         foreach (var account in _accounts.Where(account =>
                      account.Mind != null &&
                      TryComp(GetEntity(account.Mind.Value), out MindComponent? mindComp) &&
@@ -103,11 +102,14 @@ public sealed class BankCardSystem : EntitySystem
                      !_mobState.IsDead(mindComp.CurrentEntity.Value)))
         {
             if (account.Mind == null) continue;
-            account.Balance += GetSalary(GetEntity(account.Mind.Value));
+            var salary = (int) Math.Round(GetSalary(GetEntity(account.Mind.Value)) * 2d / 3d);
+            if (salary <= 0 || !TryChangeBalance(account.AccountId, salary, BankTransactionType.Salary))
+                continue;
+
+            paidAccounts.Add(account.AccountId);
         }
 
-        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("salary-pay-announcement"),
-            colorOverride: Color.FromHex("#18abf5"));
+        NotifySalaryPayments(paidAccounts);
     }
 
     private int GetSalary(EntityUid? mind)
@@ -140,6 +142,7 @@ public sealed class BankCardSystem : EntitySystem
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         _accounts.Clear();
+        _salaryTimer = 0f;
     }
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
@@ -155,12 +158,14 @@ public sealed class BankCardSystem : EntitySystem
             if (!TryComp(mind.Mind, out MindComponent? mindComponent))
                 return;
 
-            bankAccount.Balance = GetSalary(mind.Mind) + 100;
+            TryChangeBalance(bankAccount.AccountId, GetSalary(mind.Mind) + 100 - bankAccount.Balance,
+                BankTransactionType.OpeningBalance);
             mindComponent.AddMemory(new Memory("PIN", bankAccount.AccountPin.ToString()));
             mindComponent.AddMemory(new Memory(Loc.GetString("character-info-memories-account-number"),
                 bankAccount.AccountId.ToString()));
             bankAccount.Mind = GetNetEntity(mind.Mind.Value);
             bankAccount.Name = Name(ev.Mob);
+            RaiseAccountLinked(bankAccount.AccountId);
 
             if (!_inventorySystem.TryGetSlotEntity(ev.Mob, "id", out var pdaUid))
                 return;
@@ -193,8 +198,10 @@ public sealed class BankCardSystem : EntitySystem
         if (!bankCardComponent.AccountId.HasValue || !TryGetAccount(bankCardComponent.AccountId.Value, out var bankAccount))
             return false;
 
-        bankAccount.Balance = balance;
+        if (!TryChangeBalance(bankAccount.AccountId, balance - bankAccount.Balance, BankTransactionType.OpeningBalance))
+            return false;
         bankAccount.Name = Name(mob);
+        RaiseAccountLinked(bankAccount.AccountId);
 
         if (TryComp<MindContainerComponent>(mob, out var mindContainer) &&
             mindContainer.Mind.HasValue &&
@@ -269,31 +276,23 @@ public sealed class BankCardSystem : EntitySystem
         return 0;
     }
 
-    public bool TryChangeBalance(int accountId, int amount)
+    public bool TryChangeBalance(int accountId, int amount, BankTransactionType type, string details = "")
     {
-        if (!TryGetAccount(accountId, out var account) || account.Balance + amount < 0)
+        if (!TryGetAccount(accountId, out var account))
             return false;
 
-        if (account.CommandBudgetAccount)
-        {
-            var query = EntityQueryEnumerator<StationBankComponent>();
-            while (query.MoveNext(out var uid, out var acc))
-            {
-                if (acc.BankAccount.AccountId != accountId)
-                    continue;
+        var newBalance = (long) account.Balance + amount;
+        if (newBalance < 0 || newBalance > int.MaxValue)
+            return false;
 
-                // _cargo.UpdateBankAccount(uid, acc, amount); // TODO: Fix this if needed, or remove if StationBankComponent handles it differently
-                // For now, just return true as we are modifying the shared BankAccount object which is reference type if it was a class, but it is a data definition.
-                // Wait, BankAccount is a class in the previous code, but I made it a class in Shared too.
-                // However, StationBankComponent has it as a DataField.
-                // If we want to update the station's bank account, we should probably update the component.
-                
-                acc.BankAccount.Balance += amount;
-                return true;
-            }
-        }
+        if (amount < 0 && account.Arrested && IsSpending(type))
+            return false;
 
-        account.Balance += amount;
+        if (amount == 0)
+            return true;
+
+        account.Balance = (int) newBalance;
+        RecordTransaction(account, amount, type, details);
         if (account.CartridgeUid != null)
             _bankCartridge.UpdateUiState(GetEntity(account.CartridgeUid.Value));
 

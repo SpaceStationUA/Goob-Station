@@ -68,7 +68,7 @@ public sealed class ATMSystem : SharedATMSystem
         var bankCard = Comp<BankCardComponent>(component.CardSlot.Item.Value);
         var amount = stack.Count;
 
-        if (!_bankCardSystem.TryChangeBalance(bankCard.AccountId!.Value, amount))
+        if (!_bankCardSystem.TryChangeBalance(bankCard.AccountId!.Value, amount, BankTransactionType.Deposit))
         {
             _popupSystem.PopupEntity(Loc.GetString("atm-deposit-failed"), uid, args.User, PopupType.Medium);
             _audioSystem.PlayPvs(component.SoundDeny, uid);
@@ -116,7 +116,7 @@ public sealed class ATMSystem : SharedATMSystem
             return;
         }
 
-        if (!_bankCardSystem.TryChangeBalance(account.AccountId, -args.Amount))
+        if (args.Amount <= 0 || !_bankCardSystem.TryChangeBalance(account.AccountId, -args.Amount, BankTransactionType.Withdrawal))
         {
             _popupSystem.PopupEntity(Loc.GetString("atm-not-enough-cash"), uid);
             _audioSystem.PlayPvs(component.SoundDeny, uid);

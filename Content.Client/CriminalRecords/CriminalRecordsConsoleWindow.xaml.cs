@@ -323,12 +323,14 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
                 Portrait.ClearPortrait(); // Pirate: records photos
             #endregion
             HistoryView.UpdateLog(state.SelectedKey ?? 0, state.StationRecord.Name, state.Log, _access); // Pirate: record history
+            UpdateCitations(state.SelectedKey ?? 0, state.StationRecord.Name, state.CriminalRecord); // Pirate: citations
             _selectedRecord = state.CriminalRecord;
         }
         else
         {
             _selectedRecord = null;
             HistoryView.CloseDialog(); // Pirate: record history
+            ClearCitations(); // Pirate: citations
             #region Pirate: records photos
             ResetDeleteConfirmation();
             _recordProfile = null;

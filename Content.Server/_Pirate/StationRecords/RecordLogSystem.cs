@@ -173,6 +173,23 @@ public sealed class RecordLogSystem : EntitySystem
         logs.Book(book).Add(entry);
         return entry;
     }
+    // Prior-round citations can still be paid.
+    public bool TryAppend(StationRecordKey key, RecordLogBook book, uint entryId, string line, string? status = null)
+    {
+        if (!_records.TryGetRecord<RecordLogs>(key, out var logs)
+            || logs.Book(book).Find(e => e.Id == entryId) is not { } entry)
+        {
+            return false;
+        }
+
+        entry.Message = entry.Message.Length == 0 ? line : $"{entry.Message}\n{line}";
+        if (status != null)
+            entry.Status = status;
+
+        _records.Synchronize(key);
+        return true;
+    }
+
     public bool TryDelete(StationRecordKey key, RecordLogBook book, uint entryId, out RecordLogEntry? removed)
     {
         removed = null;
@@ -256,6 +273,7 @@ public sealed class RecordLogSystem : EntitySystem
         {
             RecordLogKind.Background => entry.Topic ?? Loc.GetString("records-log-kind-background"),
             RecordLogKind.StatusChange => entry.Topic ?? Loc.GetString("records-log-kind-status-change"),
+            RecordLogKind.Citation => entry.Topic ?? Loc.GetString("records-log-kind-citation"),
             _ => Loc.GetString("records-log-kind-note"),
         };
 

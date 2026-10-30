@@ -9,6 +9,7 @@ records-log-empty = Записів ще немає.
 records-log-unknown-author = Невідомий автор
 records-log-hr-author = Відділ кадрів NanoTrasen
 records-log-kind-note = Примітка
+records-log-kind-citation = Штраф
 records-log-station = Станція: { $station }
 records-log-no-matches = Нічого не знайдено.
 records-log-search-placeholder = Пошук в історії

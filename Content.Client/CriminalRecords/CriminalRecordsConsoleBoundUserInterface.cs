@@ -64,6 +64,14 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
         _window.OnDeleteLogEntry += id => SendMessage(new RecordLogDeleteMessage(id));
         _window.OnPrintLog += () => SendMessage(new RecordLogPrintMessage());
         #endregion
+        #region Pirate: citations
+        _window.OnAddCitation += (reason, details, fine) =>
+            SendMessage(new Content.Shared._Pirate.CriminalRecords.CriminalRecordAddCitation(reason, details, fine));
+        _window.OnPayCitation += id =>
+            SendMessage(new Content.Shared._Pirate.CriminalRecords.CriminalRecordPayCitation(id));
+        _window.OnVoidCitation += id =>
+            SendMessage(new Content.Shared._Pirate.CriminalRecords.CriminalRecordVoidCitation(id));
+        #endregion
         _window.OnClose += Close;
         RecordConsoleSounds.Attach(this, _window); // Pirate: records interactive sounds
     }

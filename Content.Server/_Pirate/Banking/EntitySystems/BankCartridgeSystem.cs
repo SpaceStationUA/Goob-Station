@@ -49,7 +49,11 @@ public sealed class BankCartridgeSystem : EntitySystem
                 oldAccount.CartridgeUid = null;
 
             if (account.CartridgeUid != null)
-                Comp<BankCartridgeComponent>(GetEntity(account.CartridgeUid.Value)).AccountId = null;
+            {
+                var previousCartridge = GetEntity(account.CartridgeUid.Value);
+                Comp<BankCartridgeComponent>(previousCartridge).AccountId = null;
+                UpdateUiState(previousCartridge);
+            }
 
             account.CartridgeUid = GetNetEntity(uid);
             component.AccountId = args.AccountId;
@@ -61,6 +65,7 @@ public sealed class BankCartridgeSystem : EntitySystem
 
         var bankCard = AddComp<BankCardComponent>(pda.ContainedId.Value);
         bankCard.AccountId = account.AccountId;
+        _bankCardSystem.RaiseAccountLinked(account.AccountId);
     }
 
     private void OnUiReady(EntityUid uid, BankCartridgeComponent component, CartridgeUiReadyEvent args)
@@ -102,8 +107,10 @@ public sealed class BankCartridgeSystem : EntitySystem
         if (component.AccountId != null && _bankCardSystem.TryGetAccount(component.AccountId.Value, out var account))
         {
             state.Balance = account.Balance;
+            state.Arrested = account.Arrested;
             state.AccountId = account.AccountId;
             state.OwnerName = account.Name;
+            state.Transactions = account.Transactions.ToArray();
         }
         _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
     }

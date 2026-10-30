@@ -3,16 +3,20 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Shared._Pirate.CriminalRecords;
 using Content.Shared._Pirate.StationRecords;
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database;
 public sealed record RecordHistorySnapshot(int ProfileId, RecordLogBook Book, List<RecordLogEntry> Entries);
+public sealed record RecordCitationSnapshot(int ProfileId, List<CriminalRecordCitation> Citations);
 
 public partial interface IServerDbManager
 {
     Task<List<(RecordLogBook Book, RecordLogEntry Entry)>> GetRecordHistoryAsync(int profileId, int limitPerBook, CancellationToken cancel = default);
     Task SaveRecordHistoryAsync(IReadOnlyCollection<RecordHistorySnapshot> snapshots, int limitPerBook, CancellationToken cancel = default);
+    Task<List<CriminalRecordCitation>> GetRecordCitationsAsync(int profileId, int limit, CancellationToken cancel = default);
+    Task SaveRecordCitationsAsync(IReadOnlyCollection<RecordCitationSnapshot> snapshots, int limit, CancellationToken cancel = default);
 }
 
 public sealed partial class ServerDbManager
@@ -27,6 +31,18 @@ public sealed partial class ServerDbManager
     {
         DbWriteOpsMetric.Inc();
         return RunDbCommand(() => _db.SaveRecordHistoryAsync(snapshots, limitPerBook, cancel));
+    }
+
+    public Task<List<CriminalRecordCitation>> GetRecordCitationsAsync(int profileId, int limit, CancellationToken cancel = default)
+    {
+        DbReadOpsMetric.Inc();
+        return RunDbCommand(() => _db.GetRecordCitationsAsync(profileId, limit, cancel));
+    }
+
+    public Task SaveRecordCitationsAsync(IReadOnlyCollection<RecordCitationSnapshot> snapshots, int limit, CancellationToken cancel = default)
+    {
+        DbWriteOpsMetric.Inc();
+        return RunDbCommand(() => _db.SaveRecordCitationsAsync(snapshots, limit, cancel));
     }
 }
 
@@ -94,7 +110,6 @@ public abstract partial class ServerDbBase
 
         await using var db = await GetDb(cancel);
 
-        // A character deleted during the round has nothing to save into.
         var profileIds = snapshots.Select(s => s.ProfileId).Distinct().ToList();
         var existing = (await db.DbContext.Profile
                 .Where(p => profileIds.Contains(p.Id))
@@ -129,6 +144,81 @@ public abstract partial class ServerDbBase
                     AuthorTitle = Truncate(entry.AuthorTitle, 128),
                     StationName = Truncate(entry.StationName, 128),
                     Time = DateTime.SpecifyKind(entry.Time, DateTimeKind.Utc),
+                });
+            }
+        }
+
+        await db.DbContext.SaveChangesAsync(cancel);
+
+        static string? Truncate(string? text, int max) => text is { Length: > 0 } && text.Length > max ? text[..max] : text;
+    }
+
+    // Preserve issue order when assigning IDs.
+    public async Task<List<CriminalRecordCitation>> GetRecordCitationsAsync(int profileId, int limit, CancellationToken cancel = default)
+    {
+        await using var db = await GetDb(cancel);
+
+        var rows = await db.DbContext.PirateRecordCitations
+            .AsNoTracking()
+            .Where(c => c.ProfileId == profileId)
+            .OrderByDescending(c => c.IssuedAt)
+            .Take(Math.Max(0, limit))
+            .ToListAsync(cancel);
+
+        return rows
+            .OrderBy(c => c.IssuedAt)
+            .Select(row => new CriminalRecordCitation
+            {
+                Reason = row.Reason,
+                Details = row.Details,
+                Fine = row.Fine,
+                Status = (CitationStatus) row.Status,
+                IssuedBy = row.IssuedBy,
+                IssuedAt = DateTime.SpecifyKind(row.IssuedAt, DateTimeKind.Utc),
+                ClosedBy = row.ClosedBy,
+                ClosedAt = row.ClosedAt is { } closed ? DateTime.SpecifyKind(closed, DateTimeKind.Utc) : null,
+            })
+            .ToList();
+    }
+
+    public async Task SaveRecordCitationsAsync(IReadOnlyCollection<RecordCitationSnapshot> snapshots, int limit, CancellationToken cancel = default)
+    {
+        if (snapshots.Count == 0)
+            return;
+
+        await using var db = await GetDb(cancel);
+
+        var profileIds = snapshots.Select(s => s.ProfileId).Distinct().ToList();
+        var existing = (await db.DbContext.Profile
+                .Where(p => profileIds.Contains(p.Id))
+                .Select(p => p.Id)
+                .ToListAsync(cancel))
+            .ToHashSet();
+
+        var saved = await db.DbContext.PirateRecordCitations
+            .Where(c => profileIds.Contains(c.ProfileId))
+            .ToListAsync(cancel);
+
+        foreach (var snapshot in snapshots)
+        {
+            if (!existing.Contains(snapshot.ProfileId))
+                continue;
+
+            db.DbContext.PirateRecordCitations.RemoveRange(saved.Where(c => c.ProfileId == snapshot.ProfileId));
+
+            foreach (var citation in snapshot.Citations.OrderByDescending(c => c.IssuedAt).Take(Math.Max(0, limit)))
+            {
+                db.DbContext.PirateRecordCitations.Add(new PirateRecordCitation
+                {
+                    ProfileId = snapshot.ProfileId,
+                    Reason = Truncate(citation.Reason, 64) ?? string.Empty,
+                    Details = Truncate(citation.Details, 512) ?? string.Empty,
+                    Fine = citation.Fine,
+                    Status = (int) citation.Status,
+                    IssuedBy = Truncate(citation.IssuedBy, 128),
+                    IssuedAt = DateTime.SpecifyKind(citation.IssuedAt, DateTimeKind.Utc),
+                    ClosedBy = Truncate(citation.ClosedBy, 128),
+                    ClosedAt = citation.ClosedAt is { } closed ? DateTime.SpecifyKind(closed, DateTimeKind.Utc) : null,
                 });
             }
         }

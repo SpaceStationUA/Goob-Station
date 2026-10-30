@@ -81,6 +81,11 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             subs.Event<CriminalRecordUploadPhoto>(OnUploadPhoto);
             subs.Event<CriminalRecordStoreGeneratedPhoto>(OnStoreGeneratedPhoto);
             #endregion
+            #region Pirate: citations
+            subs.Event<Content.Shared._Pirate.CriminalRecords.CriminalRecordAddCitation>(OnAddCitation);
+            subs.Event<Content.Shared._Pirate.CriminalRecords.CriminalRecordPayCitation>(OnPayCitation);
+            subs.Event<Content.Shared._Pirate.CriminalRecords.CriminalRecordVoidCitation>(OnVoidCitation);
+            #endregion
         });
 
         Subs.BuiEvents<IdExaminableComponent>(SetWantedVerbMenu.Key, subs => // Goobstation-WantedMenu
@@ -237,6 +242,7 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             : criminalRecord.GeneralRecordSnapshot?.Name ?? string.Empty;
 
         _criminalRecords.NotifyCriminalRecordDeleted(name);
+        _citationArrests.Refresh(key); // Pirate: citations
 
         if (ent.Comp.ActiveKey == msg.Id)
             ent.Comp.ActiveKey = null;

@@ -193,6 +193,7 @@
     - id: FlashlightSeclite
     - id: ForensicScanner
     - id: LogProbeCartridge
+    - id: RecordsCartridge # Pirate: records cartridge
     - id: BoxForensicPad
     - id: DrinkDetFlask
     - id: ClothingHandsGlovesForensic

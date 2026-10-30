@@ -1163,6 +1163,66 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
             #endregion Pirate: temporary ranks
 
+            #region Pirate: citations
+            modelBuilder.Entity("Content.Server.Database.PirateRecordCitation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("pirate_record_citations_id");
+
+                    b.Property<DateTime?>("ClosedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("closed_at");
+
+                    b.Property<string>("ClosedBy")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("closed_by");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("details");
+
+                    b.Property<int>("Fine")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("fine");
+
+                    b.Property<DateTime>("IssuedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("issued_at");
+
+                    b.Property<string>("IssuedBy")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("issued_by");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_id");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("reason");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_record_citations");
+
+                    b.HasIndex("ProfileId", "IssuedAt")
+                        .HasDatabaseName("IX_pirate_record_citations_profile_id_issued_at");
+
+                    b.ToTable("pirate_record_citations", (string)null);
+                });
+            #endregion
+
             #region Pirate: persistent record history
             modelBuilder.Entity("Content.Server.Database.PirateRecordHistoryEntry", b =>
                 {
@@ -2681,6 +2741,20 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("AdminRank");
                 });
             #endregion Pirate: temporary ranks
+
+            #region Pirate: citations
+            modelBuilder.Entity("Content.Server.Database.PirateRecordCitation", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_pirate_record_citations_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+            #endregion
 
             #region Pirate: persistent record history
             modelBuilder.Entity("Content.Server.Database.PirateRecordHistoryEntry", b =>
