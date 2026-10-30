@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -13,15 +14,22 @@ public static class RunechatStyle
     public const int MaxFontSize = 24;
     private const float DesignPixelsPerEm = 8f;
 
-    private static readonly Dictionary<(string, int), Font> Fonts = new();
-    private static readonly Dictionary<(string, int), Stylesheet> Sheets = new();
+    // Pirate: parallel test clients own separate resources and must not share fonts or stylesheets.
+    private static readonly ConditionalWeakTable<IResourceCache, ClientCache> Caches = new();
+
+    private sealed class ClientCache
+    {
+        public readonly Dictionary<(string, int), Font> Fonts = new();
+        public readonly Dictionary<(string, int), Stylesheet> Sheets = new();
+    }
 
     public static Font GetFont(string path, int size)
     {
-        if (Fonts.TryGetValue((path, size), out var font))
+        var cache = IoCManager.Resolve<IResourceCache>();
+        var fonts = Caches.GetValue(cache, static _ => new ClientCache()).Fonts;
+        if (fonts.TryGetValue((path, size), out var font))
             return font;
 
-        var cache = IoCManager.Resolve<IResourceCache>();
         font = new VectorFont(cache.GetResource<FontResource>(path), size);
         // Pirate: preserve Ukrainian glyphs in the configurable runechat fonts.
         var fallback = path switch
@@ -32,13 +40,15 @@ public static class RunechatStyle
         };
         if (fallback != null)
             font = new StackedFont(font, new VectorFont(cache.GetResource<FontResource>(fallback), size));
-        Fonts[(path, size)] = font;
+        fonts[(path, size)] = font;
         return font;
     }
 
     public static Stylesheet GetStylesheet(string path, int size)
     {
-        if (Sheets.TryGetValue((path, size), out var sheet))
+        var cache = IoCManager.Resolve<IResourceCache>();
+        var sheets = Caches.GetValue(cache, static _ => new ClientCache()).Sheets;
+        if (sheets.TryGetValue((path, size), out var sheet))
             return sheet;
 
         sheet = new Stylesheet(new[]
@@ -47,7 +57,7 @@ public static class RunechatStyle
                 new SelectorElement(typeof(RichTextLabel), null, null, null),
                 new[] { new StyleProperty(Label.StylePropertyFont, GetFont(path, size)) }),
         });
-        Sheets[(path, size)] = sheet;
+        sheets[(path, size)] = sheet;
         return sheet;
     }
 
