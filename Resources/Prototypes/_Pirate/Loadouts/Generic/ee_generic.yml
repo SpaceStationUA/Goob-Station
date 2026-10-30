@@ -502,6 +502,17 @@
     - CrayonBox
 
 - type: loadout
+  id: LoadoutItemCrayonArtist
+  showWhenUnavailable: true
+  effects:
+  - !type:UsernameLoadoutRequirementEffect
+    username: Jon_Brando
+    failureReason: loadout-artist-requirement
+  storage:
+    back:
+    - CrayonArtist
+
+- type: loadout
   id: LoadoutItemDrinkLithiumFlask
   customColorTint: true
   storage:

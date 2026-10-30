@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Based on CrayonInfinite. BaseItem avoids inheriting LimitedCharges and AutoRecharge.
+# This personal reward must not be added to random crayon tables.
+- type: entity
+  parent: BaseItem
+  id: CrayonArtist
+  categories: [ DoNotMap ]
+  name: artist's rainbow crayon
+  description: A crayon for true artists. As endless as their imagination.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+    state: rainbow
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: Tiny
+    heldPrefix: rainbow
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - Trash
+    - Recyclable
+  - type: SpaceGarbage
+  - type: UserInterface
+    interfaces:
+      enum.CrayonUiKey.Key:
+        type: CrayonBoundUserInterface
+  - type: Crayon
+    selectedState: like
+    color: Red
+    selectableColor: true
+    deleteEmpty: false
+  - type: StaticPrice
+    price: 5
+  - type: PaintTool
+    colorMode: Crayon
+    maxBrushSize: 3
+    pixelsPerCharge: 0
+  - type: Edible
+  - type: FlavorProfile
+    flavors:
+    - chewy
+    - bitter
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: MindbreakerToxin
+          Quantity: 2
