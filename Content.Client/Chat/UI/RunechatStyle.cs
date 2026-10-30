@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+using Content.Client._Pirate.Chat;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -14,22 +14,17 @@ public static class RunechatStyle
     public const int MaxFontSize = 24;
     private const float DesignPixelsPerEm = 8f;
 
-    // Pirate: parallel test clients own separate resources and must not share fonts or stylesheets.
-    private static readonly ConditionalWeakTable<IResourceCache, ClientCache> Caches = new();
-
-    private sealed class ClientCache
-    {
-        public readonly Dictionary<(string, int), Font> Fonts = new();
-        public readonly Dictionary<(string, int), Stylesheet> Sheets = new();
-    }
+    // Pirate: UI controllers belong to one client, including in parallel integration tests.
+    private static RunechatStyleCacheController Cache =>
+        IoCManager.Resolve<IUserInterfaceManager>().GetUIController<RunechatStyleCacheController>();
 
     public static Font GetFont(string path, int size)
     {
-        var cache = IoCManager.Resolve<IResourceCache>();
-        var fonts = Caches.GetValue(cache, static _ => new ClientCache()).Fonts;
+        var fonts = Cache.Fonts;
         if (fonts.TryGetValue((path, size), out var font))
             return font;
 
+        var cache = IoCManager.Resolve<IResourceCache>();
         font = new VectorFont(cache.GetResource<FontResource>(path), size);
         // Pirate: preserve Ukrainian glyphs in the configurable runechat fonts.
         var fallback = path switch
@@ -46,8 +41,7 @@ public static class RunechatStyle
 
     public static Stylesheet GetStylesheet(string path, int size)
     {
-        var cache = IoCManager.Resolve<IResourceCache>();
-        var sheets = Caches.GetValue(cache, static _ => new ClientCache()).Sheets;
+        var sheets = Cache.Sheets;
         if (sheets.TryGetValue((path, size), out var sheet))
             return sheet;
 
