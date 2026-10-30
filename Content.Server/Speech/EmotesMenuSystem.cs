@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Server.Chat.Systems;
 using Content.Server._Pirate.Speech; // Pirate: emote cooldown
 using Content.Shared.Chat;
 using Content.Server.Chat.Systems;

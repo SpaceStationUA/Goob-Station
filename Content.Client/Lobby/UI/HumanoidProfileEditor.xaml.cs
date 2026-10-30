@@ -2199,7 +2199,10 @@ namespace Content.Client.Lobby.UI
         private void SetSpecies(string newSpecies)
         {
             Profile = Profile?.WithSpecies(newSpecies);
+            EnsureAppearanceForSpecies(); // Goob
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
+            UpdateMarkings(); // Goob
+            UpdateHairPickers(); // Goob
             Markings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
