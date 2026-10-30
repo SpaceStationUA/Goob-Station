@@ -77,6 +77,7 @@ namespace Content.Server.Database
         public DbSet<PersistentPhotoAlbumPhoto> PersistentPhotoAlbumPhotos { get; set; } = default!;
         public DbSet<PirateTempRankEligibility> PirateTempRankEligibility { get; set; } = default!; // Pirate: temporary ranks
         public DbSet<PirateRecordHistoryEntry> PirateRecordHistory { get; set; } = default!; // Pirate: persistent record history
+        public DbSet<PirateRecordCitation> PirateRecordCitations { get; set; } = default!; // Pirate: citations
         #endregion
 
         #region Pirate: persistent text (diaries)
@@ -454,6 +455,7 @@ namespace Content.Server.Database
             PersistentTextModelConfiguration.Configure(modelBuilder); //Pirate: persistent text (diaries)
             PirateTempRankEligibilityModelConfiguration.Configure(modelBuilder); // Pirate: temporary ranks
             PirateRecordHistoryModelConfiguration.Configure(modelBuilder); // Pirate: persistent record history
+            PirateRecordCitationModelConfiguration.Configure(modelBuilder); // Pirate: citations
             ConfigureCustomMarkings(modelBuilder); // Pirate
         }
 

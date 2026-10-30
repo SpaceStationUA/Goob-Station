@@ -173,10 +173,11 @@ public sealed class RecordLogSystem : EntitySystem
         logs.Book(book).Add(entry);
         return entry;
     }
+    // Prior-round citations can still be paid.
     public bool TryAppend(StationRecordKey key, RecordLogBook book, uint entryId, string line, string? status = null)
     {
         if (!_records.TryGetRecord<RecordLogs>(key, out var logs)
-            || logs.Book(book).Find(e => e.Id == entryId) is not { Archived: false } entry)
+            || logs.Book(book).Find(e => e.Id == entryId) is not { } entry)
         {
             return false;
         }

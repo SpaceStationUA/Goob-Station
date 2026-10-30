@@ -164,7 +164,13 @@ public sealed partial class CriminalRecordsConsoleSystem
             citation.Status.ToString());
         citation.LogEntryId = entry?.Id;
         if (entry == null)
+        {
             _records.Synchronize(key);
+            return;
+        }
+
+        // Matching timestamps link the citation to its history entry across rounds.
+        citation.IssuedAt = entry.Time;
     }
 
     // Keep one history entry per citation.

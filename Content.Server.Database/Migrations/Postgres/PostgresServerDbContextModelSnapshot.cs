@@ -1225,6 +1225,68 @@ namespace Content.Server.Database.Migrations.Postgres
                 });
             #endregion Pirate: temporary ranks
 
+            #region Pirate: citations
+            modelBuilder.Entity("Content.Server.Database.PirateRecordCitation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("pirate_record_citations_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ClosedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("closed_at");
+
+                    b.Property<string>("ClosedBy")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("closed_by");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
+                        .HasColumnName("details");
+
+                    b.Property<int>("Fine")
+                        .HasColumnType("integer")
+                        .HasColumnName("fine");
+
+                    b.Property<DateTime>("IssuedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("issued_at");
+
+                    b.Property<string>("IssuedBy")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("issued_by");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("integer")
+                        .HasColumnName("profile_id");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("reason");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_record_citations");
+
+                    b.HasIndex("ProfileId", "IssuedAt")
+                        .HasDatabaseName("IX_pirate_record_citations_profile_id_issued_at");
+
+                    b.ToTable("pirate_record_citations", (string)null);
+                });
+            #endregion
+
             #region Pirate: persistent record history
             modelBuilder.Entity("Content.Server.Database.PirateRecordHistoryEntry", b =>
                 {
@@ -2784,6 +2846,20 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("AdminRank");
                 });
             #endregion Pirate: temporary ranks
+
+            #region Pirate: citations
+            modelBuilder.Entity("Content.Server.Database.PirateRecordCitation", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_pirate_record_citations_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+            #endregion
 
             #region Pirate: persistent record history
             modelBuilder.Entity("Content.Server.Database.PirateRecordHistoryEntry", b =>

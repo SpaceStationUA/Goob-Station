@@ -1,15 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using System.Threading.Tasks;
+using Content.Server._Pirate.CriminalRecords;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
+using Content.Shared._Pirate.CriminalRecords;
 using Content.Shared._Pirate.StationRecords;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Access.Systems;
+using Content.Shared.CriminalRecords;
 using Content.Shared.Preferences;
 using Content.Shared.StationRecords;
 using Robust.Shared.Configuration;
@@ -26,6 +30,7 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
     [Dependency] private readonly RecordLogSystem _logs = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
+    [Dependency] private readonly CitationAccountArrestSystem _citationArrests = default!;
 
     private bool _enabled;
     private int _limit;
@@ -67,20 +72,46 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
                 return;
 
             var history = await _db.GetRecordHistoryAsync(profileId.Value, _limit);
+            var citations = await _db.GetRecordCitationsAsync(profileId.Value, _limit);
             if (round != _ticker.RoundId || !_records.TryGetRecord<GeneralStationRecord>(key, out _))
                 return;
 
             _records.AddRecordEntry(key, new RecordHistoryOwner(profileId.Value));
-            if (history.Count == 0)
+            if (history.Count == 0 && citations.Count == 0)
                 return;
 
             _logs.AddArchived(key, history);
+            RestoreCitations(key, citations);
             _records.Synchronize(key);
         }
         catch (Exception e)
         {
             Log.Error($"Failed to restore the records history of {ToPrettyString(args.Mob)}: {e}");
         }
+    }
+
+    private void RestoreCitations(StationRecordKey key, List<CriminalRecordCitation> citations)
+    {
+        if (citations.Count == 0)
+            return;
+
+        if (!_records.TryGetRecord<CriminalRecord>(key, out var record))
+        {
+            record = new CriminalRecord();
+            _records.AddRecordEntry(key, record);
+        }
+
+        _records.TryGetRecord<RecordLogs>(key, out var logs);
+        foreach (var citation in citations)
+        {
+            citation.Id = record.NextCitationId++;
+            // Matching timestamps link citations to their history entries.
+            citation.LogEntryId = logs?.Security
+                .Find(e => e.Kind == RecordLogKind.Citation && e.Time == citation.IssuedAt)?.Id;
+            record.Citations.Add(citation);
+        }
+
+        _citationArrests.Refresh(key);
     }
 
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
@@ -103,7 +134,8 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
             return;
 
         var snapshots = CollectSnapshots();
-        if (snapshots.Count == 0)
+        var citations = CollectCitations();
+        if (snapshots.Count == 0 && citations.Count == 0)
             return;
 
         var limit = _limit;
@@ -114,6 +146,7 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
             try
             {
                 await _db.SaveRecordHistoryAsync(snapshots, limit);
+                await _db.SaveRecordCitationsAsync(citations, limit);
             }
             catch (Exception e)
             {
@@ -156,6 +189,32 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
         }
 
         return snapshots;
+    }
+
+    private List<RecordCitationSnapshot> CollectCitations()
+    {
+        var byProfile = new Dictionary<int, List<CriminalRecordCitation>>();
+
+        var query = EntityQueryEnumerator<StationRecordsComponent>();
+        while (query.MoveNext(out var station, out var stationRecords))
+        {
+            foreach (var (id, owner) in _records.GetRecordsOfType<RecordHistoryOwner>(station, stationRecords))
+            {
+                if (!byProfile.TryGetValue(owner.ProfileId, out var citations))
+                    byProfile[owner.ProfileId] = citations = new List<CriminalRecordCitation>();
+
+                if (!_records.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station), out var record, stationRecords))
+                    continue;
+
+                foreach (var citation in record.Citations)
+                {
+                    if (!citations.Exists(c => c.IssuedAt == citation.IssuedAt && c.Reason == citation.Reason))
+                        citations.Add(citation);
+                }
+            }
+        }
+
+        return byProfile.Select(pair => new RecordCitationSnapshot(pair.Key, pair.Value)).ToList();
     }
 
     private static bool SameEntry(RecordLogEntry a, RecordLogEntry b)
