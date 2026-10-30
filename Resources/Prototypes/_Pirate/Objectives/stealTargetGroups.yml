@@ -160,11 +160,19 @@
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
     state: icon
 
+# Unifies the brigmedic's three suit options.
+- type: stealTargetGroup
+  id: ClothingOuterHardsuitBrigmedic
+  name: steal-target-groups-brigmedic-suit
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
+    state: icon
+
 - type: stealTargetGroup
   id: ClothingHandsGlovesKravMaga
   name: steal-target-groups-krav-maga-gloves
   sprite:
-    sprite: _Goobstation/Clothing/Hands/Gloves/kravgloves.rsi
+    sprite: _Pirate/Clothing/Hands/Gloves/kravgloves.rsi
     state: icon
 
 - type: stealTargetGroup

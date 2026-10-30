@@ -29,6 +29,7 @@ public partial interface IServerDbManager
         CustomMarkingStoredArt? art,
         int limit,
         int dailyArtLimit = 0,
+        bool glow = false,
         CancellationToken cancel = default);
 
     /// <summary>Removes an entry from a player's library. Its art stays, as saved characters may wear it.</summary>
@@ -67,10 +68,11 @@ public sealed partial class ServerDbManager
         CustomMarkingStoredArt? art,
         int limit,
         int dailyArtLimit = 0,
+        bool glow = false,
         CancellationToken cancel = default)
     {
         DbWriteOpsMetric.Inc();
-        return RunDbCommand(() => _db.SaveCustomMarkingAsync(userId, id, name, placement, hash, art, limit, dailyArtLimit, cancel));
+        return RunDbCommand(() => _db.SaveCustomMarkingAsync(userId, id, name, placement, hash, art, limit, dailyArtLimit, glow, cancel));
     }
 
     public Task<bool> DeleteCustomMarkingAsync(Guid userId, int id, CancellationToken cancel = default)

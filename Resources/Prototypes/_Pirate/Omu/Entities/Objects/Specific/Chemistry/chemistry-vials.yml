@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  id: ArtiplatesChemistryVial
+  parent: ChemistryEmptyVial
+  suffix: artiplates
+  components:
+  - type: Label
+    currentLabel: reagent-name-artiplates
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+          - ReagentId: Artiplates
+            Quantity: 30

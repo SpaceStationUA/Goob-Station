@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._ES.Interaction.ForcedFacing; // Goob
 using Content.Shared.Interaction;
 
 namespace Content.Shared.MouseRotator;
@@ -29,7 +30,7 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
         var query = EntityQueryEnumerator<MouseRotatorComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var rotator, out var xform))
         {
-            if (rotator.GoalRotation == null)
+            if (rotator.GoalRotation == null || HasComp<ESForcedFacingComponent>(uid)) // Goob
                 continue;
 
             if (_rotate.TryRotateTo(
@@ -49,6 +50,10 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
 
     private void OnRequestRotation(RequestMouseRotatorRotationEvent msg, EntitySessionEventArgs args)
     {
+        // Pirate: invalid cursor projection must not poison the player or contained entities' transforms.
+        if (!double.IsFinite(msg.Rotation.Theta))
+            return;
+
         // Ignore the request if the requested entity is not the user's attached entity.
         // This can happen when a player switches controlled entities while rotating.
         if (args.SenderSession.AttachedEntity != GetEntity(msg.User))

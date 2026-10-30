@@ -1,4 +1,12 @@
 ## Амуніція - Набої
+# .30 rifle
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoaderRevolverLightRifleMini
+  result: SpeedLoaderRevolverLightRifleMini
+  materials:
+    Steel: 100
+
 # MK 32
 - type: latheRecipe
   parent: BaseEmptyAmmoRecipe

@@ -1,0 +1,61 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  name: Typewriter
+  parent: [ BaseWeaponSubMachineGun, BaseCentcommContraband ]
+  id: WeaponSubMachineGunTypewriter
+  description: Replica of a submachine gun notable for facing many battles, more famously those between mobsters back on Sol. Chambered in .35, fits both special made drum mags and stick mags. Perfect gun for making sure someone's sleeping with the carps.
+  components:
+  - type: Sprite
+    sprite: _Pirate/DV/Objects/Weapons/Guns/SMGs/typewriter.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Pirate/DV/Objects/Weapons/Guns/SMGs/typewriter.rsi
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus # Changed to be on par or slightly worse than the C20
+    minAngle: -12
+    maxAngle: -12
+  - type: Gun
+    minAngle: 21
+    maxAngle: 32
+    fireRate: 5 # Moved down from 8, Felt the best
+    soundGunshot:
+      path: /Audio/_Pirate/DV/Weapons/Guns/Gunshots/typewriter.ogg
+  - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSubMachineGunDrum
+        insertSound: /Audio/Weapons/Guns/MagIn/hpistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolSubMachineGun
+            - MagazinePistolSubMachineGunDrum
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: Appearance
+
+- type: entity
+  id: WeaponSubMachineGunC20rCentComm
+  parent: WeaponSubMachineGunC20r
+  description: A classic and widespread submachine gun. One of the first homegrown Waffle Corp. designs, it remains in service today. Feeds from .35 SMG magazines. A Nanotrasen Logo is stamped on the frame.
+  suffix: CentComm
+  components:
+    - type: Contraband
+      allowedDepartments: [ CentralCommand ]
+      severity: Restricted

@@ -21,3 +21,4 @@ job-name-syndicate-engineer = Технік двигунів Синдикату
 job-name-syndicate-miner = Офіцер видобутку Синдикату
 job-name-syndicate-prisoner = Вʼязень Синдикату
 job-name-cybersun-team-leader = Лідер команди Кіберсан
+job-name-cybersun-command = Командування Кіберсан

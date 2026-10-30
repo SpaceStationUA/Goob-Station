@@ -76,3 +76,6 @@ ent-BorgChassisServiceWaitress = кіборг-офіціантка
     .desc = { ent-BaseBorgChassis.desc }
 ent-BorgChassisUrist = Уріст МакБорг
     .desc = Гидота, яка нібито допомагає в діяльності станції.
+
+ent-BorgChassisGenericClaptrap = кіборг-стюард
+    .desc = { ent-BaseBorgChassis.desc }

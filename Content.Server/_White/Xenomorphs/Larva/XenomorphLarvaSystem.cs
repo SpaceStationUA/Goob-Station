@@ -14,6 +14,10 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Content.Shared.Damage; // Omu
+using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.Damage.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Mobs;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Damage.Systems; // Omu
 
@@ -26,7 +30,8 @@ public sealed class XenomorphLarvaSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly JitteringSystem _jitter = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!; // Pirate
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!; // Omu
+    [Dependency] private readonly MobThresholdSystem _threshold = default!; // Goob
 
     public override void Initialize()
     {
@@ -86,6 +91,14 @@ public sealed class XenomorphLarvaSystem : EntitySystem
         var damage = new DamageSpecifier();
         damage.DamageDict.Add("Blunt", 120);
         damage.DamageDict.Add("Piercing", 80);
+        if (_threshold.TryGetThresholdForState(victim, MobState.Dead, out var dead) // Goob - don't gib small mobs
+            && TryComp<DamageableComponent>(victim, out var damageable))
+        {
+            var needed = dead.Value - damageable.TotalDamage + 10;
+            var total = damage.GetTotal();
+            if (needed < total)
+                damage *= FixedPoint2.Max(needed, 0) / total;
+        }
         _damageableSystem.TryChangeDamage(victim, damage: damage, ignoreResistances: true, interruptsDoAfters: false, targetPart: TargetBodyPart.Chest);
     }
 }

@@ -1,0 +1,4 @@
+- files: ["chip_fill.png", "chip_border.png", "chip_border_thick.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "9-patch chip with 2px rounded corners, made by CyberLanos for the genetics scanner"
+  source: "https://github.com/CyberLanos/daewoo-station"

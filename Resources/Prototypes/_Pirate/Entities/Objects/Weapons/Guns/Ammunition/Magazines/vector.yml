@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: BaseMagazineVector
+  parent: BaseMagazinePistol
+  abstract: true
+  name: extended pistol magazine (.35 auto)
+  description: An extended pistol magazine holding 30 rounds of .35 Auto ammunition.
+  components:
+  - type: Tag
+    tags:
+    - MagazinePistol
+    - MagazineVector
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazines/vector.rsi
+    layers:
+    - state: standard-5
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: standard
+    steps: 6
+    zeroVisible: true
+  - type: BallisticAmmoProvider
+    capacity: 30
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+
+- type: entity
+  id: MagazineVector
+  parent: BaseMagazineVector
+  name: extended pistol magazine (.35 auto)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
+
+- type: entity
+  id: MagazineVectorEmpty
+  parent: BaseMagazineVector
+  name: extended pistol magazine (.35 auto any)
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+
+- type: entity
+  id: MagazineVectorPractice
+  parent: BaseMagazineVector
+  name: extended pistol magazine (.35 auto practice)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolPractice
+  - type: MagazineVisuals
+    magState: practice
+
+- type: entity
+  id: MagazineVectorIncendiary
+  parent: BaseMagazineVector
+  name: extended pistol magazine (.35 auto incendiary)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+  - type: MagazineVisuals
+    magState: incendiary
+
+- type: entity
+  id: MagazineVectorUranium
+  parent: BaseMagazineVector
+  name: extended pistol magazine (.35 auto uranium)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolUranium
+  - type: MagazineVisuals
+    magState: uranium
+
+- type: entity
+  id: MagazineVectorCryptobiolin
+  parent: BaseMagazineVector
+  name: extended pistol magazine (.35 auto Cryptobiolin)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolCryptobiolin
+  - type: MagazineVisuals
+    magState: cryptobiolin

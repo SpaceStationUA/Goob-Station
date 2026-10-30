@@ -66,6 +66,7 @@
       - sprite: _Pirate/Structures/Machines/VendingMachines/random.rsi
         state: wallmed
   - type: RandomSpawner
+    inheritRotation: true
     prototypes:
       - VendingMachineWallMedical
       - VendingMachineWallMedical

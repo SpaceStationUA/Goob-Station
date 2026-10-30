@@ -10,13 +10,13 @@
     #   department: Science # Pirate
     #   time: 18000 #5 hrs # Pirate
     #   inverted: true # stop playing intern if you're good at science! # Pirate
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZengHuPharmaceuticals
-      - ZavodskiyInterstellar
-    # Pirate contractor end
+      - Zavod
+      - ZengHu
+    # Pirate Employment end
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science

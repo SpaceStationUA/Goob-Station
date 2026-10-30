@@ -32,13 +32,15 @@
     #  inverted: true
     #  species:
     #  - Felinid
-  # Pirate contractor start
+  # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-      - ZavodskiyInterstellar
+      - NanoTrasen
+      - Idris
       - PMCG
-  # Pirate contractor end
+  # Pirate Employment end
+    - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
+      minLength: 500 # Pirate: whitelist flavor minimum
   guides:
   - BlueshieldOfficerSOP
   - Command
@@ -70,8 +72,8 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipCombatEducationPilot # Pirate: piloting skill
-    - SkillChipSidearmsAdvanced
+    - SkillChipSecurityEducationPilot # Pirate: piloting skill # Pirate: security combat chips
+    - SkillChipBlueshield # Pirate: security combat chips
     - SkillChipFieldMedicine
   # Pirate: skill chips end
   - !type:AddImplantSpecial
@@ -89,7 +91,7 @@
     #gloves: ClothingHandsGlovesCombat - Goobstation, moved to loadouts
     id: BlueshieldPDA
     ears: ClothingHeadsetAltBlueshield
-    belt: ClothingBeltMilitaryWebbingFilled
+    # Pirate: belt is selected through PirateBlueshieldBelt, including the default webbing.
     pocket1: UniqueBlueshieldOfficerLockerTeleporter
   storage:
     back:

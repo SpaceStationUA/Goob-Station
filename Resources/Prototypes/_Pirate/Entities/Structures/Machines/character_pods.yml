@@ -40,6 +40,8 @@
   parent: BaseCharacterPod
   id: BaseCharacterPodCybersun
   components:
+  - type: GhostRoleLoadout
+    role: GhostRoleCybersun
   - type: RadioSpawnAnnouncement
     channel: Cybersun
     message: cybersun-pod-wake-announcement
@@ -82,9 +84,10 @@
     - MindRoleGhostRoleCybersun
     raffle:
       settings: default
-  - type: GhostRoleRequiredJobs # Require the Cybersun team-leader whitelist for this ghost role.
+  - type: GhostRoleRequiredJobs
     jobs:
     - CybersunTeamLeader
+    - CybersunCommand
   - type: CharacterPod
     settings: LavalandSyndieSoldierTeamLeader
     startingBalance: 1000
@@ -104,6 +107,9 @@
     - MindRoleGhostRoleCybersun
     raffle:
       settings: default
+  - type: GhostRoleRequiredJobs
+    jobs:
+    - CybersunCommand
   - type: CharacterPod
     settings: LavalandSyndieMarshal
     startingBalance: 1000
@@ -115,6 +121,8 @@
   id: CharacterPodLizardGasStaff
   suffix: Gas Station Staff
   components:
+  - type: GhostRoleLoadout
+    role: GhostRoleLizardGasStation
   - type: GhostRole
     name: працівник Lizard Gas Station
     description: Невідомо, як ви тут опинилися. Проте відомо лише одне - ви маєте отримати якомога більший прибуток від продажів. Роль можуть обрати лише Ящеролюди / Унаті.

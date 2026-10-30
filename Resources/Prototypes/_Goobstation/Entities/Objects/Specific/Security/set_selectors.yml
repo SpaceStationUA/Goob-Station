@@ -1,22 +1,3 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Head Of Security
-
-# If you want to readd this to hos, nerf lawbringer, especially the execute mode
-
-- type: entity
-  id: HeadOfSecurityWeaponUndetermined
-  name: X-00 Series Box
-  description: A small remote utilizing bluespace technology to drop in a weapon from the X-00 series to you. Choose wisely.
-  parent: [ BaseItem, BaseSetSelector, BaseCommandContraband ]
-  components:
-  - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Security/hosundetermined.rsi
-    state: icon
-  - type: SetSelector
-    possibleSets:
-    - HosSmgSet
-    - HosRifleSet
-    - HosShotgunSet
-    - HosSniperSet
-    maxSelectedSets: 1
+# Pirate: replaced by HeadOfSecurityGunCase; saved maps migrate in Resources/migration.yml.

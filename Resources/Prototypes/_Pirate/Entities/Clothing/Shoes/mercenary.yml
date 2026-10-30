@@ -1,0 +1,8 @@
+- type: entity
+  parent: ClothingShoesBootsMercFilled
+  id: ClothingShoesBootsMercNoSlipFilled
+  name: mercenary boots
+  description: Boots that have gone through many conflicts and that have proven their combat reliability. Their no-slip soles prevent slipping.
+  suffix: Filled
+  components:
+  - type: NoSlip

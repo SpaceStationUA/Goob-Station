@@ -20,6 +20,7 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
     public readonly bool Active;
     public readonly bool AccentHide;
     public ProtoId<JobIconPrototype>? JobIcon { get; } // GabyStation -> Radio icons
+    public Content.Shared._Pirate.VoiceMask.VoiceMaskModesState? Modes { get; init; } // Pirate: voice mask modes
 
     public VoiceMaskBuiState(string name, string? verb, bool active, bool accentHide,
         ProtoId<JobIconPrototype>? jobIcon) // GabyStation radio icons)

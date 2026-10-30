@@ -12,7 +12,7 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Popups;
 using Content.Server.Popups;
-using Content.Server.Hands.Systems;
+using Content.Shared._Trauma.Hands;
 using Content.Shared.BloodCult;
 using Content.Shared.BloodCult.Components;
 using Content.Server.BloodCult.Components;
@@ -23,7 +23,7 @@ public sealed class BloodCultMeleeWeaponSystem : EntitySystem
 {
 	[Dependency] private readonly IRobustRandom _random = default!;
 	[Dependency] private readonly PopupSystem _popupSystem = default!;
-	[Dependency] private readonly HandsSystem _hands = default!;
+	[Dependency] private readonly PredictedHandsSystem _hands = default!;
 	[Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
 	public override void Initialize()

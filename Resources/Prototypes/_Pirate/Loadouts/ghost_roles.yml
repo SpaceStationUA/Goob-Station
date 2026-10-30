@@ -1,0 +1,69 @@
+## Keep these groups in sync with GlobalLoadoutGroups.
+
+- type: roleLoadout
+  id: GhostRoleLizardGasStation
+  groups:
+  - PirateEEGenericBackpacks
+  - PirateEEGenericHead
+  - PirateEEGenericEyes
+  - PirateEEGenericBelt
+  - PirateEEGenericNeck
+  - PirateEEGenericOuterClothing
+  - PirateEEGenericUniform
+  - PirateEEGenericShoes
+  - PirateGenericPassengerFace
+  - PirateGenericPassengerGloves
+  - PirateEEGenericHands
+  - PirateEEGenericMask
+  - PirateEEGenericItems
+
+- type: roleLoadout
+  id: GhostRoleCybersun
+  groups:
+  - PirateEEGenericBackpacks
+  - PirateEEGenericHead
+  - PirateEEGenericEyes
+  - PirateEEGenericBelt
+  - PirateEEGenericNeck
+  - PirateEEGenericOuterClothing
+  - PirateEEGenericUniform
+  - PirateEEGenericShoes
+  - PirateGenericPassengerFace
+  - PirateGenericPassengerGloves
+  - PirateEEGenericHands
+  - PirateEEGenericMask
+  - PirateEEGenericItems
+
+- type: roleLoadout
+  id: GhostRoleMercenary
+  groups:
+  - PirateEEGenericBackpacks
+  - PirateEEGenericHead
+  - PirateEEGenericEyes
+  - PirateEEGenericBelt
+  - PirateEEGenericNeck
+  - PirateEEGenericOuterClothing
+  - PirateEEGenericUniform
+  - PirateEEGenericShoes
+  - PirateGenericPassengerFace
+  - PirateGenericPassengerGloves
+  - PirateEEGenericHands
+  - PirateEEGenericMask
+  - PirateEEGenericItems
+
+- type: roleLoadout
+  id: GhostRoleFriendlyWizard
+  groups:
+  - PirateEEGenericBackpacks
+  - PirateEEGenericHead
+  - PirateEEGenericEyes
+  - PirateEEGenericBelt
+  - PirateEEGenericNeck
+  - PirateEEGenericOuterClothing
+  - PirateEEGenericUniform
+  - PirateEEGenericShoes
+  - PirateGenericPassengerFace
+  - PirateGenericPassengerGloves
+  - PirateEEGenericHands
+  - PirateEEGenericMask
+  - PirateEEGenericItems

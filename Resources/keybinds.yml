@@ -58,6 +58,9 @@ binds:
 - function: VoicePushToTalkRadio # Goobstation - Voice chat
   type: State
   key: M
+- function: NamePeek # Goob
+  type: State
+  key: Alt
 # Shuttle
 - function: ShuttleStrafeUp
   type: State
@@ -688,3 +691,9 @@ binds:
   key: Z
   mod1: Shift
   mod2: Control
+
+# Pirate: Omu tackling gloves
+- function: Tackle
+  type: State
+  key: Q
+  mod1: Alt

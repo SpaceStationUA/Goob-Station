@@ -3,6 +3,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.RandomMetadata;
 using Content.Server.RoundEnd;
 using Content.Pirate.Server.CharacterPods;
+using Content.Server._Pirate.Ghost.Roles;
 using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
@@ -120,6 +121,8 @@ namespace Content.Pirate.Server.Mercenary
             // Apply profile data without the normal spawn side effects.
             if (mercProfile != null)
                 _profileSpawn.ApplyProfileDetails(uid, mercProfile, session);
+
+            _entManager.System<GhostRoleLoadoutSystem>().EquipLoadout(uid, session);
 
             var disk = EntityManager.SpawnEntity(Disk, spawn);
             var cd = _entManager.EnsureComponent<ShuttleDestinationCoordinatesComponent>(disk);

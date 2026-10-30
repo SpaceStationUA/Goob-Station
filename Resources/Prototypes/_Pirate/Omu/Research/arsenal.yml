@@ -1,0 +1,16 @@
+
+- type: technology
+  id: AntiArmorSolutions
+  name: research-technology-APDS
+  icon:
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: APDS
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - ShellShotgunAPDS
+  technologyPrerequisites:
+  - UraniumMunitions
+  - NonlethalAmmunition
+  position: 6,2

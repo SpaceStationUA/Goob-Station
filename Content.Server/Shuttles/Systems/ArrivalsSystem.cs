@@ -379,7 +379,8 @@ public sealed class ArrivalsSystem : EntitySystem
             spawnLoc,
             ev.Job,
             ev.HumanoidCharacterProfile,
-            ev.Station);
+            ev.Station,
+            ckey: ev.Ckey); // Pirate ckey for restricted players
 
         EnsureComp<PendingClockInComponent>(ev.SpawnResult.Value);
         EnsureComp<AutoOrientComponent>(ev.SpawnResult.Value);

@@ -115,10 +115,14 @@ public sealed partial class ProjectileComponent : Component
     [DataField(customTypeSerializer: typeof(FlagSerializer<CollisionMask>))]
     public int NoPenetrateMask = 0;
 
-    [NonSerialized]
+    [AutoNetworkedField] // Trauma - networked for prediction
     public List<EntityUid> IgnoredEntities = new();
 
     [DataField]
     public Vector2 TargetCoordinates;
     // Goobstation end
+
+    // Pirate: Omu's .30 long rifle ammunition carries its own speed multiplier.
+    [DataField]
+    public FixedPoint2 ProjectileSpeedModifier = 1f;
 }

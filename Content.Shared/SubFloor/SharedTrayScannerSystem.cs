@@ -1,27 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Shared._Pirate.Clothing.MesonGoggles; // Pirate: meson vision
-using Content.Shared._Pirate.SubFloor; // Pirate: meson vision
-using Content.Shared.Actions; // Pirate: meson vision
-using Content.Shared.Actions.Components; // Pirate: meson vision
 using Content.Shared.Eye;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.Audio.Systems; // Pirate: meson vision
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SubFloor;
 
-public abstract class SharedTrayScannerSystem : EntitySystem
+public abstract partial class SharedTrayScannerSystem : EntitySystem // Goob
 {
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!; // Pirate: meson vision
-    [Dependency] private readonly SharedAudioSystem _audio = default!; // Pirate: meson vision
 
     public const float SubfloorRevealAlpha = 0.8f;
 
@@ -29,10 +22,11 @@ public abstract class SharedTrayScannerSystem : EntitySystem
     {
         base.Initialize();
 
+        GoobInitialize(); // Goob
+
         SubscribeLocalEvent<TrayScannerComponent, ComponentGetState>(OnTrayScannerGetState);
         SubscribeLocalEvent<TrayScannerComponent, ComponentHandleState>(OnTrayScannerHandleState);
         SubscribeLocalEvent<TrayScannerComponent, ActivateInWorldEvent>(OnTrayScannerActivate);
-        SubscribeLocalEvent<TrayScannerComponent, ToggleTrayScannerEvent>(OnToggleAction); // Pirate: meson vision
 
         SubscribeLocalEvent<TrayScannerComponent, GotEquippedHandEvent>(OnTrayHandEquipped);
         SubscribeLocalEvent<TrayScannerComponent, GotUnequippedHandEvent>(OnTrayHandUnequipped);
@@ -80,124 +74,63 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnTrayHandUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedHandEvent args)
     {
-        if (!ent.Comp.RequireWorn) // Pirate: meson vision
+        if (!ent.Comp.RequireWorn) // Pirate: engineering goggles only scan while worn.
             OnUnequip(args.User);
-
-        // Pirate: meson vision
-        if (ent.Comp.ToggleActionEntity is { } action)
-        {
-            if (TryComp(action, out TransformComponent? xform) && xform.ParentUid == args.User)
-                _actions.RemoveAction(args.User, action);
-            else
-                QueueDel(action);
-
-            ent.Comp.ToggleActionEntity = null;
-        }
     }
 
     private void OnTrayHandEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedHandEvent args)
     {
-        if (!ent.Comp.RequireWorn) // Pirate: meson vision
+        if (!ent.Comp.RequireWorn) // Pirate
             OnEquip(args.User);
-
-        // Pirate: meson vision
-        if (ent.Comp.ToggleAction != null && HasComp<ActionsComponent>(args.User))
-            _actions.AddAction(args.User, ref ent.Comp.ToggleActionEntity, ent.Comp.ToggleAction.Value, ent);
     }
 
     private void OnTrayUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedEvent args)
     {
-        if (ent.Comp.RequireWorn && args.Slot != "eyes") // Pirate: tray scanner wear checks
-            return; // Pirate: tray scanner wear checks
+        if (ent.Comp.RequireWorn && args.Slot != "eyes") // Pirate
+            return;
 
         OnUnequip(args.Equipee);
-
-        // Pirate: meson vision
-        if (ent.Comp.ToggleActionEntity is { } action)
-        {
-            if (TryComp(action, out TransformComponent? xform) && xform.ParentUid == args.Equipee)
-                _actions.RemoveAction(args.Equipee, action);
-            else
-                QueueDel(action);
-
-            ent.Comp.ToggleActionEntity = null;
-        }
     }
 
     private void OnTrayEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedEvent args)
     {
-        if (ent.Comp.RequireWorn && args.Slot != "eyes") // Pirate: tray scanner wear checks
-            return; // Pirate: tray scanner wear checks
+        if (ent.Comp.RequireWorn && args.Slot != "eyes") // Pirate
+            return;
 
         OnEquip(args.Equipee);
-
-        // Pirate: meson vision
-        if (ent.Comp.ToggleAction != null && HasComp<ActionsComponent>(args.Equipee))
-            _actions.AddAction(args.Equipee, ref ent.Comp.ToggleActionEntity, ent.Comp.ToggleAction.Value, ent);
     }
 
-    // Pirate: meson vision
-    private void OnToggleAction(Entity<TrayScannerComponent> ent, ref ToggleTrayScannerEvent args)
+    private void OnTrayScannerActivate(EntityUid uid, TrayScannerComponent scanner, ActivateInWorldEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.Complex || !scanner.ToggleOnActivate) // Pirate: independent engineering goggles mode switch.
             return;
 
-        ToggleScanner(ent, args.Performer);
+        SetScannerEnabled(uid, !scanner.Enabled, scanner);
         args.Handled = true;
     }
 
-    private void OnTrayScannerActivate(Entity<TrayScannerComponent> ent, ref ActivateInWorldEvent args)
-    {
-        if (args.Handled || !args.Complex || !ent.Comp.ToggleOnActivate) // Pirate: welding viso
-            return;
-
-        ToggleScanner(ent, args.User); // Pirate: meson vision - now goes through ToggleScanner for the on/off sound.
-        args.Handled = true;
-    }
-
-    // Pirate: meson vision
-    private void ToggleScanner(Entity<TrayScannerComponent> ent, EntityUid user)
-    {
-        var isEnabled = !ent.Comp.Enabled;
-        SetScannerEnabled(ent, isEnabled);
-
-        var sound = isEnabled ? ent.Comp.SoundOn : ent.Comp.SoundOff;
-        _audio.PlayPredicted(sound, ent, user);
-    }
-
-    // Pirate: engineering goggles - public toggle for external mode-switchers, mirrors SharedXRayVisionSystem.SetEnabled.
+    // Pirate: engineering goggles share the upstream scanner and shader toggle.
     public void SetEnabled(Entity<TrayScannerComponent?> ent, bool enabled)
     {
-        if (!Resolve(ent, ref ent.Comp, false))
-            return;
-
-        SetScannerEnabled((ent.Owner, ent.Comp), enabled);
+        if (Resolve(ent, ref ent.Comp, false))
+            SetScannerEnabled(ent.Owner, enabled, ent.Comp);
     }
 
-    private void SetScannerEnabled(Entity<TrayScannerComponent> ent, bool enabled)
+    private void SetScannerEnabled(EntityUid uid, bool enabled, TrayScannerComponent? scanner = null)
     {
-        if (ent.Comp.Enabled == enabled)
+        if (!Resolve(uid, ref scanner) || scanner.Enabled == enabled)
             return;
 
-        ent.Comp.Enabled = enabled;
-        Dirty(ent);
-
-        // Pirate: meson vision - keep the goggle shader (green tint) in lockstep with the scanner state.
-        if (TryComp(ent, out GoggleShaderComponent? goggleShader))
-        {
-            goggleShader.Enabled = enabled;
-            Dirty(ent, goggleShader);
-
-            var ev = new GoggleShaderToggledEvent(enabled);
-            RaiseLocalEvent(ent.Owner, ref ev);
-        }
+        scanner.Enabled = enabled;
+        Dirty(uid, scanner);
+        GoobScannerEnabledChanged(uid, enabled); // Goob
 
         // We don't remove from _activeScanners on disabled, because the update function will handle that, as well as
         // managing the revealed subfloor entities
 
-        if (TryComp<AppearanceComponent>(ent, out var appearance))
+        if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
-            _appearance.SetData(ent, TrayScannerVisual.Visual, ent.Comp.Enabled ? TrayScannerVisual.On : TrayScannerVisual.Off, appearance);
+            _appearance.SetData(uid, TrayScannerVisual.Visual, scanner.Enabled ? TrayScannerVisual.On : TrayScannerVisual.Off, appearance);
         }
     }
 
@@ -206,13 +139,13 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         args.State = new TrayScannerState(scanner.Enabled, scanner.Range);
     }
 
-    private void OnTrayScannerHandleState(Entity<TrayScannerComponent> ent, ref ComponentHandleState args)
+    private void OnTrayScannerHandleState(EntityUid uid, TrayScannerComponent scanner, ref ComponentHandleState args)
     {
         if (args.Current is not TrayScannerState state)
             return;
 
-        ent.Comp.Range = state.Range;
-        SetScannerEnabled(ent, state.Enabled);
+        scanner.Range = state.Range;
+        SetScannerEnabled(uid, state.Enabled, scanner);
     }
 }
 

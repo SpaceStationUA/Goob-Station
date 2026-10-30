@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: ClothingNeckWardenParryCloakFilled
+  parent: ClothingNeckWardenParryCloak
+  suffix: Filled, Warden
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - SecurityRapier
+
+- type: entity
+  id: ClothingNeckSecurityParryCloakFilled
+  parent: ClothingNeckSecurityParryCloak
+  suffix: Filled, Security
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - SecurityRapier

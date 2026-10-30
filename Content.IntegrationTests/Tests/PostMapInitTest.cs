@@ -157,6 +157,7 @@ namespace Content.IntegrationTests.Tests
             "Lambda",         // Not in pool
             "Lavatest",       // Dev map
             "Leonid",
+            "LeonidTP",       // Pirate
             "Loop",
             "Marathon",
             "MetaTP",         // Pirate
@@ -207,6 +208,7 @@ namespace Content.IntegrationTests.Tests
             //"Lambda",         // Not in pool
             //  "Lavatest",       //Dev map
             //  "Leonid",
+            //  "LeonidTP",       // Pirate
             //  "Loop",
             //  "Marathon",
             //  "Meta",

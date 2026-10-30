@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  parent: ShellShotgunSlug
+  id: ShellShotgunAPDS
+  name: shell (12 Gauge APDS)
+  description: Vivian herself mandated NT stations have access to APDS, when asked why, she responded with one word. "Funny".
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    layers:
+      - state: APDS
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunAPDS
+  - type: SpentAmmoVisuals
+    state: "APDS"

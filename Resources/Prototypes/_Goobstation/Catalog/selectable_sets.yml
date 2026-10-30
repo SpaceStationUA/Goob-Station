@@ -374,34 +374,9 @@
   content:
     - BSOManual
 
-- type: selectableSet
-  id: BSOChesterSet
-  name: selectable-set-blueshield-chester-name
-  description: selectable-set-blueshield-chester-description
-  sprite:
-    sprite: _Goobstation/Objects/Weapons/Guns/Lever/chester_icon_48x.rsi
-    state: base
-  content:
-  # Guaranteed items
-  - WeaponLeverChester
-  - MagazineShotgunLeverRifleEmpty
-  - MagazineShotgunLeverRifleEmpty
-  - MagazineBoxShotgunHighCaliberEMP
-  - MagazineBoxShotgunHighCaliberEnsnaring
-#  tables:
-#  - ChesterRandomAmmoTable
+# Pirate: BSOChesterSet is defined in the Pirate Omu equipment port.
 
-- type: selectableSet
-  id: BSOSyringeSet
-  name: selectable-set-blueshield-syringe-name
-  description: selectable-set-blueshield-syringe-description
-  sprite:
-    sprite: _Goobstation/Objects/Weapons/Melee/blueshield_knife.rsi
-    state: icon
-  content:
-    - ClothingBeltMilitaryWebbingBSOFilled
-
-# Blueshield hardsuits
+# Pirate: BSOSyringeSet is replaced by the Omu duty-case sets.
 
 - type: selectableSet
   id: BSOHardsuitLightSet
@@ -449,7 +424,7 @@
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     state: icon
   content:
-    - WeaponPulseCarbineAdvanced
+    - WeaponPulseCarbine # Pirate: preserve the Omu ERT case contents.
     - WeaponEnergyRevolver
     - EnergySpeedloaderPulse
     - EnergySpeedloaderPulse
@@ -628,8 +603,6 @@
   content:
   - ClothingModularControllerResearchPreassembled # Pirate: use the new modular suit system.
 
-  - ClothingModsuitResearchDirectorPowerCell
-
 # Brigmedic
 
 - type: selectableSet
@@ -647,8 +620,7 @@
   name: selectable-set-brigmedic-modsuit-name
   description: selectable-set-brigmedic-modsuit-desc
   sprite:
-    sprite: _Goobstation/Clothing/Back/Modsuits/brigmed.rsi
-    state: control
+    sprite: _Pirate/Clothing/Modular/Brigmedic/control.rsi # Pirate: security specialist modsuits
+    state: icon # Pirate: security specialist modsuits
   content:
-
-  - ClothingModsuitBrigMedPowerCell
+  - ClothingModularControllerBrigmedicPreassembled # Pirate: security specialist modsuits

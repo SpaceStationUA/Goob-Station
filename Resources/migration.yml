@@ -1054,3 +1054,8 @@ BenchSofaLeft: SofaWhiteRight
 BenchSofaRight: SofaWhiteLeft
 BenchSofaCorner: SofaWhiteCorner
 # PIRATE END
+
+# Pirate: Omu role-specific duty cases
+HeadOfSecurityWeaponUndetermined: HeadOfSecurityGunCase
+BlueshieldUndeterminedWeapon: BlueshieldUndeterminedOffensive
+ClothingBeltMilitaryWebbingBSOFilled: ClothingBeltChemBagBSOFilled

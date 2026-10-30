@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Pirate.Common.Bloodstream;
+using Content.Pirate.Shared.Genetics.Mutations;
 using Content.Pirate.Shared.Vampire.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -35,7 +36,9 @@ public sealed class NaturalBloodRegenerationSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BloodstreamComponent, BloodRegenerationModifierEvent>(OnBloodRegenerationModifier);
+        // Pirate: charge nutrition for the final mutation-adjusted regeneration amount.
+        SubscribeLocalEvent<BloodstreamComponent, BloodRegenerationModifierEvent>(OnBloodRegenerationModifier,
+            after: [typeof(MutationRelaySystem)]);
     }
 
     private void OnBloodRegenerationModifier(Entity<BloodstreamComponent> ent, ref BloodRegenerationModifierEvent args)

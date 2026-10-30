@@ -34,7 +34,7 @@ public sealed class ThrowHeldItemTest : InteractionTest
         var disarmThrow = false;
         await Server.WaitPost(() =>
         {
-            disarmThrow = HandSys.ThrowHeldItem(
+            disarmThrow = PredictedHands.ThrowHeldItem(
                 SPlayer,
                 ToServer(TargetCoords),
                 minDistance: 4f,

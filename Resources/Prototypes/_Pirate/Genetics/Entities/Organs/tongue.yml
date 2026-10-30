@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: Trauma's tongue organ mapped to the local Organ/slotId anatomy.
+# The donor uses these same species organ sprites, already present in this repository.
+- type: entity
+  parent: OrganHumanTongue
+  id: OrganReptilianTongue
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: tongue

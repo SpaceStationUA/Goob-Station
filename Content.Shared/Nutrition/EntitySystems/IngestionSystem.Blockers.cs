@@ -57,6 +57,7 @@ public sealed partial class IngestionSystem
     private void OnBlockerMaskToggled(Entity<IngestionBlockerComponent> ent, ref ItemMaskToggledEvent args)
     {
         ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
+        Dirty(ent); // Goob
     }
 
     // Pirate: modular suit helmets use ItemToggle rather than Mask.

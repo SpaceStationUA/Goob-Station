@@ -59,6 +59,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeechEvent>>(OnTransformSpeechImplant, before: [typeof(AccentSystem)]);
 
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
+
+        InitializePirate(); // Pirate: voice mask modes
     }
 
     /// <summary>
@@ -156,11 +158,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OnToggle(Entity<VoiceMaskComponent> entity, ref VoiceMaskToggleMessage args)
     {
-        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-toggle"), entity, args.Actor);
-        entity.Comp.Active = !entity.Comp.Active;
-
-        // Update identity because of possible name override
-        _identity.QueueIdentityUpdate(args.Actor);
+        SetActive(entity, !entity.Comp.Active, args.Actor); // Pirate: voice mask modes
     }
 
     private void OnAccentToggle(Entity<VoiceMaskComponent> entity, ref VoiceMaskAccentToggleMessage args)
@@ -197,7 +195,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (_uiSystem.HasUi(entity, VoiceMaskUIKey.Key))
             _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceMaskSpeechVerb, entity.Comp.Active, entity.Comp.AccentHide,
-                entity.Comp.JobIconProtoId)); // GabyStation -> Radio icons
+                entity.Comp.JobIconProtoId) // GabyStation -> Radio icons // Pirate: voice mask modes
+                { Modes = GetModesState(entity) }); // Pirate: voice mask modes
     }
     #endregion
 
@@ -211,6 +210,9 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!entity.Comp.Active)
             return;
+
+        if (!ShouldTransformMode(entity.Comp, args)) // Pirate: voice mask modes
+            return; // Pirate: voice mask modes
 
         args.VoiceName = GetCurrentVoiceName(entity);
         args.SpeechVerb = entity.Comp.VoiceMaskSpeechVerb ?? args.SpeechVerb;

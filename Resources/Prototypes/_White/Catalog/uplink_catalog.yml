@@ -8,6 +8,7 @@
   productEntity: ExperimentalSyndicateTeleporter
   cost:
     Telecrystal: 50 # Goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
     - UplinkDisruption
   conditions:
@@ -24,6 +25,7 @@
   productEntity: BetrayalKnife
   cost:
     Telecrystal: 30 # goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -41,6 +43,7 @@
   productEntity: ClothingEyesNightVisionGogglesSyndie
   cost:
     Telecrystal: 10 # goob
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkWearables
   conditions:
@@ -73,6 +76,7 @@
   productEntity: ClothingEyesThermalVisionGogglesSyndie
   cost:
     Telecrystal: 15 # goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWearables
   conditions:

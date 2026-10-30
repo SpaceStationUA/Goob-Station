@@ -1,0 +1,31 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<BoxContainer xmlns="https://spacestation14.io"
+        xmlns:genetics="clr-namespace:Content.Pirate.Client.Genetics.UI"
+        xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+        Orientation="Vertical"
+        HorizontalExpand="True"
+        VerticalExpand="True">
+    <genetics:GeneticScanner Name="Scanner"/>
+    <BoxContainer Name="MobContainer" Orientation="Vertical" Visible="False">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <genetics:SequenceButtons Name="SequenceButtons"/>
+            <genetics:SequenceInfo Name="Info">
+                <Button Name="CombineButton" Text="{Loc 'genetics-console-combine-button'}" Disabled="True" HorizontalExpand="True" Margin="0 8 0 0"/>
+            </genetics:SequenceInfo>
+        </BoxContainer>
+        <Label Text="{Loc 'genetics-console-combine-catalyst-heading'}" Margin="0 20 0 0"/>
+        <PanelContainer StyleClasses="LowDivider"/>
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Vertical" Margin="10">
+                <Label Name="DiskMutation" Text="{Loc 'genetics-console-disk-empty'}"/>
+                <RichTextLabel Name="DiskRecipes" Visible="False" Margin="0 4 0 0"/>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+</BoxContainer>

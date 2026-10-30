@@ -1,0 +1,44 @@
+- type: entity
+  parent: ClothingBackpackMerc
+  id: ClothingBackpackMercenaryFilled
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: MedkitCombatMercenaryFilled
+    - id: ExGrenade
+      amount: 2
+
+- type: entity
+  parent: ClothingBackpackMerc
+  id: ClothingBackpackMercenaryVanguardFilled
+  suffix: Vanguard, Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: MedkitCombatMercenaryFilled
+    - id: ExGrenade
+      amount: 2
+    - id: ClothingShoesBootsMercNoSlipFilled
+    - id: BolaEnergy
+      amount: 2
+    - id: SmokeGrenade
+      amount: 2
+    - id: GrenadeFlashBang
+      amount: 2
+    - id: CQCManual
+    - id: CombatMedipen
+      amount: 2
+
+- type: entity
+  parent: ClothingBackpackMercenaryFilled
+  id: ClothingBackpackMercenaryAssaultFilled
+  suffix: Assault, Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: MedkitCombatMercenaryFilled
+    - id: ExGrenade
+      amount: 2
+    - id: C4
+      amount: 2

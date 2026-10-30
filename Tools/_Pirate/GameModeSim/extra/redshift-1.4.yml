@@ -1,0 +1,133 @@
+# Simulator-only fixture; use separate SecretSalt14 ids to compare both Redshift versions.
+
+- type: entity
+  parent: Conspirators
+  id: SecretSaltConspirators
+  components:
+  - type: GameRule
+    chaosScore: 650
+
+- type: entity
+  parent: SiliconLiberation
+  id: SecretSaltSiliconLiberation
+  components:
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ SELFAgent ]
+      max: 3
+      playerRatio: 31
+      chaosScore: 125
+      lateJoinAdditional: true
+      allowNonHumans: true
+      jobBlacklist: [ Roboticist ]
+      blacklist:
+        components:
+        - AntagImmune
+      startingGear: SELFAgentGear
+      mindRoles:
+      - MindRoleSELFAgent
+      briefing:
+        sound: "/Audio/_Pirate/Ambience/Antag/self_greeting.ogg"
+
+- type: entity
+  parent: BloodCult
+  id: SecretSaltBloodCult
+  components:
+  - type: GameRule
+    chaosScore: 1000
+
+- type: entity
+  parent: Gangwars
+  id: SecretSaltGangwars
+  components:
+  - type: GameRule
+    minPlayers: 30
+    chaosScore: 1000
+
+- type: entity
+  parent: TerrorSpidersSpawn
+  id: SecretSaltTerrorSpidersSpawn
+  components:
+  - type: StationEvent
+    weight: 1
+    earliestStart: 20
+    minimumPlayers: 50
+    maxOccurrences: 1
+    duration: null
+    eventType: HostilesSpawn
+    chaos:
+      Hostile: 200
+      Combat: 100
+      Death: 50
+
+- type: entityTable
+  id: SecretSalt14Table
+  table: !type:AllSelector
+    children:
+      - !type:NestedSelector
+        tableId: SpaceTrafficControlTable
+      - !type:NestedSelector
+        tableId: BasicGameRulesTable
+      - id: SecretSaltTerrorSpidersSpawn
+      - id: AsakimShuttle
+      - id: TraitorMidround
+
+- type: weightedRandom
+  id: SecretSalt14Roundstart
+  weights:
+    Thief: 0.2
+    Shadowling: 0.05
+    Devil: 0.05
+    BloodBrothers: 0.2
+    Traitor: 0.18
+    SecretSaltConspirators: 0.03
+    SecretSaltSiliconLiberation: 0.03
+    Letoferol: 0.4
+    Changeling: 0.06
+    Heretic: 0.11
+    Vampire: 0.04
+    CorporateAgent: 0.025
+    XenomorphsInfestationRoundstart: 0.02
+
+- type: weightedRandom
+  id: SecretSalt14Primary
+  weights:
+    Traitor: 0.18
+    Changeling: 0.06
+    Heretic: 0.11
+    Vampire: 0.04
+    Nukeops: 0.07
+    SecretSaltGangwars: 0.05
+    SecretSaltBloodCult: 0.05
+    Letoferol: 0.4
+    SecretSaltConspirators: 0.04
+    Revolutionary: 0.10
+    Zombie: 0.05
+    BlobGameMode: 0.05
+    Wizard: 0.04
+    CosmicCult: 0.03
+    CorporateAgent: 0.025
+    XenomorphsInfestationRoundstart: 0.04
+    OopsAllThieves: 0.02
+    Shadowling: 0.04
+
+- type: entity
+  id: SecretSalt14
+  parent: SecretSalt
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SecretSaltPlus
+    primaryAntagsWeightTable: SecretSalt14Primary
+    roundStartAntagsWeightTable: SecretSalt14Roundstart
+  - type: SelectedGameRules
+    scheduledGameRules: !type:NestedSelector
+      tableId: SecretSalt14Table
+
+- type: gamePreset
+  id: SecretSalt14
+  name: secretsalt-title
+  description: secretsalt-description
+  showInVote: false
+  rules:
+    - SecretSalt14
+    - GlimmerEventScheduler

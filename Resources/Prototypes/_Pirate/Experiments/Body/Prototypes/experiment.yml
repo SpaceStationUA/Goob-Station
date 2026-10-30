@@ -17,13 +17,18 @@
     torso:
       part: TorsoExperiment
       connections:
+      - groin
       - right arm
       - left arm
-      - right leg
-      - left leg
       organs:
         heart: OrganExperimentHeart
         lungs: OrganHumanLungs
+    groin:
+      part: GroinExperiment
+      connections:
+      - right leg
+      - left leg
+      organs:
         stomach: OrganExperimentStomach
         liver:  OrganExperimentLiver
         kidneys: OrganHumanKidneys

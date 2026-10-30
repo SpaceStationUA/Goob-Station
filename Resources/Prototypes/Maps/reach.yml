@@ -36,6 +36,7 @@
             AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 1, 2 ]
             Scientist: [ 1, 1 ]
+            Geneticist: [ 1, 1 ] # Pirate: Trauma genetics
             Passenger: [ -1, -1 ]
 
         # Goobstation blob-config-start LOW

@@ -17,13 +17,6 @@ public sealed partial class AnyOfCondition : BaseTraitCondition
 
     protected override bool EvaluateImplementation(TraitConditionContext ctx)
     {
-        if (Invert)
-        {
-            throw new InvalidOperationException(
-                "AnyOfCondition does not support Invert. To require none of the conditions, " +
-                "invert the individual child conditions instead.");
-        }
-
         if (Conditions.Count == 0)
             return false;
 
@@ -53,9 +46,10 @@ public sealed partial class AnyOfCondition : BaseTraitCondition
         if (requirements.Count == 0)
             return string.Empty;
 
-        var joinedRequirements = string.Join("\nâ€˘ ", requirements);
+        var joinedRequirements = string.Join("\n\u2022 ", requirements);
 
-        return Loc.GetString("trait-condition-any-of", ("requirements", joinedRequirements));
+        var key = Invert ? "trait-condition-none-of" : "trait-condition-any-of";
+        return Loc.GetString(key, ("requirements", joinedRequirements));
     }
 }
 

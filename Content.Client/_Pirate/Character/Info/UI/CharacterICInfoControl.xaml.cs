@@ -42,8 +42,10 @@ public sealed partial class CharacterICInfoControl : Control
         var characterInfo = entityManager.System<PirateSharedCharacterInfoSystem>();
         var description = info == null
             ? characterInfo.GetPublicDescription(target.Value)
-            : string.Join("\n", new[] { characterInfo.GetPhysicalDescription(target.Value), info.Personality }
-                .Where(text => !string.IsNullOrEmpty(text)));
+            : string.Join(
+                PirateSharedCharacterInfoSystem.PublicDescriptionSeparator,
+                new[] { characterInfo.GetPhysicalDescription(target.Value), info.Personality }
+                    .Where(text => !string.IsNullOrEmpty(text)));
         DescriptionSection.Visible = !string.IsNullOrEmpty(description);
         CharacterDescription.SetMessage(FormattedMessage.RemoveMarkupPermissive(description));
 

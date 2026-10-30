@@ -154,14 +154,6 @@ selectable-set-blueshield-chester-description =
     Includes: 8 Gauge shotgun, the Chester. Spare ammo,
     Alternate ammo, Spare magazines.
 
-selectable-set-blueshield-syringe-name = medical set
-selectable-set-blueshield-syringe-description =
-    Perfect for healing allies or poisioning foes in a pinch.
-    Includes: An explosive resistant chestrig, a combat injector, and
-    several vials of medicine.
-
-# Blueshield hardsuits
-
 selectable-set-blueshield-hardsuit-light-name = blueshield hardsuit
 selectable-set-blueshield-hardsuit-light-description =
     An armoured hardsuit, allowing for more speed at the cost of protection.

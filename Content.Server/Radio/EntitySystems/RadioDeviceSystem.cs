@@ -203,7 +203,7 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         if (uid == args.RadioSource || component.PowerRequired && !_power.IsPowered(uid)) // Goobstation, powered required
             return;
 
-        var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
+        var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource)) { Context = Content.Shared._Pirate.VoiceMask.SpeakerNameContext.Radio, RadioChannel = args.Channel.ID }; // Pirate: voice mask modes
         RaiseLocalEvent(args.MessageSource, nameEv);
 
         var name = Loc.GetString("speech-name-relay",

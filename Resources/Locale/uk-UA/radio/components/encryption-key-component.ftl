@@ -5,5 +5,5 @@ encryption-keys-no-keys = Цей пристрій не має ключів ши�
 encryption-keys-are-locked = Слоти для ключів шифрування заблоковані!
 encryption-keys-panel-locked = Спочатку відкрийте технічну панель!
 examine-encryption-channels-prefix = Доступні частоти:
-examine-encryption-channel = [color={$color}]{$key} для {$id} ({$freq})[/color]
-examine-encryption-default-channel = Стандартним каналом є [color={$color}]{$channel}[/color].
+examine-encryption-channel = [radiochannel="{$channelId}"]{$key} для {$id} ({NATURALFIXED($freq, 1)}) {$deviceType}[/radiochannel]
+examine-encryption-default-channel = Канал за замовчуванням — [radiochannel="{$channelId}"]{$channel}[/radiochannel].

@@ -17,6 +17,7 @@
 - type: latheRecipePack
   id: ScienceEquipment
   recipes:
+  - ClothingHandsGlovesDolphin # Pirate: Omu equipment
   - AnomalyScanner
   - NodeScanner
   - AnomalyLocator

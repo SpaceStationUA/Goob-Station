@@ -19,6 +19,12 @@ public sealed class TransformSpeakerNameEvent : EntityEventArgs, IInventoryRelay
     public string VoiceName;
     public ProtoId<SpeechVerbPrototype>? SpeechVerb;
 
+    #region Pirate: voice mask modes
+    public Content.Shared._Pirate.VoiceMask.SpeakerNameContext Context = Content.Shared._Pirate.VoiceMask.SpeakerNameContext.Unknown;
+
+    public ProtoId<RadioChannelPrototype>? RadioChannel;
+    #endregion
+
     public TransformSpeakerNameEvent(EntityUid sender, string name)
     {
         Sender = sender;

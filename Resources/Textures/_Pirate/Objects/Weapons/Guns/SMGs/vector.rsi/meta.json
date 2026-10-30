@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "license": "AGPL-3.0-or-later",
+  "copyright": "Vector by GeneralPantsu, based on Toriate, from Sojourn PR #2310. Magazines from Sojourn/CEV-Eris contributors. Converted to RSI for Lanos. Source license: sojourn-station/COPYING. https://github.com/sojourn-13/sojourn-station/pull/2310",
+  "size": {
+    "x": 48,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "vector"
+    },
+    {
+      "name": "vector_slide"
+    },
+    {
+      "name": "vector_mag"
+    },
+    {
+      "name": "vector_mag_slide"
+    },
+    {
+      "name": "vector_longmag"
+    },
+    {
+      "name": "vector_longmag_slide"
+    },
+    {
+      "name": "vector_stock"
+    },
+    {
+      "name": "vector_stock_slide"
+    },
+    {
+      "name": "vector_stock_mag"
+    },
+    {
+      "name": "vector_stock_mag_slide"
+    },
+    {
+      "name": "vector_stock_longmag"
+    },
+    {
+      "name": "vector_stock_longmag_slide"
+    },
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "equipped-SUITSTORAGE",
+      "directions": 4
+    }
+  ]
+}

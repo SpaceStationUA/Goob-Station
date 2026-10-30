@@ -124,7 +124,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         if (_objectives.TryCreateObjective((cloneMindId, cloneMindComp), "ParadoxCloneFriendObjective", out var objective))
         {
             _targetObjective.SetTarget(objective.Value, ent.Comp.OriginalMind.Value);
-            
+
             _mind.AddObjective(cloneMindId, cloneMindComp, objective.Value);
         }
         // Pirate edit end ^^^

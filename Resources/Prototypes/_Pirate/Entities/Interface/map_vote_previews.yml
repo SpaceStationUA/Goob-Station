@@ -231,3 +231,11 @@
   components:
   - type: Sprite
     state: core
+
+- type: entity
+  parent: BasePirateMapPreview
+  id: PirateMapPreviewLeonidTP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: leonid_tp

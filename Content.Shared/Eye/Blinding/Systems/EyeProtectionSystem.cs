@@ -6,7 +6,6 @@ using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Tools.Components;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Clothing.Components;
-using Content.Shared._Pirate.Clothing.WeldingVisor; // Pirate: welding visor toggle
 
 namespace Content.Shared.Eye.Blinding.Systems
 {
@@ -34,9 +33,6 @@ namespace Content.Shared.Eye.Blinding.Systems
         private void OnGetProtection(EntityUid uid, EyeProtectionComponent component, GetEyeProtectionEvent args)
         {
             if (TryComp<MaskComponent>(uid, out var mask) && mask.IsToggled)
-                return;
-
-            if (TryComp<WeldingVisorComponent>(uid, out var visor) && !visor.Lowered) // Pirate: welding visor toggle
                 return;
 
             args.Protection += component.ProtectionTime;

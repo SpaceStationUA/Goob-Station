@@ -188,6 +188,7 @@ namespace Content.Client.Voting
             for (var i = 0; i < message.Options.Length; i++)
             {
                 existingVote.Entries[i].Votes = message.Options[i].votes;
+                existingVote.Entries[i].PirateSubtraction = message.PirateSubtractions[i]; // Pirate: voting penalties and runoffs
             }
 
             if (@new && _popupContainer != null)
@@ -258,6 +259,7 @@ namespace Content.Client.Voting
             public string? Icon { get; }
             public EntProtoId? Preview { get; }
             public int Votes { get; set; }
+            public int PirateSubtraction { get; set; } // Pirate: voting penalties and runoffs
 
             public VoteEntry(string text, string? icon, EntProtoId? preview)
             {

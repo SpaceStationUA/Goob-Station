@@ -163,7 +163,7 @@ public sealed partial class RadioSystem : EntitySystem
         if (!_messages.Add(message))
             return;
 
-        var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
+        var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName) { Context = Content.Shared._Pirate.VoiceMask.SpeakerNameContext.Radio, RadioChannel = channel.ID }; // Pirate: voice mask modes
         RaiseLocalEvent(messageSource, evt);
 
         // Goob - Job icons
@@ -361,6 +361,8 @@ public sealed partial class RadioSystem : EntitySystem
 
         return Loc.GetString(wrapId,
             ("color", channel.Color),
+            ("channelId", channel.ID), // Goob
+            ("languageOverride", language.SpeechOverride.Color is null ? "none" : languageColor.ToHex()), // Goob
             ("languageColor", languageColor),
             ("fontType", language.SpeechOverride.FontId ?? speech.FontId),
             ("fontSize", loudSpeakFont ?? language.SpeechOverride.FontSize ?? speech.FontSize), // goob edit - "loudSpeakFont"

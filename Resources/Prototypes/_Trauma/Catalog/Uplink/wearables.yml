@@ -13,6 +13,11 @@
     blacklist:
       components:
       - SurplusBundle
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+      - LoneOpsUplink
 
 - type: listing
   id: UplinkBombCollarKit
@@ -24,7 +29,7 @@
     Telecrystal: 20
   categories:
   - UplinkWearables
-  reputation: 50 # Pirate: explosives reputation
+  reputation: 60 # Pirate: military reputation tier
 
 - type: listing
   id: UplinkChameleonArmor

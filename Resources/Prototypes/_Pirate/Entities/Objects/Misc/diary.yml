@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: 2026 CyberLanos <cyber.lanos00@gmail.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+- type: entity
+  id: Diary
+  parent: BookBase
+  name: щоденник
+  description: Особистий щоденник для записів, думок та спогадів. Написане в ньому зберігається між змінами.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/diary.rsi
+    layers:
+    - state: closed
+      map: [ "enum.DiaryCoverLayers.Cover" ]
+    - state: open_page_left
+      map: [ "enum.DiaryCoverLayers.PageLeft" ]
+      visible: false
+    - state: open_page_right
+      map: [ "enum.DiaryCoverLayers.PageRight" ]
+      visible: false
+  - type: DiaryCover
+    openSound:
+      path: /Audio/_Goobstation/Items/handling/book_pickup.ogg
+      params:
+        volume: -4
+    closeSound:
+      path: /Audio/_Goobstation/Items/handling/book_drop.ogg
+      params:
+        volume: -4
+  # Pirate: persistent text (diaries) - a stamp would make the diary unwritable forever
+  - type: NoStamping
+  - type: Paper
+    contentSize: 20000
+  # Pirate: persistent diary pages - the diary reads like a book: flip it leaf by leaf,
+  # add or tear out leaves and sign each one separately
+  - type: PaperPages
+
+- type: entity
+  id: DiaryLoadout
+  parent: Diary
+  suffix: loadout
+  components:
+  - type: PersistentText
+    ownerKind: profile
+    storageKey: diary
+    supportCharacterName: true
+    appendOwnerName: true

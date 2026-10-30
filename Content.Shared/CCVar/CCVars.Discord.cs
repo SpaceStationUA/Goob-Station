@@ -7,7 +7,7 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     /// <summary>
-    ///     The role that will get mentioned if a new SOS ahelp comes in.
+    ///     Pirate: comma-separated role IDs to mention if a new SOS ahelp comes in.
     /// </summary>
     public static readonly CVarDef<string> DiscordAhelpMention =
         CVarDef.Create("discord.on_call_ping", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);

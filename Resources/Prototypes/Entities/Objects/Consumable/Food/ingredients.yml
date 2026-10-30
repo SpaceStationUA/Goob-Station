@@ -729,6 +729,8 @@
   - type: SliceableFood
     count: 3
     slice: FoodButterSlice
+  - type: Extractable # Goob
+    grindableSolutionName: food
 
 - type: entity
   parent: FoodBakingBase
@@ -750,6 +752,8 @@
   - type: Tag
     tags:
     - Slice
+  - type: Extractable # Goob
+    grindableSolutionName: food
 
 - type: entity
   name: stick of cannabis butter

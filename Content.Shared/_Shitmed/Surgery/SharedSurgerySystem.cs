@@ -141,6 +141,7 @@ public abstract partial class SharedSurgerySystem : EntitySystem
         _ui.SetUi(ent.Owner, SurgeryUIKey.Key, data);
     }
 
+    // Pirate: resolve the operated part separately from the patient do-after target.
     private void OnBeforeTargetDoAfter(Entity<SurgeryTargetComponent> ent,
         ref DoAfterAttemptEvent<SurgeryDoAfterEvent> args)
     {
@@ -148,8 +149,8 @@ public abstract partial class SharedSurgerySystem : EntitySystem
             || !args.Event.Repeat) // We only wanna do this laggy shit on repeatables. One-time stuff idc.
             return;
 
-        if (args.Event.Target is not { } target
-            || !IsSurgeryValid(ent, target, args.Event.Surgery, args.Event.Step, args.Event.User, out var surgery, out var part, out var _)
+        if (!TryGetEntity(args.Event.Part, out var target)
+            || !IsSurgeryValid(ent, target.Value, args.Event.Surgery, args.Event.Step, args.Event.User, out var surgery, out var part, out var _)
             || IsStepComplete(ent, part, args.Event.Step, surgery))
             args.Cancel();
     }
@@ -168,8 +169,8 @@ public abstract partial class SharedSurgerySystem : EntitySystem
 
         var tool = _hands.GetActiveItemOrSelf(args.User);
         if (args.Handled
-            || args.Target is not { } target
-            || !IsSurgeryValid(ent, target, args.Surgery, args.Step, args.User, out var surgery, out var part, out var step)
+            || !TryGetEntity(args.Part, out var target)
+            || !IsSurgeryValid(ent, target.Value, args.Surgery, args.Step, args.User, out var surgery, out var part, out var step)
             || !PreviousStepsComplete(ent, part, surgery, args.Step, args.User)
             || !CanPerformStep(args.User, ent, part, step, tool, false))
         {
@@ -178,10 +179,12 @@ public abstract partial class SharedSurgerySystem : EntitySystem
         }
 
         var complete = IsStepComplete(ent, part, args.Step, surgery);
-        args.Repeat = HasComp<SurgeryRepeatableStepComponent>(step) && !complete;
         var ev = new SurgeryStepEvent(args.User, ent, part, tool, surgery, step, complete);
         RaiseLocalEvent(step, ref ev);
         RaiseLocalEvent(args.User, ref ev);
+        // Pirate: determine repetition after applying the treatment.
+        args.Handled = true;
+        args.Repeat = HasComp<SurgeryRepeatableStepComponent>(step) && !IsStepComplete(ent, part, args.Step, surgery);
 
         // consume the tool if it's something like using LV cable as stitches
         if (args.ToolUsed)

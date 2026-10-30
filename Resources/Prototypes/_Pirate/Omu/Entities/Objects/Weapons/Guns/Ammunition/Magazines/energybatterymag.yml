@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  id: AdvancedEnergyMagRifleLethal
+  parent: [ EnergyRifleMagBase, BaseSecurityContraband ]
+  name: advanced energy rifle magazine (lethal)
+  description: A Microreactor hooked up to a laser emitter that creates a lethal bolt of energy out the front of it's rifle.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Ammunition/Magazine/advancedenergyriflemag.rsi
+    layers:
+    - state: erifle_lethal
+      map: [ "enum.GunVisualLayers.Base" ]
+  - type: BatteryAmmoProvider
+    proto: RifleBulletEnergyGunLethal
+    fireCost: 50
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50 # if balance is fucked probably just halve this number
+    autoRechargePauseTime: 12
+  - type: Tag
+    tags:
+    - AdvancedEnergyMagAmmo
+
+- type: entity
+  id: AdvancedEnergyMagRifleOverchargeLethal
+  parent: [ EnergyRifleMagBase, BaseSecurityContraband ]
+  name: advanced energy rifle magazine (overcharge)
+  description: A Microreactor hooked up to an overclocked laser emitter that creates a devastating bolt of energy out the front of it's rifle, but recharges slower and carries less ammo.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Ammunition/Magazine/advancedenergyriflemag.rsi
+    layers:
+    - state: erifle_overcharge
+      map: [ "enum.GunVisualLayers.Base" ]
+  - type: BatteryAmmoProvider
+    proto: RifleBulletEnergyGunOverchargeLethal
+    fireCost: 66 #15 shot hopefully
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50 # if balance is fucked probably just halve this number
+    autoRechargePauseTime: 12
+  - type: Tag
+    tags:
+    - AdvancedEnergyMagAmmo
+
+- type: entity
+  id: AdvancedEnergyMagRifleDisabler
+  parent: [ EnergyRifleMagBase, BaseSecurityContraband ]
+  name: advanced energy rifle magazine (disabler)
+  description: A Microreactor hooked up to a laser emitter that creates an exhausting bolt of energy out the front of it's rifle.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Ammunition/Magazine/advancedenergyriflemag.rsi
+    layers:
+    - state: erifle_disabler
+      map: [ "enum.GunVisualLayers.Base" ]
+  - type: BatteryAmmoProvider
+    proto: RifleBulletEnergyGunDisabler
+    fireCost: 25
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50 # if balance is fucked probably just halve this number
+    autoRechargePauseTime: 12
+  - type: Tag
+    tags:
+    - AdvancedEnergyMagAmmo

@@ -28,7 +28,7 @@ public sealed partial class SingleMarkingPicker
     private IReadOnlyDictionary<string, MarkingPrototype> ResolveCategoryMarkings(string? ckey)
     {
         return IgnoreSpecies
-            ? _markingManager.MarkingsByCategoryAndSex(Category, Sex, GradientContext != null ? null : ckey)
-            : _markingManager.MarkingsByCategoryAndSpecies(Category, _species!, GradientContext != null ? null : ckey);
+            ? _markingManager.MarkingsByCategoryAndSex(Category, Sex, ckey)
+            : _markingManager.MarkingsByCategoryAndSpecies(Category, _species!, ckey);
     }
 }

@@ -7,7 +7,7 @@
     Telecrystal: 12
   categories:
   - UplinkExplosives
-  reputation: 45 # Pirate: explosives reputation
+  reputation: 40 # Pirate: specialist reputation tier
 
 - type: listing
   id: UplinkStickyGrenade

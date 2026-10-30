@@ -18,7 +18,7 @@ using GasCanisterComponent = Content.Shared.Atmos.Piping.Unary.Components.GasCan
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
-public sealed class GasCanisterSystem : SharedGasCanisterSystem
+public sealed partial class GasCanisterSystem : SharedGasCanisterSystem // Pirate: novice protection extension.
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -90,6 +90,8 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
 
         // Pirate: Small tanks barely affect canister pressure, so track their transfer separately for UI updates.
         var tankPressureChanged = false;
+
+        EnforceNoviceRelease(uid, canister); // Pirate: check again after tank removal or pipe disconnection.
 
         // Release valve is open, release gas.
         if (canister.ReleaseValve)

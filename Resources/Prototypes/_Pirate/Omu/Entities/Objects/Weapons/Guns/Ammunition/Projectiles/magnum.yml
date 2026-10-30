@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  id: BulletMagnumEnsnaring
+  name: bullet (.45 magnum ensnaring)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: rubber
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Piercing: 15 #Low damage, but ensnaring
+  - type: Ensnaring
+    canThrowTrigger: true
+    destroyOnRemove: true
+    breakoutTime: 2
+    freeTime: 2
+    sprintSpeed: 0.7
+    walkSpeed: 0.7
+    staminaDamage: 10
+
+- type: entity
+  id: BulletMagnumFlash
+  name: bullet (.45 magnum flash)
+  parent: BaseBulletTrigger
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: rubber
+      color: "#fff94d"
+  - type: FlashOnTrigger
+    range: 5
+    duration: 4
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
+  - type: Ammo
+    muzzleFlash: null
+  - type: PointLight
+    radius: 1.5
+    color: yellow
+    energy: 1
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 18

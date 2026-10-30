@@ -2,6 +2,7 @@
 ### Кайот
 - type: marking
   id: VulpTailCoyote
+  wagging: VulpTailCoyoteAnimated # Pirate: upstream wagging lookup
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]
@@ -19,6 +20,7 @@
 ### Фенек
 - type: marking
   id: VulpTailFennec
+  wagging: VulpTailFennecAnimated # Pirate: upstream wagging lookup
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]
@@ -43,6 +45,7 @@
 ### Пухнастий
 - type: marking
   id: VulpTailFluffy
+  wagging: VulpTailFluffyAnimated # Pirate: upstream wagging lookup
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]
@@ -67,6 +70,7 @@
 ### Лисячий
 - type: marking
   id: VulpTailFox
+  wagging: VulpTailFoxAnimated # Pirate: upstream wagging lookup
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]
@@ -91,6 +95,7 @@
 ### Хаскі
 - type: marking
   id: VulpTailHusky
+  wagging: VulpTailHuskyAnimated # Pirate: upstream wagging lookup
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]
@@ -122,6 +127,7 @@
 ### Довгий
 - type: marking
   id: VulpTailLong
+  wagging: VulpTailLongAnimated # Pirate: upstream wagging lookup
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]
@@ -146,6 +152,7 @@
 ### Стандартний
 - type: marking
   id: VulpTail
+  wagging: VulpTailAnimated # Pirate: upstream wagging lookup
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]
@@ -170,6 +177,7 @@
 ### Стандартний (градіент)
 - type: marking
   id: VulpTailFade
+  wagging: VulpTailFadeAnimated # Pirate: upstream wagging lookup
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Vulpkanin ]

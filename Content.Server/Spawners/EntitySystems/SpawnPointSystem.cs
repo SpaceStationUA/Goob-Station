@@ -71,6 +71,7 @@ public sealed class SpawnPointSystem : EntitySystem
             spawnLoc,
             args.Job,
             args.HumanoidCharacterProfile,
-            args.Station);
+            args.Station,
+            ckey: args.Ckey); // Pirate ckey for restricted players
     }
 }

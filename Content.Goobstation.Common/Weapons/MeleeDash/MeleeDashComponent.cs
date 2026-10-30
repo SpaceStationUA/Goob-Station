@@ -21,6 +21,10 @@ public sealed partial class MeleeDashComponent : Component
 
     [DataField("length")]
     public float MaxDashLength = 4f;
+
+    // Pirate: Omu's warden rapier cannot dash in zero gravity.
+    [DataField]
+    public bool CanDashWhileWeightless = true;
 }
 
 [Serializable, NetSerializable]

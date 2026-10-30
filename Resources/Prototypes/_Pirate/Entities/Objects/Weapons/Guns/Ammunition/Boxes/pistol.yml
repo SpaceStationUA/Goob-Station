@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolBig
+  name: large ammunition box (.35 auto)
+  description: A large cardboard box holding 200 rounds of .35 Auto ammunition.
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 200
+    proto: CartridgePistol
+  - type: Sprite
+    sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Boxes/pistol_big.rsi
+    layers:
+    - state: base-b
+      map: ["enum.GunVisualLayers.Base"]
+    - state: magb-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: magb
+    steps: 4
+    zeroVisible: false

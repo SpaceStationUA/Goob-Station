@@ -9,13 +9,13 @@
   - !type:DepartmentTimeRequirement
     department: Civilian
     time: 7.5h # - Goobstation - shitter nerf
-  # Pirate contractor start
+  # Pirate Employment start
   - !type:CharacterEmployerRequirement
     employers:
     - NanoTrasen
-    - IdrisIncorporated
-    - OrionExpress
-  # Pirate contractor end
+    - Idris
+    - Orion
+  # Pirate Employment end
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service

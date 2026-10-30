@@ -160,6 +160,25 @@
         whitelist:
           tags:
           - MilitaryPowerCellRevolver
+      #region Pirate: gun flashlights
+      flashlight:
+        name: weapon-upgrade-slot-name-flashlight
+        priority: -1 # Below the cell and speedloader slots.
+        ejectOnBreak: true
+        occludesLight: false
+        whitelist:
+          components:
+          - GunUpgradeFlashlight
+      #endregion Pirate: gun flashlights
+  #region Pirate: gun flashlights
+  - type: GunFlashlightAttachment
+    offset: "0.09375, 0.0625"
+  - type: ItemUpgradeable
+  - type: ContainerContainer # Redeclaring containers replaces the parent's list.
+    containers:
+      gun_magazine: !type:ContainerSlot
+      flashlight: !type:ContainerSlot
+  #endregion Pirate: gun flashlights
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/cell_revolver.rsi
     layers:

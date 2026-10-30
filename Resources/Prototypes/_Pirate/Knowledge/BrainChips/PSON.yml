@@ -31,10 +31,6 @@
       MeleeKnowledge: -1000
 
 - type: entity
-  parent: SkillChipCombatDampener
-  id: SkillChipMindPurge
-
-- type: entity
   parent: BaseSkillChipPSON
   id: SkillChipTiderDampener
   components:

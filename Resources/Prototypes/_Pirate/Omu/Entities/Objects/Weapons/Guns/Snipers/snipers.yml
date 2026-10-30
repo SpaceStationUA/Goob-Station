@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  name: M1 Garand
+  parent: [ BaseWeaponRifle, BaseSecurityContraband ]
+  id: WeaponSniperM1Garand
+  description: An ancient, adored weapon once wielded by infantrymen on Sol. This one was gifted to the Sergeant.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Snipers/ceremonial_rifle.rsi
+    state: base
+  - type: Clothing
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Snipers/ceremonial_rifle.rsi
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Clip
+        startingItem: MagazineClipM1Garand
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineClipM1Garand
+      gun_chamber:
+        name: Chamber
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeLongRifle
+  - type: Gun
+    fireRate: 0.66
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: ChamberMagazineAmmoProvider
+    autoCycle: true
+    autoEject: true
+    soundAutoEject:
+      path: /Audio/_Goobstation/Weapons/Guns/MagOut/garand_eject.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/m41_cock.ogg
+    soundBoltClosed:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundBoltOpened:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+  - type: GunRequiresWield
+  - type: Item
+    size: Large
+    storedRotation: 45
+  - type: AmmoCounter

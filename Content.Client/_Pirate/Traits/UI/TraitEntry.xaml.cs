@@ -1,4 +1,7 @@
 using System.Linq;
+using Content.Client.Guidebook.RichText;
+using Content.Client.UserInterface.Systems.Guidebook;
+using Content.Shared.Guidebook;
 using Content.Shared.Traits;
 using Content.Shared._Pirate.Traits;
 using Content.Shared.Preferences;
@@ -15,8 +18,13 @@ using Robust.Shared.Utility;
 namespace Content.Client._Pirate.Traits.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class TraitEntry : PanelContainer
+public sealed partial class TraitEntry : PanelContainer, ILinkClickHandler
 {
+    private static readonly Type[] TraitDescriptionMarkupTags =
+    [
+        typeof(TextLinkTag),
+    ];
+
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ILocalizationManager _loc = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -33,6 +41,12 @@ public sealed partial class TraitEntry : PanelContainer
     private bool _isUpdating;
     private readonly List<string> _failedConditionTooltips = new();
 
+    public void HandleClick(string link)
+    {
+        UserInterfaceManager.GetUIController<GuidebookUIController>()
+            .OpenGuidebook(selected: new ProtoId<GuideEntryPrototype>(link));
+    }
+
     public TraitEntry(TraitPrototype trait)
     {
         RobustXamlLoader.Load(this);
@@ -45,7 +59,13 @@ public sealed partial class TraitEntry : PanelContainer
 
         TraitNameLabel.Text = Loc.GetString(trait.Name);
         if (trait.Description != null)
-            TraitDescriptionLabel.SetMessage(Loc.GetString(trait.Description));
+        {
+            TraitDescriptionLabel.SetMessage(
+                FormattedMessage.FromMarkupPermissive(Loc.GetString(trait.Description)),
+                TraitDescriptionMarkupTags);
+            foreach (var link in TraitDescriptionLabel.Controls.OfType<Label>())
+                link.AddStyleClass("TraitsEntryDescriptionLink");
+        }
 
         var displayCost = -trait.Cost;
         var costPrefix = displayCost > 0 ? "+" : "";
@@ -54,8 +74,17 @@ public sealed partial class TraitEntry : PanelContainer
         TraitCostLabel.ModulateSelfOverride = Color.FromHex(costColor);
 
         TraitCheckbox.OnToggled += OnCheckboxToggled;
+        TraitInfo.OnResized += UpdateDescriptionWidth;
+        UpdateDescriptionWidth();
 
         UpdateConditionTooltips();
+    }
+
+    private void UpdateDescriptionWidth()
+    {
+        var width = Math.Max(0, TraitInfo.Size.X - TraitDescriptionLabel.Margin.Left - TraitDescriptionLabel.Margin.Right);
+        if (TraitDescriptionLabel.SetWidth != width)
+            TraitDescriptionLabel.SetWidth = width;
     }
 
     private void UpdateConditionTooltips()
@@ -69,15 +98,20 @@ public sealed partial class TraitEntry : PanelContainer
                 tooltips.Add(tooltip);
         }
 
-        if (tooltips.Count > 0)
-        {
-            var tooltipText = Loc.GetString("trait-conditions-tooltip",
-                ("requirements", string.Join("\n", tooltips)));
+        SetConditionTooltip(tooltips);
+    }
 
-            TooltipSupplier = _ => CreateMarkupTooltip(tooltipText);
-        }
-        else
+    private void SetConditionTooltip(IReadOnlyCollection<string> tooltips)
+    {
+        if (tooltips.Count == 0)
+        {
             TooltipSupplier = null;
+            return;
+        }
+
+        var tooltipText = Loc.GetString("trait-conditions-tooltip",
+            ("requirements", string.Join("\n", tooltips)));
+        TooltipSupplier = _ => CreateMarkupTooltip(tooltipText);
     }
 
     /// <summary>
@@ -127,26 +161,6 @@ public sealed partial class TraitEntry : PanelContainer
             }
         }
 
-        var conflictingNames = new List<string>();
-        foreach (var conflictId in _trait.Conflicts)
-        {
-            if (selectedTraits.Contains(conflictId) && conflictId != _trait.ID)
-            {
-                MeetsConditions = false;
-                if (_prototype.TryIndex(conflictId, out var conflictingTrait))
-                {
-                    conflictingNames.Add(Loc.GetString(conflictingTrait.Name));
-                }
-            }
-        }
-
-        if (conflictingNames.Count > 0)
-        {
-            var conflictTooltip = Loc.GetString("trait-conditions-conflict-tooltip",
-                ("traits", string.Join(", ", conflictingNames)));
-            TooltipSupplier = _ => CreateMarkupTooltip(conflictTooltip);
-        }
-
         var canAfford = remainingPoints >= TraitCost || selectedTraits.Contains(_trait.ID);
         UpdateDisabledState(canAfford);
     }
@@ -171,6 +185,7 @@ public sealed partial class TraitEntry : PanelContainer
             AddStyleClass("TraitsEntryUnavailable");
             RemoveStyleClass("TraitsEntryDisabled");
             RemoveStyleClass("TraitsEntryUnaffordable");
+            SetConditionTooltip(_failedConditionTooltips);
         }
         else if (!canAfford)
         {

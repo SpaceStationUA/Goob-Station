@@ -1,20 +1,38 @@
 - type: entity
-  id: MercUndeterminedWeapon
+  id: MercUndeterminedClass
+  name: mercenary specialization requisition
+  description: Choose one mercenary specialization. Assault provides weapon requisitions, while Medic, Recon, Augment and Vanguard provide specialized equipment.
+  parent: [ BaseItem, BaseSetSelector ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Mercenary/requisition_uplink.rsi
+    state: icon
+  - type: SetSelector
+    possibleSets:
+    - MercAssaultSet
+    - MercMedicSet
+    - MercReconSet
+    - MercAugmentSet
+    - MercVanguardSet
+    maxSelectedSets: 1
+
+- type: entity
+  id: MercUndeterminedAssaultWeapon
   name: mercenary weapon requisition
   description: A small remote utilizing bluespace technology to drop in a weapon loadout directly to you. Choose wisely.
   parent: [ BaseItem, BaseSetSelector ]
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Security/ertundetermined.rsi
+    sprite: _Pirate/Objects/Specific/Mercenary/requisition_uplink.rsi
     state: icon
   - type: SetSelector
     possibleSets:
-    - MercWSPRSet
     - MercEstocSet
     - MercBanditSet
     - MercAKMSet
     - MercEnforcerSet
     - MercVulkanMSet
+    - MercM16ModernSet
     maxSelectedSets: 1
 
 - type: entity
@@ -24,7 +42,7 @@
   parent: [ BaseItem, BaseSetSelector ]
   components:
   - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Security/ertundetermined.rsi
+    sprite: _Pirate/Objects/Specific/Mercenary/requisition_uplink.rsi
     state: icon
   - type: SetSelector
     possibleSets:

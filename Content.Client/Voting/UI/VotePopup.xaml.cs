@@ -83,6 +83,8 @@ namespace Content.Client.Voting.UI
                 if (_vote.DisplayVotes)
                 {
                     _voteOptions[i].Button.IconLabel.Text = Loc.GetString("ui-vote-button", ("text", entry.Text), ("votes", entry.Votes));
+                    if (entry.PirateSubtraction > 0) // Pirate: voting penalties and runoffs
+                        _voteOptions[i].Button.IconLabel.Text += $" (-{entry.PirateSubtraction})"; // Pirate: voting penalties and runoffs
                 }
                 else
                 {

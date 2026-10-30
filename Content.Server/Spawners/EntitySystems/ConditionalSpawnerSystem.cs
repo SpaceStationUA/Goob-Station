@@ -6,6 +6,7 @@ using Content.Server.Spawners.Components;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects; // Pirate: preserve random spawner rotation
 using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems
@@ -16,6 +17,7 @@ namespace Content.Server.Spawners.EntitySystems
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly EntityTableSystem _entityTable = default!;
+        [Dependency] private readonly TransformSystem _transform = default!; // Pirate: preserve random spawner rotation
 
         public override void Initialize()
         {
@@ -97,7 +99,11 @@ namespace Content.Server.Spawners.EntitySystems
         {
             if (component.RarePrototypes.Count > 0 && (component.RareChance == 1.0f || _robustRandom.Prob(component.RareChance)))
             {
-                Spawn(_robustRandom.Pick(component.RarePrototypes), Transform(uid).Coordinates);
+                var prototype = _robustRandom.Pick(component.RarePrototypes); // Pirate: preserve random spawner rotation
+                var rareCoordinates = Transform(uid).Coordinates; // Pirate: preserve random spawner rotation
+                var spawned = Spawn(prototype, rareCoordinates); // Pirate: preserve random spawner rotation
+                if (component.InheritRotation) // Pirate: preserve random spawner rotation
+                    _transform.SetLocalRotation(spawned, Transform(uid).LocalRotation); // Pirate: preserve random spawner rotation
                 return;
             }
 
@@ -119,7 +125,10 @@ namespace Content.Server.Spawners.EntitySystems
 
             var coordinates = Transform(uid).Coordinates.Offset(new Vector2(xOffset, yOffset));
 
-            Spawn(_robustRandom.Pick(component.Prototypes), coordinates);
+            var commonPrototype = _robustRandom.Pick(component.Prototypes); // Pirate: preserve random spawner rotation
+            var commonSpawned = Spawn(commonPrototype, coordinates); // Pirate: preserve random spawner rotation
+            if (component.InheritRotation) // Pirate: preserve random spawner rotation
+                _transform.SetLocalRotation(commonSpawned, Transform(uid).LocalRotation); // Pirate: preserve random spawner rotation
         }
 
         private void Spawn(Entity<EntityTableSpawnerComponent> ent)

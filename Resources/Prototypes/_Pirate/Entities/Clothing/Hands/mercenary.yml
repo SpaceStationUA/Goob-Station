@@ -1,0 +1,20 @@
+- type: entity
+  parent: [ ClothingHandsMercGlovesCombat, ClothingHandsGlovesNitrile ]
+  id: ClothingHandsMercGlovesMedical
+  name: mercenary medical gloves
+  description: Insulated combat gloves with a medical-grade nitrile coating, combining surgical hygiene with protection from combat injuries and electricity.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Hands/Gloves/merc_medical.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Hands/Gloves/merc_medical.rsi
+  - type: Insulated
+    coefficient: 0
+  - type: Fiber
+    fiberMaterial: fibers-nitrile
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+    - GlovesNitrile

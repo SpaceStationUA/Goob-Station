@@ -4,20 +4,21 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Inventory;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Random;
 
 namespace Content.Pirate.Server.Fluids;
 
-/// <summary>
-/// Soaks wading mobs and drains puddles on standing water.
-/// </summary>
 public sealed class FloorWaterSystem : EntitySystem
 {
     [Dependency] private readonly SharedWetnessSystem _wetness = null!;
-    [Dependency] private readonly EntityLookupSystem _lookup = null!;
     [Dependency] private readonly SharedMapSystem _map = null!;
-    [Dependency] private readonly IRobustRandom _random = null!;
     [Dependency] private readonly WaterBridgeSystem _waterBridge = null!;
+
+    private const float AbsorbInterval = 1f;
+
+    private float _absorbAccumulator;
+
+    private EntityQuery<FloorWaterComponent> _floorWaterQuery;
+    private EntityQuery<MapGridComponent> _gridQuery;
 
     public override void Initialize()
     {
@@ -25,13 +26,13 @@ public sealed class FloorWaterSystem : EntitySystem
         SubscribeLocalEvent<FloorWaterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<FloorWaterComponent, StepTriggerAttemptEvent>(OnStepAttempt);
         SubscribeLocalEvent<FloorWaterComponent, StepTriggeredOffEvent>(OnStepTriggered);
+
+        _floorWaterQuery = GetEntityQuery<FloorWaterComponent>();
+        _gridQuery = GetEntityQuery<MapGridComponent>();
     }
 
     private void OnMapInit(Entity<FloorWaterComponent> ent, ref MapInitEvent args)
     {
-        // Stagger absorb scans across water tiles.
-        ent.Comp.AbsorbAccumulator = _random.NextFloat(ent.Comp.AbsorbInterval);
-
         _waterBridge.UpdateWater(ent.Owner);
     }
 
@@ -42,7 +43,6 @@ public sealed class FloorWaterSystem : EntitySystem
 
     private void OnStepTriggered(Entity<FloorWaterComponent> ent, ref StepTriggeredOffEvent args)
     {
-        // Wading soaks worn clothing and rinses stains.
         if (HasComp<InventoryComponent>(args.Tripper))
             _wetness.ImmerseInWater(args.Tripper, ent.Comp.ImmersionFlow);
     }
@@ -51,31 +51,33 @@ public sealed class FloorWaterSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<FloorWaterComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        _absorbAccumulator += frameTime;
+        if (_absorbAccumulator < AbsorbInterval)
+            return;
+
+        _absorbAccumulator = 0f;
+
+        // Scan puddles because water tiles are more numerous.
+        var query = EntityQueryEnumerator<PuddleComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var xform))
         {
-            comp.AbsorbAccumulator += frameTime;
-            if (comp.AbsorbAccumulator < comp.AbsorbInterval)
+            if (xform.GridUid is not { } gridUid || !_gridQuery.TryComp(gridUid, out var grid))
                 continue;
 
-            comp.AbsorbAccumulator = 0f;
-            AbsorbTilePuddles(uid);
+            if (IsOnWater((gridUid, grid), _map.TileIndicesFor(gridUid, grid, xform.Coordinates)))
+                QueueDel(uid);
         }
     }
 
-    private void AbsorbTilePuddles(EntityUid uid)
+    private bool IsOnWater(Entity<MapGridComponent> grid, Vector2i tile)
     {
-        var xform = Transform(uid);
-        if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var grid))
-            return;
-
-        var tile = _map.TileIndicesFor(gridUid, grid, xform.Coordinates);
-
-        foreach (var (puddle, _) in _lookup.GetEntitiesInRange<PuddleComponent>(xform.Coordinates, 0.8f))
+        var anchored = _map.GetAnchoredEntitiesEnumerator(grid, grid.Comp, tile);
+        while (anchored.MoveNext(out var ent))
         {
-            var puddleXform = Transform(puddle);
-            if (puddleXform.GridUid == gridUid && _map.TileIndicesFor(gridUid, grid, puddleXform.Coordinates) == tile)
-                QueueDel(puddle);
+            if (_floorWaterQuery.HasComp(ent))
+                return true;
         }
+
+        return false;
     }
 }

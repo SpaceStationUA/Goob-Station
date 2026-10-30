@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  id: ERTSecurityUndeterminedWeapon
+  name: emergency response weaponry pack
+  description: A small remote utilizing bluespace technology to drop in a loadout directly to you. Choose wisely.
+  parent: [ BaseItem, BaseSetSelector, BaseCentcommContraband ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Specific/Security/ert_requisition.rsi
+    state: icon
+  - type: SetSelector
+    possibleSets:
+    - ERTBallisticsSet
+    - ERTPulseSet
+    - ERTShotgunSet # Omu - ERT Rework
+    - ERTLightEnergySet # Omu - ERT Hotfix
+    - ERTSMGSet # Omu - ERT Rework
+    maxSelectedSets: 1

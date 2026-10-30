@@ -1,20 +1,47 @@
 # SPDX-License-Identifier: MIT
 
-# Pirate: welding visor - ported from tgstation.
+# Pirate: use the upstream clothing toggle for the existing welding goggles.
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, BaseToggleClothing]
   id: ClothingEyesGlassesWelding
   name: welding goggles
   description: Protects the eyes from bright flashes, but only while lowered down over the eyes.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/welding.rsi
+    layers:
+    - state: icon
+      map: ["enum.ToggleableVisuals.Layer"]
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/welding.rsi
   - type: FlashImmunity
   - type: EyeProtection
-  - type: WeldingVisor
+  - type: ToggleClothing
+    action: ActionToggleWeldingMask
+    mustEquip: false
+  - type: ItemToggle
+    activated: true
+  - type: WeldingMaskOverlay
+    texture: /Textures/_Funkystation/Clothing/Head/Welding/weldingOverlayWeak.png
+  - type: ComponentToggler
+    components:
+    - type: FlashImmunity
+    - type: EyeProtection
+    - type: WeldingMaskOverlay
+      texture: /Textures/_Funkystation/Clothing/Head/Welding/weldingOverlayWeak.png
+  - type: ItemTogglePrefix
+    prefixOn: null
+    prefixOff: up
+  - type: ToggleClothingPrefix
+    prefixOn: null
+    prefixOff: up
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {state: icon}
+          False: {state: icon-up}
   - type: PhysicalComposition
     materialComposition:
       Steel: 25

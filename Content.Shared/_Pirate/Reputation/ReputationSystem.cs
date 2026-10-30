@@ -268,6 +268,13 @@ public sealed class ReputationSystem : EntitySystem
             return false;
         }
 
+        // Offers can outlive their crew-count, objective-limit, or blacklist requirements.
+        // Recheck before adding the objective or paying a non-refundable advance.
+        var requirements = new RequirementCheckEvent(ent.Owner, mind);
+        RaiseLocalEvent(objective, ref requirements);
+        if (requirements.Cancelled)
+            return false;
+
         _mind.AddObjective(ent.Owner, mind, objective);
 
         ent.Comp.Objectives[index] = objective;

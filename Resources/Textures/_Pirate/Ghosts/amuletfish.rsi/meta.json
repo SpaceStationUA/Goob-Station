@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sylveon art by eeveeleader, taken from https://dinopixel.com/sylveon-pixel-art-22798",
+  "size": {
+    "x": 352,
+    "y": 368
+  },
+  "states": [
+    {
+      "name": "animated"
+    }
+  ]
+}

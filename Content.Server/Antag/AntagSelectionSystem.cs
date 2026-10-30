@@ -153,6 +153,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (comp.SelectionTime != AntagSelectionTime.PostPlayerSpawn && comp.SelectionTime != AntagSelectionTime.IntraPlayerSpawn)
                 continue;
 
+            DropInvalidPreSelected((uid, comp)); // Pirate: antag re-pick
             ChooseAntags((uid, comp), args.Players);
             AssignPreSelectedSessions((uid, comp));
         }
@@ -271,6 +272,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                         status == PlayerGameStatus.JoinedGame)
             .ToList();
 
+        DropInvalidPreSelected((uid, component)); // Pirate: antag re-pick
         ChooseAntags((uid, component), players, midround: true);
         AssignPreSelectedSessions((uid, component));
     }

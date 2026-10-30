@@ -4,6 +4,8 @@
   description: job-description-security-instructor
   playTimeTracker: JobSecurityInstructor
   requirements:
+    - !type:FlavorTextLengthRequirement
+      minLength: 500
     - !type:RoleTimeRequirement
       role: JobWarden
       time: 10h
@@ -15,8 +17,9 @@
       time: 1h
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-      - ZavodskiyInterstellar
+      - NanoTrasen
+      - Idris
+      - Zavod
       - PMCG
   startingGear: SecurityInstructorGear
   icon: "JobIconSecurityInstructor"
@@ -41,9 +44,8 @@
   special:
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipCombatEducation
-    - SkillChipSidearmsAdvanced
-    - SkillChipNonLethal
+    - SkillChipSecurityEducation
+    - SkillChipSecurityInstructor
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
@@ -55,11 +57,10 @@
   equipment:
     id: SecurityInstructorPDA
     ears: ClothingHeadsetAltSecurityRegular
-    pocket1: WeaponPistolUniversalSecurity
   storage:
     back:
-    - MagazineUniversalMagnum
     - SecurityInstructorWhistle
+    - SergeantMeleeCase # Pirate: Omu sergeant equipment for our instructor
     - BaseSeclinkRadio
 
 - type: chameleonOutfit

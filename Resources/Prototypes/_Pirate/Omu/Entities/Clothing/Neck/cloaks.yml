@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: [ClothingNeckBase, BaseSecurityContraband, ClothingSlotBase] # Shared by warden and instructor.
+  id: ClothingNeckWardenParryCloak
+  name: security dueling cloak
+  description: A navy cloak with an integrated scabbard, useful for dramatically swishing at prisoners.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Clothing/Neck/Cloaks/parryingcloak.rsi
+  - type: ItemSlots
+    slots:
+      item:
+        name: Rapier
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - WardenRapier
+
+- type: entity
+  parent: ClothingNeckWardenParryCloak
+  id: ClothingNeckSecurityParryCloak
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Clothing/Neck/Cloaks/parryingcloak_gold.rsi

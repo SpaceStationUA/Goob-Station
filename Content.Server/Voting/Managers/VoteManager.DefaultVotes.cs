@@ -240,9 +240,8 @@ namespace Content.Server.Voting.Managers
 
             WirePresetVoteInitiator(options, initiator);
 
-            var vote = CreateVote(options);
-
-            vote.OnFinished += (_, args) =>
+            AddPiratePresetPenalties(options); // Pirate: voting penalties and runoffs
+            CreatePirateSelectionVote(options, (_, args) => // Pirate: voting penalties and runoffs
             {
                 string picked;
                 if (args.Winner == null)
@@ -260,7 +259,7 @@ namespace Content.Server.Voting.Managers
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Preset vote finished: {picked}");
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 ticker.SetGamePreset(picked);
-            };
+            }); // Pirate: voting penalties and runoffs
         }
 
         private void CreateMapVote(ICommonSession? initiator)
@@ -287,9 +286,7 @@ namespace Content.Server.Voting.Managers
 
             WirePresetVoteInitiator(options, initiator);
 
-            var vote = CreateVote(options);
-
-            vote.OnFinished += (_, args) =>
+            CreatePirateSelectionVote(options, (_, args) => // Pirate: voting penalties and runoffs
             {
                 GameMapPrototype picked;
                 if (args.Winner == null)
@@ -328,7 +325,7 @@ namespace Content.Server.Voting.Managers
                         _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-notlobby-time", ("time", timeString)));
                     }
                 }
-            };
+            }); // Pirate: voting penalties and runoffs
         }
 
         private async void CreateVotekickVote(ICommonSession? initiator, string[]? args)

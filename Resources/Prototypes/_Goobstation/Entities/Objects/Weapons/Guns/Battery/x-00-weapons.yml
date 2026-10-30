@@ -8,6 +8,8 @@
   id: WeaponHeadOfSecurityRifle
   description: An elaborately designed rifle, firing shots of pure phoron. Low fire rate, high damage.
   components:
+  - type: StealTarget # Pirate: each HoS duty-case choice fulfils the weapon theft objective.
+    stealGroup: WeaponEnergyGunLawbringer
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/HeadOfSecurity/rifle.rsi
     layers:
@@ -47,6 +49,8 @@
   id: WeaponHeadOfSecuritySMG
   description: An elaborately designed SMG, firing shots of pure phoron. Amazing for laying down suppressive fire.
   components:
+  - type: StealTarget # Pirate: each HoS duty-case choice fulfils the weapon theft objective.
+    stealGroup: WeaponEnergyGunLawbringer
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/HeadOfSecurity/smg.rsi
     layers:
@@ -95,6 +99,8 @@
   id: WeaponHeadOfSecurityShotgun
   description: An elaborately designed shotgun, firing shots of pure phoron. Built to break down defenses, and it does that job well.
   components:
+  - type: StealTarget # Pirate: each HoS duty-case choice fulfils the weapon theft objective.
+    stealGroup: WeaponEnergyGunLawbringer
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/HeadOfSecurity/shotgun.rsi
     layers:
@@ -135,6 +141,8 @@
   id: WeaponHeadOfSecuritySniper
   description: An elaborately designed sniper rifle, firing shots of pure phoron. You won't want to get hit by this.
   components:
+  - type: StealTarget # Pirate: each HoS duty-case choice fulfils the weapon theft objective.
+    stealGroup: WeaponEnergyGunLawbringer
   - type: Sprite
     sprite: _Goobstation/Objects/Weapons/Guns/Battery/HeadOfSecurity/sniper_icon_48x.rsi
     layers:

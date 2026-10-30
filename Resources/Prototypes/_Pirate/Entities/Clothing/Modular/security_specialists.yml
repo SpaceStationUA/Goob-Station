@@ -1,0 +1,266 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: ClothingModularControllerSecurity
+  id: ClothingModularControllerWarden
+  name: warden modsuit controller
+  description: A security controller tuned for the brig's overseer. The riot plating of the warden's hardsuit, on a modular frame.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Warden/control.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Warden/control.rsi
+  - type: ContainerFill
+    containers:
+      suit_core:
+        - ModularSuitCoreStandard
+      suit_part:
+        - ClothingModularHelmetWarden
+        - ClothingModularChestPlateWarden
+        - ClothingModularGauntletsWarden
+        - ClothingModularBootsWarden
+  - type: StealTarget # Both warden suits satisfy this objective.
+    stealGroup: ClothingOuterHardsuitWarden
+
+- type: entity
+  parent: ClothingModularHelmetSecurity
+  id: ClothingModularHelmetWarden
+  name: warden modsuit helmet
+  description: A domed riot helmet with a cyan visor. Oddly comfortable.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Warden/helmet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Warden/helmet.rsi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Warden/helmet.rsi
+      state: icon-sealed
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: sealed-equipped-HELMET
+      - state: visor-unshaded
+        shader: unshaded
+      head-reptilian:
+      - state: sealed-equipped-HELMET-reptilian
+      - state: visor-unshaded-reptilian
+        shader: unshaded
+      head-vox:
+      - state: sealed-equipped-HELMET-vox
+      - state: visor-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: sealed-equipped-HELMET-vulpkanin
+      - state: visor-unshaded-vulpkanin
+        shader: unshaded
+      head-feroxi:
+      - state: sealed-equipped-HELMET-feroxi
+      - state: visor-unshaded-feroxi
+        shader: unshaded
+      head-hydrakin:
+      - state: sealed-equipped-HELMET-hydrakin
+      - state: visor-unshaded-hydrakin
+        shader: unshaded
+  - type: PointLight
+    color: "#00bfff"
+
+- type: entity
+  parent: ClothingModularChestPlateSecurity
+  id: ClothingModularChestPlateWarden
+  name: warden modsuit chestplate
+  description: The warden's riot chestplate, cut into retractable segments.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Warden/chestplate.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Warden/chestplate.rsi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Warden/chestplate.rsi
+      state: icon-sealed
+
+- type: entity
+  parent: ClothingModularGauntletsSecurity
+  id: ClothingModularGauntletsWarden
+  name: warden modsuit gauntlets
+  description: Security gauntlets with cyan status lights.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Warden/gauntlets.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Warden/gauntlets.rsi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Warden/gauntlets.rsi
+      state: icon-sealed
+
+- type: entity
+  parent: ClothingModularBootsSecurity
+  id: ClothingModularBootsWarden
+  name: warden modsuit boots
+  description: Security boots for walking the brig.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Warden/boots.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Warden/boots.rsi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Warden/boots.rsi
+      state: icon-sealed
+
+- type: entity
+  parent: [ ClothingModularControllerLockedBase, ClothingModularControllerWarden ]
+  id: ClothingModularControllerWardenPreassembled
+  suffix: Preassembled
+  components:
+  - type: ModularSuitPreassembled
+    modules:
+    - MagnetSuitModule
+    - ArmorBossterSuitModule
+    - VisorSecuritySuitModule
+    - StorageSuitModule
+    - FlashlightSuitModuleCyan
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+- type: entity
+  parent: ClothingModularControllerSecurity
+  id: ClothingModularControllerBrigmedic
+  name: brigmedic modsuit controller
+  description: A security controller fitted for field medics. The brigmedic's hardsuit, on a modular frame.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Brigmedic/control.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Brigmedic/control.rsi
+  - type: ContainerFill
+    containers:
+      suit_core:
+        - ModularSuitCoreStandard
+      suit_part:
+        - ClothingModularHelmetBrigmedic
+        - ClothingModularChestPlateBrigmedic
+        - ClothingModularGauntletsBrigmedic
+        - ClothingModularBootsBrigmedic
+  # Keep the target on brigmedic-only suits; the selector also offers shared security gear.
+  - type: StealTarget
+    stealGroup: ClothingOuterHardsuitBrigmedic
+
+- type: entity
+  parent: ClothingModularHelmetSecurity
+  id: ClothingModularHelmetBrigmedic
+  name: brigmedic modsuit helmet
+  description: A domed helmet with a teal faceplate that retracts completely when unsealed.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Brigmedic/helmet.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Brigmedic/helmet.rsi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Brigmedic/helmet.rsi
+      state: icon-sealed
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: sealed-equipped-HELMET
+      - state: visor-unshaded
+        shader: unshaded
+      head-reptilian:
+      - state: sealed-equipped-HELMET-reptilian
+      - state: visor-unshaded-reptilian
+        shader: unshaded
+      head-vox:
+      - state: sealed-equipped-HELMET-vox
+      - state: visor-unshaded-vox
+        shader: unshaded
+      head-vulpkanin:
+      - state: sealed-equipped-HELMET-vulpkanin
+      - state: visor-unshaded-vulpkanin
+        shader: unshaded
+      head-feroxi:
+      - state: sealed-equipped-HELMET-feroxi
+      - state: visor-unshaded-feroxi
+        shader: unshaded
+      head-hydrakin:
+      - state: sealed-equipped-HELMET-hydrakin
+      - state: visor-unshaded-hydrakin
+        shader: unshaded
+  - type: PointLight
+    color: "#76c6c9"
+
+- type: entity
+  parent: ClothingModularChestPlateSecurity
+  id: ClothingModularChestPlateBrigmedic
+  name: brigmedic modsuit chestplate
+  description: The brigmedic's chestplate, cut into retractable segments.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Brigmedic/chestplate.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Brigmedic/chestplate.rsi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Brigmedic/chestplate.rsi
+      state: icon-sealed
+
+- type: entity
+  parent: ClothingModularGauntletsSecurity
+  id: ClothingModularGauntletsBrigmedic
+  name: brigmedic modsuit gauntlets
+  description: Security gauntlets with teal-trimmed plating.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Brigmedic/gauntlets.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Brigmedic/gauntlets.rsi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Brigmedic/gauntlets.rsi
+      state: icon-sealed
+
+- type: entity
+  parent: ClothingModularBootsSecurity
+  id: ClothingModularBootsBrigmedic
+  name: brigmedic modsuit boots
+  description: Security boots for running between patients.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Modular/Brigmedic/boots.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Modular/Brigmedic/boots.rsi
+  - type: ModularSuitPart
+    verbIcon:
+      sprite: _Pirate/Clothing/Modular/Brigmedic/boots.rsi
+      state: icon-sealed
+
+- type: entity
+  parent: [ ClothingModularControllerLockedBase, ClothingModularControllerBrigmedic ]
+  id: ClothingModularControllerBrigmedicPreassembled
+  suffix: Preassembled
+  components:
+  - type: ModularSuitPreassembled
+    modules:
+    - HealthAnalyzerSuitModule
+    - VisorMedicalSuitModule
+    - ArmorBossterSuitModule
+    - StorageSuitModule
+    - FlashlightSuitModuleAqua
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh

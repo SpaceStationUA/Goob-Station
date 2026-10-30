@@ -2,10 +2,12 @@
 
 using Content.Goobstation.Common.Weapons.MeleeDash;
 using Content.Shared.Emoting;
+using Content.Shared.Gravity; // Pirate: Omu rapier gravity restriction
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
+using Content.Shared.Popups; // Pirate: Omu rapier gravity restriction
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
@@ -23,6 +25,7 @@ namespace Content.Goobstation.Shared.Weapons.MeleeDash;
 public sealed partial class MeleeDashSystem : EntitySystem
 {
     [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private Emoting.SharedAnimatedEmotesSystem _emotes = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private SharedMeleeWeaponSystem _melee = default!;
@@ -30,6 +33,8 @@ public sealed partial class MeleeDashSystem : EntitySystem
     [Dependency] private StandingStateSystem _standing = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!; // Pirate
+    [Dependency] private SharedPopupSystem _popup = default!; // Pirate
 
     private const int DashCollisionLayer = (int) CollisionGroup.MidImpassable;
 
@@ -111,6 +116,13 @@ public sealed partial class MeleeDashSystem : EntitySystem
             !TryComp(weapon, out UseDelayComponent? delay) || _useDelay.IsDelayed((weapon, delay)))
             return;
 
+        // Pirate: preserve Omu's gravity restriction on the warden rapier.
+        if (!dash.CanDashWhileWeightless && _gravity.IsWeightless(user))
+        {
+            _popup.PopupClient(Loc.GetString("no-dash-while-weightless"), user, user, PopupType.Medium);
+            return;
+        }
+
         var length = MathF.Min(msg.Direction.Length(), dash.MaxDashLength);
         if (length <= 0f)
             return;
@@ -142,10 +154,7 @@ public sealed partial class MeleeDashSystem : EntitySystem
         _throwing.TryThrow(user, dir, dash.DashForce, null, 0f, null, false, false, false, false, false);
         _audio.PlayPredicted(dash.DashSound, user, user);
 
-        if (dash.EmoteOnDash == null || !TryComp(user, out Emoting.AnimatedEmotesComponent? emotes))
-            return;
-
-        emotes.Emote = dash.EmoteOnDash;
-        Dirty(user, emotes);
+        if (dash.EmoteOnDash != null)
+            _emotes.SetEmote(user, dash.EmoteOnDash);
     }
 }

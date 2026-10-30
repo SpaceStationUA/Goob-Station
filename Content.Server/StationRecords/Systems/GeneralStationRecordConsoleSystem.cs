@@ -7,9 +7,9 @@ using Content.Shared.Access.Systems;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 #region Pirate: records photos
-using Content.Shared._Pirate.Contractors.Prototypes;
+using Content.Shared._Pirate.Origin;
+using Content.Shared._Pirate.Employment;
 using Content.Shared.CriminalRecords;
-using Content.Shared.Customization.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -206,15 +206,15 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
         var age = Math.Clamp(msg.Age, speciesProto.MinAge, speciesProto.MaxAge);
         var profile = BuildEditedProfile(generalRecord, _portraits.GetSnapshot(key), speciesProto.ID, age, msg.Gender);
-        var nationality = NormalizeNationality(msg.Nationality, profile);
-        profile = profile.WithNationality(nationality);
+        var citizenship = NormalizeCitizenship(msg.Citizenship, profile);
+        profile = profile.WithCitizenship(citizenship);
         var employer = NormalizeEmployer(msg.Employer, profile);
         profile = profile.WithEmployer(employer);
 
         generalRecord.Species = speciesProto.ID;
         generalRecord.Age = age;
         generalRecord.Gender = msg.Gender;
-        generalRecord.Nationality = nationality;
+        generalRecord.Citizenship = citizenship;
         generalRecord.Employer = employer;
 
         if (criminalRecord != null)
@@ -263,7 +263,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             JobTitle = Loc.GetString("suit-sensor-component-unknown-job"),
             JobIcon = string.Empty,
             JobPrototype = string.Empty,
-            Nationality = string.Empty,
+            Citizenship = string.Empty,
             Employer = string.Empty,
             Species = string.Empty,
             Gender = Gender.Male,
@@ -290,34 +290,34 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
             .WithSpecies(species)
             .WithAge(age)
             .WithGender(gender)
-            .WithNationality(generalRecord.Nationality)
+            .WithCitizenship(generalRecord.Citizenship)
             .WithEmployer(generalRecord.Employer);
     }
 
-    private string NormalizeNationality(string requestedNationality, HumanoidCharacterProfile profile)
+    private string NormalizeCitizenship(string requestedCitizenship, HumanoidCharacterProfile profile)
     {
-        if (string.IsNullOrWhiteSpace(requestedNationality))
+        if (string.IsNullOrWhiteSpace(requestedCitizenship))
             return string.Empty;
 
-        if (_prototypeManager.TryIndex<NationalityPrototype>(requestedNationality, out var nationality)
-            && RequirementsMet(nationality.Requirements, profile.WithNationality(requestedNationality)))
+        if (_prototypeManager.TryIndex<CitizenshipPrototype>(requestedCitizenship, out var citizenship)
+            && RequirementsMet(citizenship.Requirements, profile.WithCitizenship(requestedCitizenship)))
         {
-            return requestedNationality;
+            return requestedCitizenship;
         }
 
-        if (_prototypeManager.TryIndex<NationalityPrototype>(SharedHumanoidAppearanceSystem.DefaultNationality, out var defaultNationality)
-            && RequirementsMet(defaultNationality.Requirements, profile.WithNationality(defaultNationality.ID)))
+        if (_prototypeManager.TryIndex<CitizenshipPrototype>(SharedHumanoidAppearanceSystem.DefaultCitizenship, out var defaultCitizenship)
+            && RequirementsMet(defaultCitizenship.Requirements, profile.WithCitizenship(defaultCitizenship.ID)))
         {
-            return defaultNationality.ID;
+            return defaultCitizenship.ID;
         }
 
-        foreach (var prototype in _prototypeManager.EnumeratePrototypes<NationalityPrototype>())
+        foreach (var prototype in _prototypeManager.EnumeratePrototypes<CitizenshipPrototype>())
         {
-            if (RequirementsMet(prototype.Requirements, profile.WithNationality(prototype.ID)))
+            if (RequirementsMet(prototype.Requirements, profile.WithCitizenship(prototype.ID)))
                 return prototype.ID;
         }
 
-        return SharedHumanoidAppearanceSystem.DefaultNationality;
+        return SharedHumanoidAppearanceSystem.DefaultCitizenship;
     }
 
     private string NormalizeEmployer(string requestedEmployer, HumanoidCharacterProfile profile)

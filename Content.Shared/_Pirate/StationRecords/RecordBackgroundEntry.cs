@@ -8,7 +8,7 @@ public sealed partial record RecordBackgroundEntry
 {
     public const int MaxTitleLength = 64;
     public const int MaxAuthorLength = 64;
-    public const int MaxBodyLength = 1024;
+    public const int MaxBodyLength = 2048;
     public const int MaxPerBook = 10;
 
     [DataField]

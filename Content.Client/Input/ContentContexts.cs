@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Input;
+using Content.Pirate.Common.Security; // Pirate: Omu tackles
 using Content.Shared._Pirate.Input; // Pirate: multiz
 using Robust.Shared.Input;
 
@@ -40,6 +41,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.ResistGrab); // Goobstation - Grab Intent
             common.AddFunction(ContentKeyFunctions.VoicePushToTalk); // Goobstation - Voice chat
             common.AddFunction(ContentKeyFunctions.VoicePushToTalkRadio); // Goobstation - Voice chat
+            common.AddFunction(ContentKeyFunctions.NamePeek); // Goob
             common.AddFunction(ContentKeyFunctions.ZoomOut);
             common.AddFunction(ContentKeyFunctions.ZoomIn);
             common.AddFunction(ContentKeyFunctions.ResetZoom);
@@ -74,6 +76,7 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.OpenEmotesMenu);
             human.AddFunction(ContentKeyFunctions.OpenLanguageMenu); // Einstein Engines - Language
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
+            human.AddFunction(SecurityKeyFunctions.Tackle); // Pirate: Omu tackles
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
             human.AddFunction(ContentKeyFunctions.AltActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.TryPullObject);

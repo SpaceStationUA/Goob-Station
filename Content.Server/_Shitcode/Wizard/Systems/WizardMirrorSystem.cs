@@ -16,6 +16,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Polymorph;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Player; // Pirate ckey for restricted players
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Goobstation.Wizard.Systems;
@@ -48,7 +49,8 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
         if (!TryComp(ent.Comp.Target, out HumanoidAppearanceComponent? humanoid))
             return;
 
-        ForceLoadProfile(ent.Comp.Target.Value, ent.Comp, args.Profile, humanoid);
+        var ckey = TryComp<ActorComponent>(ent.Comp.Target, out var actor) ? actor.PlayerSession.Name : null; // Pirate ckey for restricted players
+        ForceLoadProfile(ent.Comp.Target.Value, ent.Comp, args.Profile, humanoid, ckey);
     }
 
     private void OnUiClosed(Entity<WizardMirrorComponent> ent, ref BoundUIClosedEvent args)
@@ -60,7 +62,8 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
     private void ForceLoadProfile(EntityUid target,
         WizardMirrorComponent component,
         HumanoidCharacterProfile profile,
-        HumanoidAppearanceComponent humanoid)
+        HumanoidAppearanceComponent humanoid,
+        string? ckey) // Pirate ckey for restricted players
     {
         var age = humanoid.Age;
         if (humanoid.Species != profile.Species && component.AllowedSpecies.Contains(profile.Species) &&
@@ -125,7 +128,7 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
         var markingFColored = new Dictionary<Marking, MarkingPrototype>();
         foreach (var marking in profile.Appearance.Markings)
         {
-            if (!_markingManager.TryGetMarking(marking, out var prototype))
+            if (!_markingManager.TryGetMarking(marking, out var prototype) || !MarkingManager.CanPlayerUseMarking(prototype, ckey)) // Pirate ckey for restricted players
                 continue;
 
             if (!prototype.ForcedColoring)
@@ -143,13 +146,13 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
         var facialHairColor = profile.Appearance.FacialHairColor;
 
         if (_markingManager.Markings.TryGetValue(profile.Appearance.HairStyleId, out var hairPrototype) &&
-            _markingManager.CanBeApplied(profile.Species, profile.Sex, hairPrototype, _proto))
+            _markingManager.CanBeApplied(profile.Species, profile.Sex, hairPrototype, _proto, ckey)) // Pirate ckey for restricted players
         {
             _humanoid.AddMarking(target, profile.Appearance.HairStyleId, hairColor, false);
         }
 
         if (_markingManager.Markings.TryGetValue(profile.Appearance.FacialHairStyleId, out var facialHairPrototype) &&
-            _markingManager.CanBeApplied(profile.Species, profile.Sex, facialHairPrototype, _proto))
+            _markingManager.CanBeApplied(profile.Species, profile.Sex, facialHairPrototype, _proto, ckey)) // Pirate ckey for restricted players
         {
             _humanoid.AddMarking(target, profile.Appearance.FacialHairStyleId, facialHairColor, false);
         }

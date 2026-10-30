@@ -44,6 +44,7 @@
             Paramedic: [ 1, 1 ]
             #science (3 - 5)
             Scientist: [ 3, 5 ]
+            Geneticist: [ 1, 1 ] # Pirate: Trauma genetics
             ResearchAssistant: [ 3, 3 ] #intern, not counted
             #security (6 - 8)
             Warden: [ 1, 1 ]

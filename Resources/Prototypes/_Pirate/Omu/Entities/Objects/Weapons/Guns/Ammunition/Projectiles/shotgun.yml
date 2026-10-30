@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  parent: BaseBullet
+  id: PelletShotgunAPDS
+  categories: [ HideSpawnMenu ]
+  name: pellet (12 Gauge APDS)
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dart_blue.rsi
+    layers:
+    - state: icon
+  - type: Projectile
+    angle: -45
+    damage:
+      types:
+        Piercing: 10 # Your just going to overpen everything.
+        Structural: 20
+      armorPenetration: 1 # 100% AP is very balanced.

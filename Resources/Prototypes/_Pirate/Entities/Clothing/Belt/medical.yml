@@ -1,0 +1,35 @@
+- type: entity
+  abstract: true
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltMedicalStorageBase
+  components:
+  - type: Storage
+    whitelist:
+      tags:
+      - Wrench
+      - Bottle
+      - Spray
+      - Brutepack
+      - Bloodpack
+      - Gauze
+      - Ointment
+      - Tourniquet
+      - CigPack
+      - PillCanister
+      - Radio
+      - DiscreteHealthAnalyzer
+      - SurgeryTool
+      - Dropper
+      - MedicalPatch
+      - AutoinjectorCartridge
+      - HandheldCrewMonitor
+      - BrigmedicBeltEquip
+      - Hypospray
+      components:
+      - Injector
+      - Pill
+      - HandLabeler
+      - SurgeryTool
+      - Defibrillator
+      - SyringeGun
+      - GunApplySolution

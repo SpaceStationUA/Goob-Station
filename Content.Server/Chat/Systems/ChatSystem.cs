@@ -228,6 +228,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         ignoreActionBlocker = CheckIgnoreSpeechBlocker(source, ignoreActionBlocker);
+        // Pirate: reject before speech transforms, radio, emotes and TTS; generated speech has no player.
+        if (EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(player, message))
+            return;
 
         // this method is a disaster
         // every second i have to spend working with this code is fucking agony
@@ -364,6 +367,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
         // in-game IC messages.
         if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
+            return;
+
+        // Pirate: LOOC and dead chat share the same player-input filter.
+        if (EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(player, message))
             return;
 
         message = SanitizeInGameOOCMessage(message);
@@ -606,7 +613,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
         else
         {
-            var nameEv = new TransformSpeakerNameEvent(source, Name(source));
+            var nameEv = new TransformSpeakerNameEvent(source, Name(source)) { Context = Content.Shared._Pirate.VoiceMask.SpeakerNameContext.Say }; // Pirate: voice mask modes
             RaiseLocalEvent(source, nameEv);
             name = nameEv.VoiceName;
             // Check for a speech verb override
@@ -714,7 +721,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
         else
         {
-            var nameEv = new TransformSpeakerNameEvent(source, Name(source));
+            var nameEv = new TransformSpeakerNameEvent(source, Name(source)) { Context = Content.Shared._Pirate.VoiceMask.SpeakerNameContext.Whisper }; // Pirate: voice mask modes
             RaiseLocalEvent(source, nameEv);
             name = nameEv.VoiceName;
         }
@@ -1224,7 +1231,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// </summary>
     public string WrapPublicMessage(EntityUid source, string name, string message, LanguagePrototype? language = null, Color? colorOverride = null)
     {
-        var wrapId = GetSpeechVerbWithOverride(source, message).Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message"; // Goob
+        var wrapId = GetSpeechVerbWithOverride(source, message, Content.Shared._Pirate.VoiceMask.SpeakerNameContext.Say).Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message"; // Goob // Pirate: voice mask modes
         return WrapMessage(wrapId, InGameICChatType.Speak, source, name, message, language, colorOverride);
     }
 
@@ -1241,7 +1248,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// </summary>
     public string WrapMessage(LocId wrapId, InGameICChatType chatType, EntityUid source, string entityName, string message, LanguagePrototype? language, Color? colorOverride)
     {
-        var speech = GetSpeechVerbWithOverride(source, message); // Goob - keep voice mask verb override
+        var speech = GetSpeechVerbWithOverride(source, message, chatType == InGameICChatType.Whisper ? Content.Shared._Pirate.VoiceMask.SpeakerNameContext.Whisper : Content.Shared._Pirate.VoiceMask.SpeakerNameContext.Say); // Goob - keep voice mask verb override // Pirate: voice mask modes
         language ??= _language.GetLanguage(source);
 
         // Goobstation - Bolded Language Overrides begin

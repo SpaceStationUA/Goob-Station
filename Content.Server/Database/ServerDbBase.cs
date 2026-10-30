@@ -31,6 +31,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Collections.Generic; // Pirate: cameras (photo persistence)
 using Content.Shared._Pirate.Photo; // Pirate: cameras (photo persistence)
+using Content.Shared._Pirate.PersistentText; // Pirate: persistent text (diaries)
 
 namespace Content.Server.Database
 {
@@ -215,8 +216,14 @@ namespace Content.Server.Database
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)
         {
-            var jobs = profile.Jobs.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
-            var jobAlternatives = profile.Jobs.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => new ProtoId<AlternativeJobPrototype>(j.ActiveAlternativeJobId ?? string.Empty)); // Pirate - Alternative Jobs
+            // Pirate edit - start
+            var jobs = profile.Jobs
+                .Where(j => j.Priority != DbJobPriority.Never)
+                .ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
+            var jobAlternatives = profile.Jobs
+                .Where(j => !string.IsNullOrWhiteSpace(j.ActiveAlternativeJobId))
+                .ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => new ProtoId<AlternativeJobPrototype>(j.ActiveAlternativeJobId!));
+            // Pirate edit - end
             var antags = profile.Antags.Select(a => new ProtoId<AntagPrototype>(a.AntagName));
             var traits = profile.Traits.Select(t => new ProtoId<TraitPrototype>(t.TraitName));
 
@@ -279,8 +286,8 @@ namespace Content.Server.Database
                 profile.CharacterName,
                 profile.FlavorText,
                 profile.Species,
-                profile.Nationality, // Pirate - port EE contractors
-                profile.Employer, // Pirate - port EE contractors
+                profile.Citizenship, // Pirate - Origin: Citizenship
+                profile.Employer, // Pirate - Employer
                 profile.Height, // Goobstation: port EE height/width sliders
                 profile.Width, // Goobstation: port EE height/width sliders
                 profile.Age,
@@ -339,8 +346,8 @@ namespace Content.Server.Database
             profile.Species = humanoid.Species;
             profile.Height = humanoid.Height; // Goobstation: port EE height/width sliders
             profile.Width = humanoid.Width; // Goobstation: port EE height/width sliders
-            profile.Nationality = humanoid.Nationality; // Pirate - port EE contractors
-            profile.Employer = humanoid.Employer; // Pirate - port EE contractors
+            profile.Citizenship = humanoid.Citizenship; // Pirate - Origin: Citizenship
+            profile.Employer = humanoid.Employer; // Pirate - Employer
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
@@ -357,11 +364,26 @@ namespace Content.Server.Database
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
 
             profile.Jobs.Clear();
-            profile.Jobs.AddRange(
-                humanoid.JobPriorities
-                    .Where(j => j.Value != JobPriority.Never)
-                    .Select(j => new Job { JobName = j.Key, Priority = (DbJobPriority) j.Value, ActiveAlternativeJobId = humanoid.JobAlternatives.TryGetValue(j.Key, out var altJob) ? altJob : string.Empty }) // Pirate - Alternative Jobs
-            );
+            // Pirate edit - start
+            var savedJobs = humanoid.JobPriorities
+                .Where(job => job.Value != JobPriority.Never)
+                .ToDictionary(
+                    job => job.Key,
+                    job => new Job { JobName = job.Key, Priority = (DbJobPriority) job.Value });
+
+            foreach (var (jobId, alternativeId) in humanoid.JobAlternatives)
+            {
+                if (!savedJobs.TryGetValue(jobId, out var savedJob))
+                {
+                    savedJob = new Job { JobName = jobId, Priority = DbJobPriority.Never };
+                    savedJobs.Add(jobId, savedJob);
+                }
+
+                savedJob.ActiveAlternativeJobId = alternativeId;
+            }
+
+            profile.Jobs.AddRange(savedJobs.Values);
+            // Pirate edit - end
 
             profile.Antags.Clear();
             profile.Antags.AddRange(
@@ -2424,6 +2446,101 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             await db.DbContext.SaveChangesAsync(cancel);
         }
+
+        #region Pirate: persistent text (diaries)
+
+        public async Task<PersistentTextSnapshot?> GetPersistentTextSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string storageKey,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var texts = db.DbContext.PersistentTexts
+                .Where(entry => entry.OwnerKind == ownerKind &&
+                                entry.StorageKey == storageKey);
+
+            PersistentText? entry;
+            if (profileId != null)
+            {
+                entry = await texts.SingleOrDefaultAsync(text => text.ProfileId == profileId, cancel);
+            }
+            else
+            {
+                entry = await texts.SingleOrDefaultAsync(
+                    text => text.ProfileId == null && text.OwnerId == ownerId,
+                    cancel);
+            }
+
+            if (entry == null)
+                return null;
+
+            return new PersistentTextSnapshot
+            {
+                OwnerKind = entry.OwnerKind,
+                ProfileId = entry.ProfileId,
+                OwnerId = entry.OwnerId,
+                StorageKey = entry.StorageKey,
+                OwnerCharacterName = entry.OwnerCharacterName,
+                OwnerUserId = entry.OwnerUserId,
+                SavedAt = NormalizeDatabaseTime(entry.SavedAt),
+                Content = entry.Content
+            };
+        }
+
+        public async Task UpsertPersistentTextSnapshotAsync(
+            string ownerKind,
+            int? profileId,
+            string? ownerId,
+            string storageKey,
+            string content,
+            string? ownerCharacterName = null,
+            Guid? ownerUserId = null,
+            CancellationToken cancel = default)
+        {
+            await using var db = await GetDb(cancel);
+
+            var texts = db.DbContext.PersistentTexts
+                .Where(entry => entry.OwnerKind == ownerKind &&
+                                entry.StorageKey == storageKey);
+
+            PersistentText? entry;
+            if (profileId != null)
+            {
+                entry = await texts.SingleOrDefaultAsync(text => text.ProfileId == profileId, cancel);
+            }
+            else
+            {
+                entry = await texts.SingleOrDefaultAsync(
+                    text => text.ProfileId == null && text.OwnerId == ownerId,
+                    cancel);
+            }
+
+            if (entry == null)
+            {
+                entry = new PersistentText
+                {
+                    OwnerKind = ownerKind,
+                    ProfileId = profileId,
+                    OwnerId = profileId == null ? ownerId : null,
+                    StorageKey = storageKey
+                };
+                db.DbContext.PersistentTexts.Add(entry);
+            }
+
+            entry.SavedAt = DateTime.UtcNow;
+            entry.ProfileId = profileId;
+            entry.OwnerId = profileId == null ? ownerId : null;
+            entry.Content = content;
+            entry.OwnerCharacterName = ownerCharacterName;
+            entry.OwnerUserId = ownerUserId;
+
+            await db.DbContext.SaveChangesAsync(cancel);
+        }
+
+        #endregion
 
         private static string? SerializeCaptureData(PhotoCaptureData? data)
         {

@@ -7,13 +7,13 @@
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 14400 #4 hrs
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZengHuPharmaceuticals
+      - ZengHu
       - PMCG
-    # Pirate contractor end
+    # Pirate Employment end
   startingGear: VirologistGear
   icon: "JobIconVirologist"
   supervisors: job-supervisors-cmo

@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-using Robust.Shared.Audio; // Pirate: meson vision
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes; // Pirate: meson vision
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SubFloor;
@@ -28,21 +26,6 @@ public sealed partial class TrayScannerComponent : Component
     [DataField]
     public float Range = 4f;
 
-    // Pirate: meson vision
-
-    #region Pirate: meson vision
-    [DataField]
-    public EntProtoId? ToggleAction;
-
-    [DataField, NonSerialized]
-    public EntityUid? ToggleActionEntity;
-
-    [DataField]
-    public SoundSpecifier? SoundOn;
-
-    [DataField]
-    public SoundSpecifier? SoundOff;
-    #endregion Pirate: meson vision
 }
 
 [Serializable, NetSerializable]

@@ -41,6 +41,7 @@
   name: secretsalt-title
   description: secretsalt-description
   showInVote: true
+  minPlayers: 20
   rules:
     - SecretSalt
     - GlimmerEventScheduler # Pirate
@@ -205,3 +206,16 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
+
+- type: gamePreset
+  id: Blueshift
+  alias:
+    - blueshift
+  name: blueshift-title
+  description: blueshift-description
+  showInVote: true
+  rules:
+    - BlueshiftScheduler
+    - BlueshiftAntagScheduler
+    - MeteorSwarmScheduler
+    - GlimmerEventScheduler

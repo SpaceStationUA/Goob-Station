@@ -1023,6 +1023,70 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("pirate_persistent_photo_album_photos", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PersistentText", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("pirate_persistent_texts_id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("content");
+
+                    b.Property<string>("OwnerCharacterName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("owner_character_name");
+
+                    b.Property<string>("OwnerId")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("owner_id");
+
+                    b.Property<string>("OwnerKind")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("owner_kind");
+
+                    b.Property<Guid?>("OwnerUserId")
+                        .HasMaxLength(36)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("owner_user_id");
+
+                    b.Property<int?>("ProfileId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_id");
+
+                    b.Property<DateTime>("SavedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("saved_at");
+
+                    b.Property<string>("StorageKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("storage_key");
+
+                    b.HasKey("Id")
+                        .HasName("PK_pirate_persistent_texts");
+
+                    b.HasIndex("ProfileId")
+                        .HasDatabaseName("IX_pirate_persistent_texts_profile_id");
+
+                    b.HasIndex("OwnerKind", "OwnerId", "StorageKey")
+                        .IsUnique()
+                        .HasDatabaseName("IX_pirate_persistent_texts_owner_kind_owner_id_storage_key");
+
+                    b.HasIndex("OwnerKind", "ProfileId", "StorageKey")
+                        .IsUnique()
+                        .HasDatabaseName("IX_pirate_persistent_texts_owner_kind_profile_id_storage_key");
+
+                    b.ToTable("pirate_persistent_texts", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.PirateAdminHelpRating", b =>
                 {
                     b.Property<int>("Id")
@@ -1545,7 +1609,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
 
-                    b.Property<string>("Nationality")
+                    // Pirate: persist citizenship using the existing nationality column.
+                    b.Property<string>("Citizenship")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("nationality");
@@ -1576,11 +1641,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("pref_unavailable");
 
-                    b.Property<string>("Sex")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("sex");
-
                     b.Property<string>("Secrets")
                         .IsRequired()
                         .HasMaxLength(4096)
@@ -1593,6 +1653,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("record_backgrounds");
             #endregion
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("sex");
 
                     b.Property<string>("SkinColor")
                         .IsRequired()
@@ -1635,17 +1700,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_loadout_id");
 
-                    b.Property<string>("LoadoutName")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("loadout_name");
-
                     b.Property<string>("CustomColorTint")
                         .HasMaxLength(16)
                         .HasColumnType("TEXT")
                         .HasColumnName("custom_color_tint");
 
-                    #region Pirate: loadout
                     b.Property<string>("CustomDescription")
                         .HasColumnType("TEXT")
                         .HasColumnName("custom_description");
@@ -1653,7 +1712,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<string>("CustomName")
                         .HasColumnType("TEXT")
                         .HasColumnName("custom_name");
-                    #endregion
+
+                    b.Property<string>("LoadoutName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("loadout_name");
 
                     b.Property<int>("ProfileLoadoutGroupId")
                         .HasColumnType("INTEGER")
@@ -2581,6 +2644,17 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Album");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.PersistentText", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_pirate_persistent_texts_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("Content.Server.Database.PirateAdminHelpRating", b =>
                 {
                     b.HasOne("Content.Server.Database.Player", "Player")
@@ -3136,6 +3210,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasMaxLength(64)
                         .HasColumnType("TEXT")
                         .HasColumnName("art_hash");
+
+                    b.Property<bool>("Glow")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("glow");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -69,7 +69,7 @@ public sealed class CharacterPodSystem : EntitySystem
             profile = _profileSpawn.RollProfile(settings);
         }
 
-        var mob = _profileSpawn.SpawnFromProfile(settings, profile, Transform(ent).Coordinates);
+        var mob = _profileSpawn.SpawnFromProfile(settings, profile, Transform(ent).Coordinates, ckey: usesCharacter ? args.Player.Name : null); // Pirate ckey for restricted players
         _transform.AttachToGridOrMap(mob);
 
         RemComp<GhostRoleComponent>(mob);

@@ -19,6 +19,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._Pirate.SlimeMorph;
@@ -412,9 +413,10 @@ public sealed class SlimeMorphSystem : EntitySystem
 
     private void OnSelectMarking(Entity<SlimeMorphComponent> ent, ref SlimeMorphSelectMarkingMessage args)
     {
-        if (!IsSelfEditable(args.Category)
+        if (!TryGetUiCkey(args.Actor, ent.Owner, out var ckey)
+            || !IsSelfEditable(args.Category)
             || ent.Comp.Staged is not { } staged
-            || !TryResolveMarking(staged, args.Category, args.MarkingId, out var proto)
+            || !TryResolveMarking(staged, args.Category, args.MarkingId, ckey, out var proto)
             || !staged.Markings.TryGetCategory(args.Category, out var list)
             || args.Slot < 0 || args.Slot >= list.Count)
             return;
@@ -432,13 +434,13 @@ public sealed class SlimeMorphSystem : EntitySystem
     /// Resolve a marking id from the pool the pickers currently offer: scoped to the chosen xenotype
     /// when one is selected, otherwise every species' markings (the free "Any" mode).
     /// </summary>
-    private bool TryResolveMarking(SlimeMorphWorking staged, MarkingCategories category, string id,
+    private bool TryResolveMarking(SlimeMorphWorking staged, MarkingCategories category, string id, string ckey,
         [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out MarkingPrototype? proto)
     {
         IReadOnlyDictionary<string, MarkingPrototype> pool = staged.PickerSpecies is { } species
-            ? _markings.MarkingsByCategoryAndSpecies(category, species)
+            ? _markings.MarkingsByCategoryAndSpecies(category, species, ckey)
             : _markings.MarkingsByCategory(category);
-        return pool.TryGetValue(id, out proto);
+        return pool.TryGetValue(id, out proto) && MarkingManager.CanPlayerUseMarking(proto, ckey);
     }
 
     private void OnChangeColor(Entity<SlimeMorphComponent> ent, ref SlimeMorphChangeColorMessage args)
@@ -455,7 +457,8 @@ public sealed class SlimeMorphSystem : EntitySystem
 
     private void OnAddSlot(Entity<SlimeMorphComponent> ent, ref SlimeMorphAddSlotMessage args)
     {
-        if (!IsSelfEditable(args.Category)
+        if (!TryGetUiCkey(args.Actor, ent.Owner, out var ckey)
+            || !IsSelfEditable(args.Category)
             || ent.Comp.Staged is not { } staged
             || !TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
             return;
@@ -465,14 +468,14 @@ public sealed class SlimeMorphSystem : EntitySystem
         if (staged.PickerSpecies is { } scoped)
         {
             // Scoped to a xenotype: only that race's markings, gated by its marking points.
-            markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, scoped).Keys.FirstOrDefault();
+            markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, scoped, ckey).Keys.FirstOrDefault();
             forced = false;
         }
         else
         {
             // Free "Any" mode: any species' marking, forced so cross-species picks survive.
-            markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, humanoid.Species).Keys.FirstOrDefault()
-                ?? _markings.MarkingsByCategory(args.Category).Keys.FirstOrDefault();
+            markingId = _markings.MarkingsByCategoryAndSpecies(args.Category, humanoid.Species, ckey).Keys.FirstOrDefault()
+                ?? _markings.MarkingsByCategory(args.Category).FirstOrDefault(p => MarkingManager.CanPlayerUseMarking(p.Value, ckey)).Key;
             forced = true;
         }
 
@@ -582,6 +585,9 @@ public sealed class SlimeMorphSystem : EntitySystem
         var name = args.Name.Trim();
         if (string.IsNullOrEmpty(name))
             return;
+
+        var ckey = TryComp<ActorComponent>(ent.Owner, out var actor) ? actor.PlayerSession.Name : null;
+        _markings.FilterPlayerRestrictedMarkings(staged.Markings, ckey);
 
         var species = staged.PickerSpecies ?? humanoid.Species;
         var appearance = new SlimeMorphAppearance
@@ -696,6 +702,18 @@ public sealed class SlimeMorphSystem : EntitySystem
         return Array.IndexOf(SlimeMorphCategories.Editable, category) >= 0;
     }
 
+    private bool TryGetUiCkey(EntityUid actorUid, EntityUid owner, out string ckey)
+    {
+        if (actorUid == owner && TryComp<ActorComponent>(actorUid, out var actor))
+        {
+            ckey = actor.PlayerSession.Name;
+            return true;
+        }
+
+        ckey = string.Empty;
+        return false;
+    }
+
     // ---- Body commit helpers ----
 
     private void CommitStaged(
@@ -704,6 +722,8 @@ public sealed class SlimeMorphSystem : EntitySystem
         SlimeMorphComponent comp,
         SlimeMorphWorking staged)
     {
+        var ckey = TryComp<ActorComponent>(uid, out var actor) ? actor.PlayerSession.Name : null;
+        _markings.FilterPlayerRestrictedMarkings(staged.Markings, ckey);
         humanoid.MarkingSet = new MarkingSet(staged.Markings);
         _humanoid.SetSex(uid, staged.Sex, false, humanoid);
         _humanoid.SetGender(uid, staged.Gender, false, humanoid);

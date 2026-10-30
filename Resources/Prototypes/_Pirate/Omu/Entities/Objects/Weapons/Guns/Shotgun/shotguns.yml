@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  name: S1 "Pnuey" shotgun
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
+  id: WeaponPneumaticShotgun
+  description: A "field-improvised" modification on a hunting shotgun, capable of launching syringes on a second, air-powered trigger. Pronounced "Peh-Neu-Ey". Now produced and sold through grey market channels due to consumer demand. NOT NT APPROVED.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Shotguns/PneumaticShotty.rsi
+  - type: Clothing
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Shotguns/PneumaticShotty.rsi
+  - type: Gun
+    fireRate: 3
+  - type: GunSpreadModifier
+    spread: 2.5
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunAPDS
+    capacity: 1
+    whitelist:
+      tags:
+      - Syringe # goobstation fire all syringes
+      - SyringeGunAmmo
+      - ShellShotgun
+  - type: SyringeGun
+    pierceArmor: false # i'd considered this but it may be too offensively busted
+    injectionSpeedMultiplier: 1 # it'll be better for microdosing your officers though
+
+- type: entity
+  id: WeaponShotgunCombatCentComm
+  parent: WeaponShotgunCombat
+  description: An old design with a beefier shell intended to repel boarding parties; this time, you are the boarding party. A Nanotrasen logo is stamped on the barrel.
+  suffix: CentComm
+  components:
+  - type: Contraband
+    allowedDepartments: [ CentralCommand ]
+    severity: Restricted

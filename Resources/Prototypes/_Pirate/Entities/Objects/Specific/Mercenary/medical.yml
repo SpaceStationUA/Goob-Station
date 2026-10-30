@@ -1,0 +1,60 @@
+- type: entity
+  parent: MedkitCombat
+  id: MedkitCombatMercenaryFilled
+  suffix: Mercenary, Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: MedicatedSuture
+        - id: RegenerativeMesh
+        - id: SyringeEphedrine
+        - id: SyringeSaline
+        - id: CombatMedipen
+          amount: !type:ConstantNumberSelector
+            value: 2
+
+- type: entity
+  parent: ClothingBackpackMerc
+  id: ClothingBackpackMercenaryMedicFilled
+  description: A mercenary backpack packed with chemical jugs, a hypospray and supplies for keeping a mercenary squad alive.
+  suffix: Medic, Filled
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Back/Backpacks/merc_medical.rsi
+  - type: StorageFill
+    contents:
+    - id: JugSalicylicAcid
+    - id: JugOxandrolone
+    - id: JugDexPlusSaline
+    - id: JugDylovene
+    - id: DefibrillatorSyndicate
+    - id: EmergencyRollerBedSpawnFolded
+    - id: SyndiHypo
+    - id: ChemistryBottleEpinephrine
+
+- type: entity
+  parent: BaseAutosurgeonSyndicateSingle
+  id: AutosurgeonMedicalCyberneticEyes
+  name: syndicate autosurgeon (medical cybernetic eyes)
+  components:
+  - type: AutoSurgeon
+    targetBodyPart: Head
+    targetOrgan: eyes
+    newPartProto: MedicalCyberneticEyes
+
+- type: entity
+  parent: MedkitCombat
+  id: MedkitCombatMercenaryMedicFilled
+  suffix: Mercenary Medic, Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: MedicatedSuture
+        - id: RegenerativeMesh
+        - id: SyringeEphedrine
+        - id: SyringeSaline
+        - id: HandheldHealthAnalyzer

@@ -1,0 +1,135 @@
+- type: entity
+  name: passport
+  parent: BaseItem
+  id: BasePassport
+  abstract: true
+  description: Паспорт, що підтверджує громадянство та інформацію особи.
+  components:
+    - type: Passport
+    - type: Sprite
+      sprite: _Pirate/Origin/Passport.rsi
+      layers:
+      - state: passport_biesel_closed
+    - type: Appearance
+    - type: EmitSoundOnPickup
+      sound:
+        path: /Audio/_Goobstation/Items/handling/book_pickup.ogg
+        params:
+          volume: -4
+    - type: EmitSoundOnDrop
+      sound:
+        path: /Audio/_Goobstation/Items/handling/book_drop.ogg
+        params:
+          volume: -4
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/_Goobstation/Items/handling/book_drop.ogg
+        params:
+          volume: -4
+
+- type: entity
+  name: паспорт Республіки Бізель
+  parent: BasePassport
+  id: BieselPassport
+  components:
+    - type: Sprite
+      sprite: _Pirate/Origin/Passport.rsi
+      layers:
+      - state: passport_biesel_closed
+#    - type: ExtendDescription
+#      descriptionList:
+#      - description: "bieselite_view_biesel_passport"
+#        fontSize: 12
+#        color: "#77ff77"
+#        requireDetailRange: true
+#        requirements:
+#        - !type:CharacterNationalityRequirement
+#          nationalities:
+#          - Bieselite
+#      - description: "solarian_view_biesel_passport"
+#        fontSize: 12
+#        color: "#ff7777"
+#        requireDetailRange: true
+#        requirements:
+#        - !type:CharacterNationalityRequirement
+#          nationalities:
+#          - Solarian
+
+- type: entity
+  name: паспорт Федерації Нралакк
+  parent: BasePassport
+  id: NralakkPassport
+  components:
+    - type: Sprite
+      sprite: _Pirate/Origin/Passport.rsi
+      layers:
+      - state: passport_nralakk_closed
+
+- type: entity
+  name: паспорт Солоріанського Альянсу
+  parent: BasePassport
+  id: SolPassport
+  components:
+    - type: Sprite
+      sprite: _Pirate/Origin/Passport.rsi
+      layers:
+      - state: passport_sol_closed
+#    - type: ExtendDescription
+#      descriptionList:
+#      - description: "bieselite_view_sol_passport"
+#        fontSize: 12
+#        color: "#ff7777"
+#        requireDetailRange: true
+#        requirements:
+#        - !type:CharacterNationalityRequirement
+#          nationalities:
+#          - Bieselite
+#      - description: "solarian_view_sol_passport"
+#        fontSize: 12
+#        color: "#77ff77"
+#        requireDetailRange: true
+#        requirements:
+#        - !type:CharacterNationalityRequirement
+#          nationalities:
+#          - Solarian
+
+- type: entity
+  name: корпоративна ID-картка Ерідану
+  description: ID-картка, що підтверджує інформацію особи.
+  parent: BasePassport
+  id: EridanCorpID
+  components:
+    - type: Sprite
+      sprite: _Pirate/Origin/Passport.rsi
+      layers:
+      - state: CorpID_eridan_closed
+
+- type: entity
+  name: паспорт Адхомаі
+  parent: BasePassport
+  id: AdhomaiPassport
+  components:
+    - type: Sprite
+      sprite: _Pirate/Origin/Passport.rsi
+      layers:
+      - state: passport_adhomai_closed
+
+- type: entity
+  name: паспорт Ізвескі-Гегемонії
+  parent: BasePassport
+  id: IzweskiPassport
+  components:
+    - type: Sprite
+      sprite: _Pirate/Origin/Passport.rsi
+      layers:
+      - state: passport_izweski_closed
+
+- type: entity
+  name: паспорт Золотої Глибини
+  parent: BasePassport
+  id: GoldenDeepPassport
+  components:
+    - type: Sprite
+      sprite: _Pirate/Origin/Passport.rsi
+      layers:
+      - state: passport_goldendeep_closed

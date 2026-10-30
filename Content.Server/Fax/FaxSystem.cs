@@ -895,6 +895,11 @@ public sealed class FaxSystem : EntitySystem
         // Goobstation - Admin Notifications / Admin Notifications
         // _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
         foreach (var admin in _adminManager.ActiveAdmins)
+        { // Pirate: staff chats
+            if (!_adminManager.HasAdminFlag(admin, Content.Shared.Administration.AdminFlags.Adminchat)) // Pirate: staff chats - match the announcement's audience
+                continue; // Pirate: staff chats
+
             RaiseNetworkEvent(new AdminNotificationEvent(new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")), admin);
+        } // Pirate: staff chats
     }
 }

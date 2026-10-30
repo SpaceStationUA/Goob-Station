@@ -172,6 +172,9 @@ public sealed partial class DamageableSystem
         if (damage.Empty)
             return damageDone;
 
+        if (IsNoOpHeal((ent, ent.Comp), damage)) // Goob
+            return damageDone;
+
         var before = new BeforeDamageChangedEvent(damage, origin, canBeCancelled, targetPart, OriginFlag: originFlag); // Pirate
         RaiseLocalEvent(ent, ref before);
 
@@ -340,7 +343,7 @@ public sealed partial class DamageableSystem
                 uncappedDamage: damageDoneHypotheticalUncapped); // Woundmed
 
             if (isWoundable && !damageDone.Empty) // Pirate: only stored damage changes affect the parent body.
-                UpdateParentBodyDamage(ent, interruptsDoAfters, origin, ignoreBlockers);
+                TryUpdateParentBodyDamage(ent, interruptsDoAfters, origin, ignoreBlockers);
         }
 
         return damageDone;

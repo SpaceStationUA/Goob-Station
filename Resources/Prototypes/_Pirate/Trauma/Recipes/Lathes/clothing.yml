@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: latheRecipe
+  id: ClothingHandsGlovesDolphin
+  result: ClothingHandsGlovesDolphin
+  completetime: 2
+  materials:
+    Cloth: 500
+    Durathread: 1500
+    Plastic: 300
+    Silver: 100

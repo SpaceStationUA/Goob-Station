@@ -308,7 +308,7 @@ public abstract partial class SharedBloodstreamSystem
             || !TryComp<WoundableComponent>(args.Component.HoldingWoundable, out var woundable)
             || !woundable.CanBleed
             || args.NewSeverity < component.SeverityThreshold
-            || args.NewSeverity < args.OldSeverity)
+            || (args.Overflow ?? args.NewSeverity - args.OldSeverity) <= 0) // Pirate: only new damage can reopen bleeding.
             return;
 
         component.BleedingAmountRaw = args.NewSeverity * _cfg.GetCVar(SurgeryCVars.BleedingSeverityTrade);

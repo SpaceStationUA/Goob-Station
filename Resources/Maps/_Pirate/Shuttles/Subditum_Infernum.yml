@@ -2488,7 +2488,7 @@ entities:
     - type: Transform
       pos: -11.5,-9.5
       parent: 2
-- proto: BlueshieldUndeterminedWeapon
+- proto: BlueshieldUndeterminedOffensive
   entities:
   - uid: 1614
     components:

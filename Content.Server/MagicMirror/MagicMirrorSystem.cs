@@ -13,6 +13,7 @@ using Content.Shared.MagicMirror;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player; // Pirate ckey for restricted players
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.MagicMirror;
@@ -369,7 +370,8 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
                 return;
         }
 
-        var marking = _markings.MarkingsByCategoryAndSpecies(category, humanoid.Species).Keys.FirstOrDefault();
+        var ckey = TryComp<ActorComponent>(component.Target, out var actor) ? actor.PlayerSession.Name : null; // Pirate ckey for restricted players
+        var marking = _markings.MarkingsByCategoryAndSpecies(category, humanoid.Species, ckey).Keys.FirstOrDefault(); // Pirate ckey for restricted players
 
         if (string.IsNullOrEmpty(marking))
             return;

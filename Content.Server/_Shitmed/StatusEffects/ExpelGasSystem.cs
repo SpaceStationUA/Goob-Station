@@ -4,7 +4,7 @@ using Content.Shared._Shitmed.StatusEffects;
 using Content.Shared.Chat.Prototypes;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
-using Robust.Shared.Prototypes;
+using Content.Shared.Chat;
 using Robust.Shared.Random;
 
 namespace Content.Server._Shitmed.StatusEffects;
@@ -13,7 +13,6 @@ public sealed class ExpelGasEffectSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
@@ -25,10 +24,7 @@ public sealed class ExpelGasEffectSystem : EntitySystem
         var mix = _atmos.GetContainingMixture((uid, Transform(uid)), true, true) ?? new();
         var gas = _random.Pick(component.PossibleGases);
         mix.AdjustMoles(gas, 60);
-
-        // Pirate: fart emotes are removed downstream.
-        if (_prototype.HasIndex<EmotePrototype>("Fart"))
-            _chat.TryEmoteWithChat(uid, "Fart");
+        _chat.TrySendInGameICMessage(uid, Loc.GetString(component.Emote), InGameICChatType.Emote, ChatTransmitRange.Normal, ignoreActionBlocker: true);
     }
 
 

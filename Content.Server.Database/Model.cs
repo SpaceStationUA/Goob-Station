@@ -9,11 +9,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text.Json;
-using Content.Shared._Pirate.Contractors.Prototypes; // Pirate - port EE contractors
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
 using NpgsqlTypes;
-using Robust.Shared.Prototypes; // Pirate - port EE contractors
+using Robust.Shared.Prototypes; // Pirate - Origin / Employer
 
 namespace Content.Server.Database
 {
@@ -78,6 +77,10 @@ namespace Content.Server.Database
         public DbSet<PersistentPhotoAlbumPhoto> PersistentPhotoAlbumPhotos { get; set; } = default!;
         public DbSet<PirateTempRankEligibility> PirateTempRankEligibility { get; set; } = default!; // Pirate: temporary ranks
         public DbSet<PirateRecordHistoryEntry> PirateRecordHistory { get; set; } = default!; // Pirate: persistent record history
+        #endregion
+
+        #region Pirate: persistent text (diaries)
+        public DbSet<PersistentText> PersistentTexts { get; set; } = default!;
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -448,6 +451,7 @@ namespace Content.Server.Database
                 .OnDelete(DeleteBehavior.Cascade);
             //Pirate Changes End
             PersistentPhotoAlbumModelConfiguration.Configure(modelBuilder); //Pirate: cameras (photo persistence)
+            PersistentTextModelConfiguration.Configure(modelBuilder); //Pirate: persistent text (diaries)
             PirateTempRankEligibilityModelConfiguration.Configure(modelBuilder); // Pirate: temporary ranks
             PirateRecordHistoryModelConfiguration.Configure(modelBuilder); // Pirate: persistent record history
             ConfigureCustomMarkings(modelBuilder); // Pirate
@@ -482,8 +486,8 @@ namespace Content.Server.Database
         public int Slot { get; set; }
         [Column("char_name")] public string CharacterName { get; set; } = null!;
         public string FlavorText { get; set; } = null!;
-        public string Nationality { get; set; } = null!; // Pirate - port EE contractors
-        public string Employer { get; set; } = null!; // Pirate - port EE contractors
+        [Column("nationality")] public string Citizenship { get; set; } = null!; // Pirate - Origin
+        public string Employer { get; set; } = null!; // Pirate - Employer
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;

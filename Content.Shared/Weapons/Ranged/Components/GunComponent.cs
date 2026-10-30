@@ -309,6 +309,10 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float GunExecutionTime = 3.5f;
+
+    // Pirate: Omu's .45 Chester applies this multiplier to each fired projectile.
+    [DataField]
+    public float DamageModifier = 1f;
 }
 
 [Flags]

@@ -2,6 +2,7 @@
 
 using Content.Server.Chemistry.Components;
 using Content.Shared._Goobstation.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Components; // Pirate: mixed syringe and ballistic ammunition
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 
@@ -21,7 +22,16 @@ public sealed class SyringeGunSystem : EntitySystem
 
     private void OnShootAttemot(Entity<SyringeGunComponent> ent, ref AttemptShootEvent args)
     {
-        args.ThrowItems = true;
+        // Pirate: Omu's Pnuey must fire shells normally while launching loaded syringes.
+        if (TryComp<BallisticAmmoProviderComponent>(ent.Owner, out var ammo))
+        {
+            if (ammo.Entities.Count > 0 && HasComp<SolutionInjectWhileEmbeddedComponent>(ammo.Entities[^1]))
+                args.ThrowItems = true;
+        }
+        else
+        {
+            args.ThrowItems = true;
+        }
     }
 
     private void OnFire(Entity<SyringeGunComponent> gun, ref AmmoShotEvent args)

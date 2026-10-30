@@ -1,0 +1,2 @@
+role-timer-flavor-text-too-short = Фізичний опис вашого персонажа має містити щонайменше [color=yellow]{$required}[/color] символів, щоб ви могли вибрати цю роль (зараз [color=yellow]{$current}[/color]).
+role-timer-flavor-text-too-long = Фізичний опис вашого персонажа має містити менше ніж [color=yellow]{$required}[/color] символів, щоб ви могли вибрати цю роль (зараз [color=yellow]{$current}[/color]).

@@ -1,7 +1,7 @@
 namespace Content.Client._Funkystation.VendingMachines;
 
 /// <summary>
-/// Made so VendingMachineSystem can push state to either the upstream vending ui or the funky keypad ui without knowing which is open
+/// made so VendingMachineSystem can push state to either the upstream vending ui or the funky keypad ui without knowing which is open
 /// </summary>
 public interface IVendingMachineBoundUi
 {

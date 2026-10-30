@@ -214,9 +214,9 @@ public sealed partial class MarkingPicker : Control
     private IReadOnlyDictionary<string, MarkingPrototype> GetMarkings(MarkingCategories category)
     {
         var ckey = _playerManager.LocalSession?.Name; // Pirate ckey for restricted players
-        return IgnoreSpecies
+        return _markingManager.WithoutWaggingVariants(IgnoreSpecies
             ? _markingManager.MarkingsByCategoryAndSex(category, _currentSex, ckey) // Pirate ckey for restricted players
-            : _markingManager.MarkingsByCategoryAndSpeciesAndSex(category, _currentSpecies, _currentSex, ckey); // Pirate ckey for restricted players
+            : _markingManager.MarkingsByCategoryAndSpeciesAndSex(category, _currentSpecies, _currentSex, ckey)); // Pirate ckey for restricted players
     }
 
     public void Populate(string filter)
@@ -500,7 +500,6 @@ public sealed partial class MarkingPicker : Control
 
         var marking = new Marking(_currentMarkings.Markings[_selectedMarkingCategory][markingIndex]);
         marking.SetColor(colorIndex, _currentMarkingColors[colorIndex]);
-        MarkingColoration.Clamp(marking, _prototypeManager); // Pirate - Marking coloration clamp
         _currentMarkings.Replace(_selectedMarkingCategory, markingIndex, marking);
 
         OnMarkingColorChange?.Invoke(_currentMarkings);

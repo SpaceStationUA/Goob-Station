@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.MedicalScanner;
+using Content.Shared._Pirate.Triage.MedicalRecords; // Pirate
 using Content.Shared._Shitmed.Targeting; // Shitmed Change
 using Content.Shared._Shitmed.Medical.HealthAnalyzer; // Shitmed Change
 using JetBrains.Annotations;
@@ -25,6 +26,8 @@ namespace Content.Client.HealthAnalyzer.UI
             _window = this.CreateWindow<HealthAnalyzerWindow>();
             _window.OnBodyPartSelected += SendBodyPartMessage; // Shitmed Change
             _window.OnModeChanged += SendModeMessage;
+            _window.Triage.OnStatusChanged += status => SendMessage(new HealthAnalyzerTriageStatusMessage(status)); // Pirate
+            _window.Triage.OnClaim += () => SendMessage(new HealthAnalyzerTriageClaimMessage()); // Pirate
             _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
         }
 
@@ -36,6 +39,9 @@ namespace Content.Client.HealthAnalyzer.UI
 
             switch (message)
             {
+                case HealthAnalyzerTriageUpdateMessage triage: // Pirate
+                    _window.Triage.Populate(triage);
+                    break;
                 case HealthAnalyzerBodyMessage bodyMessage:
                     _window.Populate(bodyMessage);
                     break;

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Singularity.Components;
+using Content.Client._Pirate.Singularity; // Pirate: finite distortion coordinates
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
@@ -46,12 +47,13 @@ namespace Content.Client.Singularity
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
         {
-            if (args.Viewport.Eye == null)
+            _count = 0; // Pirate: do not retain a previous viewport's distortions on an early return.
+            if (args.Viewport.Eye == null ||
+                !SingularityDistortionMath.IsValidScale(args.Viewport.RenderScale * args.Viewport.Eye.Scale))
                 return false;
             if (_xformSystem is null && !_entMan.TrySystem(out _xformSystem))
                 return false;
 
-            _count = 0;
             var query = _entMan.EntityQueryEnumerator<SingularityDistortionComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var distortion, out var xform))
             {
@@ -59,6 +61,11 @@ namespace Content.Client.Singularity
                     continue;
 
                 var mapPos = _xformSystem.GetWorldPosition(uid);
+
+                // Pirate: a contained toy inherits its owner's transform. NaN bypasses the range check
+                // below and would otherwise corrupt the screen and cursor for everyone on this map.
+                if (!SingularityDistortionMath.IsValidSource(mapPos, distortion.Intensity, distortion.FalloffPower))
+                    continue;
 
                 // is the distortion in range?
                 if ((mapPos - args.WorldAABB.ClosestPoint(mapPos)).LengthSquared() > MaxDistance * MaxDistance)
@@ -68,6 +75,8 @@ namespace Content.Client.Singularity
                 // In other words, specifically NOT IViewportControl.WorldToScreen (which uses outer coordinates).
                 var tempCoords = args.Viewport.WorldToLocal(mapPos);
                 tempCoords.Y = args.Viewport.Size.Y - tempCoords.Y; // Local space to fragment space.
+                if (!SingularityDistortionMath.IsFinite(tempCoords)) // Pirate
+                    continue;
 
                 _positions[_count] = tempCoords;
                 _intensities[_count] = distortion.Intensity;
@@ -122,29 +131,18 @@ namespace Content.Client.Singularity
                 var localPosition = _positions[i];
                 localPosition.Y = args.Viewport.Size.Y - localPosition.Y;
                 var delta = args.VisiblePosition - localPosition;
-                var distance = (delta / (args.Viewport.RenderScale * args.Viewport.Eye.Scale)).Length();
-
-                var deformation = _intensities[i] / MathF.Pow(distance, _falloffPowers[i]);
-
-                // ensure deformation goes to zero at max distance
-                // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
-
-                if (distance >= maxDistance)
-                    deformation = 0.0f;
-                else
-                    deformation *= 1.0f - MathF.Pow(distance / maxDistance, 4.0f);
-
-                if (deformation > 0.8)
-                    deformation = MathF.Pow(deformation, 0.3f);
-
-                finalCoords -= delta * deformation;
+                // Pirate: use the same finite center calculation as the shader.
+                finalCoords -= SingularityDistortionMath.GetOffset(delta,
+                    args.Viewport.RenderScale * args.Viewport.Eye.Scale,
+                    _intensities[i], _falloffPowers[i], maxDistance);
             }
 
             finalCoords.X -= MathF.Floor(finalCoords.X / (args.Viewport.Size.X * 2)) * args.Viewport.Size.X * 2; // Manually handle the wrapping reflection behaviour used by the viewport texture.
             finalCoords.Y -= MathF.Floor(finalCoords.Y / (args.Viewport.Size.Y * 2)) * args.Viewport.Size.Y * 2;
             finalCoords.X = (finalCoords.X >= args.Viewport.Size.X) ? ((args.Viewport.Size.X * 2) - finalCoords.X) : finalCoords.X;
             finalCoords.Y = (finalCoords.Y >= args.Viewport.Size.Y) ? ((args.Viewport.Size.Y * 2) - finalCoords.Y) : finalCoords.Y;
-            args.VisiblePosition = finalCoords;
+            if (SingularityDistortionMath.IsFinite(finalCoords)) // Pirate: never send NaN back to gameplay input.
+                args.VisiblePosition = finalCoords;
         }
     }
 }

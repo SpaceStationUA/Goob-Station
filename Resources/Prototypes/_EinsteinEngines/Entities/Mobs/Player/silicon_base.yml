@@ -368,6 +368,7 @@
     - type: Penetratable # Goobstation - Better snipers
       penetrateDamage: 50
       damagePenalty: 0.2
+    - type: Tackler # Pirate: Omu tackling gloves
     - type: CombatMode
       canDisarm: true
     - type: ExaminableCharacter # WWDP

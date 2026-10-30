@@ -35,7 +35,7 @@ namespace Content.Goobstation.Client.ServerCurrency.UI
 
             UpdatePlayerBalance();
 
-            isAdmin = _adminManager.CanCommand("balance:add");
+            isAdmin = _adminManager.CanCommand(Loc.GetString("server-currency-add-command"));
 
             if (!isAdmin)
                 Admin.Visible = false;
@@ -109,7 +109,7 @@ namespace Content.Goobstation.Client.ServerCurrency.UI
             if (player == null || value == 0)
                 return;
 
-            _consoleHost.ExecuteCommand("gift " + player + " " + value);
+            _consoleHost.ExecuteCommand(Loc.GetString("server-currency-gift-command") + " " + player + " " + value);
 
             UpdatePlayerBalance();
         }
@@ -119,7 +119,7 @@ namespace Content.Goobstation.Client.ServerCurrency.UI
             if (!isAdmin || player == null || value == 0)
                 return;
 
-            _consoleHost.ExecuteCommand("balance:add " + player + " " + value);
+            _consoleHost.ExecuteCommand(Loc.GetString("server-currency-add-command") + " " + player + " " + value);
 
             UpdatePlayerBalance();
         }

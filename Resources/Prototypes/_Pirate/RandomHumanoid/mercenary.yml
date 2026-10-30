@@ -6,6 +6,8 @@
   - Diona
   - Vox
   components:
+    - type: GhostRoleLoadout
+      role: GhostRoleMercenary
     # Pirate: skill chips start
     - type: OrganChipsOnSpawn
       chips:

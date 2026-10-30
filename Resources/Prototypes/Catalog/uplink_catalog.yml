@@ -6,6 +6,10 @@
 # - all costs are 5x before rebalancing
 # - discounts are removed as they are done procedurally
 
+# Pirate: reputation tiers follow capability, not item price or catalogue origin.
+# No requirement: basic supplies and budget gear; 20: entry-level; 40: specialist;
+# 60: military; 80: elite; 100: strategic weapons and bundles that can supply them.
+
 - type: listing
   id: UplinkPistolViper
   name: uplink-pistol-viper-name
@@ -15,7 +19,7 @@
     Telecrystal: 13 # goob - this +1 mag = 15 TC
   categories:
   - UplinkWeaponry
-  reputation: 40 # Pirate: sidearms reputation
+  reputation: 20 # Pirate: entry-level reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -51,7 +55,7 @@
     Telecrystal: 17 # goob - this +1 mag = 20 TC
   categories:
   - UplinkWeaponry
-  reputation: 45 # Pirate: sidearms reputation
+  reputation: 40 # Pirate: specialist reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -70,7 +74,6 @@
     Telecrystal: 4 # goob
   categories:
   - UplinkWeaponry
-  reputation: 60 # Pirate: long arms reputation
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -88,7 +91,7 @@
     Telecrystal: 37 # goob - desword is 74
   categories:
   - UplinkWeaponry
-  reputation: 30 # Pirate: melee weapons reputation
+  reputation: 40 # Pirate: specialist reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -125,6 +128,7 @@
   productEntity: WeaponEnergyCrossbow
   cost:
     Telecrystal: 30 # Goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWeaponry
   conditions:
@@ -141,7 +145,6 @@
     Telecrystal: 20 # goob - Pretty weak, but resusable ranged crit potential shouldn't be less.
   categories:
     - UplinkWeaponry
-  reputation: 20 # Pirate: melee weapons reputation
     #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -159,7 +162,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkWeaponry
-  reputation: 30 # Pirate: melee weapons reputation
+  reputation: 20 # Pirate: entry-level reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -197,7 +200,7 @@
     Telecrystal: 15 # goob
   categories:
   - UplinkWeaponry
-  reputation: 40 # Pirate: sidearms reputation
+  reputation: 20 # Pirate: entry-level reputation tier
 
 
 - type: listing
@@ -210,7 +213,7 @@
     Telecrystal: 75 # goob
   categories:
   - UplinkWeaponry
-  reputation: 60 # Pirate: long arms reputation
+  reputation: 80 # Pirate: elite reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -230,6 +233,7 @@
   #  Telecrystal: 8
   cost:
     Telecrystal: 30 # goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkWeaponry
 
@@ -259,6 +263,7 @@
   productEntity: WeaponRifleEstoc # goob unbundle
   cost:
     Telecrystal: 60 # goob unbundle
+  reputation: 60 # Pirate: military reputation tier
   categories:
   - UplinkWeaponry
   #Goobstation
@@ -297,7 +302,7 @@
     Telecrystal: 150 # goob
   categories:
   - UplinkWeaponry
-  reputation: 95 # Pirate: high-power weapons reputation
+  reputation: 100 # Pirate: strategic reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -336,7 +341,7 @@
     Telecrystal: 10 # goob
   categories:
   - UplinkExplosives
-  reputation: 40 # Pirate: explosives reputation
+  reputation: 20 # Pirate: entry-level reputation tier
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -382,7 +387,7 @@
     Telecrystal: 24 # goob
   categories:
     - UplinkExplosives
-  reputation: 50 # Pirate: explosives reputation
+  reputation: 40 # Pirate: specialist reputation tier
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -400,7 +405,7 @@
     Telecrystal: 20 # goob
   categories:
     - UplinkExplosives
-  reputation: 55 # Pirate: explosives reputation
+  reputation: 80 # Pirate: elite reputation tier
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -456,7 +461,7 @@
     Telecrystal: 8 # goob - We have a ten tens or 100 TC system, lets use the bastard. Better than 13's yet 10 TC's a pretty crappy price.
   categories:
   - UplinkExplosives
-  reputation: 40 # Pirate: explosives reputation
+  reputation: 20 # Pirate: entry-level reputation tier
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -489,7 +494,7 @@
     Telecrystal: 52 # goob - you're buying bulk so its some discount
   categories:
   - UplinkExplosives
-  reputation: 65 # Pirate: powerful explosives reputation
+  reputation: 40 # Pirate: specialist reputation tier
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -506,7 +511,7 @@
     Telecrystal: 4 # goob - implanter is 10 and infintely better lmao
   categories:
   - UplinkExplosives
-  reputation: 40 # Pirate: explosives reputation
+  reputation: 20 # Pirate: entry-level reputation tier
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -536,7 +541,7 @@
     Telecrystal: 52 # goob
   categories:
     - UplinkExplosives
-  reputation: 75 # Pirate: powerful explosives reputation
+  reputation: 80 # Pirate: elite reputation tier
   restockTime: 1800
 #Goobstation
   conditions:
@@ -588,7 +593,7 @@
     Telecrystal: 8 # goob
   categories:
   - UplinkExplosives
-  reputation: 45 # Pirate: explosives reputation
+  reputation: 40 # Pirate: specialist reputation tier
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -606,7 +611,7 @@
     Telecrystal: 8 # goob
   categories:
   - UplinkExplosives
-  reputation: 45 # Pirate: explosives reputation
+  reputation: 40 # Pirate: specialist reputation tier
   conditions: # Goob, two times cheaper for nukies
   - !type:StoreWhitelistCondition
     blacklist:
@@ -781,7 +786,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkChemicals
-  reputation: 25 # Pirate: chemicals reputation
+  reputation: 40 # Pirate: specialist reputation tier
 
 
 - type: listing
@@ -794,7 +799,6 @@
     Telecrystal: 5 # goob
   categories:
   - UplinkChemicals
-  reputation: 20 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -850,7 +854,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkChemicals
-  reputation: 25 # Pirate: chemicals reputation
+  reputation: 40 # Pirate: specialist reputation tier
 
 
 - type: listing
@@ -862,7 +866,6 @@
     Telecrystal: 10 #goob
   categories:
   - UplinkChemicals
-  reputation: 20 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -874,7 +877,6 @@
     Telecrystal: 12 # Goobstation - Combat pen rebalance
   categories:
   - UplinkChemicals
-  reputation: 20 # Pirate: chemicals reputation
 
 
 - type: listing
@@ -904,7 +906,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkChemicals
-  reputation: 35 # Pirate: chemicals reputation
+  reputation: 40 # Pirate: specialist reputation tier
 
 
 - type: listing
@@ -978,6 +980,7 @@
   productEntity: ChameleonProjector
   cost:
     Telecrystal: 30 # goob - Basically a meme item at 35 TC to be real.
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkDeception
 
@@ -1024,7 +1027,6 @@
     Telecrystal: 5 # goob
   categories:
   - UplinkDeception
-  reputation: 5 # Pirate: melee weapon and pen
 
 - type: listing
   id: UplinkDecoyDisk
@@ -1056,7 +1058,6 @@
     Telecrystal: 20 # goob
   categories:
     - UplinkDeception
-  reputation: 15 # Pirate: reputation gate
   conditions: # EE Plasmeme Change: Plasmamen get another listing.
   - !type:BuyerSpeciesCondition
     blacklist:
@@ -1093,7 +1094,6 @@
     Telecrystal: 10 # goob
   categories:
   - UplinkDeception
-  reputation: 40 # Pirate: explosives reputation
   restockTime: 1800
   conditions:
   - !type:StoreWhitelistCondition
@@ -1128,6 +1128,7 @@
   productEntity: AccessBreaker
   cost:
     Telecrystal: 20 # goob
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkDisruption
 
@@ -1140,7 +1141,7 @@
     Telecrystal: 20 # goob - not quite worth 25
   categories:
   - UplinkDisruption
-  reputation: 10 # Pirate: iconic item
+  reputation: 20 # Pirate: entry-level reputation tier
 
 
 - type: listing
@@ -1150,6 +1151,7 @@
   productEntity: RadioJammer
   cost:
     Telecrystal: 20 # goob
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkDisruption
 
@@ -1211,7 +1213,6 @@
     Telecrystal: 6 # goob - Not a GREAT item but has some effects. Bomb Balance.
   categories:
   - UplinkDisruption
-  reputation: 5 # Pirate: requires one completed task
 
 
 - type: listing
@@ -1256,7 +1257,7 @@
     Telecrystal: 32 # goob - worse synd bomb. Requires real skill to pull off. Can get 3, but that blocks any decent item. Bomb balancing applies here.
   categories:
   - UplinkDisruption
-  reputation: 50 # Pirate: explosives reputation
+  reputation: 60 # Pirate: military reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1310,6 +1311,7 @@
   productEntity: CrateSyndicateSurplusBundle
   cost:
     Telecrystal: 100 # goob
+  reputation: 100 # Pirate: strategic reputation tier
   categories:
   - UplinkDisruption
   #Goobstation
@@ -1332,6 +1334,7 @@
   productEntity: CrateSyndicateSuperSurplusBundle
   cost:
     Telecrystal: 200 # goob
+  reputation: 100 # Pirate: strategic reputation tier
   categories:
   - UplinkDisruption
   #Goobstation
@@ -1376,7 +1379,7 @@
     Telecrystal: 60 # goob
   categories:
     - UplinkDisruption
-  reputation: 85 # Pirate: station-destructive items reputation
+  reputation: 100 # Pirate: strategic reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1412,7 +1415,7 @@
       tags:
       - ContractorUplink
       - NukeOpsUplink
-  reputation: 50 # Pirate: allies reputation
+  reputation: 60 # Pirate: military reputation tier
 
 
 - type: listing
@@ -1425,7 +1428,7 @@
     Telecrystal: 70 # goob
   categories:
   - UplinkAllies
-  reputation: 45 # Pirate: allies reputation
+  reputation: 60 # Pirate: military reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1486,7 +1489,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkAllies
-  reputation: 30 # Pirate: allies reputation, reduced for a monkey
+  reputation: 20 # Pirate: entry-level reputation tier
   conditions:
     - !type:StoreWhitelistCondition
       blacklist:
@@ -1522,6 +1525,7 @@
   productEntity: DehydratedSpaceCarp
   cost:
     Telecrystal: 10 # goob
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkAllies
   #Goobstation
@@ -1541,6 +1545,7 @@
   productEntity: ReinforcementRadioSyndicateSyndiCat
   cost:
     Telecrystal: 30 # goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
     - UplinkAllies
   #Goobstation
@@ -1581,6 +1586,7 @@
   productEntity: StorageImplanter
   cost:
     Telecrystal: 40 # goob
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
     - UplinkImplants
   conditions:
@@ -1598,6 +1604,7 @@
   productEntity: FreedomImplanter
   cost:
     Telecrystal: 18 # goob - not quite worth any more than that
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
     - UplinkImplants
 
@@ -1610,6 +1617,7 @@
   productEntity: ScramImplanter
   cost:
     Telecrystal: 15 # goob - can be useful, but does nothing on its own
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
     - UplinkImplants
 
@@ -1624,7 +1632,7 @@
     Telecrystal: 25 # goob
   categories:
     - UplinkImplants
-  reputation: 25 # Pirate: not needed for shoe theft
+  reputation: 20 # Pirate: entry-level reputation tier
 
 
 - type: listing
@@ -1637,7 +1645,7 @@
     Telecrystal: 10 # goob
   categories:
     - UplinkImplants
-  reputation: 25 # Pirate: melee weapons reputation
+  reputation: 20 # Pirate: entry-level reputation tier
 
 - type: listing
   id: UplinkRadioImplanter
@@ -1663,6 +1671,7 @@
   productEntity: MicroBombImplanter
   cost:
     Telecrystal: 20 # goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkImplants
   #Goobstation
@@ -1690,6 +1699,7 @@
   productEntity: MacroBombImplanter
   cost:
     Telecrystal: 65 # goob
+  reputation: 80 # Pirate: elite reputation tier
   categories:
     - UplinkImplants
   restockTime: 1800
@@ -1902,7 +1912,6 @@
     Telecrystal: 15 # goob
   categories:
   - UplinkWearables
-  reputation: 15 # Pirate: armour reputation
 
 
 - type: listing
@@ -1937,7 +1946,6 @@
     Telecrystal: 20 # goob - Meh protection no slowdown. Can definitely take a hit or two extra however.
   categories:
   - UplinkWearables
-  reputation: 10 # Pirate: syndicate EVA reputation
 
 
 - type: listing
@@ -1950,7 +1958,7 @@
     Telecrystal: 20 # goob
   categories:
   - UplinkWearables
-  reputation: 15 # Pirate: armour reputation
+  reputation: 20 # Pirate: entry-level reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -1969,7 +1977,7 @@
     Telecrystal: 50 # goob
   categories:
   - UplinkWearables
-  reputation: 65 # Pirate: hardsuits reputation
+  reputation: 60 # Pirate: military reputation tier
   #Goobstation
   conditions:
   - !type:StoreWhitelistCondition
@@ -2003,6 +2011,7 @@
   productEntity: ClothingBackpackDuffelSyndicateEliteHardsuitBundle
   cost:
     Telecrystal: 75 # goob
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkWearables
   #Goobstation
@@ -2026,6 +2035,7 @@
   productEntity: CrateCybersunJuggernautBundle
   cost:
     Telecrystal: 75 # goob
+  reputation: 80 # Pirate: elite reputation tier
   categories:
   - UplinkWearables
   #Goobstation
@@ -2132,7 +2142,6 @@
     Telecrystal: 130 # goob
   categories:
   - UplinkPointless
-  reputation: 100 # Pirate: station-destructive items reputation
 
 
 - type: listing
@@ -2215,7 +2224,6 @@
     Telecrystal: 100 # goob
   categories:
   - UplinkPointless
-  reputation: 50 # Pirate: reputation gate
 
 
 - type: listing
@@ -2260,7 +2268,7 @@
     Telecrystal: 30 # goob
   categories:
   - UplinkJob
-  reputation: 30 # Pirate: lower than sidearms because it must be grown
+  reputation: 20 # Pirate: entry-level reputation tier
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2276,7 +2284,6 @@
     Telecrystal: 30 # goob
   categories:
     - UplinkJob
-  reputation: 5 # Pirate: melee weapons reputation
   conditions:
     - !type:BuyerJobCondition
       whitelist:
@@ -2311,7 +2318,7 @@
     Telecrystal: 100 # goob
   categories:
   - UplinkJob
-  reputation: 70 # Pirate: powerful explosives
+  reputation: 80 # Pirate: elite reputation tier
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2327,7 +2334,7 @@
     Telecrystal: 20 # goob
   categories:
   - UplinkJob
-  reputation: 40 # Pirate: sidearms reputation
+  reputation: 20 # Pirate: entry-level reputation tier
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2345,7 +2352,7 @@
     Telecrystal: 8 # goob
   categories:
   - UplinkJob
-  reputation: 40 # Pirate: explosives reputation
+  reputation: 20 # Pirate: entry-level reputation tier
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2361,7 +2368,7 @@
     Telecrystal: 18 # goob
   categories:
   - UplinkJob
-  reputation: 45 # Pirate: explosives reputation
+  reputation: 40 # Pirate: specialist reputation tier
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2378,7 +2385,7 @@
     Telecrystal: 60 # goob
   categories:
   - UplinkJob
-  reputation: 45 # Pirate: allies reputation
+  reputation: 60 # Pirate: military reputation tier
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2429,7 +2436,7 @@
     Telecrystal: 16 # goob - was 20, with my buff made it 25 to be closer to minibomb -panzer well no one uses it! 16 TC better.
   categories:
   - UplinkJob
-  reputation: 45 # Pirate: explosives reputation
+  reputation: 40 # Pirate: specialist reputation tier
   conditions:
   - !type:BuyerJobCondition
     whitelist:
@@ -2448,6 +2455,7 @@
   productEntity: SyndicateSpongeBox
   cost:
     Telecrystal: 35 # goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -2525,6 +2533,7 @@
   productEntity: ClothingBackpackDuffelAcolyteBundle
   cost:
     Telecrystal: 20 # Goobstation
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkJob
   conditions:
@@ -2560,6 +2569,7 @@
   #  Telecrystal: 10
   cost:
     Telecrystal: 25 # Goob
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkJob
   conditions:

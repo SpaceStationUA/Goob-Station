@@ -183,6 +183,8 @@
   parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
+  - type: Flashbang # Pirate: Omu Henrietta flash-slug effect
+    minProtectionRange: 7
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
@@ -381,4 +383,3 @@
     proto: HighCaliberPelletGrenade
     count: 20
     spread: 15
-

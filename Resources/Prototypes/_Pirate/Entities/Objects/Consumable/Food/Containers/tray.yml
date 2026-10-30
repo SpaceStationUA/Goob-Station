@@ -1,0 +1,59 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseStorageItem
+  id: FoodTray
+  name: serving tray
+  description: A metal serving tray with a lid for carrying food and drinks.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Consumable/Food/tray.rsi
+    layers:
+    - state: tray
+    - state: tray-cap
+      map: [lid]
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
+    storedOffset: 0,-2
+    inhandVisuals:
+      left:
+      - state: tray-inhand-left
+      - state: cap-inhand-left
+      right:
+      - state: tray-inhand-right
+      - state: cap-inhand-right
+  - type: Storage
+    grid:
+    - 0,0,3,1
+    maxItemSize: Normal
+    quickInsert: true
+    whitelist:
+      components:
+      - Edible
+      - Utensil
+    storageOpenSound: /Audio/Items/toolbox_open.ogg
+    storageCloseSound: /Audio/Items/toolbox_close.ogg
+    storageInsertSound: /Audio/Items/toolbox_insert.ogg
+    storageRemoveSound: /Audio/Items/toolbox_remove.ogg
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        lid:
+          True: { visible: false }
+          False: { visible: true }
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 0
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
+  - type: StaticPrice
+    price: 30

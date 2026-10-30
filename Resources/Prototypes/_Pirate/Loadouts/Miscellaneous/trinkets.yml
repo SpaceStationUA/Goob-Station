@@ -22,6 +22,12 @@
     - PhotoAlbumLoadoutSigned
 
 - type: loadout
+  id: TrinketsDiary
+  storage:
+    back:
+    - DiaryLoadout
+
+- type: loadout
   id: TrinketsPhotoCameraFilled
   storage:
     back:

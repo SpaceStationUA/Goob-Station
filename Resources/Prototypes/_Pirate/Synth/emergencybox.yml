@@ -1,0 +1,87 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Synths need oral repair supplies because they cannot breathe or take injections.
+
+- type: entity
+  parent: BoxSurvivalSlots
+  id: BoxSurvivalSlotsSynth
+  name: synth survival box
+  description: It's a box with basic supplies for synth upkeep inside.
+  components:
+  - type: Sprite
+    state: box_silicon
+  # mapLayers keys must match layers in the selected RSI.
+  - type: ItemMapper
+    sprite: _Pirate/Objects/Misc/synth_survival_box.rsi
+    mapLayers:
+      ferrobrick:
+        whitelist:
+          tags:
+          - FoodSnack
+          - BreadEmergency
+          - FoodTinMRE
+      flare:
+        whitelist:
+          tags:
+          - Flare
+      water:
+        whitelist:
+          tags:
+          - DrinkBottle
+  - type: ContainerContainer
+    containers:
+      water: !type:ContainerSlot
+      nutriblock: !type:ContainerSlot
+      flare: !type:ContainerSlot
+      fullerene: !type:ContainerSlot
+      nanites: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      water:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - DrinkBottle
+      nutriblock:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - FoodSnack
+          - BreadEmergency
+          - FoodTinMRE
+      flare:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - Flare
+      fullerene:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - Bloodpack
+      nanites:
+        ejectOnInteract: false
+        whitelist:
+          tags:
+          - SynthFood
+          - Pill
+  - type: ContainerFill
+    containers:
+      water:
+      - DrinkWaterBottleFull
+      nutriblock:
+      - FoodSnackFerrobrick
+      flare:
+      - Flare
+      fullerene:
+      - SynthBloodpack3
+      nanites:
+      - FoodNanitePaste
+
+- type: entity
+  parent: SynthBloodpack
+  id: SynthBloodpack3
+  suffix: 3
+  components:
+  - type: Stack
+    stackType: SynthBloodpack
+    count: 3

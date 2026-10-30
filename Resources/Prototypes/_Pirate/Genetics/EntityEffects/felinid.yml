@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Pirate: local anatomy uses separate organ slots and humanoid markings.
+- type: entityEffect
+  id: MakeFelinid
+  guidebookText: entity-effect-guidebook-make-felinid
+  effects:
+  - !type:SetFelinized
+  - !type:PopupMessage
+    type: Pvs
+    visualType: LargeCaution
+    messages:
+    - entity-effect-popup-make-felinid
+
+- type: entityEffect
+  id: RevertFelinid
+  guidebookText: entity-effect-guidebook-revert-felinid
+  effects:
+  - !type:SetFelinized
+    revert: true
+  - !type:PopupMessage
+    type: Pvs
+    visualType: MediumCaution
+    messages:
+    - entity-effect-popup-revert-felinid

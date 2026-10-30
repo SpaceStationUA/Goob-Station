@@ -7,6 +7,13 @@
   - type: Sprite
     state: icon
     sprite: _DV/Objects/Specific/Species/Oni/gourd.rsi
+  # Pirate: both gourds use the same sprite state when opened and closed.
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: icon}
+          False: {state: icon}
   - type: SolutionContainerManager
     solutions:
       drink:

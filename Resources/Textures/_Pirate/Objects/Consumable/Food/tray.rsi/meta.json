@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made with love by Unity <3, *beep-boop* Taken from https://github.com/corvax-team/ss14-wl/tree/60dda2d5ea68e8393cb712da03aef0d72f593f43/Resources/Textures/_WL/Objects/Consumable/tray.rsi.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "tray-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tray-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "cap-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cap-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "tray"
+    },
+    {
+      "name": "tray-cap"
+    }
+  ]
+}

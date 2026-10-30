@@ -3,13 +3,12 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitMercenary
     eyes: ClothingEyesGlassesMercenary
-    back: ClothingBackpackMerc
     shoes: ClothingShoesBootsMercFilled
     head: ClothingHeadHelmetMerc
     gloves: ClothingHandsMercGlovesCombat
     ears: ClothingHeadsetAltFreelancer
-    belt: ClothingBeltMercWebbingHelldiverFilled
     outerClothing: ClothingOuterVestWebMerc
+    pocket1: MercUndeterminedClass
     pocket2: RadioHandheld
     id: MercenaryIDCard
     mask: ClothingMaskGasMerc

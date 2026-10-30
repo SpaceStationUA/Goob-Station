@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  parent: ClothingHeadHelmetVoidsuitSecurity #Parented to goob's security hardsuit
+  id: ClothingHeadHelmetHardsuitCorpsman
+  name: corpsman combat hardsuit helmet
+  description: A lightweight armoured helmet with full-face blue visor and head-mounted light.
+  components:
+  - type: Sprite
+    sprite: _Pirate/DV/Clothing/Head/Hardsuits/corpsman.rsi
+  - type: Clothing
+    sprite: _Pirate/DV/Clothing/Head/Hardsuits/corpsman.rsi
+  - type: PointLight
+    color: "#00FFFF"

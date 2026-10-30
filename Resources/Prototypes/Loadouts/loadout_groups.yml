@@ -7,6 +7,7 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
+  - CandyBucket # Goobstation - Halloween
   - FlowerWreath
   - Hairflower
   - Headphones
@@ -135,6 +136,7 @@
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVapor # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 # nitrogen or oxygen tank, depending on what your species needs
 - type: loadoutGroup
@@ -702,6 +704,7 @@
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporClown # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 - type: loadoutGroup
   id: ClownJobTrinkets
@@ -780,6 +783,7 @@
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporMime # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 - type: loadoutGroup
   id: MimeJobTrinkets
@@ -1200,6 +1204,7 @@
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporExtended # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 # Science
 - type: loadoutGroup
@@ -1475,6 +1480,7 @@
   id: SecurityBelt
   name: loadout-group-security-belt
   loadouts:
+  - SecuritySwordBelt # Pirate: Omu Grognard with the source senior-officer gate
   - SecurityBelt
   - SecurityWebbing
   - SecurityJudoBelt # Goobstation - Martial Arts
@@ -1586,6 +1592,7 @@
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporSecurity # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 # Medical
 - type: loadoutGroup
@@ -1614,6 +1621,7 @@
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
+  - ChiefMedicalOfficerLabCoatWinter # Funky Station
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerNeck
@@ -1837,6 +1845,7 @@
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporMedical # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 # Wildcards
 - type: loadoutGroup
@@ -1883,6 +1892,7 @@
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporSyndicate # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 - type: loadoutGroup
   id: SurvivalMilitaryDouble

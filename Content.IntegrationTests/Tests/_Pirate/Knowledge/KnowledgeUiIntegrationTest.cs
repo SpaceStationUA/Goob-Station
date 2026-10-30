@@ -66,7 +66,7 @@ public sealed class KnowledgeUiIntegrationTest
                 Assert.That(saveButton.Disabled, Is.True);
                 Assert.That(resetButton.Disabled, Is.True);
                 Assert.That(firstAidLevel.FontColorOverride, Is.EqualTo(KnowledgeStyleColors.ForLevel(0)));
-                Assert.That(FindNamed<BoxContainer>(editor, "Legend").ChildCount, Is.EqualTo(5));
+                Assert.That(FindNamed<BoxContainer>(editor, "Legend").ChildCount, Is.EqualTo(4));
                 Assert.That(FindNamed<PanelContainer>(editor, "SkillBarFirstAidKnowledge"), Is.Not.Null);
                 Assert.That(
                     FindNamed<PanelContainer>(editor, "SkillRowFirstAidKnowledge").ToolTip,
@@ -74,7 +74,6 @@ public sealed class KnowledgeUiIntegrationTest
                         "knowledge-editor-breakdown",
                         ("profile", 0),
                         ("job", "0"),
-                        ("employer", "0"),
                         ("total", 0))));
                 Assert.That(TryFindNamed<Label>(editor, "PreviewLabel", out _), Is.False);
             });
@@ -139,11 +138,13 @@ public sealed class KnowledgeUiIntegrationTest
             Assert.That(applyCount, Is.EqualTo(3));
         });
 
-        await Click(pair, firstAidIncrease);
-        await Click(pair, firstAidIncrease);
-        await Click(pair, firstAidIncrease);
+        // Mastery 3 spends 6 points for the budget checks below.
+        for (var i = 0; i < 5; i++)
+            await Click(pair, firstAidIncrease);
         await client.WaitAssertion(() => Assert.That(firstAidIncrease.Disabled, Is.True,
             "The editor must stop at the skill's maximum selectable mastery."));
+        await Click(pair, firstAidDecrease);
+        await Click(pair, firstAidDecrease);
 
         await Click(pair, chemistryIncrease);
         await Click(pair, chemistryIncrease);

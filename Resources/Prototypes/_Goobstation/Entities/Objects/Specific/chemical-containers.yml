@@ -10,7 +10,7 @@
     currentLabel: reagent-name-salicylic-acid
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink: # Pirate: mercenary loadouts
         reagents:
         - ReagentId: SalicylicAcid
           Quantity: 200
@@ -25,7 +25,7 @@
     currentLabel: reagent-name-oxandrolone
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink: # Pirate: mercenary loadouts
         reagents:
         - ReagentId: Oxandrolone
           Quantity: 200

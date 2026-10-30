@@ -1,0 +1,57 @@
+<Document>
+# Новий вигляд лобі!
+
+Після додавання голосового чату до Ґуба я помітив, що спливні вікна перекривають одне одного. Тому вирішив замінити їх системою новин.
+Старе лобі було настільки захаращене, що новини просто не було куди вставити. Я почав прибирати зайве й непомітно для себе переробив усе лобі, стилізувавши його під обшивку корабля.
+
+Потім вирішив, що редактор персонажа має відповідати новому стилю. І подумав:
+[bold]Друже.[/bold]
+[italic]Тут теж усе хріново.[/italic]
+
+Обирати зачіски й прикраси зі списку жахливо незручно. До натискання не знаєш, як вони виглядають, а повільно перебирати все підряд — справжня мука.
+Тож переробляємо й редактор персонажа!
+
+## Що нового
+### Лобі
+- Стрічка новин із закріпленими дописами — ви саме її читаєте
+- Вкладки чату й новин
+- Інформацію про раунд і готовність перенесено в бічну панель та гарно оформлено
+- Посилання й меню зібрано у випадні списки
+
+### Редактор персонажа
+- Зачіски, прикраси та види тепер мають плитки попереднього перегляду
+- Зразки кольорів шкіри й очей та повзунок віку
+- Можливість приховати недоступні посади
+- Вибір рис персонажа
+
+Ось нові елементи — на них можна натискати!
+  <NewsPanel Margin="4">
+    <Box Orientation="Vertical">
+      <Box>
+        <NewsSevenSegment Countdown="300" MinDigits="4" Caption="ui-lobby-lcd-starts-in" Margin="6"/>
+        <NewsHazardStripe Margin="6">
+          <NewsButton Style="Ready" Text="ui-lobby-ready-up-button" Margin="4"/>
+        </NewsHazardStripe>
+      </Box>
+      <Box>
+        <NewsFact Key="ui-lobby-fact-map" Value="news-new-lobby-demo-map" Margin="3"/>
+        <NewsFact Key="ui-lobby-fact-mode" Value="news-new-lobby-demo-mode" Margin="3"/>
+      </Box>
+      <Box>
+        <NewsButton Text="news-new-lobby-demo-plate" Margin="3"/>
+        <NewsButton Style="Tab" Text="news-new-lobby-demo-tab" Margin="3"/>
+        <NewsButton Style="Danger" Text="news-new-lobby-demo-danger" Margin="3"/>
+      </Box>
+    </Box>
+  </NewsPanel>
+
+
+<ColorBox Color="#262a2e" OutlineColor="#4d535a" Margin="4">
+<Box Orientation="Vertical" Margin="8">Спрайти створив наш славний лідер [bold]@Rouge2t7[/bold] у Дискорді.</Box>
+</ColorBox>
+
+Роботу ще не завершено: треба замінити кнопки приєднання й збереження та металеву панель НТ, а семисегментний індикатор, можливо, перемалювати у піксельному стилі.
+Але я хотів дати вам змогу спробувати нове лобі й залишити відгуки. Сподіваюся, вам сподобається!
+<InfoLinkButton Link="Discord" Text="news-new-lobby-feedback"/>
+<Box HorizontalAlignment="Right">[italic]— Дерк[/italic]</Box>
+</Document>

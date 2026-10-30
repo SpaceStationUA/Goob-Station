@@ -10,6 +10,13 @@
   components:
   - type: VoiceChatEffect # Goobstation - Voice chat
     effect: Robot
+  #region Pirate: silicon skills
+  - type: KnowledgeFloor
+    level: 50
+    exclude:
+    - RevolutionaryKnowledge
+    - SpiderCraftKnowledge
+  #endregion Pirate: silicon skills
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -358,8 +365,9 @@
     keysIn:
     - timer
   # explosion does most of its damage in the center and less at the edges
+  - type: ExplosionEffect # Goob
   - type: Explosive
-    explosionType: Minibomb
+    explosionType: TransparentMinibomb # Goob
     deleteAfterExplosion: false # let damage threshold gib the borg
     totalIntensity: 30
     intensitySlope: 20
@@ -380,8 +388,9 @@
     mobile: True # Goobstation - mobile cameras fix, borg camera not really relevant since monitor doesn't see it anyways but eh
     id: Xenoborg
     useEntityNameAsCameraId: true
+  - type: ExplosionEffect # Goob
   - type: Explosive
-    explosionType: Minibomb
+    explosionType: TransparentMinibomb # Goob
     deleteAfterExplosion: false # let damage threshold gib the borg
     totalIntensity: 200 # bigger kaboom
     intensitySlope: 20

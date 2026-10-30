@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/, ported from funky-station at https://github.com/funky-station/funky-station/commit/4536688a4643978688adb615210846a7a9e9b123",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "analyzer",
+      "delays": [
+        [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ]
+      ]
+    },
+    {
+      "name": "analyzer-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "analyzer-inhand-right",
+      "directions": 4
+    }
+  ]
+}

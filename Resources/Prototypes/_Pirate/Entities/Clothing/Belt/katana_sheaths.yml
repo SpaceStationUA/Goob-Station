@@ -144,3 +144,13 @@
     containers:
       item:
       - EnergyKatana
+
+- type: entity
+  parent: ClothingBeltEnergyKatanaSheathFilled
+  id: ClothingBeltEnergyKatanaSheathMercenaryFilled
+  suffix: Filled, Mercenary
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - EnergyKatanaMercenary

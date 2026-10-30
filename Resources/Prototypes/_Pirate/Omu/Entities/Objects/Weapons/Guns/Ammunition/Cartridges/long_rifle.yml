@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
+
+- type: entity
+  id: CartridgeLongRifle
+  name: cartridge (.30 long rifle magnum)
+  parent: [ BaseCartridge, BaseSecurityContraband ]
+  components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - CartridgeLongRifle
+  - type: CartridgeAmmo
+    proto: BulletLongRifle
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals

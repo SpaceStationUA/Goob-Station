@@ -23,13 +23,7 @@ public sealed class CableVisualizerSystem : EntitySystem
         if (args.Sprite == null)
             return;
 
-        if (!args.Sprite.Visible)
-        {
-            // This entity is probably below a floor and is not even visible to the user -> don't bother updating sprite data.
-            // Note that if the subfloor visuals change, then another AppearanceChangeEvent will get triggered.
-            return;
-        }
-
+        // Pirate: keep hidden cables current too; revealing a sprite need not change its appearance data.
         if (!_appearanceSystem.TryGetData<WireVisDirFlags>(uid, WireVisVisuals.ConnectedMask, out var mask, args.Component))
             mask = WireVisDirFlags.None;
 

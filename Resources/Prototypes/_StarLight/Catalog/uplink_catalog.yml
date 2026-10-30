@@ -7,6 +7,7 @@
   productEntity: ClothingUniformJumpsuitAtmosSyndie
   cost:
     Telecrystal: 30 # Goobstation edit
+  reputation: 20 # Pirate: entry-level reputation tier
   categories:
   - UplinkWearables
   # Goobstation - nuh uh
@@ -22,6 +23,7 @@
   productEntity: ClothingUniformJumpsuitAtmosSyndieAdvanced
   cost:
     Telecrystal: 60
+  reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkJob
   conditions:

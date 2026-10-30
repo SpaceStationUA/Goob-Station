@@ -54,6 +54,16 @@
   - StationAiHologramHorror #Goobstation
   - StationAiHologramQueen #Goobstation
   - StationAiHologramPerformer  #Goobstation
+  # Pirate: Omu holograms
+  - StationAiHologramAlgalone
+  - StationAiHologramFractalsnowflake
+  - StationAiHologramHensonsnode
+  - StationAiHologramLongrun
+  - StationAiHologramNtpaint
+  - StationAiHologramPuredata
+  - StationAiHologramRorschach
+  - StationAiHologramSeraphim
+  - StationAiHologramTripleaffirmative
 
 # Iconography
 - type: stationAiCustomization

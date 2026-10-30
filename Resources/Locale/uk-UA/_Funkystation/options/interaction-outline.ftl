@@ -1,0 +1,11 @@
+ui-options-interaction-outline-header = Налаштування контурів взаємодії
+ui-options-use-custom-interaction-outline-color = Використовувати власні кольори контурів взаємодії
+ui-options-interaction-outline-color-expand = Розгорнути налаштування кольорів контурів взаємодії
+ui-options-interaction-outline-color-valid = Колір контуру об’єктів у межах досяжності
+ui-options-interaction-outline-color-invalid = Колір контуру об’єктів поза межами досяжності
+ui-options-interaction-outline-color-example = Так виглядає колір контуру.
+ui-options-color-slider-default-button = Скинути до типового
+ui-options-radio-channel-colors-header = Кольори радіоканалів
+ui-options-use-custom-radio-channel-colors = Використовувати власні кольори радіоканалів
+ui-options-radio-channel-colors-expand = Розгорнути налаштування кольорів радіоканалів
+ui-options-radio-channel-colors-example = [{$channel}] Так виглядає колір каналу.

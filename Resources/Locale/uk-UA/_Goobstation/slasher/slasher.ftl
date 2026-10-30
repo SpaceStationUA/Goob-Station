@@ -69,3 +69,6 @@ slasher-fear-music-muted = Ви вимикаєте свою музичну те�
 slasher-fear-music-unmuted = Ваша музична тема знову лунає.
 alerts-slasher-fear-victim-name = Страх
 alerts-slasher-fear-victim-desc = Жах охоплює ваш розум, поки різник полює на вас. Що він сильніший, то більше сповільнює та ранить вас. Сховайтеся з поля зору різника, щоб страх спав.
+slasher-kit-guide-button = Цей різновид має інші особливості гри — відкрийте його сторінку довідника.
+slasher-kit-boogeyman = Бабай
+slasher-kit-boogeyman-desc = «Цікаво, чи може... Бабай насправді пересуватися крізь тіні...»

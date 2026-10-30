@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Voting
 {
-    public sealed class MsgVoteData : NetMessage
+    public sealed partial class MsgVoteData : NetMessage // Pirate: voting penalties and runoffs
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
 
@@ -52,6 +52,7 @@ namespace Content.Shared.Voting
                 Options[i] = (votes, name, icon, preview);
             }
 
+            ReadPirateSubtractions(buffer); // Pirate: voting penalties and runoffs
             IsYourVoteDirty = buffer.ReadBoolean();
             if (IsYourVoteDirty)
             {
@@ -89,6 +90,7 @@ namespace Content.Shared.Voting
                     buffer.Write(previewId.Id);
             }
 
+            WritePirateSubtractions(buffer); // Pirate: voting penalties and runoffs
             buffer.Write(IsYourVoteDirty);
             if (IsYourVoteDirty)
             {

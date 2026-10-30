@@ -5,6 +5,7 @@
     CentralCommandOfficial: 1440
     NanotrasenRepresentative: 1080
     BlueshieldOfficer: 810
+    NanotrasenCareerTrainer: 810
     # Командування
     Captain: 1080
     HeadOfSecurity: 810
@@ -39,12 +40,15 @@
     # Науковий Відділ
     Roboticist: 470
     Scientist: 470
+    Geneticist: 470
     ForensicMantis: 450
     ResearchAssistant: 270
     # Сервісний відділ
     Chef: 400
     Botanist: 330
     Bartender: 320
+    Lawyer: 400
+    Chaplain: 270
     Janitor: 270
     RadioHost: 270
     Reporter: 270

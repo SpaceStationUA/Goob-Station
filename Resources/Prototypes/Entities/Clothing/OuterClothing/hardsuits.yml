@@ -526,6 +526,8 @@
     damageProtection:
       flatReductions:
         Blunt: 4 # Pirate ^
+  - type: StealTarget # Pirate: brigmedic suit contract
+    stealGroup: ClothingOuterHardsuitBrigmedic # Pirate: brigmedic suit contract
 
 #Warden's Hardsuit
 - type: entity

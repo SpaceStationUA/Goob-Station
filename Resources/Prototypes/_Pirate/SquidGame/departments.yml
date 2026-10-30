@@ -1,5 +1,6 @@
 - type: department
   id: SquidGame
+  editorHidden: true
   name: department-name-squidgame
   description: department-desc-squidgame
   color: "#FF1744"

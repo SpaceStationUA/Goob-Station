@@ -42,3 +42,6 @@
 
 - type: playTimeTracker
   id: JobCybersunTeamLeader
+
+- type: playTimeTracker
+  id: JobCybersunCommand

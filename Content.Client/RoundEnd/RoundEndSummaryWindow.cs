@@ -367,7 +367,9 @@ namespace Content.Client.RoundEnd
                 Orientation = LayoutOrientation.Vertical
             };
             var StationReportLabel = new RichTextLabel();
-            StationReportLabel.SetMarkupPermissive(stationReportText);
+            var StationReportmessage = new FormattedMessage();
+            StationReportmessage.AddMarkupPermissive(stationReportText);
+            StationReportLabel.SetMessage(StationReportmessage);
             StationReportContainer.AddChild(StationReportLabel);
 
 

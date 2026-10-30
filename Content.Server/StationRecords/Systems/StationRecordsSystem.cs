@@ -162,7 +162,7 @@ public sealed partial class StationRecordsSystem : SharedStationRecordsSystem
             JobTitle = alternativeJobPrototype?.LocalizedJobName ?? jobPrototype.LocalizedName, // Pirate - Alternative Jobs
             JobIcon = alternativeJobPrototype?.JobIconProtoId ?? jobPrototype.Icon, // Pirate - Alternative Jobs
             JobPrototype = jobId,
-            Nationality = profile.Nationality, // Pirate: records photos
+            Citizenship = profile.Citizenship, // Pirate: records photos
             Employer = profile.Employer, // Pirate: records photos
             Species = species,
             Gender = gender,

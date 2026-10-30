@@ -47,6 +47,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<TetherGunComponent, ActivateInWorldEvent>(OnTetherActivate);
         SubscribeLocalEvent<TetherGunComponent, AfterInteractEvent>(OnTetherRanged);
+        SubscribeLocalEvent<TetherGunComponent, ComponentShutdown>(OnTetherShutdown); // Pirate: mutation cleanup.
         SubscribeAllEvent<RequestTetherMoveEvent>(OnTetherMove);
 
         SubscribeLocalEvent<TetheredComponent, BuckleAttemptEvent>(OnTetheredBuckleAttempt);
@@ -143,6 +144,13 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         gunUid = null;
         gun = null;
 
+        // Pirate: Trauma's telekinesis owns its tether on the character, independently of held items.
+        if (TryComp(user, out gun))
+        {
+            gunUid = user;
+            return true;
+        }
+
         if (!_hands.TryGetActiveItem(user, out var activeItem) ||
             !TryComp(activeItem, out gun) ||
             _container.IsEntityInContainer(user))
@@ -160,6 +168,14 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             return;
 
         StopTether(uid, component);
+    }
+
+    // Pirate: release before the owning component disappears, regardless of mutation component removal order.
+    private void OnTetherShutdown(Entity<TetherGunComponent> ent, ref ComponentShutdown args)
+    {
+        // The client receives removal of the target's tether components in the same state update.
+        if (_netManager.IsServer)
+            StopTether(ent, ent.Comp);
     }
 
     public bool TryTether(EntityUid gun, EntityUid target, EntityUid? user, BaseForceGunComponent? component = null)
@@ -248,7 +264,8 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         Dirty(gunUid, component);
     }
 
-    protected virtual void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
+    // Pirate: genetics telekinesis releases tethers through the existing API.
+    public virtual void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
     {
         if (component.Tethered == null)
             return;

@@ -16,6 +16,14 @@
       inverted: true
       traits:
       - Vampirism # Pirate end
+  # Pirate Employment start
+    - !type:CharacterEmployerRequirement
+      employers:
+        - NanoTrasen
+        - Idris
+        - Orion
+        - ZengHu
+  # Pirate Employment end
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hop

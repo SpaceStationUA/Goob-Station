@@ -24,7 +24,6 @@ public enum CustomMarkingPlacement : byte
     Front,
 }
 
-/// <summary>A custom marking a character wears: which art, and where it is drawn.</summary>
 [DataRecord, Serializable, NetSerializable]
 public partial record struct CustomMarking
 {
@@ -33,13 +32,19 @@ public partial record struct CustomMarking
 
     public CustomMarkingPlacement Placement;
 
-    public CustomMarking(string hash, CustomMarkingPlacement placement)
+    public bool Glow;
+
+    public CustomMarking(string hash, CustomMarkingPlacement placement, bool glow = false)
     {
         Hash = hash;
         Placement = placement;
+        Glow = glow;
     }
 }
 
 /// <summary>One saved marking in a player's library.</summary>
 [Serializable, NetSerializable]
-public readonly record struct CustomMarkingEntry(int Id, string Name, string Hash, CustomMarkingPlacement Placement);
+public readonly record struct CustomMarkingEntry(int Id, string Name, string Hash, CustomMarkingPlacement Placement, bool Glow = false)
+{
+    public CustomMarking Marking => new(Hash, Placement, Glow);
+}

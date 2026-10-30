@@ -40,8 +40,15 @@ public sealed partial class KnowledgeComponent : Component
     [DataField, AutoNetworkedField]
     public int TemporaryLevel;
 
+    [DataField, AutoNetworkedField]
+    public int FloorLevel;
+
+    // Removes skills created only by the floor when its holder changes.
+    [DataField]
+    public bool FloorGranted;
+
     [ViewVariables]
-    public int NetLevel => Math.Clamp(LearnedLevel + TemporaryLevel, 0, 100);
+    public int NetLevel => Math.Clamp(Math.Max(LearnedLevel + TemporaryLevel, FloorLevel), 0, 100);
 
     [DataField]
     public int BonusExperience;
@@ -73,6 +80,16 @@ public sealed partial class KnowledgeHolderComponent : Component
 {
     [DataField, AutoNetworkedField]
     public EntityUid? KnowledgeEntity;
+}
+
+[RegisterComponent]
+public sealed partial class KnowledgeFloorComponent : Component
+{
+    [DataField]
+    public int Level = 50;
+
+    [DataField]
+    public HashSet<EntProtoId> Exclude = new();
 }
 
 /// <summary>

@@ -14,6 +14,7 @@ public sealed partial class VendingMachineGridSlot : PanelContainer
 {
     [Dependency] private IPrototypeManager _protoManager = null!;
     [Dependency] private ILocalizationManager _loc = null!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
 
     private const float SlotSize = 84f;
     private const float ItemSize = 64f;
@@ -65,26 +66,25 @@ public sealed partial class VendingMachineGridSlot : PanelContainer
         CodeLabel.Text = code;
         ItemSprite.SetPrototype(protoId);
 
-        PriceLabel.Text = price > 0 ? $"{price}¥" : "";
+        PriceLabel.Text = price > 0 ? $"{price}电" : ""; // Pirate: display the custom currency symbol.
         LayoutContainer.SetPosition(PriceLabel, new Vector2(2f, SlotSize - BadgeSize - 2f));
 
         if (_protoManager.TryIndex(protoId, out var proto))
         {
             var tooltipText = proto.Name;
 
-            if (proto.Components.TryGetValue("Label", out var labelEntry) &&
-                labelEntry.Component is LabelComponent label &&
+            if (proto.TryComp<LabelComponent>(out var label, _componentFactory) &&
                 !string.IsNullOrWhiteSpace(label.CurrentLabel))
             {
                 var labelText = _loc.TryGetString(label.CurrentLabel, out var localized)
                     ? localized
                     : label.CurrentLabel;
 
-                tooltipText = $"{proto.Name} ({labelText})";
+                tooltipText = _loc.GetString("comp-label-format", ("baseName", proto.Name), ("label", labelText));
             }
 
             if (price > 0)
-                tooltipText = $"{tooltipText}\n{price}¥";
+                tooltipText = $"{tooltipText}\n{price}电"; // Pirate: display the custom currency symbol.
 
             ToolTip = string.IsNullOrWhiteSpace(proto.Description)
                 ? tooltipText

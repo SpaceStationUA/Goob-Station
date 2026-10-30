@@ -2,3 +2,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "Avali Scratch by AikaDee; original alphabet and font by Icebelly, Avali by RyuujinZERO."
   source: "https://fontstruct.com/fontstructions/show/1108804/avali_scratch"
+
+- files: ["PixeloidSans.ttf"]
+  license: "Custom"
+  copyright: "Copyright © 2020-2025 GGBotNet (https://ggbot.net/fonts/), with Reserved Font Name \"Pixeloid\". Licensed under the SIL Open Font License 1.1 (OFL-1.1). Pixeloid Sans v1.0, unmodified."
+  source: "https://ggbot.itch.io/pixeloid-font"
+
+- files: ["Tiny5-Regular.ttf"]
+  license: "Custom"
+  copyright: "Copyright 2022-2024 The Tiny5 Project Authors (https://github.com/Gissio/font_tiny5). Licensed under the SIL Open Font License 1.1 (OFL-1.1). Static Regular instance generated from the Google Fonts variable build (v2.007) at default axis values."
+  source: "https://github.com/google/fonts/tree/main/ofl/tiny5"

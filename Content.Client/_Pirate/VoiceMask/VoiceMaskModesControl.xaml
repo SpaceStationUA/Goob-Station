@@ -1,0 +1,16 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical"
+              Margin="5">
+    <Label Text="{Loc 'voice-mask-modes-label'}" />
+    <BoxContainer Orientation="Horizontal" Margin="5 2">
+        <CheckBox Name="SayCheck" Text="{Loc 'voice-mask-modes-say'}" Margin="0 0 12 0" />
+        <CheckBox Name="WhisperCheck" Text="{Loc 'voice-mask-modes-whisper'}" />
+    </BoxContainer>
+    <Label Text="{Loc 'voice-mask-modes-radio'}" />
+    <GridContainer Name="ChannelGrid" Columns="3" Margin="5 2" HSeparationOverride="12">
+    </GridContainer>
+</BoxContainer>

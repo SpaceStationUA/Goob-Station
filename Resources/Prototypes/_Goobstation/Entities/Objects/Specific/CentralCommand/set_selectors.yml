@@ -2,24 +2,7 @@
 
 # Blueshield
 
-- type: entity
-  id: BlueshieldUndeterminedWeapon
-  name: blueshield sets pack
-  description: A small box utilizing bluespace technology to drop in a loadout directly to you. Choose wisely.
-  parent: [ BaseItem, BaseSetSelector, BaseCentcommContraband ]
-  components:
-  - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Security/blueshieldundetermined.rsi
-    state: icon
-  - type: SetSelector
-    possibleSets:
-    - BSOBlueshieldSet
-    - BSORevolverSet
-    - BSOCQCSet
-    - BSOChesterSet
-    - BSOSyringeSet
-    maxSelectedSets: 2
-
+# Pirate: replaced by the Omu offensive/support cases; see Resources/migration.yml.
 
 - type: entity
   id: BlueshieldUndeterminedHardsuit
@@ -38,20 +21,4 @@
 
 # ERT
 
-- type: entity
-  id: ERTSecurityUndeterminedWeapon
-  name: emergency response weaponry pack
-  description: A small remote utilizing bluespace technology to drop in a loadout directly to you. Choose wisely.
-  parent: [ BaseItem, BaseSetSelector, BaseCentcommContraband ]
-  components:
-  - type: Sprite
-    sprite: _Goobstation/Objects/Specific/Security/ertundetermined.rsi
-    state: icon
-  - type: SetSelector
-    possibleSets:
-    - ERTBallisticsSet
-    - ERTPulseSet
-    - ERTGuardianSet # Pirate Changes
-    - ERTBreacherSet # Pirate Changes
-    maxSelectedSets: 1
-
+# Pirate: ERTSecurityUndeterminedWeapon is defined in the Pirate Omu equipment port.

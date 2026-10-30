@@ -338,7 +338,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     /// <summary>
     /// Try to get a single component from the source entity/prototype.
     /// </summary>
-    private bool GetSrcComp<T>(ChameleonDisguiseComponent comp, [NotNullWhen(true)] out T? src) where T : Component, new()
+    // Pirate: allow the client to copy sprites through SpriteSystem instead of serialization.
+    protected bool GetSrcComp<T>(ChameleonDisguiseComponent comp, [NotNullWhen(true)] out T? src) where T : Component, new()
     {
         if (TryComp(comp.SourceEntity, out src))
             return true;
