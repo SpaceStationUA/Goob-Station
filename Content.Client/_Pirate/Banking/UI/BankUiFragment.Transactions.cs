@@ -84,6 +84,7 @@ public sealed partial class BankUiFragment
         BankTransactionType.Withdrawal => "bank-transaction-withdrawal",
         BankTransactionType.Purchase => "bank-transaction-purchase",
         BankTransactionType.Transfer => "bank-transaction-transfer",
+        BankTransactionType.Fine => "bank-transaction-fine",
         _ => "bank-transaction-adjustment",
     };
 }

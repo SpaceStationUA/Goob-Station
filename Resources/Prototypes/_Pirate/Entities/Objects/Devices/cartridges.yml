@@ -21,7 +21,7 @@
 - type: entity
   parent: BaseItem
   id: WalletCartridge
-  name: virtual wallet cartridge
+  name: IdrisBank cartridge
   description: A program for managing bank account
   components:
   - type: Sprite

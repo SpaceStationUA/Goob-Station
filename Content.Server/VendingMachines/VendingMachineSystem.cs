@@ -344,7 +344,7 @@ namespace Content.Server.VendingMachines
                 }
                 else
                 {
-                    Popup.PopupEntity(Loc.GetString("vending-machine-component-no-balance", ("target", uid)), sender, sender);
+                    Popup.PopupEntity(Loc.GetString(IsBankCardArrested(sender) ? "bank-account-arrested-purchase" : "vending-machine-component-no-balance", ("target", uid)), sender, sender); // Pirate: citations
                     Deny((uid, component), sender);
                     return;
                 }
@@ -364,6 +364,16 @@ namespace Content.Server.VendingMachines
 
             return _bankCard.TryChangeBalance(bankCard.AccountId.Value, -amount, BankTransactionType.Purchase, Name(vendor)); // Pirate: bank transaction history
         }
+
+        #region Pirate: citations
+        private bool IsBankCardArrested(EntityUid user)
+        {
+            return _idCard.TryFindIdCard(user, out var idCard)
+                && TryComp<BankCardComponent>(idCard.Owner, out var bankCard)
+                && bankCard.AccountId is { } accountId
+                && _bankCard.IsArrested(accountId);
+        }
+        #endregion
 
 
         private void OnInteractUsing(EntityUid uid, VendingMachineComponent component, InteractUsingEvent args)

@@ -39,7 +39,8 @@ public sealed class EftposSystem : EntitySystem
         }
         else
         {
-            _popupSystem.PopupEntity(Loc.GetString("eftpos-transaction-error"), uid);
+            var arrested = bankCard.AccountId is { } accountId && _bankCardSystem.IsArrested(accountId);
+            _popupSystem.PopupEntity(Loc.GetString(arrested ? "bank-account-arrested-purchase" : "eftpos-transaction-error"), uid);
             _audioSystem.PlayPvs(component.SoundDeny, uid);
         }
     }

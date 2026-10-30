@@ -12,6 +12,7 @@ public enum BankTransactionType : byte
     Withdrawal,
     Purchase,
     Transfer,
+    Fine,
 }
 
 [Serializable, NetSerializable]

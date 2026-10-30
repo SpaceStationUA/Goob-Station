@@ -230,6 +230,10 @@ public sealed partial class RecordHistoryPanel : BoxContainer
                     : SecurityStatusLook(entry.Status);
                 return (title, color, icon);
 
+            case RecordLogKind.Citation:
+                return (entry.Topic ?? Loc.GetString("records-log-kind-citation"), CitationColor(entry.Status),
+                    CitationIcon(entry.Status));
+
             default:
                 return (Loc.GetString("records-log-kind-note"), NoteColor, new SpriteSpecifier.Rsi(LogIcons, "note"));
         }
@@ -257,6 +261,26 @@ public sealed partial class RecordHistoryPanel : BoxContainer
             : new SpriteSpecifier.Rsi(SecurityIcons, state));
     }
 
+    private static Color CitationColor(string? status)
+    {
+        return Color.FromHex(status switch
+        {
+            "Paid" => "#8FC72A",
+            "Voided" => "#8A8A8A",
+            _ => "#E0A030",
+        });
+    }
+
+    public static SpriteSpecifier CitationIcon(string? status)
+    {
+        return new SpriteSpecifier.Rsi(LogIcons, status switch
+        {
+            "Paid" => "citation_paid",
+            "Voided" => "citation_voided",
+            _ => "citation_active",
+        });
+    }
+
     private static (Color, SpriteSpecifier) PsionicsStatusLook(string? status)
     {
         var (state, color) = status switch
@@ -271,7 +295,7 @@ public sealed partial class RecordHistoryPanel : BoxContainer
             ? new SpriteSpecifier.Rsi(JobIcons, "Unknown")
             : new SpriteSpecifier.Rsi(PsionicsIcons, state));
     }
-    private static string FormatTime(DateTime utc)
+    public static string FormatTime(DateTime utc)
     {
         var local = DateTime.SpecifyKind(utc, DateTimeKind.Utc).ToLocalTime();
         return $"{local.Day:00}/{local.Month:00}/{PirateStationCalendar.CurrentYear:0000} {local.Hour:00}:{local.Minute:00}";

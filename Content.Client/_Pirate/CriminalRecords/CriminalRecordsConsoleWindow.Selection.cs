@@ -70,6 +70,7 @@ public sealed partial class CriminalRecordsConsoleWindow
         HistoryView.OnAddNote += text => OnAddLogNote?.Invoke(text);
         HistoryView.OnDeleteEntry += id => OnDeleteLogEntry?.Invoke(id);
         HistoryView.OnPrint += () => OnPrintLog?.Invoke();
+        InitCitations();
     }
 
     private void InitFieldWidths()

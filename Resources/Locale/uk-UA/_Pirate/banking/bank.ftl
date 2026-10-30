@@ -1,6 +1,6 @@
 bank-program-ui-no-account = [color=red]Обліковий запис не привʼязаний.[/color]
-bank-program-name = Віртуальний гаманець
-bank-program-ui-title = NanoBank
+bank-program-name = IdrisBank
+bank-program-ui-title = IdrisBank
 bank-program-ui-back = Назад
 bank-program-ui-history-empty = Операції відсутні
 bank-program-ui-history-amount = { $amount }电
@@ -10,6 +10,10 @@ bank-transaction-deposit = Внесення готівки
 bank-transaction-withdrawal = Зняття готівки
 bank-transaction-purchase = Покупка
 bank-transaction-transfer = Переказ
+bank-transaction-fine = Штраф
+bank-program-ui-arrested = АРЕШТОВАНО
+bank-account-arrested-purchase = Ваш банківський рахунок арештовано.
+bank-card-citation-issued = Штраф: { $fine }电 за { $reason }. Рахунок арештовано до оплати на консолі кримінальних записів.
 bank-transaction-adjustment = Зміна балансу
 bank-program-ui-link-account = Привʼязати облік. запис
 bank-program-ui-account-number = Номер облік. запису

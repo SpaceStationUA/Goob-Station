@@ -7,6 +7,7 @@ namespace Content.Shared._Pirate.Banking;
 public sealed class BankCartridgeUiState : BoundUserInterfaceState
 {
     public int Balance;
+    public bool Arrested;
     public int? AccountId = null;
     public string OwnerName = string.Empty;
     public string AccountLinkMessage = string.Empty;

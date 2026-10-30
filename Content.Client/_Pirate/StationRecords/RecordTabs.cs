@@ -7,10 +7,11 @@ namespace Content.Client._Pirate.StationRecords;
 
 public sealed class RecordTabs
 {
-    private readonly Button _profileButton;
-    private readonly Button _historyButton;
-    private readonly Control _profileView;
-    private readonly Control _historyView;
+    private const int HistoryTab = 1;
+
+    private readonly ButtonGroup _group = new();
+    private readonly List<(Button Button, Control View)> _tabs = new();
+    private int _shown;
 
     private OptionButton? _filterType;
     private LineEdit? _recordSearch;
@@ -19,21 +20,23 @@ public sealed class RecordTabs
     private bool _hasRecord = true;
     private bool _searchingHistory;
 
-    public bool ShowingHistory { get; private set; }
+    public bool ShowingHistory => _shown == HistoryTab;
 
     public RecordTabs(Button profileButton, Button historyButton, Control profileView, Control historyView)
     {
-        _profileButton = profileButton;
-        _historyButton = historyButton;
-        _profileView = profileView;
-        _historyView = historyView;
+        AddTab(profileButton, profileView);
+        AddTab(historyButton, historyView);
+        Show(0);
+    }
 
-        var group = new ButtonGroup();
-        profileButton.Group = group;
-        historyButton.Group = group;
-        profileButton.OnPressed += _ => Show(history: false);
-        historyButton.OnPressed += _ => Show(history: true);
-        Show(history: false);
+    public void AddTab(Button button, Control view)
+    {
+        var index = _tabs.Count;
+        _tabs.Add((button, view));
+        button.Group = _group;
+        button.OnPressed += _ => Show(index);
+        button.Pressed = index == _shown;
+        view.Visible = index == _shown;
     }
 
     public void BindSearch(OptionButton filterType, LineEdit recordSearch, RecordHistoryPanel history)
@@ -66,16 +69,18 @@ public sealed class RecordTabs
 
     public void Refresh()
     {
-        Show(ShowingHistory);
+        Show(_shown);
     }
 
-    private void Show(bool history)
+    private void Show(int index)
     {
-        ShowingHistory = history;
-        _profileButton.Pressed = !history;
-        _historyButton.Pressed = history;
-        _profileView.Visible = !history;
-        _historyView.Visible = history;
+        _shown = index;
+        for (var i = 0; i < _tabs.Count; i++)
+        {
+            _tabs[i].Button.Pressed = i == index;
+            _tabs[i].View.Visible = i == index;
+        }
+
         UpdateSearch();
     }
 

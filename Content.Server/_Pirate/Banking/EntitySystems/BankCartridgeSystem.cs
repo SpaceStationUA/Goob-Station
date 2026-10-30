@@ -106,6 +106,7 @@ public sealed class BankCartridgeSystem : EntitySystem
         if (component.AccountId != null && _bankCardSystem.TryGetAccount(component.AccountId.Value, out var account))
         {
             state.Balance = account.Balance;
+            state.Arrested = account.Arrested;
             state.AccountId = account.AccountId;
             state.OwnerName = account.Name;
             state.Transactions = account.Transactions.ToArray();

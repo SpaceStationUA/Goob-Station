@@ -1,6 +1,6 @@
-bank-program-ui-title = NanoBank
+bank-program-ui-title = IdrisBank
 bank-program-ui-back = Back
-bank-program-name = Virtual Wallet
+bank-program-name = IdrisBank
 bank-program-ui-no-account = [color=red]No account linked.[/color]
 bank-program-ui-link-account = Link account
 bank-program-ui-account-number = Account number
@@ -21,4 +21,8 @@ bank-transaction-deposit = Cash deposit
 bank-transaction-withdrawal = Cash withdrawal
 bank-transaction-purchase = Purchase
 bank-transaction-transfer = Transfer
+bank-transaction-fine = Fine
+bank-program-ui-arrested = ARRESTED
+bank-account-arrested-purchase = Your bank account is arrested.
+bank-card-citation-issued = Citation: { $fine }电 for { $reason }. Your account is arrested until you pay it at a security records console.
 bank-transaction-adjustment = Balance adjustment

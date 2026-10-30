@@ -25,13 +25,24 @@ public sealed partial class BankCardSystem
 
     private void NotifySalaryPayments(HashSet<int> paidAccounts)
     {
+        NotifyAccountHolders(paidAccounts,
+            accountId => Loc.GetString("bank-card-salary-paid", ("balance", GetBalance(accountId))));
+    }
+
+    public void NotifyAccountHolders(IReadOnlySet<int> accounts, string message)
+    {
+        NotifyAccountHolders(accounts, _ => message);
+    }
+
+    public void NotifyAccountHolders(IReadOnlySet<int> accounts, Func<int, string> getMessage)
+    {
         var cards = EntityQueryEnumerator<BankCardComponent>();
         while (cards.MoveNext(out var uid, out var card))
         {
-            if (card.AccountId is not { } accountId || !paidAccounts.Contains(accountId))
+            if (card.AccountId is not { } accountId || !accounts.Contains(accountId))
                 continue;
 
-            var message = Loc.GetString("bank-card-salary-paid", ("balance", GetBalance(accountId)));
+            var message = getMessage(accountId);
             var wrappedMessage = $"{FormattedMessage.EscapeText(Name(uid))}: {message}";
             var parent = Transform(uid).ParentUid;
             var carried = false;

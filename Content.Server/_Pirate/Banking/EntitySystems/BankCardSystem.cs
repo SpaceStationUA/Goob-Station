@@ -284,6 +284,9 @@ public sealed partial class BankCardSystem : EntitySystem
         if (newBalance < 0 || newBalance > int.MaxValue)
             return false;
 
+        if (amount < 0 && account.Arrested && IsSpending(type))
+            return false;
+
         if (amount == 0)
             return true;
 

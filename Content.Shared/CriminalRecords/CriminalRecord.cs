@@ -41,6 +41,14 @@ public sealed partial record CriminalRecord
     public GeneralStationRecord? GeneralRecordSnapshot;
     #endregion
 
+    #region Pirate: citations
+    [DataField]
+    public List<Content.Shared._Pirate.CriminalRecords.CriminalRecordCitation> Citations = new();
+
+    [DataField]
+    public uint NextCitationId = 1;
+    #endregion
+
     /// <summary>
     /// Criminal history of the person.
     /// This should have charges and time served added after someone is detained.
