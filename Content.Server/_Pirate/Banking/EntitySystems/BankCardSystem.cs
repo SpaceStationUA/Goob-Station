@@ -165,6 +165,7 @@ public sealed partial class BankCardSystem : EntitySystem
                 bankAccount.AccountId.ToString()));
             bankAccount.Mind = GetNetEntity(mind.Mind.Value);
             bankAccount.Name = Name(ev.Mob);
+            RaiseAccountLinked(bankAccount.AccountId);
 
             if (!_inventorySystem.TryGetSlotEntity(ev.Mob, "id", out var pdaUid))
                 return;
@@ -200,6 +201,7 @@ public sealed partial class BankCardSystem : EntitySystem
         if (!TryChangeBalance(bankAccount.AccountId, balance - bankAccount.Balance, BankTransactionType.OpeningBalance))
             return false;
         bankAccount.Name = Name(mob);
+        RaiseAccountLinked(bankAccount.AccountId);
 
         if (TryComp<MindContainerComponent>(mob, out var mindContainer) &&
             mindContainer.Mind.HasValue &&
@@ -274,8 +276,7 @@ public sealed partial class BankCardSystem : EntitySystem
         return 0;
     }
 
-    public bool TryChangeBalance(int accountId, int amount,
-        BankTransactionType type = BankTransactionType.Adjustment, string details = "")
+    public bool TryChangeBalance(int accountId, int amount, BankTransactionType type, string details = "")
     {
         if (!TryGetAccount(accountId, out var account))
             return false;

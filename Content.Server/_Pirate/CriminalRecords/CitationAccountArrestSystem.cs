@@ -17,6 +17,7 @@ public sealed class CitationAccountArrestSystem : EntitySystem
     [Dependency] private readonly BankCardSystem _bankCards = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
 
+    // Records with unpaid citations, also those without a known account yet.
     // An account stays arrested while any record holds it.
     private readonly Dictionary<StationRecordKey, HashSet<int>> _arrests = new();
 
@@ -24,25 +25,33 @@ public sealed class CitationAccountArrestSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<RecordRemovedEvent>(args => Refresh(args.Key));
+        SubscribeLocalEvent<BankAccountLinkedEvent>(OnAccountLinked);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _arrests.Clear());
     }
 
     public void Refresh(StationRecordKey key)
     {
         var accounts = new HashSet<int>();
-        if (_records.TryGetRecord<CriminalRecord>(key, out var record)
-            && record.Citations.Any(c => c.Status == CitationStatus.Active))
-        {
-            CollectAccounts(key, record, accounts);
-        }
+        var active = _records.TryGetRecord<CriminalRecord>(key, out var record)
+            && record.Citations.Any(c => c.Status == CitationStatus.Active);
+        if (active)
+            CollectAccounts(key, record!, accounts);
 
         _arrests.Remove(key, out var previous);
-        if (accounts.Count > 0)
+        if (active)
             _arrests[key] = accounts;
 
         foreach (var account in accounts.Concat(previous ?? []))
         {
             _bankCards.SetArrested(account, _arrests.Values.Any(held => held.Contains(account)));
+        }
+    }
+
+    private void OnAccountLinked(BankAccountLinkedEvent args)
+    {
+        foreach (var key in _arrests.Keys.ToList())
+        {
+            Refresh(key);
         }
     }
 

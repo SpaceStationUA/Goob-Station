@@ -65,6 +65,7 @@ public sealed class BankCartridgeSystem : EntitySystem
 
         var bankCard = AddComp<BankCardComponent>(pda.ContainedId.Value);
         bankCard.AccountId = account.AccountId;
+        _bankCardSystem.RaiseAccountLinked(account.AccountId);
     }
 
     private void OnUiReady(EntityUid uid, BankCartridgeComponent component, CartridgeUiReadyEvent args)

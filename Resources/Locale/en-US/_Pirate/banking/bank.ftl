@@ -24,5 +24,5 @@ bank-transaction-transfer = Transfer
 bank-transaction-fine = Fine
 bank-program-ui-arrested = ARRESTED
 bank-account-arrested-purchase = Your bank account is arrested.
-bank-card-citation-issued = Citation: { $fine }电 for { $reason }. Your account is arrested until you pay it at a security records console.
+bank-card-citation-issued = Citation: { $fine }电 for { $reason }. Account arrested until paid.
 bank-transaction-adjustment = Balance adjustment

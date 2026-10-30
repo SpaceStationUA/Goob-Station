@@ -73,7 +73,8 @@ public sealed class RecordsCartridgeSystem : EntitySystem
 
     private void OnMessage(Entity<RecordsCartridgeComponent> ent, ref CartridgeMessageEvent args)
     {
-        if (args is not RecordsCartridgeUiMessageEvent msg)
+        // An undefined tab has no access list, so CanEdit would allow it.
+        if (args is not RecordsCartridgeUiMessageEvent msg || !Enum.IsDefined(msg.Tab))
             return;
 
         ent.Comp.Tab = msg.Tab;

@@ -55,4 +55,17 @@ public sealed partial class BankCardSystem
                 yield return account.AccountId;
         }
     }
+
+    /// <summary>
+    /// An account got an owner name or an ID card. Systems that link accounts to people check it again.
+    /// </summary>
+    public void RaiseAccountLinked(int accountId)
+    {
+        RaiseLocalEvent(new BankAccountLinkedEvent(accountId));
+    }
 }
+
+/// <summary>
+/// Raised when an account gets an owner name or is linked to an ID card.
+/// </summary>
+public readonly record struct BankAccountLinkedEvent(int AccountId);

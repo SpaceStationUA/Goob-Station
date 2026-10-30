@@ -35,7 +35,9 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
     private bool _enabled;
     private int _limit;
     private Task? _saveTask;
-    private bool _savedThisRound;
+
+    // Loaded citation owners. A deleted record leaves no owner entry, but its saved citations must still be cleared.
+    private readonly Dictionary<StationRecordKey, int> _citationOwners = new();
 
     public override void Initialize()
     {
@@ -77,6 +79,7 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
                 return;
 
             _records.AddRecordEntry(key, new RecordHistoryOwner(profileId.Value));
+            _citationOwners[key] = profileId.Value;
             if (history.Count == 0 && citations.Count == 0)
                 return;
 
@@ -116,16 +119,15 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
 
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
     {
-        _savedThisRound = true;
         Save();
     }
+
+    // Save again: records still change after the round end, for example a paid citation.
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
     {
-        if (!_savedThisRound)
-            Save();
-
+        Save();
         WaitForSave();
-        _savedThisRound = false;
+        _citationOwners.Clear();
     }
 
     private void Save()
@@ -176,7 +178,8 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
                         if (entry.Kind == RecordLogKind.Background || entries.Exists(e => SameEntry(e, entry)))
                             continue;
 
-                        entries.Add(entry);
+                        // A copy, so the background save never reads an entry that the game changes.
+                        entries.Add(entry with { });
                     }
                 }
             }
@@ -195,22 +198,23 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
     {
         var byProfile = new Dictionary<int, List<CriminalRecordCitation>>();
 
-        var query = EntityQueryEnumerator<StationRecordsComponent>();
-        while (query.MoveNext(out var station, out var stationRecords))
+        foreach (var (key, profileId) in _citationOwners)
         {
-            foreach (var (id, owner) in _records.GetRecordsOfType<RecordHistoryOwner>(station, stationRecords))
+            // A deleted station is not a deleted record: keep the saved citations.
+            if (!TryComp<StationRecordsComponent>(key.OriginStation, out var stationRecords))
+                continue;
+
+            if (!byProfile.TryGetValue(profileId, out var citations))
+                byProfile[profileId] = citations = new List<CriminalRecordCitation>();
+
+            // A deleted criminal record saves an empty list, which clears its saved citations.
+            if (!_records.TryGetRecord<CriminalRecord>(key, out var record, stationRecords))
+                continue;
+
+            foreach (var citation in record.Citations)
             {
-                if (!byProfile.TryGetValue(owner.ProfileId, out var citations))
-                    byProfile[owner.ProfileId] = citations = new List<CriminalRecordCitation>();
-
-                if (!_records.TryGetRecord<CriminalRecord>(new StationRecordKey(id, station), out var record, stationRecords))
-                    continue;
-
-                foreach (var citation in record.Citations)
-                {
-                    if (!citations.Exists(c => c.IssuedAt == citation.IssuedAt && c.Reason == citation.Reason))
-                        citations.Add(citation);
-                }
+                if (!citations.Exists(c => c.IssuedAt == citation.IssuedAt && c.Reason == citation.Reason))
+                    citations.Add(citation with { });
             }
         }
 
