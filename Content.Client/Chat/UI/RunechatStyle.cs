@@ -1,3 +1,4 @@
+using Content.Client._Pirate.Chat;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -13,12 +14,14 @@ public static class RunechatStyle
     public const int MaxFontSize = 24;
     private const float DesignPixelsPerEm = 8f;
 
-    private static readonly Dictionary<(string, int), Font> Fonts = new();
-    private static readonly Dictionary<(string, int), Stylesheet> Sheets = new();
+    // Pirate: UI controllers belong to one client, including in parallel integration tests.
+    private static RunechatStyleCacheController Cache =>
+        IoCManager.Resolve<IUserInterfaceManager>().GetUIController<RunechatStyleCacheController>();
 
     public static Font GetFont(string path, int size)
     {
-        if (Fonts.TryGetValue((path, size), out var font))
+        var fonts = Cache.Fonts;
+        if (fonts.TryGetValue((path, size), out var font))
             return font;
 
         var cache = IoCManager.Resolve<IResourceCache>();
@@ -32,13 +35,14 @@ public static class RunechatStyle
         };
         if (fallback != null)
             font = new StackedFont(font, new VectorFont(cache.GetResource<FontResource>(fallback), size));
-        Fonts[(path, size)] = font;
+        fonts[(path, size)] = font;
         return font;
     }
 
     public static Stylesheet GetStylesheet(string path, int size)
     {
-        if (Sheets.TryGetValue((path, size), out var sheet))
+        var sheets = Cache.Sheets;
+        if (sheets.TryGetValue((path, size), out var sheet))
             return sheet;
 
         sheet = new Stylesheet(new[]
@@ -47,7 +51,7 @@ public static class RunechatStyle
                 new SelectorElement(typeof(RichTextLabel), null, null, null),
                 new[] { new StyleProperty(Label.StylePropertyFont, GetFont(path, size)) }),
         });
-        Sheets[(path, size)] = sheet;
+        sheets[(path, size)] = sheet;
         return sheet;
     }
 

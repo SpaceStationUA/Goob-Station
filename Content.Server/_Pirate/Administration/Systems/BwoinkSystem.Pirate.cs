@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.GameTicking;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -11,8 +10,6 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class BwoinkSystem
 {
-    [Dependency] private readonly ITaskManager _taskManager = default!;
-
     private readonly Dictionary<NetUserId, TicketRatingTracker> _ticketRatingTracker = new();
     private readonly Dictionary<string, Dictionary<NetUserId, byte>> _adminRatings = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<string, string> _adminDisplayNames = new(StringComparer.OrdinalIgnoreCase);
@@ -26,31 +23,26 @@ public sealed partial class BwoinkSystem
     {
         SubscribeNetworkEvent<BwoinkAHelpWindowClosed>(OnPirateAHelpWindowClosed);
         SubscribeNetworkEvent<BwoinkTicketRatingMessage>(OnPirateTicketRatingSubmitted);
-        LoadPirateAdminRatings();
+        _ = LoadPirateAdminRatings();
     }
 
-    private void LoadPirateAdminRatings()
+    private async Task LoadPirateAdminRatings()
     {
         if (_ratingsLoadStarted)
             return;
 
         _ratingsLoadStarted = true;
 
-        _ = Task.Run(async () =>
+        // Pirate: the DB manager handles background work and keeps test databases synchronous.
+        try
         {
-            List<PirateAdminHelpRating> ratings;
-            try
-            {
-                ratings = await _dbManager.GetPirateAdminHelpRatingsAsync();
-            }
-            catch (Exception e)
-            {
-                _sawmill.Error($"Failed to load AHelp ratings from DB: {e}");
-                return;
-            }
-
-            _taskManager.RunOnMainThread(() => MergePirateAdminRatings(ratings));
-        });
+            var ratings = await _dbManager.GetPirateAdminHelpRatingsAsync();
+            MergePirateAdminRatings(ratings);
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error($"Failed to load AHelp ratings from DB: {e}");
+        }
     }
 
     private void MergePirateAdminRatings(List<PirateAdminHelpRating> ratings)
