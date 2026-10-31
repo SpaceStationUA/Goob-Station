@@ -17,10 +17,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
          HorizontalExpand="True"
          SeparationOverride="10">
     <BoxContainer Orientation="Vertical" MinWidth="300" SeparationOverride="6">
-        <PanelContainer StyleClasses="HullInset" VerticalExpand="True">
+        <pirateInfo:CharacterPreviewBackground StyleClasses="HullInset" VerticalExpand="True"> <!-- Pirate: character preview background -->
             <SpriteView Name="SpriteView" Scale="8 8" Margin="4"
                         HorizontalAlignment="Center" VerticalAlignment="Center" />
-        </PanelContainer>
+        </pirateInfo:CharacterPreviewBackground> <!-- Pirate: character preview background -->
         <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="4">
             <Button Name="SpriteRotateLeft" Text="◀" StyleClasses="HullPlate" />
             <Button Name="SpriteRotateRight" Text="▶" StyleClasses="HullPlate" />
