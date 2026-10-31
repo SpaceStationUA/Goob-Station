@@ -74,4 +74,3 @@
         stomach: OrganDollStomach
         liver: OrganDollLiver
         kidneys: OrganDollKidneys
-        cavity: null

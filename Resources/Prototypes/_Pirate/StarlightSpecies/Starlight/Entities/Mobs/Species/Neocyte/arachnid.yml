@@ -199,9 +199,6 @@
     - enum.HumanoidVisualLayers.RArm
     - enum.HumanoidVisualLayers.RLeg
   - type: CreamPied
-    sprite:
-      sprite: _Pirate/StarlightSpecies/Shared/Effects/creampie.rsi
-      state: creampie_arachnid
   - type: Sprite
     layers:
     - map:
@@ -289,6 +286,11 @@
       color: '#ffffff'
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
+      visible: false
+    - sprite: _Pirate/StarlightSpecies/Shared/Effects/creampie.rsi
+      state: creampie_arachnid
+      map:
+      - clownedon
       visible: false
   - type: Inventory
     templateId: neoarachnid

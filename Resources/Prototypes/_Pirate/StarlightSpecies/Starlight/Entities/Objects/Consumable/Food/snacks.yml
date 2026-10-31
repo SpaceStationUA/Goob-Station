@@ -24,7 +24,7 @@
     - id: FoodSnackBloodBrickOpen
     sound:
       path: /Audio/Effects/unwrap.ogg
-    requireHands: false
+  - type: StarlightWrapper
 - type: entity
   parent:
   - FoodSnackBase

@@ -7,7 +7,27 @@
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
     state: torso_m
 - type: humanoidBaseSprite
+  id: MobShadekinGroinFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobShadekinGroinMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
   id: MobShadekinHead
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: head_m
+- type: humanoidBaseSprite
+  id: MobShadekinHeadFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: head_f
+- type: humanoidBaseSprite
+  id: MobShadekinHeadMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
     state: head_m
@@ -53,6 +73,16 @@
     state: r_leg
 - type: humanoidBaseSprite
   id: MobShadekinTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
+  id: MobShadekinTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobShadekinTorsoMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
     state: torso_m

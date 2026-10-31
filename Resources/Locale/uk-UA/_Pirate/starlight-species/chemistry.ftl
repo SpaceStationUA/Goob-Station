@@ -18,3 +18,5 @@ reagent-name-pseudoceramic-platelets = Псевдокерамічні тромб
 reagent-desc-pseudoceramic-platelets = Шорсткі, хрусткі та слизькі...
 reagent-name-mycophylin = Мікофілін
 reagent-desc-mycophylin = Дивна грибкова сполука, яку виробляє організм діони. Її дія, схоже, цілком залежить від того, з чого складається організм, до якого вона потрапила.
+reagent-name-phytovitalin = Фітовіталін
+reagent-desc-phytovitalin = Складна сполука, яку виробляють лише деякі діони. Надзвичайно універсальний засіб для рослин. Здається, він ворушиться.

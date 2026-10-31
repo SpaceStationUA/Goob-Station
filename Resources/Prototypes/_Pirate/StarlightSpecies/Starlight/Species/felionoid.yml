@@ -12,7 +12,27 @@
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
     state: torso
 - type: humanoidBaseSprite
+  id: MobFelionoidGroinFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobFelionoidGroinMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
   id: MobFelionoidHead
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: head
+- type: humanoidBaseSprite
+  id: MobFelionoidHeadFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: head
+- type: humanoidBaseSprite
+  id: MobFelionoidHeadMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
     state: head
@@ -58,6 +78,16 @@
     state: r_leg
 - type: humanoidBaseSprite
   id: MobFelionoidTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobFelionoidTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobFelionoidTorsoMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
     state: torso

@@ -58,4 +58,3 @@
         stomach: OrganLagomorphStomach
         liver: OrganHumanLiver
         kidneys: OrganHumanKidneys
-        cavity: null

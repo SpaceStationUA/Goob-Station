@@ -7,7 +7,27 @@
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
     state: torso
 - type: humanoidBaseSprite
+  id: MobDollGroinFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobDollGroinMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
   id: MobDollHead
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
+    state: head
+- type: humanoidBaseSprite
+  id: MobDollHeadFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
+    state: head
+- type: humanoidBaseSprite
+  id: MobDollHeadMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
     state: head
@@ -53,6 +73,16 @@
     state: r_leg
 - type: humanoidBaseSprite
   id: MobDollTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobDollTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobDollTorsoMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
     state: torso

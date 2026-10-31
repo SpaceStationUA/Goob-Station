@@ -6,3 +6,13 @@
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Diona/parts.rsi
     state: torso_m
+- type: humanoidBaseSprite
+  id: MobDionaTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Diona/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobDionaTorsoMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Diona/parts.rsi
+    state: torso_m

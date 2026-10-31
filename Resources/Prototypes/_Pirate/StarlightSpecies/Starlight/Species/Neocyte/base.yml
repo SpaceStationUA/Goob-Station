@@ -12,7 +12,27 @@
     sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/parts.rsi
     state: torso_m
 - type: humanoidBaseSprite
+  id: MobNeocyteGroinFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobNeocyteGroinMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
   id: MobNeocyteHead
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/parts.rsi
+    state: head_m
+- type: humanoidBaseSprite
+  id: MobNeocyteHeadFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/parts.rsi
+    state: head_f
+- type: humanoidBaseSprite
+  id: MobNeocyteHeadMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/parts.rsi
     state: head_m
@@ -58,6 +78,16 @@
     state: r_leg
 - type: humanoidBaseSprite
   id: MobNeocyteTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
+  id: MobNeocyteTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobNeocyteTorsoMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/parts.rsi
     state: torso_m

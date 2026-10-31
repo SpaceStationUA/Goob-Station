@@ -6,3 +6,13 @@
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Moth/parts.rsi
     state: torso_m
+- type: humanoidBaseSprite
+  id: MobMothTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Moth/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobMothTorsoMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Moth/parts.rsi
+    state: torso_m

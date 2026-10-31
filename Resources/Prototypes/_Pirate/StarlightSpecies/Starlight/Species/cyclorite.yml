@@ -12,7 +12,27 @@
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
     state: torso
 - type: humanoidBaseSprite
+  id: MobCycloriteGroinFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobCycloriteGroinMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
   id: MobCycloriteHead
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: head
+- type: humanoidBaseSprite
+  id: MobCycloriteHeadFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: head
+- type: humanoidBaseSprite
+  id: MobCycloriteHeadMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
     state: head
@@ -58,6 +78,16 @@
     state: r_leg
 - type: humanoidBaseSprite
   id: MobCycloriteTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobCycloriteTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobCycloriteTorsoMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
     state: torso

@@ -7,7 +7,27 @@
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Proto-Vulp/parts.rsi
     state: torso_m
 - type: humanoidBaseSprite
+  id: MobNeoVulpkaninGroinFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Proto-Vulp/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobNeoVulpkaninGroinMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Proto-Vulp/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
   id: MobNeoVulpkaninHead
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Proto-Vulp/parts.rsi
+    state: head_m
+- type: humanoidBaseSprite
+  id: MobNeoVulpkaninHeadFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Proto-Vulp/parts.rsi
+    state: head_f
+- type: humanoidBaseSprite
+  id: MobNeoVulpkaninHeadMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Proto-Vulp/parts.rsi
     state: head_m
@@ -33,6 +53,16 @@
     state: r_hand
 - type: humanoidBaseSprite
   id: MobNeoVulpkaninTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Proto-Vulp/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
+  id: MobNeoVulpkaninTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Proto-Vulp/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobNeoVulpkaninTorsoMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Proto-Vulp/parts.rsi
     state: torso_m

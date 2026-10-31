@@ -6,3 +6,13 @@
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Reptilian/parts.rsi
     state: torso_m
+- type: humanoidBaseSprite
+  id: MobReptilianTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Reptilian/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobReptilianTorsoMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Reptilian/parts.rsi
+    state: torso_m

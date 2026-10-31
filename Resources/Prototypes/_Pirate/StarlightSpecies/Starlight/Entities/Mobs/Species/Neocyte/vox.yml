@@ -352,10 +352,12 @@
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
       visible: false
-  - type: CreamPied
-    sprite:
-      sprite: _Pirate/StarlightSpecies/Shared/Effects/creampie.rsi
+    - sprite: _Pirate/StarlightSpecies/Shared/Effects/creampie.rsi
       state: creampie_vox
+      map:
+      - clownedon
+      visible: false
+  - type: CreamPied
   - type: HumanoidAppearance
     species: NeoVox
     hideLayersOnEquip:

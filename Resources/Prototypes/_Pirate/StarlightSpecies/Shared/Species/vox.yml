@@ -6,3 +6,13 @@
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Vox/parts.rsi
     state: torso
+- type: humanoidBaseSprite
+  id: MobVoxTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Vox/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobVoxTorsoMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Vox/parts.rsi
+    state: torso

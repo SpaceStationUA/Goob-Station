@@ -58,4 +58,3 @@
         stomach: OrganCycloriteStomach
         liver: OrganCycloriteLiver
         kidneys: OrganCycloriteKidneys
-        cavity: null

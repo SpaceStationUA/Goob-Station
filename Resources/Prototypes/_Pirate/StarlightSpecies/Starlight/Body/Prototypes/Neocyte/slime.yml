@@ -54,5 +54,4 @@
       connections:
       - right leg
       - left leg
-      organs:
-        cavity: null
+      organs: {}

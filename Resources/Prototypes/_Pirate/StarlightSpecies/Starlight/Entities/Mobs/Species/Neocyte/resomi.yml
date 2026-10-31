@@ -551,10 +551,12 @@
       - pocket1
     - map:
       - pocket2
-  - type: CreamPied
-    sprite:
-      sprite: _Pirate/StarlightSpecies/Starlight/Effects/creampie.rsi
+    - sprite: _Pirate/StarlightSpecies/Starlight/Effects/creampie.rsi
       state: creampie_resomi
+      map:
+      - clownedon
+      visible: false
+  - type: CreamPied
   - type: Tag
     tags:
     - CanPilot

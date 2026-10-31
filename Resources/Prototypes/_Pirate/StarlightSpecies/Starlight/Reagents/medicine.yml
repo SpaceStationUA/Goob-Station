@@ -119,3 +119,78 @@
           - Cyclorite
         reagent: Mycophylin
         amount: 0.1
+# Pirate: native botany has no Unviable trait to remove; retain the other source plant effects.
+- type: reagent
+  id: Phytovitalin
+  name: reagent-name-phytovitalin
+  group: Botanical
+  desc: reagent-desc-phytovitalin
+  flavor: medicine
+  color: '#b2c21f'
+  physicalDesc: reagent-physical-desc-gloopy
+  worksOnTheDead: true
+  plantMetabolism:
+  - !type:PlantAdjustPotency
+    amount: 1
+  - !type:PlantRestoreSeeds
+    probability: 0.5
+  - !type:PlantAdjustToxins
+    amount: -5
+  - !type:PlantAdjustHealth
+    amount: 1
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:EvenHealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+        damage:
+          Brute: -2
+          Burn: -0.2
+          Toxin: -2.5
+          Airloss: -1
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+        damage:
+          types:
+            Radiation: -0.25
+            Cellular: -0.1
+      - !type:ModifyBloodLevel
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+        amount: 1
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        damage:
+          types:
+            Poison: 1.5
+            Cellular: 0.2
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        reagent: Histamine
+        amount: 0.75
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Phytovitalin
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Phytovitalin
+        amount: 0.1

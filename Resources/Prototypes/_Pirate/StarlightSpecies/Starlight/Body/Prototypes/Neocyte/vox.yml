@@ -58,4 +58,3 @@
         stomach: OrganNeoVoxStomach
         liver: OrganNeocyteLiver
         kidneys: OrganNeocyteKidneys
-        cavity: null

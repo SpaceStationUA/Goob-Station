@@ -58,4 +58,3 @@
         stomach: OrganReptilianStomach
         liver: OrganHumanLiver
         kidneys: OrganHumanKidneys
-        cavity: null

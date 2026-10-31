@@ -7,7 +7,27 @@
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
     state: torso_m
 - type: humanoidBaseSprite
+  id: MobElfGroinFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobElfGroinMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
   id: MobElfHead
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
+    state: head_m
+- type: humanoidBaseSprite
+  id: MobElfHeadFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
+    state: head_f
+- type: humanoidBaseSprite
+  id: MobElfHeadMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
     state: head_m
@@ -53,6 +73,16 @@
     state: r_leg
 - type: humanoidBaseSprite
   id: MobElfTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
+  id: MobElfTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobElfTorsoMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
     state: torso_m

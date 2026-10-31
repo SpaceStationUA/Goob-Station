@@ -12,7 +12,27 @@
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
     state: torso_m
 - type: humanoidBaseSprite
+  id: MobLagomorphGroinFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobLagomorphGroinMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
   id: MobLagomorphHead
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
+    state: head_m
+- type: humanoidBaseSprite
+  id: MobLagomorphHeadFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
+    state: head_f
+- type: humanoidBaseSprite
+  id: MobLagomorphHeadMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
     state: head_m
@@ -58,6 +78,16 @@
     state: r_leg
 - type: humanoidBaseSprite
   id: MobLagomorphTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
+  id: MobLagomorphTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobLagomorphTorsoMale
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
     state: torso_m

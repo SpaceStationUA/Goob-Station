@@ -6,3 +6,13 @@
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Thaven/parts.rsi
     state: torso
+- type: humanoidBaseSprite
+  id: MobThavenTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Thaven/parts.rsi
+    state: torso
+- type: humanoidBaseSprite
+  id: MobThavenTorsoMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Thaven/parts.rsi
+    state: torso

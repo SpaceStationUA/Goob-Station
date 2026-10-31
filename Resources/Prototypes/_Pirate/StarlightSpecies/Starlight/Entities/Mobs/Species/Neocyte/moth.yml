@@ -337,10 +337,12 @@
       - pocket1
     - map:
       - pocket2
-  - type: CreamPied
-    sprite:
-      sprite: _Pirate/StarlightSpecies/Shared/Effects/creampie.rsi
+    - sprite: _Pirate/StarlightSpecies/Shared/Effects/creampie.rsi
       state: creampie_moth
+      map:
+      - clownedon
+      visible: false
+  - type: CreamPied
   - type: Vocal
   - type: Speech
     speechVerb: Robotic

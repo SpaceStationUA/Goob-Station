@@ -6,3 +6,13 @@
   baseSprite:
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Arachnid/parts.rsi
     state: torso_m
+- type: humanoidBaseSprite
+  id: MobArachnidTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Arachnid/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobArachnidTorsoMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Arachnid/parts.rsi
+    state: torso_m
