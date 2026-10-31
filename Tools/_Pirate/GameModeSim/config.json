@@ -29,7 +29,7 @@
 
   // VentCrittersRule always offers a rat king, ignoring specialEntry probability.
   // Assume cargo never pays the pirate ransom.
-  "ghostRoleSpawnRules": { "BorerSpawn": 1, "KingRatMigration": 1, "BlueshiftKingRatMigration": 1, "SpacePirates": 5, "BlueshiftSpacePirates": 5 },
+  "ghostRoleSpawnRules": { "BorerSpawn": 1, "KingRatMigration": 1, "BlueshiftKingRatMigration": 1, "BlueshiftBorerSpawn": 1, "SpacePirates": 5, "BlueshiftSpacePirates": 5 },
 
   "securityWeightMultiplier": 1,
   "observers": 2,

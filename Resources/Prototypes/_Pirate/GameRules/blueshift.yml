@@ -51,7 +51,8 @@
     - id: EeepEvent
     - id: SnailMigration
 
-# Target rounds: traitor ~60%, bounty ~45%, vampire ~40%, pirates/extras ~15-20%, clown/mime/priest ~10%.
+# Target rounds: traitor ~55%, bounty/vampire ~40%, pirates ~30%, extras ~15-20%, clown/mime/priest ~10%.
+# Pirates and malf AI count as majors here: their rates do not follow the cuts to minor antags.
 # Use TraitorMidround rather than SleeperAgents to respect the Traitor preference and ban.
 - type: entityTable
   id: BlueshiftAntagEventsTable
@@ -74,7 +75,7 @@
     - id: BlueshiftTunnelClownMidround
     - id: BlueshiftMimeAssassinMidround
     - id: BlueshiftDarkPriestMidround
-    - id: BorerSpawn
+    - id: BlueshiftBorerSpawn
     # VentCrittersRule ignores specialEntry probability, so this belongs in the antag pool.
     - id: BlueshiftKingRatMigration
 
@@ -88,8 +89,8 @@
   - type: BasicStationEventScheduler
     minimumTimeUntilFirstEvent: 1500
     minMaxEventTiming:
-      min: 2400
-      max: 3200
+      min: 2160
+      max: 2880
     scheduledGameRules: !type:NestedSelector
       tableId: BlueshiftAntagEventsTable
 
@@ -117,7 +118,7 @@
   components:
   - type: StationEvent
     earliestStart: 15
-    weight: 12
+    weight: 13.4
 
 - type: entity
   id: BlueshiftBountyHunterSpawn
@@ -126,7 +127,7 @@
   components:
   - type: StationEvent
     earliestStart: 15
-    weight: 20
+    weight: 18.8
 
 - type: entity
   id: BlueshiftTunnelClownMidround
@@ -134,7 +135,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 4.0
+    weight: 4.4
 
 - type: entity
   id: BlueshiftMimeAssassinMidround
@@ -142,7 +143,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 4.35
+    weight: 5.3
 
 - type: entity
   id: BlueshiftDarkPriestMidround
@@ -150,7 +151,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 4.3
+    weight: 5.1
 
 - type: entity
   id: BlueshiftParadoxCloneSpawn
@@ -158,7 +159,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 2.4
+    weight: 2.45
 
 - type: entity
   id: BlueshiftHitmanShuttle
@@ -166,7 +167,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 5.8
+    weight: 6.3
 
 - type: entity
   id: BlueshiftKingRatMigration
@@ -174,7 +175,15 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 6.0
+    weight: 6.8
+
+- type: entity
+  id: BlueshiftBorerSpawn
+  parent: BorerSpawn
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: StationEvent
+    weight: 5.6
 
 # Viruses toned down for Blueshift: greytide in about 50% of rounds, random virus in about 30%.
 - type: entity
@@ -232,7 +241,7 @@
       maxPicks: 3
     maxDifficulty: 8
   - type: StationEvent
-    weight: 3.8
+    weight: 6.0
 
 - type: entity
   id: BlueshiftMalfAiDoomsdayMidround
@@ -249,7 +258,7 @@
       maxPicks: 2
     maxDifficulty: 5 # 8 minus doomsday's 3
   - type: StationEvent
-    weight: 2.0
+    weight: 3.2
 
 # Target about half of rounds instead of the observed 70%.
 - type: entity
@@ -267,7 +276,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 5.0
+    weight: 7.1
     maxOccurrences: 1
 
 # Target malign rifts in about 20% of rounds.
@@ -553,18 +562,18 @@
 - type: weightedRandom
   id: BlueshiftRoundstart
   weights:
-    BlueshiftTraitor: 0.30
+    BlueshiftTraitor: 0.186
     # One traitor each: a round can get 0-2 traitors more than the guaranteed ones.
-    BlueshiftTraitorExtra1: 0.18
-    BlueshiftTraitorExtra2: 0.18
-    BlueshiftVampire: 0.11
-    BloodBrothers: 0.12
-    BlueshiftChangeling: 0.22
-    BlueshiftHeretic: 0.11
+    BlueshiftTraitorExtra1: 0.273
+    BlueshiftTraitorExtra2: 0.273
+    BlueshiftVampire: 0.156
+    BloodBrothers: 0.17
+    BlueshiftChangeling: 0.297
+    BlueshiftHeretic: 0.164
     # Cheap antags pass budget rolls more often; keep weights low.
-    BlueshiftThief: 0.023
-    BlueshiftDevil: 0.025
-    BlueshiftSiliconLiberation: 0.03
+    BlueshiftThief: 0.033
+    BlueshiftDevil: 0.036
+    BlueshiftSiliconLiberation: 0.042
 
 - type: entity
   id: BlueshiftScheduler
@@ -572,10 +581,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SecretPlus
-    minStartingChaos: 4.2 # Per connected player, including the lobby.
-    maxStartingChaos: 8.4
-    # 2 / 0.7 keeps the first-pick odds of 6-12 chaos, so the lower budget cuts only follow-up antags.
-    primaryAntagChaosBias: 2.857
+    minStartingChaos: 4.44 # Per connected player, including the lobby.
+    maxStartingChaos: 8.88
+    # 2 / 0.74 keeps the first-pick odds of 6-12 chaos, so the lower budget cuts only follow-up antags.
+    primaryAntagChaosBias: 2.703
     livingChaosChange: -0.018
     deadChaosChange: 0.048
     chaosChangeVariationMin: 0.65
