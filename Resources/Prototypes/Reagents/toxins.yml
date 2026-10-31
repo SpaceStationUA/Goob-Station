@@ -27,6 +27,17 @@
           types:
             Poison: 4
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Toxin
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Toxin
+        amount: 0.25
 - type: reagent
   id: CarpoToxin
   name: reagent-name-carpotoxin
@@ -64,6 +75,17 @@
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: CarpoToxin
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: CarpoToxin
+        amount: 0.25
 - type: reagent
   id: ChloralHydrate
   name: reagent-name-chloral-hydrate
@@ -110,6 +132,17 @@
           types:
             Poison: 1.5
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: ChloralHydrate
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: ChloralHydrate
+        amount: 0.25
 - type: reagent
   id: GastroToxin
   name: reagent-name-gastrotoxin
@@ -139,6 +172,17 @@
             inverted: true
           probability: 0.2
 
+        # Pirate: Starlight species-specific metabolism.
+        - !type:AdjustReagent
+          conditions:
+          - !type:ReagentCondition
+            reagent: GastroToxin
+            min: 0.26
+          - !type:MetabolizerTypeCondition
+            type:
+            - Cyclorite
+          reagent: GastroToxin
+          amount: 0.25
 - type: reagent
   id: Mold
   name: reagent-name-mold
@@ -161,6 +205,17 @@
           types:
             Poison: 1
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Mold
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Mold
+        amount: 0.25
 - type: reagent
   id: PolytrinicAcid
   name: reagent-name-polytrinic-acid
@@ -209,6 +264,17 @@
         emote: Scream
         probability: 0.3
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: PolytrinicAcid
+          min: 1.51
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: PolytrinicAcid
+        amount: 1.5
 - type: reagent
   id: FerrochromicAcid
   name: reagent-name-ferrochromic-acid
@@ -270,6 +336,17 @@
         emote: Scream
         probability: 0.25
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: FluorosulfuricAcid
+          min: 1.51
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: FluorosulfuricAcid
+        amount: 1.5
 - type: reagent
   id: SulfuricAcid
   name: reagent-name-sulfuric-acid
@@ -320,6 +397,17 @@
         emote: Scream
         probability: 0.2
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: SulfuricAcid
+          min: 1.51
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: SulfuricAcid
+        amount: 1.5
 - type: reagent
   id: UnstableMutagen
   name: reagent-name-unstable-mutagen
@@ -345,6 +433,17 @@
         damage:
           types:
             Radiation: 3
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: UnstableMutagen
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: UnstableMutagen
+        amount: 0.25
     Narcotic:
       effects:
       - !type:MutateDiseases
@@ -370,6 +469,17 @@
         damage:
           types:
             Asphyxiation: 5
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: HeartbreakerToxin
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: HeartbreakerToxin
+        amount: 0.25
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -390,6 +500,17 @@
           groups:
             Airloss: 10
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lexorin
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Lexorin
+        amount: 0.25
 - type: reagent
   id: MindbreakerToxin
   name: reagent-name-mindbreaker-toxin
@@ -416,6 +537,17 @@
           min: 20
   # TODO: PROPER hallucinations
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: MindbreakerToxin
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: MindbreakerToxin
+        amount: 0.25
 - type: reagent
   id: Histamine
   name: reagent-name-histamine
@@ -461,6 +593,17 @@
         messages: [ "histamine-effect-heavy-itchiness" ]
         probability: 0.2
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Histamine
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Histamine
+        amount: 0.25
 - type: reagent
   id: Theobromine
   name: reagent-name-theobromine
@@ -489,6 +632,17 @@
             type: [Animal, Experiment] # Pirate
 
 # Pirate: coffemaker
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Theobromine
+          min: 0.026
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Theobromine
+        amount: 0.02
 - type: reagent
   id: Anthrobromine
   name: reagent-name-anthrobromine
@@ -540,6 +694,17 @@
           types:
             Poison: 3
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Amatoxin
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Amatoxin
+        amount: 0.1
 - type: reagent
   id: VentCrud
   name: reagent-name-vent-crud
@@ -563,6 +728,17 @@
           damage:
             types:
               Poison: 2
+        # Pirate: Starlight species-specific metabolism.
+        - !type:AdjustReagent
+          conditions:
+          - !type:ReagentCondition
+            reagent: VentCrud
+            min: 0.26
+          - !type:MetabolizerTypeCondition
+            type:
+            - Cyclorite
+          reagent: VentCrud
+          amount: 0.25
     Food:
      effects:
       - !type:SatiateHunger
@@ -590,6 +766,17 @@
               reagent: Romerol
               min: 5
 
+        # Pirate: Starlight species-specific metabolism.
+        - !type:AdjustReagent
+          conditions:
+          - !type:ReagentCondition
+            reagent: Romerol
+            min: 0.26
+          - !type:MetabolizerTypeCondition
+            type:
+            - Cyclorite
+          reagent: Romerol
+          amount: 0.25
 - type: reagent
   id: UncookedAnimalProteins
   name: reagent-name-uncooked-animal-proteins
@@ -606,6 +793,7 @@
         - !type:MetabolizerTypeCondition
           type:
           - Animal
+          - Doll # Pirate: Starlight raw-meat diet.
           - Vox
           - Yowie # Goobstation - Yowie
           - XenobioSlime # Goobstation - XenobioSlime
@@ -623,6 +811,7 @@
         - !type:MetabolizerTypeCondition
           type:
           - Animal
+          - Doll # Pirate: Starlight raw-meat diet.
           - Vox
           - Plant
           - Yowie # Goobstation - Yowie
@@ -636,6 +825,7 @@
         - !type:MetabolizerTypeCondition
           type:
           - Animal
+          - Doll # Pirate: Starlight raw-meat diet.
           - Vox
           - Plant
           - Yowie # Goobstation - Yowie
@@ -657,7 +847,7 @@
       - !type:AdjustReagent
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal ]
+          type: [ Animal, Doll ] # Pirate: Starlight raw-meat diet.
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent # Goobstation - XenobioSlime
@@ -732,6 +922,17 @@
         strengthModifier: -0.0088888888888 #ditto
         statusLifetime: 1.5 # 1.5s per 1u
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Pax
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Pax
+        amount: 0.25
 - type: reagent
   id: Honk
   name: reagent-name-honk
@@ -769,6 +970,17 @@
             Poison: 0.06
 
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Honk
+          min: 0.026
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Honk
+        amount: 0.02
 - type: reagent
   id: Lead
   name: reagent-name-lead
@@ -790,6 +1002,17 @@
           types:
             Poison: 0.6 # Makes it 20 damage per unit.
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lead
+          min: 0.011
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Lead
+        amount: 0.01
 - type: reagent
   id: Bungotoxin
   name: reagent-name-bungotoxin
@@ -811,6 +1034,17 @@
           types:
             Poison: 1.8
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Bungotoxin
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Bungotoxin
+        amount: 0.1
 - type: reagent
   id: Vestine
   name: reagent-name-vestine
@@ -845,6 +1079,17 @@
           groups:
             Airloss: 2
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Vestine
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Vestine
+        amount: 0.25
 - type: reagent
   id: Tazinide
   name: reagent-name-tazinide
@@ -860,6 +1105,17 @@
       - !type:Electrocute
         probability: 0.5 #goob edit
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Tazinide
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Tazinide
+        amount: 0.25
 - type: reagent
   id: Lipolicide
   name: reagent-name-lipolicide
@@ -888,6 +1144,17 @@
 
 # inspired by the spider neurotoxin GsMtx-4
 # poisons non-spiders and slows you down at high doses
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lipolicide
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Lipolicide
+        amount: 0.25
 - type: reagent
   id: Mechanotoxin
   name: reagent-name-mechanotoxin
@@ -935,6 +1202,17 @@
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Mechanotoxin
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Mechanotoxin
+        amount: 0.1
 - type: reagent
   id: ToxinTrash
   name: reagent-name-toxintrash
@@ -951,6 +1229,17 @@
         - !type:MetabolizerTypeCondition
           type: [Vox]
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: ToxinTrash
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: ToxinTrash
+        amount: 0.25
 - type: reagent
   id: Hemorrhinol
   name: reagent-name-hemorrhinol
@@ -969,3 +1258,14 @@
         type: Update
       - !type:ModifyBleed
         amount: 0.5
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hemorrhinol
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Hemorrhinol
+        amount: 0.25

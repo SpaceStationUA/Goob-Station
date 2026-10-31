@@ -1,0 +1,100 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: OrganNeoDionaLungs
+  parent:
+  - OrganDionaLungs
+  name: diona augmented lungs
+  suffix: Neo-Diona
+  description: A spongy mess of slimy, leaf-like structures. Capable of breathing both carbon dioxide and oxygen.
+  components:
+  - type: Organ
+- type: entity
+  id: OrganNeoDionaLungsNymph
+  categories:
+  - HideSpawnMenu
+  parent:
+  - OrganNeoDionaLungs
+  name: neo-diona nymph lungs
+  suffix: Neo-Diona Nymph
+  description: Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier.
+  components:
+  - type: Nymph
+    entityPrototype: OrganNeoDionaNymphLungs
+- type: entity
+  id: OrganNeoDionaNymphLungs
+  categories:
+  - HideSpawnMenu
+  parent:
+  - MobDionaNymphAccent
+  name: neo-diona nymph lungs
+  suffix: Neo-Diona Nymph
+  description: Contains the lungs of a formerly fully-formed Neo-Diona. Breathtaking.
+  components:
+  - type: IsDeadIC
+  - type: Body
+    prototype: AnimalProtoNymphLungs
+- type: entity
+  id: OrganNeoDionaNymphStomach
+  categories:
+  - HideSpawnMenu
+  parent:
+  - MobDionaNymphAccent
+  name: neo-diona nymph stomach
+  suffix: Neo-Diona Nymph
+  description: Contains the stomach of a formerly fully-formed Neo-Diona. It doesn't taste any better for it.
+  components:
+  - type: IsDeadIC
+  - type: Body
+    prototype: AnimalProtoNymphStomach
+- type: entity
+  id: OrganNeoDionaStomach
+  parent:
+  - OrganDionaStomach
+  name: augmented stomach
+  suffix: Neo-Diona
+  description: The diona's equivalent of a stomach, it reeks of asparagus and vinegar.
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - RamChip
+    isSpecialDigestibleExclusive: false
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes:
+    - Plant
+    - Neocyte
+    groups:
+    - id: Food
+    - id: Drink
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+    - id: Alcohol
+  - type: Organ
+- type: entity
+  id: OrganNeoDionaStomachNymph
+  categories:
+  - HideSpawnMenu
+  parent:
+  - OrganNeoDionaStomach
+  name: neo-diona nymph stomach
+  suffix: Neo-Diona Nymph
+  description: Gross. This is hard to stomach.
+  components:
+  - type: Nymph
+    entityPrototype: OrganNeoDionaNymphStomach
+- type: entity
+  id: OrganNeoDionaTongue
+  parent:
+  - OrganNeocyteTongue
+  suffix: Neo-Diona
+  components:
+  - type: OrganTongue
+    sounds:
+      Male: NeoDionaMSounds
+      Female: NeoDionaFSounds
+      Unsexed: NeoDionaMSounds
+  - type: TongueVoiceOrgan

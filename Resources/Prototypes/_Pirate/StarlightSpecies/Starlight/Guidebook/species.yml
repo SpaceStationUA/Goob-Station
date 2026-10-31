@@ -1,0 +1,47 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: guideEntry
+  id: Cyclorite
+  name: species-name-cyclorite
+  text: /ServerInfo/_Pirate/StarlightSpecies/Starlight/Guidebook/Mobs/Cyclorite.xml
+- type: guideEntry
+  id: Doll
+  name: species-name-doll
+  text: /ServerInfo/_Pirate/StarlightSpecies/Starlight/Guidebook/Mobs/Doll.xml
+- type: guideEntry
+  id: Elf
+  name: species-name-elf
+  text: /ServerInfo/_Pirate/StarlightSpecies/Starlight/Guidebook/Mobs/Elf.xml
+- type: guideEntry
+  id: Felionoid
+  name: species-name-felionoid
+  text: /ServerInfo/_Pirate/StarlightSpecies/Starlight/Guidebook/Mobs/Felionoid.xml
+- type: guideEntry
+  id: Lagomorph
+  name: species-name-lagomorph
+  text: /ServerInfo/_Pirate/StarlightSpecies/Starlight/Guidebook/Mobs/Lagomorph.xml
+- type: guideEntry
+  id: Neocyte
+  name: species-name-neocyte
+  text: /ServerInfo/_Pirate/StarlightSpecies/Starlight/Guidebook/Mobs/Neocyte.xml
+  children:
+  - NeocyteFrames
+  - TrueNeocyte
+  - NeoElf
+  - NeoArachnid
+  - NeoAvali
+  - NeoCyclorite
+  - NeoDiona
+  - NeoDwarf
+  - NeoFelionoid
+  - NeoHuman
+  - NeoKin
+  - NeoLagomorph
+  - NeoSlimePerson
+  - NeoThaven
+  - NeoMoth
+  - NeoReptilian
+  - NeoResomi
+  - NeoVox
+  - NeoVulpkanin

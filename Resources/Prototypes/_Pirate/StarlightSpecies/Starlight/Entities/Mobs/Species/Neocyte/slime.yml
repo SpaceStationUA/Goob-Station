@@ -1,0 +1,181 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseNeocyteAppearance
+  - BaseSpeciesDummy
+  id: AppearanceNeoSlimePerson
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: HumanoidAppearance
+    species: NeoSlimePerson
+  - type: Inventory
+    templateId: neocyte
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+- type: entity
+  parent:
+  - BaseMobNeocyte
+  id: BaseMobNeoSlimePerson
+  name: Urist McSlimester
+  abstract: true
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Bubblish
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Bubblish
+  - type: HumanoidAppearance
+    species: NeoSlimePerson
+    hideLayersOnEquip:
+    - Hair
+  - type: UserInterface
+    interfaces:
+      enum.StorageComponent.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      enum.MagicMirrorUiKey.Key:
+        type: MagicMirrorBoundUserInterface
+  - type: InteractionPopup
+    interactSuccessSound: /Audio/Voice/Slime/slime_squish.ogg
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Proto-Slime/parts.rsi
+    state: full
+  - type: Body
+    prototype: NeoSlime
+    requiredLegs: 2
+  - type: Storage
+    clickInsert: false
+    showVerb: false
+    openOnActivate: false
+    grid:
+    - 0,0,1,2
+    maxItemSize: Large
+    storageInsertSound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: PrivateStorage
+    accessDelay: 3.0
+    accessPopup: laspi-storage-accessing
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UseDelay
+    delay: 0.5
+  - type: Damageable
+    damageContainer: Hybrid
+    damageModifierSet: NeoSlimePerson
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Heat: -0.14
+        Blunt: -0.05
+        Piercing: -0.05
+        Slash: -0.05
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/brute_damage.rsi
+        color: '#2cf274'
+      Burn:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/burn_damage.rsi
+    thresholds:
+    - 10
+    - 20
+    - 30
+    - 50
+    - 70
+    - 100
+    targetLayers:
+    - enum.HumanoidVisualLayers.Chest
+    - enum.HumanoidVisualLayers.Head
+    - enum.HumanoidVisualLayers.LArm
+    - enum.HumanoidVisualLayers.LLeg
+    - enum.HumanoidVisualLayers.RArm
+    - enum.HumanoidVisualLayers.RLeg
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 600
+  - type: Barotrauma
+    protectionSlots:
+    - head
+    alternativeProtectionSlots:
+    - - outerClothing
+      - outerClothing2
+    damage:
+      types:
+        Blunt: 1
+  - type: Reactive
+    groups:
+      Flammable:
+      - Touch
+      Extinguish:
+      - Touch
+    reactions:
+    - reagents:
+      - Water
+      - SpaceCleaner
+      methods:
+      - Touch
+      effects:
+      - !type:WashCreamPie ''
+    - reagents:
+      - Water
+      methods:
+      - Touch
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 0.25
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages:
+        - slime-hurt-by-water-popup
+        probability: 0.25
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSlime
+      amount: 5
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+    maxSaturation: 15
+  - type: Inventory
+    templateId: neocyte
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: ShowThirstIcons
+  - type: SolutionScanner
+  - type: Wagging
+  - type: InnateHairChange
+  - type: MagicMirror
+  - type: StarlightBodyDamageModifiers

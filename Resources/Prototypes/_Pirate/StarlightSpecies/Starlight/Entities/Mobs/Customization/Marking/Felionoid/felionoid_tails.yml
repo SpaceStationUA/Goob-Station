@@ -1,0 +1,24 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: marking
+  id: FelionoidTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: tail_behind
+  wagging: FelionoidTailAnimated
+- type: marking
+  id: FelionoidTailAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: tail_wagging

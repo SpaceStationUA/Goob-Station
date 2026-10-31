@@ -1,0 +1,28 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: reagent
+  id: NeuralPrion
+  name: reagent-name-neuralprion
+  group: Toxins
+  desc: reagent-desc-neuralprion
+  physicalDesc: reagent-physical-desc-neural
+  color: '#EE35FF'
+  metabolisms:
+    Poison:
+      metabolismRate: 0.07
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.4
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: NeuralPrion
+          min: 0.25
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: NeuralPrion
+        amount: 0.015

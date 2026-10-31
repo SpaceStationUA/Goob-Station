@@ -1,0 +1,808 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: marking
+  id: NeoArachnidLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoArachnid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-arachnid/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoArachnidVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoArachnid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-arachnid/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoAvaliLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoAvali
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-avali/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoAvaliLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoAvali
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-avali/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoAvaliMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoAvali
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-avali/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoAvaliVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoAvali
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-avali/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoAvaliWings
+  bodyPart: Tail
+  markingCategory: Overlay
+  speciesRestriction:
+  - NeoAvali
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-avali/led_shapes_body.rsi
+    state: wings
+- type: marking
+  id: NeoCycloriteLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoCyclorite
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-cyclops/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoCycloriteLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoCyclorite
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-cyclops/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoCycloriteMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoCyclorite
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-cyclops/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoCycloriteVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoCyclorite
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-cyclops/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoDionaLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoDiona
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-dionae/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoDionaLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoDiona
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-dionae/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoDionaMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoDiona
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-dionae/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoDionaVines
+  bodyPart: RHand
+  markingCategory: Overlay
+  speciesRestriction:
+  - NeoDiona
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-dionae/led_shapes_body.rsi
+    state: vines
+- type: marking
+  id: NeoDionaVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoDiona
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-dionae/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoFelionoidClaws
+  bodyPart: RHand
+  markingCategory: Overlay
+  speciesRestriction:
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-feline/led_shapes_body.rsi
+    state: claws
+- type: marking
+  id: NeoFelionoidLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-feline/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoFelionoidLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-feline/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoFelionoidMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-feline/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoFelionoidVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-feline/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoKinLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoKin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-kin/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoKinLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoKin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-kin/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoKinMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoKin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-kin/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoKinVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoKin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-kin/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoLagomorphLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - Neocyte
+  - NeoLagomorph
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Protogen/proto-lagomorph/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoLagomorphVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - Neocyte
+  - NeoLagomorph
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Protogen/proto-lagomorph/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoMothClaws
+  bodyPart: RHand
+  markingCategory: Overlay
+  speciesRestriction:
+  - NeoMoth
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-moth/led_shapes_body.rsi
+    state: claws
+- type: marking
+  id: NeoMothLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoMoth
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-moth/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoMothLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoMoth
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-moth/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoMothMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoMoth
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-moth/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoMothVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoMoth
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-moth/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoReptilianClaws
+  bodyPart: RHand
+  markingCategory: Overlay
+  speciesRestriction:
+  - NeoReptilian
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-reptile/led_shapes_body.rsi
+    state: claws
+- type: marking
+  id: NeoReptilianLEDFaceBoxy
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoReptilian
+  - NeoHuman
+  - NeoDwarf
+  - NeoElf
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/led_shapes_face.rsi
+    state: boxy
+- type: marking
+  id: NeoResomiLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoResomi
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Protogen/proto-resomi/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoResomiLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoResomi
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Protogen/proto-resomi/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoResomiMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoResomi
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Protogen/proto-resomi/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoResomiVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoResomi
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Protogen/proto-resomi/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoSlimePersonLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoSlimePerson
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-slime/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoSlimePersonLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoSlimePerson
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoSlimePersonMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoSlimePerson
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-slime/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoSlimePersonVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoSlimePerson
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-slime/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoThavenLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoThaven
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-thaven/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoThavenLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoThaven
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-thaven/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoThavenMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoThaven
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-thaven/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoThavenVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoThaven
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-thaven/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoVoxClaws
+  bodyPart: RHand
+  markingCategory: Overlay
+  speciesRestriction:
+  - NeoVox
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vox/led_shapes_body.rsi
+    state: claws
+- type: marking
+  id: NeoVoxLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoVox
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vox/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoVoxLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoVox
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vox/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoVoxMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoVox
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vox/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoVoxVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoVox
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vox/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeoVulpkaninClaws
+  bodyPart: RHand
+  markingCategory: Overlay
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/led_shapes_body.rsi
+    state: claws
+- type: marking
+  id: NeoVulpkaninClawsLong
+  bodyPart: RHand
+  markingCategory: Overlay
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/led_shapes_body.rsi
+    state: clawslong
+- type: marking
+  id: NeoVulpkaninLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeoVulpkaninLEDFaceFourEyes
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/led_shapes_face.rsi
+    state: four-eyes
+- type: marking
+  id: NeoVulpkaninLEDFaceLong
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/led_shapes_face.rsi
+    state: long
+- type: marking
+  id: NeoVulpkaninLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeoVulpkaninLightsAngled
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/led_shapes_body.rsi
+    state: bodyangled
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/led_shapes_body.rsi
+    state: bodyangled_inner
+- type: marking
+  id: NeoVulpkaninMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeoVulpkaninMediumArmorAngled
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/body_armor.rsi
+    state: mediumangled
+- type: marking
+  id: NeoVulpkaninPawSocksFeet
+  bodyPart: RFoot
+  markingCategory: Overlay
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/proto-vulp.rsi
+    state: pawsocks_feet
+- type: marking
+  id: NeoVulpkaninPawSocksLegs
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/proto-vulp.rsi
+    state: pawsocks_legs
+- type: marking
+  id: NeoVulpkaninSnoutLong
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/visor_markings.rsi
+    state: snout
+- type: marking
+  id: NeoVulpkaninVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoVulpkanin
+  - NeoReptilian
+  - NeoHuman
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/visor_shapes.rsi
+    state: vulpvisor
+- type: marking
+  id: NeoVulpkaninVisorFourEyes
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/visor_shapes.rsi
+    state: vulpvisor-four-eyes
+- type: marking
+  id: NeoVulpkaninVisorSideWings
+  bodyPart: FaceCover
+  markingCategory: Head
+  speciesRestriction:
+  - NeoVulpkanin
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/proto-vulp/visor_markings.rsi
+    state: side-visor-wings
+- type: marking
+  id: NeocyteEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Neocyte
+  - NeoVulpkanin
+  - NeoVox
+  - NeoThaven
+  - NeoKin
+  - NeoHuman
+  - NeoMoth
+  - NeoFelionoid
+  - NeoDwarf
+  - NeoCyclorite
+  - NeoAvali
+  - NeoElf
+  - NeoLagomorph
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/protogen.rsi
+    state: ears_protogen
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/protogen.rsi
+    state: ears_protogen_tips
+- type: marking
+  id: NeocyteLEDFace
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - Neocyte
+  - NeoReptilian
+  - NeoHuman
+  - NeoDwarf
+  - NeoElf
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/led_shapes_face.rsi
+    state: face
+- type: marking
+  id: NeocyteLEDFaceNoseless
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - Neocyte
+  - NeoReptilian
+  - NeoHuman
+  - NeoDwarf
+  - NeoElf
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/led_shapes_face.rsi
+    state: noseless
+- type: marking
+  id: NeocyteLEDFaceRound
+  bodyPart: FaceCoverCover
+  markingCategory: FaceCoverCover
+  speciesRestriction:
+  - Neocyte
+  - NeoHuman
+  - NeoDwarf
+  - NeoElf
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/led_shapes_face.rsi
+    state: rounded
+- type: marking
+  id: NeocyteLights
+  bodyPart: BodyCoverCover
+  markingCategory: BodyCoverCover
+  speciesRestriction:
+  - Neocyte
+  - NeoReptilian
+  - NeoHuman
+  - NeoDwarf
+  - NeoArachnid
+  - NeoElf
+  - NeoLagomorph
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/led_shapes_body.rsi
+    state: body
+- type: marking
+  id: NeocyteMediumArmor
+  bodyPart: BodyCover
+  markingCategory: BodyCover
+  speciesRestriction:
+  - Neocyte
+  - NeoReptilian
+  - NeoHuman
+  - NeoDwarf
+  - NeoArachnid
+  - NeoElf
+  - NeoLagomorph
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/body_armor.rsi
+    state: medium
+- type: marking
+  id: NeocyteTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction:
+  - Neocyte
+  - NeoVulpkanin
+  - NeoVox
+  - NeoThaven
+  - NeoKin
+  - NeoResomi
+  - NeoHuman
+  - NeoMoth
+  - NeoFelionoid
+  - NeoDwarf
+  - NeoCyclorite
+  - NeoAvali
+  - NeoElf
+  - NeoLagomorph
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/protogen.rsi
+    state: tail_protogen
+- type: marking
+  id: NeocyteTailBushy
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction:
+  - Neocyte
+  - NeoVulpkanin
+  - NeoVox
+  - NeoThaven
+  - NeoKin
+  - NeoResomi
+  - NeoHuman
+  - NeoMoth
+  - NeoFelionoid
+  - NeoDwarf
+  - NeoCyclorite
+  - NeoAvali
+  - NeoElf
+  - NeoLagomorph
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/protogen.rsi
+    state: bushy_tail_protogen
+- type: marking
+  id: NeocyteTailShark
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction:
+  - Neocyte
+  - NeoVulpkanin
+  - NeoVox
+  - NeoThaven
+  - NeoKin
+  - NeoResomi
+  - NeoHuman
+  - NeoMoth
+  - NeoFelionoid
+  - NeoDwarf
+  - NeoCyclorite
+  - NeoAvali
+  - NeoElf
+  - NeoLagomorph
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/protogen.rsi
+    state: shark_tail_protogen
+- type: marking
+  id: NeocyteVisor
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - Neocyte
+  - NeoHuman
+  - NeoDwarf
+  - NeoElf
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/visor_shapes.rsi
+    state: visor
+- type: marking
+  id: NeocyteVisorRound
+  bodyPart: FaceCover
+  markingCategory: FaceCover
+  speciesRestriction:
+  - Neocyte
+  - NeoHuman
+  - NeoDwarf
+  - NeoElf
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/visor_shapes.rsi
+    state: rounded
+- type: marking
+  id: TwoNeocyteEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Neocyte
+  - NeoVulpkanin
+  - NeoVox
+  - NeoThaven
+  - NeoKin
+  - NeoHuman
+  - NeoMoth
+  - NeoFelionoid
+  - NeoDwarf
+  - NeoCyclorite
+  - NeoAvali
+  - NeoElf
+  - NeoLagomorph
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Customization/protogen/protogen.rsi
+    state: two_ears_protogen

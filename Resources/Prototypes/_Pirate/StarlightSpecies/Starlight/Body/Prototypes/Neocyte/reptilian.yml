@@ -1,0 +1,60 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: body
+  id: NeoReptilian
+  name: neo-reptilian
+  root: torso
+  slots:
+    head:
+      part: HeadReptilian
+      connections:
+      - torso
+      organs:
+        brain: OrganNeocyteBrain
+        eyes: OrganNeocyteEyes
+        tongue: OrganNeoReptilianTongue
+    torso:
+      part: ChestReptilian
+      connections:
+      - right arm
+      - left arm
+      - groin
+      organs:
+        heart: OrganNeocyteHeart
+        lungs: OrganNeocyteLungs
+    right arm:
+      part: RightArmReptilian
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmReptilian
+      connections:
+      - left hand
+    right hand:
+      part: RightHandReptilian
+      organs: {}
+    left hand:
+      part: LeftHandReptilian
+      organs: {}
+    right leg:
+      part: RightLegReptilian
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegReptilian
+      connections:
+      - left foot
+    right foot:
+      part: RightFootReptilian
+    left foot:
+      part: LeftFootReptilian
+    groin:
+      part: GroinReptilian
+      connections:
+      - right leg
+      - left leg
+      organs:
+        stomach: OrganNeocyteStomach
+        liver: OrganNeocyteLiver
+        kidneys: OrganNeocyteKidneys

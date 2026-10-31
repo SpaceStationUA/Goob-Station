@@ -241,24 +241,9 @@ public abstract partial class InventorySystem
             return false;
 
         DebugTools.Assert(slotDefinition.Name == slot);
-        if (slotDefinition.DependsOn != null)
-        {
-            if (!TryGetSlotEntity(target, slotDefinition.DependsOn, out EntityUid? slotEntity, inventory))
-                return false;
-
-            if (slotDefinition.DependsOnComponents is { } componentRegistry)
-            {
-                foreach (var (_, entry) in componentRegistry)
-                {
-                    if (!HasComp(slotEntity, entry.Component.GetType()))
-                        return false;
-
-                    if (TryComp<AllowSuitStorageComponent>(slotEntity, out var comp) &&
-                        _whitelistSystem.IsWhitelistFailOrNull(comp.Whitelist, itemUid))
-                        return false;
-                }
-            }
-        }
+        // Pirate: Starlight supports a suit or an integral neocyte frame.
+        if (!AreSlotDependenciesMet(target, itemUid, slotDefinition, inventory))
+            return false;
 
         var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) &&
                               item != null &&
@@ -459,7 +444,11 @@ public abstract partial class InventorySystem
 
         foreach (var slotDef in inventory.Slots)
         {
-            if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
+            // Pirate: keep dependent storage if another valid support slot remains equipped.
+            if (slotDef != slotDefinition &&
+                (slotDef.DependsOn == slotDefinition.Name || slotDef.DependsOnAny.Contains(slotDefinition.Name)) &&
+                TryGetSlotEntity(target, slotDef.Name, out var dependent, inventory) &&
+                !AreSlotDependenciesMet(target, dependent.Value, slotDef, inventory))
             {
                 //this recursive call might be risky
                 TryUnequip(actor, target, slotDef.Name, out _, ref itemsDropped, true, true, predicted, inventory, reparent: reparent);

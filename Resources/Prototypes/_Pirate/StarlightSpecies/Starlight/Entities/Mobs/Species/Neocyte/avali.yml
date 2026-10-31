@@ -1,0 +1,138 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseNeocyteAppearance
+  - BaseInventoryNeoAvali
+  - BaseSpeciesDummy
+  id: AppearanceNeoAvali
+  categories:
+  - HideSpawnMenu
+  description: A dummy neo-avali meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: NeoAvali
+- type: entity
+  save: false
+  name: Urist McAvalister
+  parent:
+  - BaseInventoryNeoAvali
+  - BaseMobNeocyte
+  - BaseColdBird
+  id: BaseMobNeoAvali
+  abstract: true
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Scratch
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Scratch
+  - type: Vocal
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - Neocyte
+    - Avali
+    - NeoAvali
+    - SiliconEmotesFH
+    - NotLabelable
+  - type: HumanoidAppearance
+    species: NeoAvali
+    hideLayersOnEquip:
+    - Tail
+    - HeadTop
+  - type: Hunger
+    baseDecayRate: 0.03
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Proto-Avali/parts.rsi
+    state: full
+  - type: Body
+    prototype: NeoAvali
+    requiredLegs: 2
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 3
+  - type: MobThresholds
+    thresholds:
+      '0': Alive
+      '90': Critical
+      '180': Dead
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 95
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWeightlessAcceleration: 1.6
+    baseWeightlessFriction: 1
+    baseWeightlessModifier: 1
+  - type: Damageable
+    damageContainer: Hybrid
+    damageModifierSet: NeoAvali
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/brute_damage.rsi
+        color: '#6C3BAA'
+      Burn:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/burn_damage.rsi
+    thresholds:
+    - 10
+    - 20
+    - 30
+    - 50
+    - 70
+    - 100
+    targetLayers:
+    - enum.HumanoidVisualLayers.Chest
+    - enum.HumanoidVisualLayers.Head
+    - enum.HumanoidVisualLayers.LArm
+    - enum.HumanoidVisualLayers.LLeg
+    - enum.HumanoidVisualLayers.RArm
+    - enum.HumanoidVisualLayers.RLeg
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: AvaliBlood
+        Quantity: 600
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 6.25
+  - type: Stasis
+    enterStasisAction: ActionStasisEnter
+    exitStasisAction: ActionStasisExit
+    updateInterval: 1s
+    healingPerUpdate:
+      types:
+        Heat: 2
+        Cold: 2
+        Blunt: 2
+        Slash: 2
+        Piercing: 2
+    bleedHealPerUpdate: 1.0
+    critHealingModifier: 0.5
+    stasisDamageReduction: 0.7
+  - type: StarlightBodyDamageModifiers
+  - type: AutoImplant
+    implants:
+    - AvaliNexusImplant

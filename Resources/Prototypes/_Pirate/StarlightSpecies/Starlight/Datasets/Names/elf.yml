@@ -1,0 +1,18 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: localizedDataset
+  id: NamesFirstElfFemale
+  values:
+    prefix: names-first-elf-female-dataset-
+    count: 200
+- type: localizedDataset
+  id: NamesFirstElfMale
+  values:
+    prefix: names-first-elf-male-dataset-
+    count: 200
+- type: localizedDataset
+  id: NamesLastElf
+  values:
+    prefix: names-last-elf-dataset-
+    count: 200

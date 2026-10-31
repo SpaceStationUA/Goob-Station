@@ -1,0 +1,42 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: OrganNeoArachnidHeart
+  parent:
+  - BaseNeocyteOrgan
+  - OrganNeocyteHeart
+  name: arachnid cybernetic heart
+  suffix: Neo-Arachnid
+  components:
+  - type: Tag
+    tags:
+    - Meat
+    - Heart
+  - type: Sprite
+    state: heart-on
+  - type: Item
+    size: Small
+    heldPrefix: heart
+  - type: Metabolizer
+    updateInterval: 1.5
+    maxReagents: 2
+    metabolizerTypes:
+    - Arachnid
+    - Neocyte
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+- type: entity
+  id: OrganNeoArachnidTongue
+  parent:
+  - OrganNeocyteTongue
+  suffix: Neo-Arachnid
+  components:
+  - type: OrganTongue
+    sounds:
+      Male: NeoArachnidMSounds
+      Female: NeoArachnidFSounds
+      Unsexed: NeoArachnidMSounds
+  - type: TongueVoiceOrgan

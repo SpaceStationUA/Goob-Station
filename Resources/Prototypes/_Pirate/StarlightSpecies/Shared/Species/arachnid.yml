@@ -1,0 +1,18 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: humanoidBaseSprite
+  id: MobArachnidTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Arachnid/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
+  id: MobArachnidTorsoFemale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Arachnid/parts.rsi
+    state: torso_f
+- type: humanoidBaseSprite
+  id: MobArachnidTorsoMale
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Arachnid/parts.rsi
+    state: torso_m

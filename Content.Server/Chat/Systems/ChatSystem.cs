@@ -769,15 +769,18 @@ public sealed partial class ChatSystem : SharedChatSystem
             // Wrapped message is the result wrapped in an "x says y" string
             // Floof: handle languages that require LOS
             string result, wrappedMessage;
-            if (!language.SpeechOverride.RequireLOS && data.Range <= WhisperClearRange
-                || _examineSystem.InRangeUnOccluded(source, listener, WhisperClearRange)
+            // Pirate: preserve Starlight lagomorph hearing without changing language or line-of-sight rules.
+            var clearRange = ListenerRange(listener, WhisperClearRange);
+            var muffledRange = ListenerRange(listener, WhisperMuffledRange);
+            if (!language.SpeechOverride.RequireLOS && data.Range <= clearRange
+                || _examineSystem.InRangeUnOccluded(source, listener, clearRange)
                 || data.Observer)
             {
                 // Scenario 1: the listener can clearly understand the message
                 result = perceivedMessage;
                 wrappedMessage = WrapWhisperMessage(source, "chat-manager-entity-whisper-wrap-message", name, result, language, colorOverride);
             }
-            else if (_examineSystem.InRangeUnOccluded(source, listener, WhisperMuffledRange)) // UNEDIT FROM Einstein Engines - Language // They are out of date, this has been reverted to current ChatSystem
+            else if (_examineSystem.InRangeUnOccluded(source, listener, muffledRange)) // UNEDIT FROM Einstein Engines - Language // They are out of date, this has been reverted to current ChatSystem
             {
                 // Scenario 2: if the listener is too far, they only hear fragments of the message
                 result = ObfuscateMessageReadability(perceivedMessage);
@@ -1344,9 +1347,10 @@ public sealed partial class ChatSystem : SharedChatSystem
 
             // InRangeUnOccluded does this check, but it also checks for occlusion
             // which doesn't really work for modes that are supposed to go through walls, like Speak
-            var inRange = distance <= voiceGetRange;
+            var listenerRange = ListenerRange(playerEntity, voiceGetRange); // Pirate: Starlight species hearing.
+            var inRange = distance <= listenerRange;
 
-            var isVisible = observer || (inRange && _examineSystem.InRangeUnOccluded(source, playerEntity, voiceGetRange));
+            var isVisible = observer || (inRange && _examineSystem.InRangeUnOccluded(source, playerEntity, listenerRange));
             // Floofstation - end
 
             // even if they are a ghost hearer, in some situations we still need the range

@@ -203,5 +203,6 @@ public enum SpeciesNaming : byte
     LastNoFirst, // DeltaV
     FirstDashLast, // Goobstation
     FirstRoman, // EE Plasmeme Change
-    IdFirst // Pirate: Experiment identifier and nickname.
+    IdFirst, // Pirate: Experiment identifier and nickname.
+    PrefixSuffix // Pirate: Starlight felionoid names.
 }

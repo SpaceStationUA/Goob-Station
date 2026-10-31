@@ -1,0 +1,60 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: body
+  id: NeoThaven
+  name: neo-thaven
+  root: torso
+  slots:
+    head:
+      part: HeadThaven
+      connections:
+      - torso
+      organs:
+        brain: OrganThavenBrain
+        eyes: OrganNeocyteEyes
+        tongue: OrganNeocyteTongue
+    torso:
+      part: ChestThaven
+      connections:
+      - right arm
+      - left arm
+      - groin
+      organs:
+        heart: OrganNeocyteHeart
+        lungs: OrganNeocyteLungs
+    right arm:
+      part: RightArmThaven
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmThaven
+      connections:
+      - left hand
+    right hand:
+      part: RightHandThaven
+      organs: {}
+    left hand:
+      part: LeftHandThaven
+      organs: {}
+    right leg:
+      part: RightLegThaven
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegThaven
+      connections:
+      - left foot
+    right foot:
+      part: RightFootThaven
+    left foot:
+      part: LeftFootThaven
+    groin:
+      part: GroinThaven
+      connections:
+      - right leg
+      - left leg
+      organs:
+        stomach: OrganNeocyteStomach
+        liver: OrganNeocyteLiver
+        kidneys: OrganNeocyteKidneys

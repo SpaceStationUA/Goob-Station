@@ -1,0 +1,28 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: ArmorSparkEffect
+  name: sparks
+  description: Sparks flying from armor impact.
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: TimedDespawn
+    lifetime: 0.4
+  - type: Sprite
+    drawdepth: Effects
+    sprite: _Pirate/StarlightSpecies/Starlight/Effects/armor_sparks.rsi
+    layers:
+    - state: armor_sparks
+      map:
+      - armor_sparks
+  - type: AnimationPlayer
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    energy: 2.0
+    color: '#FFD700'
+  - type: Tag
+    tags:
+    - HideContextMenu

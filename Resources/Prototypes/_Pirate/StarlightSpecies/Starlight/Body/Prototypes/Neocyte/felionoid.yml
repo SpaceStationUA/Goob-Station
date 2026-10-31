@@ -1,0 +1,60 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: body
+  id: NeoFelionoid
+  name: neo-felionoid
+  root: torso
+  slots:
+    head:
+      part: HeadFelionoid
+      connections:
+      - torso
+      organs:
+        brain: OrganNeocyteBrain
+        eyes: OrganNeocyteEyes
+        tongue: OrganNeoFelionoidTongue
+    torso:
+      part: TorsoFelionoid
+      connections:
+      - right arm
+      - left arm
+      - groin
+      organs:
+        heart: OrganNeocyteHeart
+        lungs: OrganNeocyteLungs
+    right arm:
+      part: RightArmFelionoid
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmFelionoid
+      connections:
+      - left hand
+    right hand:
+      part: RightHandFelionoid
+      organs: {}
+    left hand:
+      part: LeftHandFelionoid
+      organs: {}
+    right leg:
+      part: RightLegFelionoid
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegFelionoid
+      connections:
+      - left foot
+    right foot:
+      part: RightFootFelionoid
+    left foot:
+      part: LeftFootFelionoid
+    groin:
+      part: GroinFelionoid
+      connections:
+      - right leg
+      - left leg
+      organs:
+        stomach: OrganNeocyteStomach
+        liver: OrganNeocyteLiver
+        kidneys: OrganNeocyteKidneys

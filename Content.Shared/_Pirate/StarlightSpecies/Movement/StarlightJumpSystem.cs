@@ -1,0 +1,151 @@
+// Pirate: Starlight jumps, renamed to coexist with the native xenomorph jump.
+using System.Numerics;
+using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
+using Content.Shared.Throwing;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
+using Content.Shared.Stunnable;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
+using Content.Shared.Popups;
+
+namespace Content.Shared._Pirate.StarlightSpecies.Movement;
+
+//idea taked from VigersRay
+public sealed partial class StarlightJumpSystem : EntitySystem
+{
+    [Dependency] private SharedActionsSystem _action = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _mapMan = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private ActionContainerSystem _actionContainer = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private SharedChargesSystem _chargesSystem = default!;
+    [Dependency] private SharedPopupSystem _popups = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<StarlightJumpComponent, MapInitEvent>(OnStartup);
+        SubscribeLocalEvent<StarlightJumpComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<StarlightJumpComponent, GetItemActionsEvent>(OnGetItemActions);
+        SubscribeLocalEvent<StarlightJumpComponent, ThrowDoHitEvent>(OnThrowCollide);
+        SubscribeLocalEvent<StarlightJumpActionEvent>(OnJump);
+    }
+
+    private void OnThrowCollide(EntityUid uid, StarlightJumpComponent component, ref ThrowDoHitEvent args)
+    {
+        if (component.KnockdownSelfOnCollision)
+            _stun.TryKnockdown(uid, TimeSpan.FromSeconds(component.KnockdownSelfDuration), true);
+
+        if (component.KnockdownTargetOnCollision)
+            _stun.TryKnockdown(args.Target, TimeSpan.FromSeconds(component.KnockdownTargetDuration), true);
+    }
+
+    private void OnGetItemActions(Entity<StarlightJumpComponent> ent, ref GetItemActionsEvent args)
+    {
+        if (ent.Comp.IsEquipment)
+            args.AddAction(ref ent.Comp.ActionEntity, ent.Comp.Action);
+    }
+
+    private void OnStartup(EntityUid uid, StarlightJumpComponent component, MapInitEvent args)
+    {
+        if (component.IsEquipment)
+        {
+            if (_actionContainer.EnsureAction(uid, ref component.ActionEntity, out var action, component.Action))
+                _action.SetEntityIcon((component.ActionEntity.Value, action), uid);
+        }
+        else
+            _action.AddAction(uid, ref component.ActionEntity, component.Action);
+
+        Dirty(uid, component);
+    }
+
+    private void OnShutdown(EntityUid uid, StarlightJumpComponent component, ComponentShutdown args)
+    {
+        if (Deleted(uid) || component.ActionEntity is null)
+            return;
+
+        if (component.IsEquipment)
+            _actionContainer.RemoveAction(component.ActionEntity.Value);
+        else
+            _action.RemoveAction((uid, null), component.ActionEntity);
+    }
+
+    private void OnJump(StarlightJumpActionEvent args)
+    {
+        if (args.Handled) return;
+
+        Jump(args.Performer, args.Performer, args.Target, args);
+        args.Handled = true;
+    }
+
+    private void Jump(EntityUid performer, EntityUid target, EntityCoordinates targetCoords, StarlightJumpActionEvent args)
+    {
+        var userTransform = Transform(target);
+        var userMapCoords = _transform.GetMapCoordinates(userTransform);
+
+        if (args.FromGrid && !_mapMan.TryFindGridAt(userMapCoords, out _, out _)) return;
+
+        TryJump(performer, targetCoords, args, target, args.Speed, args.ToPointer, args.Sound, args.Distance);
+    }
+
+    public bool TryJump(EntityUid performer, EntityCoordinates targetCoords, StarlightJumpActionEvent args, EntityUid? target = null, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null, bool decreaseCharges = false)
+    {
+        if (_action.IsCooldownActive(args.Action))
+            return false;
+
+        if (target == null)
+            target = performer;
+
+        Jump(performer, target.Value, targetCoords, args, speed, toPointer, sound, distance, decreaseCharges);
+        return true;
+    }
+
+    public bool TryJump(Entity<StarlightJumpComponent?> performer, EntityCoordinates targetCoords, EntityUid? target = null, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null, bool decreaseCharges = false)
+    {
+        if (!Resolve(performer, ref performer.Comp, false)
+            || performer.Comp.ActionEntity == null || !TryComp(performer.Comp.ActionEntity, out ActionComponent? action))
+            return false;
+
+        var jump = new StarlightJumpActionEvent()
+        {
+            Performer=performer,
+            Action=(performer.Comp.ActionEntity.Value, action),
+        };
+        return TryJump(performer, targetCoords, jump, target, speed, toPointer, sound, distance, decreaseCharges);
+    }
+
+    public void Jump(EntityUid performer, EntityUid target, EntityCoordinates targetCoords,  StarlightJumpActionEvent args, float speed = 15f, bool toPointer = false, SoundSpecifier? sound = null, float? distance = null, bool decreaseCharges = false)
+    {
+        if (TryComp<LimitedChargesComponent>(args.Action.Owner, out var limitedCharges)
+            && !_chargesSystem.HasCharges((args.Action.Owner, limitedCharges), 1))
+            return;
+        else if (decreaseCharges)
+            _chargesSystem.TryUseCharge(args.Action.Owner);
+
+        var userTransform = Transform(target);
+        var userMapCoords = _transform.GetMapCoordinates(userTransform);
+        var targetMapCoords = _transform.ToMapCoordinates(targetCoords);
+
+        var vector = targetMapCoords.Position - userMapCoords.Position;
+        // Pirate: never normalize a zero-length jump vector.
+        if (vector.LengthSquared() < 0.0001f)
+            return;
+        if (distance != null
+            && (!toPointer || Vector2.Distance(userMapCoords.Position, targetMapCoords.Position) > distance))
+            vector = Vector2.Normalize(vector) * distance.Value;
+
+        if (TryComp<ActionComponent>(args.Action.Owner, out var action) && (limitedCharges == null || limitedCharges.MaxCharges <= 1))
+            _action.SetCooldown((args.Action.Owner, action), args.Action.Comp.UseDelay?? TimeSpan.FromSeconds(1));
+
+        _throwing.TryThrow(target, vector, baseThrowSpeed: speed, doSpin: false);
+
+        if (sound != null)
+            _audio.PlayPredicted(sound, target, target, AudioParams.Default.WithVolume(-4f));
+    }
+}
