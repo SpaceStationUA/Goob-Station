@@ -14,6 +14,7 @@ using Content.Shared.CriminalRecords;
 using Content.Shared.CriminalRecords.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Paper;
+using Content.Shared.Radio;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -82,36 +83,45 @@ public sealed partial class CriminalRecordsConsoleSystem
         if (ent.Comp.ActiveKey is not { } id || _station.GetOwningStation(ent) is not { } station)
             return;
 
-        var key = new StationRecordKey(id, station);
-        var citationId = msg.CitationId;
+        TryPayCitation(ent, msg.Actor, new StationRecordKey(id, station), msg.CitationId);
+    }
+
+    public bool TryPayCitation(EntityUid console, EntityUid user, StationRecordKey key, uint citationId)
+    {
+        if (_station.GetOwningStation(console) != key.OriginStation)
+            return false;
+
+        var station = key.OriginStation;
         if (!_records.TryGetRecord<CriminalRecord>(key, out var record)
-            || record.Citations.Find(c => c.Id == citationId) is not { Status: CitationStatus.Active } citation)
+            || record.Citations.Find(c => c.Id == citationId) is not { Status: CitationStatus.Active, Fine: > 0 } citation)
         {
-            return;
+            return false;
         }
 
-        var user = msg.Actor;
         if (!TryComp<StationBankAccountComponent>(station, out var budget)
-            || !_cargo.TryGetAccount((station, budget), CitationBudget, out _))
+            || !_cargo.TryGetAccount((station, budget), CitationBudget, out var funds)
+            || (long) funds + citation.Fine > int.MaxValue)
         {
-            DenyCitationPayment(ent, user, "criminal-records-citation-pay-no-budget");
-            return;
+            DenyCitationPayment(console, user, "criminal-records-citation-pay-no-budget");
+            return false;
         }
 
         if (!_idCard.TryFindIdCard(user, out var idCard)
             || !TryComp<BankCardComponent>(idCard, out var bankCard)
             || bankCard.AccountId is not { } accountId
-            || bankCard.CommandBudgetCard)
+            || bankCard.CommandBudgetCard
+            || !_bankCards.TryGetAccount(accountId, out var account)
+            || account.CommandBudgetAccount)
         {
-            DenyCitationPayment(ent, user, "criminal-records-citation-pay-no-card");
-            return;
+            DenyCitationPayment(console, user, "criminal-records-citation-pay-no-card");
+            return false;
         }
 
         var details = Loc.GetString("criminal-records-citation-transaction", ("reason", citation.Reason));
         if (!_bankCards.TryChangeBalance(accountId, -citation.Fine, BankTransactionType.Fine, details))
         {
-            DenyCitationPayment(ent, user, "criminal-records-citation-pay-no-funds");
-            return;
+            DenyCitationPayment(console, user, "criminal-records-citation-pay-no-funds");
+            return false;
         }
 
         _cargo.TryAdjustBankAccount((station, budget), CitationBudget, citation.Fine);
@@ -125,10 +135,11 @@ public sealed partial class CriminalRecordsConsoleSystem
         citation.ClosedAt = DateTime.UtcNow;
         _citationArrests.Refresh(key);
 
-        _audio.PlayPvs(CitationPaidSound, ent);
-        _popup.PopupEntity(Loc.GetString("criminal-records-citation-pay-success", ("fine", citation.Fine)), ent, user);
+        _audio.PlayPvs(CitationPaidSound, console);
+        _popup.PopupEntity(Loc.GetString("criminal-records-citation-pay-success", ("fine", citation.Fine)), console, user);
         UpdateCitationLog(key, citation);
-        SendCitationRadio(ent, key, record, citation, ("payer", payer));
+        SendCitationRadio(console, key, record, citation, ("payer", payer));
+        return true;
     }
 
     private void OnVoidCitation(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordVoidCitation msg)
@@ -186,13 +197,16 @@ public sealed partial class CriminalRecordsConsoleSystem
         }
     }
 
-    private void SendCitationRadio(Entity<CriminalRecordsConsoleComponent> ent, StationRecordKey key, CriminalRecord record,
+    private void SendCitationRadio(EntityUid console, StationRecordKey key, CriminalRecord record,
         CriminalRecordCitation citation, (string, object) actor)
     {
         var (name, job) = CitationTarget(key, record);
         var message = Loc.GetString($"criminal-records-citation-radio-{citation.Status.ToString().ToLowerInvariant()}",
             ("name", name), ("job", job), ("reason", citation.Reason), ("fine", citation.Fine), actor);
-        _radio.SendRadioMessage(ent, message, ent.Comp.SecurityChannel, ent);
+        var channel = TryComp<CriminalRecordsConsoleComponent>(console, out var recordsConsole)
+            ? recordsConsole.SecurityChannel
+            : new ProtoId<RadioChannelPrototype>("Security");
+        _radio.SendRadioMessage(console, message, channel, console);
     }
 
     private (string Name, string Job) CitationTarget(StationRecordKey key, CriminalRecord record)

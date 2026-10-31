@@ -1,0 +1,23 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:records="clr-namespace:Content.Client._Pirate.CriminalRecords"
+                      Title="{Loc 'citation-payment-title'}"
+                      MinSize="680 440"
+                      SetSize="820 560">
+    <BoxContainer Orientation="Vertical" Margin="8">
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250" SeparationOverride="6">
+                <Label Name="NoPeople" FontColorOverride="DarkGray" HorizontalExpand="True" Align="Center" />
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <ItemList Name="PeopleList" />
+                </ScrollContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" Margin="5" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="6">
+                <Label Name="EmptyLabel" Text="{Loc 'citation-payment-select-person'}" FontColorOverride="DarkGray" />
+                <Label Name="JobLabel" FontColorOverride="DarkGray" Visible="False" />
+                <records:RecordCitationsPanel Name="Citations" Visible="False" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
