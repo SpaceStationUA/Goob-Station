@@ -11,7 +11,7 @@
       tableId: CalmPestEventsTable
     - !type:NestedSelector
       tableId: CargoGiftsTable
-    # Schedule paradox clones through Secret+ (~40% of rounds) to free timed antag slots.
+    # Schedule paradox clones through Secret+ (~20% of rounds) to free timed antag slots.
     - id: BlueshiftParadoxCloneSpawn
 
 # Keep this copy in sync with BasicCalmEventsTable; ghost-role antags use the antag pool.
@@ -51,7 +51,7 @@
     - id: EeepEvent
     - id: SnailMigration
 
-# Target rounds: traitor/bounty ~70%, vampire ~50%, extras ~30%, pirates ~25%, clown/mime/priest ~20%.
+# Target rounds: traitor ~60%, bounty ~45%, vampire ~40%, pirates/extras ~15-20%, clown/mime/priest ~10%.
 # Use TraitorMidround rather than SleeperAgents to respect the Traitor preference and ban.
 - type: entityTable
   id: BlueshiftAntagEventsTable
@@ -88,8 +88,8 @@
   - type: BasicStationEventScheduler
     minimumTimeUntilFirstEvent: 1500
     minMaxEventTiming:
-      min: 1800
-      max: 2400
+      min: 2400
+      max: 3200
     scheduledGameRules: !type:NestedSelector
       tableId: BlueshiftAntagEventsTable
 
@@ -158,7 +158,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StationEvent
-    weight: 3.4
+    weight: 2.4
 
 - type: entity
   id: BlueshiftHitmanShuttle
@@ -555,16 +555,16 @@
   weights:
     BlueshiftTraitor: 0.30
     # One traitor each: a round can get 0-2 traitors more than the guaranteed ones.
-    BlueshiftTraitorExtra1: 0.15
-    BlueshiftTraitorExtra2: 0.15
+    BlueshiftTraitorExtra1: 0.18
+    BlueshiftTraitorExtra2: 0.18
     BlueshiftVampire: 0.11
     BloodBrothers: 0.12
-    BlueshiftChangeling: 0.135
-    BlueshiftHeretic: 0.086
+    BlueshiftChangeling: 0.22
+    BlueshiftHeretic: 0.11
     # Cheap antags pass budget rolls more often; keep weights low.
-    BlueshiftThief: 0.0172
-    BlueshiftDevil: 0.0185
-    BlueshiftSiliconLiberation: 0.022
+    BlueshiftThief: 0.023
+    BlueshiftDevil: 0.025
+    BlueshiftSiliconLiberation: 0.03
 
 - type: entity
   id: BlueshiftScheduler
@@ -572,8 +572,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SecretPlus
-    minStartingChaos: 6 # Per connected player, including the lobby.
-    maxStartingChaos: 12
+    minStartingChaos: 4.2 # Per connected player, including the lobby.
+    maxStartingChaos: 8.4
+    # 2 / 0.7 keeps the first-pick odds of 6-12 chaos, so the lower budget cuts only follow-up antags.
+    primaryAntagChaosBias: 2.857
     livingChaosChange: -0.018
     deadChaosChange: 0.048
     chaosChangeVariationMin: 0.65
