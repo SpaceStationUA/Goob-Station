@@ -23,6 +23,7 @@ public sealed class NeocyteAntagFrameTest
             outerClothing2: ClothingOuterArmorNeocyteHeavySpaceUnremovable
         - type: loadoutGroup
           id: PirateNeocyteAntagFrames
+          name: loadout-group-neocyte-cybernetics
           loadouts: [NeocyteArmorHeavySpace]
         - type: roleLoadout
           id: PirateNeocyteAntagFrameRole
