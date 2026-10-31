@@ -74,8 +74,6 @@ public sealed partial class CitationPaymentConsoleWindow : FancyWindow
             _updatingList = false;
         }
         SyncHighlight();
-        NoPeople.Visible = PeopleList.Count == 0;
-        NoPeople.Text = Loc.GetString("citation-payment-empty");
     }
 
     private void SyncHighlight()

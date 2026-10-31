@@ -8,13 +8,18 @@
     <BoxContainer Orientation="Vertical" Margin="8">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250" SeparationOverride="6">
-                <Label Name="NoPeople" FontColorOverride="DarkGray" HorizontalExpand="True" Align="Center" />
                 <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
                     <ItemList Name="PeopleList" />
                 </ScrollContainer>
             </BoxContainer>
             <BoxContainer Orientation="Vertical" Margin="5" HorizontalExpand="True" VerticalExpand="True" SeparationOverride="6">
-                <Label Name="EmptyLabel" Text="{Loc 'citation-payment-select-person'}" FontColorOverride="DarkGray" />
+                <Label Name="EmptyLabel"
+                       Text="{Loc 'citation-payment-select-person'}"
+                       FontColorOverride="DarkGray"
+                       HorizontalExpand="True"
+                       VerticalExpand="True"
+                       Align="Center"
+                       VAlign="Center" />
                 <Label Name="JobLabel" FontColorOverride="DarkGray" Visible="False" />
                 <records:RecordCitationsPanel Name="Citations" Visible="False" />
             </BoxContainer>
