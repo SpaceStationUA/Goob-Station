@@ -23,6 +23,9 @@
       - ClothMade
       - RamChip
     isSpecialDigestibleExclusive: false
+  - type: Metabolizer
+    # Pirate: native food effects check the stomach, not the Neocyte heart.
+    metabolizerTypes: [Animal, Neocyte]
   - type: SolutionContainerManager
     solutions:
       food:
