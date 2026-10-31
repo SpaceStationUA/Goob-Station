@@ -21,18 +21,26 @@ public sealed class OrganTongueSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<OrganComponent, OrganAddedToBodyEvent>(OnAdded);
+        SubscribeLocalEvent<OrganComponent, ComponentInit>(OnOrganInit);
+        SubscribeLocalEvent<TongueVoiceOrganComponent, OrganAddedToBodyEvent>(OnAdded);
         SubscribeLocalEvent<OrganTongueComponent, OrganRemovedFromBodyEvent>(OnRemoved);
     }
 
-    private void OnAdded(Entity<OrganComponent> ent, ref OrganAddedToBodyEvent args)
+    private void OnOrganInit(Entity<OrganComponent> ent, ref ComponentInit args)
+    {
+        // Pirate: use a tongue marker; the native knowledge system owns OrganAddedToBodyEvent on OrganComponent.
+        if (ent.Comp.SlotId == "tongue" || HasComp<OrganTongueComponent>(ent))
+            EnsureComp<TongueVoiceOrganComponent>(ent);
+    }
+
+    private void OnAdded(Entity<TongueVoiceOrganComponent> ent, ref OrganAddedToBodyEvent args)
     {
         if (TryComp<OrganTongueComponent>(ent, out var tongue))
         {
             RestoreSpeech(args.Body);
             Apply(args.Body, tongue);
         }
-        else if (ent.Comp.SlotId == "tongue" && HasComp<TongueMutedComponent>(args.Body))
+        else if (HasComp<TongueMutedComponent>(args.Body))
         {
             // Pirate: native tongues have no Starlight voice data, but can replace an extracted tongue.
             RestoreSpeech(args.Body);
@@ -115,3 +123,6 @@ public sealed class OrganTongueSystem : EntitySystem
 
 [RegisterComponent]
 public sealed partial class TongueMutedComponent : Component;
+
+[RegisterComponent]
+public sealed partial class TongueVoiceOrganComponent : Component;

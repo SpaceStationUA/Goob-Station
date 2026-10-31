@@ -21,12 +21,12 @@ public sealed class MarkingEmoteSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<HumanoidAppearanceComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<SpeechComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<HumanoidAppearanceComponent, ProfileLoadFinishedEvent>(OnProfile);
         SubscribeLocalEvent<HumanoidAppearanceComponent, HumanoidMarkingsChangedEvent>(OnMarkings);
     }
 
-    private void OnInit(Entity<HumanoidAppearanceComponent> ent, ref MapInitEvent args) => Refresh(ent);
+    private void OnInit(Entity<SpeechComponent> ent, ref MapInitEvent args) => Refresh(ent);
     private void OnProfile(EntityUid uid, HumanoidAppearanceComponent comp, ProfileLoadFinishedEvent args) => Refresh(uid);
     private void OnMarkings(Entity<HumanoidAppearanceComponent> ent, ref HumanoidMarkingsChangedEvent args) => Refresh(ent);
 

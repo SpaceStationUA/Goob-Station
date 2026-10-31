@@ -7,7 +7,6 @@ using Content.Shared.Materials;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
-using Content.Shared.Damage.Components;
 
 namespace Content.Shared._Pirate.StarlightSpecies.Armor;
 
@@ -25,7 +24,7 @@ public abstract partial class SharedArmorSparkEffectSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArmorSparkEffectComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnArmorDamageModify);
-        SubscribeLocalEvent<DamageableComponent, DamageModifyEvent>(OnDamageableDamageModify);
+        SubscribeLocalEvent<ArmorSparkEffectComponent, DamageModifyEvent>(OnInnateDamageModify);
     }
 
     private bool AlwaysSparks(EntityUid uid, ArmorSparkEffectComponent component)
@@ -40,13 +39,8 @@ public abstract partial class SharedArmorSparkEffectSystem : EntitySystem
         return false;
     }
 
-    private void OnDamageableDamageModify(EntityUid uid, DamageableComponent component, DamageModifyEvent args)
-    {
-        if (!TryComp<ArmorSparkEffectComponent>(uid, out var spark))
-            return;
-
-        HandleSparkHit(uid, spark, args);
-    }
+    private void OnInnateDamageModify(EntityUid uid, ArmorSparkEffectComponent component, DamageModifyEvent args) =>
+        HandleSparkHit(uid, component, args);
 
     private void OnArmorDamageModify(EntityUid uid, ArmorSparkEffectComponent component, InventoryRelayedEvent<DamageModifyEvent> args) =>
         HandleSparkHit(uid, component, args.Args);
