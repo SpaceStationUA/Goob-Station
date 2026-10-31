@@ -1,7 +1,11 @@
 
 ## Entity
 
-crayon-drawing-label = Малювання: [color={$color}]{$state}[/color] ({$charges}/{$capacity})
+crayon-drawing-label =
+    { $infinite ->
+        [true] Малювання: [color={$color}]{$state}[/color] (∞)
+       *[false] Малювання: [color={$color}]{$state}[/color] ({$charges}/{$capacity})
+    }
 crayon-interact-not-enough-left-text = Недостатньо залишилось.
 crayon-interact-used-up-text = {$owner} вичерпався.
 crayon-interact-invalid-location = Неможливо дотягнутись!
