@@ -10,25 +10,18 @@
       part: TorsoAnimal
       connections:
       - legs
-      - groin
       organs:
         lungs: OrganNeoDionaLungs
+        stomach: OrganAnimalStomach
+        liver: OrganAnimalLiver
         heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
     legs:
       part: LegsAnimal
       connections:
       - feet
     feet:
       part: FeetAnimal
-    groin:
-      part: GroinAnimal
-      connections:
-      - right leg
-      - left leg
-      organs:
-        stomach: OrganAnimalStomach
-        liver: OrganAnimalLiver
-        kidneys: OrganAnimalKidneys
 - type: body
   id: AnimalProtoNymphStomach
   name: proto-nymph
@@ -38,22 +31,15 @@
       part: TorsoAnimal
       connections:
       - legs
-      - groin
       organs:
         lungs: OrganAnimalLungs
+        stomach: OrganNeoDionaStomach
+        liver: OrganAnimalLiver
         heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
     legs:
       part: LegsAnimal
       connections:
       - feet
     feet:
       part: FeetAnimal
-    groin:
-      part: GroinAnimal
-      connections:
-      - right leg
-      - left leg
-      organs:
-        stomach: OrganNeoDionaStomach
-        liver: OrganAnimalLiver
-        kidneys: OrganAnimalKidneys

@@ -115,7 +115,7 @@
 - type: emoteSounds
   id: LagomorphBodyEmotes
   sounds:
-    LagomorphStomp:
+    Stomp:
       collection: LagomorphStomp
     Clap:
       collection: Claps

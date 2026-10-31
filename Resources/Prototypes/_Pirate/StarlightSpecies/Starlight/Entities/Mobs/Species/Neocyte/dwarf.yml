@@ -137,7 +137,6 @@
     - Hair
     - Snout
   - type: CreamPied
-    displacement: Dwarfism
   - type: Flammable
   - type: Inventory
     templateId: neocyte

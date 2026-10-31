@@ -156,9 +156,6 @@
         type: StrippableBoundUserInterface
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
-      enum.ThavenMoodsUiKey.Key:
-        type: ThavenMoodsBoundUserInterface
-        requireInputValidation: false
   - type: GlitchOnIonStorm
     duration: 25
     ramp: 3

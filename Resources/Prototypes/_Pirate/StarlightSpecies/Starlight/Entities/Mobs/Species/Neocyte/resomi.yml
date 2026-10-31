@@ -80,8 +80,6 @@
     - map:
       - back
     - map:
-      - enum.HumanoidVisualLayers.TailExtras
-    - map:
       - enum.HumanoidVisualLayers.Tail
     - map:
       - enum.HumanoidVisualLayers.FacialHair
@@ -535,8 +533,6 @@
       - neck
     - map:
       - back
-    - map:
-      - enum.HumanoidVisualLayers.TailExtras
     - map:
       - enum.HumanoidVisualLayers.Tail
     - map:

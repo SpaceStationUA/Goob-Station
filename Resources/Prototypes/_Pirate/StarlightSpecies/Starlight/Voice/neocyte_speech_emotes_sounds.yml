@@ -232,7 +232,7 @@
       path: /Audio/Effects/Cargo/ping.ogg
     ThavenGlub:
       collection: ThavenGlub
-    ThavenHum:
+    Hum:
       collection: ThavenFHum
     Squee:
       collection: LagomorphSqueak
@@ -343,7 +343,7 @@
       collection: NeoVulpkaninSnarls
     ThavenGlub:
       collection: ThavenGlub
-    ThavenHum:
+    Hum:
       collection: ThavenMHum
     Squee:
       collection: LagomorphSqueak

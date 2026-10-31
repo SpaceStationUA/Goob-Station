@@ -39,7 +39,8 @@
   components:
   - type: Sprite
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Slime/organs.rsi
-    state: peepoids
+    layers:
+    - state: peepoids
   - type: Item
     size: Small
     heldPrefix: peepoids

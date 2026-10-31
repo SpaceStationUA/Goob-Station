@@ -45,8 +45,6 @@
     - Squish
     - Bubble
     - Pop
-    - Bubble
-    - Pop
     - Purr
     - Growl
     - Trill
@@ -74,13 +72,13 @@
     - Buzz-Two
     - Chime
     - Honk
-    - ThavenHum
+    - Hum
     - ThavenGlub
     - Squee
     - Snort
     - Sneeze
     - LagomorphSnore
-    - LagomorphStomp
+    - Stomp
     sounds:
       Male: NeoLagomorphMSounds
       Female: NeoLagomorphFSounds

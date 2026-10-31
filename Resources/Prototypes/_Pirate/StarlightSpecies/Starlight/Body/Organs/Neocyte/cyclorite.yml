@@ -16,7 +16,7 @@
   - type: Organ
     onAdd:
     - type: NightVision
-      disabilityBlockable: true
+      isActive: true
 - type: entity
   id: OrganNeoCycloriteHeart
   parent:

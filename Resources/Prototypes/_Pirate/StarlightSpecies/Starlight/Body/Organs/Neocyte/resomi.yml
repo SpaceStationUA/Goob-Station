@@ -13,7 +13,7 @@
   - type: Organ
     onAdd:
     - type: NightVision
-      disabilityBlockable: true
+      isActive: true
     - type: FlashModifier
       modifier: 2
 - type: entity

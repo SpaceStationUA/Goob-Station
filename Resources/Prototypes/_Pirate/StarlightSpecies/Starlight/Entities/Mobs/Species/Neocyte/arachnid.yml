@@ -184,6 +184,20 @@
         color: '#162581'
       Burn:
         sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/burn_damage.rsi
+    thresholds:
+    - 10
+    - 20
+    - 30
+    - 50
+    - 70
+    - 100
+    targetLayers:
+    - enum.HumanoidVisualLayers.Chest
+    - enum.HumanoidVisualLayers.Head
+    - enum.HumanoidVisualLayers.LArm
+    - enum.HumanoidVisualLayers.LLeg
+    - enum.HumanoidVisualLayers.RArm
+    - enum.HumanoidVisualLayers.RLeg
   - type: CreamPied
     sprite:
       sprite: _Pirate/StarlightSpecies/Shared/Effects/creampie.rsi
