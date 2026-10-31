@@ -124178,8 +124178,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 75
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 16968
