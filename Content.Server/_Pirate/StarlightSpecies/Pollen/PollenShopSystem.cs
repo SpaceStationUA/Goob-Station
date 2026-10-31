@@ -81,6 +81,7 @@ public sealed partial class PollenShopSystem : EntitySystem
         SubscribeLocalEvent<PollenCollectorComponent, PollenSporeCloudEffectEvent>(OnSporeCloudEffect);
         SubscribeLocalEvent<PollenCollectorComponent, PollenInjectPhytovitalinDoAfterEvent>(OnInjectPhytovitalinDoAfter);
         SubscribeLocalEvent<PollenAlertPollenComponent, MobStateChangedEvent>(OnAlertPollenMobStateChanged);
+        SubscribeLocalEvent<PollenMossInsulationComponent, GetTemperatureProtectionEvent>(OnMossTemperatureProtection);
     }
 
     private void OnCollectorInitialized(Entity<PollenCollectorComponent> ent, ref PollenCollectorInitializedEvent args)
@@ -177,11 +178,13 @@ public sealed partial class PollenShopSystem : EntitySystem
     // T2
     private void GrantMossInsulation(EntityUid buyer)
     {
-        var protection = EnsureComp<TemperatureProtectionComponent>(buyer);
-        protection.CoolingCoefficient = 0.8f; // 20% reduced cold exposure
-        protection.HeatingCoefficient = 0.8f; // 20% reduced heat exposure
-
+        // Pirate: native temperature protection exposes an event instead of writable coefficients.
+        EnsureComp<TemperatureProtectionComponent>(buyer);
+        EnsureComp<PollenMossInsulationComponent>(buyer);
     }
+
+    private void OnMossTemperatureProtection(Entity<PollenMossInsulationComponent> ent, ref GetTemperatureProtectionEvent args)
+        => args.Coefficient *= 0.8f;
 
     private void GrantMossFireResist(EntityUid buyer)
         => _statusEffects.TrySetStatusEffectDuration(buyer, _mossFireResistStatusEffect);
