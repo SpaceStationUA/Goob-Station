@@ -71,7 +71,7 @@
   components:
   - type: Mutation
     instability: 10
-    difficulty: 16
+    difficulty: 14
     rarity: Rare
     conflicts:
     - MutationAcromegaly

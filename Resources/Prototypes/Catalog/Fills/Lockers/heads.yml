@@ -445,7 +445,7 @@
     - id: WantedListCartridge
     - id: DrinkHosFlask
     - id: HeadOfSecurityMeleeCase # Pirate: Omu melee choice
-    - id: HeadOfSecurityGunCase # Pirate: issue the ranged case on every map
+    # - id: HeadOfSecurityGunCase # Pirate: remove HoS ranged selector
     - id: HoSPetKennel # Pirate
     - id: ClothingHandsGlovesGorilla # Pirate
     - id: PrinterDocFlatpack  # Pirate document printer

@@ -62,15 +62,29 @@
     - id: BlueshiftBountyHunterSpawn
       conditions:
       - !type:BountyHunterTargetCondition
-    - id: BlueshiftSpacePirates
     - id: BlueshiftHitmanShuttle
-    # Both copies share the single-AI exclusion.
-    - id: BlueshiftMalfAiMidround
+    # No pirates or malf AI in a round with a major antag; keep in sync with the majors in BlueshiftPrimary.
+    - !type:AllSelector
       conditions:
-      - !type:MalfAiAvailableCondition
-    - id: BlueshiftMalfAiDoomsdayMidround
-      conditions:
-      - !type:MalfAiAvailableCondition
+      - !type:MaxRuleOccurenceCondition
+        ruleOverride: Revolutionary
+      - !type:MaxRuleOccurenceCondition
+        ruleOverride: BloodCult
+      - !type:MaxRuleOccurenceCondition
+        ruleOverride: BlueshiftCosmicCult
+      - !type:MaxRuleOccurenceCondition
+        ruleOverride: Nukeops
+      - !type:MaxRuleOccurenceCondition
+        ruleOverride: Wizard
+      children:
+      - id: BlueshiftSpacePirates
+      # Both copies share the single-AI exclusion.
+      - id: BlueshiftMalfAiMidround
+        conditions:
+        - !type:MalfAiAvailableCondition
+      - id: BlueshiftMalfAiDoomsdayMidround
+        conditions:
+        - !type:MalfAiAvailableCondition
     - id: BlueshiftTunnelClownMidround
     - id: BlueshiftMimeAssassinMidround
     - id: BlueshiftDarkPriestMidround

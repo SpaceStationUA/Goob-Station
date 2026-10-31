@@ -28,8 +28,8 @@ public sealed partial class BankCardSystem
 
     private static bool IsSpending(BankTransactionType type)
     {
-        return type is not (BankTransactionType.Withdrawal or BankTransactionType.Fine
-            or BankTransactionType.Adjustment or BankTransactionType.OpeningBalance);
+        return type is not (BankTransactionType.Fine or BankTransactionType.Adjustment
+            or BankTransactionType.OpeningBalance);
     }
 
     public bool IsArrested(int accountId)

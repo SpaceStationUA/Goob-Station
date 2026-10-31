@@ -1,0 +1,41 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by CyberLanos",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "unshaded",
+            "delays": [
+                [
+                    1.2,
+                    0.6
+                ]
+            ]
+        },
+        {
+            "name": "accepted",
+            "delays": [
+                [
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "denied",
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        }
+    ]
+}
