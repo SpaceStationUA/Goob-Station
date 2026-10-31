@@ -4,6 +4,7 @@ using Content.Server._Pirate.StarlightSpecies.Pollen.Components;
 using Content.Server.Actions;
 using Content.Shared._Pirate.StarlightSpecies.Pollen;
 using Content.Shared._Pirate.StarlightSpecies.Pollen.Components;
+using Content.Shared._Starlight.CollectiveMind;
 using Content.Server.Store.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
@@ -47,6 +48,7 @@ public sealed partial class PollenShopSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private NavMapSystem _navMap = default!;
+    [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMind = default!;
 
     private static readonly EntProtoId<ObjectiveComponent> _pollenObjective = "PollenCollectionObjective";
     private static readonly EntProtoId _sporeCloudEmitter = "PollenSporeCloudEmitter";
@@ -92,9 +94,10 @@ public sealed partial class PollenShopSystem : EntitySystem
         // Pirate: native collective-mind channels replace Starlight's language radio relay.
         if (args.PurchasedItem.ID == "PollenTreeMushroomT2hivemind")
         {
-            var mind = EnsureComp<Content.Shared._Starlight.CollectiveMind.CollectiveMindComponent>(args.StoreUid);
+            var mind = EnsureComp<CollectiveMindComponent>(args.StoreUid);
             mind.Channels.Add("Spore");
             mind.DefaultChannel ??= "Spore";
+            _collectiveMind.UpdateCollectiveMind(args.StoreUid, mind);
             Dirty(args.StoreUid, mind);
         }
 
