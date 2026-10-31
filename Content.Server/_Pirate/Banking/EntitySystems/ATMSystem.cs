@@ -116,6 +116,13 @@ public sealed class ATMSystem : SharedATMSystem
             return;
         }
 
+        if (account.Arrested)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("bank-account-arrested-purchase"), uid);
+            _audioSystem.PlayPvs(component.SoundDeny, uid);
+            return;
+        }
+
         if (args.Amount <= 0 || !_bankCardSystem.TryChangeBalance(account.AccountId, -args.Amount, BankTransactionType.Withdrawal))
         {
             _popupSystem.PopupEntity(Loc.GetString("atm-not-enough-cash"), uid);
