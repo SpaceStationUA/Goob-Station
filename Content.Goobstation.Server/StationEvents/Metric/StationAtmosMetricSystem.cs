@@ -1,12 +1,15 @@
 using Content.Goobstation.Server.StationEvents.Metric.Components;
 using Content.Server.Atmos.Components;
+using Content.Server.GameTicking;
 using Content.Shared.Atmos;
 using Prometheus;
 
 namespace Content.Goobstation.Server.StationEvents.Metric;
 
-public sealed class StationAtmosMetricSystem : ChaosMetricSystem<StationAtmosMetricComponent>
+public sealed partial class StationAtmosMetricSystem : ChaosMetricSystem<StationAtmosMetricComponent>
 {
+    [Dependency] private GameTicker _ticker = default!;
+
     // Pirate: explicitly use the Prometheus factory, as in our other metrics.
     private static readonly Gauge TilesTotal = Prometheus.Metrics.CreateGauge(
         "game_director_metric_atmos_tiles_total",
@@ -38,6 +41,12 @@ public sealed class StationAtmosMetricSystem : ChaosMetricSystem<StationAtmosMet
         var spaced = 0;
         var fire = 0;
         var toxic = 0;
+
+        if (!component.BaselineCaptured && _ticker.RoundDuration() < component.BaselineDelay)
+        {
+            AtmosChaosCalculated.Set(0);
+            return new ChaosMetrics(new Dictionary<ChaosMetric, double> { { ChaosMetric.Atmos, 0 } });
+        }
 
         var capture = !component.BaselineCaptured;
         foreach (var grid in GetEventStationGrids())

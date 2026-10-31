@@ -152,10 +152,11 @@ public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricC
             }
 
             bool isAntag;
+            var isNpc = false;
             if (mindQuery.TryGetComponent(uid, out var mind) && mind.Mind != null)
                 isAntag = _roles.MindIsAntagonist(mind.Mind);
-            else if (IsHostileNpc(npcFacQ, uid))
-                isAntag = true;
+            else if (IsHostileNpc(npcFacQ, uid, combatMetric))
+                isAntag = isNpc = true;
             else
                 continue;
 
@@ -193,7 +194,7 @@ public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricC
             if (isAntag)
             {
                 hostileInventoryThreat += entityThreat;
-                hostilesChaos += (entityThreat + combatMetric.HostileScore) * threatMultiple;
+                hostilesChaos += (entityThreat + (isNpc ? combatMetric.HostileNpcScore : combatMetric.HostileScore)) * threatMultiple;
             }
             else
             {
@@ -280,9 +281,10 @@ public sealed partial class CombatMetricSystem : ChaosMetricSystem<CombatMetricC
                && department.ID == combatMetric.SecurityDepartment.Id;
     }
 
-    private bool IsHostileNpc(EntityQuery<NpcFactionMemberComponent> npcFacQ, EntityUid uid)
+    private bool IsHostileNpc(EntityQuery<NpcFactionMemberComponent> npcFacQ, EntityUid uid, CombatMetricComponent combatMetric)
     {
         return npcFacQ.TryGetComponent(uid, out var fac)
-               && _faction.IsFactionHostile(NanotrasenFactionId, (uid, fac));
+               && _faction.IsFactionHostile(NanotrasenFactionId, (uid, fac))
+               && !_faction.IsMemberOfAny((uid, fac), combatMetric.IgnoredHostileFactions);
     }
 }
