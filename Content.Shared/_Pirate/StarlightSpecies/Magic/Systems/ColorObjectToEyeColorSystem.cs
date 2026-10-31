@@ -18,7 +18,7 @@ public sealed partial class ColorObjectToEyeColorSystem : EntitySystem
         SubscribeLocalEvent<ColorObjectToEyeColorComponent, AfterSpawnItemInHandEvent>(OnAfterSpawnItemInHand);
     }
 
-    private void OnAfterSpawnItemInHand(Entity<ColorObjectToEyeColorComponent> entity, ref AfterSpawnItemInHandEvent ev)
+    private void OnAfterSpawnItemInHand(EntityUid uid, ColorObjectToEyeColorComponent component, AfterSpawnItemInHandEvent ev)
     {
         if (!TryComp<HumanoidAppearanceComponent>(ev.Performer, out var appearanceComp))
             return;

@@ -20,7 +20,7 @@ public sealed class CantripSystem : EntitySystem
             return;
         var item = PredictedSpawnAtPosition(args.Spawned, Transform(args.Performer).Coordinates);
         var after = new AfterSpawnItemInHandEvent { Entity = item, Performer = args.Performer };
-        RaiseLocalEvent(args.Action, ref after);
+        RaiseLocalEvent(args.Action, after);
         if (!_hands.TryPickupAnyHand(args.Performer, item) && args.RequiresFreeHand)
         {
             QueueDel(item);
