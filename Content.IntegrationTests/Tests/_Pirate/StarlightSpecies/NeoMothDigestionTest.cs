@@ -1,14 +1,11 @@
 using System.Linq;
 using Content.Goobstation.Maths.FixedPoint;
-using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Robust.Shared.Map;
-using Robust.Shared.Timing;
+using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests._Pirate.StarlightSpecies;
 
@@ -22,29 +19,31 @@ public sealed class NeoMothDigestionTest
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var em = server.EntMan;
+        var hungerSystem = em.System<HungerSystem>();
+        EntityUid mob = default;
+        HungerComponent hunger = default!;
+        var before = 0f;
         await server.WaitAssertion(() =>
         {
-            var em = server.EntMan;
-            var mob = em.Spawn(prototype, MapCoordinates.Nullspace);
+            mob = em.Spawn(prototype, map.MapCoords);
             var stomach = em.System<SharedBodySystem>().GetBodyOrgans(mob)
                 .Single(organ => em.HasComponent<StomachComponent>(organ.Id)).Id;
             var digestion = em.GetComponent<StomachComponent>(stomach);
-            var metabolism = em.GetComponent<MetabolizerComponent>(stomach);
-            var hunger = em.GetComponent<HungerComponent>(mob);
-            var hungerSystem = em.System<HungerSystem>();
+            hunger = em.GetComponent<HungerComponent>(mob);
             hungerSystem.SetHunger(mob, 100, hunger);
-            var before = hungerSystem.GetHunger(hunger);
+            before = hungerSystem.GetHunger(hunger);
 
             // Cloth supplies Fiber; pass it through the real stomach and metabolism systems.
             var stomachSystem = em.System<StomachSystem>();
             Assert.That(stomachSystem.TryTransferSolution(stomach, new Solution("Fiber", FixedPoint2.New(1))), Is.True);
-            var now = server.ResolveDependency<IGameTiming>().CurTime;
             digestion.DigestionDelay = TimeSpan.Zero;
-            digestion.NextUpdate = now;
-            stomachSystem.Update(0);
-            metabolism.NextUpdate = now;
-            em.System<MetabolizerSystem>().Update(0);
+        });
+        await pair.RunTicksSync(180);
 
+        await server.WaitAssertion(() =>
+        {
             var after = hungerSystem.GetHunger(hunger);
             Assert.That(after > before, Is.EqualTo(nutritious),
                 "The processing stomach must enable Fiber's hunger effect without relying on the heart's type.");
