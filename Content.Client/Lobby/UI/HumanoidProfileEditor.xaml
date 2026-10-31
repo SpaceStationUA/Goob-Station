@@ -67,9 +67,9 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                     <goob:SpeciesGallery Name="SpeciesButton" Margin="4" />
                 </PanelContainer>
             <!-- Pirate: citizenship selection. -->
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'humanoid-profile-editor-citizenship-label'}" />
-                <OptionButton Name="CitizenshipButton" />
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6"> <!-- Pirate: lobby font and styling -->
+                <Label Text="{Loc 'humanoid-profile-editor-citizenship-label'}" StyleClasses="HullFieldLabel" MinWidth="130" VAlign="Center" /> <!-- Pirate: lobby font and styling -->
+                <OptionButton Name="CitizenshipButton" StyleClasses="HullPlate" HorizontalExpand="True" /> <!-- Pirate: lobby font and styling -->
             </BoxContainer>
                 <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="0 4 0 0">
                     <Label Text="{Loc 'humanoid-profile-editor-age-label'}" StyleClasses="HullFieldLabel" MinWidth="130" VAlign="Center" />

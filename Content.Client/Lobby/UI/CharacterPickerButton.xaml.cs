@@ -35,6 +35,8 @@ public sealed partial class CharacterPickerButton : ContainerButton
         bool isSelected)
     {
         RobustXamlLoader.Load(this);
+        DeleteButton.Label.VAlign = Label.VAlignMode.Center; // Pirate: lobby font and styling
+        ConfirmDeleteButton.Label.VAlign = Label.VAlignMode.Center; // Pirate: lobby font and styling
         _entManager = entityManager;
         AddStyleClass(StyleClassButton);
         ToggleMode = true;
