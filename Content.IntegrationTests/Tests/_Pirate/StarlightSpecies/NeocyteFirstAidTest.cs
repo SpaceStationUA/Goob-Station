@@ -15,13 +15,13 @@ namespace Content.IntegrationTests.Tests._Pirate.StarlightSpecies;
 
 public sealed class NeocyteFirstAidTest : InteractionTest
 {
-    protected override string PlayerPrototype => "MobHuman";
-
     [Test, Combinatorial]
     public async Task StandardFirstAidTreatsHybridBodies(
         [Values("MobNeocyte", "MobNeoMoth")] string prototype,
         [Values("Ointment", "RegenerativeMesh", "Brutepack", "MedicatedSuture", "Gauze", "Bloodpack", "HealingToolbox")] string item)
     {
+        // The default interaction map is a vacuum; isolate treatment from environmental damage.
+        await AddAtmosphere();
         await SpawnTarget(prototype);
         var bloodBefore = 0f;
         await Server.WaitAssertion(() =>
@@ -37,8 +37,8 @@ public sealed class NeocyteFirstAidTest : InteractionTest
                 _ => "Slash",
             };
             SEntMan.System<DamageableSystem>().ChangeDamage(chest,
-                new DamageSpecifier(ProtoMan.Index<DamageTypePrototype>(damageType), 20), ignoreResistances: true);
-            Assert.That(Comp<DamageableComponent>().TotalDamage, Is.EqualTo(FixedPoint2.New(20)));
+                new DamageSpecifier(ProtoMan.Index<DamageTypePrototype>(damageType), 5), ignoreResistances: true);
+            Assert.That(Comp<DamageableComponent>().TotalDamage, Is.EqualTo(FixedPoint2.New(5)));
 
             var blood = SEntMan.System<BloodstreamSystem>();
             if (item == "Bloodpack")
@@ -50,14 +50,15 @@ public sealed class NeocyteFirstAidTest : InteractionTest
                 Assert.That(blood.TryModifyBleedAmount(target, 2), Is.True);
         });
 
-        await InteractUsing(item, quantity: 1, awaitDoAfters: false);
+        // Allow automatic treatment to finish without exhausting the stack midway through a repeat.
+        await InteractUsing(item, quantity: item == "HealingToolbox" ? 1 : 15, awaitDoAfters: false);
         await Server.WaitAssertion(() => Assert.That(ActiveDoAfters.Any(), Is.True,
             "The healing-item filter must allow treatment to start on a Hybrid body."));
         await AwaitDoAfters();
 
         await Server.WaitAssertion(() =>
         {
-            Assert.That(Comp<DamageableComponent>().TotalDamage, Is.LessThan(FixedPoint2.New(20)));
+            Assert.That(Comp<DamageableComponent>().TotalDamage, Is.LessThan(FixedPoint2.New(5)));
             if (item == "Bloodpack")
                 Assert.That(SEntMan.System<BloodstreamSystem>().GetBloodLevel(STarget!.Value), Is.GreaterThan(bloodBefore));
             if (item is "Gauze" or "MedicatedSuture")
