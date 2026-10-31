@@ -8,7 +8,7 @@
   components:
   - type: Mutation
     instability: 35
-    difficulty: 16
+    difficulty: 14
     rarity: Mythical
     conflicts:
     - MutationOrk

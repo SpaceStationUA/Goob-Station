@@ -41,7 +41,7 @@
   components:
   - type: Mutation
     instability: 35
-    difficulty: 18
+    difficulty: 16
     rarity: Mythical
     # no conflict with blindness because thats some professor X shit
   - type: ComponentMutation
@@ -83,7 +83,7 @@
   description: Reflects concentrated light back from the eyes.
   components:
   - type: Mutation
-    difficulty: 16
+    difficulty: 14
     rarity: Mythical
   # TODO: move out of goob hulk
 
@@ -95,7 +95,7 @@
   components:
   - type: Mutation
     instability: 20 # pretty good
-    difficulty: 14
+    difficulty: 12
     rarity: Rare
     conflicts:
     - MutationBlindness
@@ -112,7 +112,7 @@
   components:
   - type: Mutation
     instability: -20
-    difficulty: 14
+    difficulty: 12
     rarity: Rare
     conflicts:
     - MutationBlindness
