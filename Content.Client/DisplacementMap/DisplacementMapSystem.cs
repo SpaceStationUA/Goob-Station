@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.DisplacementMap;
+using System.Numerics; // Pirate: preserve the aspect ratio of rectangular sprite frames.
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Serialization.Manager;
@@ -67,25 +68,38 @@ public sealed class DisplacementMapSystem : EntitySystem
         // We choose a displacement map from the possible ones, matching the size with the original layer size.
         // If there is no such a map, we use a standard 32 by 32 one
         var displacementDataLayer = data.SizeMaps[EyeManager.PixelsPerMeter];
+        var mapSize = EyeManager.PixelsPerMeter; // Pirate: fallback for displacement layers without an RSI.
         var actualRSI = _sprite.LayerGetEffectiveRsi(sprite.AsNullable(), index);
         if (actualRSI is not null)
         {
-            if (actualRSI.Size.X != actualRSI.Size.Y)
-            {
-                Log.Warning(
-                    $"DISPLACEMENT: {displacementKey} has a resolution that is not 1:1, things can look crooked");
-            }
-
             var layerSize = actualRSI.Size.X;
             if (data.SizeMaps.TryGetValue(layerSize, out var map))
+            {
                 displacementDataLayer = map;
+                mapSize = layerSize; // Pirate
+            }
         }
 
         var displacementLayer = _serialization.CreateCopy(displacementDataLayer, notNullableOverride: true);
         displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString() ?? "this is impossible";
 
+        var targetLayer = sprite.Comp[index] as SpriteComponent.Layer; // Pirate: adding the map moves the target index.
         _sprite.AddLayer(sprite.AsNullable(), displacementLayer, index);
         _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index);
+
+        // Pirate: rectangular markings use a centered map without stretching its vertical features.
+        // Keep shader parameters local to this layer, including the map's texel size for atlas-safe sampling.
+        if (actualRSI != null && targetLayer?.Shader is { } instance &&
+            targetLayer.ShaderPrototype?.Id is "DisplacedDraw" or "DisplacedStencilDraw" or "DisplacedUnshadedDraw")
+        {
+            var mapRsi = _sprite.LayerGetEffectiveRsi(sprite.AsNullable(), index);
+            var size = mapRsi?.Size ?? new Vector2i(mapSize, mapSize);
+            var scale = new Vector2(1f, (float) actualRSI.Size.Y * size.X / (actualRSI.Size.X * size.Y));
+            if (!instance.Mutable)
+                targetLayer.Shader = instance = instance.Duplicate();
+            instance.SetParameter("displacementMapScale", scale);
+            instance.SetParameter("displacementMapTexelSize", new Vector2(1f / size.X, 1f / size.Y));
+        }
 
         return true;
     }
