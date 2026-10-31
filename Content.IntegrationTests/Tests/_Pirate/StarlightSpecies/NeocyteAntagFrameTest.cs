@@ -48,8 +48,11 @@ public sealed class NeocyteAntagFrameTest
         var session = pair.Player!;
         var loadout = new RoleLoadout("NeocyteLoadout");
         loadout.SelectedLoadouts["NeocyteCybernetics"] = [new Loadout { Prototype = "NeocyteArmorLightSpeed" }];
-        var profile = HumanoidCharacterProfile.DefaultWithSpecies(species).WithLoadout(loadout);
-        await server.WaitPost(() => preferences.SetProfile(session.UserId, 0, profile).Wait());
+        await server.WaitPost(() =>
+        {
+            var profile = HumanoidCharacterProfile.DefaultWithSpecies(species).WithLoadout(loadout);
+            preferences.SetProfile(session.UserId, 0, profile).Wait();
+        });
         EntityUid mob = default;
 
         await server.WaitAssertion(() =>
