@@ -25,6 +25,15 @@
     tags:
     - NeocyteCybernetics
     - SurgeryCompatibleArmor
+  - type: Armor
+    coverage:
+    - Head
+    - Chest
+    - Groin
+    - Arm
+    - Hand
+    - Leg
+    - Foot
 - type: entity
   parent:
   - ClothingOuterArmorNeocyteBase

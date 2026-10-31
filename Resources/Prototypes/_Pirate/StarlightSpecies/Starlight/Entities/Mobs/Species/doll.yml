@@ -53,3 +53,4 @@
         Quantity: 600
   - type: Shell
     generateShellPieceAction: ActionGenerateShellPiece
+  - type: StarlightBodyDamageModifiers

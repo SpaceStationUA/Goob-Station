@@ -424,3 +424,4 @@
           sprite: Mobs/Species/Vox/displacement.rsi
           state: hand_r
   - type: Vocal
+  - type: StarlightBodyDamageModifiers

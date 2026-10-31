@@ -71,3 +71,4 @@
   - type: Body
     prototype: NeoHuman
     requiredLegs: 2
+  - type: StarlightBodyDamageModifiers

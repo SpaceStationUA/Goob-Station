@@ -45,3 +45,4 @@
   - type: Body
     prototype: Elf
     requiredLegs: 2
+  - type: StarlightBodyDamageModifiers

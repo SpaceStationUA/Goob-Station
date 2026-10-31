@@ -52,7 +52,7 @@ public sealed class DollShellSystem : EntitySystem
 
     private void OnShutdown(Entity<ShellComponent> ent, ref ComponentShutdown args)
     {
-        _actions.RemoveAction(ent.Owner, ent.Comp.GenerateShellPieceActionEntity);
+        _actions.RemoveAction(ent.Comp.GenerateShellPieceActionEntity);
         _alerts.ClearAlert(ent.Owner, ent.Comp.ShellAlert);
     }
 
@@ -65,7 +65,7 @@ public sealed class DollShellSystem : EntitySystem
         if (count > 0)
             _actions.AddAction(ent, ref ent.Comp.GenerateShellPieceActionEntity, ent.Comp.GenerateShellPieceAction);
         else
-            _actions.RemoveAction(ent.Owner, ent.Comp.GenerateShellPieceActionEntity);
+            _actions.RemoveAction(ent.Comp.GenerateShellPieceActionEntity);
     }
 
     private void OnModifyDamage(EntityUid uid, ShellComponent component, DamageModifyEvent args)

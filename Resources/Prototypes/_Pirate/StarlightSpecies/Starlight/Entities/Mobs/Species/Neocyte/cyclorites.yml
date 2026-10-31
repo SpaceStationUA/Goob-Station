@@ -209,3 +209,4 @@
           '32':
             sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
             state: outer
+  - type: StarlightBodyDamageModifiers

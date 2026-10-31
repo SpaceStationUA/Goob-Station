@@ -204,3 +204,4 @@
     - PollenTreeMushroom
     currencyWhitelist:
     - PollenPoints
+  - type: StarlightBodyDamageModifiers

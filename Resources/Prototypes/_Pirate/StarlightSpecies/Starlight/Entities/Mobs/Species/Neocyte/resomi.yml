@@ -569,6 +569,7 @@
     - SiliconEmotesFH
     - NotLabelable
   - type: Vocal
+  - type: StarlightBodyDamageModifiers
   - type: AutoImplant
     implants:
     - AvaliNexusImplant

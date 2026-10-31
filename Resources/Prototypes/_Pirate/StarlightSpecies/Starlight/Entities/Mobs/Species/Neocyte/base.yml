@@ -254,6 +254,7 @@
   - type: Vocal
   - type: UniversalHealModifier
     modifier: 0.5
+  - type: StarlightBodyDamageModifiers
 - type: entity
   id: BaseNeocyteAppearance
   abstract: true

@@ -64,15 +64,18 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}" />
                 </BoxContainer>
                 <PanelContainer StyleClasses="HullInset">
-                    <goob:SpeciesGallery Name="SpeciesButton" Margin="4" />
-                    <!-- Pirate: Starlight neocyte subspecies. -->
-                    <BoxContainer Name="SubspeciesContainer" Visible="False" Margin="4">
-                        <Label Text="{Loc 'humanoid-profile-editor-subspecies-label'}" HorizontalExpand="True" />
-                        <OptionButton Name="SubspeciesButton" />
-                    </BoxContainer>
-                    <BoxContainer Name="SpeciesFrameContainer" Visible="False" Margin="4">
-                        <Label Text="{Loc 'humanoid-profile-editor-neocyte-frame-label'}" HorizontalExpand="True" />
-                        <OptionButton Name="SpeciesFrameButton" />
+                    <!-- Pirate: keep the gallery and both selectors in separate rows. -->
+                    <BoxContainer Orientation="Vertical">
+                        <goob:SpeciesGallery Name="SpeciesButton" Margin="4" />
+                        <!-- Pirate: Starlight neocyte subspecies. -->
+                        <BoxContainer Name="SubspeciesContainer" Visible="False" Margin="4">
+                            <Label Text="{Loc 'humanoid-profile-editor-subspecies-label'}" HorizontalExpand="True" />
+                            <OptionButton Name="SubspeciesButton" />
+                        </BoxContainer>
+                        <BoxContainer Name="SpeciesFrameContainer" Visible="False" Margin="4">
+                            <Label Text="{Loc 'humanoid-profile-editor-neocyte-frame-label'}" HorizontalExpand="True" />
+                            <OptionButton Name="SpeciesFrameButton" />
+                        </BoxContainer>
                     </BoxContainer>
                 </PanelContainer>
             <!-- Pirate: citizenship selection. -->

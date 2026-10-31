@@ -324,6 +324,7 @@
     - NeoKin
     - SiliconEmotesFH
     - NotLabelable
+  - type: StarlightBodyDamageModifiers
   - type: Shadowkin
   - type: Psionic
   - type: PotentialPsionic

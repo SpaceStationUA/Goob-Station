@@ -208,3 +208,4 @@
           '32':
             sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/displacement.rsi
             state: shoes
+  - type: StarlightBodyDamageModifiers

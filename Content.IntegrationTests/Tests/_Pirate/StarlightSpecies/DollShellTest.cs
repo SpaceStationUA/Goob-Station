@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared._Pirate.StarlightSpecies.Doll;
+using Content.Shared.Actions.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Humanoid;
@@ -13,6 +14,48 @@ namespace Content.IntegrationTests.Tests._Pirate.StarlightSpecies;
 [TestFixture]
 public sealed class DollShellTest
 {
+    [Test]
+    public async Task EmptyShellCanRegrowAndShutDownAfterRepeatedActionRemoval()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true, Connected = true });
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+
+        await server.WaitAssertion(() =>
+        {
+            var em = server.EntMan;
+            var body = em.System<SharedBodySystem>();
+            var shells = em.System<DollShellSystem>();
+            var doll = em.Spawn("MobDoll", map.MapCoords);
+            var shell = em.GetComponent<ShellComponent>(doll);
+
+            for (var cycle = 0; cycle < 2; cycle++)
+            {
+                Assert.That(shell.GenerateShellPieceActionEntity, Is.Not.Null);
+                var action = em.GetComponent<ActionComponent>(shell.GenerateShellPieceActionEntity!.Value);
+                Assert.That(action.AttachedEntity, Is.EqualTo(doll));
+
+                var pieces = body.GetBodyOrgans(doll)
+                    .Where(o => em.HasComponent<OrganShellComponent>(o.Id)).ToArray();
+                var snap = new SnapShellPieceEvent { Performer = doll, DeShell = true };
+                em.EventBus.RaiseEvent(EventSource.Local, snap);
+                Assert.That(snap.Handled, Is.True);
+                foreach (var piece in pieces)
+                    em.DeleteEntity(piece.Id);
+
+                // The final organ removal and the action handler both refresh the empty shell.
+                Assert.That(action.AttachedEntity, Is.Null);
+                if (cycle == 0)
+                    shells.Regrow(doll, "ShellFragmentDoll");
+            }
+
+            // Shutdown removes the action once more after the final shell fragment is gone.
+            em.DeleteEntity(doll);
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task RemovedShellRegrowsWithItsMarkingsAndColors()
     {

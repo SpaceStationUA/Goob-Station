@@ -148,3 +148,4 @@
           '32':
             sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Reptilian/displacement.rsi
             state: mask
+  - type: StarlightBodyDamageModifiers

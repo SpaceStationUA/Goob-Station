@@ -158,3 +158,4 @@
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
       visible: false
+  - type: StarlightBodyDamageModifiers

@@ -80,3 +80,4 @@
   - type: Body
     prototype: NeoElf
     requiredLegs: 2
+  - type: StarlightBodyDamageModifiers

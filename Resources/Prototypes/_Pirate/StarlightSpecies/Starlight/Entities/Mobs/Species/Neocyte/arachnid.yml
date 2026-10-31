@@ -295,3 +295,4 @@
   - type: Inventory
     templateId: neoarachnid
     speciesId: arachnid
+  - type: StarlightBodyDamageModifiers

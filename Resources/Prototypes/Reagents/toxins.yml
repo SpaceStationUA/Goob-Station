@@ -793,6 +793,7 @@
         - !type:MetabolizerTypeCondition
           type:
           - Animal
+          - Doll # Pirate: Starlight raw-meat diet.
           - Vox
           - Yowie # Goobstation - Yowie
           - XenobioSlime # Goobstation - XenobioSlime
@@ -810,6 +811,7 @@
         - !type:MetabolizerTypeCondition
           type:
           - Animal
+          - Doll # Pirate: Starlight raw-meat diet.
           - Vox
           - Plant
           - Yowie # Goobstation - Yowie
@@ -823,6 +825,7 @@
         - !type:MetabolizerTypeCondition
           type:
           - Animal
+          - Doll # Pirate: Starlight raw-meat diet.
           - Vox
           - Plant
           - Yowie # Goobstation - Yowie
@@ -844,7 +847,7 @@
       - !type:AdjustReagent
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal ]
+          type: [ Animal, Doll ] # Pirate: Starlight raw-meat diet.
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent # Goobstation - XenobioSlime
