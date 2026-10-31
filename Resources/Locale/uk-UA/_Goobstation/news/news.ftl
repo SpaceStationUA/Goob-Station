@@ -27,3 +27,6 @@ news-new-lobby-demo-danger = Небезпека
 news-new-markings-title = Нові прикраси
 news-new-markings-summary = 2073 нові прикраси.
 news-new-markings-feedback = Повідомити в Дискорді про криві прикраси
+news-game-director-title = Режисера подій полагоджено (сподіваємося)
+news-game-director-summary = БІЛЬШЕ НІЯКОЇ ПОМИЙКИ ВІД ПОВОДИРЯ!!!
+news-game-director-feedback = Поділіться враженнями в Діскорді
