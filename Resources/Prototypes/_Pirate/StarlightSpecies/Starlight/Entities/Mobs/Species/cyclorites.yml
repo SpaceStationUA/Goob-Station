@@ -1,0 +1,91 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseInventoryCyclorite
+  id: BaseMobCyclorite
+  abstract: true
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Terrum
+    understands:
+    - TauCetiBasic
+    - Terrum
+  - type: Absorbable
+  - type: Hunger
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: cyclorite
+  - type: Thirst
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatHuman
+      amount: 10
+  - type: HumanoidAppearance
+    species: Cyclorite
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+  - type: Body
+    prototype: Cyclorite
+    requiredLegs: 2
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 300
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      '0': Alive
+      '150': Critical
+      '300': Dead
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Cyclorite
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/brute_damage.rsi
+        color: '#9457eb'
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 0.5
+    damage:
+      types:
+        Blunt: 13
+        Structural: 10
+  - type: Sprite
+    scale: 1.08, 1.08
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: CycloriteBlood
+        Quantity: 600
+  - type: MovementSpeedModifierScale
+    movementSpeedScale: 0.5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      '90': 0.5
+      '120': 0
+  - type: Vocal
+  - type: Crawler
+    standTime: 4
+    knockdownDamageThreshold: 10
+  - type: Stamina
+    forceStandStamina: 20
+  - type: CombatMode
+    canDisarm: true
+    disarmFailChance: 0.5

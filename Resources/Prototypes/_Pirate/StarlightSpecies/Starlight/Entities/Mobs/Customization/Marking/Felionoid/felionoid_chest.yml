@@ -1,0 +1,55 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: marking
+  id: FelionoidChestBelly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: bellymark
+- type: marking
+  id: FelionoidChestBrightBelly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: bright_belly
+- type: marking
+  id: FelionoidChestCalico
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: calico1_chest
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: calico2_chest
+- type: marking
+  id: FelionoidChestStripes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: body_stripes
+- type: marking
+  id: FelionoidChestTabby
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: Tabby_chest

@@ -1,0 +1,348 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: BaseDollOrgan
+  parent: BaseHumanOrgan
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/organs.rsi
+  - type: Organ
+  - type: Edible
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+    - savory
+    - meaty
+    - strange
+    - spooky
+  - type: Tag
+    tags:
+    - Meat
+  - type: StatusEffects
+    allowed:
+    - Electrocution
+    - TemporaryBlindness
+    - Pacified
+    - Flashed
+    - RadiationProtection
+    - Adrenaline
+  - type: MobPrice
+    price: 150
+  - type: FloatingVisuals
+  - type: Damageable
+    damageContainer: Biological
+  - type: Stamina
+  - type: StunVisuals
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      '0': Alive
+      '100': Critical
+      '200': Dead
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
+  - type: Deathgasp
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+    - Cold
+    - Caustic
+    - Asphyxiation
+    - Radiation
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Pullable
+  - type: LightningTarget
+    priority: 2
+    lightningExplode: false
+  - type: Reactive
+    groups:
+      Flammable:
+      - Touch
+      Extinguish:
+      - Touch
+      Acidic:
+      - Touch
+      - Ingestion
+  - type: Internals
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 4
+  - type: Buckle
+  - type: StandingState
+  - type: Blindable
+  - type: PermanentBlindness
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: Body
+    prototype: Animal
+  - type: Climbing
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      '60': 0.7
+      '80': 0.5
+  - type: VentCrawler
+    allowInventory: false
+- type: entity
+  id: OrganDollBrain
+  parent:
+  - OrganHumanBrain
+  - BaseDollOrgan
+  name: brain
+  description: A strange mass of meat somehow equivalent to a brain.
+  components:
+  - type: Sprite
+    state: brain
+  - type: Item
+    size: Small
+    heldPrefix: brain
+  - type: Organ
+  - type: Input
+    context: ghost
+  - type: Brain
+  - type: Examiner
+  - type: BadFood
+  - type: Tag
+    tags:
+    - Meat
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 15
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain
+- type: entity
+  id: OrganDollEyes
+  parent:
+  - BaseDollOrgan
+  - OrganHumanEyes
+  name: eyes
+  description: There are too many of these...
+  components:
+  - type: Sprite
+    layers:
+    - state: eyeball-l
+    - state: eyeball-r
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
+  - type: Organ
+- type: entity
+  id: OrganDollHeart
+  parent:
+  - BaseDollOrgan
+  - OrganHumanHeart
+  name: heart
+  description: Is this even a heart?
+  components:
+  - type: Tag
+    tags:
+    - Meat
+    - Heart
+  - type: Sprite
+    state: heart-on
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes:
+    - Doll
+    - Human
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+  - type: Item
+    size: Small
+    heldPrefix: heart
+- type: entity
+  id: OrganDollKidneys
+  parent:
+  - BaseDollOrgan
+  - OrganHumanKidneys
+  name: kidneys
+  description: Ew, why does it have eyes?!?
+  components:
+  - type: Sprite
+    layers:
+    - state: kidney-l
+    - state: kidney-r
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes:
+    - Human
+- type: entity
+  id: OrganDollLiver
+  parent:
+  - BaseDollOrgan
+  - OrganHumanLiver
+  name: liver
+  description: Indistinct mass of flesh. Probably the liver.
+  components:
+  - type: Sprite
+    state: liver
+  - type: Metabolizer
+    maxReagents: 1
+    metabolizerTypes:
+    - Doll
+    - Human
+    groups:
+    - id: Alcohol
+- type: entity
+  id: OrganDollLungs
+  parent:
+  - BaseDollOrgan
+  - OrganHumanLungs
+  name: lungs
+  description: Dolls use these to breathe... somehow.
+  components:
+  - type: Sprite
+    layers:
+    - state: lung-l
+    - state: lung-r
+  - type: Lung
+  - type: Metabolizer
+    metabolizerTypes:
+    - Human
+    groups:
+    - id: Gas
+      rateModifier: 100
+    removeEmpty: true
+    solutionOnBody: false
+    solution: Lung
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+      Lung:
+        maxVol: 100
+        canReact: false
+- type: entity
+  id: OrganDollStomach
+  parent:
+  - BaseDollOrgan
+  - OrganHumanStomach
+  name: stomach
+  description: Surprisingly large.
+  components:
+  - type: Sprite
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+      stomach:
+        maxVol: 100
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Meat
+      - Blood
+      - Pill
+      - Crayon
+      - Paper
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes:
+    - Doll
+    groups:
+    - id: Food
+    - id: Drink
+- type: entity
+  id: OrganDollTongue
+  parent:
+  - BaseDollOrgan
+  - OrganHumanTongue
+  name: tongue
+  description: A fleshy muscle mostly used for whispering secrets from the dark.
+  components:
+  - type: OrganTongue
+    sounds:
+      Male: MaleHuman
+      Female: FemaleHuman
+      Unsexed: FemaleHuman
+  - type: Sprite
+    state: tongue
+- type: entity
+  id: ShellFragmentDoll
+  parent:
+  - BaseKnife
+  name: doll shell fragment
+  description: A shell piece, broken off of a doll. Sharp, and looks quite sturdy.
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/organs.rsi
+    state: shell
+  - type: Organ
+    slotId: shell
+  - type: PhysicalComposition
+    materialComposition:
+      Plasteel: 25
+      Steel: 100
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 10
+  - type: OrganShell
+    modifiers:
+      coefficients:
+        Slash: -0.06
+        Piercing: -0.06
+        Heat: 0.03
+  - type: Damageable
+    damageContainer: Biological

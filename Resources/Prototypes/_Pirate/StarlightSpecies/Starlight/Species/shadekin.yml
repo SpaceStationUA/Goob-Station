@@ -1,0 +1,58 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: humanoidBaseSprite
+  id: MobShadekinGroin
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: torso_m
+- type: humanoidBaseSprite
+  id: MobShadekinHead
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: head_m
+- type: humanoidBaseSprite
+  id: MobShadekinLArm
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: l_arm
+- type: humanoidBaseSprite
+  id: MobShadekinLFoot
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: l_foot
+- type: humanoidBaseSprite
+  id: MobShadekinLHand
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: l_hand
+- type: humanoidBaseSprite
+  id: MobShadekinLLeg
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: l_leg
+- type: humanoidBaseSprite
+  id: MobShadekinRArm
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: r_arm
+- type: humanoidBaseSprite
+  id: MobShadekinRFoot
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: r_foot
+- type: humanoidBaseSprite
+  id: MobShadekinRHand
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: r_hand
+- type: humanoidBaseSprite
+  id: MobShadekinRLeg
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: r_leg
+- type: humanoidBaseSprite
+  id: MobShadekinTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Shadekin/parts.rsi
+    state: torso_m

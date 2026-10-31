@@ -1041,6 +1041,29 @@
         key: DemonsBlood
         component: DemonsBlood # Goobstation - start
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Doll
+        reagent: PseudoceramicPlatelets
+        amount: 0.5
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Doll
+        reagent: UncookedAnimalProteins
+        amount: 0.5
+      - !type:EvenHealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Doll
+        damage:
+          Brute: -0.75
+          Burn: -0.375
 - type: reagent
   id: DevilsKiss
   name: reagent-name-devils-kiss
@@ -1063,6 +1086,29 @@
         key: DemonsKiss
         component: DemonsKiss # Goobstation - end
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Doll
+        reagent: PseudoceramicPlatelets
+        amount: 0.5
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Doll
+        reagent: UncookedAnimalProteins
+        amount: 0.5
+      - !type:EvenHealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Doll
+        damage:
+          Brute: -0.75
+          Burn: -0.375
 - type: reagent
   id: DoctorsDelight
   name: reagent-name-doctors-delight
@@ -1727,6 +1773,29 @@
         reagent: Ethanol
         amount: 0.2
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Doll
+        reagent: PseudoceramicPlatelets
+        amount: 0.5
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Doll
+        reagent: UncookedAnimalProteins
+        amount: 0.5
+      - !type:EvenHealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Doll
+        damage:
+          Brute: -0.75
+          Burn: -0.375
 - type: reagent
   id: PinaColada
   name: reagent-name-pina-colada

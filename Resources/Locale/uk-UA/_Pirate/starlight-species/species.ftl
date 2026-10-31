@@ -1,0 +1,79 @@
+species-name-cyclorite = Циклорит
+species-name-doll = Лялька
+species-name-elf = Айеліт
+species-name-felionoid = Феліоноїд
+species-name-lagomorph = Лагоморф
+species-name-neocyte = Неоцит
+subspecies-name-trueneocyte = Чистий неоцит
+subspecies-name-neoarachnid = Неоарахнід
+subspecies-name-neoavali = Неоавалі
+subspecies-name-neocyclorite = Неоциклорит
+subspecies-name-neodiona = Неодіона
+subspecies-name-neodwarf = Неодворф
+subspecies-name-neoelf = Неоайеліт
+subspecies-name-neofelionoid = Неофеліоноїд
+subspecies-name-neohuman = Неолюдина
+subspecies-name-neokin = Неотіньовик
+subspecies-name-neolagomorph = Неолагоморф
+subspecies-name-neomoth = Неоніан
+subspecies-name-neoreptilian = Неорептилія
+subspecies-name-neoresomi = Неоресомі
+subspecies-name-neoslimeperson = Неослайм
+subspecies-name-neothaven = Неотавен
+subspecies-name-neovox = Неовокс
+subspecies-name-neovulpkanin = Неовульпканін
+humanoid-profile-editor-subspecies-label = Підвид:
+humanoid-profile-editor-neocyte-frame-label = Корпус:
+loadout-group-neocyte-cybernetics = Корпуси неоцитів
+loadout-name-NeocyteArmorLightBasic = Легкий стандартний корпус
+loadout-name-NeocyteArmorLightSpeed = Легкий швидкісний корпус
+loadout-name-NeocyteArmorMediumBasic = Середній стандартний корпус
+loadout-name-NeocyteArmorMediumMagic = Середній магічний корпус
+loadout-name-NeocyteArmorHeavyBasic = Важкий стандартний корпус
+loadout-name-NeocyteArmorHeavySpace = Важкий космічний корпус
+metabolizer-type-cyclorite = Циклорит
+metabolizer-type-doll = Лялька
+metabolizer-type-neo-vox = Неовокс
+metabolizer-type-neocyte = Неоцит
+metabolizer-type-resomi = Ресомі
+chat-emote-name-howl = Завити
+chat-emote-msg-howl = виє.
+chat-emote-name-marr = Марркнути
+chat-emote-msg-marr = марркає.
+chat-emote-name-glub = Булькнути
+chat-emote-msg-glub = булькає.
+chat-speech-verb-name-felionoid = Феліоноїд
+chat-speech-verb-felionoid-1 = муркоче
+chat-speech-verb-felionoid-2 = нявкає
+chat-speech-verb-felionoid-3 = шипить
+chat-speech-verb-felionoid-4 = завиває
+chat-speech-verb-name-lagomorph = Лагоморф
+chat-speech-verb-lagomorph = пищить
+doll-snap-shell-action = Ви на мить вагаєтеся, збираючись із силами, щоб відламати шматочок власної оболонки.
+alerts-surge-name = [color=yellow]Приплив витривалості[/color]
+alerts-surge-desc = Ваша витривалість відновлюється швидше, а опір її втраті зростає [color=red]ціною швидшого виснаження запасів їжі[/color].
+alerts-zoomies-name = [color=lightblue]Шалений забіг![/color]
+alerts-zoomies-desc = Ви рухаєтеся швидше [color=red]ціною швидшого виснаження запасів води[/color].
+alerts-doll-shell-integrity-name = Цілісність оболонки
+alerts-doll-shell-integrity-desc = Стан вашої оболонки. Що нижча її цілісність, то більше оголюється ваше ядро! Втратити всю оболонку — жахливо. Уникайте цього за будь-яку ціну!
+entity-effect-guidebook-regrow-doll-shell = { $chance ->
+    [1] Відновлює один фрагмент панцира
+    *[other] Може відновити один фрагмент панцира
+    }
+laspi-storage-accessing = { CAPITALIZE(THE($user)) } намагається дістатися до вашого внутрішнього сховища!
+action-storage-accessing-outsider = { CAPITALIZE(THE($user)) } намагається відкрити ваше сховище!
+glitch-on-ion-storm-start-message = Таке відчуття, наче ваш мозок поклали в мікрохвильовку!
+guidebook-armor-neocyte = Корпуси неоцитів
+markings-category-FaceCover = Візор
+markings-category-FaceCoverCover = Підсвічування візора
+markings-category-BodyCover = Кібернетичний корпус
+markings-category-BodyCoverCover = Підсвічування корпусу
+trait-category-aielith-ethnicity = Походження айеліта
+trait-ethnicity-elf-high-name = Квела
+trait-ethnicity-elf-high-desc = Нащадок філософів, науковців і мандрівників Квеланських світів. Володіє айельською мовою.
+trait-ethnicity-elf-wood-name = Лаурассе
+trait-ethnicity-elf-wood-desc = Виходець із зеленого Тавасу, близький до рослин і діон. Володіє коренемовою.
+trait-ethnicity-elf-dark-name = Сейріт
+trait-ethnicity-elf-dark-desc = Нащадок дослідників небезпечних глибин Нульового Шраму. Розмовляє потойбічною мовою та розуміє фельяську.
+trait-ethnicity-elf-cave-name = Детар
+trait-ethnicity-elf-cave-desc = Виходець із підземних поселень Темних світів. Розмовляє фельяською та розуміє потойбічну мову.

@@ -34,6 +34,35 @@
           conditions:
             - !type:MetabolizerTypeCondition
               type: [ Vampiric ]
+        # Pirate: Starlight species-specific metabolism.
+        - !type:AdjustReagent
+          conditions:
+          - !type:MetabolizerTypeCondition
+            type:
+            - Doll
+          reagent: Protein
+          amount: 0.3
+        - !type:AdjustReagent
+          conditions:
+          - !type:MetabolizerTypeCondition
+            type:
+            - Doll
+          reagent: PseudoceramicPlatelets
+          amount: 0.5
+        - !type:EvenHealthChange
+          conditions:
+          - !type:MetabolizerTypeCondition
+            type:
+            - Doll
+          damage:
+            Brute: -0.75
+            Burn: -0.375
+        - !type:SatiateThirst
+          factor: 1.0
+          conditions:
+          - !type:MetabolizerTypeCondition
+            type:
+            - Doll
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5

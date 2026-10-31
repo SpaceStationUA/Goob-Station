@@ -1,0 +1,14 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: typingIndicator
+  id: lagomorph
+  spritePath: /Textures/_Pirate/StarlightSpecies/Starlight/Effects/speech.rsi
+  typingState: lagomorph0
+  idleState: lagomorph3
+- type: typingIndicator
+  id: resomi
+  spritePath: _Pirate/StarlightSpecies/Starlight/Effects/speech.rsi
+  typingState: resomi0
+  idleState: resomi0
+  offset: -0.3, 0

@@ -417,7 +417,10 @@ namespace Content.Server.Atmos.EntitySystems
                     return;
 
                 // Ignite that sucker
-                flammable.FireStacks += component.FireStacks;
+                // Pirate: Starlight Neo-Diona limits stacks from this ignition source.
+                if (flammable.FireStacks >= component.MaxFireStacks)
+                    return;
+                flammable.FireStacks = MathF.Min(flammable.FireStacks + component.FireStacks, component.MaxFireStacks);
                 Ignite(uid, uid, flammable);
             }
 

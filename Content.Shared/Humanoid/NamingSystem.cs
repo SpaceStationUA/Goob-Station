@@ -54,6 +54,8 @@ namespace Content.Shared.Humanoid
                 case SpeciesNaming.IdFirst: // Pirate
                     return Loc.GetString("namepreset-idfirst",
                         ("id", GetRandomExperimentId()), ("first", GetFirstName(speciesProto, gender)));
+                case SpeciesNaming.PrefixSuffix: // Pirate: Starlight felionoid names have no separator.
+                    return GetFirstName(speciesProto, gender) + GetLastName(speciesProto);
                 case SpeciesNaming.FirstLast:
                 default:
                     return Loc.GetString("namepreset-firstlast",

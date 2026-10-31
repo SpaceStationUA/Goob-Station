@@ -32,6 +32,14 @@
       - !type:Drunk
         boozePower: 20
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Cryptobiolin
+        amount: -0.5
 - type: reagent
   id: Dylovene
   name: reagent-name-dylovene
@@ -87,6 +95,14 @@
         - !type:ReagentCondition
           reagent: Dylovene
           min: 15
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Dylovene
+        amount: -0.5
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: -10
@@ -120,6 +136,14 @@
           types:
             Poison: -3
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Diphenhydramine
+        amount: -0.5
 - type: reagent
   id: Ethylredoxrazine
   name: reagent-name-ethylredoxrazine
@@ -150,6 +174,14 @@
           types:
             Poison: -0.5
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Ethylredoxrazine
+        amount: -0.5
 - type: reagent
   id: Arithrazine
   name: reagent-name-arithrazine
@@ -168,6 +200,14 @@
           groups:
             Brute: 0.5
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Arithrazine
+        amount: -0.5
 - type: reagent
   id: Bicaridine
   name: reagent-name-bicaridine
@@ -230,6 +270,14 @@
         amount: -1.2
         time: 12
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Bicaridine
+        amount: -0.5
 - type: reagent
   id: Cryoxadone
   name: reagent-name-cryoxadone
@@ -287,6 +335,14 @@
           effectProto: StatusEffectForcedSleeping
           type: Add
 
+        # Pirate: Starlight species-specific metabolism.
+        - !type:AdjustReagent
+          conditions:
+          - !type:MetabolizerTypeCondition
+            type:
+            - Cyclorite
+          reagent: Cryoxadone
+          amount: -0.5
 - type: reagent
   id: Doxarubixadone
   name: reagent-name-doxarubixadone
@@ -321,6 +377,14 @@
           effectProto: StatusEffectForcedSleeping
           type: Add
 
+        # Pirate: Starlight species-specific metabolism.
+        - !type:AdjustReagent
+          conditions:
+          - !type:MetabolizerTypeCondition
+            type:
+            - Cyclorite
+          reagent: Doxarubixadone
+          amount: -0.5
 - type: reagent
   id: Dermaline
   name: reagent-name-dermaline
@@ -369,6 +433,14 @@
           reagent: Dermaline
           min: 10
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Dermaline
+        amount: -0.5
 - type: reagent
   id: Dexalin
   name: reagent-name-dexalin
@@ -426,6 +498,14 @@
         amount: 3.4
         time: 12
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Dexalin
+        amount: -0.5
 - type: reagent
   id: DexalinPlus
   name: reagent-name-dexalin-plus
@@ -497,6 +577,14 @@
         time: 12
 
 # this ones a doozy
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: DexalinPlus
+        amount: -0.5
 - type: reagent
   id: Epinephrine
   name: reagent-name-epinephrine
@@ -616,6 +704,14 @@
         amount: -2.4
         time: 12
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Epinephrine
+        amount: -0.5
 - type: reagent
   id: Hyronalin
   name: reagent-name-hyronalin
@@ -654,6 +750,14 @@
           reagent: Hyronalin
           min: 30
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Hyronalin
+        amount: -0.5
 - type: reagent
   id: Ipecac
   name: reagent-name-ipecac
@@ -677,6 +781,14 @@
           inverted: true
         probability: 0.3
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Ipecac
+        amount: -0.5
 - type: reagent
   id: Inaprovaline
   name: reagent-name-inaprovaline
@@ -714,6 +826,14 @@
         amount: 8
         time: 20
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Inaprovaline
+        amount: -0.1
 - type: reagent
   id: Kelotane
   name: reagent-name-kelotane
@@ -750,6 +870,14 @@
           reagent: Kelotane
           min: 25
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Kelotane
+        amount: -0.5
 - type: reagent
   id: Leporazine
   name: reagent-name-leporazine
@@ -798,6 +926,14 @@
           type: [Hydrakin]
         amount: -75000
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Leporazine
+        amount: -0.5
 - type: reagent
   id: Barozine
   name: reagent-name-barozine
@@ -864,6 +1000,14 @@
         messages: [ "barozine-effect-skin-burning", "barozine-effect-muscle-contract" ]
         probability: 0.1
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Barozine
+        amount: -0.5
 - type: reagent
   id: Phalanximine
   name: reagent-name-phalanximine
@@ -908,6 +1052,14 @@
         affectedType: OwnCells
         progressModifier: -0.07 # anti-cancer
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Phalanximine
+        amount: -0.1
 - type: reagent
   id: PolypyryliumOligomers
   name: reagent-name-polypyrylium-oligomers
@@ -955,6 +1107,14 @@
         amount: 6
         time: 12
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: PolypyryliumOligomers
+        amount: -0.5
 - type: reagent
   id: Ambuzol
   name: reagent-name-ambuzol
@@ -1008,6 +1168,14 @@
       - !type:ModifyBleed
         amount: -0.5
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: PulpedBananaPeel
+        amount: -0.5
 - type: reagent
   id: Saline
   name: reagent-name-saline
@@ -1064,6 +1232,14 @@
           types:
             Caustic: -5
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Siderlac
+        amount: -0.5
 - type: reagent
   id: Stellibinin
   name: reagent-name-stellibinin
@@ -1093,6 +1269,14 @@
         reagent: Amatoxin
         amount: -3
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Stellibinin
+        amount: -0.5
 - type: reagent
   id: Synaptizine
   name: reagent-name-synaptizine
@@ -1125,6 +1309,14 @@
         time: 15.0
         type: Remove
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Synaptizine
+        amount: -0.5
 - type: reagent
   id: TranexamicAcid
   name: reagent-name-tranexamic-acid
@@ -1150,6 +1342,14 @@
           types:
             Bloodloss: 3
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: TranexamicAcid
+        amount: -0.5
 - type: reagent
   id: Tricordrazine
   name: reagent-name-tricordrazine
@@ -1174,6 +1374,14 @@
             Shock: -0.5
             Cold: -0.5 # Was .33, Buffed due to limb damage changes(GoobStation)
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Tricordrazine
+        amount: -0.5
 - type: reagent
   id: Lipozine
   name: reagent-name-lipozine
@@ -1192,6 +1400,14 @@
         factor: -1
 
   # Should heal quite literally everything, use in very small amounts
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Lipozine
+        amount: -0.5
 - type: reagent
   id: Omnizine
   name: reagent-name-omnizine
@@ -1226,6 +1442,14 @@
         strengthModifier: 0.0088888888888 #Twice as strong
         statusLifetime: 3
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Omnizine
+        amount: -0.5
 - type: reagent
   id: Ultravasculine
   name: reagent-name-ultravasculine
@@ -1284,6 +1508,14 @@
         reagent: Ultravasculine
         amount: 0.5
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Ultravasculine
+        amount: -0.5
 - type: reagent
   id: Oculine
   name: reagent-name-oculine
@@ -1299,6 +1531,14 @@
       effects:
       - !type:EyeDamage
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Oculine
+        amount: -0.5
 - type: reagent
   id: Cognizine
   name: reagent-name-cognizine
@@ -1316,6 +1556,14 @@
           reagent: Cognizine
           min: 5
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Cognizine
+        amount: -0.5
 - type: reagent
   id: Ethyloxyephedrine
   name: reagent-name-ethyloxyephedrine
@@ -1350,6 +1598,14 @@
         type: Local
         probability: 0.1
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Ethyloxyephedrine
+        amount: -0.5
 - type: reagent
   id: Diphenylmethylamine
   name: reagent-name-diphenylmethylamine
@@ -1376,6 +1632,14 @@
         type: Local
         probability: 0.1
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Diphenylmethylamine
+        amount: -0.5
 - type: reagent
   id: Sigynate
   name: reagent-name-sigynate
@@ -1445,6 +1709,14 @@
         messages: [ "generic-reagent-effect-nauseous" ]
         probability: 0.2
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Sigynate
+        amount: -0.25
 - type: reagent
   id: Lacerinol
   name: reagent-name-lacerinol
@@ -1475,6 +1747,14 @@
           types:
             Cold: 3 # Goobstation - 30 per u?
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Lacerinol
+        amount: -0.25
 - type: reagent
   id: Puncturase
   name: reagent-name-puncturase
@@ -1504,6 +1784,14 @@
           types:
             Blunt: 5 # Goob
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Puncturase
+        amount: -0.25
 - type: reagent
   id: Bruizine
   name: reagent-name-bruizine
@@ -1534,6 +1822,14 @@
           types:
             Poison: 4 # Goob
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Bruizine
+        amount: -0.25
 - type: reagent
   id: Holywater
   name: reagent-name-holywater
@@ -1585,6 +1881,14 @@
           types:
             Heat: 1
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Holywater
+        amount: -0.5
   reactiveEffects:
     Extinguish:
       methods: [ Touch ]
@@ -1656,6 +1960,14 @@
         emote: Scream
         probability: 0.2
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Pyrazine
+        amount: -0.1
 - type: reagent
   id: Insuzine
   name: reagent-name-insuzine
@@ -1706,6 +2018,14 @@
           reagent: Insuzine
           min: 12
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Insuzine
+        amount: -0.25
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone
@@ -1727,6 +2047,14 @@
           - !type:MobStateCondition
             mobstate: Dead
 
+        # Pirate: Starlight species-specific metabolism.
+        - !type:AdjustReagent
+          conditions:
+          - !type:MetabolizerTypeCondition
+            type:
+            - Cyclorite
+          reagent: Opporozidone
+          amount: -0.5
 - type: reagent
   id: Arcryox
   name: reagent-name-arcryox
@@ -1812,6 +2140,14 @@
           type: Add
 
 
+        # Pirate: Starlight species-specific metabolism.
+        - !type:AdjustReagent
+          conditions:
+          - !type:MetabolizerTypeCondition
+            type:
+            - Cyclorite
+          reagent: Necrosol
+          amount: -0.5
 - type: reagent
   id : Aloxadone
   name: reagent-name-aloxadone
@@ -1849,6 +2185,14 @@
         effectProto: StatusEffectForcedSleeping
         type: Add
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Aloxadone
+        amount: -0.5
 - type: reagent
   id : Mannitol
   name: reagent-name-mannitol
@@ -1875,6 +2219,14 @@
       - !type:Vomit
         probability: 0.1 # Pirate - rapid brain tissue change causes vomiting
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Mannitol
+        amount: -0.5
 - type: reagent
   id: Psicodine
   name: reagent-name-psicodine
@@ -1930,6 +2282,14 @@
         - "psicodine-effect-at-peace"
         probability: 0.2
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Psicodine
+        amount: -0.5
 - type: reagent
   id: PotassiumIodide
   name: reagent-name-potassium-iodide
@@ -1963,6 +2323,14 @@
           types:
             Poison: 1
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: PotassiumIodide
+        amount: -0.5
 - type: reagent
   id: Haloperidol
   name: reagent-name-haloperidol
@@ -2020,6 +2388,14 @@
         reagent: DoubleGreen # imp drinks
         amount: -3.0
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Haloperidol
+        amount: -0.5
 - type: reagent
   id: Warfarin
   name: reagent-name-warfarin

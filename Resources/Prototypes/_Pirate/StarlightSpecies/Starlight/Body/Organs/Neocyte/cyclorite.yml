@@ -1,0 +1,67 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: OrganNeoCycloriteEye
+  parent:
+  - OrganNeocyteEyes
+  name: cyclorite cybernetic eye
+  suffix: Neo-Cyclorite
+  description: Cyclorites see the world slightly differently.
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/organs.rsi
+    layers:
+    - state: eyeball
+  - type: Organ
+    onAdd:
+    - type: NightVision
+      disabilityBlockable: true
+- type: entity
+  id: OrganNeoCycloriteHeart
+  parent:
+  - OrganNeocyteHeart
+  name: cyclorite cybernetic heart
+  suffix: Neo-Cyclorite
+  components:
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes:
+    - Cyclorite
+    - Neocyte
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+- type: entity
+  id: OrganNeoCycloriteLungs
+  parent:
+  - OrganNeocyteLungs
+  name: cyclorite cybernetic lungs
+  suffix: Neo-Cyclorite
+  description: Filters nitrogen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier.
+    Entirely cybernetic in nature, working in tandem with the visor's filtration system.
+  components:
+  - type: Lung
+    alert: LowNitrogen
+  - type: Metabolizer
+    metabolizerTypes:
+    - Slime
+    - Cyclorite
+    groups:
+    - id: Gas
+      rateModifier: 100
+    removeEmpty: true
+    solutionOnBody: false
+    solution: Lung
+- type: entity
+  id: OrganNeoCycloriteTongue
+  parent:
+  - OrganNeocyteTongue
+  suffix: Neo-Cyclorite
+  components:
+  - type: OrganTongue
+    sounds:
+      Male: NeoCycloriteMSounds
+      Female: NeoCycloriteFSounds
+      Unsexed: NeoCycloriteMSounds

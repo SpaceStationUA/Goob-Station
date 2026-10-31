@@ -1,0 +1,47 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseInventoryFemaleJumpsuit
+  id: BaseMobElf
+  name: Urist McElgi
+  abstract: true
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    understands:
+    - TauCetiBasic
+  - type: Absorbable
+  - type: Hunger
+  - type: Thirst
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
+    state: full
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Elf
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+  - type: Speech
+    speechSounds: Tenor
+  - type: HumanoidAppearance
+    species: Elf
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - NotLabelable
+    - Elf
+  - type: Body
+    prototype: Elf
+    requiredLegs: 2

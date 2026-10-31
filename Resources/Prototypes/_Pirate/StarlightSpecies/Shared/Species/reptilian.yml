@@ -1,0 +1,8 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: humanoidBaseSprite
+  id: MobReptilianTorso
+  baseSprite:
+    sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Reptilian/parts.rsi
+    state: torso_m

@@ -1,0 +1,53 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: PartAnimal
+  parent:
+  - BaseItem
+  name: animal body part
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Reptilian/parts.rsi
+  - type: Damageable
+    damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 50
+  - type: Tag
+    tags:
+    - Trash
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+- type: entity
+  id: TorsoAnimal
+  categories:
+  - HideSpawnMenu
+  name: animal torso
+  parent:
+  - PartAnimal
+  components:
+  - type: Sprite
+    layers:
+    - state: torso_m
+  - type: BodyPart
+    partType: Chest
+  - type: Damageable
+    damageContainer: Biological
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20

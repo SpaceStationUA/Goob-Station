@@ -1,0 +1,281 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseSpeciesDummy
+  id: AppearanceNeoArachnid
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: HumanoidAppearance
+    species: NeoArachnid
+  - type: Sprite
+    layers:
+    - map:
+      - enum.HumanoidVisualLayers.Groin
+    - map:
+      - enum.HumanoidVisualLayers.Chest
+    - map:
+      - enum.HumanoidVisualLayers.Head
+    - map:
+      - enum.HumanoidVisualLayers.Snout
+    - map:
+      - enum.HumanoidVisualLayers.Eyes
+    - map:
+      - enum.HumanoidVisualLayers.FaceCover
+    - map:
+      - enum.HumanoidVisualLayers.FaceCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.RArm
+    - map:
+      - enum.HumanoidVisualLayers.LArm
+    - map:
+      - enum.HumanoidVisualLayers.RLeg
+    - map:
+      - enum.HumanoidVisualLayers.LLeg
+    - map:
+      - enum.HumanoidVisualLayers.BodyCover
+    - map:
+      - enum.HumanoidVisualLayers.BodyCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentBottom
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentTop
+    - map:
+      - jumpsuit
+    - map:
+      - enum.HumanoidVisualLayers.LFoot
+    - map:
+      - enum.HumanoidVisualLayers.RFoot
+    - map:
+      - enum.HumanoidVisualLayers.LHand
+    - map:
+      - outerClothing2
+    - map:
+      - enum.HumanoidVisualLayers.RHand
+    - map:
+      - gloves
+    - map:
+      - shoes
+    - map:
+      - outerClothing
+    - map:
+      - belt
+    - map:
+      - id
+    - map:
+      - enum.HumanoidVisualLayers.Tail
+    - map:
+      - back
+    - map:
+      - neck
+    - map:
+      - enum.HumanoidVisualLayers.SnoutCover
+    - map:
+      - enum.HumanoidVisualLayers.FacialHair
+    - map:
+      - enum.HumanoidVisualLayers.Hair
+    - map:
+      - enum.HumanoidVisualLayers.HeadSide
+    - map:
+      - ears
+    - map:
+      - eyes
+    - map:
+      - enum.HumanoidVisualLayers.HeadTop
+    - map:
+      - mask
+    - map:
+      - head
+    - map:
+      - pocket1
+    - map:
+      - pocket2
+    - map:
+      - enum.HumanoidVisualLayers.Handcuffs
+      color: '#ffffff'
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Inventory
+    templateId: neoarachnid
+    speciesId: arachnid
+- type: entity
+  save: false
+  name: Urist McWebster
+  parent:
+  - BaseMobNeocyte
+  id: BaseMobNeoArachnid
+  abstract: true
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Chittin
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Chittin
+  - type: IgnoreSpiderWeb
+  - type: Body
+    prototype: NeoArachnid
+    requiredLegs: 2
+  - type: HumanoidAppearance
+    species: NeoArachnid
+  - type: Sericulture
+    productionLength: 2
+    entityProduced: MaterialWebSilk1
+    hungerCost: 4
+  - type: Vocal
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - SpiderCraft
+    - AnomalyHost
+    - Neocyte
+    - Arachnid
+    - NeoArachnid
+    - SiliconEmotesFH
+    - NotLabelable
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 5
+  - type: Reactive
+    reactions:
+    - reagents:
+      - Water
+      methods:
+      - Touch
+      effects:
+      - !type:SpawnEntityInInventory
+        slot: head
+        entity: WaterDropletHat
+    - reagents:
+      - Water
+      - SpaceCleaner
+      methods:
+      - Touch
+      effects:
+      - !type:WashCreamPie ''
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: CopperBlood
+        Quantity: 600
+  - type: Damageable
+    damageContainer: Hybrid
+    damageModifierSet: NeoArachnid
+  - type: MeleeWeapon
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 5
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/brute_damage.rsi
+        color: '#162581'
+      Burn:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/burn_damage.rsi
+  - type: CreamPied
+    sprite:
+      sprite: _Pirate/StarlightSpecies/Shared/Effects/creampie.rsi
+      state: creampie_arachnid
+  - type: Sprite
+    layers:
+    - map:
+      - enum.HumanoidVisualLayers.Groin
+    - map:
+      - enum.HumanoidVisualLayers.Chest
+    - map:
+      - enum.HumanoidVisualLayers.Head
+    - map:
+      - enum.HumanoidVisualLayers.Snout
+    - map:
+      - enum.HumanoidVisualLayers.Eyes
+    - map:
+      - enum.HumanoidVisualLayers.FaceCover
+    - map:
+      - enum.HumanoidVisualLayers.FaceCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.RArm
+    - map:
+      - enum.HumanoidVisualLayers.LArm
+    - map:
+      - enum.HumanoidVisualLayers.RLeg
+    - map:
+      - enum.HumanoidVisualLayers.LLeg
+    - map:
+      - enum.HumanoidVisualLayers.BodyCover
+    - map:
+      - enum.HumanoidVisualLayers.BodyCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentBottom
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentTop
+    - map:
+      - jumpsuit
+    - map:
+      - enum.HumanoidVisualLayers.LFoot
+    - map:
+      - enum.HumanoidVisualLayers.RFoot
+    - map:
+      - enum.HumanoidVisualLayers.LHand
+    - map:
+      - outerClothing2
+    - map:
+      - enum.HumanoidVisualLayers.RHand
+    - map:
+      - gloves
+    - map:
+      - shoes
+    - map:
+      - outerClothing
+    - map:
+      - belt
+    - map:
+      - id
+    - map:
+      - enum.HumanoidVisualLayers.Tail
+    - map:
+      - back
+    - map:
+      - neck
+    - map:
+      - enum.HumanoidVisualLayers.SnoutCover
+    - map:
+      - enum.HumanoidVisualLayers.FacialHair
+    - map:
+      - enum.HumanoidVisualLayers.Hair
+    - map:
+      - enum.HumanoidVisualLayers.HeadSide
+    - map:
+      - ears
+    - map:
+      - eyes
+    - map:
+      - enum.HumanoidVisualLayers.HeadTop
+    - map:
+      - mask
+    - map:
+      - head
+    - map:
+      - pocket1
+    - map:
+      - pocket2
+    - map:
+      - enum.HumanoidVisualLayers.Handcuffs
+      color: '#ffffff'
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Inventory
+    templateId: neoarachnid
+    speciesId: arachnid

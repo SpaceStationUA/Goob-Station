@@ -1,0 +1,160 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseInventoryLagomorph
+  id: BaseMobLagomorph
+  name: Urist McBnuuy
+  abstract: true
+  components:
+  - type: Body
+    prototype: Lagomorph
+    requiredLegs: 2
+  - type: Absorbable
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Lagomorphian
+    understands:
+    - TauCetiBasic
+    - Lagomorphian
+  - type: StaminaSurge
+  - type: Zoomies
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/parts.rsi
+    state: full
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+  - type: HumanoidAppearance
+    species: Lagomorph
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+  - type: Hunger
+    thresholds:
+      Overfed: 210
+      Okay: 165
+      Peckish: 110
+      Starving: 55
+      Dead: 0
+    baseDecayRate: 0.02
+  - type: Thirst
+    thresholds:
+      OverHydrated: 610
+      Okay: 465
+      Thirsty: 310
+      Parched: 155
+      Dead: 0
+  - type: Speech
+    speechSounds: ALLagomorph
+    speechVerb: Lagomorph
+  - type: BodyEmotes
+    soundsId: LagomorphBodyEmotes
+  - type: ChatListenerRange
+    voiceRange: 12
+    whisperClearRange: 4
+    whisperMuffledRange: 7
+    allowExtendListenRange: true
+  - type: Vocal
+  - type: TypingIndicator
+    proto: lagomorph
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Lagomorph
+  - type: MeleeWeapon
+    animation: WeaponArcClaw
+    soundHit:
+      collection: AlienClaw
+    damage:
+      types:
+        Slash: 5
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - NotLabelable
+    - Lagomorph
+  - type: Sprite
+    layers:
+    - map:
+      - enum.HumanoidVisualLayers.Groin
+    - map:
+      - enum.HumanoidVisualLayers.Chest
+    - map:
+      - enum.HumanoidVisualLayers.Head
+    - map:
+      - enum.HumanoidVisualLayers.Snout
+    - map:
+      - enum.HumanoidVisualLayers.Eyes
+    - map:
+      - enum.HumanoidVisualLayers.RArm
+    - map:
+      - enum.HumanoidVisualLayers.LArm
+    - map:
+      - enum.HumanoidVisualLayers.RLeg
+    - map:
+      - enum.HumanoidVisualLayers.LLeg
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentBottom
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentTop
+    - map:
+      - jumpsuit
+    - map:
+      - enum.HumanoidVisualLayers.LFoot
+    - map:
+      - enum.HumanoidVisualLayers.RFoot
+    - map:
+      - enum.HumanoidVisualLayers.LHand
+    - map:
+      - enum.HumanoidVisualLayers.RHand
+    - map:
+      - gloves
+    - map:
+      - shoes
+    - map:
+      - ears
+    - map:
+      - eyes
+    - map:
+      - outerClothing
+    - map:
+      - belt
+    - map:
+      - id
+    - map:
+      - back
+    - map:
+      - neck
+    - map:
+      - enum.HumanoidVisualLayers.SnoutCover
+    - map:
+      - enum.HumanoidVisualLayers.FacialHair
+    - map:
+      - enum.HumanoidVisualLayers.HeadSide
+    - map:
+      - enum.HumanoidVisualLayers.Hair
+    - map:
+      - enum.HumanoidVisualLayers.HeadTop
+    - map:
+      - enum.HumanoidVisualLayers.Tail
+    - map:
+      - mask
+    - map:
+      - head
+    - map:
+      - pocket1
+    - map:
+      - pocket2
+    - map:
+      - enum.HumanoidVisualLayers.Handcuffs
+      color: '#ffffff'
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false

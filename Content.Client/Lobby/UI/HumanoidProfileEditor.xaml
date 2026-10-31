@@ -65,6 +65,15 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 </BoxContainer>
                 <PanelContainer StyleClasses="HullInset">
                     <goob:SpeciesGallery Name="SpeciesButton" Margin="4" />
+                    <!-- Pirate: Starlight neocyte subspecies. -->
+                    <BoxContainer Name="SubspeciesContainer" Visible="False" Margin="4">
+                        <Label Text="{Loc 'humanoid-profile-editor-subspecies-label'}" HorizontalExpand="True" />
+                        <OptionButton Name="SubspeciesButton" />
+                    </BoxContainer>
+                    <BoxContainer Name="SpeciesFrameContainer" Visible="False" Margin="4">
+                        <Label Text="{Loc 'humanoid-profile-editor-neocyte-frame-label'}" HorizontalExpand="True" />
+                        <OptionButton Name="SpeciesFrameButton" />
+                    </BoxContainer>
                 </PanelContainer>
             <!-- Pirate: citizenship selection. -->
             <BoxContainer Orientation="Horizontal">

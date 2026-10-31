@@ -1,0 +1,64 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: trait
+  id: CaveElf
+  name: trait-ethnicity-elf-cave-name
+  description: trait-ethnicity-elf-cave-desc
+  category: EthnicityTraits
+  cost: 1
+  includedSpecies:
+  - Elf
+  - NeoElf
+  languagesSpoken:
+  - Felyaic
+  languagesUnderstood:
+  - Felyaic
+  - Eldritch
+- type: trait
+  id: DarkElf
+  name: trait-ethnicity-elf-dark-name
+  description: trait-ethnicity-elf-dark-desc
+  category: EthnicityTraits
+  cost: 1
+  includedSpecies:
+  - Elf
+  - NeoElf
+  languagesSpoken:
+  - Eldritch
+  languagesUnderstood:
+  - Eldritch
+  - Felyaic
+- type: trait
+  id: HighElf
+  name: trait-ethnicity-elf-high-name
+  description: trait-ethnicity-elf-high-desc
+  category: EthnicityTraits
+  cost: 1
+  includedSpecies:
+  - Elf
+  - NeoElf
+  languagesSpoken:
+  - Aielic
+  languagesUnderstood:
+  - Aielic
+- type: trait
+  id: WoodElf
+  name: trait-ethnicity-elf-wood-name
+  description: trait-ethnicity-elf-wood-desc
+  category: EthnicityTraits
+  cost: 1
+  includedSpecies:
+  - Elf
+  - NeoElf
+  languagesSpoken:
+  - RootSpeak
+  languagesUnderstood:
+  - RootSpeak
+- type: traitCategory
+  id: EthnicityTraits
+  name: trait-category-aielith-ethnicity
+  maxTraits: 1
+  maxPoints: 1
+  countsTowardsGlobalLimit: false
+  priority: 0

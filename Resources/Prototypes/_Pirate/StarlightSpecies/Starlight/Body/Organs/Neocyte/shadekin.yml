@@ -1,0 +1,29 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: OrganNeoKinEyes
+  parent:
+  - OrganNeocyteEyes
+  name: shadekin cybernetic eyes
+  suffix: NeoKin
+  description: Cybernetic eyes of a Black-eye Shadekin that can never see their home reality again. These eyes have excellent
+    night vision, but are very sensitive to bright flashes as a result.
+  components:
+  - type: Organ
+    onAdd:
+    - type: NightVision
+      disabilityBlockable: true
+    - type: FlashModifier
+      modifier: 2
+- type: entity
+  id: OrganNeoKinTongue
+  parent:
+  - OrganNeocyteTongueForked
+  suffix: NeoKin
+  components:
+  - type: OrganTongue
+    sounds:
+      Male: NeoKinMSounds
+      Female: NeoKinFSounds
+      Unsexed: NeoKinMSounds

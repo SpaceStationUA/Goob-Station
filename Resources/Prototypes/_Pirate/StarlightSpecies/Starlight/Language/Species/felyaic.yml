@@ -1,0 +1,38 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: language
+  id: Felyaic
+  speech:
+    color: '#6c00ff'
+    fontId: Darktongue
+  obfuscation: !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 8
+    replacement:
+    - A
+    - B
+    - C
+    - D
+    - E
+    - F
+    - G
+    - H
+    - I
+    - J
+    - K
+    - L
+    - M
+    - N
+    - O
+    - P
+    - Q
+    - R
+    - S
+    - T
+    - U
+    - V
+    - W
+    - X
+    - Y
+    - Z

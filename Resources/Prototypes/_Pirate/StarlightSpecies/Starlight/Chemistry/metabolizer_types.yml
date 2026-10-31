@@ -1,0 +1,15 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: metabolizerType
+  id: Cyclorite
+  name: metabolizer-type-cyclorite
+- type: metabolizerType
+  id: Doll
+  name: metabolizer-type-doll
+- type: metabolizerType
+  id: NeoVox
+  name: metabolizer-type-neo-vox
+- type: metabolizerType
+  id: Resomi
+  name: metabolizer-type-resomi

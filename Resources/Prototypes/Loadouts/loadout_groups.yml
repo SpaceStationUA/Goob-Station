@@ -130,6 +130,7 @@
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen
+  - EmergencyOxygenBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvali # Pirate
   - EmergencyPlasma
   - LoadoutSpeciesVoxNitrogen
@@ -698,6 +699,7 @@
   loadouts:
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
+  - EmergencyOxygenClownBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliClown # Pirate
   - EmergencyPlasmaClown
   - LoadoutSpeciesVoxNitrogen
@@ -776,6 +778,7 @@
   loadouts:
   - EmergencyNitrogenMime
   - EmergencyOxygenMime
+  - EmergencyOxygenMimeBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliMime # Pirate
   - EmergencySpeciesMothMime
   - EmergencyPlasmaMime
@@ -1198,6 +1201,7 @@
   loadouts:
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
+  - EmergencyOxygenExtendedBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliExtended # Pirate
   - EmergencyPlasmaExtended
   - LoadoutSpeciesVoxNitrogen
@@ -1586,6 +1590,7 @@
   loadouts:
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
+  - EmergencyOxygenSecurityBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliSecurity # Pirate
   - EmergencyPlasmaSecurity
   - LoadoutSpeciesVoxNitrogen
@@ -1839,6 +1844,7 @@
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
+  - EmergencyOxygenMedicalBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliMedical # Pirate
   - EmergencyPlasmaMedical
   - LoadoutSpeciesVoxNitrogen
@@ -1886,6 +1892,7 @@
   loadouts:
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
+  - EmergencyOxygenSyndicateBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliSyndicate # Pirate
   - EmergencyPlasmaSyndicate
   - LoadoutSpeciesVoxNitrogen
@@ -1902,6 +1909,7 @@
   loadouts:
   - EmergencyNitrogenMilitaryDouble
   - EmergencyOxygenMilitaryDouble
+  - EmergencyOxygenMilitaryDoubleBlood # Pirate: Doll haemobrick kit.
 
 - type: loadoutGroup
   id: GroupSpeciesBreathTool

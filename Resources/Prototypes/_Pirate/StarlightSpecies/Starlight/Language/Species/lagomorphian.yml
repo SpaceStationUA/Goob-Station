@@ -1,0 +1,26 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: language
+  id: Lagomorphian
+  speech:
+    color: '#a59079'
+    fontId: Lagomorphian
+  obfuscation: !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3
+    replacement:
+    - gao
+    - su
+    - nu
+    - cap
+    - ta
+    - do
+    - to
+    - wa
+    - ru
+    - mof
+    - mu
+    - to
+    - chu
+    - wu

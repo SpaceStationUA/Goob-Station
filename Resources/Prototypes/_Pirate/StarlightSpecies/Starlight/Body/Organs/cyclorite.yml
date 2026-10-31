@@ -1,0 +1,202 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: BaseCycloriteOrgan
+  parent: BaseHumanOrgan
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/organs.rsi
+  - type: Organ
+  - type: Edible
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+    - people
+  - type: Tag
+    tags:
+    - Meat
+- type: entity
+  id: OrganCycloriteBrain
+  parent:
+  - OrganHumanBrain
+  - BaseCycloriteOrgan
+  name: cyclorite brain
+  suffix: Cyclorite
+  description: The source of incredible, unending intelligence. Honk.
+  components:
+  - type: Sprite
+    state: brain
+- type: entity
+  id: OrganCycloriteEye
+  parent:
+  - BaseCycloriteOrgan
+  - OrganHumanEyes
+  name: cyclorite eye
+  suffix: Cyclorite
+  description: Cyclorites see the world slightly differently.
+  components:
+  - type: Sprite
+    layers:
+    - state: eyeball
+  - type: Organ
+    onAdd:
+    - type: NightVision
+      disabilityBlockable: true
+- type: entity
+  id: OrganCycloriteHeart
+  parent:
+  - BaseCycloriteOrgan
+  - OrganHumanHeart
+  name: cyclorite heart
+  suffix: Cyclorite
+  description: I feel bad for the heartless bastard who lost this.
+  components:
+  - type: Tag
+    tags:
+    - Meat
+    - Heart
+  - type: Sprite
+    state: heart-on
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes:
+    - Cyclorite
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+- type: entity
+  id: OrganCycloriteKidneys
+  parent:
+  - BaseCycloriteOrgan
+  - OrganHumanKidneys
+  name: cyclorite kidneys
+  suffix: Cyclorite
+  description: Filters toxins from the bloodstream.
+  components:
+  - type: Sprite
+    layers:
+    - state: kidney-l
+    - state: kidney-r
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes:
+    - Slime
+- type: entity
+  id: OrganCycloriteLiver
+  parent:
+  - BaseCycloriteOrgan
+  - OrganHumanLiver
+  name: cyclorite liver
+  suffix: Cyclorite
+  description: 'Pairing suggestion: chianti and fava beans.'
+  components:
+  - type: Sprite
+    state: liver
+  - type: Metabolizer
+    maxReagents: 1
+    metabolizerTypes:
+    - Slime
+    groups:
+    - id: Alcohol
+- type: entity
+  id: OrganCycloriteLungs
+  parent:
+  - BaseCycloriteOrgan
+  - OrganHumanLungs
+  name: cyclorite lungs
+  suffix: Cyclorite
+  description: Cyclorite lungs filter nitrogen from the atmosphere to breathe.
+  components:
+  - type: Sprite
+    layers:
+    - state: lung-l
+    - state: lung-r
+  - type: Lung
+    alert: LowNitrogen
+  - type: Metabolizer
+    metabolizerTypes:
+    - Slime
+    - Cyclorite
+    groups:
+    - id: Gas
+      rateModifier: 100
+    removeEmpty: true
+    solutionOnBody: false
+    solution: Lung
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+      Lung:
+        maxVol: 100
+        canReact: false
+- type: entity
+  id: OrganCycloriteStomach
+  parent:
+  - BaseCycloriteOrgan
+  - OrganHumanStomach
+  name: cyclorite stomach
+  suffix: Cyclorite
+  description: Gross. This is hard to stomach.
+  components:
+  - type: Sprite
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+      stomach:
+        maxVol: 50
+  - type: Stomach
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes:
+    - Slime
+    groups:
+    - id: Food
+    - id: Drink
+- type: entity
+  id: OrganCycloriteTongue
+  parent:
+  - BaseCycloriteOrgan
+  - OrganHumanTongue
+  name: cyclorite tongue
+  suffix: Cyclorite
+  description: A fleshy muscle mostly used for lying.
+  components:
+  - type: OrganTongue
+    sounds:
+      Male: MaleCyclorite
+      Female: FemaleCyclorite
+      Unsexed: MaleCyclorite
+  - type: Sprite
+    state: tongue

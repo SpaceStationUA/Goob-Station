@@ -1,0 +1,232 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseNeocyteAppearance
+  - BaseSpeciesDummy
+  id: AppearanceNeoDwarf
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: HumanoidAppearance
+    species: NeoDwarf
+  - type: Inventory
+    templateId: neocyte
+    femaleDisplacements: {}
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      outerClothing:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      suitstorage:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      id:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      mask:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      belt:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      eyes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      gloves:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      head:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      neck:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      back:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      ears:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      shoes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+- type: entity
+  save: false
+  name: Urist McHandster the Neo-Dwarf
+  parent:
+  - BaseMobNeocyte
+  id: BaseMobNeoDwarf
+  abstract: true
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Grumbakul
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Grumbakul
+  - type: MobThresholds
+    thresholds:
+      '0': Alive
+      '110': Critical
+      '220': Dead
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Proto-Humie/parts.rsi
+    state: full
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+  - type: Damageable
+    damageContainer: Hybrid
+    damageModifierSet: NeoDwarf
+  - type: Body
+    prototype: NeoDwarf
+    requiredLegs: 2
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: ReplacementAccent
+    accent: dwarf
+  - type: HumanoidAppearance
+    species: NeoDwarf
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+  - type: CreamPied
+    displacement: Dwarfism
+  - type: Flammable
+  - type: Inventory
+    templateId: neocyte
+    femaleDisplacements: {}
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      outerClothing:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      suitstorage:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      id:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      mask:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      belt:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      eyes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      gloves:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      head:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      neck:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      back:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      ears:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+      shoes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: dwarfism
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        '32':
+          sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+          state: dwarfism_hand_left
+    rightHandDisplacement:
+      sizeMaps:
+        '32':
+          sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+          state: dwarfism_hand_right
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - NotLabelable
+    - SiliconEmotesFH
+    - Neocyte
+    - Dwarf
+    - NeoDwarf

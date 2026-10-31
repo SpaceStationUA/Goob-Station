@@ -1,0 +1,25 @@
+<Document>
+# Корпуси неоцитів
+<Box><GuideEntityEmbed Entity="ClothingOuterArmorNeocyteMediumBasic" Caption="Корпуси неоцитів"/></Box>
+Корпус — невіддільна основа кібернетичного тіла. Оберіть один із шести корпусів у редакторі персонажа.
+
+## Легкі
+<Box><GuideEntityEmbed Entity="ClothingOuterArmorNeocyteLightBasic" Caption="Стандартний легкий"/></Box>
+Зменшує різану й колоту шкоду на 5% та дає 5% захисту від вибухів.
+<Box><GuideEntityEmbed Entity="ClothingOuterArmorNeocyteLightSpeed" Caption="Гермес"/></Box>
+Прискорює ходьбу та біг на 5%, але збільшує різану й колоту шкоду на 15%.
+
+## Середні
+<Box><GuideEntityEmbed Entity="ClothingOuterArmorNeocyteMediumBasic" Caption="Стандартний середній"/></Box>
+Зменшує різану шкоду на 10%, забійну й колоту — на 5%. Біг на 5% повільніший.
+<Box><GuideEntityEmbed Entity="ClothingOuterArmorNeocyteMediumMagic" Caption="Геката"/></Box>
+Зменшує отруйну, радіаційну та клітинну шкоду на 15%. Дає невеликий біологічний захист та ізоляцію від холоду, але гірше переносить нагрівання. Біг на 10% повільніший. Випромінює слабке фіолетове світло.
+
+## Важкі
+<Box><GuideEntityEmbed Entity="ClothingOuterArmorNeocyteHeavyBasic" Caption="Стандартний важкий"/></Box>
+Зменшує різану шкоду на 25%, колоту — на 10%, забійну — на 15%, вибухову — на 25%. Біг на 25% повільніший, ходьба — на 15%.
+<Box><GuideEntityEmbed Entity="ClothingOuterArmorNeocyteHeavySpace" Caption="Нікс"/></Box>
+Зменшує теплову шкоду на 10%, холодову — на 15%, вибухову — на 25%. Добре ізолює від температури. Біг на 15% повільніший, ходьба — на 10%.
+
+«Нікс» захищає тіло від вакууму без окремого скафандра, але [bold]голові потрібен герметичний шолом, а для дихання — власне джерело газу[/bold].
+</Document>

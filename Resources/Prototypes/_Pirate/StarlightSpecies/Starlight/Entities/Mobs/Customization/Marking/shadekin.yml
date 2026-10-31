@@ -1,0 +1,25 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: marking
+  id: EarsShadekin
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - NeoKin
+  - NeoKin
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/shadekin/ears.rsi
+    state: shadekin
+- type: marking
+  id: TailShadekin
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction:
+  - NeoKin
+  - NeoKin
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/shadekin/tails64x32.rsi
+    state: shadekin

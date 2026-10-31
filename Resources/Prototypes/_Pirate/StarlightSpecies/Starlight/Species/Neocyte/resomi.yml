@@ -1,0 +1,109 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: markingPoints
+  id: MobNeoResomiMarkingLimits
+  onlyWhitelisted: true
+  points:
+    FaceCover:
+      points: 1
+      required: true
+      defaultMarkings:
+      - NeoResomiVisor
+    FaceCoverCover:
+      points: 1
+      required: true
+      defaultMarkings:
+      - NeoResomiLEDFace
+    BodyCover:
+      points: 1
+      required: true
+      defaultMarkings:
+      - NeoResomiMediumArmor
+    BodyCoverCover:
+      points: 1
+      required: true
+      defaultMarkings:
+      - NeoResomiLights
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 0
+      required: false
+    Snout:
+      points: 1
+      required: false
+    Tail:
+      points: 1
+      required: false
+    HeadTop:
+      points: 4
+      required: false
+    Head:
+      points: 6
+      required: false
+    Chest:
+      points: 4
+      required: false
+    Legs:
+      points: 6
+      required: false
+    Arms:
+      points: 6
+      required: false
+    UndergarmentTop:
+      points: 1
+      required: false
+    UndergarmentBottom:
+      points: 1
+      required: false
+- type: species
+  id: NeoResomi
+  name: subspecies-name-neoresomi
+  roundStart: true
+  prototype: MobNeoResomi
+  sprites: MobNeoResomiSprites
+  defaultSkinTone: '#faf7f7'
+  markingLimits: MobNeoResomiMarkingLimits
+  dollPrototype: AppearanceNeoResomi
+  skinColoration: Hues
+  subspeciesOf: Neocyte
+  subspeciesName: subspecies-name-neoresomi
+  maleFirstNames: names_resomi_first
+  femaleFirstNames: names_resomi_first
+  lastNames: names_resomi_packs
+  naming: FirstLast
+  minAge: 20
+  youngAge: 100
+  oldAge: 250
+  maxAge: 300
+  loadout: NeocyteLoadout
+  averageHeight: 150
+  knowledge: Human
+- type: speciesBaseSprites
+  id: MobNeoResomiSprites
+  sprites:
+    Hair: MobHumanoidAnyMarking
+    Eyes: MobNeocyteEyes
+    Head: MobResomiHead
+    Snout: MobHumanoidAnyMarking
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
+    Chest: MobResomiTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
+    LArm: MobResomiLArm
+    RArm: MobResomiRArm
+    LHand: MobResomiLHand
+    RHand: MobResomiRHand
+    LLeg: MobResomiLLeg
+    RLeg: MobResomiRLeg
+    LFoot: MobResomiLFoot
+    RFoot: MobResomiRFoot
+    FaceCover: MobHumanoidAnyMarking
+    FaceCoverCover: MobHumanoidAnyMarking
+    BodyCover: MobHumanoidAnyMarking
+    BodyCoverCover: MobHumanoidAnyMarking
+    Groin: MobResomiGroin

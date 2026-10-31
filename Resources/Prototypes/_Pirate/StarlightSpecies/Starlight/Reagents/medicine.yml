@@ -1,0 +1,121 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: reagent
+  id: Mycophylin
+  name: reagent-name-mycophylin
+  group: Botanical
+  desc: reagent-desc-mycophylin
+  flavor: bitter
+  color: '#7c9c35'
+  physicalDesc: reagent-physical-desc-gloopy
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:AdjustReagent
+        probability: 0.1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+        reagent: Kelotane
+        amount: 0.5
+      - !type:AdjustReagent
+        probability: 0.1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+        reagent: Bicaridine
+        amount: 0.5
+      - !type:AdjustReagent
+        probability: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+        reagent: Epinephrine
+        amount: 0.75
+      - !type:AdjustReagent
+        probability: 0.25
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        reagent: Mold
+        amount: 1
+      - !type:AdjustReagent
+        probability: 0.75
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        reagent: SpaceDrugs
+        amount: 1
+      - !type:AdjustReagent
+        probability: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        reagent: THC
+        amount: 1
+      - !type:AdjustReagent
+        probability: 0.25
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        reagent: Lipozine
+        amount: 0.5
+      - !type:AdjustReagent
+        probability: 0.5
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        reagent: Impedrezene
+        amount: 1
+      - !type:AdjustReagent
+        probability: 0.2
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        reagent: Stellibinin
+        amount: 1
+      - !type:AdjustReagent
+        probability: 0.25
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        reagent: Pax
+        amount: 1
+      - !type:AdjustReagent
+        probability: 0.25
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        reagent: Histamine
+        amount: 1
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Mycophylin
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Mycophylin
+        amount: 0.1

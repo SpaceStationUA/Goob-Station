@@ -1,0 +1,368 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseNeocyteAppearance
+  - BaseSpeciesDummy
+  id: AppearanceNeoVulpkanin
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: HumanoidAppearance
+    species: NeoVulpkanin
+    hideLayersOnEquip:
+    - Snout
+    - SnoutCover
+    - HeadTop
+    - HeadSide
+    - FacialHair
+    - Hair
+  - type: Inventory
+    speciesId: vulpkanin
+    displacements:
+      head:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: head
+      outerClothing:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerClothing
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+    femaleDisplacements:
+      head:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: head
+      outerClothing:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerClothing
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+  - type: Sprite
+    netsync: false
+    layers:
+    - map:
+      - enum.HumanoidVisualLayers.Groin
+    - map:
+      - enum.HumanoidVisualLayers.Chest
+    - map:
+      - enum.HumanoidVisualLayers.Head
+    - map:
+      - enum.HumanoidVisualLayers.Snout
+    - map:
+      - enum.HumanoidVisualLayers.Eyes
+    - map:
+      - enum.HumanoidVisualLayers.FaceCover
+    - map:
+      - enum.HumanoidVisualLayers.FaceCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.RArm
+    - map:
+      - enum.HumanoidVisualLayers.LArm
+    - map:
+      - enum.HumanoidVisualLayers.RLeg
+    - map:
+      - enum.HumanoidVisualLayers.LLeg
+    - map:
+      - enum.HumanoidVisualLayers.BodyCover
+    - map:
+      - enum.HumanoidVisualLayers.BodyCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentBottom
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentTop
+    - map:
+      - jumpsuit
+    - map:
+      - enum.HumanoidVisualLayers.LFoot
+    - map:
+      - enum.HumanoidVisualLayers.RFoot
+    - map:
+      - enum.HumanoidVisualLayers.LHand
+    - map:
+      - enum.HumanoidVisualLayers.RHand
+    - map:
+      - gloves
+    - map:
+      - shoes
+    - map:
+      - ears
+    - map:
+      - eyes
+    - map:
+      - outerClothing
+    - map:
+      - belt
+    - map:
+      - id
+    - map:
+      - back
+    - map:
+      - neck
+    - map:
+      - enum.HumanoidVisualLayers.SnoutCover
+    - map:
+      - enum.HumanoidVisualLayers.FacialHair
+    - map:
+      - enum.HumanoidVisualLayers.Hair
+    - map:
+      - enum.HumanoidVisualLayers.HeadSide
+    - map:
+      - enum.HumanoidVisualLayers.HeadTop
+    - map:
+      - enum.HumanoidVisualLayers.Tail
+    - map:
+      - mask
+    - map:
+      - head
+    - map:
+      - pocket1
+    - map:
+      - pocket2
+    - map:
+      - enum.HumanoidVisualLayers.Handcuffs
+      color: '#ffffff'
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+- type: entity
+  parent:
+  - BaseMobNeocyte
+  id: BaseMobNeoVulpkanin
+  name: Urist McVulpster
+  abstract: true
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Canilunzt
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Canilunzt
+    - Fox
+    - Dog
+  - type: Wagging
+  - type: Hunger
+    baseDecayRate: 0.018
+  - type: Thirst
+    baseDecayRate: 0.125
+  - type: TemperatureDamage
+    heatDamageThreshold: 325
+    coldDamageThreshold: 230
+    coldDamage:
+      types:
+        Cold: 0.05
+    heatDamage:
+      types:
+        Heat: 1.75
+  - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 46
+  - type: TemperatureProtection
+    heatingCoefficient: 1.2
+    coolingCoefficient: 0.3
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: SulfurBlood
+        Quantity: 600
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Proto-Vulp/parts.rsi
+    state: full
+  - type: Damageable
+    damageContainer: Hybrid
+    damageModifierSet: NeoVulpkanin
+  - type: Body
+    prototype: NeoVulpkanin
+    requiredLegs: 2
+  - type: HumanoidAppearance
+    species: NeoVulpkanin
+    hideLayersOnEquip:
+    - Snout
+    - SnoutCover
+    - HeadTop
+    - HeadSide
+    - FacialHair
+    - Hair
+  - type: Inventory
+    speciesId: vulpkanin
+    displacements:
+      head:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: head
+      outerClothing:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerClothing
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+    femaleDisplacements:
+      head:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: head
+      outerClothing:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerClothing
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: jumpsuit
+      shoes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: shoes
+  - type: ContentEye
+    targetZoom: 1.125, 1.125
+    maxZoom: 1.125, 1.125
+  - type: Vocal
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Piercing: 2
+        Slash: 3
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/brute_damage.rsi
+        color: '#ccac1f'
+      Burn:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/burn_damage.rsi
+  - type: MessyDrinker
+    spillChance: 0.05
+  - type: Sprite
+    netsync: false
+    layers:
+    - map:
+      - enum.HumanoidVisualLayers.Groin
+    - map:
+      - enum.HumanoidVisualLayers.Chest
+    - map:
+      - enum.HumanoidVisualLayers.Head
+    - map:
+      - enum.HumanoidVisualLayers.Snout
+    - map:
+      - enum.HumanoidVisualLayers.Eyes
+    - map:
+      - enum.HumanoidVisualLayers.FaceCover
+    - map:
+      - enum.HumanoidVisualLayers.FaceCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.RArm
+    - map:
+      - enum.HumanoidVisualLayers.LArm
+    - map:
+      - enum.HumanoidVisualLayers.RLeg
+    - map:
+      - enum.HumanoidVisualLayers.LLeg
+    - map:
+      - enum.HumanoidVisualLayers.BodyCover
+    - map:
+      - enum.HumanoidVisualLayers.BodyCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentBottom
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentTop
+    - map:
+      - jumpsuit
+    - map:
+      - enum.HumanoidVisualLayers.LFoot
+    - map:
+      - enum.HumanoidVisualLayers.RFoot
+    - map:
+      - enum.HumanoidVisualLayers.LHand
+    - map:
+      - enum.HumanoidVisualLayers.RHand
+    - map:
+      - gloves
+    - map:
+      - shoes
+    - map:
+      - ears
+    - map:
+      - eyes
+    - map:
+      - outerClothing
+    - map:
+      - belt
+    - map:
+      - id
+    - map:
+      - back
+    - map:
+      - neck
+    - map:
+      - enum.HumanoidVisualLayers.SnoutCover
+    - map:
+      - enum.HumanoidVisualLayers.FacialHair
+    - map:
+      - enum.HumanoidVisualLayers.Hair
+    - map:
+      - enum.HumanoidVisualLayers.HeadSide
+    - map:
+      - enum.HumanoidVisualLayers.HeadTop
+    - map:
+      - enum.HumanoidVisualLayers.Tail
+    - map:
+      - mask
+    - map:
+      - head
+    - map:
+      - pocket1
+    - map:
+      - pocket2
+    - map:
+      - enum.HumanoidVisualLayers.Handcuffs
+      color: '#ffffff'
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: CreamPied
+    sprite:
+      sprite: _Pirate/StarlightSpecies/Shared/Effects/creampie.rsi
+      state: creampie_vulpkanin

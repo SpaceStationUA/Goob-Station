@@ -1,0 +1,338 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  save: false
+  parent:
+  - BaseNeocyteAppearance
+  - BaseSpeciesDummy
+  id: AppearanceNeoKin
+  categories:
+  - HideSpawnMenu
+  description: A dummy neokin meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: NeoKin
+- type: entity
+  save: false
+  name: Urist McShadowster
+  parent:
+  - MobBloodstream
+  - MobAtmosStandard
+  - MobFlammable
+  - BaseMobSpecies
+  id: BaseMobNeoKin
+  abstract: true
+  components:
+  - type: Neocyte
+    frameLoadoutGroup: NeocyteCybernetics
+    frameSlot: outerClothing2
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - RobotTalk
+    - Marish
+    understands:
+    - TauCetiBasic
+    - RobotTalk
+    - Marish
+    - Psychomantic
+  - type: Repairable
+    doAfterDelay: 1
+    selfRepairPenalty: 1.3
+    allowSelfRepair: true
+    fuelCost: 7.5
+    damage:
+      types:
+        Blunt: -8
+        Piercing: -8
+        Slash: -8
+  - type: Absorbable
+  - type: Hunger
+  - type: Thirst
+  - type: HumanoidAppearance
+    species: NeoKin
+    hideLayersOnEquip:
+    - Hair
+  - type: Inventory
+    speciesId: shadowkin
+    templateId: neocyte
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Proto-Kin/parts.rsi
+    state: full
+  - type: Body
+    prototype: NeoKin
+    requiredLegs: 2
+  - type: UserInterface
+    interfaces:
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      enum.ThavenMoodsUiKey.Key:
+        type: ThavenMoodsBoundUserInterface
+        requireInputValidation: false
+  - type: GlitchOnIonStorm
+    duration: 25
+    ramp: 3
+  - type: HumanoidEMPComposite
+  - type: HumanoidEMP
+    effectCooldown: 2
+    effect:
+      knockdownAmount: 1.0
+      slowdownAmount: 15.0
+      walkSpeedModifier: 0.5
+      sprintSpeedModifier: 0.5
+      dropItemsFrom:
+      - body_part_slot_right hand
+      - body_part_slot_left hand
+      additionalEffects:
+        StatusEffectTemporaryBlindness: 2.0
+      damageAmount:
+        types:
+          Shock: 10
+          Heat: 10
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+  - type: Vocal
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+  - type: Damageable
+    damageContainer: Hybrid
+    damageModifierSet: NeoKin
+  - type: Deathgasp
+  - type: Reactive
+    groups:
+      Flammable:
+      - Touch
+      Extinguish:
+      - Touch
+      Acidic:
+      - Touch
+      - Ingestion
+    reactions:
+    - reagents:
+      - Water
+      - SpaceCleaner
+      methods:
+      - Touch
+      effects:
+      - !type:WashCreamPie ''
+      - !type:Emote
+        emote: Hisses
+        showInChat: false
+  - type: Bloodstream
+    bloodlossDamage:
+      types:
+        Bloodloss: 1
+    bloodlossHealDamage:
+      types:
+        Bloodloss: -0.25
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: BlackBlood
+        Quantity: 600
+  - type: Flammable
+    damage:
+      types:
+        Heat: 1.5
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Blunt: -0.05
+        Piercing: -0.05
+        Slash: -0.05
+        Heat: -0.07
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior {}
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShadowkinShadow:
+            min: 1
+            max: 1
+    - trigger: !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 1500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+          ShadowkinShadow:
+            min: 1
+            max: 1
+      - !type:BurnBodyBehavior {}
+  - type: Barotrauma
+    protectionSlots:
+    - head
+    alternativeProtectionSlots:
+    - - outerClothing
+      - outerClothing2
+    damage:
+      types:
+        Blunt: 0.85
+        Heat: 0.1
+  - type: Fingerprint
+  - type: Blindable
+  - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: TemperatureDamage
+    heatDamageThreshold: 325
+    coldDamageThreshold: 260
+    coldDamage:
+      types:
+        Cold: 0.1
+    heatDamage:
+      types:
+        Heat: 1.5
+  - type: TemperatureSpeed
+    thresholds:
+      '293': 0.8
+      '280': 0.6
+      '260': 0.4
+  - type: ThermalRegulator
+    metabolismHeat: 800
+    radiatedHeat: 100
+    implicitHeatRegulation: 500
+    sweatHeatRegulation: 2000
+    shiveringHeatRegulation: 2000
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 2
+  - type: Perishable
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 5
+  - type: FireVisuals
+    alternateState: Standing
+  - type: UniversalHealModifier
+    modifier: 0.5
+  - type: Sprite
+    layers:
+    - map:
+      - enum.HumanoidVisualLayers.Groin
+    - map:
+      - enum.HumanoidVisualLayers.Chest
+    - map:
+      - enum.HumanoidVisualLayers.Head
+    - map:
+      - enum.HumanoidVisualLayers.Snout
+    - map:
+      - enum.HumanoidVisualLayers.Eyes
+    - map:
+      - enum.HumanoidVisualLayers.FaceCover
+    - map:
+      - enum.HumanoidVisualLayers.FaceCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.RArm
+    - map:
+      - enum.HumanoidVisualLayers.LArm
+    - map:
+      - enum.HumanoidVisualLayers.RLeg
+    - map:
+      - enum.HumanoidVisualLayers.LLeg
+    - map:
+      - enum.HumanoidVisualLayers.BodyCover
+    - map:
+      - enum.HumanoidVisualLayers.BodyCoverCover
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentBottom
+    - map:
+      - enum.HumanoidVisualLayers.UndergarmentTop
+    - map:
+      - jumpsuit
+    - map:
+      - enum.HumanoidVisualLayers.LFoot
+    - map:
+      - enum.HumanoidVisualLayers.RFoot
+    - map:
+      - enum.HumanoidVisualLayers.LHand
+    - map:
+      - outerClothing2
+    - map:
+      - enum.HumanoidVisualLayers.RHand
+    - map:
+      - gloves
+    - map:
+      - shoes
+    - map:
+      - ears
+    - map:
+      - eyes
+    - map:
+      - outerClothing
+    - map:
+      - belt
+    - map:
+      - id
+    - map:
+      - back
+    - map:
+      - neck
+    - map:
+      - enum.HumanoidVisualLayers.SnoutCover
+    - map:
+      - enum.HumanoidVisualLayers.FacialHair
+    - map:
+      - enum.HumanoidVisualLayers.Hair
+    - map:
+      - enum.HumanoidVisualLayers.HeadSide
+    - map:
+      - enum.HumanoidVisualLayers.HeadTop
+    - map:
+      - enum.HumanoidVisualLayers.Tail
+    - map:
+      - mask
+    - map:
+      - head
+    - map:
+      - pocket1
+    - map:
+      - pocket2
+    - map:
+      - enum.HumanoidVisualLayers.Handcuffs
+      color: '#ffffff'
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - Neocyte
+    - Shadekin
+    - NeoKin
+    - SiliconEmotesFH
+    - NotLabelable
+  - type: Shadowkin
+  - type: Psionic
+  - type: PotentialPsionic
+    speciesBonusChance: 0.1
+    mindbrokenExamineDesc: examine-mindbroken-shadowkin-message
+  - type: CollectiveMind
+    defaultChannel: Empathy
+    channels:
+    - Empathy

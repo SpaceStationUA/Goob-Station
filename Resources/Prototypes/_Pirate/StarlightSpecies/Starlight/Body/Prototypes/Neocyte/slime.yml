@@ -1,0 +1,58 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: body
+  id: NeoSlime
+  name: neo-slime
+  root: torso
+  slots:
+    head:
+      part: HeadSlime
+      connections:
+      - torso
+      organs:
+        eyes: OrganNeoSlimePeepoids
+        tongue: OrganNeoSlimeSlurpoid
+    torso:
+      part: ChestSlime
+      connections:
+      - right arm
+      - left arm
+      - groin
+      organs:
+        heart: OrganNeoSlimeHeart
+        core: SentientNeoSlimeCore
+        lungs: OrganNeoSlimeLungs
+    right arm:
+      part: RightArmSlime
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmSlime
+      connections:
+      - left hand
+    right hand:
+      part: RightHandSlime
+      organs: {}
+    left hand:
+      part: LeftHandSlime
+      organs: {}
+    right leg:
+      part: RightLegSlime
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegSlime
+      connections:
+      - left foot
+    right foot:
+      part: RightFootSlime
+    left foot:
+      part: LeftFootSlime
+    groin:
+      part: GroinSlime
+      connections:
+      - right leg
+      - left leg
+      organs:
+        cavity: null

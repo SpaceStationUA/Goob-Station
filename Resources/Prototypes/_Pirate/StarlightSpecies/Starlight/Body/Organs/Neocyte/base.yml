@@ -1,0 +1,338 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: BaseNeocyteOrgan
+  parent: BaseHumanOrgan
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/organs.rsi
+  - type: Organ
+  - type: Edible
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+    - people
+  - type: Tag
+    tags:
+    - Meat
+- type: entity
+  id: OrganNeoFelionoidTongue
+  parent:
+  - OrganNeocyteTongue
+  suffix: Neo-Felionoid
+  components:
+  - type: OrganTongue
+    sounds:
+      Male: NeoFelionoidMSounds
+      Female: NeoFelionoidFSounds
+      Unsexed: NeoFelionoidMSounds
+- type: entity
+  id: OrganNeoVulpkaninTongue
+  parent:
+  - OrganNeocyteTongue
+  suffix: Neo-Vulpkanin
+  components:
+  - type: OrganTongue
+    sounds:
+      Male: NeoVulpkaninMSounds
+      Female: NeoVulpkaninFSounds
+      Unsexed: NeoVulpkaninMSounds
+- type: entity
+  id: OrganNeocyteBrain
+  parent:
+  - OrganHumanBrain
+  - BaseNeocyteOrgan
+  name: cybernetic brain
+  suffix: Neocyte
+  description: The source of incredible, unending intelligence. 01201020 02102111 01201210 02121012 20121210
+  components:
+  - type: Sprite
+    state: brain
+- type: entity
+  id: OrganNeocyteEyes
+  parent:
+  - BaseNeocyteOrgan
+  - OrganHumanEyes
+  name: cybernetic eyes
+  suffix: Neocyte
+  description: It's still focusing on you.. Creepy.
+  components:
+  - type: Sprite
+    layers:
+    - state: eyeball-l
+    - state: eyeball-r
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
+  - type: Organ
+- type: entity
+  id: OrganNeocyteHeart
+  parent:
+  - BaseNeocyteOrgan
+  - OrganHumanHeart
+  name: cybernetic heart
+  suffix: Neocyte
+  description: Doesn't actually need to beat, simply mimics the movement to provide comfort for the user.
+  components:
+  - type: Tag
+    tags:
+    - Meat
+    - Heart
+  - type: Sprite
+    state: heart-on
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes:
+    - Neocyte
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+  - type: Item
+    size: Small
+    heldPrefix: heart
+  - type: Organ
+- type: entity
+  id: OrganNeocyteKidneys
+  parent:
+  - BaseNeocyteOrgan
+  - OrganHumanKidneys
+  name: cybernetic kidneys
+  suffix: Neocyte
+  description: Pumps toxins out of the bloodstream and serves as a minor biological battery for electrical components
+  components:
+  - type: Sprite
+    layers:
+    - state: kidney-l
+    - state: kidney-r
+  - type: Item
+    size: Small
+    heldPrefix: kidneys
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes:
+    - Neocyte
+  - type: Organ
+- type: entity
+  id: OrganNeocyteLiver
+  parent:
+  - BaseNeocyteOrgan
+  - OrganHumanLiver
+  name: cybernetic liver
+  suffix: Neocyte
+  description: Pairing suggestion, a side of fermented RAM sticks and a nice CPU.
+  components:
+  - type: Sprite
+    state: liver
+  - type: Item
+    size: Small
+    heldPrefix: liver
+  - type: Metabolizer
+    maxReagents: 1
+    metabolizerTypes:
+    - Neocyte
+    groups:
+    - id: Alcohol
+  - type: Organ
+- type: entity
+  id: OrganNeocyteLungs
+  parent:
+  - BaseNeocyteOrgan
+  - OrganHumanLungs
+  name: cybernetic lungs
+  suffix: Neocyte
+  description: Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier.
+    Entirely cybernetic in nature, working in tandem with the visor's filtration system.
+  components:
+  - type: Sprite
+    layers:
+    - state: lung-l
+    - state: lung-r
+  - type: Item
+    size: Small
+    heldPrefix: lungs
+  - type: Lung
+  - type: Metabolizer
+    metabolizerTypes:
+    - Neocyte
+    groups:
+    - id: Gas
+      rateModifier: 100
+    removeEmpty: true
+    solutionOnBody: false
+    solution: Lung
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+      Lung:
+        maxVol: 100
+        canReact: false
+  - type: Organ
+- type: entity
+  id: OrganNeocyteStomach
+  parent:
+  - OrganAnimalStomach
+  - OrganHumanStomach
+  name: biological reactor
+  suffix: Neocyte
+  description: Some call it over-engineered, but it's vital to the function of a neocyte. Turns organic matter into organic
+    and electrical energy to power the neocyte's cybernetics and flesh.
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/FarHorizons/Mobs/Species/Protogen/organs.rsi
+    state: stomach
+  - type: Item
+    size: Small
+    heldPrefix: stomach
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - RamChip
+    isSpecialDigestibleExclusive: false
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+      stomach:
+        maxVol: 50
+  - type: Organ
+- type: entity
+  id: OrganNeocyteTongue
+  parent:
+  - BaseNeocyteOrgan
+  - OrganHumanTongue
+  name: cybernetic tongue
+  suffix: Neocyte
+  description: A completely glowing organ commonly used for lying or self-expression. Sometimes both.
+  components:
+  - type: OrganTongue
+    allowedEmotes:
+    - Chirp
+    - Hisses
+    - Squish
+    - Bubble
+    - Pop
+    - Bubble
+    - Pop
+    - Purr
+    - Growl
+    - Trill
+    - Scree
+    - Call
+    - Squawk
+    - Bark
+    - Snarl
+    - Whine
+    - Howl
+    - Yip
+    - Mew
+    - Meow
+    - Liss
+    - Lurr
+    - Rattle
+    - Marr
+    - Wurble
+    - Chitter
+    - Squeak
+    - Click
+    - Beep
+    - Ping
+    - Buzz
+    - Buzz-Two
+    - Chime
+    - Honk
+    - ThavenHum
+    - ThavenGlub
+    - Squee
+    - Snort
+    - Sneeze
+    - LagomorphSnore
+    sounds:
+      Male: NeoHumanMSounds
+      Female: NeoHumanFSounds
+      Unsexed: NeoHumanMSounds
+  - type: Sprite
+    state: tongue
+  - type: Organ
+- type: entity
+  id: OrganNeocyteTongueForked
+  parent:
+  - BaseNeocyteOrgan
+  - OrganHumanTongue
+  name: forked cybernetic tongue
+  suffix: Neocyte
+  description: A completely glowing organ commonly used for lying or self-expression. Sometimes both. Now split in two.
+  components:
+  - type: OrganTongue
+    allowedEmotes:
+    - Chirp
+    - Hisses
+    - Squish
+    - Bubble
+    - Pop
+    - Bubble
+    - Pop
+    - Purr
+    - Growl
+    - Trill
+    - Scree
+    - Call
+    - Squawk
+    - Bark
+    - Snarl
+    - Whine
+    - Howl
+    - Yip
+    - Mew
+    - Meow
+    - Liss
+    - Lurr
+    - Rattle
+    - Marr
+    - Wurble
+    - Chitter
+    - Squeak
+    - Click
+    - Beep
+    - Ping
+    - Buzz
+    - Buzz-Two
+    - Chime
+    - Honk
+    - ThavenHum
+    - ThavenGlub
+    - Squee
+    - Snort
+    - Sneeze
+    - LagomorphSnore
+    sounds:
+      Male: NeoHumanMSounds
+      Female: NeoHumanFSounds
+      Unsexed: NeoHumanMSounds
+  - type: Sprite
+    state: tongueforked

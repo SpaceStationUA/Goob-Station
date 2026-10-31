@@ -5,6 +5,11 @@
   effects:
   - !type:SpeciesLoadoutEffect
     species:
+    # Pirate: lobby species ported from Starlight.
+    - Cyclorite
+    - NeoCyclorite
+    - NeoVox
+    - NeoSlimePerson
     - SlimePerson
     - Vox
 
@@ -13,6 +18,25 @@
   effects:
   - !type:SpeciesLoadoutEffect
     species:
+    # Pirate: lobby species ported from Starlight.
+    - Elf
+    - Felionoid
+    - Lagomorph
+    - Neocyte
+    - NeoArachnid
+    - NeoAvali
+    - NeoDiona
+    - NeoDwarf
+    - NeoElf
+    - NeoFelionoid
+    - NeoHuman
+    - NeoKin
+    - NeoLagomorph
+    - NeoMoth
+    - NeoReptilian
+    - NeoResomi
+    - NeoThaven
+    - NeoVulpkanin
     - Arachnid
     - Diona
     - Dwarf
@@ -97,6 +121,24 @@
   effects:
   - !type:SpeciesLoadoutEffect
     species:
+    # Pirate: lobby species ported from Starlight.
+    - Elf
+    - Felionoid
+    - Lagomorph
+    - Neocyte
+    - NeoArachnid
+    - NeoAvali
+    - NeoDiona
+    - NeoDwarf
+    - NeoElf
+    - NeoFelionoid
+    - NeoHuman
+    - NeoKin
+    - NeoLagomorph
+    - NeoReptilian
+    - NeoResomi
+    - NeoThaven
+    - NeoVulpkanin
     - Arachnid
     - Diona
     - Dwarf
@@ -119,6 +161,8 @@
   effects:
   - !type:SpeciesLoadoutEffect
     species:
+    # Pirate: lobby species ported from Starlight.
+    - NeoMoth
     - Moth
 
 - type: loadout
