@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared._Pirate.StarlightSpecies;
 using Content.Shared.Body.Events;
-using Content.Shared.Body.Organ;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
@@ -21,20 +20,15 @@ public sealed class OrganTongueSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<OrganComponent, ComponentInit>(OnOrganInit);
         SubscribeLocalEvent<TongueVoiceOrganComponent, OrganAddedToBodyEvent>(OnAdded);
         SubscribeLocalEvent<OrganTongueComponent, OrganRemovedFromBodyEvent>(OnRemoved);
     }
 
-    private void OnOrganInit(Entity<OrganComponent> ent, ref ComponentInit args)
-    {
-        // Pirate: use a tongue marker; the native knowledge system owns OrganAddedToBodyEvent on OrganComponent.
-        if (ent.Comp.SlotId == "tongue" || HasComp<OrganTongueComponent>(ent))
-            EnsureComp<TongueVoiceOrganComponent>(ent);
-    }
-
     private void OnAdded(Entity<TongueVoiceOrganComponent> ent, ref OrganAddedToBodyEvent args)
     {
+        if (TerminatingOrDeleted(args.Body))
+            return;
+
         if (TryComp<OrganTongueComponent>(ent, out var tongue))
         {
             RestoreSpeech(args.Body);
@@ -59,6 +53,9 @@ public sealed class OrganTongueSystem : EntitySystem
 
     private void OnRemoved(Entity<OrganTongueComponent> ent, ref OrganRemovedFromBodyEvent args)
     {
+        if (TerminatingOrDeleted(args.OldBody))
+            return;
+
         if (TryComp<SpeechComponent>(args.OldBody, out var speech))
         {
             speech.AllowedEmotes.RemoveAll(e => ent.Comp.AllowedEmotes.Contains(e));

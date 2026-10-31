@@ -100,6 +100,7 @@
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Slime/organs.rsi
     state: slurpoid
   - type: Organ
+  - type: TongueVoiceOrgan
 - type: entity
   id: SentientNeoSlimeCore
   parent:

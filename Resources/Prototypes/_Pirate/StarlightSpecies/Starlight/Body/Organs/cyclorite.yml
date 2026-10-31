@@ -200,3 +200,4 @@
       Unsexed: MaleCyclorite
   - type: Sprite
     state: tongue
+  - type: TongueVoiceOrgan

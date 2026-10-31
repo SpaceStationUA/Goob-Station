@@ -139,7 +139,7 @@ public sealed class DollShellSystem : EntitySystem
 
     private void OnRemoved(Entity<OrganShellComponent> ent, ref OrganRemovedFromBodyEvent args)
     {
-        if (_net.IsClient || !TryComp<ShellComponent>(args.OldBody, out var shell))
+        if (_net.IsClient || TerminatingOrDeleted(args.OldBody) || !TryComp<ShellComponent>(args.OldBody, out var shell))
             return;
         if (TryComp<BodyPartComponent>(args.OldPart, out var part) &&
             TryComp<HumanoidAppearanceComponent>(args.OldBody, out var appearance) &&

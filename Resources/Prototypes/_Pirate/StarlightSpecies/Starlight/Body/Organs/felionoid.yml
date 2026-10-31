@@ -28,3 +28,4 @@
       Male: MaleFelionoid
       Female: FemaleFelionoid
       Unsexed: MaleFelionoid
+  - type: TongueVoiceOrgan

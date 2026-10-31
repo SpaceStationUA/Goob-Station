@@ -69,3 +69,4 @@
       Male: MaleLagomorph
       Female: FemaleLagomorph
       Unsexed: FemaleLagomorph
+  - type: TongueVoiceOrgan

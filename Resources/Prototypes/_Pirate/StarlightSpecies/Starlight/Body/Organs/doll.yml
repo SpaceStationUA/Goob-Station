@@ -3,7 +3,9 @@
 
 - type: entity
   id: BaseDollOrgan
-  parent: BaseHumanOrgan
+  parent:
+  - BaseMob
+  - BaseHumanOrgan
   abstract: true
   components:
   - type: Sprite
@@ -316,6 +318,7 @@
       Unsexed: FemaleHuman
   - type: Sprite
     state: tongue
+  - type: TongueVoiceOrgan
 - type: entity
   id: ShellFragmentDoll
   parent:

@@ -40,6 +40,7 @@
       Male: NeoFelionoidMSounds
       Female: NeoFelionoidFSounds
       Unsexed: NeoFelionoidMSounds
+  - type: TongueVoiceOrgan
 - type: entity
   id: OrganNeoVulpkaninTongue
   parent:
@@ -51,6 +52,7 @@
       Male: NeoVulpkaninMSounds
       Female: NeoVulpkaninFSounds
       Unsexed: NeoVulpkaninMSounds
+  - type: TongueVoiceOrgan
 - type: entity
   id: OrganNeocyteBrain
   parent:
@@ -277,6 +279,7 @@
   - type: Sprite
     state: tongue
   - type: Organ
+  - type: TongueVoiceOrgan
 - type: entity
   id: OrganNeocyteTongueForked
   parent:
@@ -332,3 +335,4 @@
       Unsexed: NeoHumanMSounds
   - type: Sprite
     state: tongueforked
+  - type: TongueVoiceOrgan

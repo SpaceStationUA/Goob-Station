@@ -130,10 +130,6 @@
     damageContainer: Biological
   - type: BodyPart
     species: Felionoid
-  - type: ContainerContainer
-    containers:
-      bodypart: !type:Container
-        ents: []
   - type: StaticPrice
     price: 100
   - type: Tag

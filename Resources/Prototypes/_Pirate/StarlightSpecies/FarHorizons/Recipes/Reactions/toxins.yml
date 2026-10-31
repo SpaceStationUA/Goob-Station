@@ -1,6 +1,7 @@
 # Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
 # Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
 
+# Pirate: explicit stirring preserves the native AlchemistAcidReaction ingredients until distillation.
 - type: reaction
   id: BatteryAcid
   impact: Medium
@@ -11,3 +12,5 @@
       amount: 3
   products:
     BatteryAcid: 4
+  requiredMixerCategories:
+  - Stir

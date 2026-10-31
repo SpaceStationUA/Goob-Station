@@ -292,6 +292,7 @@ namespace Content.Client.Lobby.UI
 
             #endregion
 
+            InitializeSubspecies(); // Pirate: initialize selectors before RefreshSpecies uses them.
             RefreshSpecies();
 
             SpeciesButton.OnItemSelected += args =>
@@ -304,7 +305,6 @@ namespace Content.Client.Lobby.UI
             };
 
             InitializePirateProfileSelectors(); // Pirate
-            InitializeSubspecies(); // Pirate: Starlight neocyte forms.
 
             // begin Goobstation: port EE height/width sliders
             #region Height and Width

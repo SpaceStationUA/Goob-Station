@@ -65,3 +65,4 @@
   - type: Sprite
     sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Slime/organs.rsi
     state: slurpoid
+  - type: TongueVoiceOrgan
