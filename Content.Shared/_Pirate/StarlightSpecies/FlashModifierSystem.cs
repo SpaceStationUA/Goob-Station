@@ -1,4 +1,3 @@
-using Content.Shared.Flash;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared._Pirate.StarlightSpecies;
@@ -15,9 +14,17 @@ public sealed class FlashModifierSystem : EntitySystem
 {
     public override void Initialize()
     {
-        SubscribeLocalEvent<FlashModifierComponent, FlashDurationMultiplierEvent>(OnFlash);
+        base.Initialize();
+        SubscribeLocalEvent<FlashModifierComponent, FlashEffectDurationEvent>(OnFlash);
     }
 
-    private void OnFlash(EntityUid uid, FlashModifierComponent component, FlashDurationMultiplierEvent args)
-        => args.Multiplier *= component.Modifier;
+    private void OnFlash(Entity<FlashModifierComponent> ent, ref FlashEffectDurationEvent args)
+    {
+        if (float.IsFinite(ent.Comp.Modifier) && ent.Comp.Modifier > 0)
+            args.Duration *= ent.Comp.Modifier;
+    }
 }
+
+/// <summary>Modifies blindness and its associated slowdown, independently of an explicitly supplied stun duration.</summary>
+[ByRefEvent]
+public record struct FlashEffectDurationEvent(TimeSpan Duration);

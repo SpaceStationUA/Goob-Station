@@ -1,10 +1,13 @@
 // Pirate: Starlight frame lifecycle with native profile loadout storage.
 using System.Linq;
+using Content.Server.Antag;
+using Content.Server.Preferences.Managers;
 using Content.Shared._Pirate.StarlightSpecies.Neocyte;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Polymorph;
+using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
@@ -20,6 +23,7 @@ public sealed partial class NeocyteSystem : EntitySystem
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IServerPreferencesManager _preferences = default!;
 
     private readonly HashSet<EntityUid> _pendingFrameChecks = [];
 
@@ -29,6 +33,7 @@ public sealed partial class NeocyteSystem : EntitySystem
 
         SubscribeLocalEvent<NeocyteComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NeocyteComponent, Content.Shared.GameTicking.PlayerSpawnCompleteEvent>(OnSpawnComplete);
+        SubscribeLocalEvent<AfterAntagEntitySelectedEvent>(OnAntagSelected);
         SubscribeLocalEvent<NeocyteComponent, StartingGearEquippedEvent>(OnStartingGearEquipped,
             after: [typeof(LoadoutSystem)]);
         SubscribeLocalEvent<NeocyteComponent, DidEquipEvent>(OnDidEquip);
@@ -177,10 +182,25 @@ public sealed partial class NeocyteSystem : EntitySystem
     }
 
     private void OnSpawnComplete(Entity<NeocyteComponent> ent, ref Content.Shared.GameTicking.PlayerSpawnCompleteEvent args)
+        => ApplyProfileFrame(ent, args.Profile);
+
+    private void OnAntagSelected(ref AfterAntagEntitySelectedEvent args)
+    {
+        // Native antag spawning loads the character profile and equips antagonist gear without PlayerSpawnCompleteEvent.
+        // This event runs after both starting gear and role loadouts, so their explicit frame takes precedence.
+        if (args.Session is not { } session ||
+            !TryComp<NeocyteComponent>(args.EntityUid, out var neocyte) ||
+            _preferences.GetPreferences(session.UserId).SelectedCharacter is not HumanoidCharacterProfile profile)
+            return;
+
+        ApplyProfileFrame((args.EntityUid, neocyte), profile);
+    }
+
+    private void ApplyProfileFrame(Entity<NeocyteComponent> ent, HumanoidCharacterProfile profile)
     {
         if (_inventory.TryGetSlotEntity(ent, ent.Comp.FrameSlot, out _))
             return; // Explicit antagonist or job equipment takes precedence.
-        if (args.Profile.Loadouts.TryGetValue("NeocyteLoadout", out var loadout) &&
+        if (profile.Loadouts.TryGetValue("NeocyteLoadout", out var loadout) &&
             loadout.SelectedLoadouts.TryGetValue(ent.Comp.FrameLoadoutGroup, out var choices) &&
             choices.Count > 0 &&
             _prototypeManager.TryIndex(ent.Comp.FrameLoadoutGroup, out var group) &&
