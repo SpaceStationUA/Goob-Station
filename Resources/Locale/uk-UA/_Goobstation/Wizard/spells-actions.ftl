@@ -36,3 +36,4 @@ action-speech-spell-curse-of-byond = ПРОКЛЯТТЯ БІОНДУ!!
 action-speech-spell-rathen = АРС НАТ!!
 action-speech-spell-cluwne-goob = NWOLC EGNEVER
 action-speech-spell-charge-goob = DI'RI CEL
+action-speech-spell-summon-supermatter = ҐІ'Т ОГ'О РІ'ЛЕР'!!!

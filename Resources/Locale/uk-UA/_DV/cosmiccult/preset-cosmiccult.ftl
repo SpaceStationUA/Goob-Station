@@ -124,7 +124,6 @@ cosmiccult-entropy-unavailable = Ви не можете зробити це за
 cosmiccult-astral-ascendant = {$name}, Вознесений
 cosmiccult-gear-pickup-rejection = {$ITEM} опирається дотику {CAPITALIZE(THE($TARGET))}!
 cosmiccult-gear-pickup = Ви відчуваєте, як розпадаєтеся, тримаючи {$ITEM}!
-cult-alert-recall-shuttle = На борту станції виявлено високі концентрації Λ-CDM невідомого походження. Усі аномальні прояви мають бути знищені або стримані перед тим, як буде дозволено евакуацію.
 cosmiccult-rift-wasempowered = Ваше тіло не витримає другого посилення...
 cosmiccult-chantry-location = Виявлено небезпечне зростання Λ-CDM {$location}! Перехопіть і втруться негайно.
 cosmiccult-chantry-powerup = Порожня Каплиця спалахує життям!
@@ -141,3 +140,4 @@ cosmiccult-silicon-chantry-briefing = Вас ув’язнено в Порожн
     Ритуал завершиться через {$minutesandseconds}.
 cosmiccult-silicon-colossus-briefing = Вас перетворено на Ентропійного Колоса!
     Як височенний бастіон згубної сили, знищуйте тих, хто вам протистоїть.
+cult-alert-block-shuttle = На борту станції виявлено високі концентрації Λ-CDM невідомого походження. Усі аномальні прояви мають бути знищені або стримані, перш ніж буде дозволено евакуацію.

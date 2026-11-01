@@ -1036,6 +1036,7 @@
   - SecurityOfficerGunCase # Pirate: Omu duty case
   - SecurityOfficerSecurityDutyRevolver # Pirate
   - LoadoutSecurityWeaponMk58
+  - WeaponPistolMk58Gold
   - LoadoutSecurityEnergyGunPistol
 
 - type: loadoutGroup
