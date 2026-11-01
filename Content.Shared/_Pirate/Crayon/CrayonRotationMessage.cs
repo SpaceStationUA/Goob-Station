@@ -1,0 +1,11 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using Robust.Shared.Serialization;
+
+namespace Content.Shared._Pirate.Crayon;
+
+[Serializable, NetSerializable]
+public sealed class CrayonRotationMessage(float degrees) : BoundUserInterfaceMessage
+{
+    public readonly float Degrees = degrees;
+}

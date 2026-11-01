@@ -38,6 +38,7 @@ namespace Content.Client.Crayon.UI
 
             Search.OnTextChanged += SearchChanged;
             ColorSelector.OnColorChanged += SelectColor;
+            InitializePirateArt(); // Pirate: floor art controls.
         }
 
         private void SelectColor(Color color)
@@ -67,9 +68,11 @@ namespace Content.Client.Crayon.UI
             {
                 _selected = first;
                 _autoSelected = _selected;
+                PirateClear(); // Pirate: searching for a stock decal leaves custom-symbol mode.
                 OnSelected?.Invoke(_selected);
             }
 
+            PirateAddCustomSymbols(); // Pirate: saved personal drawings.
             foreach (var categoryName in names)
             {
                 var locName = Loc.GetString("crayon-category-" + categoryName);
@@ -104,7 +107,7 @@ namespace Content.Client.Crayon.UI
                     };
                     button.OnPressed += ButtonOnPressed;
 
-                    if (_selected == name)
+                    if (_pirateStencil == null && _selected == name) // Pirate: one selected drawing.
                     {
                         var panelContainer = new PanelContainer()
                         {
@@ -140,6 +143,7 @@ namespace Content.Client.Crayon.UI
 
             _selected = obj.Button.Name;
             _autoSelected = null;
+            PirateClear(); // Pirate: return to the stock decal.
             OnSelected?.Invoke(_selected);
             RefreshList();
         }
