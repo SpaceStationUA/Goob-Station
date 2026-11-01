@@ -85,6 +85,7 @@ public sealed class HairGradientPickerTest
                 Assert.That(colors[0], Is.EqualTo(Color.Blue));
                 Assert.That(colors.Skip(1).Take(colorCount - 1), Has.All.EqualTo(Color.Red));
                 Assert.That(colors[colorCount], Is.EqualTo(new Color(0.25f, initialParameters.G, initialParameters.B, 0f)));
+                applied = picker.FindControl<BoxContainer>("AppliedList").Children.OfType<ContainerButton>().Single();
             });
 
             await Click(pair, applied);

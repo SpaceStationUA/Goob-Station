@@ -162,7 +162,10 @@ public sealed class CrayonSymbolTest : InteractionTest
             Assert.That(stampRotation.EqualsApprox(rotation), Is.True);
         });
         await Client.WaitAssertion(() =>
-            Assert.That(CEntMan.GetComponent<CrayonRotationComponent>(ToClient(crayon)).Rotation.EqualsApprox(Angle.FromDegrees(-52.5)), Is.True));
+        {
+            var rotation = CEntMan.GetComponent<CrayonRotationComponent>(ToClient(crayon)).Rotation;
+            Assert.That(rotation.EqualsApprox(Angle.FromDegrees(-52.5)), Is.True);
+        });
     }
 
     [Test]
@@ -174,7 +177,36 @@ public sealed class CrayonSymbolTest : InteractionTest
             await SendBui(CrayonUiKey.Key, new CrayonRotationMessage(angle), crayon);
 
         await Server.WaitAssertion(() =>
-            Assert.That(SEntMan.GetComponent<CrayonRotationComponent>(ToServer(crayon)).Rotation.EqualsApprox(Angle.FromDegrees(45)), Is.True));
+        {
+            var rotation = SEntMan.GetComponent<CrayonRotationComponent>(ToServer(crayon)).Rotation;
+            Assert.That(rotation.EqualsApprox(Angle.FromDegrees(45)), Is.True);
+        });
+    }
+
+    [Test]
+    public async Task EditorsFromDifferentCrayonsPreserveTheSavedLibrary()
+    {
+        await Client.WaitAssertion(() =>
+        {
+            var first = new CrayonSymbolStorage();
+            var second = new CrayonSymbolStorage();
+            var white = Symbol(CrayonSymbol.Small, White);
+            var red = Symbol(CrayonSymbol.Large, Red);
+            first.Save("first", white);
+            var name = second.Save("second|drawing", red);
+            Assert.That(name, Is.EqualTo("second drawing"));
+            Assert.That(second.Symbols.Select(entry => entry.Name), Is.EquivalentTo(new[] { "first", name }));
+
+            first.Delete("first");
+            var reloaded = new CrayonSymbolStorage();
+            Assert.That(reloaded.Symbols.Select(entry => entry.Name), Is.EqualTo(new[] { name }));
+            Assert.That(reloaded.Symbols.Single().Symbol.SameAs(red), Is.True);
+
+            second.Save("third", white);
+            reloaded = new CrayonSymbolStorage();
+            Assert.That(reloaded.Symbols.Select(entry => entry.Name), Is.EquivalentTo(new[] { name, "third" }),
+                "saving from a stale editor must not resurrect a deleted drawing");
+        });
     }
 
     [Test]

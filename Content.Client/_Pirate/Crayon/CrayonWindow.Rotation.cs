@@ -81,8 +81,9 @@ public sealed partial class CrayonWindow
         var entities = IoCManager.Resolve<IEntityManager>();
         if (entities.TryGetComponent<CrayonRotationComponent>(_crayon, out var rotation) && rotation.Rotation != _seenRotation)
         {
-            _seenRotation = rotation.Rotation;
-            _rotationValue.Text = rotation.Rotation.Degrees.ToString("0.##", CultureInfo.CurrentCulture);
+            var angle = rotation.Rotation;
+            _seenRotation = angle;
+            _rotationValue.Text = angle.Degrees.ToString("0.##", CultureInfo.CurrentCulture);
         }
 
         _previewCheck.Pressed = _pirateConfig.GetCVar(CCVars.PirateCrayonPreview);

@@ -148,7 +148,7 @@ public sealed partial class CrayonWindow
 
         canvas.OnSaved += (saved, symbol) =>
         {
-            _pirateStorage.Save(saved, symbol);
+            saved = _pirateStorage.Save(saved, symbol);
             // This window goes when its crayon leaves the hand, but the drawing stays open: the symbol is
             // still saved, there is just nothing left to select it on.
             if (!Disposed)

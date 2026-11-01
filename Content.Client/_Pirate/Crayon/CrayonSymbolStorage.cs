@@ -25,15 +25,20 @@ public sealed class CrayonSymbolStorage
         Load();
     }
 
-    public void Save(string name, CrayonSymbol symbol)
+    public string Save(string name, CrayonSymbol symbol)
     {
+        // Editors can outlive their crayon window, so merge against the latest library.
+        Load();
+        name = name.Replace('|', ' ').Replace('\r', ' ').Replace('\n', ' ');
         Symbols.RemoveAll(s => s.Name == name);
         Symbols.Add((name, symbol));
         Write();
+        return name;
     }
 
     public void Delete(string name)
     {
+        Load();
         Symbols.RemoveAll(s => s.Name == name);
         Write();
     }
@@ -58,7 +63,7 @@ public sealed class CrayonSymbolStorage
         foreach (var (name, symbol) in Symbols)
         {
             var colors = string.Join(',', symbol.Palette.Select(c => c.ToHex()));
-            writer.WriteLine($"{name.Replace('|', ' ')}|{symbol.Size}|{colors}|{Convert.ToBase64String(symbol.Pixels)}");
+            writer.WriteLine($"{name}|{symbol.Size}|{colors}|{Convert.ToBase64String(symbol.Pixels)}");
         }
     }
 
