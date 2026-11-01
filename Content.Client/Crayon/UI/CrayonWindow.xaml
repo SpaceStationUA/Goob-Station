@@ -8,6 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             SetSize="450 500">
     <BoxContainer Orientation="Vertical">
         <ColorSelectorSliders Name="ColorSelector" Visible="False" />
+        <BoxContainer Name="PirateArtControls" Orientation="Vertical" /> <!-- Pirate: rotation and preview. -->
         <LineEdit Name="Search" Margin="0 0 0 8" PlaceHolder="{Loc 'crayon-window-placeholder'}" />
         <ScrollContainer VerticalExpand="True">
             <BoxContainer Name="Grids" Orientation="Vertical">

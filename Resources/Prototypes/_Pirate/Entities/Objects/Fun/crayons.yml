@@ -32,6 +32,8 @@
     color: Red
     selectableColor: true
     deleteEmpty: false
+  - type: CrayonRotation
+  - type: CrayonSymbol
   - type: StaticPrice
     price: 5
   - type: PaintTool

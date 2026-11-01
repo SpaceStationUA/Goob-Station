@@ -22,6 +22,8 @@
     color: "#47f8ff"
     selectableColor: false
     deleteEmpty: false
+  - type: CrayonRotation
+  - type: CrayonSymbol
   - type: LimitedCharges
     maxCharges: 15
     lastCharges: 15

@@ -13,7 +13,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Crayon;
 
-public sealed class CrayonSystem : SharedCrayonSystem
+public sealed partial class CrayonSystem : SharedCrayonSystem // Pirate: custom floor symbols.
 {
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
@@ -50,7 +50,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
             _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("crayon-drawing-label",
                 ("color", _crayon.Comp.Color),
-                ("state", _crayon.Comp.SelectedState),
+                ("state", PirateState(_crayon)), // Pirate: show the player's selected stencil.
                 ("charges", _charges.GetCurrentCharges(_crayon.Owner)),
                 ("capacity", _capacity ?? 0),
                 ("infinite", _capacity == null))); // Pirate: unlimited crayon status
