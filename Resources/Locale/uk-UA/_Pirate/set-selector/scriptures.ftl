@@ -1,0 +1,14 @@
+pirate-scripture-druid-name = Друїдська скрижаль
+pirate-scripture-druid-description = Це таємниця друїдів!
+pirate-scripture-communist-name = Маніфест комуністичної партії
+pirate-scripture-communist-description = Зірвіть із Капіталу маску людяності.
+pirate-scripture-satanic-name = Сатанинська Біблія
+pirate-scripture-satanic-description = Що ж може піти не так?
+pirate-scripture-narsie-name = Том Нар'Сі
+pirate-scripture-narsie-description = Що може піти не так із книгою, вкритою кров'ю?
+pirate-scripture-nanotrasen-name = Кодекс Нанотразімус
+pirate-scripture-nanotrasen-description = Знайома книга зі Священними Операційними Процедурами.
+pirate-scripture-honk-name = Веселощі Матері Гонку
+pirate-scripture-honk-description = О велика й славна Мати, Володарко Веселощів, Покровителько Масок і Розваг, благословенна ти серед нас, блазнів.
+pirate-scripture-ratvar-name = Скрижаль Ратвара
+pirate-scripture-ratvar-description = Священна реліквія Механічного культу, благословенна Ратваром, Механічним Правосуддям.

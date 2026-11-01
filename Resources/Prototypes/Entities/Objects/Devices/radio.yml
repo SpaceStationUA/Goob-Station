@@ -9,11 +9,10 @@
   - type: TelecomExempt
   - type: RadioMicrophone
     broadcastChannel: Handheld
-    toggleOnInteract: false # Pirate - Handheld Radios port
-  - type: HandheldRadioFrequency
-    frequency: 1330 # Pirate - Handheld Radios port
+    toggleOnInteract: false # Nuclear-14
+    frequency: 1330 # Nuclear-14
   - type: RadioSpeaker
-    toggleOnInteract: false # Pirate - Handheld Radios port
+    toggleOnInteract: false # Nuclear-14
     channels:
     - Handheld
   - type: ListenBlacklist # Goobstation - annoying as shit
@@ -34,14 +33,12 @@
   - type: Tag
     tags:
     - Radio
-  # Pirate start - Handheld Radios port
-  - type: ActivatableUI
+  - type: ActivatableUI # Nuclear-14 start
     key: enum.HandheldRadioUiKey.Key
   - type: UserInterface
     interfaces:
       enum.HandheldRadioUiKey.Key:
-        type: HandheldRadioBoundUserInterface
-  # Pirate end - Handheld Radios port
+        type: HandheldRadioBoundUserInterface # Nuclear-14 start
 
 - type: entity
   name: security radio

@@ -11,11 +11,11 @@ cantrip-glow-description = Створює недовговічну світну 
 store-category-cantrips-standard = Прості закляття
 store-preset-name-cantrips = Закляття виживання для мандрівників
 # Формули заклять вимовляються мовою айелітів.
-action-speech-cantrip-bandage = Sercë, á racë úleasta.
-action-speech-cantrip-mop = Poitina.
-action-speech-cantrip-antidote = Á olë tennoio.
-action-speech-cantrip-spark = Huissë, á tinta.
-action-speech-cantrip-glow = Á calya nin.
+action-speech-cantrip-bandage = Серке, а раке улеаста.
+action-speech-cantrip-mop = Пойтіна.
+action-speech-cantrip-antidote = А оле теннойо.
+action-speech-cantrip-spark = Гуїссе, а тінта.
+action-speech-cantrip-glow = А калья нін.
 reagent-name-elf-tranexamic-acid = кровоспинний осад
 reagent-desc-elf-tranexamic-acid = Таємнича речовина, що запобігає небажаному витіканню крові.
 reagent-physical-desc-elf-tranexamic-acid = згортає кров

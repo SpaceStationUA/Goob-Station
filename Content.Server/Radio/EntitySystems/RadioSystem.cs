@@ -27,7 +27,6 @@ using Content.Shared.Whitelist; // Goobstation
 using Content.Shared.StatusIcon; // Goobstation
 using Content.Goobstation.Shared.Radio; // Goobstation
 using Content.Server._Pirate.ListeningPost.Components; // Pirate - listening post long-range radio
-using Content.Server._Pirate.Radio.Components; // Pirate - Handheld Radios port
 using Content.Shared._Pirate.Radio; // Pirate: radio sounds
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
 
@@ -81,18 +80,17 @@ public sealed partial class RadioSystem : EntitySystem
         }
     }
 
-    // Pirate start - Handheld Radios port
+    //Nuclear-14
+    /// <summary>
+    /// Gets the message frequency, if there is no such frequency, returns the standard channel frequency.
+    /// </summary>
     public int GetFrequency(EntityUid source, RadioChannelPrototype channel)
     {
-        if (TryComp<HandheldRadioFrequencyComponent>(source, out var radioFrequency)
-            && radioFrequency.Frequency != 0)
-        {
-            return radioFrequency.Frequency;
-        }
+        if (TryComp<RadioMicrophoneComponent>(source, out var radioMicrophone))
+            return radioMicrophone.Frequency;
 
         return channel.Frequency;
     }
-    // Pirate end - Handheld Radios port
 
     private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, ref RadioReceiveEvent args)
     {
@@ -247,6 +245,7 @@ public sealed partial class RadioSystem : EntitySystem
         #endregion
 
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
+
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
             if (!radio.ReceiveAllChannels)
