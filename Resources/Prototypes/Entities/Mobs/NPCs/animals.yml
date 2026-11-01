@@ -2960,12 +2960,7 @@
       spawned:
         - id: MaterialBananium1
           amount: 1
-    - type: SolutionRegeneration
-      solution: melee
-      generated:
-        reagents:
-        - ReagentId: CrapoToxin
-          Quantity: 1
+    # Pirate: CrapoToxin remains disabled; keep the inherited spider venom.
     - type: DamageStateVisuals
       states:
         Alive:

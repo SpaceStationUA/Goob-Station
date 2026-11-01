@@ -25963,12 +25963,6 @@ Entries:
     message: Буревій тепер доступний не частіше ніж раз на три раунди.
   id: 3014
   time: '2026-10-31T12:58:55.0000000+00:00'
-- author: acatrw
-  changes:
-  - type: Tweak
-    message: Павуки-клоуни впорскують крапотоксин.
-  id: 3015
-  time: '2026-10-31T22:35:11.0000000+00:00'
 - author: shoebill
   changes:
   - type: Remove
