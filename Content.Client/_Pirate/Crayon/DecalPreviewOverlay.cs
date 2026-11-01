@@ -28,7 +28,6 @@ public sealed class DecalPreviewOverlay : Overlay
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly IInputManager _input = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
@@ -79,7 +78,7 @@ public sealed class DecalPreviewOverlay : Overlay
 
         var mousePos = _eye.PixelToMap(_input.MouseScreenPosition);
         if (mousePos.MapId != args.MapId
-            || !_mapManager.TryFindGridAt(mousePos, out var gridUid, out var grid)
+            || !_map.TryFindGridAt(mousePos, out var gridUid, out var grid)
             || _turf.IsSpace(_map.GetTileRef(gridUid, grid, mousePos))
             || !_interaction.InRangeUnobstructed(user, mousePos))
             return;
