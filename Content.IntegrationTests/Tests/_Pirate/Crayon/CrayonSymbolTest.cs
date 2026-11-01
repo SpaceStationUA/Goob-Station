@@ -18,10 +18,12 @@ using Content.Shared.Charges.Components;
 using Content.Shared.Decals;
 using Content.Shared.Input;
 using Content.Goobstation.Maths.FixedPoint;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
@@ -81,6 +83,164 @@ public sealed class CrayonSymbolTest : InteractionTest
 
     private static readonly Color White = Color.White;
     private static readonly Color Red = Color.Red;
+
+    [TestCase(false, 1, CrayonMirror.None)]
+    [TestCase(true, 1, CrayonMirror.None)]
+    [TestCase(false, 4, CrayonMirror.Both)]
+    [TestCase(true, 4, CrayonMirror.Both)]
+    public async Task FastBrushAndEraserDragsLeaveContinuousStrokes(bool erase, int brushSize, CrayonMirror mirror)
+    {
+        CrayonCanvas canvas = null;
+        await Client.WaitPost(() =>
+        {
+            canvas = new CrayonCanvas { Brush = erase ? null : Red, BrushSize = brushSize, Mirror = mirror };
+            if (erase)
+            {
+                var filled = Symbol(CrayonSymbol.Small, Red);
+                Array.Fill(filled.Pixels, (byte) 1);
+                canvas.Load(filled);
+            }
+
+            Client.ResolveDependency<IUserInterfaceManager>().StateRoot.AddChild(canvas);
+        });
+
+        try
+        {
+            await RunTicks(1);
+            await Key(BoundKeyState.Down, 2, 3);
+            await Move(10, 3);
+            await Move(14, 7);
+            // The release may arrive at a new cell without a preceding mouse-move event.
+            await Key(BoundKeyState.Up, 18, 7);
+            await Move(25, 20);
+            await Key(BoundKeyState.Down, 25, 20);
+            await Key(BoundKeyState.Up, 25, 20);
+
+            await Client.WaitAssertion(() =>
+            {
+                var expected = new HashSet<Vector2i>();
+                for (var x = 2; x <= 10; x++)
+                    AddBrush(x, 3);
+                for (var d = 0; d <= 4; d++)
+                    AddBrush(10 + d, 3 + d);
+                for (var x = 14; x <= 18; x++)
+                    AddBrush(x, 7);
+                AddBrush(25, 20);
+
+                var result = canvas.ToSymbol();
+                for (var y = 0; y < result.Size; y++)
+                for (var x = 0; x < result.Size; x++)
+                {
+                    var pixel = result.Pixels[y * result.Size + x];
+                    Color? actual = pixel == 0 ? null : result.Palette[pixel - 1];
+                    Color? color = expected.Contains(new Vector2i(x, y)) != erase ? Red : null;
+                    Assert.That(actual, Is.EqualTo(color), $"Unexpected brush result at ({x}, {y})");
+                }
+
+                void AddBrush(int x, int y)
+                {
+                    var offset = (brushSize - 1) / 2;
+                    for (var dy = 0; dy < brushSize; dy++)
+                    for (var dx = 0; dx < brushSize; dx++)
+                    {
+                        var at = new Vector2i(x + dx - offset, y + dy - offset);
+                        expected.Add(at);
+                        if (mirror != CrayonMirror.Both)
+                            continue;
+
+                        var far = canvas.Size - 1;
+                        expected.Add(new Vector2i(far - at.X, at.Y));
+                        expected.Add(new Vector2i(at.X, far - at.Y));
+                        expected.Add(new Vector2i(far - at.X, far - at.Y));
+                    }
+                }
+            });
+        }
+        finally
+        {
+            await Client.WaitPost(() =>
+            {
+                canvas.Parent?.RemoveChild(canvas);
+                canvas.Dispose();
+            });
+        }
+
+        Vector2 Position(int x, int y) => new Vector2(x + 0.5f, y + 0.5f) * (canvas.PixelSize.X / (float) canvas.Size);
+
+        Task Key(BoundKeyState state, int x, int y)
+        {
+            var pixel = Position(x, y);
+            return Client.DoGuiEvent(canvas, new GUIBoundKeyEventArgs(
+                EngineKeyFunctions.UIClick, state, new ScreenCoordinates(Vector2.Zero, default), false, pixel, pixel));
+        }
+
+        Task Move(int x, int y) => Client.WaitPost(() =>
+        {
+            var pixel = Position(x, y);
+            // The integration helper dispatches key events; invoke the engine's mouse-move hook on its thread.
+            typeof(CrayonCanvas).GetMethod("MouseMove", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .Invoke(canvas, new object[]
+                {
+                    new GUIMouseMoveEventArgs(Vector2.Zero, canvas, pixel,
+                        new ScreenCoordinates(Vector2.Zero, default), pixel, pixel),
+                });
+        });
+    }
+
+    [Test]
+    public async Task RapidRotationClicksAccumulateBeforeServerConfirmation()
+    {
+        var crayon = await OpenWindow("CrayonArtist");
+        var window = GetWindow<CrayonWindow>();
+        var angleText = GetControlFromField<LineEdit>("_rotationValue", window);
+        await Client.WaitAssertion(() =>
+        {
+            var requested = new List<float>();
+            window.OnRotationSelected += requested.Add;
+            var plusTen = FindButton(window, "+10")!;
+            var minusOne = FindButton(window, "-1")!;
+            Click(plusTen);
+            Click(plusTen);
+            Click(minusOne);
+            Assert.That(requested, Is.EqualTo(new[] { 10f, 20f, 19f }));
+            Assert.That(float.Parse(angleText.Text, CultureInfo.CurrentCulture), Is.EqualTo(19f));
+
+            // Dispatch all clicks during one client callback, with no simulation or server ticks between them.
+            static void Click(Button button)
+            {
+                button.Mode = BaseButton.ActionMode.Press;
+                button.MuteSounds = true;
+                foreach (var state in new[] { BoundKeyState.Down, BoundKeyState.Up })
+                {
+                    typeof(BaseButton).GetMethod(state == BoundKeyState.Down ? "KeyBindDown" : "KeyBindUp",
+                            BindingFlags.Instance | BindingFlags.NonPublic)!
+                        .Invoke(button, new object[]
+                        {
+                            new GUIBoundKeyEventArgs(EngineKeyFunctions.UIClick, state,
+                                new ScreenCoordinates(Vector2.Zero, default), false, Vector2.Zero, Vector2.Zero),
+                        });
+                }
+            }
+        });
+        await RunTicks(15);
+        await Server.WaitAssertion(() =>
+        {
+            var angle = SEntMan.GetComponent<CrayonRotationComponent>(ToServer(crayon)).Rotation;
+            Assert.That(angle.EqualsApprox(Angle.FromDegrees(19)), Is.True);
+        });
+        await Client.WaitAssertion(() =>
+        {
+            var angle = CEntMan.GetComponent<CrayonRotationComponent>(ToClient(crayon)).Rotation;
+            Assert.That(angle.EqualsApprox(Angle.FromDegrees(19)), Is.True);
+            Assert.That(float.Parse(angleText.Text, CultureInfo.CurrentCulture), Is.EqualTo(19f));
+        });
+
+        await PressKey(EngineKeyFunctions.EditorRotateObject);
+        await RunTicks(15);
+        await Client.WaitAssertion(() =>
+            Assert.That(float.Parse(angleText.Text, CultureInfo.CurrentCulture), Is.EqualTo(-71f),
+                "subsequent hotkey rotations still update the numeric controls"));
+    }
 
     [Test]
     public async Task InvalidSymbolIsRejected()

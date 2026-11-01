@@ -48,7 +48,7 @@ public sealed partial class CrayonWindow
             button.OnPressed += _ =>
             {
                 var degrees = TryReadDegrees(out var value) ? value : (float) (_seenRotation?.Degrees ?? 0);
-                OnRotationSelected?.Invoke(degrees + step);
+                SelectRotation(degrees + step);
             };
             row.AddChild(button);
         }
@@ -56,7 +56,7 @@ public sealed partial class CrayonWindow
         _rotationValue.OnTextEntered += _ =>
         {
             if (TryReadDegrees(out var degrees))
-                OnRotationSelected?.Invoke(degrees);
+                SelectRotation(degrees);
         };
         _rotationValue.ToolTip = Loc.GetString("pirate-crayon-rotation-hint");
         PirateArtControls.AddChild(row);
@@ -71,6 +71,17 @@ public sealed partial class CrayonWindow
         return (float.TryParse(_rotationValue.Text, NumberStyles.Float, CultureInfo.CurrentCulture, out degrees)
                 || float.TryParse(_rotationValue.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out degrees))
             && float.IsFinite(degrees);
+    }
+
+    private void SelectRotation(float degrees)
+    {
+        if (!float.IsFinite(degrees))
+            return;
+
+        degrees = (float) Angle.FromDegrees(degrees).Reduced().Degrees;
+        // Accumulate clicks immediately, even before the next predicted simulation tick.
+        _rotationValue.Text = degrees.ToString("0.##", CultureInfo.CurrentCulture);
+        OnRotationSelected?.Invoke(degrees);
     }
 
     private void PirateSyncRotation()

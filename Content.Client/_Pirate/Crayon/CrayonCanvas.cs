@@ -48,6 +48,7 @@ public sealed class CrayonCanvas : Control
 
     private Color?[] _cells = new Color?[CrayonSymbol.Small * CrayonSymbol.Small];
     private bool _painting;
+    private Vector2i? _lastBrushCell;
     private Vector2i? _start;
     private Vector2i _end;
 
@@ -171,7 +172,8 @@ public sealed class CrayonCanvas : Control
                 break;
             case CrayonTool.Brush:
                 _painting = true;
-                Commit(Dab(cell, new Dictionary<int, Color?>()));
+                _lastBrushCell = null;
+                PaintStroke(cell);
                 break;
             default:
                 _start = cell;
@@ -187,7 +189,11 @@ public sealed class CrayonCanvas : Control
         if (args.Function != EngineKeyFunctions.UIClick)
             return;
 
+        if (_painting && CellAt(args.RelativePixelPosition) is { } brushEnd)
+            PaintStroke(brushEnd);
+
         _painting = false;
+        _lastBrushCell = null;
         if (_start is not { } start)
             return;
 
@@ -203,11 +209,14 @@ public sealed class CrayonCanvas : Control
     {
         base.MouseMove(args);
         if (CellAt(args.RelativePixelPosition) is not { } cell)
+        {
+            _lastBrushCell = null;
             return;
+        }
 
         if (_painting)
         {
-            Commit(Dab(cell, new Dictionary<int, Color?>()));
+            PaintStroke(cell);
         }
         else if (_start is { } start && cell != _end)
         {
@@ -226,7 +235,17 @@ public sealed class CrayonCanvas : Control
     {
         _start = null;
         _painting = false;
+        _lastBrushCell = null;
         _preview = new Dictionary<int, Color?>();
+    }
+
+    private void PaintStroke(Vector2i cell)
+    {
+        // Mouse movement can skip several cells between events, including when erasing.
+        var cells = new Dictionary<int, Color?>();
+        Line(_lastBrushCell ?? cell, cell, cells);
+        _lastBrushCell = cell;
+        Commit(cells);
     }
 
     private void Commit(Dictionary<int, Color?> cells)
