@@ -93,6 +93,7 @@ public sealed partial class HumanoidAppearanceSystem
         // Pirate end
         component.MarkingSet = message.MarkingSet;
         Dirty(uid, component);
+        RaiseMarkingsChanged(uid); // Goob
 
         if (message.ResendState)
         {

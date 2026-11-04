@@ -56,6 +56,7 @@ public abstract class SharedGasCanisterSystem : EntitySystem
             return;
 
         var item = canister.GasTankSlot.Item;
+        BeforeHoldingTankEjected(uid, canister, args.Actor); // Pirate: close unsafe novice releases before ejecting.
         _slots.TryEjectToHands(uid, canister.GasTankSlot, args.Actor, excludeUserAudio: true);
 
         if (canister.ReleaseValve)
@@ -90,6 +91,14 @@ public abstract class SharedGasCanisterSystem : EntitySystem
 
     private void OnCanisterChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleaseValveMessage args)
     {
+        // Pirate: validate on the server and correct predicted UI state when denied.
+        if (!CanChangeReleaseValve(uid, canister, args.Actor, args.Valve))
+        {
+            Dirty(uid, canister);
+            DirtyUI(uid, canister);
+            return;
+        }
+
         // filling a jetpack with plasma is less important than filling a room with it
         var impact = canister.GasTankSlot.HasItem ? LogImpact.Medium : LogImpact.High;
 
@@ -120,6 +129,10 @@ public abstract class SharedGasCanisterSystem : EntitySystem
         }
         // Pirate: ItemSlotsSystem logs successful insertions after the container accepts the tank.
     }
+
+    // Pirate: server-side novice protection hooks.
+    protected virtual bool CanChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, EntityUid actor, bool open) => true;
+    protected virtual void BeforeHoldingTankEjected(EntityUid uid, GasCanisterComponent canister, EntityUid actor) { }
 
     protected abstract void DirtyUI(EntityUid uid, GasCanisterComponent? component = null, NodeContainerComponent? nodes = null);
 }

@@ -1,0 +1,707 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: marking
+  id: LagomorphAntlers
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers
+- type: marking
+  id: LagomorphArmMittsL
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: l_arm_mitt
+- type: marking
+  id: LagomorphArmMittsR
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: r_arm_mitt
+- type: marking
+  id: LagomorphArmSpotsL
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: left_arm_spots
+- type: marking
+  id: LagomorphArmSpotsR
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: right_arm_spots
+- type: marking
+  id: LagomorphBackScarLeft
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: back_scar_L
+- type: marking
+  id: LagomorphBackScarRight
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: back_scar_R
+- type: marking
+  id: LagomorphBellyColour
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: belly_color
+- type: marking
+  id: LagomorphBinderTop
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: binder_top
+- type: marking
+  id: LagomorphBoxers
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: boxer_bottoms
+- type: marking
+  id: LagomorphBraTop
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: bra_top
+- type: marking
+  id: LagomorphBraceletL
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: bracelet_L
+- type: marking
+  id: LagomorphBraceletR
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: bracelet_R
+- type: marking
+  id: LagomorphChestScarLeft
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: chest_scar_L
+- type: marking
+  id: LagomorphChestScarRight
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: chest_scar_R
+- type: marking
+  id: LagomorphClaws
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: claws
+- type: marking
+  id: LagomorphDewlap
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: dewlap
+- type: marking
+  id: LagomorphEarsAirplane
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: airplane
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: inner_airplane
+- type: marking
+  id: LagomorphEarsAntlersFloppy
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: floppy_ears
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers-floppy-ears
+- type: marking
+  id: LagomorphEarsAntlersLoppy
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: loppy
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: loppy_inner
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers-loppy-ears
+- type: marking
+  id: LagomorphEarsAntlersLoppyLarge
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: loppy_large
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: loppy_large_inner
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers-loppy-large-ears
+- type: marking
+  id: LagomorphEarsAntlersMedium
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: standard
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: standard_inner
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers-standard-ears
+- type: marking
+  id: LagomorphEarsAntlersRotund
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: rotund
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: rotund_inner
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers-rotund-ears
+- type: marking
+  id: LagomorphEarsAntlersSharp
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: sharp
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: sharp_inner
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers-sharp-ears
+- type: marking
+  id: LagomorphEarsAntlersShort
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: short
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: short_inner
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers-short-ears
+- type: marking
+  id: LagomorphEarsAntlersTall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: tall_ears_outer
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: tall_ears_inner
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers-tall-ears
+- type: marking
+  id: LagomorphEarsDeer
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: deer
+- type: marking
+  id: LagomorphEarsDeerAntlers
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: deer
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antlers
+- type: marking
+  id: LagomorphEarsDeerAntlersDriedbush
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: deer
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antler-driedbush
+- type: marking
+  id: LagomorphEarsDeerAntlersJolly
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: deer
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antler-jolly
+- type: marking
+  id: LagomorphEarsDeerAntlersSmall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: deer
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antler-small
+- type: marking
+  id: LagomorphEarsDeerAntlersW
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: deer
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: antler-w
+- type: marking
+  id: LagomorphEarsFloppy
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: floppy_ears
+- type: marking
+  id: LagomorphEarsFloppyCutLeft
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: floppy_ears_cut_L
+- type: marking
+  id: LagomorphEarsFloppyCutRight
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: floppy_ears_cut_R
+- type: marking
+  id: LagomorphEarsLoppy
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: loppy
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: loppy_inner
+- type: marking
+  id: LagomorphEarsLoppyLarge
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: loppy_large
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: loppy_large_inner
+- type: marking
+  id: LagomorphEarsMedium
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: standard
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: standard_inner
+- type: marking
+  id: LagomorphEarsRotund
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: rotund
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: rotund_inner
+- type: marking
+  id: LagomorphEarsSharp
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: sharp
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: sharp_inner
+- type: marking
+  id: LagomorphEarsShort
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: short
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: short_inner
+- type: marking
+  id: LagomorphEarsTall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: tall_ears_outer
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: tall_ears_inner
+- type: marking
+  id: LagomorphEarsTallCutLeft
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: tall_ears_cut_L_outer
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: tall_ears_cut_L_inner
+- type: marking
+  id: LagomorphEarsTallCutRight
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: tall_ears_cut_R_outer
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: tall_ears_cut_R_inner
+- type: marking
+  id: LagomorphEyeScarLeft
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: eye_scar_L
+- type: marking
+  id: LagomorphEyeScarRight
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: eye_scar_R
+- type: marking
+  id: LagomorphFootSockR
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: feet_socks
+- type: marking
+  id: LagomorphHandMittsL
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: l_hand_mitt
+- type: marking
+  id: LagomorphHandMittsR
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: r_hand_mitt
+- type: marking
+  id: LagomorphLegSockL
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: leg_socks
+- type: marking
+  id: LagomorphLegSpotsL
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: left_leg_spots
+- type: marking
+  id: LagomorphLegSpotsR
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: right_leg_spots
+- type: marking
+  id: LagomorphPanties
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: panty_bottoms
+- type: marking
+  id: LagomorphTailCotton
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: cotton_tail
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: cotton_tail_twotone
+- type: marking
+  id: LagomorphTailFluffy
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: fluffy_tail
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: fluffy_tail_twotone
+- type: marking
+  id: LagomorphTailLong
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: long_tail
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: long_tail_twotone
+- type: marking
+  id: LagomorphTankTop
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: tank_top
+- type: marking
+  id: LagomorphTorsoSpots
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction:
+  - Lagomorph
+  - NeoLagomorph
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/lagomorph.rsi
+    state: torso_spots

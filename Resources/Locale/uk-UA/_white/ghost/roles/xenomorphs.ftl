@@ -1,0 +1,10 @@
+xenomorphs-acid-not-corrodible = { $target } не піддається роз’їданню.
+xenomorphs-acid-already-corroding = { $target } вже роз’їдається!
+xenomorphs-acid-apply = нанесено їдку кислоту на { $target }.
+xenomorphs-acid-not-enough-plasma = Вам бракує плазми!
+queen-roar-start = Ви готуєтеся видати могутній рев!
+queen-roar-start-others = Королева готується видати могутній рев!
+queen-roar-complete = Королева видає жахливий рев!
+queen-roar-victim = Оглушливий рев наповнює ваші вуха, змушуючи вас завмерти на місці!
+neurotoxin-gland-activated = Ви напружуєте залозу.
+neurotoxin-gland-deactivated = Ви розслабляєте залозу.

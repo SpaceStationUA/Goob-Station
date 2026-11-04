@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory.Events;
@@ -25,6 +26,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
     [Dependency] private ActionContainerSystem _actionContainer = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SlotBlockSystem _slotBlock = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private MovementSpeedModifierSystem _speed = default!;
@@ -312,6 +314,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
             if (!TryGetSlotFromClothing(partUid, out var slot) || string.IsNullOrEmpty(slot))
                 continue;
 
+            var dependents = TakeDependentSlotItems(wearer, slot);
             StoreExistingClothingInSlot(suit, wearer, slot);
             if (Inventory.TryEquip(wearer, partUid, slot, force: true))
             {
@@ -321,6 +324,8 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
 
                 Dirty(partUid, attached);
             }
+
+            ReturnDependentSlotItems(wearer, dependents);
         }
 
         Dirty(suit.Owner, equippedComp);
@@ -337,6 +342,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
         {
             if (Inventory.TryGetSlotEntity(wearer, slot, out var equipped) && equipped == partUid)
             {
+                var dependents = TakeDependentSlotItems(wearer, slot);
                 if (Inventory.TryUnequip(wearer, slot, out var removedItem, force: true))
                 {
                     Container.Insert(removedItem.Value, partContainer);
@@ -344,6 +350,8 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
 
                     RestoreHiddenClothingInSlot(suit, wearer, slot);
                 }
+
+                ReturnDependentSlotItems(wearer, dependents);
             }
         }
 
@@ -447,6 +455,39 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
 
         hiddenComp.HiddenItems.Remove(slot);
         Dirty(suit.Owner, hiddenComp);
+    }
+
+    // Remove dependent-slot items first: clothing swaps otherwise drop them.
+    private List<(string Slot, EntityUid Item)> TakeDependentSlotItems(EntityUid wearer, string slot)
+    {
+        var taken = new List<(string Slot, EntityUid Item)>();
+        if (!TryComp<InventoryComponent>(wearer, out var inventory))
+            return taken;
+
+        foreach (var slotDef in inventory.Slots)
+        {
+            if (slotDef.DependsOn != slot)
+                continue;
+
+            if (Inventory.TryUnequip(wearer, slotDef.Name, out var item, silent: true, force: true, inventory: inventory))
+                taken.Add((slotDef.Name, item.Value));
+        }
+
+        return taken;
+    }
+
+    private void ReturnDependentSlotItems(EntityUid wearer, List<(string Slot, EntityUid Item)> items)
+    {
+        foreach (var (slot, item) in items)
+        {
+            if (TerminatingOrDeleted(item))
+                continue;
+
+            if (Inventory.TryEquip(wearer, item, slot, silent: true))
+                continue;
+
+            _hands.PickupOrDrop(wearer, item, animateUser: false);
+        }
     }
 
     private void UpdateActions(EntityUid suit)

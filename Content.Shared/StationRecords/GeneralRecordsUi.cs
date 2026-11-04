@@ -113,15 +113,15 @@ public sealed class GeneralRecordCreateRecord : BoundUserInterfaceMessage
 public sealed class GeneralRecordEditIdentity : BoundUserInterfaceMessage
 {
     public readonly string Species;
-    public readonly string Nationality;
+    public readonly string Citizenship; // Pirate: citizenship
     public readonly string Employer;
     public readonly int Age;
     public readonly Robust.Shared.Enums.Gender Gender;
 
-    public GeneralRecordEditIdentity(string species, string nationality, string employer, int age, Robust.Shared.Enums.Gender gender)
+    public GeneralRecordEditIdentity(string species, string citizenship, string employer, int age, Robust.Shared.Enums.Gender gender) // Pirate: citizenship
     {
         Species = species;
-        Nationality = nationality;
+        Citizenship = citizenship; // Pirate: citizenship
         Employer = employer;
         Age = age;
         Gender = gender;

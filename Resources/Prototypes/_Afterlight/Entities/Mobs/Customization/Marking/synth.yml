@@ -35,6 +35,7 @@
   sprites:
   - sprite: _Afterlight/Mobs/Customization/Synth/antenna.rsi
     state: antenna_light
+  shader: unshaded # Pirate: synth fixes
 
 - type: marking
   id: SynthAntennaMajestic
@@ -91,6 +92,7 @@
   sprites:
   - sprite: _Afterlight/Mobs/Customization/Synth/arms.rsi
     state: arm_light_l
+  shader: unshaded # Pirate: synth fixes
 
 - type: marking
   id: SynthRArmLight
@@ -100,6 +102,7 @@
   sprites:
   - sprite: _Afterlight/Mobs/Customization/Synth/arms.rsi
     state: arm_light_r
+  shader: unshaded # Pirate: synth fixes
 
 - type: marking
   id: SynthLArmStarPauldron
@@ -140,6 +143,7 @@
   sprites:
   - sprite: _Afterlight/Mobs/Customization/Synth/chest.rsi
     state: chest_light
+  shader: unshaded # Pirate: synth fixes
 
 - type: marking
   id: SynthChestStarCross
@@ -208,6 +212,7 @@
   sprites:
   - sprite: _Afterlight/Mobs/Customization/Synth/headside.rsi
     state: composite_hood_light
+  shader: unshaded # Pirate: synth fixes
 
 - type: marking
   id: SynthSolarFans
@@ -237,6 +242,7 @@
   sprites:
   - sprite: _Afterlight/Mobs/Customization/Synth/legs.rsi
     state: leg_light_l
+  shader: unshaded # Pirate: synth fixes
 
 - type: marking
   id: SynthRFootToes
@@ -255,6 +261,7 @@
   sprites:
   - sprite: _Afterlight/Mobs/Customization/Synth/legs.rsi
     state: leg_light_r
+  shader: unshaded # Pirate: synth fixes
 
 # Snout
 

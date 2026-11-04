@@ -30,4 +30,16 @@ Current live state after cutover: `pirate-cdn.service` and `pirate-watchdog.serv
 
 Disable `PUBLISH_ENABLED` and remove CDN notifications. Stop the new Watchdog before starting the old monitor. Restore the bot driver to `tmux`, restart its console, restore the saved cron and use the unchanged `pirates_commands/start.sh`. The original server package, config, old CDN databases and URLs remain in place; the live game data is shared, not duplicated. Watchdog also supports `/instances/pirate/revert` for a published previous version, defaulting to round-end application.
 
+## On-call Discord roles
+
+In the instance's `config.toml`, `discord.on_call_ping` (AHelp) and
+`pirate.discord_mentorhelp_on_call_ping` (MHelp) accept one role ID or multiple
+IDs separated by commas. Whitespace, empty entries, and duplicate IDs are ignored.
+For example, to notify two roles for AHelp:
+
+```toml
+[discord]
+on_call_ping = "111111111111111111,222222222222222222"
+```
+
 Sources: [Watchdog setup](https://docs.spacestation14.com/en/server-hosting/setting-up-ss14-watchdog.html), [Robust.Cdn setup](https://docs.spacestation14.com/en/server-hosting/setting-up-robust-cdn.html).

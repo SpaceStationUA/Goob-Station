@@ -8,6 +8,7 @@
   - type: AntagPlayerEffects
     packages:
     - CosmicCultSkills
+    - HereticSkills # Each skill takes the higher of the two packages. # Pirate: antagonist skill packages
   # Pirate: skill chips end
   - type: CosmicCultRule
   - type: GameRule

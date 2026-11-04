@@ -27,12 +27,13 @@
     #  inverted: true
     #  species:
     #  - Felinid
-  # Pirate contractor start
+  # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
-      - OrionExpress
-      - HephaestusIndustries
-  # Pirate contractor end
+      - NanoTrasen
+      - Hephaest
+      - Orion
+    # Pirate Employment end
     - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 10
   startingGear: QuartermasterGear

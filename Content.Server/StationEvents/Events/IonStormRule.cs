@@ -7,12 +7,15 @@ using Content.Shared._MACRO.Species.Thaven;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Station.Components;
+using Content.Server._Pirate.StarlightSpecies.Neocyte; // Pirate
+using Content.Shared._Pirate.StarlightSpecies.Neocyte; // Pirate
 
 namespace Content.Server.StationEvents.Events;
 
 public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
 {
     [Dependency] private readonly IonStormSystem _ionStorm = default!;
+    [Dependency] private readonly GlitchingSystem _glitching = default!; // Pirate
 
     protected override void Started(EntityUid uid, IonStormRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -20,6 +23,14 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
 
         if (!TryGetRandomStation(out var chosenStation))
             return;
+
+        // Pirate: Starlight neocyte electronics also react to the station's ion storm.
+        var neocytes = EntityQueryEnumerator<GlitchOnIonStormComponent, TransformComponent>();
+        while (neocytes.MoveNext(out var neocyte, out var glitch, out var neocyteXform))
+        {
+            if (CompOrNull<StationMemberComponent>(neocyteXform.GridUid)?.Station == chosenStation)
+                _glitching.TriggerIonStorm((neocyte, glitch));
+        }
 
         var query = EntityQueryEnumerator<SiliconLawBoundComponent, TransformComponent, IonStormTargetComponent>();
         while (query.MoveNext(out var ent, out var lawBound, out var xform, out var target))

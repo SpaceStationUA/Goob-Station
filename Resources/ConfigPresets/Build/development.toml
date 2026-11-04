@@ -74,3 +74,6 @@ inspect_windows = true
 [ooc]
 # Pirate: Starlight extended character descriptions.
 rp_notes = true
+
+[voice]
+enabled = true

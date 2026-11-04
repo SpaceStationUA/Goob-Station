@@ -28,6 +28,8 @@ public enum SlotFlags
     LEGS = 1 << 13,
     FEET = 1 << 14,
     SUITSTORAGE = 1 << 15,
+    OUTERCLOTHING2 = 1 << 16, // Pirate: integral Starlight neocyte frame, beneath ordinary outer clothing.
+    MISC = 1 << 17, // Pirate: Starlight accessory slot.
     All = ~NONE,
 
     WITHOUT_POCKET = All & ~POCKET

@@ -41,6 +41,7 @@
   name: secretsalt-title
   description: secretsalt-description
   showInVote: true
+  minPlayers: 20
   rules:
     - SecretSalt
     - GlimmerEventScheduler # Pirate
@@ -98,12 +99,25 @@
     - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
+  id: BlueshiftGreenshift
+  alias:
+    - blueshiftgreenshift
+  name: blueshift-title
+  description: blueshift-description
+  showInVote: false
+  rules:
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+    - GlimmerEventScheduler # Pirate
+
+- type: gamePreset
   id: PirateGreenshift
   alias:
   - greenshift
   - shittersafarideluxeedition
   name: greenshift-title
   showInVote: true #4boring4vote
+  maxPlayers: 40
   description: greenshift-description
   rules:
   - SpaceTrafficControlFriendlyEventScheduler

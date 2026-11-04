@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Numerics;
+using Content.Shared._Pirate.Crayon; // Pirate: rotate stock decals with the same controls as custom symbols.
 using Content.Server.Administration.Logs;
 using Content.Server.Decals;
 using Content.Server.Popups;
@@ -73,7 +74,9 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
         }
 
-        if (!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f, -0.5f)), out _, component.Color, cleanable: true))
+        var rotation = new CrayonDrawRotationEvent(Angle.Zero); // Pirate
+        RaiseLocalEvent(uid, ref rotation); // Pirate
+        if (!_decals.TryAddDecal(component.SelectedState, args.ClickLocation.Offset(new Vector2(-0.5f, -0.5f)), out _, component.Color, rotation.Rotation, cleanable: true)) // Pirate
             return;
 
         if (component.UseSound != null)

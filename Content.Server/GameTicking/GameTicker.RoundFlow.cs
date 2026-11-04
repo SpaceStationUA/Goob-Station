@@ -449,6 +449,7 @@ namespace Content.Server.GameTicking
 
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
+            RecordPresetHistory(); // Goob
 
             RoundStartTimeSpan = _gameTiming.CurTime;
             SendStatusToAll();
@@ -810,6 +811,7 @@ namespace Content.Server.GameTicking
 
         private void UpdateRoundFlow(float frameTime)
         {
+            UpdatePirateSelectionVoteCountdown(); // Pirate: voting penalties and runoffs
             if (RunLevel == GameRunLevel.InRound)
             {
                 RoundLengthMetric.Inc(frameTime);

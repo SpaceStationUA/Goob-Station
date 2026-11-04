@@ -1,0 +1,118 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseMobSpeciesOrganic
+  - BaseInventoryFelionoid
+  id: BaseMobFelionoid
+  abstract: true
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Nekomimetic
+    understands:
+    - TauCetiBasic
+    - Nekomimetic
+    - Cat
+  - type: Absorbable
+  - type: Speech
+    speechVerb: Felionoid
+  - type: Vocal
+  - type: Hunger
+  - type: Thirst
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: felionoid
+  - type: Body
+    prototype: Felionoid
+    requiredLegs: 2
+  - type: HumanoidAppearance
+    species: Felionoid
+  - type: OwOAccent
+  - type: MobThresholds
+    thresholds:
+      '0': Alive
+      '85': Critical
+      '170': Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      '51': 0.7
+      '68': 0.5
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: Damageable
+    damageContainer: Biological
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/brute_damage.rsi
+        color: '#7a8bf2'
+      Burn:
+        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/burn_damage.rsi
+    thresholds:
+    - 10
+    - 20
+    - 30
+    - 50
+    - 70
+    - 100
+    targetLayers:
+    - enum.HumanoidVisualLayers.Chest
+    - enum.HumanoidVisualLayers.Head
+    - enum.HumanoidVisualLayers.LArm
+    - enum.HumanoidVisualLayers.LLeg
+    - enum.HumanoidVisualLayers.RArm
+    - enum.HumanoidVisualLayers.RLeg
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    attackRate: 2
+    damage:
+      types:
+        Slash: 3
+  - type: Reactive
+    groups:
+      Flammable:
+      - Touch
+      Extinguish:
+      - Touch
+      Acidic:
+      - Touch
+      - Ingestion
+    reactions:
+    - reagents:
+      - Water
+      - SpaceCleaner
+      methods:
+      - Touch
+      effects:
+      - !type:WashCreamPie ''
+      - !type:Emote
+        emote: Hisses
+        showInChat: false
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - Felionoid
+    - NotLabelable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.3
+        density: 110
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Wagging

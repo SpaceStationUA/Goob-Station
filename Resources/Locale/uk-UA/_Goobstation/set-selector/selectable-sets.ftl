@@ -95,9 +95,7 @@ selectable-set-blueshield-cqc-description = Іноді доводиться бр
     Включає: книгу, здатну навчити користувача
     просунутому ближньому бою.
 selectable-set-blueshield-chester-name = Комплект Chester
-
 selectable-set-blueshield-chester-description = Важільна гвинтівка Chester під .45, запасні магазини та набої різних типів. Готові до полювання?
-
 selectable-set-blueshield-hardsuit-light-name = броньований скафандр
 selectable-set-blueshield-hardsuit-light-description = Броньований скафандр, що дає змогу рухатися швидше ціною захисту.
 # Pirate: Blueshield uses the new modular Praetorian suit.

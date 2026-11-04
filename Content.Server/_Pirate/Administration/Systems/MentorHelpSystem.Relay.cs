@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
+using Content.Server._Pirate.Discord;
 using Content.Server.Administration;
 using Content.Server.Afk;
 using Content.Server.Discord;
@@ -290,8 +291,8 @@ public sealed partial class MentorHelpSystem
 
     private async Task PingOnCall(NetUserId userId, RelayedTicket ticket)
     {
-        var role = _config.GetCVar(MentorHelpCVars.DiscordOnCallPing);
-        if (_onCallUrl == string.Empty || string.IsNullOrEmpty(role))
+        var roles = DiscordRoleMentions.Format(_config.GetCVar(MentorHelpCVars.DiscordOnCallPing));
+        if (_onCallUrl == string.Empty || string.IsNullOrEmpty(roles))
             return;
 
         ticket.OnCall = true;
@@ -302,7 +303,7 @@ public sealed partial class MentorHelpSystem
             message.AppendLine($"**[Go to mentorhelp](https://discord.com/channels/{guildId}/{channelId}/{ticket.Id})**");
 
         var payload = Payload(message.ToString(), ticket.Username, userId, ticket.CharacterName);
-        payload.Content = $"<@&{role}>";
+        payload.Content = roles;
         var mentions = payload.AllowedMentions;
         mentions.AllowRoleMentions();
         payload.AllowedMentions = mentions;

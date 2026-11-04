@@ -119,7 +119,3 @@ phrase-where = Де
 phrase-which = Який
 phrase-who = Хто
 phrase-why = Чому
-phrase-number0 = 0
-phrase-number0 = 0
-phrase-number0 = 0
-phrase-number0 = 0

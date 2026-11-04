@@ -228,6 +228,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         ignoreActionBlocker = CheckIgnoreSpeechBlocker(source, ignoreActionBlocker);
+        // Pirate: reject before speech transforms, radio, emotes and TTS; generated speech has no player.
+        if (EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(player, message))
+            return;
 
         // this method is a disaster
         // every second i have to spend working with this code is fucking agony
@@ -364,6 +367,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
         // in-game IC messages.
         if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
+            return;
+
+        // Pirate: LOOC and dead chat share the same player-input filter.
+        if (EntityManager.System<Content.Server._Pirate.Chat.Systems.PirateChatFilterSystem>().Reject(player, message))
             return;
 
         message = SanitizeInGameOOCMessage(message);
@@ -762,15 +769,18 @@ public sealed partial class ChatSystem : SharedChatSystem
             // Wrapped message is the result wrapped in an "x says y" string
             // Floof: handle languages that require LOS
             string result, wrappedMessage;
-            if (!language.SpeechOverride.RequireLOS && data.Range <= WhisperClearRange
-                || _examineSystem.InRangeUnOccluded(source, listener, WhisperClearRange)
+            // Pirate: preserve Starlight lagomorph hearing without changing language or line-of-sight rules.
+            var clearRange = ListenerRange(listener, WhisperClearRange);
+            var muffledRange = ListenerRange(listener, WhisperMuffledRange);
+            if (!language.SpeechOverride.RequireLOS && data.Range <= clearRange
+                || _examineSystem.InRangeUnOccluded(source, listener, clearRange)
                 || data.Observer)
             {
                 // Scenario 1: the listener can clearly understand the message
                 result = perceivedMessage;
                 wrappedMessage = WrapWhisperMessage(source, "chat-manager-entity-whisper-wrap-message", name, result, language, colorOverride);
             }
-            else if (_examineSystem.InRangeUnOccluded(source, listener, WhisperMuffledRange)) // UNEDIT FROM Einstein Engines - Language // They are out of date, this has been reverted to current ChatSystem
+            else if (_examineSystem.InRangeUnOccluded(source, listener, muffledRange)) // UNEDIT FROM Einstein Engines - Language // They are out of date, this has been reverted to current ChatSystem
             {
                 // Scenario 2: if the listener is too far, they only hear fragments of the message
                 result = ObfuscateMessageReadability(perceivedMessage);
@@ -912,7 +922,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("entity", ent),
             ("message", FormattedMessage.RemoveMarkupPermissive(action))); // Goob - Fix (malformed markup throws)
 
-        if (checkEmote && !TryEmoteChatInput(source, action, forced)) // goob edit
+        if (checkEmote && !TryEmoteChatInput(source, action))
             return;
 
         SendInVoiceRange(
@@ -1337,9 +1347,10 @@ public sealed partial class ChatSystem : SharedChatSystem
 
             // InRangeUnOccluded does this check, but it also checks for occlusion
             // which doesn't really work for modes that are supposed to go through walls, like Speak
-            var inRange = distance <= voiceGetRange;
+            var listenerRange = ListenerRange(playerEntity, voiceGetRange); // Pirate: Starlight species hearing.
+            var inRange = distance <= listenerRange;
 
-            var isVisible = observer || (inRange && _examineSystem.InRangeUnOccluded(source, playerEntity, voiceGetRange));
+            var isVisible = observer || (inRange && _examineSystem.InRangeUnOccluded(source, playerEntity, listenerRange));
             // Floofstation - end
 
             // even if they are a ghost hearer, in some situations we still need the range

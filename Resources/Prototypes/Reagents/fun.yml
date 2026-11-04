@@ -45,6 +45,16 @@
         - !type:MetabolizerTypeCondition
           type: [ Moth ]
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:SatiateHunger
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Neocyte
+        - !type:MetabolizerTypeCondition
+          type:
+          - Moth
+          inverted: true
 - type: reagent
   id: BuzzochloricBees
   name: reagent-name-buzzochloric-bees
@@ -159,6 +169,17 @@
           tag: Bee
 # Goobstation yowie changes end
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: BuzzochloricBees
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: BuzzochloricBees
+        amount: 0.25
 - type: reagent
   id: GroundBee
   name: reagent-name-ground-bee
@@ -190,6 +211,17 @@
       - !type:Electrocute
         probability: 0.15 #goob edit
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Licoxide
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Licoxide
+        amount: 0.25
 - type: reagent
   id: Razorium
   name: reagent-name-razorium
@@ -229,6 +261,17 @@
         emote: Scream
         probability: 0.3
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Razorium
+          min: 1.51
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Razorium
+        amount: 1.5
 - type: reagent
   id: Fresium
   name: reagent-name-fresium
@@ -323,6 +366,17 @@
         messages: [ "fresium-effect-frozen"]
         probability: 0.4
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fresium
+          min: 0.23
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Fresium
+        amount: 0.22
 - type: reagent
   id: Laughter
   name: reagent-name-laughter
@@ -381,6 +435,17 @@
           reagent: JuiceThatMakesYouWeh
           min: 50
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: JuiceThatMakesYouWeh
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: JuiceThatMakesYouWeh
+        amount: 0.1
 - type: reagent
   id: JuiceThatMakesYouHew
   name: reagent-name-hew
@@ -416,6 +481,17 @@
           reagent: JuiceThatMakesYouHew
           min: 50
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: JuiceThatMakesYouHew
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: JuiceThatMakesYouHew
+        amount: 0.1
 - type: reagent
   id: CorgiJuice
   name: reagent-name-corgiessence
@@ -450,6 +526,17 @@
           reagent: CorgiJuice
           min: 50
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: CorgiJuice
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: CorgiJuice
+        amount: 0.1
 - type: reagent
   id: Felinase
   name: reagent-name-catessence
@@ -501,6 +588,17 @@
         messages: [ "capsaicin-effect-light-burn" ]
         probability: 0.05
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Felinase
+        amount: 0.1
 - type: reagent
   id: Caninase
   name: reagent-name-canidessence
@@ -551,3 +649,14 @@
         visualType: Small
         messages: [ "capsaicin-effect-light-burn" ]
         probability: 0.05
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 0.11
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Caninase
+        amount: 0.1

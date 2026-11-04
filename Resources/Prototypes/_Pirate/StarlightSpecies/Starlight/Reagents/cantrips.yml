@@ -1,0 +1,50 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: reagent
+  id: ElfDiethylamine
+  name: reagent-name-elf-diethylamine
+  group: Botanical
+  desc: reagent-desc-elf-diethylamine
+  physicalDesc: reagent-physical-desc-elf-diethylamine
+  flavor: sweet
+  color: '#00ee86'
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustPests
+    probability: 0.2
+    amount: -1
+  - !type:PlantAdjustHealth
+    amount: 0.1
+  - !type:PlantAffectGrowth
+    probability: 0.3
+    amount: 1
+  - !type:PlantAdjustToxins
+    amount: -2
+  - !type:PlantDiethylamine {}
+- type: reagent
+  id: ElfSpaceCleaner
+  name: reagent-name-elf-space-cleaner
+  desc: reagent-desc-elf-space-cleaner
+  physicalDesc: reagent-physical-desc-elf-space-cleaner
+  flavor: sweet
+  color: '#ffffff'
+  tileReactions:
+  - !type:CleanTileReaction
+    cleanCost: 0.1
+  - !type:CleanDecalsReaction
+    cleanCost: 0.1
+- type: reagent
+  id: ElfTranexamicAcid
+  name: reagent-name-elf-tranexamic-acid
+  group: Medicine
+  desc: reagent-desc-elf-tranexamic-acid
+  physicalDesc: reagent-physical-desc-elf-tranexamic-acid
+  flavor: sweet
+  color: '#f0008d'
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyBleed
+        amount: -1.5

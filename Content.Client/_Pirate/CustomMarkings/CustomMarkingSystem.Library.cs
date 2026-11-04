@@ -33,7 +33,7 @@ public sealed partial class CustomMarkingSystem
     /// Saves a marking to the library: a new one for id 0, otherwise a change to that entry. Null art keeps the
     /// entry's own. Returns the request number its <see cref="SaveAnswered"/> will carry.
     /// </summary>
-    public int Save(int id, string name, CustomMarkingPlacement placement, CustomMarkingArt? art)
+    public int Save(int id, string name, CustomMarkingPlacement placement, CustomMarkingArt? art, bool glow = false)
     {
         var request = ++_lastRequest;
         RaiseNetworkEvent(new CustomMarkingSaveEvent(
@@ -43,7 +43,8 @@ public sealed partial class CustomMarkingSystem
             placement,
             art?.Pixels,
             art?.GetFrameTimes(),
-            art != null && art.HasErase() ? art.Erase : null));
+            art != null && art.HasErase() ? art.Erase : null,
+            glow));
         return request;
     }
 

@@ -45,6 +45,8 @@ namespace Content.Shared.Humanoid
                     yield return HumanoidVisualLayers.FacialHair;
                     yield return HumanoidVisualLayers.Snout;
                     yield return HumanoidVisualLayers.SnoutCover;
+                    yield return HumanoidVisualLayers.FaceCover; // Pirate: attached neocyte visor.
+                    yield return HumanoidVisualLayers.FaceCoverCover; // Pirate
                     break;
                 case HumanoidVisualLayers.Snout:
                     yield return HumanoidVisualLayers.Snout;
@@ -68,6 +70,8 @@ namespace Content.Shared.Humanoid
                     break;
                 case HumanoidVisualLayers.Chest:
                     yield return HumanoidVisualLayers.Chest;
+                    yield return HumanoidVisualLayers.BodyCover; // Pirate: attached neocyte plating.
+                    yield return HumanoidVisualLayers.BodyCoverCover; // Pirate
                     yield return HumanoidVisualLayers.Wings; // for IPC wings port from SimpleStation
                     yield return HumanoidVisualLayers.Tail;
                     yield return HumanoidVisualLayers.TailBehind; // Pirate - port Floofstation custom layers

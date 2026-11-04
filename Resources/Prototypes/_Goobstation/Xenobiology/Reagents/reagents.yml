@@ -258,6 +258,14 @@
           reagent: AdvancedMutationToxin
           min: 10
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: AdvancedMutationToxin
+        amount: -0.5
 - type: reagent
   parent: BaseXenobioReagent
   id: XenobioFelinidToxin

@@ -2,9 +2,11 @@ using System.Numerics;
 using Content.Pirate.Shared.LightPaint;
 using Content.Server.Charges;
 using Content.Server.Crayon;
+using Content.Server._Pirate.Crayon;
 using Content.Server.Decals;
 using Content.Shared.Charges.Components;
 using Content.Shared.Crayon;
+using Content.Shared._Pirate.Crayon;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
@@ -29,6 +31,7 @@ public sealed class LightPaintSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedCrayonSystem _crayon = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
+    [Dependency] private readonly CrayonStencilSystem _stencil = default!;
 
     public override void Initialize()
     {
@@ -36,7 +39,7 @@ public sealed class LightPaintSystem : EntitySystem
 
         // Draw glyphs with the can's paint colour.
         SubscribeLocalEvent<LightPaintComponent, AfterInteractEvent>(OnAfterInteract,
-            before: [typeof(CrayonSystem)]);
+            before: [typeof(CrayonSymbolSystem), typeof(CrayonSystem)]);
         SubscribeLocalEvent<LightPaintComponent, LightPaintDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<LightPaintComponent, LightPaintColorSelectedMessage>(OnColorSelected);
         SubscribeLocalEvent<LightPaintComponent, MapInitEvent>(OnMapInit);
@@ -77,7 +80,9 @@ public sealed class LightPaintSystem : EntitySystem
             return;
         }
 
-        args.Handled = TryDrawGlyph(ent, args.ClickLocation, args.User);
+        // Let the shared floor-art path handle a selected stencil after light painting has had its turn.
+        if (!_stencil.TryGetStencil(args.User, out _))
+            args.Handled = TryDrawGlyph(ent, args.ClickLocation, args.User);
     }
 
     private bool TryGetBulb(EntityUid target, out EntityUid bulb)
@@ -151,7 +156,9 @@ public sealed class LightPaintSystem : EntitySystem
             return true;
         }
 
-        if (!_decals.TryAddDecal(crayon.SelectedState, clickLocation.Offset(new Vector2(-0.5f, -0.5f)), out _, ent.Comp.Color, cleanable: true))
+        var rotation = new CrayonDrawRotationEvent(Angle.Zero);
+        RaiseLocalEvent(ent, ref rotation);
+        if (!_decals.TryAddDecal(crayon.SelectedState, clickLocation.Offset(new Vector2(-0.5f, -0.5f)), out _, ent.Comp.Color, rotation.Rotation, cleanable: true))
             return false;
 
         _audio.PlayPvs(ent.Comp.Spray, ent);

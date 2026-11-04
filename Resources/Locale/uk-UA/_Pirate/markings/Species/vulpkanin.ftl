@@ -6,10 +6,7 @@ marking-VulpBellyFFull-belly_full-female = Живіт
 marking-VulpBellyFFull = Живіт (Суцільний)
 
 ### Хвости
-marking-VulpTailFennec-fennec-tip = Кінчик
-marking-VulpTailFluffy-fluffy-tip = Кінчик
 marking-VulpTailFox-fox-inner = Внутрішня частина
-marking-VulpTailHusky-husky = Хвіст
 marking-VulpTail-vulp-tip = Кінчик
 marking-VulpTailFade-vulp = Хвіст
 marking-VulpTailFade-vulp-fade = Градієнт
@@ -19,9 +16,6 @@ marking-VulpTailFade = Стандартний (Градієнт)
 marking-VulpEarFennecBig-fennec = Вуха
 marking-VulpEarFennecBig-fennec-inner = Внутрішня частина
 marking-VulpEarFennecBig = Фенек (Великі)
-marking-VulpEarFloppy-floppy = Вуха
-marking-VulpEarFloppy-floppy-inner = Внутрішня частина
-marking-VulpEarFloppy = Лоповухі
 marking-VulpEarSharp-sharp = Вуха
 marking-VulpEarSharp-sharp-inner = Внутрішня частина
 marking-VulpEarSharpSmall-sharp_small = Вуха

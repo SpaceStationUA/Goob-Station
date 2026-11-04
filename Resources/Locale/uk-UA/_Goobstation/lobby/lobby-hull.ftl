@@ -1,0 +1,14 @@
+ui-lobby-links-button = Посилання
+ui-lobby-menu-button = Меню
+ui-lobby-news-tab = Новини
+ui-lobby-chat-tab = Чат
+ui-lobby-lcd-starts-in = До початку раунду
+ui-lobby-lcd-round-time = Час раунду
+ui-lobby-lcd-paused = Пауза
+ui-lobby-lcd-soon = Незабаром
+ui-lobby-fact-map = Мапа
+ui-lobby-fact-mode = Режим
+ui-lobby-fact-round = Раунд
+ui-lobby-fact-ready = Готові
+ui-lobby-fact-round-value = #{$roundId}
+ui-lobby-fact-ready-value = {$ready}/{$players}

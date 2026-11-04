@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 08/16/2026 06:44:18
-  entityCount: 9268 # Pirate: include upstream heat exchangers and the CMO spawn with unique UIDs.
+  entityCount: 9269 # Pirate: include upstream heat exchangers and the CMO spawn with unique UIDs.
 maps:
 - 1
 grids:
@@ -50249,6 +50249,14 @@ entities:
     components:
     - type: Transform
       pos: -34.5,20.5
+      parent: 2
+# Pirate: genetics joins the existing science spawn area.
+- proto: SpawnPointGeneticist
+  entities:
+  - uid: 9269
+    components:
+    - type: Transform
+      pos: -19.5,-13.5
       parent: 2
 - proto: SpawnPointScientist
   entities:

@@ -83,6 +83,7 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
     private readonly CheckBox _showBody;
     private readonly CheckBox _showHair;
     private readonly CheckBox _showClothes;
+    private readonly CheckBox _glow;
     private readonly CustomMarkingIconButton _undoButton;
     private readonly CustomMarkingIconButton _redoButton;
     private readonly CustomMarkingIconButton _mirrorButton;
@@ -343,17 +344,13 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
                 new Control { MinHeight = 4 },
                 frames,
                 new Control { VerticalExpand = true },
-                new BoxContainer
+                FieldLabel("wf-custom-marking-editor-show"),
+                new GridContainer
                 {
-                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                    SeparationOverride = 8,
-                    Children = { _showBody, _showClothes },
-                },
-                new BoxContainer
-                {
-                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                    SeparationOverride = 8,
-                    Children = { _showHair, showGrid },
+                    Columns = 2,
+                    HSeparationOverride = 12,
+                    VSeparationOverride = 2,
+                    Children = { _showBody, _showClothes, _showHair, showGrid },
                 },
             },
         };
@@ -361,7 +358,7 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
         // Colour: the palette, the character's own colours beside it, and the opacity
         _colour = new CustomMarkingColorPicker { Color = Color.Black, VerticalAlignment = VAlignment.Center };
         _colour.OnColorChanged += _ => DrawAgain();
-        _opacity = new Slider { MinValue = 5, MaxValue = 100, Value = 100, MinWidth = 120, VerticalAlignment = VAlignment.Center };
+        _opacity = new Slider { MinValue = 5, MaxValue = 100, Value = 100, MinWidth = 120 };
         var colours = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -387,8 +384,13 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
         }
 
         colours.AddChild(new Control { HorizontalExpand = true });
-        colours.AddChild(FieldLabel("wf-custom-marking-editor-opacity"));
-        colours.AddChild(_opacity);
+        colours.AddChild(new BoxContainer
+        {
+            Orientation = BoxContainer.LayoutOrientation.Vertical,
+            SeparationOverride = 2,
+            VerticalAlignment = VAlignment.Center,
+            Children = { FieldLabel("wf-custom-marking-editor-opacity"), _opacity },
+        });
 
         // Name and placement, with what the placement means under them
         _name = new LineEdit
@@ -410,6 +412,12 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
         {
             _placement.SelectId(args.Id);
             UpdatePlacement();
+        };
+        _glow = new CheckBox
+        {
+            Text = Loc.GetString("wf-custom-marking-editor-glow"),
+            ToolTip = Loc.GetString("wf-custom-marking-editor-glow-tooltip"),
+            Pressed = entry?.Glow ?? false,
         };
         _placementHint = new RichTextLabel { HorizontalExpand = true };
 
@@ -443,6 +451,8 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
                                 new Control { MinWidth = 6 },
                                 FieldLabel("wf-custom-marking-editor-placement"),
                                 _placement,
+                                new Control { MinWidth = 6 },
+                                _glow,
                             },
                         },
                         _placementHint,
@@ -511,6 +521,12 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
     public static string PlacementName(CustomMarkingPlacement placement)
     {
         return $"wf-custom-marking-placement-{placement.ToString().ToLowerInvariant()}";
+    }
+
+    public static string Describe(CustomMarking marking)
+    {
+        var placement = Loc.GetString(PlacementName(marking.Placement));
+        return marking.Glow ? Loc.GetString("wf-custom-marking-placement-glowing", ("placement", placement)) : placement;
     }
 
     private static Label Heading(string loc)
@@ -981,7 +997,7 @@ public sealed partial class CustomMarkingEditorWindow : CustomMarkingWindow
         var changed = _entry == null || !Art.Same(_opened);
         // Pirate: the queued request owns its pixels while the player continues editing.
         var submitted = changed ? Art.Clone() : null;
-        _request = _system.Save(_entry?.Id ?? 0, CustomMarkingRules.CleanName(_name.Text), Placement, submitted);
+        _request = _system.Save(_entry?.Id ?? 0, CustomMarkingRules.CleanName(_name.Text), Placement, submitted, _glow.Pressed);
         _saveButton.Disabled = true;
         SetStatus(Loc.GetString("wf-custom-marking-editor-saving"), false);
     }

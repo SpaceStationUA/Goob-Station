@@ -66,19 +66,21 @@
         acts: ["Destruction"]
 
 - type: entity
-  parent: SpawnSupplyEmpty
+  parent: DropPod
   id: SpawnPodRevTraps
   categories: [ HideSpawnMenu ]
   name: rev caltrops pod
   components:
-  - type: SpawnOnDespawn
-    prototype: BlueprintCaltrops
+  - type: DropPod
+    contents:
+    - BlueprintCaltrops
 
 - type: entity
-  parent: SpawnSupplyEmpty
+  parent: DropPod
   id: SpawnPodRevMelees
   categories: [ HideSpawnMenu ]
   name: rev melee upgrades pod
   components:
-  - type: SpawnOnDespawn
-    prototype: BlueprintRevMelees
+  - type: DropPod
+    contents:
+    - BlueprintRevMelees

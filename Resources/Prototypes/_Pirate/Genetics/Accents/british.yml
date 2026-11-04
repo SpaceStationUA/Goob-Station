@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+- type: simpleAccent
+  id: British
+  replacement: british
+  prefix: AccentBritishPrefix
+  prefixChance: 0.1
+  suffix: AccentBritishSuffix
+  suffixChance: 0.05
+
+- type: localizedDataset
+  id: AccentBritishPrefix
+  values:
+    prefix: accent-british-prefix-
+    count: 5
+
+- type: localizedDataset
+  id: AccentBritishSuffix
+  values:
+    prefix: accent-british-suffix-
+    count: 6

@@ -156,6 +156,14 @@ public sealed class SmartEquipSystem : EntitySystem
                     return;
                 case null:
                     var removing = storage.Container.ContainedEntities[^1];
+                    #region Pirate: security sheath sword limits
+                    // The last stored item remains the smart-equip target while sheathed.
+                    var retrieve = new GetSmartEquipStorageItemEvent(removing);
+                    RaiseLocalEvent(slotItem, ref retrieve);
+                    if (retrieve.Item is not { } selected || !storage.Container.Contains(selected))
+                        return;
+                    removing = selected;
+                    #endregion Pirate: security sheath sword limits
                     _container.RemoveEntity(slotItem, removing);
                     _hands.TryPickup(uid, removing, handsComp: hands);
                     return;

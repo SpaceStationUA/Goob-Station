@@ -20,13 +20,14 @@
     - Narcolepsy
     - Muted
     - WheelchairBound # Pirate end
-  # Pirate contractor start
+  # Pirate Employment start
   - !type:CharacterEmployerRequirement
     employers:
-    - IdrisIncorporated
-    - ZavodskiyInterstellar
+    - NanoTrasen
+    - Idris
+    - Zavod
     - PMCG
-  # Pirate contractor end
+  # Pirate Employment end
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   ransomModifier: 2 # Pirate: security staff are worth less than heads
@@ -48,9 +49,8 @@
   # Pirate: skill chips start
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipCombatEducation
-    - SkillChipSidearms
-    - SkillChipBludgeon
+    - SkillChipSecurityEducation # Pirate: security combat chips
+    - SkillChipDetective # Pirate: security combat chips
   # Pirate: skill chips end
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

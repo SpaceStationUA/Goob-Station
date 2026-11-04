@@ -9,7 +9,7 @@ using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Paper;
 using Content.Server.Preferences.Managers;
-using Content.Server._Pirate.Paper;
+using Content.Shared._Pirate.Paper;
 using Content.Server._Pirate.PersistentText;
 using Content.Shared._Pirate.PersistentText;
 using Content.Shared._Pirate.Photo;
@@ -30,7 +30,6 @@ public sealed class PersistentTextSystem : EntitySystem
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IServerPreferencesManager _preferences = default!;
-    [Dependency] private readonly BookSkinSystem _bookSkin = default!; // Pirate: persistent diary pages (cover)
     private readonly Dictionary<EntityUid, ResolvedTextPersistenceState> _resolvedTextStates = new();
     private Task? _persistTask;
 
@@ -142,9 +141,7 @@ public sealed class PersistentTextSystem : EntitySystem
                 if (snapshot == null)
                     continue;
 
-                // Pirate: persistent diary pages - the cover rides along in the stored text
-                // and is applied before the leaves are restored.
-                var restoredContent = _bookSkin.ExtractSkinMeta(uid, snapshot.Content);
+                var restoredContent = PrepareRestoredContent(uid, snapshot.Content);
                 if (string.IsNullOrEmpty(restoredContent))
                     continue;
 
@@ -261,12 +258,20 @@ public sealed class PersistentTextSystem : EntitySystem
                 OwnerCharacterName = persistence.OwnerCharacterName,
                 OwnerUserId = persistence.OwnerUserId?.UserId,
                 SavedAt = DateTime.UtcNow,
-                // Pirate: persistent diary pages - store the cover with the text.
-                Content = _bookSkin.AttachSkinMeta(uid, paper.Content)
+                Content = paper.Content
             };
         }
 
         return new List<PersistentTextSnapshot>(snapshots.Values);
+    }
+
+    private string PrepareRestoredContent(EntityUid uid, string content)
+    {
+        content = PaperPageFormat.StripLegacyCoverMeta(content);
+        if (HasComp<PaperPagesComponent>(uid))
+            content = PaperPageFormat.StripStamps(content);
+
+        return content;
     }
 
     private async void RestoreStaticTextSnapshot(EntityUid uid, PersistentTextComponent persistence)
@@ -315,8 +320,7 @@ public sealed class PersistentTextSystem : EntitySystem
             if (string.IsNullOrEmpty(snapshot.Content))
                 return;
 
-            // Pirate: persistent diary pages - the cover rides along in the stored text.
-            var restoredContent = _bookSkin.ExtractSkinMeta(uid, snapshot.Content);
+            var restoredContent = PrepareRestoredContent(uid, snapshot.Content);
             if (string.IsNullOrEmpty(restoredContent))
                 return;
 

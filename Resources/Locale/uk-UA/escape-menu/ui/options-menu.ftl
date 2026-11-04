@@ -394,3 +394,5 @@ ui-options-function-inspect-client-component-tooltip = Відкрити ViewVari
 ui-options-accessability-header-visuals = Візуальне
 ui-options-accessability-header-content = Вміст
 ui-options-censor-nudity = Цензурувати оголеність персонажів
+ui-options-hold-to-attack-melee = Утримувати для атаки (ближній бій)
+ui-options-hold-to-attack-ranged = Утримувати для атаки (дальній бій)

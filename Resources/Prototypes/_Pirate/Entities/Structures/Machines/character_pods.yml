@@ -40,6 +40,8 @@
   parent: BaseCharacterPod
   id: BaseCharacterPodCybersun
   components:
+  - type: GhostRoleLoadout
+    role: GhostRoleCybersun
   - type: RadioSpawnAnnouncement
     channel: Cybersun
     message: cybersun-pod-wake-announcement
@@ -119,6 +121,8 @@
   id: CharacterPodLizardGasStaff
   suffix: Gas Station Staff
   components:
+  - type: GhostRoleLoadout
+    role: GhostRoleLizardGasStation
   - type: GhostRole
     name: працівник Lizard Gas Station
     description: Невідомо, як ви тут опинилися. Проте відомо лише одне - ви маєте отримати якомога більший прибуток від продажів. Роль можуть обрати лише Ящеролюди / Унаті.

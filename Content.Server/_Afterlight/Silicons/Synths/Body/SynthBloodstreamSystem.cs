@@ -37,14 +37,15 @@ public sealed partial class SynthBloodstreamSystem : EntitySystem
 
             synth.NextUpdate = _timing.CurTime + synth.UpdateRate;
 
-            if (TryComp(uid, out MobStateComponent? mobState) && mobState.CurrentState == MobState.Dead)
+            var state = CompOrNull<MobStateComponent>(uid)?.CurrentState;
+            if (state == MobState.Dead)
                 continue;
 
-            UpdateSynthBloodstream((uid, synth, hunger, bloodstream, damageable));
+            UpdateSynthBloodstream((uid, synth, hunger, bloodstream, damageable), state == MobState.Critical);
         }
     }
 
-    private void UpdateSynthBloodstream(Entity<SynthBloodstreamComponent, HungerComponent, BloodstreamComponent, DamageableComponent> ent)
+    private void UpdateSynthBloodstream(Entity<SynthBloodstreamComponent, HungerComponent, BloodstreamComponent, DamageableComponent> ent, bool critical)
     {
         var hunger = _hunger.GetHunger(ent.Comp2);
         if (hunger <= ent.Comp1.MinHunger)
@@ -53,7 +54,7 @@ public sealed partial class SynthBloodstreamSystem : EntitySystem
         var availableHunger = hunger - ent.Comp1.MinHunger;
         var hungerCost = 0f;
 
-        UpdatePassiveRepair(ent, ref hungerCost, availableHunger);
+        UpdatePassiveRepair(ent, ref hungerCost, availableHunger, critical);
         UpdateBloodRegeneration(ent, ref hungerCost, availableHunger);
 
         if (hungerCost > 0f)
@@ -63,9 +64,13 @@ public sealed partial class SynthBloodstreamSystem : EntitySystem
     private void UpdatePassiveRepair(
         Entity<SynthBloodstreamComponent, HungerComponent, BloodstreamComponent, DamageableComponent> ent,
         ref float hungerCost,
-        float availableHunger)
+        float availableHunger,
+        bool critical)
     {
         var efficiency = GetBloodEfficiency(ent.Comp1, _bloodstream.GetBloodLevel((ent.Owner, ent.Comp3)));
+        if (critical)
+            efficiency *= ent.Comp1.CritRepairMultiplier;
+
         if (efficiency <= 0f)
             return;
 

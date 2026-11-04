@@ -1,0 +1,25 @@
+<!--
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<PanelContainer xmlns="https://spacestation14.io"
+        xmlns:admin="using:Content.Client.Administration.UI.CustomControls"
+        xmlns:controls="using:Content.Client.UserInterface.Controls"
+        xmlns:gfx="using:Robust.Client.Graphics"
+        HorizontalExpand="True"
+        Margin="5">
+    <PanelContainer.PanelOverride>
+        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777"/>
+    </PanelContainer.PanelOverride>
+    <BoxContainer Orientation="Vertical" Margin="8">
+        <Label Name="MutationName" Align="Center"/>
+        <TextEdit Name="MutationDesc" Editable="False" MinHeight="60"/> <!-- using TextEdit for word wrapping -->
+        <admin:HSeparator Margin="10" HorizontalExpand="True"/>
+        <BoxContainer Orientation="Horizontal" Margin="4" HorizontalAlignment="Center">
+            <Label Name="MutationInstability" Margin="8"/>
+            <Label Name="MutationDifficulty" Margin="8"/>
+        </BoxContainer>
+        <admin:HSeparator Margin="10" HorizontalExpand="True"/>
+        <BoxContainer Orientation="Vertical" Name="Obtaining" HorizontalAlignment="Center"/>
+    </BoxContainer>
+</PanelContainer>

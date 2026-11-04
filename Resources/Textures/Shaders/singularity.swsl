@@ -24,7 +24,8 @@ void fragment() {
         delta = FRAGCOORD.xy - position[i];
 	    distance = length(delta / renderScale);
 
-        deformation = intensity[i] / pow(distance, falloffPower[i]);
+        // Pirate: match cursor projection and avoid 0 * infinity at the exact center.
+        deformation = intensity[i] / pow(max(distance, 1.0), falloffPower[i]);
         
         // ensure deformation goes to zero at max distance
         // avoids long-range single-pixel shifts that are noticeable when leaving PVS.

@@ -1,0 +1,129 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  save: false
+  name: Urist McWebster
+  parent:
+  - BaseMobNeoArachnid
+  id: MobNeoArachnid
+  components: []
+- type: entity
+  save: false
+  name: Urist McAvalister
+  parent:
+  - BaseMobNeoAvali
+  id: MobNeoAvali
+  components: []
+- type: entity
+  save: false
+  name: Urist McCyclorister
+  parent:
+  - BaseMobNeoCyclorite
+  id: MobNeoCyclorite
+  components: []
+- type: entity
+  save: false
+  name: Urist McPlantster
+  parent:
+  - BaseMobNeoDiona
+  id: MobNeoDiona
+  components: []
+- type: entity
+  save: false
+  name: Urist McHandster the Neo-Dwarf
+  parent:
+  - BaseMobNeoDwarf
+  id: MobNeoDwarf
+  components: []
+- type: entity
+  save: false
+  name: Urist McElgister
+  parent:
+  - BaseMobNeoElf
+  id: MobNeoElf
+  components: []
+- type: entity
+  save: false
+  name: Urist McMeowster
+  parent:
+  - BaseMobNeoFelionoid
+  id: MobNeoFelionoid
+  components: []
+- type: entity
+  save: false
+  name: Urist McHandster
+  parent:
+  - BaseMobNeoHuman
+  id: MobNeoHuman
+  components: []
+- type: entity
+  save: false
+  name: Urist McShadowster
+  parent:
+  - BaseMobNeoKin
+  id: MobNeoKin
+  components: []
+- type: entity
+  save: false
+  name: Urist McBnuuister
+  parent:
+  - BaseMobNeoLagomorph
+  id: MobNeoLagomorph
+  components: []
+- type: entity
+  save: false
+  name: Urist McFluffster
+  parent:
+  - BaseMobNeoMoth
+  id: MobNeoMoth
+  components: []
+- type: entity
+  save: false
+  name: Urist McScalester
+  parent:
+  - BaseMobNeoReptilian
+  id: MobNeoReptilian
+  components: []
+- type: entity
+  save: false
+  name: Urist McRapster
+  parent:
+  - BaseMobNeoResomi
+  id: MobNeoResomi
+  components: []
+- type: entity
+  save: false
+  name: Urist McSlimester
+  parent:
+  - BaseMobNeoSlimePerson
+  id: MobNeoSlimePerson
+  components: []
+- type: entity
+  save: false
+  name: Urist McEarster
+  parent:
+  - BaseMobNeoThaven
+  id: MobNeoThaven
+  components: []
+- type: entity
+  save: false
+  name: Urist McVoxster
+  parent:
+  - BaseMobNeoVox
+  id: MobNeoVox
+  components: []
+- type: entity
+  save: false
+  name: Urist McVulpster
+  parent:
+  - BaseMobNeoVulpkanin
+  id: MobNeoVulpkanin
+  components: []
+- type: entity
+  save: false
+  name: Urist McToaster
+  parent:
+  - BaseMobNeocyte
+  id: MobNeocyte
+  components: []

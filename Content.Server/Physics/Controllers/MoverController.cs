@@ -26,6 +26,7 @@ public sealed class MoverController : SharedMoverController
 
     [Dependency] private readonly ThrusterSystem _thruster = default!;
     [Dependency] private readonly PilotingSkillSystem _piloting = default!; // Pirate: piloting skill
+    [Dependency] private readonly Content.Server._Pirate.Newbies.NovicePilotSpeedSystem _novicePilots = default!; // Pirate
 
     private Dictionary<EntityUid, (ShuttleComponent, List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>)> _shuttlePilots = new();
 
@@ -353,7 +354,7 @@ public sealed class MoverController : SharedMoverController
     /// <summary>
     /// Helper function to extrapolate max velocity for a given Vector2 (really, its angle) and shuttle.
     /// </summary>
-    private Vector2 ObtainMaxVel(Vector2 vel, ShuttleComponent shuttle)
+    private Vector2 ObtainMaxVel(Vector2 vel, ShuttleComponent shuttle, float speedLimit) // Pirate: per-pilot limit.
     {
         if (vel.Length() == 0f)
             return Vector2.Zero;
@@ -370,7 +371,7 @@ public sealed class MoverController : SharedMoverController
         var horizComp = vel.X != 0 ? MathF.Pow(Vector2.Dot(vel, new (shuttle.LinearThrust[horizIndex] / shuttle.LinearThrust[horizIndex], 0f)), 2) : 0;
         var vertComp = vel.Y != 0 ? MathF.Pow(Vector2.Dot(vel, new (0f, shuttle.LinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2) : 0;
 
-        return shuttle.BaseMaxLinearVelocity * vel * MathF.ReciprocalSqrtEstimate(horizComp + vertComp);
+        return speedLimit * vel * MathF.ReciprocalSqrtEstimate(horizComp + vertComp); // Pirate
     }
 
     private void HandleShuttleMovement(float frameTime)
@@ -443,10 +444,14 @@ public sealed class MoverController : SharedMoverController
             var linearCount = 0;
             var brakeCount = 0;
             var angularCount = 0;
+            var speedLimit = shuttle.BaseMaxLinearVelocity; // Pirate
 
             foreach (var (pilotUid, pilot, _, consoleXform) in pilots) // Pirate: piloting skill
             {
                 var (strafe, rotation, brakes) = GetPilotVelocityInput(pilot);
+                // Pirate: observers do not limit another pilot; any actively controlling novice does.
+                if (strafe != Vector2.Zero || rotation != 0f || brakes > 0f)
+                    speedLimit = Math.Min(speedLimit, _novicePilots.GetSpeedLimit(pilotUid, shuttle.BaseMaxLinearVelocity));
                 (strafe, rotation, brakes) = _piloting.AdjustInput(pilotUid, strafe, rotation, brakes, body.LinearVelocity); // Pirate: piloting skill
 
                 if (brakes > 0f)
@@ -473,6 +478,10 @@ public sealed class MoverController : SharedMoverController
             linearInput /= Math.Max(1, linearCount);
             angularInput /= Math.Max(1, angularCount);
             brakeInput /= Math.Max(1, brakeCount);
+
+            // Pirate: also enforce the limit when a novice takes over an already moving shuttle.
+            if (speedLimit < shuttle.BaseMaxLinearVelocity && body.LinearVelocity.LengthSquared() > speedLimit * speedLimit)
+                PhysicsSystem.SetLinearVelocity(shuttleUid, Vector2.Normalize(body.LinearVelocity) * speedLimit, body: body);
 
             // Handle shuttle movement
             if (brakeInput > 0f)
@@ -636,8 +645,8 @@ public sealed class MoverController : SharedMoverController
                 var forceMul = frameTime * body.InvMass;
 
                 var localVel = (-shuttleNorthAngle).RotateVec(body.LinearVelocity);
-                var maxVelocity = ObtainMaxVel(localVel, shuttle); // max for current travel dir
-                var maxWishVelocity = ObtainMaxVel(totalForce, shuttle);
+                var maxVelocity = ObtainMaxVel(localVel, shuttle, speedLimit); // Pirate: max for current travel dir.
+                var maxWishVelocity = ObtainMaxVel(totalForce, shuttle, speedLimit); // Pirate
                 var properAccel = (maxWishVelocity - localVel) / forceMul;
 
                 var finalForce = Vector2Dot(totalForce, properAccel.Normalized()) * properAccel.Normalized();

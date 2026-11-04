@@ -72,12 +72,14 @@ public sealed class KnowledgeProfileSystem : EntitySystem
         var species = _prototypes.Index<SpeciesPrototype>(args.Profile.Species);
         var pointsBonus = KnowledgeableComponent.GetBonusPoints(_prototypes, args.Profile.TraitPreferences);
         var masteryGrants = KnowledgeableComponent.GetMasteryGrants(_prototypes, args.Profile.TraitPreferences);
-        _knowledge.ApplyProfile(args.Mob, species.Knowledge, args.Profile.Knowledge, pointsBonus, masteryGrants);
+        // Job chips must be installed before profile pricing.
+        var chipLevels = _knowledge.GetChipLevels(_chips.GetInstalledChipPrototypes(args.Mob));
+        _knowledge.ApplyProfile(args.Mob, species.Knowledge, args.Profile.Knowledge, pointsBonus, masteryGrants,
+            chipLevels);
         // Pirate: skill chips start
         _knowledge.ReplayCompetency(args.Mob);
         _chips.ReconcileInstalledChipModifiers(args.Mob);
         // Pirate: skill chips end
-        _knowledge.ApplyEmployerBonuses(args.Mob, args.Profile.Employer);
     }
 
     private void OnJobChipsRequest(KnowledgeJobChipsRequest args, EntitySessionEventArgs session)

@@ -1,0 +1,63 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseSpeciesDummy
+  - BaseInventoryCyclorite
+  id: AppearanceCyclorite
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: HumanoidAppearance
+    species: Cyclorite
+  - type: Body
+    prototype: Cyclorite
+- type: entity
+  parent:
+  - BaseSpeciesDummy
+  - BaseInventoryFemaleJumpsuit
+  id: AppearanceDoll
+  categories:
+  - HideSpawnMenu
+  description: A dummy doll meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Doll
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+- type: entity
+  parent:
+  - BaseSpeciesDummy
+  - BaseInventoryFemaleJumpsuit
+  id: AppearanceElf
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: HumanoidAppearance
+    species: Elf
+- type: entity
+  parent:
+  - BaseSpeciesDummy
+  - BaseInventoryFelionoid
+  id: AppearanceFelionoid
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: HumanoidAppearance
+    species: Felionoid
+  - type: Body
+    prototype: Felionoid
+- type: entity
+  parent:
+  - BaseSpeciesDummy
+  - BaseInventoryLagomorph
+  id: AppearanceLagomorph
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: HumanoidAppearance
+    species: Lagomorph
+  - type: Body
+    prototype: Lagomorph

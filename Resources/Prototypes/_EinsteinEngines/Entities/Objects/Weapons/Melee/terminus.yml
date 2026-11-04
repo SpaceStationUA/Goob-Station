@@ -13,10 +13,10 @@
       tags:
         - Oni
   - type: Sprite
-    sprite: _EinsteinEngines/Objects/Weapons/Melee/terminus.rsi
+    sprite: _Pirate/Objects/Weapons/Melee/terminus.rsi # Pirate: bluesec equipment resprites
     state: icon
   - type: Clothing
-    sprite: _EinsteinEngines/Objects/Weapons/Melee/terminus.rsi
+    sprite: _Pirate/Objects/Weapons/Melee/terminus.rsi # Pirate: bluesec equipment resprites
     slots:
     - Back
     - suitStorage

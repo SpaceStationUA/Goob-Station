@@ -1,0 +1,25 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: soundCollection
+  id: CycloriteCough
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Cyclorite/cough_1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Cyclorite/cough_2.ogg
+- type: soundCollection
+  id: CycloriteLaugh
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Cyclorite/laugh.ogg
+- type: soundCollection
+  id: CycloriteScreams
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Cyclorite/scream_1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Cyclorite/scream_2.ogg
+- type: soundCollection
+  id: CycloriteWhistle
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Cyclorite/whistle.ogg
+- type: soundCollection
+  id: CycloriteYawn
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Cyclorite/yawn.ogg

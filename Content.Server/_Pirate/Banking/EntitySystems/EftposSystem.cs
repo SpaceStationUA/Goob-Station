@@ -31,15 +31,16 @@ public sealed class EftposSystem : EntitySystem
             bankCard.AccountId == component.BankAccountId || component.Amount <= 0 || bankCard.CommandBudgetCard)
             return;
 
-        if (_bankCardSystem.TryChangeBalance(bankCard.AccountId!.Value, -component.Amount) &&
-            _bankCardSystem.TryChangeBalance(component.BankAccountId.Value, component.Amount))
+        if (bankCard.AccountId.HasValue &&
+            _bankCardSystem.TryTransferBalance(bankCard.AccountId.Value, component.BankAccountId.Value, component.Amount))
         {
             _popupSystem.PopupEntity(Loc.GetString("eftpos-transaction-success"), uid);
             _audioSystem.PlayPvs(component.SoundApply, uid);
         }
         else
         {
-            _popupSystem.PopupEntity(Loc.GetString("eftpos-transaction-error"), uid);
+            var arrested = bankCard.AccountId is { } accountId && _bankCardSystem.IsArrested(accountId);
+            _popupSystem.PopupEntity(Loc.GetString(arrested ? "bank-account-arrested-purchase" : "eftpos-transaction-error"), uid);
             _audioSystem.PlayPvs(component.SoundDeny, uid);
         }
     }

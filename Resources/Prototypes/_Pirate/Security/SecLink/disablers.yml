@@ -168,6 +168,8 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: GunFlashlightAttachment
+    offset: "0.0625, 0"
   - type: Item
     size: Small
     shape:
@@ -203,6 +205,10 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: GunFlashlightAttachment
+    stateOff: flight-compact
+    stateOn: flight-compact-on
+    offset: "0, 0" # light body bottom on the gun bottom
   - type: Item
     size: Small
     shape:
@@ -249,6 +255,8 @@
     - state: mag-unshaded-0
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: GunFlashlightAttachment
+    offset: "0.0625, -0.03125"
   - type: Clothing
     sprite: _Pirate/Objects/Weapons/Guns/Disablers/stunprojector.rsi
   - type: Appearance

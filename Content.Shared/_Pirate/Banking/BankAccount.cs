@@ -24,6 +24,11 @@ public sealed partial class BankAccount
     [DataField]
     public NetEntity? CartridgeUid;
 
+    [DataField]
+    public bool Arrested;
+
+    public List<BankTransaction> Transactions = new();
+
     public BankAccount(int accountId, int balance)
     {
         AccountId = accountId;

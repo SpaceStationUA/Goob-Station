@@ -1,6 +1,5 @@
 ent-EncryptionKeyStationMasterReceiveOnly = ключ шифрування для прослуховування станції
     .desc = Ключ шифрування, що приймає всі вісім каналів станції, але не дозволяє передавати на них.
-
 ent-MercUndeterminedClass = заявка на спеціалізацію найманця
     .desc = Оберіть одну спеціалізацію найманця. Штурмовик отримує заявки на зброю, а медик, розвідник, аугментований та авангард — спеціалізоване спорядження.
 ent-MercUndeterminedAssaultWeapon = заявка на зброю найманця
@@ -41,18 +40,13 @@ ent-ClothingBackpackMercenaryVanguardFilled = рюкзак найманця
 ent-ClothingBackpackMercenaryAssaultFilled = рюкзак найманця
     .desc = Надійний бойовий рюкзак з аптечкою, двома вибуховими гранатами та двома зарядами C4.
     .suffix = Штурмовик, Заповнений
-
 selectable-set-merc-assault-name = Штурмовик
 selectable-set-merc-assault-description = Стрілець першої лінії. Оберіть основну та додаткову зброю із заявок у розвантаженні. Два заряди C4 призначені для проломів.
-
 selectable-set-merc-medic-name = Медик
 selectable-set-merc-medic-description = Польовий медик. Заправляйте гіпоспрей з каністр. Пояс лише для медичного спорядження. Автодок встановлює очі з вбудованим медичним HUD.
-
 selectable-set-merc-recon-name = Розвідник
 selectable-set-merc-recon-description = Інфільтратор. Має ключ прослуховування, який працює лише на прийом, і безшумний дробовик для тихих ліквідацій.
-
 selectable-set-merc-augment-name = Аугментований
 selectable-set-merc-augment-description = Кібернетично посилений боєць ближнього бою. Встановіть клинок богомола, Сандевістан і кібердеку до зіткнення.
-
 selectable-set-merc-vanguard-name = Авангард
 selectable-set-merc-vanguard-description = Проривник ближнього бою. Протиковзке взуття. Тримайте катану обома руками, щоб відбивати удари та кулі.

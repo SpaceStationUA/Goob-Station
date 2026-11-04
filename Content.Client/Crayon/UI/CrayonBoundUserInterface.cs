@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Crayon.UI
 {
-    public sealed class CrayonBoundUserInterface : BoundUserInterface
+    public sealed partial class CrayonBoundUserInterface : BoundUserInterface // Pirate: floor art controls.
     {
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
@@ -25,6 +25,7 @@ namespace Content.Client.Crayon.UI
             _menu = this.CreateWindowCenteredLeft<CrayonWindow>();
             _menu.OnColorSelected += SelectColor;
             _menu.OnSelected += Select;
+            InitializePirateArt(); // Pirate: custom symbols and rotation.
             PopulateCrayons();
         }
 

@@ -226,7 +226,8 @@ namespace Content.Server.VendingMachines
             {
                 var range = vendComponent.NonLimitedEjectRange;
                 var direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
-                _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
+                _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce,
+                    predicted: false); // Trauma
             }
 
             vendComponent.NextItemToEject = null;
@@ -285,8 +286,10 @@ namespace Content.Server.VendingMachines
 
         private void UpdateVendingMachineInterfaceState(EntityUid uid, VendingMachineComponent component)
         {
-            var state = new VendingMachineInterfaceState(GetAllInventory(uid, component), GetPriceMultiplier(component),
-                component.Credits);
+            var inventory = GetAllInventory(uid, component)
+                .Select(entry => new VendingMachineInventoryEntry(entry))
+                .ToList();
+            var state = new VendingMachineInterfaceState(inventory, GetPriceMultiplier(component), component.Credits);
 
             UISystem.SetUiState(uid, VendingMachineUiKey.Key, state);
         }
@@ -335,13 +338,13 @@ namespace Content.Server.VendingMachines
                 {
                     component.Credits -= price;
                 }
-                else if (TryPayWithBankCard(sender, price))
+                else if (TryPayWithBankCard(sender, price, uid)) // Pirate: bank transaction history
                 {
                     Audio.PlayPvs(component.SoundInsertCurrency, uid);
                 }
                 else
                 {
-                    Popup.PopupEntity(Loc.GetString("vending-machine-component-no-balance", ("target", uid)), sender, sender);
+                    Popup.PopupEntity(Loc.GetString(IsBankCardArrested(sender) ? "bank-account-arrested-purchase" : "vending-machine-component-no-balance", ("target", uid)), sender, sender); // Pirate: citations
                     Deny((uid, component), sender);
                     return;
                 }
@@ -351,7 +354,7 @@ namespace Content.Server.VendingMachines
             UpdateVendingMachineInterfaceState(uid, component);
         }
 
-        private bool TryPayWithBankCard(EntityUid user, int amount)
+        private bool TryPayWithBankCard(EntityUid user, int amount, EntityUid vendor) // Pirate: bank transaction history
         {
             if (!_idCard.TryFindIdCard(user, out var idCard))
                 return false;
@@ -359,8 +362,18 @@ namespace Content.Server.VendingMachines
             if (!TryComp<BankCardComponent>(idCard.Owner, out var bankCard) || bankCard.AccountId == null)
                 return false;
 
-            return _bankCard.TryChangeBalance(bankCard.AccountId.Value, -amount);
+            return _bankCard.TryChangeBalance(bankCard.AccountId.Value, -amount, BankTransactionType.Purchase, Name(vendor)); // Pirate: bank transaction history
         }
+
+        #region Pirate: citations
+        private bool IsBankCardArrested(EntityUid user)
+        {
+            return _idCard.TryFindIdCard(user, out var idCard)
+                && TryComp<BankCardComponent>(idCard.Owner, out var bankCard)
+                && bankCard.AccountId is { } accountId
+                && _bankCard.IsArrested(accountId);
+        }
+        #endregion
 
 
         private void OnInteractUsing(EntityUid uid, VendingMachineComponent component, InteractUsingEvent args)
@@ -388,7 +401,7 @@ namespace Content.Server.VendingMachines
         protected override int GetEntryPrice(EntityPrototype proto)
         {
             var price = (int) _pricing.GetEstimatedPrice(proto);
-            return price; 
+            return price;
         }
 
         private int GetPrice(VendingMachineInventoryEntry entry, VendingMachineComponent comp)
@@ -408,7 +421,7 @@ namespace Content.Server.VendingMachines
 
             if (!IsAuthorized(uid, args.Actor, component))
                 return;
-                
+
             _stackSystem.SpawnAtPosition(component.Credits, PrototypeManager.Index(component.CreditStackPrototype),
                 Transform(uid).Coordinates);
             component.Credits = 0;

@@ -30,7 +30,7 @@
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - IdrisIncorporated
+      - Idris
   goobcoins: 30 #Goob content
   startingGear: AdminAssistantGear
   icon: "JobIconAdminAssitant"

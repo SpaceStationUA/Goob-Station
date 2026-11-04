@@ -4,6 +4,8 @@
   description: job-description-security-instructor
   playTimeTracker: JobSecurityInstructor
   requirements:
+    - !type:FlavorTextLengthRequirement
+      minLength: 500
     - !type:RoleTimeRequirement
       role: JobWarden
       time: 10h
@@ -15,8 +17,9 @@
       time: 1h
     - !type:CharacterEmployerRequirement
       employers:
-      - IdrisIncorporated
-      - ZavodskiyInterstellar
+      - NanoTrasen
+      - Idris
+      - Zavod
       - PMCG
   startingGear: SecurityInstructorGear
   icon: "JobIconSecurityInstructor"
@@ -41,9 +44,8 @@
   special:
   - !type:OrganChipsSpecial
     chips:
-    - SkillChipCombatEducation
-    - SkillChipSecurityInstructor # Pirate: sidearm and M1 Garand training in one slot.
-    - SkillChipNonLethal
+    - SkillChipSecurityEducation
+    - SkillChipSecurityInstructor
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial

@@ -9,13 +9,13 @@
     - !type:DepartmentTimeRequirement
       department: Science
       time: 2.5h
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZengHuPharmaceuticals
-      - ZavodskiyInterstellar
-    # Pirate contractor end
+      - Zavod
+      - ZengHu
+    # Pirate Employment end
   startingGear: ScientistGear
   icon: "JobIconScientist"
   supervisors: job-supervisors-rd

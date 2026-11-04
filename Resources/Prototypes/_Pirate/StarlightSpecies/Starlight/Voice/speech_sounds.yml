@@ -1,0 +1,42 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: soundCollection
+  id: LagomorphScream
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/scream1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/scream2.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/scream3.ogg
+- type: soundCollection
+  id: LagomorphSneeze
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/sneeze1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/sneeze2.ogg
+- type: soundCollection
+  id: LagomorphSnore
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/snore1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/snore2.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/snore3.ogg
+- type: soundCollection
+  id: LagomorphSnort
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/snort1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/snort2.ogg
+- type: soundCollection
+  id: LagomorphSqueak
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/squeak1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/squeak2.ogg
+- type: soundCollection
+  id: LagomorphStomp
+  files:
+  - /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+- type: speechSounds
+  id: ALLagomorph
+  saySound:
+    path: /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/bunny_talk2.ogg
+  askSound:
+    path: /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/bunny_talk3.ogg
+  exclaimSound:
+    path: /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Lagomorph/bunny_talk1.ogg

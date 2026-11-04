@@ -3,7 +3,6 @@
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using Content.Shared._Pirate.Contractors.Prototypes; // Pirate - port EE contractors
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Content.Shared.Examine;
@@ -51,10 +50,6 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
 
     public static readonly ProtoId<SpeciesPrototype> DefaultSpecies = "Human";
     public static readonly ProtoId<BarkPrototype> DefaultBarkVoice = "Alto"; // Goob Station - Barks
-
-    public static readonly ProtoId<EmployerPrototype> DefaultEmployer = "NanoTrasen"; // Pirate - port EE contractors
-
-    public static readonly ProtoId<NationalityPrototype> DefaultNationality = "Bieselite"; // Pirate - port EE contractors
 
     public override void Initialize()
     {
@@ -195,6 +190,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
 
         _identity.QueueIdentityUpdate(target);
         Dirty(target, targetHumanoid);
+        RaiseMarkingsChanged(target); // Goob
     }
 
     /// <summary>
@@ -291,6 +287,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
         humanoid.MarkingSet.EnsureSpecies(species, humanoid.SkinColor, _markingManager);
         var oldMarkings = humanoid.MarkingSet.GetForwardEnumerator().ToList();
         humanoid.MarkingSet = new(oldMarkings, prototype.MarkingPoints, _markingManager, _proto);
+        RaiseMarkingsChanged(uid); // Goob
 
         if (sync)
             Dirty(uid, humanoid);
@@ -604,6 +601,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
         }
 
         humanoid.MarkingSet.AddBack(prototype.MarkingCategory, markingObject);
+        RaiseMarkingsChanged(uid); // Goob
 
         if (sync)
             Dirty(uid, humanoid);
@@ -638,6 +636,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem //go
         var markingObject = new Marking(marking, colors);
         markingObject.Forced = forced;
         humanoid.MarkingSet.AddBack(prototype.MarkingCategory, markingObject);
+        RaiseMarkingsChanged(uid); // Goob
 
         if (sync)
             Dirty(uid, humanoid);

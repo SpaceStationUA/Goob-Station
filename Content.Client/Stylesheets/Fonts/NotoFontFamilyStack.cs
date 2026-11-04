@@ -35,10 +35,16 @@ public sealed class NotoFontFamilyStack(IResourceCache resCache, string variant 
     /// </remarks>
     private string _fontSymbols = "/Fonts/NotoSans/NotoSansSymbols-{2}.ttf";
 
+    private string _fontCjk = "/Fonts/NotoSans/NotoSansSC-{2}.ttf"; // Goob
+
     /// <summary>
     ///     The fallback font path, exactly. (no string substitutions.)
     /// </summary>
-    private string[] _extras = new[] { "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf" };
+    private string[] _extras =
+    [
+        "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf",
+        "/Fonts/NotoSans/NotoSansSC-Regular.ttf", // Pirate: fallback for the 电 currency symbol.
+    ];
 
     public HashSet<FontKind> AvailableKinds = [FontKind.Regular, FontKind.Bold, FontKind.Italic, FontKind.BoldItalic];
 
@@ -69,6 +75,7 @@ public sealed class NotoFontFamilyStack(IResourceCache resCache, string variant 
         {
             string.Format(_fontPrimary, kindStr, simpleKindStr, boldOrRegularStr),
             string.Format(_fontSymbols, kindStr, simpleKindStr, boldOrRegularStr),
+            string.Format(_fontCjk, kindStr, simpleKindStr, boldOrRegularStr), // Goob
         };
         fontList.AddRange(_extras);
         return fontList.ToArray();

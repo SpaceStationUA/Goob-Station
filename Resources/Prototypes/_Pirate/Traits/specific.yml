@@ -1,0 +1,32 @@
+- type: trait
+  id: TraitUnathiTailArt
+  name: trait-unathi-tail-art-name
+  description: trait-unathi-tail-art-desc
+  category: RaceSpecific
+  cost: 3
+  conditions:
+  - !type:IsSpeciesCondition
+    species:
+    - Reptilian
+  - !type:IsCitizenshipCondition
+    citizenships:
+    - Izweski
+  - !type:HasTraitsCondition
+    invert: true
+    traits:
+    - TraitLightweight
+  components:
+  - type: GrantUnathiTail
+
+- type: trait
+  id: ScreenVision
+  name: trait-screenvision-name
+  description: trait-screenvision-desc
+  category: RaceSpecific
+  cost: -1
+  conditions:
+    - !type:IsSpeciesCondition
+      species:
+        - IPC
+  components:
+  - type: ScreenVision

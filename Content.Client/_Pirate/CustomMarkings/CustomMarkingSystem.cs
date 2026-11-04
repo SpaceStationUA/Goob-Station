@@ -298,6 +298,10 @@ public sealed partial class CustomMarkingSystem : EntitySystem
             var layer = _sprite.AddRsiLayer(sprite, CustomMarkingResources.State, shown.Rsi, depth);
             _sprite.LayerMapSet(sprite, LayerKey(i), layer);
 
+            // Glow uses an unshaded layer.
+            if (marking.Glow)
+                spriteComp.LayerSetShader(layer, SpriteSystem.UnshadedId.Id);
+
             _sprite.LayerSetVisible(sprite, layer, visible);
             if (visible)
                 CustomMarkingErase.Add(covered, shown.Solid);

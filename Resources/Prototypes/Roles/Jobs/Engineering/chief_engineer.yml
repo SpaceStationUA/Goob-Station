@@ -26,13 +26,13 @@
     #  inverted: true
     #  species:
     #  - Felinid
-    # Pirate contractor start
+    # Pirate Employment start
     - !type:CharacterEmployerRequirement
       employers:
       - NanoTrasen
-      - ZavodskiyInterstellar
-      - HephaestusIndustries
-    # Pirate contractor end
+      - Zavod
+      - Hephaest
+    # Pirate Employment end
     - !type:FlavorTextLengthRequirement # Pirate: command flavor gate
   weight: 10
   startingGear: ChiefEngineerGear

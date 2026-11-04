@@ -80,6 +80,8 @@
   - LoadoutItemCig
   - LoadoutItemCigsMixed
   - LoadoutItemCrayonBox
+  - LoadoutItemCrayonArtist
+  - LoadoutItemSuperSynthesizerNoLimit
   - LoadoutItemDrinkLithiumFlask
   - LoadoutItemDrinkShinyFlask
   - LoadoutItemDrinkVacuumFlask
@@ -1034,6 +1036,7 @@
   - SecurityOfficerGunCase # Pirate: Omu duty case
   - SecurityOfficerSecurityDutyRevolver # Pirate
   - LoadoutSecurityWeaponMk58
+  - WeaponPistolMk58Gold
   - LoadoutSecurityEnergyGunPistol
 
 - type: loadoutGroup

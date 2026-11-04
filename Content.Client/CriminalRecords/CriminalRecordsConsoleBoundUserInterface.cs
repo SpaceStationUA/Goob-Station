@@ -48,8 +48,8 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
             SendMessage(new CriminalRecordCreateRecord(name));
         _window.OnDeleteRecord += id =>
             SendMessage(new DeleteStationRecord(id));
-        _window.OnIdentityInfoChanged += (species, nationality, employer, age, gender) =>
-            SendMessage(new CriminalRecordEditIdentity(species, nationality, employer, age, gender));
+        _window.OnIdentityInfoChanged += (species, citizenship, employer, age, gender) => // Pirate: citizenship
+            SendMessage(new CriminalRecordEditIdentity(species, citizenship, employer, age, gender)); // Pirate: citizenship
         _window.OnForensicsInfoChanged += (fingerprint, dna) =>
             SendMessage(new CriminalRecordEditForensics(fingerprint, dna));
         _window.OnPrintPhoto += (key, image) =>
@@ -63,6 +63,14 @@ public sealed class CriminalRecordsConsoleBoundUserInterface : BoundUserInterfac
         _window.OnAddLogNote += text => SendMessage(new RecordLogAddNoteMessage(text));
         _window.OnDeleteLogEntry += id => SendMessage(new RecordLogDeleteMessage(id));
         _window.OnPrintLog += () => SendMessage(new RecordLogPrintMessage());
+        #endregion
+        #region Pirate: citations
+        _window.OnAddCitation += (reason, details, fine) =>
+            SendMessage(new Content.Shared._Pirate.CriminalRecords.CriminalRecordAddCitation(reason, details, fine));
+        _window.OnPayCitation += id =>
+            SendMessage(new Content.Shared._Pirate.CriminalRecords.CriminalRecordPayCitation(id));
+        _window.OnVoidCitation += id =>
+            SendMessage(new Content.Shared._Pirate.CriminalRecords.CriminalRecordVoidCitation(id));
         #endregion
         _window.OnClose += Close;
         RecordConsoleSounds.Attach(this, _window); // Pirate: records interactive sounds

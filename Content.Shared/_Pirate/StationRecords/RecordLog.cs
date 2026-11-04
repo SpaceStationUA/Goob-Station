@@ -12,6 +12,9 @@ public enum RecordLogKind : byte
     Note,
 
     Background,
+
+    // Stored as an int in the history database: append new kinds at the end.
+    Citation,
 }
 
 [Serializable, NetSerializable]

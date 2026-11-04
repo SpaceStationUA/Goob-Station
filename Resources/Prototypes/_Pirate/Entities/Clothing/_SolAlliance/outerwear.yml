@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, SolAllianceInfo, BaseMajorContraband]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseMajorContraband]
   id: ClothingOuterVestWebSAN
   name: SAN web vest
   suffix: SAN

@@ -23,9 +23,6 @@
     - !type:DepartmentTimeRequirement
       department: Interdyne
       time: 50400 # 14 hours
-    - !type:CharacterEmployerRequirement
-      employers:
-      - Interdyne
   startingGear: InterdyneOfficerGear
   name: job-name-captain-interdyne
   description: job-description-captain-interdyne

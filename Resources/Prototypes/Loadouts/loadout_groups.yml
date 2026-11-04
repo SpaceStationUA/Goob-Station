@@ -7,6 +7,7 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
+  - CandyBucket # Goobstation - Halloween
   - FlowerWreath
   - Hairflower
   - Headphones
@@ -129,12 +130,14 @@
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen
+  - EmergencyOxygenBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvali # Pirate
   - EmergencyPlasma
   - LoadoutSpeciesVoxNitrogen
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVapor # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 # nitrogen or oxygen tank, depending on what your species needs
 - type: loadoutGroup
@@ -549,20 +552,21 @@
   loadouts:
   - LizardPlushieChaplain
 
-- type: loadoutGroup
-  id: ChaplainBible
-  name: loadout-group-chaplain-bible
-  minLimit: 1
-  loadouts:
-  - Bible
-  - BibleNanoTrasen
-  - BibleDruid
-  - BibleSatanic
-  - BibleTanakh
-  - BibleQuran
-  - BibleHonk
-  - BibleRatvar
-  - BibleNarsie
+# Goobstation - redundant due to chaplains spawning with a bluespace scripture beacon
+#- type: loadoutGroup
+#  id: ChaplainBible
+#  name: loadout-group-chaplain-bible
+#  minLimit: 1
+#  loadouts:
+#  - Bible
+#  - BibleNanoTrasen
+#  - BibleDruid
+#  - BibleSatanic
+#  - BibleTanakh
+#  - BibleQuran
+#  - BibleHonk
+#  - BibleRatvar
+#  - BibleNarsie
 
 - type: loadoutGroup
   id: JanitorHead
@@ -696,12 +700,14 @@
   loadouts:
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
+  - EmergencyOxygenClownBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliClown # Pirate
   - EmergencyPlasmaClown
   - LoadoutSpeciesVoxNitrogen
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporClown # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 - type: loadoutGroup
   id: ClownJobTrinkets
@@ -773,6 +779,7 @@
   loadouts:
   - EmergencyNitrogenMime
   - EmergencyOxygenMime
+  - EmergencyOxygenMimeBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliMime # Pirate
   - EmergencySpeciesMothMime
   - EmergencyPlasmaMime
@@ -780,6 +787,7 @@
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporMime # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 - type: loadoutGroup
   id: MimeJobTrinkets
@@ -1194,12 +1202,14 @@
   loadouts:
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
+  - EmergencyOxygenExtendedBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliExtended # Pirate
   - EmergencyPlasmaExtended
   - LoadoutSpeciesVoxNitrogen
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporExtended # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 # Science
 - type: loadoutGroup
@@ -1581,12 +1591,14 @@
   loadouts:
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
+  - EmergencyOxygenSecurityBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliSecurity # Pirate
   - EmergencyPlasmaSecurity
   - LoadoutSpeciesVoxNitrogen
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporSecurity # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 # Medical
 - type: loadoutGroup
@@ -1615,6 +1627,7 @@
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
+  - ChiefMedicalOfficerLabCoatWinter # Funky Station
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerNeck
@@ -1832,12 +1845,14 @@
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
+  - EmergencyOxygenMedicalBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliMedical # Pirate
   - EmergencyPlasmaMedical
   - LoadoutSpeciesVoxNitrogen
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporMedical # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 # Wildcards
 - type: loadoutGroup
@@ -1878,12 +1893,14 @@
   loadouts:
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
+  - EmergencyOxygenSyndicateBlood # Pirate: Doll haemobrick kit.
   - EmergencyOxygenAvaliSyndicate # Pirate
   - EmergencyPlasmaSyndicate
   - LoadoutSpeciesVoxNitrogen
   - LoadoutSpeciesPlasma # Goobstation
   - EmergencyWaterVaporSyndicate # Delta-V
   - EmergencySilicon
+  - EmergencySynth # Pirate: synth survival kit
 
 - type: loadoutGroup
   id: SurvivalMilitaryDouble
@@ -1893,6 +1910,7 @@
   loadouts:
   - EmergencyNitrogenMilitaryDouble
   - EmergencyOxygenMilitaryDouble
+  - EmergencyOxygenMilitaryDoubleBlood # Pirate: Doll haemobrick kit.
 
 - type: loadoutGroup
   id: GroupSpeciesBreathTool

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Overlay layers for the Pirate synth survival box. ferrobrick recoloured from nutriblock, water and flare copied unchanged, all from _Goobstation/Objects/Misc/emergencybox.rsi (tgstation commit cc65477c04f7403ca8a457bd5bae69a01abadbf0, modified by gtheglorious, aidenkrz and gnusnotutopia).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ferrobrick"
+    },
+    {
+      "name": "water"
+    },
+    {
+      "name": "flare"
+    }
+  ]
+}

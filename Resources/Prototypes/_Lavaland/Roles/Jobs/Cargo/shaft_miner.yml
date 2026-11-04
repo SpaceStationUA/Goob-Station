@@ -16,12 +16,13 @@
   - !type:DepartmentTimeRequirement
     department: Cargo
     time: 9000 # 2.5 hrs
-  # Pirate contractor start
+  # Pirate Employment start
   - !type:CharacterEmployerRequirement
     employers:
-    - OrionExpress
-    - HephaestusIndustries
-  # Pirate contractor end
+    - NanoTrasen
+    - Hephaest
+    - Orion
+  # Pirate Employment end
   icon: "JobIconLavaShaftMiner" # Wizden's icon is already called shaft miner for whatever reason.
   startingGear: ShaftMinerGear
   guides:

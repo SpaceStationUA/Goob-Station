@@ -708,6 +708,18 @@
     borderColor: "#7C5D00"
   - type: Icon
     state: pda-captain
+  #region Pirate: records cartridge
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - NanoChatCartridge
+    - WalletCartridge
+    - RadioCartridge
+    - RecordsCartridge
+  #endregion Pirate: records cartridge
 
 - type: entity
   parent: BasePDA
@@ -733,6 +745,18 @@
     accentHColor: "#447987"
   - type: Icon
     state: pda-hop
+  #region Pirate: records cartridge
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - NanoChatCartridge
+    - WalletCartridge
+    - RadioCartridge
+    - RecordsCartridge
+  #endregion Pirate: records cartridge
 
 - type: entity
   parent: BasePDA
@@ -941,6 +965,7 @@
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
     - RadioCartridge # Pirate internet radio
+    - RecordsCartridge # Pirate: records cartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1422,6 +1447,7 @@
     - NanoChatCartridge # DeltaV
     - WalletCartridge # Pirate banking
     - RadioCartridge # Pirate internet radio
+    - RecordsCartridge # Pirate: records cartridge
 
 - type: entity
   parent: BaseMedicalPDA

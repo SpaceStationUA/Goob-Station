@@ -1,0 +1,1 @@
+guide-entry-unathi-tail = Мистецтво хвостового бою

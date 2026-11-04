@@ -145,7 +145,7 @@ namespace Content.Server.Voting.Managers
         {
             // Handle active votes.
             var remQueue = new RemQueue<int>();
-            foreach (var v in _votes.Values)
+            foreach (var v in _votes.Values.ToArray()) // Pirate: voting penalties and runoffs
             {
                 // Logger.Debug($"{_timing.ServerTime}");
                 if (_timing.RealTime >= v.EndTime)
@@ -213,7 +213,7 @@ namespace Content.Server.Voting.Managers
             var entries = options.Options.Select(o =>
             {
                 options.OptionVisuals.TryGetValue(o.data, out var visual);
-                return new VoteEntry(o.data, o.text, visual);
+                return new VoteEntry(o.data, o.text, visual) { PiratePenalty = options.PiratePenalties.GetValueOrDefault(o.data) }; // Pirate: voting penalties and runoffs
             }).ToArray();
 
             var start = _timing.RealTime;
@@ -296,10 +296,12 @@ namespace Content.Server.Voting.Managers
 
             // Pirate - map vote previews
             msg.Options = new (ushort votes, string name, string? icon, EntProtoId? preview)[v.Entries.Length];
+            msg.PirateSubtractions = new ushort[v.Entries.Length]; // Pirate: voting penalties and runoffs
             for (var i = 0; i < msg.Options.Length; i++)
             {
                 ref var entry = ref v.Entries[i];
-                msg.Options[i] = (msg.DisplayVotes ? (ushort) entry.Votes : (ushort) 0, entry.Text, entry.Icon, entry.Preview);
+                msg.Options[i] = (msg.DisplayVotes ? (ushort) GetPirateEffectiveVotes(entry) : (ushort) 0, entry.Text, entry.Icon, entry.Preview); // Pirate: voting penalties and runoffs
+                msg.PirateSubtractions[i] = msg.DisplayVotes ? (ushort) (entry.Votes - GetPirateEffectiveVotes(entry)) : (ushort) 0; // Pirate: voting penalties and runoffs
             }
 
             player.Channel.SendMessage(msg);
@@ -403,7 +405,7 @@ namespace Content.Server.Voting.Managers
 
             // Find winner or stalemate.
             var winners = v.Entries
-                .GroupBy(e => e.Votes)
+                .GroupBy(e => GetPirateEffectiveVotes(e)) // Pirate: voting penalties and runoffs
                 .OrderByDescending(g => g.Key)
                 .First()
                 .Select(e => e.Data)
@@ -412,7 +414,7 @@ namespace Content.Server.Voting.Managers
             var voteTally = new List<int>();
             foreach(var entry in v.Entries)
             {
-                voteTally.Add(entry.Votes);
+                voteTally.Add(GetPirateEffectiveVotes(entry)); // Pirate: voting penalties and runoffs
             }
 
             v.Finished = true;
@@ -555,6 +557,7 @@ namespace Content.Server.Voting.Managers
             public string? Icon;
             public EntProtoId? Preview;
             public int Votes;
+            public float PiratePenalty; // Pirate: voting penalties and runoffs
 
             public VoteEntry(object data, string text, VoteOptionVisuals visual)
             {
@@ -639,7 +642,7 @@ namespace Content.Server.Voting.Managers
 
                 public IEnumerator<KeyValuePair<object, int>> GetEnumerator()
                 {
-                    return _reg.Entries.Select(e => KeyValuePair.Create(e.Data, e.Votes)).GetEnumerator();
+                    return _reg.Entries.Select(e => KeyValuePair.Create(e.Data, GetPirateEffectiveVotes(e))).GetEnumerator(); // Pirate: voting penalties and runoffs
                 }
 
                 IEnumerator IEnumerable.GetEnumerator()
@@ -659,7 +662,7 @@ namespace Content.Server.Voting.Managers
                     var entry = _reg.Entries.FirstOrNull(a => a.Data.Equals(key));
                     if (entry != null)
                     {
-                        value = entry.Value.Votes;
+                        value = GetPirateEffectiveVotes(entry.Value); // Pirate: voting penalties and runoffs
                         return true;
                     }
 
@@ -681,7 +684,7 @@ namespace Content.Server.Voting.Managers
                 }
 
                 public IEnumerable<object> Keys => _reg.Entries.Select(c => c.Data);
-                public IEnumerable<int> Values => _reg.Entries.Select(c => c.Votes);
+                public IEnumerable<int> Values => _reg.Entries.Select(c => GetPirateEffectiveVotes(c)); // Pirate: voting penalties and runoffs
             }
         }
 

@@ -403,7 +403,6 @@ ent-ClothingModularControllerERTEngineerPreassembled = { ent-ClothingModularCont
 ent-ClothingModularControllerERTJanitorPreassembled = { ent-ClothingModularControllerERTJanitor }
     .desc = { ent-ClothingModularControllerERTJanitor.desc }
     .suffix = Зібраний
-
 ent-ClothingModularControllerWarden = контролер MOD-костюма наглядача
     .desc = Контролер служби безпеки, налаштований для наглядача брігу. Броня скафандра наглядача на модульній рамі.
 ent-ClothingModularHelmetWarden = шолом MOD-костюма наглядача

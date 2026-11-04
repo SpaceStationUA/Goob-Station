@@ -1,0 +1,41 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<records:RecordsCartridgeUiFragment xmlns="https://spacestation14.io"
+                                    xmlns:records="clr-namespace:Content.Pirate.Client._Pirate.StationRecords"
+                                    Orientation="Horizontal"
+                                    HorizontalExpand="True"
+                                    VerticalExpand="True"
+                                    Margin="5">
+    <BoxContainer Name="ListColumn"
+                  Orientation="Vertical"
+                  MinWidth="160"
+                  MaxWidth="160"
+                  VerticalExpand="True"
+                  Margin="0 0 5 0" />
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      Margin="0 0 0 5">
+            <Button Name="SecurityTabButton"
+                    Text="{Loc 'records-cartridge-tab-security'}"
+                    ToggleMode="True"
+                    StyleClasses="OpenRight"
+                    HorizontalExpand="True" />
+            <Button Name="CrewTabButton"
+                    Text="{Loc 'records-cartridge-tab-crew'}"
+                    ToggleMode="True"
+                    StyleClasses="OpenBoth"
+                    HorizontalExpand="True" />
+            <Button Name="PsionicsTabButton"
+                    Text="{Loc 'records-cartridge-tab-psionics'}"
+                    ToggleMode="True"
+                    StyleClasses="OpenLeft"
+                    HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Name="HistoryColumn"
+                      Orientation="Vertical"
+                      HorizontalExpand="True"
+                      VerticalExpand="True" />
+    </BoxContainer>
+</records:RecordsCartridgeUiFragment>

@@ -12,8 +12,6 @@ paper-page-add-need-paper = You need a sheet of paper to add a new page.
 paper-page-torn-out = You tear a page out of {THE($target)}.
 paper-page-inserted = You tuck a sheet into {THE($target)}.
 
-# Pirate: chameleon-style cover
-book-skin-menu-title = Cover
-book-skin-search = Search covers...
-book-skin-verb = Change cover
-book-skin-changed = The cover has been changed.
+diary-cover-verb-open = Open
+diary-cover-verb-close = Close
+diary-cover-closed = Open {THE($target)} first.

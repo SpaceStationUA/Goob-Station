@@ -642,6 +642,10 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (!action.Comp.RaiseOnUser && action.Comp.Container is {} container && !_mindQuery.HasComp(container))
             target = container;
 
+        // Pirate: preserve Trauma's action-local ability handlers; explicit user routing wins.
+        if (action.Comp.RaiseOnAction && !action.Comp.RaiseOnUser)
+            target = action.Owner;
+
         RaiseLocalEvent(target, (object) ev, broadcast: true);
         handled = ev.Handled;
 

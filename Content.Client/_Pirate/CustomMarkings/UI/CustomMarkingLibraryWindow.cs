@@ -201,14 +201,14 @@ public sealed partial class CustomMarkingLibraryWindow : CustomMarkingWindow
         // Worn markings with no entry behind them: deleted from the library since, or from an imported character.
         foreach (var marking in _worn)
         {
-            if (!library.Any(entry => entry.Hash == marking.Hash && entry.Placement == marking.Placement))
+            if (!library.Any(entry => entry.Marking == marking))
                 _rows.AddChild(StrayRow(marking, library.Count < limit));
         }
     }
 
     private Control EntryRow(CustomMarkingEntry entry)
     {
-        var marking = new CustomMarking(entry.Hash, entry.Placement);
+        var marking = entry.Marking;
         var worn = _worn.Contains(marking);
         var loaded = _system.TryGetArt(entry.Hash, out var rsi);
 
@@ -256,7 +256,7 @@ public sealed partial class CustomMarkingLibraryWindow : CustomMarkingWindow
             };
         }
 
-        return Row(rsi, entry.Hash, entry.Name, entry.Placement, wear, edit, export, delete);
+        return Row(rsi, entry.Marking, entry.Name, wear, edit, export, delete);
     }
 
     private Control StrayRow(CustomMarking marking, bool room)
@@ -275,22 +275,23 @@ public sealed partial class CustomMarkingLibraryWindow : CustomMarkingWindow
         keep.OnPressed += _ =>
         {
             if (ReadArt(marking.Hash) is { } art)
-                _system.Save(0, string.Empty, marking.Placement, art);
+                _system.Save(0, string.Empty, marking.Placement, art, marking.Glow);
         };
 
-        return Row(rsi, marking.Hash, Loc.GetString("wf-custom-marking-library-stray"), marking.Placement, takeOff, keep);
+        return Row(rsi, marking, Loc.GetString("wf-custom-marking-library-stray"), takeOff, keep);
     }
 
     /// <summary>
     /// A row: the marking on the character from each side, as it will look, its name and placement, and its
     /// actions.
     /// </summary>
-    private Control Row(RSI? rsi, string hash, string name, CustomMarkingPlacement placement, params BaseButton[] actions)
+    private Control Row(RSI? rsi, CustomMarking marking, string name, params BaseButton[] actions)
     {
+        var (hash, placement) = (marking.Hash, marking.Placement);
         RSI.State? state = null;
         rsi?.TryGetState(CustomMarkingResources.State, out state);
         if (rsi != null && _doll is { } doll)
-            state = _system.GetPreviewState((doll, null), new CustomMarking(hash, placement));
+            state = _system.GetPreviewState((doll, null), marking);
 
         byte[]? erase = null;
         if (rsi != null && _system.EraseEnabled)
@@ -339,7 +340,7 @@ public sealed partial class CustomMarkingLibraryWindow : CustomMarkingWindow
                         new Label { Text = name, ClipText = true, ToolTip = name, StyleClasses = { CustomMarkingStylesheet.StyleClassCreatorCardTitle } },
                         new Label
                         {
-                            Text = Loc.GetString(CustomMarkingEditorWindow.PlacementName(placement)),
+                            Text = CustomMarkingEditorWindow.Describe(marking),
                             ClipText = true,
                             StyleClasses = { CustomMarkingStylesheet.StyleClassCreatorFieldLabel },
                         },
@@ -389,7 +390,7 @@ public sealed partial class CustomMarkingLibraryWindow : CustomMarkingWindow
         // The body under the art wears everything else, but not the marking being changed.
         var body = _profile();
         if (body != null && entry is { } editing)
-            body = body.WithCustomMarkings(_worn.Where(marking => marking.Hash != editing.Hash || marking.Placement != editing.Placement));
+            body = body.WithCustomMarkings(_worn.Where(marking => marking != editing.Marking));
 
         var editor = new CustomMarkingEditorWindow(entry, art, name, body);
         editor.OnSaved += OnSaved;

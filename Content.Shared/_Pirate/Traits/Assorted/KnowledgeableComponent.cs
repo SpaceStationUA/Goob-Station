@@ -12,11 +12,7 @@ public sealed partial class KnowledgeableComponent : Component
     public int BonusPoints = 10;
 
     [DataField]
-    public HashSet<ProtoId<TraitPrototype>> RequiredTraits = new();
-
-    [DataField]
     public Dictionary<EntProtoId, int> MasteryGrants = new();
-
     public static int GetBonusPoints(
         IPrototypeManager prototypes,
         IReadOnlySet<ProtoId<TraitPrototype>> traits)
@@ -35,8 +31,7 @@ public sealed partial class KnowledgeableComponent : Component
         {
             if (!prototypes.TryIndex(traitId, out TraitPrototype? trait) ||
                 !trait.Components.TryGetValue(ComponentName, out var entry) ||
-                entry.Component is not KnowledgeableComponent component ||
-                !component.RequiredTraits.IsSubsetOf(traits))
+                entry.Component is not KnowledgeableComponent component)
                 continue;
 
             return component;

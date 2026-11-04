@@ -1,0 +1,17 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: soundCollection
+  id: ThavenFHum
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Thaven/thavenFhum1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Thaven/thavenFhum2.ogg
+- type: soundCollection
+  id: ThavenGlub
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Thaven/thaven-bubble.ogg
+- type: soundCollection
+  id: ThavenMHum
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Thaven/thavenMhum1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Voice/Thaven/thavenMhum2.ogg

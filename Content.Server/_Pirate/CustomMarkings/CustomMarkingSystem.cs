@@ -147,7 +147,7 @@ public sealed partial class CustomMarkingSystem : EntitySystem
     private static CustomMarkingEntry ToEntry(PirateCustomMarking row)
     {
         var placement = (CustomMarkingPlacement) row.Placement;
-        return new CustomMarkingEntry(row.Id, row.Name, row.ArtHash, Enum.IsDefined(placement) ? placement : CustomMarkingPlacement.Skin);
+        return new CustomMarkingEntry(row.Id, row.Name, row.ArtHash, Enum.IsDefined(placement) ? placement : CustomMarkingPlacement.Skin, row.Glow);
     }
 
     private async void OnSave(CustomMarkingSaveEvent msg, EntitySessionEventArgs args)
@@ -207,7 +207,7 @@ public sealed partial class CustomMarkingSystem : EntitySystem
         try
         {
             result = await _db.SaveCustomMarkingAsync(session.UserId, msg.Id, name, (int) msg.Placement, hash, stored,
-                _cfg.GetCVar(CustomMarkingCVars.LibraryLimit), _cfg.GetCVar(CustomMarkingCVars.DailyArtLimit));
+                _cfg.GetCVar(CustomMarkingCVars.LibraryLimit), _cfg.GetCVar(CustomMarkingCVars.DailyArtLimit), msg.Glow);
         }
         catch (Exception e)
         {

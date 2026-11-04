@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 
+using Content.Client.IconSmoothing; // Pirate: restore old ground puddle textures
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
@@ -10,6 +11,7 @@ namespace Content.Client.Fluids;
 
 public sealed partial class PuddleSystem : SharedPuddleSystem // Goob
 {
+    [Dependency] private readonly IconSmoothSystem _smooth = default!; // Pirate: restore old ground puddle textures
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
@@ -31,7 +33,33 @@ public sealed partial class PuddleSystem : SharedPuddleSystem // Goob
             volume = (float)volumeObj;
         }
 
-        UpdatePuddleSprite((uid, args.Sprite), volume, args.AppearanceData); // Goob
+        // Pirate edit start: restore old ground puddle textures
+        if (TryComp<IconSmoothComponent>(uid, out var smooth))
+        {
+            if (volume < LowThreshold)
+            {
+                _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}a");
+                _smooth.SetEnabled(uid, false, smooth);
+            }
+            else if (volume < MediumThreshold)
+            {
+                _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}b");
+                _smooth.SetEnabled(uid, false, smooth);
+            }
+            else if (!smooth.Enabled)
+            {
+                _sprite.LayerSetRsiState((uid, args.Sprite), 0, $"{smooth.StateBase}0");
+                _smooth.SetEnabled(uid, true, smooth);
+                _smooth.DirtyNeighbours(uid);
+            }
+        }
+
+        var baseColor = Color.White;
+        if (args.AppearanceData.TryGetValue(PuddleVisuals.SolutionColor, out var colorObj))
+            _sprite.SetColor((uid, args.Sprite), (Color) colorObj * baseColor);
+        else
+            _sprite.SetColor((uid, args.Sprite), args.Sprite.Color * baseColor);
+        // Pirate edit end
     }
 
     #region Spill

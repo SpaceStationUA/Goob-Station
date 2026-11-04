@@ -70,9 +70,9 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: SkillChipSidearms
+        - id: SkillChipSecurityOfficer
           amount: 3
-        - id: SkillChipNonLethal
+        - id: SkillChipSecurityCadet
           amount: 3
         - id: SkillChipBludgeon
           amount: 3
@@ -80,7 +80,7 @@
           amount: 2
         - id: SkillChipMarksmanship
           amount: 2
-        - id: SkillChipCombatEducationPilot
+        - id: SkillChipSecurityEducationPilot
 
 - type: entity
   parent: CrateEngineeringSecure

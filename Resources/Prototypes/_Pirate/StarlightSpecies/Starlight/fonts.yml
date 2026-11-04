@@ -1,0 +1,15 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: font
+  id: Darktongue
+  path: /Fonts/_Pirate/StarlightSpecies/Starlight/Darktongue.ttf
+- type: font
+  id: Lagomorphian
+  path: /Fonts/_Pirate/StarlightSpecies/Starlight/Lagomorphian.ttf
+- type: font
+  id: MonasteryRaid
+  path: /Fonts/_Pirate/StarlightSpecies/Starlight/Monastery Raid.ttf
+- type: font
+  id: Thaveyan
+  path: /Fonts/_Pirate/StarlightSpecies/Starlight/Thaveyan.ttf

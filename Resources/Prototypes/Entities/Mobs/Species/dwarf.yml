@@ -7,6 +7,11 @@
   id: BaseMobDwarf
   abstract: true
   components:
+  # Pirate: Trauma genetics species defaults.
+  - type: Mutatable
+    dormant:
+    - MutationDwarfism # not activated by default it would be too silly
+    - MutationRockEater # non parity but peak
   - type: Hunger
   - type: Thirst
   - type: Icon

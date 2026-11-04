@@ -16,7 +16,6 @@ borg-type-medical_bug-transponder = медичний жукоборг
 borg-type-service_bug-name = Сервісний жукоборг
 borg-type-service_bug-desc = Допомагайте з ботанікою, напоями та розвагами у комахоподібному корпусі.
 borg-type-service_bug-transponder = сервісний жукоборг
-
 ent-BorgChassisGenericBugborg = універсальний жукоборг
     .desc = { ent-BaseBorgChassis.desc }
 ent-BorgChassisGenericBugScience = науковий жукоборг

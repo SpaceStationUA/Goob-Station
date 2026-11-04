@@ -1,0 +1,81 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: marking
+  id: ElfLongEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction:
+  - Elf
+  - NeoElf
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/elf_ears.rsi
+    state: long_ears_standard
+- type: marking
+  id: ElfLongEarsSmall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction:
+  - Elf
+  - NeoElf
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/elf_ears.rsi
+    state: long_ears_small
+- type: marking
+  id: ElfLongEarsTall
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction:
+  - Elf
+  - NeoElf
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/elf_ears.rsi
+    state: long_ears_tall
+- type: marking
+  id: ElfLongEarsThin
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction:
+  - Elf
+  - NeoElf
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/elf_ears.rsi
+    state: long_ears_thin
+- type: marking
+  id: ElfLongEarsUpwards
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction:
+  - Elf
+  - NeoElf
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/elf_ears.rsi
+    state: long_ears_upwards
+- type: marking
+  id: ElfLongEarsWide
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  forcedColoring: true
+  followSkinColor: true
+  speciesRestriction:
+  - Elf
+  - NeoElf
+  - Neocyte
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/elf_ears.rsi
+    state: long_ears_wide

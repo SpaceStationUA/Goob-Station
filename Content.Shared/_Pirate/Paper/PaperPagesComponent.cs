@@ -68,8 +68,14 @@ public static class PaperPageFormat
     /// <summary>Record separator; separates individual signatures of one leaf.</summary>
     public const char SignatureSeparator = '\u001E';
 
+    // Stamp frame: \u0017#RRGGBBAA\u0017name.
+    public const char StampMarker = '\u0017';
+
     /// <summary>Ink used for leaf signatures, matching the pen signature stamp.</summary>
     public static readonly Color SignatureColor = Color.DarkSlateGray;
+
+    // Pen signatures always use SignatureColor.
+    public static bool IsStamp(StampDisplayInfo info) => info.StampedColor != SignatureColor;
 
     public static string Encode(IReadOnlyList<PaperPage> pages)
     {
@@ -92,7 +98,11 @@ public static class PaperPageFormat
                 if (j > 0)
                     builder.Append(SignatureSeparator);
 
-                builder.Append(page.Signatures[j].StampedName);
+                var signature = page.Signatures[j];
+                if (IsStamp(signature))
+                    builder.Append(StampMarker).Append(signature.StampedColor.ToHex()).Append(StampMarker);
+
+                builder.Append(signature.StampedName);
             }
         }
 
@@ -112,15 +122,36 @@ public static class PaperPageFormat
         var builder = new StringBuilder(text.Length);
         foreach (var c in text)
         {
-            // \f - leaf separator; \u001D/\u001E - signature markers;
-            // \u001C/\u001F - book cover meta block (see BookSkinSystem).
-            if (c == LeafSeparator || c is '\u001C' or '\u001D' or '\u001E' or '\u001F')
+            // Reserve document separators, legacy cover delimiters (U+001C/U+001F), and the stamp marker.
+            if (c == LeafSeparator || c is '\u001C' or '\u001D' or '\u001E' or '\u001F' or StampMarker)
                 continue;
 
             builder.Append(c);
         }
 
         return builder.ToString();
+    }
+
+    // Legacy cover metadata would otherwise appear as text on the first page.
+    public static string StripLegacyCoverMeta(string content)
+    {
+        if (content.Length < 2 || content[0] != '\u001C')
+            return content;
+
+        var end = content.IndexOf('\u001C', 1);
+        return end < 0 ? content : content[(end + 1)..];
+    }
+
+    // Stamps must not persist between rounds; pen signatures may persist.
+    public static string StripStamps(string content)
+    {
+        var pages = Decode(content);
+        foreach (var page in pages)
+        {
+            page.Signatures.RemoveAll(IsStamp);
+        }
+
+        return Encode(pages);
     }
 
     /// <summary>
@@ -140,15 +171,30 @@ public static class PaperPageFormat
 
             if (marker >= 0)
             {
-                foreach (var name in leaf[(marker + 1)..].Split(SignatureSeparator))
+                foreach (var entry in leaf[(marker + 1)..].Split(SignatureSeparator))
                 {
+                    var name = entry;
+                    var color = SignatureColor;
+
+                    // Malformed stamp frames fall back to pen signatures.
+                    if (name.Length > 0 && name[0] == StampMarker)
+                    {
+                        var end = name.IndexOf(StampMarker, 1);
+                        if (end > 0)
+                        {
+                            if (Color.TryFromHex(name.AsSpan(1, end - 1), out var ink))
+                                color = ink;
+                            name = name[(end + 1)..];
+                        }
+                    }
+
                     if (string.IsNullOrWhiteSpace(name))
                         continue;
 
                     page.Signatures.Add(new StampDisplayInfo
                     {
                         StampedName = name,
-                        StampedColor = SignatureColor,
+                        StampedColor = color,
                     });
                 }
             }

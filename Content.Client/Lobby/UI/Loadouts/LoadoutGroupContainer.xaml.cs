@@ -92,7 +92,9 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                 var enabled = loadout.IsValid(profile, session, proto.ID, collection, out var reason);
                 return (Prototype: proto, Enabled: enabled, Reason: reason);
             })
-            .Where(entry => entry.Enabled || selectedIds.Contains(entry.Prototype.ID))
+            .Where(entry => entry.Enabled
+                || entry.Prototype.ShowWhenUnavailable // Pirate: show reward requirements.
+                || selectedIds.Contains(entry.Prototype.ID))
             .OrderBy(entry => loadoutSystem.GetName(entry.Prototype))
             .ToList();
 

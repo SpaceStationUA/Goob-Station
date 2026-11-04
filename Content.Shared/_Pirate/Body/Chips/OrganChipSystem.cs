@@ -418,6 +418,27 @@ public sealed class OrganChipSystem : EntitySystem
 
     #region Reconciliation
 
+    public List<EntProtoId> GetInstalledChipPrototypes(EntityUid body)
+    {
+        var result = new List<EntProtoId>();
+        if (!HasComp<BodyComponent>(body))
+            return result;
+
+        foreach (var brain in _body.GetBodyOrganEntityComps<BrainComponent>(body))
+        {
+            if (!_containerQuery.TryComp(brain.Owner, out var container) || container.Container is not { } chips)
+                continue;
+
+            foreach (var chip in chips.ContainedEntities)
+            {
+                if (Prototype(chip) is { } prototype)
+                    result.Add(prototype.ID);
+            }
+        }
+
+        return result;
+    }
+
     // Rebuild chip contributions for the body's current organs.
     public void ReconcileInstalledChipModifiers(EntityUid body)
     {

@@ -46,6 +46,8 @@
     cleanCost: 0.13
   - !type:CleanDecalsReaction
     cleanCost: 0.13
+  - !type:CleanCrayonStampsReaction # Pirate: custom floor art.
+    cleanCost: 0.01
 
 - type: reagent
   id: SpaceCleaner
@@ -63,6 +65,8 @@
     - !type:CleanStainsTileReaction {} # Pirate: stains
     - !type:CleanTileReaction {}
     - !type:CleanDecalsReaction {}
+    - !type:CleanCrayonStampsReaction # Pirate: custom floor art.
+      cleanCost: 0.1
 
 - type: reagent
   id: SoapReagent

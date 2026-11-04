@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: GeneticsConsoleCircuitboard
+  name: genetics computer board
+  description: A computer printed circuit board for a genetics console.
+  components:
+  - type: Sprite
+    state: cpu_medical
+  - type: ComputerBoard
+    prototype: ComputerGeneticsConsoleEmpty # no farming biomass chud

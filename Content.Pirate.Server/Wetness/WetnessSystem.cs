@@ -10,29 +10,61 @@ using Robust.Shared.Random;
 
 namespace Content.Pirate.Server.Wetness;
 
-/// <summary>
-/// Server-side drying and clean-water dripping.
-/// </summary>
 public sealed class WetnessSystem : SharedWetnessSystem
 {
     [Dependency] private readonly SharedPuddleSystem _puddle = null!;
     [Dependency] private readonly SharedContainerSystem _container = null!;
     [Dependency] private readonly IRobustRandom _random = null!;
 
+    private readonly List<Entity<WettableComponent>> _dueToDry = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<WettableComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<WettableComponent, WetnessChangedEvent>(OnWetnessChanged);
+    }
+
+    private void OnMapInit(Entity<WettableComponent> ent, ref MapInitEvent args)
+    {
+        UpdateDrying(ent);
+    }
+
+    private void OnWetnessChanged(Entity<WettableComponent> ent, ref WetnessChangedEvent args)
+    {
+        UpdateDrying(ent);
+    }
+
+    private void UpdateDrying(Entity<WettableComponent> ent)
+    {
+        if (ent.Comp.Wetness > 0)
+            EnsureComp<WetDryingComponent>(ent);
+        else
+            RemComp<WetDryingComponent>(ent);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
         var now = Timing.CurTime;
-        var query = EntityQueryEnumerator<WettableComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+
+        // Defer marker changes until after enumeration.
+        _dueToDry.Clear();
+        var query = EntityQueryEnumerator<WetDryingComponent, WettableComponent>();
+        while (query.MoveNext(out var uid, out _, out var comp))
         {
-            if (comp.Wetness <= 0 || now < comp.NextDryTime)
+            if (now >= comp.NextDryTime)
+                _dueToDry.Add((uid, comp));
+        }
+
+        foreach (var ent in _dueToDry)
+        {
+            var (uid, comp) = ent;
+            if (TerminatingOrDeleted(uid) || comp.Wetness <= 0)
                 continue;
 
-            var ent = (uid, comp);
-
-            // Apply drying and any drip as one wetness change.
             var dried = FixedPoint2.Min(comp.DryPerStep, comp.Wetness);
             var remaining = comp.Wetness - dried;
 
@@ -54,9 +86,6 @@ public sealed class WetnessSystem : SharedWetnessSystem
         }
     }
 
-    /// <summary>
-    /// Only worn, held, or loose items drip onto the floor.
-    /// </summary>
     private bool CanDrip(EntityUid item)
     {
         if (!_container.TryGetContainingContainer(item, out var container))

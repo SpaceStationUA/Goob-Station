@@ -13,7 +13,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Crayon;
 
-public sealed class CrayonSystem : SharedCrayonSystem
+public sealed partial class CrayonSystem : SharedCrayonSystem // Pirate: custom floor symbols.
 {
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
@@ -30,13 +30,16 @@ public sealed class CrayonSystem : SharedCrayonSystem
         private readonly Entity<CrayonComponent> _crayon;
         private readonly SharedChargesSystem _charges;
         private readonly RichTextLabel _label;
-        private readonly int _capacity;
+        private readonly int? _capacity; // Pirate: crayons can have unlimited uses.
 
         public StatusControl(Entity<CrayonComponent> crayon, SharedChargesSystem charges, EntityManager entityManage)
         {
             _crayon = crayon;
             _charges = charges;
-            _capacity = entityManage.GetComponent<LimitedChargesComponent>(_crayon.Owner).MaxCharges;
+            // Pirate: unlimited crayons have no charge component, including when first picked up.
+            _capacity = entityManage.TryGetComponent<LimitedChargesComponent>(_crayon.Owner, out var limitedCharges)
+                ? limitedCharges.MaxCharges
+                : null;
             _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             AddChild(_label);
         }
@@ -47,10 +50,10 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
             _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("crayon-drawing-label",
                 ("color", _crayon.Comp.Color),
-                ("state", _crayon.Comp.SelectedState),
+                ("state", PirateState(_crayon)), // Pirate: show the player's selected stencil.
                 ("charges", _charges.GetCurrentCharges(_crayon.Owner)),
-                ("capacity", _capacity),
-                ("infinite", false))); // Pirate: light paint glyph status
+                ("capacity", _capacity ?? 0),
+                ("infinite", _capacity == null))); // Pirate: unlimited crayon status
         }
     }
 }

@@ -214,9 +214,9 @@ public sealed partial class MarkingPicker : Control
     private IReadOnlyDictionary<string, MarkingPrototype> GetMarkings(MarkingCategories category)
     {
         var ckey = _playerManager.LocalSession?.Name; // Pirate ckey for restricted players
-        return IgnoreSpecies
+        return _markingManager.WithoutWaggingVariants(IgnoreSpecies
             ? _markingManager.MarkingsByCategoryAndSex(category, _currentSex, ckey) // Pirate ckey for restricted players
-            : _markingManager.MarkingsByCategoryAndSpeciesAndSex(category, _currentSpecies, _currentSex, ckey); // Pirate ckey for restricted players
+            : _markingManager.MarkingsByCategoryAndSpeciesAndSex(category, _currentSpecies, _currentSex, ckey)); // Pirate ckey for restricted players
     }
 
     public void Populate(string filter)

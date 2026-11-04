@@ -92,7 +92,11 @@
   - type: ContainerFill
     containers:
       storagebase: # Pirate: avoid a second container on the storage-enabled sheath.
-      - Justice
+      - Handcuffs # Pirate: security sheath sword limits
+      - Handcuffs # Pirate: security sheath sword limits
+      - HoloprojectorSecurity # Pirate: security sheath sword limits
+      - RadioHandheldSecurity # Pirate: security sheath sword limits
+      - Justice # Pirate: security sheath sword limits
 
 - type: entityTable
   id: BeltSecurityNoBatonEntityTable

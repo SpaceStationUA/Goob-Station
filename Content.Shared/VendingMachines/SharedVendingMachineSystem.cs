@@ -333,6 +333,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, component, restockQuality);
         AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, component, restockQuality);
         AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, component, restockQuality);
+
         Dirty(uid, component);
     }
 
@@ -420,6 +421,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                 var price = GetEntryPrice(proto); // Pirate banking
 
                 if (inventory.TryGetValue(id, out var entry))
+                {
                     // Prevent a machine's stock from going over three times
                     // the prototype's normal amount. This is an arbitrary
                     // number and meant to be a convenience for someone
@@ -427,12 +429,17 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     // all the items just to restock one empty slot without
                     // losing the rest of the restock.
                     entry.Amount = Math.Min(entry.Amount + amount, 3 * restock);
+                }
                 else
-                    inventory.Add(id, new VendingMachineInventoryEntry(type, id, restock, price)); // Pirate banking
+    // Pirate banking start
+                {
+                    // Pirate banking: keep the calculated item price on new inventory entries.
+                    var newEntry = new VendingMachineInventoryEntry(type, id, restock, price);
+                    inventory.Add(id, newEntry);
+                }
             }
         }
     }
-    // Pirate banking start
     protected virtual int GetEntryPrice(EntityPrototype proto)
     {
         return 25;

@@ -64,6 +64,16 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
                 _sprite.LayerSetColor(entSprite, layerID, Color.Black);
             }
         }
+
+        // Replays apply part states before initializing the reactor and creating its cap layers.
+        // Restore the installed parts now that both the container and the layers are ready.
+        foreach (var part in comp.PartsContainer.ContainedEntities)
+        {
+            if (!PartQuery.TryComp(part, out var partComp) || partComp.Position is not { } pos)
+                continue;
+
+            UpdateRodAppearance(entSprite, FormatMap(pos), partComp.IconStateCap, PropsQuery.Comp(part).Color);
+        }
     }
 
     private static string FormatMap(Vector2i pos) => $"NuclearReactorCap_{pos.X}_{pos.Y}";
@@ -93,7 +103,8 @@ public sealed partial class NuclearReactorSystem : SharedNuclearReactorSystem
         var parent = Transform(ent).ParentUid;
         if (ent.Comp.Position is not { } pos ||
             !_query.TryComp(parent, out var reactor) ||
-            !reactor.PartsContainer.Contains(ent.Owner))
+            reactor.PartsContainer is not { } parts ||
+            !parts.Contains(ent.Owner))
             return;
 
         var color = PropsQuery.Comp(ent).Color;

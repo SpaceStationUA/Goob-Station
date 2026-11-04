@@ -1,0 +1,67 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: PollenAdvancedPollenCloud
+  name: floral wisp
+  description: A cluster of potent pollen drifting on the air.
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/Starlight/Pollen/advanced_pollen.rsi
+    layers:
+    - map:
+      - pollen
+      state: advanced_pollen
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PollenAdvancedPollenVisuals.Fading:
+        pollen:
+          'true':
+            state: advanced_pollen_fading
+          'false':
+            state: advanced_pollen
+  - type: EmitPollen
+    pollenId: advancedpollen
+  - type: PollenAdvancedPollen
+- type: entity
+  parent:
+  - BaseObjective
+  id: PollenCollectionObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-pollen
+    icon:
+      sprite: _Pirate/StarlightSpecies/Starlight/Interface/Actions/actions_diona.rsi
+      state: open_shop
+  - type: NumberObjective
+    min: 5
+    max: 5
+    title: objective-condition-pollen-collection-title
+  - type: PollenCollectionCondition
+- type: entity
+  parent:
+  - TearGasSmokeWhite
+  id: PollenSporeCloud
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: Occluder
+- type: entity
+  id: PollenSporeCloudEmitter
+  name: spore cloud
+  description: An invisible pollen spore emitter.
+  components:
+  - type: SmokeOnTrigger
+    duration: 30
+    spreadAmount: 10
+    smokePrototype: PollenSporeCloud
+    solution:
+      reagents:
+      - ReagentId: Mycophylin
+        Quantity: 15
+  - type: EmitSoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+    positional: true
+  - type: DeleteOnTrigger

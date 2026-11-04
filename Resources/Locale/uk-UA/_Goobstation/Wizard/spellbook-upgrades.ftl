@@ -68,3 +68,5 @@ spellbook-upgrade-simians-name = Покращення «Прикликання �
 spellbook-upgrade-simians-desc = Покращує «Прикликання мавп» до 5-го рівня!
 spellbook-upgrade-rathen-name = Покращення Таємниці Ратена
 spellbook-upgrade-rathen-desc = Покращує Таємницю Ратена максимум до 3 рівня!
+spellbook-upgrade-summon-supermatter-name = Покращення виклику суперматерії
+spellbook-upgrade-summon-supermatter-desc = Покращує виклик суперматерії до 5 рівня! Кожен рівень скорочує час відновлення на одну хвилину.

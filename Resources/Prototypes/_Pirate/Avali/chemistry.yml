@@ -69,6 +69,17 @@
           tag: AmoxlaCompatible
         amount: 3
 
+      # Pirate: Starlight species-specific metabolism.
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Amoxla
+          min: 0.26
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+        reagent: Amoxla
+        amount: 0.25
 - type: reaction
   id: AvaliBloodBreakdown
   source: true

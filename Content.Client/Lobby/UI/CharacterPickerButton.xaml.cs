@@ -35,6 +35,8 @@ public sealed partial class CharacterPickerButton : ContainerButton
         bool isSelected)
     {
         RobustXamlLoader.Load(this);
+        DeleteButton.Label.VAlign = Label.VAlignMode.Center; // Pirate: lobby font and styling
+        ConfirmDeleteButton.Label.VAlign = Label.VAlignMode.Center; // Pirate: lobby font and styling
         _entManager = entityManager;
         AddStyleClass(StyleClassButton);
         ToggleMode = true;
@@ -54,7 +56,8 @@ public sealed partial class CharacterPickerButton : ContainerButton
             if (highPriorityJob != default)
             {
                 var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
-                description = $"{description}\n{jobName}";
+                JobLabel.Text = jobName; // Goob
+                JobLabel.Visible = true; // Goob
             }
         }
 
