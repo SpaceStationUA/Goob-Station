@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Client._Pirate.CriminalRecords; // Pirate: warned / safe status icons
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
@@ -86,14 +87,15 @@ public sealed partial class WantedMenu : FancyWindow
     }
     private void PopulateRecordContainer(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
     {
-        var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown");
+        SpriteSpecifier specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown"); // Pirate: warned / safe status icons
         PersonName.Text = stationRecord.Name ?? "Unknown";
         PersonJob.Text = stationRecord.JobTitle ?? "Unknown";
 
         if (_prototypeManager.TryIndex<JobIconPrototype>(stationRecord.JobIcon, out var proto))
             PersonJobIcon.Texture = _spriteSystem.Frame0(proto.Icon);
         if (criminalRecord.Status != SecurityStatus.None)
-            specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"), GetStatusIcon(criminalRecord.Status));
+            specifier = PirateSecurityIcons.FromStatus(criminalRecord.Status) // Pirate: warned / safe status icons
+                ?? new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"), GetStatusIcon(criminalRecord.Status));
 
         PersonStatusTX.SetFromSpriteSpecifier(specifier);
         PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);
