@@ -453,3 +453,12 @@
   alpha: 1
   ghostName: amuletfish
   ghostDescription: хтось рибний.. а може ні..
+
+- type: customGhost
+  id: jeleshk-ghost
+  ckey: Jelesh0
+  sprite:
+  - _Pirate/Ghosts/Jelesh0.rsi
+  alpha: 1
+  ghostName: Jeleshk0
+  ghostDescription: О, ні! Не я - Контроль я не втрачав. Твоє лице. Напроти того, хто світ продав.
