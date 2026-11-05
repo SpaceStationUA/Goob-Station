@@ -502,6 +502,17 @@
     - CrayonBox
 
 - type: loadout
+  id: LoadoutItemCrayonArtistQuestion
+  showWhenUnavailable: true
+  effects:
+  - !type:UsernameLoadoutRequirementEffect
+    username: The_Question
+    failureReason: loadout-artist-requirement
+  storage:
+    back:
+    - CrayonArtist
+
+- type: loadout
   id: LoadoutItemCrayonArtist
   showWhenUnavailable: true
   effects:
