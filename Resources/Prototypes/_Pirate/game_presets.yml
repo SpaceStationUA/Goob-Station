@@ -228,7 +228,7 @@
   description: blueshift-description
   showInVote: true
   rules:
-    - BlueshiftScheduler
+    - BlueshiftDraft
+    - BlueshiftDirector
     - BlueshiftAntagScheduler
-    - MeteorSwarmScheduler
     - GlimmerEventScheduler

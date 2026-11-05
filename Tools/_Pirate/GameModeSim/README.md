@@ -69,6 +69,7 @@ Then you merge its results with the earlier results.
 For each mode, the last folder that contains the mode supplies its results.
 The script stops if the folders have a different seed, number of rounds or scenarios.
 The script shows a warning if the population model is different.
+To leave a mode out of the dashboard, add `--exclude A,B` (for example `--exclude BlueshiftLegacy`).
 
 ## Config
 
@@ -78,10 +79,32 @@ The script shows a warning if the population model is different.
 - `randomize`: ranges that the simulator rolls again for each round. All presets get the same roll, so all modes see the same worlds.
   A key in this list overrides the fixed value. This also applies to the join window and the join curve of a scenario.
 - `extraPrototypes`: YAML files that the simulator loads on top of the game prototypes. Use them to simulate a mode from an unmerged PR.
-  `extra/redshift-1.4.yml` is PR #1170 (Secret Salt 1.4) as the preset `SecretSalt14`. The game does not load this file.
-  When PR #1170 is merged or closed, remove the file from `presets` and from `extraPrototypes`.
+  `extra/redshift-1.4.1.yml` is PR #1170 (Secret Salt 1.4.1) as the preset `SecretSalt141`. The game does not load this file.
+  The default run does not use it. To compare it, add the file to `extraPrototypes` and `SecretSalt141` to `presets`.
+  `extra/blueshift-1.1.yml` is Blueshift 1.1 (preset `BlueshiftLegacy`): Blueshift before the GameDirector rework,
+  frozen as a historical reference. Do not update it. The default run does not use it. To compare it, add the file
+  to `extraPrototypes` and `BlueshiftLegacy` to `presets`.
+- `directorWorld`: the world model for GameDirector modes. See the next section.
 - `ghostRoleSpawnRules`: rules that spawn ghost-role antags without antag selection. The simulator counts these mobs as antags.
 - `conditionPassChance`: the pass chance for table conditions that need the world state. The simulator cannot evaluate these conditions.
+
+## GameDirector modes (estimates)
+
+Поводир (`TheGuide`), Спостерігач (`TheWatcher`) and Блюшифт (`Blueshift`, for its non-antag events) use the
+GameDirector. The simulator models roundstart picks, stories and beats, goals, event choices, repeats, destruction
+budget, reinforcements, responders and subgamemodes.
+
+The director picks events by the chaos that it measures on the station. The simulator has no station, so it
+uses a world model (`directorWorld` in `config.json`):
+
+- Friend, Hostile, Death, Security and Combat come from the simulated people: living crew, living antags,
+  dead bodies and living security.
+- The other metrics (Atmos, Power, Anomaly, Infestation, Medical, Mess, Hunger, Thirst) come from the chaos
+  that each started event declares. That chaos falls with a half-life for each metric, because the crew
+  repairs the station. Without a responder department alive, repairs are slower.
+
+Thus the midround numbers for these two modes are estimates. The dashboard marks them with «≈».
+Reinforcement shuttles do not add crew in the simulator.
 
 ## Files
 
