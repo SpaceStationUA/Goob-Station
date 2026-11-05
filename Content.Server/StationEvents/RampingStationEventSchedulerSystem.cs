@@ -60,6 +60,7 @@ public sealed class RampingStationEventSchedulerSystem : GameRuleSystem<RampingS
             }
 
             PickNextEventTime(uid, scheduler);
+            Log.Info($"t={GameTicker.RoundDuration():hh\\:mm\\:ss} {ToPrettyString(uid)} runs an event"); // Pirate: Blueshift director logs - the next added rule is its pick
             _event.RunRandomEvent(scheduler.ScheduledGameRules);
         }
     }

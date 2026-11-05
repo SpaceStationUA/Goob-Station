@@ -172,6 +172,7 @@ public sealed partial class GameDirectorSystem : GameRuleSystem<GameDirectorComp
     private void LogMessage(string message, bool showChat = true)
     {
         _adminLogger.Add(LogType.GameDirector, showChat ? LogImpact.Medium : LogImpact.Low, $"{message}");
+        ConsoleLog(message); // Pirate: Blueshift director logs
         if (showChat)
             _chat.SendAdminAnnouncement("GameDirector " + message);
     }
