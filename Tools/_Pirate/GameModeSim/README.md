@@ -99,12 +99,15 @@ The director picks events by the chaos that it measures on the station. The simu
 uses a world model (`directorWorld` in `config.json`):
 
 - Friend, Hostile, Death, Security and Combat come from the simulated people: living crew, living antags,
-  dead bodies and living security.
-- The other metrics (Atmos, Power, Anomaly, Infestation, Medical, Mess, Hunger, Thirst) come from the chaos
-  that each started event declares. That chaos falls with a half-life for each metric, because the crew
-  repairs the station. Without a responder department alive, repairs are slower.
+  dead bodies and living security. Hostile, Death and Security also get the chaos that events declare.
+- Medical comes from the simulated people (`medicalPerLivingCrew` for each living crew member and
+  `medicalPerAliveAntag` for each living antag) and from the chaos that events declare.
+- The other metrics (Atmos, Power, Anomaly, Infestation, Mess, Hunger, Thirst, Charge) come only from the chaos
+  that each started event declares.
+- Declared chaos falls with a half-life for each metric, because the crew repairs the station. Without a
+  responder department alive, repairs are slower.
 
-Thus the midround numbers for these two modes are estimates. The dashboard marks them with «≈».
+Thus the midround numbers for these three modes are estimates. The dashboard marks them with «≈».
 Reinforcement shuttles do not add crew in the simulator.
 
 ## Files

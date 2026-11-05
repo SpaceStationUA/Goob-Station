@@ -35,10 +35,10 @@ public sealed partial class GameDirectorSystem
         return GameTicker.RoundDuration().ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture);
     }
 
+    // All keys, zero goals too (RepairStation wants Atmos:0), with enough precision to recompute the event scores.
     private static string ShortChaos(ChaosMetrics chaos)
     {
         return string.Join(" ", chaos.ChaosDict
-            .Where(p => Math.Abs(p.Value) >= 0.5)
-            .Select(p => $"{p.Key}:{p.Value.ToString("0", CultureInfo.InvariantCulture)}"));
+            .Select(p => $"{p.Key}:{(Math.Round(p.Value, 2) + 0.0).ToString("0.##", CultureInfo.InvariantCulture)}")); // + 0.0 turns -0 into 0
     }
 }
