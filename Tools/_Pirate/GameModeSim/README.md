@@ -86,6 +86,7 @@ To leave a mode out of the dashboard, add `--exclude A,B` (for example `--exclud
   to `extraPrototypes` and `BlueshiftLegacy` to `presets`.
 - `directorWorld`: the world model for GameDirector modes. See the next section.
 - `ghostRoleSpawnRules`: rules that spawn ghost-role antags without antag selection. The simulator counts these mobs as antags.
+  You do not need an entry for a pirate ransom rule (`PendingPirateRule`). The simulator gets its crew size from the spawn rule that it starts.
 - `conditionPassChance`: the pass chance for table conditions that need the world state. The simulator cannot evaluate these conditions.
 
 ## GameDirector modes (estimates)

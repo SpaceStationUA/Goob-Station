@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Goobstation.Server.Pirates.GameTicking.Rules;
 using Content.Goobstation.Server.StationEvents.Components;
 using Content.Goobstation.Server.StationEvents.Metric;
 using Content.Goobstation.Server.StationEvents.SecretPlus;
@@ -52,6 +53,30 @@ public sealed class GameModeSimData
             data.Rules[rule.Id] = rule;
             if (rule.Event != null)
                 data.StationEvents.Add(rule);
+        }
+
+        // Ransom rules inherit antag counts from their spawn rule.
+        foreach (var rule in data.Rules.Values)
+        {
+            if (rule.Antags != null || rule.SpawnsRule is not { } spawnId
+                || !data.Rules.TryGetValue(spawnId, out var spawn) || spawn.Antags == null)
+                continue;
+
+            rule.Antags = spawn.Antags.Select(def => new SimAntagDef
+            {
+                Min = def.Min,
+                Max = def.Max,
+                MinRange = def.MinRange,
+                MaxRange = def.MaxRange,
+                PlayerRatio = def.PlayerRatio,
+                ChaosScore = def.ChaosScore,
+                PickPlayer = def.PickPlayer,
+                HasSpawner = def.HasSpawner,
+                Synthetic = true,
+                FirstRole = def.FirstRole,
+                MindRoleAntags = def.MindRoleAntags,
+                Label = def.Label,
+            }).ToList();
         }
 
         foreach (var table in protos.EnumeratePrototypes<EntityTablePrototype>())
@@ -285,6 +310,9 @@ public sealed class GameModeSimData
 
         rule.MalfAi = proto.Components.ContainsKey("MalfAiRule");
 
+        if (proto.TryComp<PendingPirateRuleComponent>(out var pirates, factory))
+            rule.SpawnsRule = pirates.PirateSpawnRule.Id;
+
         if (proto.TryComp<StationEventComponent>(out var ev, factory))
         {
             rule.Event = new SimStationEvent
@@ -398,6 +426,8 @@ public sealed class SimRule
     public HashSet<string> RequiresStaff = new();
 
     public List<SimAntagDef>? Antags;
+
+    public string? SpawnsRule;
 }
 
 public sealed class SimStationEvent

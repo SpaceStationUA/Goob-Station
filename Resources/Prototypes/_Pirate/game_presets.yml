@@ -227,6 +227,7 @@
   name: blueshift-title
   description: blueshift-description
   showInVote: true
+  maxPlayers: 30
   rules:
     - BlueshiftDraft
     - BlueshiftDirector

@@ -335,6 +335,30 @@
   - type: StationEvent
     weight: 5.0
     maxOccurrences: 1
+  - type: PendingPirateRule
+    ransomPrototype: BikeHornRansom
+    pirateSpawnRule: BlueshiftPiratesSpawn
+
+# AntagSelection inheritance replaces definitions, so copy the parent fields.
+- type: entity
+  id: BlueshiftPiratesSpawn
+  parent: PiratesSpawn
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointPirateCaptain
+      pickPlayer: false
+      min: 1
+      max: 5
+      playerRatio: 10
+      mindRoles:
+      - MindRolePirate
+      startingGear: PirateGear
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - NamesDeathCommando
 
 # Anomaly 20 fills half the calm beat's Anomaly 40 goal; cap the rift at one per round.
 - type: entity
