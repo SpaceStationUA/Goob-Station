@@ -62,10 +62,43 @@
     - id: EeepEvent
     - id: SnailMigration
 
+# The timer rolls at the same rate at every headcount, so lower pop skips some rolls: a skipped roll gives no
+# event and the timer starts again. The player count is the connected players at the roll.
+# Below 25 players a skipped roll falls back to the roles that help the crew: the bounty hunter hunts antags and
+# the paradox clone protects its original. Each runs once per round (duration: null).
+- type: entityTable
+  id: BlueshiftAntagEventsTable
+  table: !type:AllSelector
+    children:
+    - !type:AllSelector
+      conditions:
+      - !type:PlayerCountCondition
+        max: 24
+      children:
+      - !type:NestedSelector
+        tableId: BlueshiftAntagEventsPool
+        prob: 0.6
+      - id: BlueshiftBountyHunterSpawn
+        conditions:
+        - !type:BountyHunterTargetCondition
+      - id: BlueshiftParadoxCloneSpawn
+    - !type:NestedSelector
+      tableId: BlueshiftAntagEventsPool
+      prob: 0.8
+      conditions:
+      - !type:PlayerCountCondition
+        min: 25
+        max: 34
+    - !type:NestedSelector
+      tableId: BlueshiftAntagEventsPool
+      conditions:
+      - !type:PlayerCountCondition
+        min: 35
+
 # Target rounds: traitor/bounty ~70%, vampire ~50%, extras ~30%, pirates ~25%, clown/mime/priest ~20%.
 # Use TraitorMidround rather than SleeperAgents to respect the Traitor preference and ban.
 - type: entityTable
-  id: BlueshiftAntagEventsTable
+  id: BlueshiftAntagEventsPool
   table: !type:AllSelector
     children:
     - id: BlueshiftTraitorMidround
@@ -134,6 +167,22 @@
   - type: StationEvent
     earliestStart: 15
     weight: 20
+  # Redeclared in full: a child's definitions list replaces the parent's. playerRatio 20 (TraitorMidround: 10)
+  # gives 1 traitor below 40 players and 2 from 40.
+  - type: AntagSelection
+    selectionTime: PostPlayerSpawn
+    definitions:
+    - prefRoles: [ Traitor ]
+      min: 1
+      max: 2
+      playerRatio: 20
+      blacklist:
+        components:
+        - AntagImmune
+        - CommandStaff
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleTraitor
 
 - type: entity
   id: BlueshiftVampireMidround
@@ -184,9 +233,12 @@
   id: BlueshiftParadoxCloneSpawn
   categories: [ HideSpawnMenu ]
   components:
+  # Ends after 60 s, so it can run again (an active rule is never picked); max 2 per round. The ghost-role
+  # spawner and the round-end summary still work after the rule ends.
   - type: StationEvent
     weight: 2.2
-    duration: null
+    duration: 60
+    maxOccurrences: 2
     earliestStart: 20
     reoccurrenceDelay: 20
     minimumPlayers: 15
