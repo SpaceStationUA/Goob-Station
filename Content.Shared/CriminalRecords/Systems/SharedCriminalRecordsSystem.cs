@@ -53,6 +53,8 @@ public abstract class SharedCriminalRecordsSystem : EntitySystem
             SecurityStatus.Search => "SecurityIconSearch", // Goobstation
             SecurityStatus.Dangerous => "SecurityIconDangerous", // Goobstation
             SecurityStatus.Demote => "SecurityIconDemoted", // Goobstation
+            SecurityStatus.Warned => "SecurityIconWarned", // Pirate
+            SecurityStatus.Safe => "SecurityIconSafe", // Pirate
             _ => record.StatusIcon
         };
 

@@ -17,6 +17,8 @@ namespace Content.Shared.Security;
 /// Perma - the person has been sentenced to permanent imprisonment
 /// Dangerous - the person is highly dangerous and may resist arrest
 /// Demote - The person is about to be demoted
+/// Warned - The person was let off with a warning instead of a punishment (Pirate)
+/// Safe - The person was searched and found clean (Pirate)
 /// </summary>
 public enum SecurityStatus : byte
 {
@@ -31,5 +33,7 @@ public enum SecurityStatus : byte
     Search, // Goobstation
     Perma, // Goobstation
     Dangerous, // Goobstation
-    Demote // Goobstation - Demotion
+    Demote, // Goobstation - Demotion
+    Warned, // Pirate - warning issued instead of a punishment
+    Safe // Pirate - searched and found clean
 }

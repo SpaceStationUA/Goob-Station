@@ -350,6 +350,10 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             (_, SecurityStatus.Dangerous) => "dangerous", // Goobstation
             // person is demoted from their job
             (_, SecurityStatus.Demote) => "demote", // Goobstation
+            // person was let off with a warning
+            (_, SecurityStatus.Warned) => "warned", // Pirate
+            // person was searched and is clean
+            (_, SecurityStatus.Safe) => "safe", // Pirate
             // person is no longer sus
             (SecurityStatus.Suspected, SecurityStatus.None) => "not-suspected",
             // going from wanted to none, must have been a mistake
@@ -366,6 +370,10 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
             (SecurityStatus.Dangerous, SecurityStatus.None) => "not-dangerous", // Goobstation
             // person no longer demoted
             (SecurityStatus.Demote, SecurityStatus.None) => "not-demoted", // Goobstation
+            // warning cleared
+            (SecurityStatus.Warned, SecurityStatus.None) => "not-warned", // Pirate
+            // clean checkup cleared
+            (SecurityStatus.Safe, SecurityStatus.None) => "not-safe", // Pirate
             // this is impossible
             _ => "not-wanted"
         };

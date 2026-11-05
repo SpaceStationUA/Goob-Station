@@ -84,6 +84,8 @@ wanted-list-status-label = [color=darkgray]статус:[/color] {$status ->
         [perma] [color=#343434]перма[/color]
         [dangerous] [color=red]небезпечний[/color]
         [demote] [color=red]пониження[/color]
+        [warned] [color=#e09b2d]попереджені[/color]
+        [safe] [color=#2fbf71]безпечний[/color]
         *[other] немає
     }
 wanted-list-history-table-time-col = Час

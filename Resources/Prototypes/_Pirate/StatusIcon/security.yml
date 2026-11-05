@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconWarned
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/security_icons.rsi
+    state: hud_warned
+
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconSafe
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/security_icons.rsi
+    state: hud_safe
