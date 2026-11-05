@@ -60,6 +60,7 @@ namespace Content.Server.StationEvents
                     continue;
                 }
 
+                Log.Info($"t={GameTicker.RoundDuration():hh\\:mm\\:ss} {ToPrettyString(uid)} runs an event"); // Pirate: Blueshift director logs - the next added rule is its pick
                 _event.RunRandomEvent(eventScheduler.ScheduledGameRules);
                 ResetTimer(eventScheduler);
             }

@@ -153,7 +153,7 @@
   name: guide-title
   description: guide-description
   showInVote: false # Pirate: blueshift
-  minPlayers: 25
+  minPlayers: 30 # Pirate: Blueshift pirates
   rules:
     - CombatDynamic
     - SubGamemodesRule

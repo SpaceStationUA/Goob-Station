@@ -104,7 +104,10 @@ public sealed partial class GameDirectorSystem
     {
         var scheduler = ent.Comp;
         if (beat.AllowReinforcements && TryChooseReinforcement(scheduler, beat, count) is { } reinforcement)
+        { // Pirate: Blueshift director logs
+            ConsoleLogPick("reinforcement", reinforcement.StationEvent, scheduler, beat, goal, chaos, count); // Pirate: Blueshift director logs
             return reinforcement;
+        } // Pirate: Blueshift director logs
 
         var desiredChange = goal.ExclusiveSubtract(chaos);
         var noEventScore = Score(desiredChange);
@@ -141,6 +144,7 @@ public sealed partial class GameDirectorSystem
             var best = ranked.OrderByDescending(r => r.Score).Take(beat.RandomEventLimit).ToList();
             var picked = PickWeighted(best, r => r.Score * r.PossibleEvent.Weight);
             LogMessage($"Picked {picked.StationEvent} from best events (in sequence) {string.Join(", ", best.Select(r => r.PossibleEvent.StationEvent))}");
+            ConsoleLogPick("best", picked.StationEvent, scheduler, beat, goal, chaos, count); // Pirate: Blueshift director logs
             return picked;
         }
 
@@ -149,6 +153,7 @@ public sealed partial class GameDirectorSystem
 
         var calmPick = PickWeighted(calm, r => r.Score);
         LogMessage($"Picked calm event {calmPick.StationEvent}, nothing moves chaos towards the goal");
+        ConsoleLogPick("calm", calmPick.StationEvent, scheduler, beat, goal, chaos, count); // Pirate: Blueshift director logs
         return calmPick;
     }
 

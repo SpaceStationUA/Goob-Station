@@ -2,12 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Goobstation.Server.Pirates.GameTicking.Rules;
 using Content.Goobstation.Server.StationEvents.Components;
+using Content.Goobstation.Server.StationEvents.Metric;
 using Content.Goobstation.Server.StationEvents.SecretPlus;
 using Content.Goobstation.Shared.StationEvents;
+using Content.Pirate.Server.GameTicking.Rules.Components;
 using Content.Pirate.Server.SecretTP.Components;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking.Presets;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Psionics.Glimmer;
 using Content.Server.StationEvents.Components;
 using Content.Shared.EntityTable;
@@ -16,6 +20,7 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Random;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
+using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -32,6 +37,9 @@ public sealed class GameModeSimData
     public readonly Dictionary<string, List<string>> JobDepartments = new();
     public readonly Dictionary<string, SimPreset> Presets = new();
 
+    public readonly Dictionary<string, StoryPrototype> Stories = new();
+    public readonly Dictionary<string, StoryBeatPrototype> Beats = new();
+
     public static GameModeSimData Extract(IPrototypeManager protos, IComponentFactory factory, IEnumerable<string> presetIds)
     {
         var data = new GameModeSimData();
@@ -47,6 +55,30 @@ public sealed class GameModeSimData
                 data.StationEvents.Add(rule);
         }
 
+        // Ransom rules inherit antag counts from their spawn rule.
+        foreach (var rule in data.Rules.Values)
+        {
+            if (rule.Antags != null || rule.SpawnsRule is not { } spawnId
+                || !data.Rules.TryGetValue(spawnId, out var spawn) || spawn.Antags == null)
+                continue;
+
+            rule.Antags = spawn.Antags.Select(def => new SimAntagDef
+            {
+                Min = def.Min,
+                Max = def.Max,
+                MinRange = def.MinRange,
+                MaxRange = def.MaxRange,
+                PlayerRatio = def.PlayerRatio,
+                ChaosScore = def.ChaosScore,
+                PickPlayer = def.PickPlayer,
+                HasSpawner = def.HasSpawner,
+                Synthetic = true,
+                FirstRole = def.FirstRole,
+                MindRoleAntags = def.MindRoleAntags,
+                Label = def.Label,
+            }).ToList();
+        }
+
         foreach (var table in protos.EnumeratePrototypes<EntityTablePrototype>())
             data.Tables[table.ID] = table.Table;
 
@@ -55,6 +87,12 @@ public sealed class GameModeSimData
 
         foreach (var incompatible in protos.EnumeratePrototypes<IncompatibleGameModesPrototype>())
             data.IncompatibleModes[incompatible.ID] = new HashSet<string>(incompatible.Modes);
+
+        foreach (var story in protos.EnumeratePrototypes<StoryPrototype>())
+            data.Stories[story.ID] = story;
+
+        foreach (var beat in protos.EnumeratePrototypes<StoryBeatPrototype>())
+            data.Beats[beat.ID] = beat;
 
         foreach (var department in protos.EnumeratePrototypes<DepartmentPrototype>())
         {
@@ -76,7 +114,7 @@ public sealed class GameModeSimData
         return data;
     }
 
-    // Ghost-role rules without AntagSelection would otherwise be missing from antag counts.
+    // Include ghost roles without AntagSelection in antag counts.
     public void AddGhostRoleSpawns(Dictionary<string, int> rules)
     {
         foreach (var (id, count) in rules)
@@ -93,6 +131,7 @@ public sealed class GameModeSimData
                     PlayerRatio = 1,
                     PickPlayer = false,
                     HasSpawner = true,
+                    Synthetic = true,
                     Label = id.EndsWith("Spawn", StringComparison.Ordinal) ? id[..^"Spawn".Length] : id,
                 },
             ];
@@ -134,6 +173,18 @@ public sealed class GameModeSimData
                     salt.EventIntervalMax, salt.PrimaryAntagsWeightTable, salt.RoundStartAntagsWeightTable,
                     salt.PrimaryAntagChaosBias, salt: true, factory));
             }
+            else if (proto.TryComp<AntagDraftComponent>(out var draft, factory))
+            {
+                sim.Drafts.Add(draft);
+            }
+            else if (proto.TryComp<GameDirectorComponent>(out var director, factory))
+            {
+                sim.Directors.Add(DirectorFrom(proto, director, factory));
+            }
+            else if (proto.TryComp<SubGamemodesComponent>(out var sub, factory))
+            {
+                sim.SubGamemodes.Add((proto.ID, sub.Rules.ToList()));
+            }
             else if (proto.TryComp<BasicStationEventSchedulerComponent>(out var basic, factory))
             {
                 sim.Basic.Add(new SimBasicScheduler
@@ -150,6 +201,38 @@ public sealed class GameModeSimData
                 sim.Unsimulated.Add(proto.ID);
             }
         }
+
+        return sim;
+    }
+
+    private static SimDirector DirectorFrom(EntityPrototype proto, GameDirectorComponent d, IComponentFactory factory)
+    {
+        var sim = new SimDirector
+        {
+            Id = proto.ID,
+            DualAntags = d.DualAntags,
+            NoRoundstartAntags = d.NoRoundstartAntags,
+            Stories = d.Stories?.Select(s => s.Id).ToArray(),
+            FallbackBeat = d.FallbackBeatName.Id,
+            PendingDuration = d.PendingDuration.TotalSeconds,
+            RepeatWindow = d.RepeatWindow.TotalSeconds,
+            RepeatFactor = d.RepeatFactor,
+            MaxDestructionBudget = d.MaxDestructionBudget,
+            DestructionRegenPerMinute = d.DestructionRegenPerMinute,
+            ReferencePlayers = d.ReferencePlayers,
+            MinPopulationScale = d.MinPopulationScale,
+            MaxPopulationScale = d.MaxPopulationScale,
+            PopulationScaledMetrics = d.PopulationScaledMetrics.ToHashSet(),
+            DenouementBeat = d.DenouementBeat?.Id,
+            Responders = d.Responders.ToDictionary(p => p.Key, p => p.Value.Id),
+            MinResponders = d.MinResponders,
+            ReinforcementCooldown = d.ReinforcementCooldown.TotalSeconds,
+            NoEventRetryDelay = d.NoEventRetryDelay.TotalSeconds,
+            RoundstartTable = d.RoundStartAntagsWeightTable.Id,
+        };
+
+        if (proto.TryComp<SelectedGameRulesComponent>(out var selected, factory))
+            sim.Table = selected.ScheduledGameRules;
 
         return sim;
     }
@@ -185,7 +268,7 @@ public sealed class GameModeSimData
             PrimaryTable = primary,
             RoundstartTable = roundstart,
             PrimaryAntagChaosBias = primaryBias,
-            // SecretPlusSystem raises SecretTP hooks only for this exact prototype id.
+            // SecretTP hooks are raised only for this exact rule id.
             TpHooks = !salt && proto.ID == Content.Shared.GameTicking.SecretTPConstants.RuleId,
         };
 
@@ -227,6 +310,9 @@ public sealed class GameModeSimData
 
         rule.MalfAi = proto.Components.ContainsKey("MalfAiRule");
 
+        if (proto.TryComp<PendingPirateRuleComponent>(out var pirates, factory))
+            rule.SpawnsRule = pirates.PirateSpawnRule.Id;
+
         if (proto.TryComp<StationEventComponent>(out var ev, factory))
         {
             rule.Event = new SimStationEvent
@@ -240,8 +326,23 @@ public sealed class GameModeSimData
                 MaxOccurrences = ev.MaxOccurrences,
                 OccursDuringRoundEnd = ev.OccursDuringRoundEnd,
                 EventType = ev.EventType.Id,
+                Chaos = new ChaosMetrics(ev.Chaos),
+                Destruction = ev.Destruction,
             };
         }
+
+        if (proto.TryComp<GameDirectorReinforcementComponent>(out var reinforcement, factory))
+        {
+            rule.Reinforcement = new SimReinforcement
+            {
+                Departments = reinforcement.Departments.Select(dep => dep.Id).ToHashSet(),
+                UnderstaffedBelow = reinforcement.UnderstaffedBelow,
+                RequiredGhosts = reinforcement.RequiredGhosts,
+            };
+        }
+
+        if (proto.TryComp<GameDirectorRequiresStaffComponent>(out var requiresStaff, factory))
+            rule.RequiresStaff = requiresStaff.Departments.Select(dep => dep.Id).ToHashSet();
 
         if (proto.TryComp<GlimmerEventComponent>(out var glimmer, factory))
         {
@@ -300,6 +401,9 @@ public sealed class SimPreset
     public string Id = "";
     public readonly List<SimChaosScheduler> Chaos = new();
     public readonly List<SimBasicScheduler> Basic = new();
+    public readonly List<AntagDraftComponent> Drafts = new();
+    public readonly List<SimDirector> Directors = new();
+    public readonly List<(string Id, List<EntitySpawnEntry> Rules)> SubGamemodes = new();
     public readonly List<string> Unsimulated = new();
 }
 
@@ -316,7 +420,14 @@ public sealed class SimRule
 
     public SimStationEvent? Event;
     public SimGlimmerBand? Glimmer;
+
+    public SimReinforcement? Reinforcement;
+
+    public HashSet<string> RequiresStaff = new();
+
     public List<SimAntagDef>? Antags;
+
+    public string? SpawnsRule;
 }
 
 public sealed class SimStationEvent
@@ -330,6 +441,42 @@ public sealed class SimStationEvent
     public int? MaxOccurrences;
     public bool OccursDuringRoundEnd;
     public string EventType = "";
+
+    public ChaosMetrics Chaos = new();
+
+    public int Destruction;
+}
+
+public sealed class SimReinforcement
+{
+    public HashSet<string> Departments = new();
+    public int UnderstaffedBelow;
+    public int RequiredGhosts;
+}
+
+public sealed class SimDirector
+{
+    public string Id = "";
+    public EntityTableSelector? Table;
+    public bool DualAntags;
+    public bool NoRoundstartAntags;
+    public string[]? Stories;
+    public string FallbackBeat = "";
+    public double PendingDuration;
+    public double RepeatWindow;
+    public float RepeatFactor;
+    public float MaxDestructionBudget;
+    public float DestructionRegenPerMinute;
+    public int ReferencePlayers;
+    public float MinPopulationScale;
+    public float MaxPopulationScale;
+    public HashSet<ChaosMetric> PopulationScaledMetrics = new();
+    public string? DenouementBeat;
+    public Dictionary<ChaosMetric, string> Responders = new();
+    public int MinResponders;
+    public double ReinforcementCooldown;
+    public double NoEventRetryDelay;
+    public string RoundstartTable = "";
 }
 
 public sealed class SimGlimmerBand
@@ -350,6 +497,10 @@ public sealed class SimAntagDef
     public float? ChaosScore;
     public bool PickPlayer;
     public bool HasSpawner;
+
+    // True when this is a synthesized ghost-role rule.
+    public bool Synthetic;
+
     public string? FirstRole;
     public List<string> MindRoleAntags = new();
     public string Label = "";
