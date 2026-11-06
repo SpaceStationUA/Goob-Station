@@ -33,11 +33,8 @@ public sealed class NoviceCrayonProtectionSystem : EntitySystem
         SubscribeLocalEvent<CrayonComponent, CrayonDrawImageEvent>(OnDrawImage,
             before: new[] { typeof(CrayonSymbolSystem) });
         SubscribeLocalEvent<CrayonComponent, CrayonDrawAttemptEvent>(OnDrawAttempt);
-        SubscribeLocalEvent<ActorComponent, ComponentShutdown>(OnActorShutdown);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
-
-    private void OnActorShutdown(Entity<ActorComponent> ent, ref ComponentShutdown args) => _nextNotification.Remove(ent);
 
     private void OnRoundRestart(RoundRestartCleanupEvent args) => _nextNotification.Clear();
 
