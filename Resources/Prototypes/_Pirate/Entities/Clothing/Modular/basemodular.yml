@@ -78,6 +78,8 @@
     interfaces:
       enum.ModularSuitUiKey.Key:
         type: ModularSuitBoundUserInterface
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
   - type: WiresPanel

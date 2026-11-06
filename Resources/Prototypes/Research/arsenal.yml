@@ -187,7 +187,10 @@
   - ClothingHandsGlovesMansusBlock # Pirate
   - SecurityPlating # Pirate: Wega modular suit port.
   - ArmorBossterSuitModule # Pirate: Wega modular suit port.
-  - EMPShieldSuitModule # Pirate: Wega modular suit port.
+  - EMPShieldSuitModule
+  - CriminalCaptureSuitModule # Pirate: upstream MOD module.
+  - MagneticHarnessSuitModule # Pirate: upstream MOD module.
+  - ShockAbsorberSuitModule # Pirate: upstream MOD module. # Pirate: Wega modular suit port.
   # Goobstation R&D Console rework start
   position: 5,3
   technologyPrerequisites:

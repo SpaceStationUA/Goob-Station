@@ -28,6 +28,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Timing; // Goob edit
+using Content.Goobstation.Common.Carrying; // Goob
 using System.Numerics;
 using Content.Shared._EinsteinEngines.Contests;
 using Content.Shared.Hands.EntitySystems;
@@ -381,6 +382,10 @@ public sealed class CarryingSystem : EntitySystem
 
         var mod = _contests.MassContest(carried, carrier);
         length *= mod;
+
+        var ev = new ModifyCarryDurationEvent(carried); // Goob
+        RaiseLocalEvent(carrier, ref ev); // Goob
+        length *= ev.Multiplier; // Goob
 
         TryComp<LightweightComponent>(carried, out var lightweight); // Pirate - Traits Rework
         return length / float.Max(lightweight?.PickupSpeedMultiplier ?? 1f, 1f); // Pirate - Traits Rework

@@ -1,4 +1,5 @@
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Goobstation.Shared.ModSuits.Components;
 using Content.Pirate.Shared.ModularSuit;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
@@ -130,6 +131,13 @@ public sealed partial class ModularSuitSystem
         {
             foreach (var module in modules)
             {
+                // Modules such as the upstream plasma stabilizer keep working while the suit is unsealed.
+                if (TryComp<ModModuleComponent>(module, out var upstream)
+                    && (upstream.AllowFlags & ModModuleAllowFlags.Inactive) != 0
+                    && _upstreamModules.TryGetSuitModuleHost(ent, out var host)
+                    && _upstreamModules.HasCharge(host, 0.001f))
+                    continue;
+
                 if (TryComp<ModularSuitModuleComponent>(module, out var mod) && mod.IsActive && mod.CanBeDisabled)
                 {
                     mod.WasActive = true;
@@ -245,7 +253,9 @@ public sealed partial class ModularSuitSystem
         float totalDraw = suit.Comp.BasePowerDraw;
         foreach (var module in GetCurrentModules(suit))
         {
-            if (TryComp<ModularSuitModuleComponent>(module, out var mod) && mod.IsActive)
+            if (TryComp<ModModuleComponent>(module, out var upstream))
+                totalDraw += upstream.IdlePower + (upstream.Active ? upstream.ActivePower : 0);
+            else if (TryComp<ModularSuitModuleComponent>(module, out var mod) && mod.IsActive)
                 totalDraw += mod.PowerUsage;
         }
 

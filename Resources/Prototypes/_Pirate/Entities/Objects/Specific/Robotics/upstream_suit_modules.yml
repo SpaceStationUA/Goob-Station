@@ -1,0 +1,167 @@
+# Pirate: upstream effects and assets hosted by our modular suit system.
+
+- type: entity
+  parent: ModsuitModuleRecycler
+  id: RecyclerSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleDonkRecycler
+  id: DonkRecyclerSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModulePatientTransport
+  id: PatientTransportSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleCriminalCapture
+  id: CriminalCaptureSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleMagneticHarness
+  id: MagneticHarnessSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleProjectileDampener
+  id: ProjectileDampenerSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleShootingAssistant
+  id: ShootingAssistantSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleBuiltinSphereTransform
+  id: SphereTransformSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    permanent: true
+
+- type: entity
+  parent: ModsuitModuleChameleon
+  id: ChameleonSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+  - type: ModChameleonModule
+    components:
+    - type: ChameleonClothing
+      slot: [back]
+      default: ClothingModularControllerStandard
+
+- type: entity
+  parent: ModsuitModuleThreadRipper
+  id: ThreadRipperSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleHeadProtector
+  id: HeadProtectorSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Helmet
+
+- type: entity
+  parent: ModsuitModuleMister
+  id: MisterSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleResinMister
+  id: ResinMisterSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleJanitorMister
+  id: JanitorMisterSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleThermalVisor
+  id: ThermalVisorSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Helmet
+    tags: [ VisorSuitModule ]
+
+- type: entity
+  parent: ModsuitModuleNightVisor
+  id: NightVisorSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Helmet
+    tags: [ VisorSuitModule ]
+
+- type: entity
+  parent: ModsuitModuleGloveTranslator
+  id: GloveTranslatorSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModulePlasmaStabilizer
+  id: PlasmaStabilizerSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Helmet
+
+- type: entity
+  parent: ModsuitModuleShockAbsorber
+  id: ShockAbsorberSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleJumpJet
+  id: JumpJetSuitModule
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso

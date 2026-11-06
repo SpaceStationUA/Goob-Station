@@ -8,25 +8,26 @@
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_SolAlliance/Modsuits/csa_85x.rsi
-    - type: ToggleableClothing
-      clothingPrototypes:
+    # Pirate: preserve this legacy faction suit on the upstream MOD API.
+    - type: ModSuit
+      parts:
         head: ClothingModsuitHelmetSANMarine
         gloves: ClothingModsuitGauntletsSANMarine
         outerClothing: ClothingModsuitChestplateSANMarine
         shoes: ClothingModsuitBootsSANMarine
     - type: ItemSlots
       slots:
-        cell_slot:
-          name: power-cell-slot-component-slot-name-default
-          startingItem: PowerCellHyper
+        mod-core:
+          name: modsuit-core-slot-name
+          startingItem: ModsuitCoreStandardHyper
           whitelist:
             components:
-              - PowerCell
+              - ModCore
     - type: Storage
       maxItemSize: Huge
       grid:
         - 0,0,7,4
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         back:
@@ -42,7 +43,7 @@
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_SolAlliance/Modsuits/csa_85x.rsi
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         gloves:
@@ -71,7 +72,7 @@
     - type: EyeProtection
     - type: PointLight
       color: "#FF4500"
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         head:
@@ -116,7 +117,7 @@
       damageCoefficient: 0.45
     - type: FireProtection
       reduction: 0.90
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         outerClothing:
@@ -136,7 +137,7 @@
     - type: Tag
       tags:
         - WhitelistChameleon
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         shoes:

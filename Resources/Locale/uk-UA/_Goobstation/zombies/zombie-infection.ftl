@@ -1,0 +1,1 @@
+zombie-infection-symptom = {CAPITALIZE(THE($target))} здригається й тихо кашляє!
