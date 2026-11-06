@@ -31,13 +31,6 @@ public sealed class ChemicalMixingSystem : EntitySystem
         RaiseLocalEvent(user, ref attempt);
         return !attempt.Cancelled;
     }
-
-    public bool CanProcess(EntityUid user, Solution source, EntityUid mixer)
-    {
-        var attempt = new ChemicalProcessAttemptEvent(source, mixer);
-        RaiseLocalEvent(user, ref attempt);
-        return !attempt.Cancelled;
-    }
 }
 
 /// <summary>Raised on the user before either solution is changed.</summary>
@@ -47,7 +40,3 @@ public record struct ChemicalMixAttemptEvent(Solution Source, Solution Target, b
 /// <summary>Raised on the user before a solution is removed for a spill.</summary>
 [ByRefEvent]
 public record struct ChemicalSpillAttemptEvent(Solution Source, EntityCoordinates Coordinates, bool Cancelled = false);
-
-/// <summary>Raised on the user before starting a machine reaction.</summary>
-[ByRefEvent]
-public record struct ChemicalProcessAttemptEvent(Solution Source, EntityUid Mixer, bool Cancelled = false);

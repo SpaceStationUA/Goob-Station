@@ -292,9 +292,10 @@ public sealed class NoviceChemicalProtectionTest : InteractionTest
         });
     }
 
-    [TestCase(0, false)]
-    [TestCase(24, true)]
-    public async Task ElectrolysisCannotProduceSodiumInsideWater(double hours, bool allowed)
+    [TestCase(0, 20, 10, 25, 0)]
+    [TestCase(0, 80, 10, 50, 40)]
+    [TestCase(24, 20, 10, 25, 0)]
+    public async Task SaltWaterBecomesSalineBeforeElectrolysis(double hours, int water, int salt, int saline, int remainingWater)
     {
         await SetPlaytime(hours);
         await Server.WaitAssertion(() =>
@@ -302,15 +303,20 @@ public sealed class NoviceChemicalProtectionTest : InteractionTest
             var machine = SEntMan.SpawnEntity("MachineElectrolysisUnit", MapData.GridCoords);
             SEntMan.RemoveComponent<ApcPowerReceiverComponent>(machine); // Test map has no power network.
             var beaker = SEntMan.SpawnEntity("LargeBeaker", MapData.GridCoords);
-            var solution = Fill(beaker, "Water", 20);
-            Assert.That(Server.System<SharedSolutionContainerSystem>().TryAddReagent(solution, "TableSalt", FixedPoint2.New(10)), Is.True);
+            var solution = Fill(beaker, "Water", water);
+            Assert.That(Server.System<SharedSolutionContainerSystem>().TryAddReagent(solution, "TableSalt", FixedPoint2.New(salt)), Is.True);
             Assert.That(Server.System<ItemSlotsSystem>().TryInsert(machine, "mixer", beaker, SPlayer), Is.True);
             var component = SEntMan.GetComponent<SolutionContainerMixerComponent>(machine);
             var mixers = Server.System<SharedSolutionContainerMixerSystem>();
             mixers.TryStartMix((machine, component), SPlayer);
-            Assert.That(component.Mixing, Is.EqualTo(allowed));
-            Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(30)));
-            mixers.StopMix((machine, component));
+            Assert.That(component.Mixing, Is.True);
+            Assert.That(solution.Comp.Solution.GetTotalPrototypeQuantity("Water"), Is.EqualTo(FixedPoint2.New(remainingWater)));
+            // Saline consumes one of the reactants before electrolysis can make sodium.
+            mixers.FinishMix((machine, component));
+            Assert.That(solution.Comp.Solution.GetTotalPrototypeQuantity("Saline"), Is.EqualTo(FixedPoint2.New(saline)));
+            Assert.That(solution.Comp.Solution.GetTotalPrototypeQuantity("Water") == FixedPoint2.Zero ||
+                solution.Comp.Solution.GetTotalPrototypeQuantity("Sodium") == FixedPoint2.Zero, Is.True);
+            Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(water + salt)));
             SEntMan.DeleteEntity(machine);
         });
     }

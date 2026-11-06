@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Chemistry.Components;
-using Content.Shared._Pirate.Chemistry; // Pirate
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -24,7 +23,6 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly ChemicalMixingSystem _chemicalMixing = default!; // Pirate
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -71,17 +69,6 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
             if (user != null)
                 _popup.PopupClient(Loc.GetString("solution-container-mixer-popup-nothing-to-mix"), entity, user.Value);
             return;
-        }
-
-        // Pirate: block reactions that produce a reactive metal in water before starting.
-        if (user is { } actor)
-        {
-            foreach (var contained in container.ContainedEntities)
-            {
-                if (_solution.TryGetFitsInDispenser(contained, out _, out var solution) &&
-                    !_chemicalMixing.CanProcess(actor, solution, uid))
-                    return;
-            }
         }
 
         comp.Mixing = true;
