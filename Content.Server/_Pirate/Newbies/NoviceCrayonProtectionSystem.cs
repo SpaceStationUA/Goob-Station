@@ -4,10 +4,12 @@ using Content.Server._Pirate.Crayon;
 using Content.Server.Crayon;
 using Content.Shared._Pirate.Crayon;
 using Content.Shared.Crayon;
+using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Pirate.Newbies;
 
@@ -18,6 +20,9 @@ public sealed class NoviceCrayonProtectionSystem : EntitySystem
 
     [Dependency] private readonly NovicePlaytimeSystem _playtime = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    private readonly Dictionary<EntityUid, TimeSpan> _nextNotification = new();
 
     public override void Initialize()
     {
@@ -28,7 +33,13 @@ public sealed class NoviceCrayonProtectionSystem : EntitySystem
         SubscribeLocalEvent<CrayonComponent, CrayonDrawImageEvent>(OnDrawImage,
             before: new[] { typeof(CrayonSymbolSystem) });
         SubscribeLocalEvent<CrayonComponent, CrayonDrawAttemptEvent>(OnDrawAttempt);
+        SubscribeLocalEvent<ActorComponent, ComponentShutdown>(OnActorShutdown);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
+
+    private void OnActorShutdown(Entity<ActorComponent> ent, ref ComponentShutdown args) => _nextNotification.Remove(ent);
+
+    private void OnRoundRestart(RoundRestartCleanupEvent args) => _nextNotification.Clear();
 
     private void OnAfterInteract(Entity<CrayonComponent> ent, ref AfterInteractEvent args)
     {
@@ -54,7 +65,12 @@ public sealed class NoviceCrayonProtectionSystem : EntitySystem
             !_playtime.IsRestricted(actor.PlayerSession, RequiredPlaytime))
             return false;
 
-        _popup.PopupEntity(Loc.GetString("novice-protection-crayon-drawing"), user, user);
+        // Paint UIs send many strokes per second: reject every stroke, but throttle only the notification.
+        if (!_nextNotification.TryGetValue(user, out var next) || _timing.CurTime >= next)
+        {
+            _nextNotification[user] = _timing.CurTime + TimeSpan.FromSeconds(2);
+            _popup.PopupEntity(Loc.GetString("novice-protection-crayon-drawing"), user, user);
+        }
         return true;
     }
 }

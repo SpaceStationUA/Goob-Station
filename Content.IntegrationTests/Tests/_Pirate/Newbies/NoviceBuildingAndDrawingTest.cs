@@ -10,7 +10,7 @@ using Content.Shared._Pirate.Crayon;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
 using Content.Shared.Decals;
-using Content.Shared.RCD.Components;
+using Content.Shared.RCD;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
@@ -72,12 +72,15 @@ public sealed class NoviceBuildingAndDrawingTest : InteractionTest
     public async Task RcdCannotBypassRestriction(double hours, bool allowed)
     {
         await SetPlaytime(hours);
-        var rcd = ToServer(await PlaceInHands("RCD"));
+        var rcdItem = await PlaceInHands("RCD");
+        var rcd = ToServer(rcdItem);
+        await UseInHand();
+        await SendBui(RcdUiKey.Key, new RCDSystemMessage("Grille"), rcdItem);
+        await CloseBui(RcdUiKey.Key, rcdItem);
         var charges = Server.System<SharedChargesSystem>();
         var before = 0;
         await Server.WaitPost(() =>
         {
-            SEntMan.GetComponent<RCDComponent>(rcd).ProtoId = "Grille";
             before = charges.GetCurrentCharges(rcd);
         });
         await Interact(null, TargetCoords);
@@ -90,14 +93,17 @@ public sealed class NoviceBuildingAndDrawingTest : InteractionTest
     public async Task StockAndCustomFloorDrawingRespectPlaytime(double hours, bool allowed)
     {
         await SetPlaytime(hours);
-        var crayon = ToServer(await PlaceInHands("CrayonRed"));
+        var crayonItem = await PlaceInHands("CrayonRed");
+        var crayon = ToServer(crayonItem);
+        await UseInHand();
+        await SendBui(CrayonUiKey.Key, new CrayonSelectMessage("0"), crayonItem);
+        await CloseBui(CrayonUiKey.Key, crayonItem);
         var charges = Server.System<SharedChargesSystem>();
         var decals = Server.System<SharedDecalSystem>();
         var before = 0;
         var decalCount = 0;
         await Server.WaitPost(() =>
         {
-            SEntMan.GetComponent<CrayonComponent>(crayon).SelectedState = "0";
             before = charges.GetCurrentCharges(crayon);
             decalCount = decals.GetDecalsInRange(MapData.Grid.Owner, MapData.GridCoords.Position, 4).Count;
         });
