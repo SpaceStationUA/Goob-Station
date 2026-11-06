@@ -53,4 +53,12 @@ public sealed partial class ParallaxPrototype : IPrototype
     /// </summary>
     [DataField]
     public string SectorDescription { get; private set; } = "";
+
+    #region Pirate: starlight
+    [DataField]
+    public Color? StarlightColor { get; private set; }
+
+    [DataField]
+    public float? StarlightStrength { get; private set; }
+    #endregion
 }

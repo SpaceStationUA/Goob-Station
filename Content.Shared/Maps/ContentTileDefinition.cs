@@ -90,10 +90,21 @@ namespace Content.Shared.Maps
 
         [DataField("variants")] public byte Variants { get; set; } = 1;
 
-        #region Pirate: glass floors - tile smoothing
+        #region Pirate: glass floors and starlight
         /// <summary>Requires a 47-state strip ordered by junction mask; null disables smoothing.</summary>
         [DataField]
         public string? SmoothGroup;
+
+        [DataField]
+        public ResPath? PaneOverlay;
+
+        /// <summary>Linear blending makes small alpha values appear stronger.</summary>
+        [DataField]
+        public float PaneOverlayAlpha = 0.06f;
+
+        /// <summary>Used only for Z-transparent tiles.</summary>
+        [DataField]
+        public Color? StarlightColor;
         #endregion
 
         /// <summary>

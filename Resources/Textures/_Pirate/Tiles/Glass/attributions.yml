@@ -7,3 +7,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Green recolour of plasma_glass.png and reinf_plasma_glass.png (NovaSector, see above), made for Lanos Station. Same 47-state layout."
   source: "https://github.com/NovaSector/NovaSector/tree/9d5bb13a76866960c76cb78217e7436e65239268/icons/turf/floors"
+
+- files: ["plasma_glass_pane.png", "reinf_plasma_glass_pane.png", "uranium_glass_pane.png", "reinf_uranium_glass_pane.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Only the coloured glass pixels (no frame) of the matching strip above, made for Lanos Station. Drawn unshaded so the tint shows in darkness."
+  source: "https://github.com/NovaSector/NovaSector/tree/9d5bb13a76866960c76cb78217e7436e65239268/icons/turf/floors"

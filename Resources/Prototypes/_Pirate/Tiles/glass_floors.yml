@@ -31,6 +31,8 @@
   parent: BaseFloorGlassSolid
   name: tiles-plasma-glass-floor
   sprite: /Textures/_Pirate/Tiles/Glass/plasma_glass.png
+  paneOverlay: /Textures/_Pirate/Tiles/Glass/plasma_glass_pane.png
+  starlightColor: "#6927C5"
   itemDrop: FloorTileItemPlasmaGlass
   tileRipResistance: 175
 
@@ -39,6 +41,8 @@
   parent: BaseFloorGlassSolid
   name: tiles-plasma-glass-reinforced-floor
   sprite: /Textures/_Pirate/Tiles/Glass/reinf_plasma_glass.png
+  paneOverlay: /Textures/_Pirate/Tiles/Glass/reinf_plasma_glass_pane.png
+  starlightColor: "#6927C5"
   itemDrop: FloorTileItemPlasmaGlassReinforced
   tileRipResistance: 200
 
@@ -47,6 +51,8 @@
   parent: BaseFloorGlassSolid
   name: tiles-uranium-glass-floor
   sprite: /Textures/_Pirate/Tiles/Glass/uranium_glass.png
+  paneOverlay: /Textures/_Pirate/Tiles/Glass/uranium_glass_pane.png
+  starlightColor: "#1A5E26"
   itemDrop: FloorTileItemUraniumGlass
   tileRipResistance: 175
 
@@ -55,5 +61,7 @@
   parent: BaseFloorGlassSolid
   name: tiles-uranium-glass-reinforced-floor
   sprite: /Textures/_Pirate/Tiles/Glass/reinf_uranium_glass.png
+  paneOverlay: /Textures/_Pirate/Tiles/Glass/reinf_uranium_glass_pane.png
+  starlightColor: "#1A5E26"
   itemDrop: FloorTileItemUraniumGlassReinforced
   tileRipResistance: 200
