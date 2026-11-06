@@ -1,2 +1,4 @@
+ent-WeaponShotgunKammererRubber = { ent-WeaponShotgunKammerer }
+    .desc = { ent-WeaponShotgunKammerer.desc }
 ent-WeaponShotgunSol = M63
     .desc = Компактний штурмовий дробовик виробництва Zavodskiy Interstellar для збройних сил Соларіанського Альянсу. M63 найчастіше використовується сухопутних силами, що воюють у ближньому бою, хоча також широко використовується як оборонна зброя екіпажами флоту.

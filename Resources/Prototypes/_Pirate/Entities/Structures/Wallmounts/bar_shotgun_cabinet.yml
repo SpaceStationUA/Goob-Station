@@ -19,3 +19,16 @@
     containers:
       ItemCabinet:
       - WeaponShotgunDoubleBarreledRubber
+
+- type: entity
+  parent: ShotGunCabinet
+  id: ShotGunCabinetBarKammererFilled
+  name: bar Kammerer cabinet
+  suffix: Filled
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - WeaponShotgunKammererRubber
