@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using System.Numerics;
 using Content.Goobstation.Shared.Paint;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server._Pirate.Crayon;
@@ -84,7 +85,8 @@ public sealed class NoviceBuildingAndDrawingTest : InteractionTest
         {
             before = charges.GetCurrentCharges(rcd);
         });
-        await Interact(null, TargetCoords);
+        // RCD placement expects coordinates relative to the grid, as sent by the client.
+        await Interact(null, MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)));
         await AssertCount("Grille", allowed ? 1 : 0);
         await Server.WaitAssertion(() => Assert.That(charges.GetCurrentCharges(rcd), Is.EqualTo(before - (allowed ? 4 : 0))));
     }
@@ -109,7 +111,8 @@ public sealed class NoviceBuildingAndDrawingTest : InteractionTest
             before = charges.GetCurrentCharges(crayon);
             decalCount = decals.GetDecalsInRange(MapData.Grid.Owner, MapData.GridCoords.Position, 4).Count;
         });
-        await Interact(null, TargetCoords);
+        var floor = MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f));
+        await Interact(null, floor);
         await Server.WaitAssertion(() =>
         {
             Assert.That(decals.GetDecalsInRange(MapData.Grid.Owner, MapData.GridCoords.Position, 4).Count,
@@ -118,7 +121,7 @@ public sealed class NoviceBuildingAndDrawingTest : InteractionTest
             symbol.Pixels[0] = 1;
             Assert.That(Server.System<CrayonSymbolSystem>().TrySelect(crayon, SPlayer, symbol), Is.True);
         });
-        await Interact(null, TargetCoords);
+        await Interact(null, floor);
         await Server.WaitAssertion(() =>
         {
             Assert.That(SEntMan.EntityQuery<CrayonStampComponent>().Count(), Is.EqualTo(allowed ? 1 : 0));
