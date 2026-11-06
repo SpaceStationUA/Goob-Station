@@ -1,5 +1,5 @@
 using Content.Goobstation.Maths.FixedPoint;
-using Content.Goobstation.Shared.Clothing.Components;
+using Content.Goobstation.Shared.ModSuits.Components;
 using Content.Pirate.Shared.Fluids;
 using Content.Pirate.Shared.Stains.Systems;
 using Content.Pirate.Shared.Wetness.Components;
@@ -351,7 +351,7 @@ public abstract class SharedWetnessSystem : EntitySystem
 
             // Sealed blockers only count while sealed.
             if (blocker.RequiresSealed &&
-                (!TryComp<SealableClothingComponent>(slotEnt, out var sealable) || !sealable.IsSealed))
+                (!TryComp<ModPartComponent>(slotEnt, out var part) || !part.Sealed))
             {
                 continue;
             }

@@ -58,7 +58,7 @@ public sealed partial class ModularSuitWindow : BaseWindow
         else
         {
             CoreChargeBar.Value = 0;
-            CoreChargeLabel.Text = Loc.GetString("modsuit-ui-no-core");
+            CoreChargeLabel.Text = Loc.GetString("pirate-modsuit-ui-no-core");
         }
 
         var powerDrawW = state.TotalPowerDraw;
@@ -161,8 +161,8 @@ public sealed partial class ModularSuitWindow : BaseWindow
 
         ActivateButton.Pressed = state.Active;
         ActivateButton.Text = state.Active
-            ? Loc.GetString("modsuit-ui-deactivate")
-            : Loc.GetString("modsuit-ui-activate");
+            ? Loc.GetString("pirate-modsuit-ui-deactivate")
+            : Loc.GetString("pirate-modsuit-ui-activate");
 
         ActivateButton.Disabled = !state.HasCore || state.CoreCharge <= 0;
 
@@ -188,7 +188,7 @@ public sealed partial class ModularSuitWindow : BaseWindow
         {
             var emptyLabel = new Label
             {
-                Text = Loc.GetString("modsuit-ui-no-modules"),
+                Text = Loc.GetString("pirate-modsuit-ui-no-modules"),
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center,
                 FontColorOverride = Color.FromHex("#8ecae6"),

@@ -788,7 +788,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             return false;
         }
 
-        Popup.PopupEntity(Loc.GetString("modsuit-module-installed"), suit, user);
+        Popup.PopupEntity(Loc.GetString("pirate-modsuit-module-installed"), suit, user);
         _audio.PlayPredicted(suit.Comp.InsertSound, suit.Owner, null);
 
         var ev = new ModularSuitInstalledEvent(suit, user);

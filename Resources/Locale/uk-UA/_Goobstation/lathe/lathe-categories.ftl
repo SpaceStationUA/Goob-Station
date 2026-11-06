@@ -16,3 +16,4 @@ lathe-category-mechs-durand = Durand
 lathe-category-mechs-equipment = Спорядження для меха
 lathe-category-mechs-weapons = Зброя для меха
 lathe-category-modsuit = MOD-костюми
+lathe-category-modsuit-modules = Модулі МОД-костюмів

@@ -8,3 +8,6 @@ ent-ClothingModsuitHelmetPraetorian = Шолом мод-костюма "Прет
     .desc = Найсучасніший шолом, розроблений NanoTrasen для мод-костюма "Преторіанець".
 ent-ClothingModsuitPraetorian = Блок керування мод-костюмом "Преторіанець"
     .desc = Основний контролер для мод-костюма "Преторіанець".
+ent-ClothingModsuitPraetorianFilled = { ent-ClothingModsuitPraetorian }
+    .desc = { ent-ClothingModsuitPraetorian.desc }
+    .suffix = укомплектований
