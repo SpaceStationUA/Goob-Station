@@ -10,6 +10,8 @@ using Content.Client._Pirate.Crayon;
 using Content.Client.Crayon.UI;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server._Pirate.Crayon;
+using Content.IntegrationTests.Tests._Pirate.Newbies;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.Charges.Systems;
 using Content.Shared._Pirate.Crayon;
 using Content.Shared.Chemistry.Reagent;
@@ -60,6 +62,8 @@ public sealed class CrayonSymbolTest : InteractionTest
         await base.Setup();
         await Server.WaitPost(() =>
         {
+            // Drawing mechanics are exercised by a player who has unlocked crayons.
+            NoviceTestPlaytime.Set(Server.ResolveDependency<PlayTimeTrackingManager>(), ServerSession, 24);
             var loc = Server.ResolveDependency<ILocalizationManager>();
             _serverCulture = loc.DefaultCulture;
             loc.SetCulture(CultureInfo.GetCultureInfo("uk-UA"));
