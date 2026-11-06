@@ -178,6 +178,9 @@
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
+  - type: Tag # Pirate: bar shotgun cabinet
+    tags: # Pirate: bar shotgun cabinet
+    - WeaponShotgunDoubleBarreledRubber # Pirate: bar shotgun cabinet
 
 - type: entity
   name: Enforcer

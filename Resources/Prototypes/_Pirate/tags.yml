@@ -2,6 +2,9 @@
   id: CartridgeBazooka
 
 - type: Tag
+  id: WeaponShotgunDoubleBarreledRubber
+
+- type: Tag
   id: EchionGun
 
 - type: Tag

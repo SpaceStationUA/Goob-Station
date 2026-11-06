@@ -90,6 +90,12 @@ namespace Content.Shared.Maps
 
         [DataField("variants")] public byte Variants { get; set; } = 1;
 
+        #region Pirate: glass floors - tile smoothing
+        /// <summary>Requires a 47-state strip ordered by junction mask; null disables smoothing.</summary>
+        [DataField]
+        public string? SmoothGroup;
+        #endregion
+
         /// <summary>
         ///     Allows the tile to be rotated/mirrored when placed on a grid.
         /// </summary>

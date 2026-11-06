@@ -1,0 +1,63 @@
+- type: latheRecipe
+  abstract: true
+  parent: BaseTileRecipe
+  id: BaseGlassTileRecipe
+  categories:
+  - Tiles
+  - GlassTiles
+
+- type: latheRecipe
+  parent: BaseGlassTileRecipe
+  id: FloorTileItemGlass
+  result: FloorTileItemGlass
+  materials:
+    Glass: 25
+
+- type: latheRecipe
+  parent: BaseGlassTileRecipe
+  id: FloorTileItemRGlass
+  result: FloorTileItemRGlass
+  materials:
+    ReinforcedGlass: 25
+
+- type: latheRecipe
+  parent: BaseGlassTileRecipe
+  id: FloorTileItemGlassSolid
+  result: FloorTileItemGlassSolid
+  materials:
+    Glass: 25
+
+- type: latheRecipe
+  parent: BaseGlassTileRecipe
+  id: FloorTileItemGlassSolidReinforced
+  result: FloorTileItemGlassSolidReinforced
+  materials:
+    ReinforcedGlass: 25
+
+- type: latheRecipe
+  parent: BaseGlassTileRecipe
+  id: FloorTileItemPlasmaGlass
+  result: FloorTileItemPlasmaGlass
+  materials:
+    PlasmaGlass: 25
+
+- type: latheRecipe
+  parent: BaseGlassTileRecipe
+  id: FloorTileItemPlasmaGlassReinforced
+  result: FloorTileItemPlasmaGlassReinforced
+  materials:
+    ReinforcedPlasmaGlass: 25
+
+- type: latheRecipe
+  parent: BaseGlassTileRecipe
+  id: FloorTileItemUraniumGlass
+  result: FloorTileItemUraniumGlass
+  materials:
+    UraniumGlass: 25
+
+- type: latheRecipe
+  parent: BaseGlassTileRecipe
+  id: FloorTileItemUraniumGlassReinforced
+  result: FloorTileItemUraniumGlassReinforced
+  materials:
+    ReinforcedUraniumGlass: 25

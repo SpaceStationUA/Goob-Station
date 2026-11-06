@@ -1,0 +1,59 @@
+- type: tile
+  abstract: true
+  id: BaseFloorGlassSolid
+  parent: BaseStationTile
+  zTransparent: true
+  variants: 47
+  placementVariants:
+  - 1.0
+  smoothGroup: Glass
+  footstepSounds:
+    collection: FootstepTile
+
+- type: tile
+  id: FloorGlassSolid
+  parent: BaseFloorGlassSolid
+  name: tiles-glass-solid-floor
+  sprite: /Textures/_Pirate/Tiles/Glass/glass.png
+  itemDrop: FloorTileItemGlassSolid
+  tileRipResistance: 150
+
+- type: tile
+  id: FloorGlassSolidReinforced
+  parent: BaseFloorGlassSolid
+  name: tiles-glass-solid-reinforced-floor
+  sprite: /Textures/_Pirate/Tiles/Glass/reinf_glass.png
+  itemDrop: FloorTileItemGlassSolidReinforced
+  tileRipResistance: 175
+
+- type: tile
+  id: FloorPlasmaGlass
+  parent: BaseFloorGlassSolid
+  name: tiles-plasma-glass-floor
+  sprite: /Textures/_Pirate/Tiles/Glass/plasma_glass.png
+  itemDrop: FloorTileItemPlasmaGlass
+  tileRipResistance: 175
+
+- type: tile
+  id: FloorPlasmaGlassReinforced
+  parent: BaseFloorGlassSolid
+  name: tiles-plasma-glass-reinforced-floor
+  sprite: /Textures/_Pirate/Tiles/Glass/reinf_plasma_glass.png
+  itemDrop: FloorTileItemPlasmaGlassReinforced
+  tileRipResistance: 200
+
+- type: tile
+  id: FloorUraniumGlass
+  parent: BaseFloorGlassSolid
+  name: tiles-uranium-glass-floor
+  sprite: /Textures/_Pirate/Tiles/Glass/uranium_glass.png
+  itemDrop: FloorTileItemUraniumGlass
+  tileRipResistance: 175
+
+- type: tile
+  id: FloorUraniumGlassReinforced
+  parent: BaseFloorGlassSolid
+  name: tiles-uranium-glass-reinforced-floor
+  sprite: /Textures/_Pirate/Tiles/Glass/reinf_uranium_glass.png
+  itemDrop: FloorTileItemUraniumGlassReinforced
+  tileRipResistance: 200
