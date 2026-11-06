@@ -12,8 +12,9 @@ public sealed partial class ModGrantComponentsModuleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnActivated(Entity<ModGrantComponentsModuleComponent> ent, ref ModModuleActivatedEvent args)
     {
-        if (TryComp<ModSuitComponent>(args.Suit, out var suit))
-            Grant(ent, GetTarget(ent, (args.Suit, suit), args.Wearer));
+        // Pirate: grant the effect to parts owned by either suit controller.
+        if (_modSuit.TryGetSuitModuleHost(args.Suit, out var suit))
+            Grant(ent, GetTarget(ent, suit, args.Wearer));
     }
 
     [SubscribeLocalEvent]
@@ -32,7 +33,7 @@ public sealed partial class ModGrantComponentsModuleSystem : EntitySystem
         Grant(ent, args.NewWearer);
     }
 
-    private EntityUid? GetTarget(Entity<ModGrantComponentsModuleComponent> ent, Entity<ModSuitComponent> suit, EntityUid? wearer)
+    private EntityUid? GetTarget(Entity<ModGrantComponentsModuleComponent> ent, ModSuitModuleHost suit, EntityUid? wearer)
     {
         return ent.Comp.Target switch
         {

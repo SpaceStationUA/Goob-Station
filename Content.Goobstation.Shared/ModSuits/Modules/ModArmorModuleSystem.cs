@@ -32,16 +32,17 @@ public sealed partial class ModArmorModuleSystem : EntitySystem
 
     private void RefreshArmor(EntityUid suitUid, List<string> slots)
     {
-        if (slots.Count == 0 || !TryComp<ModSuitComponent>(suitUid, out var suit))
+        // Pirate: include the parts managed by our modular suit controller.
+        if (slots.Count == 0 || !_modSuit.TryGetSuitModuleHost(suitUid, out var suit))
             return;
 
         foreach (var slot in slots)
         {
-            RefreshPartArmor((suitUid, suit), slot);
+            RefreshPartArmor(suit, slot);
         }
     }
 
-    private void RefreshPartArmor(Entity<ModSuitComponent> suit, string slot)
+    private void RefreshPartArmor(ModSuitModuleHost suit, string slot)
     {
         if (_modSuit.GetPart(suit, slot) is not { } part
             || TerminatingOrDeleted(part)
@@ -57,7 +58,7 @@ public sealed partial class ModArmorModuleSystem : EntitySystem
             IgnoreArmorPierceFlags = baseline.Modifiers.IgnoreArmorPierceFlags,
         };
 
-        foreach (var module in suit.Comp.ModulesContainer.ContainedEntities)
+        foreach (var module in suit.ModulesContainer.ContainedEntities)
         {
             if (!TryComp<ModArmorModuleComponent>(module, out var moduleArmor)
                 || !moduleArmor.Slots.Contains(slot)

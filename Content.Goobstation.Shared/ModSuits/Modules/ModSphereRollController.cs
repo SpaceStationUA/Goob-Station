@@ -21,6 +21,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Shared.ModSuits.Modules;
 
+// Pirate: resolve module hosts through the shared bridge so these effects also work on our suits.
 public sealed partial class ModSphereRollController : VirtualController
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -141,7 +142,7 @@ public sealed partial class ModSphereRollController : VirtualController
             if (TerminatingOrDeleted(rock) || !_drillQuery.TryComp(drill, out var drillComp))
                 continue;
 
-            if (_modSuit.TryGetModuleSuit(drill, out var suit))
+            if (_modSuit.TryGetModuleHost(drill, out var suit))
                 _modSuit.TryUseCharge(suit, drillComp.PowerCost);
 
             _damageable.TryChangeDamage(rock, drillComp.Damage, origin: user);
@@ -273,7 +274,7 @@ public sealed partial class ModSphereRollController : VirtualController
     {
         if (ent.Comp.Drill is not { } drill
             || !_drillQuery.TryComp(drill, out var drillComp)
-            || !_modSuit.TryGetModuleSuit(drill, out var suit))
+            || !_modSuit.TryGetModuleHost(drill, out var suit))
             return false;
 
         var speed = velocity.Length();

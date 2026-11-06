@@ -207,6 +207,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
 
     private void OnEquipped(Entity<ModularSuitComponent> ent, ref ClothingGotEquippedEvent args)
     {
+        var oldWearer = ent.Comp.Wearer;
         ent.Comp.Wearer = args.Wearer;
         EnsureComp<ModularSuitCarrierComponent>(args.Wearer).CurrentSlot = args.Clothing.InSlot;
 
@@ -214,6 +215,8 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
         {
             EquipAllParts(ent, args.Wearer);
         }
+
+        OnUpstreamModuleWearerChanged(ent, oldWearer, args.Wearer);
     }
 
     private void OnUnequipped(Entity<ModularSuitComponent> ent, ref GotUnequippedEvent args)
@@ -224,6 +227,7 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
         }
 
         ent.Comp.Wearer = null;
+        OnUpstreamModuleWearerChanged(ent, args.Equipee, null);
         RemComp<ModularSuitCarrierComponent>(args.Equipee);
         _uiSystem.CloseUi(ent.Owner, ModularSuitUiKey.Key, args.Equipee);
     }
@@ -561,5 +565,9 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
         SetSealedToWearer(ent, active);
         SyncActivateAction(ent);
         Dirty(ent.Owner, ent.Comp);
+    }
+
+    protected virtual void OnUpstreamModuleWearerChanged(Entity<ModularSuitComponent> suit, EntityUid? oldWearer, EntityUid? newWearer)
+    {
     }
 }

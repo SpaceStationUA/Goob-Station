@@ -17,6 +17,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Shared.ModSuits.Modules;
 
+// Pirate: resolve module hosts through the shared bridge so these effects also work on our suits.
 public sealed partial class ModGunModulesSystem : VirtualController
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -176,7 +177,7 @@ public sealed partial class ModGunModulesSystem : VirtualController
     private void OnAssistantInstalled(Entity<ModShootingAssistantModuleComponent> ent, ref ModModuleInstalledEvent args)
     {
         if (!_timing.ApplyingState
-            && TryComp<ModSuitComponent>(args.Suit, out var suit)
+            && _modSuit.TryGetSuitModuleHost(args.Suit, out var suit)
             && suit.Wearer is { } wearer
             && _actions.GetAction(ent.Comp.CycleActionEntity, false) is { } action)
             _actions.AddAction(wearer, action.AsNullable(), ent.Owner);
@@ -211,7 +212,7 @@ public sealed partial class ModGunModulesSystem : VirtualController
     [SubscribeLocalEvent]
     private void OnCycleMode(Entity<ModShootingAssistantModuleComponent> ent, ref ModShootingModeActionEvent args)
     {
-        if (args.Handled || !_modSuit.TryGetModuleSuit(ent, out var suit) || suit.Comp.Wearer != args.Performer)
+        if (args.Handled || !_modSuit.TryGetModuleHost(ent, out var suit) || suit.Wearer != args.Performer)
             return;
 
         args.Handled = true;

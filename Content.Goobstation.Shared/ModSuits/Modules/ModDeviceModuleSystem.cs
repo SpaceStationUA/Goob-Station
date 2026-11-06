@@ -8,6 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Shared.ModSuits.Modules;
 
+// Pirate: resolve module hosts through the shared bridge so these effects also work on our suits.
 public sealed partial class ModDeviceModuleSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -135,9 +136,9 @@ public sealed partial class ModDeviceModuleSystem : EntitySystem
             return;
 
         var wasActive = TryComp<ModModuleComponent>(ent, out var moduleBase) && moduleBase.Active;
-        _modSuit.TryGetModuleSuit(ent, out var suit);
+        var hasSuit = _modSuit.TryGetModuleHost(ent, out var suit);
 
-        if (wasActive && suit.Comp != null)
+        if (wasActive && hasSuit)
             _modSuit.SetModuleActive(suit, (ent.Owner, moduleBase!), false);
 
         if (ent.Comp.DeviceEntity is { } old)
@@ -156,7 +157,7 @@ public sealed partial class ModDeviceModuleSystem : EntitySystem
         ent.Comp.Device = device;
         Dirty(ent);
 
-        if (wasActive && suit.Comp != null)
+        if (wasActive && hasSuit)
             _modSuit.SetModuleActive(suit, (ent.Owner, moduleBase!), true);
     }
 
@@ -164,7 +165,7 @@ public sealed partial class ModDeviceModuleSystem : EntitySystem
     {
         if (TryComp<ModModuleComponent>(ent, out var moduleBase)
             && moduleBase.Active
-            && _modSuit.TryGetModuleSuit(ent, out var suit))
+            && _modSuit.TryGetModuleHost(ent, out var suit))
             _modSuit.SetModuleActive(suit, (ent.Owner, moduleBase), false);
     }
 }

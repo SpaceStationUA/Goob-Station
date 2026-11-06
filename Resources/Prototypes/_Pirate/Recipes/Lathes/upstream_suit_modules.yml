@@ -1,0 +1,127 @@
+# Pirate: keep upstream material costs and production times.
+
+- type: latheRecipe
+  parent: ModsuitModuleRecycler
+  id: RecyclerSuitModule
+  result: RecyclerSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleDonkRecycler
+  id: DonkRecyclerSuitModule
+  result: DonkRecyclerSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModulePatientTransport
+  id: PatientTransportSuitModule
+  result: PatientTransportSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleCriminalCapture
+  id: CriminalCaptureSuitModule
+  result: CriminalCaptureSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleMagneticHarness
+  id: MagneticHarnessSuitModule
+  result: MagneticHarnessSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleProjectileDampener
+  id: ProjectileDampenerSuitModule
+  result: ProjectileDampenerSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleShootingAssistant
+  id: ShootingAssistantSuitModule
+  result: ShootingAssistantSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleThreadRipper
+  id: ThreadRipperSuitModule
+  result: ThreadRipperSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleHeadProtector
+  id: HeadProtectorSuitModule
+  result: HeadProtectorSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleMister
+  id: MisterSuitModule
+  result: MisterSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleResinMister
+  id: ResinMisterSuitModule
+  result: ResinMisterSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleJanitorMister
+  id: JanitorMisterSuitModule
+  result: JanitorMisterSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleThermalVisor
+  id: ThermalVisorSuitModule
+  result: ThermalVisorSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleNightVisor
+  id: NightVisorSuitModule
+  result: NightVisorSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleGloveTranslator
+  id: GloveTranslatorSuitModule
+  result: GloveTranslatorSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModulePlasmaStabilizer
+  id: PlasmaStabilizerSuitModule
+  result: PlasmaStabilizerSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleShockAbsorber
+  id: ShockAbsorberSuitModule
+  result: ShockAbsorberSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleJumpJet
+  id: JumpJetSuitModule
+  result: JumpJetSuitModule
+  categories:
+  - ModesuitModule

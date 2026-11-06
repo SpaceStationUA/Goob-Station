@@ -44,6 +44,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
 
         InitializePower();
         InitializeUi();
+        InitializeUpstreamModules();
 
         SubscribeLocalEvent<ModularSuitComponent, ComponentInit>(OnSuitInit);
         SubscribeLocalEvent<ModularSuitComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
@@ -749,6 +750,9 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
 
     private bool TryInstallModule(Entity<ModularSuitComponent> suit, Entity<ModularSuitModuleComponent> module, EntityUid user)
     {
+        if (!CanInstallUpstreamModule(suit, module, user))
+            return false;
+
         var container = Container.GetContainer(suit, ModuleContainer);
         if (module.Comp.IsPermanent && container.Contains(module.Owner))
         {

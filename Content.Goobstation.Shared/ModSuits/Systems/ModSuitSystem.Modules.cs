@@ -250,6 +250,11 @@ public sealed partial class ModSuitSystem
 
     public bool TryUseModule(EntityUid moduleUid, EntityUid user)
     {
+        // Pirate: installed upstream modules can be controlled by the Pirate suit runtime.
+        if (TryComp<ModModuleComponent>(moduleUid, out var external)
+            && external.Suit is { } externalSuit && !HasComp<ModSuitComponent>(externalSuit))
+            return SendExternalModuleCommand(externalSuit, moduleUid, user, ExternalModModuleCommand.Use);
+
         if (!TryComp<ModModuleComponent>(moduleUid, out var moduleComp)
             || moduleComp.Suit is not { } suitUid
             || !TryComp<ModSuitComponent>(suitUid, out var suitComp))
@@ -410,6 +415,11 @@ public sealed partial class ModSuitSystem
 
     public bool TryStartModuleUse(EntityUid moduleUid, EntityUid user)
     {
+        // Pirate: targeted module tools use the same owner and charge checks as our UI.
+        if (TryComp<ModModuleComponent>(moduleUid, out var external)
+            && external.Suit is { } externalSuit && !HasComp<ModSuitComponent>(externalSuit))
+            return SendExternalModuleCommand(externalSuit, moduleUid, user, ExternalModModuleCommand.StartUse);
+
         if (!TryComp<ModModuleComponent>(moduleUid, out var moduleComp) || !TryGetModuleSuit(moduleUid, out var suit))
             return false;
 

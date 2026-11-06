@@ -18,6 +18,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Server.ModSuits;
 
+// Pirate: resolve module hosts through the shared bridge so these effects also work on our suits.
 public sealed partial class ModRecyclerSystem : VirtualController
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -58,7 +59,7 @@ public sealed partial class ModRecyclerSystem : VirtualController
     [SubscribeLocalEvent]
     private void OnInstalled(Entity<ModRecyclerModuleComponent> ent, ref ModModuleInstalledEvent args)
     {
-        if (TryComp<ModSuitComponent>(args.Suit, out var suit) && suit.Wearer is { } wearer)
+        if (_modSuit.TryGetSuitModuleHost(args.Suit, out var suit) && suit.Wearer is { } wearer)
             GrantUnloadAction(ent, wearer);
     }
 
@@ -85,8 +86,8 @@ public sealed partial class ModRecyclerSystem : VirtualController
     private void OnUnload(Entity<ModRecyclerModuleComponent> ent, ref ModRecyclerUnloadActionEvent args)
     {
         if (args.Handled
-            || !_modSuit.TryGetModuleSuit(ent, out var suit)
-            || suit.Comp.Wearer != args.Performer)
+            || !_modSuit.TryGetModuleHost(ent, out var suit)
+            || suit.Wearer != args.Performer)
             return;
 
         args.Handled = true;
@@ -138,8 +139,8 @@ public sealed partial class ModRecyclerSystem : VirtualController
         while (query.MoveNext(out var uid, out var recycler, out var module))
         {
             if (!module.Active
-                || !_modSuit.TryGetModuleSuit(uid, out var suit)
-                || suit.Comp.Wearer is not { } wearer
+                || !_modSuit.TryGetModuleHost(uid, out var suit)
+                || suit.Wearer is not { } wearer
                 || _container.IsEntityInContainer(wearer))
                 continue;
 

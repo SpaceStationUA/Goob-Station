@@ -13,10 +13,11 @@ public sealed partial class ModOpenUiModuleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnUsed(Entity<ModOpenUiModuleComponent> ent, ref ModModuleUsedEvent args)
     {
-        if (!TryComp<ModSuitComponent>(args.Suit, out var suit))
+        // Pirate: modules can open the interfaces on our controller and its parts.
+        if (!_modSuit.TryGetSuitModuleHost(args.Suit, out var suit))
             return;
 
-        var target = ent.Comp.Slot is { } slot ? _modSuit.GetPart((args.Suit, suit), slot) : args.Suit;
+        var target = ent.Comp.Slot is { } slot ? _modSuit.GetPart(suit, slot) : args.Suit;
         if (target is not { } uid || !_ui.HasUi(uid, ent.Comp.Key))
             return;
 

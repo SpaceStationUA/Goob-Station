@@ -1,4 +1,6 @@
 using Content.Shared.Body.Events;
+using Content.Goobstation.Shared.ModSuits.Components;
+using Content.Goobstation.Shared.ModSuits.Systems;
 using Content.Shared.Body.Systems;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
@@ -30,6 +32,7 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
     [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
     [Dependency] private SharedMetabolizerSystem _metabolizer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private ModSuitSystem _modSuit = default!; // Pirate: validate the projector's current suit owner.
 
     private readonly List<(EntityUid User, EntityUid Bag)> _pendingPulls = new();
 
@@ -100,6 +103,13 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
         if (_net.IsClient || ent.Comp.LinkedBag != null || TerminatingOrDeleted(target))
             return;
 
+        // Pirate: a powered-down or detached projector cannot finish capturing someone.
+        if (!TryComp<ModDeviceItemComponent>(ent, out var device)
+            || device.Module is not { } module
+            || !TryComp<ModModuleComponent>(module, out var moduleComp) || !moduleComp.Active
+            || !_modSuit.TryGetModuleHost(module, out var host) || host.Wearer != args.User)
+            return;
+
         var bag = Spawn(ent.Comp.BagPrototype, Transform(target).Coordinates);
         if (!_entityStorage.Insert(target, bag))
         {
@@ -116,6 +126,23 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
 
         _audio.PlayPvs(ent.Comp.Sound, bag);
         _pendingPulls.Add((args.User, bag));
+    }
+
+    // Pirate: release patients when the projector loses power or is removed with its module.
+    [SubscribeLocalEvent]
+    private void OnModuleDeactivated(Entity<ModDeviceModuleComponent> ent, ref ModModuleDeactivatedEvent args)
+    {
+        if (ent.Comp.DeviceEntity is { } device
+            && TryComp<ModPatientTransportComponent>(device, out var transport)
+            && transport.LinkedBag is { } bag)
+            Dissolve(bag);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnProjectorShutdown(Entity<ModPatientTransportComponent> ent, ref ComponentShutdown args)
+    {
+        if (ent.Comp.LinkedBag is { } bag)
+            Dissolve(bag);
     }
 
     [SubscribeLocalEvent]

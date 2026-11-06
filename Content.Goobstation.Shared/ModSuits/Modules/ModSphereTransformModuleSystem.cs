@@ -29,6 +29,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Shared.ModSuits.Modules;
 
+// Pirate: resolve module hosts through the shared bridge so these effects also work on our suits.
 public sealed partial class ModSphereTransformModuleSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -98,7 +99,7 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
         if (!_timing.ApplyingState
             && TryComp<ModModuleComponent>(ent, out var moduleComp)
             && moduleComp.Active
-            && _modSuit.TryGetModuleSuit(ent, out var suit))
+            && _modSuit.TryGetModuleHost(ent, out var suit))
             _modSuit.SetModuleActive(suit, (ent.Owner, moduleComp), false);
 
         RevertForm(ent, false);
@@ -153,7 +154,7 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
 
     private EntityUid? FindDrill(EntityUid suit)
     {
-        if (!TryComp<ModSuitComponent>(suit, out var suitComp))
+        if (!_modSuit.TryGetSuitModuleHost(suit, out var suitComp))
             return null;
 
         foreach (var module in suitComp.ModulesContainer.ContainedEntities)
@@ -180,7 +181,7 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
     private void RefreshDrill(EntityUid suit)
     {
         if (_timing.ApplyingState
-            || !TryComp<ModSuitComponent>(suit, out var suitComp)
+            || !_modSuit.TryGetSuitModuleHost(suit, out var suitComp)
             || suitComp.Wearer is not { } wearer
             || !TryComp<ModSphereFormComponent>(wearer, out var form))
             return;
@@ -197,7 +198,7 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
 
         var user = args.Performer;
         if (!TryComp<ModSphereFormComponent>(user, out var form) || form.Module != ent.Owner
-            || !_modSuit.TryGetModuleSuit(ent, out var suit))
+            || !_modSuit.TryGetModuleHost(ent, out var suit))
             return;
 
         if (_lavalandAtmos.GetTileMixture(user) is { } mixture && mixture.Pressure > ent.Comp.MissileMaxPressure)
@@ -341,7 +342,7 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
         if (_timing.ApplyingState
             || ent.Comp.Module is not { } module
             || !TryComp<ModModuleComponent>(module, out var moduleComp)
-            || !_modSuit.TryGetModuleSuit(module, out var suit))
+            || !_modSuit.TryGetModuleHost(module, out var suit))
             return;
 
         _modSuit.SetModuleActive(suit, (module, moduleComp), false);
