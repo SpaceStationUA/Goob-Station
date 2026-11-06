@@ -129,6 +129,7 @@
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -216,6 +217,7 @@
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -304,6 +306,7 @@
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -392,6 +395,7 @@
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -481,6 +485,7 @@
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -568,6 +573,7 @@
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -659,6 +665,7 @@
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -747,6 +754,7 @@
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
