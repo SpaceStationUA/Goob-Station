@@ -50,6 +50,7 @@
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: inherited armor-plate storage must exist before initialization.
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
