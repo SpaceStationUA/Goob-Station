@@ -56,6 +56,15 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (args.Handled || !args.CanReach)
             return;
 
+        // Pirate: reject drawing before creating decals or consuming charges.
+        var attempt = new CrayonDrawAttemptEvent(args.User);
+        RaiseLocalEvent(uid, ref attempt);
+        if (attempt.Cancelled)
+        {
+            args.Handled = true;
+            return;
+        }
+
         if (_charges.IsEmpty(uid))
         {
             if (component.DeleteEmpty)

@@ -71,6 +71,11 @@ public sealed class CrayonSymbolSystem : EntitySystem
             return;
 
         args.Handled = true;
+        var attempt = new CrayonDrawAttemptEvent(args.User);
+        RaiseLocalEvent(ent, ref attempt);
+        if (attempt.Cancelled)
+            return;
+
         if (!TryGetFloor(args.ClickLocation, out var floor))
         {
             _popup.PopupEntity(Loc.GetString("crayon-interact-invalid-location"), ent, args.User);

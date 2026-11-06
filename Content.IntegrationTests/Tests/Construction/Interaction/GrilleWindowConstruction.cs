@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.IntegrationTests.Tests.Interaction;
+using Content.IntegrationTests.Tests._Pirate.Newbies; // Pirate
+using Content.Server.Players.PlayTimeTracking; // Pirate
 using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Maths;
 
@@ -17,6 +19,10 @@ public sealed class GrilleWindowConstruction : InteractionTest
     [Test]
     public async Task WindowOnGrille()
     {
+        // Pirate: this geometry test uses a player who has unlocked grille construction.
+        await Server.WaitPost(() => NoviceTestPlaytime.Set(
+            Server.ResolveDependency<PlayTimeTrackingManager>(), ServerSession, 24));
+
         // Construct Grille
         await StartConstruction(Grille);
         await InteractUsing(Rod, 10);
