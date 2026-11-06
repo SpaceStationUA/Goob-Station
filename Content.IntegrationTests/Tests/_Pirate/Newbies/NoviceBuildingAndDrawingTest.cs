@@ -75,6 +75,7 @@ public sealed class NoviceBuildingAndDrawingTest : InteractionTest
         var rcdItem = await PlaceInHands("RCD");
         var rcd = ToServer(rcdItem);
         await UseInHand();
+        await RunTicks(3);
         await SendBui(RcdUiKey.Key, new RCDSystemMessage("Grille"), rcdItem);
         await CloseBui(RcdUiKey.Key, rcdItem);
         var charges = Server.System<SharedChargesSystem>();
@@ -96,6 +97,7 @@ public sealed class NoviceBuildingAndDrawingTest : InteractionTest
         var crayonItem = await PlaceInHands("CrayonRed");
         var crayon = ToServer(crayonItem);
         await UseInHand();
+        await RunTicks(3);
         await SendBui(CrayonUiKey.Key, new CrayonSelectMessage("0"), crayonItem);
         await CloseBui(CrayonUiKey.Key, crayonItem);
         var charges = Server.System<SharedChargesSystem>();

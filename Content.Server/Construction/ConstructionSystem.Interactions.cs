@@ -290,7 +290,11 @@ namespace Content.Server.Construction
                         var attempt = new ConstructMaterialAttemptEvent(construction.Graph.Id, construction.Node, insert);
                         RaiseLocalEvent(user.Value, ref attempt);
                         if (attempt.Cancelled)
+                        {
+                            // Pirate: don't fall through to laying a reinforced floor with the rejected rods.
+                            interactUsing.Handled = true;
                             return HandleResult.False;
+                        }
                     }
 
                     // If we're only testing whether this step would be handled by the given event, then we're done.
