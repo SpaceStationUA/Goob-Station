@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Goobstation.Shared.ModSuits.Components;
 using Content.Shared.PowerCell;
 using Robust.Shared.Containers;
 
@@ -29,6 +30,10 @@ public sealed class ModularSuitUiStateSystem : EntitySystem
 
     public bool CanPredictModuleToggle(Entity<ModularSuitComponent> ent, EntityUid module, bool active)
     {
+        // Upstream tools also check cooldowns, free hands and effect-specific activation rules.
+        if (HasComp<UpstreamSuitModuleComponent>(module))
+            return false;
+
         if (!ent.Comp.Active)
             return false;
 
@@ -84,7 +89,9 @@ public sealed class ModularSuitUiStateSystem : EntitySystem
                 if (!TryComp<ModularSuitModuleComponent>(moduleUid, out var module))
                     continue;
 
-                if (module.IsActive)
+                if (TryComp<ModModuleComponent>(moduleUid, out var upstream))
+                    totalPowerDraw += upstream.IdlePower + (upstream.Active ? upstream.ActivePower : 0);
+                else if (module.IsActive)
                     totalPowerDraw += module.PowerUsage;
 
                 modules.Add(new SuitModuleEntry(

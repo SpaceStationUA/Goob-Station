@@ -100,9 +100,7 @@ selectable-set-blueshield-hardsuit-light-name = броньований скаф�
 selectable-set-blueshield-hardsuit-light-description = Броньований скафандр, що дає змогу рухатися швидше ціною захисту.
 # Pirate: Blueshield uses the new modular Praetorian suit.
 selectable-set-blueshield-modsuit-name = модульний костюм «Преторіанець»
-selectable-set-blueshield-modsuit-description = Попередньо зібраний модульний костюм для офіцерів «Синього щита», що поєднує посилений захист із передовими модулями.
-
-# ERT
+selectable-set-blueshield-modsuit-description = Заздалегідь зібраний модульний костюм для офіцерів Синього Щита, що поєднує потужний захист з удосконаленими модулями.
 selectable-set-ert-ballistic-name = набір «Балістика»
 selectable-set-ert-ballistic-description = Надійні, ефективні та компактні. Енні вас прикриє.
     Включає: Гвинтівку калібру .30, "Енні".
@@ -169,3 +167,7 @@ selectable-set-syndicate-western-description = Запали західну го�
     резонансний комбінезон, сонцезахисні окуляри, класичне пончо,
     ковбойський капелюх і чоботи, два револьвери Python, шість бронебійних швидкозарядників,
     і два вдосконалені бойові медіпени.
+selectable-set-blueshield-syringe-name = набір «Медик»
+selectable-set-blueshield-syringe-description = Чудово підходить для лікування союзників або отруєння ворогів у скрутну мить.
+    Містить: вибухостійку розвантажувальну систему, бойовий інжектор
+    і кілька флаконів ліків.

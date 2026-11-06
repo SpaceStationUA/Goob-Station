@@ -1,0 +1,8 @@
+# Pirate: upstream chameleon adapted to our MOD controllers.
+- type: listing
+  id: UplinkModsuitModuleChameleon
+  productEntity: ChameleonSuitModule
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkWearables

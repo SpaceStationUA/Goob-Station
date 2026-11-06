@@ -148,6 +148,7 @@
     - OreBagSuitModule
     - GrabberSuitModule
     - DrillSuitModule
+    - SphereTransformSuitModule # Pirate: integrated upstream mining sphere.
     - StorageSuitModule
     - AdvancedFlashlightSuitModuleAqua
   - type: ItemSlots

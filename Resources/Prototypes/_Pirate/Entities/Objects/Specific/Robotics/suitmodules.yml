@@ -834,6 +834,14 @@
   - type: ModularSuitItemModule
     handId: drill-hand
     item: MiningDrill
+  # Pirate: reuse the upstream sphere's drilling with our existing drill module.
+  - type: ModSphereDrill
+    damage:
+      types:
+        Structural: 50
+    whitelist:
+      components:
+      - MiningScannerViewable
   - type: ModularSuitModule
     modulePart: Gloves
     powerUsage: 0.5
