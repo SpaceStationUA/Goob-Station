@@ -73,6 +73,10 @@ public sealed partial class ModDeviceModuleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnDeactivated(Entity<ModDeviceModuleComponent> ent, ref ModModuleDeactivatedEvent args)
     {
+        // Pirate: let deployed projectors release their patients before returning to storage.
+        if (ent.Comp.DeviceEntity is { } deployed && !TerminatingOrDeleted(deployed))
+            RaiseLocalEvent(deployed, ref args);
+
         if (ent.Comp.DeviceEntity is not { } device
             || _pendingReturn.Contains(device)
             || ent.Comp.DeviceContainer.Contains(device)

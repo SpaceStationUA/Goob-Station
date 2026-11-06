@@ -130,11 +130,9 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
 
     // Pirate: release patients when the projector loses power or is removed with its module.
     [SubscribeLocalEvent]
-    private void OnModuleDeactivated(Entity<ModDeviceModuleComponent> ent, ref ModModuleDeactivatedEvent args)
+    private void OnModuleDeactivated(Entity<ModPatientTransportComponent> ent, ref ModModuleDeactivatedEvent args)
     {
-        if (ent.Comp.DeviceEntity is { } device
-            && TryComp<ModPatientTransportComponent>(device, out var transport)
-            && transport.LinkedBag is { } bag)
+        if (ent.Comp.LinkedBag is { } bag)
             Dissolve(bag);
     }
 
