@@ -299,7 +299,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (message.Label.Length > SharedChemMaster.LabelMaxLength)
                 return;
 
-            if (!WithdrawFromSource(chemMaster, message.Dosage, user, out var withdrawal))
+            if (!WithdrawFromSource(chemMaster, message.Dosage, user, out var withdrawal, solution)) // Pirate
                 return;
 
             _labelSystem.Label(container, message.Label);
@@ -317,7 +317,8 @@ namespace Content.Server.Chemistry.EntitySystems
             Entity<ChemMasterComponent> chemMaster,
             FixedPoint2 neededVolume,
             EntityUid? user,
-            [NotNullWhen(returnValue: true)] out Solution? outputSolution)
+            [NotNullWhen(returnValue: true)] out Solution? outputSolution,
+            Solution? target = null) // Pirate
         {
             outputSolution = null;
 
@@ -376,6 +377,15 @@ namespace Content.Server.Chemistry.EntitySystems
                     break;
 
                 default:
+                    return false;
+            }
+
+            // Pirate: preview the exact dose before consuming it, including bottle contents.
+            if (user is { } actor)
+            {
+                var preview = new Solution(solution).SplitSolution(neededVolume);
+                if (!EntityManager.System<Content.Shared._Pirate.Chemistry.ChemicalMixingSystem>()
+                    .CanMix(actor, preview, target ?? new Solution()))
                     return false;
             }
 

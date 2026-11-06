@@ -1,10 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Maths.FixedPoint;
+using System.Linq;
+using System.Numerics;
+using Content.Goobstation.Server.Chemistry.Components;
 using Content.Goobstation.Shared.Chemistry;
 using Content.IntegrationTests.Tests.Interaction;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Power.Components;
 using Content.Shared._Pirate.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -12,7 +17,10 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Power.Components;
+using Content.Shared.Trigger;
+using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests._Pirate.Newbies;
@@ -117,18 +125,17 @@ public sealed class NoviceChemicalProtectionTest : InteractionTest
             Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(20)));
             Assert.That(battery.LastCharge, Is.EqualTo(charge));
 
-            Server.System<SharedSolutionContainerSystem>().RemoveAllSolution(solution);
             Send(dispenser, new ReagentDispenserStartRecipeRecordingMessage());
-            Send(dispenser, new EnergyReagentDispenserDispenseReagentMessage("Water"));
             Send(dispenser, new EnergyReagentDispenserDispenseReagentMessage("Potassium"));
             Send(dispenser, new ReagentDispenserSaveRecipeMessage("restricted"));
+            Assert.That(SEntMan.GetComponent<EnergyReagentDispenserComponent>(dispenser).SavedRecipes.ContainsKey("restricted"), Is.True);
             Send(dispenser, new ReagentDispenserDispenseRecipeMessage("restricted"));
-            Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.Zero));
+            Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(20)));
             Assert.That(battery.LastCharge, Is.EqualTo(charge));
 
             // An ordinary dispense through the same message path remains available.
-            Send(dispenser, new EnergyReagentDispenserDispenseReagentMessage("Water"));
-            Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(5)));
+            Send(dispenser, new EnergyReagentDispenserDispenseReagentMessage("Sugar"));
+            Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(25)));
             Assert.That(battery.LastCharge, Is.LessThan(charge));
             SEntMan.DeleteEntity(dispenser);
         });
@@ -169,6 +176,142 @@ public sealed class NoviceChemicalProtectionTest : InteractionTest
                 NoviceTestPlaytime.SetLoaded(tracking, ServerSession, true);
             }
             Assert.That(mixing.CanMix(SPlayer, source, target), Is.True);
+        });
+    }
+
+    [TestCase("Sodium")]
+    [TestCase("Potassium")]
+    public async Task SpillVerbCannotPlaceReactiveMetalOnTheFloor(string metal)
+    {
+        await SetPlaytime(0);
+        var bucket = ToServer(await PlaceInHands("Bucket"));
+        await Server.WaitAssertion(() =>
+        {
+            var solution = Fill(bucket, metal, 20);
+            var spill = Server.System<SharedVerbSystem>().GetLocalVerbs(bucket, SPlayer, typeof(Verb))
+                .Single(verb => verb.Text == Loc.GetString("spill-target-verb-get-data-text"));
+            Assert.That(spill.Act, Is.Not.Null);
+            spill.Act!();
+            Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(20)));
+        });
+    }
+
+    [Test]
+    public async Task WaterCannotBeSpilledOntoAnExistingReactivePuddle()
+    {
+        await SetPlaytime(0);
+        var bucket = ToServer(await PlaceInHands("Bucket"));
+        await Server.WaitAssertion(() =>
+        {
+            var coordinates = SEntMan.GetComponent<TransformComponent>(SPlayer).Coordinates;
+            Assert.That(Server.System<PuddleSystem>().TrySpillAt(coordinates,
+                new Solution("Sodium", FixedPoint2.New(10)), out var puddle, sound: false), Is.True);
+            var solution = Fill(bucket, "Water", 20);
+            var spill = Server.System<SharedVerbSystem>().GetLocalVerbs(bucket, SPlayer, typeof(Verb))
+                .Single(verb => verb.Text == Loc.GetString("spill-target-verb-get-data-text"));
+            Assert.That(spill.Act, Is.Not.Null);
+            spill.Act!();
+            Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(20)));
+            SEntMan.DeleteEntity(puddle);
+        });
+    }
+
+    [TestCase("Sodium", 0, true)]
+    [TestCase("Potassium", 0, true)]
+    [TestCase("Sodium", 24, false)]
+    [TestCase("Water", 0, false)]
+    public async Task ThrowingReactiveContainersRespectsPlaytime(string reagent, double hours, bool restricted)
+    {
+        await SetPlaytime(hours);
+        var bucket = ToServer(await PlaceInHands("Bucket"));
+        await Server.WaitAssertion(() =>
+        {
+            Fill(bucket, reagent, 20);
+            Assert.That(PredictedHands.ThrowHeldItem(SPlayer, MapData.GridCoords.Offset(new Vector2(3, 0)), 4), Is.True);
+            Assert.That(HandSys.GetActiveItem((SPlayer, Hands)) == bucket, Is.EqualTo(restricted));
+            Assert.That(Drainable(bucket).Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(20)));
+        });
+    }
+
+    [TestCase("Sodium", 0, true)]
+    [TestCase("Potassium", 0, true)]
+    [TestCase("Sodium", 24, false)]
+    public async Task ChemicalPayloadCannotBypassProtection(string metal, double hours, bool restricted)
+    {
+        await SetPlaytime(hours);
+        await Server.WaitAssertion(() =>
+        {
+            var payload = SEntMan.SpawnEntity("ChemicalPayload", MapCoordinates.Nullspace);
+            var beakerA = SEntMan.SpawnEntity("LargeBeaker", MapCoordinates.Nullspace);
+            var beakerB = SEntMan.SpawnEntity("LargeBeaker", MapCoordinates.Nullspace);
+            var solutionA = Fill(beakerA, "Water", 20);
+            var solutionB = Fill(beakerB, metal, 10);
+            var slots = Server.System<ItemSlotsSystem>();
+            Assert.That(slots.TryInsert(payload, "BeakerSlotA", beakerA, null), Is.True);
+            Assert.That(slots.TryInsert(payload, "BeakerSlotB", beakerB, null), Is.True);
+            var trigger = new TriggerEvent(SPlayer);
+            SEntMan.EventBus.RaiseLocalEvent(payload, ref trigger);
+            Assert.That(solutionA.Comp.Solution.Volume + solutionB.Comp.Solution.Volume,
+                Is.EqualTo(FixedPoint2.New(restricted ? 30 : 10)));
+            SEntMan.DeleteEntity(payload);
+        });
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task ChemMasterBottleOutputPreservesTheRejectedDose(bool external)
+    {
+        await SetPlaytime(0);
+        await Server.WaitAssertion(() =>
+        {
+            var machine = SEntMan.SpawnEntity("ChemMaster", MapData.GridCoords);
+            var bottle = SEntMan.SpawnEntity("ChemistryEmptyBottle01", MapData.GridCoords);
+            var contents = Fill(bottle, "Water", 20);
+            var slots = Server.System<ItemSlotsSystem>();
+            Assert.That(slots.TryInsert(machine, SharedChemMaster.OutputSlotName, bottle, SPlayer), Is.True);
+            var solutions = Server.System<SharedSolutionContainerSystem>();
+            Entity<SolutionComponent> source;
+            if (external)
+            {
+                var beaker = SEntMan.SpawnEntity("LargeBeaker", MapData.GridCoords);
+                source = Fill(beaker, "Potassium", 10);
+                Assert.That(slots.TryInsert(machine, SharedChemMaster.InputSlotName, beaker, SPlayer), Is.True);
+                Send(machine, new ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource.External));
+            }
+            else
+            {
+                Assert.That(solutions.TryGetSolution(machine, SharedChemMaster.BufferSolutionName, out var buffer, out _), Is.True);
+                source = buffer!.Value;
+                Assert.That(solutions.TryAddReagent(source, "Potassium", FixedPoint2.New(10)), Is.True);
+            }
+
+            Send(machine, new ChemMasterOutputToBottleMessage(5, ""));
+            Assert.That(source.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(10)));
+            Assert.That(contents.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(20)));
+            SEntMan.DeleteEntity(machine);
+        });
+    }
+
+    [TestCase(0, false)]
+    [TestCase(24, true)]
+    public async Task ElectrolysisCannotProduceSodiumInsideWater(double hours, bool allowed)
+    {
+        await SetPlaytime(hours);
+        await Server.WaitAssertion(() =>
+        {
+            var machine = SEntMan.SpawnEntity("MachineElectrolysisUnit", MapData.GridCoords);
+            SEntMan.RemoveComponent<ApcPowerReceiverComponent>(machine); // Test map has no power network.
+            var beaker = SEntMan.SpawnEntity("LargeBeaker", MapData.GridCoords);
+            var solution = Fill(beaker, "Water", 20);
+            Assert.That(Server.System<SharedSolutionContainerSystem>().TryAddReagent(solution, "TableSalt", FixedPoint2.New(10)), Is.True);
+            Assert.That(Server.System<ItemSlotsSystem>().TryInsert(machine, "mixer", beaker, SPlayer), Is.True);
+            var component = SEntMan.GetComponent<SolutionContainerMixerComponent>(machine);
+            var mixers = Server.System<SharedSolutionContainerMixerSystem>();
+            mixers.TryStartMix((machine, component), SPlayer);
+            Assert.That(component.Mixing, Is.EqualTo(allowed));
+            Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(30)));
+            mixers.StopMix((machine, component));
+            SEntMan.DeleteEntity(machine);
         });
     }
 

@@ -3,6 +3,7 @@
 using Content.Goobstation.Common.Solutions;
 using Content.Shared.Fluids.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared._Pirate.Chemistry; // Pirate
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Weapons.Melee;
@@ -18,6 +19,7 @@ public sealed partial class SpillableMeleePuddleSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
     [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private ChemicalMixingSystem _chemicalMixing = default!; // Pirate
 
     public override void Initialize()
     {
@@ -31,7 +33,7 @@ public sealed partial class SpillableMeleePuddleSystem : EntitySystem
         if (args.Amount <= 0f || !TryComp(ent, out MeleeWeaponComponent? melee))
             return;
 
-        if (!_solution.TryGetDrainableSolution(ent.Owner, out var soln, out _))
+        if (!_solution.TryGetDrainableSolution(ent.Owner, out var soln, out var solution)) // Pirate
             return;
 
         var coords = _transform.ToMapCoordinates(args.Coords);
@@ -53,11 +55,14 @@ public sealed partial class SpillableMeleePuddleSystem : EntitySystem
             coords = new MapCoordinates( userCoords.Position + dir, coords.MapId);
         }
 
-        var splitSolution = _solution.SplitSolution(soln.Value, args.Amount);
-
         if (!_map.TryFindGridAt(coords, out var gridUid, out var mapGrid))
             return;
 
+        // Pirate: check the actual clamped spill position before removing reagents.
+        if (!_chemicalMixing.CanSpill(args.User, solution, _transform.ToCoordinates(gridUid, coords)))
+            return;
+
+        var splitSolution = _solution.SplitSolution(soln.Value, args.Amount);
         var tileRef = _map.GetTileRef(gridUid, mapGrid, coords);
         _puddle.TrySpillAt(tileRef, splitSolution, out _);
     }

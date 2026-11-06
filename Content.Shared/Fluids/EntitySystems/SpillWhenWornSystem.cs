@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared._Pirate.Chemistry; // Pirate
 using Content.Shared.Clothing;
 using Content.Shared.Fluids.Components;
 
@@ -11,6 +12,7 @@ public sealed class SpillWhenWornSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
+    [Dependency] private readonly ChemicalMixingSystem _chemicalMixing = default!; // Pirate
 
     public override void Initialize()
     {
@@ -24,7 +26,8 @@ public sealed class SpillWhenWornSystem : EntitySystem
     private void OnGotEquipped(Entity<SpillWhenWornComponent> ent, ref ClothingGotEquippedEvent args)
     {
         if (_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.Solution, out var soln, out var solution)
-            && solution.Volume > 0)
+            && solution.Volume > 0
+            && _chemicalMixing.CanSpill(args.Wearer, solution, Transform(args.Wearer).Coordinates)) // Pirate
         {
             // Spill all solution on the player
             var drainedSolution = _solutionContainer.Drain(ent.Owner, soln.Value, solution.Volume);
