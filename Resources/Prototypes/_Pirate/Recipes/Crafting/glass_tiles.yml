@@ -1,0 +1,87 @@
+- type: construction
+  id: TileGlass
+  graph: TileGlass
+  startNode: start
+  targetNode: tile
+  category: construction-category-tiles
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+
+- type: construction
+  id: TileRGlass
+  graph: TileRGlass
+  startNode: start
+  targetNode: tile
+  category: construction-category-tiles
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+
+- type: construction
+  id: TileGlassSolid
+  graph: TileGlassSolid
+  startNode: start
+  targetNode: tile
+  category: construction-category-tiles
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+
+- type: construction
+  id: TileGlassSolidReinforced
+  graph: TileGlassSolidReinforced
+  startNode: start
+  targetNode: tile
+  category: construction-category-tiles
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+
+- type: construction
+  id: TilePlasmaGlass
+  graph: TilePlasmaGlass
+  startNode: start
+  targetNode: tile
+  category: construction-category-tiles
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+
+- type: construction
+  id: TilePlasmaGlassReinforced
+  graph: TilePlasmaGlassReinforced
+  startNode: start
+  targetNode: tile
+  category: construction-category-tiles
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+
+- type: construction
+  id: TileUraniumGlass
+  graph: TileUraniumGlass
+  startNode: start
+  targetNode: tile
+  category: construction-category-tiles
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false
+
+- type: construction
+  id: TileUraniumGlassReinforced
+  graph: TileUraniumGlassReinforced
+  startNode: start
+  targetNode: tile
+  category: construction-category-tiles
+  objectType: Item
+  theory:
+    FabricationKnowledge: 0
+  useQuality: false

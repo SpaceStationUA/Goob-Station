@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Light switch sprite from NovaSector (https://github.com/NovaSector/NovaSector/blob/9d5bb13a76866960c76cb78217e7436e65239268/modular_nova/modules/aesthetics/lightswitch/icons/lightswitch.dmi), introduced in commit 9258420a88b6e9c417aa5b3fdcca3464ff0b7b17. Adapted into directional housing and indicator layers for Lanos.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "housing",
+      "directions": 4
+    },
+    {
+      "name": "on",
+      "directions": 4
+    },
+    {
+      "name": "off",
+      "directions": 4
+    }
+  ]
+}

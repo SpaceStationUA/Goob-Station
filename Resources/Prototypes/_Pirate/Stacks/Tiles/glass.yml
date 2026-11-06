@@ -1,0 +1,55 @@
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileGlass
+  name: stack-glass-tile
+  icon: { sprite: /Textures/_Pirate/Objects/Tiles/glass_tiles.rsi, state: glass-old }
+  spawn: FloorTileItemGlass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileRGlass
+  name: stack-rglass-tile
+  icon: { sprite: /Textures/_Pirate/Objects/Tiles/glass_tiles.rsi, state: rglass-old }
+  spawn: FloorTileItemRGlass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileGlassSolid
+  name: stack-glass-solid-tile
+  icon: { sprite: /Textures/_Pirate/Objects/Tiles/glass_tiles.rsi, state: glass }
+  spawn: FloorTileItemGlassSolid
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileGlassSolidReinforced
+  name: stack-glass-solid-reinforced-tile
+  icon: { sprite: /Textures/_Pirate/Objects/Tiles/glass_tiles.rsi, state: rglass }
+  spawn: FloorTileItemGlassSolidReinforced
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTilePlasmaGlass
+  name: stack-plasma-glass-tile
+  icon: { sprite: /Textures/_Pirate/Objects/Tiles/glass_tiles.rsi, state: pglass }
+  spawn: FloorTileItemPlasmaGlass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTilePlasmaGlassReinforced
+  name: stack-plasma-glass-reinforced-tile
+  icon: { sprite: /Textures/_Pirate/Objects/Tiles/glass_tiles.rsi, state: rpglass }
+  spawn: FloorTileItemPlasmaGlassReinforced
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileUraniumGlass
+  name: stack-uranium-glass-tile
+  icon: { sprite: /Textures/_Pirate/Objects/Tiles/glass_tiles.rsi, state: uglass }
+  spawn: FloorTileItemUraniumGlass
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileUraniumGlassReinforced
+  name: stack-uranium-glass-reinforced-tile
+  icon: { sprite: /Textures/_Pirate/Objects/Tiles/glass_tiles.rsi, state: ruglass }
+  spawn: FloorTileItemUraniumGlassReinforced

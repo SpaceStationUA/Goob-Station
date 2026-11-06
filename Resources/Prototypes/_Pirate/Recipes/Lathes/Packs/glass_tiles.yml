@@ -1,0 +1,11 @@
+- type: latheRecipePack
+  id: FloorGlassTilesStatic
+  recipes:
+  - FloorTileItemGlass
+  - FloorTileItemRGlass
+  - FloorTileItemGlassSolid
+  - FloorTileItemGlassSolidReinforced
+  - FloorTileItemPlasmaGlass
+  - FloorTileItemPlasmaGlassReinforced
+  - FloorTileItemUraniumGlass
+  - FloorTileItemUraniumGlassReinforced

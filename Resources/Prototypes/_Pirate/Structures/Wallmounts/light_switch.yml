@@ -1,0 +1,109 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseWallmountMachine
+  id: PirateLightSwitch
+  name: light switch
+  description: A wall switch for linked lights and other devices.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/light_switch.rsi
+    noRot: true
+    layers:
+    - state: housing
+    - state: on
+      map: [indicator]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SignalSwitchVisuals.State:
+        indicator:
+          On: { state: on }
+          Off: { state: off }
+      enum.PowerDeviceVisuals.Powered:
+        indicator:
+          True: { shader: unshaded }
+          False: { shader: "" }
+  - type: ApcPowerReceiver
+    powerLoad: 5
+  - type: PirateLightSwitch
+  - type: DeviceLinkSource
+    ports:
+    - On
+    - Off
+    - Pressed
+  - type: UseDelay
+    delay: 0.5
+  - type: StationAiWhitelist
+  - type: Construction
+    graph: PirateLightSwitch
+    node: switch
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [Destruction]
+
+- type: entity
+  parent: PirateLightSwitch
+  id: PirateLightSwitchStartsOff
+  suffix: Starts Off
+  components:
+  - type: PirateLightSwitch
+    startsOff: true
+    isOn: false # the look before MapInit (mapping) and on startup
+  - type: Sprite
+    layers:
+    - state: housing
+    - state: off
+      map: [indicator]
+
+- type: construction
+  id: PirateLightSwitch
+  graph: PirateLightSwitch
+  startNode: start
+  targetNode: switch
+  category: construction-category-machines
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+  theory:
+    ElectronicsKnowledge: 0
+  practical:
+    MechanicsKnowledge: 1
+  useQuality: false
+
+- type: constructionGraph
+  id: PirateLightSwitch
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: switch
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 2
+      - material: Cable
+        amount: 1
+  - node: switch
+    entity: PirateLightSwitch
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 2
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:GivePrototype
+        prototype: CableApcStack1
+        amount: 1
+      - !type:DeleteEntity {}

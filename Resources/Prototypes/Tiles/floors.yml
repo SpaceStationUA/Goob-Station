@@ -1273,7 +1273,7 @@
   - 1.0
   footstepSounds:
     collection: FootstepTile
-  itemDrop: SheetGlass1
+  itemDrop: FloorTileItemGlass # Pirate: glass floors
   tileRipResistance: 150 # Goob
 
 - type: tile
@@ -1290,7 +1290,7 @@
   - 1.0
   footstepSounds:
     collection: FootstepTile
-  itemDrop: SheetRGlass1
+  itemDrop: FloorTileItemRGlass # Pirate: glass floors
   tileRipResistance: 175 # Goob
 
 - type: tile

@@ -907,6 +907,7 @@
     - CircuitFloorsStatic
     - FloorMarbleTilesStatic
     - DenFloorPoolTilesStatic # DEN
+    - FloorGlassTilesStatic # Pirate: glass floors
     dynamicPacks:
     - FauxTiles
   - type: MaterialStorage

@@ -46,3 +46,13 @@
     fireRate: 3.3
     soundGunshot:
       path: /Audio/_Pirate/Weapons/Guns/Gunshots/shotgun2.ogg
+
+- type: entity
+  parent: WeaponShotgunKammerer
+  id: WeaponShotgunKammererRubber
+  suffix: Non-Lethal
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
+  - type: Contraband
+    allowedJobs: [BlueshieldOfficer, Bartender]
