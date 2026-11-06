@@ -128,7 +128,7 @@ public sealed class NoviceChemicalProtectionTest : InteractionTest
             Send(dispenser, new ReagentDispenserStartRecipeRecordingMessage());
             Send(dispenser, new EnergyReagentDispenserDispenseReagentMessage("Potassium"));
             Send(dispenser, new ReagentDispenserSaveRecipeMessage("restricted"));
-            Assert.That(SEntMan.GetComponent<EnergyReagentDispenserComponent>(dispenser).SavedRecipes.ContainsKey("restricted"), Is.True);
+            Assert.That(SEntMan.GetComponent<EnergyReagentDispenserComponent>(dispenser).SavedRecipes, Does.ContainKey("restricted"));
             Send(dispenser, new ReagentDispenserDispenseRecipeMessage("restricted"));
             Assert.That(solution.Comp.Solution.Volume, Is.EqualTo(FixedPoint2.New(20)));
             Assert.That(battery.LastCharge, Is.EqualTo(charge));
