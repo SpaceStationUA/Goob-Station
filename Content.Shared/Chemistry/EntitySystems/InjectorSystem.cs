@@ -24,6 +24,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chemistry.EntitySystems.Hypospray;
 using Content.Shared._DV.Chemistry.Components;
+using Content.Shared._Pirate.Chemistry; // Pirate: novice chemical mixing protection.
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -45,6 +46,7 @@ public sealed partial class InjectorSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly ChemicalMixingSystem _chemicalMixing = default!; // Pirate
 
     public override void Initialize()
     {
@@ -522,6 +524,10 @@ public sealed partial class InjectorSystem : EntitySystem
             return false;
         }
 
+        // Pirate: syringes must not bypass restrictions on mixing reactive chemicals.
+        if (!_chemicalMixing.CanMix(user, injectorSolution, targetSolution.Comp.Solution))
+            return false;
+
         // Move units from attackSolution to targetSolution
         Solution removedSolution;
         if (TryComp<StackComponent>(target, out var stack))
@@ -577,6 +583,16 @@ public sealed partial class InjectorSystem : EntitySystem
         }
 
         var applicableTargetSolution = targetSolution.Comp.Solution;
+        // Pirate: drawing into a partly filled syringe can also trigger a reaction.
+        var mixingSource = applicableTargetSolution;
+        if (injector.Comp.ReagentWhitelist is { } mixingWhitelist)
+        {
+            mixingSource = new Solution(applicableTargetSolution);
+            mixingSource.SplitSolutionWithout(mixingSource.Volume, mixingWhitelist.ToArray());
+        }
+        if (!_chemicalMixing.CanMix(user, mixingSource, solution))
+            return false;
+
         // If a whitelist exists, remove all non-whitelisted reagents from the target solution temporarily
         var temporarilyRemovedSolution = new Solution();
         if (injector.Comp.ReagentWhitelist is { } reagentWhitelist)

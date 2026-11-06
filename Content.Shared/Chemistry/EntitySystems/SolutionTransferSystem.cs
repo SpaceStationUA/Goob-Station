@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared._Pirate.Chemistry; // Pirate: novice chemical mixing protection.
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
@@ -24,6 +25,7 @@ public sealed class SolutionTransferSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly ChemicalMixingSystem _chemicalMixing = default!; // Pirate
 
     private EntityQuery<RefillableSolutionComponent> _refillableQuery;
     private EntityQuery<DrainableSolutionComponent> _drainableQuery;
@@ -367,6 +369,10 @@ public sealed class SolutionTransferSystem : EntitySystem
             _popup.PopupClient(Loc.GetString("comp-solution-transfer-is-full", ("target", data.TargetEntity)), data.TargetEntity, data.User);
             return false;
         }
+
+        // Pirate: check both pouring and refilling, including DoAfter completion, before removing any liquid.
+        if (data.Amount > FixedPoint2.Zero && !_chemicalMixing.CanMix(data.User, sourceSolution, targetSolution))
+            return false;
 
         return true;
     }

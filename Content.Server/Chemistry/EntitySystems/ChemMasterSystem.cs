@@ -165,6 +165,9 @@ namespace Content.Server.Chemistry.EntitySystems
             if (fromBuffer) // Buffer to container
             {
                 amount = FixedPoint2.Min(amount, containerSolution.AvailableVolume);
+                // Pirate: check before removing reagents from either side of the buffer.
+                if (actor is { } user && !CanMixReagent(user, id, amount, containerSolution))
+                    return;
                 amount = bufferSolution.RemoveReagent(id, amount, preserveOrder: true);
                 _solutionContainerSystem.TryAddReagent(containerSoln.Value, id, amount, out var _);
             }
@@ -173,6 +176,10 @@ namespace Content.Server.Chemistry.EntitySystems
                 amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id));
                 if (bufferSolution.MaxVolume.Value > 0)    //Goobstation - chemicalbuffer if no limit
                     amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id), bufferSolution.AvailableVolume);
+
+                // Pirate: block assembling the same explosive mixture inside the inert buffer.
+                if (actor is { } user && !CanMixReagent(user, id, amount, bufferSolution))
+                    return;
 
                 _solutionContainerSystem.RemoveReagent(containerSoln.Value, id, amount);
                 bufferSolution.AddReagent(id, amount);
@@ -185,6 +192,14 @@ namespace Content.Server.Chemistry.EntitySystems
                                  $" {ToPrettyString(containerSoln)} {(fromBuffer ? "from" : "to")} {ToPrettyString(chemMaster)}");
 
             UpdateUiState(chemMaster, updateLabel: true);
+        }
+
+        // Pirate: retain reagent data while checking a single-reagent transfer.
+        private bool CanMixReagent(EntityUid user, ReagentId reagent, FixedPoint2 amount, Solution target)
+        {
+            var incoming = new Solution();
+            incoming.AddReagent(reagent, amount);
+            return EntityManager.System<Content.Shared._Pirate.Chemistry.ChemicalMixingSystem>().CanMix(user, incoming, target);
         }
 
         private void DiscardReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)

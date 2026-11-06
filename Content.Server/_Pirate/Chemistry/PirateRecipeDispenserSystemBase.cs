@@ -56,7 +56,7 @@ public abstract class PirateRecipeDispenserSystemBase<TComp> : EntitySystem
             out diskComp);
     }
 
-    protected abstract bool TryDispenseRecipe(Entity<TComp> dispenser, Dictionary<string, FixedPoint2> recipe);
+    protected abstract bool TryDispenseRecipe(Entity<TComp> dispenser, Dictionary<string, FixedPoint2> recipe, EntityUid user);
     protected abstract void UpdateRecipeUiState(Entity<TComp> dispenser);
 
     protected virtual void OnRecipeStateUpdated(Entity<TComp> dispenser)
@@ -139,7 +139,7 @@ public abstract class PirateRecipeDispenserSystemBase<TComp> : EntitySystem
             return;
         }
 
-        if (!TryDispenseRecipe(dispenser, recipe))
+        if (!TryDispenseRecipe(dispenser, recipe, message.Actor))
         {
             OnRecipeError(dispenser);
             return;
@@ -165,7 +165,7 @@ public abstract class PirateRecipeDispenserSystemBase<TComp> : EntitySystem
             return;
         }
 
-        if (!TryDispenseRecipe(dispenser, recipe))
+        if (!TryDispenseRecipe(dispenser, recipe, message.Actor))
         {
             OnRecipeError(dispenser);
             return;
