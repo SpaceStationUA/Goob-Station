@@ -54,6 +54,7 @@
   components:
   - type: PirateLightSwitch
     startsOff: true
+    isOn: false # the look before MapInit (mapping) and on startup
   - type: Sprite
     layers:
     - state: housing

@@ -8,6 +8,7 @@ public sealed partial class PirateLightSwitchComponent : Component
     [DataField]
     public bool StartsOff;
 
-    [ViewVariables]
+    // Saved, so a persistence save of a running map keeps the switch in step with its lamps (PoweredLight.On is saved too).
+    [DataField]
     public bool IsOn = true;
 }

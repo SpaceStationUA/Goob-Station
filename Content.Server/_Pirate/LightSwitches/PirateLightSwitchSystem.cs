@@ -7,6 +7,7 @@ using Content.Server.Light.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
 using Content.Shared.Timing;
@@ -31,8 +32,16 @@ public sealed class PirateLightSwitchSystem : EntitySystem
         base.Initialize();
 
         UpdatesBefore.Add(typeof(PowerNetSystem));
+        SubscribeLocalEvent<PirateLightSwitchComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<PirateLightSwitchComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<PirateLightSwitchComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<PirateLightSwitchComponent, ActivateInWorldEvent>(OnActivate);
+    }
+
+    // Appearance data is not saved, and a loaded running map skips MapInit, so restore the look from IsOn here.
+    private void OnStartup(Entity<PirateLightSwitchComponent> ent, ref ComponentStartup args)
+    {
+        UpdateAppearance(ent);
     }
 
     private void OnMapInit(Entity<PirateLightSwitchComponent> ent, ref MapInitEvent args)
@@ -74,6 +83,16 @@ public sealed class PirateLightSwitchSystem : EntitySystem
         }
     }
 
+    // The startup queue only sees links that exist at MapInit; a lamp linked later to a switch that is off goes off too.
+    private void OnNewLink(Entity<PirateLightSwitchComponent> ent, ref NewLinkEvent args)
+    {
+        if (args.Source != ent.Owner || ent.Comp.IsOn)
+            return;
+
+        if (TryComp<PoweredLightComponent>(args.Sink, out var light) && light.On && !TerminatingOrDeleted(args.Sink))
+            _lights.SetState(args.Sink, false, light);
+    }
+
     private void OnActivate(Entity<PirateLightSwitchComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
@@ -88,8 +107,9 @@ public sealed class PirateLightSwitchSystem : EntitySystem
 
         ent.Comp.IsOn = !ent.Comp.IsOn;
         UpdateAppearance(ent);
-        _links.InvokePort(ent, ent.Comp.IsOn ? "On" : "Off");
+        // Pressed first, so a lamp linked to both Pressed->Toggle and On/Off ends in the explicit state.
         _links.InvokePort(ent, "Pressed");
+        _links.InvokePort(ent, ent.Comp.IsOn ? "On" : "Off");
         _audio.PlayPvs(ClickSound, ent);
     }
 
