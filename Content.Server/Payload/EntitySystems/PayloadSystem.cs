@@ -8,6 +8,7 @@ using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
 using Content.Shared.Trigger;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared._Pirate.Chemistry; // Pirate
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
@@ -25,6 +26,7 @@ public sealed class PayloadSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly ChemicalMixingSystem _chemicalMixing = default!; // Pirate
 
     private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
 
@@ -174,6 +176,10 @@ public sealed class PayloadSystem : EntitySystem
         {
             return;
         }
+
+        // Pirate: chemical payloads must respect the activator's playtime too.
+        if (args.User is { } user && !_chemicalMixing.CanMix(user, solutionA, solutionB))
+            return;
 
         var solStringA = SharedSolutionContainerSystem.ToPrettyString(solutionA);
         var solStringB = SharedSolutionContainerSystem.ToPrettyString(solutionB);

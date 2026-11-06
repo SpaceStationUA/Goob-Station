@@ -190,6 +190,10 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
             }
 
             var sol = new Solution(message.ReagentId, amount);
+            // Pirate: check before consuming battery charge or changing the beaker.
+            if (!EntityManager.System<Content.Shared._Pirate.Chemistry.ChemicalMixingSystem>().CanMix(message.Actor, sol, solution.Value.Comp.Solution))
+                return;
+
             if (!_solutionContainerSystem.TryAddSolution(solution.Value, sol))
                 return;
 
@@ -253,7 +257,7 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
                 PlayClickSound(ent);
         }
 
-        protected override bool TryDispenseRecipe(Entity<EnergyReagentDispenserComponent> reagentDispenser, Dictionary<string, FixedPoint2> recipe)
+        protected override bool TryDispenseRecipe(Entity<EnergyReagentDispenserComponent> reagentDispenser, Dictionary<string, FixedPoint2> recipe, EntityUid user)
         {
             if (PirateChemRecipeServerHelper.MergeRecipeIntoRecording(reagentDispenser.Comp.RecordingRecipe, recipe))
                 return true;
@@ -267,6 +271,10 @@ namespace Content.Goobstation.Server.Chemistry.EntitySystems
 
             var totalRequiredQuantity = recipe.Values.Aggregate(FixedPoint2.Zero, (current, quantity) => current + quantity);
             if (totalRequiredQuantity > outputSolution.AvailableVolume)
+                return false;
+
+            // Pirate: a saved or disk recipe must not bypass manual mixing restrictions.
+            if (!EntityManager.System<Content.Shared._Pirate.Chemistry.ChemicalMixingSystem>().CanMixRecipe(user, recipe, outputSolution))
                 return false;
 
             if (!TryComp<BatteryComponent>(reagentDispenser, out var battery))

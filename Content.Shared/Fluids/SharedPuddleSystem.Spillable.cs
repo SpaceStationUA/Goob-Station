@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Chemistry;
+using Content.Shared._Pirate.Chemistry; // Pirate
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Prototypes;
@@ -26,6 +27,7 @@ public abstract partial class SharedPuddleSystem
 {
     private static readonly FixedPoint2 MeleeHitTransferProportion = 0.25;
     [Dependency] private readonly InjectorSystem _injectorSystem = default!;
+    [Dependency] protected readonly ChemicalMixingSystem ChemicalMixing = default!; // Pirate
 
     protected virtual void InitializeSpillable()
     {
@@ -75,6 +77,10 @@ public abstract partial class SharedPuddleSystem
             var user = args.User;
             verb.Act = () =>
             {
+                // Pirate: reject dangerous spills before consuming the solution.
+                if (!ChemicalMixing.CanSpill(user, solution, Transform(target).Coordinates))
+                    return;
+
                 var puddleSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
                 TrySpillAt(Transform(target).Coordinates, puddleSolution, out _);
 
@@ -104,6 +110,10 @@ public abstract partial class SharedPuddleSystem
             var user = args.User;
             verb.Act = () =>
             {
+                // Pirate: also rechecked when the spill finishes.
+                if (!ChemicalMixing.CanSpill(user, solution, Transform(entity).Coordinates))
+                    return;
+
                 _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
                     user,
                     entity.Comp.SpillDelay ?? 0,
@@ -133,6 +143,10 @@ public abstract partial class SharedPuddleSystem
         // Otherwise let's say they want to spill a quarter of its max volume.
 
         if (!_solutionContainerSystem.TryGetDrainableSolution(entity.Owner, out var soln, out var solution))
+            return;
+
+        // Pirate
+        if (!ChemicalMixing.CanSpill(args.User, solution, args.Coords))
             return;
 
         var hitCount = args.HitEntities.Count;

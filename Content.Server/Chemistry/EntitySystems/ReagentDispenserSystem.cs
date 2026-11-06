@@ -182,7 +182,7 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 // force open container, if applicable, to avoid confusing people on why it doesn't dispense
                 _openable.SetOpen(storedContainer, true);
-                _solutionTransferSystem.Transfer(new SolutionTransferData(reagentDispenser,
+                _solutionTransferSystem.Transfer(new SolutionTransferData(message.Actor, // Pirate: attribute mixing to the player.
                         storedContainer, src.Value,
                         outputContainer.Value, dst.Value,
                         (int)reagentDispenser.Comp.DispenseAmount));
@@ -253,7 +253,7 @@ namespace Content.Server.Chemistry.EntitySystems
             return true;
         }
 
-        protected override bool TryDispenseRecipe(Entity<ReagentDispenserComponent> reagentDispenser, Dictionary<string, FixedPoint2> recipe)
+        protected override bool TryDispenseRecipe(Entity<ReagentDispenserComponent> reagentDispenser, Dictionary<string, FixedPoint2> recipe, EntityUid user)
         {
             if (PirateChemRecipeServerHelper.MergeRecipeIntoRecording(reagentDispenser.Comp.RecordingRecipe, recipe))
                 return true;
@@ -267,6 +267,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var totalRequiredQuantity = recipe.Values.Aggregate(FixedPoint2.Zero, (current, quantity) => current + quantity);
             if (totalRequiredQuantity > dstSolution.AvailableVolume)
+                return false;
+
+            // Pirate: reject the whole recipe before consuming any ingredients.
+            if (!EntityManager.System<Content.Shared._Pirate.Chemistry.ChemicalMixingSystem>().CanMixRecipe(user, recipe, dstSolution))
                 return false;
 
             var cachedSources = new Dictionary<string, (EntityUid Container, Entity<Content.Shared.Chemistry.Components.SolutionComponent>? Drainable)>(recipe.Count);
@@ -301,7 +305,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 _openable.SetOpen(source.Container, true);
                 var transferred = _solutionTransferSystem.Transfer(new SolutionTransferData(
-                    reagentDispenser,
+                    user, // Pirate: keep the acting player for novice restrictions and logs.
                     source.Container,
                     srcDrainable,
                     outputContainer.Value,
