@@ -2,6 +2,6 @@
 
 namespace Content.Shared._Pirate.Crayon;
 
-/// <summary>Raised on a crayon before drawing on a paint surface.</summary>
+/// <summary>Raised on a crayon before drawing a decal, custom symbol or paint stroke.</summary>
 [ByRefEvent]
 public record struct CrayonDrawAttemptEvent(EntityUid User, bool Cancelled = false);

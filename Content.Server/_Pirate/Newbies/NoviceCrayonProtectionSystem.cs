@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server._Pirate.Crayon;
-using Content.Server.Crayon;
 using Content.Shared._Pirate.Crayon;
 using Content.Shared.Crayon;
 using Content.Shared.GameTicking;
-using Content.Shared.Interaction;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -27,9 +24,6 @@ public sealed class NoviceCrayonProtectionSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<CrayonComponent, AfterInteractEvent>(OnAfterInteract,
-            after: new[] { typeof(IngestionSystem) },
-            before: new[] { typeof(CrayonSymbolSystem), typeof(CrayonSystem) });
         SubscribeLocalEvent<CrayonComponent, CrayonDrawImageEvent>(OnDrawImage,
             before: new[] { typeof(CrayonSymbolSystem) });
         SubscribeLocalEvent<CrayonComponent, CrayonDrawAttemptEvent>(OnDrawAttempt);
@@ -37,12 +31,6 @@ public sealed class NoviceCrayonProtectionSystem : EntitySystem
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent args) => _nextNotification.Clear();
-
-    private void OnAfterInteract(Entity<CrayonComponent> ent, ref AfterInteractEvent args)
-    {
-        if (!args.Handled && args.CanReach && IsRestricted(args.User))
-            args.Handled = true;
-    }
 
     private void OnDrawImage(Entity<CrayonComponent> ent, ref CrayonDrawImageEvent args)
     {

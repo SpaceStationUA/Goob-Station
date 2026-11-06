@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Server.Construction;
-using Content.Server.Construction.Components;
 using Content.Shared._Pirate.Construction;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Player;
@@ -26,8 +23,7 @@ public sealed class NoviceGrilleProtectionSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ActorComponent, ConstructAttemptEvent>(OnConstructAttempt);
         SubscribeLocalEvent<ActorComponent, ConstructEntityAttemptEvent>(OnConstructEntityAttempt);
-        SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(OnRepairAttempt,
-            before: new[] { typeof(ConstructionSystem) });
+        SubscribeLocalEvent<ActorComponent, ConstructMaterialAttemptEvent>(OnRepairAttempt);
     }
 
     private void OnConstructAttempt(Entity<ActorComponent> ent, ref ConstructAttemptEvent args)
@@ -65,18 +61,17 @@ public sealed class NoviceGrilleProtectionSystem : EntitySystem
         return false;
     }
 
-    private void OnRepairAttempt(Entity<ConstructionComponent> ent, ref InteractUsingEvent args)
+    private void OnRepairAttempt(Entity<ActorComponent> ent, ref ConstructMaterialAttemptEvent args)
     {
-        if (args.Handled ||
-            ent.Comp.Graph.Id is not ("Grille" or "ClockGrille") ||
-            ent.Comp.Node is not ("grilleBroken" or "clockGrilleBroken") ||
-            !TryComp<StackComponent>(args.Used, out var stack) || stack.StackTypeId.Id != "MetalRod" ||
-            !TryComp<ActorComponent>(args.User, out var actor) ||
-            !_playtime.IsRestricted(actor.PlayerSession, RequiredPlaytime))
+        if (args.Cancelled ||
+            args.Graph is not ("Grille" or "ClockGrille") ||
+            args.Node is not ("grilleBroken" or "clockGrilleBroken") ||
+            !TryComp<StackComponent>(args.Material, out var stack) || stack.StackTypeId.Id != "MetalRod" ||
+            !_playtime.IsRestricted(ent.Comp.PlayerSession, RequiredPlaytime))
             return;
 
-        args.Handled = true;
-        ShowRestriction(args.User);
+        args.Cancelled = true;
+        ShowRestriction(ent);
     }
 
     private void ShowRestriction(EntityUid user)
