@@ -32,7 +32,8 @@ jobs:
       - name: Install publish dependencies
         run: python -m pip install requests
       - name: Get engine tags
-        run: git -C RobustToolbox fetch --tags --force
+        # Pirate: checkout already fetched the pinned submodules; only engine tags are needed here.
+        run: git -C RobustToolbox fetch --tags --force --no-recurse-submodules
       - name: Restore
         run: dotnet restore
       - name: Build packaging
