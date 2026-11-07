@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent: [ MobRespirator, MobAtmosStandard, SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
   id: MobSkia
   components:
   - type: Sprite

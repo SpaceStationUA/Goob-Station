@@ -269,7 +269,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      450: Dead
+      337.5: Dead # Pirate: reduce entropic colossus health by 25%.
   - type: CosmicCorrupting
     mobile: true
     autoDisable: false
@@ -294,7 +294,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      400: Dead
+      300: Dead # Pirate: reduce entropic colossus health by 25%.
   - type: CosmicColossus
 
 - type: speechSounds

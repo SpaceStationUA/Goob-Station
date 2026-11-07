@@ -7,7 +7,7 @@
 - type: damageModifierSet
   id: SkiaSpirit
   coefficients:
-    Cold: 0.0
+    Cold: 1.0
     Shock: 0.2
     Blunt: 0.4
     Slash: 0.4
