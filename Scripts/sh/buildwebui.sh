@@ -2,6 +2,11 @@
 # Build the Solid WebUI interfaces into game resources.
 #
 #   Scripts/sh/buildwebui.sh            -> build every interface (final assets)
+#
+# GalaxyMap is in the list because the list is HARDCODED and a new interface is
+# invisible to this script until it is added here. The bundle was published once by
+# hand; without this line the next run of the script would leave that copy in place,
+# stale and passing, and nobody would be told.
 #   Scripts/sh/buildwebui.sh dev Radio  -> run vite dev server for HMR
 #
 # Phase B note: while the radio page is still the hand-built
@@ -27,7 +32,7 @@ if [ "${1:-}" = "dev" ]; then
     TUI_IFACE="$iface" exec npx vite --clearScreen false
 fi
 
-for iface in Radio ThemePicker EvidenceBoard; do
+for iface in Radio ThemePicker EvidenceBoard GalaxyMap; do
     if [ -f "src/$iface/index.html" ]; then
         out="$res/$iface"
         [ "${BUILDWEBUI_FINAL:-}" = "1" ] || out="$ui/dist_resources"
