@@ -2,7 +2,7 @@
 
 - type: entity
   parent: BaseWallmountMachine
-  id: PirateLightSwitch
+  id: LightSwitch
   name: light switch
   description: A wall switch for linked lights and other devices.
   components:
@@ -33,7 +33,7 @@
     - Off
     - Pressed
   - type: UseDelay
-    delay: 0.5
+    delay: 0.25
   - type: StationAiWhitelist
   - type: Construction
     graph: PirateLightSwitch
@@ -48,8 +48,8 @@
         acts: [Destruction]
 
 - type: entity
-  parent: PirateLightSwitch
-  id: PirateLightSwitchStartsOff
+  parent: LightSwitch
+  id: LightSwitchStartsOff
   suffix: Starts Off
   components:
   - type: PirateLightSwitch
@@ -93,7 +93,7 @@
       - material: Cable
         amount: 1
   - node: switch
-    entity: PirateLightSwitch
+    entity: LightSwitch
     edges:
     - to: start
       steps:

@@ -140589,7 +140589,7 @@ entities:
     - type: Transform
       parent: 2
       pos: 9.71805,-57.154495
-- proto: PirateLightSwitch
+- proto: LightSwitch
   entities:
   - uid: 22406
     components:
@@ -140659,7 +140659,7 @@ entities:
           - Toggle
     - type: Fixtures
       fixtures: {}
-- proto: PirateLightSwitchStartsOff
+- proto: LightSwitchStartsOff
   entities:
   - uid: 18925
     components:
