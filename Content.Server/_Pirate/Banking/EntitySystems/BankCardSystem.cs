@@ -103,6 +103,7 @@ public sealed partial class BankCardSystem : EntitySystem
         {
             if (account.Mind == null) continue;
             var salary = (int) Math.Round(GetSalary(GetEntity(account.Mind.Value)) * 2d / 3d);
+            salary = ApplyRevolutionSalaryCut(GetEntity(account.Mind.Value), salary);
             if (salary <= 0 || !TryChangeBalance(account.AccountId, salary, BankTransactionType.Salary))
                 continue;
 
@@ -142,6 +143,7 @@ public sealed partial class BankCardSystem : EntitySystem
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         _accounts.Clear();
+        _salaryStations.Clear();
         _salaryTimer = 0f;
     }
 
@@ -164,6 +166,7 @@ public sealed partial class BankCardSystem : EntitySystem
             mindComponent.AddMemory(new Memory(Loc.GetString("character-info-memories-account-number"),
                 bankAccount.AccountId.ToString()));
             bankAccount.Mind = GetNetEntity(mind.Mind.Value);
+            _salaryStations[mind.Mind.Value] = ev.Station;
             bankAccount.Name = Name(ev.Mob);
             RaiseAccountLinked(bankAccount.AccountId);
 

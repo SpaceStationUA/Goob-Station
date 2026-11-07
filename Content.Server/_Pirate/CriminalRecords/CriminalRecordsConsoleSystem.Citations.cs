@@ -59,22 +59,51 @@ public sealed partial class CriminalRecordsConsoleSystem
         }
 
         GetOfficer(mob.Value, out var officer);
+        var citation = AddCitation(key.Value, record, reason, details, msg.Fine, officer, false);
+        LogCitation(key.Value, citation, mob.Value, ent);
+        SendCitationRadio(ent, key.Value, record, citation, ("officer", officer));
+        PrintCitationTicket(ent, CitationTarget(key.Value, record).Name, citation);
+    }
+
+    public CriminalRecordCitation? IssueCitation(StationRecordKey key, string reason, string details, int fine,
+        string issuer, bool roundOnly)
+    {
+        if (!_records.TryGetRecord<CriminalRecord>(key, out var record) || fine < 1 || fine > CriminalRecordCitations.MaxFine)
+            return null;
+
+        var citation = AddCitation(key, record, reason, details, fine, issuer, roundOnly);
+        var topic = Loc.GetString("criminal-records-citation-log-topic", ("reason", citation.Reason), ("fine", citation.Fine));
+        if (_logs.Add(key, RecordLogBook.Security, RecordLogKind.Citation, topic, citation.Details, null, null,
+                citation.Status.ToString()) is not { } entry)
+        {
+            return citation;
+        }
+
+        entry.AuthorName = issuer;
+        entry.RoundOnly = roundOnly;
+        citation.LogEntryId = entry.Id;
+        citation.IssuedAt = entry.Time;
+        _records.Synchronize(key);
+        return citation;
+    }
+
+    private CriminalRecordCitation AddCitation(StationRecordKey key, CriminalRecord record, string reason, string details,
+        int fine, string? issuer, bool roundOnly)
+    {
         var citation = new CriminalRecordCitation
         {
             Id = record.NextCitationId++,
             Reason = reason,
             Details = details,
-            Fine = msg.Fine,
-            IssuedBy = officer,
+            Fine = fine,
+            IssuedBy = issuer,
             IssuedAt = DateTime.UtcNow,
+            RoundOnly = roundOnly,
         };
         record.Citations.Add(citation);
-        _citationArrests.Refresh(key.Value);
-        _citationArrests.NotifyIssued(key.Value, citation);
-
-        LogCitation(key.Value, citation, mob.Value, ent);
-        SendCitationRadio(ent, key.Value, record, citation, ("officer", officer));
-        PrintCitationTicket(ent, CitationTarget(key.Value, record).Name, citation);
+        _citationArrests.Refresh(key);
+        _citationArrests.NotifyIssued(key, citation);
+        return citation;
     }
 
     private void OnPayCitation(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordPayCitation msg)

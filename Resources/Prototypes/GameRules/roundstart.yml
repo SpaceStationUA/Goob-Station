@@ -345,6 +345,7 @@
     minPlayers: 15
     chaosScore: 1000 # Goobstation - intentionally not per-antag
   - type: RevolutionaryRule
+  - type: PirateRevolutionOrders # Pirate: revolution orders
   # Pirate: skill chips start - only head revs are selected by this rule, converts get nothing
   - type: AntagPlayerEffects
     packages:
