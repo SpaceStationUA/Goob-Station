@@ -1157,6 +1157,9 @@
     gatedItems:
     - NFWeaponLauncherGrenadeNfsd
     - NFBoxDartsTracking
+    blueOnlyItems: # Pirate: security breaching alert
+    - HammerBreachingNT # Pirate: security breaching alert
+    - BreachingCharge # Pirate: security breaching alert
     allowedAlertLevels:
     - blue
     - red
