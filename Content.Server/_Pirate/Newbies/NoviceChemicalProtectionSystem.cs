@@ -28,8 +28,20 @@ public sealed class NoviceChemicalProtectionSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ActorComponent, ChemicalMixAttemptEvent>(OnMixAttempt);
+        SubscribeLocalEvent<ActorComponent, ChemicalIngestionAttemptEvent>(OnIngestionAttempt);
         SubscribeLocalEvent<ActorComponent, ChemicalSpillAttemptEvent>(OnSpillAttempt);
         SubscribeLocalEvent<ActorComponent, BeforeThrowEvent>(OnBeforeThrow);
+    }
+
+    private void OnIngestionAttempt(Entity<ActorComponent> ent, ref ChemicalIngestionAttemptEvent args)
+    {
+        // Swallowed metal could also be vomited into water instead of mixed inside the stomach.
+        if (args.Cancelled || !HasReactiveMetal(args.Source) ||
+            !_playtime.IsRestricted(ent.Comp.PlayerSession, RequiredPlaytime))
+            return;
+
+        args.Cancelled = true;
+        _popup.PopupEntity(Loc.GetString("novice-protection-reactive-chemical-ingestion"), ent, ent);
     }
 
     private void OnMixAttempt(Entity<ActorComponent> ent, ref ChemicalMixAttemptEvent args)
