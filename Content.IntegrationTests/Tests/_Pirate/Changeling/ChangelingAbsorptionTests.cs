@@ -12,6 +12,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Store.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests._Pirate.Changeling;
@@ -36,6 +37,7 @@ public sealed class ChangelingAbsorptionTests
             var mind = mindSystem.CreateMind(null).Owner;
             mindSystem.TransferTo(mind, ling);
             entMan.EnsureComponent<ChangelingComponent>(ling);
+            entMan.EnsureComponent<StoreComponent>(ling);
             entMan.EnsureComponent<AbsorbableComponent>(target);
             entMan.System<MobStateSystem>().ChangeMobState(target, MobState.Dead);
 
@@ -60,8 +62,9 @@ public sealed class ChangelingAbsorptionTests
                 Assert.That(entMan.System<SharedDoAfterSystem>().TryStartDoAfter(absorb), Is.True);
             }
 
-            Assert.That(entMan.GetComponent<DamageableComponent>(target).Damage.DamageDict["Cellular"],
-                Is.EqualTo(FixedPoint2.New(100)));
+            // Splitting damage between vital parts can round away one hundredth.
+            Assert.That(entMan.GetComponent<DamageableComponent>(target).DamagePerGroup["Genetic"],
+                Is.InRange(FixedPoint2.New(99.99), FixedPoint2.New(100)));
             Assert.That(body.GetBodyChildren(target).SelectMany(part => body.GetPartOrgans(part.Id))
                 .Select(organ => organ.Id), Is.EquivalentTo(organs));
             foreach (var (part, previousIntegrity) in integrity)
