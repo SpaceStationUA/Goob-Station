@@ -2,13 +2,19 @@
 
 using System.Globalization;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Mobs.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Pirate.Client.Genetics.UI;
 
 public sealed partial class GeneticsConsoleWindow
 {
+    private static readonly ProtoId<DamageTypePrototype> CellularDamage = "Cellular";
+    private static readonly ProtoId<DamageTypePrototype> RadiationDamage = "Radiation";
+    private static readonly ProtoId<DamageTypePrototype> PoisonDamage = "Poison";
+
     private (int? Health, double Genetic, double Radiation, double Toxic)? _healthReadout;
 
     private void UpdateHealth(EntityUid? uid)
@@ -28,9 +34,9 @@ public sealed partial class GeneticsConsoleWindow
                 100d * (1d - damageable.TotalDamage.Double() / threshold.Value.Double()), 0d, 100d));
         }
 
-        var genetic = GetRoundedDamage("Cellular");
-        var radiation = GetRoundedDamage("Radiation");
-        var toxic = GetRoundedDamage("Poison");
+        var genetic = GetRoundedDamage(CellularDamage);
+        var radiation = GetRoundedDamage(RadiationDamage);
+        var toxic = GetRoundedDamage(PoisonDamage);
         var readout = (health, genetic, radiation, toxic);
         if (_healthReadout == readout)
             return;
@@ -54,7 +60,7 @@ public sealed partial class GeneticsConsoleWindow
         MobDamages.Visible = true;
         return;
 
-        double GetRoundedDamage(string type)
+        double GetRoundedDamage(ProtoId<DamageTypePrototype> type)
         {
             return damageable.Damage.DamageDict.TryGetValue(type, out var damage)
                 ? Math.Round(damage.Double(), 1, MidpointRounding.AwayFromZero)

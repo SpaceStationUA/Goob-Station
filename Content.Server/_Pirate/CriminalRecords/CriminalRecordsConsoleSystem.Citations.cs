@@ -76,6 +76,7 @@ public sealed partial class CriminalRecordsConsoleSystem
         if (_logs.Add(key, RecordLogBook.Security, RecordLogKind.Citation, topic, citation.Details, null, null,
                 citation.Status.ToString()) is not { } entry)
         {
+            _records.Synchronize(key);
             return citation;
         }
 

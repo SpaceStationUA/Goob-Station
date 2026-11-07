@@ -125,7 +125,6 @@ public sealed partial class PirateRevolutionOrdersSystem : GameRuleSystem<Pirate
         if (comp.EventsSent >= 15 || Timing.CurTime < comp.NextEvent)
             return;
 
-        comp.EventsSent++;
         var sent = RobustRandom.Next(6) switch
         {
             0 => SendOrder(comp),
@@ -133,8 +132,8 @@ public sealed partial class PirateRevolutionOrdersSystem : GameRuleSystem<Pirate
             _ => TryIssueDirective(comp, RobustRandom.Pick(Enum.GetValues<PirateRevolutionDirectiveKind>())),
         };
 
-        if (!sent && !SendOrder(comp))
-            CutSalary();
+        if (sent || SendOrder(comp) || CutSalary())
+            comp.EventsSent++;
 
         Schedule(comp);
     }

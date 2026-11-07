@@ -42,9 +42,9 @@ public sealed partial class GeneticsConsoleSystem
                 sequences.Select(sequence => sequence.Number).Order()));
         if (index < 0)
         {
-            var previousScans = ent.Comp.Scans.Count(saved => saved.Target == subject);
-            if (previousScans > 0)
-                scan.Name = $"{scan.Name} ({previousScans + 1})";
+            var baseName = scan.Name;
+            for (var suffix = 2; ent.Comp.Scans.Any(saved => saved.Name == scan.Name); suffix++)
+                scan.Name = $"{baseName} ({suffix})";
             index = ent.Comp.Scans.Count;
             ent.Comp.Scans.Add(scan);
         }

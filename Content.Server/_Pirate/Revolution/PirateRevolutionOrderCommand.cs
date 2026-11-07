@@ -44,7 +44,7 @@ public sealed class PirateRevolutionOrderCommand : LocalizedEntityCommands
             return;
         }
 
-        if (args[0] == "list")
+        if (args[0].Equals("list", StringComparison.OrdinalIgnoreCase))
         {
             var jobs = _orders.GetPresentJobs();
             foreach (var order in PirateRevolutionOrdersSystem.Orders)
