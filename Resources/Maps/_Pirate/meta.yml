@@ -16274,8 +16274,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 30076
-      configurators:
-      - invalid
   - uid: 736
     components:
     - type: Transform
@@ -85187,8 +85185,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 30076
-      configurators:
-      - invalid
   - uid: 12449
     components:
     - type: Transform
@@ -85197,8 +85193,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 30076
-      configurators:
-      - invalid
   - uid: 12450
     components:
     - type: Transform
@@ -85207,8 +85201,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 30076
-      configurators:
-      - invalid
   - uid: 12451
     components:
     - type: Transform
@@ -85217,8 +85209,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 30076
-      configurators:
-      - invalid
   - uid: 12452
     components:
     - type: Transform
@@ -85228,8 +85218,6 @@ entities:
       deviceLists:
       - 12270
       - 30076
-      configurators:
-      - invalid
   - uid: 12453
     components:
     - type: Transform
@@ -85239,8 +85227,6 @@ entities:
       deviceLists:
       - 12270
       - 30076
-      configurators:
-      - invalid
   - uid: 12454
     components:
     - type: Transform
@@ -85250,8 +85236,6 @@ entities:
       deviceLists:
       - 12270
       - 30076
-      configurators:
-      - invalid
   - uid: 12455
     components:
     - type: Transform
@@ -85795,8 +85779,6 @@ entities:
       - 30048
       - 12266
       - 112
-      configurators:
-      - invalid
   - uid: 30051
     components:
     - type: Transform
@@ -123416,8 +123398,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 30076
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 16854
@@ -123523,8 +123503,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 112
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 16868
@@ -125287,8 +125265,6 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 30076
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 17059
