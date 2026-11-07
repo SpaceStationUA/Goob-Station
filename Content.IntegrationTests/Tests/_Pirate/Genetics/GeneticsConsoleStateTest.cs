@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Pirate.Client.Genetics.UI;
 using Content.Pirate.Common.Genetics.Medical;
@@ -15,7 +16,10 @@ using Content.Shared._Shitmed.DoAfter;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Tag;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -27,6 +31,86 @@ namespace Content.IntegrationTests.Tests._Pirate.Genetics;
 [TestFixture]
 public sealed class GeneticsConsoleStateTest
 {
+    [Test]
+    public async Task HandheldPreservesOldGenomesAndNumbersNewRecordsAfterScrambling()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var mutations = server.System<MutationSystem>();
+        var genome = server.System<ScannedGenomeSystem>();
+        var ui = server.System<SharedUserInterfaceSystem>();
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var handheld = entities.SpawnEntity("HandheldGeneticsScanner", map.GridCoords);
+            var patient = entities.SpawnEntity("MobHuman", map.GridCoords);
+            var user = entities.SpawnEntity("MobHuman", map.GridCoords);
+            server.System<TagSystem>().AddTag(user, "InstantDoAfters");
+            var history = entities.GetComponent<HandheldGeneticsScannerComponent>(handheld);
+            var mutatable = entities.GetComponent<MutatableComponent>(patient);
+            try
+            {
+                SetGenes("MutationDwarfism");
+                Scan();
+                var first = history.Scans.Single();
+                var originalSequences = first.Sequences.ToArray();
+                Scan();
+                Assert.That(history.Scans, Has.Count.EqualTo(1), "An unchanged scan must not create a record.");
+
+                mutations.Scramble((patient, mutatable));
+                SetGenes("MutationStimmed");
+                Scan();
+                Assert.That(history.Scans, Has.Count.EqualTo(2));
+                Assert.That(history.SelectedScan, Is.EqualTo(1));
+                Assert.That(history.Scans[0].Sequences, Is.EqualTo(originalSequences));
+                Assert.That(history.Scans[1].Name, Is.EqualTo($"{first.Name} (2)"));
+                Assert.That(history.Scans[1].Sequences.Single().Number, Is.Not.EqualTo(originalSequences[0].Number));
+                Scan();
+                Assert.That(history.Scans, Has.Count.EqualTo(2));
+                Assert.That(history.Scans[1].Name, Is.EqualTo($"{first.Name} (2)"));
+
+                var dna = mutations.GetDna(patient);
+                entities.RemoveComponent<ScannedGenomeComponent>(patient);
+                SetGenes("MutationTelekinesis");
+                Scan();
+                Assert.That(mutations.GetDna(patient), Is.EqualTo(dna));
+                Assert.That(history.Scans, Has.Count.EqualTo(3));
+                Assert.That(history.Scans[2].Name, Is.EqualTo($"{first.Name} (3)"));
+                Assert.That(history.Scans[0].Sequences, Is.EqualTo(originalSequences));
+
+                entities.EventBus.RaiseLocalEvent(handheld, new HandheldGeneticsSelectScanMessage(0)
+                {
+                    Actor = user, UiKey = GeneticsConsoleUiKey.Key
+                });
+                Assert.That(ui.TryGetUiState<GeneticsConsoleState>(handheld, GeneticsConsoleUiKey.Key, out var state), Is.True);
+                Assert.That(state!.HandheldHistory!.Targets, Has.Count.EqualTo(3));
+                Assert.That(state.Sequences, Is.EqualTo(originalSequences));
+            }
+            finally
+            {
+                foreach (var uid in new[] { handheld, patient, user })
+                    entities.DeleteEntity(uid);
+            }
+
+            void SetGenes(EntProtoId<MutationComponent> mutation)
+            {
+                mutations.ClearDormant(patient);
+#pragma warning disable RA0002 // Give each stored genome a deterministic gene set.
+                mutatable.Dormant.Add(mutation);
+#pragma warning restore RA0002
+            }
+
+            void Scan()
+            {
+                entities.EventBus.RaiseLocalEvent(handheld,
+                    new AfterInteractEvent(user, handheld, patient, map.GridCoords, true));
+                Assert.That(genome.IsScanned(patient), Is.True);
+            }
+        });
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task PublishedSequencesRemainIndependentAcrossConsolesHandheldsAndPrintouts()
     {
@@ -219,6 +303,90 @@ public sealed class GeneticsConsoleStateTest
             entities.DeleteEntity(human);
         });
         await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task GeneEditingTracksPatientConditionWithoutReopeningTheWindow()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        await pair.Client.WaitAssertion(() =>
+        {
+            var entities = pair.Client.EntMan;
+            var console = entities.SpawnEntity("ComputerGeneticsConsole", MapCoordinates.Nullspace);
+            var patient = entities.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            var scanner = entities.GetComponent<GeneticsScannerComponent>(console);
+            var condition = entities.GetComponent<MobStateComponent>(patient);
+            var power = entities.GetComponent<Content.Client.Power.Components.ApcPowerReceiverComponent>(console);
+            entities.AddComponent<ScannedGenomeComponent>(patient);
+#pragma warning disable RA0002 // Simulate replicated scanner and patient state on the client.
+            scanner.Scanner = console;
+            scanner.ScannedMob = patient;
+            power.Powered = true;
+#pragma warning restore RA0002
+            try
+            {
+                using var window = new GeneticsConsoleWindow();
+                window.SetEntity(console);
+                var sequencer = window.FindControl<GeneticSequencer>("Sequencer");
+                var puzzle = sequencer.FindControl<GenePuzzle>("Puzzle");
+                var bases = new string('A', MutationData.BaseCount);
+                var original = "A" + new string('X', MutationData.BaseCount - 1);
+                puzzle.SetBases(bases, original);
+                puzzle.SetJokerCooldown(0);
+                var buttons = Descendants(puzzle.FindControl<BoxContainer>("BaseButtons")).OfType<Button>().ToArray();
+                Assert.That(buttons, Has.Length.EqualTo(MutationData.BaseCount));
+                AssertEditing(true);
+
+#pragma warning disable RA0002 // Simulate condition and busy-state updates without changing the patient entity.
+                condition.CurrentState = MobState.Dead;
+                AssertEditing(false);
+                scanner.Busy = true;
+                AssertEditing(false);
+                scanner.Busy = false;
+                puzzle.SetBases(bases, original);
+                AssertEditing(false);
+                condition.CurrentState = MobState.Critical;
+                AssertEditing(true);
+                condition.CurrentState = MobState.Alive;
+                AssertEditing(true);
+                power.Powered = false;
+                AssertEditing(false);
+                power.Powered = true;
+                AssertEditing(true);
+#pragma warning restore RA0002
+                entities.RemoveComponent<ScannedGenomeComponent>(patient);
+                AssertEditing(false);
+                entities.AddComponent<ScannedGenomeComponent>(patient);
+                AssertEditing(true);
+                sequencer.MakeReadonly();
+                AssertEditing(false);
+
+                void AssertEditing(bool enabled)
+                {
+                    window.SetEntity(console);
+                    Assert.That(buttons.Count(button => !button.Disabled),
+                        Is.EqualTo(enabled ? MutationData.BaseCount - 1 : 0));
+                    foreach (var name in new[] { "SequenceButton", "ResetSequenceButton", "JokerButton" })
+                        Assert.That(puzzle.FindControl<Button>(name).Disabled, Is.EqualTo(!enabled), name);
+                }
+            }
+            finally
+            {
+                entities.DeleteEntity(console);
+                entities.DeleteEntity(patient);
+            }
+        });
+        await pair.CleanReturnAsync();
+
+        static IEnumerable<Control> Descendants(Control control)
+        {
+            foreach (var child in control.Children)
+            {
+                yield return child;
+                foreach (var descendant in Descendants(child))
+                    yield return descendant;
+            }
+        }
     }
 
     private static (EntityUid Console, EntityUid Patient, EntityUid Scanner) CreateScanner(

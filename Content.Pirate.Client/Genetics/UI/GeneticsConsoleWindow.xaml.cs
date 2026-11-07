@@ -56,7 +56,6 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
     private EntProtoId<MutationComponent>? _diskMutation;
     private bool _busy;
     private bool _scanned;
-    private int? _damage;
     private int _instability;
     private int _scrambleCooldown;
     private bool _writeCooldown;
@@ -185,15 +184,12 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
         UpdatePrintCooldown(comp.NextPrint);
         UpdateEnzymesCooldown(enzymes.NextApply);
 
+        UpdateHealth(_hasScanner == true ? _mob : null);
+        UpdateEditing(scanner);
+
         if (_mob is not {} mob)
             return;
 
-        var damage = _mutation.GetGeneticDamage(mob);
-        if (damage != _damage)
-        {
-            _damage = damage;
-            UpdateIntegrity();
-        }
         var instability = _mutation.GetInstability(mob);
         if (instability != _instability)
         {
@@ -259,7 +255,7 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
             MobStatus.Text = Loc.GetString("generic-not-available-shorthand");
         }
         UpdateInstability();
-        UpdateIntegrity();
+        UpdateHealth(uid);
     }
 
     private void UpdateScrambleDisabled()
@@ -317,13 +313,6 @@ public sealed partial class GeneticsConsoleWindow : FancyWindow
     private void UpdateInstability()
     {
         MobInstability.Text = $"{_instability}%";
-    }
-
-    private void UpdateIntegrity()
-    {
-        MobIntegrity.Text = _damage is {} damage
-            ? Math.Max(100 - damage, 0).ToString()
-            : Loc.GetString("generic-not-available-shorthand");
     }
 
     private void UpdateBusy(bool busy)
