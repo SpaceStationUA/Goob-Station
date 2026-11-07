@@ -19,21 +19,21 @@ public sealed class SecurityAlertGatedVendingSystem : EntitySystem
         Entity<SecurityAlertGatedVendingComponent> ent,
         ref VendingMachineVendAttemptEvent args)
     {
-        var blueOnly = ent.Comp.BlueOnlyItems.Contains(args.ItemId);
-        if (!blueOnly && !ent.Comp.GatedItems.Contains(args.ItemId))
+        var elevated = ent.Comp.ElevatedAlertItems.Contains(args.ItemId);
+        if (!elevated && !ent.Comp.GatedItems.Contains(args.ItemId))
             return;
 
         var station = _station.GetOwningStation(ent.Owner);
         if (station != null &&
             TryComp<AlertLevelComponent>(station.Value, out var alert) &&
-            (blueOnly ? alert.CurrentLevel == "blue" : ent.Comp.AllowedAlertLevels.Contains(alert.CurrentLevel)))
+            (elevated ? ent.Comp.ElevatedAlertLevels.Contains(alert.CurrentLevel) : ent.Comp.AllowedAlertLevels.Contains(alert.CurrentLevel)))
         {
             return;
         }
 
         args.Cancel();
-        args.DenialMessage = Loc.GetString(blueOnly
-            ? "security-blue-alert-vending-denied"
+        args.DenialMessage = Loc.GetString(elevated
+            ? "security-elevated-alert-vending-denied"
             : "security-alert-gated-vending-denied");
     }
 }

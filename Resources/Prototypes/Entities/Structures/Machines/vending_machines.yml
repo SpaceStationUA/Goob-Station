@@ -1157,12 +1157,25 @@
     gatedItems:
     - NFWeaponLauncherGrenadeNfsd
     - NFBoxDartsTracking
-    blueOnlyItems: # Pirate: security breaching alert
+    elevatedAlertItems: # Pirate: security breaching alert
     - HammerBreachingNT # Pirate: security breaching alert
     - BreachingCharge # Pirate: security breaching alert
+    elevatedAlertLevels: [blue, yellow, red, violet, orange, gamma, delta, epsilon, omicron, octarine, honk, white, amber, cyan] # Pirate: security breaching alert
     allowedAlertLevels:
     - blue
     - red
+    - yellow # Pirate: security vending alerts
+    - violet # Pirate: security vending alerts
+    - orange # Pirate: security vending alerts
+    - gamma # Pirate: security vending alerts
+    - delta # Pirate: security vending alerts
+    - epsilon # Pirate: security vending alerts
+    - omicron # Pirate: security vending alerts
+    - octarine # Pirate: security vending alerts
+    - honk # Pirate: security vending alerts
+    - white # Pirate: security vending alerts
+    - amber # Pirate: security vending alerts
+    - cyan # Pirate: security vending alerts
   - type: DatasetVocalizer
     dataset: SecTechAds
   - type: SpeakOnUIClosed
