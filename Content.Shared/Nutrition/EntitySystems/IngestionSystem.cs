@@ -275,6 +275,9 @@ public sealed partial class IngestionSystem : EntitySystem
         if (!CanConsume(args.User, entity, args.Ingested, out var solution, out var time))
             return;
 
+        if (!CanIngestChemicals(args.User, entity, solution.Value.Comp.Solution)) // Pirate: validate before starting to eat.
+            return;
+
         if (!_doAfter.TryStartDoAfter(GetEdibleDoAfterArgs(args.User, entity, food, time ?? TimeSpan.Zero)))
             return;
 
@@ -363,6 +366,10 @@ public sealed partial class IngestionSystem : EntitySystem
         }
 
         var transfer = FixedPoint2.Clamp(beforeEv.Transfer, beforeEv.Min, beforeEv.Max);
+
+        // Pirate: contents can change during the do-after; reject before consuming any solution.
+        if (!CanIngestChemicals(args.User, entity, solution.Value.Comp.Solution))
+            return;
 
         var split = _solutionContainer.SplitSolution(solution.Value, transfer);
 
