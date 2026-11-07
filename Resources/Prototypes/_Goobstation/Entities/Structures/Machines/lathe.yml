@@ -40,11 +40,7 @@
     - MiscSignallersStatic
     - NailgunStatic
     - NailsStatic
-    - ServiceBoardsStatic # Pirate start - tweak fab recepies | Add more circuits to engi fab
-    - CargoBoardsStatic
-    - MedicalBoardsStaticGoob
-    - SecurityBoardsStaticGoob
-    - ServiceBoardsStaticGoob # Pirate end
+    # Pirate: other departments' circuit boards stay on their own techfabs.
     dynamicPacks:
     - ConstructionBagOfHolding
     - AdvancedTools
@@ -63,16 +59,11 @@
     - BluespaceTheory
     - ScienceClothing
     - UpgradeKits
-    - CargoBoards # Pirate start - tweak fab recepies | Add more circuits to engi fab
-    - MedicalBoards
-    - ServiceBoards # Pirate end
     - AdvancedEmitters        # Omu - advanced emitters
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NailgunEvilStatic
-    emagDynamicPacks:
-    - SecurityBoards # TF2 reference, go build fucking turrets
-    - MiningBoards
+    # Pirate: emagging does not restore other departments' circuit boards.
   - type: MaterialStorage
     whitelist:
       tags:

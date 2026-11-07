@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent: [ MobRespirator, MobAtmosStandard, SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
   id: MobSkia
   components:
   - type: Sprite
@@ -85,6 +85,7 @@
         Piercing: -0.35
         Slash: -0.35
         Heat: -0.35
+        Cold: -0.35
         Poison: -0.35
         Asphyxiation: -0.17
         Bloodloss: -0.17
