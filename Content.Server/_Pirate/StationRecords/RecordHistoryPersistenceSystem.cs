@@ -175,7 +175,7 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
 
                     foreach (var entry in logs.Book(book))
                     {
-                        if (entry.Kind == RecordLogKind.Background || entries.Exists(e => SameEntry(e, entry)))
+                        if (entry.Kind == RecordLogKind.Background || entry.RoundOnly || entries.Exists(e => SameEntry(e, entry)))
                             continue;
 
                         // A copy, so the background save never reads an entry that the game changes.
@@ -213,7 +213,7 @@ public sealed class RecordHistoryPersistenceSystem : EntitySystem
 
             foreach (var citation in record.Citations)
             {
-                if (!citations.Exists(c => c.IssuedAt == citation.IssuedAt && c.Reason == citation.Reason))
+                if (!citation.RoundOnly && !citations.Exists(c => c.IssuedAt == citation.IssuedAt && c.Reason == citation.Reason))
                     citations.Add(citation with { });
             }
         }

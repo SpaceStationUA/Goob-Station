@@ -20,8 +20,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             <GridContainer Columns="2" VerticalAlignment="Center">
                 <Label Text="{Loc 'genetics-console-status'}" Margin="0 0 10 0"/>
                 <Label Name="MobStatus"/>
-                <Label Text="{Loc 'genetics-console-integrity'}" Margin="0 0 10 0"/>
-                <Label Name="MobIntegrity"/>
+                <Label Text="{Loc 'genetics-console-health'}" Margin="0 0 10 0"/>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Name="MobHealth" Text="{Loc 'generic-not-available-shorthand'}"/>
+                    <RichTextLabel Name="MobDamages" Margin="12 0 0 0" VerticalAlignment="Center" Visible="False"/>
+                </BoxContainer>
                 <Label Text="{Loc 'genetics-console-instability'}" Margin="0 0 10 0"/>
                 <Label Name="MobInstability"/>
             </GridContainer>

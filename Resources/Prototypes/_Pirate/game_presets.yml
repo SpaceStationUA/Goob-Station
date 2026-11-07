@@ -117,7 +117,7 @@
   - shittersafarideluxeedition
   name: greenshift-title
   showInVote: true #4boring4vote
-  maxPlayers: 40
+  maxPlayers: 30
   description: greenshift-description
   rules:
   - SpaceTrafficControlFriendlyEventScheduler
@@ -227,7 +227,6 @@
   name: blueshift-title
   description: blueshift-description
   showInVote: true
-  maxPlayers: 30
   rules:
     - BlueshiftDraft
     - BlueshiftDirector

@@ -62,6 +62,7 @@ public sealed partial class GenePuzzle : Control
         Tip.Visible = false;
         SequenceButtonContainer.Visible = false;
         UpdateBaseButtons();
+        UpdateSequenceButton();
     }
 
     public void SetJokerCooldown(int? cooldown)
@@ -86,7 +87,7 @@ public sealed partial class GenePuzzle : Control
 
     private void UpdateJokerButton()
     {
-        JokerButton.Disabled = _busy || !_writable || _sequenced || _jokerCooldown > 0 || !_originalBases.Contains('X');
+        JokerButton.Disabled = _busy || !_writable || !_editingEnabled || _sequenced || _jokerCooldown > 0 || !_originalBases.Contains('X');
         if (JokerButton.Disabled)
             SetJokerMode(false);
     }
@@ -94,8 +95,8 @@ public sealed partial class GenePuzzle : Control
     private void UpdateSequenceButton()
     {
         UpdateJokerButton();
-        SequenceButton.Disabled = _busy || _sequenced || !IsComplete();
-        ResetSequenceButton.Disabled = _busy || _bases == _originalBases;
+        SequenceButton.Disabled = _busy || !_writable || !_editingEnabled || _sequenced || !IsComplete();
+        ResetSequenceButton.Disabled = _busy || !_writable || !_editingEnabled || _bases == _originalBases;
     }
 
     private bool IsComplete()
@@ -199,7 +200,7 @@ public sealed partial class GenePuzzle : Control
             var b = _bases[i];
             button.Text = b.ToString();
             button.Modulate = GetColor(b);
-            button.Disabled = _busy || !_writable || _originalBases[i] != 'X';
+            button.Disabled = _busy || !_writable || !_editingEnabled || _originalBases[i] != 'X';
         }
     }
 

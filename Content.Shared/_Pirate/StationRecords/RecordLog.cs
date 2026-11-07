@@ -59,6 +59,10 @@ public sealed partial record RecordLogEntry
     public TimeSpan RoundTime;
     [DataField]
     public bool Archived;
+
+    // Round-only entries are not saved to the history database.
+    [DataField]
+    public bool RoundOnly;
 }
 public static class RecordLogOrder
 {

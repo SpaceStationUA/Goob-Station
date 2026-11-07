@@ -47,6 +47,10 @@ public sealed partial record CriminalRecordCitation
     // Payment and void update this entry instead of adding new entries.
     [DataField]
     public uint? LogEntryId;
+
+    // Not saved to the database, so the citation ends with the round.
+    [DataField]
+    public bool RoundOnly;
 }
 
 public static class CriminalRecordCitations
