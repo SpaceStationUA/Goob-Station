@@ -46,6 +46,7 @@
     exactVolume: true
   - type: DrawableSolution
     solution: drink
+  - type: PourSound # Pirate: pour sound
   - type: SolutionTransfer
     maxTransferAmount: 30
     canChangeTransferAmount: true

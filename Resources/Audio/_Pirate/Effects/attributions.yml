@@ -57,3 +57,18 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from cmss13"
   source: "https://github.com/cmss13-devs/cmss13/blob/7853d79df1827a2a4907fb3162b6319662dbc1ba/sound/items/detector.ogg"
+
+- files: ["Fluids/liquid_pour1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation PR #84371 by TheBoondock via NovaSector, converted to mono"
+  source: "https://github.com/NovaSector/NovaSector/blob/9d5bb13a76866960c76cb78217e7436e65239268/sound/effects/liquid_pour/liquid_pour1.ogg"
+
+- files: ["Fluids/liquid_pour2.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Cut from \"Liquid, pour, splash, stream, water, with bottle slosh\" by MattRuthSound on freesound.org (tgstation PR #84371, via NovaSector), converted to mono"
+  source: "https://freesound.org/people/MattRuthSound/sounds/561896/"
+
+- files: ["Fluids/liquid_pour3.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Cut from \"Liquid, pour, splash, stream, water, short pour with small drop in background\" by MattRuthSound on freesound.org (tgstation PR #84371, via NovaSector), converted to mono"
+  source: "https://freesound.org/people/MattRuthSound/sounds/561895/"

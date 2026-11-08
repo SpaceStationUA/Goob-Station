@@ -42,6 +42,7 @@
     solution: beaker
   - type: InjectableSolution
     solution: beaker
+  - type: PourSound # Pirate: pour sound
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: SolutionItemStatus
@@ -159,6 +160,7 @@
     solution: beaker
   - type: InjectableSolution
     solution: beaker
+  - type: PourSound # Pirate: pour sound
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: SolutionItemStatus

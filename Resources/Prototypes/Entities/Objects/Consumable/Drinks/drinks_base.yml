@@ -40,6 +40,7 @@
     solutions:
       drink:
         maxVol: 30
+  - type: PourSound # Pirate: pour sound
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface

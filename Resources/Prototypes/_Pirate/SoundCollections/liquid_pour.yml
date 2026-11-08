@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: PirateLiquidPour
+  files:
+    - /Audio/_Pirate/Effects/Fluids/liquid_pour1.ogg
+    - /Audio/_Pirate/Effects/Fluids/liquid_pour2.ogg
+    - /Audio/_Pirate/Effects/Fluids/liquid_pour3.ogg
