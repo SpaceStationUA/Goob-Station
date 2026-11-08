@@ -26,12 +26,11 @@ public sealed class FeroxiUnderwaterVisualsSystem : EntitySystem
     // Target state names must differ from keys to detect swapped layers.
     private static readonly Dictionary<string, SpriteSpecifier.Rsi> SubmergedFins = new()
     {
-        // The tip layer recolours the same pixels as the tail fin.
         ["feroxi-dorsal"] = new(FeroxiFins, "dorsal"),
         ["feroxi-dorsal-tip"] = new(FeroxiFins, "dorsal-tip"),
         ["feroxi-dorsal-stripes"] = new(FeroxiFins, "dorsal-stripes"),
         ["feroxi-tail"] = new(FeroxiFins, "second-dorsal"),
-        ["feroxi-tail-second-dorsal-tip"] = new(FeroxiFins, "second-dorsal"),
+        ["feroxi-tail-second-dorsal-tip"] = new(FeroxiFins, "second-dorsal-tip"),
 
         // The BEHIND layer draws the whole fin for split tail layers.
         ["m_tail_orca_BEHIND_primary"] = new(PortedFins, "orca"),

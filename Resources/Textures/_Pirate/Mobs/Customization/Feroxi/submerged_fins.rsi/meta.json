@@ -22,6 +22,10 @@
         {
             "name": "second-dorsal",
             "directions": 4
+        },
+        {
+            "name": "second-dorsal-tip",
+            "directions": 4
         }
     ]
 }

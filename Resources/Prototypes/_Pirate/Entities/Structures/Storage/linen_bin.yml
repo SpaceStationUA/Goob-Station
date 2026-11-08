@@ -82,6 +82,8 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
   - type: Bin
     maxItems: 50
     whitelist:
@@ -137,6 +139,8 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
   - type: Bin
     maxItems: 50
     whitelist:
@@ -188,6 +192,8 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
   - type: Bin
     maxItems: 50
     whitelist:
