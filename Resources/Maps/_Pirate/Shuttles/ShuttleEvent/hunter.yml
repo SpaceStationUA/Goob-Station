@@ -988,6 +988,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 20.5,-1.5
       parent: 1
+- proto: CharacterPodBountyHunter
+  entities:
+  - uid: 314
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 24.5,0.5
+      parent: 1
 - proto: ClothingHeadHatWeldingMaskFlame
   entities:
   - uid: 144
@@ -1795,7 +1803,7 @@ entities:
     - type: Transform
       pos: 18.472094,7.574433
       parent: 1
-- proto: Mirror
+- proto: BountyHunterMirror
   entities:
   - uid: 261
     components:
@@ -2104,13 +2112,6 @@ entities:
     components:
     - type: Transform
       pos: 17.5,-1.5
-      parent: 1
-- proto: SpawnPointBountyHunter
-  entities:
-  - uid: 314
-    components:
-    - type: Transform
-      pos: 24.5,0.5
       parent: 1
 - proto: SpeedLoaderMagnum
   entities:
