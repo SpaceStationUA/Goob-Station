@@ -316,7 +316,8 @@ namespace Content.Server.Database
                 profile.PersonalNotes,
                 profile.OOCNotes,
                 profile.Secrets,
-                profile.ExploitableInfo).WithRecordBackgrounds( // Pirate: persistent record history
+                profile.ExploitableInfo).WithBloodTaste( // Pirate: blood taste description
+                profile.BloodTaste).WithRecordBackgrounds( // Pirate: persistent record history
                 FromStoredRecordBackgrounds(profile.RecordBackgrounds)).WithKnowledge( // Pirate: persistent record history
                 new KnowledgeProfile(profile.KnowledgeMastery.ToDictionary(
                     pair => new EntProtoId(pair.Key),
@@ -342,6 +343,7 @@ namespace Content.Server.Database
             profile.OOCNotes = humanoid.OOCNotes;
             profile.Secrets = humanoid.Secrets;
             profile.ExploitableInfo = humanoid.ExploitableInfo;
+            profile.BloodTaste = humanoid.BloodTaste; // Pirate: blood taste description
             profile.RecordBackgrounds = ToStoredRecordBackgrounds(humanoid.RecordBackgrounds); // Pirate: persistent record history
             profile.Species = humanoid.Species;
             profile.Height = humanoid.Height; // Goobstation: port EE height/width sliders

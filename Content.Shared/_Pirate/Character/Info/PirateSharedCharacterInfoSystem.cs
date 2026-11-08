@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Shared._Pirate.CCVars;
+using Content.Shared.Body.Components;
 using Content.Shared._Pirate.Character.Info.Components;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
@@ -104,6 +105,13 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
             }, true);
         }
 
+        // Pirate: blood taste is independent of the flavor text cvar, so it always applies.
+        if (TryComp<TastyBloodComponent>(mob, out var tastyBlood))
+        {
+            tastyBlood.CustomTaste = profile.BloodTaste;
+            Dirty(mob, tastyBlood);
+        }
+
         if (_config.GetCVar(PirateVars.ExploitableSecrets))
         {
             AddComp(mob, new ExploitableInfoComponent
@@ -133,6 +141,12 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
         {
             physicalDescription.Description = string.Empty;
             Dirty(entity, physicalDescription);
+        }
+
+        if (TryComp(entity, out TastyBloodComponent? tastyBlood))
+        {
+            tastyBlood.CustomTaste = string.Empty;
+            Dirty(entity, tastyBlood);
         }
 
         var mind = _minds.GetMind(entity);

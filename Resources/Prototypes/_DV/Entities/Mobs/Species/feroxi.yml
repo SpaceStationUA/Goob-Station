@@ -5,6 +5,8 @@
   save: false
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-feroxi
   - type: HumanoidAppearance
     species: Feroxi
     hideLayersOnEquip:

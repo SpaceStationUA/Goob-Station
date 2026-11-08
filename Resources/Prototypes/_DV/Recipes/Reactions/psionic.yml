@@ -193,7 +193,7 @@
     amount: -3
 
 - type: reaction
-  id: CreateAssayCrystal
+  id: CreateXenoglossyCrystal
   impact: Low
   quantized: true
   minTemp: 386
@@ -204,6 +204,6 @@
       amount: 25
   effects:
   - !type:SpawnEntity
-    entity: PsionCrystalAssay
+    entity: PsionCrystalXenoglossy
   - !type:AffectsGlimmer
     amount: -3

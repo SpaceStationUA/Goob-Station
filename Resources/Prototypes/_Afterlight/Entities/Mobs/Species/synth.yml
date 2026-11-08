@@ -5,6 +5,9 @@
   id: BaseMobSynth
   name: Urist McBeeper
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-synth
+    givesBenefits: false
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
