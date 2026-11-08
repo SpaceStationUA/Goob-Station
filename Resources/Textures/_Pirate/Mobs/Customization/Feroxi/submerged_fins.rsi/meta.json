@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Derived from _Goobstation/Mobs/Customization/Feroxi/tail_markings.rsi (made by BlitzTheSquishy, resprite and tip by RedTerror): fin frames rearranged for submerged Feroxi by the Pirate team",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "dorsal",
+            "directions": 4
+        },
+        {
+            "name": "dorsal-tip",
+            "directions": 4
+        },
+        {
+            "name": "dorsal-stripes",
+            "directions": 4
+        },
+        {
+            "name": "second-dorsal",
+            "directions": 4
+        }
+    ]
+}

@@ -7,33 +7,40 @@ using Content.Pirate.Shared.Wetness.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Pirate.Client.Feroxi;
 
-/// <summary>Shows only a submerged Feroxi's dorsal fin.</summary>
 /// <remarks>Only hides layers that their owning systems can rebuild from live state.</remarks>
 public sealed class FeroxiUnderwaterVisualsSystem : EntitySystem
 {
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
-    [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly WoundableVisualsSystem _woundVisuals = default!;
 
-    /// <summary>Dorsal-fin states that remain visible while submerged.</summary>
-    private static readonly HashSet<string> FinStates =
-    [
-        "feroxi-dorsal",
-        "feroxi-dorsal-tip",
-        "feroxi-dorsal-stripes",
-        "feroxi-tail-second-dorsal-tip",
-    ];
+    private static readonly ResPath FeroxiFins = new("/Textures/_Pirate/Mobs/Customization/Feroxi/submerged_fins.rsi");
+    private static readonly ResPath PortedFins = new("/Textures/_Pirate/Mobs/Customization/Feroxi/submerged_ported_fins.rsi");
+
+    // Target state names must differ from keys to detect swapped layers.
+    private static readonly Dictionary<string, SpriteSpecifier.Rsi> SubmergedFins = new()
+    {
+        // The tip layer recolours the same pixels as the tail fin.
+        ["feroxi-dorsal"] = new(FeroxiFins, "dorsal"),
+        ["feroxi-dorsal-tip"] = new(FeroxiFins, "dorsal-tip"),
+        ["feroxi-dorsal-stripes"] = new(FeroxiFins, "dorsal-stripes"),
+        ["feroxi-tail"] = new(FeroxiFins, "second-dorsal"),
+        ["feroxi-tail-second-dorsal-tip"] = new(FeroxiFins, "second-dorsal"),
+
+        // The BEHIND layer draws the whole fin for split tail layers.
+        ["m_tail_orca_BEHIND_primary"] = new(PortedFins, "orca"),
+        ["m_tail_datashark_BEHIND_C"] = new(PortedFins, "datashark"),
+        ["m_tailwag_datashark_BEHIND_C"] = new(PortedFins, "datashark"),
+        ["data_shark_wag_primary_BEHIND"] = new(PortedFins, "datashark-wag"),
+        ["fish_primary_BEHIND"] = new(PortedFins, "fish"),
+        ["fish_wag_primary_BEHIND"] = new(PortedFins, "fish"),
+    };
 
     private readonly HashSet<EntityUid> _underwater = new();
 
@@ -85,8 +92,6 @@ public sealed class FeroxiUnderwaterVisualsSystem : EntitySystem
 
     private void ApplyUnderwater(EntityUid uid, HumanoidAppearanceComponent humanoid, SpriteComponent sprite)
     {
-        var dirOffset = GetFinDirOffset(uid);
-
         foreach (var layer in humanoid.BaseLayers.Keys)
         {
             SetLayerVisible(uid, sprite, layer, false);
@@ -101,22 +106,23 @@ public sealed class FeroxiUnderwaterVisualsSystem : EntitySystem
 
                 foreach (var markingSprite in prototype.Sprites)
                 {
-                    if (markingSprite is not SpriteSpecifier.Rsi rsi)
-                        continue;
-
-                    var layerId = $"{marking.MarkingId}-{rsi.RsiState}";
-
-                    if (!FinStates.Contains(rsi.RsiState))
+                    if (markingSprite is not SpriteSpecifier.Rsi rsi ||
+                        !_sprite.LayerMapTryGet((uid, sprite), $"{marking.MarkingId}-{rsi.RsiState}", out var index, false))
                     {
-                        SetLayerVisible(uid, sprite, layerId, false);
                         continue;
                     }
 
-                    SetLayerVisible(uid, sprite, layerId, true);
+                    if (!SubmergedFins.TryGetValue(rsi.RsiState, out var fin))
+                    {
+                        _sprite.LayerSetVisible((uid, sprite), index, false);
+                        continue;
+                    }
 
-                    // Marking refreshes reset the direction offset.
-                    if (_sprite.LayerMapTryGet((uid, sprite), layerId, out var finIndex, false))
-                        _sprite.LayerSetDirOffset((uid, sprite), finIndex, dirOffset);
+                    if (_sprite.LayerGetRsiState((uid, sprite), index).Name != fin.RsiState)
+                        _sprite.LayerSetSprite((uid, sprite), index, fin);
+
+                    // Clothing that hides the tail on land is hidden underwater.
+                    _sprite.LayerSetVisible((uid, sprite), index, true);
                 }
             }
         }
@@ -139,27 +145,6 @@ public sealed class FeroxiUnderwaterVisualsSystem : EntitySystem
 
     private void Restore(EntityUid uid, HumanoidAppearanceComponent humanoid, SpriteComponent sprite)
     {
-        foreach (var markingList in humanoid.MarkingSet.Markings.Values)
-        {
-            foreach (var marking in markingList)
-            {
-                if (!_markingManager.TryGetMarking(marking, out var prototype))
-                    continue;
-
-                foreach (var markingSprite in prototype.Sprites)
-                {
-                    if (markingSprite is not SpriteSpecifier.Rsi rsi ||
-                        !FinStates.Contains(rsi.RsiState) ||
-                        !_sprite.LayerMapTryGet((uid, sprite), $"{marking.MarkingId}-{rsi.RsiState}", out var index, false))
-                    {
-                        continue;
-                    }
-
-                    _sprite.LayerSetDirOffset((uid, sprite), index, DirectionOffset.None);
-                }
-            }
-        }
-
         _humanoidAppearance.UpdateSprite((uid, humanoid, sprite));
 
         // Re-render worn clothing.
@@ -182,15 +167,5 @@ public sealed class FeroxiUnderwaterVisualsSystem : EntitySystem
     {
         if (_sprite.LayerMapTryGet((uid, sprite), key, out var index, false))
             _sprite.LayerSetVisible((uid, sprite), index, visible);
-    }
-
-    private DirectionOffset GetFinDirOffset(EntityUid uid)
-    {
-        var angle = (_transform.GetWorldRotation(uid) + _eye.CurrentEye.Rotation).Reduced().FlipPositive();
-
-        // Flip swaps east/west and uses north for south; scale would hide status icons.
-        return angle.GetCardinalDir() == Direction.North
-            ? DirectionOffset.None
-            : DirectionOffset.Flip;
     }
 }
