@@ -1,0 +1,85 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made for Pirate station by CyberLanos (GitHub). State names are the ckeys of the players who chose them.",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "dynexust",
+            "delays": [
+                [
+                    1.5,
+                    1.5,
+                    0.1,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "the_question",
+            "delays": [
+                [
+                    0.4,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "astrally"
+        },
+        {
+            "name": "saloplay",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "luciusgg",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "syvorks",
+            "delays": [
+                [
+                    0.4,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "pyrizhok",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "hamster_masterr"
+        },
+        {
+            "name": "gamescat"
+        },
+        {
+            "name": "ter_4333"
+        }
+    ]
+}

@@ -39,6 +39,7 @@
   - type: DnaSubstanceTrace
   - type: Item
     size: Small
+  - type: Towel # Pirate: towel bin
 
 - type: entity
   id: TowelColorWhite

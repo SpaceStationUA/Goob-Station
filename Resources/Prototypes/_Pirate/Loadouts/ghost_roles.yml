@@ -52,6 +52,23 @@
   - PirateEEGenericItems
 
 - type: roleLoadout
+  id: GhostRoleBountyHunter
+  groups:
+  - PirateEEGenericBackpacks
+  - PirateEEGenericHead
+  - PirateEEGenericEyes
+  - PirateEEGenericBelt
+  - PirateEEGenericNeck
+  - PirateEEGenericOuterClothing
+  - PirateEEGenericUniform
+  - PirateEEGenericShoes
+  - PirateGenericPassengerFace
+  - PirateGenericPassengerGloves
+  - PirateEEGenericHands
+  - PirateEEGenericMask
+  - PirateEEGenericItems
+
+- type: roleLoadout
   id: GhostRoleFriendlyWizard
   groups:
   - PirateEEGenericBackpacks

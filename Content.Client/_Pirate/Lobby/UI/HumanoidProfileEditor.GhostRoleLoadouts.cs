@@ -28,6 +28,7 @@ public sealed partial class HumanoidProfileEditor
         [
             ("GhostRoleCybersun", "roles-antag-cybersun-name"),
             ("GhostRoleMercenary", "roles-antag-mercenary-name"),
+            ("GhostRoleBountyHunter", "roles-antag-bounty-hunter-name"),
             ("GhostRoleFriendlyWizard", "humanoid-profile-editor-friendly-wizard"),
             ("GhostRoleLizardGasStation", "humanoid-profile-editor-lizard-gas-station"),
         ];

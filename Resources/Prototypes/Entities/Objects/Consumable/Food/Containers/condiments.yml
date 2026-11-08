@@ -378,6 +378,7 @@
     solution: food
   - type: Spillable
     solution: food
+  - type: PourSound # Pirate: pour sound
   - type: SolutionTransfer
     canChangeTransferAmount: true
     minTransferAmount: 5

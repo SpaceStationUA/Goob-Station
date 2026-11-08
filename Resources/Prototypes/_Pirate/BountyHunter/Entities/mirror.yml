@@ -1,0 +1,6 @@
+- type: entity
+  parent: WizardMirror
+  id: BountyHunterMirror
+  suffix: Bounty Hunter, single use
+  components:
+  - type: BountyHunterMirror

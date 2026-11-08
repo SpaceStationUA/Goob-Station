@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from NovaSector at commit https://github.com/NovaSector/NovaSector/commit/273938898af29b73f4ddf45b02f51f8a7d6680fd (icons/obj/structures.dmi)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "linenbin-empty"
+    },
+    {
+      "name": "linenbin-half"
+    },
+    {
+      "name": "linenbin-full"
+    },
+    {
+      "name": "linenbasket-empty"
+    },
+    {
+      "name": "linenbasket-half"
+    },
+    {
+      "name": "linenbasket-full"
+    }
+  ]
+}

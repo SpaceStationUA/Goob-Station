@@ -12,6 +12,10 @@
     reoccurrenceDelay: 20
     minimumPlayers: 15
   - type: AntagLoadProfileRule
+  - type: AntagProfileDetailsRule
+  # Bank account on the ID card; no job, so no salary.
+  - type: AntagStartingBalanceRule
+    balance: 1000
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/_Pirate/Shuttles/ShuttleEvent/hunter.yml
@@ -35,11 +39,4 @@
         color: Orange
       mindRoles:
       - MindRoleBountyHunter
-      components:
-      - type: RandomMetadata
-        nameSegments:
-        - NamesBountyHunterTitle
-        - NamesBountyHunter
-        nameFormat: name-format-bounty-hunter
-      - type: RandomHumanoidAppearance
-        randomizeName: false
+      # Random appearance components would overwrite the loaded profile.

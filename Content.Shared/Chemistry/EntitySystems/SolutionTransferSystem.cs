@@ -26,6 +26,7 @@ public sealed class SolutionTransferSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly ChemicalMixingSystem _chemicalMixing = default!; // Pirate
+    [Dependency] private readonly PourSoundSystem _pourSound = default!; // Pirate: pour sound
 
     private EntityQuery<RefillableSolutionComponent> _refillableQuery;
     private EntityQuery<DrainableSolutionComponent> _drainableQuery;
@@ -280,6 +281,8 @@ public sealed class SolutionTransferSystem : EntitySystem
         if (transferred <= 0)
             return;
 
+        _pourSound.TryPlay(data.SourceEntity, data.User); // Pirate: pour sound
+
         var message = Loc.GetString("comp-solution-transfer-transfer-solution", ("amount", transferred), ("target", data.TargetEntity));
         _popup.PopupClient(message, data.SourceEntity, data.User);
     }
@@ -296,6 +299,8 @@ public sealed class SolutionTransferSystem : EntitySystem
         var transferred = Transfer(data);
         if (transferred <= 0)
             return;
+
+        _pourSound.TryPlay(data.TargetEntity, data.User); // Pirate: pour sound
 
         var toTheBrim = targetSolution.AvailableVolume == 0;
         var msg = toTheBrim

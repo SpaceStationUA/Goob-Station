@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Shared.SlaughterDemon;
+using Content.Server._Pirate.BountyHunter; // Pirate: bounty hunter mirror
 using Content.Server.Guardian;
 using Content.Server.Humanoid;
 using Content.Server.Mind;
@@ -31,6 +32,7 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly BountyHunterMirrorSystem _hunterMirror = default!; // Pirate: bounty hunter mirror
 
     public override void Initialize()
     {
@@ -46,11 +48,19 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
 
     private void OnMessage(Entity<WizardMirrorComponent> ent, ref WizardMirrorMessage args)
     {
+        #region Pirate: bounty hunter mirror
+        if (!_hunterMirror.CanUse(ent, args.Actor))
+            return;
+        #endregion
+
         if (!TryComp(ent.Comp.Target, out HumanoidAppearanceComponent? humanoid))
             return;
 
         var ckey = TryComp<ActorComponent>(ent.Comp.Target, out var actor) ? actor.PlayerSession.Name : null; // Pirate ckey for restricted players
-        ForceLoadProfile(ent.Comp.Target.Value, ent.Comp, args.Profile, humanoid, ckey);
+        #region Pirate: bounty hunter mirror
+        if (ForceLoadProfile(ent.Comp.Target.Value, ent.Comp, args.Profile, humanoid, ckey))
+            _hunterMirror.CompleteUse(ent);
+        #endregion
     }
 
     private void OnUiClosed(Entity<WizardMirrorComponent> ent, ref BoundUIClosedEvent args)
@@ -59,7 +69,7 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
         Dirty(ent);
     }
 
-    private void ForceLoadProfile(EntityUid target,
+    private bool ForceLoadProfile(EntityUid target, // Pirate: bounty hunter mirror
         WizardMirrorComponent component,
         HumanoidCharacterProfile profile,
         HumanoidAppearanceComponent humanoid,
@@ -72,13 +82,13 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
             if (HasComp<GuardianHostComponent>(target))
             {
                 _popup.PopupEntity(Loc.GetString("wizard-mirror-guardian-change-species-fail"), target, target);
-                return;
+                return false; // Pirate: bounty hunter mirror
             }
 
             if (HasComp<BloodCrawlComponent>(target))
             {
                 _popup.PopupEntity(Loc.GetString("wizard-mirror-blood-crawl-change-species-fail"), target, target);
-                return;
+                return false; // Pirate: bounty hunter mirror
             }
 
             var config = new PolymorphConfiguration
@@ -193,5 +203,6 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
 
         RaiseLocalEvent(target, new ProfileLoadFinishedEvent());
         Dirty(target, humanoid);
+        return true; // Pirate: bounty hunter mirror
     }
 }

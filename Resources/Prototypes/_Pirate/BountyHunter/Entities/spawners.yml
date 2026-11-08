@@ -12,15 +12,6 @@
     raffle:
       settings: default
   - type: BountyHunterSpawner
-
-- type: entity
-  id: SpawnPointBountyHunter
-  parent: MarkerBase
-  name: bounty hunter
-  components:
-  - type: SpawnPoint
-  - type: Sprite
-    layers:
-    - state: green
-    - sprite: Clothing/Head/Hats/cowboyhatbountyhunter.rsi
-      state: icon
+  - type: AntagCharacterPod
+  - type: GhostRoleLoadout
+    role: GhostRoleBountyHunter

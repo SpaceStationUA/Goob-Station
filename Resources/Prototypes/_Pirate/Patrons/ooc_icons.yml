@@ -1,0 +1,81 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: oocIcon
+  id: OocIconPirateDynexust
+  name: ooc-icon-pirate-dynexust
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: dynexust
+  tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPirateTheQuestion
+  name: ooc-icon-pirate-the-question
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: the_question
+  tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPirateAstrally
+  name: ooc-icon-pirate-astrally
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: astrally
+  tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPirateSaloplay
+  name: ooc-icon-pirate-saloplay
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: saloplay
+  tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPirateLuciusgg
+  name: ooc-icon-pirate-luciusgg
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: luciusgg
+  tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPirateSyvorks
+  name: ooc-icon-pirate-syvorks
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: syvorks
+  tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPiratePyrizhok
+  name: ooc-icon-pirate-pyrizhok
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: pyrizhok
+  tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPirateHamsterMasterr
+  name: ooc-icon-pirate-hamster-masterr
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: hamster_masterr
+  tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPirateGamescat
+  name: ooc-icon-pirate-gamescat
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: gamescat
+  tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPirateTer4333
+  name: ooc-icon-pirate-ter-4333
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: ter_4333
+  tier: PatronTierAssistant
