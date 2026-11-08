@@ -176,11 +176,9 @@
     - type: Sprite
       sprite: _Pirate/Objects/Consumable/Drinks/coffeemaker_drinks.rsi
       layers:
+        # A fill layer would cover the lid.
         - map: ["coffee_cup_base"]
           state: coffee
-        - map: ["enum.SolutionContainerLayers.Fill"]
-          state: coffee_full_1
-          visible: false
     - type: Icon
       sprite: _Pirate/Objects/Consumable/Drinks/coffeemaker_drinks.rsi
       state: coffee
@@ -189,11 +187,7 @@
     - type: Appearance
     - type: DrinkableThroughLid
     - type: CoffeeCupVisuals
-    - type: SolutionContainerVisuals
-      maxFillLevels: 1
-      fillBaseName: coffee_full_
-      changeColor: false
-      emptySpriteName: coffee_empty
+    - type: SolutionContainerVisuals # only so the server sends FillFraction to CoffeeCupVisuals
     - type: TrashOnSolutionEmpty
       solution: drink
 
