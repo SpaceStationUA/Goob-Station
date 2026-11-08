@@ -31,9 +31,9 @@ public abstract class SharedBountyHunterMirrorSystem : EntitySystem
 
         // The bounty hunter role marker is server-only. The server must check the role.
         return _net.IsClient ||
-               _mind.TryGetMind(user, out var mind, out var mindComp) &&
-               mindComp.OwnedEntity == user &&
-               _roles.MindHasRole<BountyHunterRoleComponent>(mind);
+               (_mind.TryGetMind(user, out var mind, out var mindComp) &&
+                mindComp.OwnedEntity == user &&
+                _roles.MindHasRole<BountyHunterRoleComponent>(mind));
     }
 
     private void OnOpenAttempt(Entity<BountyHunterMirrorComponent> ent, ref ActivatableUIOpenAttemptEvent args)

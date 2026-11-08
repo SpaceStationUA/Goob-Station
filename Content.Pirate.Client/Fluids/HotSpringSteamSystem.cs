@@ -18,11 +18,13 @@ public sealed partial class HotSpringSteamSystem : EntitySystem
 
         SubscribeLocalEvent<HotSpringSteamComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<HotSpringSteamComponent, ComponentShutdown>(OnShutdown);
+        InitializeParticleQuality();
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
+        ShutdownParticleQuality();
 
         foreach (var emitter in _emitters.Values)
             _particles.RemoveParticle(emitter);
@@ -30,6 +32,9 @@ public sealed partial class HotSpringSteamSystem : EntitySystem
     }
 
     private void OnStartup(Entity<HotSpringSteamComponent> ent, ref ComponentStartup args)
+        => CreateEmitter(ent);
+
+    private void CreateEmitter(Entity<HotSpringSteamComponent> ent)
     {
         var effects = ent.Comp.Effects;
         if (effects.Count == 0 || _emitters.ContainsKey(ent))
