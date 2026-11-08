@@ -1,0 +1,206 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: BaseLinenBin
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Storage/linen_bin.rsi
+    state: linenbin-empty
+    drawdepth: SmallObjects
+    noRot: true
+  - type: Appearance
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.3,0.25,0.3"
+        density: 100
+        mask:
+        - TabletopMachineMask
+  - type: InteractionOutline
+  - type: LinenBin
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container
+      linen-bin-hidden: !type:ContainerSlot
+  - type: Anchorable
+    delay: 0.5
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 70
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 20
+
+- type: entity
+  parent: BaseLinenBin
+  id: TowelBin
+  name: towel bin
+  description: Seeing this really makes you think of how much worse your life would have been without towels. Seriously, who doesn't use towels?
+  suffix: Empty
+  components:
+  - type: ItemMapper
+    sprite: _Pirate/Structures/Storage/linen_bin.rsi
+    containerWhitelist: [ bin-container ]
+    mapLayers:
+      linenbin-half:
+        minCount: 1
+        maxCount: 5
+        whitelist:
+          components:
+          - Towel
+      linenbin-full:
+        minCount: 6
+        whitelist:
+          components:
+          - Towel
+  - type: Bin
+    maxItems: 50
+    whitelist:
+      components:
+      - Towel
+  - type: Construction
+    graph: LinenBin
+    node: towelBin
+
+- type: entity
+  parent: TowelBin
+  id: TowelBinFilled
+  suffix: Filled
+  components:
+  - type: Transform
+    anchored: true
+  - type: Bin
+    maxItems: 50
+    whitelist:
+      components:
+      - Towel
+    initialContents:
+    - TowelColorWhite
+    - TowelColorWhite
+    - TowelColorWhite
+    - TowelColorWhite
+    - TowelColorWhite
+    - TowelColorWhite
+    - TowelColorWhite
+    - TowelColorWhite
+    - TowelColorWhite
+    - TowelColorWhite
+
+- type: entity
+  parent: BaseLinenBin
+  id: LinenBin
+  name: linen bin
+  description: It looks rather cosy.
+  suffix: Empty
+  components:
+  - type: ItemMapper
+    sprite: _Pirate/Structures/Storage/linen_bin.rsi
+    containerWhitelist: [ bin-container ]
+    mapLayers:
+      linenbin-half:
+        minCount: 1
+        maxCount: 5
+        whitelist:
+          tags:
+          - Bedsheet
+      linenbin-full:
+        minCount: 6
+        whitelist:
+          tags:
+          - Bedsheet
+  - type: Bin
+    maxItems: 50
+    whitelist:
+      tags:
+      - Bedsheet
+  - type: Construction
+    graph: LinenBin
+    node: linenBin
+
+- type: entity
+  parent: LinenBin
+  id: LinenBinFilled
+  suffix: Filled
+  components:
+  - type: Transform
+    anchored: true
+  - type: Bin
+    maxItems: 50
+    whitelist:
+      tags:
+      - Bedsheet
+    initialContents:
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+
+- type: entity
+  parent: LinenBin
+  id: LinenBasket
+  name: linen basket
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: linenbasket-empty
+  - type: ItemMapper
+    sprite: _Pirate/Structures/Storage/linen_bin.rsi
+    containerWhitelist: [ bin-container ]
+    mapLayers:
+      linenbasket-half:
+        minCount: 1
+        maxCount: 5
+        whitelist:
+          tags:
+          - Bedsheet
+      linenbasket-full:
+        minCount: 6
+        whitelist:
+          tags:
+          - Bedsheet
+  - type: Construction
+    graph: LinenBin
+    node: linenBasket
+
+- type: entity
+  parent: LinenBasket
+  id: LinenBasketFilled
+  suffix: Filled
+  components:
+  - type: Transform
+    anchored: true
+  - type: Bin
+    maxItems: 50
+    whitelist:
+      tags:
+      - Bedsheet
+    initialContents:
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
+    - BedsheetWhite
