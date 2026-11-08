@@ -48,6 +48,7 @@
             MedicalIntern: [ 3, 6 ]
             Paramedic: [ 1, 1 ]
             Psychologist: [ 1, 1 ]
+            Virologist: [ 2, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 7 ]
