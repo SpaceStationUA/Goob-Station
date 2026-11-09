@@ -1,11 +1,15 @@
 light_mode unshaded;
 
-uniform sampler2D SCREEN_TEXTURE;      // after every caster
-uniform sampler2D BEFORE_MOBS_TEXTURE; // before upright mobs
-uniform sampler2D AFTER_MOBS_TEXTURE;  // after upright mobs
+uniform sampler2D SCREEN_TEXTURE;      // alpha = coverage of the flat sprites after the upright mobs (doors)
+uniform sampler2D BEFORE_MOBS_TEXTURE; // alpha = coverage of the flat sprites before the upright mobs
+uniform sampler2D AFTER_MOBS_TEXTURE;  // alpha = the same, plus the upright mobs
 // The silhouettes of stealthed entities: they must never cast a shadow. Any alpha counts, because the stealth
 // shader draws every pixel with sprite alpha above 0 as opaque.
 uniform sampler2D EXCLUDE_TEXTURE;
+// Inside a silhouette the frame has no coverage of the other sprites there (the stealth shader writes alpha 1),
+// so they are drawn again into these: flat casters and upright casters.
+uniform sampler2D OTHER_FLAT_TEXTURE;
+uniform sampler2D OTHER_UPRIGHT_TEXTURE;
 // alpha 1 over the fixture strips of thin directional structures: flat, even though they draw at Mobs.
 uniform sampler2D FLAT_TEXTURE;
 // One world pixel down the screen, in UV.
@@ -26,17 +30,15 @@ highp float mobAt(highp vec2 uv) {
     // Over floor a mob raises the coverage; over a flat sprite the coverage is already 1, so compare colour.
     highp vec3 d = abs(zToSrgb(after).rgb - zToSrgb(before).rgb);
     highp float overSprite = step(threshold, max(max(d.r, d.g), d.b));
-    return max(step(0.004, after.a - before.a), overSprite);
+    highp float captured = max(step(0.004, after.a - before.a), overSprite);
+    // Inside a stealth silhouette only the redrawn upright casters count, never the stealthed entity.
+    highp float other = step(0.004, zTextureSpec(OTHER_UPRIGHT_TEXTURE, uv).a);
+    return mix(captured, other, excludedAt(uv));
 }
 
 void fragment() {
     highp vec2 uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
-
-    highp float flatBefore = zTextureSpec(BEFORE_MOBS_TEXTURE, uv).a;
-    highp float afterMobs = zTextureSpec(AFTER_MOBS_TEXTURE, uv).a;
-    highp float total = zTextureSpec(SCREEN_TEXTURE, uv).a;
-    highp float mobCoverage = clamp(afterMobs - flatBefore, 0.0, 1.0);
-    highp float flatAfter = clamp(total - afterMobs, 0.0, 1.0);
+    highp float excluded = excludedAt(uv);
 
     highp float weight = 1.0;
     if (mobAt(uv) > 0.5 && FADE > 0.0) {
@@ -47,9 +49,8 @@ void fragment() {
                 break;
 
             highp vec2 under = uv - STEP * float(i);
-            // A flat strip (directional window under a mob's feet) is not part of the mob. Neither is a stealthed
-            // entity below it, or the mob's feet would stop casting next to an invisible player.
-            if (mobAt(under) < 0.5 || zTextureSpec(FLAT_TEXTURE, under).a > 0.5 || excludedAt(under) > 0.5)
+            // A flat strip (directional window under a mob's feet) is not part of the mob.
+            if (mobAt(under) < 0.5 || zTextureSpec(FLAT_TEXTURE, under).a > 0.5)
                 break;
 
             below += 1.0;
@@ -60,7 +61,17 @@ void fragment() {
 
     weight = max(weight, zTextureSpec(FLAT_TEXTURE, uv).a);
 
-    highp float caster = clamp(flatBefore + flatAfter + mobCoverage * weight, 0.0, 1.0);
-    caster *= 1.0 - excludedAt(uv);
+    // Match alpha-over coverage in both paths so stealth does not change nearby shadows.
+    highp float flatBefore = zTextureSpec(BEFORE_MOBS_TEXTURE, uv).a;
+    highp float mobGain = max(zTextureSpec(AFTER_MOBS_TEXTURE, uv).a - flatBefore, 0.0);
+    highp float flatAfter = zTextureSpec(SCREEN_TEXTURE, uv).a;
+    highp float captured = 1.0 - max(1.0 - flatBefore - mobGain * weight, 0.0) * (1.0 - flatAfter);
+
+    // Redraw path, inside a stealth silhouette: OTHER_FLAT.a is every flat caster combined, OTHER_UPRIGHT.a = m.
+    highp float otherFlat = zTextureSpec(OTHER_FLAT_TEXTURE, uv).a;
+    highp float otherUpright = zTextureSpec(OTHER_UPRIGHT_TEXTURE, uv).a;
+    highp float redrawn = 1.0 - (1.0 - otherFlat) * (1.0 - otherUpright * weight);
+
+    highp float caster = clamp(mix(captured, redrawn, excluded), 0.0, 1.0);
     COLOR = vec4(1.0, 1.0, 1.0, caster);
 }
