@@ -1,0 +1,33 @@
+light_mode unshaded;
+blend_mode none;
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D FLOOR_TEXTURE;
+uniform sampler2D MASK_TEXTURE;
+// The silhouettes of stealthed entities (any alpha): they show the floor, so they get the floor's shadow (no
+// tell-tale hole).
+uniform sampler2D EXCLUDE_TEXTURE;
+// x = 0, y = how many render pixels up the shadow caster is (the shadow falls down the screen).
+uniform highp vec2 SHIFT;
+// rgb = shadow colour in sRGB, a = strength.
+uniform highp vec4 SHADOW;
+
+void fragment() {
+    highp vec2 uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
+    highp vec4 screen = zTextureSpec(SCREEN_TEXTURE, uv);
+    highp vec4 floorColour = zTextureSpec(FLOOR_TEXTURE, uv);
+    highp float coverage = screen.a;
+    highp float excluded = step(0.5 / 255.0, zTextureSpec(EXCLUDE_TEXTURE, uv).a);
+    highp float visibleFloor = 1.0 - coverage * (1.0 - excluded);
+
+    // FRAGCOORD grows upwards, so the caster of this pixel's shadow sits at +SHIFT.
+    highp float shadow = zTextureSpec(MASK_TEXTURE, uv + SHIFT * SCREEN_PIXEL_SIZE).a;
+    highp float a = clamp(shadow, 0.0, 1.0) * SHADOW.a;
+
+    // The frame is "sprites over floor" in linear light: replace the floor part with the darkened floor.
+    highp vec3 darkFloor = zFromSrgb(vec4(mix(zToSrgb(floorColour).rgb, SHADOW.rgb, a), 1.0)).rgb;
+    highp vec3 result = screen.rgb + (darkFloor - floorColour.rgb) * visibleFloor;
+
+    highp float alpha = coverage + floorColour.a * (1.0 - coverage);
+    COLOR = vec4(result, alpha);
+}

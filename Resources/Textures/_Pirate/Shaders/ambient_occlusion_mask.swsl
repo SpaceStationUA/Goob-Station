@@ -1,0 +1,66 @@
+light_mode unshaded;
+
+uniform sampler2D SCREEN_TEXTURE;      // after every caster
+uniform sampler2D BEFORE_MOBS_TEXTURE; // before upright mobs
+uniform sampler2D AFTER_MOBS_TEXTURE;  // after upright mobs
+// The silhouettes of stealthed entities: they must never cast a shadow. Any alpha counts, because the stealth
+// shader draws every pixel with sprite alpha above 0 as opaque.
+uniform sampler2D EXCLUDE_TEXTURE;
+// alpha 1 over the fixture strips of thin directional structures: flat, even though they draw at Mobs.
+uniform sampler2D FLAT_TEXTURE;
+// One world pixel down the screen, in UV.
+uniform highp vec2 STEP;
+// Zero disables upright fade.
+uniform highp float FADE;
+
+// sRGB difference that counts as "a mob was drawn over a flat sprite here".
+const highp float threshold = 1.5 / 255.0;
+
+highp float excludedAt(highp vec2 uv) {
+    return step(0.5 / 255.0, zTextureSpec(EXCLUDE_TEXTURE, uv).a);
+}
+
+highp float mobAt(highp vec2 uv) {
+    highp vec4 before = zTextureSpec(BEFORE_MOBS_TEXTURE, uv);
+    highp vec4 after = zTextureSpec(AFTER_MOBS_TEXTURE, uv);
+    // Over floor a mob raises the coverage; over a flat sprite the coverage is already 1, so compare colour.
+    highp vec3 d = abs(zToSrgb(after).rgb - zToSrgb(before).rgb);
+    highp float overSprite = step(threshold, max(max(d.r, d.g), d.b));
+    return max(step(0.004, after.a - before.a), overSprite);
+}
+
+void fragment() {
+    highp vec2 uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
+
+    highp float flatBefore = zTextureSpec(BEFORE_MOBS_TEXTURE, uv).a;
+    highp float afterMobs = zTextureSpec(AFTER_MOBS_TEXTURE, uv).a;
+    highp float total = zTextureSpec(SCREEN_TEXTURE, uv).a;
+    highp float mobCoverage = clamp(afterMobs - flatBefore, 0.0, 1.0);
+    highp float flatAfter = clamp(total - afterMobs, 0.0, 1.0);
+
+    highp float weight = 1.0;
+    if (mobAt(uv) > 0.5 && FADE > 0.0) {
+        // Count how far the silhouette goes on below this pixel. FRAGCOORD grows upwards, so down is -STEP.
+        highp float below = 0.0;
+        for (int i = 1; i <= 32; i++) {
+            if (float(i) > FADE)
+                break;
+
+            highp vec2 under = uv - STEP * float(i);
+            // A flat strip (directional window under a mob's feet) is not part of the mob. Neither is a stealthed
+            // entity below it, or the mob's feet would stop casting next to an invisible player.
+            if (mobAt(under) < 0.5 || zTextureSpec(FLAT_TEXTURE, under).a > 0.5 || excludedAt(under) > 0.5)
+                break;
+
+            below += 1.0;
+        }
+
+        weight = clamp(1.0 - below / FADE, 0.0, 1.0);
+    }
+
+    weight = max(weight, zTextureSpec(FLAT_TEXTURE, uv).a);
+
+    highp float caster = clamp(flatBefore + flatAfter + mobCoverage * weight, 0.0, 1.0);
+    caster *= 1.0 - excludedAt(uv);
+    COLOR = vec4(1.0, 1.0, 1.0, caster);
+}
