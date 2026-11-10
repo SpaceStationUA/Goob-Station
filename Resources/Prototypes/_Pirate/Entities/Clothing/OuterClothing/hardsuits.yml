@@ -4,6 +4,9 @@
   name: atmos hardsuit # Pirate
   description: An old atmospheric hardsuit. It looks like it has seen better days, but it still provides good fire protection. Feels heavy.
   components:
+  - type: SuitWrap
+    ramp: [ "#203F3B", "#3B3B3B", "#6B5619", "#397169" ]
+    accent: "#2DDAFF"
   - type: Sprite
     sprite: _Pirate/Clothing/OuterClothing/Hardsuits/atmospherics_old.rsi
   - type: Clothing
@@ -48,6 +51,9 @@
   suffix: SAN
   description: Спеціальний войдсуїт, розрахований на збереження носія від екстремальних зовнішніх умов.
   components:
+  - type: SuitWrap
+    ramp: [ "#171816", "#242722", "#302C33", "#353B41" ]
+    accent: "#C9B12E"
   - type: Sprite
     sprite: _Pirate/Clothing/OuterClothing/Hardsuits/SolarianSecVoidSuit.rsi
   - type: Clothing

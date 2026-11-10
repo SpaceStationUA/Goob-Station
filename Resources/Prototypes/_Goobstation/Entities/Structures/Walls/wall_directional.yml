@@ -26,6 +26,7 @@
     soundGroups:
       Brute:
         collection: MetalThud
+  - type: AmbientOcclusionFlat # Pirate: sprite ambient occlusion
   - type: Sprite
     drawdepth: Mobs
     sprite: _Goobstation/Structures/Walls/directional.rsi

@@ -37,3 +37,23 @@
   id: GerasColorTint
   kind: source
   path: "/Textures/_Pirate/Shaders/geras_color_tint.swsl"
+
+- type: shader
+  id: PirateAmbientOcclusionCopy
+  kind: source
+  path: "/Textures/_Pirate/Shaders/ambient_occlusion_copy.swsl"
+
+- type: shader
+  id: PirateAmbientOcclusionMask
+  kind: source
+  path: "/Textures/_Pirate/Shaders/ambient_occlusion_mask.swsl"
+
+- type: shader
+  id: PirateAmbientOcclusionComposite
+  kind: source
+  path: "/Textures/_Pirate/Shaders/ambient_occlusion_composite.swsl"
+
+- type: shader
+  id: PirateAmbientOcclusionClearAlpha
+  kind: source
+  path: "/Textures/_Pirate/Shaders/ambient_occlusion_clear_alpha.swsl"

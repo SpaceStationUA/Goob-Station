@@ -153,6 +153,11 @@
   name: atmospherics hardsuit # Goob edit
   description: A special suit that protects against hazardous, low pressure environments. Has thermal shielding.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#402A0D", "#BF8F2E", "#E6C35C" ]
+    accent: "#3FBFBF"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: Clothing
@@ -200,6 +205,11 @@
   name: engineering hardsuit
   description: A special hardsuit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#72452A", "#946132", "#BC9053" ]
+    accent: "#30B5E6"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
   - type: Clothing
@@ -244,6 +254,11 @@
   name: spationaut hardsuit # Goob edit
   description: A lightweight hardsuit designed for industrial EVA in zero gravity. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#422623", "#72452A" ]
+    accent: "#A4FEF4"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
   - type: Clothing
@@ -290,6 +305,11 @@
   name: mining hardsuit # Goob edit
   description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#48322E", "#72452A", "#9F6F3D" ]
+    accent: "#B15CE6"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
   - type: Clothing
@@ -338,6 +358,11 @@
   name: goliath hardsuit # Goob edit
   description: A lightweight hardsuit, adorned with a patchwork of thick, chitinous goliath hide. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0F0200", "#2D0600", "#590C00", "#993333" ]
+    accent: "#7DFCFF"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/goliath.rsi
   - type: Clothing
@@ -389,6 +414,11 @@
   name: salvager maxim hardsuit # Goob edit
   description: Fire. Heat. These things forge great weapons, they also forge great salvagers.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0F0200", "#400902", "#3B3B3B", "#6B5E52" ]
+    accent: "#FF3366"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi
   - type: Clothing
@@ -439,6 +469,11 @@
   name: security hardsuit
   description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#FACB3E"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security.rsi
   - type: Clothing
@@ -491,6 +526,11 @@
   name: brigmedic hardsuit # Goob edit
   description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#FACB3E"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
   - type: Clothing
@@ -536,6 +576,11 @@
   name: warden's hardsuit # Goob edit
   description: A specialized riot suit geared to combat low pressure environments.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#FACB3E"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
   - type: Clothing
@@ -586,6 +631,11 @@
   name: captain's parade hardsuit # Goob edit
   description: A formal and slightly armored hardsuit, made for the station's captain. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0E0E0E", "#181818", "#212121", "#312F47" ]
+    accent: "#E6A345"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
   - type: Clothing
@@ -639,6 +689,11 @@
   name: chief engineer's hardsuit # Goob edit
   description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#49475C", "#8A8A9E", "#C2C1C9" ]
+    accent: "#CC793D"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
   - type: Clothing
@@ -694,6 +749,11 @@
   name: chief medical officer's hardsuit # Goob edit
   description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#343442", "#49475C", "#8A8A9E", "#C2C1C9" ]
+    accent: "#8DCDF7"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
   - type: Clothing
@@ -738,6 +798,11 @@
   name: experimental research hardsuit # Goob edit
   description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#9D1DE8"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
   - type: Clothing
@@ -796,6 +861,11 @@
   name: head of security's hardsuit
   description: Lighter and more protective than the standard security hardsuit, but not by much.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#2F2E31", "#545350" ]
+    accent: "#008BED"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
   - type: Clothing
@@ -846,6 +916,11 @@
   description: A refurbished mining hardsuit, fashioned after the Quartermaster's colors. Graphene lining provides less protection, but is much easier to move. # Goob edit
   categories: [ DoNotMap ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#422623", "#72452A", "#595F19" ]
+    accent: "#E1EE3A"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/luxury.rsi
   - type: Clothing
@@ -889,6 +964,11 @@
   name: blood-red hardsuit # Goob edit
   description: A heavily armored hardsuit designed for work in special operations. Property of Gorlex Marauders.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#303032", "#3E3D3F" ]
+    accent: "#545350"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: Item
@@ -949,6 +1029,11 @@
   name: blood-red medic hardsuit # Goob edit
   description: A heavily armored and agile advanced hardsuit specifically designed for field medic operations.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#3F010D", "#181719", "#232226", "#3E3D3F" ]
+    accent: "#B22C20"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
   - type: Clothing
@@ -978,6 +1063,11 @@
   name: syndicate elite hardsuit # Goob edit
   description: An elite version of the blood-red hardsuit, with improved mobility and fireproofing. Property of Gorlex Marauders. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#384134", "#545350" ]
+    accent: "#B22C20"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
   - type: Clothing
@@ -1037,6 +1127,11 @@
   name: syndicate commander hardsuit # Goob edit
   description: A bulked up version of the blood-red hardsuit, purpose-built for the commander of a syndicate operative squad. Has significantly improved armor for those deadly front-lines firefights. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0E0E0E", "#171717", "#1F1F1F", "#452B2D" ]
+    accent: "#B5B5B5"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
   - type: Clothing
@@ -1093,6 +1188,11 @@
   name: cybersun juggernaut suit
   description: A suit made by the cutting edge R&D department at Cybersun to be hyper resilient.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#000000", "#261517", "#391D23", "#573A3C" ]
+    accent: "#00FF00"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
   - type: Clothing
@@ -1150,6 +1250,11 @@
   name: wizard hardsuit # Goob edit
   description: A bizarre gem-encrusted suit that radiates magical energies.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#450363", "#5F277F", "#8637AF", "#994DC5" ]
+    accent: "#2DDAFF"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
   - type: Clothing
@@ -1205,6 +1310,11 @@
   name: organic space suit
   description: A spaceworthy biomass of pressure and temperature resistant tissue.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#CF9D87", "#E4B29C", "#EEBCA6", "#F6C4AE" ]
+    accent: "#F6C4AE"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
   - type: Clothing
@@ -1280,6 +1390,11 @@
   name: pirate captain's hardsuit # Goob edit
   description: An ancient armored hardsuit, perfect for defending against space scurvy and toolbox-wielding scallywags. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#131214", "#212022", "#2F2E31", "#806E00" ]
+    accent: "#B09800"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: Item
@@ -1327,6 +1442,11 @@
   name: ERT leader's hardsuit # Goob edit
   description: A protective hardsuit worn by the leader of an emergency response team. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#191824", "#2A2938", "#4F548E", "#978C8C" ]
+    accent: "#CE9B2D"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: Clothing
@@ -1344,6 +1464,11 @@
   name: ERT chaplain's hardsuit # Goob edit
   description: A protective hardsuit worn by the chaplains of an Emergency Response Team. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#252525", "#771B20", "#ACACAC", "#FFFFFF" ]
+    accent: "#771B20"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi #if you change this, please update the humanoid.yml with a better markers sprite.
   - type: Clothing
@@ -1370,6 +1495,11 @@
   name: ERT engineer's hardsuit # Goob edit
   description: A protective hardsuit worn by the engineers of an emergency response team. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#191825", "#6C431E", "#9A6836", "#BEB1B4" ]
+    accent: "#ED9A62"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: Clothing
@@ -1389,6 +1519,11 @@
   name: ERT medic's hardsuit # Goob edit
   description: A protective hardsuit worn by the medics of an emergency response team. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#191824", "#312D38", "#695B68", "#A4969D" ]
+    accent: "#C06463"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: Clothing
@@ -1415,6 +1550,11 @@
   name: ERT security's hardsuit # Goob edit
   description: A protective hardsuit worn by the security officers of an emergency response team. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#191824", "#292739", "#5D515C", "#99A2AB" ]
+    accent: "#99A2AB"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: Clothing
@@ -1445,6 +1585,11 @@
   name: ERT janitor's hardsuit # Goob edit
   description: A protective hardsuit worn by the janitors of an emergency response team. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#191824", "#332533", "#505463", "#B882A2" ]
+    accent: "#C4874E"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: Clothing
@@ -1462,6 +1607,11 @@
   name: PI-52 "Lucifer" hardsuit # Goob edit
   description: A famous hardsuit used by Central Command's death-squadrons, often shown in movies by Nanotrasen intended to increase recruitment. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0C0C0D", "#17171F", "#212129", "#31323C" ]
+    accent: "#68C2D3"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
   - type: Clothing
@@ -1527,6 +1677,11 @@
   name: CBURN exosuit
   description: A lightweight yet strong exosuit used for special cleanup operations.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0F1110", "#171918", "#242625", "#3D3E32" ]
+    accent: "#3D3E32"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/cburn.rsi
   - type: Clothing
@@ -1578,6 +1733,11 @@
   name: clown hardsuit # Goob edit
   description: A custom-made clown hardsuit. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#7A0606", "#A40808", "#C40000", "#CC9BCC" ]
+    accent: "#E1E277"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/clown.rsi
   - type: Clothing
@@ -1615,6 +1775,11 @@
   name: mime hardsuit # Goob edit
   description: A custom-made mime hardsuit. # Goob edit.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#14151A", "#800000", "#808080", "#D8D9DC" ]
+    accent: "#950000"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
   - type: Clothing
@@ -1633,6 +1798,11 @@
   name: Santa's hardsuit # Goob edit
   description: A festive, cheerful hardsuit that protects the jolly gift-giver while on sleighrides in space. Offers some resistance against asteroid strikes. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#111111", "#282828", "#8A8A8A", "#E7E7E7" ]
+    accent: "#FFFF00"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/santahardsuit.rsi
   - type: Clothing

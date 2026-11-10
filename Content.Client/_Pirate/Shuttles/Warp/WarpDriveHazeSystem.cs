@@ -20,11 +20,8 @@ public sealed class WarpDriveHazeSystem : EntitySystem
 
     private static readonly ProtoId<ShaderPrototype> HazeShader = "WarpDriveHaze";
 
-    /// <summary>
-    ///     Stable id for this post-shader, so it can be replaced or removed without disturbing any
-    ///     other shader the same sprite may carry.
-    /// </summary>
-    private const string PostShaderId = "warp-drive-haze";
+    // The opaque haze quad must be excluded from ambient occlusion.
+    public const string PostShaderId = "warp-drive-haze";
 
     private ShaderInstance _shader = default!;
 

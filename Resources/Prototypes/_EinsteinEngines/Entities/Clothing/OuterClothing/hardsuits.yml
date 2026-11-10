@@ -6,6 +6,11 @@
   name: combat hardsuit
   description: A purpose-built combat hardsuit designed to protect its user against all manner of enemy combatants in low pressure environments.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#101319", "#212734", "#3A3D43", "#5F6672" ]
+    accent: "#CFCB5A"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _DV/Clothing/OuterClothing/Hardsuits/Combat/standard.rsi
   - type: Clothing
@@ -50,6 +55,11 @@
   name: security combat hardsuit
   description: A purpose-built combat hardsuit designed to protect its user against all manner of enemy combatants in low pressure environments. This one has station security markings.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#101319", "#212734", "#3A3D43", "#5F6672" ]
+    accent: "#CFCB5A"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _DV/Clothing/OuterClothing/Hardsuits/Combat/officer.rsi
   - type: Clothing
@@ -65,6 +75,11 @@
   name: medical combat hardsuit
   description: A purpose-built combat hardsuit designed to allow its user greater mobility for superior support of friendly units in active combat zones.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#101319", "#212734", "#3A3D43", "#5F6672" ]
+    accent: "#00E8FF"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _DV/Clothing/OuterClothing/Hardsuits/Combat/medical.rsi
   - type: Clothing
@@ -110,6 +125,11 @@
   name: riot combat hardsuit
   description: A purpose-built combat hardsuit designed for crowd control against armed combatants in low pressure environments.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#191D26", "#2C2E30", "#3A3D43", "#4D5157" ]
+    accent: "#CFCB5A"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _DV/Clothing/OuterClothing/Hardsuits/Combat/riot.rsi
   - type: Clothing

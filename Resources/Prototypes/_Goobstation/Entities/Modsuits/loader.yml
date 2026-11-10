@@ -115,6 +115,11 @@
   description: The titanium exoskeleton of a loader modsuit. Its myomer-driven legs let the wearer run at full speed.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#20232D", "#303546", "#404555", "#505564" ]
+    accent: "#B88430"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Modsuits/loader.rsi
   - type: ClothingSpeedModifier

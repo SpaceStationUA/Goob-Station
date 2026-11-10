@@ -92,6 +92,9 @@
   description: Передовий нагрудник, розроблений NanoTrasen для модульного костюма легіонера. Вбудовані силові сервоприводи допомагають знизити вагу спорядження для користувача.
   categories: [HideSpawnMenu]
   components:
+    - type: SuitWrap
+      ramp: [ "#1A1A1A", "#232E42", "#412D1B", "#354C72" ]
+      accent: "#B50A0A"
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Modsuits/legionnaire.rsi
     - type: ClothingSpeedModifier

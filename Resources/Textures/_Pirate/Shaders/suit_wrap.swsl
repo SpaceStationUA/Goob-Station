@@ -1,0 +1,98 @@
+
+// Top-left of any frame of this RSI in the atlas, in pixels counted from the top.
+uniform highp vec2 frameOrigin;
+uniform highp vec2 frameSize;
+// Where the marking attaches to the body, in frame pixels counted from the top.
+uniform highp vec2 anchor;
+// Plate colours dark -> light and accent. All sRGB.
+uniform highp vec3 ramp0;
+uniform highp vec3 ramp1;
+uniform highp vec3 ramp2;
+uniform highp vec3 ramp3;
+uniform highp vec3 accentColor;
+uniform highp float seamPeriod;
+uniform highp float accentStrength;
+
+const highp float alphaCut = 40.0 / 255.0;
+// Preserve flat layers and spread dark colours to keep rings and stripes distinct.
+const highp float flatRange = 0.08;
+// Exclude small layers so the tip does not cover most of an ear or horn.
+const highp float tipMinReach = 10.0;
+const highp float tipMinPixels = 40.0;
+const highp float edgeBlend = 0.6;
+const highp int maxFrame = 96;
+
+highp vec2 texelUV(highp vec2 pixel) {
+    return vec2((pixel.x + 0.5) * TEXTURE_PIXEL_SIZE.x, 1.0 - (pixel.y + 0.5) * TEXTURE_PIXEL_SIZE.y);
+}
+
+highp float luma(highp vec4 col) {
+    return dot(zToSrgb(col).rgb, vec3(0.299, 0.587, 0.114));
+}
+
+bool solidAt(highp vec2 frameStart, highp vec2 texel) {
+    if (texel.x < 0.0 || texel.y < 0.0 || texel.x >= frameSize.x || texel.y >= frameSize.y)
+        return false;
+    return zTexture(texelUV(frameStart + texel)).a > alphaCut;
+}
+
+void fragment() {
+    highp vec4 base = zTexture(UV);
+    if (base.a <= alphaCut)
+        discard;
+
+    highp vec2 pixel = floor(vec2(UV.x / TEXTURE_PIXEL_SIZE.x, (1.0 - UV.y) / TEXTURE_PIXEL_SIZE.y));
+    highp vec2 texel = floor(mod(pixel - frameOrigin + 0.5, frameSize));
+    highp vec2 frameStart = pixel - texel;
+
+    highp float lo = 1.0;
+    highp float hi = 0.0;
+    highp float reach = 0.0;
+    highp float pixels = 0.0;
+    for (int y = 0; y < maxFrame; y++) {
+        if (float(y) >= frameSize.y)
+            break;
+        for (int x = 0; x < maxFrame; x++) {
+            if (float(x) >= frameSize.x)
+                break;
+            highp vec2 at = vec2(float(x), float(y));
+            highp vec4 texCol = zTexture(texelUV(frameStart + at));
+            if (texCol.a > alphaCut) {
+                highp float l = luma(texCol);
+                lo = min(lo, l);
+                hi = max(hi, l);
+                reach = max(reach, length(at - anchor));
+                pixels += 1.0;
+            }
+        }
+    }
+
+    highp float tint = dot(zToSrgb(vec4(MODULATE.rgb, 1.0)).rgb, vec3(0.299, 0.587, 0.114));
+    bool isFlat = hi - lo < flatRange;
+    bool hasTip = reach >= tipMinReach && pixels >= tipMinPixels;
+    highp float shade = isFlat ? sqrt(luma(base) * tint) : (luma(base) - lo) / (hi - lo + 0.000001);
+    highp float index = min(floor(shade * 3.0) + 1.0, 3.0);
+    highp vec3 col = index < 1.5 ? ramp1 : index < 2.5 ? ramp2 : ramp3;
+    highp vec3 darker = mix(col, index < 1.5 ? ramp0 : index < 2.5 ? ramp1 : ramp2, edgeBlend);
+
+    // Texel y grows downwards, so +y is the bottom side.
+    bool shadowEdge = !solidAt(frameStart, texel + vec2(1.0, 0.0)) || !solidAt(frameStart, texel + vec2(0.0, 1.0));
+
+    highp float dist = length(texel - anchor);
+    highp float ring = floor(dist);
+    highp float inPlate = mod(ring, seamPeriod);
+    bool oddPlate = mod(floor(ring / seamPeriod), 2.0) > 0.5;
+
+    if (shadowEdge)
+        col = darker;
+    else if (hasTip && dist > reach - 1.5)
+        col = mix(col, accentColor, min(accentStrength + 0.15, 1.0));
+    else if (dist > 3.0 && inPlate < 0.5)
+        col = darker;
+    else if (dist > 3.0 && inPlate > 0.5 && inPlate < 1.5 && !oddPlate)
+        col = mix(col, accentColor, accentStrength);
+
+    COLOR = vec4(zFromSrgb(vec4(col, 1.0)).rgb, 1.0);
+    // The marking colour must not tint the suit colours. Keep its alpha (fades, stealth).
+    MODULATE = vec4(1.0, 1.0, 1.0, MODULATE.a);
+}

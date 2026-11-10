@@ -1,0 +1,9 @@
+// Clearing alpha preserves coverage even when a sprite matches the floor colour.
+light_mode unshaded;
+blend_mode none;
+
+uniform sampler2D SCREEN_TEXTURE;
+
+void fragment() {
+    COLOR = vec4(zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy * SCREEN_PIXEL_SIZE).rgb, 0.0);
+}

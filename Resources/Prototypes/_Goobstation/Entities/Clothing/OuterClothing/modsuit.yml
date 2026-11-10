@@ -31,6 +31,11 @@
   description: A special modular suit spaceproof cover designed for compact folding inside modular suit control.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#151515", "#1A1A1A", "#3A3A3A", "#585858" ]
+    accent: "#585858"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -110,6 +115,11 @@
   description: A robust modular suit cover with ceramic inserts for extra protection.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#008BED"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -198,6 +208,11 @@
   description: A robust modular suit cover with EXTRA ceramic inserts for slightly more protection.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#008BED"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -287,6 +302,11 @@
   description: A white and blue-ish-grey steel plate for keeping out the harsh void of space and the occasional bullet.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#18202B", "#424B58", "#49475C", "#8A8A9E" ]
+    accent: "#4F94AD"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -376,6 +396,11 @@
   description: A tough armor plate to defend against harsh atmospheric conditions and shockwaves.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#2B3440", "#545350" ]
+    accent: "#E6B812"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -466,6 +491,11 @@
   description: A fire-proof armor plate to defend against harsh atmospheric conditions.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#402A0D", "#734D1D", "#BF8F2E" ]
+    accent: "#4EB1AE"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -554,6 +584,11 @@
   description: A bulky bomb and bat proof chunk of steel.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#9D1DE8"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -645,6 +680,11 @@
   description: This shit is made out of DIAMONDS, man, this armor was forged with GEMS.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#212121", "#312F47", "#3D4379" ]
+    accent: "#E6A345"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: GroupExamine
@@ -735,6 +775,11 @@
   description: A robust modular suit cover with white ceramic inserts for extra drip.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0F0F1A", "#343442", "#545461", "#C2C1C9" ]
+    accent: "#38DEE2"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite

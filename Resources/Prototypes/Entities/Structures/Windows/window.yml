@@ -157,6 +157,7 @@
     - Window
   components:
   - type: ReflectiveSurface # Pirate: Mirror Maid jaunt surface.
+  - type: AmbientOcclusionFlat # Pirate: sprite ambient occlusion
   - type: WallMount
     arc: 360 # interact despite grilles
   - type: Tag

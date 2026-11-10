@@ -92,6 +92,11 @@
   description: The chestplate of a mining modsuit. Ceramic plating gives it incredible protection against blasts, corrosives and heat.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#131326", "#181719", "#232226", "#3E3D3F" ]
+    accent: "#A4FEF4"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Modsuits/mining.rsi
   - type: Armor

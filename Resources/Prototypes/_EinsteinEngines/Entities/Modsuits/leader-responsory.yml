@@ -140,6 +140,11 @@
   description: A state of the art chestplate designed by NanoTrasen for the Leader Responsory modsuit. It incorporates powered servos to reduce the equipment load.
   categories: [HideSpawnMenu]
   components:
+    #region Pirate: suit wrap
+    - type: SuitWrap
+      ramp: [ "#0D0C19", "#1E1E32", "#1C222B", "#343442" ]
+      accent: "#3A98FF"
+    #endregion Pirate: suit wrap
     - type: Sprite
       sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/leader-responsory.rsi
     - type: ClothingSpeedModifier

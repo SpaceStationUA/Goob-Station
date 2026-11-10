@@ -133,6 +133,11 @@
   description: A state of the art chestplate designed by NanoTrasen for the Inquisitory modsuit. It incorporates powered servos to reduce the equipment load.
   categories: [HideSpawnMenu]
   components:
+    #region Pirate: suit wrap
+    - type: SuitWrap
+      ramp: [ "#0D0C19", "#1E1E32", "#49475C", "#8A8A9E" ]
+      accent: "#C5993D"
+    #endregion Pirate: suit wrap
     - type: Sprite
       sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/inquisitory.rsi
     - type: Armor
