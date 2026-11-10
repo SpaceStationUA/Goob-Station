@@ -77,7 +77,7 @@ public sealed class SuitWrapSystem : EntitySystem
                 continue;
             }
 
-            if (_active.TryGetValue(wearer, out var state) && state.Suit != suit)
+            if (_active.TryGetValue(wearer, out var state) && (state.Suit != suit || state.Wrap != wrap))
             {
                 Clear(wearer);
                 state = null;

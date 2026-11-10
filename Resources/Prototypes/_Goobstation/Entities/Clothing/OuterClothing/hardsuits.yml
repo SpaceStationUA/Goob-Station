@@ -63,11 +63,6 @@
   id: ClothingOuterHardsuitChronolegioneerUnremoveable
   suffix: Unremoveable
   components:
-  #region Pirate: suit wrap
-  - type: SuitWrap
-    ramp: [ "#23262B", "#4C5E68", "#6A7A83", "#AABDC7" ]
-    accent: "#AABDC7"
-  #endregion Pirate: suit wrap
   - type: Unremoveable
 
 # Blueshield Hardsuit
