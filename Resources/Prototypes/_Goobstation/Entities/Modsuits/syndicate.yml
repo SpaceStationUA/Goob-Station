@@ -125,6 +125,11 @@
   description: The chestplate of a blood-red modsuit.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1C070E", "#3F010D", "#2A1217", "#5B0010" ]
+    accent: "#B22C20"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Modsuits/syndicate.rsi
   - type: ClothingSpeedModifier
@@ -355,6 +360,11 @@
   description: The chestplate of a elite syndicate modsuit.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#384134", "#545350" ]
+    accent: "#545350"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Modsuits/elite.rsi
   - type: ClothingSpeedModifier

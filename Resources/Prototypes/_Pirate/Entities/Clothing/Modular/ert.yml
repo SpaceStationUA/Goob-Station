@@ -97,6 +97,9 @@
   description: A reinforced response chestplate issued to the leader of an emergency response team.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#1C222B", "#343442" ]
+    accent: "#2E80F8"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsoryLeader/chestplate.rsi
   - type: Clothing
@@ -299,6 +302,9 @@
   description: A reinforced response chestplate issued to the security officers of an emergency response team.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#1C222B", "#343442" ]
+    accent: "#FF0000"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsorySecurity/chestplate.rsi
   - type: Clothing
@@ -501,6 +507,9 @@
   description: A reinforced response chestplate issued to the medics of an emergency response team.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#1C222B", "#343442" ]
+    accent: "#343442"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsoryMedical/chestplate.rsi
   - type: Clothing
@@ -721,6 +730,9 @@
   description: A reinforced response chestplate issued to the engineers of an emergency response team.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#1C222B", "#343442" ]
+    accent: "#FFBC00"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsoryEngineering/chestplate.rsi
   - type: Clothing
@@ -956,6 +968,9 @@
   description: A reinforced response chestplate issued to the janitors of an emergency response team.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#1C222B", "#343442" ]
+    accent: "#7152CD"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/ResponsoryJanitorial/chestplate.rsi
   - type: Clothing

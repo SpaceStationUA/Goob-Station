@@ -6,6 +6,11 @@
   name: EVA suit
   description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#343434", "#595959", "#7A7A7A", "#D9D8D8" ]
+    accent: "#2079C5"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Clothing
@@ -25,6 +30,11 @@
   name: syndicate EVA suit
   description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#620303", "#211F1F", "#343434", "#E01002" ]
+    accent: "#EEAC0D"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
   - type: Clothing
@@ -45,6 +55,11 @@
   name: emergency EVA suit
   description: An emergency EVA suit with a built-in helmet. It's horribly slow and lacking in temperature protection, but enough to buy you time from the harsh vacuum of space.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#5E2600", "#963C00", "#BC4B00", "#DD6700" ]
+    accent: "#E5E5E5"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
   - type: Clothing
@@ -100,6 +115,11 @@
   name: NTSRA voidsuit #Nanotrasen Space Research Association
   description: An ancient space suit, designed by the NTSRA branch of CentComm. It is very finely crafted, allowing for greater mobility than most modern space suits.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#320101", "#620303", "#7C1616", "#B51E0E" ]
+    accent: "#F7C800"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
   - type: Clothing
@@ -117,6 +137,11 @@
   name: paramedic hardsuit # Goob edit - it has high pressure protection and resistances, call it a hardsuit
   description: A hardsuit made for paramedics. # Goob edit
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#2F4E6E", "#427CA6", "#8A8A9E" ]
+    accent: "#8DCDF7"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
   - type: Clothing

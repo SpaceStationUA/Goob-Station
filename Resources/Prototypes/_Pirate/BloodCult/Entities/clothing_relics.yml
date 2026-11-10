@@ -9,6 +9,9 @@
   name: Nar'Sien hardened armor
   description: A heavily armored exosuit worn by Nar'Sien warriors. It can withstand hard vacuum.
   components:
+  - type: SuitWrap
+    ramp: [ "#1C0903", "#241308", "#32251C", "#594542" ]
+    accent: "#922120"
   - type: Sprite
     sprite: _Pirate/BloodCult/Clothing/OuterClothing/Hardsuits/blood_cult_armor.rsi
   - type: Clothing

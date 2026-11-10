@@ -186,6 +186,11 @@
   description: A state of the art chestplate designed by the Syndicate for the Contractor modsuit. It incorporates powered servos to reduce the equipment load.
   categories: [HideSpawnMenu]
   components:
+    #region Pirate: suit wrap
+    - type: SuitWrap
+      ramp: [ "#130609", "#2C0D14", "#1E1E1E", "#40121D" ]
+      accent: "#8E2A3F"
+    #endregion Pirate: suit wrap
     - type: Sprite
       sprite: _Goobstation/Clothing/OuterClothing/Modsuits/contractor.rsi
     - type: ClothingSpeedModifier

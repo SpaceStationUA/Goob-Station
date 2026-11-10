@@ -179,6 +179,11 @@
   description: A state of the art chestplate designed by NanoTrasen for the Corporate modsuit. It incorporates powered servos to reduce the equipment load.
   categories: [HideSpawnMenu]
   components:
+    #region Pirate: suit wrap
+    - type: SuitWrap
+      ramp: [ "#152413", "#1E1E1E", "#243F21", "#33582E" ]
+      accent: "#33582E"
+    #endregion Pirate: suit wrap
     - type: Sprite
       sprite: _Goobstation/Clothing/OuterClothing/Modsuits/corporate.rsi
     - type: ClothingSpeedModifier
@@ -385,6 +390,11 @@
   description: A state of the art chestplate designed by NanoTrasen for the Career Trainer modsuit. It incorporates powered servos to reduce the equipment load.
   categories: [HideSpawnMenu]
   components:
+    #region Pirate: suit wrap
+    - type: SuitWrap
+      ramp: [ "#152413", "#1E1E1E", "#243F21", "#33582E" ]
+      accent: "#B27630"
+    #endregion Pirate: suit wrap
     - type: Sprite
       sprite: _Goobstation/Clothing/OuterClothing/Modsuits/nct.rsi
     - type: Armor # mostly the same stats as HoS modsuit

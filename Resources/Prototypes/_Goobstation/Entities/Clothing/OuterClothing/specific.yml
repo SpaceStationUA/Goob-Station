@@ -6,6 +6,11 @@
   name: H.E.V suit
   description: Full-body hazardous suit designed to protect wearer from radiation, energy discarges, blunt-force trauma during the handling of hazardous material.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#19192A", "#703200", "#964903", "#C86810" ]
+    accent: "#555963"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Suits/hev.rsi
   - type: Clothing
@@ -273,6 +278,11 @@
   name: elite soldier armor
   description: Admins arent supposed to suck dicks
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#171616", "#323234", "#B5B7B8", "#DEE0E5" ]
+    accent: "#901E2F"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Misc/elite.rsi
     state: icon

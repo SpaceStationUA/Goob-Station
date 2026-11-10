@@ -190,6 +190,9 @@
   name: mercenary hardsuit
   description: A stylish hardsuit lined with lightweight armor-plating.
   components:
+  - type: SuitWrap
+    ramp: [ "#0E0F15", "#161616", "#2A2A2A", "#49492F" ]
+    accent: "#665606"
   - type: Sprite
     sprite: _Pirate/Clothing/OuterClothing/Hardsuits/bounty_merc.rsi
   - type: Item

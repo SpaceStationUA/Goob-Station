@@ -86,6 +86,9 @@
   description: Сучасний нагрудник для мод-костюма "Мазу".
   categories: [HideSpawnMenu]
   components:
+    - type: SuitWrap
+      ramp: [ "#111111", "#22271F", "#384134", "#485443" ]
+      accent: "#FF5300"
     - type: Sprite
       sprite: _Pirate/Clothing/_SolAlliance/Modsuits/csa_85x.rsi
     - type: ClothingSpeedModifier

@@ -6,6 +6,9 @@
   name: corpsman combat hardsuit
   description: A purpose-built combat suit designed to allow its user greater mobility for superior support of friendly units in active combat zones.
   components:
+  - type: SuitWrap
+    ramp: [ "#101319", "#212734", "#3A3D43", "#5F6672" ]
+    accent: "#00E8FF"
   - type: Sprite
     sprite: _Pirate/DV/Clothing/OuterClothing/Hardsuits/corpsman.rsi
   - type: Clothing

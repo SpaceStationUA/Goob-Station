@@ -5,6 +5,9 @@
   description: Чорний, пропитаний ненавистю та злобою костюм, на який й погляд тяжко кинути.
   suffix: StarWars
   components:
+  - type: SuitWrap
+    ramp: [ "#000000", "#0E0E0E", "#131313", "#1D1D1D" ]
+    accent: "#808200"
   - type: Sprite
     sprite: _Pirate/_StarWars/Clothing/OuterClothing/Hardsuits/darthVaderBody.rsi
   - type: Clothing
@@ -50,6 +53,9 @@
   description: Дешевий костюм, ніби зроблений на один раз й таких ще тисячі.
   suffix: StarWars
   components:
+  - type: SuitWrap
+    ramp: [ "#1C1C1C", "#807574", "#C2C1C9", "#E1E1E1" ]
+    accent: "#E1E1E1"
   - type: Sprite
     sprite: _Pirate/_StarWars/Clothing/OuterClothing/Hardsuits/shturmBody.rsi
   - type: Clothing

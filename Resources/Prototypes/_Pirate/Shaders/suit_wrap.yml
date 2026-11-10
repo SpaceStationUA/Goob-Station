@@ -1,0 +1,4 @@
+- type: shader
+  id: PirateSuitWrap
+  kind: source
+  path: "/Textures/_Pirate/Shaders/suit_wrap.swsl"
