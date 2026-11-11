@@ -1,0 +1,12 @@
+// Sample each 2x2 block center; filtered input averages its pixels, including at odd-size edges.
+// Linear R8: texture2D avoids the engine's sRGB decode in zTextureSpec.
+light_mode unshaded;
+blend_mode none;
+
+uniform sampler2D SOURCE_TEXTURE;
+uniform highp vec2 SOURCE_PIXEL_SIZE;
+
+void fragment() {
+    highp vec2 uv = (floor(FRAGCOORD.xy) * 2.0 + 1.0) * SOURCE_PIXEL_SIZE;
+    COLOR = vec4(texture2D(SOURCE_TEXTURE, uv).r);
+}

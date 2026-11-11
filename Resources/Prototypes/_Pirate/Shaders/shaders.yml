@@ -49,6 +49,16 @@
   path: "/Textures/_Pirate/Shaders/ambient_occlusion_mask.swsl"
 
 - type: shader
+  id: PirateAmbientOcclusionMaskSimple
+  kind: source
+  path: "/Textures/_Pirate/Shaders/ambient_occlusion_mask_simple.swsl"
+
+- type: shader
+  id: PirateAmbientOcclusionDownsample
+  kind: source
+  path: "/Textures/_Pirate/Shaders/ambient_occlusion_downsample.swsl"
+
+- type: shader
   id: PirateAmbientOcclusionComposite
   kind: source
   path: "/Textures/_Pirate/Shaders/ambient_occlusion_composite.swsl"

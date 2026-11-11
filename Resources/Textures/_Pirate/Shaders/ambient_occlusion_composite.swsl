@@ -6,7 +6,10 @@ uniform sampler2D SCREEN_TEXTURE;
 uniform sampler2D FLOOR_TEXTURE;
 // alpha = coverage of every caster up to and including the upright mobs.
 uniform sampler2D AFTER_MOBS_TEXTURE;
+// Linear R8: texture2D avoids the engine's sRGB decode in zTextureSpec.
 uniform sampler2D MASK_TEXTURE;
+// Maps full-resolution FRAGCOORD to mask UV, including the downsample's odd-size alignment.
+uniform highp vec2 MASK_UV_SCALE;
 // The silhouettes of stealthed entities (any alpha): they show the floor, so they get the floor's shadow (no
 // tell-tale hole).
 uniform sampler2D EXCLUDE_TEXTURE;
@@ -17,6 +20,7 @@ uniform sampler2D OTHER_UPRIGHT_TEXTURE;
 uniform highp vec2 SHIFT;
 // rgb = shadow colour in sRGB, a = strength.
 uniform highp vec4 SHADOW;
+uniform bool HAS_EXCLUSIONS;
 
 // a + b over a, the way default blending adds coverage.
 highp float over(highp float a, highp float b) {
@@ -30,12 +34,21 @@ void fragment() {
 
     // The real coverage of the frame, and the coverage without the stealthed entities.
     highp float coverage = over(screen.a, zTextureSpec(AFTER_MOBS_TEXTURE, uv).a);
-    highp float others = over(zTextureSpec(OTHER_FLAT_TEXTURE, uv).a, zTextureSpec(OTHER_UPRIGHT_TEXTURE, uv).a);
-    highp float excluded = step(0.5 / 255.0, zTextureSpec(EXCLUDE_TEXTURE, uv).a);
-    highp float visibleFloor = 1.0 - mix(coverage, others, excluded);
+    highp float visibleFloor = 1.0 - coverage;
+    if (HAS_EXCLUSIONS && zTextureSpec(EXCLUDE_TEXTURE, uv).a >= 0.5 / 255.0) {
+        highp float others = over(zTextureSpec(OTHER_FLAT_TEXTURE, uv).a, zTextureSpec(OTHER_UPRIGHT_TEXTURE, uv).a);
+        visibleFloor = 1.0 - others;
+    }
+
+    highp float alpha = coverage + floorColour.a * (1.0 - coverage);
+    // Opaque casters contain no visible floor to darken; avoid the shadow sample and colour conversions.
+    if (visibleFloor <= 0.0) {
+        COLOR = vec4(screen.rgb, alpha);
+        return;
+    }
 
     // FRAGCOORD grows upwards, so the caster of this pixel's shadow sits at +SHIFT.
-    highp float shadow = zTextureSpec(MASK_TEXTURE, uv + SHIFT * SCREEN_PIXEL_SIZE).a;
+    highp float shadow = texture2D(MASK_TEXTURE, (FRAGCOORD.xy + SHIFT) * MASK_UV_SCALE).r;
     highp float a = clamp(shadow, 0.0, 1.0) * SHADOW.a;
 
     // The frame is "sprites over floor" in linear light: replace the floor part with the darkened floor. The floor
@@ -45,6 +58,5 @@ void fragment() {
     highp vec3 darkFloor = zFromSrgb(vec4(darkSrgb, 1.0)).rgb;
     highp vec3 result = screen.rgb + (darkFloor - floorColour.rgb) * visibleFloor;
 
-    highp float alpha = coverage + floorColour.a * (1.0 - coverage);
     COLOR = vec4(result, alpha);
 }
