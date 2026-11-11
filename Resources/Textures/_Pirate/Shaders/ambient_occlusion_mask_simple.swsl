@@ -25,28 +25,26 @@ void fragment() {
     highp float mobGain = max(zTextureSpec(AFTER_MOBS_TEXTURE, uv).a - flatBefore, 0.0);
     highp float flatAfter = zTextureSpec(SCREEN_TEXTURE, uv).a;
 
-    if (mobGain <= 0.0 || flatBefore >= 1.0 || flatAfter >= 1.0) {
-        highp float caster = 1.0 - max(1.0 - flatBefore - mobGain, 0.0) * (1.0 - flatAfter);
-        COLOR = vec4(clamp(caster, 0.0, 1.0));
-        return;
-    }
-
-    highp float forceFlat = zTextureSpec(FLAT_TEXTURE, uv).a;
+    // Keep one exit path; the engine appends the output write after this body.
     highp float weight = 1.0;
-    if (forceFlat < 1.0 && FADE > 0.0 && mobAt(uv) > 0.5) {
-        highp float below = 0.0;
-        for (int i = 1; i <= 32; i++) {
-            if (float(i) > FADE)
-                break;
-            highp vec2 under = uv - STEP * float(i);
-            if (mobAt(under) < 0.5 || zTextureSpec(FLAT_TEXTURE, under).a > 0.5)
-                break;
-            below += 1.0;
+    if (mobGain > 0.0 && flatBefore < 1.0 && flatAfter < 1.0) {
+        highp float forceFlat = zTextureSpec(FLAT_TEXTURE, uv).a;
+        if (forceFlat < 1.0 && FADE > 0.0 && mobAt(uv) > 0.5) {
+            highp float below = 0.0;
+            for (int i = 1; i <= 32; i++) {
+                if (float(i) > FADE)
+                    break;
+                highp vec2 under = uv - STEP * float(i);
+                if (mobAt(under) < 0.5 || zTextureSpec(FLAT_TEXTURE, under).a > 0.5)
+                    break;
+                below += 1.0;
+            }
+            weight = clamp(1.0 - below / FADE, 0.0, 1.0);
         }
-        weight = clamp(1.0 - below / FADE, 0.0, 1.0);
+
+        weight = max(weight, forceFlat);
     }
 
-    weight = max(weight, forceFlat);
     highp float caster = 1.0 - max(1.0 - flatBefore - mobGain * weight, 0.0) * (1.0 - flatAfter);
     COLOR = vec4(clamp(caster, 0.0, 1.0));
 }
