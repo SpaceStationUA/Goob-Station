@@ -78,8 +78,12 @@ public abstract class SharedBorgSwitchableTypeSystem : EntitySystem
         if (ent.Comp.SelectedBorgType != null)
             return;
 
-        if (!Prototypes.HasIndex(args.Prototype) || !Prototypes.HasIndex(args.Subtype))
+        #region Pirate: update borg sprite layers with their RSI states (check that the skin matches the selected chassis)
+        if (!Prototypes.HasIndex(args.Prototype) ||
+            !Prototypes.TryIndex(args.Subtype, out var subtype) ||
+            subtype.ParentBorgType != args.Prototype)
             return; // GOOB
+        #endregion
 
         SelectBorgModule(ent, args.Prototype, args.Subtype); // GOOB
     }
