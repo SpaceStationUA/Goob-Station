@@ -1,4 +1,5 @@
 light_mode unshaded;
+blend_mode none;
 
 uniform sampler2D SCREEN_TEXTURE;      // alpha = coverage of the flat sprites after the upright mobs (doors)
 uniform sampler2D BEFORE_MOBS_TEXTURE; // alpha = coverage of the flat sprites before the upright mobs
@@ -73,5 +74,5 @@ void fragment() {
     highp float redrawn = 1.0 - (1.0 - otherFlat) * (1.0 - otherUpright * weight);
 
     highp float caster = clamp(mix(captured, redrawn, excluded), 0.0, 1.0);
-    COLOR = vec4(1.0, 1.0, 1.0, caster);
+    COLOR = vec4(caster);
 }

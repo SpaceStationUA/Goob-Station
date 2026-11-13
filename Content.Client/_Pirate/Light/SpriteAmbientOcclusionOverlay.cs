@@ -36,6 +36,9 @@ public sealed class SpriteAmbientOcclusionResources : IDisposable
 
     public readonly IRenderTexture?[] Captures = new IRenderTexture?[CaptureCount];
     public IRenderTexture? Mask;
+    // Half-size targets reduce blur work to one quarter of the full-size pixel count.
+    public IRenderTexture? MaskHalf;
+    public IRenderTexture? MaskHalfBlur;
     public IRenderTexture? MaskBlur;
     public IRenderTexture? Exclude;
     public IRenderTexture? OtherFlat;
@@ -58,6 +61,8 @@ public sealed class SpriteAmbientOcclusionResources : IDisposable
         }
 
         Mask?.Dispose();
+        MaskHalf?.Dispose();
+        MaskHalfBlur?.Dispose();
         MaskBlur?.Dispose();
         Exclude?.Dispose();
         OtherFlat?.Dispose();
@@ -98,14 +103,16 @@ public sealed class SpriteAmbientOcclusionResources : IDisposable
         _postShaderTargets.Clear();
     }
 
-    public static void EnsureTarget(IClyde clyde, ref IRenderTexture? target, Vector2i size, string name)
+    public static void EnsureTarget(IClyde clyde, ref IRenderTexture? target, Vector2i size, string name,
+        bool filter = false, RenderTargetColorFormat format = RenderTargetColorFormat.Rgba8Srgb)
     {
         if (target?.Texture.Size == size)
             return;
 
         target?.Dispose();
         target = clyde.CreateRenderTarget(size,
-            new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
+            new RenderTargetFormatParameters(format),
+            filter ? new TextureSampleParameters { Filter = true } : null,
             name: name);
     }
 
@@ -132,7 +139,8 @@ public abstract class SpriteAmbientOcclusionCaptureOverlay : Overlay
     private readonly string _targetName;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
-    public override bool RequestScreenTexture => true;
+
+    // Avoid the engine's viewport copy; RenderInRenderTarget flushes draws before sampling the viewport target.
 
     // Clearing alpha preserves coverage even when sprites match the background colour.
     protected SpriteAmbientOcclusionCaptureOverlay(
@@ -167,16 +175,14 @@ public abstract class SpriteAmbientOcclusionCaptureOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (ScreenTexture == null)
-            return;
-
         var res = _resources.GetForViewport(args.Viewport, static _ => new SpriteAmbientOcclusionResources());
-        var size = args.Viewport.RenderTarget.Size;
+        var viewportTarget = args.Viewport.RenderTarget;
+        var size = viewportTarget.Size;
         SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.Captures[_slot], size, _targetName);
         var target = res.Captures[_slot]!;
 
         var handle = args.WorldHandle;
-        _copy.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _copy.SetParameter("SCREEN_TEXTURE", viewportTarget.Texture);
         handle.RenderInRenderTarget(target, () =>
         {
             handle.UseShader(_copy);
@@ -188,7 +194,8 @@ public abstract class SpriteAmbientOcclusionCaptureOverlay : Overlay
         if (_clearAlpha == null)
             return;
 
-        _clearAlpha.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        // RenderInRenderTarget restored the viewport, so sample the capture explicitly.
+        _clearAlpha.SetParameter("SCREEN_TEXTURE", target.Texture);
         handle.SetTransform(Matrix3x2.Identity);
         handle.UseShader(_clearAlpha);
         handle.DrawRect(args.WorldBounds, Color.White);
@@ -216,6 +223,10 @@ public sealed class SpriteAmbientOcclusionAfterMobsCaptureOverlay(OverlayResourc
 public sealed class SpriteAmbientOcclusionOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> MaskShader = "PirateAmbientOcclusionMask";
+    private static readonly ProtoId<ShaderPrototype> SimpleMaskShader = "PirateAmbientOcclusionMaskSimple";
+    private static readonly ProtoId<ShaderPrototype> DownsampleShader = "PirateAmbientOcclusionDownsample";
+
+    private const float HalfResMinRenderPerWorldPixel = 0.999f;
     private static readonly ProtoId<ShaderPrototype> CompositeShader = "PirateAmbientOcclusionComposite";
 
     // Culling margin for stealthed sprites: covers the dilation below and rounding.
@@ -244,6 +255,8 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
 
     private readonly OverlayResourceCache<SpriteAmbientOcclusionResources> _resources;
     private readonly ShaderInstance _mask;
+    private readonly ShaderInstance _simpleMask;
+    private readonly ShaderInstance _downsample;
     private readonly ShaderInstance _composite;
     // Fixture bounds are exact; the sprite strip can be a pixel wider.
     private const float ForceFlatMargin = 1f / EyeManager.PixelsPerMeter;
@@ -276,8 +289,7 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
     private readonly List<Silhouette> _otherUpright = new();
     private readonly List<Entity<SpriteComponent, TransformComponent>> _treeResults = new();
     private readonly Dictionary<EntityUid, Vector2> _gridSnaps = new();
-    private readonly HashSet<EntityUid> _drawnStealthed = new();
-    private readonly HashSet<EntityUid> _drawnOthers = new();
+    private readonly HashSet<EntityUid> _queriedSprites = new();
     private readonly List<UIBox2> _hazeQuads = new();
 
     private readonly record struct StealthTextures(Texture Exclude, Texture OtherFlat, Texture OtherUpright);
@@ -292,6 +304,8 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _resources = resources;
         _mask = _proto.Index(MaskShader).InstanceUnique();
+        _simpleMask = _proto.Index(SimpleMaskShader).InstanceUnique();
+        _downsample = _proto.Index(DownsampleShader).InstanceUnique();
         _composite = _proto.Index(CompositeShader).InstanceUnique();
 
         // Drawn before Effects (gas overlay, fire, melee swings) and ghosts, which must not cast a shadow.
@@ -330,41 +344,88 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
         if (floor.Texture.Size != size || beforeMobs.Texture.Size != size || afterMobs.Texture.Size != size)
             return;
 
-        SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.Mask, size, "pirate-ao-mask");
-        SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.MaskBlur, size, "pirate-ao-mask-blur");
+        // Render pixels per world pixel, so the offsets stay in world pixels at any zoom or render scale.
+        var renderPerWorldPixel = args.Viewport.RenderScale.Y * eye.Scale.Y;
+        var pixelSize = Vector2.One / size;
+
+        // Keep the blur full-size when it is under 2 render pixels; half-size blur distorts it at zoomed-out scales.
+        var halfRes = renderPerWorldPixel >= HalfResMinRenderPerWorldPixel;
+        var halfSize = new Vector2i((size.X + 1) / 2, (size.Y + 1) / 2);
+        SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.Mask, size, "pirate-ao-mask", filter: true,
+            format: RenderTargetColorFormat.R8);
+        if (halfRes)
+        {
+            SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.MaskHalf, halfSize, "pirate-ao-mask-half",
+                filter: true, format: RenderTargetColorFormat.R8);
+            SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.MaskHalfBlur, halfSize,
+                "pirate-ao-mask-half-blur", filter: true, format: RenderTargetColorFormat.R8);
+        }
+        else
+        {
+            SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.MaskBlur, size, "pirate-ao-mask-blur",
+                filter: true, format: RenderTargetColorFormat.R8);
+        }
 
         var handle = args.WorldHandle;
         var stealth = DrawStealth(args, res, eye, size);
         var forceFlat = DrawForceFlat(args, res, eye, size);
 
-        // Render pixels per world pixel, so the offsets stay in world pixels at any zoom or render scale.
-        var renderPerWorldPixel = args.Viewport.RenderScale.Y * eye.Scale.Y;
-        var pixelSize = Vector2.One / size;
-
-        _mask.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _mask.SetParameter("BEFORE_MOBS_TEXTURE", beforeMobs.Texture);
-        _mask.SetParameter("AFTER_MOBS_TEXTURE", afterMobs.Texture);
-        _mask.SetParameter("EXCLUDE_TEXTURE", stealth.Exclude);
-        _mask.SetParameter("OTHER_FLAT_TEXTURE", stealth.OtherFlat);
-        _mask.SetParameter("OTHER_UPRIGHT_TEXTURE", stealth.OtherUpright);
-        _mask.SetParameter("FLAT_TEXTURE", forceFlat);
-        _mask.SetParameter("STEP", new Vector2(0f, renderPerWorldPixel * pixelSize.Y));
-        _mask.SetParameter("FADE", UprightFade);
+        // Separate programs keep exclusion branches and samplers out of the common path.
+        var hasExclusions = stealth.Exclude != Texture.Transparent;
+        var mask = hasExclusions ? _mask : _simpleMask;
+        mask.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        mask.SetParameter("BEFORE_MOBS_TEXTURE", beforeMobs.Texture);
+        mask.SetParameter("AFTER_MOBS_TEXTURE", afterMobs.Texture);
+        if (hasExclusions)
+        {
+            mask.SetParameter("EXCLUDE_TEXTURE", stealth.Exclude);
+            mask.SetParameter("OTHER_FLAT_TEXTURE", stealth.OtherFlat);
+            mask.SetParameter("OTHER_UPRIGHT_TEXTURE", stealth.OtherUpright);
+        }
+        mask.SetParameter("FLAT_TEXTURE", forceFlat);
+        mask.SetParameter("STEP", new Vector2(0f, renderPerWorldPixel * pixelSize.Y));
+        mask.SetParameter("FADE", UprightFade);
         handle.RenderInRenderTarget(res.Mask!, () =>
         {
-            handle.UseShader(_mask);
+            handle.UseShader(mask);
             SpriteAmbientOcclusionResources.DrawFullTarget(handle, size);
         }, Color.Transparent);
 
-        _clyde.BlurRenderTarget(args.Viewport, res.Mask!, res.MaskBlur!, eye, ShadowBlur);
+        IRenderTexture shadowMask;
+        Vector2 maskUvScale;
+        if (halfRes)
+        {
+            // Sample each 2x2 block center; filtered input averages its pixels and preserves alignment for odd sizes.
+            _downsample.SetParameter("SOURCE_TEXTURE", res.Mask!.Texture);
+            _downsample.SetParameter("SOURCE_PIXEL_SIZE", pixelSize);
+            handle.RenderInRenderTarget(res.MaskHalf!, () =>
+            {
+                handle.UseShader(_downsample);
+                SpriteAmbientOcclusionResources.DrawFullTarget(handle, halfSize);
+            }, Color.Transparent);
+
+            // Blur radius uses viewport dimensions, so it stays constant for half-size targets.
+            BlurLinearMask(handle, args.Viewport, eye, res.MaskHalf!, res.MaskHalfBlur!);
+            shadowMask = res.MaskHalf!;
+            // Map full pixels to half-resolution texels using the downsample's 2x2 block centers.
+            maskUvScale = Vector2.One / (halfSize * 2);
+        }
+        else
+        {
+            BlurLinearMask(handle, args.Viewport, eye, res.Mask!, res.MaskBlur!);
+            shadowMask = res.Mask!;
+            maskUvScale = pixelSize;
+        }
 
         _composite.SetParameter("SCREEN_TEXTURE", ScreenTexture);
         _composite.SetParameter("FLOOR_TEXTURE", floor.Texture);
         _composite.SetParameter("AFTER_MOBS_TEXTURE", afterMobs.Texture);
-        _composite.SetParameter("MASK_TEXTURE", res.Mask!.Texture);
+        _composite.SetParameter("MASK_TEXTURE", shadowMask.Texture);
+        _composite.SetParameter("MASK_UV_SCALE", maskUvScale);
         _composite.SetParameter("EXCLUDE_TEXTURE", stealth.Exclude);
         _composite.SetParameter("OTHER_FLAT_TEXTURE", stealth.OtherFlat);
         _composite.SetParameter("OTHER_UPRIGHT_TEXTURE", stealth.OtherUpright);
+        _composite.SetParameter("HAS_EXCLUSIONS", hasExclusions);
         _composite.SetParameter("SHIFT", new Vector2(0f, ShadowOffset * renderPerWorldPixel));
         _composite.SetParameter("SHADOW", new Vector4(ShadowColor.R, ShadowColor.G, ShadowColor.B, ShadowColor.A));
 
@@ -458,14 +519,11 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
             return blank;
         }
 
-        SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.Exclude, size, "pirate-ao-exclude");
-        SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.OtherFlat, size, "pirate-ao-other-flat");
-        SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref res.OtherUpright, size, "pirate-ao-other-upright");
-
         // Every caster sprite that overlaps a stealth entity or a haze quad, from the same tree the renderer
         // draws from.
         _otherFlat.Clear();
         _otherUpright.Clear();
+        _queriedSprites.Clear();
         var tree = _entManager.System<SpriteTreeSystem>();
         foreach (var box in _stealthBoxes)
         {
@@ -473,6 +531,10 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
             tree.QueryAabb(_treeResults, args.MapId, box);
             foreach (var (uid, sprite, xform) in _treeResults)
             {
+                // Deduplicate before transforms and list insertion, not just before drawing.
+                if (!_queriedSprites.Add(uid))
+                    continue;
+
                 if (_stealthUids.Contains(uid))
                 {
                     _stealthed.Add(MakeSilhouette(uid, sprite, xform, worldToLocal, xforms));
@@ -494,36 +556,18 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
         }
 
         _stealthUids.Clear();
-        _drawnOthers.Clear();
+        _queriedSprites.Clear();
 
         var handle = args.WorldHandle;
-        DrawSilhouettes(handle, screen, res, res.Exclude!, _stealthed, ExcludeOffsets, false, view, _drawnStealthed);
-        DrawHazeQuads(handle, screen, res.Exclude!);
-        DrawSilhouettes(handle, screen, res, res.OtherFlat!, _otherFlat, NoOffsets, true, view, _drawnOthers);
-        DrawSilhouettes(handle, screen, res, res.OtherUpright!, _otherUpright, NoOffsets, true, view, _drawnOthers);
-        _drawnStealthed.Clear();
-        _drawnOthers.Clear();
-
-        return new StealthTextures(res.Exclude!.Texture, res.OtherFlat!.Texture, res.OtherUpright!.Texture);
-    }
-
-    private void DrawHazeQuads(DrawingHandleWorld handle, DrawingHandleScreen screen, IRenderTexture target)
-    {
-        if (_hazeQuads.Count == 0)
-            return;
-
-        var quads = _hazeQuads;
-        handle.RenderInRenderTarget(target, () =>
-        {
-            screen.SetTransform(Matrix3x2.Identity);
-            screen.UseShader(null);
-            foreach (var quad in quads)
-            {
-                screen.DrawRect(quad, Color.White);
-            }
-        }, null);
-
+        var exclude = DrawSilhouettes(handle, screen, res, ref res.Exclude, "pirate-ao-exclude",
+            _stealthed, ExcludeOffsets, false, view, _hazeQuads);
+        var otherFlat = DrawSilhouettes(handle, screen, res, ref res.OtherFlat, "pirate-ao-other-flat",
+            _otherFlat, NoOffsets, true, view);
+        var otherUpright = DrawSilhouettes(handle, screen, res, ref res.OtherUpright, "pirate-ao-other-upright",
+            _otherUpright, NoOffsets, true, view);
         _hazeQuads.Clear();
+
+        return new StealthTextures(exclude, otherFlat, otherUpright);
     }
 
     private static Box2 LocalBoxToWorld(UIBox2 box, Matrix3x2 localToWorld)
@@ -575,28 +619,30 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
         return new Silhouette(uid, sprite, pixel, rotation, position, snap);
     }
 
-    private void DrawSilhouettes(
+    private Texture DrawSilhouettes(
         DrawingHandleWorld handle,
         DrawingHandleScreen screen,
         SpriteAmbientOcclusionResources res,
-        IRenderTexture target,
+        ref IRenderTexture? target,
+        string targetName,
         List<Silhouette> silhouettes,
         Vector2[] offsets,
         bool postShaders,
         in SilhouetteView view,
-        HashSet<EntityUid> drawn)
+        List<UIBox2>? quads = null)
     {
+        // Skip allocation and clear work when the group has no coverage.
+        if (silhouettes.Count == 0 && (quads == null || quads.Count == 0))
+            return Texture.Transparent;
+
+        SpriteAmbientOcclusionResources.EnsureTarget(_clyde, ref target, view.TargetSize, targetName);
         var viewCopy = view;
-        handle.RenderInRenderTarget(target, () =>
+        handle.RenderInRenderTarget(target!, () =>
         {
             handle.SetTransform(Matrix3x2.Identity);
             handle.UseShader(null);
             foreach (var silhouette in silhouettes)
             {
-                // Overlapping query boxes find the same sprite more than once.
-                if (!drawn.Add(silhouette.Uid))
-                    continue;
-
                 if (postShaders && TryGetPostShaders(silhouette.Sprite))
                 {
                     DrawWithPostShaders(handle, screen, res, silhouette, viewCopy);
@@ -609,8 +655,19 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
                 }
             }
 
+            if (quads != null)
+            {
+                screen.SetTransform(Matrix3x2.Identity);
+                screen.UseShader(null);
+                foreach (var quad in quads)
+                {
+                    screen.DrawRect(quad, Color.White);
+                }
+            }
+
             handle.UseShader(null);
         }, Color.Transparent);
+        return target!.Texture;
     }
 
     private static void DrawRaw(DrawingHandleScreen screen, in Silhouette silhouette, Vector2 pixel, in SilhouetteView view)
@@ -711,6 +768,21 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
         screen.DrawTextureRectRegion(texture, full, UIBox2.FromDimensions(shift, targetSize));
     }
 
+    /// <summary>
+    /// Runs the engine blur on an R8 (linear) mask with that mask as the bound target. Without hardware sRGB
+    /// (compatibility mode: GLES on Windows), the engine emulates sRGB in its shaders. BlurRenderTarget sets the
+    /// emulation flags once, before it binds its own targets: "read" from the source texture (R8, not sRGB) and
+    /// "write" from the CURRENTLY bound target. Called from the overlay, that is the viewport, which is flagged
+    /// sRGB, so each of the six passes would encode its output to sRGB again and turn the faint edge of every
+    /// shadow into a wide dark halo. With the R8 mask bound, the write flag is off too. No clear: the mask is the
+    /// blur's input.
+    /// </summary>
+    private void BlurLinearMask(DrawingHandleWorld handle, IClydeViewport viewport, IEye eye, IRenderTexture mask,
+        IRenderTexture buffer)
+    {
+        handle.RenderInRenderTarget(mask, () => _clyde.BlurRenderTarget(viewport, mask, buffer, eye, ShadowBlur), null);
+    }
+
     // Matches the private renderer bucket calculation.
     private static Vector2i PostShaderPoolBucket(Vector2i size)
     {
@@ -809,6 +881,8 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
     {
         _ui.OnPostDrawUIRoot -= OnPostDrawUIRoot;
         _mask.Dispose();
+        _simpleMask.Dispose();
+        _downsample.Dispose();
         _composite.Dispose();
         base.DisposeBehavior();
     }
