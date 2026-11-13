@@ -259,8 +259,9 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             if (attemptEv.Cancelled)
                 continue;
 
-            if (ContainerSystem.GetContainer(container, $"solution@{name}") is ContainerSlot slot && slot.ContainedEntity is { } solutionId)
-                yield return (name, (solutionId, Comp<SolutionComponent>(solutionId)));
+            if (ContainerSystem.GetContainer(container, $"solution@{name}") is ContainerSlot slot && slot.ContainedEntity is { } solutionId // Pirate: stained solution PVS guard
+                && TryComp<SolutionComponent>(solutionId, out var containedComp)) // Pirate: stained solution PVS guard; sibling components can arrive later
+                yield return (name, (solutionId, containedComp)); // Pirate: stained solution PVS guard
         }
     }
 
