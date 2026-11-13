@@ -899,7 +899,7 @@
   description: uplink-lollypop-bundle-big-desc
   productEntity: ClothingBackpackDuffelSyndicateFilledCandy
   cost:
-    Telecrystal: 90 #Happy Halloween!
+    Telecrystal: 100
   reputation: 40 # Pirate: specialist reputation tier
   categories:
   - UplinkChemicals
