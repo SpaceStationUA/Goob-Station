@@ -104,6 +104,8 @@
     #TODO: super resonator for 2500
   - id: ClothingOuterHardsuitLuxury
     cost: 3000 #still costs more than just buying it with spesos you got from vendor but whatever
+  - id: ClothingModularControllerPrototypePreassembled # Pirate
+    cost: 3000
   - id: MedkitCombatFilled
     cost: 3000
   - id: ShelterCapsuleLuxury
@@ -114,6 +116,8 @@
     cost: 4000 #Mostly for flexing
   - id: ClothingModularControllerMiningPreassembled # Pirate
     cost: 5000
+  - id: ClothingModularControllerAsteroidPreassembled # Pirate
+    cost: 6000
   - id: ClothingNeckEnsembleSalvager #Earn. It.
     cost: 10000
   - id: CrateCargoClarkeAssembly
