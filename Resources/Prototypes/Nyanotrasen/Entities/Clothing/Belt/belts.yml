@@ -19,6 +19,7 @@
         - Pill
         - Syringe
         - MagazinePistol
+        - MagazineVector # Pirate: Vector magazine compatibility
         - PillCanister
         - MantisBeltStorable
       components:
