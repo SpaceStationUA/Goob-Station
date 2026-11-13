@@ -405,14 +405,14 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
             }, Color.Transparent);
 
             // Blur radius uses viewport dimensions, so it stays constant for half-size targets.
-            _clyde.BlurRenderTarget(args.Viewport, res.MaskHalf!, res.MaskHalfBlur!, eye, ShadowBlur);
+            BlurLinearMask(handle, args.Viewport, eye, res.MaskHalf!, res.MaskHalfBlur!);
             shadowMask = res.MaskHalf!;
             // Map full pixels to half-resolution texels using the downsample's 2x2 block centers.
             maskUvScale = Vector2.One / (halfSize * 2);
         }
         else
         {
-            _clyde.BlurRenderTarget(args.Viewport, res.Mask!, res.MaskBlur!, eye, ShadowBlur);
+            BlurLinearMask(handle, args.Viewport, eye, res.Mask!, res.MaskBlur!);
             shadowMask = res.Mask!;
             maskUvScale = pixelSize;
         }
@@ -766,6 +766,21 @@ public sealed class SpriteAmbientOcclusionOverlay : Overlay
         var shift = region.TopLeft - finalBox.TopLeft;
         var full = UIBox2.FromDimensions(Vector2.Zero, targetSize);
         screen.DrawTextureRectRegion(texture, full, UIBox2.FromDimensions(shift, targetSize));
+    }
+
+    /// <summary>
+    /// Runs the engine blur on an R8 (linear) mask with that mask as the bound target. Without hardware sRGB
+    /// (compatibility mode: GLES on Windows), the engine emulates sRGB in its shaders. BlurRenderTarget sets the
+    /// emulation flags once, before it binds its own targets: "read" from the source texture (R8, not sRGB) and
+    /// "write" from the CURRENTLY bound target. Called from the overlay, that is the viewport, which is flagged
+    /// sRGB, so each of the six passes would encode its output to sRGB again and turn the faint edge of every
+    /// shadow into a wide dark halo. With the R8 mask bound, the write flag is off too. No clear: the mask is the
+    /// blur's input.
+    /// </summary>
+    private void BlurLinearMask(DrawingHandleWorld handle, IClydeViewport viewport, IEye eye, IRenderTexture mask,
+        IRenderTexture buffer)
+    {
+        handle.RenderInRenderTarget(mask, () => _clyde.BlurRenderTarget(viewport, mask, buffer, eye, ShadowBlur), null);
     }
 
     // Matches the private renderer bucket calculation.
