@@ -1,7 +1,7 @@
 - type: storeTree
   id: HereticKnowledge
   name: store-tree-heretic-title
-  home: 0,1.5
+  home: 0.75,1.5 # Pirate: center all seven paths.
   labels:
   - text: store-heretic-path-ash
     position: -3.75,-0.65
@@ -20,6 +20,10 @@
     color: "#b48ae6"
   - text: store-heretic-path-cosmos
     position: 3.75,-0.65
+    color: "#b48ae6"
+  # Pirate: include the local Lock path in the knowledge tree.
+  - text: store-heretic-path-lock
+    position: 5.25,-0.65
     color: "#b48ae6"
   - text: store-heretic-path-side
     position: 0,1.35
@@ -187,6 +191,33 @@
     HereticCosmosPath9:
       position: 3.75,8
       parents: [ HereticCosmosPath8 ]
+    # Pirate: Lock knowledge uses the same listings and progression as before.
+    KnowledgePathStartLock:
+      position: 5.25,0
+    HereticLockPath2:
+      position: 5.25,1
+      parents: [ KnowledgePathStartLock ]
+    HereticLockPath3:
+      position: 5.25,2
+      parents: [ HereticLockPath2 ]
+    HereticLockPath4:
+      position: 5.25,3
+      parents: [ HereticLockPath3 ]
+    HereticLockPath5:
+      position: 5.25,4
+      parents: [ HereticLockPath4 ]
+    HereticLockPath6:
+      position: 5.25,5
+      parents: [ HereticLockPath5 ]
+    HereticLockPath7:
+      position: 5.25,6
+      parents: [ HereticLockPath6 ]
+    HereticLockPath8:
+      position: 5.25,7
+      parents: [ HereticLockPath7 ]
+    HereticLockPath9:
+      position: 5.25,8
+      parents: [ HereticLockPath8 ]
     # side knowledge
     HereticSidePath3Armor:
       position: -3,2

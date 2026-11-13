@@ -132,3 +132,5 @@ modsuit-capture-not-restrained = Спочатку ціль потрібно зв
 modsuit-shooting-mode-off = Помічник стрільби вимкнено.
 modsuit-shooting-mode-stormtrooper = Режим штурмовика ввімкнено.
 modsuit-shooting-mode-sharpshooter = Режим влучного стрільця ввімкнено.
+modsuit-wearer-incompatible = Скафандр не підходить для вашої будови тіла!
+modsuit-sphere-ensnared = Ви не можете згорнутися у сферу, поки вас обплутано!

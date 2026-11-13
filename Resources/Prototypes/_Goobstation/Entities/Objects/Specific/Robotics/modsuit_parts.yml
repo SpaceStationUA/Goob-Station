@@ -147,7 +147,7 @@
 
 - type: entity
   id: ModsuitPlatingParamedic
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMinorMedicalContraband ]
   name: MOD standard paramedic 'sanitater' plating
   description: A part used in MOD construction.
   components:
@@ -167,7 +167,7 @@
 
 - type: entity
   id: ModsuitPlatingEngineer
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMinorEngineeringContraband ]
   name: MOD standard engineer 'sapper' plating
   description: A part used in MOD construction.
   components:
@@ -187,7 +187,7 @@
 
 - type: entity
   id: ModsuitPlatingMining
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMinorCargoContraband ]
   name: MOD mining plating
   description: A part used in MOD construction.
   components:
@@ -207,7 +207,7 @@
 
 - type: entity
   id: ModsuitPlatingLoader
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMajorCargoCommandContraband ]
   name: MOD loader plating
   description: A part used in MOD construction. An experimental motorized harness plating from Scarborough Arms, issued to quartermasters.
   components:
@@ -227,7 +227,7 @@
 
 - type: entity
   id: ModsuitPlatingSecurity
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMajorSecurityContraband ]
   name: MOD standard security 'soldat' plating
   description: A part used in MOD construction.
   components:
@@ -247,7 +247,7 @@
 
 - type: entity
   id: ModsuitPlatingHeadOfSecurity
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMajorSecurityCommandContraband ]
   name: MOD standard head of security 'bulwark' plating
   description: A part used in MOD construction.
   components:
@@ -267,7 +267,7 @@
 
 - type: entity
   id: ModsuitPlatingCaptain
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMajorCommandContraband ]
   name: MOD standard captain's magnate plating
   description: A part used in MOD construction.
   components:
@@ -287,7 +287,7 @@
 
 - type: entity
   id: ModsuitPlatingRD
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMajorScienceCommandContraband ]
   name: MOD standard RD's 'minerva' plating
   description: A part used in MOD construction.
   components:
@@ -307,7 +307,7 @@
 
 - type: entity
   id: ModsuitPlatingAtmostech
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMinorEngineeringContraband ]
   name: MOD standard atmospheric technician's 'aeolus' plating
   description: A part used in MOD construction.
   components:
@@ -327,7 +327,7 @@
 
 - type: entity
   id: ModsuitPlatingBrigMed
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMajorSecurityMedicalContraband ]
   name: MOD standard security trauma plating
   description: A part used in MOD construction.
   components:
@@ -347,7 +347,7 @@
 
 - type: entity
   id: ModsuitPlatingPraetorian
-  parent: PartModsuit
+  parent: [ PartModsuit, BaseMajorSecurityCommandContraband ]
   name: MOD praetorian plating
   description: A part used in MOD construction. Issued to Blueshield Officers.
   components:
