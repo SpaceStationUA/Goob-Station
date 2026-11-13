@@ -72,7 +72,7 @@
   reactants:
     PureOil:
       amount: 25
-    Blissifylovene:
+    Ephedrine:
       amount: 25
   effects:
   - !type:SpawnEntity
@@ -205,5 +205,21 @@
   effects:
   - !type:SpawnEntity
     entity: PsionCrystalXenoglossy
+  - !type:AffectsGlimmer
+    amount: -3
+
+- type: reaction
+  id: CreateShadeskipCrystal
+  impact: Low
+  quantized: true
+  minTemp: 386
+  reactants:
+    PureOil:
+      amount: 25
+    RobustHarvest:
+      amount: 25
+  effects:
+  - !type:SpawnEntity
+    entity: PsionCrystalShadeskip
   - !type:AffectsGlimmer
     amount: -3

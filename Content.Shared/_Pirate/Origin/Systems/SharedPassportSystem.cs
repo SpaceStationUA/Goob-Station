@@ -55,14 +55,19 @@ public class SharedPassportSystem : EntitySystem
         args.PushMarkup($"Ширина: {MathF.Round(profile.Width * species.AverageWidth)} см", 46);
         args.PushMarkup($"Дата народження: {PirateStationCalendar.CurrentYear - profile.Age}", 45);
 
-        args.PushMarkup(
-            $"PID: {GenerateIdentityString(profile.Name
+        args.PushMarkup($"PID: {ComputePassportId(profile)}", 44);
+    }
+
+    /// <summary>
+    /// Deterministic passport ID derived from the character profile.
+    /// Shared so other documents (e.g. the vampire certificate) can print the same ID.
+    /// </summary>
+    public static string ComputePassportId(HumanoidCharacterProfile profile) =>
+        GenerateIdentityString(profile.Name
             + profile.Height
             + profile.Age
             + profile.Width
-            + profile.FlavorText)}",
-            44);
-    }
+            + profile.FlavorText);
 
     private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev) =>
         SpawnPassportForPlayer(ev.Mob, ev.Profile, ev.JobId);
