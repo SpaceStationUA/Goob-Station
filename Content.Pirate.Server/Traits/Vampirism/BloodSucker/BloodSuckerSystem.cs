@@ -299,8 +299,8 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
                     // Reduce bleeding.
                     _bloodstreamSystem.TryModifyBleedAmount((bloodsucker, null), unitsSucked * -0.05f);
 
-                    // Satisfy hunger.
-                    _hunger.ModifyHunger(bloodsucker, unitsSucked * 6f);
+                    if (TryComp<HungerComponent>(bloodsucker, out var hunger))
+                        _hunger.ModifyHunger(bloodsucker, unitsSucked * 6f, hunger);
 
                     // Satisfy thirst directly.
                     if (TryComp<ThirstComponent>(bloodsucker, out var thirst))
