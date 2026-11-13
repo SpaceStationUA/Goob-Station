@@ -111,7 +111,9 @@ public sealed class PreenableSystem : EntitySystem
 
     private void OnDamaged(Entity<PreenableComponent> ent, ref DamageChangedEvent args)
     {
-        if (args.DamageDelta == null || ent.Comp.ValidDamageGroups == null || !args.DamageIncreased)
+        // Client state handling re-raises damage changes (e.g. while resetting predicted entities);
+        // spawning a feather or adding a status effect there breaks the reset.
+        if (_timing.ApplyingState || args.DamageDelta == null || ent.Comp.ValidDamageGroups == null || !args.DamageIncreased)
             return;
 
         if (ent.Comp.CurrentFeathers <= 0)

@@ -96,7 +96,6 @@ public sealed class SequencedSoundLoopTest
             "Omnilathe",
             "EngineeringTechFab", "CargoTechFab", "ScienceTechFab", "ServiceTechFab",
             "MedicalTechFab", "SecurityTechFab", "AmmoTechFab", "ERTTechFab",
-            "GoobYautjaTechFab", "GoobYautjaStructureYautjaMachinesAutolathe",
             "ExosuitFabricator",
         ];
 
