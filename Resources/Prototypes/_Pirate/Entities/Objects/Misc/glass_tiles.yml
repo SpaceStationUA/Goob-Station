@@ -1,0 +1,186 @@
+- type: entity
+  abstract: true
+  parent: FloorTileItemBase
+  id: FloorTileItemGlassBase
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Tiles/glass_tiles.rsi
+  - type: Item
+    sprite: _Pirate/Objects/Tiles/glass_tiles.rsi
+    heldPrefix: glass
+
+- type: entity
+  parent: FloorTileItemGlassBase
+  id: FloorTileItemGlass
+  name: glass floor tile
+  description: A see-through glass floor tile.
+  components:
+  - type: Sprite
+    state: glass-old
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorGlass
+  - type: Stack
+    stackType: FloorTileGlass
+  - type: Construction
+    graph: TileGlass
+    node: tile
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
+
+- type: entity
+  parent: FloorTileItemGlassBase
+  id: FloorTileItemRGlass
+  name: reinforced glass floor tile
+  description: A see-through reinforced glass floor tile.
+  components:
+  - type: Sprite
+    state: rglass-old
+  - type: Item
+    heldPrefix: rglass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorRGlass
+  - type: Stack
+    stackType: FloorTileRGlass
+  - type: Construction
+    graph: TileRGlass
+    node: tile
+  - type: PhysicalComposition
+    materialComposition:
+      ReinforcedGlass: 25
+
+- type: entity
+  parent: FloorTileItemGlassBase
+  id: FloorTileItemGlassSolid
+  name: solid glass floor tile
+  description: Glass floor that joins into one pane with the glass next to it.
+  components:
+  - type: Sprite
+    state: glass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorGlassSolid
+  - type: Stack
+    stackType: FloorTileGlassSolid
+  - type: Construction
+    graph: TileGlassSolid
+    node: tile
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
+
+- type: entity
+  parent: FloorTileItemGlassBase
+  id: FloorTileItemGlassSolidReinforced
+  name: reinforced solid glass floor tile
+  description: Reinforced glass floor that joins into one pane with the glass next to it.
+  components:
+  - type: Sprite
+    state: rglass
+  - type: Item
+    heldPrefix: rglass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorGlassSolidReinforced
+  - type: Stack
+    stackType: FloorTileGlassSolidReinforced
+  - type: Construction
+    graph: TileGlassSolidReinforced
+    node: tile
+  - type: PhysicalComposition
+    materialComposition:
+      ReinforcedGlass: 25
+
+- type: entity
+  parent: FloorTileItemGlassBase
+  id: FloorTileItemPlasmaGlass
+  name: plasma glass floor tile
+  description: Plasma glass floor that joins into one pane with the glass next to it.
+  components:
+  - type: Sprite
+    state: pglass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorPlasmaGlass
+  - type: Stack
+    stackType: FloorTilePlasmaGlass
+  - type: Construction
+    graph: TilePlasmaGlass
+    node: tile
+  - type: PhysicalComposition
+    materialComposition:
+      PlasmaGlass: 25
+
+- type: entity
+  parent: FloorTileItemGlassBase
+  id: FloorTileItemPlasmaGlassReinforced
+  name: reinforced plasma glass floor tile
+  description: Reinforced plasma glass floor that joins into one pane with the glass next to it.
+  components:
+  - type: Sprite
+    state: rpglass
+  - type: Item
+    heldPrefix: rglass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorPlasmaGlassReinforced
+  - type: Stack
+    stackType: FloorTilePlasmaGlassReinforced
+  - type: Construction
+    graph: TilePlasmaGlassReinforced
+    node: tile
+  - type: PhysicalComposition
+    materialComposition:
+      ReinforcedPlasmaGlass: 25
+
+- type: entity
+  parent: FloorTileItemGlassBase
+  id: FloorTileItemUraniumGlass
+  name: uranium glass floor tile
+  description: Uranium glass floor that joins into one pane with the glass next to it.
+  components:
+  - type: Sprite
+    state: uglass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorUraniumGlass
+  - type: Stack
+    stackType: FloorTileUraniumGlass
+  - type: Construction
+    graph: TileUraniumGlass
+    node: tile
+  - type: PhysicalComposition
+    materialComposition:
+      UraniumGlass: 25
+
+- type: entity
+  parent: FloorTileItemGlassBase
+  id: FloorTileItemUraniumGlassReinforced
+  name: reinforced uranium glass floor tile
+  description: Reinforced uranium glass floor that joins into one pane with the glass next to it.
+  components:
+  - type: Sprite
+    state: ruglass
+  - type: Item
+    heldPrefix: rglass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorUraniumGlassReinforced
+  - type: Stack
+    stackType: FloorTileUraniumGlassReinforced
+  - type: Construction
+    graph: TileUraniumGlassReinforced
+    node: tile
+  - type: PhysicalComposition
+    materialComposition:
+      ReinforcedUraniumGlass: 25

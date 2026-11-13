@@ -52,3 +52,4 @@ ghosts-summoned-message = Привидів було викликано!
 dimension-shift-message = Виміри зміщуються!
 global-tile-movement-message = Починає грати зловісний ритм!
 spell-rathen-gut-popup = У вас немає апендикса, але щось таки мусило постраждати!
+spell-fail-no-grid = Для цього заклинання потрібна тверда поверхня під ногами.

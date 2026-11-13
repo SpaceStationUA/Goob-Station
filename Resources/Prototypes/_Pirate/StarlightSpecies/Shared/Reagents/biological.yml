@@ -1,0 +1,12 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: reagent
+  parent: Blood
+  id: SulfurBlood
+  name: reagent-name-sulfur-blood
+  group: Biological
+  desc: reagent-desc-sulfur-blood
+  flavor: bitter
+  color: '#ccac1f'
+  physicalDesc: reagent-physical-desc-strong-smelling

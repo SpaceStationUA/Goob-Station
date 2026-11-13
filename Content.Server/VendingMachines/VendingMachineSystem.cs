@@ -338,13 +338,13 @@ namespace Content.Server.VendingMachines
                 {
                     component.Credits -= price;
                 }
-                else if (TryPayWithBankCard(sender, price))
+                else if (TryPayWithBankCard(sender, price, uid)) // Pirate: bank transaction history
                 {
                     Audio.PlayPvs(component.SoundInsertCurrency, uid);
                 }
                 else
                 {
-                    Popup.PopupEntity(Loc.GetString("vending-machine-component-no-balance", ("target", uid)), sender, sender);
+                    Popup.PopupEntity(Loc.GetString(IsBankCardArrested(sender) ? "bank-account-arrested-purchase" : "vending-machine-component-no-balance", ("target", uid)), sender, sender); // Pirate: citations
                     Deny((uid, component), sender);
                     return;
                 }
@@ -354,7 +354,7 @@ namespace Content.Server.VendingMachines
             UpdateVendingMachineInterfaceState(uid, component);
         }
 
-        private bool TryPayWithBankCard(EntityUid user, int amount)
+        private bool TryPayWithBankCard(EntityUid user, int amount, EntityUid vendor) // Pirate: bank transaction history
         {
             if (!_idCard.TryFindIdCard(user, out var idCard))
                 return false;
@@ -362,8 +362,18 @@ namespace Content.Server.VendingMachines
             if (!TryComp<BankCardComponent>(idCard.Owner, out var bankCard) || bankCard.AccountId == null)
                 return false;
 
-            return _bankCard.TryChangeBalance(bankCard.AccountId.Value, -amount);
+            return _bankCard.TryChangeBalance(bankCard.AccountId.Value, -amount, BankTransactionType.Purchase, Name(vendor)); // Pirate: bank transaction history
         }
+
+        #region Pirate: citations
+        private bool IsBankCardArrested(EntityUid user)
+        {
+            return _idCard.TryFindIdCard(user, out var idCard)
+                && TryComp<BankCardComponent>(idCard.Owner, out var bankCard)
+                && bankCard.AccountId is { } accountId
+                && _bankCard.IsArrested(accountId);
+        }
+        #endregion
 
 
         private void OnInteractUsing(EntityUid uid, VendingMachineComponent component, InteractUsingEvent args)

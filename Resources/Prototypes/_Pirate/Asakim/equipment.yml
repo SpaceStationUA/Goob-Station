@@ -61,6 +61,9 @@
   description: An advanced combat harness. Incredibly rare, and practically alien in technology compared to modern hardsuits. Once equipped, the armor binds itself with the wearer and cannot be removed without external release.
   suffix: SelfUnremovable
   components:
+  - type: SuitWrap
+    ramp: [ "#161616", "#1E1E1E", "#2D2D2D", "#555555" ]
+    accent: "#555555"
   - type: Sprite
     sprite: _Pirate/Asakim/Clothing/OuterClothing/Hardsuits/asakim.rsi
   - type: Clothing
@@ -120,6 +123,9 @@
   description: An advanced combat harness. Incredibly rare, and practically alien in technology compared to modern hardsuits. Once equipped, the armor binds itself with the wearer and cannot be removed without external release. This one is fully bound to a warrior, and will take a long time to remove.
   suffix: 120 stripDelay
   components:
+  - type: SuitWrap
+    ramp: [ "#161616", "#1E1E1E", "#2D2D2D", "#555555" ]
+    accent: "#555555"
   - type: Clothing
     stripDelay: 120
     equipDelay: 120

@@ -292,6 +292,7 @@ namespace Content.Client.Lobby.UI
 
             #endregion
 
+            InitializeSubspecies(); // Pirate: initialize selectors before RefreshSpecies uses them.
             RefreshSpecies();
 
             SpeciesButton.OnItemSelected += args =>
@@ -646,6 +647,8 @@ namespace Content.Client.Lobby.UI
 
             for (var i = 0; i < _species.Count; i++)
             {
+                if (_species[i].SubspeciesOf != null) // Pirate: selectable in the subspecies dropdown.
+                    continue;
                 var name = Loc.GetString(_species[i].Name);
                 SpeciesButton.AddItem(name, i);
 
@@ -655,6 +658,7 @@ namespace Content.Client.Lobby.UI
                 }
             }
 
+            RefreshSubspecies(); // Pirate
             // If our species isn't available then reset it to default.
             if (Profile != null)
             {
@@ -1876,6 +1880,7 @@ namespace Content.Client.Lobby.UI
                 return;
 
             PreviewDummy = LoadGhostRoleLoadoutPreview() ?? _controller.LoadProfileEntity(Profile, null, ShowClothes.Pressed); // Pirate: ghost role loadouts - preview the open role; keep the normal job preview otherwise.
+            ApplySpeciesFramePreview(); // Pirate: intrinsic Starlight neocyte frame.
             SpriteView.SetEntity(PreviewDummy);
             _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, Profile.Name);
 
@@ -2211,7 +2216,11 @@ namespace Content.Client.Lobby.UI
         private void SetSpecies(string newSpecies)
         {
             Profile = Profile?.WithSpecies(newSpecies);
+            RefreshSubspecies(); // Pirate
+            EnsureAppearanceForSpecies(); // Goob
             OnSkinColorOnValueChanged(); // Species may have special color prefs, make sure to update it.
+            UpdateMarkings(); // Goob
+            UpdateHairPickers(); // Goob
             Markings.SetSpecies(newSpecies); // Repopulate the markings tab as well.
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();

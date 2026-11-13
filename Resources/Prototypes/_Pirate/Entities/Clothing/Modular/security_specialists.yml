@@ -73,6 +73,9 @@
   description: The warden's riot chestplate, cut into retractable segments.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#FACB3E"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Warden/chestplate.rsi
   - type: Clothing
@@ -206,6 +209,9 @@
   description: The brigmedic's chestplate, cut into retractable segments.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#FACB3E"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Brigmedic/chestplate.rsi
   - type: Clothing

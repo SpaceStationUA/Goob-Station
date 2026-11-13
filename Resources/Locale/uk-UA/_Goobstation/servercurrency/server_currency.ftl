@@ -46,7 +46,8 @@ gs-balanceui-gift-player = Гравець
 gs-balanceui-gift-player-tooltip = Введіть ім'я гравця, якому ви хочете надіслати гроші
 gs-balanceui-gift-value = Сума
 gs-balanceui-gift-value-tooltip = Сума грошей для переказу
-gs-balanceui-shop-label = Крамниця жетонів
+# Pirate: lobby font and styling
+gs-balanceui-shop-label = Жетони
 gs-balanceui-shop-empty = Немає в наявності!
 gs-balanceui-shop-buy = Купити
 gs-balanceui-shop-footer = ⚠ Зверніться до адмінів (Ahelp), щоб використати ваш жетон. Лише 1 використання на день.

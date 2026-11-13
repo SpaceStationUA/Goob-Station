@@ -41,6 +41,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 #endregion
 
+using Content.Client._Pirate.CriminalRecords; // Pirate: warned / safe status icons
+
 namespace Content.Client.CriminalRecords;
 
 // TODO: dedupe shitcode from general records theres a lot
@@ -323,12 +325,14 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
                 Portrait.ClearPortrait(); // Pirate: records photos
             #endregion
             HistoryView.UpdateLog(state.SelectedKey ?? 0, state.StationRecord.Name, state.Log, _access); // Pirate: record history
+            UpdateCitations(state.SelectedKey ?? 0, state.StationRecord.Name, state.CriminalRecord); // Pirate: citations
             _selectedRecord = state.CriminalRecord;
         }
         else
         {
             _selectedRecord = null;
             HistoryView.CloseDialog(); // Pirate: record history
+            ClearCitations(); // Pirate: citations
             #region Pirate: records photos
             ResetDeleteConfirmation();
             _recordProfile = null;
@@ -346,7 +350,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     private void PopulateRecordContainer(uint key, GeneralStationRecord stationRecord, CriminalRecord criminalRecord, RecordPortraitData? portrait) // Pirate: records photos
     {
-        var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown");
+        SpriteSpecifier specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown"); // Pirate: warned / safe status icons
         var na = Loc.GetString("generic-not-available-shorthand");
 
         #region Pirate: records photos
@@ -369,7 +373,9 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         if (criminalRecord.Status != SecurityStatus.None)
         {
-            specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"),  GetStatusIcon(criminalRecord.Status));
+            // Pirate: warned / safe status icons live in their own sheet
+            specifier = PirateSecurityIcons.FromStatus(criminalRecord.Status)
+                ?? new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"), GetStatusIcon(criminalRecord.Status));
         }
         PersonStatusTX.SetFromSpriteSpecifier(specifier);
         PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);

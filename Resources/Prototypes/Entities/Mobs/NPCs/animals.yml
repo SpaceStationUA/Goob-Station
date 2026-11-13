@@ -2960,6 +2960,7 @@
       spawned:
         - id: MaterialBananium1
           amount: 1
+    # Pirate: CrapoToxin remains disabled; keep the inherited spider venom.
     - type: DamageStateVisuals
       states:
         Alive:

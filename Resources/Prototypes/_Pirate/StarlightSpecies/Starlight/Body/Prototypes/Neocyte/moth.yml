@@ -1,0 +1,60 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: body
+  id: NeoMoth
+  name: neo-moth
+  root: torso
+  slots:
+    head:
+      part: HeadMoth
+      connections:
+      - torso
+      organs:
+        brain: OrganNeocyteBrain
+        eyes: OrganNeocyteEyes
+        tongue: OrganNeoMothTongue
+    torso:
+      part: ChestMoth
+      connections:
+      - right arm
+      - left arm
+      - groin
+      organs:
+        heart: OrganNeocyteHeart
+        lungs: OrganNeocyteLungs
+    right arm:
+      part: RightArmMoth
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmMoth
+      connections:
+      - left hand
+    right hand:
+      part: RightHandMoth
+      organs: {}
+    left hand:
+      part: LeftHandMoth
+      organs: {}
+    right leg:
+      part: RightLegMoth
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegMoth
+      connections:
+      - left foot
+    right foot:
+      part: RightFootMoth
+    left foot:
+      part: LeftFootMoth
+    groin:
+      part: GroinMoth
+      connections:
+      - right leg
+      - left leg
+      organs:
+        stomach: OrganNeoMothStomach
+        liver: OrganNeocyteLiver
+        kidneys: OrganNeocyteKidneys

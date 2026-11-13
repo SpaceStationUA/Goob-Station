@@ -38,6 +38,10 @@ namespace Content.Shared.Humanoid
         StencilMask,
         Ensnare,
         Fire,
-
+        // Pirate: Starlight neocyte visors and cybernetic plating. Append to preserve network values.
+        FaceCover,
+        FaceCoverCover,
+        BodyCover,
+        BodyCoverCover,
     }
 }

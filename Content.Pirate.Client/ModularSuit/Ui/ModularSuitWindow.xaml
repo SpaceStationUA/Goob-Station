@@ -12,7 +12,7 @@
 
         <BoxContainer SetHeight="32" Margin="12 8 12 4" Orientation="Horizontal" HorizontalExpand="True">
             <TextureRect TexturePath="/Textures/_Pirate/Interface/Logo/nakamura_logo.png" SetSize="32 32" Margin="0 0 6 0" VerticalAlignment="Center"/>
-            <Label Text="{Loc 'modsuit-ui-title'}" StyleClasses="LabelBig" VAlign="Center"
+            <Label Text="{Loc 'pirate-modsuit-ui-title'}" StyleClasses="LabelBig" VAlign="Center"
                    FontColorOverride="#ffaa33" HorizontalExpand="True"/>
             <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"
                            Modulate="#ff6666" VerticalAlignment="Center" Margin="0 4 4 0"/>
@@ -92,7 +92,7 @@
 
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Orientation="Horizontal" Margin="0 5">
-                                <Label Text="{Loc 'modsuit-ui-modules'}" StyleClasses="ConsoleSubHeading" FontColorOverride="#ffaa33" HorizontalExpand="True"/>
+                                <Label Text="{Loc 'pirate-modsuit-ui-modules'}" StyleClasses="ConsoleSubHeading" FontColorOverride="#ffaa33" HorizontalExpand="True"/>
                                 <Label Name="ModulesCountLabel" Text="0" FontColorOverride="#aaccff" HorizontalAlignment="Right"/>
                             </BoxContainer>
 
@@ -109,7 +109,7 @@
 
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Orientation="Horizontal" Margin="0 5">
-                                <Label Text="{Loc 'modsuit-ui-parts'}" StyleClasses="ConsoleSubHeading" FontColorOverride="#ffaa33" HorizontalExpand="True"/>
+                                <Label Text="{Loc 'pirate-modsuit-ui-parts'}" StyleClasses="ConsoleSubHeading" FontColorOverride="#ffaa33" HorizontalExpand="True"/>
                                 <Label Name="PartsCountLabel" Text="0" FontColorOverride="#aaccff" HorizontalAlignment="Right"/>
                             </BoxContainer>
 

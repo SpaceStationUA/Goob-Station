@@ -44,6 +44,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
 
         InitializePower();
         InitializeUi();
+        InitializeUpstreamModules();
 
         SubscribeLocalEvent<ModularSuitComponent, ComponentInit>(OnSuitInit);
         SubscribeLocalEvent<ModularSuitComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
@@ -749,6 +750,9 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
 
     private bool TryInstallModule(Entity<ModularSuitComponent> suit, Entity<ModularSuitModuleComponent> module, EntityUid user)
     {
+        if (!CanInstallUpstreamModule(suit, module, user))
+            return false;
+
         var container = Container.GetContainer(suit, ModuleContainer);
         if (module.Comp.IsPermanent && container.Contains(module.Owner))
         {
@@ -788,7 +792,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             return false;
         }
 
-        Popup.PopupEntity(Loc.GetString("modsuit-module-installed"), suit, user);
+        Popup.PopupEntity(Loc.GetString("pirate-modsuit-module-installed"), suit, user);
         _audio.PlayPredicted(suit.Comp.InsertSound, suit.Owner, null);
 
         var ev = new ModularSuitInstalledEvent(suit, user);

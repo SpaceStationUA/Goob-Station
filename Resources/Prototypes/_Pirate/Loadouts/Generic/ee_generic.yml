@@ -502,6 +502,39 @@
     - CrayonBox
 
 - type: loadout
+  id: LoadoutItemCrayonArtistQuestion
+  showWhenUnavailable: true
+  effects:
+  - !type:UsernameLoadoutRequirementEffect
+    username: The_Question
+    failureReason: loadout-artist-requirement
+  storage:
+    back:
+    - CrayonArtist
+
+- type: loadout
+  id: LoadoutItemCrayonArtist
+  showWhenUnavailable: true
+  effects:
+  - !type:UsernameLoadoutRequirementEffect
+    username: Jon_Brando
+    failureReason: loadout-artist-requirement
+  storage:
+    back:
+    - CrayonArtist
+
+- type: loadout
+  id: LoadoutItemSuperSynthesizerNoLimit
+  showWhenUnavailable: true
+  effects:
+  - !type:UsernameLoadoutRequirementEffect
+    username: Jon_Brando
+    failureReason: loadout-artist-requirement
+  storage:
+    back:
+    - SuperSynthesizerNoLimitInstrument
+
+- type: loadout
   id: LoadoutItemDrinkLithiumFlask
   customColorTint: true
   storage:

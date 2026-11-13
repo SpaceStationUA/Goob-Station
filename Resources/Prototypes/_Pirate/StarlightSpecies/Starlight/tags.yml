@@ -1,0 +1,29 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: Tag
+  id: Arachnid
+- type: Tag
+  id: Blood
+- type: Tag
+  id: Bow
+- type: Tag
+  id: Diona
+- type: Tag
+  id: Dwarf
+- type: Tag
+  id: Elf
+- type: Tag
+  id: Felionoid
+- type: Tag
+  id: Labelable
+- type: Tag
+  id: Lagomorph
+- type: Tag
+  id: Nexus
+- type: Tag
+  id: Resomi
+- type: Tag
+  id: Shadekin
+- type: Tag
+  id: SurgeryCompatibleArmor

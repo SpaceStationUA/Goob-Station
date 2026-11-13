@@ -1,0 +1,181 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: BaseInventoryCyclorite
+  abstract: true
+  components:
+  - type: Inventory
+    speciesId: cyclorite
+    templateId: cyclorite
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: jumpsuit
+      eyes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: eyes
+      gloves:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: hand
+      head:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: head
+      back:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: back
+      ears:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: ears
+      shoes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: shoes
+      neck:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: neck
+      misc:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: neck
+      belt:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: belt
+      outerClothing:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: outer
+- type: entity
+  id: BaseInventoryFelionoid
+  abstract: true
+  components:
+  - type: Inventory
+    speciesId: felionoid
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/displacement.rsi
+            state: jumpsuit
+      eyes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/displacement.rsi
+            state: eyes
+      gloves:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/displacement.rsi
+            state: hand
+      head:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/displacement.rsi
+            state: head
+      back:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/displacement.rsi
+            state: back
+      ears:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/displacement.rsi
+            state: ears
+      shoes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Felionoid/displacement.rsi
+            state: shoes
+- type: entity
+  id: BaseInventoryFemaleJumpsuit
+  abstract: true
+  components:
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+- type: entity
+  id: BaseInventoryLagomorph
+  abstract: true
+  components:
+  - type: Inventory
+    speciesId: lagomorph
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Lagomorph/displacement.rsi
+            state: jumpsuit
+- type: entity
+  id: BaseInventoryNeoAvali
+  parent:
+  - BaseInventoryAvali
+  abstract: true
+  components:
+  - type: Inventory
+    speciesId: avali
+    templateId: neocyte
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Avali/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Avali/displacement.rsi
+            state: outerclothing
+      shoes:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Avali/displacement.rsi
+            state: shoes
+      head:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Avali/displacement.rsi
+            state: head
+      hand:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Avali/displacement.rsi
+            state: hand
+      back:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Avali/displacement.rsi
+            state: back
+      gloves:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Avali/displacement.rsi
+            state: gloves

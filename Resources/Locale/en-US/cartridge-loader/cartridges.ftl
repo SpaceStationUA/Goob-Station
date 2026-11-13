@@ -114,6 +114,8 @@ wanted-list-status-label = [color=darkgray]status:[/color] {$status ->
         [perma] [color=#343434]perma[/color]
         [dangerous] [color=red]dangerous[/color]
         [demote] [color=red]demote[/color]
+        [warned] [color=#e09b2d]warned[/color]
+        [safe] [color=#2fbf71]safe[/color]
         *[other] none
     }
 

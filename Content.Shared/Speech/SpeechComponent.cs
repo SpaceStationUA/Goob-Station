@@ -34,6 +34,7 @@ namespace Content.Shared.Speech
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
+        [AutoNetworkedField] // Pirate: tongue and shell emotes must reach the client's emote picker.
         public List<ProtoId<EmotePrototype>> AllowedEmotes = new();
 
         /// <summary>

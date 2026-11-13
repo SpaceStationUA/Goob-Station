@@ -36,7 +36,12 @@ namespace Content.Shared.Humanoid.Markings
         // Pirate - append new values so existing NetSerializable byte values stay stable.
         HairSpecial, // Pirate - Trauma Station hair gradients
         FacialHairSpecial, // Pirate - Trauma Station hair gradients; Pirate: lizard head shape
-        HeadShape // Pirate: lizard head shape; full-head markings stay beneath Head overlays
+        HeadShape, // Pirate: lizard head shape; full-head markings stay beneath Head overlays
+        // Pirate: independent Starlight neocyte visor, display, plating and light colors.
+        FaceCover,
+        FaceCoverCover,
+        BodyCover,
+        BodyCoverCover
     }
 
     public static class MarkingCategoriesConversion
@@ -67,6 +72,11 @@ namespace Content.Shared.Humanoid.Markings
                 HumanoidVisualLayers.RFoot => MarkingCategories.RightFoot, // Goobstation
                 HumanoidVisualLayers.Wings => MarkingCategories.Wings, // Goobstation
                 HumanoidVisualLayers.Tail => MarkingCategories.Tail,
+                // Pirate: Starlight neocyte customization.
+                HumanoidVisualLayers.FaceCover => MarkingCategories.FaceCover,
+                HumanoidVisualLayers.FaceCoverCover => MarkingCategories.FaceCoverCover,
+                HumanoidVisualLayers.BodyCover => MarkingCategories.BodyCover,
+                HumanoidVisualLayers.BodyCoverCover => MarkingCategories.BodyCoverCover,
                 _ => MarkingCategories.Overlay
             };
         }

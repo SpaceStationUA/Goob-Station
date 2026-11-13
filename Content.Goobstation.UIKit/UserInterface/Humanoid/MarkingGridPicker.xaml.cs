@@ -475,7 +475,8 @@ public sealed partial class MarkingGridPicker : BoxContainer
     {
         var marking = proto.AsMarking();
 
-        if (_markingManager.MustMatchSkin(_currentSpecies, proto.BodyPart, out _, _prototypeManager))
+        if (!proto.MarkingCategory.IgnoresMatchSkin() // Pirate - gradients keep their own colors and shader parameters
+            && _markingManager.MustMatchSkin(_currentSpecies, proto.BodyPart, out _, _prototypeManager))
         {
             for (var i = 0; i < proto.Sprites.Count; i++)
             {
@@ -635,9 +636,13 @@ public sealed partial class MarkingGridPicker : BoxContainer
             StyleClasses = { HullStyleClasses.Section },
         });
 
-        for (var i = 0; i < proto.Sprites.Count && i < current.MarkingColors.Count; i++)
+        for (var i = 0; i < proto.ColorCount && i < current.MarkingColors.Count; i++) // Pirate - shader markings have no sprites
         {
             if (IsColorLinked(proto, i))
+                continue;
+
+            // Pirate - shader parameters use numeric controls rather than RGB color selectors.
+            if (TryCreateShaderParamSliders(proto, i))
                 continue;
 
             var selector = new ColorSelectorSliders
@@ -677,7 +682,7 @@ public sealed partial class MarkingGridPicker : BoxContainer
 
     private static bool IsColorLinked(MarkingPrototype proto, int layer)
     {
-        if (proto.ColorLinks is not { Count: > 0 })
+        if (layer >= proto.Sprites.Count || proto.ColorLinks is not { Count: > 0 }) // Pirate - shader-only markings
             return false;
 
         var name = proto.Sprites[layer] switch
@@ -692,6 +697,10 @@ public sealed partial class MarkingGridPicker : BoxContainer
 
     private static List<string> GetMarkingStateNames(MarkingPrototype marking)
     {
+        // Pirate - shader-only marking layers use the same ordering as their stored colors.
+        if (marking.Sprites.Count == 0 && marking.Coloring.Layers is { } layers)
+            return layers.Keys.Order().Select(layer => Loc.GetString($"marking-{marking.ID}-{layer}")).ToList();
+
         var result = new List<string>();
         foreach (var state in marking.Sprites)
         {

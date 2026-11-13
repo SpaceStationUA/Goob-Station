@@ -52,6 +52,7 @@ public sealed partial class MiscTab : Control
         Control.AddOptionCheckBox(GoobCVars.DetailedExamine, DetailedExamineCheckBox); // Goobstation Change
         Control.AddOptionCheckBox(CCVars.HudHeldItemShow, ShowHeldItemCheckBox);
         Control.AddOptionCheckBox(CCVars.CombatModeIndicatorsPointShow, ShowCombatModeIndicatorsCheckBox);
+        Control.AddOptionPercentSlider(CCVars.PirateDecalPreviewOpacity, PirateDecalPreviewOpacitySlider); // Pirate
         Control.AddOptionCheckBox(CCVars.OpaqueStorageWindow, OpaqueStorageWindowCheckBox);
         Control.AddOptionCheckBox(GoobCVars.AutoFocusSearchOnBuildMenu, AutoFocusSearchOnBuildMenuCheckBox); // Goobstation Change
         Control.AddOptionCheckBox(GoobCVars.LockActionBarDrag, LockActionBarDragCheckBox); // Goobstation

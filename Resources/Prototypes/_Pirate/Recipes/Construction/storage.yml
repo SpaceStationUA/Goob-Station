@@ -1,0 +1,11 @@
+- type: construction
+  id: TowelBin
+  graph: LinenBin
+  startNode: start
+  targetNode: towelBin
+  category: construction-category-storage
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

@@ -12,3 +12,5 @@ ghost-role-information-xenomorph-queen-name = королева-ксеномор�
 ghost-role-information-xenomorph-queen-description = Ви — королева-ксеноморф. Створюйте потомство та керуйте роєм, і найголовніше — НЕ ВМИРАЙТЕ.
 ghost-role-information-xenomorph-sentinel-name = страж-ксеноморф
 ghost-role-information-xenomorph-sentinel-description = Ви — страж-ксеноморф. Допомагайте преторіанцю захищати рій та атакуйте гуманоїдів, якщо це необхідно.
+ghost-role-information-xenomorph-facehugger-name = ксеноморф-лицехап
+ghost-role-information-xenomorph-facehugger-description = Ви — ксеноморф-лицехап. Шукайте гуманоїдів для зараження, щоб ваш вулик ставав сильнішим.

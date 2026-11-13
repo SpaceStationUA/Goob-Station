@@ -1,0 +1,4 @@
+- files: ["twobeep_high.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation."
+  source: "https://github.com/tgstation/tgstation/blob/21ce3d66d4ceff1e547f6e2c137231c599efcf2a/sound/machines/beep/twobeep_high.ogg"

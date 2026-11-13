@@ -4,8 +4,8 @@ meta:
   engineVersion: 293.0.0
   forkId: ""
   forkVersion: ""
-  time: 10/27/2026 22:28:52
-  entityCount: 8579
+  time: 10/31/2026 10:51:07
+  entityCount: 8580
 maps:
 - 1
 grids:
@@ -7813,7 +7813,7 @@ entities:
       pos: -14.5,1.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -183698.02
+      secondsUntilStateChange: -183728.78
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -7825,7 +7825,7 @@ entities:
       pos: -13.5,6.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -140856.77
+      secondsUntilStateChange: -140887.53
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -8055,7 +8055,7 @@ entities:
       pos: 20.5,-9.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -71391.61
+      secondsUntilStateChange: -71422.375
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -21359,6 +21359,16 @@ entities:
       pos: -7.5,10.5
     - type: OreSiloClient
       siloNetwork: perdition
+- proto: CitationPaymentConsole
+  entities:
+  - uid: 5854
+    components:
+    - type: Transform
+      parent: 2
+      rot: 1.5707963267948966 rad
+      pos: 7.5,0.5
+    - type: Fixtures
+      fixtures: {}
 - proto: ClarinetInstrument
   entities:
   - uid: 9
@@ -23102,7 +23112,7 @@ entities:
       pos: 17.5,-18.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -16937.191
+      secondsUntilStateChange: -16967.957
 - proto: CurtainsOrangeOpen
   entities:
   - uid: 2567
@@ -23216,7 +23226,7 @@ entities:
       pos: 23.5,-18.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -16934.559
+      secondsUntilStateChange: -16965.324
 - proto: CurtainsRedOpen
   entities:
   - uid: 2576
@@ -58920,7 +58930,7 @@ entities:
         DoorStatus: True
     - type: Door
       state: Opening
-      secondsUntilStateChange: -16855.125
+      secondsUntilStateChange: -16885.89
     - type: Airlock
       autoClose: False
   - uid: 4959
@@ -58933,7 +58943,7 @@ entities:
         DoorStatus: True
     - type: Door
       state: Opening
-      secondsUntilStateChange: -16854.525
+      secondsUntilStateChange: -16885.291
     - type: Airlock
       autoClose: False
   - uid: 7543

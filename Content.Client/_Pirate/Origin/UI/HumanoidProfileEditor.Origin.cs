@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Goobstation.UIKit.UserInterface.Lobby;
 using Content.Shared._Pirate.Origin;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -12,6 +13,7 @@ public sealed partial class HumanoidProfileEditor
 
     private void InitializeCitizenshipSelector()
     {
+        HullStyler.Apply(CitizenshipButton.Parent!);
         RefreshCitizenships();
 
         CitizenshipButton.OnItemSelected += args =>

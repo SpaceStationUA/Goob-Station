@@ -88,13 +88,6 @@ public sealed partial class ModularSuitSystem
 
     private void OnToggleModuleMessage(Entity<ModularSuitComponent> ent, ref ToggleModuleMessage args)
     {
-        if (!ent.Comp.Active)
-        {
-            Popup.PopupPredicted(Loc.GetString("modsuit-not-active"), ent, null);
-            UpdateUiState(ent);
-            return;
-        }
-
         var moduleContainer = Container.GetContainer(ent, ModuleContainer);
         if (!TryGetEntity(args.ModuleUid, out var moduleEnt)
             || !moduleContainer.ContainedEntities.Contains(moduleEnt.Value)
@@ -106,6 +99,20 @@ public sealed partial class ModularSuitSystem
 
         if (!module.CanBeDisabled)
         {
+            UpdateUiState(ent);
+            return;
+        }
+
+        if (HasComp<UpstreamSuitModuleComponent>(moduleEnt.Value))
+        {
+            RequestUpstreamModuleToggle(ent, moduleEnt.Value, args.Actor, args.Active);
+            UpdateUiState(ent);
+            return;
+        }
+
+        if (!ent.Comp.Active)
+        {
+            Popup.PopupPredicted(Loc.GetString("modsuit-not-active"), ent, null);
             UpdateUiState(ent);
             return;
         }

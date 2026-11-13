@@ -1,0 +1,45 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: marking
+  id: FelionoidHeadCalico
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: calico1_head
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: calico2_head
+- type: marking
+  id: FelionoidHeadStripes
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: head_stripes
+- type: marking
+  id: FelionoidHeadTabby
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: Tabby_head
+- type: marking
+  id: FelionoidHeadTiger
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: Tiger_stripes_face

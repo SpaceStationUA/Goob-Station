@@ -1059,3 +1059,7 @@ BenchSofaCorner: SofaWhiteCorner
 HeadOfSecurityWeaponUndetermined: HeadOfSecurityGunCase
 BlueshieldUndeterminedWeapon: BlueshieldUndeterminedOffensive
 ClothingBeltMilitaryWebbingBSOFilled: ClothingBeltChemBagBSOFilled
+
+# Pirate: retain our active suit selectors and debug loadouts.
+# The removed legacy storage-free controller still needs upstream migration.
+ClothingModsuitStandardNoStorage: ClothingModsuitStandard

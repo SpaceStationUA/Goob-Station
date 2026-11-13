@@ -1,0 +1,10 @@
+ooc-icon-pirate-dynexust = Дайнексуст
+ooc-icon-pirate-the-question = Питання
+ooc-icon-pirate-astrally = Астраллі
+ooc-icon-pirate-saloplay = салоплей
+ooc-icon-pirate-luciusgg = ЛюціусҐҐ
+ooc-icon-pirate-syvorks = Сіворкс
+ooc-icon-pirate-pyrizhok = Пиріжок
+ooc-icon-pirate-hamster-masterr = Хамстер_мастерр
+ooc-icon-pirate-gamescat = Ґеймскет
+ooc-icon-pirate-ter-4333 = Тер_4333

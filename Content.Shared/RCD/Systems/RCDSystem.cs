@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Administration.Logs;
+using Content.Shared._Pirate.Construction; // Pirate: novice construction protection
 using Content.Shared.Atmos.Components; // Pirate: chem plumbing
 using Content.Shared.Atmos.EntitySystems; // Pirate: chem plumbing
 using Content.Shared.Charges.Components;
@@ -539,6 +540,15 @@ public sealed class RCDSystem : EntitySystem
     private bool IsConstructionLocationValid(EntityUid uid, RCDComponent component, EntityUid gridUid, MapGridComponent mapGrid, TileRef tile, Vector2i position, Direction direction, EntityUid user, bool popMsgs = true)
     {
         var prototype = _protoManager.Index(component.ProtoId);
+        // Pirate: enforce server-side construction restrictions at both start and completion.
+        if (_net.IsServer && prototype.Mode == RcdMode.ConstructObject && prototype.Prototype is { } entityPrototype)
+        {
+            var attempt = new ConstructEntityAttemptEvent(entityPrototype, popMsgs);
+            RaiseLocalEvent(user, ref attempt);
+            if (attempt.Cancelled)
+                return false;
+        }
+
         if (prototype.Mode == RcdMode.ConstructObject && prototype.Prototype != null) // Goobstation
             _protoManager.Index(prototype.Prototype); // Goobstation
 

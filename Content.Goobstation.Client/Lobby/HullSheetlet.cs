@@ -2,6 +2,7 @@ using Content.Client.Chat.UI;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.Stylesheets;
+using Content.Goobstation.Client._Pirate.Lobby; // Pirate: lobby font and styling
 using Content.Goobstation.UIKit.UserInterface.Lobby;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -235,7 +236,7 @@ public sealed class HullSheetlet : Sheetlet<NanotrasenStylesheet>
         var cache = IoCManager.Resolve<IResourceCache>();
         var pixel = cache.GetFont($"{FontPath}/Freezeframe-Cond{style}.ttf", small ? 6 : 12);
         var fallback = cache.NotoStack(bold ? "Bold" : "Regular", small ? 7 : 11);
-        return new StackedFont(pixel, fallback);
+        return HullFontFallback.Create(cache, pixel, fallback, bold, small); // Pirate: lobby font and styling
     }
 
     private static StyleBoxFlat Flat(string background, string border, float thickness = 1, float padH = 0, float padV = 0)

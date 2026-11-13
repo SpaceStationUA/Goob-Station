@@ -1,0 +1,66 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: OrganNeoAvaliHeart
+  parent:
+  - OrganNeocyteHeart
+  name: avali cybernetic heart
+  suffix: Neo-Avali
+  components:
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes:
+    - Avali
+    - Neocyte
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+- type: entity
+  id: OrganNeoAvaliLiver
+  parent:
+  - OrganNeocyteLiver
+  name: avali cybernetic liver
+  suffix: Neo-Avali
+  components:
+  - type: Metabolizer
+    updateInterval: 1.5
+    maxReagents: 1
+    metabolizerTypes:
+    - Avali
+    groups:
+    - id: Alcohol
+- type: entity
+  id: OrganNeoAvaliStomach
+  parent:
+  - OrganNeocyteStomach
+  name: avali biological reactor
+  suffix: Neo-Avali
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - RamChip
+    isSpecialDigestibleExclusive: false
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+      stomach:
+        maxVol: 50
+- type: entity
+  id: OrganNeoAvaliTongue
+  parent:
+  - OrganNeocyteTongueForked
+  suffix: Neo-Avali
+  components:
+  - type: OrganTongue
+    sounds:
+      Male: NeoAvaliMSounds
+      Female: NeoAvaliFSounds
+      Unsexed: NeoAvaliMSounds
+  - type: TongueVoiceOrgan

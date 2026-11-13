@@ -2,19 +2,21 @@
   id: SpawnPodCoffeemakerImpressaPirate
   categories: [ HideSpawnMenu ]
   name: "coffeemaker supply drop"
-  parent: SpawnSupplyEmpty
+  parent: DropPod
   components:
-  - type: SpawnOnDespawn
-    prototype: CrateServiceCoffeemakerImpressaPirate
+  - type: DropPod
+    contents:
+    - CrateServiceCoffeemakerImpressaPirate
 
 - type: entity
   id: SpawnPodCoffeemakerModelloPirate
   categories: [ HideSpawnMenu ]
   name: "coffeemaker supply drop"
-  parent: SpawnSupplyEmpty
+  parent: DropPod
   components:
-  - type: SpawnOnDespawn
-    prototype: CrateServiceCoffeemakerPirate
+  - type: DropPod
+    contents:
+    - CrateServiceCoffeemakerPirate
 
 - type: entity
   parent: BaseItem

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Charges.Components;
+using Content.Shared._Pirate.StarlightSpecies; // Pirate: source flash sensitivity changes blindness, not paralysis.
 using Content.Shared.Charges.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Eye.Blinding.Components;
@@ -186,6 +187,11 @@ public abstract class SharedFlashSystem : EntitySystem
         RaiseLocalEvent(target, multiplierEv);
         var multiplier = multiplierEv.Multiplier;
         // Goobstation end
+
+        // Pirate: preserve Starlight's visual duration separately from Goob's stun multiplier.
+        var durationEv = new FlashEffectDurationEvent(flashDuration);
+        RaiseLocalEvent(target, ref durationEv);
+        flashDuration = durationEv.Duration;
 
         // don't paralyze, slowdown or convert to rev if the target is immune to flashes
         if (!_statusEffectsSystem.TryAddStatusEffect<FlashedComponent>(target, FlashedKey, flashDuration, true)

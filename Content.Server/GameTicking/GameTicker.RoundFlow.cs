@@ -449,6 +449,7 @@ namespace Content.Server.GameTicking
 
             _roundStartDateTime = DateTime.UtcNow;
             RunLevel = GameRunLevel.InRound;
+            RecordPresetHistory(); // Goob
 
             RoundStartTimeSpan = _gameTiming.CurTime;
             SendStatusToAll();

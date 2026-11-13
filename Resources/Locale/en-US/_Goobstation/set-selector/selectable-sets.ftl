@@ -163,6 +163,12 @@ selectable-set-blueshield-modsuit-name = Praetorian modular suit
 selectable-set-blueshield-modsuit-description =
     A preassembled modular suit for Blueshield Officers, combining heavy protection with advanced modules.
 
+selectable-set-blueshield-syringe-name = medical set
+selectable-set-blueshield-syringe-description =
+    Perfect for healing allies or poisioning foes in a pinch.
+    Includes: An explosive resistant chestrig, a combat injector, and
+    several vials of medicine.
+
 # ERT
 
 selectable-set-ert-ballistic-name = ballistics set

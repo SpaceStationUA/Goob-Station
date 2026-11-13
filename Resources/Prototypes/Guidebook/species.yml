@@ -35,6 +35,13 @@
     - Hydrakin # Monolith/Obelisk
     - Thaven # MACRO
     - Synth # Goob - Afterlight
+    # Pirate: additional lobby species from Starlight.
+    - Elf
+    - Cyclorite
+    - Lagomorph
+    - Doll
+    - Felionoid
+    - Neocyte
 
 - type: guideEntry
   id: Arachnid

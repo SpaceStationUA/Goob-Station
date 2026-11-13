@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Goobstation.UIKit.UserInterface.Lobby;
 using Content.Shared.Preferences.Loadouts;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
@@ -20,12 +21,14 @@ public sealed partial class HumanoidProfileEditor
         {
             Text = Loc.GetString("humanoid-profile-editor-ghost-role-loadouts"),
             Margin = new Thickness(3f, 12f, 3f, 3f),
+            StyleClasses = { HullStyleClasses.Section },
         });
 
         (ProtoId<RoleLoadoutPrototype> Role, string Name)[] roles =
         [
             ("GhostRoleCybersun", "roles-antag-cybersun-name"),
             ("GhostRoleMercenary", "roles-antag-mercenary-name"),
+            ("GhostRoleBountyHunter", "roles-antag-bounty-hunter-name"),
             ("GhostRoleFriendlyWizard", "humanoid-profile-editor-friendly-wizard"),
             ("GhostRoleLizardGasStation", "humanoid-profile-editor-lizard-gas-station"),
         ];
@@ -44,9 +47,15 @@ public sealed partial class HumanoidProfileEditor
             {
                 Text = Loc.GetString(name),
                 MinWidth = 250,
+                VerticalAlignment = VAlignment.Center,
+                StyleClasses = { HullStyleClasses.Text },
             });
 
-            var button = new Button { Text = Loc.GetString("loadout-window") };
+            var button = new Button
+            {
+                Text = Loc.GetString("loadout-window"),
+                StyleClasses = { HullStyleClasses.Plate },
+            };
             button.OnPressed += _ => OpenGhostRoleLoadoutEditor(role, Loc.GetString(name));
 
             row.AddChild(button);
@@ -61,8 +70,17 @@ public sealed partial class HumanoidProfileEditor
 
         if (_ghostRoleLoadoutHeader == null)
         {
-            _ghostRoleLoadoutTitle = new Label { HorizontalExpand = true };
-            var back = new Button { Text = Loc.GetString("humanoid-profile-editor-ghost-role-loadouts-back") };
+            _ghostRoleLoadoutTitle = new Label
+            {
+                HorizontalExpand = true,
+                VerticalAlignment = VAlignment.Center,
+                StyleClasses = { HullStyleClasses.Heading },
+            };
+            var back = new Button
+            {
+                Text = Loc.GetString("humanoid-profile-editor-ghost-role-loadouts-back"),
+                StyleClasses = { HullStyleClasses.Plate },
+            };
             back.OnPressed += _ => TabContainer.CurrentTab = _ghostRoleLoadoutReturnTab;
             _ghostRoleLoadoutHeader = new BoxContainer
             {

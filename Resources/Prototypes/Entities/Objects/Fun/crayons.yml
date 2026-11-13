@@ -27,6 +27,8 @@
         type: CrayonBoundUserInterface
   - type: Crayon
     selectedState: like
+  - type: CrayonRotation # Pirate: floor art for every crayon.
+  - type: CrayonSymbol # Pirate: personal stencils.
   - type: LimitedCharges
     maxCharges: 25
   - type: StaticPrice

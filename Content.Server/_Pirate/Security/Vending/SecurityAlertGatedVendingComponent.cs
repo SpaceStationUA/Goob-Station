@@ -15,4 +15,10 @@ public sealed partial class SecurityAlertGatedVendingComponent : Component
 
     [DataField(required: true)]
     public HashSet<string> AllowedAlertLevels = [];
+
+    [DataField]
+    public List<EntProtoId> ElevatedAlertItems = [];
+
+    [DataField]
+    public HashSet<string> ElevatedAlertLevels = [];
 }

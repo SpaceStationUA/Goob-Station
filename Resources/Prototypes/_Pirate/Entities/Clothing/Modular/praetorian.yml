@@ -126,6 +126,9 @@
   description: "Високоміцний нагрудник із силовими сервоприводами, створений для захисту офіцерів «Синього щита»."
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#005DBF"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Praetorian/chestplate.rsi
   - type: Clothing

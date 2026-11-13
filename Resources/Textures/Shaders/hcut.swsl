@@ -1,13 +1,14 @@
 light_mode unshaded;
 
-const highp float c = 0.3;
+const highp float c = 0.372; // Pirate: hot springs; Pirate: sprite ambient occlusion - keep the cut position in UV2
 const highp float alphaModifier = 0.2;
 const bool below = true;
 
 void fragment()
 {
     highp vec4 tex = zTexture(UV);
-    highp float modifier = (UV.y > c ^^ !below) ? 1.0 : alphaModifier;
+    // Pirate: sprite ambient occlusion - UV2 prevents the cut from shifting with pooled texture size.
+    highp float modifier = (UV2.y > c ^^ !below) ? 1.0 : alphaModifier; // Pirate: sprite ambient occlusion
 
     COLOR = vec4(tex.rgb * modifier, tex.a * modifier);
 }

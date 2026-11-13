@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+# Pirate: AU-14/ColonialMarinesUniverse#2179.
+
+- type: entity
+  id: CMUCrayonStamp
+  name: crayon drawing
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: FloorObjects
+  - type: CrayonStamp

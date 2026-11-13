@@ -8,7 +8,7 @@
 :root {
   --bg: #111418; --panel: #181c21; --ink: #eef0f3; --ink-2: #b4bbc5; --ink-3: #848c97;
   --line: #2a3038; --grid: #222830; --chip: #232931; --focus: #7aa2ff;
-  --m1: #3987e5; --m2: #d95926; --m3: #199e70; --m4: #c98500; --m5: #d55181; --m6: #008300; --m7: #9085e9; --m8: #d93a3a; --m9: #a82626; --warn: #e0a24a;
+  --m1: #3987e5; --m2: #d95926; --m3: #199e70; --m4: #c98500; --m5: #e04dd1; --m6: #62c8f2; --m7: #7f26d9; --m8: #d93a3a; --m9: #a82626; --warn: #e0a24a;
   --font-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
   --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --font-data: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -17,7 +17,7 @@
 :root[data-theme="light"] {
   --bg: #f5f6f8; --panel: #ffffff; --ink: #15191f; --ink-2: #4a525e; --ink-3: #7a828e;
   --line: #dde1e7; --grid: #eceff3; --chip: #e9ecf1; --focus: #2a5bd7;
-  --m1: #2a78d6; --m2: #eb6834; --m3: #1baf7a; --m4: #eda100; --m5: #e87ba4; --m6: #008300; --m7: #6250d6; --m8: #d63c3c; --m9: #922020; --warn: #b25e00;
+  --m1: #2a78d6; --m2: #eb6834; --m3: #1baf7a; --m4: #eda100; --m5: #e35fe3; --m6: #5bb2ea; --m7: #7c1da5; --m8: #d63c3c; --m9: #922020; --warn: #b25e00;
   color-scheme: light;
 }
 .themebtn { justify-self: start; font: 500 12px var(--font-body); color: var(--ink-2); background: var(--chip); border: 0; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
@@ -364,7 +364,7 @@ const DATA = /*__DATA__*/null;
   const sv = (tag, attrs = {}) => { const n = document.createElementNS(SVG, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); return n; };
   const fmt = (v, d = 1) => v === null || v === undefined || Number.isNaN(v) ? '–' : (Math.abs(v) >= 100 ? Math.round(v).toString() : (+v).toFixed(d).replace(/\.0+$/, ''));
 
-  const SRC_NAMES = { roundstart: 'початок', midround: 'хаос', side: 'інше', MeteorSwarmScheduler: 'метеори', GlimmerEventScheduler: 'мерехтіння', BlueshiftAntagScheduler: 'антагоністи' };
+  const SRC_NAMES = { roundstart: 'початок', midround: 'хаос', side: 'інше', MeteorSwarmScheduler: 'метеори', GlimmerEventScheduler: 'мерехтіння', BlueshiftAntagScheduler: 'антагоністи', IonStormScheduler: 'іонні бурі', RareIonStormScheduler: 'іонні бурі' };
   const srcName = s => SRC_NAMES[s] || s;
 
   const themeBtn = document.querySelector('#themebtn');
@@ -386,7 +386,8 @@ const DATA = /*__DATA__*/null;
   const presets = DATA.presets;
   const colorOf = id => { const p = presets.find(q => q.id === id); return `var(--m${p && p.slot ? p.slot : presets.indexOf(p) + 1})`; };
   const labelOf = id => (presets.find(p => p.id === id) || { label: id }).label;
-  const state = { scenario: DATA.scenarios[Math.min(1, DATA.scenarios.length - 1)].name, hidden: new Set() };
+  const defaultScenario = (DATA.scenarios.find(s => s.population === 40 && s.roundstartPlayers === 15) || DATA.scenarios[Math.min(1, DATA.scenarios.length - 1)]).name;
+  const state = { scenario: defaultScenario, hidden: new Set() };
   try { const s = JSON.parse(localStorage.getItem('gms-state') || '{}'); if (DATA.groups[s.scenario]) state.scenario = s.scenario; (s.hidden || []).forEach(h => state.hidden.add(h)); } catch (e) {}
   const save = () => { try { localStorage.setItem('gms-state', JSON.stringify({ scenario: state.scenario, hidden: [...state.hidden] })); } catch (e) {} };
   const visible = () => presets.filter(p => !state.hidden.has(p.id) && DATA.groups[state.scenario][p.id]);
@@ -915,6 +916,7 @@ const DATA = /*__DATA__*/null;
     'EventManager CanRun: активні правила, найбільша кількість запусків, мінімум гравців, найраніший запуск, затримка повтору, кінець раунду та межі мерехтіння.',
     'Таблиці сутностей з імовірностями, групами та умовами. Кількість антагоністів з GetTargetAntagCount з випадковими мінімумом і максимумом. Затримки запуску й тривалість правил.',
     'Планувальники метеорів і мерехтіння кожного пресету.',
+    'GameDirector (Поводир, Спостерігач): антагоністи на початку раунду, історії та етапи, цілі й ескалація хаосу, кінець і розгалуження етапу, вибір події за користю, повтори, бюджет руйнувань, підкріплення, відповідальні відділи. SubGamemodes: кожне правило має свій шанс.',
   ].map(t => el('li', {}, t)));
   const rnd = c.randomize || {};
   const pv = (name, fixed, f = v => v) => rnd[name] ? `${f(rnd[name][0])}–${f(rnd[name][1])} (випадково)` : f(fixed);
@@ -922,13 +924,14 @@ const DATA = /*__DATA__*/null;
   const join = s => `${pv('joinWindowMinutes', s.joinWindowMinutes)} хв, крива ${pv('joinCurve', s.joinCurve)}`;
   const secShare = Math.round((DATA.jobs || []).filter(j => /Secur|Warden|Detective|Brigmedic|HeadOfSecurity/.test(j.job)).reduce((a, j) => a + j.weight, 0));
   $('#assumed').replaceChildren(...[
-    `Населення: на початку раунду підключено ${DATA.scenarios[0].population} гравців. У налаштуваннях раунд одразу починають ${DATA.scenarios.map(s => s.roundstartPlayers).join(', ')} з них. Гравці в лобі враховуються для мінімуму гравців, кількості антагоністів і хаосу на початку раунду. Вони входять протягом ${join(DATA.scenarios[0])}. Спостерігачі не входять: ${pv('observers', c.observers)} з ${DATA.scenarios[0].population} гравців.`,
+    `Населення: налаштування ${DATA.scenarios.map(s => `${s.roundstartPlayers} з ${s.population}`).join(', ')}. Перше число — гравці, які одразу починають раунд, друге — гравці, підключені на початку раунду. Гравці в лобі враховуються для мінімуму гравців, кількості антагоністів і хаосу на початку раунду. Вони входять протягом ${join(DATA.scenarios[0])}. Спостерігачі не входять: ${pv('observers', c.observers)} з підключених гравців.`,
     `Смерті: екіпаж ${pv('crewDeathPerMinute', c.crewDeathPerMinute)}/хв, плюс ${pv('crewDeathPerAntagPerMinute', c.crewDeathPerAntagPerMinute)}/хв за кожного живого антагоніста. Антагоністи ${pv('antagDeathPerMinute', c.antagDeathPerMinute)}/хв, плюс ${pv('antagDeathPerSecPerMinute', c.antagDeathPerSecPerMinute)}/хв за кожного живого співробітника СБ. Шанс воскресіння ${pv('revivalChance', c.revivalChance, pc)}, через ${c.revivalMinMinutes}–${c.revivalMaxMinutes} хв.`,
     `Посади: при множнику 1× приблизно ${secShare}% гравців отримують посаду в СБ. Множник: ${pv('securityWeightMultiplier', c.securityWeightMultiplier ?? 1, v => v + '×')}. Максимум задають слоти посад.`,
     `Вибір антагоністів: ${pv('antagOptInChance', c.antagOptInChance, pc)} членів екіпажу погоджуються на роль антагоніста. Симулятор ніколи не обирає СБ чи командування. Привид або спостерігач бере ${pv('ghostRoleTakeChance', c.ghostRoleTakeChance, pc)} ролей привидів. Медіанне очікування ролі привида: ${pv('ghostRoleTakeMedianMinutes', c.ghostRoleTakeMedianMinutes)} хв.`,
     `Мерехтіння починається з ${pv('glimmerStart', c.glimmerStart)} і зростає на ${pv('glimmerPerMinute', c.glimmerPerMinute)} щохвилини. Події мерехтіння його зменшують.`,
     'Деякі умови таблиць залежать від стану ігрового світу. Симулятор використовує фіксовані шанси: збійний ШІ доступний у 50%, ціль для мисливця за головами — у 100%.',
     `Деякі правила додають мобів під керуванням гравців без вибору антагоністів. Симулятор рахує таких мобів антагоністами-ролями привидів: ${Object.keys(c.ghostRoleSpawnRules || {}).join(', ') || 'немає'}.`,
+    'Поводир, Спостерігач і Блюшифт (≈) — оцінка. GameDirector обирає події за хаосом, який він вимірює на станції. Симулятор не має станції. Бойові показники (екіпаж, антагоністи, смерті, СБ) він бере з моделі населення. Інші показники (атмосфера, живлення, аномалії, зараження, медицина, бруд) він бере з хаосу, який заявляє кожна подія. Цей хаос зменшується з часом, бо екіпаж ремонтує станцію. Значення моделі задає config.json (directorWorld).',
     'Калібрування: попередня модель підключала лише гравців, що починають раунд. Вона збігалася з логами сервера за серпень–вересень 2026 щодо правил на початку раунду. Частота подій з антагоністами посеред раунду була приблизно в 1,5 раза вищою за логи. Цю модель з логами ще не порівнювали. Порівнюйте режими між собою, а не як точні значення.',
   ].map(t => el('li', {}, t)));
   if (DATA.warnings && DATA.warnings.length) $('#warnings').replaceChildren(el('div', { class: 'warnbox note', style: { marginTop: '10px' } }, el('b', {}, 'Попередження симулятора: '), DATA.warnings.join('; ')));

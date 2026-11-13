@@ -17,6 +17,7 @@
     solutions:
       food:
         maxVol: 50
+  - type: PourSound # Pirate: pour sound
   - type: SolutionTransfer
     # This is potentially badly-handled due to 'drink opening',
     #  but it lets the flour be tampered with, refilled, etc.

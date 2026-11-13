@@ -1005,6 +1005,13 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         return match;
     }
     #endregion
+
+    #region Pirate: revolution orders
+    public string GetStationNumber(EntityUid paper)
+    {
+        return GetStationNumber(paper, paper);
+    }
+    #endregion
     #endregion
 
     private void OnPaperWrite(Entity<ActivateOnPaperOpenedComponent> entity, ref PaperWriteEvent args)

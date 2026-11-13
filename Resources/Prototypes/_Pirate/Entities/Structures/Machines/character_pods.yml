@@ -116,6 +116,15 @@
     extraComponents:
     - type: TargetObjectiveImmune
 
+# The spawner rule selects this pod only on the hunter shuttle.
+- type: entity
+  parent: BaseCharacterPod
+  id: CharacterPodBountyHunter
+  suffix: Bounty Hunter
+  components:
+  - type: SpawnPoint
+  - type: AntagCharacterPodSpot
+
 - type: entity
   parent: BaseCharacterPod
   id: CharacterPodLizardGasStaff

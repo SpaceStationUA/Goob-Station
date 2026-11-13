@@ -1,0 +1,41 @@
+- type: entity
+  abstract: true
+  parent: FloorWaterEntity
+  id: FloorWaterEntityHotSpringBasePirate
+  components:
+  - type: HotSpringSteam
+    effects:
+    - HotSpringSteam1Pirate
+    - HotSpringSteam2Pirate
+    - HotSpringSteam3Pirate
+    - HotSpringSteam4Pirate
+    - HotSpringSteam5Pirate
+  - type: SolutionContainerManager
+    solutions:
+      pool:
+        maxVol: 9999999
+        temperature: 313.15
+        reagents:
+        - ReagentId: Water
+          Quantity: 9999999
+
+- type: entity
+  parent: FloorWaterEntityHotSpringBasePirate
+  id: FloorWaterEntityHotSpringPirate
+  components:
+  - type: Sprite
+    sprite: _Pirate/Tiles/hot_spring.rsi
+    layers:
+    - state: pool_1
+      map: [ "water" ]
+  - type: RandomSprite
+    available:
+    - water:
+        pool_1: ""
+        pool_2: ""
+        pool_3: ""
+        pool_4: ""
+
+- type: entity
+  parent: FloorWaterEntityHotSpringBasePirate
+  id: FloorWaterEntityHotSpringPlanetPirate

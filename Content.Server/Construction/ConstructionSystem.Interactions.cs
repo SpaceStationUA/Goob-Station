@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Shared._Pirate.Construction; // Pirate: novice construction protection
 using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.Temperature.Components;
@@ -282,6 +283,19 @@ namespace Content.Server.Construction
                     // Unremovable items can't be inserted
                     if(HasComp<UnremoveableComponent>(insert))
                         return HandleResult.False;
+
+                    // Pirate: check material-based repairs before starting and after finishing the DoAfter.
+                    if (insertStep is MaterialConstructionGraphStep)
+                    {
+                        var attempt = new ConstructMaterialAttemptEvent(construction.Graph.Id, construction.Node, insert);
+                        RaiseLocalEvent(user.Value, ref attempt);
+                        if (attempt.Cancelled)
+                        {
+                            // Pirate: don't fall through to laying a reinforced floor with the rejected rods.
+                            interactUsing.Handled = true;
+                            return HandleResult.False;
+                        }
+                    }
 
                     // If we're only testing whether this step would be handled by the given event, then we're done.
                     if (validation)

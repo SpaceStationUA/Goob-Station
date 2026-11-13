@@ -22,7 +22,7 @@ using Content.Goobstation.Common.Atmos;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    public sealed class BarotraumaSystem : EntitySystem
+    public sealed partial class BarotraumaSystem : EntitySystem // Pirate: alternative neocyte frame protection.
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -74,7 +74,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (TryComp<BarotraumaComponent>(protectionTarget, out var barotrauma))
             {
-                if (slotTarget != null && !barotrauma.ProtectionSlots.Contains(slotTarget))
+                if (slotTarget != null && !IsProtectionSlot(barotrauma, slotTarget)) // Pirate
                     return;
 
                 UpdateCachedResistances(protectionTarget, barotrauma);
@@ -94,7 +94,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnPressureProtectionEquipped(EntityUid uid, PressureProtectionComponent pressureProtection, GotEquippedEvent args)
         {
-            if (TryComp<BarotraumaComponent>(args.Equipee, out var barotrauma) && barotrauma.ProtectionSlots.Contains(args.Slot))
+            if (TryComp<BarotraumaComponent>(args.Equipee, out var barotrauma) && IsProtectionSlot(barotrauma, args.Slot)) // Pirate
             {
                 UpdateCachedResistances(args.Equipee, barotrauma);
             }
@@ -102,7 +102,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnPressureProtectionUnequipped(EntityUid uid, PressureProtectionComponent pressureProtection, GotUnequippedEvent args)
         {
-            if (TryComp<BarotraumaComponent>(args.Equipee, out var barotrauma) && barotrauma.ProtectionSlots.Contains(args.Slot))
+            if (TryComp<BarotraumaComponent>(args.Equipee, out var barotrauma) && IsProtectionSlot(barotrauma, args.Slot)) // Pirate
             {
                 UpdateCachedResistances(args.Equipee, barotrauma);
             }
@@ -150,6 +150,7 @@ namespace Content.Server.Atmos.EntitySystems
                     lPMultiplier = Math.Min(lPMultiplier, itemLowMultiplier.Value);
                 }
 
+                ApplyAlternativeProtection(uid, barotrauma, ref hPModifier, ref hPMultiplier, ref lPModifier, ref lPMultiplier); // Pirate
                 barotrauma.HighPressureModifier = hPModifier;
                 barotrauma.HighPressureMultiplier = hPMultiplier;
                 barotrauma.LowPressureModifier = lPModifier;

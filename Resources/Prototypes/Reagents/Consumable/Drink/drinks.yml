@@ -618,11 +618,18 @@
         factor: 4
     Gas: # DeltaV - Feroxi get to breathe with this too!
       effects:
+      # Pirate: Starlight species-specific metabolism.
       - !type:HealthChange
         ignoreResistances: true
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Slime ]
+          type:
+          - Slime
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
+          - NeoVox
+          inverted: true
         damage:
           types:
             Heat: 3

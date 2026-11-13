@@ -149,7 +149,7 @@
   - type: SynthShock
     batteryChargeMultiplier: 10.8
     cellularDamageMultiplier: 0.2
-  - type: ZombieImmune
+  - type: SiliconZombie
   #region Pirate: synth fixes - explain why injectors fail on synths
   - type: InjectionRefusalMessage
     message: injector-component-no-injection-port-synth

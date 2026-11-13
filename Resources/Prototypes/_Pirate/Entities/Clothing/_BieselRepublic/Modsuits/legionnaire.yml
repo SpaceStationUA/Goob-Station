@@ -8,25 +8,26 @@
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Modsuits/legionnaire.rsi
-    - type: ToggleableClothing
-      clothingPrototypes:
+    # Pirate: preserve this legacy faction suit on the upstream MOD API.
+    - type: ModSuit
+      parts:
         head: ClothingModsuitHelmetTCAFLegionnaire
         gloves: ClothingModsuitGauntletsTCAFLegionnaire
         outerClothing: ClothingModsuitChestplateTCAFLegionnaire
         shoes: ClothingModsuitBootsTCAFLegionnaire
     - type: ItemSlots
       slots:
-        cell_slot:
-          name: power-cell-slot-component-slot-name-default
-          startingItem: PowerCellHyper
+        mod-core:
+          name: modsuit-core-slot-name
+          startingItem: ModsuitCoreStandardHyper
           whitelist:
             components:
-              - PowerCell
+              - ModCore
     - type: Storage
       maxItemSize: Huge
       grid:
         - 0,0,7,4
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         back:
@@ -42,7 +43,7 @@
   components:
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Modsuits/legionnaire.rsi
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         gloves:
@@ -70,7 +71,7 @@
     - type: EyeProtection
     - type: PointLight
       color: "#FFDF00"
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         head:
@@ -91,6 +92,9 @@
   description: Передовий нагрудник, розроблений NanoTrasen для модульного костюма легіонера. Вбудовані силові сервоприводи допомагають знизити вагу спорядження для користувача.
   categories: [HideSpawnMenu]
   components:
+    - type: SuitWrap
+      ramp: [ "#1A1A1A", "#232E42", "#412D1B", "#354C72" ]
+      accent: "#B50A0A"
     - type: Sprite
       sprite: _Pirate/Clothing/_BieselRepublic/Modsuits/legionnaire.rsi
     - type: ClothingSpeedModifier
@@ -122,7 +126,7 @@
       damageCoefficient: 0.45
     - type: FireProtection
       reduction: 0.90
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         outerClothing:
@@ -149,7 +153,7 @@
     - type: Tag
       tags:
         - WhitelistChameleon
-    - type: SealableClothingVisuals
+    - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
         shoes:

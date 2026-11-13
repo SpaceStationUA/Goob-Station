@@ -113,13 +113,22 @@ namespace Content.Shared.Movement.Systems
             var ev = new RefreshMovementSpeedModifiersEvent(isImmune);
             RaiseLocalEvent(uid, ev);
 
-            if (MathHelper.CloseTo(ev.WalkSpeedModifier, move.WalkSpeedModifier) &&
-                MathHelper.CloseTo(ev.SprintSpeedModifier, move.SprintSpeedModifier))
+            // Pirate: Starlight cyclorites halve both buffs and debuffs around neutral speed.
+            var walkModifier = ev.WalkSpeedModifier;
+            var sprintModifier = ev.SprintSpeedModifier;
+            if (TryComp<Content.Shared._Pirate.StarlightSpecies.Movement.MovementSpeedModifierScaleComponent>(uid, out var scale))
+            {
+                walkModifier = (walkModifier - 1f) * scale.MovementSpeedScale + 1f;
+                sprintModifier = (sprintModifier - 1f) * scale.MovementSpeedScale + 1f;
+            }
+
+            if (MathHelper.CloseTo(walkModifier, move.WalkSpeedModifier) && // Pirate
+                MathHelper.CloseTo(sprintModifier, move.SprintSpeedModifier)) // Pirate
                 return;
 
 
-            move.WalkSpeedModifier = Math.Min(ev.WalkSpeedModifier, _maxSpeed); // Goobstation Change
-            move.SprintSpeedModifier = Math.Min(ev.SprintSpeedModifier, _maxSpeed); // Goobstation Change
+            move.WalkSpeedModifier = Math.Min(walkModifier, _maxSpeed); // Goobstation Change; Pirate: scaled modifier.
+            move.SprintSpeedModifier = Math.Min(sprintModifier, _maxSpeed); // Goobstation Change; Pirate: scaled modifier.
             Dirty(uid, move);
         }
 

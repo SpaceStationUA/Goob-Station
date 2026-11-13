@@ -1,0 +1,127 @@
+- type: constructionGraph
+  id: TileGlass
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: Glass
+        amount: 1
+  - node: tile
+    entity: FloorTileItemGlass
+
+- type: constructionGraph
+  id: TileRGlass
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: ReinforcedGlass
+        amount: 1
+  - node: tile
+    entity: FloorTileItemRGlass
+
+- type: constructionGraph
+  id: TileGlassSolid
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: Glass
+        amount: 1
+  - node: tile
+    entity: FloorTileItemGlassSolid
+
+- type: constructionGraph
+  id: TileGlassSolidReinforced
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: ReinforcedGlass
+        amount: 1
+  - node: tile
+    entity: FloorTileItemGlassSolidReinforced
+
+- type: constructionGraph
+  id: TilePlasmaGlass
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: PlasmaGlass
+        amount: 1
+  - node: tile
+    entity: FloorTileItemPlasmaGlass
+
+- type: constructionGraph
+  id: TilePlasmaGlassReinforced
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: ReinforcedPlasmaGlass
+        amount: 1
+  - node: tile
+    entity: FloorTileItemPlasmaGlassReinforced
+
+- type: constructionGraph
+  id: TileUraniumGlass
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: UraniumGlass
+        amount: 1
+  - node: tile
+    entity: FloorTileItemUraniumGlass
+
+- type: constructionGraph
+  id: TileUraniumGlassReinforced
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+      - material: ReinforcedUraniumGlass
+        amount: 1
+  - node: tile
+    entity: FloorTileItemUraniumGlassReinforced

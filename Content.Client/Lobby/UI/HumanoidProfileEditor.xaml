@@ -17,10 +17,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
          HorizontalExpand="True"
          SeparationOverride="10">
     <BoxContainer Orientation="Vertical" MinWidth="300" SeparationOverride="6">
-        <PanelContainer StyleClasses="HullInset" VerticalExpand="True">
+        <pirateInfo:CharacterPreviewBackground StyleClasses="HullInset" VerticalExpand="True"> <!-- Pirate: character preview background -->
             <SpriteView Name="SpriteView" Scale="8 8" Margin="4"
                         HorizontalAlignment="Center" VerticalAlignment="Center" />
-        </PanelContainer>
+        </pirateInfo:CharacterPreviewBackground> <!-- Pirate: character preview background -->
         <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" SeparationOverride="4">
             <Button Name="SpriteRotateLeft" Text="◀" StyleClasses="HullPlate" />
             <Button Name="SpriteRotateRight" Text="▶" StyleClasses="HullPlate" />
@@ -64,12 +64,24 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}" />
                 </BoxContainer>
                 <PanelContainer StyleClasses="HullInset">
-                    <goob:SpeciesGallery Name="SpeciesButton" Margin="4" />
+                    <!-- Pirate: keep the gallery and both selectors in separate rows. -->
+                    <BoxContainer Orientation="Vertical">
+                        <goob:SpeciesGallery Name="SpeciesButton" Margin="4" />
+                        <!-- Pirate: Starlight neocyte subspecies. -->
+                        <BoxContainer Name="SubspeciesContainer" Visible="False" Margin="4">
+                            <Label Text="{Loc 'humanoid-profile-editor-subspecies-label'}" HorizontalExpand="True" />
+                            <OptionButton Name="SubspeciesButton" />
+                        </BoxContainer>
+                        <BoxContainer Name="SpeciesFrameContainer" Visible="False" Margin="4">
+                            <Label Text="{Loc 'humanoid-profile-editor-neocyte-frame-label'}" HorizontalExpand="True" />
+                            <OptionButton Name="SpeciesFrameButton" />
+                        </BoxContainer>
+                    </BoxContainer>
                 </PanelContainer>
             <!-- Pirate: citizenship selection. -->
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'humanoid-profile-editor-citizenship-label'}" />
-                <OptionButton Name="CitizenshipButton" />
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6"> <!-- Pirate: lobby font and styling -->
+                <Label Text="{Loc 'humanoid-profile-editor-citizenship-label'}" StyleClasses="HullFieldLabel" MinWidth="130" VAlign="Center" /> <!-- Pirate: lobby font and styling -->
+                <OptionButton Name="CitizenshipButton" StyleClasses="HullPlate" HorizontalExpand="True" /> <!-- Pirate: lobby font and styling -->
             </BoxContainer>
                 <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="0 4 0 0">
                     <Label Text="{Loc 'humanoid-profile-editor-age-label'}" StyleClasses="HullFieldLabel" MinWidth="130" VAlign="Center" />

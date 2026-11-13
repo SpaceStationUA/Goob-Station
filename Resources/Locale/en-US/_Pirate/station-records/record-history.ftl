@@ -9,6 +9,7 @@ records-log-empty = No entries yet.
 records-log-unknown-author = Unknown author
 records-log-hr-author = NanoTrasen Human Resources
 records-log-kind-note = Note
+records-log-kind-citation = Citation
 records-log-station = Station: { $station }
 records-log-no-matches = Nothing found.
 records-log-search-placeholder = Search the history

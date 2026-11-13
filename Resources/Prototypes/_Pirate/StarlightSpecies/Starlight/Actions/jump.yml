@@ -1,0 +1,55 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: Jump
+  name: Jump
+  description: You jump at the selected direction.
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: Action
+    useDelay: 30
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Pirate/StarlightSpecies/Starlight/Interface/Actions/actions_jump.rsi
+      state: jump
+  - type: TargetAction
+    checkCanAccess: false
+    range: 20
+  - type: WorldTargetAction
+    event: !type:StarlightJumpActionEvent
+      sound:
+        path: /Audio/_Pirate/StarlightSpecies/Starlight/Effects/Jump/resomi.ogg
+- type: entity
+  parent:
+  - Jump
+  id: JumpMoth
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: Action
+    useDelay: 1
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: AutoRecharge
+    rechargeDuration: 30
+  - type: WorldTargetAction
+    event: !type:StarlightJumpActionEvent
+      distance: 2.25
+      toPointer: false
+      speed: 4.5
+      sound:
+        path: /Audio/_Pirate/StarlightSpecies/Starlight/Effects/Jump/moth.ogg
+- type: entity
+  parent:
+  - Jump
+  id: JumpResomi
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: WorldTargetAction
+    event: !type:StarlightJumpActionEvent
+      distance: 10
+      sound:
+        path: /Audio/_Pirate/StarlightSpecies/Starlight/Effects/Jump/resomi.ogg

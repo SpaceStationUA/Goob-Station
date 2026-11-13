@@ -73,17 +73,19 @@ wanted-list-unknown-reason-label = причина невідома
 wanted-list-initiator-label = [color=darkgray]Ініціатор:[/color] [color=white]{$initiator}[/color]
 wanted-list-unknown-initiator-label = ініціатор невідомий
 wanted-list-status-label = [color=darkgray]статус:[/color] {$status ->
-        [suspected] [color=yellow]підозрюваний[/color]
-        [wanted] [color=red]розшукується[/color]
-        [detained] [color=#b18644]затриманий[/color]
-        [paroled] [color=green]умовно-достроково звільнений[/color]
-        [discharged] [color=green]звільнений[/color]
+        [suspected] [color=yellow]підозрюється[/color]
+        [wanted] [color=red]у розшуку[/color]
+        [detained] [color=#b18644]затримано[/color]
+        [paroled] [color=green]умовно звільнено[/color]
+        [discharged] [color=green]звільнено[/color]
         [hostile] [color=darkred]ворожий[/color]
-        [eliminated] [color=gray]ліквідований[/color]
+        [eliminated] [color=gray]ліквідовано[/color]
         [search] [color=#33cccc]обшук[/color]
-        [perma] [color=#343434]перма[/color]
+        [perma] [color=#343434]довічне ув'язнення[/color]
         [dangerous] [color=red]небезпечний[/color]
-        [demote] [color=red]пониження[/color]
+        [demote] [color=red]понизити[/color]
+        [warned] [color=#e09b2d]попереджено[/color]
+        [safe] [color=#2fbf71]безпечний[/color]
         *[other] немає
     }
 wanted-list-history-table-time-col = Час

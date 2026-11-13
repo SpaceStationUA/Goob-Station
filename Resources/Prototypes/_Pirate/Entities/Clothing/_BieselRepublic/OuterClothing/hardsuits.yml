@@ -5,6 +5,9 @@
   suffix: TCAF
   description: Стандартний тактичний скафандр, що використовується Збройними силами Тау-Кита. Зроблений з тонких листів пластитану він забезпечує базовий захист, а також захист від вибухів та високого тиску.
   components:
+  - type: SuitWrap
+    ramp: [ "#050505", "#25252A", "#373737", "#3C5A8C" ]
+    accent: "#3C5A8C"
   - type: Sprite
     sprite: _Pirate/Clothing/_BieselRepublic/OuterClothing/Hardsuits/TCAF_tacsuit.rsi
   - type: Clothing

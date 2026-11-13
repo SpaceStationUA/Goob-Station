@@ -8,6 +8,11 @@
   name: syndicate stealth hardsuit
   description: A hardsuit with stealth plating for operations, the shielding doesn't work while you're moving though! Needs the helmet on to finish the stealth field.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#303032", "#3E3D3F" ]
+    accent: "#545350"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: Item

@@ -1,0 +1,10 @@
+ooc-icon-pirate-dynexust = Dynexust
+ooc-icon-pirate-the-question = The_Question
+ooc-icon-pirate-astrally = Astrally
+ooc-icon-pirate-saloplay = saloplay
+ooc-icon-pirate-luciusgg = LuciusGG
+ooc-icon-pirate-syvorks = Syvorks
+ooc-icon-pirate-pyrizhok = Pyrizhok
+ooc-icon-pirate-hamster-masterr = Hamster_masterr
+ooc-icon-pirate-gamescat = Gamescat
+ooc-icon-pirate-ter-4333 = Ter_4333

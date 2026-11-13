@@ -8,6 +8,11 @@
   name: futuristic hardsuit
   description: A hardsuit covered in an unknown material that protects against most material and temporal damage.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#23262B", "#4C5E68", "#6A7A83", "#AABDC7" ]
+    accent: "#AABDC7"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/chronolegioneer.rsi
   - type: Clothing
@@ -68,6 +73,11 @@
   name: "'praetorian' escort hardsuit"
   description: A hardsuit designed for an elite bodyguard. This particular one is made of a lighter metal, allowing for more maneuverability.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#191824", "#00305E", "#074578", "#55484C" ]
+    accent: "#005195"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/bsolight.rsi
   - type: Clothing
@@ -116,6 +126,11 @@
   name: cybersun stealth hardsuit
   description: A hardsuit with photo-reactive plating for sneaky operations, the shielding doesn't work while you're moving though! Needs the helmet on to finish the stealth field.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1C070E", "#2A1217", "#381E22", "#452B2D" ]
+    accent: "#21A52E"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/cybersunstealth.rsi
   - type: Item
@@ -172,6 +187,11 @@
   name: Cybersun dreadnought suit
   description: The Syndicate places its glory on your shoulders, do not disappoint.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#15151B", "#26262E", "#2D2D33", "#45444F" ]
+    accent: "#990908"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/dreadnought.rsi
   - type: Item
@@ -236,6 +256,11 @@
   name: security hardsuit
   description: A light hardsuit with an in-built plate carrier to provide moderate protection while remaining mobile.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#3E3D3F", "#545350" ]
+    accent: "#008BED"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Pirate/Clothing/OuterClothing/Hardsuits/security.rsi # Pirate edit
   - type: Clothing
@@ -280,6 +305,11 @@
   name: FI-52 "Honor Guard" parade hardsuit
   description: A special hardsuit that protects against hazardous, low pressure environments. Has an experimental inbuilt stimulant autoinjector system.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#020206", "#1E1E32", "#333333", "#545461" ]
+    accent: "#DCA01B"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/hos-expi.rsi
   - type: Clothing
@@ -314,6 +344,11 @@
   name: "NTX5-Mirrorduss"
   description: A crude dark exosuit of reinforced plating, etched with faintly glowing Bluespace circuits. You can tell someone attempted to scratch out part of the text — Prototype No. 2
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1D1B19", "#412F24", "#1F592C", "#33759F" ]
+    accent: "#FFCE5B"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/ntr_experimental.rsi
   - type: Clothing
@@ -358,6 +393,11 @@
   name: singuloth knight's armor
   description: A ceremonial armor from the chapter of the Singuloth Knights, It's made of pure forged adamantium.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#33181F", "#3B3D3A", "#5C6B72", "#A1A5A4" ]
+    accent: "#A1A5A4"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/singuloth_knight_armor.rsi
   - type: Clothing
@@ -374,6 +414,11 @@
   name: vox raider stealth suit
   description: A sleek black suit. It seems to have a tail, and is very heavy.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#000000", "#212121", "#292929", "#454545" ]
+    accent: "#292929"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/vox-raiders-stealth.rsi
   - type: Clothing
@@ -390,6 +435,11 @@
   name: detective hardsuit
   description: A hardsuit custom-made for the Detective. It has a strong smell of alcohol and cigarettes.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#181719", "#1E1E32", "#232226", "#00548F" ]
+    accent: "#FACB3E"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/detective.rsi
   - type: Clothing
@@ -404,6 +454,11 @@
   name: contractor hardsuit
   description: A light hardsuit with an in-built plate carrier to provide moderate protection while remaining mobile.
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#130609", "#101010", "#2E2E2E", "#3B3B3B" ]
+    accent: "#2E2E2E"
+  #endregion Pirate: suit wrap
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Hardsuits/contractor.rsi
   - type: Clothing

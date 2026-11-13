@@ -175,6 +175,7 @@ public sealed partial class DamageableSystem
         if (IsNoOpHeal((ent, ent.Comp), damage)) // Goob
             return damageDone;
 
+        damage = new DamageSpecifier(damage); // Pirate: species modifiers must not mutate reusable damage/medicine definitions.
         var before = new BeforeDamageChangedEvent(damage, origin, canBeCancelled, targetPart, OriginFlag: originFlag); // Pirate
         RaiseLocalEvent(ent, ref before);
 

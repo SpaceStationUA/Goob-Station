@@ -1,0 +1,83 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: marking
+  id: FelionoidArmCalicoL
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: calico2_ArmL
+- type: marking
+  id: FelionoidArmCalicoR
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: calico2_ArmR
+- type: marking
+  id: FelionoidArmPawMittensL
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: pawmittens_armsL
+- type: marking
+  id: FelionoidArmPawMittensR
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: pawmittens_armsR
+- type: marking
+  id: FelionoidArmStripesL
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: l_arm_stripes
+- type: marking
+  id: FelionoidArmStripesR
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: r_arm_stripes
+- type: marking
+  id: FelionoidArmTabbyL
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: Tabby_armL
+- type: marking
+  id: FelionoidArmTabbyR
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction:
+  - Felionoid
+  - NeoFelionoid
+  sprites:
+  - sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Customization/Felionoid/parts.rsi
+    state: Tabby_armR

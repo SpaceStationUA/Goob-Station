@@ -60,6 +60,10 @@ public sealed partial class PuddleSystem
         if (!_solutionContainerSystem.TryGetDrainableSolution(entity.Owner, out var soln, out var solution))
             return;
 
+        // Pirate
+        if (!ChemicalMixing.CanSpill(args.User, solution, args.Coords))
+            return;
+
         var hitCount = args.HitEntities.Count;
 
         var totalSplit = FixedPoint2.Min(solution.MaxVolume * 0.25, solution.Volume);
@@ -130,6 +134,12 @@ public sealed partial class PuddleSystem
         if (!entity.Comp.SpillWhenThrown || Openable.IsClosed(entity.Owner))
             return;
 
+        // Pirate: includes water thrown onto an existing reactive puddle.
+        if (args.User is { } user &&
+            _solutionContainerSystem.TryGetDrainableSolution(entity.Owner, out _, out var incoming) &&
+            !ChemicalMixing.CanSpill(user, incoming, Transform(entity).Coordinates))
+            return;
+
         if (TrySplashSpillAt(entity.Owner, Transform(entity).Coordinates, out _, out var solution) && args.User != null)
         {
             AdminLogger.Add(LogType.Landed,
@@ -144,6 +154,10 @@ public sealed partial class PuddleSystem
 
         //solution gone by other means before doafter completes
         if (!_solutionContainerSystem.TryGetDrainableSolution(entity.Owner, out var soln, out var solution) || solution.Volume == 0)
+            return;
+
+        // Pirate
+        if (!ChemicalMixing.CanSpill(args.User, solution, Transform(entity).Coordinates))
             return;
 
         var puddleSolution = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);

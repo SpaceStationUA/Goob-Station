@@ -24,11 +24,13 @@ HERE = Path(__file__).parent
 _args = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
 _args.add_argument('dirs', nargs='*', type=Path, default=[HERE / 'output'], help='simulator output folders, later ones win')
 _args.add_argument('--out', type=Path, help='where to write the dashboard (default: the first folder)')
+_args.add_argument('--exclude', default='', help='comma-separated modes to leave out, e.g. BlueshiftLegacy')
 _args.add_argument('--sample', type=int, default=100, help='rounds per mode and setup in the round browser')
 ARGS = _args.parse_args()
 DIRS = ARGS.dirs
 OUT = ARGS.out or DIRS[0]
 ROUND_SAMPLE = ARGS.sample
+EXCLUDE = {p for p in ARGS.exclude.split(',') if p}
 
 BROWSER_EVENT_FIELDS = ['seq', 'source', 'rule', 'added', 'started', 'cost', 'budgetBefore', 'budgetAfter',
                         'target', 'spawned', 'blocked', 'unfilled', 'antags', 'connected', 'alive', 'ghosts', 'secAlive',
@@ -40,11 +42,15 @@ LABELS = {
     "SecretPlusMid": "Ентропія",
     "SecretPlusLow": "Турбулентність",
     "SecretSalt": "Редшифт",
-    "SecretSalt14": "Редшифт 1.4",
+    "SecretSalt141": "Редшифт 1.4.1",
+    "TheGuide": "Поводир ≈",
+    "TheWatcher": "Спостерігач ≈",
     "SecretTP": "Секрет ТП",
-    "Blueshift": "Блюшифт",
+    "Blueshift": "Блюшифт ≈",
+    "BlueshiftLegacy": "Блюшифт 1.1",
 }
-SLOTS = {"Blueshift": 1, "SecretSalt": 8, "SecretSalt14": 9, "SecretTP": 3, "SecretPlusMid": 4, "SecretPlusLow": 7}
+SLOTS = {"Blueshift": 1, "SecretSalt": 8, "SecretSalt141": 9, "SecretTP": 3, "SecretPlusMid": 4, "TheGuide": 5, "TheWatcher": 7,
+         "BlueshiftLegacy": 6, "SecretPlusLow": 2}
 
 # Match the real-log family split so simulated and observed counts are comparable.
 MAJOR = {'Nukeops', 'Honkops', 'Revolutionary', 'Zombie', 'ZombieOutbreak', 'CosmicCult', 'BloodCult', 'Shadowling',
@@ -59,13 +65,18 @@ CREW = {'Traitor', 'SleeperAgents', 'TraitorMidround', 'Changeling', 'Heretic', 
 FAMILIES = ['Великі / ескалаційні', 'Екіпаж / приховані', 'Зовнішні / бойові', 'Дрібні / умовні']
 
 
-COPY_PREFIX = re.compile(r'^(Blueshift|SecretSalt(?=[A-Z]))')
+# Strip mode prefixes and GameRule so equivalent events share one dashboard row.
+COPY_PREFIX = re.compile(r'^(BlueshiftLegacy(?=[A-Z])|Blueshift(?=[A-Z])|SecretSalt(?=[A-Z])|GameRule(?=[A-Z]))')
 
 
 def canon(rule):
     if not COPY_PREFIX.match(rule):
         return rule
     return re.sub(r'(Late|Wave\d+)$', '', COPY_PREFIX.sub('', rule)) or rule
+
+
+def unlegacy(rule):
+    return 'Blueshift' + rule[len('BlueshiftLegacy'):] if rule.startswith('BlueshiftLegacy') else rule
 
 
 def family(rule):
@@ -152,11 +163,15 @@ def load_runs(dirs):
     owner, order = {}, []
     for d, m in zip(dirs, metas):
         for p in m['config']['presets']:
+            if p in EXCLUDE:
+                continue
             if p not in owner:
                 order.append(p)
             owner[p] = d
     meta = metas[0]
     if len(dirs) == 1:
+        meta['config'] = {**meta['config'], 'presets': order}
+        meta['presets'] = [i for i in meta['presets'] if i['id'] in owner]
         return meta, owner
 
     base = meta['config']
@@ -232,7 +247,7 @@ def main():
     for e in read_rows('events.csv', owner):
         key = (e['preset'], e['scenario'])
         rnd = int(e['round'])
-        rule = e['rule']
+        rule = unlegacy(e['rule'])
         src = e['source']
         started = num(e['startedMin'])
         spawned = int(e['antagSpawned'] or 0)

@@ -1,8 +1,5 @@
-using Content.Client._Pirate.Chat;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Chat.UI;
 
@@ -14,45 +11,14 @@ public static class RunechatStyle
     public const int MaxFontSize = 24;
     private const float DesignPixelsPerEm = 8f;
 
-    // Pirate: UI controllers belong to one client, including in parallel integration tests.
-    private static RunechatStyleCacheController Cache =>
-        IoCManager.Resolve<IUserInterfaceManager>().GetUIController<RunechatStyleCacheController>();
-
     public static Font GetFont(string path, int size)
     {
-        var fonts = Cache.Fonts;
-        if (fonts.TryGetValue((path, size), out var font))
-            return font;
-
-        var cache = IoCManager.Resolve<IResourceCache>();
-        font = new VectorFont(cache.GetResource<FontResource>(path), size);
-        // Pirate: preserve Ukrainian glyphs in the configurable runechat fonts.
-        var fallback = path switch
-        {
-            FontPath => "/Fonts/_Pirate/PixeloidSans.ttf",
-            WhisperFontPath => "/Fonts/_Pirate/Tiny5-Regular.ttf",
-            _ => null,
-        };
-        if (fallback != null)
-            font = new StackedFont(font, new VectorFont(cache.GetResource<FontResource>(fallback), size));
-        fonts[(path, size)] = font;
-        return font;
+        return IoCManager.Resolve<RunechatFontCache>().GetFont(path, size);
     }
 
     public static Stylesheet GetStylesheet(string path, int size)
     {
-        var sheets = Cache.Sheets;
-        if (sheets.TryGetValue((path, size), out var sheet))
-            return sheet;
-
-        sheet = new Stylesheet(new[]
-        {
-            new StyleRule(
-                new SelectorElement(typeof(RichTextLabel), null, null, null),
-                new[] { new StyleProperty(Label.StylePropertyFont, GetFont(path, size)) }),
-        });
-        sheets[(path, size)] = sheet;
-        return sheet;
+        return IoCManager.Resolve<RunechatFontCache>().GetStylesheet(path, size);
     }
 
     public static int ScaleSize(int baseSize, int fontSize)

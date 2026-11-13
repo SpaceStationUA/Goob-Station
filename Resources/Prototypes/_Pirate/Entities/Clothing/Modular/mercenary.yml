@@ -122,6 +122,9 @@
   description: "Композитна бронепластина, з якої не раз зафарбовували емблеми приватних армій. Свою справу знає, а от чиї це кольори тепер - краще не питати."
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0E0F15", "#161616", "#2A2A2A", "#4D4D4D" ]
+    accent: "#C2CB48"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Mercenary/chestplate.rsi
   - type: Clothing

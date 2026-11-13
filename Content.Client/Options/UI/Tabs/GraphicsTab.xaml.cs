@@ -24,7 +24,7 @@ public sealed partial class GraphicsTab : Control
         RobustXamlLoader.Load(this);
 
         Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
-        Control.AddOptionCheckBox(CCVars.AmbientOcclusion, AmbientOcclusionCheckBox);
+        Control.AddOptionCheckBox(CCVars.PirateSpriteAmbientOcclusion, AmbientOcclusionCheckBox); // Pirate: sprite ambient occlusion
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
         Control.AddOption(new OptionParticleQuality(Control, _cfg, DropDownParticleQuality)); // Starfall: Particle quality.
@@ -78,6 +78,7 @@ public sealed partial class GraphicsTab : Control
         Control.AddOptionCheckBox(CCVars.ParallaxLowQuality, ParallaxLowQualityCheckBox);
         Control.AddOptionCheckBox(CCVars.HudFpsCounterVisible, FpsCounterCheckBox);
 
+        InitializeCharacterPreviewBackgroundOption(); // Pirate: character preview background
         Control.Initialize();
 
         _cfg.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportWidthRange());

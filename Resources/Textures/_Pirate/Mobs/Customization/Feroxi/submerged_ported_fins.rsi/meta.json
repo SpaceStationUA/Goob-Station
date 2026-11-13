@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Fin frames rearranged for submerged Feroxi by the Pirate team. orca: from _Goobstation/Mobs/Customization/Ported/Floofstation/_Floof/Mobs/Customization/skyrattails.rsi (Nova Sector via Floofstation). datashark: from _Goobstation/Mobs/Customization/Ported/LoneStar/_CS/cb_tails_batch_a.rsi (coyote-bayou via LoneStar). datashark-wag, fish: from _Goobstation/Mobs/Customization/Ported/Wolfgate/_WF/MeridianMarkings/tails.rsi (Meridian Rift / NovaSector / Skyrat-tg / tgstation via Wolfgate)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "orca",
+            "directions": 4
+        },
+        {
+            "name": "datashark",
+            "directions": 4
+        },
+        {
+            "name": "datashark-wag",
+            "directions": 4
+        },
+        {
+            "name": "fish",
+            "directions": 4
+        }
+    ]
+}

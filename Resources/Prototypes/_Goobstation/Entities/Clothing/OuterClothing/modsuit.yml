@@ -31,6 +31,11 @@
   description: A special modular suit spaceproof cover designed for compact folding inside modular suit control.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#151515", "#1A1A1A", "#3A3A3A", "#585858" ]
+    accent: "#585858"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -47,16 +52,20 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
-  - type: SealableClothing
-    sealUpPopup: sealable-clothing-seal-up-chestplate
-    sealDownPopup: sealable-clothing-seal-down-chestplate
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: inherited armor-plate storage must exist before initialization.
+  - type: ModPart
+    sealUpPopup: modsuit-part-seal-up-chestplate
+    sealDownPopup: modsuit-part-seal-down-chestplate
   #region Pirate: wetness
   # Sealed modsuit body stays dry and protects inner clothing.
   - type: WetnessBlocker
     slots: [OUTERCLOTHING, INNERCLOTHING]
     requiresSealed: true
   #endregion Pirate: wetness
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
@@ -88,7 +97,7 @@
         Piercing: 0.85
         Heat: 0.85
         Radiation: 0.2
-  - type: ComponentToggler
+  - type: ModSealedComponents
     components:
     - type: PressureProtection
       highPressureMultiplier: 0.3
@@ -106,6 +115,11 @@
   description: A robust modular suit cover with ceramic inserts for extra protection.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#008BED"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -122,16 +136,20 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
-  - type: SealableClothing
-    sealUpPopup: sealable-clothing-seal-up-chestplate
-    sealDownPopup: sealable-clothing-seal-down-chestplate
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
+  - type: ModPart
+    sealUpPopup: modsuit-part-seal-up-chestplate
+    sealDownPopup: modsuit-part-seal-down-chestplate
   #region Pirate: wetness
   # Sealed modsuit body stays dry and protects inner clothing.
   - type: WetnessBlocker
     slots: [OUTERCLOTHING, INNERCLOTHING]
     requiresSealed: true
   #endregion Pirate: wetness
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
@@ -172,7 +190,7 @@
         Piercing: 0.6
         Heat: 0.6
         Radiation: 0.6
-  - type: ComponentToggler
+  - type: ModSealedComponents
     components:
     - type: PressureProtection
       highPressureMultiplier: 0.3
@@ -190,6 +208,11 @@
   description: A robust modular suit cover with EXTRA ceramic inserts for slightly more protection.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#008BED"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -206,16 +229,20 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.80
     sprintModifier: 0.80
-  - type: SealableClothing
-    sealUpPopup: sealable-clothing-seal-up-chestplate
-    sealDownPopup: sealable-clothing-seal-down-chestplate
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
+  - type: ModPart
+    sealUpPopup: modsuit-part-seal-up-chestplate
+    sealDownPopup: modsuit-part-seal-down-chestplate
   #region Pirate: wetness
   # Sealed modsuit body stays dry and protects inner clothing.
   - type: WetnessBlocker
     slots: [OUTERCLOTHING, INNERCLOTHING]
     requiresSealed: true
   #endregion Pirate: wetness
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
@@ -257,7 +284,7 @@
         Heat: 0.5
         Caustic: 0.5
         Radiation: 0.5
-  - type: ComponentToggler
+  - type: ModSealedComponents
     components:
     - type: PressureProtection
       highPressureMultiplier: 0.3
@@ -267,12 +294,6 @@
       heatingCoefficient: 0.01
   - type: FireProtection
     reduction: 0.5
-  - type: ClothingAutoInject
-    reagents:
-      Epinephrine: 10
-      Bicaridine: 10
-      TranexamicAcid: 5
-      Tramadol: 5
 
 - type: entity
   parent: [ClothingOuterBase, ClothingArmorPlate] # Pirate: armor plates.
@@ -281,6 +302,11 @@
   description: A white and blue-ish-grey steel plate for keeping out the harsh void of space and the occasional bullet.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#18202B", "#424B58", "#49475C", "#8A8A9E" ]
+    accent: "#4F94AD"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -297,16 +323,20 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
-  - type: SealableClothing
-    sealUpPopup: sealable-clothing-seal-up-chestplate
-    sealDownPopup: sealable-clothing-seal-down-chestplate
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
+  - type: ModPart
+    sealUpPopup: modsuit-part-seal-up-chestplate
+    sealDownPopup: modsuit-part-seal-down-chestplate
   #region Pirate: wetness
   # Sealed modsuit body stays dry and protects inner clothing.
   - type: WetnessBlocker
     slots: [OUTERCLOTHING, INNERCLOTHING]
     requiresSealed: true
   #endregion Pirate: wetness
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
@@ -343,7 +373,7 @@
         Heat: 0.8
         Caustic: 0.6
         Radiation: 0.3
-  - type: ComponentToggler
+  - type: ModSealedComponents
     components:
     - type: PressureProtection
       highPressureMultiplier: 0.3
@@ -366,6 +396,11 @@
   description: A tough armor plate to defend against harsh atmospheric conditions and shockwaves.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#2B3440", "#545350" ]
+    accent: "#E6B812"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -382,16 +417,20 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
-  - type: SealableClothing
-    sealUpPopup: sealable-clothing-seal-up-chestplate
-    sealDownPopup: sealable-clothing-seal-down-chestplate
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
+  - type: ModPart
+    sealUpPopup: modsuit-part-seal-up-chestplate
+    sealDownPopup: modsuit-part-seal-down-chestplate
   #region Pirate: wetness
   # Sealed modsuit body stays dry and protects inner clothing.
   - type: WetnessBlocker
     slots: [OUTERCLOTHING, INNERCLOTHING]
     requiresSealed: true
   #endregion Pirate: wetness
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
@@ -429,7 +468,7 @@
         Shock: 0.8
         Caustic: 0.5
         Radiation: 0.01
-  - type: ComponentToggler
+  - type: ModSealedComponents
     components:
     - type: PressureProtection
       highPressureMultiplier: 0.3
@@ -452,6 +491,11 @@
   description: A fire-proof armor plate to defend against harsh atmospheric conditions.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#402A0D", "#734D1D", "#BF8F2E" ]
+    accent: "#4EB1AE"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -468,16 +512,20 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
-  - type: SealableClothing
-    sealUpPopup: sealable-clothing-seal-up-chestplate
-    sealDownPopup: sealable-clothing-seal-down-chestplate
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
+  - type: ModPart
+    sealUpPopup: modsuit-part-seal-up-chestplate
+    sealDownPopup: modsuit-part-seal-down-chestplate
   #region Pirate: wetness
   # Sealed modsuit body stays dry and protects inner clothing.
   - type: WetnessBlocker
     slots: [OUTERCLOTHING, INNERCLOTHING]
     requiresSealed: true
   #endregion Pirate: wetness
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
@@ -513,7 +561,7 @@
         Piercing: 0.85
         Heat: 0.2
         Radiation: 0.05
-  - type: ComponentToggler
+  - type: ModSealedComponents
     components:
     - type: PressureProtection
       highPressureMultiplier: 0.3
@@ -536,6 +584,11 @@
   description: A bulky bomb and bat proof chunk of steel.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#9D1DE8"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -552,16 +605,20 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
-  - type: SealableClothing
-    sealUpPopup: sealable-clothing-seal-up-chestplate
-    sealDownPopup: sealable-clothing-seal-down-chestplate
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
+  - type: ModPart
+    sealUpPopup: modsuit-part-seal-up-chestplate
+    sealDownPopup: modsuit-part-seal-down-chestplate
   #region Pirate: wetness
   # Sealed modsuit body stays dry and protects inner clothing.
   - type: WetnessBlocker
     slots: [OUTERCLOTHING, INNERCLOTHING]
     requiresSealed: true
   #endregion Pirate: wetness
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
@@ -599,7 +656,7 @@
         Shock: 0.75
         Caustic: 0.25
         Radiation: 0.01
-  - type: ComponentToggler
+  - type: ModSealedComponents
     components:
     - type: PressureProtection
       highPressureMultiplier: 0.3
@@ -623,6 +680,11 @@
   description: This shit is made out of DIAMONDS, man, this armor was forged with GEMS.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#212121", "#312F47", "#3D4379" ]
+    accent: "#E6A345"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: GroupExamine
@@ -640,16 +702,20 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
-  - type: SealableClothing
-    sealUpPopup: sealable-clothing-seal-up-chestplate
-    sealDownPopup: sealable-clothing-seal-down-chestplate
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
+  - type: ModPart
+    sealUpPopup: modsuit-part-seal-up-chestplate
+    sealDownPopup: modsuit-part-seal-down-chestplate
   #region Pirate: wetness
   # Sealed modsuit body stays dry and protects inner clothing.
   - type: WetnessBlocker
     slots: [OUTERCLOTHING, INNERCLOTHING]
     requiresSealed: true
   #endregion Pirate: wetness
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
@@ -686,7 +752,7 @@
         Heat: 0.5
         Radiation: 0.1
         Caustic: 0.5
-  - type: ComponentToggler
+  - type: ModSealedComponents
     components:
     - type: PressureProtection
       highPressureMultiplier: 0.3
@@ -709,6 +775,11 @@
   description: A robust modular suit cover with white ceramic inserts for extra drip.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: suit wrap
+  - type: SuitWrap
+    ramp: [ "#0F0F1A", "#343442", "#545461", "#C2C1C9" ]
+    accent: "#38DEE2"
+  #endregion Pirate: suit wrap
   - type: Appearance
   - type: AllowSuitStorage
   - type: Sprite
@@ -723,12 +794,16 @@
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
-  - type: SealableClothing
-    sealUpPopup: sealable-clothing-seal-up-chestplate
-    sealDownPopup: sealable-clothing-seal-down-chestplate
-  - type: SealableClothingVisuals
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container # Pirate: preserve inherited armor-plate storage in this container override.
+  - type: ModPart
+    sealUpPopup: modsuit-part-seal-up-chestplate
+    sealDownPopup: modsuit-part-seal-down-chestplate
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
@@ -762,12 +837,12 @@
     - Other
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.6
-        Heat: 0.6
+        Blunt: 0.72
+        Slash: 0.72
+        Piercing: 0.72
+        Heat: 0.72
         Radiation: 0.6
-  - type: ComponentToggler
+  - type: ModSealedComponents
     components:
     - type: PressureProtection
       highPressureMultiplier: 0.3

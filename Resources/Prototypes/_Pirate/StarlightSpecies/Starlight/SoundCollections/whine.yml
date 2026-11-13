@@ -1,0 +1,18 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: soundCollection
+  id: Whine
+  files:
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_1.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_2.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_3.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_4.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_5.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_6.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_7.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_8.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_9.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_10.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_11.ogg
+  - /Audio/_Pirate/StarlightSpecies/Starlight/Effects/whine/whine_12.ogg

@@ -68,6 +68,9 @@
   description: A basic armor plate for modular suits. Provides standard protection and serves as the main mounting point for modules.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#151515", "#1A1A1A", "#3A3A3A", "#585858" ]
+    accent: "#585858"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Standard/chestplate.rsi
   - type: Clothing
@@ -241,6 +244,9 @@
   description: An upgraded armor plate with superior protection against heat and explosions. Features a distinctive white finish.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#181719", "#303038", "#5D5D65", "#A2A8AC" ]
+    accent: "#EFB514"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Advanced/chestplate.rsi
   - type: Clothing
@@ -464,6 +470,9 @@
   description: An incredibly durable chestplate offering near-impenetrable protection against all forms of damage. Sterilized for medical applications.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#B22C20"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Apocryphal/chestplate.rsi
   - type: Clothing
@@ -622,6 +631,9 @@
   description: A durable mining chestplate with good protection against kinetic impacts and moderate environmental hazards.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#422623", "#343442", "#72452A" ]
+    accent: "#B15CE6"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Asteroid/chestplate.rsi
   - type: Clothing
@@ -812,6 +824,9 @@
   description: A fire-resistant chestplate designed for atmospheric technicians. Provides excellent thermal protection.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#3E3D3F", "#545350" ]
+    accent: "#C68200"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Atmospheric/chestplate.rsi
   - type: Clothing
@@ -991,6 +1006,9 @@
   description: A mysterious chestplate with unknown properties. Time seems to flow differently around it.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#18191E", "#39393F", "#A5A9B6", "#CBCDD1" ]
+    accent: "#47BFFF"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Chrono/chestplate.rsi
   - type: Clothing
@@ -1104,6 +1122,9 @@
   description: A lightweight civilian chestplate. Provides minimal protection but maximum mobility.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#18202B", "#252D38", "#49475C", "#8A8A9E" ]
+    accent: "#8A8A9E"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Civilian/chestplate.rsi
   - type: Clothing
@@ -1233,6 +1254,9 @@
   description: A refined corporate chestplate with balanced protection. Designed to impress and protect.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#0F331C", "#1F592C", "#29722E" ]
+    accent: "#FFCE5B"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Corporate/chestplate.rsi
   - type: Clothing
@@ -1348,6 +1372,10 @@
   description: A medical chestplate with a distinct corpsman color scheme.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#301C20", "#807376", "#BEB7B6", "#E6E2DF" ]
+    accent: "#CF0638"
+    accentStrength: 0.9
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Corpsman/chestplate.rsi
   - type: Clothing
@@ -1470,6 +1498,9 @@
   description: A clown-themed chestplate. Surprisingly durable for something so silly.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#444441", "#70705F", "#ADAD95" ]
+    accent: "#FFCB1F"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Cosmohonk/chestplate.rsi
   - type: Clothing
@@ -1620,6 +1651,9 @@
   description: An elite chestplate with superior protection against most damage types. The pinnacle of defensive engineering.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#384134", "#545350" ]
+    accent: "#545350"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Elite/chestplate.rsi
   - type: Clothing
@@ -1765,6 +1799,9 @@
   description: A magical chestplate with strong protective enchantments. Resists physical and elemental damage.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#450363", "#2C2234", "#5F277F", "#5C4569" ]
+    accent: "#2DDAFF"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Enchanted/chestplate.rsi
   - type: Clothing
@@ -1952,6 +1989,9 @@
   description: An engineering chestplate with good protection against electrical shocks and moderate environmental hazards.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#181719", "#232226", "#2B3440", "#545350" ]
+    accent: "#E6B812"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Engineering/chestplate.rsi
   - type: Clothing
@@ -2160,6 +2200,9 @@
   description: A well-balanced chestplate with good all-around protection. Judge, jury, and protector.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#49475C", "#8A8A9E" ]
+    accent: "#C5993D"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Inquisitory/chestplate.rsi
   - type: Clothing
@@ -2277,6 +2320,9 @@
   description: A durable chestplate designed for heavy lifting and cargo handling.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#20232D", "#303546", "#404555", "#505564" ]
+    accent: "#B88430"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Loader/chestplate.rsi
   - type: Clothing
@@ -2396,6 +2442,9 @@
   description: A prestigious chestplate with exceptional protection. Fit for the captain of a Nanotrasen station.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#132B4D", "#244A66" ]
+    accent: "#FFCE5B"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Magnate/chestplate.rsi
   - type: Clothing
@@ -2537,6 +2586,9 @@
   description: A lightweight medical chestplate with disease protection. Designed for rapid response.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#49475C", "#8A8A9E", "#C2C1C9" ]
+    accent: "#8DCDF7"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Medical/chestplate.rsi
   - type: Clothing
@@ -2671,6 +2723,9 @@
   description: A durable mining chestplate with good protection against impacts and environmental hazards.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#131326", "#181719", "#232226", "#3E3D3F" ]
+    accent: "#A4FEF4"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Mining/chestplate.rsi
   - type: Clothing
@@ -2905,6 +2960,9 @@
   description: A bulky prototype chestplate with good explosion resistance. The research director's choice.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1C222B", "#422623", "#384052" ]
+    accent: "#A4FEF4"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Prototype/chestplate.rsi
   - type: Clothing
@@ -3031,6 +3089,9 @@
   description: A rescue chestplate with excellent environmental protection. Built for the most dangerous rescue operations.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#1E1E32", "#2F4E6E", "#427CA6", "#8A8A9E" ]
+    accent: "#8DCDF7"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Rescue/chestplate.rsi
   - type: Clothing
@@ -3173,6 +3234,9 @@
   description: A research chestplate with exceptional explosion resistance. Perfect for studying unstable materials.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#9D1DE8"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Research/chestplate.rsi
   - type: Clothing
@@ -3315,6 +3379,9 @@
   description: A well-balanced rescue chestplate with excellent all-around protection.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#1C222B", "#343442" ]
+    accent: "#343442"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Responsory/chestplate.rsi
   - type: Clothing
@@ -3455,6 +3522,9 @@
   description: An advanced security chestplate with excellent protection against all forms of attack.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#008BED"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Safeguard/chestplate.rsi
   - type: Clothing
@@ -3596,6 +3666,9 @@
   description: A security chestplate with solid protection against physical attacks.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#0D0C19", "#1E1E32", "#343442", "#545461" ]
+    accent: "#008BED"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Security/chestplate.rsi
   - type: Clothing
@@ -3744,6 +3817,9 @@
   description: A syndicate chestplate with excellent all-around protection. Built for operatives.
   categories: [ HideSpawnMenu ]
   components:
+  - type: SuitWrap
+    ramp: [ "#1C070E", "#3F010D", "#2A1217", "#5B0010" ]
+    accent: "#B22C20"
   - type: Sprite
     sprite: _Pirate/Clothing/Modular/Syndicate/chestplate.rsi
   - type: Clothing

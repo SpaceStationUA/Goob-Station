@@ -1,0 +1,56 @@
+- type: entity
+  id: CitationPaymentConsole
+  parent: BaseWallmountMachine
+  name: citation payment terminal
+  description: A public terminal for paying security citations with an ID card.
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    sprite: _Pirate/Structures/Machines/citation_payment.rsi
+    noRot: true
+    snapCardinals: true
+    layers:
+    - state: icon
+    - state: unshaded
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered", "enum.CitationPaymentConsoleVisualLayers.Screen"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.CitationPaymentConsoleVisuals.Status:
+        enum.CitationPaymentConsoleVisualLayers.Screen:
+          Idle: { state: unshaded }
+          Accepted: { state: accepted }
+          Denied: { state: denied }
+  - type: CitationPaymentConsole
+  - type: ActivatableUI
+    key: enum.CitationPaymentConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.CitationPaymentConsoleUiKey.Key:
+        type: CitationPaymentConsoleBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 100
+    priority: Low
+  - type: Appearance
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 1.5
+  - type: LitOnPowered
+  - type: EmitSoundOnUIOpen
+    sound:
+      collection: Keyboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

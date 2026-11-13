@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Man, who was inspired by his own deed. One nukie spider(from hobo nukie squad), who teslaloosed station. Btw, it's syndie-spider from trauma.",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+        {
+          "name": "animated"
+        }
+      ]
+  }

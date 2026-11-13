@@ -99,12 +99,25 @@
     - GlimmerEventScheduler # Pirate
 
 - type: gamePreset
+  id: BlueshiftGreenshift
+  alias:
+    - blueshiftgreenshift
+  name: blueshift-title
+  description: blueshift-description
+  showInVote: false
+  rules:
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation
+    - GlimmerEventScheduler # Pirate
+
+- type: gamePreset
   id: PirateGreenshift
   alias:
   - greenshift
   - shittersafarideluxeedition
   name: greenshift-title
   showInVote: true #4boring4vote
+  maxPlayers: 30
   description: greenshift-description
   rules:
   - SpaceTrafficControlFriendlyEventScheduler
@@ -215,7 +228,7 @@
   description: blueshift-description
   showInVote: true
   rules:
-    - BlueshiftScheduler
+    - BlueshiftDraft
+    - BlueshiftDirector
     - BlueshiftAntagScheduler
-    - MeteorSwarmScheduler
     - GlimmerEventScheduler

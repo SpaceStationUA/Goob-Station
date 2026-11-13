@@ -80,3 +80,7 @@
   name: lathe-category-general-bureaucracy
 
 # 
+
+- type: latheCategory
+  id: GlassTiles
+  name: lathe-category-glass-tile

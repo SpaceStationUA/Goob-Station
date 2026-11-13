@@ -1,11 +1,13 @@
 {
-  "presets": ["SecretPlusMid", "SecretSalt", "SecretSalt14", "SecretTP", "Blueshift"],
-  "extraPrototypes": ["Tools/_Pirate/GameModeSim/extra/redshift-1.4.yml"],
+  "presets": ["SecretSalt", "SecretTP", "Blueshift", "TheGuide", "TheWatcher"],
+  "extraPrototypes": [],
   "rounds": 1000,
   "seed": 1337,
   "outputDir": "Tools/_Pirate/GameModeSim/output",
 
   "scenarios": [
+    { "name": "20pop-8start", "roundMinutes": 150, "population": 20, "roundstartPlayers": 8, "joinWindowMinutes": 60, "joinCurve": 1.5 },
+    { "name": "30pop-11start", "roundMinutes": 150, "population": 30, "roundstartPlayers": 11, "joinWindowMinutes": 60, "joinCurve": 1.5 },
     { "name": "40pop-10start", "roundMinutes": 150, "population": 40, "roundstartPlayers": 10, "joinWindowMinutes": 60, "joinCurve": 1.5 },
     { "name": "40pop-15start", "roundMinutes": 150, "population": 40, "roundstartPlayers": 15, "joinWindowMinutes": 60, "joinCurve": 1.5 },
     { "name": "40pop-20start", "roundMinutes": 150, "population": 40, "roundstartPlayers": 20, "joinWindowMinutes": 60, "joinCurve": 1.5 }
@@ -29,7 +31,7 @@
 
   // VentCrittersRule always offers a rat king, ignoring specialEntry probability.
   // Assume cargo never pays the pirate ransom.
-  "ghostRoleSpawnRules": { "BorerSpawn": 1, "KingRatMigration": 1, "BlueshiftKingRatMigration": 1, "SpacePirates": 5, "BlueshiftSpacePirates": 5 },
+  "ghostRoleSpawnRules": { "BorerSpawn": 1, "KingRatMigration": 1, "BlueshiftKingRatMigration": 1, "BlueshiftLegacyKingRatMigration": 1 },
 
   "securityWeightMultiplier": 1,
   "observers": 2,

@@ -1,0 +1,37 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  id: HeadElf
+  name: elf head
+  parent:
+  - PartElf
+  - BaseHead
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Elf/parts.rsi
+    state: head_m
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
+- type: entity
+  id: PartElf
+  parent:
+  - BaseItem
+  - BasePart
+  name: elf body part
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+  - type: BodyPart
+    species: Elf

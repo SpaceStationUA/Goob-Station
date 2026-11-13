@@ -10,6 +10,8 @@
     func: NotEqual
   params:
     displacementSize: 127
+    displacementMapScale: 1, 1 # Pirate: square frames remain unchanged by default.
+    displacementMapTexelSize: 0.03125, 0.03125 # Pirate
 
 - type: shader
   id: DisplacedDraw
@@ -17,3 +19,5 @@
   path: "/Textures/Shaders/displacement.swsl"
   params:
     displacementSize: 127
+    displacementMapScale: 1, 1 # Pirate
+    displacementMapTexelSize: 0.03125, 0.03125 # Pirate

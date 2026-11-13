@@ -21,5 +21,7 @@ public sealed partial class PendingPirateRuleComponent : Component
 
     [DataField] public float Ransom = 25000f;
 
+    [DataField] public EntProtoId PirateSpawnRule = "PiratesSpawn";
+
     public CargoOrderData? Order;
 }

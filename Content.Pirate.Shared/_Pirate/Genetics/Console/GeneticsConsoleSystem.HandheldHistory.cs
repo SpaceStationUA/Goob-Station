@@ -2,6 +2,7 @@
 
 using Content.Pirate.Shared.Genetics.Mutations;
 using Content.Shared.IdentityManagement;
+using System.Linq;
 
 namespace Content.Pirate.Shared.Genetics.Console;
 
@@ -36,14 +37,22 @@ public sealed partial class GeneticsConsoleSystem
             DnaId = _mutation.GetDna(subject) ?? Loc.GetString("generic-not-available-shorthand"),
             Sequences = sequences
         };
-        var index = ent.Comp.Scans.FindIndex(saved => saved.Target == subject);
+        var index = ent.Comp.Scans.FindIndex(saved => saved.Target == subject && saved.DnaId == scan.DnaId &&
+            saved.Sequences.Select(sequence => sequence.Number).Order().SequenceEqual(
+                sequences.Select(sequence => sequence.Number).Order()));
         if (index < 0)
         {
+            var baseName = scan.Name;
+            for (var suffix = 2; ent.Comp.Scans.Any(saved => saved.Name == scan.Name); suffix++)
+                scan.Name = $"{baseName} ({suffix})";
             index = ent.Comp.Scans.Count;
             ent.Comp.Scans.Add(scan);
         }
         else
+        {
+            scan.Name = ent.Comp.Scans[index].Name;
             ent.Comp.Scans[index] = scan;
+        }
         ent.Comp.SelectedScan = index;
     }
 

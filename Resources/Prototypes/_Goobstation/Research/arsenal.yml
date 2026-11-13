@@ -201,6 +201,8 @@
   recipeUnlocks:
   - WeaponSubMachineSmart
   - MagazineSmart
+  - ShootingAssistantSuitModule # Pirate: upstream MOD module.
+  - ThermalVisorSuitModule # Pirate: upstream MOD module.
   technologyPrerequisites:
   - UraniumMunitions
   position: 4,2
@@ -219,6 +221,7 @@
   - PowerCellBluespaceSMG
   - PowerCellBluespaceSniper
   - MilitaryPowerCellBluespaceLMG
+  - ProjectileDampenerSuitModule # Pirate: upstream MOD module.
   technologyPrerequisites:
   - WeaponLaserCellLMGTech
   - WeaponLaserCellSniperTech
@@ -232,7 +235,7 @@
     state: sec
   discipline: Arsenal
   tier: 2
-  cost: 10000
+  cost: 20000
   recipeUnlocks:
   - SecEndoskeleton
   position: 5,2

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
-using Content.Server._Pirate.Radio.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server._EinsteinEngines.Language;
@@ -19,12 +18,11 @@ using Content.Shared.Speech.Components;
 using Content.Shared.Chat;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Radio.Components;
-using Content.Shared.UserInterface; // Pirate - Handheld Radios port
-using Content.Shared._Pirate.Radio; // Pirate - Handheld Radios port
-using Robust.Server.GameObjects; // Pirate - Handheld Radios port
-using Robust.Shared.Network; // Pirate - Handheld Radios port
-using Robust.Shared.Player; // Pirate - Handheld Radios port
 using Robust.Shared.Prototypes;
+using Content.Shared.UserInterface; // Nuclear-14 start
+using Content.Shared._NC.Radio;
+using Robust.Server.GameObjects;
+using Robust.Shared.Network; // Nuclear-14 end
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -41,16 +39,15 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly LanguageSystem _language = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!; // Goob
-    [Dependency] private readonly UserInterfaceSystem _ui = default!; // Pirate - Handheld Radios port
-    [Dependency] private readonly INetManager _netMan = default!; // Pirate - Handheld Radios port
+    [Dependency] private readonly UserInterfaceSystem _ui = default!; // Nuclear-14
+    [Dependency] private readonly INetManager _netMan = default!; // Nuclear-14
 
     // Used to prevent a shitter from using a bunch of radios to spam chat.
     private HashSet<(string, EntityUid, RadioChannelPrototype)> _recentlySent = new();
 
-    // Pirate start - Handheld Radios port
+    // Frontier: minimum, maximum radio frequencies
     private const int MinRadioFrequency = 1000;
     private const int MaxRadioFrequency = 3000;
-    // Pirate end - Handheld Radios port
 
     public override void Initialize()
     {
@@ -71,13 +68,14 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         SubscribeLocalEvent<IntercomComponent, ToggleIntercomSpeakerMessage>(OnToggleIntercomSpeaker);
         SubscribeLocalEvent<IntercomComponent, SelectIntercomChannelMessage>(OnSelectIntercomChannel);
 
-        // Pirate start - Handheld Radios port
-        SubscribeLocalEvent<RadioMicrophoneComponent, BeforeActivatableUIOpenEvent>(OnBeforeHandheldRadioUiOpen);
+
+        SubscribeLocalEvent<RadioMicrophoneComponent, BeforeActivatableUIOpenEvent>(OnBeforeHandheldRadioUiOpen); // Nuclear-14 start
         SubscribeLocalEvent<RadioMicrophoneComponent, ToggleHandheldRadioMicMessage>(OnToggleHandheldRadioMic);
         SubscribeLocalEvent<RadioMicrophoneComponent, ToggleHandheldRadioSpeakerMessage>(OnToggleHandheldRadioSpeaker);
-        SubscribeLocalEvent<RadioMicrophoneComponent, SelectHandheldRadioFrequencyMessage>(OnChangeHandheldRadioFrequency);
-        SubscribeLocalEvent<IntercomComponent, MapInitEvent>(OnMapInit);
-        // Pirate end - Handheld Radios port
+        SubscribeLocalEvent<RadioMicrophoneComponent, SelectHandheldRadioFrequencyMessage>(OnChangeHandheldRadioFrequency); // Nuclear-14 end
+
+        SubscribeLocalEvent<IntercomComponent, MapInitEvent>(OnMapInit); // Frontier
+
     }
 
     public override void Update(float frameTime)
@@ -171,12 +169,18 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         var proto = _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel);
 
         using (args.PushGroup(nameof(RadioMicrophoneComponent)))
+        // Nuclear-14 edit start
         {
-            // Pirate start - Handheld Radios port
-            args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", GetHandheldRadioFrequency(uid, proto)), ("color", proto.Color.ToHex())));
-            args.PushMarkup(Loc.GetString("handheld-radio-component-channel-examine", ("channel", proto.LocalizedName), ("color", proto.Color.ToHex())));
-            // Pirate end - Handheld Radios port
+            args.PushMarkup(Loc.GetString(
+                "handheld-radio-component-on-examine",
+                ("frequency", component.Frequency),
+                ("color", proto.Color.ToHex())));
+            args.PushMarkup(Loc.GetString(
+                "handheld-radio-component-channel-examine",
+                ("channel", proto.LocalizedName),
+                ("color", proto.Color.ToHex())));
         }
+        // Nuclear-14 edit end
     }
 
     private void OnListen(EntityUid uid, RadioMicrophoneComponent component, ListenEvent args)
@@ -186,7 +190,7 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
 
         var channel = _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel)!;
         if (_recentlySent.Add((args.Message, args.Source, channel)))
-            _radio.SendRadioMessage(args.Source, args.Message, channel, uid, /*Pirate-handheld-radios-start*/ frequency: GetHandheldRadioFrequency(uid, channel) /*Pirate-handheld-radios-end*/);
+            _radio.SendRadioMessage(args.Source, args.Message, channel, uid, frequency: component.Frequency); // Nuclear-14
     }
 
     private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
@@ -258,8 +262,8 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         if (ent.Comp.RequiresPower && !this.IsPowered(ent, EntityManager))
             return;
 
-        if (!_protoMan.TryIndex<RadioChannelPrototype>(args.Channel, out var channel) || !ent.Comp.SupportedChannels.Contains(args.Channel)) // Pirate - Handheld Radios port
-            return;
+        if (!_protoMan.TryIndex<RadioChannelPrototype>(args.Channel, out var channel) || !ent.Comp.SupportedChannels.Contains(args.Channel)) // Nuclear-14: add channel
+            return; // Nuclear-14: add channel
 
         SetIntercomChannel(ent, args.Channel);
     }
@@ -281,16 +285,14 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         if (TryComp<RadioMicrophoneComponent>(ent, out var mic))
         {
             mic.BroadcastChannel = channel.Value;
-            if(_protoMan.TryIndex<RadioChannelPrototype>(channel.Value, out var channelProto)) // Pirate - Handheld Radios port
-                SetHandheldRadioFrequency(ent, GetHandheldRadioFrequency(ent, channelProto)); // Pirate - Handheld Radios port
+            if (_protoMan.TryIndex<RadioChannelPrototype>(channel, out var channelProto)) // Nuclear-14
+                mic.Frequency = channelProto.Frequency; // Pirate: retune to the newly selected intercom channel
         }
-
         if (TryComp<RadioSpeakerComponent>(ent, out var speaker))
             speaker.Channels = new() { channel.Value };
         Dirty(ent);
     }
-
-    // Pirate start - Handheld Radios port
+    // Nuclear-14-Start
     #region Handheld Radio
 
     private void OnBeforeHandheldRadioUiOpen(Entity<RadioMicrophoneComponent> microphone, ref BeforeActivatableUIOpenEvent args)
@@ -321,49 +323,38 @@ public sealed class RadioDeviceSystem : SharedRadioDeviceSystem
         if (!args.Actor.Valid)
             return;
 
+        // Update frequency if valid and within range.
         if (args.Frequency >= MinRadioFrequency && args.Frequency <= MaxRadioFrequency)
-            SetHandheldRadioFrequency(microphone, args.Frequency);
+            microphone.Comp.Frequency = args.Frequency;
+        // Update UI with current frequency.
         UpdateHandheldRadioUi(microphone);
     }
 
     private void UpdateHandheldRadioUi(Entity<RadioMicrophoneComponent> radio)
     {
         var speakerComp = CompOrNull<RadioSpeakerComponent>(radio);
-        var channel = _protoMan.Index<RadioChannelPrototype>(radio.Comp.BroadcastChannel);
-        var frequency = GetHandheldRadioFrequency(radio, channel);
+        var frequency = radio.Comp.Frequency;
 
         var micEnabled = radio.Comp.Enabled;
         var speakerEnabled = speakerComp?.Enabled ?? false;
         var state = new HandheldRadioBoundUIState(micEnabled, speakerEnabled, frequency);
         if (TryComp<UserInterfaceComponent>(radio, out var uiComp))
-            _ui.SetUiState((radio.Owner, uiComp), HandheldRadioUiKey.Key, state);
-    }
-
-    private int GetHandheldRadioFrequency(EntityUid uid, RadioChannelPrototype channel)
-    {
-        if (TryComp<HandheldRadioFrequencyComponent>(uid, out var radioFrequency)
-            && radioFrequency.Frequency != 0)
-        {
-            return radioFrequency.Frequency;
-        }
-
-        return channel.Frequency;
-    }
-
-    private void SetHandheldRadioFrequency(EntityUid uid, int frequency)
-    {
-        EnsureComp<HandheldRadioFrequencyComponent>(uid).Frequency = frequency;
+            _ui.SetUiState((radio.Owner, uiComp), HandheldRadioUiKey.Key, state); // Frontier: TrySetUiState<SetUiState
     }
 
     #endregion
+    // Nuclear-14-End
+
+    // Frontier: init intercom with map
     private void OnMapInit(EntityUid uid, IntercomComponent ent, MapInitEvent args)
     {
+        // Set initial frequency (must be done regardless of power/enabled)
         if (ent.CurrentChannel != null &&
                 _protoMan.TryIndex(ent.CurrentChannel, out var channel) &&
-                HasComp<RadioMicrophoneComponent>(uid))
+                TryComp(uid, out RadioMicrophoneComponent? mic))
         {
-            SetHandheldRadioFrequency(uid, channel.Frequency);
+            mic.Frequency = channel.Frequency;
         }
     }
-    // Pirate end - Handheld Radios port
+    // Nuclear-14-end
 }

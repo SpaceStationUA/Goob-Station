@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  parent: [ SimpleSpaceMobBase ] # Pirate: neither growth stage can fly.
   id: MobEeepBase
   abstract: true
   categories: [ HideSpawnMenu ]
@@ -15,11 +15,12 @@
     - type: ReplacementAccent
       accent: eeep
     - type: MobMover
+    - type: NoSlip # Pirate: retain slip resistance without flight.
     - type: InputMover
     - type: MovementSpeedModifier
       baseWalkSpeed: 3
       baseSprintSpeed: 5
-      baseWeightlessModifier: 1.5
+      # Pirate: use normal weightless movement instead of the space speed bonus.
     - type: Fixtures
       fixtures:
         fix1:
@@ -28,9 +29,9 @@
             radius: 0.40
           density: 100
           mask:
-            - FlyingMobMask
+            - MobMask # Pirate: grounded collision.
           layer:
-            - FlyingMobLayer
+            - MobLayer # Pirate: grounded collision.
     - type: Butcherable
       spawned:
         - id: EeepSpark

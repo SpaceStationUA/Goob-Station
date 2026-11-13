@@ -1,0 +1,56 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseMobSpeciesOrganic
+  id: BaseMobDoll
+  abstract: true
+  components:
+  - type: LanguageKnowledge
+    speaks:
+    - TauCetiBasic
+    - Eldritch
+    understands:
+    - TauCetiBasic
+    - Eldritch
+  - type: Absorbable
+  - type: Hunger
+  - type: Icon
+    sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Species/Doll/parts.rsi
+    state: doll
+  - type: Thirst
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatAnomaly
+      amount: 5
+    - id: SheetPlasteel1
+      amount: 5
+  - type: HumanoidAppearance
+    species: Doll
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+  - type: Body
+    prototype: Doll
+    requiredLegs: 2
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Doll
+  - type: Vocal
+  - type: Inventory
+    speciesId: Doll
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          '32':
+            sprite: _Pirate/StarlightSpecies/Shared/Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: DollBlood
+        Quantity: 600
+  - type: Shell
+    generateShellPieceAction: ActionGenerateShellPiece
+  - type: StarlightBodyDamageModifiers

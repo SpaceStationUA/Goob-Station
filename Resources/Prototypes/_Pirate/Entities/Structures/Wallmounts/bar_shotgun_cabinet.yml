@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: ShotGunCabinet
+  id: ShotGunCabinetBarFilled
+  name: bar shotgun cabinet
+  suffix: Filled
+  components:
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
+        ejectOnInteract: true
+        whitelist:
+          tags:
+          - WeaponShotgunDoubleBarreledRubber
+  - type: AccessReader
+    access: [["Bar"]]
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - WeaponShotgunDoubleBarreledRubber
+
+- type: entity
+  parent: ShotGunCabinet
+  id: ShotGunCabinetBarKammererFilled
+  name: bar Kammerer cabinet
+  suffix: Filled
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - WeaponShotgunKammererRubber

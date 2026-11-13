@@ -61,6 +61,8 @@ public sealed class SpeakOnActionSystem : SharedSpeakOnActionSystem
 
         if (string.IsNullOrWhiteSpace(speech))
             return;
-        _chat.TrySendInGameICMessage(user, Loc.GetString(speech), InGameICChatType.Speak, false);
+        // Pirate: preserve whispered Starlight cantrip invocations.
+        _chat.TrySendInGameICMessage(user, Loc.GetString(speech),
+            ent.Comp.Whisper ? InGameICChatType.Whisper : InGameICChatType.Speak, false);
     }
 }

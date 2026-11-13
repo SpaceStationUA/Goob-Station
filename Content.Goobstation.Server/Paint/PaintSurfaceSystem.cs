@@ -1,4 +1,5 @@
 using Content.Goobstation.Shared.Paint;
+using Content.Shared._Pirate.Crayon; // Pirate: novice crayon protection
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
@@ -81,6 +82,15 @@ public sealed partial class PaintSurfaceSystem : SharedPaintSurfaceSystem
             return;
 
         var tool = maybeTool.Value;
+        // Pirate: check every stroke, including messages from an already open painting UI.
+        if (HasComp<CrayonComponent>(tool))
+        {
+            var attempt = new CrayonDrawAttemptEvent(user);
+            RaiseLocalEvent(tool, ref attempt);
+            if (attempt.Cancelled)
+                return;
+        }
+
         if (args.BrushSize < tool.Comp.MinBrushSize
             || args.BrushSize > tool.Comp.MaxBrushSize
             || args.Erase && !tool.Comp.CanErase)

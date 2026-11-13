@@ -1,0 +1,151 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BoxCardboard
+  id: BoxHugBlood
+  name: box of hugs
+  description: A special box for sensitive people. This one is labelled to contain a haemobrick.
+  suffix: Emergency, Blood
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingMaskBreath
+        - id: ExtendedEmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
+        - id: FoodSnackBloodBrick
+        - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: extendedtank
+- type: entity
+  parent:
+  - BoxCardboard
+  id: BoxSurvivalBlood
+  name: survival box
+  description: It's a box with basic internals inside. This one is labelled to contain a haemobrick.
+  suffix: Standard, Blood
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingMaskBreath
+        - id: EmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
+        - id: FoodSnackBloodBrick
+  - type: Sprite
+    layers:
+    - state: internals
+- type: entity
+  parent:
+  - BoxCardboard
+  id: BoxSurvivalEngineeringBlood
+  name: extended-capacity survival box
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank and a haemobrick.
+  suffix: Extended, Blood
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingMaskBreath
+        - id: ExtendedEmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
+        - id: FoodSnackBloodBrick
+        - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: extendedtank
+- type: entity
+  parent:
+  - BoxCardboard
+  id: BoxSurvivalMedicalBlood
+  name: survival box
+  description: It's a box with basic internals inside. This one is labelled to contain a haemobrick.
+  suffix: Medical, Blood
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingMaskBreathMedical
+        - id: EmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
+        - id: FoodSnackBloodBrick
+        - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: emergencytank
+- type: entity
+  parent:
+  - BoxCardboardSmall
+  id: BoxSurvivalMilitaryDoubleBlood
+  suffix: Military O2, Blood
+  description: It's a box with basic internals inside. This one is labelled to contain an double extended-capacity tank and
+    a haemobrick.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: DoubleEmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: extendedtank
+- type: entity
+  parent:
+  - BoxCardboard
+  id: BoxSurvivalSecurityBlood
+  name: survival box
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank and a haemobrick.
+  suffix: Security, Blood
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingMaskGasSecurity
+        - id: ExtendedEmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
+        - id: FoodSnackBloodBrick
+        - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: emergencytank
+- type: entity
+  parent:
+  - BoxCardboard
+  id: BoxSurvivalSyndicateBlood
+  name: extended-capacity survival box
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank and a haemobrick.
+  suffix: Syndicate, Blood
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingMaskGasSyndicate
+        - id: ExtendedEmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
+        - id: FoodSnackBloodBrick
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: extendedtank

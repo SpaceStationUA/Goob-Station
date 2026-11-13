@@ -26,7 +26,7 @@
         Blunt: 20
         Structural: 110
   - type: Item
-    size: Normal
+    size: Ginormous
     shape:
     - 0,0,1,4
   - type: Tool

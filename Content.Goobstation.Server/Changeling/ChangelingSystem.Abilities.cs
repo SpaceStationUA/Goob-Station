@@ -167,7 +167,10 @@ public sealed partial class ChangelingSystem
 
         PlayMeatySound(args.User, comp);
 
-        var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
+        // Pirate: absorption leaves treatable genetic damage without mangling organs through wounds.
+        var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 100);
+        foreach (var damageType in dmg.DamageDict.Keys)
+            dmg.WoundSeverityMultipliers[damageType] = FixedPoint2.Zero;
         _damage.TryChangeDamage(target, dmg, true, false, targetPart: TargetBodyPart.All); // Shitmed Change
         _blood.ChangeBloodReagent(target, "FerrochromicAcid");
         _blood.SpillAllSolutions(target);
@@ -663,7 +666,10 @@ public sealed partial class ChangelingSystem
         comp.LastResortComponents.Clear();
 
         EnsureComp<AbsorbedComponent>(target);
-        var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
+        // Pirate: use the same recoverable absorption damage when implanting a changeling egg.
+        var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 100);
+        foreach (var damageType in dmg.DamageDict.Keys)
+            dmg.WoundSeverityMultipliers[damageType] = FixedPoint2.Zero;
         _damage.TryChangeDamage(target, dmg, false, false, targetPart: TargetBodyPart.All); // Shitmed Change
         _blood.ChangeBloodReagent(target, "FerrochromicAcid");
         _blood.SpillAllSolutions(target);

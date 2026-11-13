@@ -7,7 +7,7 @@
   components:
   - type: Mutation
     instability: 25
-    difficulty: 16
+    difficulty: 14
     rarity: Rare
     conflicts:
     - MutationThermalAdaptation
@@ -46,7 +46,7 @@
   components:
   - type: Mutation
     instability: 35
-    difficulty: 20 # powergamers delight
+    difficulty: 18
     rarity: Mythical
     conflicts:
     - MutationPressureAdaptation

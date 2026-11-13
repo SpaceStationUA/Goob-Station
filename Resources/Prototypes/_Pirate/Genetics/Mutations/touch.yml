@@ -8,7 +8,7 @@
   components:
   - type: Mutation
     instability: 25
-    difficulty: 16
+    difficulty: 14
     rarity: Mythical
   - type: ActionMutation
     action: ActionGeneticsShockTouch
@@ -44,7 +44,7 @@
   components:
   - type: Mutation
     instability: 35
-    difficulty: 16
+    difficulty: 14
     rarity: Mythical
   #- type: ActionMutation
   #  action: ActionMutationMendingTouch

@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taked from SS13, thermal and night vision by Darkrell",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "eye_implant_welding"
+    },
+    {
+      "name": "eye_implant_diagnostic"
+    },
+    {
+      "name": "eye_implant_janitor"
+    },
+    {
+      "name": "eye_implant_medical"
+    },
+    {
+      "name": "eye_implant_security"
+    },
+    {
+      "name": "eye_implant_syndicate"
+    },
+    {
+      "name": "eyes_thermal"
+    },
+    {
+      "name": "eyes_night"
+    },
+    {
+      "name": "eye_implant_chemistry",
+      "copyright": "Simple dyeing of medical implant, done by Citrea"
+    },
+    {
+      "name": "hand_implant_insulated",
+      "copyright": "Citrea"
+    },
+    {
+      "name": "hand_implant_forensics",
+      "copyright": "Citrea"
+    },
+    {
+      "name": "hand_implant_claws",
+      "copyright": "Citrea"
+    },
+    {
+      "name": "hand_implant_thrusters",
+      "copyright": "Citrea"
+    },
+    {
+      "name": "brain_implant_nexus",
+      "copyright": "Citrea"
+    },
+    {
+      "name": "brain_implant_translator",
+		"delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "copyright": "Citrea"
+    },
+    {
+      "name": "brain_implant_comms",
+		"delays": [
+        [
+          0.9,
+          0.1
+        ]
+      ],
+      "copyright": "Citrea"
+    },
+    {
+      "name": "brain_implant_comms_exped",
+		"delays": [
+        [
+          0.9,
+          0.1
+        ]
+      ],
+      "copyright": "Citrea"
+    },
+    {
+      "name": "nose_implant_scent",
+      "copyright": "Sparlight (GitHub)"
+    },
+    {
+      "name": "brain_implant_scan",
+      "copyright": "DocMoth"
+    }
+  ]
+}

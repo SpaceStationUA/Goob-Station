@@ -8,7 +8,7 @@
   components:
   - type: Mutation
     instability: 35
-    difficulty: 16
+    difficulty: 14
     rarity: Rare
   - type: ComponentMutation
     added:

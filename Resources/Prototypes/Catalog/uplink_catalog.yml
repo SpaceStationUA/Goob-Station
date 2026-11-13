@@ -1620,6 +1620,9 @@
   reputation: 20 # Pirate: entry-level reputation tier
   categories:
     - UplinkImplants
+  conditions: # Pirate: scram implant purchase limit
+  - !type:ListingLimitedStockCondition # Pirate: scram implant purchase limit
+    stock: 1 # Pirate: scram implant purchase limit
 
 
 - type: listing

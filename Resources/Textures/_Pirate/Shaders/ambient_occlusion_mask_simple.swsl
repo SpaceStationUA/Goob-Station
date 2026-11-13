@@ -1,0 +1,50 @@
+light_mode unshaded;
+blend_mode none;
+
+// Keep coverage and fade logic in sync with ambient_occlusion_mask.
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D BEFORE_MOBS_TEXTURE;
+uniform sampler2D AFTER_MOBS_TEXTURE;
+uniform sampler2D FLAT_TEXTURE;
+uniform highp vec2 STEP;
+uniform highp float FADE;
+
+const highp float threshold = 1.5 / 255.0;
+
+highp float mobAt(highp vec2 uv) {
+    highp vec4 before = zTextureSpec(BEFORE_MOBS_TEXTURE, uv);
+    highp vec4 after = zTextureSpec(AFTER_MOBS_TEXTURE, uv);
+    highp vec3 d = abs(zToSrgb(after).rgb - zToSrgb(before).rgb);
+    highp float overSprite = step(threshold, max(max(d.r, d.g), d.b));
+    return max(step(0.004, after.a - before.a), overSprite);
+}
+
+void fragment() {
+    highp vec2 uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
+    highp float flatBefore = zTextureSpec(BEFORE_MOBS_TEXTURE, uv).a;
+    highp float mobGain = max(zTextureSpec(AFTER_MOBS_TEXTURE, uv).a - flatBefore, 0.0);
+    highp float flatAfter = zTextureSpec(SCREEN_TEXTURE, uv).a;
+
+    // Keep one exit path; the engine appends the output write after this body.
+    highp float weight = 1.0;
+    if (mobGain > 0.0 && flatBefore < 1.0 && flatAfter < 1.0) {
+        highp float forceFlat = zTextureSpec(FLAT_TEXTURE, uv).a;
+        if (forceFlat < 1.0 && FADE > 0.0 && mobAt(uv) > 0.5) {
+            highp float below = 0.0;
+            for (int i = 1; i <= 32; i++) {
+                if (float(i) > FADE)
+                    break;
+                highp vec2 under = uv - STEP * float(i);
+                if (mobAt(under) < 0.5 || zTextureSpec(FLAT_TEXTURE, under).a > 0.5)
+                    break;
+                below += 1.0;
+            }
+            weight = clamp(1.0 - below / FADE, 0.0, 1.0);
+        }
+
+        weight = max(weight, forceFlat);
+    }
+
+    highp float caster = 1.0 - max(1.0 - flatBefore - mobGain * weight, 0.0) * (1.0 - flatAfter);
+    COLOR = vec4(clamp(caster, 0.0, 1.0));
+}

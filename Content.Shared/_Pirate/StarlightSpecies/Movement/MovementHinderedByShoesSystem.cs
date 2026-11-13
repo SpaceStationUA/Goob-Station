@@ -1,0 +1,43 @@
+// Pirate: ported from ss14Starlight/space-station-14.
+using Content.Shared.Inventory;
+using Content.Shared.Body.Components;
+using Content.Shared.Movement.Systems;
+
+namespace Content.Shared._Pirate.StarlightSpecies.Movement;
+
+public sealed partial class MovementHinderedByShoesSystem : EntitySystem
+{
+    [Dependency] private InventorySystem _inventory = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<BodyComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
+    }
+
+    private void OnRefreshSpeed(EntityUid uid, BodyComponent body, ref RefreshMovementSpeedModifiersEvent args)
+    {
+        // shoes check
+        if (!_inventory.TryGetSlotEntity(uid, "shoes", out var entityUid))
+            return;
+
+
+        float hinderModifier = 0f;
+
+        foreach (var legEntity in body.LegEntities)
+        {
+            if (!TryComp<MovementBodyPartHinderedByShoesComponent>(legEntity, out var legModifier))
+                continue;
+            hinderModifier += legModifier.HinderModifier;
+        }
+        if (TryComp<OverrideShoesHinderComponent>(entityUid, out var _override))
+        {
+            hinderModifier *= _override.HinderModifier;
+        }
+        if (hinderModifier > 0f)
+        {
+            args.ModifySpeed(1f, 1f - hinderModifier);
+        }
+    }
+}

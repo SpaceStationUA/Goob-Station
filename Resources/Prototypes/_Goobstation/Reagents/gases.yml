@@ -598,3 +598,35 @@
         ratios:
           CarbonDioxide: 0.5
           Pluoxium: -0.5
+      # Pirate: Starlight species-specific metabolism.
+      - !type:Oxygenate
+        factor: 8
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type:
+          - Neocyte
+        - !type:MetabolizerTypeCondition
+          type:
+          - Human
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Animal
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Rat
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Plant
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Feroxi
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cybernetic
+          - Hydrakin
+          inverted: true

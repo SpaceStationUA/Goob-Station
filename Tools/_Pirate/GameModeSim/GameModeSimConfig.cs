@@ -28,6 +28,11 @@ public sealed class GameModeSimConfig
     public float EventSpeedup { get; set; } = 1f;
     public int PlayerCountBias { get; set; } = 0;
 
+    public float DirectorMinimumTimeUntilFirstEvent { get; set; } = 300f;
+
+    // The sim does not create a station; these values estimate its metrics.
+    public DirectorWorldModel DirectorWorld { get; set; } = new();
+
     public int Observers { get; set; } = 2;
 
     public double EvacCallMinutesBeforeEnd { get; set; } = 10;
@@ -103,6 +108,19 @@ public sealed class GameModeSimConfig
         new() { Job = "ChiefMedicalOfficer", Weight = 1.5, Slots = 1 },
         new() { Job = "ResearchDirector", Weight = 1.5, Slots = 1 },
         new() { Job = "Quartermaster", Weight = 1.5, Slots = 1 },
+        // Uncapped crew rolls add department counts without changing slot-limited jobs.
+        new() { Job = "StationEngineer", Weight = 9 },
+        new() { Job = "AtmosphericTechnician", Weight = 3 },
+        new() { Job = "MedicalDoctor", Weight = 8 },
+        new() { Job = "Chemist", Weight = 3 },
+        new() { Job = "Paramedic", Weight = 2 },
+        new() { Job = "Scientist", Weight = 8 },
+        new() { Job = "CargoTechnician", Weight = 5 },
+        new() { Job = "SalvageSpecialist", Weight = 4 },
+        new() { Job = "Botanist", Weight = 3 },
+        new() { Job = "Chef", Weight = 2 },
+        new() { Job = "Bartender", Weight = 2 },
+        new() { Job = "Janitor", Weight = 3 },
     ];
 
     public double JobWeightTotal { get; set; } = 100;
@@ -184,7 +202,7 @@ public sealed class RoundParams
             GlimmerPerMinute = cfg.GlimmerPerMinute,
         };
 
-        // Keep rolls independent of dictionary order.
+        // Keep random rolls independent of dictionary order.
         foreach (var (name, _, set) in All)
         {
             var range = cfg.Randomize.FirstOrDefault(r => string.Equals(r.Key, name, StringComparison.OrdinalIgnoreCase)).Value;
@@ -200,6 +218,41 @@ public sealed class RoundParams
         return All.Select(a => a.Name)
             .Where(n => cfg.Randomize.Keys.Any(k => string.Equals(k, n, StringComparison.OrdinalIgnoreCase)));
     }
+}
+
+public sealed class DirectorWorldModel
+{
+    public double EventEffect { get; set; } = 1.0;
+
+    public Dictionary<string, double> HalfLifeMinutes { get; set; } = new()
+    {
+        ["Hostile"] = 10,
+        ["Death"] = 20,
+        ["Medical"] = 10,
+        ["Security"] = 15,
+        ["Atmos"] = 15,
+        ["Power"] = 10,
+        ["Anomaly"] = 20,
+        ["Infestation"] = 20,
+        ["Mess"] = 15,
+        ["Hunger"] = 30,
+        ["Thirst"] = 30,
+        ["Charge"] = 20,
+    };
+
+    public double UnstaffedRepairFactor { get; set; } = 0.25;
+
+    public double FriendlyItemThreat { get; set; } = 2;
+
+    public double SecurityItemThreat { get; set; } = 8;
+
+    public double HostileItemThreat { get; set; } = 5;
+
+    public double MedicalPerLivingCrew { get; set; } = 0.5;
+
+    public double MedicalPerAliveAntag { get; set; } = 5;
+
+    public double BodyCleanupMedianMinutes { get; set; } = 20;
 }
 
 public sealed class GameModeSimScenario

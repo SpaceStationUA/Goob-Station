@@ -1,0 +1,65 @@
+- type: constructionGraph
+  id: LinenBin
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: towelBin
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 0.5
+
+    - node: towelBin
+      entity: TowelBin
+      edges:
+        - to: start
+          conditions:
+            - !type:ContainerEmpty
+              container: bin-container
+            - !type:ContainerEmpty
+              container: linen-bin-hidden
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+    - node: linenBin
+      entity: LinenBin
+      edges:
+        - to: start
+          conditions:
+            - !type:ContainerEmpty
+              container: bin-container
+            - !type:ContainerEmpty
+              container: linen-bin-hidden
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+    - node: linenBasket
+      entity: LinenBasket
+      edges:
+        - to: start
+          conditions:
+            - !type:ContainerEmpty
+              container: bin-container
+            - !type:ContainerEmpty
+              container: linen-bin-hidden
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5

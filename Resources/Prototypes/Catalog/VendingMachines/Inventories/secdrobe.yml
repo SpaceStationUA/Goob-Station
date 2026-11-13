@@ -8,9 +8,13 @@
     ClothingBackpackDuffelSecurity: 3
     ClothingBackpackMessengerSecurity: 3 # Frontier
     ClothingUniformJumpsuitSec: 3
+    ClothingUniformJumpsuitCadet: 3 # Pirate: secdrobe clothing
     ClothingShoesBootsJack: 3
     ClothingHeadHatBeretSecurity: 3
     ClothingHeadHatSecsoft: 3
+    ClothingHeadHatBeretSecurityOfficer: 3 # Pirate: secdrobe clothing
+    ClothingHeadHatSecsoftOfficer: 3 # Pirate: secdrobe clothing
+    ClothingHeadHatSecurityTrooper: 3 # Pirate: secdrobe clothing
     #ClothingHeadBandRed: 3 # Pirate
     ClothingHeadBandBlack: 3 # Pirate
     Balaclava: 3 # Pirate
@@ -33,6 +37,8 @@
     ClothingOuterWinterSecArmored : 4 # Goobstation
     ClothingOuterArmorBasic: 2
     ClothingOuterCoatAMG: 1 # Goobstation
+    ClothingOuterCoatBrigMedic: 1 # Pirate: secdrobe clothing
+    ClothingOuterSecurityBomber: 3 # Pirate: secdrobe clothing
     #ClothingNeckScarfStripedRed: 3 # Pirate
     ClothingOuterArmorBasicSlim: 2
     ClothingOuterArmorCadet: 2

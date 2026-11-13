@@ -19,6 +19,13 @@
     - ClockworkSet
     - BibleVedaSet
     - VelesBookSet
+    - BibleDruidSet
+    - BibleCommunistSet
+    - BibleSatanicSet
+    - BibleNarsieSet
+    - BibleNanoTrasenSet
+    - BibleHonkSet
+    - BibleRatvarSet
     maxSelectedSets: 1
 
 - type: selectableSet
@@ -80,6 +87,76 @@
     state: icon
   content:
   - BibleVelesBook
+
+- type: selectableSet
+  id: BibleDruidSet
+  name: pirate-scripture-druid-name # Pirate: localized selection menu
+  description: pirate-scripture-druid-description
+  sprite:
+    sprite: Objects/Specific/Chapel/mysteryofthedruids.rsi
+    state: icon
+  content:
+  - BibleDruid
+
+- type: selectableSet
+  id: BibleCommunistSet
+  name: pirate-scripture-communist-name # Pirate: localized selection menu
+  description: pirate-scripture-communist-description
+  sprite:
+    sprite: Objects/Specific/Chapel/communistmanifesto.rsi
+    state: icon
+  content:
+  - BibleCommunistManifesto
+
+- type: selectableSet
+  id: BibleSatanicSet
+  name: pirate-scripture-satanic-name # Pirate: localized selection menu
+  description: pirate-scripture-satanic-description
+  sprite:
+    sprite: Objects/Specific/Chapel/satanicbible.rsi
+    state: icon
+  content:
+  - BibleSatanic
+
+- type: selectableSet
+  id: BibleNarsieSet
+  name: pirate-scripture-narsie-name # Pirate: localized selection menu
+  description: pirate-scripture-narsie-description
+  sprite:
+    sprite: Objects/Specific/Chapel/tomeofnarsie.rsi
+    state: icon
+  content:
+  - BibleNarsie
+
+- type: selectableSet
+  id: BibleNanoTrasenSet
+  name: pirate-scripture-nanotrasen-name # Pirate: localized selection menu
+  description: pirate-scripture-nanotrasen-description
+  sprite:
+    sprite: Objects/Specific/Chapel/codexnanotrasimus.rsi
+    state: icon
+  content:
+  - BibleNanoTrasen
+
+- type: selectableSet
+  id: BibleHonkSet
+  name: pirate-scripture-honk-name # Pirate: localized selection menu
+  description: pirate-scripture-honk-description
+  sprite:
+    sprite: Objects/Specific/Chapel/honk.rsi
+    state: icon
+  content:
+  - BibleHonk
+
+- type: selectableSet
+  id: BibleRatvarSet
+  name: pirate-scripture-ratvar-name # Pirate: localized selection menu
+  description: pirate-scripture-ratvar-description
+  sprite:
+    sprite: Objects/Specific/Chapel/ratvartablet.rsi
+    state: icon
+  content:
+  - BibleRatvar
 ##END SET SELECTION
 
 - type: entity

@@ -167,6 +167,7 @@
   components:
   - type: Organ # Pirate: genetics tongue mutations use the local organ slot.
     slotId: tongue
+  - type: TongueVoiceOrgan # Pirate: restoring speech after replacement of a Starlight tongue.
   - type: Sprite
     state: tongue
   - type: Tag # goob edit

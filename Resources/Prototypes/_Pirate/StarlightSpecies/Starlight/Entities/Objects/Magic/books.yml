@@ -1,0 +1,27 @@
+# Pirate: Starlight species port, adapted to native body topology, organs and chemistry.
+# Source: ss14Starlight/space-station-14@8d02e1bf65628a4f156143bbbdf3fb366923cba0.
+
+- type: entity
+  parent:
+  - BaseItem
+  - StorePresetCantrips
+  id: BookOfCantrips
+  name: abridged grimoire
+  suffix: Elf
+  description: A thin manuscript containing just some of the lesser secrets of Elvenkind.
+  components:
+  - type: Sprite
+    sprite: _Pirate/StarlightSpecies/Starlight/Objects/Misc/books.rsi
+    layers:
+    - state: cantrips
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    refundAllowed: false
+    ownerOnly: true
+    balance:
+      WizCoin: 2

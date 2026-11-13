@@ -1,0 +1,46 @@
+// Pirate: ported from Starlight.
+using Content.Shared.Actions;
+using Content.Shared.Damage;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared._Pirate.StarlightSpecies.Magic.Events;
+
+public sealed partial class SpawnItemInHandEvent : InstantActionEvent
+{
+    /// <summary>
+    /// Item to create with the action
+    /// </summary>
+    [DataField(required: true)]
+    public EntProtoId Spawned = string.Empty;
+
+    /// <summary>
+    /// Damage applied to user when used
+    /// </summary>
+    [DataField]
+    public DamageSpecifier? SelfDamage;
+
+    /// <summary>
+    /// Should this require a free hand to work?
+    /// </summary>
+    [DataField]
+    public bool RequiresFreeHand = false;
+}
+
+/// <summary>
+///     Raised after an entity was spawned in someones hand.
+/// </summary>
+[DataDefinition]
+public sealed partial class AfterSpawnItemInHandEvent
+{
+    /// <summary>
+    ///     Entity that was spawned.
+    /// </summary>
+    [DataField]
+    public EntityUid Entity;
+
+    /// <summary>
+    ///     The entity who spawned the item.
+    /// </summary>
+    [DataField]
+    public EntityUid Performer;
+}

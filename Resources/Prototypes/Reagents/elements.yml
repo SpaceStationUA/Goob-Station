@@ -208,13 +208,19 @@
         amount: 0.2 # Goob end
     Medicine:
       effects:
+      # Pirate: Starlight species-specific metabolism.
       - !type:ModifyBloodLevel
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Arachnid, Synth ] # Goob - Afterlight synths
+          type:
+          - Arachnid
+          - Synth
+          inverted: true
+        - !type:MetabolizerTypeCondition
+          type:
+          - Cyclorite
           inverted: true
         amount: 0.4
-
 - type: reagent
   id: Lithium
   name: reagent-name-lithium
