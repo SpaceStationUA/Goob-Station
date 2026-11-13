@@ -66,20 +66,22 @@ public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
         {
             var rsiPath = SpriteSpecifierSerializer.TextureRoot / subtypePrototype.SpritePath;
             #region Pirate: update borg sprite layers with their RSI states
-            if (!_resourceCache.TryGetResource<RSIResource>(rsiPath, out var resource))
+            // A missing RSI skips only the layer updates; mind states and the base update still run.
+            if (_resourceCache.TryGetResource<RSIResource>(rsiPath, out var resource))
+            {
+                var hasMind = _appearance.TryGetData<bool>(entity, BorgVisuals.HasPlayer, out var hasPlayer) && hasPlayer;
+                _sprite.LayerSetRsi((entity, sprite), BorgVisualLayers.Body, resource.RSI, bodyState);
+                _sprite.LayerSetRsi((entity, sprite), BorgVisualLayers.Light, resource.RSI, hasMind ? hasMindState : noMindState);
+                _sprite.LayerSetRsi((entity, sprite), BorgVisualLayers.LightStatus, resource.RSI, toggleLightState);
+
+                if (prototype.SpriteBodyMovementState is { } movementState)
+                    hasMovementState = resource.RSI.TryGetState(movementState, out _);
+            }
+            else
             {
                 Log.Error($"Unable to load RSI '{rsiPath}' for borg subtype '{subtypePrototype.ID}'.");
-                return;
             }
-
-            var hasMind = _appearance.TryGetData<bool>(entity, BorgVisuals.HasPlayer, out var hasPlayer) && hasPlayer;
-            _sprite.LayerSetRsi((entity, sprite), BorgVisualLayers.Body, resource.RSI, bodyState);
-            _sprite.LayerSetRsi((entity, sprite), BorgVisualLayers.Light, resource.RSI, hasMind ? hasMindState : noMindState);
-            _sprite.LayerSetRsi((entity, sprite), BorgVisualLayers.LightStatus, resource.RSI, toggleLightState);
             #endregion
-
-            if (prototype.SpriteBodyMovementState is { } movementState)
-                hasMovementState = resource.RSI.TryGetState(movementState, out _);
 
             _sprite.SetScale((entity, sprite), prototype.SpriteScale); // Pirate: source quadborg art uses a custom sprite scale.
             sprite.NoRotation = prototype.SpriteNoRotation; // Pirate: source quadborg art uses directional states.
