@@ -126962,13 +126962,6 @@ entities:
     - type: Transform
       pos: 52.24633,-11.908365
       parent: 2
-- proto: MagazinePistolCryptobiolin
-  entities:
-  - uid: 18933
-    components:
-    - type: Transform
-      pos: 27.806662,71.6614
-      parent: 2
 - proto: MagazinePistolSubMachineGun
   entities:
   - uid: 1646
