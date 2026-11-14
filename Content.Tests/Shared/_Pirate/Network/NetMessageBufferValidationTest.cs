@@ -53,7 +53,7 @@ public sealed class NetMessageBufferValidationTest
     public void LargeEntityCountCannotWrapToAnEmptyPayload()
     {
         var buffer = CreateBuffer();
-        const int count = 1 << 30;
+        var count = 1 << 30; // Match a runtime count read from the packet, not constant-expression arithmetic.
         var requiredSize = count * NetMessageBufferExtensions.SizeOfNetEntity;
         Assert.That(requiredSize, Is.EqualTo(1L << 32));
         Assert.Throws<InvalidOperationException>(() => buffer.AssertAtLeastSize(requiredSize));
