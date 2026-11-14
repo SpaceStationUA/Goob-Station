@@ -21,6 +21,7 @@ ent-OviniaCube = кубик овінії
     .desc = Спресована овінія. Просто додайте води!
 
 ent-PartOvinia = частина тіла овінії
+    .desc = Частина тіла овінії.
 ent-ChestOvinia = грудна клітка овінії
 ent-GroinOvinia = пах овінії
 ent-HeadOvinia = голова овінії
@@ -33,6 +34,7 @@ ent-RightLegOvinia = права нога овінії
 ent-LeftFootOvinia = ліве копито овінії
 ent-RightFootOvinia = праве копито овінії
 ent-OrganOviniaStomach = шлунок овінії
+    .desc = Місткий шлунок травоїдної овінії.
 
 ent-BoxSurvivalSlotsVegetable = { ent-BoxSurvivalSlots }
     .desc = { ent-BoxSurvivalSlots.desc }
