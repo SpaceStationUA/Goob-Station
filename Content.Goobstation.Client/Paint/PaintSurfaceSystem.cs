@@ -46,8 +46,11 @@ public sealed partial class PaintSurfaceSystem : SharedPaintSurfaceSystem
 
         UpdateTexture(ent, args.Chunks);
 
-        if (_ui.TryGetOpenUi<PaintBoundUserInterface>(ent.Owner, PaintUiKey.Key, out var bui))
-            bui.SurfaceUpdated(args.Chunks);
+        if (_ui.TryGetOpenUi(ent.Owner, PaintUiKey.Key, out var bui)
+            && bui is PaintBoundUserInterface paintBui)
+        {
+            paintBui.SurfaceUpdated(args.Chunks);
+        }
     }
 
     private void UpdateTexture(Entity<PaintSurfaceComponent> ent, List<int>? chunks)
