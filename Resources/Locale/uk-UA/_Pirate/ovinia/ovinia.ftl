@@ -1,0 +1,57 @@
+language-Caprine-name = Капрін
+language-Caprine-description = Мова овіній, у якій різні звуки бекання та мекання поєднуються у слова.
+metabolizer-type-ovinia = Овінія
+
+chat-speech-verb-name-ovinia = Овінія
+chat-speech-verb-ovinia-1 = бекає
+chat-speech-verb-ovinia-2 = мекоче
+chat-speech-verb-ovinia-3 = мекає
+chat-speech-verb-ovinia-4 = бекає
+chat-emote-name-baa = Бекати
+chat-emote-msg-baa = бекає
+
+ent-MobOvinia = Уріст МакОвечка
+    .desc = Овінія — розумний гуманоїд, укритий густою вовною.
+ent-MobOviniaDummy = манекен овінії
+    .desc = Манекен овінії для налаштування персонажа.
+ent-MobOviniaRandom = { ent-MobOvinia }
+    .desc = { ent-MobOvinia.desc }
+    .suffix = Випадкова зовнішність
+ent-OviniaCube = кубик овінії
+    .desc = Спресована овінія. Просто додайте води!
+
+ent-PartOvinia = частина тіла овінії
+ent-ChestOvinia = грудна клітка овінії
+ent-GroinOvinia = пах овінії
+ent-HeadOvinia = голова овінії
+ent-LeftArmOvinia = ліва рука овінії
+ent-RightArmOvinia = права рука овінії
+ent-LeftHandOvinia = ліва кисть овінії
+ent-RightHandOvinia = права кисть овінії
+ent-LeftLegOvinia = ліва нога овінії
+ent-RightLegOvinia = права нога овінії
+ent-LeftFootOvinia = ліве копито овінії
+ent-RightFootOvinia = праве копито овінії
+ent-OrganOviniaStomach = шлунок овінії
+
+ent-BoxSurvivalSlotsVegetable = { ent-BoxSurvivalSlots }
+    .desc = { ent-BoxSurvivalSlots.desc }
+    .suffix = Для травоїдних
+ent-BoxSurvivalSlotsEngineeringVegetable = { ent-BoxSurvivalSlotsEngineering }
+    .desc = { ent-BoxSurvivalSlotsEngineering.desc }
+    .suffix = Розширений, для травоїдних
+ent-BoxSurvivalSlotsSecurityVegetable = { ent-BoxSurvivalSlotsSecurity }
+    .desc = { ent-BoxSurvivalSlotsSecurity.desc }
+    .suffix = СБ, для травоїдних
+ent-BoxSurvivalSlotsMedicalVegetable = { ent-BoxSurvivalSlotsMedical }
+    .desc = { ent-BoxSurvivalSlotsMedical.desc }
+    .suffix = Медичний, для травоїдних
+ent-BoxHugSlotsVegetable = { ent-BoxHugSlots }
+    .desc = { ent-BoxHugSlots.desc }
+    .suffix = Клоун, для травоїдних
+ent-BoxMimeSlotsVegetable = { ent-BoxSurvivalSlots }
+    .desc = { ent-BoxSurvivalSlots.desc }
+    .suffix = Мім, для травоїдних
+ent-BoxSurvivalSlotsSyndicateVegetable = { ent-BoxSurvivalSlotsSyndicate }
+    .desc = { ent-BoxSurvivalSlotsSyndicate.desc }
+    .suffix = Синдикат, для травоїдних

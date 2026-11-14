@@ -1,0 +1,8 @@
+# Pirate: Ovinia from ProjectOmu/OmuStation@2034ff02e121ae8dd42b3dd70c62d11b3a4ebba1.
+- type: latheRecipe #Omu
+  id: OviniaCube
+  result: OviniaCube
+  completetime: 30
+  materials:
+    Biomass: 70
+    Plasma: 250

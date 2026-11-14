@@ -1,0 +1,7 @@
+# Pirate: Ovinia from ProjectOmu/OmuStation@2034ff02e121ae8dd42b3dd70c62d11b3a4ebba1.
+- type: soundCollection
+  id: OviniaBaa
+  files:
+  - /Audio/_Pirate/Ovinia/ovinia-baa1.ogg
+  - /Audio/_Pirate/Ovinia/ovinia-baa2.ogg
+  - /Audio/_Pirate/Ovinia/ovinia-baa3.ogg
