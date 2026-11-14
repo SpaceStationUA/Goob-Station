@@ -9,6 +9,7 @@
   markingLimits: MobOviniaMarkingLimits
   dollPrototype: MobOviniaDummy
   skinColoration: Hues
+  knowledge: Human # Pirate: required local skill baseline, absent in Omu.
   minHeight: 0.75
   defaultHeight: 0.9
   maxHeight: 1.175

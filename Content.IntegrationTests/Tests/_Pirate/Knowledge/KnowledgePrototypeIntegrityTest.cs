@@ -116,6 +116,7 @@ public sealed class KnowledgePrototypeIntegrityTest
             ["NeoVulpkanin"] = "Human",
             ["Neocyte"] = "Human",
             ["Oni"] = "Human",
+            ["Ovinia"] = "Human",
             ["Plasmaman"] = "Plasmaman",
             ["Reptilian"] = "Reptilian",
             ["Resomi"] = "Human",
