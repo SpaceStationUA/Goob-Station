@@ -9,6 +9,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -77,8 +78,13 @@ public sealed class OviniaTest
             var appearance = client.System<HumanoidAppearanceSystem>();
             var humanoid = em.GetComponent<HumanoidAppearanceComponent>(uid);
             var sprite = em.GetComponent<SpriteComponent>(uid);
+            var markings = client.ResolveDependency<MarkingManager>();
             foreach (var marking in new[] { "OviniaEarsDeer", "OviniaDeerHorns", "OviniaPatternFawn", "OviniaNeckfluff" })
+            {
+                var category = markings.Markings[marking].MarkingCategory;
+                Assert.That(markings.MarkingsByCategoryAndSpecies(category, humanoid.Species).ContainsKey(marking), Is.True, marking);
                 appearance.AddMarking(uid, marking, Color.White, sync: false, forced: true, humanoid: humanoid);
+            }
             appearance.UpdateSprite((uid, humanoid, sprite));
 
             var sprites = client.System<SpriteSystem>();

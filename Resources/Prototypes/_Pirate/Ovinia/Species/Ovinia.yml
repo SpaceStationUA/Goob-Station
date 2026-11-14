@@ -14,7 +14,7 @@
   defaultHeight: 0.9
   maxHeight: 1.175
   minWidth: 0.95
-  defaultWidth: 0.9
+  defaultWidth: 0.95 # Pirate: match the minimum width enforced by SetScale.
   maxWidth: 1.225
 
 - type: speciesBaseSprites
@@ -89,6 +89,9 @@
       points: 1
       required: false
     UndergarmentBottom:
+      points: 1
+      required: false
+    NeckFluff: # Pirate: allow selecting the ported neck wool in the editor.
       points: 1
       required: false
 
