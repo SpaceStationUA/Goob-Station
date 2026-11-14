@@ -132,6 +132,7 @@ public sealed class KnowledgePrototypeIntegrityTest
             ["Thaven"] = "Human",
             ["Vox"] = "Vox",
             ["Vulpkanin"] = "Human",
+            ["Xelthia"] = "Human",
             ["Yowie"] = "Human",
         };
 
