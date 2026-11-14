@@ -79,7 +79,7 @@ public sealed class OviniaTest
             var humanoid = em.GetComponent<HumanoidAppearanceComponent>(uid);
             var sprite = em.GetComponent<SpriteComponent>(uid);
             var markings = client.ResolveDependency<MarkingManager>();
-            foreach (var marking in new[] { "OviniaEarsDeer", "OviniaDeerHorns", "OviniaPatternFawn", "OviniaNeckfluff" })
+            foreach (var marking in new[] { "OviniaEarsDeer", "OviniaDeerHorns", "OviniaPatternFawn", "OviniaNeckfluff", "OviniaSnout" })
             {
                 var category = markings.Markings[marking].MarkingCategory;
                 Assert.That(markings.MarkingsByCategoryAndSpecies(category, humanoid.Species).ContainsKey(marking), Is.True, marking);
@@ -88,7 +88,7 @@ public sealed class OviniaTest
             appearance.UpdateSprite((uid, humanoid, sprite));
 
             var sprites = client.System<SpriteSystem>();
-            foreach (var key in new[] { "OviniaEarsDeer-deer-ears", "OviniaDeerHorns-ovinia-deer-horns", "OviniaPatternFawn-torso-fawn", "OviniaNeckfluff-ovinia-neck-fluff" })
+            foreach (var key in new[] { "OviniaEarsDeer-deer-ears", "OviniaDeerHorns-ovinia-deer-horns", "OviniaPatternFawn-torso-fawn", "OviniaNeckfluff-ovinia-neck-fluff", "OviniaSnout-ovinia-snout" })
             {
                 Assert.That(sprites.LayerMapTryGet((uid, sprite), key, out var layer, false), Is.True, key);
                 Assert.That(sprite[layer].Visible, Is.True, key);

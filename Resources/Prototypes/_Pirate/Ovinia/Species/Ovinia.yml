@@ -94,6 +94,9 @@
     NeckFluff: # Pirate: allow selecting the ported neck wool in the editor.
       points: 1
       required: false
+    Snout: # Pirate: allow selecting the three ported muzzle styles.
+      points: 1
+      required: false
 
 - type: humanoidBaseSprite
   id: MobOviniaHead
