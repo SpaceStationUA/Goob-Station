@@ -106,6 +106,17 @@ public sealed partial class SpeciesPrototype : IPrototype
 
     #endregion
 
+    #region Pirate: eye coloration
+
+    /// <summary>
+    ///     Method of eye coloration used by this species, if any. Restricts the eye colors
+    ///     players can pick (e.g. shadowkin cannot have black eyes - that is the mindbroken look).
+    /// </summary>
+    [DataField]
+    public ProtoId<EyeColorationPrototype>? EyeColoration { get; private set; }
+
+    #endregion
+
     [DataField]
     public List<Sex> Sexes { get; private set; } = new() { Sex.Male, Sex.Female };
 

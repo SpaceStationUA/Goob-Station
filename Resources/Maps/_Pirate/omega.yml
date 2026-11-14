@@ -35600,10 +35600,7 @@ entities:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
-          ents:
-          - 5344
-          - 5343
-          - 5342
+          ents: []
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -65067,29 +65064,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -63.5,-7.5
       parent: 2
-- proto: MagazinePistolCryptobiolin
-  entities:
-  - uid: 5342
-    components:
-    - type: Transform
-      parent: 5341
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 5343
-    components:
-    - type: Transform
-      parent: 5341
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 5344
-    components:
-    - type: Transform
-      parent: 5341
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 9621

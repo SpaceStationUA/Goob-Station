@@ -3,6 +3,7 @@ background-tab-section-filled = { $filled } / { $total } заповнено
 background-tab-physical = Фізичний опис
 background-tab-personality = Опис особистості
 background-tab-exploitable = Вразлива інформація
+background-tab-blood-taste = Смак крові
 background-tab-secrets = Таємниці
 background-tab-personal-notes = Особисті нотатки
 background-tab-ooc-notes = OOC-нотатки

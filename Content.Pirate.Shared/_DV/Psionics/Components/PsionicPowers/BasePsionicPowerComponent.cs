@@ -17,9 +17,10 @@ public abstract partial class BasePsionicPowerComponent : Component
     /// <summary>
     /// The prototype ID for the action.
     /// It's set up in the component, optionally overriden via YML and then referenced via a string here.
+    /// Null for purely passive powers that have no action button.
     /// </summary>
     [DataField]
-    public abstract EntProtoId ActionProtoId { get; set; }
+    public abstract EntProtoId? ActionProtoId { get; set; }
 
     /// <summary>
     /// The Loc string for the name of the power.

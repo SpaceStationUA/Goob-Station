@@ -7,6 +7,8 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-diona
   # Goobstation - Diona can see through kudzu rendered on the "kudzu" layer.
   - type: SeeOverLayer
     layers:

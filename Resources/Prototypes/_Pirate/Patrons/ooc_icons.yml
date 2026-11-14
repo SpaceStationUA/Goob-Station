@@ -79,3 +79,11 @@
     sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
     state: ter_4333
   tier: PatronTierAssistant
+
+- type: oocIcon
+  id: OocIconPirateBi
+  name: ooc-icon-pirate-bi
+  icon:
+    sprite: /Textures/_Pirate/Interface/Misc/ooc_icons.rsi
+    state: bi
+  tier: PatronTierAssistant

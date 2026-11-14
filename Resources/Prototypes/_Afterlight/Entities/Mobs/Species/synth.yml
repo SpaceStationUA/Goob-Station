@@ -5,6 +5,9 @@
   id: BaseMobSynth
   name: Urist McBeeper
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-synth
+    givesBenefits: false
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic
@@ -163,3 +166,5 @@
     - AnomalyHost
     - SiliconEmotes
     - Synth
+  # Pirate: Synth are psionically insulated and cannot receive psionic powers.
+  - type: PsionicallyInsulative

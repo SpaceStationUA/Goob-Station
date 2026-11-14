@@ -185,3 +185,6 @@
   # - type: ItemToggleDamageOtherOnHit # Not in this fork
   - type: ThrowingAngle
     angle: 180
+  - type: Tag
+    tags:
+    - MantisBeltStorable

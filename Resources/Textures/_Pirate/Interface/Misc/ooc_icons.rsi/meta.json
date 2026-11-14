@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made for Pirate station by CyberLanos (GitHub). State names are the ckeys of the players who chose them.",
+    "copyright": "Made for Pirate station by CyberLanos (GitHub). State names are the ckeys of the players who chose them. The 'bi' state made by stanislav4ix (discord).",
     "size": {
         "x": 8,
         "y": 8
@@ -80,6 +80,9 @@
         },
         {
             "name": "ter_4333"
+        },
+        {
+            "name": "bi"
         }
     ]
 }

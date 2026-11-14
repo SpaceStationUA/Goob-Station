@@ -6,7 +6,7 @@ namespace Content.Shared._DV.Psionics.Components.PsionicPowers;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ShadeskipPowerComponent : BasePsionicPowerComponent
 {
-    public override EntProtoId ActionProtoId { get; set; } = "ActionShadeskip";
+    public override EntProtoId? ActionProtoId { get; set; } = "ActionShadeskip";
 
     public override string PowerName { get; set; } = "psionic-power-name-shadeskip";
 

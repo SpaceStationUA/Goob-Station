@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Pirate.Shared.Caduceus;
 using Robust.Shared.GameStates;
 
 namespace Content.Pirate.Shared.Index;
@@ -22,10 +23,4 @@ public sealed partial class IndexMemberComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Pager;
-
-    /// <summary>
-    ///     Admin-set flag: the next Caduceus transformation is guaranteed to be a fpoon.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool NextWeaponFpoon;
 }

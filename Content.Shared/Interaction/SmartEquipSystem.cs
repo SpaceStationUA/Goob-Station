@@ -10,6 +10,8 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Weapons.Melee; // Pirate: pocket smart equip weapons
+using Content.Shared.Weapons.Ranged.Components; // Pirate: pocket smart equip weapons
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
@@ -192,7 +194,9 @@ public sealed class SmartEquipSystem : EntitySystem
         }
 
         // case 3 (itemslot item):
-        if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
+        // Pirate: a weapon in a pocket keeps its own item slots (e.g. a magazine). The keybind
+        // must take the weapon itself instead of ejecting its internals, same as the back slot.
+        if (!IsWeapon(slotItem) && TryComp<ItemSlotsComponent>(slotItem, out var slots))
         {
             if (handItem == null)
             {
@@ -200,7 +204,9 @@ public sealed class SmartEquipSystem : EntitySystem
 
                 foreach (var slot in slots.Slots.Values)
                 {
-                    if (slot.HasItem && slot.Priority > (toEjectFrom?.Priority ?? int.MinValue))
+                    if (slot.Item is { } stored
+                        && IsWeapon(stored)
+                        && slot.Priority > (toEjectFrom?.Priority ?? int.MinValue))
                         toEjectFrom = slot;
                 }
 
@@ -248,5 +254,11 @@ public sealed class SmartEquipSystem : EntitySystem
 
         _inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true, checkDoafter: true);
         _hands.TryPickup(uid, slotItem, handsComp: hands);
+    }
+
+    // Pirate: pocket smart equip should take the weapon itself, not eject gun internals.
+    private bool IsWeapon(EntityUid uid)
+    {
+        return HasComp<GunComponent>(uid) || HasComp<MeleeWeaponComponent>(uid);
     }
 }

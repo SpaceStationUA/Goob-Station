@@ -30,6 +30,12 @@ public sealed partial class GlimmerFoxfireSpawnRuleComponent : Component
     public int SpawnRange = 10;
 
     /// <summary>
+    /// How many times to retry finding a non-wall tile for each foxfire.
+    /// </summary>
+    [DataField]
+    public int MaxPlacementAttempts = 10;
+
+    /// <summary>
     /// Prototype to be spawned.
     /// </summary>
     [DataField]

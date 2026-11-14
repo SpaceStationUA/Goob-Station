@@ -70,13 +70,3 @@
     proto: CartridgePistolUranium
   - type: MagazineVisuals
     magState: uranium
-
-- type: entity
-  id: MagazineVectorCryptobiolin
-  parent: BaseMagazineVector
-  name: extended pistol magazine (.35 auto Cryptobiolin)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolCryptobiolin
-  - type: MagazineVisuals
-    magState: cryptobiolin

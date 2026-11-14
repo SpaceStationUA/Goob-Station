@@ -591,13 +591,15 @@ namespace Content.Client.Lobby.UI
             _allowExploitableInfo = _cfgManager.GetCVar(PirateVars.ExploitableSecrets);
             _allowRoleplayNotes = _cfgManager.GetCVar(PirateVars.OOCNotes);
 
-            var showIcInfo = _allowFlavorText || _allowCharacterSecrets || _allowExploitableInfo;
-            // Pirate: OOC records - Keep disabled sections inaccessible; the records section has no toggle.
-            ICInfoSection.Visible = showIcInfo; // Pirate: OOC records
+            // Pirate: the IC section stays visible because blood taste is always editable;
+            // every other field still hides itself according to its own cvar.
+            ICInfoSection.Visible = true; // Pirate: OOC records
             OOCInfoSection.Visible = _allowRoleplayNotes; // Pirate: OOC records
 
             ICInfoEditor.Physical.Visible = _allowFlavorText;
             ICInfoEditor.Personality.Visible = _allowFlavorText;
+            // Pirate: blood taste is gameplay-relevant and is not gated by the flavor text cvar.
+            ICInfoEditor.BloodTaste.Visible = true;
             ICInfoEditor.Secrets.Visible = _allowCharacterSecrets;
             ICInfoEditor.Exploitable.Visible = _allowExploitableInfo;
             OOCInfoEditor.PersonalNotes.Visible = _allowRoleplayNotes;
@@ -608,6 +610,7 @@ namespace Content.Client.Lobby.UI
         {
             ICInfoEditor.PhysicalDescriptionInput.OnTextChanged += OnPhysicalDescriptionChanged;
             ICInfoEditor.PersonalityDescriptionInput.OnTextChanged += OnPersonalityDescriptionChanged;
+            ICInfoEditor.BloodTasteInput.OnTextChanged += OnBloodTasteChanged;
             ICInfoEditor.ExploitableInfoInput.OnTextChanged += OnExploitableInfoChanged;
             ICInfoEditor.SecretsInput.OnTextChanged += OnSecretsChanged;
             OOCInfoEditor.PersonalNotesInput.OnTextChanged += OnPersonalNotesChanged;
@@ -2054,6 +2057,15 @@ namespace Content.Client.Lobby.UI
             SetDirty();
         }
 
+        private void OnBloodTasteChanged(TextEdit.TextEditEventArgs args)
+        {
+            if (Profile is null || _suppressCharacterInfoChanges)
+                return;
+
+            Profile = Profile.WithBloodTaste(Rope.Collapse(args.TextRope).Trim());
+            SetDirty();
+        }
+
         private void OnExploitableInfoChanged(TextEdit.TextEditEventArgs args)
         {
             if (Profile is null || _suppressCharacterInfoChanges)
@@ -2286,6 +2298,7 @@ namespace Content.Client.Lobby.UI
             {
                 ICInfoEditor.PhysicalDescriptionInput.TextRope = new Rope.Leaf(Profile?.PhysicalDescription ?? string.Empty);
                 ICInfoEditor.PersonalityDescriptionInput.TextRope = new Rope.Leaf(Profile?.PersonalityDescription ?? string.Empty);
+                ICInfoEditor.BloodTasteInput.TextRope = new Rope.Leaf(Profile?.BloodTaste ?? string.Empty);
                 ICInfoEditor.ExploitableInfoInput.TextRope = new Rope.Leaf(Profile?.ExploitableInfo ?? string.Empty);
                 ICInfoEditor.SecretsInput.TextRope = new Rope.Leaf(Profile?.Secrets ?? string.Empty);
                 OOCInfoEditor.PersonalNotesInput.TextRope = new Rope.Leaf(Profile?.PersonalNotes ?? string.Empty);

@@ -7,6 +7,8 @@
   id: BaseMobMoth
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-moth
   - type: HumanoidAppearance
     species: Moth
     hideLayersOnEquip:

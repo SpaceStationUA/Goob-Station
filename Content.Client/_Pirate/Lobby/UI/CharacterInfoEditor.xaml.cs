@@ -20,17 +20,20 @@ public sealed partial class CharacterInfoEditor : Control
     private readonly BackgroundSection _section;
     private readonly BackgroundTextField _physical;
     private readonly BackgroundTextField _personality;
+    private readonly BackgroundTextField _bloodTaste;
     private readonly BackgroundTextField _exploitable;
     private readonly BackgroundTextField _secrets;
     private readonly BackgroundTextField[] _fields;
 
     public Control Physical => _physical;
     public Control Personality => _personality;
+    public Control BloodTaste => _bloodTaste;
     public Control Exploitable => _exploitable;
     public Control Secrets => _secrets;
 
     public TextEdit PhysicalDescriptionInput => _physical.Input;
     public TextEdit PersonalityDescriptionInput => _personality.Input;
+    public TextEdit BloodTasteInput => _bloodTaste.Input;
     public TextEdit ExploitableInfoInput => _exploitable.Input;
     public TextEdit SecretsInput => _secrets.Input;
 
@@ -43,9 +46,11 @@ public sealed partial class CharacterInfoEditor : Control
         _physical = Field("background-tab-physical", "character-info-editor-physical-placeholder",
             IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.MaxFlavorTextLength));
         _personality = Field("background-tab-personality", "character-info-editor-personality-placeholder");
+        _bloodTaste = Field("background-tab-blood-taste", "character-info-editor-blood-taste-placeholder",
+            HumanoidCharacterProfile.MaxBloodTasteLength);
         _exploitable = Field("background-tab-exploitable", "character-info-editor-exploitable-placeholder");
         _secrets = Field("background-tab-secrets", "character-info-editor-secrets-placeholder");
-        _fields = [_physical, _personality, _exploitable, _secrets];
+        _fields = [_physical, _personality, _bloodTaste, _exploitable, _secrets];
         Root.AddChild(_section);
         _section.SetProgress(0, 0);
     }

@@ -141145,13 +141145,6 @@ entities:
     - type: Transform
       parent: 2
       pos: -28.5,-22.5
-- proto: MagazinePistolCryptobiolin
-  entities:
-  - uid: 19839
-    components:
-    - type: Transform
-      parent: 2
-      pos: 55.73521,-43.801285
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 19850

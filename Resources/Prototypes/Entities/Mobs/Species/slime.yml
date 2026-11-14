@@ -6,6 +6,9 @@
   id: BaseMobSlimePerson
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-slimeperson
+    givesBenefits: false
   - type: Hunger
   - type: Thirst
   - type: Icon

@@ -139,7 +139,6 @@
     componentsToAdd:
     - type: PyrokinesisPower
 
-# Pirate: Ported from upstream PR #34 (SpaceStationUA/Goob-Station)
 - type: entity
   parent: BasePsionCrystal
   id: PsionCrystalAnoigo
@@ -267,3 +266,28 @@
   - type: AddComponentsImplant
     componentsToAdd:
     - type: PsionicEruptionPower
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalRemilia
+  name: кристал Ремілії
+  description: Маленький псіонічний кристал. Прислухаючись, можна почути тихий писк крил за гранню реальності.
+  components:
+  - type: Sprite
+    color: "#b04ddb"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: SummonFamiliarPower
+      prototype: MobBatRemilia
+
+- type: entity
+  parent: BasePsionCrystal
+  id: PsionCrystalXenoglossy
+  name: xenoglossy crystal
+  description: A small psionic crystal. You can almost feel the knowledge radiating from it.
+  components:
+  - type: Sprite
+    color: "#8a00c2"
+  - type: AddComponentsImplant
+    componentsToAdd:
+    - type: AssayPower

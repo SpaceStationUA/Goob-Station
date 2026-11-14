@@ -185,7 +185,7 @@ public sealed class OracleSystem : EntitySystem
 
         DispenseLiquidReward(oracle.Owner, oracle.Comp);
 
-        var i = _random.Next(1, 4);
+        var i = _random.Next(2, 6);
 
         while (i != 0)
         {
