@@ -6,7 +6,7 @@ namespace Content.Shared._DV.Psionics.Components.PsionicPowers;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NoosphericZapPowerComponent : BasePsionicPowerComponent
 {
-    public override EntProtoId ActionProtoId { get; set; } = "ActionNoosphericZap";
+    public override EntProtoId? ActionProtoId { get; set; } = "ActionNoosphericZap";
 
     public override string PowerName { get; set; } = "psionic-power-name-noospheric-zap";
 

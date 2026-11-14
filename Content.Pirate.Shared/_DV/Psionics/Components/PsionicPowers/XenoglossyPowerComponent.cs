@@ -7,8 +7,7 @@ namespace Content.Shared._DV.Psionics.Components.PsionicPowers;
 public sealed partial class XenoglossyPowerComponent : BasePsionicPowerComponent
 {
     // No action — xenoglossy is a purely passive power.
-    // The value is never resolved because OnPowerInit skips Action.AddAction.
-    public override EntProtoId ActionProtoId { get; set; } = "";
+    public override EntProtoId? ActionProtoId { get; set; } = null;
 
     public override string PowerName { get; set; } = "psionic-power-name-xenoglossy";
 

@@ -14,7 +14,7 @@ namespace Content.Shared._DV.Psionics.Components.PsionicPowers;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedSummonFamiliarPowerSystem))]
 public sealed partial class SummonFamiliarPowerComponent : BasePsionicPowerComponent
 {
-    public override EntProtoId ActionProtoId { get; set; } = "ActionSummonRemilia";
+    public override EntProtoId? ActionProtoId { get; set; } = "ActionSummonRemilia";
 
     public override string PowerName { get; set; } = "psionic-power-name-remilia";
 

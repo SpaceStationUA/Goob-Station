@@ -7,7 +7,7 @@ namespace Content.Shared._DV.Psionics.Components.PsionicPowers;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedTelegnosisPowerSystem))]
 public sealed partial class TelegnosisPowerComponent : BasePsionicPowerComponent
 {
-    public override EntProtoId ActionProtoId { get; set; } = "ActionTelegnosis";
+    public override EntProtoId? ActionProtoId { get; set; } = "ActionTelegnosis";
 
     public override string PowerName { get; set; } = "psionic-power-name-telegnosis";
 

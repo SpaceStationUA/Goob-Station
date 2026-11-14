@@ -60,7 +60,8 @@ public abstract class BasePsionicPowerSystem<T, T1> : EntitySystem where T : Bas
             return;
         }
 
-        Action.AddAction(power, ref power.Comp.ActionEntity, power.Comp.ActionProtoId);
+        if (power.Comp.ActionProtoId is { } actionProtoId)
+            Action.AddAction(power, ref power.Comp.ActionEntity, actionProtoId);
 
         var psionicComp = EnsureComp<PsionicComponent>(power);
         psionicComp.PsionicPowersActionEntities.Add(power.Comp.ActionEntity);
