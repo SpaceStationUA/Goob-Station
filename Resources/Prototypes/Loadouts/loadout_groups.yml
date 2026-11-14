@@ -128,6 +128,7 @@
   hidden: true
   loadouts:
   - EmergencyOxygenCarnivore # Pirate: Xelthia survival kit.
+  - EmergencyOxygenVegetarian # Pirate: Ovinia survival kit.
   - EmergencyNitrogen
   - EmergencyOxygen
   - EmergencyOxygenBlood # Pirate: Doll haemobrick kit.
@@ -147,6 +148,7 @@
   loadouts:
   - LoadoutSpeciesEVANitrogen
   - LoadoutXelthiaEVAOxygen # Pirate
+  - LoadoutOviniaEVAOxygen # Pirate
   - LoadoutSpeciesEVAOxygen
   - LoadoutSpeciesEVAWaterVapor
 
@@ -165,6 +167,7 @@
   loadouts:
   - LoadoutSpeciesPocketDoubleNitrogen
   - LoadoutXelthiaPocketDoubleOxygen # Pirate
+  - LoadoutOviniaPocketDoubleOxygen # Pirate
   - LoadoutSpeciesPocketDoubleOxygen
   - LoadoutSpeciesPocketDoubleWaterVapor
 
@@ -703,6 +706,7 @@
   hidden: true
   loadouts:
   - EmergencyOxygenCarnivoreClown # Pirate: Xelthia survival kit.
+  - EmergencyOxygenVegetarianClown # Pirate: Ovinia survival kit.
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
   - EmergencyOxygenClownBlood # Pirate: Doll haemobrick kit.
@@ -783,6 +787,7 @@
   hidden: true
   loadouts:
   - EmergencyOxygenCarnivoreMime # Pirate: Xelthia survival kit.
+  - EmergencyOxygenVegetarianMime # Pirate: Ovinia survival kit.
   - EmergencyNitrogenMime
   - EmergencyOxygenMime
   - EmergencyOxygenMimeBlood # Pirate: Doll haemobrick kit.
@@ -1216,6 +1221,7 @@
   hidden: true
   loadouts:
   - EmergencyOxygenCarnivoreExtended # Pirate: Xelthia survival kit.
+  - EmergencyOxygenVegetarianExtended # Pirate: Ovinia survival kit.
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
   - EmergencyOxygenExtendedBlood # Pirate: Doll haemobrick kit.
@@ -1609,6 +1615,7 @@
   hidden: true
   loadouts:
   - EmergencyOxygenCarnivoreSecurity # Pirate: Xelthia survival kit.
+  - EmergencyOxygenVegetarianSecurity # Pirate: Ovinia survival kit.
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
   - EmergencyOxygenSecurityBlood # Pirate: Doll haemobrick kit.
@@ -1873,6 +1880,7 @@
   hidden: true
   loadouts:
   - EmergencyOxygenCarnivoreMedical # Pirate: Xelthia survival kit.
+  - EmergencyOxygenVegetarianMedical # Pirate: Ovinia survival kit.
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
   - EmergencyOxygenMedicalBlood # Pirate: Doll haemobrick kit.
@@ -1922,6 +1930,7 @@
   hidden: true
   loadouts:
   - EmergencyOxygenCarnivoreSyndicate # Pirate: Xelthia survival kit.
+  - EmergencyOxygenVegetarianSyndicate # Pirate: Ovinia survival kit.
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
   - EmergencyOxygenSyndicateBlood # Pirate: Doll haemobrick kit.
@@ -1940,6 +1949,7 @@
   hidden: true
   loadouts:
   - EmergencyOxygenCarnivoreSyndicate # Pirate: oxygen and edible rations for Xelthia.
+  - EmergencyOxygenVegetarianSyndicate # Pirate: Ovinia survival kit.
   - EmergencyNitrogenMilitaryDouble
   - EmergencyOxygenMilitaryDouble
   - EmergencyOxygenMilitaryDoubleBlood # Pirate: Doll haemobrick kit.

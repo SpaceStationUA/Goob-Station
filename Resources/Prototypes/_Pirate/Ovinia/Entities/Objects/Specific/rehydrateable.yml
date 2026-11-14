@@ -1,0 +1,9 @@
+# Pirate: Ovinia from ProjectOmu/OmuStation@2034ff02e121ae8dd42b3dd70c62d11b3a4ebba1.
+- type: entity #Omu
+  parent: MonkeyCube
+  id: OviniaCube
+  name: ovinia cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobOviniaRandom

@@ -1,0 +1,5 @@
+# Source REUSE.toml licenses audio as MIT; no separate Ovinia attribution is supplied.
+- files: ["ovinia-baa1.ogg", "ovinia-baa2.ogg", "ovinia-baa3.ogg"]
+  license: MIT
+  copyright: None
+  source: https://github.com/ProjectOmu/OmuStation/blob/2034ff02e121ae8dd42b3dd70c62d11b3a4ebba1/REUSE.toml

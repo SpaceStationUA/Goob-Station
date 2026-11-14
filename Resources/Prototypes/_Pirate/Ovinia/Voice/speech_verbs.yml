@@ -1,0 +1,9 @@
+# Pirate: Ovinia from ProjectOmu/OmuStation@2034ff02e121ae8dd42b3dd70c62d11b3a4ebba1.
+- type: speechVerb
+  id: Ovinia
+  name: chat-speech-verb-name-ovinia
+  speechVerbStrings:
+  - chat-speech-verb-ovinia-1
+  - chat-speech-verb-ovinia-2
+  - chat-speech-verb-ovinia-3
+  - chat-speech-verb-ovinia-4

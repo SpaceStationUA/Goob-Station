@@ -69,6 +69,7 @@ namespace Content.Shared.Humanoid
                     yield return HumanoidVisualLayers.RFoot;
                     break;
                 case HumanoidVisualLayers.Chest:
+                    yield return HumanoidVisualLayers.NeckFluff; // Pirate: Ovinia wool follows the chest.
                     yield return HumanoidVisualLayers.Chest;
                     yield return HumanoidVisualLayers.BodyCover; // Pirate: attached neocyte plating.
                     yield return HumanoidVisualLayers.BodyCoverCover; // Pirate

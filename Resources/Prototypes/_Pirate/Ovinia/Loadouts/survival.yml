@@ -1,0 +1,102 @@
+# Pirate: Ovinia from ProjectOmu/OmuStation@2034ff02e121ae8dd42b3dd70c62d11b3a4ebba1.
+- type: loadoutEffectGroup
+  id: OxygenVegetableEater
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Ovinia
+
+# Basic
+
+- type: loadout
+  id: EmergencyOxygenVegetarian
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenVegetableEater
+  storage:
+    back:
+    - BoxSurvivalSlotsVegetable
+
+# Clown
+
+- type: loadout
+  id: EmergencyOxygenVegetarianClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenVegetableEater
+  storage:
+    back:
+    - BoxHugSlotsVegetable
+
+# Mime
+
+- type: loadout
+  id: EmergencyOxygenVegetarianMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenVegetableEater
+  storage:
+    back:
+    - BoxMimeSlotsVegetable
+
+# Engineering / Extended
+
+- type: loadout
+  id: EmergencyOxygenVegetarianExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenVegetableEater
+  storage:
+    back:
+    - BoxSurvivalSlotsEngineeringVegetable
+
+# Medical
+
+- type: loadout
+  id: EmergencyOxygenVegetarianMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenVegetableEater
+  storage:
+    back:
+    - BoxSurvivalSlotsMedicalVegetable
+
+# Security
+
+- type: loadout
+  id: EmergencyOxygenVegetarianSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenVegetableEater
+  storage:
+    back:
+    - BoxSurvivalSlotsSecurityVegetable
+
+# Syndicate
+
+- type: loadout
+  id: EmergencyOxygenVegetarianSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenVegetableEater
+  storage:
+    back:
+    - BoxSurvivalSlotsSyndicateVegetable
+
+# Pirate: local EVA groups require explicit entries for herbivorous oxygen breathers.
+- type: loadout
+  id: LoadoutOviniaEVAOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenVegetableEater
+  equipment:
+    suitstorage: OxygenTankFilled
+
+- type: loadout
+  id: LoadoutOviniaPocketDoubleOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenVegetableEater
+  equipment:
+    pocket1: DoubleEmergencyOxygenTankFilled
+

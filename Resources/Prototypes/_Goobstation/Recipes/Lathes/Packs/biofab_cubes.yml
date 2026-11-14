@@ -4,6 +4,7 @@
   id: HumanoidCubesStatic
   recipes:
   - XelthiaCube # Pirate
+  - OviniaCube # Pirate
   - HumanCube
   - DionaCube
   - GingerbreadCube
