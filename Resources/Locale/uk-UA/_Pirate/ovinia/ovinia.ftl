@@ -1,4 +1,5 @@
 language-Caprine-name = Капрін
+chat-language-Caprine-name = Капрін
 language-Caprine-description = Мова овіній, у якій різні звуки бекання та мекання поєднуються у слова.
 metabolizer-type-ovinia = Овінія
 
