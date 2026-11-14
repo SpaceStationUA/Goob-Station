@@ -22,7 +22,7 @@
 
 - type: emote
   id: Caw
-  name: Caw
+  name: chat-emote-name-harpycaw # Pirate
   category: Vocal
   icon: _Goobstation/Interface/Emotes/caw.png
   whitelist:
@@ -31,7 +31,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [caws.]
+  chatMessages: [chat-emote-msg-harpycaw] # Pirate
   chatTriggers:
     - caws
     - caw
@@ -41,7 +41,7 @@
 #Vulpkanin
 - type: emote
   id: Bark
-  name: Bark
+  name: chat-emote-name-vulpbark # Pirate
   category: Vocal
   icon: _Goobstation/Interface/Emotes/bark.png
   whitelist:
@@ -50,14 +50,14 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [гавкає.]
+  chatMessages: [chat-emote-msg-vulpbark] # Pirate
   chatTriggers:
     - гав
     - гавкає
 
 - type: emote
   id: Snarl
-  name: Snarl
+  name: chat-emote-name-vulpsnarl # Pirate
   category: Vocal
   icon: _Goobstation/Interface/Emotes/snarl.png
   whitelist:
@@ -66,13 +66,13 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [гарчить.]
+  chatMessages: [chat-emote-msg-vulpsnarl] # Pirate
   chatTriggers:
     - гарчить
 
 - type: emote
   id: Whine
-  name: Whine
+  name: chat-emote-name-vulpwhine # Pirate
   category: Vocal
   icon: _Goobstation/Interface/Emotes/whine.png
   whitelist:
@@ -81,7 +81,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [скиглить.]
+  chatMessages: [chat-emote-msg-vulpwhine] # Pirate
   chatTriggers:
     - скиглить
     - скиглючи
@@ -109,7 +109,7 @@
 
 - type: emote
   id: Awoo
-  name: Awoo
+  name: chat-emote-name-vulphowl # Pirate
   category: Vocal
   icon: _Goobstation/Interface/Emotes/awoo.png
   whitelist:
@@ -118,7 +118,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [виє.]
+  chatMessages: [chat-emote-msg-vulphowl] # Pirate
   chatTriggers:
     - виє
     - виючи
@@ -136,7 +136,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [gnashes.]
+  chatMessages: [chat-emote-msg-gnash] # Pirate
   chatTriggers:
     - gnash
     - gnashes
