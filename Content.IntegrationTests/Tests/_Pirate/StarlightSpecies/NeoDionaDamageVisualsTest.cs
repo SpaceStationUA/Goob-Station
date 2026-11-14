@@ -19,6 +19,8 @@ public sealed class NeoDionaDamageVisualsTest : InteractionTest
     [TestCase("MobNeoDiona", "Heat", "Burn")]
     [TestCase("MobDiona", "Blunt", "Brute")]
     [TestCase("MobDiona", "Heat", "Burn")]
+    [TestCase("MobNeoResomi", "Blunt", "Brute")]
+    [TestCase("MobNeoResomi", "Heat", "Burn")]
     public async Task DamageAfterLimbRemovalPreservesBodySprites(string prototype, string damageType, string damageGroup)
     {
         await AddAtmosphere();
