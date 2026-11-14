@@ -321,7 +321,8 @@
       enum.AmmoSelectorUiKey.Key:
         type: AmmoSelectorMenuBoundUserInterface
   - type: ActivatableUI
-    inHandsOnly: true
+    altVerb: true
+    verbText: mode-select-verb-text
     key: enum.AmmoSelectorUiKey.Key
   - type: ItemToggle
     activated: true
