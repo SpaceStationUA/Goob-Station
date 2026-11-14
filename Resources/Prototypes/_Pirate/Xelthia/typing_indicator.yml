@@ -1,0 +1,7 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: typingIndicator
+  id: xelthia
+  spritePath: /Textures/_Pirate/Xelthia/Effects/speech.rsi
+  typingState: xelthia0
+  idleState: xelthia1
+  offset: 0, 0.2

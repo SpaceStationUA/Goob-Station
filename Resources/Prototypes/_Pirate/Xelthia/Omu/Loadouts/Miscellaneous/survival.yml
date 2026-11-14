@@ -1,0 +1,97 @@
+# Pirate: Omu carnivore survival kits.
+- type: loadoutEffectGroup
+  id: OxygenMeatEater
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Xelthia
+    # Pirate: Avali already has separate survival kits.
+
+- type: loadout
+  id: EmergencyOxygenCarnivore
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  storage:
+    back:
+    - BoxSurvivalSlotsMeat
+
+- type: loadout
+  id: EmergencyOxygenCarnivoreClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  storage:
+    back:
+    - BoxHugSlotsMeat
+
+- type: loadout
+  id: EmergencyOxygenCarnivoreMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  storage:
+    back:
+    - BoxMimeSlotsMeat
+
+- type: loadout
+  id: EmergencyOxygenCarnivoreExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  storage:
+    back:
+    - BoxSurvivalSlotsEngineeringMeat
+
+- type: loadout
+  id: EmergencyOxygenCarnivoreMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  storage:
+    back:
+    - BoxSurvivalSlotsMedicalMeat
+
+- type: loadout
+  id: EmergencyOxygenCarnivoreSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  storage:
+    back:
+    - BoxSurvivalSlotsSecurityMeat
+
+- type: loadout
+  id: EmergencyOxygenCarnivoreSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  storage:
+    back:
+    - BoxSurvivalSlotsSyndicateMeat
+
+- type: loadout
+  id: EmergencyOxygenCarnivoreBlueshieldOfficer
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  storage:
+    back:
+    - BoxSurvivalSlotsBlueshieldOfficerMeat
+
+# Pirate: the local EVA tank groups need explicit entries for this oxygen-breathing carnivore.
+- type: loadout
+  id: LoadoutXelthiaEVAOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  equipment:
+    suitstorage: OxygenTankFilled
+
+- type: loadout
+  id: LoadoutXelthiaPocketDoubleOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenMeatEater
+  equipment:
+    pocket1: DoubleEmergencyOxygenTankFilled

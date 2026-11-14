@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 using System.IO;
+using Content.Shared._Pirate.Network; // Pirate
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -21,6 +22,7 @@ namespace Content.Shared.Preferences
         {
             Slot = buffer.ReadInt32();
             var length = buffer.ReadVariableInt32();
+            buffer.AssertAtLeastSize(length); // Pirate: Omu #2166
             using var stream = new MemoryStream(length);
             buffer.ReadAlignedMemory(stream, length);
             Profile = serializer.Deserialize<ICharacterProfile>(stream);

@@ -64,14 +64,15 @@ namespace Content.Goobstation.Server.MaterialEnergy
             if (chargeToAdd <= 0)
                 return;
 
-            if (_batterySystem.TryGetBatteryComponent(cutter, out var batteryComponent, out _))
-                _batterySystem.SetCharge(cutter, batteryComponent.LastCharge + chargeToAdd);
+            if (!_batterySystem.TryGetBatteryComponent(cutter, out var batteryComponent, out _))
+                return;
 
-            var toDel = _stack.Split(
-                (EntityUid) _material,
-                chargeToAdd / materialPerSheet,
-                Transform(_material).Coordinates);
-            QueueDel(toDel);
+            // Pirate: topping up by less than one piece of ore must still consume that piece.
+            var piecesToUse = (int) MathF.Ceiling((float) chargeToAdd / materialPerSheet);
+            if (!_stack.TryUse(_material, piecesToUse))
+                return;
+
+            _batterySystem.SetCharge(cutter, batteryComponent.LastCharge + chargeToAdd);
         }
     }
 }

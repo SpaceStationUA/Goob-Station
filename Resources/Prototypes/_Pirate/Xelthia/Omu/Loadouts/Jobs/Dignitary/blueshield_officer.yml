@@ -1,0 +1,9 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: loadout
+  id: BlueshieldOfficerOuterXelthiaBlueshield
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Xelthia
+  equipment:
+    outerClothing: ClothingOuterBlueshieldArmourXelthia

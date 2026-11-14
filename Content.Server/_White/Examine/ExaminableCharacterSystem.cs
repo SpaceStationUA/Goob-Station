@@ -86,6 +86,10 @@ public sealed class ExaminableCharacterSystem : EntitySystem
             if (!_inventorySystem.TryGetSlotEntity(uid, slotName, out var slotEntity))
                 continue;
 
+            // Pirate: membrane jackets reserve glove slots with invisible virtual items.
+            if (HasComp<Content.Shared.Inventory.VirtualItem.VirtualItemComponent>(slotEntity))
+                continue;
+
             if (_entityManager.TryGetComponent<MetaDataComponent>(slotEntity, out var metaData)
                 && !HasComp<StripMenuInvisibleComponent>(slotEntity))
             {

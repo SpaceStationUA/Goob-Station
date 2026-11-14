@@ -1,0 +1,5 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: flavor
+  id: xelthia
+  flavorType: Complex
+  description: flavor-complex-xelthia

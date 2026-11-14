@@ -1,0 +1,143 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Ported from ProjectOmu/OmuStation #2139.
+
+- type: loadout
+  id: BlueshieldOfficerOffcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBlueshieldOfficer
+  equipment:
+    neck: ClothingNeckCloakBSOCoat
+
+- type: loadoutEffectGroup
+  id: VeteranQM
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobQuartermaster
+      time: 50h
+
+- type: loadout
+  id: QuartermasterOffcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranQM
+  equipment:
+    neck: ClothingNeckCloakQMCoat
+
+- type: loadoutEffectGroup
+  id: VeteranCap
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCaptain
+      time: 180000 # 50 hrs
+
+- type: loadout
+  id: CaptainOffcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+  equipment:
+    neck: ClothingNeckCloakCAPCoat
+
+- type: loadoutEffectGroup
+  id: VeteranHoP
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 50h
+
+- type: loadout
+  id: HeadofPersonnelOffcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranHoP
+  equipment:
+    neck: ClothingNeckCloakHOPCoat
+
+- type: loadoutEffectGroup
+  id: VeteranCE
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefEngineer
+      time: 50h
+
+- type: loadout
+  id: ChiefEngineerWhiteOffcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCE
+  equipment:
+    neck: ClothingNeckCloakCECoatWhite
+  groupBy: "ceoffcoat"
+
+- type: loadout
+  id: ChiefEngineerGreenOffcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCE
+  equipment:
+    neck: ClothingNeckCloakCECoatGreen
+  groupBy: "ceoffcoat"
+
+- type: loadoutEffectGroup
+  id: ProCMO
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 180000 #50 hours
+
+- type: loadout
+  id: ChiefMedicalOfficerOffcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ProCMO
+  equipment:
+    neck: ClothingNeckCloakCMOCoat
+
+- type: loadoutEffectGroup
+  id: VeteranRD
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobResearchDirector
+      time: 180000 # 50 hrs
+
+#Neck
+
+- type: loadout
+  id: ResearchDirectorOffcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranRD
+  equipment:
+    neck: ClothingNeckCloakRDCoat
+
+#Silicon-Interfacing Glasses
+
+- type: loadoutEffectGroup
+  id: VeteranHoS
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 180000 # 50 hrs
+
+- type: loadout
+  id: HeadofSecurityOffcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranHoS
+  equipment:
+    neck: ClothingNeckCloakHOSCoat

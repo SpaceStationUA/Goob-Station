@@ -10,6 +10,7 @@ using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Whitelist; // Pirate
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Ninja.Systems;
@@ -24,6 +25,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SparksSystem _sparks = default!; // goob edit - sparks everywhere
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Pirate
 
     public override void Initialize()
     {
@@ -52,6 +54,10 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         var (uid, comp) = ent;
         var target = args.Target;
         if (args.Handled || comp.BatteryUid is not { } battery || !HasComp<PowerNetworkBatteryComponent>(target))
+            return;
+
+        // Pirate: electric sheep cannot feed on SMES units.
+        if (!_whitelist.CheckBoth(target, blacklist: comp.TargetBlacklist))
             return;
 
         // handles even if battery is full so you can actually see the poup
@@ -93,6 +99,10 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
     protected override bool TryDrainPower(Entity<BatteryDrainerComponent> ent, EntityUid target)
     {
         var (uid, comp) = ent;
+        // Pirate: also enforce target restrictions when an existing drain completes.
+        if (!_whitelist.CheckBoth(target, blacklist: comp.TargetBlacklist))
+            return false;
+
         if (comp.BatteryUid == null || !TryComp<BatteryComponent>(comp.BatteryUid.Value, out var battery))
             return false;
 

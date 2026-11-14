@@ -1,0 +1,9 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: speechSounds
+  id: XelthiaSpeech
+  saySound:
+    path: /Audio/_Pirate/Xelthia/Voice/Xelthia/say.ogg
+  askSound:
+    path: /Audio/_Pirate/Xelthia/Voice/Xelthia/ask.ogg
+  exclaimSound:
+    path: /Audio/_Pirate/Xelthia/Voice/Xelthia/exclaim.ogg

@@ -1,0 +1,6 @@
+# Pirate: Xelthia from ProjectOmu/OmuStation@94c6cb84bac71924f9e114c811a8d1a0ac859a3f.
+- type: localizedDataset
+  id: NamesXelthiaFirst
+  values:
+    prefix: names-xelthia-first-dataset-
+    count: 100

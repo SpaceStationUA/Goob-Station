@@ -1,0 +1,9 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: entity
+  parent: MonkeyCube
+  id: XelthiaCube
+  name: xelthia cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobXelthiaRandom
